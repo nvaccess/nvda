@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-02 00:10+1000\n"
-"PO-Revision-Date: 2017-06-05 16:30+0300\n"
+"POT-Creation-Date: 2017-06-30 00:10+1000\n"
+"PO-Revision-Date: 2017-06-29 23:29+0300\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -94,37 +94,42 @@ msgid "Error in appModule %s"
 msgstr "Eroare în appModule %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "banner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "complementar"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
 msgstr "informația conținutului"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "principal"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "navigare"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "caută"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "formă"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "regiune"
 
@@ -689,26 +694,42 @@ msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "bnnr"
 msgstr "bnnr"
 
 #. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "cmpl"
 msgstr "cmpl"
 
 #. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "cinf"
 msgstr "cinf"
 
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "principal"
+
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "navi"
 msgstr "navi"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "srch"
 msgstr "srch"
 
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "formă"
+
 #. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
 msgid "rgn"
 msgstr "rgn"
 
@@ -1268,6 +1289,22 @@ msgstr "mută la adnotarea anterioară"
 msgid "no previous annotation"
 msgstr "nu există adnotare anterioară"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "se mută la eroarea următoare"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "nu există eroare următoare"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "se mută la eroarea anterioară"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "nu există eroare anterioară"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1788,6 +1825,10 @@ msgstr "ceas"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "separator"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "formă"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -3576,7 +3617,7 @@ msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"Următoarea tastă apăsat nu va fi folosită de NVDA, va trece direct la "
+"Următoarea tastă apăsată nu va fi folosită de NVDA, va trece direct la "
 "Windows."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
@@ -4416,13 +4457,13 @@ msgstr "Săgeată sus îndoită"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Bevel"
-msgstr "Oblic"
+msgstr "Pantă"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Block arc"
-msgstr "blocare arc "
+msgstr "bloc de tip arc de cerc"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4434,31 +4475,31 @@ msgstr "Cană"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chart Plus symbol"
-msgstr "Simbolul Cart Plus"
+msgstr "simbolul plus în diagramă"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chart Star Symbol"
-msgstr "Simbolul Cart Star"
+msgstr "simbolul stea în diagramă"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chart X Symbol"
-msgstr "Simbolul Cart X"
+msgstr "simbolul X în diagramă"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chevron"
-msgstr "Șevron"
+msgstr "paranteză unghiulară"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Circle with line through center"
-msgstr "Cerc cu o linie pe centru"
+msgstr "Cerc cu o linie prin centru"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4476,7 +4517,7 @@ msgstr "Formă de nor"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cloud callout"
-msgstr ""
+msgstr "Nor de explicație"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4488,7 +4529,7 @@ msgstr "Colț"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "four snipped corners"
-msgstr "Patru colțuri lovite"
+msgstr "chenar dreptunghi cu colțuri vizibile"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4512,7 +4553,7 @@ msgstr "Săgeată jos curbată"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Ribbon banner"
-msgstr "Banner pamblică"
+msgstr "Banner panglică"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4536,7 +4577,7 @@ msgstr "Săgeată sus curbată"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Curved Up Ribbon banner"
-msgstr "banner panglică curbată"
+msgstr "banner panglică curbată sus"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4596,7 +4637,7 @@ msgstr "Săgeată jos"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr ""
+msgstr "Explicație cu săgeată jos"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4644,7 +4685,7 @@ msgstr "Simbol al diagramei rombului"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Delay flowchart symbol"
-msgstr ""
+msgstr "Simbol al diagramei de întârziere"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4716,7 +4757,7 @@ msgstr "Simbol al diagramei de stocare offline"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Off-page connector flowchart symbol"
-msgstr ""
+msgstr "Simbol al diagramei conectare în afara paginii"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4746,13 +4787,13 @@ msgstr "Simbol al diagramei procesului"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr "Simbol al diagramei benzii perforată"
+msgstr "Simbol al diagramei de tip bandă perforată"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr ""
+msgstr "Simbol al diagramei pentru stocare cu acces secvențial"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4764,25 +4805,25 @@ msgstr "Simbol al diagramei de sortare"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Stored data flowchart symbol"
-msgstr "Simbol al diagramei datei stocate"
+msgstr "Simbol al diagramei date stocate"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Summing junction flowchart symbol"
-msgstr ""
+msgstr "Simbol al diagramei pentru suma de joncțiune"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Terminator flowchart symbol"
-msgstr ""
+msgstr "Simbol al diagramei cu nod de sfârșit"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Folded corner"
-msgstr ""
+msgstr "Colț pliat"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4812,7 +4853,7 @@ msgstr "roată cu nouă dinți"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Half of rectangular picture frame"
-msgstr "Jumătate din cadrul imaginii dreptunghiulare"
+msgstr "Jumătate de cadru dreptunghiular pentru imagine"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4836,7 +4877,7 @@ msgstr "Hexagon"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Horizontal scroll"
-msgstr ""
+msgstr "Pergament orizontal"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4854,7 +4895,7 @@ msgstr "Săgeată stânga"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Left Arrow"
-msgstr ""
+msgstr "Explicație cu săgeată stânga"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4872,7 +4913,7 @@ msgstr "Paranteză pătrată deschisă"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Counter-clockwise Circular arrow"
-msgstr "Săgeată circulară în sensul acelor de ceasornic"
+msgstr "Săgeată circulară în inversul sensului acelor de ceasornic"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4884,7 +4925,7 @@ msgstr "Săgeată orizontală cu două capete"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Explicație cu săgeată orizontală cu două capete"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4896,19 +4937,19 @@ msgstr "Săgeată circulară cu două capete"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Ribbon with left and right arrows"
-msgstr "Panglică cu săgețile stânga și dreapta"
+msgstr "Panglică cu săgeți stânga și dreapta"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Left right and up Arrows"
-msgstr "Săgețile stânga, dreapta și sus"
+msgstr "Săgeți stânga, dreapta și sus"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Left and up Arrows"
-msgstr "Săgețile stânga și sus"
+msgstr "Săgeți stânga și sus"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4920,85 +4961,86 @@ msgstr "Fulger"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line Callout"
-msgstr ""
+msgstr "Linie de explicație"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with horizontal accent bar"
-msgstr ""
+msgstr "Explicație cu bară de accent orizontală"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border and horizontal accent bar"
-msgstr ""
+msgstr "Explicație cu margine și bară de accent orizontală"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr ""
+msgstr "Explicație cu linie orizontală"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with diagonal straight line"
-msgstr ""
+msgstr "Explicație cu linie dreaptă pe diagonală"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with diagonal callout line and accent bar"
-msgstr ""
+msgstr "Explicație cu linie de explicație pe diagonală și bară de accent"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr ""
+msgstr "Explicație cu margine, linie dreaptă pe diagonală și bară de accent"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and diagonal callout line"
-msgstr ""
+msgstr "Explicație fără margine și cu linie explicație pe diagonală"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled line"
-msgstr ""
+msgstr "Explicație cu linie înclinată"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled callout line and accent bar"
-msgstr ""
+msgstr "Explicație cu linie înclinată de explicație și bară de accent"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, angled callout line, and accent bar"
-msgstr ""
+msgstr "Explicație cu margine, linie de explicație înclinată și bară de accent"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and angled callout line"
-msgstr ""
+msgstr "Explicație fără margine, dar cu linie de explicație înclinată"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with callout line segments forming a U-shape"
-msgstr ""
+msgstr "Explicație cu segmente de linie de explicație în formă de U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with accent bar and callout line segments forming a U-shape"
 msgstr ""
+"Explicație cu bară de accent și segmente de linie de explicație în formă de U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5006,12 +5048,15 @@ msgctxt "shape"
 msgid ""
 "Callout with border, accent bar, and callout line segments forming a U-shape"
 msgstr ""
+"Explicație cu margine, bară de accent și segmente de linie de explicație în "
+"formă de U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and callout line segments forming a U-shape"
 msgstr ""
+"Explicație fără margine, dar cu segmente de linie de explicație în formă de U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5023,25 +5068,25 @@ msgstr "Linie inversă"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Division symbol"
-msgstr "Simbolul diviziei matematice"
+msgstr "Simbolul matematic al împărțirii"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Equivalence symbol"
-msgstr "Simbolul echivalenței matematice"
+msgstr "Simbolul matematic al echivalenței"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Subtraction symbol"
-msgstr "Simbolul scăderii matematice"
+msgstr "Simbolul matematic al scăderii"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Multiplication symbol"
-msgstr "Simbolul multiplicării matematice"
+msgstr "Simbolul matematic al înmulțirii"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5053,7 +5098,7 @@ msgstr "Simbolul neechivalenței matematice"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Addition symbol"
-msgstr "Simbolul adițional matematic"
+msgstr "Simbolul matematic al adunării"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5065,7 +5110,7 @@ msgstr "Lună"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid with asymmetrical non-parallel sides"
-msgstr "Trapez cu laturi asimetrice non-paralele"
+msgstr "Trapezoid cu laturi asimetrice non-paralele"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5077,7 +5122,7 @@ msgstr "Simbolul 'nu'"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Notched RightArrow"
-msgstr ""
+msgstr "Săgeată dreapta crestată"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5095,13 +5140,13 @@ msgstr "Oval"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr ""
+msgstr "Explicație în formă ovală"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Parallelogram"
-msgstr "Parallelogram"
+msgstr "Paralelogram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5113,25 +5158,25 @@ msgstr "Pentagon"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Incomplete Pie with wedge missing"
-msgstr ""
+msgstr "Formă radială incompletă cu un sector lipsă"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr ""
+msgstr "Sector în formă de sfert de structură radială"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque"
-msgstr "Placă"
+msgstr "Plachetă"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque Tabs"
-msgstr "Plăcuțe de tablă"
+msgstr "tabulatori de plachetă"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5143,7 +5188,7 @@ msgstr "Săgeți îndreptate spre stânga, sus și jos"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Arrows pointing left right up and down"
-msgstr ""
+msgstr "Explicație cu săgeți îndreptate spre stânga, dreapta, sus și jos"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5155,7 +5200,7 @@ msgstr "Dreptunghi"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangular callout"
-msgstr ""
+msgstr "Explicație în formă dreptunghiulară"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5167,7 +5212,7 @@ msgstr "Săgeată dreapta"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr ""
+msgstr "Explicație cu săgeată dreapta"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5197,13 +5242,13 @@ msgstr "Dreptunghi cu un colț rotunjit"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two rounded corners diagonally-opposed"
-msgstr "Dreptunghi cu două colțuri rotunjite în diagonală"
+msgstr "Dreptunghi cu două colțuri în diagonală, rotunjite"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two-rounded corners that share a side"
-msgstr "Dreptunghi cu două colțuri rotunjite care împart o latură"
+msgstr "Dreptunghi cu două colțuri pe aceeași latură, rotunjite"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5215,7 +5260,7 @@ msgstr "Dreptunghi rotunjit"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rounded rectangle-shaped callout"
-msgstr ""
+msgstr "Explicație în formă de dreptunghi rotunjit"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5227,13 +5272,13 @@ msgstr "Față zâmbitoare"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with one snipped corner"
-msgstr "Dreptunghi cu un colț alungit"
+msgstr "Dreptunghi cu un colț decupat"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two snipped corners diagonally-opposed"
-msgstr "Dreptunghi cu două colțuri alungite pe diagonală"
+msgstr "Dreptunghi cu două colțuri diagonale, decupate"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5245,7 +5290,7 @@ msgstr "Dreptunghi cu două colțuri alungite care împart o latură"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with one snipped corner and one rounded corner"
-msgstr "Dreptunghi cu un colț alungit și unul rotunjit"
+msgstr "Dreptunghi cu un colț decupat și unul rotunjit"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5281,7 +5326,7 @@ msgstr "Picătură de apă"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid"
-msgstr "Trapez"
+msgstr "Trapezoid"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5293,7 +5338,7 @@ msgstr "Săgeată sus"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with UpArrow"
-msgstr ""
+msgstr "Explicație cu săgeată sus"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5305,7 +5350,7 @@ msgstr "Săgeată cu două capete în sus și în jos"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr ""
+msgstr "Explicație cu săgeți care sunt îndreptate în sus și în jos"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5317,7 +5362,7 @@ msgstr "Săgeată în formă de u"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Vertical scroll"
-msgstr ""
+msgstr "Pergament vertical"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5365,7 +5410,7 @@ msgstr "Ajutor"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Home"
-msgstr "Începere"
+msgstr "Acasă"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6180,6 +6225,10 @@ msgstr "Mută obiectul navigator și focalizarea la următorul rând"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Mută obiectul navigator și focalizarea la rândul precedent"
+
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Sugestii"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -8187,6 +8236,11 @@ msgstr "Anunță barele de progres din &fundal"
 msgid "Report dynamic &content changes"
 msgstr "Anunță schimbările &dinamice de conținut"
 
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "&Redă un sunet când apar autosugestiile"
+
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
 msgstr "Mod navigare"
@@ -8555,7 +8609,7 @@ msgstr "&Timp expirare mesaj (sec)"
 
 #. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
 msgid "Show &messages indefinitely"
-msgstr "Arată mesajele pe termen nelimitat"
+msgstr "Arată &mesajele pe termen nelimitat"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "B&raille tethered to:"
@@ -8672,6 +8726,10 @@ msgstr "fără"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "Amplificare &rată vorbire"
+
+#. Translators: Description for a speech synthesizer.
+msgid "Windows OneCore voices"
+msgstr "Voci Windows OneCore"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -9886,6 +9944,10 @@ msgstr "comentariu: {text} de către {author} în {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} de {author} în {date}"
 
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Ortografie: {text}"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10136,6 +10198,11 @@ msgstr "Nu este în tabel"
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&Adnotări"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&errors"
+msgstr "&erori"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"

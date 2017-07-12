@@ -33,6 +33,10 @@ class Ia2Web(IAccessible):
 		current = self.IA2Attributes.get("current", False)
 		return current
 
+	def _get_placeholder(self):
+		placeholder = self.IA2Attributes.get('placeholder', None)
+		return placeholder
+
 class Document(Ia2Web):
 	value = None
 

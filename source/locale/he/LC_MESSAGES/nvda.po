@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-12 00:10+1000\n"
-"PO-Revision-Date: 2017-05-16 08:56+0200\n"
+"POT-Creation-Date: 2017-06-30 00:10+1000\n"
+"PO-Revision-Date: 2017-07-03 13:02+0300\n"
 "Last-Translator: shmuel naaman <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 2.0.2\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -96,35 +96,42 @@ msgid "Error in appModule %s"
 msgstr "שגיאת תכנות ב %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "כותרת"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "מוסף"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
 msgstr "מידע תוכן"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "ראשי"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "ניווט"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "חיפוש"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "טופס"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "איזור"
 
@@ -436,7 +443,7 @@ msgstr "מראתית שיטת ברייל 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Belgium)"
-msgstr "הולנדית (בלגיה"
+msgstr "הולנדית (בלגיה)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -688,6 +695,46 @@ msgstr "clk"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "באנר"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "משלים"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "תוכן"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "ראשי"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "נווט"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "חפש"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "טופס"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "איזור"
+
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
 msgstr "נקודות 7-8"
@@ -795,7 +842,7 @@ msgid ""
 "keys are passed to the application"
 msgstr ""
 "מיתוג ניווט לפי תו בודד במצב \"פעיל\", לחיצה על תו מעבירה את הפוקוס לרכיב "
-"הקרוב המסומל בתו זה. במצב \"לא פעיל\", התו מועבר ליישום."
+"הקרוב המסומל בתו זה. במצב \"לא פעיל\", התו מועבר ליישום"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -968,7 +1015,7 @@ msgstr "מעבר לקישור הקודם שהופעל"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "אין קישור קודם שהופעל "
+msgstr "אין קישור קודם שהופעל"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
@@ -1242,6 +1289,22 @@ msgstr "מעבר להערת ההסבר הקודמת"
 msgid "no previous annotation"
 msgstr "אין הערת הסבר קודמת"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "מעבר לשגיאה הבאה"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "אין שגיאה נוספת"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "מעבר לשגיאה הקודמת"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "אין שגיאה קודמת"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1287,10 +1350,14 @@ msgstr "&הפעל"
 msgid "&Move to"
 msgstr "&עבור ל"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
 msgstr "%s ציון דרך"
+
+#. Translators: This is brailled to indicate a landmark (example output: lmk main).
+#, python-format
+msgid "lmk %s"
+msgstr "סמן %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #. Translators: Announces selected text. %s is replaced with the text.
@@ -1304,7 +1371,7 @@ msgstr "ללא תיאור ארוך"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 msgid "Shows the long description at this position if one is found."
-msgstr "הצג את ה&תיאור הארוך במקום זה, אם יש כזה"
+msgstr "הצג את ה&תיאור הארוך במקום זה, אם יש כזה."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
@@ -1515,7 +1582,7 @@ msgstr "ורוד אדום"
 #, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
-msgstr "{color} בהיר"
+msgstr "בהיר {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
 #, python-brace-format
@@ -1527,37 +1594,37 @@ msgstr "{color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
-msgstr "{color}} כהה"
+msgstr "כהה {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
-msgstr "{color} כהה מאוד"
+msgstr "כהה מאוד {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
-msgstr "{color} חיוור בהיר"
+msgstr "חיוור בהיר {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
-msgstr "{color} חיוור"
+msgstr "חיוור {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "{color} חיוור כהה"
+msgstr "חיוור כהה {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
-msgstr "{color} חיוור כהה מאוד"
+msgstr "חיוור כהה מאוד {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
 #, python-brace-format
@@ -1757,6 +1824,10 @@ msgstr "שעון"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "מפריד"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "טופס"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -2107,7 +2178,7 @@ msgstr "מודגש"
 
 #. Translators: Describes text formatting.
 msgid "ITALIC"
-msgstr " נטוי"
+msgstr "נטוי"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2160,6 +2231,12 @@ msgstr "חוצץ"
 
 msgid "calendar"
 msgstr "לוח שנה"
+
+msgid "video"
+msgstr "וידאו"
+
+msgid "audio"
+msgstr "אודיו"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2366,7 +2443,7 @@ msgid ""
 "More details about the errors can be found in the log file."
 msgstr ""
 "קובץ ההגדרות מכיל שגיאות. שחזור להגדרות מקוריות \n"
-"N"
+"N."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -2378,7 +2455,7 @@ msgid ""
 msgstr ""
 "שגיאות בקובץ המחוות \n"
 " ניתן למצוא פירוט בקובץ הלוג\n"
-"N"
+"N."
 
 msgid "gesture map File Error"
 msgstr "שגיאה בקובץ מיפוי המחוות"
@@ -2406,7 +2483,7 @@ msgstr "התחשב באותיות &גדולות"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "הטקסט \"%s\" לא נמצא."
+msgstr "הטקסט \"%s\" לא נמצא"
 
 msgid "Find Error"
 msgstr "שגיאת חיפוש"
@@ -2453,7 +2530,7 @@ msgstr "עכבר"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Speech"
-msgstr " דיבור"
+msgstr "דיבור"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration"
@@ -2513,7 +2590,7 @@ msgid ""
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
 "מיתוג עזרה. במצב פעיל, כל לחיצה עלתו תכריז על  תוכנת העזר הקשורה ליישום "
-"שבפוקוס"
+"שבפוקוס."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -2525,7 +2602,7 @@ msgstr "מצב שינה פעיל"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "מיתוג מצב השינה עבור היישום שבפוקוס"
+msgstr "מיתוג מצב השינה עבור היישום שבפוקוס."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -2542,7 +2619,7 @@ msgstr "קליק שמאל"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "לחיצת הכפתור השמאלי של העכבר פעם אחת במקום שסמן העכבר מצביע עליו."
+msgstr "לחיצת הכפתור השמאלי של העכבר פעם אחת במקום שסמן העכבר מצביע עליו"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
@@ -2550,7 +2627,7 @@ msgstr "קליק ימין"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "לחיצת הכפתור הימני של העכבר פעם אחת במקום שסמן העכבר מצביע עליו."
+msgstr "לחיצת הכפתור הימני של העכבר פעם אחת במקום שסמן העכבר מצביע עליו"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
@@ -2590,7 +2667,7 @@ msgstr "הקראת הטקסט המסומן. אם אין כזה, מכריז על 
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr "לחיצה פעם אחת, הקראת השעה. לחיצה פעמיים, הקראת התאריך."
+msgstr "לחיצה פעם אחת, הקראת השעה. לחיצה פעמיים, הקראת התאריך"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -2598,19 +2675,19 @@ msgstr "אין הגדרות"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "הגדלת הערך של ההגדרה בטווח המיועד לכך."
+msgstr "הגדלת הערך של ההגדרה בטווח המיועד לכך"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "הקטנת הערך של ההגדרה בטווח המיועד לכך."
+msgstr "הקטנת הערך של ההגדרה בטווח המיועד לכך"
 
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr "מעבר לערך ההגדרה הבא בטווח המיועד לכך."
+msgstr "מעבר לערך ההגדרה הבא בטווח המיועד לכך"
 
 #. Translators: Input help mode message for previous synth setting command.
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "מעבר לערך ההגדרה הקודם בטווח המיועד לכך."
+msgstr "מעבר לערך ההגדרה הקודם בטווח המיועד לכך"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
@@ -3058,7 +3135,7 @@ msgstr "מעבר לאובייקט שבפוקוס"
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
-msgstr "מעבר לאובייקט שבפוקוס וקביעת הסמן לאותו מקום, אם הדבר אפשרי. "
+msgstr "מעבר לאובייקט שבפוקוס וקביעת הסמן לאותו מקום, אם הדבר אפשרי."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3080,7 +3157,7 @@ msgid ""
 "sets the system caret to the position of the review cursor"
 msgstr ""
 "לחיצה פעם אחת מעבירה את סמן המקלדת לאובייקט שבניווט. לחיצה פעמיים מעבירה את "
-"סמן המערכת לסמן הסריקה."
+"סמן המערכת לסמן הסריקה"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3130,7 +3207,7 @@ msgid ""
 "presses it if it is a button)."
 msgstr ""
 "ביצוע פעולת ברירת מחדל על האובייקט שבפוקוס. לדוגמה, אם מדובר בכפתור, הפעולה "
-"תהיה - לחיצה"
+"תהיה - לחיצה."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
@@ -3208,7 +3285,7 @@ msgid ""
 "cursor is situated. Pressing twice reports a description or example of that "
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
-msgstr "הקראת התו הנוכחי. לחיצה פעמיים,  כינוי התו בלועזית."
+msgstr "הקראת התו הנוכחי. לחיצה פעמיים,  כינוי התו בלועזית"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
 msgid "Right"
@@ -3264,7 +3341,11 @@ msgstr ""
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
-msgstr "יציאה מNVDA"
+msgstr "יציאה מNVDA!"
+
+#. Translators: Input help mode message for restart NVDA command.
+msgid "Restarts NVDA!"
+msgstr "הפעלת NVDA מחדש!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3274,13 +3355,13 @@ msgstr "פתיחת תפריט NVDA"
 msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
-msgstr "הקראה ממקום סמן הסריקה עד לסוף הטקסט, תוך כדי הזזת סמן הסריקה."
+msgstr "הקראה ממקום סמן הסריקה עד לסוף הטקסט, תוך כדי הזזת סמן הסריקה"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
 "Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
-msgstr "הקראה ממקום סמן המערכת עד לסוף הטקסט, תוך כדי הזזת סמן הסריקה."
+msgstr "הקראה ממקום סמן המערכת עד לסוף הטקסט, תוך כדי הזזת סמן הסריקה"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -3296,11 +3377,11 @@ msgid ""
 "document. If pressed twice, presents the information in browse mode"
 msgstr ""
 "מספק מידע אודות מיקום הסריקה בתוך המסמך. לחיצה פעמיים מכניסה את המידע גם "
-"לטקסט של מצב הגלישה."
+"לטקסט של מצב הגלישה"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
-msgstr "מספק מידע אודות האובייקט שבפוקוס. לחיצה פעמיים גורמת לאיות המידע."
+msgstr "מספק מידע אודות האובייקט שבפוקוס. לחיצה פעמיים גורמת לאיות המידע"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3312,7 +3393,7 @@ msgid ""
 "pressed twice, spells the information"
 msgstr ""
 "הקראת שורת המצב הנוכחית והעברת הפוקוס אליה. לחיצה פעמיים גורמת לאיות המילים "
-"בשורה."
+"בשורה"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3335,7 +3416,7 @@ msgid ""
 "Reports the title of the current application or foreground window. If "
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
-msgstr "הקראת כותרת היישום או החלון הפעיל. לחיצה פעמיים, איות המילים בכותרת."
+msgstr "הקראת כותרת היישום או החלון הפעיל. לחיצה פעמיים, איות המילים בכותרת"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Speaks the current foreground object"
@@ -3347,7 +3428,7 @@ msgid ""
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
 "רישום מידע על האובייקט שבפוקוס, כך שהמפתחים יוכלו להסיק מסקנות אודות התנהגות "
-"אובייקט זה"
+"אובייקט זה."
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
@@ -3398,7 +3479,7 @@ msgstr "תנועת סמן המקלדת תגרום לשינוי סמן הסריק
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "מיתוג הקראת השפעת סמן המקלדת על סמן הסריקה"
+msgstr "מיתוג הקראת השפעת סמן המקלדת על סמן הסריקה."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -3429,7 +3510,7 @@ msgstr "חיבור לחשמל פעיל"
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "{hours:d} שעות ו {minutes:d} דקות נותרו "
+msgstr "{hours:d} שעות ו {minutes:d} דקות נותרו"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
@@ -3443,7 +3524,7 @@ msgstr "העבר את ההקשה הבאה לתכנית שבפוקוס"
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
-msgstr "המקש הבא שיילחץ לא יטופל על ידי NVDA  אלא על ידי מערכת ההפעלה"
+msgstr "המקש הבא שיילחץ לא יטופל על ידי NVDA  אלא על ידי מערכת ההפעלה."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -3457,7 +3538,7 @@ msgstr "התכנית שבפוקוס היא %s"
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " and currently loaded module is %s"
-msgstr "וההרחבה הפעילה כרגע היא %s"
+msgstr " וההרחבה הפעילה כרגע היא %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -3541,7 +3622,7 @@ msgstr "לחיצה פעם אחת, חזרה להגדרות הקודמות. לחי
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "פתיחת מסך הפקודות של פייתון. לשימוש המפתחים."
+msgstr "פתיחת מסך הפקודות של פייתון. לשימוש המפתחים"
 
 #. Translators: Input help mode message for activate manage add-ons command.
 msgid ""
@@ -3645,7 +3726,7 @@ msgstr "אין טקסט להעתקה"
 
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
-msgstr "לא ניתן לסמן את הטקסט. לחיצה פעמיים תגרום להעתקה."
+msgstr "לא ניתן לסמן את הטקסט. לחיצה פעמיים תגרום להעתקה"
 
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
@@ -3662,7 +3743,7 @@ msgid ""
 "twice, the text is copied to the clipboard"
 msgstr ""
 "לחיצה פעם אחת תגרום לסימון הטקסט שבין מיקום סמן הסריקה הקודם למיקומו הנוכחי. "
-"לחיצה פעמיים תגרום להעתקת הטקסט לזיכרון הזמני."
+"לחיצה פעמיים תגרום להעתקת הטקסט לזיכרון הזמני"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -3691,7 +3772,7 @@ msgstr "קלט נקודות ברייל באמצעות מקלדת הברייל"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the current focus"
-msgstr "העברת צג הברייל לפוקוס הנוכחי."
+msgstr "העברת צג הברייל לפוקוס הנוכחי"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -3703,7 +3784,7 @@ msgid ""
 "Useful for developers"
 msgstr ""
 "טעינת תוכנות עזר ותוספים מחדש מבלי להפעיל את NVDA מחדש. הדבר יכול להועיל "
-"למפתחים."
+"למפתחים"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -3720,7 +3801,7 @@ msgstr "מעבר לאובייקט הקודם בפריסה שטוחה של התצ
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
-msgstr "%s מצב "
+msgstr "%s מצב"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Cycles between available touch modes"
@@ -4063,35 +4144,35 @@ msgstr "insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
-msgstr "Control שמאל"
+msgstr "control שמאלי"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right control"
-msgstr " Control ימין"
+msgstr "control ימין"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left windows"
-msgstr "Windows שמאל"
+msgstr "windows שמאל"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left shift"
-msgstr "Shift שמאל"
+msgstr "shift שמאל"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right shift"
-msgstr "Shift ימין"
+msgstr "shift ימין"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left alt"
-msgstr " Alt שמאל"
+msgstr "alt שמאל"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right alt"
-msgstr "Alt ימין"
+msgstr "alt ימין"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right windows"
-msgstr "Windows ימין"
+msgstr "windows ימין"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "break"
@@ -4159,7 +4240,7 @@ msgstr "נפאלית"
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Serbian (Latin)"
-msgstr "סרבית לטינית"
+msgstr "סרבית (לטינית)"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -4170,14 +4251,1077 @@ msgstr "ברירת מחדל"
 msgid "%s cursor"
 msgstr "סמן %s"
 
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "10-point star"
+msgstr "כוכב עם 10 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "12-point star"
+msgstr "כוכב עם 12 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "16-point star"
+msgstr "כוכב עם 16 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "24-point star"
+msgstr "כוכב עם 24 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "32-point star"
+msgstr "כוכב עם 32 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "4-point star"
+msgstr "כוכב עם 4 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "5-point star"
+msgstr "כוכב עם 5 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "6-point star"
+msgstr "כוכב עם 6 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "7-point star"
+msgstr "כוכב עם 7 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "8-point star"
+msgstr "כוכב עם 8 נקודות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arc"
+msgstr "קשת"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Balloon"
+msgstr "בלון עזרה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent arrow"
+msgstr "חץ מכופף"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent Up Arrow"
+msgstr "חץ מכופף כלפי מעלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bevel"
+msgstr "שִׁפּוּעַ"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Block arc"
+msgstr "קשת חסומה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Can"
+msgstr "פחית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Plus symbol"
+msgstr "סמל תרשים פלוס"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Star Symbol"
+msgstr "סמל תרשים כוכב"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart X Symbol"
+msgstr "סמל תרשים X"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chevron"
+msgstr "שברון"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circle with line through center"
+msgstr "מעגל עם קו דרך מרכז"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circular Arrow"
+msgstr "חץ מעוגל"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud shape"
+msgstr "&צורת הסמן"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud callout"
+msgstr "ענן הסבר"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Corner"
+msgstr "פינות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "four snipped corners"
+msgstr "ארבע פינות חתוכות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cross"
+msgstr "קו חוצה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cube"
+msgstr "קוביה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Down Arrow"
+msgstr "חץ למטה מעוקל"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon banner"
+msgstr "סרט כרזה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Left Arrow"
+msgstr "חץ שמאלה מעוקל"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Right Arrow"
+msgstr "חץ ימני מעוקל"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Arrow"
+msgstr "חץ מעוקל למעלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Ribbon banner"
+msgstr "חץ מעוקל למעלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decagon"
+msgstr "דקאגון"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diagonal stripe"
+msgstr "פס אלכסוני"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diamond"
+msgstr "יהלום"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Dodecagon"
+msgstr "דודקגון"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Donut"
+msgstr "צורת טבעת"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double brace"
+msgstr "גל כפול"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double bracket"
+msgstr "סוגר כפול"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double wave"
+msgstr "גל כפול"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Down Arrow"
+msgstr "חץ מטה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Down Arrow"
+msgstr "הסבר עם חץ מטה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Explosion"
+msgstr "פיצוץ"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Alternate process flowchart symbol"
+msgstr "סמל תרשים זרימה חלופי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Card flowchart symbol"
+msgstr "סמל תרשים זרימה כרטיס"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Collate flowchart symbol"
+msgstr "סמל תרשים זרימה איסוף"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Connector flowchart symbol"
+msgstr "סמל תרשים זרימה מחבר"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Data flowchart symbol"
+msgstr "סמל תרשים זרימה של נתונים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decision flowchart symbol"
+msgstr "סמל תרשים זרימת ההחלטות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Delay flowchart symbol"
+msgstr "סמל תרשים זרימה השהיה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Direct access storage flowchart symbol"
+msgstr "סמל תרשים זרימה גישה ישירה לנתונים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Display flowchart symbol"
+msgstr "סמל תרשים זרימה הצג"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Document flowchart symbol"
+msgstr "סמל תרשים זרימה מסמכים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Extract flowchart symbol"
+msgstr "סמל תרשים זרימה חלץ"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Internal storage flowchart symbol"
+msgstr "סמל תרשים זרימה פנימי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Magnetic disk flowchart symbol"
+msgstr "סמל תרשים זרימה מגנטית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual input flowchart symbol"
+msgstr "סמל תרשים זרימה ידנית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual operation flowchart symbol"
+msgstr "סמל תרשים זרימה ידנית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Merge flowchart symbol"
+msgstr "סמל תרשים זרימה מיזוג"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Multi-document flowchart symbol"
+msgstr "סמל תרשים זרימה מרובה מסמכים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Offline storage flowchart symbol"
+msgstr "סמל תרשים זרימה לא מקוון"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Off-page connector flowchart symbol"
+msgstr "סמל תרשים זרימה מחבר מחוץ לדף"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'Or' flowchart symbol"
+msgstr "סמל תרשים זרימה או"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Predefined process flowchart symbol"
+msgstr "סמל תרשים זרימה תהליך מוגדר מראש"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Preparation flowchart symbol"
+msgstr "סמל תרשים זרימה הכנה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Process flowchart symbol"
+msgstr "סמל תרשים זרימת תהליך"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Punched tape flowchart symbol"
+msgstr "סמל תרשים זרימה סרט מנוקב"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sequential access storage flowchart symbol"
+msgstr "סמל תרשים זרימה של אחסון גישה עוקבת"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sort flowchart symbol"
+msgstr "סמל תרשים זרימה מיון"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Stored data flowchart symbol"
+msgstr "סמל תרשים זרימה אחסון נתונים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Summing junction flowchart symbol"
+msgstr "סמל תרשים זרימה צומת מסכם"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Terminator flowchart symbol"
+msgstr "סמל תרשים זרימה Terminator"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Folded corner"
+msgstr "פינה מקופלת"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular picture frame"
+msgstr "מסגרת תמונה מלבנית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Funnel"
+msgstr "מַשׁפֵּך"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with six teeth"
+msgstr "גלגל שיניים עם שש שיניים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with nine teeth"
+msgstr "גלגל שיניים עם תשע שיניים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Half of rectangular picture frame"
+msgstr "מחצית מסגרת תמונה מלבנית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heart"
+msgstr "לב"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heptagon"
+msgstr "מצולע בעל שבע צלעות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Hexagon"
+msgstr "מְשׁוּשֶׁה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Horizontal scroll"
+msgstr "גלילה אופקית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Isosceles triangle"
+msgstr "משולש שווה שוקיים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left Arrow"
+msgstr "חץ שמאלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Left Arrow"
+msgstr "הסבר עם חץ שמאלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left brace"
+msgstr "סוגר מסולסל שמאלי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left bracket"
+msgstr "סוגר שמאלי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Counter-clockwise Circular arrow"
+msgstr "חץ עגול נגד כיוון השעון"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended horizontal Arrow"
+msgstr "חץ אופקי כפול"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Double-ended horizontal Arrow"
+msgstr "הסבר עם חץ אופקי לסיום כפול"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Circular arrow"
+msgstr "חץ עגול כפול"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon with left and right arrows"
+msgstr "רצועת הכלים עם החצים שמאלה וימינה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left right and up Arrows"
+msgstr "חיצים שמאלה ימינה ולמעלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left and up Arrows"
+msgstr "חיצים שמאלה ולמעלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Lightning bolt"
+msgstr "ברק"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line Callout"
+msgstr "קו הסבר"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal accent bar"
+msgstr "הסבר עם סרגל מבטא אופקי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border and horizontal accent bar"
+msgstr "הסבר עם גבול וסרגל כלים אופקי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal line"
+msgstr "הסבר עם קו אופקי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal straight line"
+msgstr "הסבר עם קו ישר אלכסוני"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal callout line and accent bar"
+msgstr "הסבר עם קו הסבר אלכסוני וסרגל כלים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, diagonal straight line and accent bar"
+msgstr "הסבר עם הגבול, קו ישר אלכסוני וסרגל מודגש"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and diagonal callout line"
+msgstr "הסבר ללא גבול וללא קו הסבר אלכסוני"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled line"
+msgstr "הסבר עם קו זוויתי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled callout line and accent bar"
+msgstr "הסבר עם קו הסבר זוויתי וסרגל כלים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, angled callout line, and accent bar"
+msgstr "הסבר עם גבול, קו הסבר זוויתי, וסרגל מודגש"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and angled callout line"
+msgstr "הסבר ללא גבול וקו הסבר זוויתי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with callout line segments forming a U-shape"
+msgstr "הסבר עם פלחי קו ההסבר ויוצרים צורת U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with accent bar and callout line segments forming a U-shape"
+msgstr "הסבר עם סרגל מודגש וקטעי שורת הסבר הסברים בצורת U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid ""
+"Callout with border, accent bar, and callout line segments forming a U-shape"
+msgstr "הסבר עם גבול, סרגל מודגש, וכן מקטעי קו הסבר ליצירת צורת U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and callout line segments forming a U-shape"
+msgstr "הסבר ללא גבול וקטעי שורת הסברים בצורת U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line inverse"
+msgstr "קו הפוך"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Division symbol"
+msgstr "סמל חלוקה מתמטי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Equivalence symbol"
+msgstr "סמל שוויון מתמטי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Subtraction symbol"
+msgstr "סמל חיסור מתמטי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Multiplication symbol"
+msgstr "סמל כפל מתמטי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Non-equivalence symbol"
+msgstr "סמל אי-שיוון מתמטי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Addition symbol"
+msgstr "סמל הוספה מתמטי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Moon"
+msgstr "ירח"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid with asymmetrical non-parallel sides"
+msgstr "טרפז עם צדדים אסימטריים לא מקבילים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'No' symbol"
+msgstr "סמל לא"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Notched RightArrow"
+msgstr "חץ ימני מחורץ"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Octagon"
+msgstr "מְתוּמָן"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval"
+msgstr "עגלגל"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval-shaped callout"
+msgstr "הסבר בצורת אליפסה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Parallelogram"
+msgstr "מַקבִּילִית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Pentagon"
+msgstr "מְחוּמָשׁ"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Incomplete Pie with wedge missing"
+msgstr "פאי שלם עם טריז חסר"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Quarter Pie Wedge"
+msgstr "רבע פאי"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque"
+msgstr "כרטיסיה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque Tabs"
+msgstr "כרטיסיות"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arrows pointing left right up and down"
+msgstr "חצים מצביעים ימינה שמאלה ומטה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Arrows pointing left right up and down"
+msgstr "הסבר עם חצי הצבעה שמאלה ימינה ומטה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle"
+msgstr "מַלבֵּן"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular callout"
+msgstr "הסברים מלבניים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow"
+msgstr "חץ ימינה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Right Arrow"
+msgstr "הסבר עם חץ ימינה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right brace"
+msgstr "סוגר ימיני"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right bracket"
+msgstr "סוגר ימין"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right triangle"
+msgstr "משולש ישר זווית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one rounded corner"
+msgstr "מלבן עם פינה מעוגלת אחת"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two rounded corners diagonally-opposed"
+msgstr "מלבן עם שתי פינות מעוגלות הופכיות באלכסון"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two-rounded corners that share a side"
+msgstr "מלבן עם פינות מעוגלות שמשותפות בצד"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle"
+msgstr "מלבן מעוגל"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle-shaped callout"
+msgstr "הסבר מלבן בצורה מעוגלת"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Smiley face"
+msgstr "פרצוף מחייך"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner"
+msgstr "מלבן עם פינה אחת מקוטעת"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners diagonally-opposed"
+msgstr "מלבן עם שתי פינות מקוטעות באלכסון"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners that share a side"
+msgstr "מלבן עם שתי פינות קטועות שמשותפות בצד"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner and one rounded corner"
+msgstr "מלבן עם פינה אחת מקוטעת ופינה אחת מעוגלת"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Four small squares that define a rectangular shape"
+msgstr "ארבעה ריבועים קטנים המגדירים צורה מלבנית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow with Stripes"
+msgstr "חץ ימני עם פסים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sun"
+msgstr "שמש"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved arrow"
+msgstr "חץ מעוקל"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Water droplet"
+msgstr "טיפת מים"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid"
+msgstr "טרפז"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Up Arrow"
+msgstr "חץ מעלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with UpArrow"
+msgstr "הסבר עם חץ למעלה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Arrow pointing up and down"
+msgstr "חץ המצביע מעלה ומטה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with arrows that point up and down"
+msgstr "הסבר עם חצים המצביעים למעלה ולמטה"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "U-shaped Arrow"
+msgstr "חץ בצורת U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Vertical scroll"
+msgstr "גלילה אנכית"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Wave"
+msgstr "גַל"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Back"
+msgstr "חזור"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Beginning"
+msgstr "התחלה"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Document"
+msgstr "מסמך"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "End"
+msgstr "סוף"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Next"
+msgstr "הַבָּא"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Help"
+msgstr "עזרה"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Home"
+msgstr "בית"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Information"
+msgstr "מידע על התוסף"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Movie"
+msgstr "סרט"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Return"
+msgstr "לַחֲזוֹר"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Sound"
+msgstr "צליל"
+
 #. Translators: The description of the NVDA service.
 msgid ""
 "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
 "screens."
-msgstr "הפעל את NVDA בעליית המחשב ובמצב בטוח"
+msgstr "הפעל את NVDA בעליית המחשב ובמצב בטוח."
 
 msgid "Type help(object) to get help about object."
-msgstr "הקש help ואת שם האובייקט בסוגריים כדי לקבל עזרה בשימוש האובייקט"
+msgstr "הקש help ואת שם האובייקט בסוגריים כדי לקבל עזרה בשימוש האובייקט."
 
 msgid "Type exit() to exit the console"
 msgstr "הקש exit () כדי לצאת"
@@ -4307,7 +5451,7 @@ msgstr "עמודה {0} מתוך {1}"
 #. %s will be replaced with the number of text columns.
 #, python-format
 msgid "%s columns"
-msgstr " %s עמודות"
+msgstr "%s עמודות"
 
 msgid "continuous section break"
 msgstr "מעבר בתוך מקטע רציף"
@@ -4373,7 +5517,7 @@ msgstr "{color}"
 #. {backgroundColor} will be replaced with the background color.
 #, python-brace-format
 msgid "{backgroundColor} background"
-msgstr "על  רקע {backgroundColor}"
+msgstr "{backgroundColor} על  רקע"
 
 #, python-brace-format
 msgid "background pattern {pattern}"
@@ -4441,7 +5585,7 @@ msgstr "לא מודגש"
 
 #. Translators: Reported when text is italicized.
 msgid "italic"
-msgstr " נטוי"
+msgstr "נטוי"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
@@ -4666,27 +5810,27 @@ msgstr "הצגה לפי אובייקטים"
 #. Translators: a touch screen action performed once
 #, python-brace-format
 msgid "single {action}"
-msgstr "{action} פעם אחת"
+msgstr "פעם אחת {action}"
 
 #. Translators: a touch screen action performed twice
 #, python-brace-format
 msgid "double {action}"
-msgstr "{action} פעמיים"
+msgstr "פעמיים {action}"
 
 #. Translators: a touch screen action performed 3 times
 #, python-brace-format
 msgid "tripple {action}"
-msgstr "{action} שלוש פעמים"
+msgstr "שלוש פעמים {action}"
 
 #. Translators: a touch screen action performed 4 times
 #, python-brace-format
 msgid "quadruple {action}"
-msgstr "{action} ארבע פעמים"
+msgstr "ארבע פעמים {action}"
 
 #. Translators: a touch screen action using multiple fingers
 #, python-brace-format
 msgid "{numFingers} finger {action}"
-msgstr "{action} בעזרת  {numFingers} finger  אצבעות"
+msgstr "{action} בעזרת אצבעות {numFingers}"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 msgctxt "touch action"
@@ -4752,7 +5896,7 @@ msgstr "בדיקת עדכון"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
-msgstr "שגיאה בעת בדיקת עדכון"
+msgstr "שגיאה בעת בדיקת עדכון."
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
@@ -4768,11 +5912,11 @@ msgstr "עדכון NVDA זמין"
 #. {version} will be replaced with the version; e.g. 2011.3.
 #, python-brace-format
 msgid "NVDA version {version} is available."
-msgstr "גרסה {version} של NVDA זמינה"
+msgstr "גרסה {version} של NVDA זמינה."
 
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
-msgstr "אין עדכון זמין"
+msgstr "אין עדכון זמין."
 
 #. Translators: The label of a button to download and install an NVDA update.
 msgid "Download and &install update"
@@ -4794,24 +5938,24 @@ msgstr "&סגור"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
-msgstr "העדכון בהורדה ..."
+msgstr "העדכון בהורדה"
 
 #. Translators: The progress message indicating that a connection is being established.
 msgid "Connecting"
-msgstr "מתחבר ..."
+msgstr "מתחבר"
 
 #. Translators: The progress message indicating that a download is in progress.
 msgid "Downloading"
-msgstr "מוריד ..."
+msgstr "מוריד"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
-msgstr "שגיאה בעת הורדת העדכון"
+msgstr "שגיאה בעת הורדת העדכון."
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
 msgid "Update downloaded. It will now be installed."
-msgstr "העדכון הורד בהצלחה ויותקן עתה"
+msgstr "העדכון הורד בהצלחה ויותקן עתה."
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
 msgid "Install Update"
@@ -4835,7 +5979,7 @@ msgstr ""
 
 #. Translators: The title of the dialog requesting donations from users.
 msgid "Please Donate"
-msgstr "אנא תרום לנו."
+msgstr "אנא תרום לנו"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
@@ -4924,7 +6068,7 @@ msgid ""
 msgstr ""
 "גבולות האובייקט ממוקמים כדילהלן :  {left:.1f}  באחוזים מהקצה השמאלי של "
 "המסך,  {top:.1f}  מהקצה העליון של המסך,  ברוחב {width:.1f}  באחוזים מרוחב "
-"המסך,  ובגובה {height:.1f}  באחוזים מגובה המסך."
+"המסך,  ובגובה {height:.1f}  באחוזים מגובה המסך"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -4952,6 +6096,10 @@ msgstr "העברת סמן הניווט והפוקוס לשורה הבאה"
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "העברת סמן הניווט והפוקוס לשורה הקודמת"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "הצעות"
+
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "תבנית"
@@ -4970,7 +6118,7 @@ msgstr "התחלה"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
-msgstr "אין קטע המתנגן כרגע."
+msgstr "אין קטע המתנגן כרגע"
 
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -5032,19 +6180,19 @@ msgstr "מצורפים קבצים"
 
 #. Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
 msgid "To:"
-msgstr "אל: "
+msgstr "אל:"
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 msgid "Newsgroup:"
-msgstr "קבוצת חדשות"
+msgstr "קבוצת חדשות:"
 
 #. Translators: This is presented in outlook or live mail, email carbon copy
 msgid "CC:"
-msgstr "עותק: "
+msgstr "עותק:"
 
 #. Translators: This is presented in outlook or live mail, email subject
 msgid "Subject:"
-msgstr "נושא: "
+msgstr "נושא:"
 
 #. Translators: This is presented in outlook or live mail, email sender
 msgid "From:"
@@ -5052,27 +6200,27 @@ msgstr "מאת:"
 
 #. Translators: This is presented in outlook or live mail, date of email
 msgid "Date:"
-msgstr "תאריך: "
+msgstr "תאריך:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Forward to:"
-msgstr "העבר אל: "
+msgstr "העבר אל:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Answer to:"
-msgstr "ענה אל: "
+msgstr "ענה אל:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Organisation:"
-msgstr "ארגון"
+msgstr "ארגון:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Distribution:"
-msgstr "הפצה"
+msgstr "הפצה:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Key words:"
-msgstr "מילות מפתח"
+msgstr "מילות מפתח:"
 
 #. Translators: This is presented in outlook or live mail, email blind carbon copy
 msgid "BCC:"
@@ -5082,6 +6230,36 @@ msgstr "עותק מוסתר:"
 #. Translators: when an email is unread
 msgid "unread"
 msgstr "לא נקרא"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "purple flag"
+msgstr "דגל סגול"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Orange flag"
+msgstr "דגל כתום"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Green flag"
+msgstr "דגל ירוק"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Yellow flag"
+msgstr "דגל צהוב"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Blue flag"
+msgstr "דגל כחול"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Red flag"
+msgstr "דגל אדום"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -5112,7 +6290,7 @@ msgstr "נשלח %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
-msgstr "ממתין לOutlook"
+msgstr "ממתין לOutlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -5135,12 +6313,12 @@ msgstr "דרישה לקביעת פגישה"
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr "אין הערות למתרגמים"
+msgstr "אין הערות למתרגמים."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "חלון ההערות למתרגמים לא נמצא"
+msgstr "חלון ההערות למתרגמים לא נמצא."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
@@ -5149,13 +6327,13 @@ msgstr "דיווח הערות למתרגמים"
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 msgid "Could not find comment window."
-msgstr "חלון ההערות לא נמצא"
+msgstr "חלון ההערות לא נמצא."
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
 msgid "No comment."
-msgstr "אין הערות"
+msgstr "אין הערות."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
@@ -5286,6 +6464,10 @@ msgstr "תמונות ממוזערות"
 msgid "Slide {slideNumber}"
 msgstr "שקופית מספר {slideNumber}"
 
+#. Translators:   an unlabelled item in Powerpoint another shape is overlapping
+msgid "other item"
+msgstr "פריט אחר"
+
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5409,7 +6591,7 @@ msgstr "שקופית ריקה"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
-msgstr "ממתין לתוכנת  Power Point"
+msgstr "ממתין לתוכנת  Power Point..."
 
 #. Translators: The name of the NVDA command category for Skype specific commands.
 msgid "Skype"
@@ -5498,7 +6680,7 @@ msgstr "&צגי ברייל של  EcoBraille"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
-msgstr "סדרת Focus/Pac Mate של Freedom Scientific "
+msgstr "סדרת Focus/Pac Mate של Freedom Scientific"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 msgid "display scroll"
@@ -5525,7 +6707,7 @@ msgstr "ללא ברייל"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
-msgstr "דגמים חדישים של Papenmeier BRAILLEX "
+msgstr "דגמים חדישים של Papenmeier BRAILLEX"
 
 #. Translators: Describes action of routing buttons on a braille display.
 msgid "Route to and report formatting"
@@ -5533,7 +6715,7 @@ msgstr "ניווט אל עיצוב המסמך והקראתו"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
-msgstr "דגמים ישנים של Papenmeier BRAILLEX "
+msgstr "דגמים ישנים של Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
@@ -5558,7 +6740,7 @@ msgstr "ההגדרות נשמרו"
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
-"אין אפשרות לשמור את ההגדרות. ייתכן כי תיקיית הקבצים נמצאת במצב לקריאה  בלבד."
+"אין אפשרות לשמור את ההגדרות. ייתכן כי תיקיית הקבצים נמצאת במצב לקריאה  בלבד"
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
@@ -5590,14 +6772,14 @@ msgstr "הגדרות כלליות"
 
 #. Translators: The label for the menu item to open Synthesizer settings dialog.
 msgid "&Synthesizer..."
-msgstr "&מנוע דיבור"
+msgstr "&מנוע דיבור..."
 
 msgid "Change the synthesizer to be used"
 msgstr "החלפת מנוע הדיבור"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "הגדרות קול"
+msgstr "הגדרות קול..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "בחירת הקול, המהירות, הגובה ואת העוצמה"
@@ -5624,14 +6806,14 @@ msgstr "אופן הקראת צורות העכבר והאובייקטים שבפ�
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
-msgstr "סמן &סקירה"
+msgstr "סמן &סקירה..."
 
 msgid "Configure how and when the review cursor moves"
 msgstr "הגדרות הקראת תנועות סמן הסריקה"
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
-msgstr "הגדרות שיטות ה&קלט"
+msgstr "הגדרות שיטות ה&קלט..."
 
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
@@ -5640,21 +6822,21 @@ msgstr "הגדרות תבנית הקראת הקלט והבחירה עבור הש
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
-msgstr "הצגת ה&אובייקטים"
+msgstr "הצגת ה&אובייקטים..."
 
 msgid "Change reporting of objects"
 msgstr "מאפשר שינוי הגדרות עבור הצגת האובייקטים השונים"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
-msgstr "מצב &גלישה"
+msgstr "מצב &גלישה..."
 
 msgid "Change virtual buffers specific settings"
 msgstr "מאפשר שינוי הגדרות מיוחדות של תבנית ההקראה"
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
-msgstr "&עיצוב מסמך"
+msgstr "&עיצוב מסמך..."
 
 msgid "Change settings of document properties"
 msgstr "מאפשר שינוי הגדרות מאפייני מסמך"
@@ -5694,11 +6876,11 @@ msgstr "מילוני דיבור"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "הקראת &פיסוק וסמלים"
+msgstr "הקראת &פיסוק וסמלים..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "מחוות &קלט"
+msgstr "מחוות &קלט..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -5722,11 +6904,11 @@ msgstr "ניהול הרחבות..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
-msgstr "יצירת עותק נייד"
+msgstr "יצירת עותק נייד..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
-msgstr "התקנת NVDA"
+msgstr "התקנת NVDA..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -5765,7 +6947,7 @@ msgstr "מסך הפתיחה..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "&בדיקת עדכונים"
+msgstr "&בדיקת עדכונים..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
@@ -5777,7 +6959,7 @@ msgstr "עזרה"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "&פרופילים"
+msgstr "&פרופילים..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -5815,12 +6997,12 @@ msgstr "יציאה מNVDA"
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
+"By default, the numpad Insert and main Insert keys may both be used as the "
 "NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"functions."
 msgstr ""
 "ברוכים הבאים לNVDA\n"
 "רוב הפקודות לעבודה עם NVDA דורשות לחיצה על מקש NVDA בצירוף מקשים אחרים.\n"
@@ -5828,8 +7010,7 @@ msgstr ""
 "מקש הNVDA.\n"
 "ניתן להגדיר גם את מקש Caps Lock כמקש NVDA.\n"
 "לחץ על NVDA+N בכל עת כדי לפתוח את תפריט NVDA.\n"
-"בתפריט זה תוכל לקבוע את הגדרות NVDA ולקבל עזרה ומידע בכל הקשור לשימוש "
-"בתוכנה.\n"
+"בתפריט זה תוכל לקבוע את הגדרות NVDA ולקבל עזרה ומידע בכל הקשור לשימוש בתוכנה."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -5838,24 +7019,29 @@ msgstr "ברוכים הבאים לNVDA"
 #. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
 #. bold lettering
 msgid "Welcome to NVDA!"
-msgstr "ברוכים הבאים לNVDA"
+msgstr "ברוכים הבאים לNVDA!"
 
 msgid "Options"
 msgstr "אפשרויות"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: The label of a combobox in the Welcome dialog.
+#. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "השתמש בCaps Lock כמקש NVDA"
+msgid "&Keyboard layout:"
+msgstr "&פריסת מקלדת:"
 
-#. Translators: The label of a check box in the Welcome dialog.
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "&השתמש בCaps Lock כמקש NVDA"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "הפעל את NVDA  אוטומטית עם עליית המחשב"
 
-#. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
-msgid "Show this dialog when NVDA starts"
-msgstr "הצג תיבת דו-שיח זו בעת הפעלת NVDA"
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "&הצג תיבת דו-שיח זו בעת הפעלת NVDA"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -5890,7 +7076,7 @@ msgstr "איזו פעולה ברצונך לעשות ?"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Exit"
-msgstr "יציאה "
+msgstr "יציאה"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart"
@@ -5906,7 +7092,7 @@ msgstr "הפעלה מחדש במצב כתיבת לוגים של בדיקה"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
-msgstr "נא להמתין ..."
+msgstr "נא להמתין"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -5915,7 +7101,7 @@ msgstr "מנהל התוספים"
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
 msgid ""
 "All add-ons are currently disabled. To enable add-ons you must restart NVDA."
-msgstr "פעולת כל התוספים בוטלה. כדי לאפשר אותם, עליך לאתחל את NVDA"
+msgstr "פעולת כל התוספים בוטלה. כדי לאפשר אותם, עליך לאתחל את NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5939,7 +7125,7 @@ msgstr "מחבר"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "&אודות... התוסף"
+msgstr "&אודות התוסף..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
@@ -5951,7 +7137,7 @@ msgstr "ביטול פעולת התוסף"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
-msgstr "&מותקנים"
+msgstr "&מותקנים..."
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -5978,7 +7164,7 @@ msgstr "חבילת תוספים של NVDA  (*.{ext})"
 msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
-msgstr "פתיחת חבילת התוסף %s נכשלה.  ייתכן כי הקובץ חסר או פגום."
+msgstr "פתיחת חבילת התוסף %s נכשלה.  ייתכן כי הקובץ חסר או פגום"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
@@ -6009,7 +7195,7 @@ msgstr "התקנת התוסף בביצוע"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
-msgstr "נא להמתין בעת התקנת התוסף"
+msgstr "נא להמתין בעת התקנת התוסף."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
@@ -6056,7 +7242,7 @@ msgstr "הפעלת התוסף"
 msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
-msgstr "פעולת התוספים שונתה. עליך להריץ את NVDA כדי שהשינויים יחולו."
+msgstr "פעולת התוספים שונתה. עליך להריץ את NVDA כדי שהשינויים יחולו?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6104,7 +7290,7 @@ msgstr "&מחיקה"
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "&מפעילים"
+msgstr "&מפעילים..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
@@ -6113,7 +7299,7 @@ msgstr "&ביטול  זמני של כל המפעילים"
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "תצורה רגילה"
+msgstr "(תצורה רגילה)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
@@ -6132,7 +7318,7 @@ msgstr "מפעיל"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 msgid "Error activating profile."
-msgstr "שגיאה בעת הפעלת פרופיל"
+msgstr "שגיאה בעת הפעלת פרופיל."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "This profile will be permanently deleted. This action cannot be undone."
@@ -6144,7 +7330,7 @@ msgstr "אישור מחיקה"
 
 #. Translators: An error displayed when deleting a configuration profile fails.
 msgid "Error deleting profile."
-msgstr "שגיאה בעת מחיקת הפרופיל"
+msgstr "שגיאה בעת מחיקת הפרופיל."
 
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
@@ -6158,7 +7344,7 @@ msgstr "הפעלה ידנית"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
 msgid "New name:"
-msgstr "שם חדש"
+msgstr "שם חדש:"
 
 #. Translators: The title of the dialog to rename a configuration profile.
 msgid "Rename Profile"
@@ -6171,13 +7357,13 @@ msgid "That profile already exists. Please choose a different name."
 msgstr "קיים פרופיל בשם זה. נא לבחור בשם אחר."
 
 msgid "Error renaming profile."
-msgstr "שגיאה בעת שינוי שם הפרופיל"
+msgstr "שגיאה בעת שינוי שם הפרופיל."
 
 #. Translators: Displayed for the configuration profile trigger for the current application.
 #. %s is replaced by the application executable name.
 #, python-format
 msgid "Current application (%s)"
-msgstr "היישום שבפוקוס הוא %s"
+msgstr "היישום שבפוקוס הוא (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
@@ -6187,7 +7373,7 @@ msgstr "הקרא את הכל"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"שגיאה בעת שמירת נתוני הפרופיל. ייתכן כי תיקיית הקבצים נמצאת במצב לקריאה בלבד"
+"שגיאה בעת שמירת נתוני הפרופיל. ייתכן כי תיקיית הקבצים נמצאת במצב לקריאה בלבד."
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -6213,7 +7399,7 @@ msgstr "פרופיל חדש"
 
 #. Translators: The label of a field to enter the name of a new configuration profile.
 msgid "Profile name:"
-msgstr "שם הפרופיל"
+msgstr "שם הפרופיל:"
 
 #. Translators: The label of a radio button to specify that a profile will be used for manual activation
 #. in the new configuration profile dialog.
@@ -6253,7 +7439,7 @@ msgid ""
 "Do you wish to manually activate it now?"
 msgstr ""
 "על מנת לערוך את הפרופיל, תצטרך להפעיל אותו ידנית. בתום העריכה, הפעל את "
-"הפרופיל ידנית."
+"הפרופיל ידנית?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 msgid "Manual Activation"
@@ -6297,11 +7483,11 @@ msgstr "התקנת NVDA נכשלה. נא בדוק את קובץ הלוג למי�
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "התקנת NVDA  הסתיימה בהצלחה."
+msgstr "התקנת NVDA  הסתיימה בהצלחה "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "התקנת העדכון של NVDA  הסתיימה בהצלחה."
+msgstr "התקנת העדכון של NVDA  הסתיימה בהצלחה "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -6386,11 +7572,11 @@ msgstr ""
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Portable &directory:"
-msgstr "תיקיית העותק הנייד"
+msgstr "תיקיית העותק הנייד:"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
-msgstr "עיון"
+msgstr "עיון..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
@@ -6404,7 +7590,7 @@ msgstr "העתקת הגדרות המשתמש הנוכחיות"
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "נא לבחור את התיקייה שאליה תותקן הגרסה הניידת"
+msgstr "נא לבחור את התיקייה שאליה תותקן הגרסה הניידת."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -6414,15 +7600,15 @@ msgstr "כונן %s לא חוקי"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 msgid "Creating Portable Copy"
-msgstr "יצירת העותק הנייד בביצוע ..."
+msgstr "יצירת העותק הנייד בביצוע"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "אנא המתן בעת יצירת העותק הנייד של NVDA"
+msgstr "אנא המתן בעת יצירת העותק הנייד של NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
-msgstr "NVDA  נכשל בעת מחיקה או כתיבה של קובץ"
+msgstr "NVDA  נכשל בעת מחיקה או כתיבה של קובץ."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
@@ -6483,7 +7669,7 @@ msgstr "debug"
 
 #. Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 msgid "&Language (requires restart to fully take effect):"
-msgstr "שינוי השפה דורש הפעלה מחדש של התוכנה כדי לעבוד באופן מלא."
+msgstr "שינוי השפה דורש הפעלה מחדש של התוכנה כדי לעבוד באופן מלא:"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
@@ -6499,22 +7685,22 @@ msgstr "השמע צלילים בעת  כניסה ויציאה"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
-msgstr "רמת &דיווח"
+msgstr "רמת &דיווח:"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
-"הפעלת NVDA  בעת הכניסה לחלון בחירת משתמש. אפשרות זו דורשת זכויות של מנהל על "
-"התחנה."
+"הפעלת NVDA  בעת הכניסה לחלון בחירת משתמש.( אפשרות זו דורשת זכויות של מנהל על "
+"התחנה)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"השתמש בהגדרות הנוכחיות עבור מסך הפתיחה ועלייה במצב בטוח.  אפשרות זו דורשת "
-"זכויות מנהל על התחנה."
+"השתמש בהגדרות הנוכחיות עבור מסך הפתיחה ועלייה במצב בטוח. ( אפשרות זו דורשת "
+"זכויות מנהל על התחנה)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -6535,7 +7721,7 @@ msgstr "העתקת הגדרות"
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "נא להמתין בעת העתקת ההגדרות לפרופיל המערכת"
+msgstr "נא להמתין בעת העתקת ההגדרות לפרופיל המערכת."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 msgid ""
@@ -6556,7 +7742,7 @@ msgid "Successfully copied NVDA user settings"
 msgstr "הגדרות המשתמש של NVDA הועתקו בהצלחה"
 
 msgid "This change requires administrator privileges."
-msgstr "שינוי זה דורש זכויות מנהל על התחנה"
+msgstr "שינוי זה דורש זכויות מנהל על התחנה."
 
 msgid "Insufficient Privileges"
 msgstr "אין זכויות מספיקות"
@@ -6582,7 +7768,7 @@ msgstr "מנוע דיבור"
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
 msgid "&Synthesizer:"
-msgstr "&מנוע דיבור"
+msgstr "&מנוע דיבור:"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
@@ -6593,14 +7779,14 @@ msgstr "התקן &פלט:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
 msgid "Audio &ducking mode:"
-msgstr "מצב הנמכה של השמע"
+msgstr "מצב הנמכה של השמע:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "לא ניתן להפעיל את מנוע הדיבור %s"
+msgstr "לא ניתן להפעיל את מנוע הדיבור %s."
 
 msgid "Synthesizer Error"
 msgstr "שגיאת מנוע דיבור"
@@ -6612,12 +7798,12 @@ msgstr "הגדרות קול"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
-msgstr "החלפה אוטומטית של השפה, אם מנוע הדיבור תומך באפשרות זו"
+msgstr "החלפה אוטומטית של השפה, (אם מנוע הדיבור תומך באפשרות זו)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
-msgstr "החלפה אוטומטית של ניב השפה, אם מנוע הדיבור תומך באפשרות זו"
+msgstr "החלפה אוטומטית של ניב השפה, (אם מנוע הדיבור תומך באפשרות זו)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
@@ -6652,10 +7838,10 @@ msgstr "השתמש ב&איות אם מנוע הדיבור תומך באפשרו�
 msgid "Keyboard Settings"
 msgstr "הגדרות מקלדת"
 
-#. Translators: This is the label for a combobox in the
+#. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-msgid "&Keyboard layout:"
-msgstr "&פריסת מקלדת:"
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "השתמש בCaps Lock כמקש NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6714,7 +7900,7 @@ msgstr "טפל במקשי קיצור  עבור יישומים אחרים"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr "לפחות מקש אחד חייב לשמש כמקש NVDA"
+msgstr "לפחות מקש אחד חייב לשמש כמקש NVDA."
 
 #. Translators: This is the label for the mouse settings dialog.
 msgid "Mouse Settings"
@@ -6733,7 +7919,7 @@ msgstr "עקוב אחרי סמן העכבר"
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
-msgstr "מידת גודל הגופנים"
+msgstr "מידת גודל הגופנים:"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6848,7 +8034,7 @@ msgstr "הקראת מיקום האובייקטים"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "נסה לשער את  מיקום האובייקטים כשמידע זה אינו זמין."
+msgstr "נסה לשער את  מיקום האובייקטים כשמידע זה אינו זמין"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -6858,7 +8044,7 @@ msgstr "הקראת &תיאור האובייקטים"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
 msgid "Progress &bar output:"
-msgstr "פלט הקראת פסי ההתקדמות"
+msgstr "פלט הקראת פסי ההתקדמות:"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -6869,6 +8055,11 @@ msgstr "הקראת פסי ההתקדמות המופיעים ברקע"
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
 msgstr "הקראת שינויי תוכן &דינמי"
+
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "&השמע צליל כאשר יוצגו הצעות אוטומטיות"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -6927,7 +8118,7 @@ msgstr "עיצוב מסמך"
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
-msgstr "בעזרת האפשרויות להלן תוכל לשלוט בעיצוב המסמך"
+msgstr "בעזרת האפשרויות להלן תוכל לשלוט בעיצוב המסמך."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7071,7 +8262,7 @@ msgstr "צבעים וסגנונות"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
 msgid "Cell borders:"
-msgstr "גבולות תא"
+msgstr "גבולות תא:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7134,11 +8325,11 @@ msgstr "&הערה"
 
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
-msgstr "&סוג:"
+msgstr "&סוג"
 
 #. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
 msgid "A pattern is required."
-msgstr "יש למלה תבנית"
+msgstr "יש למלה תבנית."
 
 msgid "Dictionary Entry Error"
 msgstr "שגיאה במונח במילון"
@@ -7146,7 +8337,7 @@ msgstr "שגיאה במונח במילון"
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
-msgstr "שגיאה בביטוי רגיל %s"
+msgstr "שגיאה בביטוי רגיל %s ."
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7171,7 +8362,7 @@ msgstr "גודל התו"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
-msgstr "סוג:"
+msgstr "סוג"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
@@ -7197,15 +8388,15 @@ msgstr "&צג ברייל:"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
-msgstr "יציאה"
+msgstr "&יציאה:"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
-msgstr "טבלת ברייל"
+msgstr "&טבלת ברייל:"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 msgid "&Input table:"
-msgstr "טבלת קלט ברייל"
+msgstr "&טבלת קלט ברייל:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
@@ -7213,7 +8404,7 @@ msgstr "הצג את המילה שבפוקוס במבנה ברייל מורחב"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
-msgstr "סמן "
+msgstr "&סמן"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
 msgid "Blink cursor"
@@ -7221,19 +8412,23 @@ msgstr "סמן מהבהב"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "מהירות הבהוב הסמן במילישניות"
+msgstr "מהירות הבהוב הסמן (במילישניות)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
 msgstr "&צורת הסמן:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-msgid "Message timeout (sec)"
-msgstr "משך זמן ההצגה (שניות)"
+msgid "Message &timeout (sec)"
+msgstr "משך זמן &ההצגה (שניות)"
+
+#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+msgid "Show &messages indefinitely"
+msgstr "הצג &הודעות ללא הגבלת זמן"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "Braille tethered to:"
-msgstr "הצמדת הברייל ל"
+msgid "B&raille tethered to:"
+msgstr "הצמדת הברייל ל:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -7245,7 +8440,7 @@ msgstr "הימנע מפיצול מילים ככל האפשר"
 
 #, python-format
 msgid "Could not load the %s display."
-msgstr "לא ניתן לטעון את צג הברייל %s"
+msgstr "לא ניתן לטעון את צג הברייל %s ."
 
 msgid "Braille Display Error"
 msgstr "שגיאת צג ברייל"
@@ -7256,13 +8451,13 @@ msgstr "הוסף הגדרת סימן"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
 msgid "Symbol:"
-msgstr "סימן"
+msgstr "סימן:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
 #, python-format
 msgid "Symbol Pronunciation (%s)"
-msgstr "היגוי סימן %s"
+msgstr "היגוי סימן (%s)"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
@@ -7300,7 +8495,7 @@ msgstr "&הסר"
 #. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
 #, python-format
 msgid "Symbol \"%s\" is already present."
-msgstr "הסימן \"%s\" כבר מוגדר"
+msgstr "הסימן \"%s\" כבר מוגדר."
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
@@ -7320,7 +8515,7 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "בצע מחוות קלט"
+msgstr "בצע מחוות קלט:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -7334,7 +8529,7 @@ msgstr "יציאה ממצב פיענוח מתימטי"
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr "הפיענוח המתימטי אינו נתמך"
+msgstr "הפיענוח המתימטי אינו נתמך."
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -7345,6 +8540,10 @@ msgstr "ללא"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "קצב האצה"
+
+#. Translators: Description for a speech synthesizer.
+msgid "Windows OneCore voices"
+msgstr "Windows OneCore קולות"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -7572,7 +8771,7 @@ msgstr "{start} עד {end}"
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
-msgstr "לא ניתן לקבוע כותרות. נא הפוך אפשרות זו לזמינה בהגדרות מסמך."
+msgstr "לא ניתן לקבוע כותרות. נא הפוך אפשרות זו לזמינה בהגדרות מסמך"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -7582,7 +8781,7 @@ msgstr "קבע את  {address}  כההתחלת כותרות העמודות"
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Already set {address} as start of column headers"
-msgstr " {address}   כבר נקבע כהתחלת כותרות העמודות"
+msgstr "{address}   כבר נקבע כהתחלת כותרות העמודות"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -7610,7 +8809,7 @@ msgstr "קבע את  {address}  כהתחלת כותרות השורות"
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Already set {address} as start of row headers"
-msgstr " {address}  כבר נקבע ככותרת השורות"
+msgstr "{address}  כבר נקבע ככותרת השורות"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -7687,7 +8886,7 @@ msgstr "קו  אלכסוני למטה וימינה"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "horizontal borders except outside"
-msgstr "גבול אופקי חוץ מבחוץ."
+msgstr "גבול אופקי חוץ מבחוץ"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "vertical borders except outside"
@@ -7777,7 +8976,7 @@ msgstr "{desc} גבולות מימין ומשמאל"
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
 msgid "{desc} up-right and down-right diagonal lines"
-msgstr "{desc} קו אלכסוני מלמעה ימינה ומלמטה ימינה."
+msgstr "{desc} קו אלכסוני מלמעה ימינה ומלמטה ימינה"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
@@ -7972,7 +9171,7 @@ msgstr "סופגנייה"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
-msgstr "חלק סופגניה "
+msgstr "חלק סופגניה"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8107,7 +9306,7 @@ msgstr "שטח (תצוגה מלמעלה עם קוי רשת)"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
-msgstr "שטח תלת מימדי עם קוי רשת"
+msgstr "שטח תלת מימדי (עם קוי רשת)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8183,7 +9382,7 @@ msgstr "סדרה  {number} {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
-msgstr "אין סדרה מוגדרת"
+msgstr "אין סדרה מוגדרת."
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
@@ -8200,7 +9399,7 @@ msgstr "נקודת נתונים"
 
 #. Translators: A segment of a chart for charts which don't have a specific name for segments.
 msgid "item"
-msgstr "פריט "
+msgstr "פריט"
 
 #, python-brace-format
 msgid "Series color: {colorName} "
@@ -8309,7 +9508,7 @@ msgstr "הוגדל בשיעור  {incrementValue} מהנקודה  {previousIndex
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "הוקטן בשיעור {decrementValue} מהנקודה {previousIndex},"
+msgstr "הוקטן בשיעור {decrementValue} מהנקודה {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -8379,7 +9578,7 @@ msgstr "עקומה"
 
 #. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
 msgid " squared "
-msgstr "מרובע"
+msgstr " מרובע "
 
 #. Translators: Details about a chart title in Microsoft Excel.
 #, python-brace-format
@@ -8401,7 +9600,7 @@ msgstr ""
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
-msgstr "איזור גיליון"
+msgstr "איזור גיליון "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
 #, python-brace-format
@@ -8416,7 +9615,7 @@ msgstr ""
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
 msgid "Plot area "
-msgstr "איזור ציור"
+msgstr "איזור ציור "
 
 #. Translators: Indicates the legend in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
@@ -8490,11 +9689,11 @@ msgstr "הגדרת סגנון"
 
 #. Translators: a Microsoft Word revision type (moved from)
 msgid "moved from"
-msgstr "הועתק מ..."
+msgstr "הועתק מ"
 
 #. Translators: a Microsoft Word revision type (moved to)
 msgid "moved to"
-msgstr "הועתק אל..."
+msgstr "הועתק אל"
 
 #. Translators: a Microsoft Word revision type (inserted table cell)
 msgid "cell insertion"
@@ -8545,6 +9744,10 @@ msgstr "הערה: {text} מאת {author} בתאריך {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} מאת {author} בתאריך {date}"
+
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "שגיאת איות: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -8760,7 +9963,7 @@ msgstr "אין הערות"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "הקראת ההערה הקשורה לטקסט שבפוקוס"
+msgstr "הקראת ההערה הקשורה לטקסט שבפוקוס."
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
@@ -8783,6 +9986,11 @@ msgstr "לא בתוך טבלה"
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
 msgstr "&הערות הסבר"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&errors"
+msgstr "שגיאות"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
