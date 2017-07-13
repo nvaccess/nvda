@@ -18,13 +18,15 @@ Quoi de Neuf dans NVDA
 - Dans l'application Courrier de Windows 10, la suggestion sélectionnée est maintenant annoncée pour les champs à/cc, et il en va de même pour le champ de recherche des paramètres de Windows 10. (#6241)
 - Un son est maintenant émis pour indiquer l'apparition d'une suggestion dans certains champs de recherche de Windows 10 (ex : écran de démarrage, recherche de paramètres, champs à/cc de Windows 10 courrier). (#6241)
 - Mise à jour de Espeak-ng à la version 1.49.1 (#7280).
+- Annonce automatique des notifications sous Skype for Business Desktop, par exemple quand quelqu'un démarre une conversation avec vous.  (#7281)
+- Annonce automatique des notifications sous Microsoft Edge, par exemple lorsqu'un téléchargement démarre.  (#7281)
 
 
 == Changements ==
 - Un geste non affecté (script_restart) a été ajouté pour permettre de redémarrer NVDA rapidement. (#6396)
 - La configuration clavier peut maintenant être choisie dans le dialogue de bienvenue à NVDA. (#6863)
 - Le nom des repères est abrégé en Braille comme suit : (#3975)
- - "repère" : "rpr"
+ - "repère" : "rep"
  - "bannière" : "bnr"
  - "complémentaire" : "cmp"
  - "information sur le contenu" : "cinf"
@@ -33,7 +35,7 @@ Quoi de Neuf dans NVDA
  - "recherche" : "rch"
  - "formulaire" : "form"
  - "région" : "rgn"
- - Exemple : "repère navigation" devient "rpr nav"
+ - Exemple : "repère navigation" devient "rep nav"
 
 
 == Corrections de Bogues ==
@@ -45,6 +47,8 @@ Quoi de Neuf dans NVDA
 - NVDA annonce maintenant les changements de sélection pour certaines listes déroulantes de Windows 10 telles que Lecture automatique dans les Paramètres. (#6337).
 - Les informations sans objet ne sont plus annoncées quand on entre dans les dialogues de création de réunions ou rendez-vous de Microsoft Outlook. (#7216)
 - Les bips indiquant les barres de progression indéterminées (ex : dialogue de vérification des mises à jour) ne sont émis que si le suivi des barres de progression est configuré pour émettre des bips. (#6759)
+- Sous Microsoft Excel 2007 et 2003, les cellules sont de nouveau annoncées quand on se déplace avec les flèches dans une feuille de calcul. (#8243)
+- Sous Windows 10 Creators update et au-delà, on s'assure que le mode navigation est activé automatiquement quand on lit des courriels sous l'application Courrier de Windows 10. (#7289)
 
 
 == Changement pour les Développeurs ==
