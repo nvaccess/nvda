@@ -947,7 +947,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_becomeNavigatorObject(self):
 		"""Called when this object becomes the navigator object.
 		"""
-		braille.handler.handleReviewMove()
+		braille.handler.handleReviewMove(shouldAutoTether=not eventHandler.lastReviewMoveDueToFollowing)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():

@@ -26,6 +26,7 @@ import brailleDisplayDrivers
 import inputCore
 import brailleTables
 from collections import namedtuple
+import eventHandler
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -1426,6 +1427,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
+		self._tether = config.conf["braille"]["tetherTo"]
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1439,18 +1441,34 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display = None
 		_BgThread.stop()
 
+	def getTether(self):
+		return self._tether
+
 	def _get_tether(self):
-		return config.conf["braille"]["tetherTo"]
+		"""@deprecated: Use L{getTether instead."""
+		return self.getTether()
+
+	def setTether(self, tether, auto=False):
+		if auto and not self.shouldAutoTether:
+			return
+		if auto and tether == self.TETHER_REVIEW and eventHandler.lastReviewMoveDueToFollowing:
+			return
+		if not auto:
+			config.conf["braille"]["tetherTo"] = tether
+		if tether == self._tether:
+			return
+		self._tether = tether
+		self.mainBuffer.clear()
 
 	def _set_tether(self, tether):
-		if tether == config.conf["braille"]["tetherTo"]:
-			return
-		config.conf["braille"]["tetherTo"] = tether
-		self.mainBuffer.clear()
-		if tether == self.TETHER_REVIEW:
-			self.handleReviewMove()
-		else:
-			self.handleGainFocus(api.getFocusObject())
+		"""@deprecated: Use L{setTether instead."""
+		self.setTether(tether, auto=False)
+
+	def _get_isAutoTethered(self):
+		return self._tether is not config.conf["braille"]["tetherTo"]
+
+	def _get_shouldAutoTether(self):
+		return self.enabled and config.conf["braille"]["autoTether"]
 
 	def setDisplayByName(self, name, isFallback=False):
 		if not name:
@@ -1615,10 +1633,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._messageCallLater = None
 		self.update()
 
-	def handleGainFocus(self, obj):
+	def handleGainFocus(self, obj, shouldAutoTether=True):
 		if not self.enabled:
 			return
-		if self.tether != self.TETHER_FOCUS:
+		if shouldAutoTether:
+			self.setTether(self.TETHER_FOCUS, auto=True)
+		elif self._tether != self.TETHER_FOCUS:
 			return
 		self._doNewObject(itertools.chain(getFocusContextRegions(obj, oldFocusRegions=self.mainBuffer.regions), getFocusRegions(obj)))
 
@@ -1647,12 +1667,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
-	def handleCaretMove(self, obj):
+	def handleCaretMove(self, obj, shouldAutoTether=True):
 		if not self.enabled:
 			return
-		if self.tether != self.TETHER_FOCUS:
-			return
-		if not self.mainBuffer.regions:
+		if shouldAutoTether:
+			self.setTether(self.TETHER_FOCUS, auto=True)
+		elif self._tether != self.TETHER_FOCUS or not self.mainBuffer.regions:
 			return
 		region = self.mainBuffer.regions[-1]
 		if region.obj is not obj:
@@ -1717,7 +1737,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# There are some objects that require special update behavior even if they have no region.
 			# This only applies when tethered to focus, because tethering to review shows only one object at a time,
 			# which always has a braille region associated with it.
-			if self.tether != self.TETHER_FOCUS:
+			if self._tether != self.TETHER_FOCUS:
 				return
 			# Late import to avoid circular import.
 			from NVDAObjects import NVDAObject
@@ -1733,12 +1753,16 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
-	def handleReviewMove(self):
+	def handleReviewMove(self, shouldAutoTether=True):
 		if not self.enabled:
 			return
-		if self.tether != self.TETHER_REVIEW:
+		if not shouldAutoTether and self._tether != self.TETHER_REVIEW:
 			return
 		reviewPos = api.getReviewPosition()
+		#if reviewPos.obj == api.getFocusObject() and config.conf["reviewCursor"]["followFocus"]:
+			#return
+		if shouldAutoTether:
+			self.setTether(self.TETHER_REVIEW, auto=True)
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
 			self._doCursorMove(region)
@@ -1826,9 +1850,9 @@ def initialize():
 		# Braille is disabled or focus/review hasn't yet been initialised.
 		return
 	if handler.tether == handler.TETHER_FOCUS:
-		handler.handleGainFocus(api.getFocusObject())
+		handler.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
 	else:
-		handler.handleReviewMove()
+		handler.handleReviewMove(shouldAutoTether=False)
 
 def pumpAll():
 	"""Runs tasks at the end of each core cycle. For now just caret updates."""

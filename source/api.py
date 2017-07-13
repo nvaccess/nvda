@@ -177,13 +177,14 @@ def getReviewPosition():
 		globalVars.reviewPosition,globalVars.reviewPositionObj=review.getPositionForCurrentMode(obj)
 		return globalVars.reviewPosition
 
-def setReviewPosition(reviewPosition,clearNavigatorObject=True):
+def setReviewPosition(reviewPosition,clearNavigatorObject=True, isCaret=False):
 	"""Sets a TextInfo instance as the review position. if clearNavigatorObject is true, It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
 	"""
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
-	braille.handler.handleReviewMove()
+	eventHandler.lastReviewMoveDueToFollowing = isCaret
+	braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
 
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
@@ -227,6 +228,7 @@ def setNavigatorObject(obj,isFocus=False):
 		if isFocus:
 			globalVars.reviewPosition=obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
 			globalVars.reviewPositionObj=globalVars.reviewPosition
+	eventHandler.lastReviewMoveDueToFollowing = isFocus
 	eventHandler.executeEvent("becomeNavigatorObject",obj)
 
 def isTypingProtected():

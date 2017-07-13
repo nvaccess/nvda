@@ -27,6 +27,9 @@ _pendingEventCountsLock=threading.RLock()
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
 
+#: Whether the last focus or caret event changed or is about to change the review cursor due to following
+lastReviewMoveDueToFollowing = False
+
 def queueEvent(eventName,obj,**kwargs):
 	"""Queues an NVDA event to be executed.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
@@ -170,7 +173,7 @@ def doPreGainFocus(obj,sleepMode=False):
 		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
 			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
- 
+
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
 	if (not obj.treeInterceptor or not obj.treeInterceptor.isAlive or obj.treeInterceptor.shouldPrepare) and (obj==focusObject or obj in api.getFocusAncestors()):
