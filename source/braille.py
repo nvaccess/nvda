@@ -166,20 +166,20 @@ positiveStateLabels = {
 	controlTypes.STATE_HALFCHECKED: u"⣏⣸⣹",
 	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 	controlTypes.STATE_READONLY: _("ro"),
-	# Displayed in braille when an object (e.g. a tree view item) is expanded.
-	controlTypes.STATE_EXPANDED: "-",
-	# Displayed in braille when an object (e.g. a tree view item) is collapsed.
-	controlTypes.STATE_COLLAPSED: "+",
+	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+	controlTypes.STATE_EXPANDED: _("-"),
+	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+	controlTypes.STATE_COLLAPSED: _("+"),
 	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 	controlTypes.STATE_HASPOPUP: _("submnu"),
-	# Displayed in braille when a protected control or a document is encountered.
-	controlTypes.STATE_PROTECTED: "***",
+	# Translators: Displayed in braille when a protected control or a document is encountered.
+	controlTypes.STATE_PROTECTED: _("***"),
 	# Translators: Displayed in braille when a required form field is encountered.
 	controlTypes.STATE_REQUIRED: _("req"),
 	# Translators: Displayed in braille when an invalid entry has been made.
 	controlTypes.STATE_INVALID_ENTRY: _("invalid"),
-	# Displayed in braille when an object supports autocompletion.
-	controlTypes.STATE_AUTOCOMPLETE: "...",
+	# Translators: Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: _("..."),
 	# Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 	controlTypes.STATE_MULTILINE: _("mln"),
 	# Translators: Displayed in braille when an object is clickable.
