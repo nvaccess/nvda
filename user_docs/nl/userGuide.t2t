@@ -510,6 +510,7 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 - o: embedded object (ingevoegd object)
 - 1 tot en met 6: respectievelijk, kop op niveau 1, 2, 3, 4, 5 en 6.
 - a: annotatie (invoeroptie voor notities, opmerkingen e.d.).
+ - w: spelfout
 
 Gebruik de volgende toetscombinaties om naar het begin resp. het einde van containerobjecten (lijsten tabellen e.d.) te springen:
 || Naam | Toetscombinatie | Beschrijving |
@@ -610,7 +611,7 @@ Meer informatie over  Bladermodus en Snelnavigatie vindt u in de paragraaf Blade
 %kc:beginInclude
 Terwijl u in Bladermodus bent in Microsoft Word, kunt u toegang tot de Lijst met Elementen krijgen  door opNVDA+f7 te drukken.
 %kc:endInclude
-De Elementenlijst kan koppen, hyperlinks en annotaties melden met inbegrip van opmerkingen en trackwijzigingen.
+De Elementenlijst kan koppen, hyperlinks en annotaties melden met inbegrip van opmerkingen en trackwijzigingen alsmede fouten met dien verstande dat dit momenteel alleen spelfouten betreft.
 
 +++ Opmerkingen Melden +++
 %kc:beginInclude
@@ -807,7 +808,7 @@ Als er bij het laden van de synthesizer een fout optreedt, zal NVDA dit melden e
 ==== Synthesizer ====
 Hiermee kiest u de synthesizer die door NVDA moet worden gebruikt voor de spraakuitvoer.
 
-Onder [Supported Speech Synthesizers #SupportedSpeechSynths]treft u een lijst aan met synthesizers die in NVDA worden ondersteund.
+Onder [Ondersteunde spraaksynthesizers #SupportedSpeechSynths]treft u een lijst aan met synthesizers die in NVDA worden ondersteund.
 
 Er is één specifieke optie die altijd in deze lijst voorkomt en wel “geen spraak” waarmee alle spraakuitvoer wordt uitgeschakeld.
 Dit kan nuttig zijn voor iemand die NVDA uitsluitend met braille wil gebruiken of voor goedziende ontwikkelaars die uitsluitend de speech viewer willen gebruiken.
@@ -830,7 +831,7 @@ audio-onderdrukking kan niet worden ondersteund bij gebruik van de draagbare en 
 +++ Stem (NVDA+control+v) +++[VoiceSettings]
 Onder “Opties” in het NVDA-menu gaat u naar “Stem”  om instellingen aan te passen die te maken hebben met de gebruikte stem(men).
 Een snellere, alternatieve manier om steminstellingen te wijzigen vindt u onder [Synth Settings Ring #SynthSettingsRing].
- 
+
 In het dialoogvenster Steminstellingen treft u de volgende opties aan:
 
 ==== Stem ====
@@ -867,7 +868,7 @@ Indien automatisch van taal wisselen is ingeschakeld, kan deze optie gebruikt wo
 Deze optie staat standaard uit.
 
 %kc:setting
-==== Interpunctie uitspreken ====
+==== Interpunctie-/symboolniveau ====
 Toets: NVDA+p
 
 Deze optie bepaalt welke leestekens en symbolen als woorden worden uitgesproken.
@@ -891,7 +892,7 @@ Bij het gebruik van hoofdletters wordt door NVDA normaal gesproken de toonhoogte
 Als dit selectievakje is aangevinkt zal NVDA een korte pieptoon laten horen telkens wanneer er sprake is van een hoofdletter.
 Net als bij de optie “Het woord hoofdletter uitspreken bij gebruik hoofdletters” kan dit nuttig zijn als de gebruikte synthesizer het verhogen van de toonhoogte bij hoofdletters niet ondersteund.
 
-==== Spelling functionaliteit gebruiken (wanneer ondersteund) ====[VoiceSpellingFunctionality]
+==== Spellingfunctionaliteit gebruiken (wanneer ondersteund) ====[VoiceSpellingFunctionality]
 Er zijn woorden die slechts uit één letterteken bestaan. Een voorbeeld hiervan is "a" in het Engels of "u" in het Nederlands. 
 Als "a" in het Engels als woord wordt gebruikt (het equivalent van het Nederlandse "een") is de uitspraak anders dan wanneer we de naam van dit letterteken uitspreken zoals bij het spellen.
 Door het selectievakje aan te vinken kan de synthesizer  het verschil in uitspraak weergeven.
@@ -919,7 +920,7 @@ Met de pijltoetsen kunt u  het door u gewenste stuurprogramma kiezen.
 
 Geen braille betekent dat u braille niet gebruikt.
 
-Meer informatie over ondersteunde brailleleesregels vindt u onder [Supported Braille Displays #SupportedBrailleDisplays] .
+Meer informatie over ondersteunde brailleleesregels vindt u onder [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] .
 
 ==== Poort ====
 Voor zover beschikbaar, kunt u met deze optie bepalen welke poort of welk type verbinding moet worden gebruikt om te communiceren met de geselecteerde brailleleesregel.
@@ -932,7 +933,7 @@ De normale procedure is dat opties "Automatisch" worden ingesteld (hetgeen  inho
 Deze optie is niet beschikbaar als uw brailleleesregel alleen automatische poortdetectie ondersteunt.
 
 Raadpleeg de documentatie van uw brailleleesregel in de rubriek [ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor meer informatie over de ondersteunde communicatietypes en beschikbare poorten.
- 
+
 ==== Uitvoertabel ====
 Vervolgens komt u in dit dialoogvenster de vervolgkeuzelijst met braille-uitvoertabellen tegen.
 In de lijst vindt u brailletabellen voor verschillende talen, braillestandaarden en gradaties.
@@ -947,10 +948,10 @@ U kunt de pijltjestoetsen gebruiken om door de lijst met brailletabellen te navi
 Merk op dat deze instelling alleen zinvol is als uw leesregel over een toetsenbord van het Perkins-type beschikt en het stuurprogramma van uw brailleleesregel hiervoor ondersteuning biedt. 
 Als invoer niet wordt ondersteund door een leesregel  die is uitgerust met een brailletoetsenbord, wordt dit vermeld in de rubriek [ondersteunde Brailleleesregels #SupportedBrailleDisplays].
 
-==== woord onder cursor uitbreiden naar computerbraille ====
+==== Woord onder cursor uitbreiden naar computerbraille ====
 Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven in onverkort computerbraille.
 
-==== Cursor Tonen ====
+==== Cursor weergeven ====
 Met deze optie kunt u de braillecursor in- en uitschakelen.
 Deze mogelijkheid is beschikbaar voor de invoegcursor en de leescursor, maar niet voor de selectieaanwijzer.
 
@@ -966,14 +967,14 @@ Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen.
 Deze optie heeft geen betrekking op de selectieaanwijzer.
 
 ==== Time-out voor meldingen (sec.) ====
-In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen in het uitleesvenster worden weergegeven.
-Als u "0" als waarde invult, worden geen berichten getoond.
+In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen op de brailleleesregel worden weergegeven.
+Als u "0" als waarde invult, worden geen meldingen getoond.
 
 ==== Meldingen voor onbepaalde tijd tonen ====
 Met deze optie kunnen NVDA-meldingen voor onbepaalde tijd op de brailleleesregel worden getoond.
 
 %kc:setting
-==== Braille volgmoduskeuze ====[BrailleTether]
+==== Braille koppelen aan ====[BrailleTether]
 Toets: NVDA+control+t
 
 Hiermee kunt u bepalen of de leesregel de systeemfocus dan wel de navigatorobject- / reviewcursor moet volgen
@@ -985,7 +986,7 @@ Dit betekent dat u de brailleleesregel niet hoeft te scrollen aan het eind van e
 Dit maakt het mogelijk om grote hoeveelheden tekst vloeiender te lezen.
 Deze optie is standaard uitgeschakeld.
 
-==== Waar mogelijk woorden niet afbreken ====
+==== Waar mogelijk woorden niet splitsen ====
 Wanneer deze optie is ingeschakeld, zal een woord dat te lang is om nog op de brailleregel te passen niet worden afgebroken.
 In plaats daarvan blijft er wat lege ruimte aan het einde van de brailleleesregel.
 Door te scrollen kunt u het gehele woord lezen.
@@ -1034,17 +1035,17 @@ Toets: NVDA+3
 
 Door dit selectievakje in te schakelen wordt elk woord dat u getypt hebt uitgesproken.
 
-==== Spraak onderbreken bij het typen van karakters ====
+==== Spraak onderbreken bij typen van karakters ====
 Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer er een letterteken wordt getypt. Deze instelling staat standaard "aan".   
 
 ==== Spraak onderbreken  bij drukken van Enter-toets ====
 Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer de Enter-toets wordt ingedrukt. Deze instelling staat standaard "aan".   
 
-==== Skimmen bij Alles Voorlezen toestaan ====
+==== Doorbladeren bij Alles Voorlezen toestaan ====
 Als dit selectievakje is aangevinkt,zullen navigatieopdrachten zoals snel navigeren in bladermodus of verplaatsen per regelof alinea er niet toe leiden dat Alles Voorlezen wordt gestopt. 
 Het is veeleer zo dat Alles Voorlezen naar de nieuwe positie springt waar het lezen wordt voortgezet.
 
-==== Piep bij het typen van kleine letters terwijl capslock is ingeschakeld ====
+==== Piep als kleine letters worden getypt terwijl CapsLock is ingeschakeld ====
 Als deze optie is geactiveerd, zal er een waarschuwingssignaal klinken bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
 Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld. U heeft capslock dan wellicht ingeschakeld zonder dat u zich dat hebt gerealiseerd. 
 
@@ -1057,8 +1058,8 @@ Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voo
 ==== Geluid voor spelfouten afspelen tijdens typen ====
 Wanneer deze optie is ingeschakeld, zal er een kort zoemsignaal klinken als u een spelfout maakt in een woorrd dat u typt.
 Deze optie is alleen beschikbaar indien "Spelfouten melden"  is ingeschakeld in het dialoogvenster [Documentopmaak #DocumentFormattingSettings] van het instellingenmenu van NVDA.
-+
-==== Invoer van andere toepassingen beheren ====
+
+==== Toetsen van andere toepassingen verwerken ====
 Met deze optie kan de gebruiker bepalen of invoer die afkomstig is van toepassingen zoals virtuele (scherm)toetsenborden of spraakherkenningssoftware door NVDA moet worden verwerkt. 
 Deze optie is standaard ingeschakeld, maar sommige gebruikers,zoals mensen die werken met het Unikey typeprogramma voor Viëtnamees, zullen er wellicht de voorkeur aan geven deze optie uit te zetten omdat er anders invoerfouten ontstaan. 
 
@@ -1066,13 +1067,13 @@ Deze optie is standaard ingeschakeld, maar sommige gebruikers,zoals mensen die w
 Het dialoogvenster Muisinstellingen vindt u in het NVDA-menu onder Opties waar u vervolgens Muis selecteert.
 U treft er de volgende keuzemogelijkheden aan:
 
-==== Veranderingen van muisaanwijzervorm weergeven====
+==== Veranderingen van muisaanwijzervorm melden ====
 Als dit selectievakje is ingeschakeld, zal NVDA elke verandering die optreedt in de vorm van de muisaanwijzer melden.
 In Windows verandert de vorm van de muisaanwijzer om aan te geven waar de computer mee bezig is, zoals met het laden van iets of om te laten weten dat u tekst kunt invoeren.
 
 %kc:setting
-==== De muis volgen activeren====
- Toets : NVDA+m |
+==== Muis volgen ====
+Toets : NVDA+m |
 
 Door het selectievakje in te schakelen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie.
 
@@ -1080,7 +1081,7 @@ Door het selectievakje in te schakelen wordt de tekst gelezen die zich onder de 
 Als u ervoor gekozen hebt om de tekst onder de muis te laten uitspreken, kunt u hier instellen hoeveel tekst moet worden uitgesproken.
 U hebt de keuze uit karakter, woord, regel en alinea.
 
-==== Rol weergeven wanneer muisaanwijzer zich binnen een object bevind ====
+==== Rol melden als de muis binnen een object komt ====
 Als dit selectievakje is ingeschakeld, zal NVDA de rol (van het type object weergeven bij verplaatsing van de muis binnen het object.
 
 ==== Geluidscoördinatie gebruiken bij verplaatsen muis====
@@ -1097,7 +1098,7 @@ Om instellingen aan te passen gaat u in het NVDA-menu onder Opties naar Leescurs
 In het dialoogvenster treft u de volgende keuzemogelijkheden aan:
 
 %kc:setting
-==== Volg de systeemfocus====
+==== Ssysteemfocus volgen ====
 Toets : NVDA+7
 
 Wanneer deze optie is ingeschakeld,wordt de leescursor (review cursor) altijd in hetzelfde object geplaatst als de systeemfocus telkens wanneer de focus zich wijzigt.
@@ -1108,31 +1109,31 @@ Toets: NVDA+6
 
 Als dit selectievakje is aangevinkt, volgt de leescursor (review cursor) automatisch de systeemcursor wanneer deze wordt verplaatst
 
-==== De muiscursor volgen====
+==== Muiscursor volgen====
 Als dit selectievakje aangevinkt is, zal de leescursor (review cursor) de muis volgen wanneer deze wordt verplaatst.
 
-==== Vereenvoudigde leesmodus (Simple review mode)====
+==== Eenvoudige leesoverzichtmodus ====
 Als dit selectievakje aangevinkt is, zorgt NVDA ervoor dat objecten die voor de gebruiker niet van belang zijn, zoals verborgen objecten of die welke slechts een lay-out technisch doel dienen, worden uitgefilterd.
 
-Om de vereenvoudigde leesmodus vanaf een willekeurige plaats aan- of uit te zetten kunt u via het dialoogvenster [Invoerhandelingen #InputGestures] een aangepaste handeling hiervoor aanmaken.
+Om de eenvoudige leesoverzichtmodus vanaf een willekeurige plaats aan- of uit te zetten kunt u via het dialoogvenster [Invoerhandelingen #InputGestures] een aangepaste handeling hiervoor aanmaken.
 
 +++ Objectweergave-instellingen(NVDA+control+o) +++
 Om instellingen aan te passen gaat u in het NVDA-menu onder Opties naar Objectweergave.
 In het dialoogvenster treft u de volgende keuzemogelijkheden aan:
 
-==== Flitsberichten (tooltips)weergeven ====
-Als dit selectievakje aangevinkt is, zal NVDA eventuele tooltips laten horen wanneer deze op het scherm verschijnen.
+==== Flitsberichten melden ====
+Als dit selectievakje aangevinkt is, zal NVDA eventuele flitsberichten (tooltips) laten horen wanneer deze op het scherm verschijnen.
 Bij veel Windows schermen en besturingselementen verschijnt een kort berichtje, – dat “tooltip” genoemd wordt, – wanneer deze zich onder de muisaanwijzer bevinden of soms wanneer deze gefocusseerd worden.
 
-==== Hulpballonnen weergeven ====
+==== Hulpballonnen melden ====
 Als dit selectievakje aangevinkt is, zal NVDA eventuele hulpballonnen laten horen wanneer deze op het scherm verschijnen.
 Hulpballonnen lijken op tooltips maar ze bevatten meer informatie dan tooltips. Ze hebben te maken met dingen die aan of met uw computer gebeuren zoals het verwijderen van een netwerk kabel of wellicht wordt u er attent op gemaakt dat er een beveiligingsprobleem is.
 
-==== Sneltoetscombinaties voor weergeven van objecten ====
+==== Objectsneltoetsen melden ====
 Als dit selectievakje is aangevinkt, zal NVDA bij de aankondiging van een bepaald object of element ook de bijbehorende sneltoetscombinatie vermelden.
 Zo zal bij voorbeeld bij het onderdeel Bestand op de menubalk ook gemeld worden dat hiervoor de sneltoetscombinatie Alt + b. beschikbaar is.
 
-==== Informatie over objectpositie weergeven ====
+==== Informatie over objectpositie melden ====
 Als dit selectievakje aangevinkt is, wordt de objectpositie gemeld,bijvoorbeeld 1 van 4, zodra het object focus krijgt, of zich in de objectnavigatie bevind.
 
 ==== Objectpositie raden indien deze niet beschikbaar is ====
@@ -1140,7 +1141,7 @@ Als informatie van objectpositie weergeven is ingeschakeld, kan deze optie ervoo
 
 Als deze optie is ingeschakeld, zal positie-informatie voor meer objecten (zoals menu's en werkbalken) beschikbaar zijn, maar deze informatie  is mogelijk niet geheel nauwkeurig.
 
-==== Beschrijving van object weergeven ====
+==== Objectbeschrijvingen melden ====
 Vink dit selectievakje niet aan als u, behalve de naam van het object, geen extra informatie hoeft te horen. 
 
 %kc:setting
@@ -1152,11 +1153,11 @@ Via de vervolgkeuzelijst kunt u kiezen hoe u wilt worden geïnformeerd over de v
 U kunt kiezen uit
 - uit: veranderingen in voortgangsbalken worden niet gemeld.
 - uitspreken: u hoort het percentage dat aangeeft hoe ver het proces is gevorderd. Elke verandering wordt gemeld.
-- Pieptoon: Bij elke verandering in de voortgangsbalk zal NVDA een pieptoon laten horen. Hoe hoger de toon, hoe verder de balk gevuld raakt.
-- Pieptonen + uitspreken: U hoort zowel pieptonen  als gesproken info over de voortgang van het proces.
+- Pieptonen: Bij elke verandering in de voortgangsbalk zal NVDA een pieptoon laten horen. Hoe hoger de toon, hoe verder de balk gevuld raakt.
+- Uitspreken en pieptonen: U hoort zowel pieptonen  als gesproken info over de voortgang van het proces.
 -
 
-==== Achtergrond voortgangsbalken weergeven ====
+==== Achtergrondvoortgangsbalken melden ====
 Als dit selectievakje is ingeschakeld blijft NVDA veranderingen in een voortgangsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
 Als u een venster met een voortgangsbalk minimaliseert of naar een ander venster overschakelt, zal NVDA de veranderingen in de voortgangsbalk toch bijhouden terwijl u met iets anders bezig bent. 
 
@@ -1166,12 +1167,19 @@ Toets: NVDA+5
 
 Schakelt het automatisch melden van nieuwe inhoud aan of uit voor bepaalde besturingselementen zoals terminalvensters of chatgeschiedenis.
 
+==== Geluid afspelen wanneer auto-aanvullen suggesties oplevert ====
+Schakelt de melding dat auto-aanvullen suggesties oplevert in of uit. Wanneer deze optie is ingeschakeld, zal NVDA een geluid afspelen om dit aan te geven. 
+Auto-aanvullen levert mogelijk lijsten met suggesties op die gebaseerd zijn op de tekst die ingevoerd wordt in bepaalde velden en documenten.
+Wanneer u bijvoorbeeld in het zoekvak van het startmenu van Windows Vista of latere Windows versies tekst invoert, zal er een lijst met suggesties worden getoond die gebaseerd is op wat u intypte. 
+Voor bepaalde invoervelden zoals zoekvakken in verrschillende Windows 10 apps, kunt u NVDA laten melden dat   er een lijst met suggesties is open gegaan tijdens het typen. 
+De lijst met suggesties sluit zich wanneer u uit het invoerveld gaat. Voor sommige invoervelden kan NVDA hiervan melding maken.   
+
 +++ Instellingen voor Invoersamenstelling +++
 Het dialoogvenster Instellingen voor Invoersamenstelling vindt u onder Opties in het NVDA-menu.
 Met behulp van dit dialoogvenster kunt u regelen hoe NVDA de karakters van  Aziatische talen weergeeft, wanneer u deze invoert. Dit geldt zowel voor IME- als  voor de Text Service-invoer.
 Aangezien er grote verschillen bestaan tussen de invoermethodes wat betreft mogelijkheden en de wijze van informatieoverdracht, zal het wellicht nodig zijn de instellingen aan te passen aan de gebruikte invoermethode. Hierdoor wordt typen aangenamer en gemakkelijker.
 
-==== automatisch alle beschikbare kandidaten rapporteren ====
+==== Automatisch alle beschikbare kandidaten melden ====
 Met deze keuzemogelijkheid, die standaard geactiveerd is, bepaalt u of de zichtbare kandidaten al dan niet automatisch moeten worden gemeld wanneer er een kandidatenlijst verschijnt of wanneer de pagina verandert.
 Bij pictografische invoer, zoals voor Chinees Nieuw Tsjang-Dzji en Boshiami is het handig als deze keuze aangevinkt is, omdat u automatisch alle symbolen hoort met het bijbehorende nummer zodat u er direct één kunt kiezen.
 Bij fonetische invoermethodes zoals Chinees Nieuw Fonetisch is het evenwel verstandiger deze optie uit te zetten omdat alle tekens hetzelfde klinken en u met de pijltoetsen door de lijst moet bladeren om uit de beschrijving van de afzonderlijke karakters de benodigde informatie te verkrijgen voor de te kiezen kandidaat.
@@ -1181,23 +1189,23 @@ Met deze keuzemogelijkheid, die standaard geactiveerd is, bepaalt u of NVDA de g
 Deze functie is nodig voor invoermethodes waarbij de selectie kan worden gewijzigd met de pijltoetsen  (zoals het Chinees Nieuw Fonetisch), maar voor andere invoermethodes is het wellicht efficiënter deze optie uit te zetten.
 Merk op dat zelfs wanneer deze optie uit staat, de leescursor toch bij de geselecteerde kandidaat wordt geplaatst zodat u met gebruik van object navigatie / review deze of andere kandidaten handmatig kunt uitlezen.
 
-==== Altijd Korte Beschrijving Geven van Kandidaat-karakters ====
+==== Altijd korte beschrijving geven van kandidaat-karakters ====
 Met deze keuzemogelijkheid, die standaard geactiveerd is, bepaalt u of NVDA   al dan niet een korte beschrijving moet geven van elk beoogd karakter wanneer dit wordt geselecteerd of automatisch wordt uitgelezen zodra er een kandidatenlijst verschijnt.
 Merk op dat voor talen zoals het Chinees het melden van extra karakter beschrijvingen voor de geselecteerde kandidaat niet door deze optie wordt beïnvloed.
 Deze optie kan nuttig zijn voor Koreaanse en Japanse invoermethodes.
 
-==== Rapporteren van Veranderingen aan de Leesreeks ====
+==== Wijzigingen in de leesreeks melden ====
 Sommige invoermethodes zoals Chinees Nieuw Fonetisch en Nieuw TSjangDzjie hebben een leesreeks (soms ook wel precompositie reeks genoemd).
 Met deze optie kunt u bepalen of NVDA de karakters die in de leesreeks worden ingevoerd al dan niet moet melden.
 Deze optie is standaard aangevinkt.
 Merk op dat sommige oudere invoermethodes zoals Chinees TsjangDzji de leesreeks mogelijk niet gebruiken om karakters voorafgaand aan de eigenlijke samenstelling in op te nemen, maar in plaats daarvan rechtstreeks gebruik maken van de samenstellingsreeks. In de optie hierna leest u hoe het rapporteren van de samenstellingsreeks kan worden ingesteld.
 
-==== Rapporteren van Veranderingen aan de Samenstellingsreeks ====
+==== Wijzigingen in de samenstellingsreeks melden ====
 Nadat de lees- of pré-compositiegegevens tot een geldig pictografisch symbool zijn gecombineerd slaan de meeste invoermethodes dit symbool, samen met andere gecombineerde symbolen, tijdelijk op in een samenstellingsreeks om tenslotte in het document te worden ingevoegd.   
 Met deze optie kunt u bepalen of NVDA nieuwe symbolen die in de samenstellingsreeks verschijnen al dan niet moet melden.
 Deze optie is standaard aangevinkt.
 
-+++ Instellingen bladermodus(NVDA+control+b) +++
++++ Bladermodus-instellingen (NVDA+control+b) +++
 Voor het dialoogvenster Bladermodus gaat u naar Opties in het NVDA-menu en selecteert u Bladermodus.
 
 De volgende keuzemogelijkheden zijn beschikbaar:
@@ -1205,7 +1213,7 @@ De volgende keuzemogelijkheden zijn beschikbaar:
 ==== Maximale aantal karakters per regel====
 In het invoerveld kunt u het aantal karakters per regel instellen dat  een document in bladermodus mag bevatten.
 
-==== Maximaal aantal regels per pagina ====
+==== Aantal regels per pagina ====
 Hoewel er in bladermodus eigenlijk geen echte pagina-indeling bestaat, kunt u hier het aantal regels invoeren dat opschuift als u Page Up (pagina omhoog) of Page Down (pagina omlaag) indrukt terwijl u zich in een document in bladermodus bevindt.
 
 %kc:setting
@@ -1214,7 +1222,7 @@ Toets: NVDA+v
 
 Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is ingeschakeld blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
 
-==== Automatisch lezen zodra een pagina geladen is ====
+==== Automatisch lezen zodra pagina geladen is ====
 Deze optie bepaalt of een pagina die geladen is in bladermodus automatisch wordt gelezen.
 Deze optie is standaard ingeschakeld.
 
@@ -1224,7 +1232,7 @@ Wanneer Layout-tabellen opnemen is ingeschakeld, zal NVDA zulke tabellen als nor
 Wanneer deze optie niet ingeschakeld is, worden de tabellen niet opgenomen en men kan  er niet naar toe navigeren.
 De inhoud wordt echter wel als normale tekst weergegeven.
 Deze optie staat standaard uit.
- 
+
 ==== Het melden van velden zoals links en koppen instellen====
 Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en tabellen.
 
@@ -1236,12 +1244,11 @@ Als het selectievakje is ingeschakeld, zal de focusmodus automatisch worden geac
 Als dit selectievakje is ingeschakeld, zal NVDA de focusmodus vanzelf aanpassen bij gebruik van de pijltjestoetsen.
 Als u bij voorbeeld met de pijltjestoetsen door een webpagina bladert en u in een invoerveld belandt, komt u automatisch in de focusmodus. Als u het invoerveld uitgaat, keert u weer terug in de bladermodus (ook wel surfmodus genoemd).  
 
-==== Audiomarkering voor focus- en surfmodus====
+==== Geluids&markering voor focus- en bladermodus ====
 Als dit selectievakje is ingeschakeld, hoort u een bepaald geluid als gewisseld wordt tussen de focus- en bladermodus in een document. Dit komt dan in de plaats van een uitgesproken wijziging van de focus.
 
 ==== Niet-commandogebonden handelingen onderscheppen voordat ze het document bereiken ====
-Met deze optie, die standaard is ingeschakeld, kunt u
- bepalen of invoerhandelingen zoals toetsaanslagen die geen NVDA-commando opleveren en die niet worden beschouwd als commandotoets  in het algemeen, moeten worden onderschept voordat ze het document dat op dat moment de focus heeft, bereiken.
+Met deze optie, die standaard is ingeschakeld, kunt u bepalen of invoerhandelingen zoals toetsaanslagen die geen NVDA-commando opleveren en die niet worden beschouwd als commandotoets  in het algemeen, moeten worden onderschept voordat ze het document dat op dat moment de focus heeft, bereiken.
 Ervan uitgaande dat de optie is ingeschakeld zal de letter "j", bij voorbeeld, wanneer u deze indrukt, onderschept worden voordat ze het document bereikt, ook al is het geen navigatiesneltoets en waarschijnlijk ook geen commandotoets binnen de toepassing zelf. 
 
 +++ Documentopmaakinstellingen (NVDA+control+d) +++[DocumentFormattingSettings]
@@ -1272,7 +1279,7 @@ U kunt de vermelding laten horen van:
  - Uitlijning
 - Tabelinformatie
  - Tabellen
- - Rij- en kolomhoofden
+ - Rij- en kolomkoppen
  - Celcoördinaten
  - Celranden [(Uit, Stijlen, Zowel kleuren als stijlen
 - Elementen
@@ -1281,13 +1288,13 @@ U kunt de vermelding laten horen van:
  - Lijsten
  - Blokcitaten
  - Oriëntatiepunten
- - Kaders
+ - Frames
  - Wat klikbaar is
 -
 
 Als u vermelding van bovenstaande kenmerken altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
-==== Wijzigingen in documentopmaak achter de cursor melden ====
+==== Opmaakwijzigingen achter de cursor melden ====
 Als dit selectievakje aangevinkt is, zal NVDA proberen alle wijzigingen in de opmaak van een regel te melden bij het lezen van de regel ook als dit de prestatie vertraagt.
 
 Standaard wordt de opmaak bij de systeemcursor / review cursor gedetecteerd, maar in bepaalde gevallen wordt ook de opmaak in de rest van de regel gedetecteerd voor zover dit geen nadelige invloed heeft op de prestatie.
@@ -1310,7 +1317,7 @@ Via het menu-item Uitspraakwoordenboeken dat te vinden is onder Opties kunt u aa
 Op dit moment zijn er 3 soorten woordenboeken beschikbaar,
 te weten, 
 - Standaard woordenboek: de regels hierin hebben betrekking op alles wat in NVDA wordt uitgesproken.
-- Stemafhankelijk woordenboek: de regels hierin hebben betrekking op de in gebruik zijnde synthesizer stem.
+- Stem-afhankelijk woordenboek: de regels hierin hebben betrekking op de in gebruik zijnde synthesizer stem.
 - Tijdelijk woordenboek: de regels hierin hebben betrekking op alles wat er door NVDA wordt uitgesproken, maar dan alleen voor de huidige sessie. De gemaakte regels gaan verloren wanneer NVDA opnieuw wordt gestart.
 -
 
@@ -1334,8 +1341,8 @@ De standaardinstelling is dat geen verschil wordt gemaakt tussen hoofdletters en
 Tenslotte kunt u met behulp van een aantal keuzerondjes bepalen wanneer en in hoeverre NVDA uw patroon als overeenkomst moet beschouwen; altijd ongeacht de plaats ervan binnen een woord, alleen als er sprake is van een heel woord of dat het patroon als “regular expression “ moet worden behandeld.
 Wanneer voor een patroon de voorwaarde voor overeenkomst wordt ingesteld als “heel  woord”, zal vervanging ervan alleen gebeuren als  het patroon GEEN deel uitmaakt van een langer woord, d.w.z. een teken anders dan een alfanumeriek teken, een liggend streepje, (underscore) of helemaal geen teken dat direct voor en / of achter het patroon staat.  
 Als we uitgaan van het eerder gebruikte voorbeeld waarin “luid” werd vervangen door “hard”, dan zou er bij vervanging van een “heel woord” geen sprake van overeenkomst zijn voor harde en gehard.
-Een regular expression is een reeks waarin speciale tekens worden gebruikt om aan te geven hoe en in welke mate de reeks moet worden toegepast (op specifieke tekens, alleen getallen of alleen letters, bij voorbeeld).
-In deze handleiding wordt niet verder ingegaan op “regular expressions”, maar op het internet zijn allerlei tutorials te vinden die meer informatie geven.  
+Een regulieire expressie (regular expression) is een reeks waarin speciale tekens worden gebruikt om aan te geven hoe en in welke mate de reeks moet worden toegepast (op specifieke tekens, alleen getallen of alleen letters, bij voorbeeld).
+In deze handleiding wordt niet verder ingegaan op reguliere expressies, maar op het internet zijn allerlei tutorials te vinden die meer informatie geven.  
 
 +++ Uitspraak van interpunctie/symbolen +++[SymbolPronunciation]
 In dit dialoogvenster kan men de wijze waarop interpunctie en symbolen worden gemeld aanpassen, alsmede het interpunctieniveau waarop deze worden uitgesproken.
@@ -1348,7 +1355,7 @@ Selecteer eerst een symbool uit de symbolenlijst als u een symbool wilt  aanpass
 - In het veld "Vervangen door" kunt u de aangepaste tekst invoeren die uitgesproken moet
 worden in plaats van  dit symbool.
 - In het keuzevak Niveau kunt u het laagste niveau opgeven waarop dit symbool moet worden uitgesproken
-- Het veld "Het eigenlijke symbool naar synthesizer sturen" specifieert wanneer  het symbool zelf (in tegenstelling tot de vervanging ervan naar de synthesizer moet worden gestuurd.
+- Het veld "Het eigenlijke symbool naar synthesizer sturen" specificeert wanneer  het symbool zelf (in tegenstelling tot de vervanging ervan naar de synthesizer moet worden gestuurd.
 Dit is nuttig alss het symbool de synthesizer even laat stoppen of als het de buiging van de stem verandert.
 Een komma, bij voorbeeld, zorgt ervoor dat er een kort pauzemoment is in de spraakuitvoer
 Er zijn drie opties:
@@ -1363,7 +1370,6 @@ U kunt nieuwe symbolen toevoegen door op de knop toevoegen te drukken
 In het dialoogvenster dat verschijnt voert u  het symbool in en vervolgens  drukt u op  de 
 OK-knop.
 Pas daarna de velden aan voor het nieuwe symbool zoals u dat voor andere symbolen zou doen.
-
 
 U kunt een eerder ingevoerd symbool verwijderen door op de knop Verwijderen te drukken.
 
