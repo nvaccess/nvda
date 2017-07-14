@@ -271,7 +271,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			currentItem = self.categoryTree.Selection
 			index = self.categoryTreeItems.index(currentItem)
 			newIndex=index-1 if evt.ShiftDown() else index+1
-			newItem=self.categoryTreeItems[newIndex if newIndex<len(self.categoryTreeItems) else 0]
+			newItem=self.categoryTreeItems[newIndex % len(self.categoryTreeItems)]
 			self.categoryTree.SelectItem(newItem)
 		else:
 			evt.Skip()
