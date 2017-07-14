@@ -104,7 +104,7 @@ roleLabels = {
 	controlTypes.ROLE_SEPARATOR: u"⠤⠤⠤⠤⠤",
 	# Translators: Displayed in braille for an object which is a
 	# block quote.
-	controlTypes.ROLE_BLOCKQUOTE: _("blq"),
+	controlTypes.ROLE_BLOCKQUOTE: _("bqt"),
 	# Translators: Displayed in braille for an object which is a
 	# document.
 	controlTypes.ROLE_DOCUMENT: _("doc"),
