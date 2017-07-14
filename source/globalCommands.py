@@ -1705,12 +1705,14 @@ class GlobalCommands(ScriptableObject):
 			index = values.index(config.conf["braille"]["focusContextPresentation"])
 		except:
 			index=0
-		newIndex = index+1 if index+1<len(values) else 0
+		newIndex = (index+1) % len(values)
 		config.conf["braille"]["focusContextPresentation"] = values[newIndex]
 		braille.invalidateCachedFocusAncestors(0)
 		braille.handler.handleGainFocus(api.getFocusObject())
 		# Translators: Reports the new state of braille focus context presentation.
-		ui.message(_("Braille focus context presentation %s") % labels[newIndex].lower())
+		# %s will be replaced with the context presentation setting.
+		# For example, the full message might be "Braille focus context presentation: fill display for context changes"
+		ui.message(_("Braille focus context presentation: %s")%labels[newIndex].lower())
 	# Translators: Input help mode message for toggle braille focus context presentation command.
 	script_braille_toggleFocusContextPresentation.__doc__ = _("Toggle the way context information is presented in braille")
 	script_braille_toggleFocusContextPresentation.category=SCRCAT_BRAILLE

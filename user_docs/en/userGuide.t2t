@@ -1076,12 +1076,12 @@ Enabling this may allow for more fluent reading, but generally requires you to s
 
 ==== Focus context presentation ====
 This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
-Context information (or focus ancestry) refers to the hierarchy of objects containing the focus.
+Context information refers to the hierarchy of objects containing the focus.
 For example, when you focus a list item, this list item is part of a list.
 This list might be contained by a dialog, etc.
 Please consult the section about [object navigation #ObjectNavigation] for more information about the hierarchy that applies to objects in NVDA.
 
-When set to fill display for context changes, NVDA will try to display as much as possible context information on the braille display, but only for the parts of the context that have changed.
+When set to fill display for context changes, NVDA will try to display as much context information as possible on the braille display, but only for the parts of the context that have changed.
 For the example above, this means that when changing focus to the list, NVDA will show the list item on the braille display.
 Furthermore, if there is enough space left on the braille display, NVDA will try to show that the list item is part of a list.
 If you then start moving through the list with your arrow keys, it is assumed that you are aware that you are still in the list.
