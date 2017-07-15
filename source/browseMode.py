@@ -1539,6 +1539,11 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
+	#: The controlField attribute name that should be used as the row number when navigating in a table. By default this is the same as the presentational attribute name
+	navigationalTableRowNumberAttributeName="table-rownumber"
+	#: The controlField attribute name that should be used as the column number when navigating in a table. By default this is the same as the presentational attribute name
+	navigationalTableColumnNumberAttributeName="table-columnnumber"
+
 	def _getTableCellCoords(self, info):
 		"""
 		Fetches information about the deepest table cell at the given position.
@@ -1556,12 +1561,12 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 				# Not a control field.
 				continue
 			attrs = field.field
-			if "table-id" in attrs and "table-rownumber" in attrs:
+			if "table-id" in attrs and self.navigationalTableRowNumberAttributeName in attrs:
 				break
 		else:
 			raise LookupError("Not in a table cell")
 		return (attrs["table-id"],
-			attrs["table-rownumber"], attrs["table-columnnumber"],
+			attrs[self.navigationalTableRowNumberAttributeName], attrs[self.navigationalTableColumnNumberAttributeName],
 			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
 
 	def _getTableCellAt(self,tableID,startPos,row,column):
