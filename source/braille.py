@@ -713,31 +713,6 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
-class TextInfoRegionState(object):
-	"""Caches the state of a TextInfoRegion such as the current formatfield."""
-
-	__slots__=[
-		'objRef',
-		'formatFieldAttributesCache',
-	]
-
-	def __init__(self,obj):
-		if isinstance(obj,TextInfoRegionState):
-			oldState=obj
-			self.objRef=oldState.objRef
-		else:
-			self.objRef=weakref.ref(obj)
-			oldState=getattr(obj,'_textInfoRegionState',None)
-		self.formatFieldAttributesCache=oldState.formatFieldAttributesCache if oldState else {}
-		
-	def updateObj(self):
-		obj=self.objRef()
-		if obj:
-			obj._textInfoRegionState=self.copy()
-
-	def copy(self):
-		return self.__class__(self)
-
 def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
@@ -913,16 +888,14 @@ class TextInfoRegion(Region):
 		self._rawToContentPos.extend((contentPos,) * textLen)
 
 	def _addTextWithFields(self, info, formatConfig, isSelection=False, useCache=True):
-		if isinstance(useCache,TextInfoRegionState):
-			textInfoRegionState=useCache
-		elif useCache:
-		 textInfoRegionState=TextInfoRegionState(info.obj)
-		else:
-			textInfoRegionState=None
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
-		formatFieldAttributesCache = textInfoRegionState.formatFieldAttributesCache if textInfoRegionState else {}
 		typeform = louis.plain_text
+		if useCache:
+			formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
+		else:
+			formatFieldAttributesCache = None
+
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
 				self._isFormatFieldAtStart = False
@@ -1001,9 +974,7 @@ class TextInfoRegion(Region):
 			# Otherwise, we'll render fields that have already been rendered.
 			self._skipFieldsNotAtStartOfNode = True
 		if useCache:
-			textInfoRegionState.formatFieldAttributesCache = formatFieldAttributesCache
-			if not isinstance(useCache,TextInfoRegionState):
-				textInfoRegionState.updateObj()
+			info.obj._brailleFormatFieldAttributesCache = formatFieldAttributesCache
 
 	def _getReadingUnit(self):
 		return textInfos.UNIT_PARAGRAPH if config.conf["braille"]["readByParagraph"] else textInfos.UNIT_LINE
