@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Davy Kager
 
 """Manages information about available braille translation tables.
 """
@@ -62,6 +62,7 @@ def listTables():
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {
+	# "oldName":"newName",
 	"da-dk-g16.utb":"da-dk-g16.ctb",
 	"da-dk-g18.utb":"da-dk-g18.ctb",
 	"gr-gr-g1.utb":"el.ctb",
@@ -73,7 +74,7 @@ RENAMED_TABLES = {
 	"UEBC-g2.ctb":"en-ueb-g2.ctb",
 }
 
-# Add builtin tables.
+# Add built-in tables.
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ar-ar-g1.utb", _("Arabic grade 1"))
@@ -100,6 +101,9 @@ addTable("cy-cy-g2.ctb", _("Welsh grade 2"), contracted=True)
 addTable("cz-cz-g1.utb", _("Czech grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("da-dk-g08.ctb", _("Danish 8 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("da-dk-g16.ctb", _("Danish 6 dot grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -109,7 +113,13 @@ addTable("da-dk-g18.ctb", _("Danish 8 dot grade 1"))
 addTable("da-dk-g26.ctb", _("Danish 6 dot grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("da-dk-g26l.ctb", _("Danish 6 dot grade 1.5"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("da-dk-g28.ctb", _("Danish 8 dot grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("da-dk-g28l.ctb", _("Danish 8 dot grade 1.5"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("de-de-comp8.ctb", _("German 8 dot computer braille"))
