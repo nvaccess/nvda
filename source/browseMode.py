@@ -1556,12 +1556,23 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		if info.isCollapsed:
 			info = info.copy()
 			info.expand(textInfos.UNIT_CHARACTER)
-		for field in reversed(info.getTextWithFields()):
+		fields=list(info.getTextWithFields())
+		# First record the ID of all layout tables so that we can skip them when searching for the deepest table
+		layoutIDs=set()
+		for field in fields:
+			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart" and field.field.get('table-layout'):
+				tableID=field.field.get('table-id')
+				if tableID is not None:
+					layoutIDs.add(tableID)
+		for field in reversed(fields):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
 			attrs = field.field
-			if "table-id" in attrs and self.navigationalTableRowNumberAttributeName in attrs:
+			tableID=attrs.get('table-id')
+			if tableID is None or tableID in layoutIDs:
+				continue
+			if self.navigationalTableColumnNumberAttributeName in attrs and not attrs.get('table-layout'):
 				break
 		else:
 			raise LookupError("Not in a table cell")
@@ -1628,8 +1639,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			return
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
-		#  For now, table movement includes layout tables even if reporting of layout tables is disabled.
-		formatConfig["includeLayoutTables"]=True
 		try:
 			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:
