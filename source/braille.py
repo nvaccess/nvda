@@ -6,7 +6,6 @@
 
 import sys
 import itertools
-import weakref
 import os
 import pkgutil
 import ctypes.wintypes
