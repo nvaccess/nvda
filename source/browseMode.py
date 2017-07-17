@@ -1592,6 +1592,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		@type column: int
 		@returns: the table cell's position in the document
 		@rtype: L{textInfos.TextInfo}
+		@raises: L{HiddenCellFound} if the cell it founds is hidden, allowing the caller to try a different cell.
 		"""
 		raise NotImplementedError
 
@@ -1628,11 +1629,22 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		elif axis == "column":
 			destCol += origColSpan if movement == "next" else -1
 
-		if destCol < 1 or destRow<1:
-			# Optimisation: We're definitely at the edge of the column or row.
-			raise LookupError
-
-		return self._getTableCellAt(tableID,startPos,destRow,destCol)
+		# Try and fetch the cell at these coordinates, though  if a hidden cell is hit, try up to 4 more times moving the coordinates on by one cell each time
+		limit=5
+		while limit>0:
+			limit-=1
+			if destCol < 1 or destRow<1:
+				# Optimisation: We're definitely at the edge of the column or row.
+				raise LookupError
+			try:
+				return self._getTableCellAt(tableID,startPos,destRow,destCol)
+			except HiddenCellFound:
+				pass
+			if axis=="row":
+				destRow+=1 if movement=="next" else -1
+			else:
+				destCol+=1 if movement=="next" else -1
+		raise LookupError
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		if isScriptWaiting():
@@ -1716,3 +1728,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
 	}
+
+class HiddenCellFound(LookupError):
+	""" Raised when a table navigation method locates a cell but it is hidden, allowing the caller to possibly skip over it."""
+	pass

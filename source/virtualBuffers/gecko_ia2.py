@@ -19,6 +19,7 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField
+import browseMode
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -277,6 +278,8 @@ class Gecko_ia2(VirtualBuffer):
 		try:
 			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
 			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			if cell.IA2Attributes.get('hidden'):
+				raise browseMode.HiddenCellFound
 			return self.makeTextInfo(cell)
 		except (COMError, RuntimeError):
 			raise LookupError
