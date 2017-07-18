@@ -190,8 +190,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:shift+alt+downArrow": ("br(hims):dot5+dot6+dot7+advance1",),
 			"kb:alt+downArrow": ("br(hims):dot5+dot6+dot7",),
 			"kb:shift+downArrow": ("br(hims):space+rightSideScrollDown",),
-			"kb:backspace": ("br(hims):dot7",),
-			"kb:enter": ("br(hims):dot8",),
 			"kb:escape": ("br(hims):dot1+dot5+space",),
 			"kb:delete": ("br(hims):dot1+dot3+dot5+space",),
 			"kb:f1": ("br(hims):dot1+dot2+dot5+space",),

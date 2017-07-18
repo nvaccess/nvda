@@ -1,3 +1,9 @@
+#_UIAHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
@@ -54,7 +60,6 @@ badUIAWindowClassNames=[
 	"RICHEDIT50W",
 	"SysListView32",
 	"_WwG",
-	'_WwN',
 	"EXCEL7",
 	"Button",
 ]
@@ -117,6 +122,7 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_IsEnabledPropertyId:"stateChange",
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
+	UIA_ControllerForPropertyId:"UIA_controllerFor",
 }
 
 UIAEventIdsToNVDAEventNames={
@@ -132,6 +138,7 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
+	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
 class UIAHandler(COMObject):

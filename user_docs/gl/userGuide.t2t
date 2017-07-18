@@ -136,6 +136,10 @@ Se instalaches o NVDA co instalador, entón iniciar NVDA é tan sinxelo coma ou 
 Adicionalmente podes teclear NVDA no diálogo Executar e premer Intro. 
 Tamén podes pasar algunhas [opcións de liña de ordes #CommandLineOptions] as que che permiten reiniciar o NVDA (-r), saír (-q), deshabilitar complementos (--disable-addons), etc.
 
+Para as copias instaladas, NVDA almacena a configuración no cartafol roaming application data do usuario actual por omisión (ex.: "C:\Users\<user>\AppData\Roaming").
+É posible cambiar esto de xeito que o NVDA cargue a súa configuración dende o cartafol local de datos de aplicación no seu lugar.
+Consulta a seción acerca de [parámetros do sistema #SystemWideParameters] para máis detalles.
+
 Para iniciar a versión portátil, vai ao directorio onde descomprimiches ao NVDA, e preme intro ou fai doble clic sobre nvda.exe.
 
 Cando o NVDA arrinca, primeiro escoitarás un grupo ascendente de tons (que che din que NVDA se está a cargar). 
@@ -502,6 +506,7 @@ A seguintes teclas elas soas saltan ao seguinte campo, ca tecla shift saltan ao 
 - o: obxecto empotrado
 - 1 a 6: cabeceiras da 1 á 6 respectivamente
 - a: anotación (comentario, revisión do editor, etc.)
+- w: erro de ortografía
 -
 Para te mover cara o comezo ou o remate de elementos contedores como listas e táboas:
 || Nome | Tecla | Descripción |
@@ -543,7 +548,7 @@ Esto require que MathPlayer 4 estea instalado no computador.
 MathPlayer está dispoñible como unha descarga gratuita dende: http://www.dessci.com/en/products/mathplayer/
 
 NVDA soporta os seguintes tipos de contidos matemáticos:
-- MathML en Mozilla Firefox e Microsoft Internet Explorer.
+- MathML en Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
 - Design Science MathType en Microsoft Word e PowerPoint. MathType necesita estaren instalado para que esto funcione. A versión trial é suficiente.
 - MathML en Adobe Reader. Ten en conta que esto non é un estándar official aínda, así que non hai actualmente software dispoñible para o público que poda producir este contido.
 -
@@ -602,7 +607,7 @@ Para información adicional acerca do modo Exploración e a Navegación Rápida,
 %kc:beginInclude
 Mentres se estea no modo Exploración en Microsoft Word, podes acceder á Lista de Elementos premendo NVDA+f7.
 %kc:endInclude
-A Lista de Elementos pode listar cabeceiras, ligas e anotacións (as que inclúen comentarios e seguemento de cambios).
+A Lista de Elementos pode listar cabeceiras, ligas, anotacións (as que inclúen comentarios e seguemento de cambios) e erros (actualmente limitados a erros de ortografía).
 
 +++ Anunciado de Comentarios +++
 %kc:beginInclude
@@ -1160,6 +1165,13 @@ Tecla: NVDA+5
 
 Conmuta o anunciado de contido novo en obxectos particulares como terminais e o control de histórico en programas de chat.
 
+==== Reproducir un son ao aparecer autosuxerencias ====
+Conmuta o anunciado da aparición de autosuxerencias, e se está habilitado, NVDA reproducirá un son para indicar esto.
+As autosuxerencias son listas de entradas suxeridas baseadas en texto introducido en certos campos de edición e documentos.
+por exempro, cando introduzas texto na caixa de procura no menú inicio en Windows Vista e posterior, Windows amosa unha lista de suxerencias baseadas no que escribiches.
+Para algúns campos de edición  coma campos de procura en varias aplicacións de Windows 10, NVDA pode notificarte que apareceu unha lista de suxerencias ao se escrebir texto.
+A lista de autosuxerencias pecharase unha vez te movas polo campo de edición, e para algúns campos, NVDA pode notificarte de esto cando elo ocorra.
+
 +++ Opcións de Composición de Entrada +++
 O diálogo Opcións de Composición de Entrada pode encontrarse baixo o menú Preferencias. 
 Este diálogo permíteche controlar cómo anuncia NVDA a entrada de Caracteres Asiáticos, como co IME ou métodos de Servizo de entrada de texto .
@@ -1592,6 +1604,17 @@ Para utilizar estas voces, necesitarás instalar dous compoñentes:
  Por exemplo, o ficheiro MSSpeech_TTS_en-US_ZiraPro.msi é unha voz inglesa U.S..
  -
 -
+
+++ Voces Windows OneCore ++
+Windows 10 inclúe novas voces coñecidas coma voces "OneCore" ou "mobile".
+Proporciónanse voces para moitas linguas e son máis lixeiras que as voces Microsoft disponibles ao se usar Microsoft Speech API versión 5.
+
+Para instalar voces para linguas adicionais, consulta este artigo de Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Por favor ten en conta que actualmente non están dispoñibles co NVDA as velocidades máis rápidas dispoñibles co Narrator.
+Tamén, a velocidade selecionada na configuración de Windows afecta á configurada no NVDA.
+Estos problemas non se poden resolver sen cambios no Windows.
+Desexamos que esto se solucione nunha actualización futura do Windows.
 
 ++ Audiologic Tts3 ++
 Este é un sintetizador de voz commercial específicamente para a lingua italiana.
@@ -2319,6 +2342,18 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | None | --debug-logging | Habilita o nivel depuración no rexistro só para esta execución. Esta opción anulará calquera outro argumento do nivel do rexistro ( ""--loglevel"", -l) dado. |
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
+
+++ Parámetros do Sistema ++[SystemWideParameters]
+NVDA permite configurar algúns valores no rexistro do sistema que alteran o comportamento de todo o sistema do NVDA.
+Estos valores almacénanse no rexistro do sistema baixo unha das seguintes claves:
+- Sistema de 32 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- Sistema de 64 bits: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Os seguintes valores poden configurarse baixo estas claves do rexistro:
+|| Nome | Tipo | Valores Posibles | Descripción |
+| configInLocalAppData | DWORD | 0 (predeterminado) para deshabilitado, 1 para habilitado | Se está habilitado, almacena a configuración do usuario do NVDA no cartafol local de datos de aplicación en lugar da roaming application data |
+| serviceDebug | DWORD | 0 (predeterminado) para deshabilitar, 1 para habilitar | Se se habilita, deshabilita o modo seguro nos escritorios seguros do windows, permitindo o uso da consola de Python e do visualizador do Rexistro. Debido a varias implicacións importantes de seguridade, o uso desta opción está altamente desaconsellada |
 
 + Información Adicional +
 Se requires información adicional ou asistencia referente ao NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.

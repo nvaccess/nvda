@@ -147,8 +147,9 @@ Consultare il sito di NVDA su come procedere per farlo.
 
 Quando NVDA si avvia per la prima volta, sarete accolti da una finestra di benvenuto che fornirà informazioni basilari sulle impostazioni del tasto funzione "NVDA" e sul menu. 
 Si vedano le sezioni successive di questo documento per ulteriori dettagli. 
-La finestra di dialogo contiene tre caselle di controllo.
-La prima consente di stabilire se NVDA debba usare il tasto "Blocca Maiuscole" come tasto funzione "NVDA".
+La finestra di dialogo contiene una casella combinata e tre caselle di controllo.
+La casella combinata consente di selezionare il layout tastiera.
+La prima casella di controllo permette di stabilire se NVDA debba usare il tasto "Blocca Maiuscole" come tasto funzione "NVDA".
 La seconda permette di specificare se NVDA debba avviarsi automaticamente dopo l'accesso a Windows ed è disponibile solo per le copie installate dello screen reader.
 La terza invece permette di decidere se questa finestra debba presentarsi ad ogni avvio dello Screen Reader.
  
@@ -542,7 +543,7 @@ Ciò richiede che MathPlayer4 sia installato sul computer.
 MathPlayer può essere scaricato gratuitamente dal seguente sito web: http://www.dessci.com/en/products/mathplayer/
 
 NVDA supporta la matematica nei seguenti formati:
-- MathML in Mozilla Firefox e Microsoft Internet Explorer.
+- MathML in Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
 - MathType Design Science  in Microsoft Word e PowerPoint. Si noti che MathType dev'essere installato affinché il supporto funzioni correttamente, è sufficiente anche la versione di prova.
 - MathML in Adobe Reader. (Si noti che questo non è ancora uno standard ufficiale, per cui attualmente non esiste per il pubblico un software disponibile che possa produrre questo contenuto).
 -
@@ -966,6 +967,9 @@ L'indicatore della selezione non è affetto da questa funzione.
 ==== Timeout dei messaggi(sec) ====
 Si tratta di un campo numerico che controlla per quanto tempo i messaggi di NVDA saranno mostrati sul Display Braille.
 Il valore 0 farà in modo che non verrà visualizzato più alcun messaggio.
+
+==== Mostra messaggi a tempo indeterminato ====
+Questa funzione fa in modo che NVDA mostri i messaggi sul display braille a tempo indeterminato.
 
 %kc:setting
 ==== Il display braille segue ====[BrailleTether]
@@ -1588,6 +1592,17 @@ Per usare queste voci, è necessaria l'installazione di due componenti:
  Ad esempio, il file MSSpeech_TTS_en-US_ZiraPro.msi è una voce inglese Stati Uniti.
  -
 -
+
+++ Voci Windows OneCore ++
+In Windows10 sono presenti nuove voci conosciute come "OneCore", oppure come "mobile".
+Tali voci sono disponibili in diverse lingue e risultano più reattive rispetto alle classiche Sapi5.
+
+Per installare voci in lingue aggiuntive, si veda questo articolo Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Si noti che le velocità più elevate che sono presenti in Narrator non sono attualmente disponibili in NVDA.
+Inoltre, la velocità che viene selezionata nelle impostazioni di Windows influenza anche quella di NVDA.
+Purtroppo si tratta di bug che non possono essere risolti da noi, senza l'intervento di Microsoft.
+Sono stati comunque segnalati, perciò speriamo che presto Windows riceva aggiornamenti in tal senso.
 
 ++ Audiologic Tts3 ++
 Si tratta di una sintesi vocale commerciale espressamente rivolta al mercato italiano. 
@@ -2224,8 +2239,8 @@ Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyBindings
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
-+ Tipi di controlli braille e abbreviazioni di stato +
-Per fare in modo di fornire il maggior numero di informazioni in un display braille, sono state definite le seguenti abbreviazioni per illustrare i tipi di controllo e lo stato degli elementi.
++ Tipi di controlli braille, punti di riferimento e abbreviazioni di stato +
+Per fare in modo di fornire il maggior numero di informazioni in un display braille, sono state definite le seguenti abbreviazioni per illustrare i tipi di controllo, lo stato degli elementi e per i punti di riferimento.
 
 || Abbreviazione | Tipo controllo |
 | btn | bottone |
@@ -2239,6 +2254,7 @@ Per fare in modo di fornire il maggior numero di informazioni in un display brai
 | hN | intestazione di livello n, ad esempio h1, h2. |
 | lnk | link |
 | lst | elenco |
+| prf | punto di riferimento |
 | vlnk | link visitato |
 | mnu | menu |
 | mnubar | barra dei menu |
@@ -2260,6 +2276,17 @@ Sono inoltre definiti i seguenti indicatori di stato:
 | ro | visualizzato quando un oggetto, come un campo di testo editabile, risulta di sola lettura |
 | sel | visualizzato quando un oggetto risulta selezionato |
 | submnu | visualizzato quando un oggetto contiene un popup, in genere un sottomenu |
+
+Inoltre, sono presenti alcune abbreviazioni per gestire i punti di riferimento:
+|| Abbreviazione | Punto di riferimento |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementare |
+| form | form |
+| main | principale |
+| navi | navigazione |
+| srch | ricerca |
+| rgn | regione |
 
 + Argomenti avanzati +
 

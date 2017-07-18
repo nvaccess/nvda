@@ -26,6 +26,9 @@ debug=env['nvdaHelperDebugFlags']
 release=env['release']
 signExec=env['signExec'] if env['certFile'] else None
 progFilesX86 = os.getenv("ProgramFiles(x86)")
+if not progFilesX86:
+	# 32 bit system, so only one Program Files directory.
+	progFilesX86 = os.getenv("ProgramFiles")
 
 env.Append(CPPDEFINES=[
 	'UNICODE', '_CRT_SECURE_NO_DEPRECATE',

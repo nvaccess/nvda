@@ -25,6 +25,7 @@ import appModuleHandler
 import treeInterceptorHandler
 import braille
 import globalPluginHandler
+import brailleInput
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -819,6 +820,15 @@ Tries to force this object to take the focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 
+	def _get_placeholder(self):
+		"""If it exists for this object get the value of the placeholder text.
+		For example this might be the aria-placeholder text for a field in a web page.
+		@return: the placeholder text else None
+		@rtype: String or None
+		"""
+		log.debug("Potential unimplemented child class: %r" %self)
+		return None
+
 	def _reportErrorInPreviousWord(self):
 		try:
 			# self might be a descendant of the text control; e.g. Symphony.
@@ -915,6 +925,7 @@ This code is executed if a gain focus event is received by this object.
 """
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
+		brailleInput.handler.handleGainFocus(self)
 
 	def event_foreground(self):
 		"""Called when the foreground window changes.
@@ -946,6 +957,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
+			brailleInput.handler.handleCaretMove(self)
 			review.handleCaretMove(self)
 
 	def _get_flatReviewPosition(self):
@@ -980,6 +992,14 @@ This code is executed if a gain focus event is received by this object.
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
+
+	def _get__isTextEmpty(self):
+		"""
+		@return C{True} if the text contained in the object is considered empty by the underlying implementation. In most cases this will match {isCollapsed}, however some implementations may consider a single space or line feed as an empty range.
+		"""
+		ti = self.makeTextInfo(textInfos.POSITION_FIRST)
+		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+		return ti.isCollapsed
 
 	@staticmethod
 	def _formatLongDevInfoString(string, truncateLen=250):
@@ -1108,3 +1128,18 @@ This code is executed if a gain focus event is received by this object.
 	#: The language/locale of this object.
 	#: @type: basestring
 	language = None
+
+	def _get__hasNavigableText(self):
+		# The generic NVDAObjectTextInfo by itself is never enough to be navigable
+		if self.TextInfo is NVDAObjectTextInfo:
+			return False
+		role = self.role
+		states = self.states
+		if role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT):
+			# Edit fields, terminals and documents  are always navigable
+			return True
+		elif controlTypes.STATE_EDITABLE in states:
+			# Anything that is specifically editable is navigable
+			return True
+		else:
+			return False
