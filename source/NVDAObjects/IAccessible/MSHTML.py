@@ -90,15 +90,12 @@ class HTMLAttribCache(object):
 			return self.containsCache[item]
 		except LookupError:
 			pass
-		value = self[item]
-		if value is not None:
-			contains = True
-			self.containsCache[item]=contains
-			return contains
-		try:
-			contains= self.HTMLNode.hasAttribute(item)
-		except (COMError,NameError):
-			contains = False
+		contains=item in self.cache
+		if not contains:
+			try:
+				contains=self.HTMLNode.hasAttribute(item)
+			except (COMError,NameError):
+				pass
 		self.containsCache[item]=contains
 		return contains
 
