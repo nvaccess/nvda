@@ -89,6 +89,21 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Dismiss the recognition result")
 
+	# The find commands are tricky to support because they pop up dialogs.
+	# This moves the focus, so we lose our fake focus.
+	# See https://github.com/nvaccess/nvda/pull/7361#issuecomment-314698991
+	def script_find(self, gesture):
+		# Translators: Reported when a user tries to use a find command when it isn't supported.
+		ui.message(_("Not supported in this document"))
+
+	def script_findNext(self, gesture):
+		# Translators: Reported when a user tries to use a find command when it isn't supported.
+		ui.message(_("Not supported in this document"))
+
+	def script_findPrevious(self, gesture):
+		# Translators: Reported when a user tries to use a find command when it isn't supported.
+		ui.message(_("Not supported in this document"))
+
 	__gestures = {
 		"kb:enter": "activatePosition",
 		"kb:space": "activatePosition",
