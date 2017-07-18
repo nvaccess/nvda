@@ -91,6 +91,7 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 
 	__gestures = {
 		"kb:enter": "activatePosition",
+		"kb:space": "activatePosition",
 		"kb:escape": "exit",
 	}
 
