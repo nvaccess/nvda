@@ -6,7 +6,10 @@
 
 import locale
 from collections import OrderedDict
-import _winreg
+try:
+	import winreg
+except:
+	import _winreg as winreg
 from comtypes import COMObject, COMError
 from ctypes import *
 from synthDriverHandler import SynthDriver,VoiceInfo
@@ -42,7 +45,7 @@ class SynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		try:
-			_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT, r"CLSID\%s" % CLSID_TTSEnumerator).Close()
+			winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"CLSID\%s" % CLSID_TTSEnumerator).Close()
 			return True
 		except WindowsError:
 			return False
