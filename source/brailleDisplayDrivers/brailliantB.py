@@ -5,7 +5,10 @@
 #Copyright (C) 2012-2017 NV Access Limited
 
 import os
-import _winreg
+try:
+	import winreg
+except:
+	import _winreg as winreg
 import itertools
 import time
 import serial
@@ -101,7 +104,7 @@ def _getPorts():
 	# USB serial.
 	for usbId in USB_IDS_SER:
 		try:
-			rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
+			rootKey = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,
 				r"SYSTEM\CurrentControlSet\Enum\USB\%s" % usbId)
 		except WindowsError:
 			# A display with this id has never been connected via USB.
@@ -109,12 +112,12 @@ def _getPorts():
 		with rootKey:
 			for index in itertools.count():
 				try:
-					keyName = _winreg.EnumKey(rootKey, index)
+					keyName = winreg.EnumKey(rootKey, index)
 				except WindowsError:
 					break # No more sub-keys.
 				try:
-					with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-						yield "USB serial", _winreg.QueryValueEx(paramsKey, "PortName")[0]
+					with winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
+						yield "USB serial", winreg.QueryValueEx(paramsKey, "PortName")[0]
 				except WindowsError:
 					continue
 
