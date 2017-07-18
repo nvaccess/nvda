@@ -8,6 +8,7 @@ from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 from comtypes.automation import VARIANT
+import time
 import weakref
 import sys
 import numbers
@@ -823,6 +824,16 @@ class UIA(Window):
 			return bool(self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId))
 		except COMError:
 			return True
+
+	_lastLiveRegionChangeInfo=(None,None) #: Keeps track of the last live region change (text, time)
+	def _get__shouldAllowUIALiveRegionChangeEvent(self):
+		oldText,oldTime=self._lastLiveRegionChangeInfo
+		newText=self.name
+		newTime=time.time()
+		if newText==oldText and oldTime is not None and (newTime-oldTime)<0.5:
+			return False
+		self.__class__._lastLiveRegionChangeInfo=(newText,newTime)
+		return True
 
 	def _getUIAPattern(self,ID,interface,cache=False):
 		punk=self.UIAElement.GetCachedPattern(ID) if cache else self.UIAElement.GetCurrentPattern(ID) 

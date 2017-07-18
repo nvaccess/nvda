@@ -217,7 +217,11 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
+		if (
+			not obj
+			or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent)
+			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
+		):
 			return
 		focus=api.getFocusObject()
 		if obj==focus:
