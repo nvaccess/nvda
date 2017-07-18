@@ -74,7 +74,7 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 			# we want the cursor to move to the focus (#3145).
 			# However, we don't want this for recognition results, as these aren't focusable.
 			ti._enteringFromOutside = True
-		eventHandler.executeEvent("gainFocus", self)
+		eventHandler.queueEvent("gainFocus", self)
 
 	def script_activatePosition(self, gesture):
 		try:
