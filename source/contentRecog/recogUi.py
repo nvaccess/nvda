@@ -74,7 +74,8 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 			# we want the cursor to move to the focus (#3145).
 			# However, we don't want this for recognition results, as these aren't focusable.
 			ti._enteringFromOutside = True
-		eventHandler.executeEvent("gainFocus", self)
+		# This might get called from a background thread and all NVDA events must run in the main thread.
+		eventHandler.queueEvent("gainFocus", self)
 
 	def script_activatePosition(self, gesture):
 		try:
@@ -89,8 +90,24 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Dismiss the recognition result")
 
+	# The find commands are tricky to support because they pop up dialogs.
+	# This moves the focus, so we lose our fake focus.
+	# See https://github.com/nvaccess/nvda/pull/7361#issuecomment-314698991
+	def script_find(self, gesture):
+		# Translators: Reported when a user tries to use a find command when it isn't supported.
+		ui.message(_("Not supported in this document"))
+
+	def script_findNext(self, gesture):
+		# Translators: Reported when a user tries to use a find command when it isn't supported.
+		ui.message(_("Not supported in this document"))
+
+	def script_findPrevious(self, gesture):
+		# Translators: Reported when a user tries to use a find command when it isn't supported.
+		ui.message(_("Not supported in this document"))
+
 	__gestures = {
 		"kb:enter": "activatePosition",
+		"kb:space": "activatePosition",
 		"kb:escape": "exit",
 	}
 
