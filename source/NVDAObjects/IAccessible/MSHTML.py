@@ -71,6 +71,7 @@ class HTMLAttribCache(object):
 	def __init__(self,HTMLNode):
 		self.HTMLNode=HTMLNode
 		self.cache={}
+		self.containsCache={}
 
 	def __getitem__(self,item):
 		try:
@@ -83,6 +84,20 @@ class HTMLAttribCache(object):
 			value=None
 		self.cache[item]=value
 		return value
+
+	def __contains__(self,item):
+		try:
+			return self.containsCache[item]
+		except LookupError:
+			pass
+		contains=item in self.cache
+		if not contains:
+			try:
+				contains=self.HTMLNode.hasAttribute(item)
+			except (COMError,NameError):
+				pass
+		self.containsCache[item]=contains
+		return contains
 
 nodeNamesToNVDARoles={
 	"FRAME":controlTypes.ROLE_FRAME,
@@ -735,8 +750,9 @@ class MSHTML(IAccessible):
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
 			states.add(state)
+		htmlRequired='required' in self.HTMLAttributes
 		ariaRequired=self.HTMLAttributes['aria-required']
-		if ariaRequired=="true":
+		if htmlRequired or ariaRequired=="true":
 			states.add(controlTypes.STATE_REQUIRED)
 		ariaSelected=self.HTMLAttributes['aria-selected']
 		if ariaSelected=="true":
