@@ -78,6 +78,9 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 template<typename TableType> inline void fillTableCounts(VBufStorage_controlFieldNode_t* node, IAccessible2* pacc, TableType* paccTable) {
 	wostringstream s;
 	long count = 0;
+	// Fetch row and column counts and add them as two sets of attributes on this vbuf node.
+	// The first set: table-physicalrowcount and table-physicalcolumncount represent the physical topology of the table and can be used programmatically to understand table limits.
+	// The second set: table-rowcount and table-columncount are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTable->get_nRows(&count) == S_OK) {
 		s << count;
 		node->addAttribute(L"table-physicalrowcount", s.str());
@@ -130,6 +133,10 @@ inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAcc
 	long cellIndex = _wtoi(cellIndexStr.c_str());
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
+	// Fetch row and column extents and add them as attributes on this node.
+	// for rowNumber and columnNumber, store these as two sets of attributes.
+	// The first set: table-physicalrownumber and table-physicalcolumnnumber represent the physical topology of the table and can be used programmatically to fetch other table cells with IAccessibleTable etc.
+	// The second set: table-rownumber and table-columnnumber are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		s << row + 1;
 		node->addAttribute(L"table-physicalrownumber", s.str());
@@ -190,6 +197,10 @@ inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFi
 
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
+	// Fetch row and column extents and add them as attributes on this node.
+	// for rowNumber and columnNumber, store these as two sets of attributes.
+	// The first set: table-physicalrownumber and table-physicalcolumnnumber represent the physical topology of the table and can be used programmatically to fetch other table cells with IAccessibleTable etc.
+	// The second set: table-rownumber and table-columnnumber are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		s << row + 1;
 		node->addAttribute(L"table-physicalrownumber", s.str());
@@ -347,9 +358,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		LOG_DEBUG(L"a node with this docHandle and ID already exists, returning NULL");
 		return NULL;
 	}
-
-	// Save off the old parent for later propagation of some attributes
-	VBufStorage_fieldNode_t* origParentNode=parentNode;
 
 	//Add this node to the buffer
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
