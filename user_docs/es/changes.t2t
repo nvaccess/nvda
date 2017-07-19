@@ -17,6 +17,8 @@ Qué hay de Nuevo en NVDA
 - Añadido el soporte para el control Selector de Fecha que se encuentra en los cuadros de diálogo Citas de Microsoft Outlook. (#7217)
 - Ahora se anuncia la sugerencia actualmente seleccionada en los campos de Windows 10 Mail para/cc y en el campo Opciones de búsqueda de Windows 10. (#6241)
 - Ahora se reproduce un sonido para indicar la aparición de sugerencias en ciertos campos de búsqueda de Windows 10 (Ej.: pantalla de inicio, Opciones de búsqueda, campos de Windows 10 mail para/CC). (#6241)
+- Se anuncian automáticamente las notificaciones en Skype for Business Desktop, tales como cuando alguien inicia una conversación contigo.  (#7281)
+- Se anuncian automáticamente las notificaciones en Microsoft Edge, tales como cuando se inicia una descarga. (#7281)
 
 
 == Cambios ==
@@ -45,6 +47,8 @@ Qué hay de Nuevo en NVDA
 - NVDA ahora anunciará cambios de selección para ciertos cuadros combinados de Windows 10 tales como AutoReproducción en Opciones. (#6337).
 - Ya no se anuncia información injustificada al entrar en diálogos de reuniones / citas en Microsoft Outlook. (#7216)
 - Pitidos indeterminados para barras de progreso de diálogo tales como el actualizador sólo cuando la salida de la barra de progreso se configure para incluir pitidos. (#6759)
+- En Microsoft Excel 2007 y 2003, las celdas se anuncian de nuevo al navegar a través de una hoja de cálculo. (#8243)
+- En la actualización Windows 10 Creators y posterior, se asegura de que el modo exploración se active automáticamente al leer correos electrónicos en Windows 10 Mail. (#7289)
 
 
 == Cambios para Desarrolladores ==
@@ -2115,6 +2119,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - NVDA ahora pregunta si debería guardar la configuración y reiniciar si el usuario ha cambiado el idioma en el diálogo Opciones de Interface de Usuario. NVDA debe ser reiniciado para que el cambio de idioma tenga un efecto completo.
 - Si un sintetizador no puede ser cargado, cuando se lo selecciona desde el diálogo Sintetizadores, Un cuadro de mensaje alerta al usuario del hecho.
 - Cuando se carga un sintetizador por primera vez, NVDA permite al sintetizador elegir la voz más conveniente, los parámetros de velocidad y tono, en lugar de forzarlo a dejarlo como piense que está bien. Esto corrige un problema donde los sintetizadores sapi4 Eloquence y Viavoice comienzan a hablar de un modo bastante rápido para una primera vez.
+
 
 
 
