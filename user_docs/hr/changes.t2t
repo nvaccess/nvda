@@ -13,12 +13,14 @@
 - NVDA sada može govoriti uz pomoć Windows OneCore glasova (znanih kao mobile glasovi), koji su uključeni u Windowse 10. Pristupate im označavanjem opcije Windows OneCore glasovi u NVDA dijaloškom okviru Govorna jedinica. (#6159)
 - NVDA konfiguracijske datoteke sada mogu biti pospremljene korisničkoj mapi application data. To se uključuje u registru. Za više detalja, pogledajte poglavlje 'sistemski parametri' u korisničkom priručniku. (#6812)
 - U web preglednicima, NVDA izgovara vrijednosti placeholdera za polja (točnije, aria-placeholder sada je podržan). (#7004)
-- In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w) (#6942)
-- Added support for the Date picker control found in Microsoft Outlook Appointment dialogs. (#7217)
-- The currently selected suggestion is now reported in Windows 10 Mail to/cc fields and the Windows 10 Settings search field. (#6241)
-- A sound is now playd to indicate the  appearance of suggestions in certain search fields in Windows 10 (E.g. start screen, settings search, Windows 10 mail to/cc fields). (#6241)
-- Automatically report notifications in Skype for Business Desktop, such as when someone starts a conversation with you.  (#7281)
-- Automatically report notifications in Microsoft Edge, such as when a download starts.  (#7281)
+- U načinu pregleda u Microsoft Wordu, sada je moguće kretati se po pravopisnim pogreškama uz pomoć brze navigacije (w i shift+w) (#6942)
+- Dodana podrška za kontrolu odabirnika datuma koja se može pronaći u Microsoft Outlookovom dijaloškom okviru za termine. (#7217)
+- Trenutno označeni prijedlog sada se izgovara u Windows 10 pošti u poljima to/cc te u Windows 10 polju uređivanja u Postavkama. (#6241)
+- Sada se reproducira zvučni signal, koji izvještava o prisutnosti prijeldoga u većini polja za pretragu u Windowsima 10 (NPR. početni zaslon, pretraga u postavkama, polja to/CC u Windows 10 pošti). (#6241)
+- Automatski izgovara obavijesti u Skype for Business Desktop, kao na primjer, kada netko želi započeti razgovor s vama.  (#7281)
+- Automatsko čitanje obavijesti u Microsoft Edgeu, poput početka preuzimanja.  (#7281)
+- Sada možete pisati kratkopisom i punim pismom na brajičnoj tipkovnici vašeg brajevog redka. Pogledajte poglavlje brajični unos u korisničkom vodiću. (#2439)
+- Sada možete upisivati Unicode brajične znakove na brajičnoj tipkovnici, označujući Unicode braille kao brajičnu tablicu. (#6449)
 
 
 == Izmjene ==
@@ -35,7 +37,9 @@
  - "obrazac": "frm"
  - "regija": "rgn"
  - Na primjer: "navigacijski orijentir" postaje "lmk nav"
-- Espeak-ng has been updated to release 1.49.1 (#7280).
+- Espeak-ng je nadograđen na verziju 1.49.1 (#7280).
+- Popisi ulaznih i izlaznih brajičnih tablica u dojaloškom okviru brajičnih postavki, sada su sortirani po abecednom redu. (#6113)
+- Obnovljen liblouis brajični prevoditelj na verziju 3.2.0. (#6935)
 
 
 == Ispravke grešaka ==
@@ -44,11 +48,13 @@
 - Način pregleda je sada ispravno podržan u Microsoft Edgeu gdje je dokumentu dodijeljen atribut dokumenta. (#6998)
 - U načinu pregleda, može se označavati ili odznačavati do kraja retka sa  using shift+end čak i ako je znak ili redak na kraju. (#7157)
 - Ako dijaloški okvir sadrži traku napredka, tekst dijaloškog okvira je ažuriran kada se traka napredka promijeni. to sada znaći, da se preostalo vrijeme iz dijaloškog okvira preuzimanja nadogradnje može isčitati. (#6862)
-- NVDA will now announce selection changes for certain Windows 10 combo boxes such as AutoPlay in Settings. (#6337).
-- Pointless information is no longer announced when entering Meeting / Appointment creation dialogs in Microsoft Outlook. (#7216)
-- Beeps for indeterminate progress bar dialogs such as the update checker only when progress bar output is configured to include beeps. (#6759)
-- In Microsoft Excel 2007 and 2003, cells are again reported when arrowing around a worksheet. (#8243)
-- In Windows 10 Creators update and later, ensure that browse mode is automatically enabled when reading emails in Windows 10 Mail. (#7289)
+- NVDA će sada izgovarati promjenu označenog za većinu Windows 10 odabirnih okvira kao što je to automatska reprodukcija u postavkama. (#6337).
+- Više se ne izgovaraju nepotrebne informacije pri upisu susreta / termina u dijaloškim okvirima za stvaranje u Microsoft Outlooku. (#7216)
+- Zvučni signali za vječne trake napredovanja u dijaloškim okvirima kao što su to provjere nadogradnje čuju se samo kada je izlaz podešena na zvučne signale. (#6759)
+- U Microsoft Excelu 2007 i 2003, ćelije se ponovno izgovaraju prilikom kretanja po radnom listu. (#8243)
+- U Windowsima 10 nadogradnji za tvorce i novijim, način pregleda se automatski omogućuje pri čitanju pošte u Windows 10 Pošti. (#7289)
+- Na većini brajičnih redaka sa brajičnom tipkovnicom, Točkica 7 briše zadnju brajičnu ćeliju ili znak, a točkica 8 pritišće enter. (#6054)
+- U tekstu za uređivanje, prilikom premještanja kursora (npr. sa strelicama ili tipkom backspace), NVDAova izgovorena povratna informacija je sada točnija u većini slučajeva, točnije u Google chrome i terminalnim aplikacijama. (#6424)
 
 
 == Izmjene za razvojne programere ==
