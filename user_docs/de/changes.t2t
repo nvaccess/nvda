@@ -17,6 +17,10 @@
 - Datumsfelder in Dialogfeldern für Microsoft Outlook-Termine werden unterstützt. (#7217)
 - In dem "An"-Feld und Kopie in der Windows 10 Mail-App und im Suchfeld für die Windows-Einstellungen wird der aktuell hervorgehobene Vorschlag angezeigt. (#6241)
 - Sobald die Vorschlagsliste für ein Suchfeld in Windows 10 erscheint, wird ein Klang abgespielt. (#6241)
+- In Skype für Unternehmen werden Benachrichtung wie ankommende Nachrichten automatisch angezeigt.  (#7281)
+- In Microsoft Edge werden Benachrichtigungen (z.B. über abgeschlossene Downloads) automatisch angezeigt.  (#7281)
+- Sie können nun Kurz-, Voll- und Basisschrift über die Brailletastatur einer Braillezeile eingeben. lesen Sie den Abschnitt über Braille-Eingabe in Benutzerhandbuch für weitere Informationen. (#2439)
+- Mit Hilfe der Brailletabelle Unicode können Sie nun Unicode-Zeichen über die Brailletastastur einer Braillezeile eingeben. (#6449)
 
 
 == Änderungen ==
@@ -34,6 +38,8 @@
  - "Region": "rgn"
  - Beispiel: "Sprungmarke Navigation" wird geändert in "lmk nav"
 - Espeak-ng wurde auf Version 1.49.1 aktualisiert. (#7280).
+- Die Liste der Brailleein- und -Ausgabetabellen wird nun alphabetisch sortiert. (#6113)
+- Liblouis wurde auf 3.2.0 aktualisiert. (#6935)
 
 
 == Fehlerkorrekturen ==
@@ -45,13 +51,17 @@
 - Einige Kombinationsfelder in Windows 10 wie z.B. die Einstellungen für automatische Wiedergabe werden jetzt unterstützt. (#6337).
 - Beim Erstellen von Besprechungen und Terminen in Microsoft Outlook werden keine nutzlosen Informationen mehr angezeigt. (#7216)
 - Signaltöne für Fortschrittsbalken mit scheinbar unbegrenztem Wertebereich (wie z.B. der Fortschrittsbalken bei der Prüfung auf Aktualisierungen) werden nur noch abgespielt, wenn Sie in den Einstellungen für Objektdarstellungen die Signaltöne für Fortschrittsbalken aktiviert haben. (#6759)
+- In Microsoft Excel 2003 und 2007 werden die Zellen wieder angezeigt, wenn Sie in einem Tabellenblatt navigieren. (#8243)
+- Der lesemodus in Windows 10 Mail in Windows 10 Creators Update funktioniert nun wieder korrekt. (#7289)
+- auf den meisten Braillezeilen mit einer Brailletastatur bewirkt das Drücken von Punkt 7 ein Löschen des zuletzt eingegebenen zeichens und ein Drücken von Punkt 8 fügt einen Zeilenvorschub ein. (#6054)
+- Das Bewegen des Systemcursors (z. B. mit den Pfeiltasten) wird nun exakter verfolgt. Dies betrifft z. B. die eingabeaufforderung. (#6424)
 
 
 == Änderungen für Entwickler ==
 - Die Zeitstempel im Protokoll enthalten jetzt auch Millisekunden. (#7163)
 - NVDA muss mit Visual Studio Community 2015 erzeugt werden. Visual Studio Express wird nicht mehr unterstützt. (#7110)
  - Das windows 10 SDK ist nun ebenfalls erforderlich. Es kann aktiviert werden, wenn Sie Visual Studio installieren.
- - Lesen Sie den Abschnitt Abhängigkeiten in der Liesmich-Datei für weitere Informationen.
+ - Lesen Sie den Abschnitt über Abhängigkeiten in der Liesmich-Datei für weitere Informationen.
 
 
 = 2017.2 =

@@ -6,8 +6,9 @@
 
 = Inhaltsverzeichnis =[toc]
 %%toc
-
 + Einleitung +
+Willkommen zu NVDA!
+
 NonVisual Desktop Access (NVDA) ist ein freier und quelloffener Screenreader für das Microsoft Windows-Betriebssystem.
 Es bietet Feedback via synthetischer Sprache und Braille. Dabei erhalten Blinde und hochgradig Sehbehinderte Menschen kostenlos gleichermaßen Zugriff auf Windows wie ein Sehender.
 Entwickelt wird NVDA von [NV Access http://www.nvaccess.org/] und allen Mitwirkenden aus der Community.
@@ -43,6 +44,7 @@ Informationen über weitere Sprachausgaben, die NVDA unterstützt, können Sie i
 
 ++ Unterstützung von Brailleausgabe ++
 Für Anwender, die eine Braillezeile besitzen, kann NVDA die Informationen in Brailleschrift ausgeben.
+Die Eingabe von Kurz-, Voll- und Basisschrift über die Brailletastatur Ihrer Braillezeile wird ebenfalls unterstützt.
 Für weitere Informationen schauen Sie bitte im Abschnitt "[Unterstützte Braillezeilen #SupportedBrailleDisplays]" nach.
 
 NVDA enthält Braille-Übersetzungstabellen für Computerbraille sowie für Voll- und Kurzschrift für viele Sprachen.
@@ -578,6 +580,77 @@ Weiter Informationen hierzu finden Sie in der Dokumentation zu mathplayer.
 
 Um die Navigation im Ausdruck zu beenden, drücken Sie die Escape-Taste.
 
++ Braille +
+Wenn Sie eine Braillezeile besitzen, kann NVDA diese verwenden, um Informationen in Blindenschrift darzustellen.
+Falls Ihre Braillezeile eine Tastatur besitzt, können Sie außerdem Kurz-, Voll- oder Basisschrift eingeben.
+
+Bitte sehen Sie im Abschnitt [unterstützte Braillezeilen #SupportedBrailleDisplays] nach, um zu erfahren, ob Ihre Braillezeile unterstützt wird.
+Verwenden Sie den [Dialog "Brailleeinstellungen" #BrailleSettings], um NVDA an Ihre Braillezeile anzupassen.
+
+++ Abkürzungen für Steuerelementtypen und Statusanzeigen ++
+Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende Abkürzungen für Steuerelementtypen und Statusanzeigen festgelegt.
+
+|| Abkürzung | Steuerelementtyp |
+| sltr | Schalter |
+| akl | Konbinationsfeld |
+| kf | Kontrollkästchen |
+| dlg | Dialogfeld |
+| ef | Eingabefeld |
+| grf | Grafik |
+| sN | Tabellenspalte N, zum Beispiel S1, S2. |
+| rN | Reihe N in einer Tabelle, zum Beispiel R1, R2. |
+| üN | Überschrift der Ordnung N, zum Beispiel ü1, ü2. |
+| lnk | link |
+| lst | Liste |
+| lmk | Sprungmarke |
+| bl | Besuchter Link |
+| mnü | Menü |
+| Mnülst | Menüleiste |
+| as | Auswahlschalter |
+| tbl | Tabelle |
+| ba | Baumansicht |
+| N | Ein Eintrag in einer Baumansicht in der Ebene N |
+| ``-----`` | Trennlinie |
+
+Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
+|| Abkürzung | Status |
+| ... | Wird angezeigt, wenn ein Objekt automatische Vervollständigung unterstützt. |
+| [ ] | Wird angezeigt, wenn ein Objekt (zum Beispiel ein Kontrollkästchen) nicht aktiviert ist. |
+| [X] | Wird angezeigt, wenn ein Objekt (zum Beispiel ein Kontrollfeld) aktiviert ist. |
+| [-] | Wird angezeigt, wenn ein Objekt (zum Beispiel ein Kontrollfeld) teilweise aktiviert ist. |
+| - | Wird bei Objekten (zum Beispiel Baumeinträgen) angezeigt, die reduziert werden können. |
+| + | Wird bei Objekten (zum Beispiel Baumeinträgen) angezeigt, die erweitert werden können. |
+| clk | Wird bei anklickbaren Objekten angezeigt |
+| sef | wird bei Objekten (zum Beispiel Eingabefeldern) angezeigt, die schreibgeschützt sind. |
+| mrk | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
+| -> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
+
+Die folgenden Abkürzungen werden für Sprungmarken verwendet:
+|| Abkürzung | Sprungmarke |
+| bnnr | Logo |
+| cinf | Inhalt |
+| cmpl | Ergänzung |
+| form | Formular |
+| main | Haupt |
+| navi | navigation |
+| srch | Suche |
+| rgn | region |
+
+++ Brailleeingabe ++
+NVDA unterstützt die Eingabe von Kurz-, Voll- und Basisschrift über eine Brailletastatur.
+Verwenden sie die Einstellung  ["Brailleeingabetabelle" #BrailleInputTable] in den Brailleeinstellungen, um zu bestimmen, welche Übersetzungstabelle Sie verwenden wollen.
+
+Wenn Sie Basisschrift eingeben, wird der eingegebene Text unmittelbar nach der Eingabe über die Brailletastatur in das aktuelle Programm eingefügt.
+Wenn Sie Kurz- oder Vollschrift eingeben, wird der Text erst in die aktuelle Anwendung eingefügt, wenn Sie ein Wort mit der Leertaste beenden.
+Dies betrifft nur direkt über die Brailletastatur eingegebenen Text und bezieht sich nicht auf bereits existierenden Text.
+Wenn Sie beispielsweise den Cursor an das Ende einer Zahl bewegt haben, müssen Sie das Zahlenzeichen nochmals eingeben um zusätzliche Stellen anzufügen.
+
+%kc:beginInclude
+Drücken Sie den Punkt 7, um das letzte Zeichen zu löschen.
+Drücken Sie den Punkt 8, um einen Zeilenvorschub einzufügen.
+Drücken Sie Punkt 7 und Punkt 8, um die eingegebenen Braillezeichen zu übersetzen, ohne einen Zeilenvorschub oder ein Leerzeichen einzufügen.
+%kc:endInclude
+
 + Anwendungsspezifische Funktionen +
 NVDA stellt für bestimmte Anwendungen zusätzliche Funktionen bereit, um bestimmte Aufgaben zu erleichtern oder um Zugriff auf Funktionalität bereitzustellen, die sonst nicht zugänglich wäre.
 
@@ -912,7 +985,7 @@ Wenn Sie rasch durch die verschiedenen Sprachausgabeneinstellungen schalten möc
 | Aktuelle Sprachausgabeneinstellung verringern | NVDA+Steuerung+Pfeiltaste nach unten | NVDA+Steuerung+Umschalt+Pfeiltaste nach unten | Verringert die aktuelle Einstellung (zum Beispiel die Sprechgeschwindigkeit verringern, wählt die vorherige Stimme aus, verringert die Lautstärke). |
 %kc:endInclude
 
-+++ Braille-Einstellungen +++
++++ Braille-Einstellungen +++[BrailleSettings]
 Sie finden die Braille-Einstellungen im Menü Einstellungen unter dem Punkt Braille-Einstellungen.
 
 ==== Braillezeile ====
@@ -936,16 +1009,15 @@ Diese Option ist nicht verfügbar, wenn Ihre Braillezeile nur die automatische S
 
 Sehen Sie im Abschnitt "[unterstützte Braillezeilen #SupportedBrailleDisplays]" für Informationen darüber nach, welche anschlüsse für Ihre Braillezeile zur Verfügung stehen.
 
-==== Ausgabetabelle ====
+==== Ausgabetabelle ====[BrailleInputTable]
 Die nächste Option ist die Auswahlliste der Braille-Tabellen.
 In diesem Kombinationsfeld finden Sie Brailletabellen für verschiedene Sprachen, Braille-Standards und Kurzschriften.
 Die ausgewählteTabelle wird zur Umwandlung von Text in Braille verwendet, um diesen auf Ihrer Braillezeile darzustellen.
 Zwischen den Braille-Tabellen bewegen Sie sich mit den Pfeiltasten.
 
-==== Eingabetabelle ====
+==== Eingabetabelle ====[BrailleInputTable]
 Entsprechend der vorherigen Option, finden Sie hier das Kombinationsfeld für die Braille-Eingabetabellen.
 Bei Verwendung von Braillezeilen mit Brailletastatur wird die hier ausgewählte Tabelle zur Umwandlung von Braille nach Text verwendet.
-NVDA unterstützt derzeit nur die Eingabe von Computerbraille, sodass nur 8-Punkt-Computerbrailletabellen aufgelistet werden.
 Von Brailletabelle zu Brailletabelle bewegen Sie sich mit den Pfeiltasten.
 
 Diese Option ist nur hilfreich, wenn Sie eine Braillezeile mit Brailletastatur verwenden und dieses Feature vom Braillezeilen-Treiber unterstützt wird.
@@ -1609,7 +1681,7 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
 Windows 10 enthält neue Stimmen, die als "Mobile" oder "OneCore"-Stimmen bekannt sind.
 Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft Sapi 5-Stimmen in früheren Windows-versionen.
 
-Informationen darüber, wie Sie Stimmen in zusätzlichen Sprachen installieren, finden Sie im folgenden Artikel: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+Informationen darüber, wie Sie Stimmen in zusätzlichen Sprachen installieren, finden Sie im folgenden Artikel: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 Bitte bedenken Sie auch, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, im NVDA nicht zur Verfügung stehen.
 Eine Änderung der Sprechgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprechgeschwindigkeit in NVDA.
@@ -1661,8 +1733,6 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Rückwärtsscrollen des verwendeten rechten Rollrädchens | Rechtes Rollrädchen nach oben |
 | Vorwärtsscrollen des verwendeten rechten Rollrädchens | Rechtes Rollrädchen nach unten |
 | Zum aktuellen Modul auf der Braillezeile springen | Routingtaste |
-| Rücktaste | Punkt7 |
-| Eingabetaste | Punkt8 |
 | Umschalt+Tab | Leertaste+Punkt1+Punkt2 |
 | Tab | Leertaste+Punkt4+Punkt5 |
 | Pfeil nach oben | Leertaste+Punkt1 |
@@ -1904,8 +1974,6 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Alt-Taste | Punkt1+Punkt3+Punkt4+Leertaste |
 | Escape-Taste | Punkt1+Punkt5+Leertaste |
 | Tab-Taste | Punkt4+Punkt5+Leertaste |
-| Eingabetaste | Punkt8 |
-| Rücktaste | Punkt7 |
 | Pfeil Auf | Punkt1+Leertaste |
 | Pfeil Ab | Punkt4+Leertaste |
 | Dauergroßschreibtaste | Punkt1+Punkt3+Punkt6+Leertaste |
@@ -2052,8 +2120,6 @@ Die inneren Tasten sind als Leertasten belegt.
 
 %kc:beginInclude
 || Name | Taste |
-| Rücktaste | Punkt7 |
-| Eingabetaste | Punkt8 |
 | Escape | Leertaste+Punkt7 |
 | Pfeil nach oben | Leertaste+Punkt2 |
 | Pfeil nach links | Leertaste+Punkt1 |
@@ -2250,55 +2316,6 @@ Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturbelegungen http://
 | Braillezeile zur nächsten Zeile bewegen | lndn (eine Zeile nach unten bewegen) |
 | Cursor zum Braille-Modul ziehen | Routingtaste (Cursor zum Zeichen bewegen) |
 %kc:endInclude
-
-+ Abkürzungen für Steuerelementtypen und Statusanzeigen in Braille +
-Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende Abkürzungen für Steuerelementtypen und Statusanzeigen festgelegt.
-
-|| Abkürzung | Steuerelementtyp |
-| sltr | Schalter |
-| akl | Konbinationsfeld |
-| kf | Kontrollkästchen |
-| dlg | Dialogfeld |
-| ef | Eingabefeld |
-| grf | Grafik |
-| sN | Tabellenspalte N, zum Beispiel S1, S2. |
-| rN | Reihe N in einer Tabelle, zum Beispiel R1, R2. |
-| üN | Überschrift der Ordnung N, zum Beispiel ü1, ü2. |
-| lnk | link |
-| lst | Liste |
-| lmk | Sprungmarke |
-| bl | Besuchter Link |
-| mnü | Menü |
-| Mnülst | Menüleiste |
-| as | Auswahlschalter |
-| tbl | Tabelle |
-| ba | Baumansicht |
-| N | Ein Eintrag in einer Baumansicht in der Ebene N |
-| ``-----`` | Trennlinie |
-
-Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
-|| Abkürzung | Status |
-| ... | Wird angezeigt, wenn ein Objekt automatische Vervollständigung unterstützt. |
-| [ ] | Wird angezeigt, wenn ein Objekt (zum Beispiel ein Kontrollkästchen) nicht aktiviert ist. |
-| [X] | Wird angezeigt, wenn ein Objekt (zum Beispiel ein Kontrollfeld) aktiviert ist. |
-| [-] | Wird angezeigt, wenn ein Objekt (zum Beispiel ein Kontrollfeld) teilweise aktiviert ist. |
-| - | Wird bei Objekten (zum Beispiel Baumeinträgen) angezeigt, die reduziert werden können. |
-| + | Wird bei Objekten (zum Beispiel Baumeinträgen) angezeigt, die erweitert werden können. |
-| clk | Wird bei anklickbaren Objekten angezeigt |
-| sef | wird bei Objekten (zum Beispiel Eingabefeldern) angezeigt, die schreibgeschützt sind. |
-| mrk | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
-| -> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
-
-Die folgenden Abkürzungen werden für Sprungmarken verwendet:
-|| Abkürzung | Sprungmarke |
-| bnnr | Logo |
-| cinf | Inhalt |
-| cmpl | Ergänzung |
-| form | Formular |
-| main | Haupt |
-| navi | navigation |
-| srch | Suche |
-| rgn | region |
 
 + Erweiterte Themen +
 
