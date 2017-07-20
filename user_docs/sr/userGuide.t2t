@@ -8,9 +8,11 @@
 %%toc
 
 + Uvod +
+Dobrodošli u  NVDA!
+
 NonVisual Desktop Access (NVDA) je besplatan čitač ekrana otvorenog koda za Microsoft Windows.
 Pružajući informacije koristeći sintetizatore govora i brajev red, omogućava slepim korisnicima pristup Windows operativnom sistemu uz jednake troškove videćim osobama.
-NVDA razvija[NV Access http://www.nvaccess.org/], uz saradnju zajednice.
+NVDA razvija[NV Access https://www.nvaccess.org/], uz saradnju zajednice.
 
 ++ Opšte karakteristike ++
 NVDA omogućava interakciju sa Windows operativnim sistemom i puno drugih aplikacija.
@@ -43,9 +45,10 @@ Informacije o sintezama koje NVDA podržava možete pronaći u delu[Podržani si
 
 ++ Podrška za brajeve redove ++
 Za korisnike koji imaju brajev red, NVDA može pružati informacije na brajevom pismu.
+Skraćen i standardan unos brajevih znakova je podržan.
 Molimo vas da pogledate deo[Podržani brajevi redovi #SupportedBrailleDisplays] za informacije o podržanim brajevim redovima.
 
-NVDA podržava brajeve kodove za puno jezika, uključujući contracted, uncontracted i kompjuterske brajeve kodove.
+NVDA podržava brajeve kodove za puno jezika, uključujući skraćene, standardne i kompjuterske brajeve kodove.
 
 ++ Licenca i autorska prava ++
 NVDA je pod autorskim pravima NVDA_COPYRIGHT_YEARS NVDA saradnici.
@@ -578,6 +581,77 @@ Molimo pročitajte dokumentaciju programa MathPlayer za više informacija.
 
 Kada želite da se vratite u dokument, jednostavno pritisnite taster escape.
 
++ Brajevo pismo +
+Ako koristite brajev red, NVDA može prikazati informacije na brajevom pismu.
+Ako vaš brajev red ima tastaturu, takođe možete pisati u skraćenom i standardnom  brajevom pismu.
+
+Molimo pročitajte [podržani brajevi redovi#SupportedBrailleDisplays] deo za informacije o posebnim komandama za brajeve redove.
+Možete podesiti brajev red korišćenjem dijaloga [brajeva podešavanja#BrailleSettings].
+
+++ Skraćenice za vrste kontrola, stanje i orjentire++
+Kako bi što je više informacija moguće stalo na brajev red, sledeće skraćenice su dodate za vrste kontrola stanje kao i orjentire.
+
+|| Skraćenica | Vrsta kontrole |
+| btn | Dugme |
+| cbo | Izborni okvir |
+| chk | Izborno polje |
+| dlg | dialog |
+| edt | Polje za unos teksta |
+| gra | Slika|
+| cN | Broj kolone tabele n, na primer c1, c2. |
+| rN | Broj reda tabele n, na primer r1, r2. |
+| hN | Zaglavlje na nivou n, na primer h1, h2. |
+| lnk | link |
+| lst | Lista |
+| lmk | Orjentir |
+| vlnk | Posećen link |
+| mnu | Meni |
+| mnubar | Traka menija |
+| rbtn | radio dugme |
+| tb | Tabela |
+| tv | Prikaz stabla |
+| lv N | Stavka prikaza stabla na nivou N|
+| ``-----`` | separator |
+
+Sledeći pokazivači stanja su takođe definisani:
+|| Skraćenica | Stanje kontrole |
+| ... | Prikazuje se kada objekat podržava automatsko dopunjavanje|
+| ( ) | Prikazano kada objekat(na primer izborno polje) nije označen|
+| (x) | Prikazano kada objekat(na primer izborno polje) je označen|
+| (-) | Prikazano kada objekat(na primer izborno polje) je polovično označeno|
+| - | Prikazano kada objekat(na primer stavka prikaza stabla) se može skupiti|
+| + | Prikazano kada objekat(na primer stavka prikaza stabla) se može proširiti|
+| clk | Prikazano kada se na objekat može kliknuti|
+| ro | Prikazano kada objekat(na primer polje za unos teksta) je samo za čitanje|
+| sel | Prikazano kada je objekat izabran|
+| submnu | Prikazano kada objekat ima dodatni prozor(obično podmeni) |
+
+Takođe, sledeće skraćenice za orjentire su definisane:
+|| Skraćenica | Orjentir |
+| bnnr | baner |
+| cinf | Informacije o sadržaju |
+| cmpl | Dodatni |
+| form | Formular |
+| main | Glavni |
+| navi | Navigacija|
+| srch | Pretraga |
+| rgn | region |
+
+++ Brajev unos ++
+NVDA podržava unos skraćenog i standardnog brajevog pisma.
+Možete izabrati brajevu tabelu koja se koristi za prevod korišćenjem [opcije ulazna tabela #BrailleInputTable] u dijalogu brajeva podešavanja.
+
+Kada se koristi standardan brajev unos, tekst se ubacuje čim se napiše.
+Kada se koristi skraćen brajev unos, tekst se ubacuje kada pritisnete razmak ili enter na kraju reči.
+Napomena da brajev prevod uzima u obzir samo reč koju upišete i ne može zavisiti od prethodnih reči.
+Na primer, ako koristite brajev  kod u kojem brojevi počinju sa znakom za broj i ako pritisnete taster za brisanje da dođete do kraja broja, moraćete ponovo da upišete znak za broj za dodatne brojeve.
+
+%kc:beginInclude
+Pritiskanje tačke 7 briše zadnji upisan znak.
+Tačka 8 prevodi bilo koji brajev unos i pritiska enter.
+Pritiskanje tačke7 i 8 prevodi brajev unos, bez pritiskanja tastera enter.
+%kc:endInclude
+
 + Posebne karakteristike za aplikacije+
 NVDA pruža određene dodatne karakteristike za neke aplikacije koje ili omogućavaju lakše izvršavanje određenog zadatka ili čine delove koji nisu bili pristupačni korisnicima čitača ekrana aplikacije pristupačnim .
 
@@ -912,7 +986,7 @@ Ako želite brzo da menjate podešavanja govora bez ulaza u dijalog glasovnih po
 | Smanjuje trenutno podešavanje govora| NVDA+kontrol+strelica dole | NVDA+šift+kontrol+strelica dole | Smanjuje trenutno podešavanje govora na kome se nalazite. Na primer smanjuje brzinu, bira prethodni glas, smanjuje ton|
 %kc:endInclude
 
-+++ Podešavanja brajevog reda +++
++++ Podešavanja brajevog reda  +++[BrailleSettings]
 Dijalog podešavanja brajevog reda se može aktivirati iz menija podešavanja u NVDA meniju.
 
 ==== Brajev red ====
@@ -942,10 +1016,9 @@ U ovom izbornom okviru, pronaćićete različite brajeve tabele za različite je
 Izabrana tabela će se koristiti za prevod teksta na brajevo pismo za prikazivanje na vašem brajevom redu.
 Možete se pomerati po tabelama koristeći strelice.
 
-==== Ulazna tabela ====
+==== Ulazna tabela  ====[BrailleInputTable]
 Nakon prethodne opcije, sledeća opcija na koju ćete naići je izborni okvir za izbor ulazne tabele.
 Izabrana tabela će se koristiti za prevođenje unetog teksta na brajevoj tastaturi u tekst.
-NVDA Trenutno podržava samo unos kompjuterskog brajevog koda, tako da će se prikazati samo osmotačkaste brajeve tabele.
 Možete se pomerati kroz tabele sa strelicama.
 
 Napomena da je ova opcija korisna samo ako vaš brajev red ima brajevu tastaturu i ako je ona podržana od strane odgovarajućeg drajvera.
@@ -1609,7 +1682,7 @@ Da biste koristili ove glasove, morate da instalirate dve komponente:
 Windows 10 uključuje nove glasove poznati i kao "OneCore" ili  "Mobilni" glasovi.
 Glasovi su ponuđeni za puno jezika, i oni su brži od Microsoft glasova dostupni korišćenjem opcije Microsoft Speech API verzija  5.
 
-Da instalirate glasove za dodatne jezike, pročitajte ovaj Microsoft članak: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+Molimo pročitajte ovaj Microsoft članak za listu dostupnih glasova i uputstva za instalaciju: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 Molimo imajte na umu da brzina govora koja je dostupna sa čitačem ekrana Narrator nije dostupna sa čitačem ekrana NVDA.
 Takođe, brzina koju izaberete u Windows podešavanjima utiče na brzinu izabranu u podešavanjima programa NVDA.
@@ -1661,8 +1734,6 @@ Molimo pogledajte dokumentaciju za više informacija o opisu tastera i o tome gd
 | Premesti se nazad koristeći desni točak | DesniWizWheelGore |
 | Premesti se napred koristeći desni točak | desniWizWheelDole |
 | Prebaci se na brajevu ćeliju | routing |
-| backspace | Tačka7 |
-| enter | tačka8 |
 | shift+tab | BrajevRazmak+tačka1+tačka2 |
 | tab | BrajevRazmak+tačka4+tačka5 |
 | strelicaGore | BrajevRazmak+tačka1 |
@@ -1904,8 +1975,6 @@ Molimo pogledajte uputstva za upotrebu brajevih redova kako biste saznali raspor
 | alt | Tačka1+tačka3+tačka4+Razmak |
 | escape | Tačka1+tačka5+Razmak |
 | tab | tačka4+tačka5+Razmak |
-| enter | tačka8 |
-| backspace | Tačka7 |
 | strelicaGore | Tačka1+razmak |
 | strelicaDole | Tačka4+Razmak |
 | capsLock | Tačka1+tačka3+tačka6+razmak |
@@ -2052,8 +2121,6 @@ Oba dve unutrašnje tipke su približene razmaku.
 
 %kc:beginInclude
 || Ime | Komanda |
-| backspace | Tačka 7 |
-| enter | Tačka 8 |
 | escape | razmak sa tačkom 7 |
 | strelicaGore | razmak sa tačkom 2 |
 | strelicaLevo | razmak sa tačkom 1 |
@@ -2187,8 +2254,8 @@ Molimo pogledajte vaše BrailleNote uputstvo za upotrebu da biste znali gde se n
 | Kontrol+home | razmak+tačka1+tačka2+tačka3 |
 | Control+end | razmak+tačka4+tačka5+tačka6 |
 | Razmak | brajev razmak |
-| Enter | razmak+tačka8 |
-| Backspace | razmak+tačka7 |
+| Enter | Razmak +tačka8  |
+| Backspace | Razmak +tačka7  |
 | Tab | razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
 | Šift+tab | razmak+tačka1+tačka2+tačka5+tačka6 |
 | Windows taster | razmak+tačka2+tačka4+tačka5+tačka6 (razmak+w) |
@@ -2250,55 +2317,6 @@ Molimo pogledajte [BRLTTY tabele tasterskih prečica http://mielke.cc/brltty/doc
 | Premesti brajev red na sledeći red | lndn (Idi dole za jedan red) |
 | Pomeri se na brajevu ćeliju | route (Pomeri kursor na znak) |
 %kc:endInclude
-
-+ Skraćenice za vrste kontrola, stanje i orjentire+
-Kako bi što je više informacija moguće stalo na brajev red, sledeće skraćenice su dodate za vrste kontrola stanje kao i orjentire.
-
-|| Skraćenica | Vrsta kontrole |
-| btn | Dugme |
-| cbo | Izborni okvir |
-| chk | Izborno polje |
-| dlg | dialog |
-| edt | Polje za unos teksta |
-| gra | Slika|
-| cN | Broj kolone tabele n, na primer c1, c2. |
-| rN | Broj reda tabele n, na primer r1, r2. |
-| hN | Zaglavlje na nivou n, na primer h1, h2. |
-| lnk | link |
-| lst | Lista |
-| lmk | Orjentir |
-| vlnk | Posećen link |
-| mnu | Meni |
-| mnubar | Traka menija |
-| rbtn | radio dugme |
-| tb | Tabela |
-| tv | Prikaz stabla |
-| lv N | Stavka prikaza stabla na nivou N|
-| ``-----`` | separator |
-
-Sledeći pokazivači stanja su takođe definisani:
-|| Skraćenica | Stanje kontrole |
-| ... | Prikazuje se kada objekat podržava automatsko dopunjavanje|
-| ( ) | Prikazano kada objekat(na primer izborno polje) nije označen|
-| (x) | Prikazano kada objekat(na primer izborno polje) je označen|
-| (-) | Prikazano kada objekat(na primer izborno polje) je polovično označeno|
-| - | Prikazano kada objekat(na primer stavka prikaza stabla) se može skupiti|
-| + | Prikazano kada objekat(na primer stavka prikaza stabla) se može proširiti|
-| clk | Prikazano kada se na objekat može kliknuti|
-| ro | Prikazano kada objekat(na primer polje za unos teksta) je samo za čitanje|
-| sel | Prikazano kada je objekat izabran|
-| submnu | Prikazano kada objekat ima dodatni prozor(obično podmeni) |
-
-Takođe, sledeće skraćenice za orjentire su definisane:
-|| Skraćenica | Orjentir |
-| bnnr | baner |
-| cinf | Informacije o sadržaju |
-| cmpl | Dodatni |
-| form | Formular |
-| main | Glavni |
-| navi | Navigacija|
-| srch | Pretraga |
-| rgn | region |
 
 + Napredne teme +
 

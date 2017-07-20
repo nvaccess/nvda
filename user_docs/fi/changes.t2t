@@ -20,6 +20,8 @@
 - Windows 10:ssä toistetaan nyt ääni, joka ilmaisee ehdotusten ilmestymisen tietyissä hakukentissä (esim. aloitusnäytössä, asetushaussa, Sähköposti-sovelluksen vastaanottaja/kopio-kentissä). (#6241)
 - Ilmoitukset luetaan automaattisesti Skype for Businessin työpöytäversiossa esim. tilanteessa, jossa joku aloittaa keskustelun kanssasi.  (#7281)
 - Ilmoitukset luetaan automaattisesti Microsoft Edgessä esim. latauksen käynnistyessä.  (#7281)
+- Voit nyt kirjoittaa sekä lyhenne- että tavallista pistekirjoitusta sellaisilla pistenäytöillä, joissa on pistekirjoitusnäppäimistö. Katso lisätietoja käyttöoppaan Pistekirjoituksen syöttäminen -kappaleesta. (#2439)
+- Voit nyt syöttää Unicode-pistekirjoitusmerkkejä pistenäytön pistekirjoitusnäppäimistöltä valitsemalla Pistekirjoitusasetukset-valintaikkunassa syöttötaulukoksi Unicode-pistekirjoitus. (#6449)
 
 
 == Muutokset ==
@@ -36,7 +38,9 @@
  - "lomake": "lom"
  - "alue": "alu"
  - Esimerkki: "navigaatio kiintopiste" on nyt "kp nav"
-- Espeak-ng on päivitetty versioksi 1.49.1 (#7280).
+- eSpeak NG on päivitetty versioksi 1.49.1 (#7280).
+- Pistekirjoitusasetukset-valintaikkunan tulostus- ja syöttötaulukkoluettelot lajitellaan nyt aakkosjärjestykseen. (#6113)
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.2.0. (#6935)
 
 
 == Korjatut ohjelmavirheet ==
@@ -44,12 +48,14 @@
 - End-näppäimen painaminen ei enää aiheuta ajonaikaista virhettä selaustilassa oltaessa tyhjässä Microsoft Word -dokumentissa. (#7009)
 - Selaustilaa tuetaan nyt asianmukaisesti Microsoft Edgessä, kun dokumentille on annettu document-ARIA-rooli. (#6998)
 - Valitseminen tai valinnan peruminen Shift+Endillä rivin loppuun saakka on nyt mahdollista selaustilassa, vaikka kohdistin on rivin viimeisen merkin kohdalla. (#7157)
-- Jos valintaikkuna sisältää edistymispalkin, valintaikkunan teksti päivitetään edistymispalkin muuttuessa. Tämä tarkoittaa, että esim. jäljellä olevan ajan lukeminen on nyt mahdollista NVDA:n "Ladataan päivitystä" -valintaikkunassa. (#6862)
+- Jos valintaikkuna sisältää edistymispalkin, ikkunan teksti päivittyy nyt pistenäytöllä edistymispalkin muuttuessa. Tämä tarkoittaa, että esim. jäljellä olevan ajan lukeminen on nyt mahdollista NVDA:n "Ladataan päivitystä" -valintaikkunassa. (#6862)
 - NVDA ilmoittaa nyt valinnan muutokset tietyissä Windows 10:n yhdistelmäruuduissa, kuten Asetukset-sovelluksen Automaattisessa toistossa. (#6337).
 - Hyödytöntä tietoa ei enää puhuta Microsoft Outlookissa siirryttäessä kokouksen/tapaamisenluontivalintaikkunoihin. (#7216)
 - Äänimerkit toistetaan epäsäännöllisille edistymispalkkivalintaikkunoille (kuten NVDA:n päivitystarkistus), vain, kun edistymispalkit on määritetty ilmaistavaksi äänimerkein. (#6759)
-- Solut luetaan taas Microsoft Excel 2007:n ja 2003:n työkirjassa nuolinäppäimillä liikuttaessa. (#8243)
+- Solut luetaan taas Microsoft Excel 2003:n ja 2007:n työkirjassa nuolinäppäimillä liikuttaessa. (#8243)
 - Windows 10 Creators-päivityksessä ja uudemmissa varmistetaan, että selaustila otetaan automaattisesti käyttöön luettaessa sähköposteja Sähköposti-sovelluksessa. (#7289)
+- Piste 7 poistaa nyt viimeksi syötetyn pistesolun tai -merkin ja piste 8 painaa Enter-näppäintä useimmissa pistekirjoitusnäppäimistön sisältävissä pistenäytöissä. (#6054)
+- NVDA:n puhepalaute on nyt useimmissa tapauksissa tarkempaa (erityisesti Chromessa ja päätesovelluksissa) siirrettäessä kohdistinta muokattavassa tekstissä (esim. nuolinäppäimillä tai askelpalauttimella). (#6424)
 
 
 == Muutokset kehittäjille (englanniksi) ==
