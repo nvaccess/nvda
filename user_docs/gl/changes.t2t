@@ -8,7 +8,7 @@ Que hai de Novo no NVDA
 == Novas Características ==
 - Engadiuse unha opción Braille para "amosar mensaxes indefinidamente". (#6669)
 - Na listaxe de mensaxes do Microsoft Outlook, anúnciase se unha mensaxe está marcada. (#6374)
-- No Microsoft Powerpoint, agora anúnciase o tipo exacto dunha forma cando se edita unha diapositiva (Exemplos inclúen: triángulo, círculo, vídeo, frecha), en lugar de só 'forma'. (#7111)
+- No Microsoft PowerPoint, agora anúnciase o tipo exacto dunha forma cando se edita unha diapositiva coma triángulo, círculo, vídeo, frecha, en lugar de só 'forma'. (#7111)
 - O contido matemático (proporcionado coma MathML) agora sopórtase en Google Chrome. (#7184)
 - NVDA agora pode falar usando as novas voces Windows OneCore (tamén coñecidas coma voces mobile) incluidas no Windows 10. Accede a elas selecionando Voces Windows OneCore no diálogo Sintetizadores de NVDA. (#6159)
 - Os ficheiros de configuración do usuario do NVDA agora poden almacenarse no cartafol local de datos de aplicacións do usuario. Esto habilítase a través dunha opción no rexistro. Consulta 'Parámetros do Sistema' na guía do usuario para máis detalles. (#6812)
@@ -19,6 +19,8 @@ Que hai de Novo no NVDA
 - Agora reprodúcese un son para indicar a aparición de suxerencias en certos campos de procura do Windows 10 (Ex.: pantalla de inicio, opcións de procura, campos de Windows 10 mail para/CC). (#6241)
 - Anúncianse as notificacións automáticamente no Skype for Business Desktop, coma cando alguén comeza unha conversa contigo.  (#7281)
 - Anúncianse as notificacións automáticamente no Microsoft Edge, coma cando se comeza unha descarga. (#7281)
+- Agora podes escrebir tanto en braille contraído coma sen contraer nunha pantalla braille cun teclado braille. Consulta a seción Entrada Braille da Guía do Usuario para detalles. (#2439)
+- Agora podes introducir caracteres braille Unicode dende o teclado braille nunha pantalla braille selecionando Braille Unicode como a táboa de entrada nas Opcións de Braille. (#6449)
 
 
 == Cambios ==
@@ -35,7 +37,9 @@ Que hai de Novo no NVDA
  - "form": "frm"
  - "rexión": "rgn"
  - Exemplo: "ponto de referencia de navegación" sería "pdr nav"
-- Espeak-ng actualizouse á versión 1.49.1 (#7280).
+- Actualizado o Espeak-ng á 1.49.1 (#7280).
+- As listaxes de táboas de entrada e de saída no diálogo Opcións de Braille agora ordéanse alfabéticamente. (#6113)
+- Actualizado o transcriptor braille liblouis a 3.2.0. (#6935)
 
 
 == Corrección de Erros ==
@@ -43,12 +47,14 @@ Que hai de Novo no NVDA
 - Premer fin mentres se estea en modo exploración dun documento valdeiro do Microsoft Word xa non produce un erro en tempo de execución. (#7009)
 - O modo exploración agora sopórtase correctamente no Microsoft Edge cando a un documento se lle dera un rol ARIA específico de documento. (#6998)
 - En modo exploración, agora podes selecionar ou deselecionar ata o remate da liña usando shift+fin incluso cando o cursor estea sobre o derradeiro carácter da liña. (#7157)
-- Se un diálogo contén unha barra de progreso, o texto do diálogo agora actualízase cando a barra de progreso cambie. Esto siñifica, por exemplo, que o tempo restante agora pode lerse no diálogo do NVDA "Descargando Actualizacións". (#6862)
+- Se un diálogo contén unha barra de progreso, o texto do diálogo agora actualízase en braille cando a barra de progreso cambie. Esto siñifica, por exemplo, que o tempo restante agora pode lerse no diálogo do NVDA "Descargando Actualizacións". (#6862)
 - NVDA agora anunciará cambios de seleción para certas caixas combinadas de Windows 10 tales como AutoReproducción en Opcións. (#6337).
 - Xa non se anuncia información inxustificada ao entrar en diálogos de reunións / citas no Microsoft Outlook. (#7216)
 - Pitidos indeterminados para barras de progreso de diálogo coma o actualizador só cando a saída da barra de progreso se configure para incluir pitidos. (#6759)
-- No Microsoft Excel 2007 e 2003, as celdas anúncianse de novo ao se navegar a través dunha folla de cálculo. (#8243)
-- Na actualización Windows 10 Creators e posterior, asegúrase de que o modo exploración se active automáticamente ao ler correos electrónicos no Windows 10 Mail. (#7289)
+- No Microsoft Excel 2003 e 2007, as celdas anúncianse de novo ao se navegar a través dunha folla de cálculo. (#8243)
+- Na actualización Windows 10 Creators e posterior, o modo exploración actívase de novo automáticamente ao ler correos electrónicos no Windows 10 Mail. (#7289)
+- Na maioría de pantallas braille cun teclado braille, o ponto 7 agora borra a derradeira celda ou carácter braille introducido, e o ponto 8 preme a tecla intro. (#6054)
+- No texto editable, ao se mover o cursor (ex.: coas teclas do cursor ou retroceso), a resposta falada do NVDA agora é máis precisa en moitos casos, especialmente no Chrome e nas aplicacións de terminal. (#6424)
 
 
 == Cambios para Desenvolvedores ==

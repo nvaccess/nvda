@@ -19,6 +19,8 @@ Ce este nou în NVDA
 - Un sunet este redat pentru a indica aspectul sugestiilor în anumite câmpuri de căutare din Windows 10, ca de exemplu ecranul de pornire, căutarea de setări, câmpurile către și cc din aplicația Windows 10 Mail. (#6241)
 - În Skype pentru Business Desktop notificările sunt raportate automat, cum ar fi atunci când cineva începe o conversație cu dumneavoastră. (#7281)
 - În Microsoft Edge notificările sunt raportate automat, cum ar fi atunci când o descărcare începe. (#7281)
+- Puteți scrie atât în braille-ul abreviat cât și în cel neabreviat pe un afișaj braille cu o tastatură braille. Vedeți secțiunea intrării braille a manualului de utilizare pentru detalii. (#2439)
+- Puteți introduce caractere braille unicode de la tastatura braille pe un afișaj braille selectând Braille unicode ca tabel de intrare din setările braille. (#6449)
 
 
 == Modificări ==
@@ -36,6 +38,8 @@ Ce este nou în NVDA
  - „regiune”: „rgn”
  - Exemplu: „navigare reper” devine „lmk nav”
 - A fost actualizat Espeak NG la versiunea 1.49.1 (#7280).
+- Listele tabelelor braille de intrare și de ieșire din dialogul de setări braille sunt sortate alfabetic. (#6113)
+- A fost actualizat traducătorul braille liblouis la versiunea 3.2.0. (#6935)
 
 
 == Rezolvări Defecte ==
@@ -49,6 +53,8 @@ Ce este nou în NVDA
 - Bipurile pentru dialogurile nedeterminate ale barei de progres, cum ar fi verificatorul de actualizare, numai atunci când ieșirea barei de progres este configurată să includă bipuri. (#6759)
 - În Microsoft Excel 2007 și 2003, celulele sunt din nou raportate la navigarea în foile de lucru. (#8243)
 - În Windows 10 Creators update și mai nou, asigurați-vă că modul de navigare este activat automat atunci când citiți scrisori electronice în Windows 10 Mail. (#7289)
+- Pe majoritatea afișajelor braille cu o tastatură braille, punctul 7 șterge ultima celulă braille sau ultimul caracter introdus, iar punctul opt apasă tasta enter. (#6054)
+- La deplasarea cursorului de scriere în textele editabile (de exemplu cu tastele de cursor sau cu backspace), feedback-ul vorbit al NVDA-ului este mai precis în multe cazuri, particular în Chrome și în aplicațiile terminale. (#6424)
 
 
 = Modificări pentru Dezvoltatori =

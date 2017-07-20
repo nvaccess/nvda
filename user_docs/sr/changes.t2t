@@ -18,6 +18,8 @@
 - Zvuk koji obaveštava o dostupnim predlozima se sada reprodukuje u određenim poljima pretrage Windows 10 sistema (Na primer Start ekran, polje pretrage aplikacije podešavanja, polja za unos primaoca u Windows 10 mail aplikaciji). (#6241)
 - obaveštenja se sada automatski prijavljuju u aplikaciji  Skype za  biznis korisnike, kao što su kada neko započne razgovor sa vama.  (#7281)
 - Automatsko prijavljivanje obaveštenja u programu Microsoft Edge, na primer kada preuzimanje počne.  (#7281)
+- Sada možete pisati u skraćenom unosu na brajevoj tastaturi brajevog reda. Pogledajte deo brajev unos korisničkog uputstva za više detalja. (#2439)
+- Možete upisati unikodne brajeve znakove sa brajeve tastature izborom unikodne brajeve tabele. (#6449)
 
 
 == Promene ==
@@ -35,6 +37,8 @@
  - "region": "rgn"
  - Primer: "Navigacija orjentir" postaje "lmk nav"
 - Espeak-ng je ažuriran na verziju 1.49.1 (#7280).
+- Ulazne i izlazne tabele u dijalogu brajevih podešavanja su sada poređane po abecedi. (#6113)
+- Ažuriran liblouis brajev prevodioc  na verziju 3.2.0. (#6935)
 
 
 == Ispravljene greške ==
@@ -48,6 +52,8 @@
 - Pištanja za trake napredovanja koje su beskonačne kao što je provera ažuriranja programa NVDA se sada reprodukuju samo kada su omogućena. (#6759)
 - U programu  Microsoft Excel 2007 i  2003, ćelije se ponovo prijavljuju kada se krećete kroz radni list. (#8243)
 - U Windows 10 Creators ažuriranju i novijim ažuriranjima, režim pretraživanja će ponovo automatski biti omogućen tokom čitanja poruka u Windows 10 Mail aplikaciji. (#7289)
+- Na većini brajevih redova sa brajevom tastaturom, tačka 7 sada briše poslednju dodatu brajevu ćeliju ili znak, a tačka 8 pritiska taster enter. (#6054)
+- Kada se uređuje tekst, dok pomerate kursor(npr. sa kursorskim tasterima ili tasterom backspace), NVDAovo čitanje je preciznije u puno slučajeva, posebno u Chromeu i terminal aplikacijama. (#6424)
 
 
 == Promene za programere ==
