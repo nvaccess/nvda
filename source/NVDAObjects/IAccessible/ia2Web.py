@@ -13,7 +13,7 @@ import oleacc
 import IAccessibleHandler
 import controlTypes
 from logHandler import log
-from NVDAObjects.behaviors import Dialog
+from NVDAObjects.behaviors import Dialog, FocusableUnfocusableContainer
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
 
@@ -45,6 +45,21 @@ class Document(Ia2Web):
 
 class Application(Document):
 	shouldCreateTreeInterceptor = False
+
+class WebDialog(Document):
+	"""
+	A dialog that will use a treeInterceptor if its parent currently does.
+	"""
+
+	def _get_shouldCreateTreeInterceptor(self):
+		if self.parent.treeInterceptor:
+			return True
+		return False
+
+	# For dialogs that will get browseMode and are focusable themselves (have a tabindex):
+	# Allow setting focus to the dialog directly, rather than its first focusable descendant
+	def _get__alwaysFocusFirstfocusableDescendant(self):
+		return not self.shouldCreateTreeInterceptor
 
 class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
@@ -102,10 +117,11 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
 		clsList.append(Math)
 
-	isApp = iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG)
-	if isApp:
+	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)
-	if isApp or iaRole == oleacc.ROLE_SYSTEM_DOCUMENT:
+	elif iaRole==oleacc.ROLE_SYSTEM_DIALOG:
+		clsList.append(WebDialog)
+	if iaRole in (oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_DOCUMENT):
 		clsList.append(documentClass)
 
 	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:
