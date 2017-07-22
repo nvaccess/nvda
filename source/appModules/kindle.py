@@ -156,7 +156,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		"""Recursively iterate through all embedded objects in a given direction starting at a given hyperlink index.
 		"""
 		log.debug("Starting at hyperlink index %d" % startIndex)
-		for index in xrange(startIndex, hypertext.nHyperlinks if direction == "next" else -1, 1 if direction == "next" else -1):
+		for index in range(startIndex, hypertext.nHyperlinks if direction == "next" else -1, 1 if direction == "next" else -1):
 			hl = hypertext.hyperlink(index)
 			obj = IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
 			log.debug("Yielding object at index %d" % index)

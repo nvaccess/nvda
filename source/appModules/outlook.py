@@ -475,7 +475,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			# This is unexpected here.
 			log.debugWarning("Unable to get relevant children for UIAGridRow", stack_info=True)
 			return super(UIAGridRow, self).name
-		for index in xrange(cachedChildren.length):
+		for index in range(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			name=e.cachedName
 			columnHeaderTextList=[]
@@ -485,7 +485,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				columnHeaderItems=None
 			if columnHeaderItems:
 				columnHeaderItems=columnHeaderItems.QueryInterface(UIAHandler.IUIAutomationElementArray)
-				for index in xrange(columnHeaderItems.length):
+				for index in range(columnHeaderItems.length):
 					columnHeaderItem=columnHeaderItems.getElement(index)
 					columnHeaderTextList.append(columnHeaderItem.currentName)
 			columnHeaderText=" ".join(columnHeaderTextList)

@@ -34,7 +34,7 @@ class Conversation(NVDAObjects.IAccessible.IAccessible):
 	scriptCategory = SCRCAT_SKYPE
 
 	def initOverlayClass(self):
-		for n in xrange(0, 10):
+		for n in range(0, 10):
 			self.bindGesture("kb:NVDA+control+%d" % n, "reviewRecentMessage")
 
 	def _isEqual(self, other):
@@ -125,7 +125,7 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
 	def _getMessageCount(self):
 		ia = self.IAccessibleObject
-		for c in xrange(self.childCount, -1, -1):
+		for c in range(self.childCount, -1, -1):
 			try:
 				if ia.accRole(c) != oleacc.ROLE_SYSTEM_LISTITEM or ia.accState(c) & oleacc.STATE_SYSTEM_UNAVAILABLE:
 					# Not a message.
@@ -142,7 +142,7 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 				#4644: Don't report a flood of messages.
 				and newCount - self.oldMessageCount < 5):
 			ia = self.IAccessibleObject
-			for c in xrange(self.oldMessageCount + 1, newCount + 1):
+			for c in range(self.oldMessageCount + 1, newCount + 1):
 				text = ia.accName(c)
 				if not text:
 					continue
