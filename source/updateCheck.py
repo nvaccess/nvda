@@ -22,7 +22,10 @@ import winVersion
 import os
 import threading
 import time
-import cPickle
+try:
+	import pickle
+except:
+	import cPickle as pickle
 import urllib
 import tempfile
 import hashlib
@@ -568,7 +571,7 @@ class DonateRequestDialog(wx.Dialog):
 
 def saveState():
 	try:
-		cPickle.dump(state, file(_stateFilename, "wb"))
+		pickle.dump(state, file(_stateFilename, "wb"))
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
@@ -576,7 +579,7 @@ def initialize():
 	global state, _stateFilename, autoChecker
 	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
 	try:
-		state = cPickle.load(file(_stateFilename, "r"))
+		state = pickle.load(file(_stateFilename, "r"))
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
 		# Defaults.

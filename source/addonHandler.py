@@ -10,7 +10,10 @@ import os.path
 import gettext
 import glob
 import tempfile
-import cPickle
+try:
+	import pickle
+except:
+	import cPickle as pickle
 import inspect
 import itertools
 import collections
@@ -45,7 +48,7 @@ def loadState():
 	global state
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		state = cPickle.load(file(statePath, "r"))
+		state = pickle.load(file(statePath, "r"))
 	except:
 		# Defaults.
 		state = {
@@ -58,7 +61,7 @@ def loadState():
 def saveState():
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		cPickle.dump(state, file(statePath, "wb"))
+		pickle.dump(state, file(statePath, "wb"))
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
