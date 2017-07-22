@@ -251,7 +251,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 				synth.pitch=oldPitch
 			while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
-				for x in xrange(2):
+				for x in range(2):
 					args=yield
 					if args: buf.append(args)
 			if uppercase and  synthConfig["beepForCapitals"]:
@@ -540,7 +540,7 @@ def speak(speechSequence,symbolLevel=None):
 		symbolLevel=config.conf["speech"]["symbolLevel"]
 	curLanguage=defaultLanguage
 	inCharacterMode=False
-	for index in xrange(len(speechSequence)):
+	for index in range(len(speechSequence)):
 		item=speechSequence[index]
 		if isinstance(item,CharacterModeCommand):
 			inCharacterMode=item.state
@@ -799,7 +799,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 			raise ValueError("unknown field: %s"%field)
 	#Calculate how many fields in the old and new controlFieldStacks are the same
 	commonFieldCount=0
-	for count in xrange(min(len(newControlFieldStack),len(controlFieldStackCache))):
+	for count in range(min(len(newControlFieldStack),len(controlFieldStackCache))):
 		# #2199: When comparing controlFields try using uniqueID if it exists before resorting to compairing the entire dictionary
 		oldUniqueID=controlFieldStackCache[count].get('uniqueID')
 		newUniqueID=newControlFieldStack[count].get('uniqueID')
@@ -812,7 +812,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
 	if reason!=controlTypes.REASON_FOCUS:
 		endingBlock=False
-		for count in reversed(xrange(commonFieldCount,len(controlFieldStackCache))):
+		for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
 			text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
@@ -829,7 +829,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
-		for count in xrange(commonFieldCount):
+		for count in range(commonFieldCount):
 			field=newControlFieldStack[count]
 			text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
@@ -840,7 +840,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				_speakTextInfo_addMath(speechSequence,info,field)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
-	for count in xrange(commonFieldCount,len(newControlFieldStack)):
+	for count in range(commonFieldCount,len(newControlFieldStack)):
 		field=newControlFieldStack[count]
 		text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
@@ -956,7 +956,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		speechSequence.append(LangChangeCommand(None))
 		lastLanguage=None
 	if not extraDetail:
-		for count in reversed(xrange(min(len(newControlFieldStack),commonFieldCount))):
+		for count in reversed(range(min(len(newControlFieldStack),commonFieldCount))):
 			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
@@ -1679,7 +1679,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 	#Break on all explicit break commands
 	if detectBreaks and speechSequence:
 		sequenceLen=len(speechSequence)
-		for index in xrange(sequenceLen):
+		for index in range(sequenceLen):
 			if isinstance(speechSequence[index],SpeakWithoutPausesBreakCommand):
 				if index>0 and lastStartIndex<index:
 					speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
@@ -1698,7 +1698,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 	else: #Handling normal speech
 		#Scan the given speech and place all completed phrases in finalSpeechSequence to be spoken,
 		#And place the final incomplete phrase in pendingSpeechSequence
-		for index in xrange(len(speechSequence)-1,-1,-1): 
+		for index in range(len(speechSequence)-1,-1,-1): 
 			item=speechSequence[index]
 			if isinstance(item,basestring):
 				m=re_last_pause.match(item)
@@ -1713,7 +1713,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 						finalSpeechSequence.append(before)
 						# Apply the last language change to the pending sequence.
 						# This will need to be done for any other speech change commands introduced in future.
-						for changeIndex in xrange(index-1,-1,-1):
+						for changeIndex in range(index-1,-1,-1):
 							change=speechSequence[changeIndex]
 							if not isinstance(change,LangChangeCommand):
 								continue
