@@ -479,7 +479,7 @@ class WinWordCollectionQuicknavIterator(object):
 		items=self.collectionFromRange(self.rangeObj)
 		itemCount=items.count
 		isFirst=True
-		for index in xrange(1,itemCount+1):
+		for index in range(1,itemCount+1):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
@@ -511,7 +511,7 @@ class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 		if t == FIELD_TYPE_REF:
 			fieldText = item.code.text.strip().split(' ')
 			# ensure that the text has a \\h in it
-			return any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) )
+			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) )
 		return t == FIELD_TYPE_HYPERLINK
 
 
@@ -595,7 +595,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return
 		tempRange.expand(wdParagraph)
 		fields=tempRange.fields
-		for field in (fields.item(i) for i in xrange(1, fields.count+1)):
+		for field in (fields.item(i) for i in range(1, fields.count+1)):
 			if field.type != FIELD_TYPE_REF:
 				continue
 			fResult = field.result
@@ -610,7 +610,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			# text will be something like ' REF _Ref457210120 \\h '
 			fieldText = field.code.text.strip().split(' ')
 			# the \\h field indicates that the field is a link
-			if not any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) ):
+			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) ):
 				log.debugWarning("no \\h for field xref: %s" % field.code.text)
 				continue
 			bookmarkKey = fieldText[1] # we want the _Ref12345 part
@@ -1143,6 +1143,237 @@ class WordDocument(Window):
 			return name
 		else:
 			raise ValueError("Unknown color format %x %x %x %x"%((val>>24)&0xff,(val>>16)&0xff,(val>>8)&0xff,val&0xff))
+
+	def _get_ignoreEditorRevisions(self):
+		try:
+			ignore=not self.WinwordWindowObject.view.showRevisionsAndComments
+		except COMError:
+			log.debugWarning("showRevisionsAndComments",exc_info=True)
+			ignore=False
+		self.ignoreEditorRevisions=ignore
+		return ignore
+
+	#: True if page numbers (as well as section numbers and column numbers) should be ignored. Such as in outlook.
+	ignorePageNumbers = False
+
+	#: True if formatting should be ignored (text only) such as for spellCheck error field
+	ignoreFormatting=False
+
+	def __init__(self,*args,**kwargs):
+		super(WordDocument,self).__init__(*args,**kwargs)
+
+	def event_caret(self):
+		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
+		self._lastSelectionPos=curSelectionPos
+		if lastSelectionPos:
+			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
+				return
+		super(WordDocument,self).event_caret()
+
+	def _get_role(self):
+		return controlTypes.ROLE_EDITABLETEXT
+
+	def _get_states(self):
+		states=super(WordDocument,self).states
+		states.add(controlTypes.STATE_MULTILINE)
+		return states
+
+	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
+		rows=table.rows
+		numHeaderRows=0
+		for rowIndex in range(rows.count): 
+			try:
+				row=rows.item(rowIndex+1)
+			except COMError:
+				break
+			try:
+				headingFormat=row.headingFormat
+			except (COMError,AttributeError,NameError):
+				headingFormat=0
+			if headingFormat==-1: # is a header row
+				numHeaderRows+=1
+			else:
+				break
+		if numHeaderRows>0:
+			headerCellTracker.addHeaderCellInfo(rowNumber=1,columnNumber=1,rowSpan=numHeaderRows,isColumnHeader=True,isRowHeader=False)
+
+	def populateHeaderCellTrackerFromBookmarks(self,headerCellTracker,bookmarks):
+		for x in bookmarks: 
+			name=x.name
+			lowerName=name.lower()
+			isColumnHeader=isRowHeader=False
+			if lowerName.startswith('title'):
+				isColumnHeader=isRowHeader=True
+			elif lowerName.startswith('columntitle'):
+				isColumnHeader=True
+			elif lowerName.startswith('rowtitle'):
+				isRowHeader=True
+			else:
+				continue
+			try:
+				headerCell=x.range.cells.item(1)
+			except COMError:
+				continue
+			headerCellTracker.addHeaderCellInfo(rowNumber=headerCell.rowIndex,columnNumber=headerCell.columnIndex,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+
+	_curHeaderCellTrackerTable=None
+	_curHeaderCellTracker=None
+	def getHeaderCellTrackerForTable(self,table):
+		tableRange=table.range
+		if not self._curHeaderCellTrackerTable or not tableRange.isEqual(self._curHeaderCellTrackerTable.range):
+			self._curHeaderCellTracker=HeaderCellTracker()
+			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
+			self.populateHeaderCellTrackerFromHeaderRows(self._curHeaderCellTracker,table)
+			self._curHeaderCellTrackerTable=table
+		return self._curHeaderCellTracker
+
+	def setAsHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
+		rowNumber=cell.rowIndex
+		columnNumber=cell.columnIndex
+		headerCellTracker=self.getHeaderCellTrackerForTable(cell.range.tables[1])
+		oldInfo=headerCellTracker.getHeaderCellInfoAt(rowNumber,columnNumber)
+		if oldInfo:
+			if isColumnHeader and not oldInfo.isColumnHeader:
+				oldInfo.isColumnHeader=True
+			elif isRowHeader and not oldInfo.isRowHeader:
+				oldInfo.isRowHeader=True
+			else:
+				return False
+			isColumnHeader=oldInfo.isColumnHeader
+			isRowHeader=oldInfo.isRowHeader
+		if isColumnHeader and isRowHeader:
+			name="Title_"
+		elif isRowHeader:
+			name="RowTitle_"
+		elif isColumnHeader:
+			name="ColumnTitle_"
+		else:
+			raise ValueError("One or both of isColumnHeader or isRowHeader must be True")
+		name+=uuid.uuid4().hex
+		if oldInfo:
+			self.WinwordDocumentObject.bookmarks[oldInfo.name].delete()
+			oldInfo.name=name
+		else:
+			headerCellTracker.addHeaderCellInfo(rowNumber=rowNumber,columnNumber=columnNumber,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+		self.WinwordDocumentObject.bookmarks.add(name,cell.range)
+		return True
+
+	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
+		rowNumber=cell.rowIndex
+		columnNumber=cell.columnIndex
+		if not isColumnHeader and not isRowHeader: 
+			return False
+		headerCellTracker=self.getHeaderCellTrackerForTable(cell.range.tables[1])
+		info=headerCellTracker.getHeaderCellInfoAt(rowNumber,columnNumber)
+		if not info or not hasattr(info,'name'):
+			return False
+		if isColumnHeader and info.isColumnHeader:
+			info.isColumnHeader=False
+		elif isRowHeader and info.isRowHeader:
+			info.isRowHeader=False
+		else:
+			return False
+		headerCellTracker.removeHeaderCellInfo(info)
+		self.WinwordDocumentObject.bookmarks(info.name).delete()
+		if info.isColumnHeader or info.isRowHeader:
+			self.setAsHeaderCell(cell,isColumnHeader=info.isColumnHeader,isRowHeader=info.isRowHeader)
+		return True
+
+	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
+		table=cell.range.tables[1]
+		rowNumber=cell.rowIndex
+		columnNumber=cell.columnIndex
+		headerCellTracker=self.getHeaderCellTrackerForTable(table)
+		for info in headerCellTracker.iterPossibleHeaderCellInfosFor(rowNumber,columnNumber,columnHeader=columnHeader):
+			textList=[]
+			if columnHeader:
+				for headerRowNumber in range(info.rowNumber,info.rowNumber+info.rowSpan): 
+					tempColumnNumber=columnNumber
+					while tempColumnNumber>=1:
+						try:
+							headerCell=table.cell(headerRowNumber,tempColumnNumber)
+						except COMError:
+							tempColumnNumber-=1
+							continue
+						break
+					textList.append(headerCell.range.text)
+			else:
+				for headerColumnNumber in range(info.columnNumber,info.columnNumber+info.colSpan): 
+					tempRowNumber=rowNumber
+					while tempRowNumber>=1:
+						try:
+							headerCell=table.cell(tempRowNumber,headerColumnNumber)
+						except COMError:
+							tempRowNumber-=1
+							continue
+						break
+					textList.append(headerCell.range.text)
+			text=" ".join(textList)
+			if text:
+				return text
+
+	def script_setColumnHeader(self,gesture):
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if not config.conf['documentFormatting']['reportTableHeaders']:
+			# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
+			return
+		try:
+			cell=self.WinwordSelectionObject.cells[1]
+		except COMError:
+			# Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+			ui.message(_("Not in a table cell"))
+			return
+		if scriptCount==0:
+			if self.setAsHeaderCell(cell,isColumnHeader=True,isRowHeader=False):
+				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+				ui.message(_("Set row {rowNumber} column {columnNumber} as start of column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+			else:
+				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+				ui.message(_("Already set row {rowNumber} column {columnNumber} as start of column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+		elif scriptCount==1:
+			if self.forgetHeaderCell(cell,isColumnHeader=True,isRowHeader=False):
+				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+				ui.message(_("Removed row {rowNumber} column {columnNumber}  from column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+			else:
+				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell.")
+
+	def script_setRowHeader(self,gesture):
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if not config.conf['documentFormatting']['reportTableHeaders']:
+			# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
+			return
+		try:
+			cell=self.WinwordSelectionObject.cells[1]
+		except COMError:
+			# Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+			ui.message(_("Not in a table cell"))
+			return
+		if scriptCount==0:
+			if self.setAsHeaderCell(cell,isColumnHeader=False,isRowHeader=True):
+				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+				ui.message(_("Set row {rowNumber} column {columnNumber} as start of row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+			else:
+				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+				ui.message(_("Already set row {rowNumber} column {columnNumber} as start of row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+		elif scriptCount==1:
+			if self.forgetHeaderCell(cell,isColumnHeader=False,isRowHeader=True):
+				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+				ui.message(_("Removed row {rowNumber} column {columnNumber}  from row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+			else:
+				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+	script_setRowHeader.__doc__=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell.")
+
+	def script_reportCurrentHeaders(self,gesture):
+		cell=self.WinwordSelectionObject.cells[1]
+		rowText=self.fetchAssociatedHeaderCellText(cell,False)
+		columnText=self.fetchAssociatedHeaderCellText(cell,True)
+		ui.message("Row %s, column %s"%(rowText or "empty",columnText or "empty"))
 
 	def _get_WinwordVersion(self):
 		if not hasattr(self,'_WinwordVersion'):

@@ -830,7 +830,7 @@ class ExcelWorksheet(ExcelBase):
 		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
-				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
+				for headerRowNumber in range(info.rowNumber,info.rowNumber+info.rowSpan): 
 					headerCell=self.excelWorksheetObject.cells(headerRowNumber,cell.columnNumber)
 					# The header could be  merged cells. 
 					# if so, fetch text from the first in the merge as that always contains the content
@@ -840,7 +840,7 @@ class ExcelWorksheet(ExcelBase):
 						pass
 					textList.append(headerCell.text)
 			else:
-				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
+				for headerColumnNumber in range(info.columnNumber,info.columnNumber+info.colSpan): 
 					headerCell=self.excelWorksheetObject.cells(cell.rowNumber,headerColumnNumber)
 					# The header could be  merged cells. 
 					# if so, fetch text from the first in the merge as that always contains the content

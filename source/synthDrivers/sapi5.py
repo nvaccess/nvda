@@ -118,7 +118,7 @@ class SynthDriver(SynthDriver):
 		v=self._getVoiceTokens()
 		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
 		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
-		for i in xrange(len(v)):
+		for i in range(len(v)):
 			try:
 				ID=v[i].Id
 				name=v[i].GetDescription()
@@ -189,7 +189,7 @@ class SynthDriver(SynthDriver):
 		tokens = self._getVoiceTokens()
 		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
 		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
-		for i in xrange(len(tokens)):
+		for i in range(len(tokens)):
 			voice=tokens[i]
 			if value==voice.Id:
 				break
