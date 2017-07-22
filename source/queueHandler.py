@@ -5,7 +5,10 @@
 #See the file COPYING for more details.
 
 import types
-from Queue import Queue
+try:
+	from queue import Queue
+except ImportError:
+	from Queue import Queue
 import globalVars
 from logHandler import log
 import watchdog
