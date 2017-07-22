@@ -35,7 +35,7 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.13, 32 bit
+* [Python](http://www.python.org/), version 2.6.2, 32 bit
 * Microsoft Visual Studio 2017 Community, Version 15.3 or later:
 	* Download from https://www.visualstudio.com/downloads/
 	* When installing Visual Studio, you need to enable the following:
@@ -58,11 +58,17 @@ For reference, the following dependencies are included in Git submodules:
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.4
 * [wxPython](http://www.wxpython.org/), version 3.0.2.0
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
+* [six](https://pypi.python.org/pypi/six/), version 1.10.0
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 37121600
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
+<<<<<<< HEAD
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
 * [liblouis](http://www.liblouis.org/), version 3.5.0
+=======
+* [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 5.0.6
+* [liblouis](http://www.liblouis.org/), version 3.2.0
+>>>>>>> Readme: update Python dependencies based on work so far.
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
