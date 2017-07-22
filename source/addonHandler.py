@@ -16,7 +16,10 @@ import itertools
 import collections
 import pkgutil
 import shutil
-from cStringIO import StringIO
+try:
+	from io import StringIO
+except:
+	from cStringIO import StringIO
 import zipfile
 
 from configobj import ConfigObj, ConfigObjError

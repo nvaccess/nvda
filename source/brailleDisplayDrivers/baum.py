@@ -7,7 +7,10 @@
 
 import time
 from collections import OrderedDict
-from cStringIO import StringIO
+try:
+from io import StringIO
+except:
+	from cStringIO import StringIO
 import hwPortUtils
 import braille
 import inputCore

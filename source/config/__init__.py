@@ -16,7 +16,10 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
-from cStringIO import StringIO
+try:
+	from io import StringIO
+except:
+	from cStringIO import StringIO
 import itertools
 import contextlib
 from copy import deepcopy
@@ -65,7 +68,7 @@ def saveOnExit():
 def isInstalledCopy():
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
-		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
 		instDir=winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return False
@@ -141,7 +144,7 @@ def initConfigPath(configPath=None):
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
 
-RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+RUN_REGKEY = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
 	if (easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch
@@ -209,7 +212,7 @@ SLAVE_FILENAME = u"nvda_slave.exe"
 
 #: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
-NVDA_REGKEY = ur"SOFTWARE\NVDA"
+NVDA_REGKEY = r"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
 	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
