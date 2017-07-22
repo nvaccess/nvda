@@ -19,7 +19,10 @@ import comtypesMonkeyPatches
 
 import sys
 import winVersion
-import thread
+try:
+	import _thread as thread
+except ImportError:
+	import thread
 import nvwave
 import os
 import time
