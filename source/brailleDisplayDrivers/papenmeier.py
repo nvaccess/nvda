@@ -29,7 +29,7 @@ import serial
 import ctypes as c
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 import winUser
 

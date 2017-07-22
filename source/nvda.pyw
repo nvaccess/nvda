@@ -180,7 +180,7 @@ isSecureDesktop = desktopName == "Winlogon"
 if isSecureDesktop:
 	try:
 		import winreg
-	except:
+	except ImportError:
 		import _winreg as winreg
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
@@ -202,7 +202,7 @@ if logLevel<=0:
 	logLevel=log.INFO
 if globalVars.appArgs.debugLogging:
 	logLevel=log.DEBUG
-logHandler.initialize()
+#logHandler.initialize()
 logHandler.log.setLevel(logLevel)
 
 log.info("Starting NVDA")

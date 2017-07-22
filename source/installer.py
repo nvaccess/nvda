@@ -8,7 +8,7 @@ from ctypes import *
 from ctypes.wintypes import *
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 import threading
 import time

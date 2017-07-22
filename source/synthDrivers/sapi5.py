@@ -15,7 +15,7 @@ import comtypes.client
 from comtypes import COMError
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 import audioDucking
 import NVDAHelper

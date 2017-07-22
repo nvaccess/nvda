@@ -9,7 +9,7 @@ import _audiologic
 from synthDriverHandler import SynthDriver, VoiceInfo
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 
 class SynthDriver(SynthDriver):

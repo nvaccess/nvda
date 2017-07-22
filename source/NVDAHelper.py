@@ -2,7 +2,7 @@ import os
 import sys
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 import msvcrt
 import versionInfo

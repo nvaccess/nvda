@@ -12,7 +12,7 @@ import glob
 import tempfile
 try:
 	import pickle
-except:
+except ImportError:
 	import cPickle as pickle
 import inspect
 import itertools
@@ -21,7 +21,7 @@ import pkgutil
 import shutil
 try:
 	from io import StringIO
-except:
+except ImportError:
 	from cStringIO import StringIO
 import zipfile
 

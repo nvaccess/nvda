@@ -24,7 +24,7 @@ import threading
 import time
 try:
 	import pickle
-except:
+except ImportError:
 	import cPickle as pickle
 import urllib
 import tempfile

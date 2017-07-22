@@ -6,7 +6,7 @@
 
 try:
 	from io import StringIO
-except:
+except ImportError:
 	from cStringIO import StringIO
 from configobj import ConfigObj
 

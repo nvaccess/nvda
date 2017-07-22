@@ -10,7 +10,7 @@
 import globalVars
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 import ctypes
 import ctypes.wintypes
@@ -18,7 +18,7 @@ import os
 import sys
 try:
 	from io import StringIO
-except:
+except ImportError:
 	from cStringIO import StringIO
 import itertools
 import contextlib

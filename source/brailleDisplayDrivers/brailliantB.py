@@ -7,7 +7,7 @@
 import os
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 import itertools
 import time

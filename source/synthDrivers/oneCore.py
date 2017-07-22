@@ -13,7 +13,7 @@ from collections import OrderedDict
 import ctypes
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 import wave
 import cStringIO

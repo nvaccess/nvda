@@ -8,7 +8,7 @@ import locale
 from collections import OrderedDict
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 from comtypes import COMObject, COMError
 from ctypes import *

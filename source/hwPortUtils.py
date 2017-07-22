@@ -12,7 +12,7 @@ from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
 import winKernel
 try:
 	import winreg
-except:
+except ImportError:
 	import _winreg as winreg
 from winKernel import SYSTEMTIME
 import config
