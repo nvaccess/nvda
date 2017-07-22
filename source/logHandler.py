@@ -12,7 +12,10 @@ import sys
 import warnings
 from encodings import utf_8
 import logging
-from logging import _levelNames as levelNames
+try:
+	from logging import _levelNames as levelNames
+except:
+	from logging import _nameToLevel as levelNames
 import inspect
 import winsound
 import traceback
@@ -86,7 +89,7 @@ def getCodePath(f):
 						className=cls.__name__
 				if className:
 					break
-	return ".".join([x for x in path,className,funcName if x])
+	return ".".join([x for x in (path,className,funcName) if x])
 
 # Function to strip the base path of our code from traceback text to improve readability.
 if getattr(sys, "frozen", None):
@@ -210,7 +213,7 @@ class FileHandler(logging.StreamHandler):
 		# We need to open the file in text mode to get CRLF line endings.
 		# Therefore, we can't use codecs.open(), as it insists on binary mode. See PythonIssue:691291.
 		# We know that \r and \n are safe in UTF-8, so PythonIssue:691291 doesn't matter here.
-		logging.StreamHandler.__init__(self, utf_8.StreamWriter(file(filename, mode)))
+		logging.StreamHandler.__init__(self, utf_8.StreamWriter(open(filename, mode)))
 
 	def close(self):
 		self.flush()
