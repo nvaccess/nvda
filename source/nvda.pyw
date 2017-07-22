@@ -71,6 +71,13 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 
 globalVars.startTime=time.time()
 
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+try:
+	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+except:
+	gettext.install('nvda')
+
 # Check OS version requirements
 import winVersion
 if not winVersion.isSupportedOS():
@@ -176,7 +183,7 @@ if isSecureDesktop:
 	except:
 		import _winreg as winreg
 	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
 		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
 			globalVars.appArgs.secure = True
 	except WindowsError:
