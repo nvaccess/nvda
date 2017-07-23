@@ -75,6 +75,8 @@ def isInstalledCopy():
 	winreg.CloseKey(k)
 	try:
 		return os.stat(instDir)==os.stat(os.getcwdu()) 
+	except AttributeError:
+		return os.stat(instDir)==os.stat(os.getcwd()) 
 	except WindowsError:
 		return False
 
