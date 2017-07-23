@@ -7,9 +7,10 @@
 
 import time
 from collections import OrderedDict
-try:
+import sys
+if sys.version.startswith("3"):
 from io import StringIO
-except:
+else:
 	from cStringIO import StringIO
 import hwPortUtils
 import braille

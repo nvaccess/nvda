@@ -19,9 +19,9 @@ import itertools
 import collections
 import pkgutil
 import shutil
-try:
+if sys.version.startswith("3"):
 	from io import StringIO
-except ImportError:
+else:
 	from cStringIO import StringIO
 import zipfile
 

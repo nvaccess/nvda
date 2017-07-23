@@ -16,9 +16,9 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
-try:
+if sys.version.startswith("3"):
 	from io import StringIO
-except ImportError:
+else:
 	from cStringIO import StringIO
 import itertools
 import contextlib
