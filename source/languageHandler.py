@@ -10,7 +10,7 @@ This module assists in NVDA going global through language services such as conve
 
 try:
 	import builtins
-except ImportErrors:
+except ImportError:
 	import __builtin__ as builtins
 import os
 import sys
