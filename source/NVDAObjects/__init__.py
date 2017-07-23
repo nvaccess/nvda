@@ -71,7 +71,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			if isinstance(obj,self):
 				obj.__init__(**kwargs)
 		except InvalidNVDAObject as e:
-			log.debugWarning("Invalid NVDAObject: %s" % e, exc_info=True)
+			log.debugWarning("Invalid NVDAObject: %s" % e, stack_info=True)
 			return None
 
 		clsList = []
