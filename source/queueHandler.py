@@ -63,7 +63,7 @@ def isPendingItems(queue):
 
 def pumpAll():
 	# This dict can mutate during iteration, so use keys().
-	for ID in generators.keys():
+	for ID in list(generators.keys()):
 		# KeyError could occur within the generator itself, so retrieve the generator first.
 		try:
 			gen = generators[ID]

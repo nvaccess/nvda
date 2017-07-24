@@ -67,7 +67,7 @@ def _doValidation(profile, validator):
 			raise ValueError(errorString)
 
 def _ensureVersionProperty(profile):
-	isEmptyProfile = 1 > len(profile.keys())
+	isEmptyProfile = 1 > len(list(profile.keys()))
 	if isEmptyProfile:
 		log.debug("Empty profile, triggering default schema version")
 		profile[SCHEMA_VERSION_KEY] = latestSchemaVersion

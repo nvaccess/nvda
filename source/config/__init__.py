@@ -576,7 +576,7 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 		if self._suspendedTriggers:
 			# Remove any suspended triggers referring to this profile.
-			for trigger in self._suspendedTriggers.keys():
+			for trigger in list(self._suspendedTriggers.keys()):
 				if trigger._profile == delProfile:
 					del self._suspendedTriggers[trigger]
 
