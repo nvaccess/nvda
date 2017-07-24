@@ -987,6 +987,7 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		textList = []
+		role=attrs.get('role')
 		landmark = attrs.get("landmark")
 		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
 			try:
@@ -998,6 +999,12 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 				textList.append(aria.landmarkRoles[landmark])
 			else:
 				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+		# #3321: Report the name of groupings (such as fieldsets) for quicknav and focus jumps
+		elif reason==controlTypes.REASON_FOCUS and fieldType == "start_addedToControlFieldStack" and role==controlTypes.ROLE_GROUPING: 
+			try:
+				textList.append(attrs["name"])
+			except KeyError:
+				pass
 		textList.append(super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
