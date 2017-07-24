@@ -1274,7 +1274,7 @@ the NVDAObject for IAccessible
 					del info['indexInGroup']
 					del info['similarItemsInGroup']
 				# 0 means not applicable, so remove it.
-				for key, val in info.items():
+				for key, val in list(info.items()):
 					if not val:
 						del info[key]
 				return info
