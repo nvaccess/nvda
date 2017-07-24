@@ -475,7 +475,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				if lineEndOffset>=self._endOffset:
 					return
 			return
-		for chunk in super(DisplayModelTextInfo,self)._getTextInChunks(unit):
+		for chunk in super(DisplayModelTextInfo,self).getTextInChunks(unit):
 			yield chunk
 
 class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
