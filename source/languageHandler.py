@@ -133,7 +133,7 @@ def getAvailableLanguages(presentational=False):
 def makePgettext(translations):
 	"""Obtaina  pgettext function for use with a gettext translations instance.
 	pgettext is used to support message contexts,
-	but Python 2.7's gettext module doesn't support this,
+	but Python's gettext module doesn't support this,
 	so NVDA must provide its own implementation.
 	"""
 	if isinstance(translations, gettext.GNUTranslations):
@@ -146,7 +146,7 @@ def makePgettext(translations):
 				return message
 	else:
 		def pgettext(context, message):
-			return unicode(message)
+			return message
 	return pgettext
 
 def getWindowsLanguage():
@@ -200,12 +200,12 @@ def setLanguage(lang):
 			#Set the windows locale for this thread (NVDA core) to this locale.
 			LCID=localeNameToWindowsLCID(lang)
 			ctypes.windll.kernel32.SetThreadLocale(LCID)
-	except IOError:
+	except (IOError, OSError): # Python 3.3 and later uses the latter exception.
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
-	trans.install(unicode=True)
+	trans.install()
 	# Install our pgettext function.
-	__builtin__.__dict__["pgettext"] = makePgettext(trans)
+	builtins.__dict__["pgettext"] = makePgettext(trans)
 
 def getLanguage():
 	return curLang
