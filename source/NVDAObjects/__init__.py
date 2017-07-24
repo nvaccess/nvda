@@ -6,7 +6,7 @@
 #See the file COPYING for more details.
 
 """Module that contains the base NVDA object type"""
-from new import instancemethod
+#from new import instancemethod
 import time
 import re
 import weakref
@@ -1024,7 +1024,7 @@ This code is executed if a gain focus event is received by this object.
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
 		if newTime-oldTime>0.5:
-			self._basicText=u" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+			self._basicText=" ".join([x for x in (self.name, self.value, self.description) if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
 			if len(self._basicText)==0:
 				self._basicText=u""
 		else:
