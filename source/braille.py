@@ -137,12 +137,12 @@ TEXT_SEPARATOR = " "
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
-	role = obj.role
-	states = obj.states
-	return (issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo)
-		or role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL)
-		or controlTypes.STATE_EDITABLE in states
-		or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY not in obj.states))
+	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
+		# #1711: Flat review (using displayModel) should always be presented on the braille display
+		return True
+	else:
+		# Let the NVDAObject choose if the text should be presented
+		return obj._hasNavigableText
 
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver

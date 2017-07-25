@@ -8,9 +8,11 @@
 %%toc
 
 + Introducción +
+¡Bienvenido a NVDA!
+
 NonVisual Desktop Access (NVDA) es un lector de pantalla libre y de código abierto  para el Sistema Operativo  Microsoft Windows.
 Proporcionando retroalimentación a través de voz sintética y Braille, posibilita a la gente ciega o deficiente visual acceder a ordenadores ejecutando Windows por un coste no mayor al de una persona vidente.
-NVDA está desarrollado por [NV Access http://www.nvaccess.org/], con  colaboraciones de la comunidad.
+NVDA está desarrollado por [NV Access https://www.nvaccess.org/], con  colaboraciones de la comunidad.
 
 ++ Características generales ++
 NVDA permite a personas ciegas y deficientes visuales acceder e interactuar con el Sistema Operativo Windows y muchas aplicaciones de terceros. 
@@ -18,7 +20,7 @@ NVDA permite a personas ciegas y deficientes visuales acceder e interactuar con 
 Lo más reseñable incluye: 
 - Soporte para aplicaciones populares incluyendo navegadores web, clientes de correo, programas de chat en internet y suites de oficina
 - Sintetizador de voz integrado que soporta sobre 80 idiomas
-- anunciado de formato de texto donde esté disponible tal como nombre y tamaño de la fuente, estilo y errores de ortografía
+- Anunciado de formato de texto donde esté disponible tal como nombre y tamaño de la fuente, estilo y errores de ortografía
 - Anunciado automático de texto bajo el ratón e indicación opcional audible  de la posición del ratón
 - Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
@@ -27,7 +29,7 @@ Lo más reseñable incluye:
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
-- soporte para el símbolo del sistema de Windows y aplicaciones de consola
+- Soporte para el símbolo del sistema de Windows y aplicaciones de consola
 -
 
 ++ Internacionalización ++
@@ -43,9 +45,10 @@ Se puede encontrar información acerca de otros sintetizadores de voz que soport
 
 ++ Soporte Braille ++
 Para usuarios que posean una pantalla de braille efímero, NVDA puede mostrar su información en braille. 
+También se soporta tanto la entrada de braille sin contraer como contraída a través de un teclado braille.
 Por favor consulta la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para información acerca de las pantallas braille soportadas.
 
-NVDA soporta códigos braille para muchos idiomas, incluyendo códigos braille contraído, no contraído y computerizado para algunos idiomas.
+NVDA soporta códigos braille para muchos idiomas, incluyendo códigos braille contraído, no contraído y computerizado.
 
 ++ Licencia y Copyright ++
 NVDA es copyright NVDA_COPYRIGHT_YEARS por los colaboradores de NVDA.
@@ -578,6 +581,77 @@ Por favor consulta la documentación de MathPlayer para información adicional.
 
 Cuando desees volver al documento, simplemente pulsa la tecla escape.
 
++ Braille +
+Si tienes una pantalla braille, NVDA puede mostrar información en braille.
+Si tu pantalla braille tiene un teclado tipo Perkins, también puedes introducir braille contraído o sin contraer.
+
+Por favor consulta la sección [Pantallas Braille soportadas  #SupportedBrailleDisplays] para información  acerca de las pantallas braille soportadas.
+Puedes configurar el braille utilizando el  [diálogo Opciones de Braille #BrailleSettings].
+
+++ Abreviaturas de tipos de Control, estado y puntos de referencia ++
+Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado así como los puntos de referencia.
+
+|| Abreviatura | Tipo de Control |
+| bt | botón |
+| cc | cuadro combinado |
+| cv | casilla de verificación |
+| dlg | diálogo |
+| ce | campo de texto editable |
+| gra | gráfico |
+| cN | número de columna de tabla n, ej.: c1, c2. |
+| fN | número de fila de tabla n, ej.: r1, r2. |
+| enN | encabezado de nivel n, ej.: h1, h2. |
+| enl | enlace |
+| enlv | enlace visitado |
+| lst | lista |
+| pdr | punto de referencia |
+| mn | menú |
+| bmn | barra de menú |
+| bto | botón de opción |
+| tb | tabla |
+| vár | vista en árbol |
+| nv N | un elemento de vista en árbol que tiene un nivel jerárquico N|
+| ``-----`` | separador |
+
+Los siguientes indicadores de estado  también están definidos:
+|| Abreviatura | Estado de Control |
+| ... | mostrado cuando un objeto soporta autocompletado |
+| ( ) | mostrado cuando un objeto (ej.: una casilla de verificación) no está marcado |
+| (x) | mostrado cuando un objeto (ej.: una casilla de verificación) está marcado |
+| (-) | mostrado cuando un objeto (ej.: una casilla de verificación) está  parcialmente marcado |
+| - | mostrado cuando un objeto (ej.: un elemento de vista en árbol) es contraíble |
+| + | mostrado cuando un objeto (ej.: un elemento de vista de árbol) es Expandible |
+| clk | mostrado cuando un objeto es cliqueable |
+| ro | mostrado cuando un objeto (ej.: un campo de texto editable) es de sólo lectura |
+| sel | mostrado cuando un objeto está seleccionado |
+| submnu | mostrado cuando un objeto tiene un desplegable (normalmente un submenú) |
+
+Finalmente, se definieron las siguientes abreviaturas para puntos de referencia:
+|| Abreviatura | Punto de referencia |
+| tlo | título |
+| cinf | info de contenido |
+| cmpl | complementario |
+| form | formulario |
+| main | principal |
+| nav | navegación |
+| busq | búsqueda |
+| rgn | región |
+
+++ Entrada Braille ++
+NVDA soporta la entrada de braille  contraído y sin contraer a través de un teclado braille.
+Puedes seleccionar la tabla de transcripción utilizada para transcribir braille en el texto utilizando la opción [Tabla de entrada #BrailleInputTable] en el diálogo Opciones de Braille.
+
+Cuando se esté utilizando braille sin contraer, el texto se inserta tan pronto como se introduce.
+Cuando se esté utilizando braille contraído, el texto se inserta al pulsar espacio o intro al final de una palabra.
+Ten en cuenta que la transcripción puede reflejar sólo la palabra braille que estés escribiendo y no se puede considerar el texto existente.
+Por ejemplo, si estás utilizando un código braille que comienza los números con un signo de número y pulsas retroceso para moverte al final de un número, necesitarás teclear el signo de número de nuevo para introducir números adicionales.
+
+%kc:beginInclude
+Al pulsar el punto 7 borras la última celda o carácter introducido.
+El punto 8 transcribe cualquier entrada braille y pulsa la tecla intro.
+Pulsando los puntos 7 + 8 transcribe cualquier entrada braille, pero sin añadir un espacio o pulsando intro.
+%kc:endInclude
+
 + Características Específicas para Aplicación +
 NVDA proporciona sus propias características extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
 
@@ -912,7 +986,7 @@ Si deseas cambiar rápidamente opciones de voz  sin ir al diálogo de Opciones d
 | Decrementar actual opción de sintetizador | NVDA+control+Flecha abajo | NVDA+shift+control+Flecha abajo | decrementa la opción de voz actual sobre la que estés. Ej.: decrementa la velocidad, elige  la voz anterior, decrementa el volumen |
 %kc:endInclude
 
-+++ Opciones de Braille +++
++++ Opciones de Braille +++[BrailleSettings]
 El cuadro de diálogo de Opciones de braille puede ser invocado yendo al menú preferencias y entonces ir a la opción opciones de braille.
 
 ==== Pantalla Braille ====
@@ -942,10 +1016,9 @@ En este cuadro combinado, encontrarás tablas braille, estándares braille y gra
 La tabla elegida se utilizará para transcribir texto a braille para presentarlo en la pantalla braille.
 Puedes moverte entre las tablas braille en la lista utilizando las teclas de cursor.
 
-==== Tabla de Entrada ====
+==== Tabla de Entrada ====[BrailleInputTable]
 Complementariamente con la opción anterior, el siguiente ajuste que encontrarás es el cuadro combinado de la tabla de entrada braille.
 La tabla elegida se utilizará para transcribir a texto el braille introducido en el teclado tipo perkins de la pantalla braille.
-Actualmente NVDA sólo soporta la entrada de braille computerizado, así que sólo se mostrarán tablas de braille computerizado de 8 puntos.
 Puedes moverte entre las tablas braille en la lista utilizando las teclas de cursor.
 
 Ten en cuenta que esta opción sólo es útil si tu pantalla braille tiene un teclado tipo Perkins y si esta característica está soportada por el controlador de la pantalla braille.
@@ -1484,9 +1557,9 @@ Por ejemplo, podrías desear editar un perfil activado manualmente o la configur
 Puedes hacer esto marcando la casilla de verificación Desactivar Temporalmente Todos los Disparadores en el cuadro de diálogo  de perfiles de configuración.
 
 ++ Ubicación de los Ficheros de Configuración++
-Las versiones portátiles de NVDA almacenan todas sus opciones,  appModules personales y controladores personales en un directorio llamado userConfig, que se encuentra en el directorio de NVDA.
+Las versiones portátiles de NVDA almacenan todas sus opciones y complementos en un directorio llamado userConfig, que se encuentra en el directorio de NVDA.
 
-Las versiones instaladas de NVDA almacenan todas sus opciones, appModules personales y controladores personales en un directorio especial de NVDA localizado en tu perfil de usuario de Windows. 
+Las versiones instaladas de NVDA almacenan todas sus opciones y complementos en un directorio especial de NVDA localizado en tu perfil de usuario de Windows. 
 Esto significa que cada usuario en el sistema puede tener sus propias opciones de NVDA. 
 Para optener tu directorio de opciones para una versión instalada de NVDA, en el menú de Inicio puedes ir a programas -> NVDA -> explorar directorio de configuración de usuario.
    
@@ -1609,7 +1682,7 @@ Para utilizar estas voces, necesitarás instalar dos componentes:
 Windows 10 incluye nuevas voces conocidas como voces "OneCore" o "mobile".
 Se proporcionan voces para muchos idiomas y son más ágiles que las voces Microsoft disponibles al utilizar Microsoft Speech API versión 5.
 
-Para instalar voces para idiomas adicionales, consulta este artículo de Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+Porfavor consulta este artículo de Microsoft para una lista de voces disponibles e instrucciones para instalarlas: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 Por favor ten en cuenta que actualmente no están disponibles con NVDA las velocidades más rápidas disponibles con Narrator.
 También, la velocidad seleccionada en la configuración de Windows afecta a la configurada en NVDA.
@@ -1646,7 +1719,7 @@ No obstante, cuando se configura la pantalla, puedes seleccionar explícitamente
 Esto podría ser útil si quieres conectar la pantalla focus a NVDA utilizando bluetooth, y todavía podrías cargarla utilizando la energía del USB desde tu ordenador.
 
 Seguidamente van las asociaciones de teclas para esta pantalla con NVDA.
-Por favor consulta la documentación de la pantalla para descriptciones de dónde pueden encontrarse estas teclas.
+Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | tecla |
 | Desplazar pantalla braille atrás | sensorSuperior1 (primera celda en la pantalla) |
@@ -1661,8 +1734,6 @@ Por favor consulta la documentación de la pantalla para descriptciones de dónd
 | Moverse hacia atrás utilizando acción de rueda derecha | rueda derecha hacia arriba |
 | Moverse hacia adelante  utilizando acción de rueda derecha | rueda derecha hacia abajo |
 | Guiar hacia la celda braille | sensor |
-| tecla retroceso | punto7 |
-| tecla intro | punto8 |
 | tecla shift+tab | barra espaciadora braille+punto1+punto2 |
 | tecla tab | barra espaciadora braille+punto4+punto5 |
 | tecla flecha abajo | barra espaciadora braille+punto1 |
@@ -1904,8 +1975,6 @@ Por favor consulta la documentación de las pantallas para descripciones de dón
 | tecla alt | punto1+punto3+punto4+Espacio |
 | tecla escape | punto1+punto5+Espacio |
 | tecla tab | punto4+punto5+Espacio |
-| tecla intro | punto8 |
-| tecla retroceso | punto7 |
 | tecla flecha arriba | punto1+Espacio |
 | Tecla flecha abajo | punto4+Espacio |
 | bloq mayúsculas | punto1+punto3+punto6+Espacio |
@@ -2052,8 +2121,6 @@ Las teclas interiores se mapean a espacio.
 
 || Nombre | Tecla |
 %kc:beginInclude
-| tecla retroceso | punto 7 |
-| tecla intro | punto 8 |
 | tecla escape | espacio con punto 7 |
 | tecla flecha arriba | espacio con punto  2 |
 | tecla flecha izquierda | espacio con punto 1 |
@@ -2187,8 +2254,8 @@ Por favor consulta la documentación del BrailleNote para encontrar dónde se lo
 | teclas Control+inicio | espacio+punto1+punto2+punto3 |
 | Teclas Control+fin | espacio+punto4+punto5+punto6 |
 | tecla espacio | espacio |
-| Tecla intro | espacio+punto8 |
-| Tecla Retroceso | espacio+punto7 |
+| Intro | espacio+punto8 |
+| Retroceso | espacio+punto7 |
 | Tecla Tab | espacio+punto2+punto3+punto4+punto5 (espacio+t) |
 | Teclas Shift+tab | espacio+punto1+punto2punto5+punto6 |
 | Tecla Windows | espacio+punto2+punto4+punto5+punto6 (espacio+w) |
@@ -2250,55 +2317,6 @@ Por favor consulta las [listas de claves de vínculos de BRLTTY http://mielke.cc
 | Mover pantalla braille a la siguiente línea | lndn (va una línea hacia abajo) |
 | Guiar a la celda braille | route (lleva el cursor al carácter) |
 %kc:endInclude
-
-+ Abreviaturas de Tipos de control Braille, de estado y de Puntos de Rreferencia +
-Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado así como los puntos de referencia.
-
-|| Abreviatura | Tipo de Control |
-| bt | botón |
-| cc | cuadro combinado |
-| cv | casilla de verificación |
-| dlg | diálogo |
-| ce | campo de texto editable |
-| gra | gráfico |
-| cN | número de columna de tabla n, ej.: c1, c2. |
-| fN | número de fila de tabla n, ej.: r1, r2. |
-| enN | encabezado de nivel n, ej.: h1, h2. |
-| enl | enlace |
-| enlv | enlace visitado |
-| lst | lista |
-| pdr | punto de referencia |
-| mn | menú |
-| bmn | barra de menú |
-| bto | botón de opción |
-| tb | tabla |
-| vár | vista en árbol |
-| nv N | un elemento de vista en árbol que tiene un nivel jerárquico N|
-| ``-----`` | separador |
-
-Los siguientes indicadores de estado  también están definidos:
-|| Abreviatura | Estado de Control |
-| ... | mostrado cuando un objeto soporta autocompletado |
-| ( ) | mostrado cuando un objeto (ej.: una casilla de verificación) no está marcado |
-| (x) | mostrado cuando un objeto (ej.: una casilla de verificación) está marcado |
-| (-) | mostrado cuando un objeto (ej.: una casilla de verificación) está  parcialmente marcado |
-| - | mostrado cuando un objeto (ej.: un elemento de vista en árbol) es contraíble |
-| + | mostrado cuando un objeto (ej.: un elemento de vista de árbol) es Expandible |
-| clk | mostrado cuando un objeto es cliqueable |
-| ro | mostrado cuando un objeto (ej.: un campo de texto editable) es de sólo lectura |
-| sel | mostrado cuando un objeto está seleccionado |
-| submnu | mostrado cuando un objeto tiene un desplegable (normalmente un submenú) |
-
-Finalmente, se definieron las siguientes abreviaturas para puntos de referencia:
-|| Abreviatura | Punto de referencia |
-| tlo | título |
-| cinf | info de contenido |
-| cmpl | complementario |
-| form | formulario |
-| main | principal |
-| nav | navegación |
-| busq | búsqueda |
-| rgn | región |
 
 + Temas Avanzados +
 

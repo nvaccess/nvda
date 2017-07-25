@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-30 00:10+1000\n"
-"PO-Revision-Date: 2017-06-30 09:35+0200\n"
+"POT-Creation-Date: 2017-07-14 00:10+1000\n"
+"PO-Revision-Date: 2017-07-17 08:38+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -148,6 +148,252 @@ msgstr "Puhuttaessa ja ääntä toistettaessa"
 msgid "Always duck"
 msgstr "Aina"
 
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "muo"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "vkorvi"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "vlk"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "pnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "vlr"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "vpnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "yhd"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "lnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "vli"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "pn"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tb"
+msgstr "tl"
+
+#. Translators: Displayed in braille for an object which is a
+#. separator.
+msgid "-----"
+msgstr "-----"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "gra"
+
+#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
+msgid "(x)"
+msgstr "(x)"
+
+#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
+msgid "(-)"
+msgstr "(-)"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "val"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "alavko"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "vl"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "nps"
+
+#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
+msgid "( )"
+msgstr "( )"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "mplk"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "täyd"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "stie"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "pää"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "nav"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "hku"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "lom"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "alu"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "pisteet 7 ja 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "piste 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "kaikki pisteet"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "o%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "alnk"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "ei %s"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} / {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "ts %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "r%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "s%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "%s lop"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automaattinen"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "piste"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "välilyönti japiste"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "väli"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "pistekirjoitusnäppäimistö"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "välilyönti ja mitkä tahansa pisteet"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "mitkä tahansa pisteet"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
@@ -230,6 +476,11 @@ msgstr "saksa, taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "kreikka (Kreikka)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "englanti (Iso-Britannia), 8 pisteen tietokonemerkistö"
 
@@ -242,6 +493,16 @@ msgstr "englanti (Iso-Britannia), taso 1"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "englanti (Iso-Britannia), taso 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "englanti (yhdenmukaistettu), taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "englanti (yhdenmukaistettu), taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -337,11 +598,6 @@ msgstr "gujarati, taso 1"
 #. braille settings dialog.
 msgid "Koine Greek"
 msgstr "Koinee-kreikka"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "kreikka, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -565,13 +821,8 @@ msgstr "turkki, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "englanti (yhdenmukaistettu), taso 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "englanti (yhdenmukaistettu), taso 2"
+msgid "Unicode braille"
+msgstr "Unicode-pistekirjoitus"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -582,241 +833,6 @@ msgstr "kantoninkiina (Hong Kong)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "mandariinikiina (Taiwan)"
-
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "muo"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "lst"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "vkorvi"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "vlk"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "pnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "vlr"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "vpnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "yhd"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "lnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "vli"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "pn"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tl"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "gra"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "val"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "alavko"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "vl"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "nps"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "bnnr"
-msgstr "mplk"
-
-#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "cmpl"
-msgstr "täyd"
-
-#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "cinf"
-msgstr "stie"
-
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "main"
-msgstr "pää"
-
-#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "navi"
-msgstr "nav"
-
-#. Translators: Displayed in braille for the search landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "srch"
-msgstr "hku"
-
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "form"
-msgstr "lom"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "alu"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "pisteet 7 ja 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "piste 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "kaikki pisteet"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "o%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "alnk"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "ei %s"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} / {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "ts %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "s%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "%s lop"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automaattinen"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "pistesyöte"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "välilyönti japiste"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "piste"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "väli"
 
 msgid "Focus mode"
 msgstr "Vuorovaikutustila"
@@ -3876,6 +3892,19 @@ msgstr "Syöttää pistekirjoitusta pistenäppäimistön avulla."
 msgid "Moves the braille display to the current focus"
 msgstr "Siirtää pistenäytön nykyiseen kohdistukseen."
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "Poistaa viimeksi syötetyn pistesolun tai -merkin."
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr ""
+"Kääntää minkä tahansa pistekirjoitussyötteen ja painaa Enter-näppäintä."
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "Kääntää minkä tahansa pistekirjoitussyötteen."
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Liitännäiset ladattu uudelleen"
@@ -6147,15 +6176,14 @@ msgstr ""
 "{copyright}\n"
 "\n"
 "{name} on suojattu GNU General Public License (versio 2) -lisenssillä. Voit "
-"vapaasti levittää tai muuttaa tätä ohjelmistoa miten tahansa, kunhan "
-"toimitat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä "
-"koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita, kuten myös "
-"kaikkia johdannaisia.\n"
+"vapaasti jakaa tai muuttaa tätä ohjelmistoa, kunhan toimitat lisenssin sen "
+"mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä koskee sekä "
+"alkuperäisiä että muokattuja ohjelmistokopioita ja kaikkia johdannaisia.\n"
 "Voit tarkastella lisenssiä Ohje-valikosta saadaksesi lisätietoja.\n"
 "Lisenssi on luettavissa myös verkossa osoitteessa http://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name}:ta kehittää NV Access, voittoa tavoittelematon järjestö, joka on "
+"{name}:ta kehittää NV Access, voittoa tavoittelematon organisaatio, joka on "
 "sitoutunut auttamaan ja edistämään vapaan ja avoimen lähdekoodin ratkaisuja "
 "sokeille ja heikkonäköisille henkilöille.\n"
 "Jos pidät NVDA:ta hyödyllisenä ja haluat sen kehityksen jatkuvan, harkitse "
@@ -10166,6 +10194,9 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "braille"
+#~ msgstr "pistesyöte"
 
 #~ msgid "Are you sure you want to delete this profile? This cannot be undone."
 #~ msgstr "Haluatko varmasti poistaa tämän profiilin? Poistoa ei voi perua."

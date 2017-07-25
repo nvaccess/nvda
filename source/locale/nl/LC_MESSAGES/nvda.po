@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-30 00:10+1000\n"
+"POT-Creation-Date: 2017-07-07 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Leonard de Ruijter <leonard@babbage.com>\n"
 "Language-Team: \n"
@@ -15,6 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.13\n"
+"X-Poedit-Bookmarks: -1,-1,-1,-1,1472,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1307,24 +1308,20 @@ msgid "no previous annotation"
 msgstr "geen vorige aantekening"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the next error"
-msgstr "gaat naar de volgende scheiding"
+msgstr "gaat naar de volgende fout"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no next error"
-msgstr "geen volgende scheiding"
+msgstr "geen volgende fout"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the previous error"
-msgstr "gaat naar de vorige scheiding"
+msgstr "gaat naar de vorige fout"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no previous error"
-msgstr "geen vorige scheiding"
+msgstr "geen vorige fout"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7059,7 +7056,7 @@ msgstr "Uitspraak van &interpunctie en symbolen..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "I&nvoerhandelingen koppelen..."
+msgstr "I&nvoerhandelingen..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -7214,7 +7211,7 @@ msgstr "Toetsenbordindeling:"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "&Capslock als NVDA-toets gebruiken"
+msgstr "&CapsLock als NVDA-toets gebruiken"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -7897,7 +7894,8 @@ msgstr "Niveau van &loggen:"
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "NVDA gebruiken bij windows-aan&melding (administrator rechten vereist)"
+msgstr ""
+"NVDA gebruiken bij windows-aan&melding (administratieve rechten vereist)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
@@ -8021,7 +8019,7 @@ msgstr "Automatisch van dialect wisselen (indien ondersteund)"
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
-msgstr "Interpunctie/symbool &niveau:"
+msgstr "Interpunctie-/symbool&niveau:"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
@@ -8045,7 +8043,7 @@ msgstr "&Pieptoon bij hoofdletters"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Use &spelling functionality if supported"
-msgstr "&Spelling functionaliteit gebruiken (wanneer ondersteund)"
+msgstr "&Spellingfunctionaliteit gebruiken (wanneer ondersteund)"
 
 #. Translators: This is the label for the keyboard settings dialog.
 msgid "Keyboard Settings"
@@ -8054,7 +8052,7 @@ msgstr "Toetsenbordinstellingen"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Capslock als NVDA-toets gebruiken"
+msgstr "CapsLock als NVDA-toets gebruiken"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8084,18 +8082,17 @@ msgstr "Spraakonderbreking bij typen van karakters"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for Enter key"
-msgstr "Spraakonderbreking bij drukken van Enter"
+msgstr "Spraakonderbreking bij drukken van Enter-toets"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "Doo&rbladeren tijdens automatisch lezen toestaan"
+msgstr "Doo&rbladeren bij automatisch lezen toestaan"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr ""
-"Piep als kleine letters worden getypt terwijl caps lock is ingeschakeld"
+msgstr "Piep als kleine letters worden getypt terwijl CapsLock is ingeschakeld"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8105,12 +8102,12 @@ msgstr "&Commando-toetsen uitspreken"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Play sound for &spelling errors while typing"
-msgstr "Geluid bij &spelfouten tijdens typen"
+msgstr "Geluid voor &spelfouten afspelen tijdens typen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Handle keys from other &applications"
-msgstr "Behandel toetsen van andere toepassingen"
+msgstr "Toetsen van &andere toepassingen verwerken"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -8123,7 +8120,7 @@ msgstr "Muisinstellingen"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report mouse &shape changes"
-msgstr "Melden als de vorm van de muisaanwijzer verandert"
+msgstr "Veranderingen van mui&saanwijzervorm melden"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -8143,7 +8140,7 @@ msgstr "&Rol melden als de muis binnen een object komt"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "&Play audio coordinates when mouse moves"
-msgstr "Geluids&coördinatie gebruiken bij verplaatsen van muis"
+msgstr "Geluids&coördinatie gebruiken bij verplaatsen muis"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -8157,17 +8154,17 @@ msgstr "Instellingen voor de Leescursor"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow system &focus"
-msgstr "Volg de systeem&focus"
+msgstr "Ssysteem&focus volgen"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow System &Caret"
-msgstr "Volg systeem&cursor"
+msgstr "Systeem&cursor volgen"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow &mouse cursor"
-msgstr "Volg &muisaanwijzer"
+msgstr "&Muiscursor volgen"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -8181,19 +8178,17 @@ msgstr "Instellingen voor invoersamenstelling"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Automatically report all available &candidates"
-msgstr "Meld automatisch alle beschikbare &kandidaten"
+msgstr "Automatisch alle beschikbare &kandidaten melden"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Announce &selected candidate"
-msgstr "Kondig &geselecteerde kandidaat aan"
+msgstr "Ge&selecteerde Kandidaat Melden"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Always include short character &description when announcing candidates"
-msgstr ""
-"Altijd korte karakter&beschrijving toevoegen bij het aankondigen van "
-"kandidaten"
+msgstr "Altijd korte beschrijving geven van Kandidaat-karakters"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -8230,33 +8225,32 @@ msgstr "Uitspreken en pieptonen"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &tooltips"
-msgstr "Flits&berichten weergeven"
+msgstr "Flits&berichten melden"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &help balloons"
-msgstr "&Helpballonnen weergeven"
+msgstr "&Helpballonnen melden"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object shortcut &keys"
-msgstr "Object &sneltoetsen melden"
+msgstr "Object&sneltoetsen melden"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &position information"
-msgstr "&Positie-informatie van object weergeven"
+msgstr "&Informatie over objectpositie melden"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr ""
-"&Informatie over de positie van een object raden als die niet beschikbaar is"
+msgstr "Object&positie raden indien deze niet beschikbaar is"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &descriptions"
-msgstr "Object&beschrijvingen weergeven"
+msgstr "Object&beschrijvingen melden"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
@@ -8266,17 +8260,17 @@ msgstr "Weergave van &voortgangsbalk:"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "Achtergrond voortgangsbalken weergeven"
+msgstr "Achtergrondvoortgangsbalken melden"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
-msgstr "Veranderingen van dynamische &inhoud melden"
+msgstr "Dynamische &inhoudsveranderingen melden"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
 msgid "Play a sound when &auto-suggestions appear"
-msgstr ""
+msgstr "Geluid afspelen wanneer &auto-aanvullen suggesties oplevert"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -8285,7 +8279,7 @@ msgstr "Bladermodus"
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 msgid "&Maximum number of characters on one line"
-msgstr "&Maximaal aantal karakters per regel"
+msgstr "&Maximale aantal karakters per regel"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
@@ -8295,22 +8289,22 @@ msgstr "&Aantal regels per pagina"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Use &screen layout (when supported)"
-msgstr "&Scherm lay-out gebruiken (wanneer ondersteund)"
+msgstr "&Schermlay-out gebruiken (wanneer ondersteund)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic &Say All on page load"
-msgstr "Automati&sch lezen zodra de pagina geladen is"
+msgstr "Automati&sch lezen zodra pagina geladen is"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "&Lay-outtabellen opnemen"
+msgstr "&Lay-outtabellen melden"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for focus changes"
-msgstr "Automatische &focusmodus bij focus wijziging"
+msgstr "Automatische &focusmodus bij focus wijzigingen"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -8320,7 +8314,7 @@ msgstr "Automatische focusmodus bij &cursorbeweging"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
-msgstr "Geluids&markering voor focus- en bladermodus"
+msgstr "Audio&markering voor focus- en bladermodus"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -8621,7 +8615,7 @@ msgstr "&Invoertabel:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "Naar &computerbraille uitbreiden voor het woord onder de cursor"
+msgstr "Woord onder cursor uitbreiden naar &computerbraille"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
@@ -8633,7 +8627,7 @@ msgstr "Knipperende cursor"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "&Knippersnelheid van de cursor (miliseconden)"
+msgstr "&Knippersnelheid cursor (miliseconden)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
@@ -8641,11 +8635,11 @@ msgstr "Cursor&vorm:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
-msgstr "&Time-out voor berichten (sec)"
+msgstr "&Time-out voor meldingen (sec)"
 
 #. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
 msgid "Show &messages indefinitely"
-msgstr ""
+msgstr "&Meldingen voor onbepaalde tijd tonen"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "B&raille tethered to:"
@@ -8653,11 +8647,11 @@ msgstr "B&raille koppelen aan:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr "Lees per &paragraaf"
+msgstr "Lezen per &alinea"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "Vermijd indien mogelijk dat &woorden gesplitst worden"
+msgstr "Waar mogelijk &woorden niet splitsen"
 
 #, python-format
 msgid "Could not load the %s display."
