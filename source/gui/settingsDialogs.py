@@ -28,6 +28,8 @@ import speechDictHandler
 import appModuleHandler
 import queueHandler
 import braille
+import brailleTables
+import brailleInput
 import core
 import keyboardHandler
 import characterProcessing
@@ -949,6 +951,12 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.dynamicContentCheckBox=sHelper.addItem(wx.CheckBox(self,label=dynamicContentText))
 		self.dynamicContentCheckBox.SetValue(config.conf["presentation"]["reportDynamicContentChanges"])
 
+		# Translators: This is the label for a combobox in the
+		# object presentation settings dialog.
+		autoSuggestionsLabelText = _("Play a sound when &auto-suggestions appear")
+		self.autoSuggestionSoundsCheckBox=sHelper.addItem(wx.CheckBox(self,label=autoSuggestionsLabelText))
+		self.autoSuggestionSoundsCheckBox.SetValue(config.conf["presentation"]["reportAutoSuggestionsWithSound"])
+
 	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
 
@@ -962,6 +970,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
+		config.conf["presentation"]["reportAutoSuggestionsWithSound"]=self.autoSuggestionSoundsCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class BrowseModeDialog(SettingsDialog):
@@ -1523,25 +1532,27 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.portsList = sHelper.addLabeledControl(portsLabelText, wx.Choice, choices=[])
 		self.updatePossiblePorts()
 
+		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
-		self.tableNames = [table[0] for table in braille.TABLES]
-		tableChoices = [table[1] for table in braille.TABLES]
-		self.tableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=tableChoices)
+		outTables = [table for table in tables if table.output]
+		self.outTableNames = [table.fileName for table in outTables]
+		outTableChoices = [table.displayName for table in outTables]
+		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		try:
-			selection = self.tableNames.index(config.conf["braille"]["translationTable"])
-			self.tableList.SetSelection(selection)
+			selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
+			self.outTableList.SetSelection(selection)
 		except:
 			pass
 
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
-		self.inputTableNames = [table[0] for table in braille.INPUT_TABLES]
-		inputChoices = [table[1] for table in braille.INPUT_TABLES]
-		self.inputTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inputChoices)
+		self.inTables = [table for table in tables if table.input]
+		inTableChoices = [table.displayName for table in self.inTables]
+		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		try:
-			selection = self.inputTableNames.index(config.conf["braille"]["inputTable"])
-			self.inputTableList.SetSelection(selection)
+			selection = self.inTables.index(brailleInput.handler.table)
+			self.inTableList.SetSelection(selection)
 		except:
 			pass
 
@@ -1587,14 +1598,22 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.shapeList.Disable()
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-		messageTimeoutText = _("Message timeout (sec)")
+		messageTimeoutText = _("Message &timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
 			min=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "min")),
 			max=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "max")),
 			initial=config.conf["braille"]["messageTimeout"])
 
+		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+		noMessageTimeoutLabelText = _("Show &messages indefinitely")
+		self.noMessageTimeoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=noMessageTimeoutLabelText))
+		self.noMessageTimeoutCheckBox.Bind(wx.EVT_CHECKBOX, self.onNoMessageTimeoutChange)
+		self.noMessageTimeoutCheckBox.SetValue(config.conf["braille"]["noMessageTimeout"])
+		if self.noMessageTimeoutCheckBox.GetValue():
+			self.messageTimeoutEdit.Disable()
+
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-		tetherListText = _("Braille tethered to:")
+		tetherListText = _("B&raille tethered to:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
 		tetherChoices = [x[1] for x in self.tetherValues]
@@ -1629,13 +1648,14 @@ class BrailleSettingsDialog(SettingsDialog):
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
-		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
-		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
+		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
+		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
 		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
+		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
@@ -1674,6 +1694,9 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def onBlinkCursorChange(self, evt):
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
+
+	def onNoMessageTimeoutChange(self, evt):
+		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
 class AddSymbolDialog(wx.Dialog):
 

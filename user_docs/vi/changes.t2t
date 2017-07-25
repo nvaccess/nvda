@@ -3,37 +3,105 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.2 =
+= 2017.3 =
 
 == Tính Năng Mới ==
-- Có thể thông báo thông tin đường viền ô trong Microsoft Excel với phím tắt `NVDA+f`. (#3044)
-- Hỗ trợ các thuộc tính aria-current. (#6358)
+- Thêm một thiết lập chữ nổi mới là "Hiển thị thông điệp không xác định". (#6669)
+- Thông báo thư được đánh cờ khi đứng trong danh sách thư của Microsoft Outlook. (#6374)
+- Đã thông báo kiểu hình dạng khi chỉnh sửa slide trong Microsoft PowerPoint (ví dụ: hình tam giác, hình tròn, video, mũi tên) thay vì chỉ thông báo là "hình dạng". (#7111)
+- Hỗ trợ đọc nội dung toán theo chuẩn MathML trong Google Chrome. (#7184)
+- NVDA có thể đọc với các giọng OneCore của Windows 10 (còn được biết là giọng đọc di động). Bạn có thể chọn giọng OneCore Windows trong hộp thoại bộ đọc của NVDA. (#6159)
+- Các tập tin cấu hình người dùng đã có thể lưu trong thư mục dữ liệu ứng dụng cục bộ. Chức năng này được bật trong phần thiết lập của registry. Xem phần "Các tham số hệ thống" trong tài liệu hướng dẫn sử dụng để biết thêm thông tin. (#6812)
+- Đã thông báo giá trị các placeholder trong các trình duyệt web, cụ thể là hỗ trợ cho ARIA-placeholder.(#7004)
+- Ở chế độ duyệt trong Microsoft Word, có thể dùng phím di chuyển nhanh (w và shift+w) chuyển qua lại các lỗi chính tả. (#6942)
+- Hỗ trợ tương tác với điều khiển chọn ngày trong hộp thoại lịch hẹn của Microsoft Outlook. (#7217)
+- NVDA đã đọc gợi ý đang chọn ở trường To/CC của Windows 10 Mail và ô tìm kiếm của cửa sổ Settings trên Windows 10. (#6241)
+- Sẽ phát âm thanh khi có gợi ý ở các ô tìm kiếm trên Windows 10, ví dụ như ô tìm kiếm ở màn hình khởi động, cửa sổ settings, To/CC của Windows Mail. (#6241)
+- Tự động đọc các thông báo của bản Skype Business cho desktop khi có người bắt đầu cuộc trò chuyện với bạn. (#7281)
+- Tự động đọc thông báo trong Microsoft Edge, ví dụ khi có download được bắt đầu. (#7281)
+- Có thể nhập liệu cả chữ nổi đầy đủ và viết tắt với bàn phím chữ nổi trên màn hình nổi. Xem phần nhập liệu chữ nổi trong tài liệu hướng dẫn sử dụng để biết thêm thông tin. (#2439)
+- Bạn có thể nhập ký tự chữ nổi Unicode với bàn phím chữ nổi trên màn hình nổi bằng cách chọn Chữ nổi Unicode ở mục bảng đầu vào trong hộp thoại thiết lập màn hình nổi. (#6449)
+
+
+== Thay Đổi ==
+- Thêm thao tác chưa được gán phím (script_restart) để giúp khởi động lại NVDA nhanh hơn. (#6396)
+- Có thể cài đặt kiểu bàn phím ở cửa sổ chào mừng của NVDA. (#6863)
+- Tên của các cột mốc (landmark) đã được viết tắt như sau: (#3975)
+ -  "landmark" (cột mốc): "lmk"
+ - "banner" (biểu ngữ): "bnnr"
+ - "complementary" (bổ trợ): "comp"
+ - "contentinfo" (thông tin nội dung): "cinf"
+ - "main" (chính): "main"
+ - "navigation" (điều hướng): "nav"
+ - "search" (tìm kiếm): "srch"
+ - "form" (biểu mẫu): "frm"
+ - "region" (vùng): "rgn"
+ - Ví dụ:  "navigation landmark" sẽ là  "lmk nav"
+- Đã cập nhật Espeak-ng lên phiên bản 1.49.1 (#7280).
+- Đã sắp xếp các mục trong danh sách bảng đầu vào và đầu ra của hộp thoại thiết lập màn hình nổi theo an-pha-bê. (#6113)
+- Cập nhật trình chuyển dịch chữ nổi liblouis lên bản  3.2.0. (#6935)
+
+
+== Sửa Lỗi ==
+- Đối với các thành phần div có thể soạn thảo trong Chrome, khi ở chế độ duyệt, nhãn không còn thông báo giống với giá trị của nó. (#7153)
+- Ở chế độ duyệt trong Microsoft Word, nhấn phím End trong một văn bản trống sẽ không còn bị lỗi runtime. (#7009)
+- Đã hỗ trợ chế độ duyệt trong Microsoft Edge khi tài liệu được cung cấp vai trò ARIA cụ thể cho nó. (#6998)
+- Ở chế độ duyệt, nhấn shift+end đã có thể chọn hoặc bỏ chọn về cuối dòng, ngay cả khi dấu nháy nằm tại ký tự cuối của dòng đó. (#7157)
+- Nếu hộp thoại có thanh tiến trình, văn bản hộp thoại sẽ được cập nhật khi thanh tiến trình thay đổi. Ví dụ, thời gian còn lại trong hộp thoại tải NVDA đã có thể đọc bằng văn bản với NVDA. (#6862)
+- NVDA sẽ thông báo các thay đổi vùng chọn trong một số hộp xổ của Windows 10, ví dụ như hộp xổ Autoplay trong phần Settings. (#6337).
+- Không còn thông báo thông tin không tồn tại ơ hộp thoại tạo lịch hẹn hay cuộc họp của Microsoft Outlook. (#7216)
+- Bíp ở các hộp thoại có thanh tiến trình không xác định như hộp thoại kiểm tra bản cập nhật, khi thiết lập cho thanh tiến trình bao gồm lựa chọn bíp. (#6759)
+- Đã đọc lại các ô khi di chuyển bằng mũi tên trong Microsoft Excel 2003 và 2007. (#8243)
+- Chế độ duyệt đã được tự động bật khi đọc email trong Windows 10 Mail với bản Windows 10 creator update và những bản sau này. (#7289)
+- Ở hầu hết màn hình nổi có bàn phím chữ nổi, chấm 7 sẽ dùng để xóa ký tự hoặc ô được nhập trước đó và chấm 8 là phím enter. (#6054)
+- Khi đứng ở văn bản có thể chỉnh sửa và di chuyển dấu nháy, ví dụ với phím mũi tên hoặc xóa lùi, NVDA đã đọc chính xác hơn, đặc biệt là trong Google Chrome và những ứng dụng đầu cuối. (#6424)
+
+
+== Thay Đổi cho Nhà Phát Triển ==
+- Đã thêm mili giây vào phần đánh dấu thời gian trong  bản ghi. (#7163)
+- NVDA phải được build với Visual Studio Community 2015. Đã ngưng hỗ trợ cho bộ Visual Studio Express. (#7110)
+ - Cũng yêu cầu cài đặt thêm bộ Windows 10 Tools và SDK; có thể chọn khi cài đặt Visual Studio.
+ - Vui lòng xem phần hướng dẫn cài đặt các gói phụ thuộc để biết thêm thông tin.
+ 
+
+= 2017.2 =
+Một số điểm nổi bật trong bản phát hành này bao gồm: hỗ trợ đầy đủ các chế độ giảm âm lượng ứng dụng khác trên Windows 10 Creators Update; Sửa một số  vấn đề khi chọn ở chế độ duyệt ví dụ như chọn tất cả; cải thiện khả năng làm việc với  Microsoft Edge; và cải thiện nhiều hỗ trợ cho web ví dụ như nhận biết các thành phần sử dụng ARIA-current.
+
+== Tính Năng Mới ==
+- Có thể thông báo thông tin đường viền ô trong Microsoft Excel với phím tắt NVDA+f. (#3044)
+- NVDA đã có thể nhận biết các thành phần được đánh dấu với current trên các trình duyệt web (cụ thể là khi dùng thuộc tính ARIA-current). (#6358)
 - Hỗ trợ tự động chuyển ngôn ngữ cho Microsoft Edge. (#6852)
 - Hỗ trợ chương trình máy tính trên Windows 10 Enterprise LTSB (Long-Term Servicing Branch) và bản máy chủ. (#6914)
 - Thực hiện lệnh đọc dòng hiện tại nhanh ba lần sẽ đánh vần dòng đó với phần mô tả ký tự. (#6893)
 - Thêm ngôn ngữ Burmese
+- Đã đọc ký hiệu phân số và dấu mũi tên lên xuống mã unicode. (#3805)
 
 
 == Các Thay Đổi ==
-- Khi di chuyển với chế độ duyệt đơn giản trong những ứng dụng sử dụng UI Automation, nhiều đối tượng chứa không có nội dung sẽ được bỏ qua, giúp việc di chuyển dễ hơn. (#6948, #6950) 
+- Khi di chuyển với chế độ duyệt đơn giản trong những ứng dụng sử dụng UI Automation, nhiều đối tượng chứa không liên quan  sẽ được bỏ qua. Điều này sẽ giúp việc di chuyển dễ dàng hơn. (#6948, #6950) 
 
 
 == Sửa Lỗi ==
-- Có thể kích hoạt các mục trong thực đơn trên trang web như hộp kiểm, nút radio khi đứng ở chế độ duyệt. (#6735)
-- Phần thông báo tên bảng tính của Excel đã được dịch. (#6848)
+- Đã có thể kích hoạt các mục trong thực đơn trên web khi ở chế độ duyệt. (#6735)
 - Nhấn escape khi focus đang ở cửa sổ xác nhận xóa hồ sơ cấu hình sẽ thoát khỏi hộp thoại. (#6851)
 - Sửa lỗi treo khi bật chức năng multi-process (đa xử lý) trong Mozilla Firefox và các ứng dụng Gecko khác. (#6885)
 - Ở chế độ xem màn hình (screen reivew), việc thông báo màu nền đã chính xác hơn khi nội dung được trình bày trên nền trong suốt. (#6467) 
-- Cải thiện tính năng hỗ trợ cho aria-describedby trong Internet Explorer 11, bao gồm hỗ trợ cho iframes và khi có nhiều ID được khai báo. (#5784)
-- Chức năng giảm âm lượng ứng dụng khác đã hoạt động lại với bản cập nhật Windows 10 Creator, giống như ở các bản Windows khác. (#6933)
+- Cải thiện tính năng hỗ trợ các mô tả điều khiển trên trang web cho Internet Explorer 11, (bao gồm hỗ trợ aria-describedby trong iframes và khi có nhiều ID được khai báo). (#5784)
+- Tất cả chức năng giảm âm lượng ứng dụng khác như giảm khi đọc và phát âm thanh, không giảm và luôn luôn giảm đã hoạt động lại với bản cập nhật Windows 10 Creator, giống như ở các bản phát hành trước của Windows. (#6933)
 - NVDA đã có thể di chuyển đến và đọc các điều khiển UIA không có khai báo phím tắt. (#6779)
 - Không còn thêm vào hai khoảng trắng trong phần thông tin phím tắt cho các điều khiển UIA. (#6790)
 - Một số tổ hợp phím trên màn hình nổi HIMS như (space+chấm 4), không còn tình trạng thỉnh thoảng ngưng hoạt động. (#3157)
 - Sửa lỗi mở cổng serial trên các máy dùng ngôn ngữ không phải là tiếng Anh. Điều này, đã gây ra một số trường hợp không thể kết nối màn hình nổi. (#6845)
-- Giảm lỗi hỏng tập tin cấu hình khi tắt máy. Tập tin cấu hình hiện nay sẽ được lưu trong tập tin tạm trước khi được lưu vào tập tin cấu hình chính. (#3165)
+- Giảm nguy cơ hỏng tập tin cấu hình khi tắt máy. Hiện nay, tập tin cấu hình sẽ được lưu trong tập tin tạm trước khi được lưu vào tập tin cấu hình chính. (#3165)
 - Sử dụng đúng ngôn ngữ khi thực hiện nhanh hai lần lệnh đọc dòng hiện tại để đánh vần. (#6726)
 - Di chuyển dòng trong Microsoft Edge trên Windows 10 Creaters Update đã nhanh hơn 3 lần (#6994)
 - NVDA không còn thông báo "Web Runtime Grouping" khi focus đứng ở tài liệu Microsoft Edge trên Windows 10 Creaters Update. (#6948)
+- Đã hỗ trợ tất cả phiên bản hiện có của SecureCRT. (#6302)
+- Adobe Acrobat Reader không còn bị treo trong một số tài liệu PDF (cụ thể là những tài liệu có thuộc tính ActualText trống). (#7021, #7034)
+- Khi ở chế độ duyệt trong Microsoft Edge, nhấn t và shift+t để duyệt bảng sẽ không còn bỏ qua các loại bảng tương tác (ARIA rid). (#6977)
+- Ở chế độ duyệt, Sau khi chọn, nhấn shift+home sẽ bỏ chọn và về đầu dòng. (#5746)
+- Khi ở chế độ duyệt, nhấn (control+a) đã có thể chọn tất cả, mà không cần dấu nháy phải đứng ở đầu văn bản. (#6909)
+- Sửa một số lỗi hiếm gặp khi chọn ở chế độ duyệt. (#7131)
 
 
 == Thay Đổi Dành Cho Nhà Phát Triển ==
@@ -43,13 +111,13 @@
  - Các lớp con (subclasses) không còn cần phải normalize các indentifier trước khi trả về lại từ thuộc tính này. .
   - Nếu muốn normalize các identifier, bây giờ bạn có thể dùng thuộc tính InputGesture.normalizedIdentifiers. Nó sẽ normalize các identifiers được trả về bởi thuộc tính identifiers.
 - Thuộc tính InputGesture.logIdentifier hiện nay sẽ không được khuyến khích tiếp tục sử dụng. Thay vào đó, có thể dùng InputGesture.identifiers[0]. (#6945)
-- Bỏ các mã không còn được sử dụng:
+- Bỏ các mã không còn được khuyến khích sử dụng:
  - Các hằng số `speech.REASON_*`, thay vào đó, sẽ sử dụng `controlTypes.REASON_*`. (#6846)
  - `i18nName` để thiết lập bộ đọc. Sẽ thay thế bằng `displayName` và `displayNameWithAccelerator`. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
- - `config.save`. (#6846, #667)
-- Danh sách thành phần hoàn tất trong thực đơn ngữ cảnh autocomplete (tự động hoàn tất) của PythonConsole sẽ không còn hiển thị phần đường dẫn đối tượng đứng phía trước ký hiệu cuối được hoàn tất. (#7023)
-- Hiện đã có framework kiểm thử theo đơn vị cho NVDA. (#7026)
+ - `config.save`: thay vào đó, hãy sử dụng `config.conf.save`. (#6846, #667)
+ - Danh sách thành phần hoàn tất trong thực đơn ngữ cảnh autocomplete (tự động hoàn tất) của PythonConsole sẽ không còn hiển thị phần đường dẫn đối tượng đứng phía trước ký hiệu cuối được hoàn tất. (#7023)
+ - Hiện đã có framework kiểm thử theo đơn vị cho NVDA. (#7026)
  - Cấu trúc cơ sở hạ tầng và phần kiểm thử theo đơn vị nằm tại thư mục tests/unit. Xem docstring trong  tập tin tests\unit\__init__.py để biết thêm thông tin.
  - Bạn có thể chạy phần kiểm thử với "scons tests". Hãy xem phần "Running Tests" trong tập tin  readme.md để biết thêm thông tin.
  - Nếu muốn gửi pull request cho NVDA, bạn cần phải chạy thành công phần kiểm thử.

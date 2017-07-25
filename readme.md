@@ -36,8 +36,12 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 * [Python](http://www.python.org/), version 2.7.13, 32 bit
-* Microsoft Visual Studio 2015 (Express for Desktop with VC++ and Windows SDK 7.1A support, or Community with VC++ and Windows XP support):
-	* [Download for Visual Studio 2015 Express for Desktop](https://go.microsoft.com/fwlink/?LinkId=691984&clcid=0x409)
+* Microsoft Visual Studio Community 2015 with Update 3:
+	* To download, you will need to [join the Visual Studio Dev Essentials program](https://my.visualstudio.com/Benefits?wt.mc_id=o~msft~vscom~devessentials-hero~30569&campaign=o~msft~vscom~devessentials-hero~30569).
+		After you have joined, Visual Studio Community 2015 with Update 3 will be available on the Downloads tab.
+	* When installing Visual Studio, you need to enable the following:
+		* In Visual C++: Common Tools for Visual C++ 2015, Windows XP Support for C++
+		* Windows and Web Development -> Universal Windows App Development Tools -> Tools (1.4.1) and Windows 10 SDK (10.0.14393)
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
@@ -55,7 +59,7 @@ For reference, the following dependencies are included in Git submodules:
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
-* [liblouis](http://www.liblouis.org/), version 3.0.0
+* [liblouis](http://www.liblouis.org/), version 3.2.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

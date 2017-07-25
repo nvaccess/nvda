@@ -23,7 +23,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 48 dile çevrilmiş oluşu
+- 50 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
@@ -32,7 +32,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Yerel Dil Desteği ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 48 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 50 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -286,7 +286,7 @@ Sistem düzenleme imleciyle ilişkili olarak NVDA aşağıdaki tuş komutların�
 %kc:beginInclude
 || Ad | Masaüstü kısayol tuşu | Dizüstü kısayol tuşu | Tarif |
 | Tümünü Oku | NVDA+Aşağı yön tuşu | NVDA+a | Sistem imlecinin bulunduğu yerden okumaya başlar, ve metnin sonuna kadar okumaya devam eder |
-| Bulunulan satırı okuma | NVDA+yukarı yön tuşu | NVDA+l | Sistem imlecinin o an üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. |
+| Bulunulan satırı okuma | NVDA+yukarı yön tuşu | NVDA+l | Sistem imlecinin o an üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. Üç kez basılırsa, harfler karakter tanımlarıyla seslendirilir. |
 | Seçili metnin okunması | NVDA+Şift+Yukarı yön tuşu | NVDA+Şift+s | o an seçili olan metni okur |
 | sonrakiCümle | alt+aşağıOk | alt+aşağıOk | sonraki cümleye gider ve okur. (Yalnızca Microsoft Word ve Outlook için desteklenmektedir) |
 | öncekiCümle | alt+yukarıOk | alt+yukarıOk | Önceki cümleye gider ve okur. (Yalnızca Microsoft Word ve outlook için desteklenmektedir) |
@@ -700,7 +700,7 @@ Bir konuşma içindeyken:
 
 ++ Kindle for PC ++
 NVDA supports reading and navigating books in Amazon Kindle for PC.
-This functionality is only available in Kindle books that support "Enhanced Typesetting", which you can check on the details page for the book.
+This functionality is only available in Kindle books designated with "Screen Reader: Supported" which you can check on the details page for the book.
 
 Browse mode is used to read books.
 It is enabled automatically when you open a book or focus the book area.
@@ -1237,7 +1237,7 @@ Etkinleştirildiğinde, örneğin J harfine basılırsa, bu tuş ne  NVDA komutu
 Bu iletişim kutusu tercihler menüsü içindeki "Belge Formatları..." altında bulunur.
 
 Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür biçimlendirmeleri otomatik olarak duymak istediğinizi ayarlamanızı sağlamak içindir.
-Örneğin, yazı Tipi Adını Bildir onay kutusunu işaretlerseniz, oklarla başka bir yazı tipiyle yazılan bir metne her gittiğinizde, yazı tipi adı bildirilecektir.
+Örneğin, yazı Tipi onay kutusunu işaretlerseniz, oklarla başka bir yazı tipiyle yazılan bir metne her gittiğinizde, yazı tipi adı bildirilecektir.
 
 Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 Şunların bildirimini ayarlayabilirsiniz:
@@ -1263,6 +1263,7 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 - Tablolar
 - Satır/sütun başlıkları
 - Hücre koordinatları
+- Hücre kenarlıkları [(Kapalı, stiller, renk ve stiller)
 - Öğeler
 - Başlıklar
 - Bağlantılar

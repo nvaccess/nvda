@@ -8,6 +8,8 @@ NVDA NVDA_VERSION Vodič za korisnike
 %%toc
 
 + Uvod +
+Dobrodošli u NVDA!
+
 NonVisual Desktop Access (NVDA) je  besplatan čitač zaslona otvorenog koda za operacijski sustav Microsoft Windows.
 Pružajući povratne informacije pomoću sintetičkog govora i brajice, NVDA omogućuje slijepim osobama i osobama s oštećenjem vida pristup računalima sa windows operativnim sustavom za cijenu koja nije veća od one koju plaćaju korisnici normalnog vida.
 NVDA razvija organizacija [NV Access http://www.nvaccess.org/], uz doprinose zajednice.
@@ -43,9 +45,10 @@ Informacije o drugim sintetizatorima govora koje NVDA podržava mogu se pronaći
 
 ++ Podrška za brajične retke ++
 Za korisnike koji posjeduju brajični redak, NVDA može prikazivati svoje informacije na Brailleovom pismu.
-Za više informacija o podržanim brajičnim retcima pogledajte poglavlje [Podržani Brajični Retci #SupportedBrailleDisplays].
+Također, podržan je unos putem brajične tipkovnice brajičnog redka, koristeći kratkopis, puno pismo, te osmotočkastu brajicu.
+ Za više informacija o podržanim brajičnim retcima pogledajte poglavlje [Podržani Brajični Retci #SupportedBrailleDisplays].
 
-NVDA podržava brajične kodove za mnoge jezike, uključujući kratkopis, puno pismo i kompjutorsku brajicu Za mnoge jezike.
+NVDA podržava brajične kodove za mnoge jezike, uključujući kratkopis, puno pismo i kompjutorsku brajicu.
 
 ++ Licenca i Autorska prava ++
 NVDA sva prava zadržana NVDA_COPYRIGHT_YEARS NVDA doprinositelji.
@@ -136,6 +139,10 @@ Ako ste instalirali NVDA pomoću instalacijskog programa, tada je pokretanje NVD
 Dodatno, možete upisati "nvda", u dijaloški okvir pokreni i pritisnuti enter da biste pokrenuli NVDA.
 Možete također dodati nekoliko [opcija naredbenog retka #CommandLineOptions] koje vam omogućuju ponovno pokretanje NVDA (-r), izlaz (-q), onemogućavanje dodataka (--disable-addons) itd.
 
+U instaliranim kopijama, NVDA posprema konfiguraciju u roaming application data mapu trenutnog korisnika podrazumijevano (npr. "C:\Users\<user>\AppData\Roaming").
+To je moguće promijeniti, tako da NVDA učitava svoje postavke iz mape local application data.
+Za više detalja, pročitajte poglavlje o [cjelosustavnim parametrima #SystemWideParameters].
+
 Da biste pokrenuli prijenosnu inačicu, uđite u mapu u kojoj ste raspakirali NVDA i pritisnite enter ili dva puta kliknite na datoteku nvda.exe.
 
 Kad se NVDA pokreće, prvo ćete čuti seriju uzlaznih tonova (koji vam govore da se NVDA učitava).
@@ -147,7 +154,8 @@ Za više informacija kako to učiniti molimo pogledajte web stranicu NVDA.
 
 Kad prvi put pokrenete NVDA, otvorit će se dijaloški okvir dobrodošlice koji vam daje osnovne informacije o NVDA modifikacijskoj tipci i NVDA izborniku.
 Molimo pogledajte daljnja poglavlja o ovim temama.
-Dijaloški okvir sadrži tri potvrdna okvira.
+Dijaloški okvir sadrži jedan odabirni okvir i tri potvrdna okvira.
+Odabirni okvir vam omogućuje odabir izgleda tipkovnice.
 Prvi potvrdni okvir omogućuje vam odabir hoćete li ili nećete koristiti Capslock kao modifikacijsku tipku.
 Drugi određuje hoće li se NVDA pokretati prilikom prijave u Windows i dostupan je samo u instaliranim kopijama NVDA.
 Treći vam omogućuje odabir hoće li se ili neće ovaj dijalog prikazivati prilikom pokretanja NVDA.
@@ -286,7 +294,7 @@ NVDA omogućuje korištenje sljedećih prečaca u svezi sa kursorom sustava:
 %kc:beginInclude
 || Naziv | Prečac za stolna računala | Prečac za prijenosna računala | Opis |
 | Čitaj sve | NVDA+strelicaDolje | NVDA+a | čita od trenutne pozicije kursora sustava, pomičući ga kako on doista ide |
-| Pročitaj trenutni redak | NVDA+strelicaGore | NVDA+l | čita trenutni redak gdje je kursor sustava pozicioniran. Kad se pritisne dvaput, NVDA slovka taj redak. |
+| Pročitaj trenutni redak | NVDA+strelicaGore | NVDA+l | čita trenutni redak gdje je kursor sustava pozicioniran. Kad se pritisne dvaput, NVDA slovka taj redak. Kada se pritisne tri puta, NVDA slovka redak fonetski. |
 | Čitaj trenutno označeni tekst | NVDA+Shift+strelicaGore | NVDA+shift+s | čita bilo koji trenutno označen tekst |
 | slijedeća rečenica | alt+Strelicadolje | alt+StrelicaDolje | Premješta kursor na slijedeću rečenicu a potom je izgovara. (podržano u microsoft wordu i outlooku) |
 | prethodna rečenica | alt+StrelicaGore | alt+StrelicaGore | premješta kursor na prethodnu rečenicu a potom je izgovara. (Podržano u microsoft wordu i outlooku) |
@@ -501,6 +509,7 @@ Sljedeće tipke služe da bi se prešlo na idući dostupni element, dodavanjem s
 - o: ugrađeni objekt
 - 1 do 6: naslovi od 1 do 6
 - a: zabilješka (komentar, revizija urednika, itd.)
+- w: pravopisna pogreška
 -
 Da biste se prebacivali na početak ili kraj sadržaja popisa kao što su popisi ili tablice:
 || Naziv | Prečac | opis |
@@ -542,7 +551,7 @@ Ovo zahtjeva instaliranu kopiju MathPlayera na vašem računalu.
 MathPlayer je dostupan za besplatno preuzimanje sa adrese: http://www.dessci.com/en/products/mathplayer/
 
 NVDA podržava slijedeće vrste matematičkog sadržaja:
-- MathML u Mozilla Firefoxu i Microsoft Internet Exploreru.
+- MathML u Mozilla Firefoxu, Google Chromeu i Microsoft Internet Exploreru.
 - Design Science MathType u Microsoft Wordu i PowerPointu. MathType mora biti instaliran kako bi ova mogućnost radila. Probna inačica je dovoljna.
 - MathML u Adobe Readeru. Imajte na umu da ovo još uvijek nije službeni standard, dakle, ne postoji javno dostupan softver kojim se može izrađivati ovakav sadržaj.
 -
@@ -571,6 +580,77 @@ Na primjer, možete se pomicati po izrazu uz pomoć lijeve i desne strelice ili 
 Molimo pročitajte uputstvo za upotrebu MathPlayer-a za više informacija.
 
 Kada se želite vratiti u dokument, pritisnite escape tipku.
+
++ Brajica +
+Ako posjedujete brajični redak, NVDA može prikazivati informacije koristeći brailleovo pismo.
+Ako vaš brajični redak posjeduje perkins tipkovnicu, možete pisati kratkopisom ili punim pismom.
+
+Za više informacija o podržanim brajičnim redcima, molimo Vas, pogledajte poglavlje [podržani brajični redci #SupportedBrailleDisplays].
+Možete podešavati brajicu, koristeći [dijaloški okvir brajične postavke #BrailleSettings].
+
+++ Kratice za orjentire, stanja i tipove kontrola ++
+Kako bi stalo čim više informacija na brajični redak, slijedeće kratice za tipove, stanja kontrola, te orjentire su definirane.
+
+|| kratica | tip kontrole |
+| btn | gumb |
+| cbo | odabirni okvir |
+| chk | potvrdni okvir |
+| dlg | dijaloški okvir |
+| edt | polje za uređivanje |
+| gra | grafika |
+| cN | stupac tablice sa brojem x, NPR. c1, c2. |
+| rN | redak tablice sa brojem x, npr. r1, r2. |
+| hN | naslov na razini X, npr. h1, h2. |
+| lnk | link |
+| vlnk | posjećeni link |
+| lst | popis |
+| lmk | orjentir |
+| mnu | izbornik |
+| mnubar | traka izbornika |
+| rbtn | izborni gumb |
+| tb | tablica |
+| tv | prikaz stabla |
+| lv x | stavka prikaza stabla koja ima nivoo x u hierarhiji |
+| ``-----`` | rastavljač |
+
+Slijedeći indikatori stanja su također definirani:
+|| kratica | stanje kontrole |
+| ... | prikazano, kada objekt podržava automatsko dopunjavanje |
+| ( ) | prikazano, kada je objekt (npr. odabirni okvir) nije označen |
+| (x) | prikazano, kada je objekt (npr. potvrdni okvir) je odznačen |
+| (-) | prikazano, kada je objekt, (npr. potvrdni okvir) je polovično označen |
+| - | prikazano kada je objekt (npr. stavka prikaza stabla) je skupljiva |
+| + | prikazano, kada je objekt (npr. stavka prikaza stabla) je proširiv |
+| clk | prikazano, kada je objekt klikljiv |
+| ro | prikazano kada je objekt (npr. tekstualno polje za uređivanje) je samo za čitanje |
+| sel | prikazano, kada je objekt označen |
+| submnu | prikazano, kada objekt ima iskočni prozorčić (nerjetko je to podizbornik) |
+
+Na kraju, slijedeće kratice za orijentire su definirane:
+|| Kratica | orijentir |
+| bnnr | baner |
+| cinf | info o sadržaju |
+| cmpl | komplementarno |
+| form | formular |
+| main | glavni |
+| navi | navigacija |
+| srch | pretraga |
+| rgn | regija |
+
+++ Unos brajičnih znakova ++
+NVDA podržava upisivanje punog pisma, kao i kratkopisa putem brajične tipkovnice.
+Možete označiti brajičnu tablicu za prevođenje brajice u tekst koristeći [opciju ulazna tablica #BrailleInputTable] u dijaloškom okviru brajične postavke.
+
+Kada se koristi puno pismo, tekst je ubačivan odmah prilikom upisa.
+Pri korištenju kratkopisa, tekst je ubacivan prilikom pritiska razmaknice ili entera na kraju riječi.
+Imajte na umu da brajični prijevod djeluje na brajevu riječ koju upisujete, i ne uključuje postojeći tekst.
+Na primjer, ako koristite brajev kod koji sadrži pravilo da brojevi se započinju od brojčanog znaka i želite se prebaciti na kraj broja koristeći backspace, trebat ćete upisati brojčani znak, da biste mogli upisivati dodatne brojeve.
+
+%kc:beginInclude
+Pritisak točkice 7 briše zadnju brajevu čeliju ili znak.
+Točkica 8 prevodi bilo koji brajični unos i pritišće enter.
+Pritišćući kombinaciju točkica 7 + točkica 8 prevodi brajični unos, ali bez dodavanja razmaka ili pritiska entera.
+%kc:endInclude
 
 + značajke specifične za neke aplikacije +
 NVDA pruža svoje dodatne značajke  za neke aplikacije kako bi učinio neke zadatke jednostavnijima i kako bi omogučio pristup nekim funkcijama koje nisu inače dostupne  korisnicima čitača zaslona.
@@ -601,7 +681,7 @@ Za više informacija o načinu pregleda i brzoj navigaciji, pročitajte [odjelja
 %kc:beginInclude
 Kada se nalazite u načinu pregleda u Microsoft wordu, listi elemenata možete pristupiti pritiskom  NVDA+f7.
 %kc:endInclude
-Popis elemenata može izlistavati naslove, linkove i anotacije (koje uključuju komentare i tragove izmjena).
+Popis elemenata može izlistavati naslove, linkove i anotacije, (koje uključuju komentare i tragove izmjena, te pogreške), trenutno ograničeno na pravopisne pogreške.
 
 +++ Izgovor komentara +++
 %kc:beginInclude
@@ -906,7 +986,7 @@ Ako na brz način želite promjeniti postavke govorne jedinice bez potrebe ulask
 | Smanji vrijednost postavke govora | NVDA+kontrol+strelicaDolje | NVDA+shift+kontrol+strelicaDolje | Smanjuje vrijednost trenutne postavke glasa na kojoj se nalazite. Npr. smanjuje brzinu, odabire prethodni glas, smanjuje glasnoću |
 %kc:endInclude
 
-+++ Brajične postavke +++
++++ Brajične postavke +++[BrailleSettings]
 Brajične postavke mogu se pozvati iz NVDA izbornika, podizbornika Postavke.
 
 ==== Brajični redak ====
@@ -936,10 +1016,9 @@ U ovom odabirnom okviru nači ćete različite brajične tablice za različite j
 Označena će brajična tablica biti korištena za prikaz teksta koji se prikazuje na brajičnom retku.
 Možete se kretati između brajičnih tablica koristeći kursorske tipke.
 
-==== Ulazna tablica ====
+==== Ulazna tablica ====[BrailleInputTable]
 Uz prethodnu opciju, pronači ćete opciju za promjenu ulazne tablice koja je odabirni okvir.
 Ova će se brajična tablica koristiti pri unosu znakova sa tipkovnice vašeg brajičnog retka.
-Trenutno će biti prikazane samo osmotočkaste brajične tablice, jer NVDA podržava samo unos s brajičnog retka koristeći osmotočkastu brajicu.
 Između brajičnih tablica pomićete se koristeći kursorske tipke.
 
 Imajte na umu da ovu opciju možete koristiti ako vaš brajični redak na sebi ima brajičnu tipkovnicu i ako upravljački program podržava unos preko iste.
@@ -966,6 +1045,9 @@ Indikator označenosti nije obuhvaćen ovom opcijom.
 ==== Stanka za poruke u sekundama ====
 Ovom se opcijom određuje koliko će dugo NVDA poruke biti prikazane na brajičnom retku.
 Kad se upiše brojčana vrijednost 0, ove se poruke uopće neće prikazivati na brajičnom retku.
+
+==== Pokazuj poruke neograničeno ====
+Ova opcija omogućuje neograničeno prikazivanje poruka, koje šalje NVDA na brajičnom retku.
 
 %kc:setting
 ==== Brajica usmjerena na ====[BrailleTether]
@@ -1155,6 +1237,13 @@ Ako se prebacite ili minimizirate prozor u kojem se nalazi traka napretka, NVDA 
 Prečac: NVDA+5
 
 Uključuje ili isključuje obavjesti o sadržaju u određenim objektima poput terminala i povijesti u programima za čavrljanje.
+
+==== Reproduciraj zvuk kada se pojave automatski prijedlozi ====
+Uključuje ili isključuje izgovor prisutnosti automatskih prijedloga, te ako je uključeno, NVDA će reproducirati svuk koji će to potvrditi.
+Automatski prijedlozi su unosi bazirani na upisanom tekstu u neke od polja za uređivanje i dokumente.
+Na primjer, kada upišete tekst u polje za uređivanje u izborniku start u Windowsima Vista i novijima, Windows prikazuje popis prijedloga baziranih na tome što ste upisali.
+Za neka polja, kao što su to polja za pretragu raznim Windows 10 aplikacijama, NVDA vas može obavijestiti da se pojavio popis prijedloga kada upišete tekst.
+Popis automatskih prijedloga će se zatvoriti jednom kada se pomakenete izvan polja za uređivanje, i za neka polja, NVDA vas može o tome obavijestiti kada se to dogodi.
 
 +++ Postavke sastava unosa +++
 Postavke sastava unosa možete pronaći u postavkama u NVDA izborniku.
@@ -1580,7 +1669,7 @@ Kad se koristi ova govorna jedinica uz pomoć NVDA, dostupnim glasovima (kojima 
 Microsoft Speech Platform pruža glasove za mnoge jezike koji se uobičajeno koriste za razvoj poslužiteljski baziranih govornih aplikacija.
 Ovi se glasovi mogu također koristiti uz pomoć NVDA.
 
-Da biste mogli koristiti ove glasove, trebat ćete instalirati dvije komponente:
+Kako biste mogli koristiti ove glasove, trebat ćete instalirati dvije komponente:
 - Microsoft Speech Platform - Runtime (Inačica 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
 - Microsoft Speech Platform - Runtime jezici (Inačica 11): http://www.microsoft.com/download/en/details.aspx?id=27224
  - Ova stranica uključuje datoteke za "tekst-u govor" i za prepoznavanje govora.
@@ -1588,6 +1677,17 @@ Da biste mogli koristiti ove glasove, trebat ćete instalirati dvije komponente:
  Na primjer, datoteka MSSpeech_TTS_en-US_ZiraPro.msi je glas za američki engleski.
  -
 -
+
+++ Windows OneCore Glasovi ++
+U Windowse 10, uključeni su novi glasovi znani kao "OneCore" ili "mobile" glasovi.
+Glasovi su dostupni za puno jezika, i brži su od Microsoft glasova koji koriste Microsoft Speech API version 5.
+
+Za informacije o instalaciji i popis glasova, molimo pogledajte ovaj članak: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+
+Imajte na umu,da brzine koje su podržane u Narratoru nisu trenutno dostupne u NVDA.
+Također, brzina u windowsovoj upravljačkoj ploći utjeće na brzinu, koja je odabrana u NVDA.
+To su greške, koje ne možemo ispraviti bez promjena u Windows operacijskom sustavu.
+Nadamo se, da će ti problemi biti rješeni u sljedećoj nadogradnji sustava Windows.
 
 ++ Audiologic Tts3 ++
 Ovo je komercijalna govorna jedinica posebno rađena za talijanski jezik.
@@ -1634,8 +1734,6 @@ Molimo pogledajte dokumentaciju za više informacija o opisu tipki i o tome gdje
 | Premjesti se natrag koristeći desni kotačić | DesniWizWheelGore |
 | Premjesti se naprijed koristeći desni kotačić | desniWizWheelDolje |
 | Prebaci se na brajičnu ćeliju | routing |
-| backspace | točkica7 |
-| enter | točkica8 |
 | shift+tab | BrajičnaRazmaknica+točkica1+točkica2 |
 | tab | BrajičnaRazmaknica+točkica4+točkica5 |
 | strelicaGore | BrajičnaRazmaknica+dot1 |
@@ -1877,8 +1975,6 @@ Molimo pogledajte uputstva za upotrebu brajičnih redaka kako biste saznali smje
 | alt | točkica1+točkica3+točkica4+Razmak |
 | escape | točkica1+točkica5+Razmak |
 | tab | točkica4+točkica5+Razmak |
-| enter | točkica8 |
-| backspace | točkica7 |
 | strelicaGore | točkica1+Space |
 | strelicaDolje | točkica4+Razmak |
 | capsLock | točkica1+točkica3+točkica6+razmak |
@@ -2025,8 +2121,6 @@ Oba dvije unutrašnje tipke su pridjeljene razmaknici.
 
 %kc:beginInclude
 || Naziv | Prečac |
-| backspace | točkica 7 |
-| enter | točkica 8 |
 | escape | razmak sa točkicom 7 |
 | strelicaGore | razmak sa točkicom 2 |
 | strelicaLijevo | razmak sa točkicom 1 |
@@ -2224,43 +2318,6 @@ Molimo pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty
 | pomakni se na brajičnu ćeliju | route (Pomakni kursor na znak) |
 %kc:endInclude
 
-+ Kratice za tip i stanja kontrola na brajičnim retcima +
-Kako bi stalo čim više informacija na brajični redak, određene su slijedeće kratice za prikaz tipa brajičnih kontrola i stanja.
-
-|| Kratica | Tip kontrole |
-| gb. | gumb |
-| od.okv. | odabirni okvir |
-| p.o. | potvrdni okvir |
-| di.okv | dijaloški okvir |
-| ur. | tekstualno polje za uređivanje |
-| gra | grafika |
-| sN | broj stupca u tablici n, npr. s1, s2. |
-| rN | broj retka u tablici n, npr. r1, r2. |
-| nasl.N | Naslov na razini n, npr. h1, h2. |
-| lnk | link |
-| pop. | popis |
-| plnk | posjećeni link |
-| iz | izbornik |
-| t.iz | Traka sa izbornicima |
-| iz.gb. | izborni gumb |
-| tabl. | tablica |
-| pst | prikaz stabla |
-| lv N | prikaz stabla ima hijerarhijsku razinu N|
-| ``-----`` | rastavljač |
-
-Sljedeći pokazivači stanja su također određeni:
-|| kratica | stanje kontrole |
-| ... | prikazano ako objekt podržava samodovršavanje |
-| ( ) | prikazano kada objekt (npr. potvrdni okvir) nije odabran |
-| (x) | prikazano kada je objekt (npr. potvrdni okvir) odabran |
-| (-) | prikazano kada je objekt (npr. potvrdni okvir) napola odabran |
-| - | prikazano kada je objekt (npr. stavka sa prikaza stabla) skupljiv |
-| + | prikazano kada je objekt (npr. stavka popisa stabla) proširiv |
-| klik. | prikazano kada je objekt klikajući |
-| sč. | prikazano kada je objekt (npr polje za uređivanje teksta) samo za čitanje |
-| od. | prikazano kada je objekt označen |
-| podizb. | prikazano kada objekt iskače (uobičajeno je to podizbornik) |
-
 + Teme za napredne korisnike +
 
 ++ Opcije naredbenog retka ++[CommandLineOptions]
@@ -2303,6 +2360,18 @@ Sljede opcije naredbenog retka za NVDA:
 | Nema | --no-sr-flag  | Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu |
 | Nema | --install | Instalira NVDA, pritom pokrečući novoinstaliranu kopiju |
 | Nema | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
+
+++ Cijelosustavni parametri++[SystemWideParameters]
+NVDA omogućava izmjenu nekih postavki u registru, koje mijenjaju cijelosistemsko ponašanje NVDA.
+Te su vrijednosti pospremljene u registru pod sljedećim ključevima:
+- 32-bitni sustav: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bitni sustav: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Sljedeće vrijednosti mogu biti postavljene pod ovim ključem:
+|| Naziv | Vrijednost | moguće vrijednosti | Opis |
+| configInLocalAppData | DWORD | 0 (podrazumijevano) za onemogućavanje, 1 za omogućavanje | Ako je omogućeno, posprema konfiguraciju u mapu local application data umjesto u mapu roaming application data |
+| serviceDebug | DWORD | 0 (podrazumijevano) za onemogućavanje, 1 za omogućavanje | ako je omogućeno, onemogućuje sigurni način na sigurnoj radnoj površini, što omogućava korisniku korištenje Python konzole i preglednika zapisnika. zbog velikih sigurnosnih implikacija, korištenje ove opcije se ne preporučuje |
 
 + Dodatne Informacije +
 Ako trebate više informacija ili pomoč za NVDA, molimo posjetite NVDA web stranicu na adresi NVDA_URL.

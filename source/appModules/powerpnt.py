@@ -18,6 +18,7 @@ import speech
 import sayAllHandler
 import NVDAHelper
 import winUser
+import msoAutoShapeTypes
 from treeInterceptorHandler import DocumentTreeInterceptor
 from NVDAObjects import NVDAObjectTextInfo
 from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
@@ -77,6 +78,10 @@ class ppEApplicationSink(comtypes.COMObject):
 
 #Bullet types
 ppBulletNumbered=2
+
+# media types
+ppVideo=3
+ppAudio=2
 
 # values for enumeration 'PpPlaceholderType'
 ppPlaceholderMixed = -2
@@ -549,7 +554,14 @@ class Shape(PpObject):
 			if otherTop>=bottom or otherBottom<=top:
 				continue
 			info={}
-			info['label']=Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=ppShape).name
+			otherShape=Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=ppShape)
+			otherLabel=otherShape.name
+			otherRoleText=otherShape.roleText
+			otherLabel=" ".join(x for x in (otherLabel,otherRoleText) if x)
+			if not otherLabel:
+				# Translators:   an unlabelled item in Powerpoint another shape is overlapping 
+				otherLabel=_("other item")
+			info['label']=otherLabel
 			info['otherIsBehind']=otherIsBehind
 			info['overlapsOtherLeftBy']=right-otherLeft if right<otherRight else 0
 			info['overlapsOtherTopBy']=bottom-otherTop if bottom<otherBottom else 0
@@ -732,6 +744,16 @@ class Shape(PpObject):
 		self.ppShapeType=self.ppObject.type
 		return self.ppShapeType
 
+	def _get_ppAutoShapeType(self):
+		"""Fetches and caches the auto type of this shape."""
+		self.ppAutoShapeType=self.ppObject.autoShapeType
+		return self.ppAutoShapeType
+
+	def _get_ppMediaType(self):
+		"""Fetches and caches the media type of this shape."""
+		self.ppMediaType=self.ppObject.mediaType
+		return self.ppMediaType
+
 	def _get_name(self):
 		"""The name is calculated firstly from the object's title, otherwize if its a generic shape, then  part of its programmatic name is used."""
 		#Powerpoint 2003 shape objects do not have a title property 
@@ -741,13 +763,15 @@ class Shape(PpObject):
 			title=None
 		if title:
 			return title
+		# Provide a meaningful label for placeholders from slide templates
 		if self.ppShapeType==msoPlaceholder:
 			label=ppPlaceholderLabels.get(self.ppPlaceholderType)
 			if label:
 				return label
-		if self.role==controlTypes.ROLE_SHAPE:
-			name=self.ppObject.name
-			return " ".join(name.split(' ')[:-1])
+		# Label action buttons like next and previous etc
+		ppAutoShapeType=self.ppAutoShapeType
+		label=msoAutoShapeTypes.msoAutoShapeTypeToActionLabel.get(ppAutoShapeType)
+		return label
 
 	def _isEqual(self,other):
 		return super(Shape,self)._isEqual(other) and self.ppObject.ID==other.ppObject.ID
@@ -756,7 +780,25 @@ class Shape(PpObject):
 		return self.ppObject.alternativeText
 
 	def _get_role(self):
-		return msoShapeTypesToNVDARoles.get(self.ppShapeType,controlTypes.ROLE_SHAPE)
+		ppShapeType=self.ppShapeType
+		# handle specific media types
+		if ppShapeType==msoMedia:
+			ppMediaType=self.ppMediaType
+			if ppMediaType==ppVideo:
+				return controlTypes.ROLE_VIDEO
+			elif ppMediaType==ppAudio:
+				return controlTypes.ROLE_AUDIO
+		role=msoShapeTypesToNVDARoles.get(self.ppShapeType,controlTypes.ROLE_SHAPE)
+		if role==controlTypes.ROLE_SHAPE:
+			ppAutoShapeType=self.ppAutoShapeType
+			role=msoAutoShapeTypes.msoAutoShapeTypeToRole.get(ppAutoShapeType,controlTypes.ROLE_SHAPE)
+		return role
+
+	def _get_roleText(self):
+		if self.role!=controlTypes.ROLE_SHAPE:
+			return None
+		ppAutoShapeType=self.ppAutoShapeType
+		return msoAutoShapeTypes.msoAutoShapeTypeToRoleText.get(ppAutoShapeType)
 
 	def _get_value(self):
 		if self.ppObject.hasTextFrame:
