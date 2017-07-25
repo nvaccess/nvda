@@ -1014,6 +1014,7 @@ class VoiceSettingsPanel(SettingsPanel):
 
 		labelText="%s:"%setting.displayNameWithAccelerator
 		synth=getSynth()
+		# #7105: not sure as to how to convert this...
 		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()).values())
 		l=getattr(self,"_%ss"%setting.name)###
 		labeledControl=guiHelper.LabeledControlHelper(self, labelText, wx.Choice, choices=[x.name for x in l])
