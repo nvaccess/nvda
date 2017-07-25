@@ -185,7 +185,7 @@ def getAvailableAddons(refresh=False):
 		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
 		for addon in itertools.chain(*generators):
 			_availableAddons[addon.path] = addon
-	return _availableAddons.itervalues()
+	return _availableAddons.values()
 
 def installAddonBundle(bundle):
 	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
