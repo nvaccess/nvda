@@ -56,19 +56,14 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 For reference, the following dependencies are included in Git submodules:
 
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.4
-* [wxPython](http://www.wxpython.org/), version 3.0.2.0
+* [wxPython](http://www.wxpython.org/), version 4.0.0
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
 * [six](https://pypi.python.org/pypi/six/), version 1.10.0
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 37121600
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
-<<<<<<< HEAD
-* [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
-* [liblouis](http://www.liblouis.org/), version 3.5.0
-=======
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 5.0.6
-* [liblouis](http://www.liblouis.org/), version 3.2.0
->>>>>>> Readme: update Python dependencies based on work so far.
+* [liblouis](http://www.liblouis.org/), version 3.5.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
