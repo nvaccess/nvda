@@ -78,7 +78,7 @@ def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
 		stop=(curPosition.move(textInfos.UNIT_PARAGRAPH,1 if direction=="next" else -1)==0)
 		firstLoop=False
 
-def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction="next"):
+def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction="next",itemClass=UIATextRangeQuickNavItem):
 	# A part from the condition given, we must always match on the root of the document so we know when to stop walking
 	runtimeID=VARIANT()
 	document.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
@@ -94,14 +94,14 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				except COMError:
 					elementRange=None
 				if elementRange:
-					yield UIATextRangeQuickNavItem(itemType,document,elementRange)
+					yield itemClass(itemType,document,elementRange)
 		return
 	if direction=="up":
 		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 		element=position.UIAElementAtStart
 		element=walker.normalizeElement(element)
 		if element and not UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) and not UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement):
-			yield UIATextRangeQuickNavItem(itemType,document,element)
+			yield itemClass(itemType,document,element)
 		return
 	elif direction=="previous":
 		# Fetching items previous to the given position.
@@ -159,7 +159,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				elif not curElementMatchedCondition and isUIAElementInWalker(curElement,walker):
 					curElementMatchedCondition=True
 				if curElementMatchedCondition:
-					yield UIATextRangeQuickNavItem(itemType,document,curElement)
+					yield itemClass(itemType,document,curElement)
 			previousSibling=walker.getPreviousSiblingElement(curElement)
 			if previousSibling:
 				gonePreviousOnce=True
@@ -173,7 +173,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				goneParent=True
 				curElementMatchedCondition=True
 				if gonePreviousOnce:
-					yield UIATextRangeQuickNavItem(itemType,document,curElement)
+					yield itemClass(itemType,document,curElement)
 				continue
 			curElement=None
 	else: # direction is next
@@ -220,13 +220,13 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		# If we are already past our position, and this is a valid child
 		# Then we can emit an item already
 		if goneNextOnce and isUIAElementInWalker(curElement,walker):
-			yield UIATextRangeQuickNavItem(itemType,document,curElement)
+			yield itemClass(itemType,document,curElement)
 		# Start traversing from this child forwards through the document, emitting items for valid elements.
 		while curElement:
 			firstChild=walker.getFirstChildElement(curElement) if goneNextOnce else None
 			if firstChild:
 				curElement=firstChild
-				yield UIATextRangeQuickNavItem(itemType,document,curElement)
+				yield itemClass(itemType,document,curElement)
 			else:
 				nextSibling=None
 				while not nextSibling:
@@ -239,7 +239,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 							return
 				curElement=nextSibling
 				goneNextOnce=True
-				yield UIATextRangeQuickNavItem(itemType,document,curElement)
+				yield itemClass(itemType,document,curElement)
 
 class UIABrowseModeDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
