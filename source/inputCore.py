@@ -271,14 +271,14 @@ class GlobalGestureMap(object):
 		@type entries: mapping of str to mapping
 		"""
 		self.lastUpdateContainedError = False
-		for locationName, location in entries.iteritems():
+		for locationName, location in entries.items():
 			try:
 				module, className = locationName.rsplit(".", 1)
 			except:
 				log.error("Invalid module/class specification: %s" % locationName)
 				self.lastUpdateContainedError = True
 				continue
-			for script, gestures in location.iteritems():
+			for script, gestures in location.items():
 				if script == "None":
 					script = None
 				if gestures == "":
@@ -356,7 +356,7 @@ class GlobalGestureMap(object):
 		out = configobj.ConfigObj(encoding="UTF-8")
 		out.filename = self.fileName
 
-		for gesture, scripts in self._map.iteritems():
+		for gesture, scripts in self._map.items():
 			for module, className, script in scripts:
 				key = "%s.%s" % (module, className)
 				try:
@@ -659,7 +659,7 @@ class _AllGestureMappingsRetriever(object):
 	def addObj(self, obj, isAncestor=False):
 		scripts = {}
 		for cls in obj.__class__.__mro__:
-			for scriptName, script in cls.__dict__.iteritems():
+			for scriptName, script in cls.__dict__.items():
 				if not scriptName.startswith("script_"):
 					continue
 				if isAncestor and not getattr(script, "canPropagate", False):
@@ -673,7 +673,7 @@ class _AllGestureMappingsRetriever(object):
 						continue
 					self.addResult(scriptInfo)
 				scripts[script] = scriptInfo
-		for gesture, script in obj._gestureMap.iteritems():
+		for gesture, script in obj._gestureMap.items():
 			try:
 				scriptInfo = scripts[script.__func__]
 			except KeyError:

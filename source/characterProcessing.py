@@ -245,7 +245,7 @@ class SpeechSymbols(object):
 		"#": "#",
 		"\\": "\\",
 	}
-	IDENTIFIER_ESCAPES_OUTPUT = {v: k for k, v in IDENTIFIER_ESCAPES_INPUT.iteritems()}
+	IDENTIFIER_ESCAPES_OUTPUT = {v: k for k, v in IDENTIFIER_ESCAPES_INPUT.items()}
 	LEVEL_INPUT = {
 		"none": SYMLVL_NONE,
 		"some": SYMLVL_SOME,
@@ -253,13 +253,13 @@ class SpeechSymbols(object):
 		"all": SYMLVL_ALL,
 		"char": SYMLVL_CHAR,
 	}
-	LEVEL_OUTPUT = {v:k for k, v in LEVEL_INPUT.iteritems()}
+	LEVEL_OUTPUT = {v:k for k, v in LEVEL_INPUT.items()}
 	PRESERVE_INPUT = {
 		"never": SYMPRES_NEVER,
 		"always": SYMPRES_ALWAYS,
 		"norep": SYMPRES_NOREP,
 	}
-	PRESERVE_OUTPUT = {v: k for k, v in PRESERVE_INPUT.iteritems()}
+	PRESERVE_OUTPUT = {v: k for k, v in PRESERVE_INPUT.items()}
 
 	def _loadSymbol(self, line):
 		line = line.split("\t")
@@ -308,7 +308,7 @@ class SpeechSymbols(object):
 		with codecs.open(fileName, "w", "utf_8_sig", errors="replace") as f:
 			if self.complexSymbols:
 				f.write(u"complexSymbols:\r\n")
-				for identifier, pattern in self.complexSymbols.iteritems():
+				for identifier, pattern in self.complexSymbols.items():
 					f.write(u"%s\t%s\r\n" % (identifier, pattern))
 				f.write(u"\r\n")
 
@@ -409,7 +409,7 @@ class SpeechSymbolProcessor(object):
 
 		# Add all complex symbols first, as they take priority.
 		for source in sources:
-			for identifier, pattern in source.complexSymbols.iteritems():
+			for identifier, pattern in source.complexSymbols.items():
 				if identifier in symbols:
 					# Already defined.
 					continue
@@ -419,7 +419,7 @@ class SpeechSymbolProcessor(object):
 
 		# Supplement the data for complex symbols and add all simple symbols.
 		for source in sources:
-			for identifier, sourceSymbol in source.symbols.iteritems():
+			for identifier, sourceSymbol in source.symbols.items():
 				try:
 					symbol = symbols[identifier]
 					# We're updating an already existing symbol.

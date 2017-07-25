@@ -221,7 +221,7 @@ class ScriptableObject(AutoPropertyObject):
 		@param gestureMap: A mapping of gesture identifiers to script names.
 		@type gestureMap: dict of str to str
 		"""
-		for gestureIdentifier, scriptName in gestureMap.iteritems():
+		for gestureIdentifier, scriptName in gestureMap.items():
 			if scriptName:
 				try:
 					self.bindGesture(gestureIdentifier, scriptName)

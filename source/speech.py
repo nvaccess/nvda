@@ -263,7 +263,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
-	for name,value in allowedProperties.iteritems():
+	for name,value in allowedProperties.items():
 		if name=="includeTableCellCoords":
 			# This is verbosity info.
 			newPropertyValues[name]=value
@@ -1574,7 +1574,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 				_("no first line indent"),
 			),
 		}
-		for attr,(label,noVal) in indentLabels.iteritems():
+		for attr,(label,noVal) in indentLabels.items():
 			newVal=attrs.get(attr)
 			oldVal=attrsCache.get(attr) if attrsCache else None
 			if (newVal or oldVal is not None) and newVal!=oldVal:

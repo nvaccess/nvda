@@ -51,7 +51,7 @@ def localeNameToWindowsLCID(localeName):
 		localeName=locale.normalize(localeName)
 		if '.' in localeName:
 			localeName=localeName.split('.')[0]
-		LCList=[x[0] for x in locale.windows_locale.iteritems() if x[1]==localeName]
+		LCList=[x[0] for x in locale.windows_locale.items() if x[1]==localeName]
 		if len(LCList)>0:
 			LCID=LCList[0]
 		else:
@@ -228,7 +228,7 @@ def normalizeLanguage(lang):
 # Map Windows primary locale identifiers to locale names
 # Note these are only primary language codes (I.e. no country information)
 # For full locale identifiers we use Python's own locale.windows_locale.
-# Generated from: {x&0x3ff:y.split('_')[0] for x,y in locale.windows_locale.iteritems()}
+# Generated from: {x&0x3ff:y.split('_')[0] for x,y in locale.windows_locale.items()}
 windowsPrimaryLCIDsToLocaleNames={
 	1:'ar',
 	2:'bg',
