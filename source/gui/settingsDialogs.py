@@ -35,13 +35,13 @@ import brailleInput
 import core
 import keyboardHandler
 import characterProcessing
-import guiHelper
+from . import guiHelper
 try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
 import inputCore
-import nvdaControls
+from . import nvdaControls
 import touchHandler
 import winVersion
 import weakref

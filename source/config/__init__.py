@@ -34,7 +34,7 @@ import easeOfAccess
 from fileUtils import FaultTolerantFile
 import winKernel
 import extensionPoints
-from config import profileUpgrader
+from . import profileUpgrader
 from .configSpec import confspec
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application

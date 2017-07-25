@@ -11,7 +11,7 @@ import gui
 from logHandler import log
 import appModuleHandler
 import globalVars
-import guiHelper
+from . import guiHelper
 
 class ProfilesDialog(wx.Dialog):
 	shouldSuspendConfigProfileTriggers = True
