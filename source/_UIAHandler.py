@@ -212,7 +212,7 @@ class UIAHandler(COMObject):
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
 			self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self)
 			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,list(UIAPropertyIdsToNVDAEventNames.keys()))
-			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
+			for x in UIAEventIdsToNVDAEventNames:  
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 			if isinstance(self.clientObject, IUIAutomation5):
