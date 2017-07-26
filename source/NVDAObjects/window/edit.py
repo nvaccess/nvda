@@ -186,7 +186,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			point=textInfos.Point(p.x,p.y)
 		else:
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_POSFROMCHAR,offset,None)
-			point=textInfos.Point(winUser.LOWORD(res),winUser.HIWORD(res))
+			point=textInfos.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
 		(left,top,width,height)=self.obj.location
 		point.x=point.x+left
 		point.y=point.y+top
