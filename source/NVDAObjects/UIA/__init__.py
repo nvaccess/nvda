@@ -74,7 +74,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_PositionInSetPropertyId,
 		UIAHandler.UIA_SizeOfSetPropertyId,
 		UIAHandler.UIA_AriaRolePropertyId,
-		UIAHandler.UIA_LocalizedLandmarkTypePropertyId,
+		UIAHandler.UIA_LandmarkTypePropertyId,
 		UIAHandler.UIA_AriaPropertiesPropertyId,
 		UIAHandler.UIA_LevelPropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,

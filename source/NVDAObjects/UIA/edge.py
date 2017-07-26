@@ -1,8 +1,8 @@
-#A part of NonVisual Desktop Access (NVDA)
+#NVDAObjects/UIA/edge.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -134,9 +134,7 @@ class EdgeTextInfo(UIATextInfo):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
 		# report landmarks
-		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
-		if landmark and (landmark!='region' or field.get('name')):
-			field['landmark']=aria.landmarkRoles.get(landmark)
+		field['landmark']=obj.landmark
 		# Combo boxes with a text pattern are editable
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
@@ -428,7 +426,9 @@ class EdgeNode(UIA):
 		role=super(EdgeNode,self).role
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
-		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId)
+		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		# #7333: It is valid to provide multiple, space separated aria roles in HTML
+		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
@@ -492,6 +492,19 @@ class EdgeNode(UIA):
 		if text == "\n":
 			return True
 		return False
+
+	def _get_landmark(self):
+		"""Fetches the aria landmark role for this object."""
+		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
+		if not landmarkId: # will be 0 for non-landmarks
+			return None
+		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		# #7333: It is valid to provide multiple, space separated aria roles in HTML
+		# If multiple roles or even multiple landmark roles are provided, the first one is used
+		for ariaRole in ariaRoles.split():
+			if ariaRole in aria.landmarkRoles and (ariaRole!='region' or self.name):
+				return ariaRole
+		return None
 
 class EdgeList(EdgeNode):
 

@@ -1,7 +1,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
 
 from ctypes import byref
 from comtypes import COMError
@@ -15,6 +15,7 @@ import cursorManager
 import textInfos
 import browseMode
 from NVDAObjects.UIA import UIA
+import aria
 
 class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -41,9 +42,7 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def label(self):
 		if self.itemType=="landmark":
 			obj=self.obj
-			name=obj.name
-			landmarkType=obj.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
-			return " ".join(x for x in (name,landmarkType) if x)
+			return " ".join(x for x in (obj.name,aria.landmarkRoles.get(obj.landmark)) if x)
 		return super(UIATextRangeQuickNavItem,self).label
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
@@ -294,7 +293,7 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_CheckBoxControlTypeId,UIAHandler.UIA_RadioButtonControlTypeId,UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_ButtonControlTypeId]})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="landmark":
-			condition=UIAHandler.handler.clientObject.createNotCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_LocalizedLandmarkTypePropertyId,""))
+			condition=UIAHandler.handler.clientObject.createNotCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_LandmarkTypePropertyId,0))
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
