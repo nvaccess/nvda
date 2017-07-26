@@ -327,12 +327,10 @@ def HIWORD(long):
 	return long>>16
 
 def GET_X_LPARAM(lp):
-	loWord=LOWORD(lp)
-	return loWord if loWord<0x8000 else loWord-0x10000
+	return c_short(LOWORD(lp)).value
 
 def GET_Y_LPARAM(lp):
-	hiWord=LOWORD(lp)
-	return hiWord if hiWord<0x8000 else hiWord-0x10000
+	return c_short(HIWORD(lp)).value
 
 def MAKELONG(lo,hi):
 	return (hi<<16)+lo
