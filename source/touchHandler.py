@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited
+#Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
 
 import wx
 import threading
@@ -246,8 +246,8 @@ class TouchHandler(threading.Thread):
 		if msg>=_WM_POINTER_FIRST and msg<=_WM_POINTER_LAST:
 			flags=winUser.HIWORD(wParam)
 			touching=(flags&POINTER_MESSAGE_FLAG_INRANGE) and (flags&POINTER_MESSAGE_FLAG_FIRSTBUTTON)
-			x=winUser.LOWORD(lParam)
-			y=winUser.HIWORD(lParam)
+			x=winUser.GET_X_LPARAM(lParam)
+			y=winUser.GET_Y_LPARAM(lParam)
 			ID=winUser.LOWORD(wParam)
 			if touching:
 				self.trackerManager.update(ID,x,y,False)
