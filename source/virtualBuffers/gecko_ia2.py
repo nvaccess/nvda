@@ -124,14 +124,15 @@ class Gecko_ia2(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in root.states:
+		if not winUser.isWindow(root.windowHandle):
 			return False
 		try:
-			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IA2UniqueID):
-				return False
-		except:
-			return False
-		return True
+			isDefunct=bool(root.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_DEFUNCT)
+		except COMError:
+			# If IAccessible2 states can not be fetched at all, defunct should be assumed as the object has clearly been disconnected or is dead
+			isDefunct=True
+		return not isDefunct
+
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
