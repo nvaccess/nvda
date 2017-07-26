@@ -22,7 +22,7 @@ import windowUtils
 
 def wcharToInt(c):
 	i=ord(c)
-	return i if i<32768 else i-65536
+	return i if i<0x8000 else i-0x10000
 
 def detectStringDirection(s):
 	direction=0
