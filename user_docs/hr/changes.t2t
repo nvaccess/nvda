@@ -21,6 +21,7 @@
 - Automatsko čitanje obavijesti u Microsoft Edgeu, poput početka preuzimanja.  (#7281)
 - Sada možete pisati kratkopisom i punim pismom na brajičnoj tipkovnici vašeg brajevog redka. Pogledajte poglavlje brajični unos u korisničkom vodiću. (#2439)
 - Sada možete upisivati Unicode brajične znakove na brajičnoj tipkovnici, označujući Unicode braille kao brajičnu tablicu. (#6449)
+- Dodana podrška za SuperBraille brajični redak koji se koristi na Tajwanu. (#7352)
 
 
 == Izmjene ==
@@ -38,7 +39,7 @@
  - "regija": "rgn"
  - Na primjer: "navigacijski orijentir" postaje "lmk nav"
 - Espeak-ng je nadograđen na verziju 1.49.1 (#7280).
-- Popisi ulaznih i izlaznih brajičnih tablica u dojaloškom okviru brajičnih postavki, sada su sortirani po abecednom redu. (#6113)
+- Popisi ulaznih i izlaznih brajičnih tablica u dijaloškom okviru brajičnih postavki, sada su sortirani po abecednom redu. (#6113)
 - Obnovljen liblouis brajični prevoditelj na verziju 3.2.0. (#6935)
 
 
@@ -55,6 +56,8 @@
 - U Windowsima 10 nadogradnji za tvorce i novijim, način pregleda se automatski omogućuje pri čitanju pošte u Windows 10 Pošti. (#7289)
 - Na većini brajičnih redaka sa brajičnom tipkovnicom, Točkica 7 briše zadnju brajičnu ćeliju ili znak, a točkica 8 pritišće enter. (#6054)
 - U tekstu za uređivanje, prilikom premještanja kursora (npr. sa strelicama ili tipkom backspace), NVDAova izgovorena povratna informacija je sada točnija u većini slučajeva, točnije u Google chrome i terminalnim aplikacijama. (#6424)
+- Sadržaj uređivača potpisa u Microsoft Outlooku 2016 sada se može čitati. (#7253)
+- U Java Swing aplikacijama, NVDA više ne prouzrokuje rušenje pri navigaciji u tablicama. (#6992)
 
 
 == Izmjene za razvojne programere ==

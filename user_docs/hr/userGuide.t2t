@@ -2295,7 +2295,17 @@ Molimo pogledajte [EcoBraille korisničko uputstvo ftp://ftp.once.es/pub/utt/bib
 | Premjesti se na prvi nadređeni objekt | F8 |
 | Premjesti fokus sustava i kursor na trenutnu poziciju | F9 |
 | Izvjesti o poziciji preglednog kursora | F0 |
-| Ukljući /iskljući brajicu povezanu na | A |
+| Uključi /isključi brajicu povezanu na | A |
+%kc:endInclude
+
+++ SuperBraille ++
+Uređaj SuperBraille, pretežno dostupan na Tajvanu, može se spajati putem serijskog ili USB priključka.
+Budući da SuperBraille nema nikakvih fizičkih tipaka za pisanje ili prebacivanje između teksta, sav ulaz mora se prebacivati na standardnu tipkovnicu računala.
+Zbog toga, te kako bi se zadržala kompatibilnost sa drugim čitačima ekrana na TAjvanu, dvije tipkovničke prečice su dodane za prebacivanje između redaka:
+%kc:beginInclude
+|| Naziv | Prečac |
+| prebaci brajični redak u natrag | numeričkiMinus |
+| prebaci brajični redak u naprijed | numeričkiPlus | 
 %kc:endInclude
 
 ++ BRLTTY ++
