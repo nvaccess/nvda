@@ -137,7 +137,7 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 	# This avoids an extra core cycle.
 	consoleObject.event_textChange()
 	if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
-		x=winUser.GET_x_LPARAM(objectID)
+		x=winUser.GET_X_LPARAM(objectID)
 		y=winUser.GET_Y_LPARAM(objectID)
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		if x<consoleScreenBufferInfo.dwCursorPosition.x and (y==consoleScreenBufferInfo.dwCursorPosition.y or y==consoleScreenBufferInfo.dwCursorPosition.y+1):  
