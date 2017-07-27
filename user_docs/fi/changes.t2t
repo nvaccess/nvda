@@ -17,11 +17,12 @@
 - Microsoft Wordissa on nyt selaustilassa oltaessa mahdollista siirtyä kirjoitusvirheisiin pikanavigointikomentoja W ja Shift+W käyttäen. (#6942)
 - Lisätty tuki Microsoft Outlookin tapaamisenluontivalintaikkunoiden päivämääränvalitsinsäätimelle. (#7217)
 - Valittuna oleva ehdotus ilmoitetaan nyt Windows 10:n Sähköposti-sovelluksen vastaanottaja/kopio-kentissä ja Asetukset-sovelluksen haussa. (#6241)
-- Windows 10:ssä toistetaan nyt ääni, joka ilmaisee ehdotusten ilmestymisen tietyissä hakukentissä (esim. aloitusnäytössä, asetushaussa, Sähköposti-sovelluksen vastaanottaja/kopio-kentissä). (#6241)
+- Windows 10:ssä toistetaan nyt ääni, joka ilmaisee ehdotusten ilmestymisen tietyissä hakukentissä (esim. aloitusnäytössä, asetushaussa tai Sähköposti-sovelluksen vastaanottaja/kopio-kentissä). (#6241)
 - Ilmoitukset luetaan automaattisesti Skype for Businessin työpöytäversiossa esim. tilanteessa, jossa joku aloittaa keskustelun kanssasi.  (#7281)
 - Ilmoitukset luetaan automaattisesti Microsoft Edgessä esim. latauksen käynnistyessä.  (#7281)
 - Voit nyt kirjoittaa sekä lyhenne- että tavallista pistekirjoitusta sellaisilla pistenäytöillä, joissa on pistekirjoitusnäppäimistö. Katso lisätietoja käyttöoppaan Pistekirjoituksen syöttäminen -kappaleesta. (#2439)
 - Voit nyt syöttää Unicode-pistekirjoitusmerkkejä pistenäytön pistekirjoitusnäppäimistöltä valitsemalla Pistekirjoitusasetukset-valintaikkunassa syöttötaulukoksi Unicode-pistekirjoitus. (#6449)
+- Lisätty tuki Taiwanissa käytettävälle SuperBraille-pistenäytölle. (#7352)
 
 
 == Muutokset ==
@@ -56,6 +57,8 @@
 - Windows 10 Creators-päivityksessä ja uudemmissa varmistetaan, että selaustila otetaan automaattisesti käyttöön luettaessa sähköposteja Sähköposti-sovelluksessa. (#7289)
 - Piste 7 poistaa nyt viimeksi syötetyn pistesolun tai -merkin ja piste 8 painaa Enter-näppäintä useimmissa pistekirjoitusnäppäimistön sisältävissä pistenäytöissä. (#6054)
 - NVDA:n puhepalaute on nyt useimmissa tapauksissa tarkempaa (erityisesti Chromessa ja päätesovelluksissa) siirrettäessä kohdistinta muokattavassa tekstissä (esim. nuolinäppäimillä tai askelpalauttimella). (#6424)
+- Microsoft Outlook 2016:n allekirjoitusmuokkaimen sisällön lukeminen on nyt mahdollista. (#7253)
+- NVDA ei enää aiheuta ajoittain Java Swing -sovellusten kaatumista liikuttaessa niiden sisältämissä taulukoissa. (#6992)
 
 
 == Muutokset kehittäjille (englanniksi) ==

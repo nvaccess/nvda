@@ -22,6 +22,7 @@ Quoi de Neuf dans NVDA
 - Annonce automatique des notifications sous Microsoft Edge, par exemple lorsqu'un téléchargement démarre.  (#7281)
 - Vous pouvez maintenant taper en braille intégral ou abrégé depuis un terminal braille avec un clavier braille. Veuillez consulter la section Saisie en Braille du Guide de l'Utilisateur pour les détails. (#2439)
 - Vous pouvez maintenant entrer des caractères braille unicode depuis le clavier braille d'un terminal braille en sélectionnant Braille Unicode comme table de saisie dans les Paramètres Braille. (#6449)
+- Ajout du support du terminal braille  SuperBraille  utilisé à Taiwan. (#7352)
 
 
 == Changements ==
@@ -55,6 +56,8 @@ Quoi de Neuf dans NVDA
 - Sous Windows 10 Creators update et au-delà, on s'assure que le mode navigation est activé automatiquement quand on lit des courriels sous l'application Courrier de Windows 10. (#7289)
 - Sur la plupart des afficheurs braille possédant un clavier braille, le point 7 efface maintenant le dernier caractère entré, et le point 8 presse la touche entrer. (#6054)
 - Dans un texte éditable, quand on déplace le curseur (ex : avec les touches de manipulation du curseur ou avec retour arrière), le retour parlé de NVDA est maintenant plus précis dans beaucoup de cas, en particulier sous Chrome et les applications en mode terminal. (#6424)
+- Le contenu de l'Éditeur de Signature sous Microsoft Outlook 2016 peut maintenant être lu. (#7253)
+- Dans les applications Java Swing, NVDA ne provoque plus de plantages quand on navigue dans les tableaux. (#6992)
 
 
 == Changement pour les Développeurs ==
