@@ -19,10 +19,25 @@ BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
 
 USB_IDS_SER = {
-	"VID_0403&PID_6001", # Modular Evolution 88
+	"VID_0403&PID_6001", # FTDI chip
+	"VID_0921&PID_1200", # GoHubs chip
 }
 
 USB_IDS_HID = {
+	"VID_1FE4&PID_0054", # Active Braille
+	"VID_1FE4&PID_0081", # Basic Braille 16
+	"VID_1FE4&PID_0082", # Basic Braille 20
+	"VID_1FE4&PID_0083", # Basic Braille 32
+	"VID_1FE4&PID_0084", # Basic Braille 40
+	"VID_1FE4&PID_008A", # Basic Braille 48
+	"VID_1FE4&PID_0086", # Basic Braille 64
+	"VID_1FE4&PID_0087", # Basic Braille 80
+	"VID_1FE4&PID_008B", # Basic Braille 160
+	"VID_1FE4&PID_0061", # Actilino
+	"VID_1FE4&PID_0064", # Active Star 40
+	"VID_1FE4&PID_0003", # USB-HID adapter
+	"VID_1FE4&PID_0074", # Braille Star 40
+	"VID_1FE4&PID_0044", # Easy Braille
 }
 
 BLUETOOTH_NAMES = {
@@ -30,7 +45,29 @@ BLUETOOTH_NAMES = {
 }
 
 MODELS = {
+	"\x05": ("Braille Wave", 40),
+	"\x36": ("Modular Evolution 64", 64),
 	"\x38": ("Modular Evolution 88", 88),
+	"\x44": ("Easy Braille", 40),
+	"\x54": ("Active Braille", 40),
+	"\x55": ("Connect Braille 40", 40),
+	"\x61": ("Actilino", 20),
+	"\x64": ("Active Star 40", 40),
+	"\x81": ("Basic Braille 16", 16),
+	"\x82": ("Basic Braille 20", 20),
+	"\x83": ("Basic Braille 32", 32),
+	"\x84": ("Basic Braille 40", 40),
+	"\x8A": ("Basic Braille 48", 48),
+	"\x86": ("Basic Braille 64", 64),
+	"\x87": ("Basic Braille 80", 80),
+	"\x8B": ("Basic Braille 160", 160),
+	"\x72": ("Braillino", 20),
+	"\x74": ("Braille Star 40", 40),
+	"\x78": ("Braille Star 80", 80),
+	"\x80": ("Modular 20", 20),
+	"\x88": ("Modular 88", 88),
+	"\x89": ("Modular 40", 40),
+	"\x90": ("Bookworm", 20),
 }
 
 # Keys
