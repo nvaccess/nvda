@@ -213,6 +213,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 		self._deviceID = None
 		self._deviceName = None
+		self._ignoreKeyReleases = False
+		self._keysDown = []
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
@@ -310,12 +312,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				key = packet[1]
 				release = (ord(key) & ord("\x80")) != 0
 				if release:
-					key = chr(ord(key) ^ ord("\x80"))
-				if key in KEYS:
-					log.debug("Got key {key}, release {release}".format(
-						key=KEYS[key], release=release))
+					if not self._ignoreKeyReleases:
+						# The first key released executes the key combination.
+						try:
+							inputCore.manager.executeGesture(InputGesture(self._keysDown))
+							self._keysDown = []
+						except inputCore.NoInputGestureAction:
+							pass
+						# Any further releases are just the rest of the keys in the combination being released,
+						# so they should be ignored.
+						self._ignoreKeyReleases = True
 				else:
-					log.debug("Got unknown key %r" % key)
+					# Press.
+					# This begins a new key combination.
+					self._ignoreKeyReleases = False
+					self._keysDown.append(key)
 			else:
 				log.debug("Extended packet of type %r: %r" % (ext_packet_type, packet))
 		else:
@@ -325,3 +336,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def display(self, cells):
 		# cells will already be padded up to numCells.
 		self._sendExtendedPacket(HT_EXTPKT_BRAILLE, "".join(chr(cell) for cell in cells))
+
+
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+
+	source = BrailleDisplayDriver.name
+
+	def __init__(self, keysDown):
+		super(InputGesture, self).__init__()
+		self.keysDown = set(keysDown)
+
+		self.keyNames = names = []
+		for key in keysDown:
+			names.append(KEYS[key])
+
+		self.id = "+".join(names)
