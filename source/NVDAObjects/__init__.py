@@ -24,6 +24,7 @@ import appModuleHandler
 import treeInterceptorHandler
 import braille
 import globalPluginHandler
+import brailleInput
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -915,6 +916,7 @@ This code is executed if a gain focus event is received by this object.
 """
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
+		brailleInput.handler.handleGainFocus(self)
 
 	def event_foreground(self):
 		"""Called when the foreground window changes.
@@ -946,6 +948,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
+			brailleInput.handler.handleCaretMove(self)
 			review.handleCaretMove(self)
 
 	def _get_flatReviewPosition(self):
@@ -1116,3 +1119,18 @@ This code is executed if a gain focus event is received by this object.
 	#: The language/locale of this object.
 	#: @type: basestring
 	language = None
+
+	def _get__hasNavigableText(self):
+		# The generic NVDAObjectTextInfo by itself is never enough to be navigable
+		if self.TextInfo is NVDAObjectTextInfo:
+			return False
+		role = self.role
+		states = self.states
+		if role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT):
+			# Edit fields, terminals and documents  are always navigable
+			return True
+		elif controlTypes.STATE_EDITABLE in states:
+			# Anything that is specifically editable is navigable
+			return True
+		else:
+			return False
