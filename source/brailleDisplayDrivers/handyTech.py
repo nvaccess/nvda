@@ -308,8 +308,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debug("Extended confirmation received")
 			elif ext_packet_type == HT_EXTPKT_KEY:
 				key = packet[1]
+				release = (ord(key) & ord("\x80")) != 0
+				if release:
+					key = chr(ord(key) ^ ord("\x80"))
 				if key in KEYS:
-					log.debug("Got key {}".format(KEYS[key]))
+					log.debug("Got key {key}, release {release}".format(
+						key=KEYS[key], release=release))
 				else:
 					log.debug("Got unknown key %r" % key)
 			else:
