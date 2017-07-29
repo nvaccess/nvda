@@ -6,7 +6,7 @@
 #Copyright (C) 2008-2017 NV Access Limited and NVDA contrributors
 
 from collections import OrderedDict
-from StringIO import StringIO
+from cStringIO import StringIO
 import serial # pylint: disable=E0401
 import hwPortUtils
 import hwIo
