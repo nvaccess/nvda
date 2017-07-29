@@ -279,10 +279,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.close()
 
 	def _sendPacket(self, packet_type, data=""):
-		self._dev.write(packet_type)
-		if self._deviceID:
-			self._dev.write(self._deviceID)
-		self._dev.write(data)
+		if self.isHid:
+			if self._deviceID:
+				data= self._deviceID+data
+			self._sendHidPacket(HT_HID_RPT_OutData, packet_type, data)
+		else:
+			self._dev.write(packet_type)
+			if self._deviceID:
+				self._dev.write(self._deviceID)
+			self._dev.write(data)
 
 	def _sendExtendedPacket(self, packet_type, data):
 		packet = "{length}{ext_type}{data}\x16".format(
@@ -290,6 +295,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			length=chr(len(data) + 1)         # Length is including packet_type
 		)
 		self._sendPacket(HT_PKT_EXTENDED, packet)
+
+	def _sendHidPacket(self, hid_packet_type, ser_packet_type, data=""):
+		assert(self.isHid)
+		self._dev.write(HT_HID_RPT_InData+hid_packet_type+ser_packet_type+data)
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
