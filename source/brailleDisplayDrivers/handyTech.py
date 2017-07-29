@@ -70,7 +70,7 @@ MODEL_BRAILLINO = "\x72"
 MODEL_BRAILLE_STAR_40 = "\x74"
 MODEL_BRAILLE_STAR_80 = "\x78"
 MODEL_MODULAR_20 = "\x80"
-MODEL_MODULAR_88 = "\x88"
+MODEL_MODULAR_80 = "\x88"
 MODEL_MODULAR_40 = "\x89"
 MODEL_BOOKWORM = "\x90"
 
@@ -90,7 +90,7 @@ class Model(object):
 		or relabel keys. Even if a key isn't available on all devices, add it here
 		if it would make sense for most devices.
 		"""
-		return {
+		return OrderedDict({
 			# Braille input keys
 			# Numbered from left to right, might be used for braille input on some models
 			0x03: "b1",
@@ -129,10 +129,28 @@ class Model(object):
 			0x76: "joystickUp",
 			0x77: "joystickDown",
 			0x78: "joystickAction",
-		}
+		})
 
 
-class ModularEvolution(Model):
+class TripleActionKeysMixin(object):
+	"""Triple action keys
+
+	Most Handy Tech models have so called triple action keys. This keys are 
+	on the left and right side of the cells and can be pressed at the top, 
+	at the bottom and in the middle.
+	"""
+	def get_keys(self):
+		keys = super(TripleActionKeysMixin, self).get_keys()
+		keys.update({
+			0x0C: "leftTakTop",
+			0x14: "leftTakBottom",
+			0x04: "rightTakTop",
+			0x08: "rightTakBottom",
+		})
+		return keys
+
+
+class ModularEvolution(TripleActionKeysMixin, Model):
 	pass
 
 
@@ -146,6 +164,101 @@ class ModularEvolution64(ModularEvolution):
 	device_id = MODEL_MODULAR_EVOLUTION_64
 	num_cells = 64
 	name = "Modular Evolution 64"
+
+class EasyBraille(TripleActionKeysMixin, Model):
+	device_id = MODEL_EASY_BRAILLE
+	num_cells = 40
+	name = "Easy Braille"
+
+
+class ActiveBraille(TripleActionKeysMixin, Model):
+	device_id = MODEL_ACTIVE_BRAILLE
+	num_cells = 40
+	name = "Active Braille"
+
+
+class Actilino(TripleActionKeysMixin, Model):
+	device_id = MODEL_ACTILINO
+	num_cells = 20
+	name = "Actilino"
+
+
+class ActiveStar40(TripleActionKeysMixin, Model):
+	device_id = MODEL_ACTIVE_STAR_40
+	num_cells = 40
+	name = "Active Star 40"
+
+
+class BrailleWave(Model):
+	device_id = MODEL_BRAILLE_WAVE
+	num_cells = 40
+	name = "Braille Wave"
+
+
+class BasicBraille(TripleActionKeysMixin, Model):
+	pass
+
+
+def basic_braille_factory(cells, id):
+	return type("BasicBraille{cells}".format(cells=cells), (BasicBraille,), {
+		"device_id": id,
+		"cells": cells,
+		"name": "Basic Braille {cells}".format(cells=cells),
+	})
+
+BasicBraille16 = basic_braille_factory(16, MODEL_BASIC_BRAILLE_16)
+BasicBraille20 = basic_braille_factory(20, MODEL_BASIC_BRAILLE_20)
+BasicBraille32 = basic_braille_factory(32, MODEL_BASIC_BRAILLE_32)
+BasicBraille40 = basic_braille_factory(40, MODEL_BASIC_BRAILLE_40)
+BasicBraille48 = basic_braille_factory(48, MODEL_BASIC_BRAILLE_48)
+BasicBraille64 = basic_braille_factory(60, MODEL_BASIC_BRAILLE_64)
+BasicBraille80 = basic_braille_factory(80, MODEL_BASIC_BRAILLE_80)
+BasicBraille160 = basic_braille_factory(160, MODEL_BASIC_BRAILLE_160)
+
+
+class BrailleStar(TripleActionKeysMixin, Model):
+	pass
+
+
+class BrailleStar40(BrailleStar):
+	device_id = MODEL_BRAILLE_STAR_40
+	cells = 40
+	name = "Braille Star 40"
+
+
+class BrailleStar80(BrailleStar):
+	device_id = MODEL_BRAILLE_STAR_80
+	cells = 80
+	name = "Braille Star 80"
+
+class Modular(TripleActionKeysMixin, Model):
+	pass
+
+
+class Modular20(Modular):
+	device_id = MODEL_MODULAR_20
+	cells = 20
+	name = "Modular 20"
+
+
+class Modular40(Modular):
+	device_id = MODEL_MODULAR_40
+	cells = 40
+	name = "Modular 40"
+
+
+class Modular80(Modular):
+	device_id = MODEL_MODULAR_80
+	cells = 80
+	name = "Modular 80"
+
+
+class Bookworm(Model):
+	# TODO: uses a different protocol
+	device_id = MODEL_BOOKWORM
+	cells = 8
+	name = "Bookworm"
+
 
 # Model dict for easy lookup
 def _all_subclasses(cls):
