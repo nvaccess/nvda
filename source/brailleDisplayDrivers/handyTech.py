@@ -133,6 +133,10 @@ KEYS = {
 	"\x78": "joystickAction",
 }
 
+# Keys
+KEY_ROUTING = 0x20
+KEY_RELEASE = 0x80
+
 # Packet types
 HT_PKT_BRAILLE = "\x01"
 HT_PKT_EXTENDED = "\x79"
@@ -221,7 +225,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._deviceID = None
 		self._deviceName = None
 		self._ignoreKeyReleases = False
-		self._keysDown = []
+		self._keysDown = set()
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
@@ -279,6 +283,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		)
 		self._sendPacket(HT_PKT_EXTENDED, packet)
 
+	def _handleKeyRelease(self):
+		if self._ignoreKeyReleases or not self._keysDown:
+			return
+		# The first key released executes the key combination.
+		try:
+			inputCore.manager.executeGesture(InputGesture(self._keysDown))
+		except inputCore.NoInputGestureAction:
+			pass
+		# Any further releases are just the rest of the keys in the combination being released,
+		# so they should be ignored.
+		self._ignoreKeyReleases = True
+
 	def _onReceive(self, data):
 		if self.isHid:
 			# data contains the entire packet.
@@ -316,24 +332,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if ext_packet_type == HT_EXTPKT_CONFIRMATION:
 				log.debug("Extended confirmation received")
 			elif ext_packet_type == HT_EXTPKT_KEY:
-				key = packet[1]
-				release = (ord(key) & ord("\x80")) != 0
+				key = ord(packet[1])
+				release = (key & KEY_RELEASE) != 0
 				if release:
-					if not self._ignoreKeyReleases:
-						# The first key released executes the key combination.
-						try:
-							inputCore.manager.executeGesture(InputGesture(self._keysDown))
-							self._keysDown = []
-						except inputCore.NoInputGestureAction:
-							pass
-						# Any further releases are just the rest of the keys in the combination being released,
-						# so they should be ignored.
-						self._ignoreKeyReleases = True
+					key = key ^ KEY_RELEASE
+					self._handleKeyRelease()
+					self._keysDown.discard(key)
 				else:
 					# Press.
 					# This begins a new key combination.
 					self._ignoreKeyReleases = False
-					self._keysDown.append(key)
+					self._keysDown.add(key)
 			else:
 				log.debug("Extended packet of type %r: %r" % (ext_packet_type, packet))
 		else:
@@ -343,6 +352,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def display(self, cells):
 		# cells will already be padded up to numCells.
 		self._sendExtendedPacket(HT_EXTPKT_BRAILLE, "".join(chr(cell) for cell in cells))
+
+	gestureMap = inputCore.GlobalGestureMap({
+		"globalCommands.GlobalCommands": {
+			"braille_routeTo": ("br(handyTech):routing",),
+		},
+	})
 
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
@@ -355,6 +370,13 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 		self.keyNames = names = []
 		for key in keysDown:
-			names.append(KEYS[key])
+			if key >= KEY_ROUTING:
+				self.routingIndex = key - KEY_ROUTING
+				names.append("routing")
+			else:
+				try:
+					names.append(KEYS[key])
+				except KeyError:
+					log.debugWarning("Unknown key %d" % key)
 
 		self.id = "+".join(names)
