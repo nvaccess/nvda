@@ -188,6 +188,14 @@ HT_EXTPKT_GET_FIRMNESS = "\x61"
 HT_EXTPKT_GET_PROTOCOL_PROPERTIES = "\xC1"
 HT_EXTPKT_GET_FIRMWARE_VERSION = "\xC2"
 
+# HID specific constants
+HT_HID_RPT_OutData = "\x01" # receive data from device
+HT_HID_RPT_InData = "\x02" # send data to device
+HT_HID_RPT_InCommand = "\xFB" # run USB-HID firmware command
+HT_HID_RPT_OutVersion = "\xFC" # get version of USB-HID firmware
+HT_HID_RPT_OutBaud = "\xFD" # get baud rate of serial connection
+HT_HID_RPT_InBaud = "\xFE" # set baud rate of serial connection
+HT_HID_CMD_FlushBuffers = "\x01" # flush input and output buffers
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "handyTech"
@@ -294,10 +302,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.close()
 
 	def _sendPacket(self, packet_type, data=""):
-		self._dev.write(packet_type)
-		if self._model:
-			self._dev.write(self._model.device_id)
-		self._dev.write(data)
+		if self.isHid:
+			if self._model:
+				data = self._model.device_id + data
+			self._sendHidPacket(HT_HID_RPT_OutData, packet_type, data)
+		else:
+			self._dev.write(packet_type)
+			if self._model:
+				self._dev.write(self._model.device_id)
+			self._dev.write(data)
 
 	def _sendExtendedPacket(self, packet_type, data):
 		packet = "{length}{ext_type}{data}\x16".format(
@@ -305,6 +318,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			length=chr(len(data) + 1)         # Length is including packet_type
 		)
 		self._sendPacket(HT_PKT_EXTENDED, packet)
+
+	def _sendHidPacket(self, hid_packet_type, ser_packet_type, data=""):
+		assert(self.isHid)
+		self._dev.write(HT_HID_RPT_InData+hid_packet_type+ser_packet_type+data)
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -322,15 +339,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self.isHid:
 			# data contains the entire packet.
 			stream = StringIO(data)
-			packet_type = data[0]
-			# Skip the packet_type, so reading the stream will only give the rest of the data
-			stream.seek(1)
+			hid_packet_type = data[1]
+			ser_packet_type = data[2]
+			# Skip the header, so reading the stream will only give the rest of the data
+			stream.seek(3)
 		else:
-			packet_type = data
+			ser_packet_type = data
 			# data only contained the packet type. Read the rest from the device.
 			stream = self._dev
 
-		# log.debug("Got packet of type: %r" % packet_type)
+		# log.debug("Got packet of type: %r" % ser_packet_type)
 		model_id = stream.read(1)
 		if not self._model:
 			if not model_id in MODELS:
@@ -339,13 +357,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._model = MODELS.get(model_id)(self)
 			self.numCells = self._model.num_cells
 
-		if packet_type == HT_PKT_OK:
+		if ser_packet_type == HT_PKT_OK:
 			pass
-		elif packet_type == HT_PKT_ACK:
+		elif ser_packet_type == HT_PKT_ACK:
 			log.debug("ACK received")
-		elif packet_type == HT_PKT_NAK:
+		elif ser_packet_type == HT_PKT_NAK:
 			log.info("NAK received!")
-		elif packet_type == HT_PKT_EXTENDED:
+		elif ser_packet_type == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
 			assert stream.read(1) == "\x16"    # It seems packets are terminated with \x16
@@ -367,7 +385,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			else:
 				log.debug("Extended packet of type %r: %r" % (ext_packet_type, packet))
 		else:
-			log.warning("Unhandled packet of type %r" % packet_type)
+			log.warning("Unhandled packet of type %r" % ser_packet_type)
 
 
 	def display(self, cells):
