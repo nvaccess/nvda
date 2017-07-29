@@ -316,15 +316,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self.isHid:
 			# data contains the entire packet.
 			stream = StringIO(data)
-			packet_type = data[0]
-			# Skip the packet_type, so reading the stream will only give the rest of the data
-			stream.seek(1)
+			hid_packet_type = data[1]
+			ser_packet_type = data[2]
+			# Skip the header, so reading the stream will only give the rest of the data
+			stream.seek(3)
 		else:
-			packet_type = data
+			ser_packet_type = data
 			# data only contained the packet type. Read the rest from the device.
 			stream = self._dev
 
-		# log.debug("Got packet of type: %r" % packet_type)
+		# log.debug("Got packet of type: %r" % ser_packet_type)
 		model_id = stream.read(1)
 		if not self._deviceID:
 			if not model_id in MODELS:
@@ -335,13 +336,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._deviceName = model[0]
 			self._deviceID = model_id
 
-		if packet_type == HT_PKT_OK:
+		if ser_packet_type == HT_PKT_OK:
 			pass
-		elif packet_type == HT_PKT_ACK:
+		elif ser_packet_type == HT_PKT_ACK:
 			log.debug("ACK received")
-		elif packet_type == HT_PKT_NAK:
+		elif ser_packet_type == HT_PKT_NAK:
 			log.info("NAK received!")
-		elif packet_type == HT_PKT_EXTENDED:
+		elif ser_packet_type == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
 			assert stream.read(1) == "\x16"    # It seems packets are terminated with \x16
@@ -363,7 +364,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			else:
 				log.debug("Extended packet of type %r: %r" % (ext_packet_type, packet))
 		else:
-			log.warning("Unhandled packet of type %r" % packet_type)
+			log.warning("Unhandled packet of type %r" % ser_packet_type)
 
 
 	def display(self, cells):
