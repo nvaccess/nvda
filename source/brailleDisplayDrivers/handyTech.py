@@ -49,91 +49,115 @@ BLUETOOTH_NAMES = {
 
 }
 
-# pylint: disable=C0330
+# Model identifiers
+MODEL_BRAILLE_WAVE = "\x05"
+MODEL_MODULAR_EVOLUTION_64 = "\x36"
+MODEL_MODULAR_EVOLUTION_88 = "\x38"
+MODEL_EASY_BRAILLE = "\x44"
+MODEL_ACTIVE_BRAILLE = "\x54"
+MODEL_CONNECT_BRAILLE_40 = "\x55"
+MODEL_ACTILINO = "\x61"
+MODEL_ACTIVE_STAR_40 = "\x64"
+MODEL_BASIC_BRAILLE_16 = "\x81"
+MODEL_BASIC_BRAILLE_20 = "\x82"
+MODEL_BASIC_BRAILLE_32 = "\x83"
+MODEL_BASIC_BRAILLE_40 = "\x84"
+MODEL_BASIC_BRAILLE_48 = "\x8A"
+MODEL_BASIC_BRAILLE_64 = "\x86"
+MODEL_BASIC_BRAILLE_80 = "\x87"
+MODEL_BASIC_BRAILLE_160 = "\x8B"
+MODEL_BRAILLINO = "\x72"
+MODEL_BRAILLE_STAR_40 = "\x74"
+MODEL_BRAILLE_STAR_80 = "\x78"
+MODEL_MODULAR_20 = "\x80"
+MODEL_MODULAR_88 = "\x88"
+MODEL_MODULAR_40 = "\x89"
+MODEL_BOOKWORM = "\x90"
+
+
+class Model(object):
+	# Device identifier, used in the protocol to identify the device
+	device_id = None
+
+	def __init__(self, display):
+		self._display = display
+
+	def get_keys(self):
+		"""Basic keymap
+
+		This returns a basic keymap with sensible defaults for all devices.
+		Subclasses should override this method to add model specific keys, 
+		or relabel keys. Even if a key isn't available on all devices, add it here
+		if it would make sense for most devices.
+		"""
+		return {
+			# Braille input keys
+			# Numbered from left to right, might be used for braille input on some models
+			0x03: "b1",
+			0x07: "b2",
+			0x0B: "b3",
+			0x0F: "b4",
+			0x13: "b5",
+			0x17: "b6",
+			0x1B: "b7",
+			0x1F: "b8",
+
+			# Modular/BS80 keypad
+			0x01: "b12",
+			0x09: "b13",
+			0x05: "n0",
+			0x0D: "b14",
+
+			0x11: "b11",
+			0x15: "n1",
+			0x19: "n2",
+			0x1D: "n3",
+
+			0x02: "b10",
+			0x06: "n4",
+			0x0A: "n5",
+			0x0E: "n6",
+
+			0x12: "b9",
+			0x16: "n7",
+			0x1A: "n8",
+			0x1E: "n9",
+
+			# Actilino
+			0x74: "joystickLeft",
+			0x75: "joystickRight",
+			0x76: "joystickUp",
+			0x77: "joystickDown",
+			0x78: "joystickAction",
+		}
+
+
+class ModularEvolution(Model):
+	pass
+
+
+class ModularEvolution88(ModularEvolution):
+	device_id = MODEL_MODULAR_EVOLUTION_88
+	num_cells = 88
+	name = "Modular Evolution 88"
+
+
+class ModularEvolution64(ModularEvolution):
+	device_id = MODEL_MODULAR_EVOLUTION_64
+	num_cells = 64
+	name = "Modular Evolution 64"
+
+# Model dict for easy lookup
+def _all_subclasses(cls):
+	return cls.__subclasses__() + [g for s in cls.__subclasses__()
+		for g in _all_subclasses(s)]
+
 MODELS = {
-	"\x05": ("Braille Wave", 40),
-	"\x36": ("Modular Evolution 64", 64),
-	"\x38": ("Modular Evolution 88", 88),
-	"\x44": ("Easy Braille", 40),
-	"\x54": ("Active Braille", 40),
-	"\x55": ("Connect Braille 40", 40),
-	"\x61": ("Actilino", 20),
-	"\x64": ("Active Star 40", 40),
-	"\x81": ("Basic Braille 16", 16),
-	"\x82": ("Basic Braille 20", 20),
-	"\x83": ("Basic Braille 32", 32),
-	"\x84": ("Basic Braille 40", 40),
-	"\x8A": ("Basic Braille 48", 48),
-	"\x86": ("Basic Braille 64", 64),
-	"\x87": ("Basic Braille 80", 80),
-	"\x8B": ("Basic Braille 160", 160),
-	"\x72": ("Braillino", 20),
-	"\x74": ("Braille Star 40", 40),
-	"\x78": ("Braille Star 80", 80),
-	"\x80": ("Modular 20", 20),
-	"\x88": ("Modular 88", 88),
-	"\x89": ("Modular 40", 40),
-	"\x90": ("Bookworm", 20),
+	m.device_id: m for m in _all_subclasses(Model) if hasattr(m, 'device_id')
 }
 
-# Keys
-# pylint: disable=C0330
-KEYS = {
-	# Braille input keys
-	# Numbered from left to right, might be used for braille input on some models
-	"\x03": "b1",
-	"\x07": "b2",
-	"\x0B": "b3",
-	"\x0F": "b4",
-	"\x13": "b5",
-	"\x17": "b6",
-	"\x1B": "b7",
-	"\x1F": "b8",
 
-	# Up/down
-	# TODO: Find out which keys this are exactly
-	"\x04": "up",
-	"\x08": "down",
-
-	# Modular/BS80 keypad
-	"\x01": "b12",
-	"\x09": "b13",
-	"\x05": "n0",
-	"\x0D": "b14",
-
-	"\x11": "b11",
-	"\x15": "n1",
-	"\x19": "n2",
-	"\x1D": "n3",
-
-	"\x02": "b10",
-	"\x06": "n4",
-	"\x0A": "n5",
-	"\x0E": "n6",
-
-	"\x12": "b9",
-	"\x16": "n7",
-	"\x1A": "n8",
-	"\x1E": "n9",
-
-	# BrailleWave/Star
-	# TODO: Check which names are used by current driver
-	"\x0C": "escape",
-	"\x10": "space",
-	"\x14": "return",
-
-	# BrailleStar
-	"\x18": "spaceRight",
-
-	# Actilino
-	"\x74": "joystickLeft",
-	"\x75": "joystickRight",
-	"\x76": "joystickUp",
-	"\x77": "joystickDown",
-	"\x78": "joystickAction",
-}
-
-# Keys
+# Key ranges
 KEY_ROUTING = 0x20
 KEY_RELEASE = 0x80
 
@@ -222,8 +246,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
-		self._deviceID = None
-		self._deviceName = None
+		self._model = None
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
 
@@ -249,13 +272,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			for i in xrange(3):
 				# An expected response hasn't arrived yet, so wait for it.
 				self._dev.waitForRead(TIMEOUT)
-				if self.numCells and self._deviceID:
+				if self.numCells and self._model:
 					break
 
 			if self.numCells:
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
-					device=self._deviceName, type=portType, port=port))
+					device=self._model.name, type=portType, port=port))
 				break
 			self._dev.close()
 
@@ -272,13 +295,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _sendPacket(self, packet_type, data=""):
 		self._dev.write(packet_type)
-		if self._deviceID:
-			self._dev.write(self._deviceID)
+		if self._model:
+			self._dev.write(self._model.device_id)
 		self._dev.write(data)
 
 	def _sendExtendedPacket(self, packet_type, data):
 		packet = "{length}{ext_type}{data}\x16".format(
-			model=self._deviceID, ext_type=packet_type, data=data,
+			ext_type=packet_type, data=data,
 			length=chr(len(data) + 1)         # Length is including packet_type
 		)
 		self._sendPacket(HT_PKT_EXTENDED, packet)
@@ -288,7 +311,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return
 		# The first key released executes the key combination.
 		try:
-			inputCore.manager.executeGesture(InputGesture(self._keysDown))
+			inputCore.manager.executeGesture(InputGesture(self._model, self._keysDown))
 		except inputCore.NoInputGestureAction:
 			pass
 		# Any further releases are just the rest of the keys in the combination being released,
@@ -309,14 +332,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		# log.debug("Got packet of type: %r" % packet_type)
 		model_id = stream.read(1)
-		if not self._deviceID:
+		if not self._model:
 			if not model_id in MODELS:
 				log.debug("Unknown model: %r" % model_id)
 				return
-			model = MODELS.get(model_id)
-			self.numCells = model[1]
-			self._deviceName = model[0]
-			self._deviceID = model_id
+			self._model = MODELS.get(model_id)(self)
+			self.numCells = self._model.num_cells
 
 		if packet_type == HT_PKT_OK:
 			pass
@@ -364,18 +385,18 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keysDown):
+	def __init__(self, model, keys):
 		super(InputGesture, self).__init__()
-		self.keysDown = set(keysDown)
+		self.keys = set(keys)
 
 		self.keyNames = names = []
-		for key in keysDown:
+		for key in keys:
 			if key >= KEY_ROUTING:
 				self.routingIndex = key - KEY_ROUTING
 				names.append("routing")
 			else:
 				try:
-					names.append(KEYS[key])
+					names.append(model.get_keys()[key])
 				except KeyError:
 					log.debugWarning("Unknown key %d" % key)
 
