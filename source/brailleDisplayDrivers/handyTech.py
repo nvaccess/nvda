@@ -164,6 +164,14 @@ HT_EXTPKT_GET_FIRMNESS = "\x61"
 HT_EXTPKT_GET_PROTOCOL_PROPERTIES = "\xC1"
 HT_EXTPKT_GET_FIRMWARE_VERSION = "\xC2"
 
+# HID specific constants
+HT_HID_RPT_OutData = "\x01" # receive data from device
+HT_HID_RPT_InData = "\x02" # send data to device
+HT_HID_RPT_InCommand = "\xFB" # run USB-HID firmware command
+HT_HID_RPT_OutVersion = "\xFC" # get version of USB-HID firmware
+HT_HID_RPT_OutBaud = "\xFD" # get baud rate of serial connection
+HT_HID_RPT_InBaud = "\xFE" # set baud rate of serial connection
+HT_HID_CMD_FlushBuffers = "\x01" # flush input and output buffers
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "handyTech"
