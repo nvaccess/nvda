@@ -6,23 +6,27 @@
 #Copyright (C) 2008-2017 NV Access Limited and NVDA contrributors
 
 from collections import OrderedDict
+from StringIO import StringIO
 import serial # pylint: disable=E0401
 import hwPortUtils
+import hwIo
 import braille
+import brailleInput
 import inputCore
 from logHandler import log
-import brailleInput
-import hwIo
+
 
 TIMEOUT = 0.2
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
 
+# pylint: disable=C0330
 USB_IDS_SER = {
 	"VID_0403&PID_6001", # FTDI chip
 	"VID_0921&PID_1200", # GoHubs chip
 }
 
+# pylint: disable=C0330
 USB_IDS_HID = {
 	"VID_1FE4&PID_0054", # Active Braille
 	"VID_1FE4&PID_0081", # Basic Braille 16
@@ -40,10 +44,12 @@ USB_IDS_HID = {
 	"VID_1FE4&PID_0044", # Easy Braille
 }
 
+# pylint: disable=C0330
 BLUETOOTH_NAMES = {
 
 }
 
+# pylint: disable=C0330
 MODELS = {
 	"\x05": ("Braille Wave", 40),
 	"\x36": ("Modular Evolution 64", 64),
@@ -71,6 +77,7 @@ MODELS = {
 }
 
 # Keys
+# pylint: disable=C0330
 KEYS = {
 	# Braille input keys
 	# Numbered from left to right, might be used for braille input on some models
@@ -209,7 +216,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			yield port, portType
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__	()
+		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._deviceID = None
 		self._deviceName = None
