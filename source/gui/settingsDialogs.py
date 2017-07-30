@@ -2488,7 +2488,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		super(SpeechSymbolsDialog, self).__init__(parent)
 
 	def makeSettings(self, settingsSizer):
-		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.values()]
 		self.pendingRemovals = {}
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2645,7 +2645,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 	def onOk(self, evt):
 		self.onSymbolEdited()
 		self.editingItem = None
-		for symbol in self.pendingRemovals.itervalues():
+		for symbol in self.pendingRemovals.values():
 			self.symbolProcessor.deleteSymbol(symbol)
 		for symbol in self.symbols:
 			if not symbol.replacement:
