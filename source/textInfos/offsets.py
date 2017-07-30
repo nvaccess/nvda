@@ -289,7 +289,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			# This is a direct TextInfo to TextInfo copy.
 			# Copy over the contents of the property cache, and any private instance variables (includes the TextInfo's offsets) 
 			self._propertyCache.update(position._propertyCache)
-			self.__dict__.update({x:y for x,y in position.__dict__.iteritems() if x.startswith('_') and x!='_propertyCache'})
+			self.__dict__.update({x:y for x,y in position.__dict__.items() if x.startswith('_') and x!='_propertyCache'})
 		elif position==textInfos.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textInfos.POSITION_LAST:
