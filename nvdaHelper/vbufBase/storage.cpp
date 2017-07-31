@@ -149,13 +149,22 @@ inline void outputEscapedAttribute(wostringstream& out, const wstring& text) {
 
 bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& attribs, const std::wregex& regexp) {
 	wostringstream test;
+	wstring parentPrefix=L"parent::";
 	for (vector<wstring>::const_iterator attribName = attribs.begin(); attribName != attribs.end(); ++attribName) {
 		outputEscapedAttribute(test, *attribName);
 		test << L":";
-		VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(*attribName);
-		if (foundAttrib != attributes.end())
-			outputEscapedAttribute(test, foundAttrib->second);
-		test << L";";
+		// A given attribute can contain a parent prefix, which means the parent node will be checked for that attribute instead of this one. 
+		if(this->parent&&attribName->find(parentPrefix)==0) {
+			VBufStorage_attributeMap_t::const_iterator foundAttrib = this->parent->attributes.find(attribName->substr(parentPrefix.length()));
+			if (foundAttrib != this->parent->attributes.end())
+				outputEscapedAttribute(test, foundAttrib->second);
+			test << L";";
+		} else { // not a parent attribute
+			VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(*attribName);
+			if (foundAttrib != attributes.end())
+				outputEscapedAttribute(test, foundAttrib->second);
+			test << L";";
+		}
 	}
 	return regex_match(test.str(), regexp);
 }
