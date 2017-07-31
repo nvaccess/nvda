@@ -8,7 +8,10 @@
 import time
 import nvwave
 import threading
-import Queue
+try:
+	import Queue
+except ImportError:
+	import queue as Queue
 from ctypes import *
 import config
 import globalVars

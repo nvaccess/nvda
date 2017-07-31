@@ -8,7 +8,10 @@
 import os
 from collections import OrderedDict
 import _espeak
-import Queue
+try:
+	import Queue
+except ImportError:
+	import queue as Queue
 import threading
 import languageHandler
 from synthDriverHandler import SynthDriver,VoiceInfo,BooleanSynthSetting
