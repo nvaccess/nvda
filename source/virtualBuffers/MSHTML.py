@@ -264,14 +264,23 @@ class MSHTML(VirtualBuffer):
 		elif nodeType=="formField":
 			attrs=[
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_OUTLINE],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]},
+				# Focusable edit fields (input type=text, including readonly ones)
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
+				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
 				{"IHTMLDOMNode::nodeName":["SELECT"]},
 				{"HTMLAttrib::role":["listbox"]},
 			]
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1],"IHTMLElement::isContentEditable":[1]}
+			attrs=[
+				# Focusable edit fields (input type=text, including readonly ones)
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
+				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
+			]
 		elif nodeType=="radioButton":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="comboBox":
