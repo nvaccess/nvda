@@ -800,7 +800,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		else:
 			break
 
-	# #2591: If the reason is not focus, Speak the exit of any controlFields not in the new stack.
+	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
+	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
 	if reason!=controlTypes.REASON_FOCUS:
 		endingBlock=False
 		for count in reversed(xrange(commonFieldCount,len(controlFieldStackCache))):
