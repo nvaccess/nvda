@@ -1160,6 +1160,9 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
 		return " ".join((nameText,roleText,stateText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
+	elif nameText and reason==controlTypes.REASON_FOCUS and fieldType == "start_addedToControlFieldStack" and role==controlTypes.ROLE_GROUPING:
+		# #3321: Report the name of groupings (such as fieldsets) for quicknav and focus jumps
+		return " ".join((nameText,roleText))
 	elif fieldType in ("start_addedToControlFieldStack","start_relative") and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
