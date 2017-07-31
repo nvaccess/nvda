@@ -195,9 +195,8 @@ class BrailleWave(Model):
 	name = "Braille Wave"
 
 
-class BasicBraille(TripleActionKeysMixin, Model):
+class BasicBraille(Model):
 	pass
-
 
 def basic_braille_factory(cells, id):
 	return type("BasicBraille{cells}".format(cells=cells), (BasicBraille,), {
