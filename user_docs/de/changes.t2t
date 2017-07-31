@@ -17,10 +17,11 @@
 - Datumsfelder in Dialogfeldern für Microsoft Outlook-Termine werden unterstützt. (#7217)
 - In dem "An"-Feld und Kopie in der Windows 10 Mail-App und im Suchfeld für die Windows-Einstellungen wird der aktuell hervorgehobene Vorschlag angezeigt. (#6241)
 - Sobald die Vorschlagsliste für ein Suchfeld in Windows 10 erscheint, wird ein Klang abgespielt. (#6241)
-- In Skype für Unternehmen werden Benachrichtung wie ankommende Nachrichten automatisch angezeigt.  (#7281)
-- In Microsoft Edge werden Benachrichtigungen (z.B. über abgeschlossene Downloads) automatisch angezeigt.  (#7281)
-- Sie können nun Kurz-, Voll- und Basisschrift über die Brailletastatur einer Braillezeile eingeben. lesen Sie den Abschnitt über Braille-Eingabe in Benutzerhandbuch für weitere Informationen. (#2439)
+- In Skype für Unternehmen werden Benachrichtigung, wie ankommende Nachrichten automatisch angezeigt. (#7281)
+- In Microsoft Edge werden Benachrichtigungen (zum Beispiel über abgeschlossene Downloads) automatisch angezeigt. (#7281)
+- Sie können nun Kurz-, Voll- und Basisschrift über die Brailletastatur einer Braillezeile eingeben. Für weitere Informationen lesen Sie den Abschnitt über Braille-Eingabe in Benutzerhandbuch. (#2439)
 - Mit Hilfe der Brailletabelle Unicode können Sie nun Unicode-Zeichen über die Brailletastastur einer Braillezeile eingeben. (#6449)
+- Die in Taiwan gebräuchliche Braillezeile Superbraille wird nun unterstützt. (#7352)
 
 
 == Änderungen ==
@@ -47,7 +48,7 @@
 - Das Drücken von "Ende" im Lesemodus in Microsoft Word führt nicht mehr zu einem Laufzeitfehler. (#7009)
 - Der Lesemodus von Microsoft Edge wird auch dann vollständig unterstützt, wenn das angezeigte Dokument die ARIA-Klasse "document" besitzt. (#6998)
 - Im Lesemodus können Sie selbst dann mit Umschalt+Ende den Rest der Zeile markieren, wenn sich der Cursor bereits auf dem letzten Zeichen befindet. (#7157)
-- Wenn ein Dialogfenster eine Fortschrittsanzeige enthält, wird bei Änderungen an der Fortschrittsanzeige auch der Text des Dialogfensters aktualisiert. Das bedeutet z. B., dass Sie das Fortschreiten der Zeit zum Herunterladen beim Aktualisieren von NVDA verfolgen können. (#6862)
+- Wenn ein Dialogfenster eine Fortschrittsanzeige enthält, wird bei Änderungen an der Fortschrittsanzeige auch der Text des Dialogfensters in Braille aktualisiert. Das bedeutet z. B., dass Sie das Fortschreiten der Zeit zum Herunterladen beim Aktualisieren von NVDA verfolgen können. (#6862)
 - Einige Kombinationsfelder in Windows 10 wie z.B. die Einstellungen für automatische Wiedergabe werden jetzt unterstützt. (#6337).
 - Beim Erstellen von Besprechungen und Terminen in Microsoft Outlook werden keine nutzlosen Informationen mehr angezeigt. (#7216)
 - Signaltöne für Fortschrittsbalken mit scheinbar unbegrenztem Wertebereich (wie z.B. der Fortschrittsbalken bei der Prüfung auf Aktualisierungen) werden nur noch abgespielt, wenn Sie in den Einstellungen für Objektdarstellungen die Signaltöne für Fortschrittsbalken aktiviert haben. (#6759)
@@ -55,6 +56,8 @@
 - Der lesemodus in Windows 10 Mail in Windows 10 Creators Update funktioniert nun wieder korrekt. (#7289)
 - auf den meisten Braillezeilen mit einer Brailletastatur bewirkt das Drücken von Punkt 7 ein Löschen des zuletzt eingegebenen zeichens und ein Drücken von Punkt 8 fügt einen Zeilenvorschub ein. (#6054)
 - Das Bewegen des Systemcursors (z. B. mit den Pfeiltasten) wird nun exakter verfolgt. Dies betrifft z. B. die eingabeaufforderung. (#6424)
+- Das Eingabefeld für die Signatur in Microsoft Outlook 2016 wird nun korrekt erkannt. (#7253)
+- In Java-Swing-Anwendungen stürzt NVDA beim Navigieren in Tabelloen nicht mehr ab. (#6992)
 
 
 == Änderungen für Entwickler ==
@@ -610,7 +613,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 = 2014.4 =
 
 == Neue Funktionen ==
-- Neue Sprachen: Kolumbianisches Spanisch und Punjabi.
+- Neue Sprachen: Spanisch (Kolumbien) und Pandschabi.
 - Sie können NVDA nun auch vom Dialog "Beenden" aus (wahlweise mit deaktivierten Erweiterungen) neu starten. (#4057)
   - Sie können NVDA auch mit deaktivierten Erweiterungen neu starten, indem Sie die Kommandozeilenoption --disable-addons verwenden.
 - Sie können in Aussprachewörterbüchern angeben, dass ein bestimmtes Muster nur auf ein ganzes Wort passen soll. (#1704)
@@ -1252,7 +1255,7 @@ Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille 
 - Im Lesemodus können Sie nun durch einmaliges Drücken einer Routingtaste der Braillezeile das Objekt unter dem Cursor aktivieren. Dies bedeutet, dass Sie die Routingtaste zweimal drücken müssen, falls sich der Cursor noch nicht auf dem Objekt befindet. (#1893)
 - Grundlegende Unterstützung für Internet-Bereiche in iTunes wie z. B. der Store. Andere Anwendungen, welche auf WebKit 1 beruhen, werden möglicherweise ebenfalls unterstützt. (#734)
 - In Büchern in Adobe Digital Editions 1.8.1 und höher erfolgt nun ein automatischer Seitenwechsel, wenn Sie die Funktion "Alles lesen" verwenden. (#1978)
-- Neue Braillezeichensätze: portugisische Kurzschrift, Isländisches 8-Punkt-Computerbraille, tamilische Vollschrift, spanisches 8-Punkt-Computerbraille, persische Vollschrift. (#2014)
+- Neue Braillezeichensätze: Portugiesische Kurzschrift, Isländisches 8-Punkt-Computerbraille, Tamilische Vollschrift, Spanisches 8-Punkt-Computerbraille, Persische Vollschrift. (#2014)
 - In den Einstellungen für Dokumentformatierungen kann nun eingestellt werden, ob Rahmen in Dokumenten angesagt werden sollen. (#1900)
 - Bei der Verwendung von OpenBook wird automatisch der Schlafmodus aktiviert. (#1209)
 - In Poedit können Übersetzer nun vom Übersetzer selbst erstellte Kommentare sowie automatisch extrahierte Kommentare lesen. Als unklar markierte oder noch nicht übersetzte Meldungen werden mit einem Stern markiert. Zudem wird ein Signalton ausgegeben, wenn Sie darauf Navigieren. (#1811)
@@ -1335,7 +1338,7 @@ Die wichtigsten neuerungen sind u. a. das automatische Wechseln der Synthesizers
 - Das Maß, in dem die Stimme bei Großbuchstaben angehoben werden soll, kann nun im Dialog Stimmeneinstellungen konfiguriert werden. Die Angabe erfolgt hier in %. Dies ersetzt das alte Kontrollkästchen "Stimme bei Großbuchstaben anheben". Um die Funktion abzuschalten, geben Sie einen wert von 0 an. (#255)
 - Text- und Hintergrundfarbe werden nun mit angesagt, wenn man sich in Microsoft Excel die Formatierung der Zellen ansagen lässt. (#1655)
 - In Anwendungen, in welchen die Java Access Bridge Verwendung findet, funktioniert nun der Befehl "Aktuelles Navigator-Objekt aktivieren" auf passenden Elementen. (#1744)
-- Sprache Tamil hinzugefügt.
+- Sprache Tamilisch hinzugefügt.
 - Grundlegende Unterstützung für Design Science MathPlayer.
 -
 

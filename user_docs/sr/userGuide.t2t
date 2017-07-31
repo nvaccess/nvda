@@ -2298,6 +2298,16 @@ Molimo pogledajte [EcoBraille korisničko uputstvo ftp://ftp.once.es/pub/utt/bib
 | Uključi /isključi brajev vezan na| A |
 %kc:endInclude
 
+++ SuperBraille ++
+ SuperBraille uređaj, uglavnom dostupan u Tajvanu, se može povezati putem USB ili serijskog porta.
+Budući da SuperBraille nema fizičke tastere za unos teksta ili pomeranje, sav unos mora se vršiti putem tastature računara.
+Zbog ovoga, i zbog zadržavanja kompatibilnosti sa drugim čitačima ekrana u Tajvanu, dve komande za pomeranje brajevog reda su dodate:
+%kc:beginInclude
+|| Ime | Komanda |
+| Pomeri brajev red nazad| NumeričkiMinus |
+| Pomeri brajev red napred| NumeričkiPlus | 
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://www.brltty.com/] je program koji se može koristiti za podršku puno više brajevih redova.
 Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows http://www.brltty.com/download.html].
