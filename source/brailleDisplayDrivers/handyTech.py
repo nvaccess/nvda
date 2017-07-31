@@ -418,7 +418,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self.isHid:
 			if self._model:
 				data = self._model.device_id + data
-			self._sendHidPacket(HT_HID_RPT_OutData, packet_type, data)
+			self._sendHidPacket(chr(len(packet_type)+len(data)), packet_type, data)
 		else:
 			self._dev.write(packet_type)
 			if self._model:
