@@ -800,16 +800,18 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		else:
 			break
 
-	#Get speech text for any fields in the old controlFieldStack that are not in the new controlFieldStack 
-	endingBlock=False
-	for count in reversed(xrange(commonFieldCount,len(controlFieldStackCache))):
-		text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
-		if text:
-			speechSequence.append(text)
-		if not endingBlock and reason==controlTypes.REASON_SAYALL:
-			endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
-	if endingBlock:
-		speechSequence.append(SpeakWithoutPausesBreakCommand())
+	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
+	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
+	if reason!=controlTypes.REASON_FOCUS:
+		endingBlock=False
+		for count in reversed(xrange(commonFieldCount,len(controlFieldStackCache))):
+			text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
+			if text:
+				speechSequence.append(text)
+			if not endingBlock and reason==controlTypes.REASON_SAYALL:
+				endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
+		if endingBlock:
+			speechSequence.append(SpeakWithoutPausesBreakCommand())
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
 	isTextBlank=True
 
