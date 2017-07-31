@@ -43,7 +43,7 @@ VBufStorage_findDirection_up=2
 VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
 
-class VBufStorage_findMatch_word(unicode):
+class VBufStorage_findMatch_word(str):
 	pass
 VBufStorage_findMatch_notEmpty = object()
 
