@@ -346,7 +346,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if not wxLang and '_' in lang:
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
+		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
 	if wxLang:
 		try:
 			locale.Init(wxLang.Language)

@@ -40,7 +40,7 @@ except RuntimeError:
 	updateCheck = None
 
 ### Constants
-NVDA_PATH = os.getcwdu()
+NVDA_PATH = os.getcwd()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 

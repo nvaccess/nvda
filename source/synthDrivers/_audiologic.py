@@ -7,7 +7,7 @@
 from ctypes import *
 import os
 
-NvdaDir=os.getcwdu()
+NvdaDir=os.getcwd()
 TtsDir="c:\\TTS3\\"
 Handle=c_int()
 Tts=None
