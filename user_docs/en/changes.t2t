@@ -58,6 +58,11 @@
 - In editable text, when moving the caret (e.g. with the cursor keys or backspace), NVDA's spoken feedback is now more accurate in many cases, particularly in Chrome and terminal applications. (#6424)
 - The content of the Signature Editor in Microsoft Outlook 2016 can now be read. (#7253)
 - In Java Swing applications, NVDA no longer sometimes causes the application to crash when navigating tables. (#6992)
+- In Windows 10 Creators Update, NVDA will no longer announce toast notifications multiple times. (#7128)
+- In The start menu in Windows 10, pressing Enter to close the start menu after a search no longer causes NVDA to announce search text. (#7370)
+- Performing quick navigation to headings in Microsoft Edge is now significantly faster. (#7343)
+- In Microsoft Edge, navigating in browse mode no longer skips large parts of certain web pages such as the Wordpress 2015 theme. (#7143)
+- In Microsoft Edge, landmarks are correctly localized in languages other than English. (#7328)
 
 
 == Changes for Developers ==

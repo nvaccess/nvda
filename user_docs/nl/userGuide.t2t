@@ -42,10 +42,11 @@ De gratis, open source spraakmodule [eSpeak NG https://github.com/espeak-ng/espe
 Informatie over andere door NVDA ondersteunde spraaksynthesizers is te vinden onder [Ondersteunde spraaksynthesizers#SupportedSpeechSynths].
 
 ++ Braille-ondersteuning ++
-Gebruikers van Brailleleesregels kunnen met NVDA informatie in Braille uitlezen.
+Gebruikers van Brailleleesregels kunnen met NVDA informatie in braille uitlezen.
+Brailleïnvoer, zowel onverkort als verkort braille, door middel van een brailletoetsenbord wordt ook ondersteund.
 Voor de ondersteunde leesregels, zie [Ondersteunde brailleleesregels#SupportedBrailleDisplays]
 
-NVDA ondersteunt Braillecodes in veel talen voor zowel verkort als onverkort Braille. Voor sommige talen wordt ook computerbraille ondersteund.
+NVDA ondersteunt Braillecodes in veel talen. Het betreft braillecodes voor verkort en onverkort Braille alsmede computerbraille.
 
 ++ Licentie en Copyright ++
 NVDA is auteursrechtelijk beschermd NVDA_COPYRIGHT_YEARS NVDA contributors.
@@ -581,6 +582,76 @@ U kunt bij voorbeeld  horizontaal door de stelling gaan met de linker en rechter
 Raadpleeg de documentatie bij MathPlayer  voor nadere informatie.
 
 Als u naar het document wilt teruggaan drukt u op Escape.
+
++ Braille +
+Als u over een brailleleesregel beschikt, kan NVDA informatie in braille weergeven.
+Als uw brailleleesregel een toetsenbord heeft van het type Perkins kunt u ook zowel verkort als onverkort braille invoeren.
+
+Raadpleegde paragraaf  [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor informatie over de ondersteunde brailleleesregels.
+U kunt braille configureren via het [dialoogvenster Brailleïnstellingen #BrailleSettings].
+
++ Brailleleesregelafkortingen met betrekking tot type besturingselement, gebruiksstatus en oriëntatiepunten +
+Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement, de gebruiksstatus alsmede oriëntatiepunten.
+
+|| Afkorting | Type besturingselement |
+| kn | knop |
+| vkl | vervolgkeuzelijst |
+| slv | selectievakje |
+| dlg | dialoog |
+| iv | invoerveld |
+| afb | afbeelding |
+| kN | tabelkolomnnummer (N), bijv. k1, k2. |
+| rN | tabelrijnummer (N), bijv. r1, r2. |
+| kN | kop op niveau (N), bijv. k1, k2. |
+| lnk | link |
+| li | lijst |
+| blnk | bezochte link |
+| mnu | menu |
+| mnubalk | menubalk |
+| kr | keuzerondje |
+| tb | tabel |
+| bst | boomstructuur |
+| nv N | Items in de boomstructuur zijn hirarchisch ingedeeld, bijv. Niveau 1, 2, 3, enz. |
+| ``-----`` | scheiding |
+
+Verder worden de volgende gebruiksstatusaanduidingen gebruikt:
+|| Afkorting | Gebruiksstatus |
+| ... | wordt weergegeven wanneer object autoaanvulling ondersteunt |
+| ( ) | wordt weergegeven wanneer een object zoals een selectievakje niet is aangevinkt |
+| (x) | wordt weergegeven wanneer een object zoals een selectievakje is aangevinkt |
+| (-) | wordt weergegeven wanneer een object zoals een selectievakje gedeeltelijk is aangevinkt |
+| - | wordt weergegeven wanneer een object zoals een boomstructuuritem kan worden samengevouwen |
+| + | wordt weergegeven wanneer een object zoals een boomstructuuritem kan worden uitgevouwen |
+| klb | wordt weergegeven wanneer een objectklikbaar is |
+| al | wordt weergegeven wanneer een object (bijv. een tekstinvoerveld ) het kenmerk "alleen lezen" heeft |
+| sel | wordt weergegeven wanneer object is geselecteerd |
+| submnu | wordt weergegeven wanneer een object kan worden uitgeschoven, meestal in de vorm van een sub-menu |
+
+Tot slot kunnen de volgende afkortingen gebruikt worden met betrekking tot oriëntatiepunten:
+|| Afkorting | Oriëntatiepunt |
+| bnnr | banner |
+| cinf | content info (inhoudsinfo) |
+| aanv | aanvullend |
+| formulier | form |
+| main | main |
+| navi | navigatie |
+| zoek | zoeken |
+| rgo | regio |
+
+++ Brailleinvoer ++
+NVDA ondersteunt de invoer van zowel onverkort als verkort braille via een brailletoetsenbord.
+U kunt een omzettabel selecteren waarmee u braille in tekst kunt laten omzetten met behulp van de [Invoertabelopties#BrailleInputTable] in het dialoogvenster Brailleinstellingen.
+
+Bij gebruik van onverkort braille wordt tekst ingevoegd zodra deze wordt ingevoerd.
+Bij gebruik van verkort braille wordt tekst ingevoegd wanneer u op de spatiebalk of de Enter-toets drukt aan het eind van een woord.
+Merk op dat bij de omzetting alleen het woord dat u typt kan worden weergegeven en dat al bestaande tekst niet kan worden getoond.
+Als u bijv. een braillecode gebruikt die getallen vooraf laat gaan door een nummerteken en u backspace indrukt om naar het einde van een getal te gaan, moet u het nummerteken opnieuw typen om weer getallen toe te voegen.
+
+%kc:beginInclude
+Door punt 7 in te toetsen, verwijdert u de laatst ingevoerde braillecel of het laatste brailleteken.
+Punt  8 zet alle brailleinvoer om  en activeert de Enter-toets.
+Door punt 7 + punt 8 in te drukken wordt alle brailleinvoer  omgezet, maar zonder de spatiebalk of Enter-toets te activeren.
+%kc:endInclude
 
 + Applicatie-specifieke kenmerken +
 NVDA beschikt over een aantal applicatie-specifieke kenmerken om het gebruik van deze applicaties te vergemakkelijken, of om toegang te geven tot functionaliteit die anders niet bruikbaar zou zijn voor screenreader gebruikers.
