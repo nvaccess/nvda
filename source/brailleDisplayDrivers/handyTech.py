@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited and NVDA contrributors
+#Copyright (C) 2008-2017 NV Access Limited, Bram Duvigneau, Leonard de Ruijter
 
 from collections import OrderedDict
 from cStringIO import StringIO
@@ -102,6 +102,8 @@ class Model(object):
 			0x1B: "b7",
 			0x1F: "b8",
 
+			0x10:"leftSpace",
+			0x18:"rightSpace",
 			# Modular/BS80 keypad
 			0x01: "b12",
 			0x09: "b13",
