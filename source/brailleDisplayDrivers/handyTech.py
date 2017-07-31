@@ -122,15 +122,7 @@ class Model(object):
 			0x16: "n7",
 			0x1A: "n8",
 			0x1E: "n9",
-
-			# Actilino
-			0x74: "joystickLeft",
-			0x75: "joystickRight",
-			0x76: "joystickUp",
-			0x77: "joystickDown",
-			0x78: "joystickAction",
 		})
-
 
 class TripleActionKeysMixin(object):
 	"""Triple action keys
@@ -149,6 +141,23 @@ class TripleActionKeysMixin(object):
 		})
 		return keys
 
+
+class JoystickMixin(object):
+	"""Joystick
+
+	Some Handy Tech models have a joystick, which can be moved left, right, up, down or clicked on the center.
+	"""
+
+	def get_keys(self):
+		keys = super(TripleActionKeysMixin, self).get_keys()
+		keys.update({
+			0x74: "joystickLeft",
+			0x75: "joystickRight",
+			0x76: "joystickUp",
+			0x77: "joystickDown",
+			0x78: "joystickAction",
+		})
+		return keys
 
 class ModularEvolution(TripleActionKeysMixin, Model):
 	pass
@@ -177,9 +186,9 @@ class ActiveBraille(TripleActionKeysMixin, Model):
 	name = "Active Braille"
 
 
-class Actilino(TripleActionKeysMixin, Model):
+class Actilino(JoystickMixin, TripleActionKeysMixin, Model):
 	device_id = MODEL_ACTILINO
-	num_cells = 20
+	num_cells = 16
 	name = "Actilino"
 
 
