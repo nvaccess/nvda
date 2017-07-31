@@ -518,6 +518,33 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
 			"braille_routeTo": ("br(handyTech):routing",),
+			"braille_scrollBack": (
+				"br(handytech):leftSpace", "br(handytech):leftTakTop", "br(handytech):rightTakTop", 
+				"br(handytech):b3",),
+			"braille_previousLine": ("br(handytech):b4",),
+			"braille_nextLine": ("br(handytech):b5",),
+			"braille_scrollForward": (
+				"br(handytech):rightSpace", "br(handytech):leftTakBottom", 
+				"br(handytech):rightTakBottom", "br(handytech):b6"),
+			"braille_toggleTether": ("br(handytech):b2",),
+			"kb:shift+tab": ("br(handytech):leftTakTop+leftTakBottom",),
+			"kb:tab": ("br(handytech):rightTakTop+rightTakBottom",),
+			"kb:enter": (
+				"br(handytech):leftTakTop+leftTakBottom+rightTakTop+rightTakBottom",
+				"br(handytech):b8",),
+			"kb:alt": ("br(handytech):b2+b4+b5",),
+			"kb:escape": ("br(handytech):b4+b6",),
+			"kb:1": ("br(handytech):n1",),
+			"kb:2": ("br(handytech):n2",),
+			"kb:3": ("br(handytech):n3",),
+			"kb:4": ("br(handytech):n4",),
+			"kb:5": ("br(handytech):n5",),
+			"kb:6": ("br(handytech):n6",),
+			"kb:7": ("br(handytech):n7",),
+			"kb:8": ("br(handytech):n8",),
+			"kb:9": ("br(handytech):n9",),
+			"kb:0": ("br(handytech):n0",),
+			"showGui": ("br(handytech):b2+b4+b5+b6",),
 		},
 	})
 
