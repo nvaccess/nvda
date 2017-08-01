@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1663,6 +1663,16 @@ class BrailleSettingsDialog(SettingsDialog):
 		wordWrapText = _("Avoid splitting &words when possible")
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+		focusContextPresentationLabelText = _("Focus context presentation:")
+		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
+		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
+		self.focusContextPresentationList = sHelper.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
+		try:
+			index=self.focusContextPresentationValues.index(config.conf["braille"]["focusContextPresentation"])
+		except:
+			index=0
+		self.focusContextPresentationList.SetSelection(index)
 
 	def postInit(self):
 		self.displayList.SetFocus()
@@ -1689,6 +1699,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 	def onDisplayNameChanged(self, evt):

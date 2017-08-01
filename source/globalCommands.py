@@ -1699,6 +1699,25 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
 	script_braille_toggleTether.category=SCRCAT_BRAILLE
 
+	def script_braille_toggleFocusContextPresentation(self, gesture):
+		values = [x[0] for x in braille.focusContextPresentations]
+		labels = [x[1] for x in braille.focusContextPresentations]
+		try:
+			index = values.index(config.conf["braille"]["focusContextPresentation"])
+		except:
+			index=0
+		newIndex = (index+1) % len(values)
+		config.conf["braille"]["focusContextPresentation"] = values[newIndex]
+		braille.invalidateCachedFocusAncestors(0)
+		braille.handler.handleGainFocus(api.getFocusObject())
+		# Translators: Reports the new state of braille focus context presentation.
+		# %s will be replaced with the context presentation setting.
+		# For example, the full message might be "Braille focus context presentation: fill display for context changes"
+		ui.message(_("Braille focus context presentation: %s")%labels[newIndex].lower())
+	# Translators: Input help mode message for toggle braille focus context presentation command.
+	script_braille_toggleFocusContextPresentation.__doc__ = _("Toggle the way context information is presented in braille")
+	script_braille_toggleFocusContextPresentation.category=SCRCAT_BRAILLE
+
 	def script_braille_toggleShowCursor(self, gesture):
 		if config.conf["braille"]["showCursor"]:
 			# Translators: The message announced when toggling the braille cursor.
