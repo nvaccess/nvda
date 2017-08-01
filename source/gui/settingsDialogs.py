@@ -1316,6 +1316,35 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 		super(DocumentFormattingDialog, self).onOk(evt)
 
+class UwpOcrDialog(SettingsDialog):
+	# Translators: The title of the Windows 10 OCR dialog.
+	title = _("Windows 10 OCR")
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Lazily import this.
+		from contentRecog import uwpOcr
+		self.languageCodes = uwpOcr.getLanguages()
+		languageChoices = [
+			languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
+			for lang in self.languageCodes]
+		# Translators: Label for an option in the Windows 10 OCR dialog.
+		languageLabel = _("Recognition &language:")
+		self.languageChoice = sHelper.addLabeledControl(languageLabel, wx.Choice, choices=languageChoices)
+		try:
+			langIndex = self.languageCodes.index(config.conf["uwpOcr"]["language"])
+			self.languageChoice.Selection = langIndex
+		except ValueError:
+			self.languageChoice.Selection = 0
+
+	def postInit(self):
+		self.languageChoice.SetFocus()
+
+	def onOk(self, evt):
+		lang = self.languageCodes[self.languageChoice.Selection]
+		config.conf["uwpOcr"]["language"] = lang
+		super(UwpOcrDialog, self).onOk(evt)
+
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.

@@ -20,6 +20,7 @@ import speech
 import speechXml
 import languageHandler
 import winVersion
+import NVDAHelper
 
 SAMPLES_PER_SEC = 22050
 BITS_PER_SAMPLE = 16
@@ -28,19 +29,6 @@ BYTES_PER_SEC = SAMPLES_PER_SEC * (BITS_PER_SAMPLE / 8)
 HUNDRED_NS_PER_SEC = 10000000 # 1000000000 ns per sec / 100 ns
 WAV_HEADER_LEN = 44
 ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
-DLL_FILE = ur"lib\nvdaHelperLocalWin10.dll"
-
-def bstrReturn(address):
-	"""Handle a BSTR returned from a ctypes function call.
-	This includes freeing the memory.
-	"""
-	# comtypes.BSTR.from_address seems to cause a crash for some reason. Not sure why.
-	# Just access the string ourselves.
-	# This will terminate at a null character, even though BSTR allows nulls.
-	# We're only using this for normal, null-terminated strings anyway.
-	val = ctypes.wstring_at(address)
-	ctypes.windll.oleaut32.SysFreeString(address)
-	return val
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
 
@@ -118,12 +106,12 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		super(SynthDriver, self).__init__()
-		self._dll = ctypes.windll[DLL_FILE]
+		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		self._handle = self._dll.ocSpeech_initialize()
 		self._callbackInst = ocSpeech_Callback(self._callback)
 		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
-		self._dll.ocSpeech_getVoices.restype = bstrReturn
+		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player = nvwave.WavePlayer(1, SAMPLES_PER_SEC, BITS_PER_SAMPLE, outputDevice=config.conf["speech"]["outputDevice"])
 		# Initialize state.

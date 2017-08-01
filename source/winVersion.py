@@ -1,10 +1,11 @@
 #winVersion.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import sys
+import os
 import winUser
 
 winVersion=sys.getwindowsversion()
@@ -29,3 +30,7 @@ def canRunVc2010Builds():
 			# so all versions should be fine.)
 			return winVersion.service_pack_major >= 1
 	return True
+
+UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
+def isUwpOcrAvailable():
+	return os.path.isdir(UWP_OCR_DATA_PATH)

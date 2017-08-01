@@ -652,6 +652,31 @@ Dot 8 translates any braille input and presses the enter key.
 Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
 %kc:endInclude
 
++ Content Recognition +
+When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
+NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images.
+Additional content recognizers can be provided in NVDA add-ons.
+
+When you use a content recognition command, NVDA recognizes content from the current [navigator object #ObjectNavigation].
+By default, the navigator object follows the system focus or browse mode cursor, so you can usually just move the focus or browse mode cursor where desired.
+For example, if you move the browse mode cursor to a graphic, recognition will recognize content from the graphic by default.
+However, you may wish to use object navigation directly to, for example, recognize the content of an entire application window.
+
+Once recognition is complete, the result will be presented in a document similar to browse mode, allowing you to read the information with cursor keys, etc.
+Pressing enter or space will activate (normally click) the text at the cursor if possible.
+Pressing escape dismisses the recognition result.
+
+++ Windows 10 OCR ++[Win10Ocr]
+Windows 10 includes OCR for many languages.
+NVDA can use this to recognize text from images or inaccessible applications.
+
+You can set the language to use for text recognition in the [Windows 10 OCR #Win10OcrSettings] settings dialog.
+Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
+
+%kc:beginInclude
+To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.
+%kc:endInclude
+
 + Application Specific Features +
 NVDA provides its own extra features  for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
@@ -1384,6 +1409,12 @@ The Report line indentation with combo box has four options.
 The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
 - Both Speech and Tones: This option reads indentation using both of the above methods.
 -
+
++++ Windows 10 OCR Settings +++[Win10OcrSettings]
+This dialog can be accessed from the NVDA Preferences menu and allows you to configure [Windows 10 OCR #Win10Ocr].
+
+==== Recognition language ====
+This combo box allows you to choose the language to be used for text recognition.
 
 +++ Speech dictionaries +++
 The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases.

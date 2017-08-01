@@ -40,6 +40,7 @@ import virtualBuffers
 import characterProcessing
 from baseObject import ScriptableObject
 import core
+import winVersion
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -2023,6 +2024,17 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes a command.
 	script_interactWithMath.__doc__ = _("Begins interaction with math content")
 
+	def script_recognizeWithUwpOcr(self, gesture):
+		if not winVersion.isUwpOcrAvailable():
+			# Translators: Reported when Windows 10 OCR is not available.
+			ui.message(_("Windows 10 OCR not available"))
+			return
+		from contentRecog import uwpOcr, recogUi
+		recog = uwpOcr.UwpOcr()
+		recogUi.recognizeNavigatorObject(recog)
+	# Translators: Describes a command.
+	script_recognizeWithUwpOcr.__doc__ = _("Recognize the content of the current navigator object with Windows 10 OCR")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -2205,6 +2217,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 		"kb:NVDA+alt+m": "interactWithMath",
+		"kb:NVDA+r": "recognizeWithUwpOcr",
 	}
 
 #: The single global commands instance.

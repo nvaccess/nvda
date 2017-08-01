@@ -774,7 +774,8 @@ the NVDAObject for IAccessible
 		if role==0:
 			try:
 				role=self.IAccessibleObject.accRole(self.IAccessibleChildID)
-			except COMError:
+			except COMError as e:
+				log.debugWarning("accRole failed: %s" % e)
 				role=0
 		return role
 
