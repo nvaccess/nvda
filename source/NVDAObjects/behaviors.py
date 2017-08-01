@@ -603,9 +603,6 @@ class FocusableUnfocusableContainer(NVDAObject):
 	isFocusable = True
 
 	def setFocus(self):
-		# provide a way for  sub or super classes to disable this focusable descendant behaviour if necessary.
-		if not getattr(self,'_alwaysFocusFirstfocusableDescendant',True) and super(FocusableUnfocusableContainer,self).isFocusable: 
-			return super(FocusableUnfocusableContainer,self).setFocus()
 		for obj in self.recursiveDescendants:
 			if obj.isFocusable:
 				obj.setFocus()
@@ -663,3 +660,14 @@ class EditableTextWithSuggestions(NVDAObject):
 		"""
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
 			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
+
+class WebDialog(NVDAObject):
+	"""
+	A dialog that will use a treeInterceptor if its parent currently does.
+	This  can be used to ensure that dialogs on the web get browseMode by default, unless inside an ARIA application
+	"""
+
+	def _get_shouldCreateTreeInterceptor(self):
+		if self.parent.treeInterceptor:
+			return True
+		return False
