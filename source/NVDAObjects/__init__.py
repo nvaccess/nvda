@@ -804,7 +804,7 @@ Tries to force this object to take the focus.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
 		@rtype: bool
 		"""
-		if self.presentationType == self.presType_layout:
+		if self.presentationType in (self.presType_layout, self.presType_unavailable):
 			return False
 		if self.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
 			return False
