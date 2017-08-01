@@ -563,19 +563,9 @@ class TextInfoRegion(Region):
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
-	def _getCursor(self):
-		"""Retrieve the collapsed cursor.
-		This should be the start or end of the selection returned by L{_getSelection}.
-		@return: The cursor.
-		"""
-		try:
-			return self.obj.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
-
 	def _getSelection(self):
 		"""Retrieve the selection.
-		The start or end of this should be the cursor returned by L{_getCursor}.
+		If there is no selection, retrieve the collapsed cursor.
 		@return: The selection.
 		@rtype: L{textInfos.TextInfo}
 		"""
@@ -701,19 +691,6 @@ class TextInfoRegion(Region):
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
 		unit = self._getReadingUnit()
-		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
-		# so use the original cursor TextInfo for line and copy for cursor.
-		self._readingInfo = readingInfo = self._getCursor()
-		cursor = readingInfo.copy()
-		# Get the reading unit at the cursor.
-		readingInfo.expand(unit)
-		# Get the selection.
-		sel = self._getSelection()
-		# Restrict the selection to the reading unit at the cursor.
-		if sel.compareEndPoints(readingInfo, "startToStart") < 0:
-			sel.setEndPoint(readingInfo, "startToStart")
-		if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
-			sel.setEndPoint(readingInfo, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
 		self.cursorPos = None
@@ -724,8 +701,33 @@ class TextInfoRegion(Region):
 		self.selectionStart = self.selectionEnd = None
 		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-
 		self._endsWithField = False
+
+		# Selection has priority over cursor.
+		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
+		# and copying the TextInfo breaks this ability.
+		# So use the original TextInfo for line and a copy for cursor/selection.
+		self._readingInfo = readingInfo = self._getSelection()
+		sel = readingInfo.copy()
+		if not sel.isCollapsed:
+			# There is a selection.
+			if self.obj.isTextSelectionAnchoredAtStart:
+				# The end of the range is exclusive, so make it inclusive first.
+				readingInfo.move(textInfos.UNIT_CHARACTER, -1, "end")
+			# Collapse the selection to the unanchored end.
+			readingInfo.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
+			# Get the reading unit at the selection.
+			readingInfo.expand(unit)
+			# Restrict the selection to the reading unit.
+			if sel.compareEndPoints(readingInfo, "startToStart") < 0:
+				sel.setEndPoint(readingInfo, "startToStart")
+			if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
+				sel.setEndPoint(readingInfo, "endToEnd")
+		else:
+			# There is a cursor.
+			# Get the reading unit at the cursor.
+			readingInfo.expand(unit)
+
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
@@ -750,6 +752,7 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
+
 		# Strip line ending characters.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f")
 		rawTextLen = len(self.rawText)
@@ -770,9 +773,10 @@ class TextInfoRegion(Region):
 			self._rawToContentPos.append(self._currentContentPos)
 		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
 			self.cursorPos = rawTextLen - 1
+		# The selection end doesn't have to be checked, Region.update() makes sure brailleSelectionEnd is valid.
 
 		# If this is not the start of the object, hide all previous regions.
-		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		start = readingInfo.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
@@ -811,7 +815,7 @@ class TextInfoRegion(Region):
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
-				self._getCursor().activate()
+				self._getSelection().activate()
 			except NotImplementedError:
 				pass
 			return
@@ -879,10 +883,8 @@ class ReviewTextInfoRegion(TextInfoRegion):
 
 	allowPageTurns=False
 
-	def _getCursor(self):
+	def _getSelection(self):
 		return api.getReviewPosition().copy()
-
-	_getSelection = _getCursor
 
 	def _setCursor(self, info):
 		api.setReviewPosition(info)
@@ -1457,10 +1459,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
@@ -1492,14 +1491,22 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
+
+	def scrollToCursorOrSelection(self, region):
+		if region.brailleCursorPos is not None:
+			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif not isinstance(region, TextInfoRegion) or not region.obj.isTextSelectionAnchoredAtStart:
+			# It is unknown where the selection is anchored, or it is anchored at the end.
+			if region.brailleSelectionStart is not None:
+				self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		elif region.brailleSelectionEnd is not None:
+			# The selection is anchored at the start.
+			self.mainBuffer.scrollTo(region, region.brailleSelectionEnd - 1)
 
 	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
 	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
