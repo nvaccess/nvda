@@ -725,7 +725,7 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 	except (NotImplementedError, LookupError):
 		return
 
-def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
+def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False,onlyCache=False):
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -851,10 +851,11 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		lastLanguage=language
 
 	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
-		if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
-			speak(speechSequence)
-		if not onlyInitialFields: 
-			speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
+		if not onlyCache:
+			if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
+				speak(speechSequence)
+			if not onlyInitialFields: 
+				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
@@ -963,7 +964,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if not isinstance(useCache,SpeakTextInfoState):
 			speakTextInfoState.updateObj()
 
-	if speechSequence:
+	if not onlyCache and speechSequence:
 		if reason==controlTypes.REASON_SAYALL:
 			speakWithoutPauses(speechSequence)
 		else:
