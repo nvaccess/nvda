@@ -987,7 +987,6 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		textList = []
-		role=attrs.get('role')
 		landmark = attrs.get("landmark")
 		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
 			try:
