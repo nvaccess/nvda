@@ -725,7 +725,8 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 	except (NotImplementedError, LookupError):
 		return
 
-def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False,onlyCache=False):
+def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
+	onlyCache=reason==controlTypes.REASON_ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:

@@ -1284,6 +1284,10 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	def event_focusEntered(self,obj,nextHandler):
 		if obj==self.rootNVDAObject:
 			self._enteringFromOutside = True
+		# Even if passThrough is enabled, we still completely drop focusEntered events here. 
+		# In order to get them back when passThrough is enabled, we replay them with the _replayFocusEnteredEvents method in event_gainFocus.
+		# The reason for this is to ensure that focusEntered events are delayed until a focus event has had a chance to disable passthrough mode.
+		# As in this case we would  not want them.
 
 	def _shouldIgnoreFocus(self, obj):
 		"""Determines whether focus on a given object should be ignored.
@@ -1366,7 +1370,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 				# Although we are going to speak the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
 				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
 				# See #7435 for a discussion on this.
-				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_FOCUS,onlyCache=True)
+				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_ONLYCACHE)
 				self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
