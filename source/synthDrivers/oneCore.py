@@ -173,6 +173,7 @@ class SynthDriver(SynthDriver):
 			# which will eventually process the queue again.
 			self._dll.ocSpeech_speak(self._handle, item)
 			return
+		self._player.idle()
 		log.debug("Queue empty, done processing")
 		self._isProcessing = False
 
