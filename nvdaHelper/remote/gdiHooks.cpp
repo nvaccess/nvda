@@ -499,7 +499,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.italic=logFont.lfItalic?true:false;
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
-		if (prevColor != CLR_INVALID && GetBkMode(hdc) == TRANSPARENT) {
+		if (prevColor != CLR_INVALID) {
 			formatInfo.backgroundColor=prevColor;
 		} else {
 			formatInfo.backgroundColor=GetBkColor(hdc);
