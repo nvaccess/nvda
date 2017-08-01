@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager
 
 import sys
 import itertools
@@ -28,73 +28,181 @@ import brailleTables
 from collections import namedtuple
 
 roleLabels = {
-	# Translators: Displayed in braille for an object which is an
-	# editable text field.
-	controlTypes.ROLE_EDITABLETEXT: _("edt"),
 	# Translators: Displayed in braille for an object which is a
-	# list.
-	controlTypes.ROLE_LIST: _("lst"),
+	# window.
+	controlTypes.ROLE_WINDOW: _("wnd"),
 	# Translators: Displayed in braille for an object which is a
-	# menu bar.
-	controlTypes.ROLE_MENUBAR: _("mnubar"),
-	# Translators: Displayed in braille for an object which is a
-	# menu.
-	controlTypes.ROLE_POPUPMENU: _("mnu"),
-	# Translators: Displayed in braille for an object which is a
-	# button.
-	controlTypes.ROLE_BUTTON: _("btn"),
+	# dialog.
+	controlTypes.ROLE_DIALOG: _("dlg"),
 	# Translators: Displayed in braille for an object which is a
 	# check box.
 	controlTypes.ROLE_CHECKBOX: _("chk"),
 	# Translators: Displayed in braille for an object which is a
 	# radio button.
 	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
+	# Translators: Displayed in braille for an object which is an
+	# editable text field.
+	controlTypes.ROLE_EDITABLETEXT: _("edt"),
+	# Translators: Displayed in braille for an object which is a
+	# button.
+	controlTypes.ROLE_BUTTON: _("btn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu bar.
+	controlTypes.ROLE_MENUBAR: _("mnubar"),
+	# Translators: Displayed in braille for an object which is a
+	# menu item.
+	controlTypes.ROLE_MENUITEM: _("mnuitem"),
+	# Translators: Displayed in braille for an object which is a
+	# menu.
+	controlTypes.ROLE_POPUPMENU: _("mnu"),
 	# Translators: Displayed in braille for an object which is a
 	# combo box.
 	controlTypes.ROLE_COMBOBOX: _("cbo"),
 	# Translators: Displayed in braille for an object which is a
+	# list.
+	controlTypes.ROLE_LIST: _("lst"),
+	# Translators: Displayed in braille for an object which is a
+	# graphic.
+	controlTypes.ROLE_GRAPHIC: _("gra"),
+	# Translators: Displayed in braille for an object which is a
+	# help balloon.
+	controlTypes.ROLE_HELPBALLOON: _("hlp"),
+	# Translators: Displayed in braille for an object which is a
+	# tool tip.
+	controlTypes.ROLE_TOOLTIP: _("tltip"),
+	# Translators: Displayed in braille for an object which is a
 	# link.
 	controlTypes.ROLE_LINK: _("lnk"),
-	# Translators: Displayed in braille for an object which is a
-	# dialog.
-	controlTypes.ROLE_DIALOG: _("dlg"),
 	# Translators: Displayed in braille for an object which is a
 	# tree view.
 	controlTypes.ROLE_TREEVIEW: _("tv"),
 	# Translators: Displayed in braille for an object which is a
+	# tree view item.
+	controlTypes.ROLE_TREEVIEWITEM: _("tvitem"),
+	# Translators: Displayed in braille for an object which is a
+	# tab control.
+	controlTypes.ROLE_TABCONTROL: _("tabctl"),
+	# Translators: Displayed in braille for an object which is a
+	# progress bar.
+	controlTypes.ROLE_PROGRESSBAR: _("prgbar"),
+	# Translators: Displayed in braille for an object which is a
+	# scroll bar.
+	controlTypes.ROLE_SCROLLBAR: _("scrlbar"),
+	# Translators: Displayed in braille for an object which is a
+	# status bar.
+	controlTypes.ROLE_STATUSBAR: _("stbar"),
+	# Translators: Displayed in braille for an object which is a
 	# table.
-	controlTypes.ROLE_TABLE: _("tb"),
+	controlTypes.ROLE_TABLE: _("tbl"),
 	# Translators: Displayed in braille for an object which is a
+	# tool bar.
+	controlTypes.ROLE_TOOLBAR: _("tlbar"),
+	# Translators: Displayed in braille for an object which is a
+	# drop down button.
+	controlTypes.ROLE_DROPDOWNBUTTON: _("drbtn"),
+	# Displayed in braille for an object which is a
 	# separator.
-	controlTypes.ROLE_SEPARATOR: _("-----"),
+	controlTypes.ROLE_SEPARATOR: u"⠤⠤⠤⠤⠤",
 	# Translators: Displayed in braille for an object which is a
-	# graphic.
-	controlTypes.ROLE_GRAPHIC: _("gra"),
+	# block quote.
+	controlTypes.ROLE_BLOCKQUOTE: _("bqt"),
+	# Translators: Displayed in braille for an object which is a
+	# document.
+	controlTypes.ROLE_DOCUMENT: _("doc"),
+	# Translators: Displayed in braille for an object which is a
+	# application.
+	controlTypes.ROLE_APPLICATION: _("app"),
+	# Translators: Displayed in braille for an object which is a
+	# grouping.
+	controlTypes.ROLE_GROUPING: _("grp"),
+	# Translators: Displayed in braille for an object which is a
+	# embedded object.
+	controlTypes.ROLE_EMBEDDEDOBJECT: _("embedded"),
+	# Translators: Displayed in braille for an object which is a
+	# end note.
+	controlTypes.ROLE_ENDNOTE: _("enote"),
+	# Translators: Displayed in braille for an object which is a
+	# foot note.
+	controlTypes.ROLE_FOOTNOTE: _("fnote"),
+	# Translators: Displayed in braille for an object which is a
+	# terminal.
+	controlTypes.ROLE_TERMINAL: _("term"),
+	# Translators: Displayed in braille for an object which is a
+	# section.
+	controlTypes.ROLE_SECTION: _("sect"),
+	# Translators: Displayed in braille for an object which is a
+	# toggle button.
+	controlTypes.ROLE_TOGGLEBUTTON: _("tgbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# split button.
+	controlTypes.ROLE_SPLITBUTTON: _("splbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu button.
+	controlTypes.ROLE_MENUBUTTON: _("mnubtn"),
+	# Translators: Displayed in braille for an object which is a
+	# spin button.
+	controlTypes.ROLE_SPINBUTTON: _("spnbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# tree view button.
+	controlTypes.ROLE_TREEVIEWBUTTON: _("tvbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu.
+	controlTypes.ROLE_MENU: _("mnu"),
+	# Translators: Displayed in braille for an object which is a
+	# panel.
+	controlTypes.ROLE_PANEL: _("pnl"),
+	# Translators: Displayed in braille for an object which is a
+	# password edit.
+	controlTypes.ROLE_PASSWORDEDIT: _("pwdedt"),
 }
 
 positiveStateLabels = {
-	# Translators: Displayed in braille when an object (e.g. a check box) is checked.
-	controlTypes.STATE_CHECKED: _("(x)"),
-	# Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-	controlTypes.STATE_HALFCHECKED: _("(-)"),
 	# Translators: Displayed in braille when an object is selected.
 	controlTypes.STATE_SELECTED: _("sel"),
-	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-	controlTypes.STATE_HASPOPUP: _("submnu"),
-	# Translators: Displayed in braille when an object supports autocompletion.
-	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Displayed in braille when an object (e.g. a toggle button) is pressed.
+	controlTypes.STATE_PRESSED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a check box) is checked.
+	controlTypes.STATE_CHECKED: u"⣏⣿⣹",
+	# Displayed in braille when an object (e.g. a check box) is half checked.
+	controlTypes.STATE_HALFCHECKED: u"⣏⣸⣹",
+	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+	controlTypes.STATE_READONLY: _("ro"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 	controlTypes.STATE_EXPANDED: _("-"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
 	controlTypes.STATE_COLLAPSED: _("+"),
-	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-	controlTypes.STATE_READONLY: _("ro"),
+	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+	controlTypes.STATE_HASPOPUP: _("submnu"),
+	# Translators: Displayed in braille when a protected control or a document is encountered.
+	controlTypes.STATE_PROTECTED: _("***"),
+	# Translators: Displayed in braille when a required form field is encountered.
+	controlTypes.STATE_REQUIRED: _("req"),
+	# Translators: Displayed in braille when an invalid entry has been made.
+	controlTypes.STATE_INVALID_ENTRY: _("invalid"),
+	# Translators: Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+	controlTypes.STATE_MULTILINE: _("mln"),
 	# Translators: Displayed in braille when an object is clickable.
 	controlTypes.STATE_CLICKABLE: _("clk"),
+	# Translators: Displayed in braille when an object is sorted ascending.
+	controlTypes.STATE_SORTED_ASCENDING: _("sorted asc"),
+	# Translators: Displayed in braille when an object is sorted descending.
+	controlTypes.STATE_SORTED_DESCENDING: _("sorted desc"),
+	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
+	controlTypes.STATE_HASLONGDESC: _("ldesc"),
+	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+	controlTypes.STATE_HASFORMULA: _("frml"),
+	# Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+	controlTypes.STATE_HASCOMMENT: _("cmnt"),
 }
 negativeStateLabels = {
-	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-	controlTypes.STATE_CHECKED: _("( )"),
+	# Translators: Displayed in braille when an object is not selected.
+	controlTypes.STATE_SELECTED: _("nsel"),
+	# Displayed in braille when an object (e.g. a toggle button) is not pressed.
+	controlTypes.STATE_PRESSED: u"⢎⣀⡱",
+	# Displayed in braille when an object (e.g. a check box) is not checked.
+	controlTypes.STATE_CHECKED: u"⣏⣀⣹",
 }
 
 landmarkLabels = {
@@ -1731,10 +1839,10 @@ def terminate():
 class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	"""Abstract base braille display driver.
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
-	
+
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
-	
+
 	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
 	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
 	These gestures can be mapped in L{gestureMap}.

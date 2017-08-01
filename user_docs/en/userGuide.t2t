@@ -592,38 +592,77 @@ You can configure braille using the [Braille Settings dialog #BrailleSettings].
 In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
 
 || Abbreviation | Control type |
+| app | application |
+| bqt | block quote |
 | btn | button |
+| drbtn | drop down button |
+| spnbtn | spin button |
+| splbtn | split button |
+| tgbtn | toggle button |
 | cbo | combo box |
 | chk | checkbox |
 | dlg | dialog |
+| doc | document |
 | edt | editable text field |
+| pwdedt | password edit |
+| embedded | embedded object |
+| enote | end note |
+| fnote | foot note |
 | gra | graphic |
-| cN | table column number n, e.g. c1, c2. |
-| rN | table row number n, e.g. r1, r2. |
+| grp | grouping |
 | hN | heading at level n, e.g. h1, h2. |
+| hlp | help baloon |
+| lmk | landmark |
 | lnk | link |
 | vlnk | visited link |
 | lst | list |
-| lmk | landmark |
 | mnu | menu |
 | mnubar | menu bar |
+| mnubtn | menu button |
+| mnuitem | menu item |
+| pnl | panel |
+| prgbar | progress bar |
 | rbtn | radio button |
-| tb | table |
-| tv | treeview |
+| scrlbar | scroll bar |
+| sect | section |
+| stbar | status bar |
+| tabctl | tab control |
+| tbl | table |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| term | terminal |
+| tlbar | tool bar |
+| tltip | tool tip |
+| tv | tree view |
+| tvbtn | tree view button |
+| tvitem | tree view item |
 | lv N | a tree view item has a hierarchical level N|
-| ``-----`` | separator |
+| wnd | window |
+| ⠤⠤⠤⠤⠤ | separator |
 
 The following state indicators are also defined:
 || Abbreviation | Control state |
 | ... | displayed when an object supports autocompletion |
-| ( ) | displayed when an object (e.g. a checkbox) is not checked |
-| (x) | displayed when an object (e.g. a checkbox) is checked |
-| (-) | displayed when an object (e.g. a checkbox) is half checked |
+| ⢎⣿⡱ | displayed when an object (e.g. a toggle button) is pressed |
+| ⢎⣀⡱ | displayed when an object (e.g. a toggle button) is not pressed |
+| ⣏⣿⣹ | displayed when an object (e.g. a checkbox) is checked |
+| ⣏⣸⣹ | displayed when an object (e.g. a checkbox) is half checked |
+| ⣏⣀⣹ | displayed when an object (e.g. a checkbox) is not checked |
 | - | displayed when an object (e.g. a tree view item) is collapsible |
 | + | displayed when an object (e.g. a tree view item) is Expandable |
+| *** | displayed when a protected control or document is encountered |
 | clk | displayed when an object is clickable |
+| cmnt | displayed when there is a comment for a spreadsheet cell or piece of text in a document |
+| frml | displayed when there is a formula on a spreadsheet cell |
+| invalid | displayed when an invalid entry has been made |
+| ldesc | displayed when an object (usually a graphic) has a long description |
+| mln | displayed when an edit field allows typing multiple lines of text such as comment fields on websites |
+| req | displayed when a required form field is encountered |
 | ro | displayed when an object (e.g. an editable text field) is read-only |
 | sel | displayed when an object is selected |
+| nsel | displayed when an object is not selected |
+| sorted asc | displayed when an object is sorted ascending |
+| sorted desc | displayed when an object is sorted descending |
 | submnu | displayed when an object has a popup (usually a sub-menu) |
 
 Finally, the following abbreviations for landmarks are defined:
