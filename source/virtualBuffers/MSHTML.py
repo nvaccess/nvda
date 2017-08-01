@@ -164,8 +164,8 @@ class MSHTML(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
 		# As virtualBuffers must be created at all times for MSHTML to support live regions,
-		# Force focus mode for anything other than a document (e.g. dialog, application)
-		if rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT:
+		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)  
+		if rootNVDAObject.role==controlTypes.ROLE_APPLICATION or (rootNVDAObject.role==controlTypes.ROLE_DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
 			self.disableAutoPassThrough=True
 			self.passThrough=True
 
