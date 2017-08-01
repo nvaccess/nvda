@@ -60,7 +60,6 @@ badUIAWindowClassNames=[
 	"RICHEDIT50W",
 	"SysListView32",
 	"_WwG",
-	'_WwN',
 	"EXCEL7",
 	"Button",
 ]

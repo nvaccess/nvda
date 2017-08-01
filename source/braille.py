@@ -25,6 +25,7 @@ import textInfos
 import brailleDisplayDrivers
 import inputCore
 import brailleTables
+from collections import namedtuple
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -243,14 +244,41 @@ INPUT_END_IND = u" ⣹"
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
 
+#: Identifier for a focus context presentation setting that
+#: only shows as much as possible focus context information when the context has changed.
+CONTEXTPRES_CHANGEDCONTEXT = "changedContext"
+#: Identifier for a focus context presentation setting that
+#: shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+CONTEXTPRES_FILL = "fill"
+#: Identifier for a focus context presentation setting that
+#: always shows the object with focus at the very left of the braille display.
+CONTEXTPRES_SCROLL = "scroll"
+#: Focus context presentations associated with their user readable and translatable labels
+focusContextPresentations=[
+	# Translators: The label for a braille focus context presentation setting that
+	# only shows as much as possible focus context information when the context has changed.
+	(CONTEXTPRES_CHANGEDCONTEXT, _("Fill display for context changes")),
+	# Translators: The label for a braille focus context presentation setting that
+	# shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+	# This was the pre NVDA 2017.3 default.
+	(CONTEXTPRES_FILL, _("Always fill display")),
+	# Translators: The label for a braille focus context presentation setting that
+	# always shows the object with focus at the very left of the braille display
+	# (i.e. you will have to scroll back for focus context information).
+	(CONTEXTPRES_SCROLL, _("Only when scrolling back")),
+]
+
+#: Named tuple for a region with start and end positions in a buffer
+RegionWithPositions = namedtuple("RegionWithPositions",("region","start","end"))
+
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
-	role = obj.role
-	states = obj.states
-	return (issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo)
-		or role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL)
-		or controlTypes.STATE_EDITABLE in states
-		or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY not in obj.states))
+	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
+		# #1711: Flat review (using displayModel) should always be presented on the braille display
+		return True
+	else:
+		# Let the NVDAObject choose if the text should be presented
+		return obj._hasNavigableText
 
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
@@ -671,19 +699,9 @@ class TextInfoRegion(Region):
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
-	def _getCursor(self):
-		"""Retrieve the collapsed cursor.
-		This should be the start or end of the selection returned by L{_getSelection}.
-		@return: The cursor.
-		"""
-		try:
-			return self.obj.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
-
 	def _getSelection(self):
 		"""Retrieve the selection.
-		The start or end of this should be the cursor returned by L{_getCursor}.
+		If there is no selection, retrieve the collapsed cursor.
 		@return: The selection.
 		@rtype: L{textInfos.TextInfo}
 		"""
@@ -809,19 +827,6 @@ class TextInfoRegion(Region):
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
 		unit = self._getReadingUnit()
-		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
-		# so use the original cursor TextInfo for line and copy for cursor.
-		self._readingInfo = readingInfo = self._getCursor()
-		cursor = readingInfo.copy()
-		# Get the reading unit at the cursor.
-		readingInfo.expand(unit)
-		# Get the selection.
-		sel = self._getSelection()
-		# Restrict the selection to the reading unit at the cursor.
-		if sel.compareEndPoints(readingInfo, "startToStart") < 0:
-			sel.setEndPoint(readingInfo, "startToStart")
-		if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
-			sel.setEndPoint(readingInfo, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
 		self.cursorPos = None
@@ -832,8 +837,33 @@ class TextInfoRegion(Region):
 		self.selectionStart = self.selectionEnd = None
 		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-
 		self._endsWithField = False
+
+		# Selection has priority over cursor.
+		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
+		# and copying the TextInfo breaks this ability.
+		# So use the original TextInfo for line and a copy for cursor/selection.
+		self._readingInfo = readingInfo = self._getSelection()
+		sel = readingInfo.copy()
+		if not sel.isCollapsed:
+			# There is a selection.
+			if self.obj.isTextSelectionAnchoredAtStart:
+				# The end of the range is exclusive, so make it inclusive first.
+				readingInfo.move(textInfos.UNIT_CHARACTER, -1, "end")
+			# Collapse the selection to the unanchored end.
+			readingInfo.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
+			# Get the reading unit at the selection.
+			readingInfo.expand(unit)
+			# Restrict the selection to the reading unit.
+			if sel.compareEndPoints(readingInfo, "startToStart") < 0:
+				sel.setEndPoint(readingInfo, "startToStart")
+			if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
+				sel.setEndPoint(readingInfo, "endToEnd")
+		else:
+			# There is a cursor.
+			# Get the reading unit at the cursor.
+			readingInfo.expand(unit)
+
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
@@ -858,6 +888,7 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
+
 		# Strip line ending characters.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f")
 		rawTextLen = len(self.rawText)
@@ -878,12 +909,17 @@ class TextInfoRegion(Region):
 			self._rawToContentPos.append(self._currentContentPos)
 		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
 			self.cursorPos = rawTextLen - 1
+		# The selection end doesn't have to be checked, Region.update() makes sure brailleSelectionEnd is valid.
 
 		# If this is not the start of the object, hide all previous regions.
-		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		start = readingInfo.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
-		# If this is a multiline control, position it at the absolute left of the display when focused.
-		self.focusToHardLeft = self._isMultiline()
+		# Don't touch focusToHardLeft if it is already true
+		# For example, it can be set to True in getFocusContextRegions when this region represents the first new focus ancestor
+		# Alternatively, BrailleHandler._doNewObject can set this to True when this region represents the focus object and the focus ancestry didn't change
+		if not self.focusToHardLeft:
+			# If this is a multiline control, position it at the absolute left of the display when focused.
+			self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
 		if rawInputIndStart is not None:
@@ -919,7 +955,7 @@ class TextInfoRegion(Region):
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
-				self._getCursor().activate()
+				self._getSelection().activate()
 			except NotImplementedError:
 				pass
 			return
@@ -987,10 +1023,8 @@ class ReviewTextInfoRegion(TextInfoRegion):
 
 	allowPageTurns=False
 
-	def _getCursor(self):
+	def _getSelection(self):
 		return api.getReviewPosition().copy()
-
-	_getSelection = _getCursor
 
 	def _setCursor(self, info):
 		api.setReviewPosition(info)
@@ -1041,7 +1075,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		start = 0
 		for region in self.visibleRegions:
 			end = start + len(region.brailleCells)
-			yield region, start, end
+			yield RegionWithPositions(region, start, end)
 			start = end
 
 	def bufferPosToRegionPos(self, bufferPos):
@@ -1088,12 +1122,27 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return endPos
 
 	def _set_windowEndPos(self, endPos):
+		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
+		1. Braille display size.
+		2. Whether one of the regions should be shown hard left on the braille display;
+			i.e. because of The configuration setting for focus context representation 
+			or whether the braille region that corresponds with the focus represents a multi line edit box.
+		3. Whether word wrap is enabled."""
 		startPos = endPos - self.handler.displaySize
-		# Get the last region currently displayed.
-		region, regionPos = self.bufferPosToRegionPos(endPos - 1)
-		if region.focusToHardLeft:
-			# Only scroll to the start of this region.
-			restrictPos = endPos - regionPos - 1
+		# Loop through the currently displayed regions in reverse order
+		# If focusToHardLeft is set for one of the regions, the display shouldn't scroll further back than the start of that region
+		for region, regionStart, regionEnd in reversed(list(self.regionsWithPositions)):
+			if regionStart<=endPos:
+				if region.focusToHardLeft:
+					# Only scroll to the start of this region.
+					restrictPos = regionStart
+					break
+				elif config.conf["braille"]["focusContextPresentation"]!=CONTEXTPRES_CHANGEDCONTEXT:
+					# We aren't currently dealing with context change presentation
+					# thus, we only need to consider the last region
+					# since it doesn't have focusToHardLeftSet, the window start position isn't restricted
+					restrictPos = 0
+					break
 		else:
 			restrictPos = 0
 		if startPos <= restrictPos:
@@ -1166,7 +1215,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft:
+		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_SCROLL:
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
@@ -1283,16 +1332,28 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			newAncestorsStart = 1
 		# Yield the common regions.
 		for region in oldFocusRegions[0:commonRegionsEnd]:
+			# We are setting focusToHardLeft to False for every cached region.
+			# This is necessary as BrailleHandler._doNewObject checks focusToHardLeft on every region
+			# and sets it to True for the first focus region if the context didn't change.
+			# If we don't do this, BrailleHandler._doNewObject can't set focusToHardLeft properly.
+			region.focusToHardLeft = False
 			yield region
 	else:
 		# Fetch all ancestors.
 		newAncestorsStart = 1
 
+	focusToHardLeftSet = False
 	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
 		if not parent.isPresentableFocusAncestor:
 			continue
 		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
+		if config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT and not focusToHardLeftSet:
+			# We are presenting context changes to the user
+			# Thus, only scroll back as far as the start of the first new focus ancestor
+			# focusToHardLeftSet is used since the first new ancestor isn't always represented by a region
+			region.focusToHardLeft = True
+			focusToHardLeftSet = True
 		region.update()
 		yield region
 
@@ -1560,15 +1621,24 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _doNewObject(self, regions):
 		self.mainBuffer.clear()
+		focusToHardLeftSet = False
 		for region in regions:
+			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
+				# Check focusToHardLeft for every region.
+				# If noone of the regions has focusToHardLeft set to True, set it for the first focus region.
+				if region.focusToHardLeft:
+					focusToHardLeftSet = True
+				elif not focusToHardLeftSet and getattr(region, "_focusAncestorIndex", None) is None:
+					# Going to display a new object with the same ancestry as the previously displayed object.
+					# So, set focusToHardLeft on this region
+					# For example, this applies when you are in a list and start navigating through it
+					region.focusToHardLeft = True
+					focusToHardLeftSet = True
 			self.mainBuffer.regions.append(region)
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
@@ -1600,14 +1670,22 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
+
+	def scrollToCursorOrSelection(self, region):
+		if region.brailleCursorPos is not None:
+			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif not isinstance(region, TextInfoRegion) or not region.obj.isTextSelectionAnchoredAtStart:
+			# It is unknown where the selection is anchored, or it is anchored at the end.
+			if region.brailleSelectionStart is not None:
+				self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		elif region.brailleSelectionEnd is not None:
+			# The selection is anchored at the start.
+			self.mainBuffer.scrollTo(region, region.brailleSelectionEnd - 1)
 
 	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
 	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.

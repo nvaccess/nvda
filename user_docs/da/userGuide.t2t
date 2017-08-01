@@ -8,9 +8,11 @@ NVDA NVDA_VERSION brugervejledning
 %%toc
 
 + Introduktion +
+Velkommen til NVDA!
+
 NonVisual Desktop Access (NVDA) er en gratis og open source skærmlæser for Microsoft Windows.
 Skærmlæseren gør brug af syntetisk tale og punkt. Programmet giver blinde og svagtseende brugere adgang til computere med Windows for en pris, der ikke er højere end den, en seende bruger betaler.
-NVDA er udviklet af [NV Access http://www.nvaccess.org/], med bidrag fra fællesskabet.
+NVDA er udviklet af [NV Access https://www.nvaccess.org/], med bidrag fra fællesskabet.
 
 ++ Generelle funktioner ++
 NVDA giver blinde og svagsynede mulighed for at få adgang til og interagere med Windows-operativsystemet og mange tredjeparts-programmer.
@@ -43,9 +45,10 @@ Oplysninger om andre talesynteser som NVDA understøtter kan findes i afsnittet 
 
 ++ Understøttelse af punktskrift ++
 Brugere, som har et punktdisplay, kan med NVDA få tekst ud på punktskrift.
+Indtastning på uforkortet og uforkortet punkt er også understøttet ved hjælp af et punkttastatur.
 Se venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
 
-NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer punkt koder for mange sprog.
+NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer punkt koder.
 
 ++ Licens og Ophavsret ++
 NVDA er ophavsret NVDA_COPYRIGHT_YEARS NVDA bidragydere.
@@ -136,6 +139,10 @@ Hvis du har installeret NVDA med installationsprogrammet, kan du blot starte NVD
 Derudover kan du skrive NVDA i dialogboksen Kør og trykke på Enter.
 Du kan også skrive nogle [kommandolinjeparametre #CommandLineOptions], som du kan bruge til følgende: Genstarte NVDA (-r), afslut (-q) slå tilføjelsesprogrammer fra (--disable-addons) osv.
 
+For installerede kopier, vil konfigurationen af NVDA blive gemt i roaming application data mappen af den aktuelle bruger som standard (f.eks. "C:\Users\<user>\AppData\Roaming").
+Det er muligt at ændre dette således NVDA indlæser konfigurationen fra den lokale application data mappe i stedet.
+Læs afsnittet [systemspecifikke parametre #SystemWideParameters] for flere detaljer.
+
 Hvis du vil starte den flytbare version, skal du åbne den mappe hvori du udpakkede NVDA, og trykke enter eller dobbeltklikke på nvda.exe.
 
 Mens NVDA starter, vil du først høre en stigende række toner, som fortæller, at NVDA er ved at blive indlæst.
@@ -147,8 +154,9 @@ Venligst tjek på NVDA hjemmesiden for hvordan du gør dette.
 
 Når NVDA starter for første gang, vil du blive mødt af en dialogboks som giver dig nogle grundlæggende oplysninger om NVDA tasten og NVDA-menuen.
 (Se de følgende afsnit om disse emner).
-Dialogboksen indeholder også tre checkbokse.
-Med den første kan du bestemme, om NVDA skal bruge capslock som en NVDA tast.
+Dialogboksen indeholder også en comboboks og tre checkbokse.
+Comboboksen lader dig vælge tastaturlayout.
+Med den første checkboks kan du bestemme, om NVDA skal bruge capslock som en NVDA tast.
 Den anden bestemmer, om NVDA skal starte automatisk, efter du har logget på Windows. Det er kun tilgængeligt i installerede kopier af NVDA.
 Den tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NVDA starter.
 
@@ -501,6 +509,7 @@ Hvis du trykker en af de følgende taster ned alene, hopper du til den næste fo
 - o: indlejret objekt
 - 1-6: overskrifter på niveauer fra 1 til 6.
 - a: Annotation (kommentar, revision o.s.v.)
+- w: Stavefejl
 -
 For at flytte til begyndelsen eller slutningen af overordnede elementer, fx. lister eller tabeller:
 || Navn | Tast | Beskrivelse |
@@ -542,7 +551,7 @@ Dette kræver, at MathPlayer 4 er installeret på computeren.
 MathPlayer kan hentes gratis fra: http://www.dessci.com/en/products/mathplayer/
 
 NVDA understøtter følgende typer matematisk indhold:
-- MathML i Mozilla Firefox og Microsoft Internet Explorer.
+- MathML i Mozilla Firefox, Microsoft Internet Explorer og Google Chrome.
 - Design Science MathType i Microsoft Word og PowerPoint. MathType skal være installeret, for at dette kan virke. Prøveversionen er tilstrækkelig.
 - MathML i Adobe Reader. Bemærk, at dette endnu ikke er en officiel standard, så der er i øjeblikket ingen offentligt tilgængelige programmer, som kan producere dette indhold.
 -
@@ -571,6 +580,77 @@ For eksempel kan du flytte gennem udtrykket med Venstre- og Højre-pil og zoome 
 Se venligst dokumentationen til MathPlayer for flere oplysninger.
 
 Når du vil tilbage til dokumentet, skal du simpelthen trykke på Escape-tasten.
+
++ Punktskrift +
+Hvis du eger et punktdisplay, kan NVDA vise information på punkt.
+Hvis dit punktdisplay har et punkttastatur, kan du også indtaste forkortet og uforkortet punkt.
+
+Se venligst afsnittet [Understøttede Punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
+Du kan konfigurere punkt ved hjælp af dialogen [Punktindstillinger #BrailleSettings]
+
+++ Punktforkortelser for felttyper, felttilstande og landmærker++
+For at få plads til så meget som muligt på et punktdisplay bruger NVDA følgende forkortelser til at indikere type og tilstand for felter såvel som landmærker.
+
+|| Forkortelse | felttype |
+| knp | knap |
+| cbo | combo boks |
+| chk | checkboks |
+| dlg | dialog |
+| edt | redigerbart tekstfelt (editfelt) |
+| gra | grafik |
+| kN | Nummer på tabelkolonne fs. k1, k2 |
+| rN | Nummer på tabelrække, fx. r1, r2 |
+| hN | Overskrift niveau N, fx. h1, h2 |
+| lnk | link |
+| blnk | besøgt link |
+| lst | list |
+| lmk | landmærke |
+| mnu | menu |
+| mnuln | menulinje |
+| rknp | radioknap |
+| tb | tabel |
+| tv | trævisning |
+| nv N | Et emne i en trævisning har niveau N |
+| ``-----`` | skilletegn |
+
+Desuden er følgende indikatorer for tilstande defineret:
+|| Forkortelse | tilstand for felt |
+| ... | vises, når et objekt understøtter autofuldførelse |
+| ( ) | bliver vist, når et objekt, fx. en checkboks, ikke er markeret |
+| (x) | bliver vist, når et objekt, fx. en checkboks, er markeret |
+| (-) | bliver vist, når et objekt, fx. en checkboks, er delvist markeret |
+| - | Bliver vist, når et objekt, fx. en trævisning, kan foldes sammen |
+| + | Bliver vist, når et objekt, fx. en trævisning, kan foldes ud |
+| klk | Bliver vist, når et objekt kan klikkes på |
+| sb | Bliver vist, når et objekt, fx. et editfelt, er skrivebeskyttet |
+| vlg | Bliver vist, når et objekt er valgt |
+| umnu | Bliver vist, når et objekt har en pop-up-funktion, som regel en undermenu |
+
+ Til sidst defineres følgende forkortelser for landmærker:
+ || Forkortelse | Landmærke |
+| bnnr | banner |
+| iind | information om indhold |
+| kmpl | komplementært |
+| form | formular |
+| hind | hovedindhold |
+| navi | navigation |
+| sæg | søg |
+| omr | område |
+
+++ Indtastning med punkt ++
+NVDA understøtter indtastning ved brug af uforkortet og forkortet punktskrift ved hjælp af et punkttastatur.
+Du kan vælge den ønskede indtastningstabel ved brug af indstillingen [Indtastningstabel #BrailleInputTable] i dialogen punktindstillinger.
+
+Når uforkortet punktskrift benyttes, vil tekst indsættes så snart det skrives.
+Når forkortet punkt benyttes, vil tekst indsættes når der trykkes på mellemrum eller enter efter et ord.
+Bemærk, at oversættelsen kun reflektere det aktuelle ord du er ved at indtaste, men kan ikke bearbejde eksisterende tekst.
+Hvis du f.eks. bruger en punktkode der starter indtastning af numre ved brug af et nummertegn, skal du indtaste et nummertegn igen, hvis du har trykket backspace for at flytte til slutningen af et nummer, og såfrem du ønsker at indtaste yderligere numre.
+
+%kc:beginInclude
+Et tryk på punkt 7 sletter sidst indtastede punktcelle eller tegn.
+Punkt 8 oversætter alt indtastet punkt og trykker på enter-tasten.
+Ved at trykke på punkt 7 og 8 sammen oversættes det indtastede punktskrift, men tilføjer ikke et mellemrum eller et tryk på enter-tasten.
+%kc:endInclude
 
 + Programspecifikke NVDA-kommandoer +
 NVDA har sine egne ekstra kommandoer for nogle programmer. Dette er for at gøre nogle opgaver lettere, eller for at give adgang til funktionalitet som ellers ikke er tilgængelig for brugere af skærmlæsere.
@@ -601,7 +681,7 @@ For mere information om gennemsynstilstand og hurtignavigation se afsnittet om [
 %kc:beginInclude
 Mens du står i gennemsynstilstand i Microsoft Word, kan du komme til elementlisten ved at trykke NVDA+f7.
 %kc:endInclude
-Elementlisten kan vise overskrifter, links og annotationer, som omfatter kommentarer og sporing af ændringer.
+Elementlisten kan vise overskrifter, links og annotationer, som omfatter kommentarer og sporing af ændringer, såvel som fejl (på nuværende tidspunkt begrænset til stavefejl).
 
 +++ Annoncering af kommentarer +++
 %kc:beginInclude
@@ -906,7 +986,7 @@ Hvis du ønsker hurtigt at ændre taleindstillingerne uden først at skulle åbn
 | Formindsk den aktuelle taleindstilling | NVDA+Ctrl+Pil-ned | NVDA+Shift+Ctrl+Pil-ned | Formindsker den synteseindstilling, som du i øjeblikket er ved at ændre fx formindsker hastigheden, vælger den forrige stemme, formindsker lydstyrken |
 %kc:endInclude
 
-+++ Punktindstillinger +++
++++ Punktindstillinger +++[BrailleSettings]
 Dialogboksen Punktindstillinger kan nås ved at åbne menuen Indstillinger og derefter gå til Punktindstillinger.
 
 ==== Punktdisplay ====
@@ -936,10 +1016,9 @@ I denne combo boks finder du punkttabeller for en lang række sprog, punktstanda
 Den valgte tabel vil blive brugt til at oversætte punkt til visning på dit punktdisplay.
 Med piletasterne kan du flytte fra den ene punkttabel til den næste på listen.
 
-==== Indtastningstabel ====
+==== Indtastningstabel ====[BrailleInputTable]
 Komplementært til den foregående indstilling er Den næste indstilling combo boksen indtastningstabel.
 Den valgte tabel vil blive benyttet til at oversatte det, du indtaster på dit Perkins punkttastatur, til tekst.
-NVDA understøtter på nuværende tidspunkt kun 8-punkt computer-braille, så det er kun disse tabeller, der bliver vist.
 Med piletasterne kan du flytte fra den ene punkttabel til den næste på listen.
 
 Bemærk, at denne indstilling kun kan bruges, hvis dit punktdisplay har et Perkins punkttastatur og funktionen er understøttet af driveren til displayet.
@@ -966,6 +1045,9 @@ Udvælgelsesindikatoren påvirkes ikke af denne indstilling.
 ==== Besked vises i (sek) ====
 Denne indstilling er et felt til indtastning af en talværdi, som styrer, hvor længe NVDA-meddelelser vises på punktdisplayet.
 Hvis du skriver 0 i feltet, slår du visning af disse meddelelser helt fra.
+
+==== Vis meddelelser på ubestemt tid ====
+Denne indstilling tillader at NVDA-meddelelser kan vises på ubestemt tid på et punktdisplay.
 
 %kc:setting
 ==== Punkt følger ====[BrailleTether]
@@ -1155,6 +1237,13 @@ Hvis du minimerer et vindue eller skifter til et andet vindue end det, der indeh
 Tast: NVDA+5
 
 Skifter indstillingen for annoncering af nyt indhold, især objekter som terminalvinduer og historikfelter i chatprogrammer.
+
+==== Spil en lyd når auto-forslag vises ====
+Slår annoncéringen af auto-forslag når de vises til og fra. Hvis denne indstilling er slået til, vil NVDA afspille en lyd for at indikere dette.
+Auto-forslag er en liste af tekstforslag der er baseret på indtastning i bestemte tekstfelter og dokumenter.
+Søgefeltet i startmenuen i Windows Vista og nyere vil for eksempel vise en liste af forslag baseret på hvad du skrev.
+I nogle editfelter, såsom søgefelter i forskellige Windows 10 apps, er det muligt for NVDA at give dig besked, når automatiske tekstforslag vises når du skriver.
+Listen med auto-forslag lukkes, når du bevæger dig væk fra editfeltet, og i nogle tilfælde vil NVDA være i stand til at meddele, når dette sker.
 
 +++ Indstillinger for inputkomposition +++
 Dialogen Inputkompositionsindstillinger kan du finde under menuen Indstillinger.
@@ -1468,9 +1557,9 @@ Det kan fx. være, hvis du vil redigere en manuelt aktiveret profil eller standa
 Du kan gøre dette ved at markere checkboksen "Slå alle udløsere fra midlertidigt" i dialogen Konfigurationsprofiler.
 
 ++ Placering af konfigurationsprofiler ++
-Flytbare versioner af NVDA opbevarer alle indstillinger, særlige app-moduler og særlige drivere i en mappe med navnet userConfig, som findes i NVDA-mappen.
+Flytbare versioner af NVDA opbevarer alle indstillinger og tilføjelsesprogrammer i en mappe med navnet userConfig, som findes i NVDA-mappen.
 
-Installerede versioner af NVDA opbevarer alle indstillinger, særlige app-moduler og særlige drivere i en bestemt NVDA-mappe, som findes i din Windows brugerprofil.
+Installerede versioner af NVDA opbevarer alle indstillinger og tilføjelsesprogrammer i en bestemt NVDA-mappe, som findes i din Windows brugerprofil.
 Det betyder, at alle brugere på systemet kan have hver sine NVDA-indstillinger.
 Du kommer til mappen med dine NVDA-indstillinger ved at gå til Start-menuen og derefter Programmer -> NVDA -> Udforsk mappen med bruger-indstillinger.
 
@@ -1589,6 +1678,17 @@ For a tbruge disse stemmer, er det nødvendigt at installere to komponenter:
  -
 -
 
+++ Windows OneCore Stemmer ++
+Windows 10 indeholder nu stemmer kendt som "OneCore" eller" Mobile."
+Der er stemmer tilgængelige på mange sprog, og disse stemmer er hurtigere til at reagere end de tilgængelige Microsoft-stemmer der benytter Microsoft Speech API version 5.
+
+For at installere stemmer til brug på yderligere sprog, samt hvordan disse installeres, se artiklen fra Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+
+Bemærk venligst, at de hurtigere talehastigheder tilgængelige når disse stemmer benyttes med Narrator ikke er tilgængelige med den aktuelle version af NVDA.
+Bemærk også, at den valgte hastighed du vælger i Windows-indstillingerne også påvirker stemmerne når disse bruges med NVDA.
+Disse er problemer som vi ikke kan løse uden ændringer i Windows.
+VI håber, at disse problemer bliver løst i en Windows opdatering.
+
 ++ Audiologic Tts3 ++
 Dette er en kommerciel talesyntese, der er specielt produceret til italiensk.
 Talesyntesen skal være installeret på dit system, før den kan bruges med NVDA.
@@ -1634,8 +1734,6 @@ Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan
 | Flyt tilbage ved brug af højre lynhjul | højre lynhjul op |
 | Flyt fremad ved brug af højre lynhjul | højre lynhjul ned |
 | Flyt til punktcelle | markørsammenføringsknap |
-| backspace tast | punkt7 |
-| enter tast | punkt8 |
 | skift+tab tast | punktMellemrum+punkt1+punkt2 |
 | tab tast | punktMellemrum+punkt4+punkt5 |
 | Pil-op | punktMellemrum+punkt1 |
@@ -1877,8 +1975,6 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | alt Tast | punkt1+punkt3+punkt4+mellemrum |
 | escape Tast | punkt1+punkt5+mellemrum |
 | tab Tast | punkt4+punkt5+mellemrum |
-| enter Tast | punkt8 |
-| backspace Tast | punkt7 |
 | Pil-op | punkt1+mellemrum |
 | Pil-ned | punkt4+mellemrum |
 | Caps Lock | punkt1+punkt3+punkt6+mellemrum |
@@ -2023,10 +2119,8 @@ Knapperne er fra venstre mod højre.
 På nuværende tidspunkt er højre thumb key ikke taget i brug.
 De midterste taster bliver begge brugt som mellemrumstaster.
 
-%kc:beginInclude
 || Navn | Tast |
-| backspace tast | punkt 7 |
-| enter tast | punkt 8 |
+%kc:beginInclude
 | escape tast | mellemrum med punkt 7 |
 | Pil-op | mellemrum med punkt 2 |
 | Venstre-pil | mellemrum med punkt 1 |
@@ -2224,43 +2318,6 @@ Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brlt
 | Flyt til punktcelle | fly (bring markør til tegn) |
 %kc:endInclude
 
-+ Punktforkortelser for felttyper og felttilstande +
-For at få plads til så meget som muligt på et punktdisplay bruger NVDA følgende forkortelser til at indikere type og tilstand for felter.
-
-|| Forkortelse | felttype |
-| knp | knap |
-| cbo | combo boks |
-| chk | checkboks |
-| dlg | dialog |
-| edt | redigerbart tekstfelt (editfelt) |
-| gra | grafik |
-| kN | Nummer på tabelkolonne fs. k1, k2 |
-| rN | Nummer på tabelrække, fx. r1, r2 |
-| hN | Overskrift niveau N, fx. h1, h2 |
-| lnk | link |
-| lst | list |
-| blnk | besøgt link |
-| mnu | menu |
-| mnuln | menulinje |
-| rknp | radioknap |
-| tb | tabel |
-| tv | trævisning |
-| nv N | Et emne i en trævisning har niveau N |
-| ``-----`` | skilletegn |
-
-Desuden er følgende indikatorer for tilstande defineret:
-|| Forkortelse | tilstand for felt |
-| ... | vises, når et objekt understøtter autofuldførelse |
-| ( ) | bliver vist, når et objekt, fx. en checkboks, ikke er markeret |
-| (x) | bliver vist, når et objekt, fx. en checkboks, er markeret |
-| (-) | bliver vist, når et objekt, fx. en checkboks, er delvist markeret |
-| - | Bliver vist, når et objekt, fx. en trævisning, kan foldes sammen |
-| + | Bliver vist, når et objekt, fx. en trævisning, kan foldes ud |
-| klk | Bliver vist, når et objekt kan klikkes på |
-| sb | Bliver vist, når et objekt, fx. et editfelt, er skrivebeskyttet |
-| vlg | Bliver vist, når et objekt er valgt |
-| umnu | Bliver vist, når et objekt har en pop-up-funktion, som regel en undermenu |
-
 + Avancerede emner +
 
 ++ indstillinger på kommandolinjen ++
@@ -2303,6 +2360,18 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | Ingen | --no-sr-flag  | Lad være med at ændre det globale skærmlæserflag |
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
+
+++ Systemspecifikke parametre++[SystemWideParameters]
+NVDA tillader, at nogle værdier ændres i systemregistreringsdatabasen. Disse ændringer påvirker NVDAs adfærd på et systemspecifikt niveau.
+Disse værdier er gemt i registreringsdatabasen under en af følgende nøgler:
+- 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Følgende værdier kan indstilles under denne registreringsdatabasenøgle:
+|| Navn | Type | Mulige værdier | Beskrivelse |
+| configInLocalAppData | DWORD | 0 (standard) for at deaktivere, 1 for at aktivere | Hvis dette er aktiveret, vil NVDAs konfiguration gemmes i local application data i stedet for mappen roaming application data |
+| serviceDebug | DWORD | 0 (standard) for at deaktivere, 1 for at aktivere | Hvis dette aktiveres, vil beskyttet tilstand blive deaktiveret på beskyttede skriveborde i Windows. Dette vil tillade brugen af Python-konsollen og logviseren. På grund af flere sikkerhedsbrud, kan denne indstilling ikke anbefales |
 
 + Yderligere information +
 Hvis du har brug for yderligere information eller hjælp til brugen af NVDA, besøg venligst NVDAs netsted NVDA_URL.

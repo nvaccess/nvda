@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -50,8 +50,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Braille settings
 [braille]
 	display = string(default=noBraille)
-	translationTable = string(default=en-us-comp8.ctb)
-	inputTable = string(default=en-us-comp8.ctb)
+	translationTable = string(default=en-ueb-g1.ctb)
+	inputTable = string(default=en-ueb-g1.ctb)
 	expandAtCursor = boolean(default=true)
 	showCursor = boolean(default=true)
 	cursorBlink = boolean(default=true)
@@ -62,6 +62,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	tetherTo = string(default="focus")
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
+	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 
 	# Braille display driver settings
 	[[__many__]]
@@ -191,6 +192,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [debugLog]
 	hwIo = boolean(default=false)
 	audioDucking = boolean(default=false)
+
+[uwpOcr]
+	language = string(default="")
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)

@@ -13,6 +13,15 @@
 - NVDA sada može govoriti uz pomoć Windows OneCore glasova (znanih kao mobile glasovi), koji su uključeni u Windowse 10. Pristupate im označavanjem opcije Windows OneCore glasovi u NVDA dijaloškom okviru Govorna jedinica. (#6159)
 - NVDA konfiguracijske datoteke sada mogu biti pospremljene korisničkoj mapi application data. To se uključuje u registru. Za više detalja, pogledajte poglavlje 'sistemski parametri' u korisničkom priručniku. (#6812)
 - U web preglednicima, NVDA izgovara vrijednosti placeholdera za polja (točnije, aria-placeholder sada je podržan). (#7004)
+- U načinu pregleda u Microsoft Wordu, sada je moguće kretati se po pravopisnim pogreškama uz pomoć brze navigacije (w i shift+w) (#6942)
+- Dodana podrška za kontrolu odabirnika datuma koja se može pronaći u Microsoft Outlookovom dijaloškom okviru za termine. (#7217)
+- Trenutno označeni prijedlog sada se izgovara u Windows 10 pošti u poljima to/cc te u Windows 10 polju uređivanja u Postavkama. (#6241)
+- Sada se reproducira zvučni signal, koji izvještava o prisutnosti prijeldoga u većini polja za pretragu u Windowsima 10 (NPR. početni zaslon, pretraga u postavkama, polja to/CC u Windows 10 pošti). (#6241)
+- Automatski izgovara obavijesti u Skype for Business Desktop, kao na primjer, kada netko želi započeti razgovor s vama.  (#7281)
+- Automatsko čitanje obavijesti u Microsoft Edgeu, poput početka preuzimanja.  (#7281)
+- Sada možete pisati kratkopisom i punim pismom na brajičnoj tipkovnici vašeg brajevog redka. Pogledajte poglavlje brajični unos u korisničkom vodiću. (#2439)
+- Sada možete upisivati Unicode brajične znakove na brajičnoj tipkovnici, označujući Unicode braille kao brajičnu tablicu. (#6449)
+- Dodana podrška za SuperBraille brajični redak koji se koristi na Tajwanu. (#7352)
 
 
 == Izmjene ==
@@ -29,6 +38,9 @@
  - "obrazac": "frm"
  - "regija": "rgn"
  - Na primjer: "navigacijski orijentir" postaje "lmk nav"
+- Espeak-ng je nadograđen na verziju 1.49.1 (#7280).
+- Popisi ulaznih i izlaznih brajičnih tablica u dijaloškom okviru brajičnih postavki, sada su sortirani po abecednom redu. (#6113)
+- Obnovljen liblouis brajični prevoditelj na verziju 3.2.0. (#6935)
 
 
 == Ispravke grešaka ==
@@ -37,6 +49,15 @@
 - Način pregleda je sada ispravno podržan u Microsoft Edgeu gdje je dokumentu dodijeljen atribut dokumenta. (#6998)
 - U načinu pregleda, može se označavati ili odznačavati do kraja retka sa  using shift+end čak i ako je znak ili redak na kraju. (#7157)
 - Ako dijaloški okvir sadrži traku napredka, tekst dijaloškog okvira je ažuriran kada se traka napredka promijeni. to sada znaći, da se preostalo vrijeme iz dijaloškog okvira preuzimanja nadogradnje može isčitati. (#6862)
+- NVDA će sada izgovarati promjenu označenog za većinu Windows 10 odabirnih okvira kao što je to automatska reprodukcija u postavkama. (#6337).
+- Više se ne izgovaraju nepotrebne informacije pri upisu susreta / termina u dijaloškim okvirima za stvaranje u Microsoft Outlooku. (#7216)
+- Zvučni signali za vječne trake napredovanja u dijaloškim okvirima kao što su to provjere nadogradnje čuju se samo kada je izlaz podešena na zvučne signale. (#6759)
+- U Microsoft Excelu 2007 i 2003, ćelije se ponovno izgovaraju prilikom kretanja po radnom listu. (#8243)
+- U Windowsima 10 nadogradnji za tvorce i novijim, način pregleda se automatski omogućuje pri čitanju pošte u Windows 10 Pošti. (#7289)
+- Na većini brajičnih redaka sa brajičnom tipkovnicom, Točkica 7 briše zadnju brajičnu ćeliju ili znak, a točkica 8 pritišće enter. (#6054)
+- U tekstu za uređivanje, prilikom premještanja kursora (npr. sa strelicama ili tipkom backspace), NVDAova izgovorena povratna informacija je sada točnija u većini slučajeva, točnije u Google chrome i terminalnim aplikacijama. (#6424)
+- Sadržaj uređivača potpisa u Microsoft Outlooku 2016 sada se može čitati. (#7253)
+- U Java Swing aplikacijama, NVDA više ne prouzrokuje rušenje pri navigaciji u tablicama. (#6992)
 
 
 == Izmjene za razvojne programere ==
