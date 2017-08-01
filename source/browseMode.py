@@ -1284,8 +1284,10 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	def event_focusEntered(self,obj,nextHandler):
 		if obj==self.rootNVDAObject:
 			self._enteringFromOutside = True
-		if self.passThrough:
-			 nextHandler()
+		# Even if passThrough is enabled, we still completely drop focusEntered events here. 
+		# In order to get them back when passThrough is enabled, we replay them with the _replayFocusEnteredEvents method in event_gainFocus.
+		# The reason for this is to ensure that focusEntered events are delayed until a focus event has had a chance to disable passthrough mode.
+		# As in this case we would  not want them.
 
 	def _shouldIgnoreFocus(self, obj):
 		"""Determines whether focus on a given object should be ignored.
@@ -1317,6 +1319,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		self._enteringFromOutside=False
 		if not self.isReady:
 			if self.passThrough:
+				self._replayFocusEnteredEvents()
 				nextHandler()
 			return
 		if enteringFromOutside and not self.passThrough and self._lastFocusObj==obj:
@@ -1327,6 +1330,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			return
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
+				self._replayFocusEnteredEvents()
 				return nextHandler()
 			return 
 		if not self.passThrough and self._shouldIgnoreFocus(obj):
@@ -1363,8 +1367,11 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 			else:
-				if not oldPassThrough:
-					self._replayFocusEnteredEvents()
+				# Although we are going to speak the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
+				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
+				# See #7435 for a discussion on this.
+				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_ONLYCACHE)
+				self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
 			self._set_selection(focusInfo,reason=controlTypes.REASON_FOCUS)
@@ -1375,6 +1382,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 			else:
+				self._replayFocusEnteredEvents()
 				return nextHandler()
 
 		self._postGainFocus(obj)
