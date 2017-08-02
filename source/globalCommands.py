@@ -2052,7 +2052,7 @@ class GlobalCommands(ScriptableObject):
 		recog = uwpOcr.UwpOcr()
 		recogUi.recognizeNavigatorObject(recog)
 	# Translators: Describes a command.
-	script_recognizeWithUwpOcr.__doc__ = _("Recognize the content of the current navigator object with Windows 10 OCR")
+	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
 	__gestures = {
 		# Basic
