@@ -120,6 +120,11 @@ def recognizeNavigatorObject(recognizer):
 	@type recognizer: L{contentRecog.ContentRecognizer}
 	"""
 	global _activeRecog
+	if isinstance(api.getFocusObject(), RecogResultNVDAObject):
+		# Translators: Reported when content recognition (e.g. OCR) is attempted,
+		# but the user is already reading a content recognition result.
+		ui.message(_("Already in a content recognition result"))
+		return
 	nav = api.getNavigatorObject()
 	left, top, width, height = nav.location
 	try:
