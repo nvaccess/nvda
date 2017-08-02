@@ -1132,7 +1132,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		# Loop through the currently displayed regions in reverse order
 		# If focusToHardLeft is set for one of the regions, the display shouldn't scroll further back than the start of that region
 		for region, regionStart, regionEnd in reversed(list(self.regionsWithPositions)):
-			if regionStart<=endPos:
+			if regionStart<endPos:
 				if region.focusToHardLeft:
 					# Only scroll to the start of this region.
 					restrictPos = regionStart
