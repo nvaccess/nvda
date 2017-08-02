@@ -1557,13 +1557,14 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			info = info.copy()
 			info.expand(textInfos.UNIT_CHARACTER)
 		fields=list(info.getTextWithFields())
-		# First record the ID of all layout tables so that we can skip them when searching for the deepest table
+		# If layout tables should not be reported, we should First record the ID of all layout tables so that we can skip them when searching for the deepest table
 		layoutIDs=set()
-		for field in fields:
-			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart" and field.field.get('table-layout'):
-				tableID=field.field.get('table-id')
-				if tableID is not None:
-					layoutIDs.add(tableID)
+		if not config.conf["documentFormatting"]["includeLayoutTables"]:
+			for field in fields:
+				if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart" and field.field.get('table-layout'):
+					tableID=field.field.get('table-id')
+					if tableID is not None:
+						layoutIDs.add(tableID)
 		for field in reversed(fields):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
