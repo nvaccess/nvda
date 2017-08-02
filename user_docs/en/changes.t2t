@@ -24,6 +24,14 @@
 - Added support for the SuperBraille braille display used in Taiwan. (#7352)
 - New braille translation tables: Danish 8 dot computer braille, Lithuanian, Persian 8 dot computer braille, Persian grade 1, Slovenian 8 dot computer braille. (#6188, #6550, #6773, #7367)
 - Improved English (U.S.) 8 dot computer braille table, including support for bullets, the euro sign and accented letters. (#6836)
+- NVDA can now use the OCR functionality included in Windows 10 to recognize the text of images or inaccessible applications. (#7361)
+ - The language can be set from the new Windows 10 OCR dialog in NVDA Preferences.
+ - To recognize the content of the current navigator object, press NVDA+r.
+ - See the Content Recognition section of the User Guide for further details.
+- You can now choose what context information is shown on a braille display when an object gets focus using the new "Focus context presentation" setting in the Braille Settings dialog. (#217)
+ - For example, the "Fill display for context changes" and "Only when scrolling back" options can make working with lists and menus more efficient, since the items won't continually change their position on the display.
+ - See the section on the "Focus context presentation" setting in the User Guide for further details and examples.
+- Many more control types and states have been abbreviated for braille. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188)
 
 
 == Changes ==
@@ -44,6 +52,9 @@
 - The output and input table lists in the Braille Settings dialog are now sorted alphabetically. (#6113)
 - Updated liblouis braille translator to 3.2.0. (#6935)
 - The default braille table is now Unified English Braille Code grade 1. (#6952)
+- By default, NVDA now only shows the parts of the context information that have changed on a braille display when an object gets focus. (#217)
+ - Previously, it always showed as much context information as possible, regardless of whether you have seen the same context information before.
+ - You can revert to the old behaviour by changing the new "Focus context presentation" setting in the Braille Settings dialog to "Always fill display".
 
 
 == Bug Fixes ==
@@ -75,6 +86,8 @@
 - NVDA must now be built with Visual Studio Community 2015. Visual Studio Express is no longer supported. (#7110)
  - The Windows 10 Tools and SDK are now also required, which can be enabled when installing Visual Studio.
  - See the Installed Dependencies section of the readme for additional details.
+- Support for content recognizers such as OCR and image description tools can be easily implemented using the new contentRecog package. (#7361)
+- The Python json package is now included in NVDA binary builds. (#3050)
 
 
 = 2017.2 =
