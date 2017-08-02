@@ -10,6 +10,14 @@ NVDA 변경된 사항
 - 마이크로소프트 Outlook 메시지 목록 탐색 시 메시지 플래그가 출력되도록 함. (#6374)
 - 마이크로소프트 파워포인트에서 슬라이드 편집 시 도형 모양(예: 삼각형, 동그라미, 비디오, 화살표 등)이 출력되도록 함. (#7111)
 - 구글 크롬 사용 시 수학 컨텐츠(특히 MathML로 표기된 내용) 탐색 가능. (#7184)
+- In web browsers, NVDA now reports placeholder values for fields (specifically, aria-placeholder is now supported). (#7004)
+- In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w) (#6942)
+- 마이크로소프트 Outlook내 일정 대화상자내 날짜 선택 컨트롤 지원 추가. (#7217)
+- 윈도우 10 Mail 받는 사람/CC 필드 및 설정 앱과 같은 컨트롤에서 검색 결과 선택시 결과가 자동으로 출력되도록 함. (#6241)
+- 윈도우 10 사용시 시작 메뉴, Mail 앱 및 설정 앱과 같은 곳에서 검색 결과가 나타날때 이것을 사운드로 알릴 수 있도록 함. (#6241)
+- 스카이프 비지니스 사용시 특정 알림(예: 상대방에게서 메시지를 받았을때)이 자동으로 출력되도록 함.  (#7281)
+- Automatically report notifications in Microsoft Edge, such as when a download starts.  (#7281)
+검색 결과 나타날때 사운드로 알림
 
 
 == 변경된 기능들 ==
@@ -26,10 +34,31 @@ NVDA 변경된 사항
  - "form": "frm"
  - "region": "rgn"
  - 예: "navigation landmark"는 "lmk nav"로 표시.
+- 이스피크 NG 음성 엔진 1.49.1 사용. (#7280)
+- 점자 설정 대화상자내 점자 입력 및 출력표 목록이 가나다순으로 정렬되어 나타나도록 함. (#6113)
+- 리브루이 점자 변환기 3.2.0 버전 사용. (#6935)
 
 
 == 버그 수정 ==
+- 크롬에서 브라우즈 모드 사용시 편집 가능 div 요소명이 요소의 값으로 출력되지 않도록 함. (#7153)
+- 마이크로소프트 워드에서 빈 문서가 열린 상태에서 브라우즈 모드 사용시 end 키를 누를때 RuntimeError가 나지 않도록 함. (#7009)
+- 마이크로소프트 Edge 사용시 특정 요소가 ARIA 문서 롤로 표기되었을때 브라우즈 모드가 제대로 작동하지 않던 문제 수정. (#6998)
+- 브라우즈 모드 사용시 줄 끝에서 shift+end키를 눌러 줄 끝까지 선택(또는 선택 해제)이 가능하도록 함. (#7157)
 - 진행률 대화상자에서 진행률이 변경될 때 변경된 컨텐츠가 출력되도록 함(예: NVDA 업데이트 대화상자 내 다운로드 경과 시간 확인이 가능해짐). (#6862)
+- 윈도우 10 사용시 특정 콤보박스(예: 설정 앱내 자동 실행 옵션)에서 설정값 변경시 새 설정값이 출력되지 않던 문제 수정. (#6337).
+- 마이크로소프트 Outlook 사용시 새 미팅 또는 일정 대화상자내 필요없는 정보가 출력되던 문제 수정. (#7216)
+- 값이 없는 징행률 막대(예: 업데이트 확인 대화상자)의 값을 출력시 만약 진행률 출력이 비프음이 아닌 설정이 적용된 경우 비프음이 출력되지 않도록 함. (#6759)
+- 마이크로소프트 엑셀 2003 및 2007 사용시 방향키로 worksheet 셀을 탐색할 수 없던 문제 수정. (#8243)
+- 윈도우 10 크리에이터 업데이트 및 이후 버전의 Mail 앱 사용시 브라우즈 모드가 적동하지 않던 문제 수정. (#7289)
+- 점자 키보드가 탑제된 점자디스플레이 사용시 거의 모든 디스플레이에서 7점을 눌러 이전 글자를 삭제하고 8점을 눌러 엔터키를 입력하도록 변경됨. (#6054)
+- 편집창에서 케럿을 옮길때(예: 방향키 사용 또는 백스페이스를 누를때) 거의 대부분이ㅡ 편집창에서(예: 크롬 및 터미널 창) NVDA의 음성 반응이 빨라지도록 함. (#6424)
+- 마이크로소프트 Outlook 2016내 signature 대화상자 내용을 탐색할 수 ㅣㅇㅆ도록 함. (#7253)
+- Java Swing 기반 프로그램 사용중 표 탐색시 가끔 사용중인 프로그램이 다운되던 문제 수정. (#6992)
+- 윈도우 10 크리에이터 업데이트 사용시 토스트 알림 내용이 여러번 반복되어 출력되던 문제 수정. (#7128)
+- In The start menu in Windows 10, pressing Enter to close the start menu after a search no longer causes NVDA to announce search text. (#7370)
+- Performing quick navigation to headings in Microsoft Edge is now significantly faster. (#7343)
+- In Microsoft Edge, navigating in browse mode no longer skips large parts of certain web pages such as the Wordpress 2015 theme. (#7143)
+- In Microsoft Edge, landmarks are correctly localized in languages other than English. (#7328)
 
 
 = 2017.2 =

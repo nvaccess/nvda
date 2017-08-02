@@ -18,9 +18,22 @@
 - The currently selected suggestion is now reported in Windows 10 Mail to/cc fields and the Windows 10 Settings search field. (#6241)
 - A sound is now playd to indicate the  appearance of suggestions in certain search fields in Windows 10 (E.g. start screen, settings search, Windows 10 mail to/cc fields). (#6241)
 - Automatically report notifications in Skype for Business Desktop, such as when someone starts a conversation with you.  (#7281)
+- Automatically report incoming chat messages while in a Skype for Business conversation. (#7286)
 - Automatically report notifications in Microsoft Edge, such as when a download starts.  (#7281)
 - You can now type in both contracted and uncontracted braille on a braille display with a braille keyboard. See the Braille Input section of the User Guide for details. (#2439)
 - You can now enter Unicode braille characters from the braille keyboard on a braille display by selecting Unicode braille as the input table in Braille Settings. (#6449)
+- Added support for the SuperBraille braille display used in Taiwan. (#7352)
+- New braille translation tables: Danish 8 dot computer braille, Lithuanian, Persian 8 dot computer braille, Persian grade 1, Slovenian 8 dot computer braille. (#6188, #6550, #6773, #7367)
+- Improved English (U.S.) 8 dot computer braille table, including support for bullets, the euro sign and accented letters. (#6836)
+- NVDA can now use the OCR functionality included in Windows 10 to recognize the text of images or inaccessible applications. (#7361)
+ - The language can be set from the new Windows 10 OCR dialog in NVDA Preferences.
+ - To recognize the content of the current navigator object, press NVDA+r.
+ - See the Content Recognition section of the User Guide for further details.
+- You can now choose what context information is shown on a braille display when an object gets focus using the new "Focus context presentation" setting in the Braille Settings dialog. (#217)
+ - For example, the "Fill display for context changes" and "Only when scrolling back" options can make working with lists and menus more efficient, since the items won't continually change their position on the display.
+ - See the section on the "Focus context presentation" setting in the User Guide for further details and examples.
+- Many more control types and states have been abbreviated for braille. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188)
+- In Firefox and Chrome, NVDA now supports complex dynamic grids such as spreadsheets where only some of the content might be loaded or displayed (specifically, the aria-rowcount, aria-colcount, aria-rowindex and aria-colindex attributes introduced in ARIA 1.1). (#7410)
 
 
 == Changes ==
@@ -40,6 +53,10 @@
 - Updated eSpeak NG to 1.49.1. (#7280)
 - The output and input table lists in the Braille Settings dialog are now sorted alphabetically. (#6113)
 - Updated liblouis braille translator to 3.2.0. (#6935)
+- The default braille table is now Unified English Braille Code grade 1. (#6952)
+- By default, NVDA now only shows the parts of the context information that have changed on a braille display when an object gets focus. (#217)
+ - Previously, it always showed as much context information as possible, regardless of whether you have seen the same context information before.
+ - You can revert to the old behaviour by changing the new "Focus context presentation" setting in the Braille Settings dialog to "Always fill display".
 
 
 == Bug Fixes ==
@@ -55,6 +72,17 @@
 - In Windows 10 Creators Update and later, browse mode is again automatically enabled when reading emails in Windows 10 Mail. (#7289)
 - On most braille displays with a braille keyboard, dot 7 now erases the last entered braille cell or character, and dot 8 presses the enter key. (#6054)
 - In editable text, when moving the caret (e.g. with the cursor keys or backspace), NVDA's spoken feedback is now more accurate in many cases, particularly in Chrome and terminal applications. (#6424)
+- The content of the Signature Editor in Microsoft Outlook 2016 can now be read. (#7253)
+- In Java Swing applications, NVDA no longer sometimes causes the application to crash when navigating tables. (#6992)
+- In Windows 10 Creators Update, NVDA will no longer announce toast notifications multiple times. (#7128)
+- In The start menu in Windows 10, pressing Enter to close the start menu after a search no longer causes NVDA to announce search text. (#7370)
+- Performing quick navigation to headings in Microsoft Edge is now significantly faster. (#7343)
+- In Microsoft Edge, navigating in browse mode no longer skips large parts of certain web pages such as the Wordpress 2015 theme. (#7143)
+- In Microsoft Edge, landmarks are correctly localized in languages other than English. (#7328)
+- Braille now correctly follows the selection when selecting text beyond the width of the display. For example, if you select multiple lines with shift+downArrow, braille now shows the last line you selected. (#5770)
+- In Firefox, NVDA no longer spuriously reports "section" several times when opening details for a tweet on twitter.com. (#5741)
+- Table navigation commands are no longer available for layout tables in Browse Mode unless reporting of layout tables is enabled. (#7382)
+- In Firefox and Chrome, Browse Mode table navigation commands now skip over hidden table cells. (#6652, #5655)
 
 
 == Changes for Developers ==
@@ -62,6 +90,8 @@
 - NVDA must now be built with Visual Studio Community 2015. Visual Studio Express is no longer supported. (#7110)
  - The Windows 10 Tools and SDK are now also required, which can be enabled when installing Visual Studio.
  - See the Installed Dependencies section of the readme for additional details.
+- Support for content recognizers such as OCR and image description tools can be easily implemented using the new contentRecog package. (#7361)
+- The Python json package is now included in NVDA binary builds. (#3050)
 
 
 = 2017.2 =
