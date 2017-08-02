@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
