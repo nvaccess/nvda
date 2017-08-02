@@ -16,6 +16,7 @@ import eventHandler
 from displayModel import DisplayModelTextInfo
 import baseObject
 import speech
+import ui
 import api
 import textInfos.offsets
 import config
@@ -863,6 +864,14 @@ Tries to force this object to take the focus.
 			return
 		import nvwave
 		nvwave.playWaveFile(r"waves\textError.wav")
+
+	def event_liveRegionChange(self):
+		"""
+		A base implementation for live region change events.
+		"""
+		name=self.name
+		if name:
+			ui.message(name)
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (

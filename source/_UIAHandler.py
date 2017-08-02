@@ -126,6 +126,7 @@ UIAPropertyIdsToNVDAEventNames={
 }
 
 UIAEventIdsToNVDAEventNames={
+	UIA_LiveRegionChangedEventId:"liveRegionChange",
 	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
@@ -223,7 +224,11 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
+		if (
+			not obj
+			or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent)
+			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
+		):
 			return
 		focus=api.getFocusObject()
 		if obj==focus:
