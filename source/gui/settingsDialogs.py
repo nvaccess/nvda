@@ -1,11 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-<<<<<<< HEAD
 #Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager
-=======
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V.
->>>>>>> Implement a categories based settings dialog for configuration manager settings. This fixes #577. The following is changed:
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1477,8 +1473,8 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
-class UwpOcrDialog(SettingsDialog):
-	# Translators: The title of the Windows 10 OCR dialog.
+class UwpOcrPanel(SettingsPanel):
+	# Translators: The title of the Windows 10 OCR panel.
 	title = _("Windows 10 OCR")
 
 	def makeSettings(self, settingsSizer):
@@ -1498,13 +1494,9 @@ class UwpOcrDialog(SettingsDialog):
 		except ValueError:
 			self.languageChoice.Selection = 0
 
-	def postInit(self):
-		self.languageChoice.SetFocus()
-
-	def onOk(self, evt):
+	def onSave(self):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
-		super(UwpOcrDialog, self).onOk(evt)
 
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
@@ -1935,6 +1927,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 	]
+	if winVersion.isUwpOcrAvailable():
+		categoryClasses.append(UwpOcrPanel)
 
 	def onCategoryChange(self,evt):
 		super(NVDASettingsDialog,self).onCategoryChange(evt)
