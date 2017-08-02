@@ -33,6 +33,7 @@
  - For example, the "Fill display for context changes" and "Only when scrolling back" options can make working with lists and menus more efficient, since the items won't continually change their position on the display.
  - See the section on the "Focus context presentation" setting in the User Guide for further details and examples.
 - Many more control types and states have been abbreviated for braille. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188)
+- In Firefox and Chrome, NVDA now supports complex dynamic grids such as spreadsheets where only some of the content might be loaded or displayed (specifically, the aria-rowcount, aria-colcount, aria-rowindex and aria-colindex attributes introduced in ARIA 1.1). (#7410)
 
 
 == Changes ==
@@ -80,6 +81,8 @@
 - In Microsoft Edge, landmarks are correctly localized in languages other than English. (#7328)
 - Braille now correctly follows the selection when selecting text beyond the width of the display. For example, if you select multiple lines with shift+downArrow, braille now shows the last line you selected. (#5770)
 - In Firefox, NVDA no longer spuriously reports "section" several times when opening details for a tweet on twitter.com. (#5741)
+- Table navigation commands are no longer available for layout tables in Browse Mode unless reporting of layout tables is enabled. (#7382)
+- In Firefox and Chrome, Browse Mode table navigation commands now skip over hidden table cells. (#6652, #5655)
 
 
 == Changes for Developers ==
