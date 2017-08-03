@@ -8,19 +8,19 @@ Highlights of this release include input of contracted braille, support for new 
 
 == New Features ==
 - A Braille setting has been added to "show messages indefinitely". (#6669)
-- In Microsoft Outlook message lists, report if a message is flagged. (#6374)
-- In Microsoft PowerPoint, the exact type of a shape is now reported when editing a slide (such as triangle, circle, video or arrow), rather than just 'shape'. (#7111)
+- In Microsoft Outlook message lists, NVDA now reports if a message is flagged. (#6374)
+- In Microsoft PowerPoint, the exact type of a shape is now reported when editing a slide (such as triangle, circle, video or arrow), rather than just "shape". (#7111)
 - Mathematical content (provided as MathML) is now supported in Google Chrome. (#7184)
 - NVDA can now speak using the new Windows OneCore voices (also known as Microsoft Mobile voices) included in Windows 10. You access these by selecting Windows OneCore voices in NVDA's Synthesizer dialog. (#6159)
-- NVDA user configuration files can now be stored in the user's local application data folder. This is enabled via a setting in the registry. See 'System wide parameters' in the user guide for more details. (#6812)
+- NVDA user configuration files can now be stored in the user's local application data folder. This is enabled via a setting in the registry. See "System Wide Parameters" in the User Guide for more details. (#6812)
 - In web browsers, NVDA now reports placeholder values for fields (specifically, aria-placeholder is now supported). (#7004)
-- In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w) (#6942)
+- In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w). (#6942)
 - Added support for the Date picker control found in Microsoft Outlook Appointment dialogs. (#7217)
 - The currently selected suggestion is now reported in Windows 10 Mail to/cc fields and the Windows 10 Settings search field. (#6241)
 - A sound is now playd to indicate the  appearance of suggestions in certain search fields in Windows 10 (E.g. start screen, settings search, Windows 10 mail to/cc fields). (#6241)
-- Automatically report notifications in Skype for Business Desktop, such as when someone starts a conversation with you.  (#7281)
-- Automatically report incoming chat messages while in a Skype for Business conversation. (#7286)
-- Automatically report notifications in Microsoft Edge, such as when a download starts.  (#7281)
+- NVDA now automatically reports notifications in Skype for Business Desktop, such as when someone starts a conversation with you. (#7281)
+- NVDA now automatically reports incoming chat messages while in a Skype for Business conversation. (#7286)
+- NVDA now automatically reports notifications in Microsoft Edge, such as when a download starts. (#7281)
 - You can now type in both contracted and uncontracted braille on a braille display with a braille keyboard. See the Braille Input section of the User Guide for details. (#2439)
 - You can now enter Unicode braille characters from the braille keyboard on a braille display by selecting Unicode braille as the input table in Braille Settings. (#6449)
 - Added support for the SuperBraille braille display used in Taiwan. (#7352)
@@ -33,24 +33,13 @@ Highlights of this release include input of contracted braille, support for new 
 - You can now choose what context information is shown on a braille display when an object gets focus using the new "Focus context presentation" setting in the Braille Settings dialog. (#217)
  - For example, the "Fill display for context changes" and "Only when scrolling back" options can make working with lists and menus more efficient, since the items won't continually change their position on the display.
  - See the section on the "Focus context presentation" setting in the User Guide for further details and examples.
-- Many more control types and states have been abbreviated for braille. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188)
 - In Firefox and Chrome, NVDA now supports complex dynamic grids such as spreadsheets where only some of the content might be loaded or displayed (specifically, the aria-rowcount, aria-colcount, aria-rowindex and aria-colindex attributes introduced in ARIA 1.1). (#7410)
 
 
 == Changes ==
-- An unbound gesture (script_restart) has been added to allow NVDA to be restarted quickly. (#6396)
+- An unbound command has been added to restart NVDA on demand. You can find it in the Miscelaneous category of the Input Gestures dialog. (#6396)
 - The keyboard layout can now be set from the NVDA Welcome dialog. (#6863)
-- The names of landmarks are abbreviated in Braille as follows: (#3975)
- - "landmark": "lmk"
- - "banner": "bnnr"
- - "complementary": "comp"
- - "contentinfo": "cinf"
- - "main": "main"
- - "navigation": "nav"
- - "search": "srch"
- - "form": "frm"
- - "region": "rgn"
- - Example: "navigation landmark" becomes "lmk nav"
+- Many more control types and states have been abbreviated for braille. Landmarks have also been abbreviated. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188, #3975)
 - Updated eSpeak NG to 1.49.1. (#7280)
 - The output and input table lists in the Braille Settings dialog are now sorted alphabetically. (#6113)
 - Updated liblouis braille translator to 3.2.0. (#6935)
@@ -64,7 +53,7 @@ Highlights of this release include input of contracted braille, support for new 
 
 == Bug Fixes ==
 - Editable div elements in Chrome no longer have their label reported as their value while in browse mode. (#7153)
-- Pressing end while in browse mode of an empty Microsoft Word document no longer causes a runtime error. (#7009)
+- Pressing end while in browse mode for an empty Microsoft Word document no longer causes a runtime error. (#7009)
 - Browse mode is now correctly   supported in Microsoft Edge where a document has been given a specific ARIA role of document. (#6998)
 - In browse mode, you can now select or unselect to the end of the line using shift+end even when the caret is on the last character of the line. (#7157)
 - If a dialog contains a progress bar, the dialog text is now updated in braille when the progress bar changes. This means, for example, that the remaining time can now be read in NVDA's "Downloading Update" dialog. (#6862)
