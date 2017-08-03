@@ -58,6 +58,11 @@ Qué hay de Nuevo en NVDA
 - En el texto editable, al mover el cursor (ej.: con las teclas del cursor o retroceso), la respuesta hablada de NVDA ahora es más precisa en muchos casos, especialmente en Chrome y aplicaciones de terminal. (#6424)
 - El contenido de Editor de Firmas en Microsoft Outlook 2016 ahora puede leerse. (#7253)
 - En aplicaciones Java Swing, NVDA ya no causa que a veces la aplicación se cuelgue al navegar por las tablas. (#6992)
+- En la actualización Windows 10 Creators, NVDA ya no anunciará notificaciones toast múltiples veces. (#7128)
+- En el menú Inicio de Windows 10, al pulsar intro para cerrarlo después de una búsqueda ya no se produce que NVDA anuncie buscar texto. (#7370)
+- Ahora es significativamente más rápido realizar la navegación rápida por encabezados en Microsoft Edge. (#7343)
+- En Microsoft Edge, la navegación en modo exploración ya no se salta secciones largas de ciertas páginas web tales como el tema Wordpress 2015. (#7143)
+- En Microsoft Edge, los puntos de referencia se localizan correctamente en otros idiomas diferentes al inglés. (#7328)
 
 
 == Cambios para Desarrolladores ==
@@ -2128,6 +2133,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - NVDA ahora pregunta si debería guardar la configuración y reiniciar si el usuario ha cambiado el idioma en el diálogo Opciones de Interface de Usuario. NVDA debe ser reiniciado para que el cambio de idioma tenga un efecto completo.
 - Si un sintetizador no puede ser cargado, cuando se lo selecciona desde el diálogo Sintetizadores, Un cuadro de mensaje alerta al usuario del hecho.
 - Cuando se carga un sintetizador por primera vez, NVDA permite al sintetizador elegir la voz más conveniente, los parámetros de velocidad y tono, en lugar de forzarlo a dejarlo como piense que está bien. Esto corrige un problema donde los sintetizadores sapi4 Eloquence y Viavoice comienzan a hablar de un modo bastante rápido para una primera vez.
+
 
 
 

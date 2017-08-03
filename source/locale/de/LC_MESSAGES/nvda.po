@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-21 09:23+1000\n"
+"POT-Creation-Date: 2017-08-03 12:37+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"Last-Translator: David Parduhn <xkill85@gmx.net>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.0.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -150,30 +150,16 @@ msgstr "NVDA-Klänge beim Sprechen und Wiedergeben"
 msgid "Always duck"
 msgstr "Immer"
 
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "ef"
+#. Translators: Displayed in braille for an object which is a
+#. window.
+#, fuzzy
+msgid "wnd"
+msgstr "Ende"
 
 #. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "lst"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "mnülst"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "mnü"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "sltr"
+#. dialog.
+msgid "dlg"
+msgstr "dlg"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
@@ -185,10 +171,56 @@ msgstr "KF"
 msgid "rbtn"
 msgstr "AS"
 
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "ef"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "sltr"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "mnülst"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+#, fuzzy
+msgid "mnuitem"
+msgstr "Menüeintrag"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mnü"
+
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
 msgid "cbo"
 msgstr "akl"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "grf"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr ""
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
@@ -196,49 +228,151 @@ msgid "lnk"
 msgstr "lnk"
 
 #. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "dlg"
-
-#. Translators: Displayed in braille for an object which is a
 #. tree view.
 msgid "tv"
 msgstr "ba"
 
 #. Translators: Displayed in braille for an object which is a
+#. tree view item.
+#, fuzzy
+msgid "tvitem"
+msgstr "Eintrag"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
 #. table.
-msgid "tb"
+#, fuzzy
+msgid "tbl"
 msgstr "tbl"
 
 #. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
+#. tool bar.
+msgid "tlbar"
+msgstr ""
 
 #. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "grf"
+#. drop down button.
+#, fuzzy
+msgid "drbtn"
+msgstr "AS"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "[X]"
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+#, fuzzy
+msgid "bqt"
+msgstr "sltr"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "[-]"
+#. Translators: Displayed in braille for an object which is a
+#. document.
+#, fuzzy
+msgid "doc"
+msgstr "Punkt"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+#, fuzzy
+msgid "app"
+msgstr "Laptop"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+#, fuzzy
+msgid "grp"
+msgstr "Griff"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+#, fuzzy
+msgid "embedded"
+msgstr "Eingebettetes Objekt"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+#, fuzzy
+msgid "enote"
+msgstr "Anmerkung"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+#, fuzzy
+msgid "fnote"
+msgstr "Anmerkung"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+#, fuzzy
+msgid "term"
+msgstr "Eingabeaufforderung"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+#, fuzzy
+msgid "sect"
+msgstr "Abschnitt"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+#, fuzzy
+msgid "mnubtn"
+msgstr "mnülst"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+#, fuzzy
+msgid "pnl"
+msgstr "Steuerung"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr ""
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "mrk"
 
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "->"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "sef"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 msgid "-"
@@ -248,17 +382,62 @@ msgstr "-"
 msgid "+"
 msgstr "+"
 
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "sef"
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "->"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr ""
+
+#. Translators: Displayed in braille when a required form field is encountered.
+#, fuzzy
+msgid "req"
+msgstr "rot"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+#, fuzzy
+msgid "invalid"
+msgstr "Ungültiger Eintrag"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+#, fuzzy
+msgid "mln"
+msgstr "mnü"
 
 #. Translators: Displayed in braille when an object is clickable.
 msgid "clk"
 msgstr "klk"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "[ ]"
+#. Translators: Displayed in braille when an object is sorted ascending.
+#, fuzzy
+msgid "sorted asc"
+msgstr "Aufsteigend sortiert"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+#, fuzzy
+msgid "sorted desc"
+msgstr "Absteigend sortiert"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr ""
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr ""
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr ""
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr ""
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
@@ -311,6 +490,24 @@ msgstr "Punkt 8"
 #. Translators: The description of a braille cursor shape.
 msgid "All dots"
 msgstr "Alle Punkte"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr ""
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+#, fuzzy
+msgid "Always fill display"
+msgstr "Braille&zeile:"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr ""
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -390,23 +587,18 @@ msgstr "Braille-Tastatur"
 #. along with any dots on a braille keyboard.
 #, fuzzy
 msgid "space with any dots"
-msgstr "Leertaste mit Punkt"
+msgstr "Raum mit Punkte"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
 #, fuzzy
 msgid "any dots"
-msgstr "Alle Punkte"
+msgstr "Punkte"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "Arabische Vollschrift"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Persische Vollschrift (Farsi)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -437,6 +629,12 @@ msgstr "Walisische Kurzschrift"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "Tschechische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Danish 8 dot computer braille"
+msgstr "Spanisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -547,6 +745,18 @@ msgstr "Estnische Basisschrift"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "Äthiopische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Persian 8 dot computer braille"
+msgstr "Deutsches 8-Punkt-Computerbraille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Persian grade 1"
+msgstr "Serbische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -675,6 +885,11 @@ msgstr "Indische Vollschrift (Kashmiri)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Lithuanian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Latvian grade 1"
 msgstr "Lettische Vollschrift"
 
@@ -800,7 +1015,14 @@ msgstr "Slovakische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+#, fuzzy
+msgid "Slovenian 8 dot computer braille"
+msgstr "Norwegisches 8-Punkt-Computerbraille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Slovenian grade 1"
 msgstr "Slowenische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
@@ -2206,7 +2428,8 @@ msgid "bold"
 msgstr "fett"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
+#. Translators: Reported when text is italicized.
+msgid "italic"
 msgstr "kursiv"
 
 #. Translators: Describes text formatting.
@@ -2433,13 +2656,13 @@ msgstr "freigeschaltet"
 msgid "not selected"
 msgstr "Nicht ausgewählt"
 
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "Nicht aktiviert"
-
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
 msgstr "nicht gedrückt"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "Nicht aktiviert"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -3788,6 +4011,17 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Koppelt die Braillezeile wahlweise an den Fokus oder an den NVDA-Cursor."
 
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, fuzzy, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Braillezeile gekoppelt an %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr ""
+
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
 msgstr "Braille-Cursor aus"
@@ -3978,6 +4212,18 @@ msgstr "nicht-mathematisch"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Interagiert mit mathematischen Inhalten."
+
+#. Translators: Reported when Windows 10 OCR is not available.
+#, fuzzy
+msgid "Windows 10 OCR not available"
+msgstr "Windows OneCore-Stimmen"
+
+#. Translators: Describes a command.
+#, fuzzy
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr ""
+"Zieht den Mauszeiger zu dem Objekt, auf dem sich der Navigator befindet."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4392,7 +4638,7 @@ msgstr "Arabisch"
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Nepali"
-msgstr "nepalesisch"
+msgstr "Nepalesisch"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -4674,9 +4920,10 @@ msgstr "Pfeil nach unten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr ""
+msgstr "Callout mit Pfeil nach unten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4688,178 +4935,202 @@ msgstr "Explosion"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Alternate process flowchart symbol"
-msgstr ""
+msgstr "Flussdiagramm für alternativen Prozess"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #, fuzzy
 msgctxt "shape"
 msgid "Card flowchart symbol"
-msgstr "ausgewähltes Symbol ändern"
+msgstr "Ablaufplansinnbild"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #, fuzzy
 msgctxt "shape"
 msgid "Collate flowchart symbol"
-msgstr "ausgewähltes Symbol ändern"
+msgstr "Flussdiagramm Symbol sortieren"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Connector flowchart symbol"
-msgstr ""
+msgstr "Steckverbinder-Flußdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Data flowchart symbol"
-msgstr ""
+msgstr "Ablaufplansinnbild"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Decision flowchart symbol"
-msgstr ""
+msgstr "Entscheidungsflussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Delay flowchart symbol"
-msgstr ""
+msgstr "Verzögerung Flussdiagramm symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Direct access storage flowchart symbol"
-msgstr ""
+msgstr "Direkten Zugang Lagerung Flussdiagramm symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Display flowchart symbol"
-msgstr ""
+msgstr "Flussdiagramm Anzeigesymbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #, fuzzy
 msgctxt "shape"
 msgid "Document flowchart symbol"
-msgstr "Dokumentinformationen"
+msgstr "Flussdiagramm Dokumentensymbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Extract flowchart symbol"
-msgstr ""
+msgstr "Flussdiagramm-Symbol zu extrahieren"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Internal storage flowchart symbol"
-msgstr ""
+msgstr "Internes Speicher-Flußdiagramm-Symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Magnetic disk flowchart symbol"
-msgstr ""
+msgstr "Magnetscheiben-Flußdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Manual input flowchart symbol"
-msgstr ""
+msgstr "Manuelles Eingabe-Flußdiagramm-Symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Manual operation flowchart symbol"
-msgstr ""
+msgstr "Manuelles Ablaufdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Merge flowchart symbol"
-msgstr ""
+msgstr "Fließdiagramm zusammenführen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Multi-document flowchart symbol"
-msgstr ""
+msgstr "Multi-Dokument-Flussdiagramm-symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Offline storage flowchart symbol"
-msgstr ""
+msgstr "Offline-Speicherung Flussdiagramm symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Off-page connector flowchart symbol"
-msgstr ""
+msgstr "Off-Page-Flussdiagramm Steckersymbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'Or' flowchart symbol"
-msgstr ""
+msgstr "Flußdiagramm: 'Oder'"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Predefined process flowchart symbol"
-msgstr ""
+msgstr "Vordefinierten Prozess Flussdiagramm symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Preparation flowchart symbol"
-msgstr ""
+msgstr "Vorbereitung-Flussdiagramm-symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Process flowchart symbol"
-msgstr ""
+msgstr "Prozess-Flowchart-symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr ""
+msgstr "Lochstreifen Flussdiagramm symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr ""
+msgstr "Sequenziellen Zugriff auf Speicher Flussdiagramm symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Sort flowchart symbol"
-msgstr ""
+msgstr "Ablaufplansinnbild"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Stored data flowchart symbol"
-msgstr ""
+msgstr "Gespeicherten Daten Flussdiagramm symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Summing junction flowchart symbol"
-msgstr ""
+msgstr "Zusammenfassung der Kreuzung Flussdiagramm symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Terminator flowchart symbol"
-msgstr ""
+msgstr "Terminator-Flussdiagramm-symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4872,7 +5143,7 @@ msgstr "Gefaltete Ecken"
 #, fuzzy
 msgctxt "shape"
 msgid "Rectangular picture frame"
-msgstr "Rechteckig verlaufend"
+msgstr "Rechteckige Bilderrahmen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4921,7 +5192,7 @@ msgstr "Hexagon"
 #, fuzzy
 msgctxt "shape"
 msgid "Horizontal scroll"
-msgstr "Horizontale Linie"
+msgstr "Horizontale Bildlaufleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4937,9 +5208,10 @@ msgstr "Pfeil nach links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with Left Arrow"
-msgstr ""
+msgstr "Legende mit Pfeil nach links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4955,27 +5227,31 @@ msgstr "Eckige Klammer links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Counter-clockwise Circular arrow"
-msgstr ""
+msgstr "Gegen den Uhrzeigersinn kreisförmigen Pfeil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Horizontaler Doppelpfeil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Legende mit horizontaler Doppelpfeil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Double-ended Circular arrow"
-msgstr ""
+msgstr "Kreisförmige Doppelpfeil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4997,116 +5273,133 @@ msgstr "Pfeile nach links oben"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Lightning bolt"
-msgstr "Rechte Alt-Taste"
+msgstr "Blitzschlag"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Line Callout"
-msgstr ""
+msgstr "Legende mit Linie 1"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with horizontal accent bar"
-msgstr ""
+msgstr "Legende mit horizontalen Markierungsleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with border and horizontal accent bar"
-msgstr ""
+msgstr "Legende mit Rahmen und horizontale Markierungsleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #, fuzzy
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr "Dünne, horizontale Linie"
+msgstr "Callout mit horizontaler Linie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #, fuzzy
 msgctxt "shape"
 msgid "Callout with diagonal straight line"
-msgstr "Dünne, diagonale Linie"
+msgstr "Callout mit diagonaler Gerade"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with diagonal callout line and accent bar"
-msgstr ""
+msgstr "Legende mit diagonalen Callout-Linie und Akzent-bar"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr ""
+msgstr "Legende mit Rand, diagonale gerade Linie und Markierungsleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with no border and diagonal callout line"
-msgstr ""
+msgstr "Popup ohne Grenze und Diagonale Callout-Linie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with angled line"
-msgstr ""
+msgstr "Legende mit schrägen Linie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with angled callout line and accent bar"
-msgstr ""
+msgstr "Legende mit abgewinkelten Callout-Linie und Akzent-bar"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with border, angled callout line, and accent bar"
-msgstr ""
+msgstr "Legende mit Rand, abgewinkelte Callout-Linie und Markierungsleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with no border and angled callout line"
-msgstr ""
+msgstr "Popup ohne Grenze und abgewinkelte Callout-Linie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with callout line segments forming a U-shape"
-msgstr ""
+msgstr "Beschriftung mit Beschriftung Liniensegmenten bilden eine U-Form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with accent bar and callout line segments forming a U-shape"
 msgstr ""
+"Legende mit Markierungsleiste und Callout Liniensegmente bilden eine U-Form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid ""
 "Callout with border, accent bar, and callout line segments forming a U-shape"
 msgstr ""
+"Legende mit Rand, Markierungsleiste und Callout Liniensegmente bilden eine U-"
+"Form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with no border and callout line segments forming a U-shape"
 msgstr ""
+"Legende mit keine Grenze und Callout Liniensegmenten bilden eine U-Form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #, fuzzy
 msgctxt "shape"
 msgid "Line inverse"
-msgstr "&Zeilennummern"
+msgstr "Linie-inverse"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5143,7 +5436,7 @@ msgstr "Mathematisches Antivalenzsymbol"
 #, fuzzy
 msgctxt "shape"
 msgid "Math Addition symbol"
-msgstr "Symbol hinzufügen"
+msgstr "Mathe-plus-symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5161,7 +5454,7 @@ msgstr "Trapez mit asymetrisch nichtparallelen Seiten"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'No' symbol"
-msgstr ""
+msgstr "Symbol: 'nein'"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5183,9 +5476,10 @@ msgstr "Elipse"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr ""
+msgstr "Ovale Legende"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5201,15 +5495,17 @@ msgstr "Pentagon"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Incomplete Pie with wedge missing"
-msgstr ""
+msgstr "Unvollständige Pie mit Keil fehlt"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr ""
+msgstr "Quartal Pie Keil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5225,29 +5521,30 @@ msgstr "Tabellarische Tafel"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Arrows pointing left right up and down"
-msgstr ""
-
-#. Translators: a shape name from Microsoft Office.
-#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-msgctxt "shape"
-msgid "Callout with Arrows pointing left right up and down"
-msgstr ""
+msgstr "Pfeile links rechts oben und unten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #, fuzzy
 msgctxt "shape"
+msgid "Callout with Arrows pointing left right up and down"
+msgstr "Legende mit Pfeilen links rechts oben und unten"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
 msgid "Rectangle"
-msgstr "Auswahlfeld"
+msgstr "Rechteck"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #, fuzzy
 msgctxt "shape"
 msgid "Rectangular callout"
-msgstr "Rechteckig verlaufend"
+msgstr "Rechteckige Legende"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5258,9 +5555,10 @@ msgstr "Pfeiltaste nach rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr ""
+msgstr "Legende mit Pfeil nach rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5279,7 +5577,7 @@ msgstr "Eckige Klammer rechts"
 #, fuzzy
 msgctxt "shape"
 msgid "Right triangle"
-msgstr "Rechtsbündig"
+msgstr "Ankathete"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5307,9 +5605,10 @@ msgstr "Abgerundetes Rechteck"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Rounded rectangle-shaped callout"
-msgstr ""
+msgstr "Abgerundeten Rechtecks callout"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5343,9 +5642,10 @@ msgstr "Rechteck mit einer abgeschnittenen und einer abgerundeten Ecke"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Four small squares that define a rectangular shape"
-msgstr ""
+msgstr "Vier kleine Quadrate, die eine rechteckige Form definieren"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5385,27 +5685,31 @@ msgstr "Pfeil nach oben"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with UpArrow"
-msgstr ""
+msgstr "Beschriftung mit UpArrow"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr ""
+msgstr "Doppelpfeil nach oben und unten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr ""
+msgstr "Legende mit Pfeile oben und unten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+#, fuzzy
 msgctxt "shape"
 msgid "U-shaped Arrow"
-msgstr ""
+msgstr "U-förmige Pfeil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5427,10 +5731,9 @@ msgstr "Zurück"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Beginning"
-msgstr "Wird ausgeführt"
+msgstr "Anfang"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5759,10 +6062,6 @@ msgstr "nicht hervorgehoben"
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
 msgstr "nicht fett"
-
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "kursiv"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
@@ -6426,7 +6725,7 @@ msgstr "Ungelesen"
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 #, fuzzy
 msgid "purple flag"
-msgstr "lila"
+msgstr "lila Flagge"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
@@ -6933,7 +7232,37 @@ msgstr "Seika-Braillezeilen"
 #. Translators: Names of braille displays.
 #, fuzzy
 msgid "SuperBraille"
-msgstr "Braille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr ""
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr ""
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr ""
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr ""
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr ""
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr ""
+
+#, fuzzy
+msgid "Recognition failed"
+msgstr "Konfiguration übernommen."
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -7065,6 +7394,10 @@ msgstr "Dokument&formatierungen..."
 
 msgid "Change settings of document properties"
 msgstr "Einstellungen der Dokumenteigenschaften ändern"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "Windows 10 OCR..."
+msgstr ""
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8574,6 +8907,15 @@ msgstr ""
 "Änderungen der Formatierungen nach dem &Cursor ansagen (kann dadurch "
 "langsamer reagieren)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr ""
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+#, fuzzy
+msgid "Recognition &language:"
+msgstr "Unbekannte Sprache"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "&überall"
@@ -8694,8 +9036,14 @@ msgstr "Blinkender Cursor"
 msgid "Cursor blink rate (ms)"
 msgstr "&Cursorblinkrate (in Millisekunden)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+#, fuzzy
+msgid "Cursor shape for &focus:"
+msgstr "Cursor-&Form:"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+#, fuzzy
+msgid "Cursor shape for &review:"
 msgstr "Cursor-&Form:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
@@ -8717,6 +9065,11 @@ msgstr "&Absatzweises Lesen"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "&Wortumbruch verhindern (falls möglich)"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+#, fuzzy
+msgid "Focus context presentation:"
+msgstr "Keine weiteren Anmerkungen"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -9179,8 +9532,9 @@ msgid "up-right diagonal line"
 msgstr "Obere diagonale Linie rechts"
 
 #. Translators: border positions in Microsoft Excel.
+#, fuzzy
 msgid "down-right diagonal line"
-msgstr ""
+msgstr "Down-right diagonale Linie"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "horizontal borders except outside"
@@ -9220,7 +9574,7 @@ msgstr "Strich Punkt (geneigt)"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "hair"
-msgstr ""
+msgstr "Haar/e"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "thin"
@@ -9232,7 +9586,7 @@ msgstr "medium"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "thick"
-msgstr ""
+msgstr "fette Farbe"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium dash dot dot"
@@ -10309,7 +10663,7 @@ msgstr "&Anmerkungen"
 #. in the browse mode Elements List dialog.
 #, fuzzy
 msgid "&errors"
-msgstr "Fehler"
+msgstr "&Fehler"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10318,6 +10672,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "-----"
+#~ msgstr "-----"
+
+#~ msgid "(x)"
+#~ msgstr "[X]"
+
+#~ msgid "(-)"
+#~ msgstr "[-]"
+
+#~ msgid "( )"
+#~ msgstr "[ ]"
+
+#~ msgid "Farsi grade 1"
+#~ msgstr "Persische Vollschrift (Farsi)"
+
+#~ msgid "ITALIC"
+#~ msgstr "kursiv"
 
 #~ msgid "braille"
 #~ msgstr "Braille"

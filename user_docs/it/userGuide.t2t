@@ -651,6 +651,31 @@ Punto 8 elabora il braille inserito e aggiunge un invio.
 Tasto 7 + tasto 8 elabora il braille inserito, senza l'aggiunta di un invio o di uno spazio..
 %kc:endInclude
 
++ OCR: Riconoscimento del contenuto +
+Un utente non vedente può trovarsi di fronte a contenuti completamente inaccessibili, in quanto gli autori degli stessi non forniscono allo screen reader le informazioni necessarie affinché quest'ultimo possa gestirle correttamente (esempio, pdf immagine).
+NVDA supporta la funzionalità di OCR (riconoscimento ottico dei caratteri) già inclusa in Windows10 per riconoscere il testo contenuto nelle immagini.
+Tramite i componenti aggiuntivi sarà anche possibile interfacciarsi con NVDA fornendogli altri metodi di riconoscimento.
+
+Quando ci si serve del comando di riconoscimento OCR, NVDA riconosce il contenuto presente all'interno del [navigatore ad oggetti #ObjectNavigation].
+Per impostazioni predefinite, il navigatore ad oggetti segue il cursore di sistema, o direttamente la modalità navigazione nel caso si stia utilizzando un sito internet o app che ne permettono l'uso(ad esempio Adobe Reader), perciò sarà possibile semplicemente spostare il focus o il cursore dove si desidera.
+Ad esempio, se ci si trova in una pagina web e ci si posiziona su un grafico, l'attivazione dell'OCR riconoscerà il testo contenuto in quel grafico.
+Tuttavia è anche possibile servirsi della navigazione ad oggetti per riconoscere il contenuto di un'intera finestra, basterà spostarsi sull'oggetto desiderato, in questo caso la finestra dell'app.
+
+Una volta terminato il processo di riconoscimento, basterà utilizzare i tasti freccia per esplorare il documento.
+è possibile anche attivare (che nel 90% delle volte significa cliccare) un punto desiderato spostandosi con le frecce e poi premendo il tasto invio o la barra spaziatrice. Questo risulta utile nel caso si voglia raggiungere un pulsante non etichettato, sia esso di un sito web o di un programma.
+Premere il tasto Esc per uscire dal documento riconosciuto.
+
+++ OCR in Windows 10 ++[Win10Ocr]
+Windows10 include al suo interno un sistema di OCR per molte lingue.
+NVDA si serve di questa caratteristica per riconoscere il testo contenuto nelle immagini o in applicazioni non accessibili.
+
+è possibile impostare la lingua di riconoscimento dalle impostazioni [Windows 10 OCR #Win10OcrSettings].
+Altre lingue possono essere installate aprendo il menu avvio, scegliere poi Impostazioni, Ora e Lingua -> Paese e Lingua e quindi aggiungi lingua.
+
+%kc:beginInclude
+Per riconoscere il testo presente alla posizione del navigatore ad oggetti con l'OCR di Windows 10, premere NVDA+r.
+%kc:endInclude
+
 + Funzioni speciali per le applicazioni +
 NVDA fornisce alcuni comandi o funzioni per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
 
@@ -1383,6 +1408,12 @@ La casella combinata "annuncia rientro righe con," è costituita da quattro opzi
 Il segnale acustico aumenterà di altezza ad ogni spazio, mentre per una tabulazione, aumenterà in altezza per l'equivalente di quattro spazi.
 - Sia voce che beep: con questa opzione attiva i rientri saranno letti utilizzando entrambi i metodi spiegati sopra.
 -
+
++++ Impostazioni OCR Windows 10 +++[Win10OcrSettings]
+è possibile accedere a questa finestra di dialogo tramite il menu preferenze di NVDA, permette di configurare [l'OCR di Windows 10 #Win10Ocr].
+
+==== Lingua di riconoscimento ====
+Questa casella combinata permette di scegliere la lingua da utilizzare per il riconoscimento del testo.
 
 +++ Dizionari +++
 La voce Dizionari situata nel menu preferenze contiene delle finestre di dialogo che consentono all'utente di controllare il modo con cui NVDA pronuncia certe parole o frasi. 
@@ -2298,6 +2329,16 @@ Si prega di consultare la [documentazione EcoBraille ftp://ftp.once.es/pub/utt/b
 | Leggi la posizione del cursore di controllo | F0 |
 | Commuta inseguimento braille | A |
 +%kc:endInclude
+
+++ SuperBraille ++
+Il dispositivo SuperBraille, conosciuto soprattutto in Taiwan, può essere connesso o tramite USB o porta seriale.
+Dato che la barra braille non dispone di  tasti di immissione per la scrittura o pulsanti per lo scorrimento, qualsiasi funzione deve essere inserita attraverso la tastiera del pc.
+A causa di ciò, e per mantenere una buona compatibilità con altri screen reader in Taiwan, sono stati previste in NVDA due combinazioni di tasti per scorrere con la barra braille:
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorrimento display braille indietro | Meno del tastierino numerico |
+| Scorrimento display braille avanti | Più del tastierino numerico | 
+%kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://www.brltty.com] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 
