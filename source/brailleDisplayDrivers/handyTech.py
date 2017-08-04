@@ -220,9 +220,9 @@ class BrailleWave(Model):
 class BasicBraille(Model):
 	pass
 
-def basic_braille_factory(cells, id):
+def basic_braille_factory(cells, device_id):
 	return type("BasicBraille{cells}".format(cells=cells), (BasicBraille,), {
-		"device_id": id,
+		"device_id": device_id,
 		"cells": cells,
 		"name": "Basic Braille {cells}".format(cells=cells),
 	})
@@ -411,8 +411,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				continue
 
 			self._sendPacket(HT_PKT_RESET)
-			# self._sendPacket(HT_PKT_RESET)
-			for i in xrange(3):
+			for _i in xrange(3):
 				# An expected response hasn't arrived yet, so wait for it.
 				self._dev.waitForRead(TIMEOUT)
 				if self.numCells and self._model:
@@ -483,7 +482,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# data only contained the packet type. Read the rest from the device.
 			stream = self._dev
 
-		# log.debug("Got packet of type: %r" % ser_packet_type)
 		model_id = stream.read(1)
 		if not self._model:
 			if not model_id in MODELS:
@@ -504,7 +502,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			assert stream.read(1) == "\x16"    # It seems packets are terminated with \x16
 			ext_packet_type = packet[0]
 			if ext_packet_type == HT_EXTPKT_CONFIRMATION:
-				log.debug("Extended confirmation received")
+				# Confirmation of a command, do nothing
+				pass
 			elif ext_packet_type == HT_EXTPKT_KEY:
 				key = ord(packet[1])
 				release = (key & KEY_RELEASE) != 0
@@ -518,8 +517,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._ignoreKeyReleases = False
 					self._keysDown.add(key)
 			else:
+				# Unknown extended packet, log it
 				log.debug("Extended packet of type %r: %r" % (ext_packet_type, packet))
 		else:
+			# Unknown packet type, log it
 			log.warning("Unhandled packet of type %r" % ser_packet_type)
 
 
@@ -563,6 +564,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	})
 
 
+# pylint: disable=W0223
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
 	source = BrailleDisplayDriver.name
