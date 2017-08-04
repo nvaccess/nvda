@@ -3,6 +3,84 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+Najważniejsze zmiany w tej wersji to wprowadzanie brajla skrótami, obsługa nowych głosów Windows OneCore dostępnych w Windows 10, wbudowana obsługa silnika OCR Windows 10, wiele znaczących usprawnień brajla i przeglądania sieci.
+
+== Nowe funkcje ==
+- Dodane ustawienie brajlowskie pokazywania wiadomości w nieskończoność. (#6669)
+- Na listach wiadomości Microsoft Outlook, zgłaszane są wiadomości oflagowane. (#6374)
+- W Microsoft Powerpoint, zgłaszany jest typ kształtu podczas edycji slajdu (np. trójkąt, okrąg, wideo, strzałka), zamiast informacji 'kształt'. (#7111)
+- Treść matematyczna (dostarczona jako MathML) jest obsługiwana w Google Chrome. (#7184)
+- NVDA może mówić przy użyciu nowych głosów Windows OneCore (znanych również jako głosy mobilne Windows) zawartych w Windows 10. Dostęp do głosów jest uzyskiwany po wybraniu Głosy Windows OneCore w oknie ustawień syntezatora NVDA. (#6159)
+- Pliki konfiguracyjne użytkownika NVDA  mogą być przechowywane w lokalnym folderze aplikacji użytkownika. Jest to włączane poprzez ustawienie rejestru. Więcej w rozdziale 'Parametry systemowe' w podręczniku użytkownika. (#6812)
+- W przeglądarkach internetowych, NVDA odczytuje zastępcze wartości dla pól (szczególnie znacznik aria-placeholder jest teraz obsługiwany). (#7004)
+- W trybie czytania w Microsoft Word, można nawigować do błędów pisowni przy użyciu szybkiej nawigacji (w i shift+w) (#6942)
+- Dodana obsługa kontrolki wyboru daty w ustawieniach spotkań Microsoft Outlook. (#7217)
+- Aktualnie wybrana podpowiedź jest odczytywana w polach Do i Kopia w programie Poczta Windows 10, oraz w oknie wyszukiwania Windows 10. (#6241)
+- Odtwarzany jest dźwięk oznaczający pojawienie się podpowiedzi w niektórych polach wyszukiwania w Windows 10 (np. ekran startowy, wyszukiwanie ustawień, poczta Windows 10 pola Do i Kopia). (#6241)
+- Automatyczne zgłaszanie powiadomień w Skype dla biznesu Desktop, np. gdy ktoś rozpoczyna z tobą konwersację.  (#7281)
+- Wiadomości przychodzące na czacie są automatycznie odczytywane podczas konwersacji w Skype dla biznesu. (#7286)
+- Automatyczne zgłaszanie powiadomień w Microsoft Edge, np. o rozpoczęciu pobierania.  (#7281)
+- Można pisać w brajlu standardowym lub skrótami brajlowskimi na wyświetlaczu brajlowskim z klawiaturą. Więcej w rozdziale o wprowadzaniu brajla w podręczniku użytkownika NVDA. (#2439)
+- Można wpisywać znaki unikodu brajlowskiego z klawiatury na monitorze brajlowskim, po wybraniu unikod brajlowski jako tablicy wprowadzania w ustawieniach brajla. (#6449)
+- Dodana obsługa monitora brajlowskiego SuperBraille używanego na Tajwanie. (#7352)
+- Nowe tablice brajlowskie: duński 8-punktowy brajl komputerowy, litewski, perski 8-punktowy brajl komputerowy, perski stopień 1, słoweński 8 -punktowy brajl komputerowy. (#6188, #6550, #6773, #7367)
+- Poprawiona tablica brajlowska angielski (U.S.) 8 -punktowy brajl komputerowy, włączając obsługę punktorów, znaku euro i liter akcentowanych. (#6836)
+- NVDA może używać mechanizmu OCR zawartego w Windows 10 aby rozpoznawać tekst obrazów lub niedostępnych aplikacji. (#7361)
+ - Język może być ustawiony w nowym oknie Windows 10 OCR w ustawieniach NVDA.
+ - Aby rozpoznać treść obiektu nawigacyjnego, naciśnij NVDA+r.
+ - Więcejw rozdziale Rozpoznawanie treści w podręczniku użytkownika.
+- Możesz wybrać informację kontekstową pokazywaną na monitorze brajlowskim gdy obiekt otrzymuje punkt uwagi przy użyciu nowego ustawienia "kontekst prezentacji punktu uwagi" w ustawieniach brajlowskich. (#217)
+ - Przykładowo: opcje "Wypełnij wyświetlacz dla zmian kontekstu" i "Tylko przy przechodzeniu wstecz" mogą poprawić wydajność pracy z listami i menu, ponieważ elementy nie będą stale zmieniać położenia na monitorze.
+ - Więcej w rozdziale o ustawieniu "Kontekstowa prezentacja punktu uwagi" w podręczniku użytkownika.
+- W Firefox i Chrome, NVDA obsługuje złożone dynamiczne siatki takie jak arkusze kalkulacyjne, w których tylko część treści może być załadowana lub wyświetlana (szczególnie obsługiwane są atrybuty aria-rowcount, aria-colcount, aria-rowindex and aria-colindex  wprowadzone w ARIA 1.1). (#7410)
+
+
+== Zmiany ==
+- Dodana nieprzypisana komenda umożliwiająca szybki restart NVDA. Można ją znaleźć w kategorii "Różne" okna "Zdarzenia wejścia". (#6396)
+- Układ klawiatury może być ustawiony w oknie powitalnym NVDA. (#6863)
+- Wiele więcej stanów i typów kontrolek oraz punkty orientacyjne, zostało skrócone w brajlu. Więcej w rozdziale "Skróty typu, stanu kontrolek i punktów orientacyjnych" w podręczniku użytkownika. (#7188, #3975)
+- Aktualizacja Espeak-ng do 1.49.1 (#7280).
+- Listy tabel wprowadzania i wyjścia w oknie ustawień brajlowskich są teraz posortowane alfabetycznie. (#6113)
+- Zaktualizowany translator brajlowski liblouis do 3.2.0. (#6935)
+- Domyślną tablicą brajlowską jest teraz ujednolicony brajl angielski stopień 1. (#6952)
+- Domyślnie NVDA pokazuje teraz tylko część informacji kontekstowej która zmieniła się na wyświetlaczu brajlowskim, gdy obiekt otrzymuje punkt uwagi. (#217)
+ - Poprzednio pokazywane było tyle informacji kontekstowej ile było możliwe, niezależnie od tego, czy użytkownik otrzymał już te same informacje kontekstowe wcześniej.
+ - Możesz wrócić do starego zachowania zmieniając nowe ustawienie "Kontekstowa prezentacja punktu uwagi"  w oknie ustawień brajlowskich na "Zawsze wypełnij wyświetlacz".
+- Kursor brajlowski może mieć inny kształt przy związaniu z punktem uwagi i punktem przeglądu. (#7112)
+- Zaktualizowane logo NVDA. Nowe logo to stylizowana mieszanka białych liter NVDAna stałym fioletowym tle. Zapewnia to dobrą widoczność na każdym tle, oraz nawiązuje do fioletu używanego w logo NV Access. (#7446)
+
+
+== Poprawki błędów ==
+- Edytowalne elementy div w Chrome nie mają od teraz nazwy zgłaszanej jako wartość w trybie czytania. (#7153)
+- Naciśnięcie end w trybie czytania w pustym dokumencie Microsoft Word nie powoduje błędu runtime. (#7009)
+- Tryb czytania jest prawidłowo obsługiwany w Microsoft Edge gdy dokument posiada rolę ARIA określoną jako dokument. (#6998)
+- W trybie czytania możliwe jest zaznaczanie i odznaczanie do końca linii przy użyciu shift+end nawet, gdy kursor znajduje się na ostatnim znaku linii. (#7157)
+- Jeśli okno dialogowe zawiera pasek postępu, tekst dialogu jest aktualizowany po zmianie paska postępu. Oznacza to, że np. pozostały czas może być odczytany w oknie pobierania NVDA. (#6862)
+- NVDA oznajmia teraz zmiany zaznaczenia dla niektórych list rozwijanych Windows 10 np. Autoodtwarzanie w ustawieniach. (#6337).
+- Bezsensowne informacje nie są od teraz odczytywane po wejściu w tworzenie spotkania w Microsoft Outlook. (#7216)
+- Dźwięki powiadomień pasków postępu bez określonego czasu trwania (np. pasek sprawdzania aktualizacji) są generowane tylko gdy ustawienie sygnalizacji pasków postępu ma generować dźwięki. (#6759)
+- W Microsoft Excel 2007 i 2003, komórki są znów zgłaszane podczas przechodzenia strzałkami wewnątrz arkusza. (#8243)
+- W aktualizacji Windows 10 Creators update i nowszych, zapewnione automatyczne włączanie trybu czytania podczas czytania wiadomości w programie Poczta Windows 10. (#7289)
+- Na większości monitorów brajlowskich z klawiaturą, punkt 7 kasuje ostatnio wprowadzony znak lub  komórkę brajlowską, a punkt 8 naciska klawisz Enter. (#6054)
+- W tekście edytowalnym, podczas przemieszczania kursora strzałkami i klawiszem Backspace, informacje odczytywane przez NVDA są obecnie bardziej precyzyjne w wielu przypadkach, szczególnie w Chrome i aplikacjach terminalowych. (#6424)
+- Odczytywana zawartość edytora sygnatury W Microsoft Outlook 2016. (#7253)
+- W aplikacjach Java Swing, NVDA nie powoduje czasem awarii aplikacji podczas nawigowania po tabeli. (#6992)
+- W Windows 10 Creators Update, NVDA nie oznajmia wielokrotnie tych samych wyskakujących powiadomień. (#7128)
+- W menu start w Windows 10, naciśnięcie Enter aby zamknąć menu startowe po wyszukiwaniu, nie powoduje od teraz odczytania przez NVDA wyszukiwanego tekstu. (#7370)
+- Znacząco przyśpieszona szybka nawigacja po nagłówkach w Microsoft Edge. (#7343)
+- W Microsoft Edge, nawigacja w trybie czytania nie powoduje pomijania dużych części niektórych stron np. motywu Wordpress 2015. (#7143)
+- W Microsoft Edge, punkty orientacyjne są prawidłowo prezentowane w językach innych niż angielski. (#7328)
+- Brajl prawidłowo podąża za zaznaczeniem podczas zaznaczania tekstu przekraczającego szerokość monitora. Przykładowo, jeśli zaznaczysz wiele linii przy użyciu shift+strzałka w dół, brajl pokazuje ostatnią zaznaczoną linię. (#5770)
+- W Firefox, NVDA nie zgłasza nieprawidłowo kilkukrotnie "sekcja" przy otwieraniu szczegółów tweeta na stronie twitter.com. (#5741)
+- Komendy nawigacji po tabeli nie są odtąd dostępne dla tabel układu treści w trybie czytania, chyba, że włączone jest zgłaszanie tabel układu treści. (#7382)
+- W Firefox i Chrome, komendy nawigacji po tabeli przeskakują ukryte komórki. (#6652, #5655)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
 = 2017.2 =
 Najważniejsze zmiany w tej wersji to pełna obsługa przyciszania audio w Windows 10 Creators Update; poprawki zaznaczania w trybie czytania, włączając w to problemy z zaznaczaniem wszystkiego; znaczące poprawki obsługi Microsoft Edge; poprawki działania na stronach www, takie jak oznajmianie elementów bieżących (przy użyciu aria-current).
 

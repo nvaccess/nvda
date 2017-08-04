@@ -45,8 +45,8 @@ NVDAでサポートしているその他の音声エンジンについては[サ
 
 ++ 点字ディスプレイサポート ++
 点字ディスプレイがあれば、NVDAは情報を点字で出力することができます。
-Both uncontracted and contracted braille input via a braille keyboard is also supported.
-サポートされているディスプレイの詳細は、[サポートされている点字ディスプレイ #SupportedBrailleDisplays]セクションを参照してください。
+点字ディスプレイからの1級点字および2級点字の文字入力にも対応しています。
+詳細は[サポートされている点字ディスプレイ #SupportedBrailleDisplays]を参照してください。
 
 NVDAでは、多くの言語の点字コードをサポートしており、その多くは、略字、標準点字及びコンピューター点字にも対応しています。
 
@@ -1002,9 +1002,9 @@ eSpeak NG では音声は言語の違いに対応し、声色は声の違いに�
 このオプションが有効のとき、選択された点字ディスプレイとの通信を行うポートや接続方法を選ぶことができます。
 このコンボボックスには点字ディスプレイとの接続についての選択肢が表示されます。
 
-NVDAの初期設定では、ポートの自動選択が試みられます。つまり、システムにUSBやブルートゥースで接続された機器をスキャンして、点字ディスプレイとの通信方法が見つかれば接続を行います。
+NVDAの初期設定では、ポートの自動選択が試みられます。つまり、システムにUSBやBluetoothで接続された機器をスキャンして、点字ディスプレイとの通信方法が見つかれば接続を行います。
 しかし、点字ディスプレイによっては、ユーザーがポートを手動で設定することができます。
-通常は"自動選択"（ポートの自動選択で、これはNVDAの既定の処理です）、"USB"、"ブルートゥース"を選択できます。また、接続された機器が対応していればシリアル通信ポートを選択できます。
+通常は"自動選択"（ポートの自動選択で、これはNVDAの既定の処理です）、"USB"、"Bluetooth"を選択できます。また、接続された機器が対応していればシリアル通信ポートを選択できます。
 
 点字ディスプレイがポート自動選択だけに対応している場合には、このオプションは無効になります。
 
@@ -1714,9 +1714,9 @@ Nuance Vocalizer for NVDA の詳しい情報と購入方法は、ウェブサイ
 このページではFocus Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific社製の Focus/PAC Mate ディスプレイをサポートしています。
 64ビット版Windowsが実行されていて、ドライバーがすでに他のスクリーンリーダーによってインストールされている場合であっても、他のスクリーンリーダーがNVDAに必要なファイルをインストールしていない可能性もあるため、このリンク先にあるドライバーをインストールする必要があるかもしれません。
 
-NVDAの初期設定では、NVDA はUSBまたはブルートゥースによる接続を自動選択します。
-しかし点字設定で "USB" または "ブルートゥース" を選ぶことで、接続方法を限定することができます。
-例えばブルートゥースで Focus ディスプレイと通信しながら、充電のために USB ポートをつなぎたいときに役立ちます。
+NVDAの初期設定では、NVDA はUSBまたはBluetoothによる接続を自動選択します。
+しかし点字設定で "USB" または "Bluetooth" を選ぶことで、接続方法を限定することができます。
+例えばBluetoothで Focus ディスプレイと通信しながら、充電のために USB ポートをつなぎたいときに役立ちます。
 
 以下は、これらのディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -1927,7 +1927,7 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ HumanWare製Brailliant BI/Bシリーズ ++
-USBまたはBluetooth接続された[HumanWare http://www.humanware.com/]製の BI 32、BI 40及びB 80を含むBrailliant BI及びBシリーズディスプレーがサポートされました。
+USBまたはBluetooth接続された[HumanWare http://www.humanware.com/]製の BI 32、BI 40及びB 80を含むBrailliant BI及びBシリーズディスプレイがサポートされました。
 USB接続で HumanWare プロトコルを使用する場合は、事前に製造元から提供されたUSBドライバーをインストールする必要があります。
 プロトコルとして OpenBraille を使用する場合は USB ドライバーは不要です。
 
@@ -1958,7 +1958,7 @@ USB接続で HumanWare プロトコルを使用する場合は、事前に製造
 %kc:endInclude
 
 ++ HIMS製 Braille Sense/Braille EDGE/Smart Beetle シリーズ ++
-[HIMS http://www.hims-inc.com/] 社の Braille Sense, Braille EDGE, Smart Beetle ディスプレイを USB またはブルートゥースで接続すれば NVDA で利用できます。
+[HIMS http://www.hims-inc.com/] 社の Braille Sense, Braille EDGE, Smart Beetle ディスプレイを USB または Bluetooth で接続すれば NVDA で利用できます。
 USB 接続のときは HIMS 社が提供する USB ドライバーをインストールしておく必要があります。
 ダウンロード: http://www.himsintl.com/?c=2/13&uid=2319
 
@@ -2055,8 +2055,8 @@ NVDA で利用するときのキー割り当ては以下のとおりです。
 次の点字ディスプレイをサポートしています：
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
-- BRAILLEX Trio (USB およびブルートゥース)
-- BRAILLEX Live 20, BRAILLEX Live および BRAILLEX Live Plus (USB およびブルートゥース)
+- BRAILLEX Trio (USB およびBluetooth)
+- BRAILLEX Live 20, BRAILLEX Live および BRAILLEX Live Plus (USB およびBluetooth)
 -
 
 BrxCom がインストールされていれば NVDA は BrxCom を使います。
@@ -2219,15 +2219,15 @@ BRAILLEX 2D Screen:
 NVDA は [Humanware http://www.humanware.com] の BrailleNote ノートテイカーに対応しており、スクリーンリーダーのための点字ディスプレイ端末として使うことができます。
 次の機種に対応しています:
 - BrailleNote Classic (シリアル接続のみ)
-- BrailleNote PK (シリアル接続およびブルートゥース接続)
-- BrailleNote MPower (シリアル接続およびブルートゥース接続)
-- BrailleNote Apex (USB接続およびブルートゥース接続)
+- BrailleNote PK (シリアル接続およびBluetooth接続)
+- BrailleNote MPower (シリアル接続およびBluetooth接続)
+- BrailleNote Apex (USB接続およびBluetooth接続)
 -
 
 お使いの機種が複数の接続方法で使える場合は、 BrailleNote を NVDA で使うために、点字ディスプレイ装置の設定でポートを選ぶ必要があります。
 詳細は BrailleNote の説明書をお読みください。
 NVDA の点字設定ダイアログでのポート選択が必要になる場合もあります。
-USBまたはブルートゥースで接続する場合は、"自動選択"、"USB"、"ブルートゥース" のいずれかを適切に選んでください。
+USBまたはBluetoothで接続する場合は、"自動選択"、"USB"、"Bluetooth" のいずれかを適切に選んでください。
 シリアルポート（またはUSBシリアルコンバーター）を使う場合、あるいは、これらの選択肢が表示されない場合は、ハードウェアのポート一覧から、適切なポートを選んでください。
 
 BrailleNote Apex を USB 接続するためには、あらかじめ HumanWare が提供するドライバーをインストールしてください。
@@ -2296,6 +2296,16 @@ NVDA の点字設定ダイアログで、点字ディスプレイが接続され
 | フォーカスまたはキャレットを現在のレビュー位置に移動 | F9 |
 | レビューカーソルの位置を報告 | F0 |
 | 点字表示モードの切替 | A |
+%kc:endInclude
+
+++ SuperBraille ++
+SuperBraille は主に台湾で利用されている機器で、USB またはシリアルで接続できます。
+SuperBraille には物理的なキーやスクロールボタンがないため、入力は PC のキーボードで行います。
+台湾で利用される他のスクリーンリーダーとの互換性を考慮して、点字ディスプレイのスクロールのために以下のキー操作が割り当てられています:
+%kc:beginInclude
+|| 名称 | キー |
+| 点字表示を後にスクロール | テンキーのプラス |
+| 点字表示を前にスクロール | テンキーのマイナス | 
 %kc:endInclude
 
 ++ BRLTTY ++
