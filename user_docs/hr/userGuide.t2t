@@ -652,6 +652,31 @@ Točkica 8 prevodi bilo koji brajični unos i pritišće enter.
 Pritišćući kombinaciju točkica 7 + točkica 8 prevodi brajični unos, ali bez dodavanja razmaka ili pritiska entera.
 %kc:endInclude
 
++ Prepoznavanje sadržaja +
+Kada autori ne daju dovoljno informacija korisniku čitača ekrana, kako bi mogao prepoznati informaciju, mogu se koristiti razni alati, kako bi se tekst mogao prepoznati sa slike.
+NVDA podržava optičko prepoznavanje znakova (OCR) funkciju, koja je ugrađena u Windowse 10 kako bi se tekst mogao prepoznavati sa slika.
+Dodatni prepoznavači sadržaja mogu biti dostupni putem NVDA dodataka.
+
+Pri korištenju naredbe za prepoznavanje sadržaja, NVDA prepoznaje sadržaj sa trenutnog [Objekta navigatora #ObjectNavigation].
+Podrazumijevano, objekt navigatora prati fokus sustava i pokazivač u načinu pregleda, stoga, možete premještavati kursor po želji.
+Na primjer, ako se premještavate uz pomoć kursora načina pregleda na sliku, prepoznavanje će prepoznati sliku podrazumjevano.
+Međutim, možda biste željeli koristiti izravno objektnu navigaciju kako biste mogli prepoznati prozor u konkretnom prozoru aplikacije.
+
+Jednom kada je prepoznavanje dovršeno, rezultat će biti prezentiran slično načinu pregleda, omogućavajući čitanje objekta kursorskim tipkama, itd.
+Prilikom pritiska entera ili razmaknice će aktivirati objekt (normalan klik) teksta pod kursora ako me moguće.
+Pritiskom escape, rezultat je odbaćen.
+
+++ Windows 10 OCR ++[Win10Ocr]
+Windows 10 uključuje OCR za mnoge jezike.
+NVDA može to koristiti kako bi se prepoznavao tekst sa slike ili nedostupne aplikacije.
+
+Možete izmijeniti jezik prepoznavanja teksta koristeći postavke [Windows 10 OCR #Win10OcrSettings].
+Dodatni jezici mogu se instalirati tako da se otvori izbornik start, izaberu postavke, označi vrijeme & Jezik -> regija & i jezik i izabere dodaj jezik.
+
++%kc:beginInclude
+Kako bi se prepoznao tekst sa objekta navigatora koristeći windows 10 ocr, pritisnite NVDA+r.
+%kc:endInclude
+
 + značajke specifične za neke aplikacije +
 NVDA pruža svoje dodatne značajke  za neke aplikacije kako bi učinio neke zadatke jednostavnijima i kako bi omogučio pristup nekim funkcijama koje nisu inače dostupne  korisnicima čitača zaslona.
 
@@ -1074,6 +1099,32 @@ Kad pomaknete brajični redak za jedan redak, tada ćete moći pročitati ostata
 
 Ako omogućite ovu opciju moći ćete tečnije čitati tekst, ali to povlaći za sobom i više pomicanja brajičnog retka za jednu po jednu liniju teksta.
 
+==== Prezentacija konteksta fokusa ====
+Ova opcija vam omogučava podešavanje koju kontekstnu informaciju će NVDA will prikazati na brajičnom retku kada je objekt fokusiran.
+Kontekstna informacija se nadovezuje na hijerarhiju objekta koji je fokusiran.
+Na primjer, kada se fokusirate na stavku popisa, ova stavka popisa je dio popisa.
+Ova lista može biti sadržaj dijaloškog okvira, itd.
+Molimo pročitajte poglavlje o [objektnoj navigaciji #ObjectNavigation] za više informacija o hijerarhiji koja se primjenjuje na objekte u NVDA.
+
+Kada je postavljen da popunjava brajični redak promjenama konteksta, NVDA će pokušati prikazati čim više relevantnih informacija koliko je to moguće, ali samo za dijelove konteksta koji se promijenio.
+Koristeći prijašnji primjer iznad, to znači, kada se promijeni fokus na popis, NVDA će prikazati popis na brajičnom retku.
+Čak štoviše, ako je preostalo dovoljno mjesta na retku, NVDA će pokušati prikazati da je stavka popisa dio popisa.
+Ako se tada pomićete po listi sa strelicama, podrazumijeva se, da ste svjesni činjenice da se nalazite u popisu.
+Stoga, za preostale stavke popisa na koje ste se fokusirali, NVDA će prikazati samo fokusiranu stavku popisa na retku.
+Kako biste pročitali ponovo kontekst, (npr. da se nalazite u listi i da je ta lista dio dijaloga), morat ćete premjestiti redak u nazad.
+
+Kada je ova opcija postavljena da je redak popunjen stalno, NVDA će prikazati čim više kontekstnih informacija, neovisno od toga, jeste li vidjeli te informacije prije.
+Prednost ove opcije je ta, da će NVDA će prikazivati onoliko informacija koliko stane na redak.
+Međutim, loša je strana, da uvijek postoji razlika u poziciji početka fokusa na retku.
+To može učiniti teškim letenje po dugom popisu stavaka, na primjer, jer ćete trebati stalno pomicati prst kako biste pronašli početak stavke.
+To je bila podrazumjevana opcija u  NVDA 2017.2 i starimim inačicama.
+
+Ako se postavi opcija da se prikazuje opcija da se prikazuje kontekst prilikom prebacivanja na prijašnji redak, NVDA nikada neće prikazati kontekstnu informaciju podrazumjevano.
+dakle, u prijašnjem primjeru, NVDA će prikazati da je fokusiran popis.
+Međutim, kako biste pročitali kontekst (npr. da se nalazite u listi i da je ta lista dio dijaloga), morat ćete se prebaciti redak u nazad.
+
+Kako biste se prebacivali između načina prikazivanja konteksta od bilo kuda, molimo dodijelite prilagođeni prečac koristeći [dijalog ulazne geste #InputGestures].
+
 +++ Postavke tipkovnice (NVDA+kontrol+k) +++
 Ovu opciju možete pronaći u izborniku Postavke, kao stavku "Postavke tipkovnice...".
 Ovaj dijaloški okvir sadrži sljedeće opcije:
@@ -1384,6 +1435,12 @@ Odabirni okvir "izvijesti o poravnanju redka uz pomoć", ima četiri opcije.
 Zvuk se povećava u visini za svaki razmak, a za tabulator, povećavat će se ekvivalentno četirima razmacima.
 - zvučni signali i govor: Ova opcija čita izmjene koristeći obje metode.
 -
+
++++ Windows 10 OCR postavke +++[Win10OcrSettings]
+Ovome se dijalogu može pristupiti koristeći izbornik postavke u NVDA izborniku i omogućava vam konfiguraciju [Windows 10 OCR #Win10Ocr].
+
+==== Jezik prepoznavanja ====
+Ovaj odabirni okvir omogućava izbor jezika koji će se koristiti za prepoznavanje sadržaja.
 
 +++ Govorni rječnici +++
 Izbornik govorni rječnici (kojeg možete pronaći u izborniku postavke) sadrži dijaloške okvire koji vam omogućuju upravljanje načinom na koji NVDA izgovara određene riječi ili fraze.

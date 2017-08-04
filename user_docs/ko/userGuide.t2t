@@ -8,9 +8,11 @@ NVDA NVDA_VERSION 사용설명서
 %%toc
 
 + 머리말 +
+NVDA에 오신것을 환영합니다!
+
 NVDA(NonVisual Desktop Access)는 마이크로소프트 윈도우용 무료 오픈소스 스크린 리더입니다.
 NVDA는 음성과 점자를 통해 정보를 제공하기 때문에 시각장애인들이 정안인들보다 더 많은 비용 지출 없이도 윈도우가 동작하는 컴퓨터를 사용할 수 있게 합니다.
-NVDA는 [NV Access http://www.nvaccess.org/]와 커뮤니티의 후원을 받아 개발되고 있습니다.
+NVDA는 [NV Access https://www.nvaccess.org/]와 커뮤니티의 후원을 받아 개발되고 있습니다.
 
 ++ 일반적인 특징 ++
 시각장애인들은 NVDA를 통해 윈도우 운영체제 및 그 밖의 다양한 응용 프로그램들을 사용할 수 있습니다.
@@ -43,6 +45,7 @@ eSpeak NG 이외에 NVDA가 지원하는 음성 엔진에 대한 정보를 보�
 
 ++ 점자 디스플레이 지원 ++
 점자 사용자라면 점자 디스플레이를 통해 NvDA가 제공하는 정보를 읽을 수 있습니다.
+또한 점자 키보드를 사용하여 정자 및 약자 입력도 가능합니다.
 NVDA가 지원하는 점자 디스플레이에 대한 정보는 [지원하는 점자 디스플레이 #SupportedBrailleDisplays] 섹션을 참조하세요.
 
 NVDA는 다국어 점자 정자, 약자 및 컴퓨터 점자 코드를 지원합니다.
@@ -135,6 +138,10 @@ NVDA를 임시 버전으로 사용하는 것도 한가지 선택사항이긴 합
 NVDA를 인스톨러로 설치한 경우 control+alt+n을 누르거나 시작 메뉴 - 프로그램  - NVDA 메뉴 - NVDA를 선택하면 간단히 NVDA가 실행됩니다.
 그밖에 실행 대화상자(윈도우키+R)에서 nvda를 입력하고 엔터키를 눌러도 됩니다.
 또한 [실행 옵션 #CommandLineOptions]을 사용하여 NVDA 재시작 (-r), 종료 (-q), 추가 기능 미사용 (--disable-addons) 등을 지정할 수 있습니다.
+
+설치 버전 사용시 사용자 설정은 roaming application data 폴더(예: "C:\Users\<user>\AppData\Roaming")에 저장됩니다.
+그러나 이것을 local application data로 경로를 변경할 수 있습니다.
+자세한 내용은 [시스템 환경 옵션 #SystemWideParameters]을 참조하세요.
 
 휴대용 버전에서 NVDA를 실행하려면 NVDA를 풀어 놓았던 디렉토리로 이동한 후 nvda.exe에서 엔터키를 누르거나 더블 클릭합니다.
 
@@ -242,7 +249,7 @@ NVDA 메뉴가 열리면 방향키를 이용하여 메뉴를 탐색할 수 있�
 | 입력 도움말 모드 시작 및 종료 | NVDA+1 | NVDA+1 | 없음 | 만약 이 모드에서 어떤 키를 누른다면 NVDA는 그 키를 읽어줍니다. 만약 입력된 키가 nvda 명령어라면 누른 키에관한 설명을 알려줍니다. |
 | NVDA 종료 | NVDA+q | NVDA+q | 없음 | NVDA를 종료합니다. |
 | NVDA 기능키 무시 | NVDA+f2 | NVDA+f2 | 없음 | 다음에 입력될 키가 NVDA 단축키라 할지라도 NVDA는 이 키를 무시하고 활성화된 응용프로그램에게 넘겨줍니다. |
-| 응용 프로그램에서의 NVDA 활성화/비활성화 전환 | NVDA+shift+s | NVDA+shift+z | 없음 | 슬립모드는 현재 응용프로그램 창에서 모든 NVDA 명령어와 음성출력/점자 디스플레이 출력을 비활성화 합니다. 이 기능은 음성출력이나 화면읽기 기능을 제공하는 프로그램에서 유용합니다. 이 키를 다시 누르면 셀프보이스가 비활성화 됩니다. |
+| 응용 프로그램에서의 NVDA 활성화/비활성화 전환 | NVDA+shift+s | NVDA+shift+z | 없음 | 슬립모드는 현재 응용프로그램 창에서 모든 NVDA 명령어와 음성출력/점자 디스플레이 출력을 비활성화 합니다. 이 기능은 음성출력이나 화면읽기 기능을 제공하는 프로그램에서 유용합니다. 이 키를 다시 누르면 NVDA 명령을 다시 사용할 수 있습니다. |
 %kc:endInclude
 
 ++ 시스템 정보 알림 ++
@@ -501,7 +508,8 @@ NVDA에서는 브라우즈 모드를 사용하여 웹 페이지처럼 복잡한 
 - d: 랜드마크(landmark)
 - o: 임베디드 객체(embedded object)
 - 1 - 6: 1~6 레벨의 각각의 헤딩
-- a: 주석 (코멘트, 편집 변경 사항 등)
+- a: 주석 (annotation, 즉 코멘트, 편집 변경 사항 등)
+- w: 철자 오류 (spelling error)
 -
 목록이나 표처럼 여러 항목(하위 요소)을 지닌 요소의 처음과 끝으로 이동하려면:
 || 이름 | 키 | 설명 |
@@ -573,6 +581,116 @@ NVDA는 다음 수학 컨텐츠를 지원합니다:
 
 상위 문서로 빠져나가려면 escape키를 누르십시오.
 
++ 점자 지원 +
+점자 사용자라면 점자 디스플레이를 통해 NvDA가 제공하는 정보를 읽을 수 있습니다.
+또한 점자 키보드를 사용하여 정자 및 약자 입력도 가능합니다.
+
+NVDA가 지원하는 점자 디스플레이에 대한 정보는 [지원하는 점자 디스플레이 #SupportedBrailleDisplays] 섹션을 참조하세요.
+점자 관련 설정에 대해서는 [점자 설정 대화상자 #BrailleSettings] 섹션을 참조하세요.
+
+++ 컨트롤, 스테이트 및 랜드마크 표시용 점자 기호 목록 ++
+점자디스플레이에 최대한의 정보를 보여줄 수 있도록 컨트롤, 스테이트 및 랜드마크 정보를 다음과 같이 표기하였습니다.
+
+|| 점자 기호 | 컨트롤 |
+| app | application |
+| bqt | 인용 구역(block quote) |
+| btn | 버튼 |
+| drbtn | drop down button |
+| spnbtn | spin button |
+| splbtn | split button |
+| tgbtn | toggle button |
+| cbo | 콤보박스 |
+| chk | 체크박스 |
+| dlg | 대화상자 |
+| doc | document |
+| edt | 편집창 |
+| pwdedt | password edit |
+| embedded | embedded object |
+| enote | end note |
+| fnote | foot note |
+| gra | 그래픽 |
+| cN | 표 행 번호 n(예: c1, c2) |
+| rN | table 열 n(예: r1, r2) |
+| grp | grouping |
+| hN | 헤딩 레벨 n(예: h1, h2) |
+| hlp | help baloon |
+| lmk | landmark |
+| lnk | 링크 |
+| vlnk | 방문한 링크 |
+| lst | 목록 |
+| mnu | 메뉴 |
+| mnubar | 메뉴바 |
+| mnubtn | menu button |
+| mnuitem | menu item |
+| pnl | panel |
+| prgbar | progress bar |
+| rbtn | 라디오 버튼 |
+| scrlbar | scroll bar |
+| sect | section |
+| stbar | status bar |
+| tabctl | tab control |
+| tbl | 표 |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| term | terminal |
+| tlbar | tool bar |
+| tltip | tool tip |
+| tv | 트리뷰 |
+| tvbtn | tree view button |
+| tvitem | tree view item |
+| lv N | 트리뷰 레벨 n |
+| wnd | window |
+| ⠤⠤⠤⠤⠤ | 구분선 |
+
+각 컨트롤의 스테이트는 다음과 같이 표기됩니다.
+|| 점자 기호 | 스테이트 |
+| ... | 자동 끝내기 지원 |
+| ( ) | 선택되지 않은 컨트롤(예: 체크박스 해제) |
+| (x) | 선택된 컨트롤(예: 체크박스 선택) |
+| (-) | 부분 선택된 컨트로(예: 체크박스 부분 선택) |
+| - | 축소할 수 있는 컨트롤(예: 트리뷰 레벨 빠져나가기) |
+| + | 확장할 수 있는 컨트롤(예: 트리뷰 확장하기) |
+| *** | displayed when a protected control or document is encountered |
+| clk | 클릭가능한 컨트롤 |
+| cmnt | displayed when there is a comment for a spreadsheet cell or piece of text in a document |
+| frml | displayed when there is a formula on a spreadsheet cell |
+| invalid | displayed when an invalid entry has been made |
+| ldesc | displayed when an object (usually a graphic) has a long description |
+| mln | displayed when an edit field allows typing multiple lines of text such as comment fields on websites |
+| req | displayed when a required form field is encountered |
+| ro | 읽기 전용 컨트롤(예: 읽기 전용 편집창) |
+| sel | 특정 컨트롤 선택 |
+| nsel | displayed when an object is not selected |
+| sorted asc | displayed when an object is sorted ascending |
+| sorted desc | displayed when an object is sorted descending |
+| submnu | 하위 메뉴를 지닌 컨트롤 |
+
+또한 랜드마크 표기용 텍스트는 다음과 같습니다:
+|| 점자 기호 | 랜드마크 |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
+
+++ 점자 입력 ++
+점자 키보드를 사용하여 정자 및 약자 점자 입력이 가능합니다.
+점자 설정 대화상자에 있는 [점자 입력 표기법 #BrailleInputTable] 설정을 통해 텍스트 입력시 사용될 점자 코드를 선택할 수 있습니다.
+
+정자 점자로 텍스트 입력시 점형이 입력되었을때 곧바로 텍스트가 입력됩니다.
+약자 점자를 사용할때에는 단어의 끝에서 스페이스 또는 엔터를 누르면 텍스트가 입력됩니다.
+이때 현재 입력되는 점형은 현재 단어를 입력시에만(즉 앞뒤 단어에는 적용되지 않음) 적용됨을 유의하시기 바랍니다.
+예를 들어 숫자를 입력시 숫자표 점형과 숫자를 입력하고 최신 입력된 숫자를 지우고 새 숫자를 입력할때 다시 숫자표 점형과 숫자를 입력하여야 합니다.
+
+%kc:beginInclude
+7점을 눌러 최신 입력된 점형 또는 글자를 지웁니다.
+8점을 눌러 엔터를 누르는 동시에 점형을 역점역(텍스트 입력)합니다.
+7점과 8점을 눌러 엔터를 누르지 않고 텍스트를 입력합니다.
+%kc:endInclude
+
 + 응용프로그램별 NVDA 기능 +
 NVDA는 몇몇 프로그램에서 특정 작업을 좀 더 쉽게 수행하도록 또는 스크린 리더 사용자들에게 달리 접근할 방법이 없는 특정한 기능을 사용할 수 있도록 별도의 기능을 제공합니다.
 
@@ -602,7 +720,7 @@ NVDA는 몇몇 프로그램에서 특정 작업을 좀 더 쉽게 수행하도�
 %kc:beginInclude
 마이크로소프트 워드 사용중 브라우즈 모드에서 NVDA+f7을 눌러 요소 목록을 호출할 수 있습니다.
 %kc:endInclude
-요소 목록 대화상자를 통해 헤딩, 링크 또는 주석(문서 주석 및 track 변경) 목록을 볼 수 있습니다.
+요소 목록 대화상자를 통해 헤딩, 링크, 주석(문서 주석 및 track 변경) 및 텍스트 오류 (현재 철자 오류 목록) 목록을 볼 수 있습니다.
 
 +++ 문서 위치 주석 알리기 +++
 %kc:beginInclude
@@ -907,7 +1025,7 @@ NVDA는 보이스 설정에 접근하지 않아도 어느 곳에서나 보이스
 | 현재 선택된 음성 설정값 감소 | NVDA+control+downArrow | NVDA+shift+control+downArrow | 선택된 현재 음성 설정의 값을 감소시킵니다. 예) 음성 속도 감소, 이전 음성 엔진 선택, 음성 크기 감소 |
 %kc:endInclude
 
-+++ 점자 설정 +++
++++ 점자 설정 +++[BrailleSettings]
 이 대화상자는 설정 메뉴 - 점자 설정 옵션에서 불러 낼 수 있습니다.
 
 ==== 점자 디스플레이 ====
@@ -936,10 +1054,9 @@ NVDA가 지원하는 점자 디스플레이에 관한 더 상세한 정보를 �
 이 옵션에서 텍스트를 점자로 변환할때 사용될 표기법을 선택할 수 있습니다.
 이 콤보박스에는 다양한 언어, 표준 및 각 그레이드의 점자테이블이 있습니다. 목록 안에 있는 점자 테이블에서 점자테이블로 이동하려면 화살표키를 사용하세요.
 
-==== 점자 입력 표기법 (Input Table) ====
+==== 점자 입력 표기법 (Input Table) ====[BrailleInputTable]
 점자 출력 표기법과는 별도로 이 옵션에서 점자 입력 표기법얼 설정할 수 있습니다.
 선택된 표기법은 점자디스플레이에 장착된 점자 키보드에서 텍스트를 입력시 텍스트 변환용으로 쓰입니다.
-현재 NVDA는 컴퓨터 점자를 통한 텍스트 입력을 지원함으로 8점 컴퓨터 점자 표기법들만 나열하고 있습니다.
 목록 안에 있는 점자 테이블에서 점자테이블로 이동하려면 화살표키를 사용하세요.
 
 참고로 모든 디스플레이가 점자 입력을 지원하지 않습니다 (점자디스플레이 드라이버에 따라 유무함).
@@ -956,12 +1073,17 @@ NVDA가 지원하는 점자 디스플레이에 관한 더 상세한 정보를 �
 ==== 점자 커서 깜박이 ====
 이 옵션을 사용하여 점자 커서 깜박이를 설정합니다.
 깜박이가 꺼지면 점자 커서 점형이 디스플레이에 항상 보여지게 됩니다.
+텍스트 선택시에는 본 설정이 적용되지 않습니다(7점과 8점이 항상 출력됨).
 
 ==== 커서 깜박이 시간 ====
 이 수치 필드에서는 커서의 깜박이 속도를 1000분의 1초 단위로 변경할 수 있습니다.
 
-==== 커서 모양 ====
-본 옵션을 사용하여 점자 커서 모양(점형)을 설정할 수 있습니다.
+==== 포커스 커서 모양 ====
+본 옵션을 사용하여 포커스와 연계되었을때의 점자 커서 모양(점형)을 설정할 수 있습니다.
+본 옵션은 텍스트 선택 커서 출력에는 적용되지 않습니다.
+
+==== 리뷰 커서 모양 ====
+본 옵션을 사용하여 리뷰 커서와 연계되었을때의 점자 커서 모양(점형)을 설정할 수 있습니다.
 본 옵션은 텍스트 선택 커서 출력에는 적용되지 않습니다.
 
 ==== 알림 메시지 출력 시간 ====
@@ -1160,7 +1282,13 @@ NVDA가 마우스의 움직임에 따라서 텍스트를 읽도록 설정된 경
 
 터미널과 채팅 프로그램의 history 제어 등 특정 객체에서 새로운 컨텐츠 읽기 온/오프를 토글합니다.
 
-검색 결과 나타날때 사운드로 알림
+==== 검색 결과 나타날때 사운드로 알림 ====
+검색 결과가 나타날때 이것을 사운드로 알려줄지를 토글합니다.
+검색 결과, 또는 자동 권장(auto-suggestion)이란 특정 편집창 또는 문서에서 텍스트 검색시 나타나는 결과 목록을 말합니다.
+예를 들어 윈도우 비스타 이상에서 시작 메뉴의 검색 편집창에 텍스트를 입력시 윈도우는 입력된 텍스트를 기반으로 검색 결과 목록을 보여줍니다.
+특히 윈도우 10과 여러  앱 사용시 특정 편집창에서 텍스트를 입력시 NVDA는 검색 결과가 나타났다고 알려줄 수 있습니다.
+검색창을 빠져나갈때 검색 결과 목록은 사라지며 이때 여러 편집창에서 이것을 사운드로 알려줄 수 있습니다.
+
 +++ 입력 구성 알림 설정 +++
 설정 메뉴에 있는 "입력 구성 알림 설정" 대화상자에서는 텍스트 서비스 및 IME를 이용한 아시아 언어 입력을 NVDA가 어떻게 처리할 것인지 설정할 수 있습니다.
 주의: 각 입력 방식에 따라 설정값을 조정하시기 바랍니다.
@@ -1473,9 +1601,9 @@ NvDA의 일반 설정을 제외한 나머지 설정값을 프로필에 적용시
 이때 프로필 설정에 있는 프로필 엑션 적용 임시 해제 박스를 선택해 주십시오.
 
 ++ 환경설정 파일 저장 위치 ++
-NVDA 휴대용 버전은 설정값들, 외부 앱마주얼 및 드라이버를 NVDA 디렉토리 안에 있는 userConfig 디렉토리에 저장합니다.
+NVDA 휴대용 버전은 설정값들과 추가 기능들을 NVDA 디렉토리 안에 있는 userConfig 디렉토리에 저장합니다.
 
-NVDA 설치 버전은 설정값들, 외부 앱마주얼 및 드라이버를 각 사용자 폴더 안에 있는 NVDA 디렉토리에 저장합니다.
+NVDA 설치 버전은 설정값들과 추가 기능들을 각 사용자 폴더 안에 있는 NVDA 디렉토리에 저장합니다.
 즉 시스템의 각 사용자가 자신만의 NVDA 환경설정을 가질 수 있음을 의미합니다.
 NVDA 설치 버전용 설정 디렉토리를 찾으려면 윈도우즈 시작 메뉴에서 프로그램 -> NVDA -> "NVDA 사용자 환경 폴더 탐색" 항목을 선택하세요.
 
@@ -1594,6 +1722,17 @@ Microsoft Speech Platform은 보통 서버 기반의 음성 애플리케이션 �
  -
 -
 
+++ Windows OneCore ++
+Windows 10 사용 시 OneCore(또는 Mobile)라는 음성 엔진을 사용할 수 있습니다.
+여러 언어를 지원하고 각 언어마다 다른 보이스를 제공하며 마이크로소프트 SAPI 5 엔진보다 반응 속도가 빠릅니다.
+
+각 언어별 보이스 목록과 설치 방법에 대해서는 다음 마이크로소프트 웹사이트를 참조하세요: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+
+현재 NVDA에서 음성 속도를 조절할 때 Narrator에서 제공하는 빠른 속도는 제공되지 않습니다.
+또한 전체적인 속도 설정은 설정(Settings) 앱의 설정을 따릅니다.
+설정 앱에서 변경된 값은 NVDA에도 적용됩니다.
+이 이슈들은 새 Windows 버전을 통해서 변경되지 않는 한 NVDA에서 해결할 수 없으며 우리는 추후 Windows 업데이트에서 변경될 것이라 희망합니다.
+
 ++ Audiologic Tts3 ++
 이것은 상용 이탈리아어 음성 엔진입니다.
 NVDA에서 이 음성 엔진을 사용하려면 반드시 시스템에 설치해야 합니다.
@@ -1638,8 +1777,6 @@ Nuance 보컬라이저는 뉴언스에서 개발하고 Tiflotecnia에서 NVDA용
 | 오른쪽 위즈윌로 뒤로 이동 | rightWizWheelUp |
 | 오른쪽 위즈윌로 앞으로 이동 | rightWizWheelDown |
 | 점자 셀로 이동 | routing |
-| backspace key | 7점 |
-| enter 키 | 8점 |
 | shift+tab 키 | 1점+2점+스페이스 |
 | tab key | 4점+5점+스페이스 |
 | 상 방향키 | 1점+스페이스 |
@@ -1882,8 +2019,6 @@ http://www.himsintl.com/?c=2/13&uid=2319에 접속하여 본 드라이버를 다
 | alt 키 | 1점+3점+4점+스페이스 |
 | escape 키 | 1점+5점+스페이스 |
 | tab key | 4점+5점+스페이스 |
-| enter 키 | 8점 |
-| backspace key | 7점 |
 | 상 방향키 | 1점+스페이스 |
 | 하 방향키 | 4점+스페이스 |
 | capsLock | 1점+3점+6점+스페이스 |
@@ -2029,8 +2164,6 @@ Live 모델에서 두번째 스위치 명령을 실행하려면 EAB를 옮기고
 
 || 이름 | 키 |
 %kc:beginInclude
-| backspace key | 7점 |
-| enter key | 8점 |
 | escape key | space+7점 |
 | 윗쪽 방향키 | space+2점 |
 | 왼쪽 방향키 | space+1점 |
@@ -2209,6 +2342,16 @@ NVDA 점자 설정 대화상자에서 본 디스플레이가 연결된 시리얼
 | 점자 연계 커서 | A |
 %kc:endInclude
 
+++ SuperBraille ++
+타이완에서 보급되는 SuperBraille 디스플레이를 USB 또는 시리얼 포트로 연결하여 사용할 수 있습니다.
+본 디스플레이는 키보드와 스크롤 키가 없음으로 일반 컴퓨터 키보드를 통해 디스플레이를 제어해야 합니다.
+이와 더불어 타이완에서 보급되는 타 스크린 리더와의 호환성을 이유로 디스플레이를 스크롤할 수 있는 일반 키보드 명령이 할당되었습니다.
+%kc:beginInclude
+|| 이름 | 키 |
+| 점자 디스플레이 뒤로 스크롤 | numpadMinus |
+| 점자 디스플레이 앞으로 스크롤 | numpadPlus |
+%kc:endInclude
+
 ++ BRLTTY ++
 외부 프로그램인 [BRLTTY http://www.brltty.com/]을 사용하여 다른 점자 디스플레이를 사용할 수 있습니다.
 이를 사용하기 위해서는 [BRLTTY for Windows http://www.brltty.com/download.html]를 설치해야 합니다.
@@ -2216,7 +2359,6 @@ NVDA 점자 설정 대화상자에서 본 디스플레이가 연결된 시리얼
 점자 디스플레이와 연결 포트 설정시 주의하시기 바랍니다 - 특히 USB 디스플레이를 사용하고자 하실때 회사에서 보급한 드라이버를 설치하셨다면 더욱 주의하시기 바랍니다.
 
 BRLTTY 사용시 점자 키보드가 탑제된 디스플레이를 사용한다면 BRLTTY 자체에서 점자 입력을 지원함으로 NVDA의 점자 입력 설정을 무시하셔도 됩니다.
-
 
 다음은 NVDA에 할당된 BRLTTY 기능키 목록입니다.
 밑 기능키가 사용하는 점자 디스플레이에 어떻게 적용되었는지 보시려면 [BRLTTY key tables documentation http://mielke.cc/brltty/doc/KeyBindings/]을 참조하십시요.
@@ -2229,54 +2371,6 @@ BRLTTY 사용시 점자 키보드가 탑제된 디스플레이를 사용한다�
 | 점자 셀로 이동 | route (커서를 글자로 이동) |
 %kc:endInclude
 
-+ 컨트롤, 스테이트 및 랜드마크 표시용 점자 기호 목록 +
-점자디스플레이에 최대한의 정보를 보여줄 수 있도록 컨트롤, 스테이트 및 랜드마크 정보를 다음과 같이 표기하였습니다.
-
-|| 점자 기호 | 컨트롤 |
-| btn | 버튼 |
-| cbo | 콤보박스 |
-| chk | 체크박스 |
-| dlg | 대화상자 |
-| edt | 편집창 |
-| gra | 그래픽 |
-| cN | 표 행 번호 n(예: c1, c2) |
-| rN | table 열 n(예: r1, r2) |
-| hN | 헤딩 레벨 n(예: h1, h2) |
-| lnk | 링크 |
-| vlnk | 방문한 링크 |
-| lst | 목록 |
-| lmk | 랜드마크 |
-| mnu | 메뉴 |
-| mnubar | 메뉴바 |
-| rbtn | 라디오 버튼 |
-| tb | 표 |
-| tv | 트리뷰 |
-| lv N | 트리뷰 레벨 n |
-| ``-----`` | 구분선 |
-
-각 컨트롤의 스테이트는 다음과 같이 표기됩니다.
-|| 점자 기호 | 스테이트 |
-| ... | 자동 끝내기 지원 |
-| ( ) | 선택되지 않은 컨트롤(예: 체크박스 해제) |
-| (x) | 선택된 컨트롤(예: 체크박스 선택) |
-| (-) | 부분 선택된 컨트로(예: 체크박스 부분 선택) |
-| - | 축소할 수 있는 컨트롤(예: 트리뷰 레벨 빠져나가기) |
-| + | 확장할 수 있는 컨트롤(예: 트리뷰 확장하기) |
-| clk | 클릭가능한 컨트롤 |
-| ro | 읽기 전용 컨트롤(예: 읽기 전용 편집창) |
-| sel | 특정 컨트롤 선택 |
-| submnu | 하위 메뉴를 지닌 컨트롤 |
-
-또한 랜드마크 표기용 텍스트는 다음과 같습니다:
-|| 점자 기호 | 랜드마크 |
-| bnnr | banner |
-| cinf | content info |
-| cmpl | complementary |
-| form | form |
-| main | main |
-| navi | navigation |
-| srch | search |
-| rgn | region |
 
 + 고급 사용자 기능 +
 
@@ -2320,6 +2414,18 @@ nvda -q
 | 없음 | --no-sr-flag  | 시스템 스크린 리더 지정 무시 |
 | 없음 | --install | NVDA 설치후 자동 실행 |
 | 없음 | --install-silent | 조용하게 NVDA 설치 (자동 실행 차단) |
+
+++ 시스템 환경 옵션++[SystemWideParameters]
+Registry를 통해 NVDA 설치 버전 사용 관련 옵션을 변경할 수 있습니다.
+본 설정값들은 다음 Registry 키에[ 나열되어 잇습니다:
+- 32비트 시스템: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64비트 시스템: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+본 Registry에서 변경할 수 있는 값들은 다음과 같습니다:
+|| 이름 | 타이프 | 설정값 | 설명 |
+| configInLocalAppData | DWORD | 0 (default)/disable, 1 (enable) | 1로 변경시 roaming application data가 아닌 local application data 폴더에 NVDA 설정이 저장됨. |
+| serviceDebug | DWORD | 0 (default)/disable, 1 (enable) | 1로 변경시 보안 화면에 진입시 보안 모드로 전환하지 않음(파이썬 컨솔과 로그 뷰어를 사용할 수 있으나 여러 보안 문제가 발생할 수 있음으로 사용 권장 않 함). |
 
 + 사용설명서 외 추가 정보 +
 NVDA에 관하여 더 많은 정보와 도움이 필요하다면 NVDA 웹 사이트 NVDA_URL를 방문해 주세요.

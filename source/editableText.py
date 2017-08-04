@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -270,6 +270,7 @@ class EditableText(ScriptableObject):
 			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
+		self.isTextSelectionAnchoredAtStart=True
 		self.hasContentChangedSinceLastSelection=False
 
 	def detectPossibleSelectionChange(self):
@@ -284,10 +285,19 @@ class EditableText(ScriptableObject):
 		self._lastSelectionPos=newInfo.copy()
 		if not oldInfo:
 			# There's nothing we can do, but at least the last selection will be right next time.
+			self.isTextSelectionAnchoredAtStart=True
 			return
+		self._updateSelectionAnchor(oldInfo,newInfo)
 		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
 		self.hasContentChangedSinceLastSelection=False
 		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
+
+	def _updateSelectionAnchor(self,oldInfo,newInfo):
+		# Only update the value if the selection changed.
+		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
+			self.isTextSelectionAnchoredAtStart=False
+		elif newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
+			self.isTextSelectionAnchoredAtStart=True
 
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
@@ -297,6 +307,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	def reportSelectionChange(self, oldTextInfo):
 		api.processPendingEvents(processEventQueue=False)
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		self._updateSelectionAnchor(oldTextInfo,newInfo)
 		speech.speakSelectionChange(oldTextInfo,newInfo)
 		braille.handler.handleCaretMove(self)
 

@@ -988,6 +988,10 @@ class MSHTML(IAccessible):
 		except LookupError:
 			return None
 
+	def event_liveRegionChange(self):
+		# MSHTML live regions are currently handled with custom code in-process
+		pass
+
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
 	"""

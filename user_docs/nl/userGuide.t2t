@@ -8,9 +8,11 @@
 %%toc
 
 + Inleiding +
+Welkom bij NVDA!
+
 NonVisual Desktop Access (NVDA) is een gratis en open source schermlezer voor het Microsoft Windows besturingssysteem.
 Door het geven van informatie in synthetische spraak en braille stelt NVDA blinden en slechtzienden in staat om toegang te krijgen tot computers met het Windows besturingssysteem zonder bijkomende kosten.
-NVDA wordt ontwikkeld door [NV Access http://www.nvaccess.org/], met bijdragen van de gebruikers.
+NVDA wordt ontwikkeld door [NV Access https://www.nvaccess.org/], met bijdragen van de gebruikers.
 
 ++ Algemene kenmerken ++
 NVDA stelt blinden en slechtzienden in staat om te werken met het Windows besturingssysteem en veel toepassingen van derden.
@@ -145,7 +147,7 @@ Raadpleeg voor meer details de paragraaf over [systeembrede parameters #SystemWi
 Om de  draagbare versie van NVDA te starten gaat u naar de map waarin u de uitgepakte bestanden hebt opgeslagen. Daar selecteert u NVDA.exe. Druk op de Entertoets of dubbelklik op het bestand.
 
 Bij het opstarten van het programma hoort u eerst een reeks in hoogte oplopende tonen die aangeven dat NVDA wordt geladen. 
-Afhankelijk van de snelheid van uw PC, of, als wordt geladen van een usb-stick of een ander wat trager medium, kan het laden even duren.  
+Afhankelijk van de snelheid van uw PC, of, als wordt geladen van een usb-stick of andere wat trage media, kan het laden even duren.  
 Als het laden extra lang duurt, hoort u "NVDA wordt geladen. Even geduld....". 
 
 Als u niets hoort, of u krijgt een foutmelding van Windows dan wel een in hoogte aflopende tonenreeks hoort, is er iets fout gegaan met het programma. U doet er dan goed aan dit te melden aan de ontwikkelaars van NVDA.
@@ -248,7 +250,7 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 | Invoerhulpmodus aan-/uitzetten | NVDA+1 | NVDA+1 | geen | Als de invoerhulpmodus is ingeschakeld hoort u bij elke toets die wordt ingedrukt de naam van de toets en de (eventuele) bijbehorende functie van de toets(en) |
 | NVDA afsluiten | NVDA+q | NVDA+q | geen | Sluit NVDA af |
 | Volgende toetsaanslag niet uitvoeren | NVDA+f2 | NVDA+f2 | geen | De volgende toetsaanslag zal niet als NVDA-commando worden verwerkt maar als commando binnen de gebruikte toepassing worden uitgevoerd. |
-| Zet slaapmodus aan/uit voor huidige applicatie | NVDA+shift+s | NVDA+Shift+z | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig in applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |
+| Zet slaapmodus aan/uit voor huidige applicatie | NVDA+shift+s | NVDA+shift+z | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig bij applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |
 %kc:endInclude
 
 ++ Systeeminformatie melden ++
@@ -1555,9 +1557,9 @@ U wilt bij voorbeeld een handmatig geactiveerd profiel of de normale configurati
 Dit kunt u doen door een vinkje te zetten in het selectievakje bij "Alle triggers tijdelijk uitschakelen" in het dialoogvenster Configuratieprofielen.
 
 ++ De Locatie van Configuratiebestanden ++
-Als u een draagbare versie van NVDA hebt, worden alle instellingen, door de gebruiker gedefinieerde app-modules en aangepaste drivers opgeslagen in een sub-map genaamd user config. Deze map bevindt zich in de NVDA hoofdmap.
+Als u een draagbare versie van NVDA hebt, worden alle instellingen en add-ons opgeslagen in een sub-map genaamd user config. Deze map bevindt zich in de NVDA hoofdmap.
 
-Als u NVDA op een laptop of pc hebt geïnstalleerd, worden alle instellingen, door de gebruiker gedefinieerde app-modules en aangepaste drivers  opgeslagen in een aparte map die te vinden is in de map van de aangemelde gebruiker onder de Windows gebruikersprofielen.
+Als u NVDA op een laptop of pc hebt geïnstalleerd, worden alle instellingen en add-ons opgeslagen in een aparte map die te vinden is in de map van de aangemelde gebruiker onder de Windows gebruikersprofielen.
 Dit betekent dat elke gebruiker met de door hem- of haarzelf ingestelde configuratie van NVDA kan werken.
 U vindt de configuratiemap  door op de pc of laptop via Start naar Programma's te gaan en vervolgens naar NVDA waar u “Verken de NVDA configuratiemap” kiest.
 
@@ -1679,7 +1681,7 @@ Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
 In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
 Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
 
-Als u stemmen voor extra talen wilt installeren, leest u dan het artikel van Microsoft op https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+Een lijst met beschikbare talen en de installatieinstructie vindt u op de navolgende webpagina van Microsoft: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 Let erop dat de versnellingsmogelijkheden die op dit moment in de Verteller beschikbaar zijn nog niet ondersteund worden door NVDA.
 Houd er ook rekening mee dat de snelheid die u instelt in Windows de in NVDA ingestelde niveaus zal beïnvloeden.
@@ -2295,6 +2297,16 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | Systeemfocus of invoegcursor naar huidige leespositie verplaatsen | F9 |
 | Leescursorpositie melden | F0 |
 | Wisselknop “braille tethered to” | A |
+%kc:endInclude
+
+++ SuperBraille ++
+De SuperBraille leesregel die voornamelijk verkrijgbaar is in  Taiwan, kan ofwel serieel of via usb worden aangesloten. 
+Aangezien  de SuperBraille niet over fysieke invoertoetsen of scroltoetsen beschikt, moet alle invoer gebeuren door middel van een standaard computertoetsenbord.
+Om deze reden en om compatibiliteit met andere schermlezers in Taiwan te bewerkstelligen, kan men over 2 toetsen beschikken waarmee scrollen van de leesregel mogelijk wordt gemaakt:
+%kc:beginInclude
+|| Naam | Toets |
+| Leesregel terugscrollen | numerieke Min-toets |
+| Leesregel vooruitscrollen | numerieke Plus-toets | 
 %kc:endInclude
 
 ++ BRLTTY ++

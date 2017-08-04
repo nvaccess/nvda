@@ -58,6 +58,11 @@
 - Når markøren bevæges i redigerbart tekst (f.eks. med markørtasterne eller backspace), vil NVDAs udtalte feedback nu være mere præcist i mange tilfæld, særligt i Chrome og terminalapplikationer. (#6424)
 - Indholdet i signaturredigering i Microsoft Outlook 2016 kan nu læses. (#7253)
 - NVDA vil ikke længere være grunden til at nogle Java Swing applikationer bryder ned, når der navigeres i tabeller. (#6992)
+- NVDA vil ikke længere annoncere toastbeskeder i Windows 10 Creators Update flere gange end nødvendigt. (#7128)
+- Efter en søgning vil et tryk på Enter-tasten for at lukke startmenuen ikke længere annoncere søgetekst i Windows 10. (#7370)
+- Udførelse af bogstavnavigation mellem overskrifter er nu markant hurtigere i Microsoft Edge. (#7343)
+- Navigation i gennemsynstilstand i Microsoft Edge springer ikke længere over store dele af hjemmesider (f.eks. temaet Wordpress 2015 på hjemmesider skabt af Wordpress). (#7143)
+- Landmærker er nu rigtigt lokaliserede i andre sprog end engelsk, når Microsoft Edge benyttes som browser. (#7328)
 
 
 == Ændringer for udviklere ==
