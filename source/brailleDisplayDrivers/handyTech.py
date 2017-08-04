@@ -206,7 +206,7 @@ class BrailleWave(Model):
 	name = "Braille Wave"
 
 	def get_keys(self):
-		keys = super(TripleActionKeysMixin, self).get_keys()
+		keys = super(BrailleWave, self).get_keys()
 		keys.update({
 			0x04: "left",
 			0x08: "right",
@@ -232,7 +232,7 @@ BasicBraille20 = basic_braille_factory(20, MODEL_BASIC_BRAILLE_20)
 BasicBraille32 = basic_braille_factory(32, MODEL_BASIC_BRAILLE_32)
 BasicBraille40 = basic_braille_factory(40, MODEL_BASIC_BRAILLE_40)
 BasicBraille48 = basic_braille_factory(48, MODEL_BASIC_BRAILLE_48)
-BasicBraille64 = basic_braille_factory(60, MODEL_BASIC_BRAILLE_64)
+BasicBraille64 = basic_braille_factory(64, MODEL_BASIC_BRAILLE_64)
 BasicBraille80 = basic_braille_factory(80, MODEL_BASIC_BRAILLE_80)
 BasicBraille160 = basic_braille_factory(160, MODEL_BASIC_BRAILLE_160)
 
@@ -368,6 +368,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			hwID = portInfo["hardwareID"]
 			if hwID.startswith(r"FTDIBUS\COMPORT"):
 				# USB.
+				# TODO: It seems there is also another chip (Gohubs) used in some models?
 				portType = "USB serial"
 				try:
 					usbID = hwID.split("&", 1)[1]
