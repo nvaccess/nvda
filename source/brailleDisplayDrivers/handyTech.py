@@ -151,7 +151,7 @@ class JoystickMixin(object):
 	"""
 
 	def get_keys(self):
-		keys = super(TripleActionKeysMixin, self).get_keys()
+		keys = super(JoystickMixin, self).get_keys()
 		keys.update({
 			0x74: "joystickLeft",
 			0x75: "joystickRight",
@@ -545,7 +545,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"br(handytech):return",),
 			"kb:enter": (
 				"br(handytech):leftTakTop+leftTakBottom+rightTakTop+rightTakBottom",
-				"br(handytech):b8",),
+				"br(handytech):b8", "br(handytech):escape+return",),
 			"kb:alt": ("br(handytech):b2+b4+b5",),
 			"kb:escape": ("br(handytech):b4+b6",),
 			"kb:1": ("br(handytech):n1",),
