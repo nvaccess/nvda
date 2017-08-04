@@ -205,6 +205,17 @@ class BrailleWave(Model):
 	num_cells = 40
 	name = "Braille Wave"
 
+	def get_keys(self):
+		keys = super(TripleActionKeysMixin, self).get_keys()
+		keys.update({
+			0x04: "left",
+			0x08: "right",
+			0x0C: "escape",
+			0x14: "return",
+			0x10: "space",
+		})
+		return keys
+
 
 class BasicBraille(Model):
 	pass
@@ -520,15 +531,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_routeTo": ("br(handyTech):routing",),
 			"braille_scrollBack": (
 				"br(handytech):leftSpace", "br(handytech):leftTakTop", "br(handytech):rightTakTop", 
-				"br(handytech):b3",),
+				"br(handytech):b3", "br(handytech):left",),
 			"braille_previousLine": ("br(handytech):b4",),
 			"braille_nextLine": ("br(handytech):b5",),
 			"braille_scrollForward": (
 				"br(handytech):rightSpace", "br(handytech):leftTakBottom", 
-				"br(handytech):rightTakBottom", "br(handytech):b6"),
+				"br(handytech):rightTakBottom", "br(handytech):b6", "br(handytech):right"),
 			"braille_toggleTether": ("br(handytech):b2",),
-			"kb:shift+tab": ("br(handytech):leftTakTop+leftTakBottom",),
-			"kb:tab": ("br(handytech):rightTakTop+rightTakBottom",),
+			"kb:shift+tab": ("br(handytech):leftTakTop+leftTakBottom", 
+			"br(handytech):escape",),
+			"kb:tab": ("br(handytech):rightTakTop+rightTakBottom",  
+				"br(handytech):return",),
 			"kb:enter": (
 				"br(handytech):leftTakTop+leftTakBottom+rightTakTop+rightTakBottom",
 				"br(handytech):b8",),
