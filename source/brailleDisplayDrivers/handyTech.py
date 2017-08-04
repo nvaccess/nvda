@@ -13,6 +13,9 @@ import hwIo
 import braille
 import brailleInput
 import inputCore
+import ui
+from baseObject import ScriptableObject
+from globalCommands import SCRCAT_BRAILLE
 from logHandler import log
 
 
@@ -74,6 +77,35 @@ MODEL_MODULAR_80 = "\x88"
 MODEL_MODULAR_40 = "\x89"
 MODEL_BOOKWORM = "\x90"
 
+# Key constants
+KEY_B1 = 0x03
+KEY_B2 = 0x07
+KEY_B3 = 0x0B
+KEY_B4 = 0x0F
+KEY_B5 = 0x13
+KEY_B6 = 0x17
+KEY_B7 = 0x1B
+KEY_B8 = 0x1F
+KEY_LEFT_SPACE = 0x10
+KEY_RIGHT_SPACE = 0x18
+KEY_ROUTING = 0x20
+KEY_RELEASE = 0x80
+
+# Braille dot mapping
+KEY_DOTS = {
+	KEY_B4: 1,
+	KEY_B3: 2,
+	KEY_B2: 3,
+	KEY_B5: 4,
+	KEY_B6: 5,
+	KEY_B7: 6,
+	KEY_B1: 7,
+	KEY_B8: 8,
+}
+
+# Considered spaces in braille input mode
+KEY_SPACES = (KEY_LEFT_SPACE, KEY_RIGHT_SPACE,)
+
 
 class Model(object):
 	# Device identifier, used in the protocol to identify the device
@@ -93,17 +125,17 @@ class Model(object):
 		return OrderedDict({
 			# Braille input keys
 			# Numbered from left to right, might be used for braille input on some models
-			0x03: "b1",
-			0x07: "b2",
-			0x0B: "b3",
-			0x0F: "b4",
-			0x13: "b5",
-			0x17: "b6",
-			0x1B: "b7",
-			0x1F: "b8",
+			KEY_B1: "b1",
+			KEY_B2: "b2",
+			KEY_B3: "b3",
+			KEY_B4: "b4",
+			KEY_B5: "b5",
+			KEY_B6: "b6",
+			KEY_B7: "b7",
+			KEY_B8: "b8",
 
-			0x10:"leftSpace",
-			0x18:"rightSpace",
+			KEY_LEFT_SPACE: "leftSpace",
+			KEY_RIGHT_SPACE: "rightSpace",
 			# Modular/BS80 keypad
 			0x01: "b12",
 			0x09: "b13",
@@ -212,7 +244,7 @@ class BrailleWave(Model):
 			0x08: "right",
 			0x0C: "escape",
 			0x14: "return",
-			0x10: "space",
+			KEY_LEFT_SPACE: "space",
 		})
 		return keys
 
@@ -291,10 +323,6 @@ MODELS = {
 }
 
 
-# Key ranges
-KEY_ROUTING = 0x20
-KEY_RELEASE = 0x80
-
 # Packet types
 HT_PKT_BRAILLE = "\x01"
 HT_PKT_EXTENDED = "\x79"
@@ -331,7 +359,7 @@ HT_HID_RPT_OutBaud = "\xFD" # get baud rate of serial connection
 HT_HID_RPT_InBaud = "\xFE" # set baud rate of serial connection
 HT_HID_CMD_FlushBuffers = "\x01" # flush input and output buffers
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	name = "handyTech"
 	# Translators: The name of a series of braille displays.
 	description = _("Handy Tech braille displays")
@@ -392,6 +420,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._model = None
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
+		self._brailleInput = False
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
@@ -462,7 +491,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return
 		# The first key released executes the key combination.
 		try:
-			inputCore.manager.executeGesture(InputGesture(self._model, self._keysDown))
+			inputCore.manager.executeGesture(InputGesture(self._model, self._keysDown, self._brailleInput))
 		except inputCore.NoInputGestureAction:
 			pass
 		# Any further releases are just the rest of the keys in the combination being released,
@@ -528,6 +557,24 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# cells will already be padded up to numCells.
 		self._sendExtendedPacket(HT_EXTPKT_BRAILLE, "".join(chr(cell) for cell in cells))
 
+	scriptCategory = SCRCAT_BRAILLE
+	
+	def script_toggleBrailleInput(self, gesture):
+		self._brailleInput = not self._brailleInput
+		if self._brailleInput:
+			ui.message(_('Braille input enabled'))
+		else:
+			ui.message(_('Braille input disabled'))
+
+	script_toggleBrailleInput.__doc__ = _("Toggle braille input")
+
+	__gestures = {
+		'br(handytech):space+b1+b3+b4': 'toggleBrailleInput',
+		'br(handytech):leftSpace+b1+b3+b4': 'toggleBrailleInput',
+		'br(handytech):rightSpace+b1+b3+b4': 'toggleBrailleInput',
+		'bk:space+dot1+dot2+dot7': 'toggleBrailleInput',
+	}
+
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
 			"braille_routeTo": ("br(handyTech):routing",),
@@ -569,19 +616,30 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, model, keys):
+	def __init__(self, model, keys, isBrailleInput=False):
 		super(InputGesture, self).__init__()
 		self.keys = set(keys)
 
 		self.keyNames = names = []
 		for key in keys:
+			if isBrailleInput:
+				self.dots = self._calculateDots()
+				if key in KEY_SPACES:
+					self.space = True
 			if key >= KEY_ROUTING:
 				self.routingIndex = key - KEY_ROUTING
 				names.append("routing")
-			else:
+			elif not isBrailleInput:
 				try:
 					names.append(model.get_keys()[key])
 				except KeyError:
 					log.debugWarning("Unknown key %d" % key)
 
 		self.id = "+".join(names)
+
+	def _calculateDots(self):
+		dots = 0
+		for key in self.keys:
+			if key in KEY_DOTS:
+				dots |= 1 << (KEY_DOTS[key] - 1)
+		return dots
