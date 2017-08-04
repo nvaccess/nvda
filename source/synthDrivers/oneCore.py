@@ -265,7 +265,6 @@ class SynthDriver(SynthDriver):
 			voices[voiceInfo.ID] =  voiceInfo
 		return voices
 
-<<<<<<< HEAD
 	def _isVoiceValid(self,ID):
 		"""
 		Checks that the given voice actually exists and is valid.
@@ -284,22 +283,22 @@ class SynthDriver(SynthDriver):
 			log.debugWarning("Could not open registry key %s, %r" % (ID, e))
 			return False
 		try:
-			langDataPath = _winreg.QueryValueEx(hkey, 'langDataPath')
+			langDataPath = winreg.QueryValueEx(hkey, 'langDataPath')
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
-		if not langDataPath or not isinstance(langDataPath[0], basestring):
+		if not langDataPath or not isinstance(langDataPath[0], str):
 			log.debugWarning("Invalid langDataPath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(langDataPath[0])):
 			log.debugWarning("Missing language data file: %s" % langDataPath[0])
 			return False
 		try:
-			voicePath = _winreg.QueryValueEx(hkey, 'voicePath')
+			voicePath = winreg.QueryValueEx(hkey, 'voicePath')
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
-		if not voicePath or not isinstance(voicePath[0],basestring):
+		if not voicePath or not isinstance(voicePath[0],str):
 			log.debugWarning("Invalid voicePath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(voicePath[0] + '.apm')):
