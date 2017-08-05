@@ -26,6 +26,7 @@ import brailleDisplayDrivers
 import inputCore
 import brailleTables
 from collections import namedtuple
+import re
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -1928,6 +1929,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
+	Optionally, L{model} can be provided to allow for model specific gestures.
 	L{routingIndex} should be provided for routing buttons.
 	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
@@ -1943,6 +1945,17 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		raise NotImplementedError
 
+	def _get_model(self):
+		"""The string used to identify all gestures from a specific braille display model.
+		This should generally be a short version of the model name, without spaces.
+		This string will be included in the source portion of gesture identifiers.
+		For example, if this was C{alvaBC6},
+		a model string would look like C{BC680}
+		a display specific gesture identifier might be C{br(alvaBC6.BC680):etouch1}.
+		@rtype: str; C{None} if model specific gestures are not supported
+		"""
+		return None
+
 	def _get_id(self):
 		"""The unique, display specific id for this gesture.
 		@rtype: str
@@ -1955,6 +1968,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_identifiers(self):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
+		if self.model:
+			ids.append = [u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id)]
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -1976,6 +1991,10 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
-		return handler.display.description, identifier.split(":", 1)[1]
+		idParts = re.findall(r"br\((\w+)\.?(\w+)?\):(\w+)", identifier, re.U)
+		if idParts[0][1]: # The identifier contains a model name
+			return handler.display.description, ": ".join(idParts[0][1:])
+		else:
+			return handler.display.description, idParts[0][2]
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)

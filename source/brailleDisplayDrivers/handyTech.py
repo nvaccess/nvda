@@ -194,7 +194,7 @@ class JoystickMixin(object):
 		return keys
 
 class ModularEvolution(TripleActionKeysMixin, Model):
-	pass
+	genericName="Modular Evolution"
 
 
 class ModularEvolution88(ModularEvolution):
@@ -211,31 +211,32 @@ class ModularEvolution64(ModularEvolution):
 class EasyBraille(TripleActionKeysMixin, Model):
 	device_id = MODEL_EASY_BRAILLE
 	num_cells = 40
-	name = "Easy Braille"
+	genericName= name = "Easy Braille"
 
 
 class ActiveBraille(TripleActionKeysMixin, Model):
 	device_id = MODEL_ACTIVE_BRAILLE
 	num_cells = 40
-	name = "Active Braille"
+	genericName = name = "Active Braille"
 
 
 class Actilino(JoystickMixin, TripleActionKeysMixin, Model):
 	device_id = MODEL_ACTILINO
 	num_cells = 16
-	name = "Actilino"
+	genericName = name = "Actilino"
 
 
 class ActiveStar40(TripleActionKeysMixin, Model):
 	device_id = MODEL_ACTIVE_STAR_40
 	num_cells = 40
 	name = "Active Star 40"
+	genericName = "Active Star"
 
 
 class BrailleWave(Model):
 	device_id = MODEL_BRAILLE_WAVE
 	num_cells = 40
-	name = "Braille Wave"
+	genericName = name = "Braille Wave"
 
 	def get_keys(self):
 		keys = super(BrailleWave, self).get_keys()
@@ -250,7 +251,8 @@ class BrailleWave(Model):
 
 
 class BasicBraille(Model):
-	pass
+	genericName = "Basic Braille"
+
 
 def basic_braille_factory(cells, device_id):
 	return type("BasicBraille{cells}".format(cells=cells), (BasicBraille,), {
@@ -270,7 +272,7 @@ BasicBraille160 = basic_braille_factory(160, MODEL_BASIC_BRAILLE_160)
 
 
 class BrailleStar(TripleActionKeysMixin, Model):
-	pass
+	genericName = "Braille Star"
 
 
 class BrailleStar40(BrailleStar):
@@ -285,7 +287,7 @@ class BrailleStar80(BrailleStar):
 	name = "Braille Star 80"
 
 class Modular(TripleActionKeysMixin, Model):
-	pass
+	genericName = "Modular"
 
 
 class Modular20(Modular):
@@ -310,7 +312,7 @@ class Bookworm(Model):
 	# TODO: uses a different protocol
 	device_id = MODEL_BOOKWORM
 	cells = 8
-	name = "Bookworm"
+	genericName = name = "Bookworm"
 
 
 # Model dict for easy lookup
@@ -618,6 +620,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, model, keys, isBrailleInput=False):
 		super(InputGesture, self).__init__()
+		self.model=model.genericName
 		self.keys = set(keys)
 
 		self.keyNames = names = []
@@ -643,3 +646,4 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			if key in KEY_DOTS:
 				dots |= 1 << (KEY_DOTS[key] - 1)
 		return dots
+
