@@ -693,7 +693,7 @@ Pressing dot 7 + dot 8 translates any braille input, but without adding a space 
 
 + Content Recognition +
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
-NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images.
+NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images, as well as image description using Microsoft's CaptionBot service.
 Additional content recognizers can be provided in NVDA add-ons.
 
 When you use a content recognition command, NVDA recognizes content from the current [navigator object #ObjectNavigation].
@@ -714,6 +714,14 @@ Additional languages can be installed by opening the Start menu, choosing Settin
 
 %kc:beginInclude
 To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.
+%kc:endInclude
+
+++  CaptionBot ++
+Microsoft's CaptionBot (https://www.captionbot.ai/) uses computer vision to describe images.
+Please note that any images described with this command are uploaded to and retained by CaptionBot.
+
+%kc:beginInclude
+To describe the image at the current navigator object using CaptionBot, press NVDA+alt+c.
 %kc:endInclude
 
 + Application Specific Features +

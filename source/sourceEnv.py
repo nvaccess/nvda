@@ -15,6 +15,7 @@ TOP_DIR = os.path.dirname(os.path.dirname(__file__))
 # Directories containing Python modules included in git submodules.
 PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "pyserial"),
+	os.path.join(TOP_DIR, "include", "pillow"),
 	os.path.join(TOP_DIR, "miscDeps", "python"),
 )
 
