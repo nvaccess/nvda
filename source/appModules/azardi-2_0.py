@@ -17,6 +17,7 @@ class AzardiDocument(Document):
 	role = controlTypes.ROLE_DOCUMENT
 
 class AzardiTreeViewItem(TreeViewItem):
+	"""Scripts to perform common tasks for the selected book using the keyboard, so that mouse commands aren't required."""
 
 	def script_enter(self, gesture):
 		api.moveMouseToNVDAObject(self)
