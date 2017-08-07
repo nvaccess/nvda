@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2010-2014 NV Access Limited.
+#URL: http://www.nvaccess.org/
+#Copyright 2010-2017 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -17,6 +17,7 @@ import os
 import time
 import _winreg
 from glob import glob
+import sourceEnv
 
 def recursiveCopy(env,targetDir,sourceDir):
 	targets=[]
@@ -61,6 +62,7 @@ keyCommandsLangBlacklist=set([])
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
+vars.Add("version_build", "A unique number for this build.", "0")
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
 vars.Add("updateVersionType", "The version type for which to check for updates", versionInfo.updateVersionType or "")
@@ -69,8 +71,10 @@ vars.Add(PathVariable("certFile", "The certificate file with which to sign execu
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
 vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
-vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC"]))
+vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC","analyze"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
+if "tests" in COMMAND_LINE_TARGETS:
+	vars.Add("unitTests", "A list of unit tests to run", "")
 
 #Base environment for this and sub sconscripts
 env = Environment(variables=vars,HOST_ARCH='x86',tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen','recursiveInstall'])
@@ -88,10 +92,14 @@ if len(unknown)>0:
 	Exit(1)
 
 #Ensure that any Python subprocesses (such as for py2exe) can find our Python directory in miscDeps
-env['ENV']['PYTHONPATH']=Dir('#miscDeps/python').abspath
+env['ENV']['PYTHONPATH']=";".join(sourceEnv.PYTHON_DIRS)
 
 env["copyright"]=versionInfo.copyright
+env['version_year']=versionInfo.version_year
+env['version_major']=versionInfo.version_major
+env['version_minor']=versionInfo.version_minor
 version = env["version"]
+version_build = env["version_build"]
 release = env["release"]
 publisher = env["publisher"]
 certFile = env["certFile"]
@@ -135,13 +143,35 @@ env['signExec']=signExec
 
 #architecture-specific environments
 archTools=['default','windowsSdk','midl','msrpc']
+# MSVC analysis is only available in newer Windows SDKs
+# So if required, remove the Windows SDK 7.1 (XP) tool
+if 'analyze' in env['nvdaHelperDebugFlags']:
+	archTools.remove('windowsSdk')
 env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
 env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
 # Hack around odd bug where some tool [after] msvc states that static and shared objects are different
 env32['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
 env64['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
+# Environment for functionality that only works on Windows 10.
+envWin10 = env.Clone(TARGET_ARCH='x86', tools=['default'])
 
 env=env32
+
+projectRCSubstDict={
+	'%version_year%':env['version_year'],
+	'%version_major%':env['version_major'],
+	'%version_minor%':env['version_minor'],
+	'%version_build%':env['version_build'],
+	'%copyright%':env['copyright'],
+	'%publisher%':env['publisher'],
+	'%version%':env['version'],
+	'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
+}
+resFile=env.RES(target='build/nvda.res',
+	source=env.Substfile(target='build/nvda.rc', source='nvdaHelper/nvda.rc.subst', SUBST_DICT=projectRCSubstDict))
+env32['projectResFile'] = resFile
+env64['projectResFile'] = resFile
+envWin10['projectResFile'] = resFile
 
 #Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
@@ -151,6 +181,7 @@ env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 #Process nvdaHelper scons files
 env32.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env32,'clientInstallDir':clientDir.Dir('x86'),'libInstallDir':sourceLibDir},variant_dir='build/x86')
 env64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env64,'clientInstallDir':clientDir.Dir('x64'),'libInstallDir':sourceLibDir64},variant_dir='build/x86_64')
+envWin10.SConscript('nvdaHelper/localWin10/sconscript', exports={'env': envWin10, 'libInstallDir': sourceLibDir}, variant_dir='build/x86/localWin10')
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
@@ -184,16 +215,6 @@ env.SideEffect('_txt2tags',htmlFile)
 devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 env.Alias("developerGuide",devGuide)
 
-#Generate all needed comtypes COM interfaces
-#command = ['cd', sourceDir.path, '&&', sys.executable]
-#if release:
-#	command.append('-O')
-#command.append('generateComInterfaces.py')
-#comInterfaces = env.Command(sourceDir.Dir('comInterfaces'), None, [command])
-#env.AlwaysBuild(comInterfaces)
-#env.Depends(comInterfaces,sourceDir.Dir('typelibs'))
-
-
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
 	buildVersionFn = os.path.join(str(source[0]), "_buildVersion.py")
@@ -205,7 +226,8 @@ def NVDADistGenerator(target, source, env, for_signature):
 		'version = {version!r}\r\n'
 		'publisher = {publisher!r}\r\n'
 		'updateVersionType = {updateVersionType!r}\r\n'
-		.format(version=version, publisher=publisher, updateVersionType=updateVersionType))]
+		'version_build = {version_build!r}\r\n'
+		.format(version=version, publisher=publisher, updateVersionType=updateVersionType,version_build=version_build))]
 
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]
@@ -275,7 +297,7 @@ env["BUILDERS"]["ZipArchive"] = Builder(action=ZipArchiveAction)
 uninstFile=File("dist/uninstall.exe")
 uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
 	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"','/DVERSION_YEAR="$version_year"','/DVERSION_MAJOR="$version_major"','/DVERSION_MINOR="$version_minor"','/DVERSION_BUILD="$version_build"',
 	"/DUNINSTEXE=%s"%uninstFile.abspath,
 	"/DINSTEXE=${TARGET.abspath}",
 	"$SOURCE"]])
@@ -292,7 +314,7 @@ env.Clean([dist], buildDir)
 
 launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", dist],
 	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"','/DVERSION_YEAR="$version_year"','/DVERSION_MAJOR="$version_major"','/DVERSION_MINOR="$version_minor"','/DVERSION_BUILD="$version_build"',
 	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE=${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile:
@@ -348,9 +370,9 @@ devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
 	"--output", "${TARGET.abspath}",
 	"--quiet", "--html", "--include-log", "--no-frames",
-	"--name", "NVDA", "--url", "http://www.nvda-project.org/",
+	"--name", "NVDA", "--url", "http://www.nvaccess.org/",
 	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
-	"config", "globalPlugins", "gui", "NVDAObjects",
+	"config", "globalPlugins", "gui", "mathPres", "NVDAObjects",
 	"synthDrivers", "textInfos", "virtualBuffers",
 ]])
 
@@ -360,7 +382,11 @@ env.Clean('devDocs', [devGuide, devDocs_nvda])
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
-	[f for pattern in ("*.py", "*.pyw", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
+	[f for pattern in ("*.py", "*.pyw", r"*\*.py", r"*\*\*.py")
+		for f in env.Glob(os.path.join(sourceDir.path, pattern))
+		# Exclude comInterfaces, since these don't contain translatable strings
+		# and they cause unknown encoding warnings.
+		if not f.path.startswith("source\\comInterfaces\\")],
 	makePot)
 
 env.Alias("pot", pot)
@@ -373,3 +399,8 @@ env.Alias("symbolsArchive", symbolsArchive)
 
 env.Default(dist)
 
+if "tests" in COMMAND_LINE_TARGETS:
+	target = env.SConscript("tests/unit/sconscript", exports=["env"])
+	env.Depends(target, sourceDir)
+	env.AlwaysBuild(target)
+	tests = env.Alias("tests", target)

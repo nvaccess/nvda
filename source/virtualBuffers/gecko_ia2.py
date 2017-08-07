@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2012 NV Access Limited
+#Copyright (C) 2008-2016 NV Access Limited, Babbage B.V.
 
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -23,6 +23,17 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
+		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
+			attrVal=attrs.get(attr)
+			if attrVal is not None:
+				attrs[attr]=int(attrVal)
+
+		current = attrs.get("IAccessible2::attribute_current")
+		if current is not None:
+			attrs['current']= current
+		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
+		if placeholder is not None:
+			attrs['placeholder']= placeholder
 		accRole=attrs['IAccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
@@ -201,7 +212,10 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="unvisitedLink":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
+			attrs=[
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]},
+			]
 		elif nodeType=="list":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
 		elif nodeType=="listItem":
@@ -209,7 +223,7 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]}
 		elif nodeType=="frame":
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_INTERNAL_FRAME]}
 		elif nodeType=="separator":
@@ -251,32 +265,27 @@ class Gecko_ia2(VirtualBuffer):
 			return nextHandler()
 	event_scrollingStart.ignoreIsReady = True
 
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
-		if not axis:
-			# First or last.
-			return super(Gecko_ia2, self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+	# NVDA exposes IAccessible2 table interface row and column numbers as table-physicalrownumber and table-physicalcolumnnumber respectively.
+	# These should be used when navigating the physical table (I.e. these values should be provided to the table interfaces).
+	# The presentational table-columnnumber and table-rownumber attributes are normally duplicates of the physical ones, but are overridden  by the values of aria-rowindex and aria-colindex if present.
+	navigationalTableRowNumberAttributeName="table-physicalrownumber"
+	navigationalTableColumnNumberAttributeName="table-physicalcolumnnumber"
 
-		# Determine destination row and column.
-		destRow = origRow
-		destCol = origCol
-		if axis == "row":
-			destRow += origRowSpan if movement == "next" else -1
-		elif axis == "column":
-			destCol += origColSpan if movement == "next" else -1
-
-		if destCol < 1:
-			# Optimisation: We're definitely at the edge of the column.
-			raise LookupError
-
-		# For Gecko, we can use the table object to directly retrieve the cell with the exact destination coordinates.
-		docHandle = startPos.NVDAObjectAtStart.windowHandle
+	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		docHandle = self.rootDocHandle
 		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
 		try:
 			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
 			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			if cell.IA2Attributes.get('hidden'):
+				raise LookupError("Found hidden cell") 
 			return self.makeTextInfo(cell)
 		except (COMError, RuntimeError):
 			raise LookupError
+
+	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
+		return super(VirtualBuffer,self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
 
 	def _get_documentConstantIdentifier(self):
 		try:

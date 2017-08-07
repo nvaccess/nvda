@@ -1,5 +1,6 @@
+#browseMode.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2016 NV Access Limited
+#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -29,6 +30,7 @@ import sayAllHandler
 import treeInterceptorHandler
 import inputCore
 import api
+import gui.guiHelper
 from NVDAObjects import NVDAObject
 
 REASON_QUICKNAV = "quickNav"
@@ -58,7 +60,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 	They are sorted using min or max (__lt__ should be implemented on the L{QuickNavItem} objects).
 	@param iters: the iterators you want to merge. 
 	@type iters: sequence of iterators that emit L{QuicknavItem} objects.
-	@param direction: the direction these iterators are searching (e.g. next, previuos)
+	@param direction: the direction these iterators are searching (e.g. next, previous)
 	@type direction: string
 	"""
 	finder=min if direction=="next" else max
@@ -72,7 +74,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 		curValues.append((it,val))
 	# Until all iterators have been used up,
 	# Find the first (minimum or maximum) of all the values,
-	# emit that, and update the list with the next available value for the iterator who's value was emitted.
+	# emit that, and update the list with the next available value for the iterator whose value was emitted.
 	while len(curValues)>0:
 		first=finder(curValues,key=lambda x: x[1])
 		curValues.remove(first)
@@ -89,7 +91,7 @@ class QuickNavItem(object):
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
 	label=None #: The label that should represent this item in the Elements list.
-	isAfterSelection=False #: Is this item positioned after the caret in the document? Used by the elements list to plae its own selection.
+	isAfterSelection=False #: Is this item positioned after the caret in the document? Used by the elements list to place its own selection.
 
 	def __init__(self,itemType,document):
 		"""
@@ -196,6 +198,80 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
+	disableAutoPassThrough = False
+	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
+
+	def _get_currentNVDAObject(self):
+		raise NotImplementedError
+
+	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
+		controlTypes.ROLE_COMBOBOX,
+		controlTypes.ROLE_EDITABLETEXT,
+		controlTypes.ROLE_LIST,
+		controlTypes.ROLE_SLIDER,
+		controlTypes.ROLE_TABCONTROL,
+		controlTypes.ROLE_MENUBAR,
+		controlTypes.ROLE_POPUPMENU,
+		controlTypes.ROLE_TREEVIEW,
+		controlTypes.ROLE_TREEVIEWITEM,
+		controlTypes.ROLE_SPINBUTTON,
+		controlTypes.ROLE_TABLEROW,
+		controlTypes.ROLE_TABLECELL,
+		controlTypes.ROLE_TABLEROWHEADER,
+		controlTypes.ROLE_TABLECOLUMNHEADER,
+		})
+
+	SWITCH_TO_PASS_THROUGH_ON_FOCUS_ROLES = frozenset({
+		controlTypes.ROLE_LISTITEM,
+		controlTypes.ROLE_RADIOBUTTON,
+		controlTypes.ROLE_TAB,
+		controlTypes.ROLE_MENUITEM,
+		controlTypes.ROLE_RADIOMENUITEM,
+		controlTypes.ROLE_CHECKMENUITEM,
+		})
+
+	def shouldPassThrough(self, obj, reason=None):
+		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
+		@param obj: The object in question.
+		@type obj: L{NVDAObjects.NVDAObject}
+		@param reason: The reason for this query; one of the output reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
+		@return: C{True} if pass through mode (focus mode) should be enabled, C{False} if it should be disabled (browse mode).
+		"""
+		if reason and (
+			self.disableAutoPassThrough
+			or (reason == controlTypes.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+			or (reason == controlTypes.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
+		):
+			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
+			return self.passThrough
+		if reason == REASON_QUICKNAV:
+			return False
+		states = obj.states
+		role = obj.role
+		if controlTypes.STATE_EDITABLE in states and controlTypes.STATE_UNAVAILABLE not in states:
+			return True
+		# Menus sometimes get focus due to menuStart events even though they don't report as focused/focusable.
+		if not obj.isFocusable and controlTypes.STATE_FOCUSED not in states and role != controlTypes.ROLE_POPUPMENU:
+			return False
+		# many controls that are read-only should not switch to passThrough. 
+		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
+		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
+		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
+			return False
+		# Any roles or states for which we always switch to passThrough
+		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.STATE_EDITABLE in states:
+			return True
+		# focus is moving to this control. Perhaps after pressing tab or clicking a button that brings up a menu (via javascript)
+		if reason == controlTypes.REASON_FOCUS:
+			if role in self.SWITCH_TO_PASS_THROUGH_ON_FOCUS_ROLES:
+				return True
+			# If this is a focus change, pass through should be enabled for certain ancestor containers.
+			# this is done last for performance considerations. Walking up the through the parents could be costly
+			while obj and obj != self.rootNVDAObject:
+				if obj.role == controlTypes.ROLE_TOOLBAR:
+					return True
+				obj = obj.parent
+		return False
 
 	def _get_shouldTrapNonCommandGestures(self):
 		return config.conf['virtualBuffers']['trapNonCommandGestures']
@@ -236,7 +312,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@type itemType: string
 		@param direction: the direction in which to search (next, previous, up)
 		@ type direction: string
-		@param pos: the position in the document from where to seart the search.
+		@param pos: the position in the document from where to start the search.
 		@type pos: Usually an L{textInfos.TextInfo} 
 		@raise NotImplementedError: This type is not supported by this BrowseMode implementation
 		"""
@@ -266,6 +342,17 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	@classmethod
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
+		"""Adds a script for the given quick nav item.
+		@param itemType: The type of item, I.E. "heading" "Link" ...
+		@param key: The quick navigation key to bind to the script. Shift is automatically added for the previous item gesture. E.G. h for heading
+		@param nextDoc: The command description to bind to the script that yields the next quick nav item.
+		@param nextError: The error message if there are no more quick nav items of type itemType in this direction.
+		@param prevDoc: The command description to bind to the script that yields the previous quick nav item.
+		@param prevError: The error message if there are no more quick nav items of type itemType in this direction.
+		@param readUnit: The unit (one of the textInfos.UNIT_* constants) to announce when moving to this type of item. 
+			For example, only the line is read when moving to tables to avoid reading a potentially massive table. 
+			If None, the entire item will be announced.
+		"""
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
@@ -296,13 +383,48 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	# Translators: the description for the Elements List command in browse mode.
 	script_elementsList.__doc__ = _("Lists various types of elements in this document")
 
-	def _activatePosition(self):
-		raise NotImplementedError
+	def _activateNVDAObject(self, obj):
+		"""Activate an object in response to a user request.
+		This should generally perform the default action or click on the object.
+		@param obj: The object to activate.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+		obj.doAction()
+
+	def _activatePosition(self,obj=None):
+		if not obj:
+			obj=self.currentNVDAObject
+			if not obj:
+				return
+		if obj.role == controlTypes.ROLE_MATH:
+			import mathPres
+			try:
+				return mathPres.interactWithMathMl(obj.mathMl)
+			except (NotImplementedError, LookupError):
+				pass
+			return
+		if self.shouldPassThrough(obj):
+			obj.setFocus()
+			self.passThrough = True
+			reportPassThrough(self)
+		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT or obj.role in self.APPLICATION_ROLES:
+			obj.setFocus()
+			speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
+		else:
+			self._activateNVDAObject(obj)
 
 	def script_activatePosition(self,gesture):
 		self._activatePosition()
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
+
+	def script_disablePassThrough(self, gesture):
+		if not self.passThrough or self.disableAutoPassThrough:
+			return gesture.send()
+		self.passThrough = False
+		self.disableAutoPassThrough = False
+		reportPassThrough(self)
+	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
@@ -310,6 +432,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:numpadEnter": "activatePosition",
 		"kb:space": "activatePosition",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
+		"kb:escape": "disablePassThrough",
 	}
 
 # Add quick navigation scripts.
@@ -564,6 +687,15 @@ qn("annotation", key="a",
 	prevDoc=_("moves to the previous annotation"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous annotation"))
+qn("error", key="w",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next error"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next error"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous error"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous error"))
 del qn
 
 class ElementsListDialog(wx.Dialog):
@@ -588,46 +720,49 @@ class ElementsListDialog(wx.Dialog):
 		# Translators: The title of the browse mode Elements List dialog.
 		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		contentsSizer = wx.BoxSizer(wx.VERTICAL)
 
 		# Translators: The label of a group of radio buttons to select the type of element
 		# in the browse mode Elements List dialog.
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
 		child.SetSelection(self.lastSelectedElementType)
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
-		mainSizer.Add(child,proportion=1)
+		contentsSizer.Add(child, flag=wx.EXPAND)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
+		self.tree = wx.TreeCtrl(self, size=wx.Size(500, 600), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.onTreeLabelEditBegin)
 		self.tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.onTreeLabelEditEnd)
 		self.treeRoot = self.tree.AddRoot("root")
-		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
+		contentsSizer.Add(self.tree,flag=wx.EXPAND)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of an editable text field to filter the elements
 		# in the browse mode Elements List dialog.
-		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
-		sizer.Add(label)
-		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
+		filterText = _("&Filter by:")
+		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
+		self.filterEdit = labeledCtrl.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
-		sizer.Add(self.filterEdit)
-		mainSizer.Add(sizer,proportion=1)
+		contentsSizer.Add(labeledCtrl.sizer)
+		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		bHelper = gui.guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label of a button to activate an element
 		# in the browse mode Elements List dialog.
-		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
+		self.activateButton = bHelper.addButton(self, label=_("&Activate"))
 		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
-		sizer.Add(self.activateButton)
+		
 		# Translators: The label of a button to move to an element
 		# in the browse mode Elements List dialog.
-		self.moveButton = wx.Button(self, wx.ID_ANY, _("&Move to"))
+		self.moveButton = bHelper.addButton(self, label=_("&Move to"))
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
-		sizer.Add(self.moveButton)
-		sizer.Add(wx.Button(self, wx.ID_CANCEL))
-		mainSizer.Add(sizer,proportion=1)
+		bHelper.addButton(self, id=wx.ID_CANCEL)
 
+		contentsSizer.Add(bHelper.sizer, flag=wx.ALIGN_RIGHT)
+
+		mainSizer.Add(contentsSizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 
@@ -706,13 +841,14 @@ class ElementsListDialog(wx.Dialog):
 		#Do case-insensitive matching by lowering both filterText and each element's text.
 		filterText=filterText.lower()
 		for element in self._elements:
-			if filterText and filterText not in element.item.label.lower():
+			label=element.item.label
+			if filterText and filterText not in label.lower():
 				continue
 			matched = True
 			parent = element.parent
 			if parent:
 				parent = elementsToTreeItems.get(parent)
-			item = self.tree.AppendItem(parent or self.treeRoot, element.item.label)
+			item = self.tree.AppendItem(parent or self.treeRoot, label)
 			self.tree.SetItemPyData(item, element)
 			elementsToTreeItems[element] = item
 			if element == defaultElement:
@@ -875,10 +1011,10 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 				pass
 			if landmark == "region":
 				# The word landmark is superfluous for regions.
-				textList.append(aria.landmarkRoles[landmark])
+				textList.append(braille.landmarkLabels[landmark])
 			else:
-				# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+				# Translators: This is brailled to indicate a landmark (example output: lmk main).
+				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
 		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
 			textList.append(text)
@@ -899,7 +1035,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 
 	def __init__(self,obj):
 		super(BrowseModeDocumentTreeInterceptor,self).__init__(obj)
-		self.disableAutoPassThrough = False
 		self._lastProgrammaticScrollTime = None
 		self.documentConstantIdentifier = self.documentConstantIdentifier
 		self._lastFocusObj = None
@@ -919,6 +1054,9 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			except AttributeError:
 				# The app module died.
 				pass
+
+	def _get_currentNVDAObject(self):
+		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart
 
 	def event_treeInterceptor_gainFocus(self):
 		"""Triggered when this browse mode document gains focus.
@@ -977,14 +1115,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		if self.passThrough:
 			nextHandler()
 
-	def _activateNVDAObject(self, obj):
-		"""Activate an object in response to a user request.
-		This should generally perform the default action or click on the object.
-		@param obj: The object to activate.
-		@type obj: L{NVDAObjects.NVDAObject}
-		"""
-		obj.doAction()
-
 	def _activateLongDesc(self,controlField):
 		"""
 		Activates (presents) the long description for a particular field (usually a graphic).
@@ -994,27 +1124,12 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		raise NotImplementedError
 
 	def _activatePosition(self, info=None):
-		if not info:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		obj = info.NVDAObjectAtStart
-		if not obj:
-			return
-		if obj.role == controlTypes.ROLE_MATH:
-			import mathPres
-			try:
-				return mathPres.interactWithMathMl(obj.mathMl)
-			except (NotImplementedError, LookupError):
-				pass
-			return
-		if self.shouldPassThrough(obj):
-			obj.setFocus()
-			self.passThrough = True
-			reportPassThrough(self)
-		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT or obj.role in self.APPLICATION_ROLES:
-			obj.setFocus()
-			speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
-		else:
-			self._activateNVDAObject(obj)
+		obj=None
+		if info:
+			obj=info.NVDAObjectAtStart
+			if not obj:
+				return
+		super(BrowseModeDocumentTreeInterceptor,self)._activatePosition(obj)
 
 	def _set_selection(self, info, reason=controlTypes.REASON_CARET):
 		super(BrowseModeDocumentTreeInterceptor, self)._set_selection(info)
@@ -1073,46 +1188,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	# Translators: the description for the activateLongDescription script on browseMode documents.
 	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
 
-	def shouldPassThrough(self, obj, reason=None):
-		"""Determine whether pass through mode should be enabled or disabled for a given object.
-		@param obj: The object in question.
-		@type obj: L{NVDAObjects.NVDAObject}
-		@param reason: The reason for this query; one of the output reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
-		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
-		"""
-		if reason and (
-			self.disableAutoPassThrough
-			or (reason == controlTypes.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
-			or (reason == controlTypes.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
-		):
-			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
-			return self.passThrough
-		if reason == REASON_QUICKNAV:
-			return False
-		states = obj.states
-		role = obj.role
-		if controlTypes.STATE_EDITABLE in states and controlTypes.STATE_UNAVAILABLE not in states:
-			return True
-		# Menus sometimes get focus due to menuStart events even though they don't report as focused/focusable.
-		if not obj.isFocusable and controlTypes.STATE_FOCUSED not in states and role != controlTypes.ROLE_POPUPMENU:
-			return False
-		# many controls that are read-only should not switch to passThrough. 
-		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
-		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
-		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
-			return False
-		if reason == controlTypes.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_TAB):
-			return True
-		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM) or controlTypes.STATE_EDITABLE in states:
-			return True
-		if reason == controlTypes.REASON_FOCUS:
-			# If this is a focus change, pass through should be enabled for certain ancestor containers.
-			while obj and obj != self.rootNVDAObject:
-				if obj.role == controlTypes.ROLE_TOOLBAR:
-					return True
-				obj = obj.parent
-		return False
-
 	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
 		if not self.passThrough or not gesture or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
 			return nextHandler()
@@ -1135,14 +1210,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		info.updateCaret()
 
 		scriptHandler.queueScript(script, gesture)
-
-	def script_disablePassThrough(self, gesture):
-		if not self.passThrough or self.disableAutoPassThrough:
-			return gesture.send()
-		self.passThrough = False
-		self.disableAutoPassThrough = False
-		reportPassThrough(self)
-	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
 	def script_collapseOrExpandControl(self, gesture):
 		oldFocus = api.getFocusObject()
@@ -1349,7 +1416,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 
 		return False
 
-	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
 	def _isNVDAObjectInApplication(self, obj):
 		"""Determine whether a given object is within an application.
 		The object is considered to be within an application if it or one of its ancestors has an application role.
@@ -1473,6 +1539,162 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
+	#: The controlField attribute name that should be used as the row number when navigating in a table. By default this is the same as the presentational attribute name
+	navigationalTableRowNumberAttributeName="table-rownumber"
+	#: The controlField attribute name that should be used as the column number when navigating in a table. By default this is the same as the presentational attribute name
+	navigationalTableColumnNumberAttributeName="table-columnnumber"
+
+	def _getTableCellCoords(self, info):
+		"""
+		Fetches information about the deepest table cell at the given position.
+		@param info:  the position where the table cell should be looked for.
+		@type info: L{textInfos.TextInfo}
+		@returns: a tuple of table ID, row number, column number, row span, and column span.
+		@rtype: tuple
+		@raises: LookupError if there is no table cell at this position.
+		"""
+		if info.isCollapsed:
+			info = info.copy()
+			info.expand(textInfos.UNIT_CHARACTER)
+		fields=list(info.getTextWithFields())
+		# If layout tables should not be reported, we should First record the ID of all layout tables so that we can skip them when searching for the deepest table
+		layoutIDs=set()
+		if not config.conf["documentFormatting"]["includeLayoutTables"]:
+			for field in fields:
+				if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart" and field.field.get('table-layout'):
+					tableID=field.field.get('table-id')
+					if tableID is not None:
+						layoutIDs.add(tableID)
+		for field in reversed(fields):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
+				# Not a control field.
+				continue
+			attrs = field.field
+			tableID=attrs.get('table-id')
+			if tableID is None or tableID in layoutIDs:
+				continue
+			if self.navigationalTableColumnNumberAttributeName in attrs and not attrs.get('table-layout'):
+				break
+		else:
+			raise LookupError("Not in a table cell")
+		return (attrs["table-id"],
+			attrs[self.navigationalTableRowNumberAttributeName], attrs[self.navigationalTableColumnNumberAttributeName],
+			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
+
+	def _getTableCellAt(self,tableID,startPos,row,column):
+		"""
+		Starting from the given start position, Locates the table cell with the given row and column coordinates and table ID.
+		@param startPos: the position to start searching from.
+		@type startPos: L{textInfos.TextInfo}
+		@param tableID: the ID of the table.
+		@param row: the row number of the cell
+		@type row: int
+		@param column: the column number of the table cell
+		@type column: int
+		@returns: the table cell's position in the document
+		@rtype: L{textInfos.TextInfo}
+		@raises: LookupError if the cell does not exist 
+		"""
+		raise NotImplementedError
+
+	_missingTableCellSearchLimit=3 #: The number of missing  cells L{_getNearestTableCell} is allowed to skip over to locate the next available cell
+	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+		"""
+		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
+		For example, this is used to move to the cell in the next column, previous row, etc.
+		This method will skip over missing table cells (where L{_getTableCellAt} raises LookupError), up to the number of times set by _missingTableCellSearchLimit set on this instance.
+		@param tableID: the ID of the table
+		@param startPos: the position in the document to start searching from.
+		@type startPos: L{textInfos.TextInfo}
+		@param origRow: the row number of the starting cell
+		@type origRow: int
+		@param origCol: the column number  of the starting cell
+		@type origCol: int
+		@param origRowSpan: the row span of the row of the starting cell
+		@type origRowSpan: int
+		@param origColSpan: the column span of the column of the starting cell
+		@type origColSpan: int
+		@param movement: the direction ("next" or "previous")
+		@type movement: string
+		@param axis: the axis of movement ("row" or "column")
+		@type axis: string
+		@returns: the position of the nearest table cell
+		@rtype: L{textInfos.TextInfo}
+		"""
+		if not axis:
+			raise ValueError("Axis must be row or column")
+
+		# Determine destination row and column.
+		destRow = origRow
+		destCol = origCol
+		if axis == "row":
+			destRow += origRowSpan if movement == "next" else -1
+		elif axis == "column":
+			destCol += origColSpan if movement == "next" else -1
+
+		# Try and fetch the cell at these coordinates, though  if a  cell is missing, try  several more times moving the coordinates on by one cell each time
+		limit=self._missingTableCellSearchLimit
+		while limit>0:
+			limit-=1
+			if destCol < 1 or destRow<1:
+				# Optimisation: We're definitely at the edge of the column or row.
+				raise LookupError
+			try:
+				return self._getTableCellAt(tableID,startPos,destRow,destCol)
+			except LookupError:
+				pass
+			if axis=="row":
+				destRow+=1 if movement=="next" else -1
+			else:
+				destCol+=1 if movement=="next" else -1
+		raise LookupError
+
+	def _tableMovementScriptHelper(self, movement="next", axis=None):
+		if isScriptWaiting():
+			return
+		formatConfig=config.conf["documentFormatting"].copy()
+		formatConfig["reportTables"]=True
+		try:
+			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
+		except LookupError:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# when the cursor is not within a table.
+			ui.message(_("Not in a table cell"))
+			return
+
+		try:
+			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+		except LookupError:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# but the cursor can't be moved in that direction because it is at the edge of the table.
+			ui.message(_("Edge of table"))
+			# Retrieve the cell on which we started.
+			info = self._getTableCellAt(tableID, self.selection,origRow, origCol)
+
+		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
+		info.collapse()
+		self.selection = info
+
+	def script_nextRow(self, gesture):
+		self._tableMovementScriptHelper(axis="row", movement="next")
+	# Translators: the description for the next table row script on browseMode documents.
+	script_nextRow.__doc__ = _("moves to the next table row")
+
+	def script_previousRow(self, gesture):
+		self._tableMovementScriptHelper(axis="row", movement="previous")
+	# Translators: the description for the previous table row script on browseMode documents.
+	script_previousRow.__doc__ = _("moves to the previous table row")
+
+	def script_nextColumn(self, gesture):
+		self._tableMovementScriptHelper(axis="column", movement="next")
+	# Translators: the description for the next table column script on browseMode documents.
+	script_nextColumn.__doc__ = _("moves to the next table column")
+
+	def script_previousColumn(self, gesture):
+		self._tableMovementScriptHelper(axis="column", movement="previous")
+	# Translators: the description for the previous table column script on browseMode documents.
+	script_previousColumn.__doc__ = _("moves to the previous table column")
+
 	NOT_LINK_BLOCK_MIN_LEN = 30
 	def _isSuitableNotLinkBlock(self,range):
 		return len(range.text)>=self.NOT_LINK_BLOCK_MIN_LEN
@@ -1498,11 +1720,14 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 
 	__gestures={
 		"kb:NVDA+d": "activateLongDesc",
-		"kb:escape": "disablePassThrough",
 		"kb:alt+upArrow": "collapseOrExpandControl",
 		"kb:alt+downArrow": "collapseOrExpandControl",
 		"kb:tab": "tab",
 		"kb:shift+tab": "shiftTab",
 		"kb:shift+,": "moveToStartOfContainer",
 		"kb:,": "movePastEndOfContainer",
+		"kb:control+alt+downArrow": "nextRow",
+		"kb:control+alt+upArrow": "previousRow",
+		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+alt+leftArrow": "previousColumn",
 	}

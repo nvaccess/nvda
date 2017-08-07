@@ -475,7 +475,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				if lineEndOffset>=self._endOffset:
 					return
 			return
-		for chunk in super(DisplayModelTextInfo,self)._getTextInChunks(unit):
+		for chunk in super(DisplayModelTextInfo,self).getTextInChunks(unit):
 			yield chunk
 
 class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
@@ -556,5 +556,5 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 
 	def _setSelectionOffsets(self,start,end):
 		if start!=end:
-			raise TypeError("Expanded selections not supported")
+			raise NotImplementedError("Expanded selections not supported")
 		self._setCaretOffset(start)

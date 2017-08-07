@@ -1,6 +1,12 @@
+# -*- coding: UTF-8 -*-
+#config/__init__.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 """Manages NVDA configuration.
 """ 
-
 import globalVars
 import _winreg
 import ctypes
@@ -10,214 +16,19 @@ import sys
 from cStringIO import StringIO
 import itertools
 import contextlib
+from copy import deepcopy
 from collections import OrderedDict
 from configobj import ConfigObj, ConfigObjError
 from validate import Validator
-from logHandler import log
+from logHandler import log, levelNames
+from logging import DEBUG
 import shlobj
 import baseObject
 import easeOfAccess
+from fileUtils import FaultTolerantFile
 import winKernel
-
-def validateConfig(configObj,validator,validationResult=None,keyList=None):
-	"""
-	@deprecated: Add-ons which need this should provide their own implementation.
-	"""
-	import warnings
-	warnings.warn("config.validateConfig deprecated. Callers should provide their own implementation.",
-		DeprecationWarning, 2)
-	if validationResult is None:
-		validationResult=configObj.validate(validator,preserve_errors=True)
-	if validationResult is True:
-		return None #No errors
-	if validationResult is False:
-		return "Badly formed configuration file"
-	errorStrings=[]
-	for k,v in validationResult.iteritems():
-		if v is True:
-			continue
-		newKeyList=list(keyList) if keyList is not None else []
-		newKeyList.append(k)
-		if isinstance(v,dict):
-			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
-		else:
-			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
-			defaultValue=validator.get_default_value(configObj.configspec[k])
-			configObj[k]=defaultValue
-			if k not in configObj.defaults:
-				configObj.defaults.append(k)
-			errorStrings.append("%s: %s, defaulting to %s"%(k,v,defaultValue))
-	return errorStrings
-
-#: @deprecated: Use C{conf.validator} instead.
-val = Validator()
-
-#: The configuration specification
-#: @type: ConfigObj
-confspec = ConfigObj(StringIO(
-"""# NVDA Configuration File
-
-[general]
-	language = string(default="Windows")
-	saveConfigurationOnExit = boolean(default=True)
-	askToExit = boolean(default=true)
-	playStartAndExitSounds = boolean(default=true)
-	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
-	loggingLevel = string(default="INFO")
-	showWelcomeDialogAtStartup = boolean(default=true)
-
-# Speech settings
-[speech]
-	# The synthesiser to use
-	synth = string(default=auto)
-	symbolLevel = integer(default=100)
-	trustVoiceLanguage = boolean(default=true)
-	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
-	outputDevice = string(default=default)
-	autoLanguageSwitching = boolean(default=true)
-	autoDialectSwitching = boolean(default=false)
-
-	[[__many__]]
-		capPitchChange = integer(default=30,min=-100,max=100)
-		sayCapForCapitals = boolean(default=false)
-		beepForCapitals = boolean(default=false)
-		useSpellingFunctionality = boolean(default=true)
-
-# Audio settings
-[audio]
-	audioDuckingMode = integer(default=0)
-
-# Braille settings
-[braille]
-	display = string(default=noBraille)
-	translationTable = string(default=en-us-comp8.ctb)
-	inputTable = string(default=en-us-comp8.ctb)
-	expandAtCursor = boolean(default=true)
-	showCursor = boolean(default=true)
-	cursorBlinkRate = integer(default=500,min=0,max=2000)
-	cursorShape = integer(default=192,min=1,max=255)
-	messageTimeout = integer(default=4,min=0,max=20)
-	tetherTo = string(default="focus")
-	readByParagraph = boolean(default=false)
-	wordWrap = boolean(default=true)
-
-	# Braille display driver settings
-	[[__many__]]
-		port = string(default="")
-
-# Presentation settings
-[presentation]
-		reportKeyboardShortcuts = boolean(default=true)
-		reportObjectPositionInformation = boolean(default=true)
-		guessObjectPositionInformationWhenUnavailable = boolean(default=false)
-		reportTooltips = boolean(default=false)
-		reportHelpBalloons = boolean(default=true)
-		reportObjectDescriptions = boolean(default=True)
-		reportDynamicContentChanges = boolean(default=True)
-	[[progressBarUpdates]]
-		reportBackgroundProgressBars = boolean(default=false)
-		#output modes are beep, speak, both, or off
-		progressBarOutputMode = string(default="beep")
-		speechPercentageInterval = integer(default=10)
-		beepPercentageInterval = integer(default=1)
-		beepMinHZ = integer(default=110)
-
-[mouse]
-	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work
-	mouseTextUnit = string(default="paragraph")
-	reportObjectRoleOnMouseEnter = boolean(default=False)
-	audioCoordinatesOnMouseMove = boolean(default=False)
-	audioCoordinates_detectBrightness = boolean(default=False)
-	audioCoordinates_blurFactor = integer(default=3)
-	audioCoordinates_minVolume = float(default=0.1)
-	audioCoordinates_maxVolume = float(default=1.0)
-	audioCoordinates_minPitch = integer(default=220)
-	audioCoordinates_maxPitch = integer(default=880)
-	reportMouseShapeChanges = boolean(default=false)
-
-#Keyboard settings
-[keyboard]
-	useCapsLockAsNVDAModifierKey = boolean(default=false)
-	useNumpadInsertAsNVDAModifierKey = boolean(default=true)
-	useExtendedInsertAsNVDAModifierKey = boolean(default=true)
-	keyboardLayout = string(default="desktop")
-	speakTypedCharacters = boolean(default=true)
-	speakTypedWords = boolean(default=false)
-	beepForLowercaseWithCapslock = boolean(default=true)
-	speakCommandKeys = boolean(default=false)
-	speechInterruptForCharacters = boolean(default=true)
-	speechInterruptForEnter = boolean(default=true)
-	allowSkimReadingInSayAll = boolean(default=False)
-	handleInjectedKeys= boolean(default=true)
-
-[virtualBuffers]
-	maxLineLength = integer(default=100)
-	linesPerPage = integer(default=25)
-	useScreenLayout = boolean(default=True)
-	autoPassThroughOnFocusChange = boolean(default=true)
-	autoPassThroughOnCaretMove = boolean(default=false)
-	passThroughAudioIndication = boolean(default=true)
-	autoSayAllOnPageLoad = boolean(default=true)
-	trapNonCommandGestures = boolean(default=true)
-
-#Settings for document reading (such as MS Word and wordpad)
-[documentFormatting]
-	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
-	detectFormatAfterCursor = boolean(default=false)
-	reportFontName = boolean(default=false)
-	reportFontSize = boolean(default=false)
-	reportFontAttributes = boolean(default=false)
-	reportRevisions = boolean(default=true)
-	reportEmphasis = boolean(default=false)
-	reportColor = boolean(default=False)
-	reportAlignment = boolean(default=false)
-	reportStyle = boolean(default=false)
-	reportSpellingErrors = boolean(default=true)
-	reportPage = boolean(default=true)
-	reportLineNumber = boolean(default=False)
-	reportLineIndentation = boolean(default=False)
-	reportParagraphIndentation = boolean(default=False)
-	reportTables = boolean(default=true)
-	includeLayoutTables = boolean(default=False)
-	reportTableHeaders = boolean(default=True)
-	reportTableCellCoords = boolean(default=True)
-	reportLinks = boolean(default=true)
-	reportComments = boolean(default=true)
-	reportLists = boolean(default=true)
-	reportHeadings = boolean(default=true)
-	reportBlockQuotes = boolean(default=true)
-	reportLandmarks = boolean(default=true)
-	reportFrames = boolean(default=true)
-	reportClickable = boolean(default=true)
-
-[reviewCursor]
-	simpleReviewMode = boolean(default=True)
-	followFocus = boolean(default=True)
-	followCaret = boolean(default=True)
-	followMouse = boolean(default=False)
-
-[UIA]
-	minWindowsVersion = float(default=6.1)
-	enabled = boolean(default=true)
-
-[update]
-	autoCheck = boolean(default=true)
-
-[inputComposition]
-	autoReportAllCandidates = boolean(default=True)
-	announceSelectedCandidate = boolean(default=True)
-	alwaysIncludeShortCharacterDescriptionInCandidateName = boolean(default=True)
-	reportReadingStringChanges = boolean(default=True)
-	reportCompositionStringChanges = boolean(default=True)
-
-[debugLog]
-	hwIo = boolean(default=false)
-
-[upgrade]
-	newLaptopKeyboardLayout = boolean(default=false)
-"""
-), list_values=False, encoding="UTF-8")
-confspec.newlines = "\r\n"
+import profileUpgrader
+from .configSpec import confspec
 
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
@@ -226,15 +37,6 @@ conf = None
 def initialize():
 	global conf
 	conf = ConfigManager()
-
-def save():
-	"""
-	@deprecated: Use C{conf.save} instead.
-	"""
-	import warnings
-	warnings.warn("config.save deprecated. Use config.conf.save instead.",
-		DeprecationWarning, 2)
-	conf.save()
 
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
@@ -261,9 +63,24 @@ def isInstalledCopy():
 		return False
 
 
+#: #6864: The name of the subkey stored under NVDA_REGKEY where the value is stored
+#: which will make an installed NVDA load the user configuration either from the local or from the roaming application data profile.
+#: The registry value is unset by default.
+#: When setting it manually, a DWORD value is prefered.
+#: A value of 0 will evaluate to loading the configuration from the roaming application data (default).
+#: A value of 1 means loading the configuration from the local application data folder.
+#: @type: unicode
+CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
+
 def getInstalledUserConfigPath():
 	try:
-		return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		configInLocalAppData = bool(_winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
+	except WindowsError:
+		configInLocalAppData=False
+	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
+	try:
+		return os.path.join(configParent, "nvda")
 	except WindowsError:
 		return None
 
@@ -377,6 +194,8 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 
 SLAVE_FILENAME = u"nvda_slave.exe"
 
+#: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
+#: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
@@ -492,7 +311,7 @@ class ConfigManager(object):
 		#: Whether profile triggers are enabled (read-only).
 		#: @type: bool
 		self.profileTriggersEnabled = True
-		self.validator = val
+		self.validator = Validator()
 		self.rootSection = None
 		self._shouldHandleProfileSwitch = True
 		self._pendingHandleProfileSwitch = False
@@ -516,6 +335,8 @@ class ConfigManager(object):
 			return
 		import synthDriverHandler
 		synthDriverHandler.handleConfigProfileSwitch()
+		import brailleInput
+		brailleInput.handler.handleConfigProfileSwitch()
 		import braille
 		braille.handler.handleConfigProfileSwitch()
 		import audioDucking
@@ -524,18 +345,16 @@ class ConfigManager(object):
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
 		if factoryDefaults:
-			profile = ConfigObj(None, indent_type="\t", encoding="UTF-8")
+			profile = self._loadConfig(None)
 			profile.filename = fn
 		else:
 			try:
-				profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+				profile = self._loadConfig(fn) # a blank config returned if fn does not exist
 				self.baseConfigError = False
 			except:
 				log.error("Error loading base configuration", exc_info=True)
 				self.baseConfigError = True
 				return self._initBaseConf(factoryDefaults=True)
-		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
-		profile.newlines = "\r\n"
 
 		for key in self.BASE_ONLY_SECTIONS:
 			# These sections are returned directly from the base config, so validate them here.
@@ -551,6 +370,29 @@ class ConfigManager(object):
 		self._profileCache[None] = profile
 		self.profiles.append(profile)
 		self._handleProfileSwitch()
+
+	def _loadConfig(self, fn, fileError=False):
+		log.info(u"Loading config: {0}".format(fn))
+		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
+		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
+		profile.newlines = "\r\n"
+		profileCopy = deepcopy(profile)
+		try:
+			profileUpgrader.upgrade(profile, self.validator)
+		except Exception as e:
+			# Log at level info to ensure that the profile is logged.
+			log.info(u"Config before schema update:\n%s" % profileCopy, exc_info=False)
+			raise e
+		# since profile settings are not yet imported we have to "peek" to see
+		# if debug level logging is enabled.
+		try:
+			logLevelName = profile["general"]["loggingLevel"]
+		except KeyError as e:
+			logLevelName = None
+		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= levelNames.get(logLevelName)):
+			# Log at level info to ensure that the profile is logged.
+			log.info(u"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(profile))
+		return profile
 
 	def __getitem__(self, key):
 		if key in self.BASE_ONLY_SECTIONS:
@@ -585,9 +427,7 @@ class ConfigManager(object):
 
 		# Load the profile.
 		fn = self._getProfileFn(name)
-		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=True)
-		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
-		profile.newlines = "\r\n"
+		profile = self._loadConfig(fn, fileError = True) # file must exist.
 		profile.name = name
 		profile.manual = False
 		profile.triggered = False
@@ -636,10 +476,12 @@ class ConfigManager(object):
 			# Never save the config if running securely.
 			return
 		try:
-			self.profiles[0].write()
+			with FaultTolerantFile(self.profiles[0].filename) as f:
+				self.profiles[0].write(f)
 			log.info("Base configuration saved")
 			for name in self._dirtyProfiles:
-				self._profileCache[name].write()
+				with FaultTolerantFile(self._profileCache[name].filename) as f:
+					self._profileCache[name].write(f)
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except Exception as e:
@@ -900,6 +742,21 @@ class ConfigManager(object):
 		self.triggersToProfiles.parent.write()
 		log.info("Profile triggers saved")
 
+	def getConfigValidationParameter(self, keyPath, validationParameter):
+		"""Get a config validation parameter
+		This can be used to get the min, max, default, or other values for a config key.
+		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
+		@param validationParameter: the parameter to return the value for. EG "max"
+		@type validationParameter: string
+		"""
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+
+		spec = conf.spec
+		for nextKey in keyPath:
+			spec = spec[nextKey]
+		return conf.validator._parse_with_caching(spec)[2][validationParameter]
+
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
 	"""
@@ -912,7 +769,7 @@ class AggregatedSection(object):
 		self.profiles = profiles
 		self._cache = {}
 
-	def __getitem__(self, key):
+	def __getitem__(self, key, checkValidity=True):
 		# Try the cache first.
 		try:
 			val = self._cache[key]
@@ -944,6 +801,8 @@ class AggregatedSection(object):
 				subProfiles.append(val)
 			else:
 				# This is a setting.
+				if not checkValidity:
+					spec = None
 				return self._cacheLeaf(key, spec, val)
 		subProfiles.reverse()
 
@@ -1059,7 +918,9 @@ class AggregatedSection(object):
 			val = self.manager.validator.check(spec, val)
 
 		try:
-			curVal = self[key]
+			# when setting the value we dont care if the existing value
+			# is not valid.
+			curVal = self.__getitem__(key, checkValidity=False)
 		except KeyError:
 			pass
 		else:

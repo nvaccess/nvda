@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2012 NV Access Limited
+#Copyright (C) 2009-2016 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 import eventHandler
@@ -50,6 +50,12 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
 		level=None
+		ariaCurrent = attrs.get('HTMLAttrib::aria-current', None)
+		if ariaCurrent is not None:
+			attrs['current']=ariaCurrent
+		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
+		if placeholder:
+			attrs['placeholder']=placeholder
 		accRole=attrs.get('IAccessible::role',0)
 		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
@@ -76,15 +82,24 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		description=None
 		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
 		if ariaDescribedBy:
-			try:
-				descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
-			except (COMError,NameError):
+			ariaDescribedByIds=ariaDescribedBy.split()
+			description=""
+			for ariaDescribedById in ariaDescribedByIds:
 				descNode=None
-			if descNode:
 				try:
-					description=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
-				except:
-					pass
+					descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedById)
+				except (COMError,NameError):
+					descNode=None
+				if not descNode:
+					try:
+						descNode=NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(self.obj.rootNVDAObject.HTMLNode.document,ariaDescribedById)
+					except (COMError,NameError):
+						descNode=None
+				if descNode:
+					try:
+						description=description+" "+self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
+					except:
+						pass
 		ariaSort=attrs.get('HTMLAttrib::aria-sort')
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
@@ -122,6 +137,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			# MSHTML puts the unavailable state on all graphics when the showing of graphics is disabled.
 			# This is rather annoying and irrelevant to our users, so discard it.
 			states.discard(controlTypes.STATE_UNAVAILABLE)
+		lRole = aria.htmlNodeNameToAriaLandmarkRoles.get(nodeName.lower())
+		if lRole:
+			ariaRoles.append(lRole)
 		# Get the first landmark role, if any.
 		landmark=next((ar for ar in ariaRoles if ar in aria.landmarkRoles),None)
 		ariaLevel=attrs.get('HTMLAttrib::aria-level',None)
@@ -245,14 +263,15 @@ class MSHTML(VirtualBuffer):
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
 			attrs=[
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_OUTLINE],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT]},
 				{"IHTMLDOMNode::nodeName":["SELECT"]},
 				{"HTMLAttrib::role":["listbox"]},
 			]
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1],"IHTMLElement::%s"%"isContentEditable":[1]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1],"IHTMLElement::isContentEditable":[1]}
 		elif nodeType=="radioButton":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="comboBox":
@@ -292,7 +311,8 @@ class MSHTML(VirtualBuffer):
 			attrs = [
 				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
 				{"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
-					"name": [VBufStorage_findMatch_notEmpty]}
+					"name": [VBufStorage_findMatch_notEmpty]},
+				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word(lr.upper()) for lr in aria.htmlNodeNameToAriaLandmarkRoles]}
 				]
 		elif nodeType == "embeddedObject":
 			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}

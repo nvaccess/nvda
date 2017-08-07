@@ -35,9 +35,13 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.11, 32 bit
-* Microsoft Visual Studio 2015 (Express for Desktop, or Community with VC++ and Windows SDK 7.1A support):
-	* [Download for Visual Studio 2015 Express for Desktop](https://go.microsoft.com/fwlink/?LinkId=691984&clcid=0x409)
+* [Python](http://www.python.org/), version 2.7.13, 32 bit
+* Microsoft Visual Studio Community 2015 with Update 3:
+	* To download, you will need to [join the Visual Studio Dev Essentials program](https://my.visualstudio.com/Benefits?wt.mc_id=o~msft~vscom~devessentials-hero~30569&campaign=o~msft~vscom~devessentials-hero~30569).
+		After you have joined, Visual Studio Community 2015 with Update 3 will be available on the Downloads tab.
+	* When installing Visual Studio, you need to enable the following:
+		* In Visual C++: Common Tools for Visual C++ 2015, Windows XP Support for C++
+		* Windows and Web Development -> Universal Windows App Development Tools -> Tools (1.4.1) and Windows 10 SDK (10.0.14393)
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
@@ -54,7 +58,7 @@ For reference, the following dependencies are included in Git submodules:
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
-* [liblouis](http://www.liblouis.org/), version 2.6.5
+* [liblouis](http://www.liblouis.org/), version 3.2.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
@@ -67,15 +71,16 @@ For reference, the following dependencies are included in Git submodules:
 * lilli.dll, version 2.1.0.0
 * [Handy Tech Braille SDK, version 1.4.2.0](ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip)
 * Updated Handy Tech sbsupport.dll and dealers.dat received on 2014-09-09
-* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.5
+* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.7
 * HanSoneConnect.dll, version 2.0.0.1
 * SyncBraille.dll, version 1.0.0.1
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9
-* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.46
+* [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.51
 * [NSIS UAC plug-in](http://nsis.sourceforge.net/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 * [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303
+* [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
 ### Other Dependencies
 These dependencies are not included in Git submodules, but aren't needed by most people.
@@ -106,6 +111,7 @@ If trying to debug nvdaHelper, You can control various  debugging options  with 
 
 * debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
 * RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
+* analyze: runs MSVC code analysis on all nvdaHelper code, holting on any warning. (default is no analysis).
 
 The special keywords none and all can also be used in place of the individual flags.
 
@@ -124,6 +130,10 @@ Please see the release keyword argument for what compiler optimizations it will 
 
 ## Running the Source Code
 To start NVDA from source code, run `nvda.pyw` located in the source directory.
+To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
+These arguments are also documented in the user guide.
+Since NVDA is a Windows application (rather than command line), it is best to run it with `pythonw.exe`.
+However, if during development you encounter an error early in the startup of NVDA, you can use `python.exe` which is likely to give more information about the error.
 
 ## Building NVDA
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
@@ -193,4 +203,25 @@ For example, to build a launcher  with a specific version, you might type:
 
 ```
 scons launcher version=test1
+```
+
+## Running Automated Tests
+If you make a change to the NVDA code, you should run NVDA's automated tests.
+These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
+Currently, NVDA has only one kind of automated testing: unit tests.
+
+To run the unit tests, first change directory to the root of the NVDA source distribution as above.
+Then, run:
+
+```
+scons tests
+```
+
+To run only specific tests, specify them using the `unitTests` variable on the command line.
+The tests should be provided as a comma separated list.
+Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
+For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
+
+```
+scons tests unitTests=test_cursorManager.TestMove,test_cursorManager.TestSelection
 ```

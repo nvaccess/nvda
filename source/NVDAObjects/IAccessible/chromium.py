@@ -30,13 +30,13 @@ class ChromeVBuf(GeckoVBuf):
 			self.rootNVDAObject.IAccessibleObject.accChild(accId)
 		except COMError:
 			return False
-		return True
+		return not self._isNVDAObjectInApplication(obj)
 
 class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self):
 		states = self.states
-		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states:
+		if controlTypes.STATE_EDITABLE not in states and controlTypes.STATE_BUSY not in states:
 			return ChromeVBuf
 		return super(Document, self).treeInterceptorClass
 
