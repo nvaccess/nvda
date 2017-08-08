@@ -32,7 +32,7 @@ class ContentRecognizer(object):
 		"""
 		return 1
 
-	def recognize(self, pixels, width, height, imageInfo, onResult):
+	def recognize(self, pixels, imageInfo, onResult):
 		"""Asynchronously recognize content from an image.
 		This method should not block.
 		Only one recognition can be performed at a time.
