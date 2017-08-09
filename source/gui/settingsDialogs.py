@@ -50,7 +50,7 @@ class SettingsDialog(wx.Dialog):
 	To use this dialog:
 		* Set L{title} to the title of the dialog.
 		* Set L{settingsSizerOrientation} to one of wx.VERTICAL or wx.horizontal to set the orientation of the settings sizer.
-		* Set L{hasApplyButton} to C{True} to add an apply button to the dialog.
+		* Set L{hasApplyButton} to C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
 		* Override L{makeSettings} to populate a given sizer with the settings controls.
 		* Optionally, override L{postInit} to perform actions after the dialog is created, such as setting the focus.
 		* Optionally, extend one or more of L{onOk}, L{onCancel} or L{onApply} to perform actions in response to the OK, Cancel or Apply buttons, respectively.
@@ -204,13 +204,15 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
 	A multi category settings dialog consists of a tree view with settings categories on the left side, 
 	and a settings panel on the right side of the dialog.
+	Furthermore, in addition to Ok and Cancel buttons, it has an Apply button by default,
+	which is different  from the default behavior of L{SettingsDialog}.
 
 	To use this dialog: set title and populate L{categoryClasses} with subclasses of SettingsPanel."""
 
 	title=""
 	categoryClasses=[]
 	settingsSizerOrientation = wx.HORIZONTAL
-	hasApplyButton = True
+	hasApplyButton = True # Differs from L{SettingsDialog}, where this is C{False}
 
 	def __init__(self, parent, initialCategory=None):
 		"""
@@ -228,7 +230,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		categoriesLabelText=_("Categories")
+		categoriesLabelText=_("&Categories:")
 		self.categoryTree=sHelper.addLabeledControl(categoriesLabelText, wx.TreeCtrl, style=wx.TR_HIDE_ROOT | wx.TR_NO_LINES | wx.TR_SINGLE,size=(200,300))
 		self.categoryTreeRoot = self.categoryTree.AddRoot("root")
 		self.categoryTree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onCategoryChange)
@@ -289,7 +291,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.currentCategory=self.categoryTree.GetItemPyData(evt.Item)
 		self.currentCategory.onPanelActivated()
 
-	def onOk(	self,evt):
+	def onOk(self,evt):
 		for panel in self.getCategoryInstances():
 			panel.onSave()
 			panel.Destroy()

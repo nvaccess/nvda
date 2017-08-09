@@ -1541,67 +1541,67 @@ class GlobalCommands(ScriptableObject):
 	def script_activateGeneralSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onGeneralSettingsCommand, None)
 	# Translators: Input help mode message for go to general settings command.
-	script_activateGeneralSettingsDialog.__doc__ = _("Shows the general settings in the NVDA settings dialog")
+	script_activateGeneralSettingsDialog.__doc__ = _("Shows NVDA's general settings")
 	script_activateGeneralSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateSynthesizerDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSynthesizerCommand, None)
 	# Translators: Input help mode message for go to synthesizer settings command.
-	script_activateSynthesizerDialog.__doc__ = _("Shows the synthesizer settings in de NVDA settings dialog")
+	script_activateSynthesizerDialog.__doc__ = _("Shows NVDA's synthesizer settings")
 	script_activateSynthesizerDialog.category=SCRCAT_CONFIG
 
 	def script_activateVoiceDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onVoiceCommand, None)
 	# Translators: Input help mode message for go to voice settings command.
-	script_activateVoiceDialog.__doc__ = _("Shows the voice settings in the NVDA settings dialog")
+	script_activateVoiceDialog.__doc__ = _("Shows NVDA's voice settings")
 	script_activateVoiceDialog.category=SCRCAT_CONFIG
 
 	def script_activateBrailleSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrailleCommand, None)
 	# Translators: Input help mode message for go to braille settings command.
-	script_activateBrailleSettingsDialog.__doc__ = _("Shows the braille settings in the NVDA settings dialog")
+	script_activateBrailleSettingsDialog.__doc__ = _("Shows NVDA's braille settings")
 	script_activateBrailleSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateKeyboardSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onKeyboardSettingsCommand, None)
 	# Translators: Input help mode message for go to keyboard settings command.
-	script_activateKeyboardSettingsDialog.__doc__ = _("Shows the keyboard settings in the NVDA settings dialog")
+	script_activateKeyboardSettingsDialog.__doc__ = _("Shows NVDA's keyboard settings")
 	script_activateKeyboardSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateMouseSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onMouseSettingsCommand, None)
 	# Translators: Input help mode message for go to mouse settings command.
-	script_activateMouseSettingsDialog.__doc__ = _("Shows the mouse settings in the NVDA settings dialog")
+	script_activateMouseSettingsDialog.__doc__ = _("Shows NVDA's mouse settings")
 	script_activateMouseSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateReviewCursorDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onReviewCursorCommand, None)
 	# Translators: Input help mode message for go to review cursor settings command.
-	script_activateReviewCursorDialog.__doc__ = _("Shows the review cursor settings in the NVDA settings dialog")
+	script_activateReviewCursorDialog.__doc__ = _("Shows NVDA's review cursor settings")
 	script_activateReviewCursorDialog.category=SCRCAT_CONFIG
 
 	def script_activateInputCompositionDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputCompositionCommand, None)
 	# Translators: Input help mode message for go to input composition settings command.
-	script_activateInputCompositionDialog.__doc__ = _("Shows the input composition settings in the NVDA settings dialog")
+	script_activateInputCompositionDialog.__doc__ = _("Shows NVDA's input composition settings")
 	script_activateInputCompositionDialog.category=SCRCAT_CONFIG
 
 	def script_activateObjectPresentationDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame. onObjectPresentationCommand, None)
 	# Translators: Input help mode message for go to object presentation settings command.
-	script_activateObjectPresentationDialog.__doc__ = _("Shows the object presentation settings in the NVDA settings dialog")
+	script_activateObjectPresentationDialog.__doc__ = _("Shows NVDA's object presentation settings")
 	script_activateObjectPresentationDialog.category=SCRCAT_CONFIG
 
 	def script_activateBrowseModeDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrowseModeCommand, None)
 	# Translators: Input help mode message for go to browse mode settings command.
-	script_activateBrowseModeDialog.__doc__ = _("Shows the browse mode settings in the NVDA settings dialog")
+	script_activateBrowseModeDialog.__doc__ = _("Shows NVDA;s browse mode settings")
 	script_activateBrowseModeDialog.category=SCRCAT_CONFIG
 
 	def script_activateDocumentFormattingDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 	# Translators: Input help mode message for go to document formatting settings command.
-	script_activateDocumentFormattingDialog.__doc__ = _("Shows the document formatting settings in the NVDA settings dialog")
+	script_activateDocumentFormattingDialog.__doc__ = _("Shows NVDA's document formatting settings")
 	script_activateDocumentFormattingDialog.category=SCRCAT_CONFIG
 
 	def script_activateDefaultDictionaryDialog(self, gesture):
