@@ -7,21 +7,18 @@
 """App module for Notepad++
 """
 
+import oleacc
 import appModuleHandler
-from NVDAObjects import NVDAObject
+from NVDAObjects import NVDAObject, IAccessible
 
 class NotepadPlusPlusScintillaEdit(NVDAObject):
 
-	def initOverlayClass(self):
-		pass
-
-	def shouldAcceptShowHideCaretEvent(self):
-		return False
+	shouldAcceptShowHideCaretEvent = False
 
 class AppModule(appModuleHandler.AppModule):
 
-	def event_NVDAObject_init(self, obj):
-		pass
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		clsList.insert(0, NotepadPlusPlusScintillaEdit)
+		isIAccessible = isinstance(obj, IAccessible.IAccessible)
+		if isIAccessible and obj.windowClassName == "Scintilla" and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
+			clsList.insert(0, NotepadPlusPlusScintillaEdit)
+

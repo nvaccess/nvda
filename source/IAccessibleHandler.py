@@ -865,7 +865,7 @@ def pumpAll():
 		# #7332: If this is a show event, which would normally be dropped by `shouldAcceptEvent` and this event is for the caret,
 		# later it will be mapped to a caret event, so skip `shouldAcceptEvent`
 		if showHideCaretEvent:
-			if not focus.shouldAcceptShowHideCaretEvent():
+			if not focus.shouldAcceptShowHideCaretEvent:
 				continue
 		elif not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
 			continue
