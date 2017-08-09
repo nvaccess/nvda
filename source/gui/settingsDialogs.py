@@ -279,14 +279,15 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				yield panel
 
 	def onCategoryChange(self,evt):
+		# During dialog deconstruction, tree items are removed one by one
+		# This triggers EVT_TREE_SEL_CHANGED, which should really be ignored in these cases
+		if self.categoryTree.Count<len(self.categoryTreeItems):
+			evt.Skip()
+			return
 		if self.currentCategory:
 			self.currentCategory.onPanelDeactivated()
-		currentItem = self.categoryTree.Selection
-		self.currentCategory=self.categoryTree.GetItemPyData(currentItem)
-		# It seems like wx.EVT_TREE_SEL_CHANGED is triggered during dialog deconstruction
-		# So, make sure that there is a real panel to activate
-		if self.currentCategory:
-			self.currentCategory.onPanelActivated()
+		self.currentCategory=self.categoryTree.GetItemPyData(evt.Item)
+		self.currentCategory.onPanelActivated()
 
 	def onOk(	self,evt):
 		for panel in self.getCategoryInstances():
@@ -1932,12 +1933,13 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 	def onCategoryChange(self,evt):
 		super(NVDASettingsDialog,self).onCategoryChange(evt)
-		if self.currentCategory:
-			activeConfigProfile=config.conf.profiles[-1].name
-			if not activeConfigProfile or isinstance(self.currentCategory,GeneralSettingsPanel):
-				# Translators: The profile name for normal configuration
-				activeConfigProfile=_("normal configuration")
-			self.SetTitle("{dialogTitle}: {panelTitle} ({configProfile})".format(dialogTitle=self.title,panelTitle=self.currentCategory.title,configProfile=activeConfigProfile))
+		if evt.Skipped:
+			return
+		activeConfigProfile=config.conf.profiles[-1].name
+		if not activeConfigProfile or isinstance(self.currentCategory,GeneralSettingsPanel):
+			# Translators: The profile name for normal configuration
+			activeConfigProfile=_("normal configuration")
+		self.SetTitle("{dialogTitle}: {panelTitle} ({configProfile})".format(dialogTitle=self.title,panelTitle=self.currentCategory.title,configProfile=activeConfigProfile))
 
 class AddSymbolDialog(wx.Dialog):
 
