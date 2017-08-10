@@ -592,38 +592,77 @@ Možete podešavati brajicu, koristeći [dijaloški okvir brajične postavke #Br
 Kako bi stalo čim više informacija na brajični redak, slijedeće kratice za tipove, stanja kontrola, te orjentire su definirane.
 
 || kratica | tip kontrole |
+| app | aplikacija |
+| bqt | citat |
 | btn | gumb |
+| drbtn | klizajući gumb |
+| spnbtn | odabirni gumb |
+| splbtn | razdjeljeni gumb |
+| tgbtn | preklopni gumb |
 | cbo | odabirni okvir |
 | chk | potvrdni okvir |
 | dlg | dijaloški okvir |
+| doc | dokument |
 | edt | polje za uređivanje |
+| pwdedt | zaštićeno polje za uređivanje |
 | gra | grafika |
-| cN | stupac tablice sa brojem x, NPR. c1, c2. |
-| rN | redak tablice sa brojem x, npr. r1, r2. |
+| embedded | ugrađeni objekt |
+| enote | kraj bilješke |
+| fnote | fusnota |
+| grp | grupiranje |
 | hN | naslov na razini X, npr. h1, h2. |
+| hlp | pomočni balončić |
+| lmk | orjentir |
 | lnk | link |
 | vlnk | posjećeni link |
 | lst | popis |
-| lmk | orjentir |
 | mnu | izbornik |
 | mnubar | traka izbornika |
+| mnubtn | gumb izbornika |
+| mnuitem | stavka izbornika |
+| pnl | ploha |
+| prgbar | traka napretka |
 | rbtn | izborni gumb |
-| tb | tablica |
+| scrlbar | klizna traka |
+| sect | sekcija |
+| stbar | traka stanja |
+| tabctl | kartica svojstva |
+| tbl | tablica |
+| cN | broj stupca tablice x, npr. c1, c2. |
+| rN | broj redka u tablici x, npr. r1, r2. |
+| term | terminal |
+| tlbar | alatna traka |
+| tltip | alatni savjetnik |
 | tv | prikaz stabla |
+| tvbtn | gumb stabla |
+| tvitem | stavka stabla |
 | lv x | stavka prikaza stabla koja ima nivoo x u hierarhiji |
-| ``-----`` | rastavljač |
+| wnd | prozor |
+| ⠤⠤⠤⠤⠤ | rastavljač |
 
 Slijedeći indikatori stanja su također definirani:
 || kratica | stanje kontrole |
 | ... | prikazano, kada objekt podržava automatsko dopunjavanje |
-| ( ) | prikazano, kada je objekt (npr. odabirni okvir) nije označen |
-| (x) | prikazano, kada je objekt (npr. potvrdni okvir) je odznačen |
-| (-) | prikazano, kada je objekt, (npr. potvrdni okvir) je polovično označen |
+| ⢎⣿⡱ | prikazano, kada je objekt (npr. prebacivajući gumb) je pritisnut |
+| ⢎⣀⡱ | prikazano kada objekt (npr. prebacivajući gumb) nije pritisnut |
+| ⣏⣿⣹ | prikazano kada je potvrdni okvir odabran |
+| ⣏⣸⣹ | prikazano kada je potvrdni okvir polovično odabran |
+| ⣏⣀⣹ | prikazano kada potvrdni okvir nije odabran |
 | - | prikazano kada je objekt (npr. stavka prikaza stabla) je skupljiva |
 | + | prikazano, kada je objekt (npr. stavka prikaza stabla) je proširiv |
+| *** | prikazano, kada je otkriven zaštićeni dokument |
 | clk | prikazano, kada je objekt klikljiv |
+| cmnt | prikazano kada postoji komentar u dijelu teksta ili tablici u dokumentu |
+| frml | prikazano kada postoji formula u ćeliji tablice |
+| invalid | prikazano kada je upisana nevažeća informacija |
+| ldesc | prikazano, kada objekt, često je to grafika, ima dugi opis |
+| mln | prikazano kada polje za uređivanje sadrži više redaka, poput polja za komentar na web stranicama |
+| req | prikazano ako je pronađeno obvezno polje |
 | ro | prikazano kada je objekt (npr. tekstualno polje za uređivanje) je samo za čitanje |
 | sel | prikazano, kada je objekt označen |
+| nsel | prikazano, kada objekt nije označen |
+| sorted asc | prikazano, kada je popis poredanod gore prema dole |
+| sorted desc | prilkazano, kada je popis sortiran od dole prema gore |
 | submnu | prikazano, kada objekt ima iskočni prozorčić (nerjetko je to podizbornik) |
 
 Na kraju, slijedeće kratice za orijentire su definirane:
@@ -1059,13 +1098,18 @@ Ovo se primjenjuje za kursor sustava i pregledni kursor, ali ne i za indikator o
 ==== Titranje kursora ====
 Ova opcija omogućava titranje brajičnog kursora.
 Ako je titranje isključeno, brajični redak će konstantno biti u tzv. "gornjoj" poziciji.
+Pokazivač označenosti nije izmjenjen ovom opcijom, to su uvijek točkice 7 i 8 bez titranja.
 
 ==== Brzina titraja pokazivača (ms) ====
  Ova je opcija brojčano polje koja vam omogućuje izmjenu brzine titraja pokazivača u milisekundama.
 
-==== Izgled pokazivača ====
-Ova vam opcija omogućuje promjenu izgleda (kombinacije točkica) brajičnog pokazivača.
-Indikator označenosti nije obuhvaćen ovom opcijom.
+==== Izgled pokazivača fokusa ====
+Ova opcija vam omogućuje izbor oblika (kombinacije točkica) brajičnog pokazivača premještenog na fokus.
+Oznaka označenosti nije dotaknuta ovom opcijom, ona je uvijek ista točkice 7 i 8 bez titranja.
+
+==== Oblik pokazivača pregleda ====
+Ova opcija omogučava odabir oblika (kombinacije točkica) brajičnog pokazivača, kada je isti postavljen na pregled.
+Pokazivač označenosti nije dotaknut ovom opcijom, on je uvijek u kombinaciji točkica 7 i 8 bez titranja.
 
 ==== Stanka za poruke u sekundama ====
 Ovom se opcijom određuje koliko će dugo NVDA poruke biti prikazane na brajičnom retku.
