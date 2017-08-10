@@ -1426,6 +1426,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
+		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1434,6 +1435,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
+		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
 		if self.display:
 			self.display.terminate()
 			self.display = None
