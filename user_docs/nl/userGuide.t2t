@@ -596,37 +596,77 @@ U kunt braille configureren via het [dialoogvenster Brailleïnstellingen #Braill
 Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement, de gebruiksstatus alsmede oriëntatiepunten.
 
 || Afkorting | Type besturingselement |
-| kn | knop |
-| vkl | vervolgkeuzelijst |
-| slv | selectievakje |
+| app | applicatie / toepassing |
+| bct | blokcitaat |
+| bst | boomstructuur |
+| bsitem | boomstructuuritem |
+| bskn | boomstructuurknop |
+| nv N | Items in de boomstructuur zijn hirarchisch ingedeeld, bijv. Niveau 1, 2, 3, enz. |
 | dlg | dialoog |
+| doc | document |
+| enoot | eindnoot |
+| vnoot | voetnoot |
+| gra | grafiek |
+| grp | groepering |
+| hlp | helpballon |
+| ingevgdd | ingevoegd object |
 | iv | invoerveld |
-| afb | afbeelding |
+| wwdivr | wachtwoord invoeren|
+| kn | knop |
+| utvwkn | uitvouwknop |
+| drkzkn | draaikeuzeknop |
+| splskn | splitsknop |
+| sklkn | schakelknop |
+| kN | kop op niveau (N), bijv. k1, k2. |
+| kr | keuzerondje |
+| lnk | link |
+| blnk | bezochte link |
+| li | lijst |
+| vkl | vervolgkeuzelijst |
+| mnu | menu |
+| mnublk | menubalk |
+| mnuitem | menuitem |
+| mnukn | menuknop |
+| ortp | oriëntatiepunt |
+| pnl | paneel |
+| schfblk | schuifbalk |
+| sect | sectie |
+| slv | selectievakje |
+| stblk | statusbalk |
+| tabbstg | tabbesturingselement |
+| tb | tabel |
 | kN | tabelkolomnnummer (N), bijv. k1, k2. |
 | rN | tabelrijnummer (N), bijv. r1, r2. |
-| kN | kop op niveau (N), bijv. k1, k2. |
-| lnk | link |
-| li | lijst |
-| blnk | bezochte link |
-| mnu | menu |
-| mnubalk | menubalk |
-| kr | keuzerondje |
-| tb | tabel |
-| bst | boomstructuur |
-| nv N | Items in de boomstructuur zijn hirarchisch ingedeeld, bijv. Niveau 1, 2, 3, enz. |
-| ``-----`` | scheiding |
+| term | terminal |
+| tltip | tool tip |
+| vns | venster |
+| vgbalk | voortgangsbalk |
+| wkblk | werkbalk |
+| ⠤⠤⠤⠤⠤ | scheiding |
 
 Verder worden de volgende gebruiksstatusaanduidingen gebruikt:
 || Afkorting | Gebruiksstatus |
 | ... | wordt weergegeven wanneer object autoaanvulling ondersteunt |
-| ( ) | wordt weergegeven wanneer een object zoals een selectievakje niet is aangevinkt |
-| (x) | wordt weergegeven wanneer een object zoals een selectievakje is aangevinkt |
-| (-) | wordt weergegeven wanneer een object zoals een selectievakje gedeeltelijk is aangevinkt |
+| ⢎⣿⡱ | wordt weergegeven wanneer een object (bijv. een schakelknop) ingedrukt is |
+| ⢎⣀⡱ | wordt weergegeven wanneer een object (bijv. een schakelknop) niet is ingedrukt |
+| ⣏⣿⣹ | wordt weergegeven wanneer een object (bijv. een selectievakje) aangevinkt is |
+| ⣏⣸⣹ | wordt weergegeven wanneer een object (bijv. een selectievakje) gedeeltelijk aangevinkt is |
+| ⣏⣀⣹ | wordt weergegeven wanneer een  object (bijv. een selectievakje) niet aangevinkt is |
 | - | wordt weergegeven wanneer een object zoals een boomstructuuritem kan worden samengevouwen |
 | + | wordt weergegeven wanneer een object zoals een boomstructuuritem kan worden uitgevouwen |
+| *** | wordt weergegeven in geval van een beveiligd besturingselement of beveiligd document |
 | klb | wordt weergegeven wanneer een objectklikbaar is |
+| opmg | wordt weergegeven wanneer er sprake is van opmerking bij een werkbladcel of een stukje tekst in een document |
+| frml | wordt weergegeven in geval van een formule voor werkbladcel |
+| ongeldg | wordt weergegeven in geval van ongeldige invoer |
+| lbesr | wordt weergegeven in geval van een object (meestal een grafiek) met lange beschrijving |
+| mrg | wordt weergegeven wanneer meer regels kunnen worden ingevoer in een tekstvak   bijv. velden voor opmerkingen op websites |
+| vpl | wordt weergegeven in geval van een verplicht formulierveld |
 | al | wordt weergegeven wanneer een object (bijv. een tekstinvoerveld ) het kenmerk "alleen lezen" heeft |
 | sel | wordt weergegeven wanneer object is geselecteerd |
+| nsel | wordt weergegeven wanneer object niet geselecteerd is |
+| sorteer opl | wordt weergegeven wanneer object oplopend wordt gesorteerd |
+| sorteer afl | wordt weergegeven wanneer object aflopend wordt gesorteerd |
 | submnu | wordt weergegeven wanneer een object kan worden uitgeschoven, meestal in de vorm van een sub-menu |
 
 Tot slot kunnen de volgende afkortingen gebruikt worden met betrekking tot oriëntatiepunten:
@@ -653,6 +693,31 @@ Als u bijv. een braillecode gebruikt die getallen vooraf laat gaan door een numm
 Door punt 7 in te toetsen, verwijdert u de laatst ingevoerde braillecel of het laatste brailleteken.
 Punt  8 zet alle brailleinvoer om  en activeert de Enter-toets.
 Door punt 7 + punt 8 in te drukken wordt alle brailleinvoer  omgezet, maar zonder de spatiebalk of Enter-toets te activeren.
+%kc:endInclude
+
++ Inhoudherkenning +
+Wanneer auteurs onvoldoende informatie verschaffen waarmee een gebruiker van een schermleesprogramma kan bepalen om welke inhoud het gaat kunnen verscheidene hulpprogramma's worden gebruikt om de inhoud te herkennen uit een afbeelding.
+NVDA ondersteunt de OCR Optical Character Recognition, meestal 'tekstherkenning' genoemd in het nederlands, ) functionaliteit die in Windows 10 is ingebouwd om tekst uit afbeeldingen te herkennen.
+In andere inhoudherkenningsprogramma's kan worden voorzien met behulp van NVDA add-ons.
+
+Bij gebruik van een inhoudherkenningscommando herkent NVDA inhoud uit het huidige [navigatorobject #ObjectNavigation].
+Standaard volgt het navigatorobject de systeemfocus of de bladermoduscursor, zodat  u meestal eenvoudigweg de focus of de bladermoduscursor naar wens kunt verplaatsen.
+Als u bijv. de bladermoduscursor naar een grafiek verplaatst, zal de herkenning standaard inhoud herkennen uit de grafiek.
+Wellicht wilt u echter direct met objectnavigatie werken  om bij voorbeeld de inhoud van een compleet toepassingsvenster te herkennen.
+
+Zodra de herkenning is uitgevoerd, wordt het resultaat  gepresenteerd in een  bladermodusachtig document zodat u de informatie met behulp van cursortoetsen, etc. kunt lezen.
+Door op Enter of Spatie te drukken zal, zo mogelijk, de tekst bij de cursor op de gebruikelijke manier (klikken) worden geactiveerd.
+Door op Escape te drukken wordt het herkenningsresultaat geannuleerd.
+
+++ Windows 10 OCR ++[Win10Ocr]
+De OCR-functionaliteit van Windows 10 biedt ondersteuning voor veel talen.
+NVDA kan hiervan gebruik maken om tekst uit afbeeldingen en ontoegankelijke toepassingen te herkennen.
+
+U kunt de tekstherkenningstaal in het dialoogvenster  [Windows 10 OCR #Win10OcrSettings] instellen.
+U kunt extra talen toevoegen door in het menu Start, (of met linker Windowstoets +i) Instellingen te kiezen, Tijd en Taal -> Regio & Taal te selecteren   en dan  Een taal toevoegen te kiezen.
+
+%kc:beginInclude
+Om de tekst in het huidige navigatorobject te herkennen met behulp van Windows 10 OCR drukt u op NVDA+r.
 %kc:endInclude
 
 + Applicatie-specifieke kenmerken +
@@ -1034,10 +1099,15 @@ Als knipperen wordt uitgezet, blijft de braillecursor steeds in de "omhoog" stan
 
 ==== Knippersnelheid cursor ====
 In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor bepaalt in milliseconden.
+Deze optie heeft geen invloedt op de selectieaanwijzer. Hierop is altijd punt 7 en punt 8 van toepassing en de aanwijzer knippert niet.
 
-==== Cursorvorm ====
-Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen.
-Deze optie heeft geen betrekking op de selectieaanwijzer.
+==== Cursorvorm voor Focus ====
+Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen wanneerbraille de focus moet volgen.
+Deze optie heeft geen invloedt op de selectieaanwijzer. Hierop is altijd punt 7 en punt 8 van toepassing en de aanwijzer knippert niet.
+
+==== Leescursorvorm (Review) ====
+Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen wanneerbraille de leescursor (review) moet volgen.
+Deze optie heeft geen invloedt op de selectieaanwijzer. Hierop is altijd punt 7 en punt 8 van toepassing en de aanwijzer knippert niet.
 
 ==== Time-out voor meldingen (sec.) ====
 In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen op de brailleleesregel worden weergegeven.
@@ -1070,6 +1140,32 @@ Wanneer deze optie is uitgeschakeld, wordt zoveel mogelijk tekst op de regel gep
 Door te scrollen kunt u dan de rest van het woord lezen.
 
 Vloeiend lezen wordt gemakkelijker door deze optie in te schakelen, maar u zult als gevolg hiervan meer moeten scrollen.
+
+==== Te tonen Focus-context ====
+Met deze optie kunt u kiezen welke contextinformatie NVDA op de brailleleesregel  moet tonen wanneer een object wordt gefocuseerd.
+Contextinformatie heeft betrekking op de  hierarchie van  objecten die de focus hebben.
+Wanneer u bij voorbeeld een lijst-item focuseert, is dit lijst-item onderdeel van een lijst.
+Deze lijst zou als bovenliggend object een dialoogvenster kunnen hebben, etc.
+Raadpleeg het onderdeel [objectnavigatie #ObjectNavigation] voor meer informatie over de hierarchie die van toepassing is op objecten in NVDA.
+
+Bij selectie van de instelling contextwijzigingen weergeven op de leesregel zal NVDA proberen zoveel mogelijk contextinformatie op de brailleleesregel te tonen als moglijk is, maar alleen voor die onderdelen van de context die veranderd zijn.
+Voor het bovengenoemde voorbeeld betekent dit wanneer een lijst de focus krijgt, dat NVDA een lijstitem zal tonen op de brailleleesregel.
+Verder zal NVDA proberen, als er voldoende ruimte over is op de leesregel,  weer te geven dat het lijstitem deel uitmaakt van een lijst.
+Als u vervolgens met de pijltoetsen door de lijst gaat, wordt er vanuit gegaan dat u er zich van bewust bent dat u zich nog steeds in een lijst bevindt.
+Hieruit volgt dat voor de resterende lijstitems die u focuseert, NVDA alleen het lijstitem op de leesregel zal tonen dat de focus heeft.
+Om de context opnieuw te lezen(dat wil zeggen als u zich in een lijst bevindt en de lijst deel uitmaakt van een dialoog), moet u uw leesregel terugscrollen.
+
+Bij selectie van de instelling altijd op de brailleleesregel weergeven zal NVDA proberen zoveel mogelijk contextinformatie op de brailleleesregel te tonen, ongeacht of u dezelfde contextinformatie al eerder zag.
+Dit heeft als voordeel dat NVDA zoveel informatie als mogelijk is op de leesregel zal passen. 
+Daar staat dan als nadeel tegenover dat de plaats op de brailleleesregel waar de focus begint telkens een andere is.
+Hierdoor wordt het lastig bij voorbeeld om door een lange lijst met items te lopen omdat u voortdurend uw vinger moet verplaatsen om het begin van het item te vinden.
+In NVDA 2017.2 en eerder was dit de standaardinstelling.
+
+Als u bij de opties weer te geven  contextinformatie kiest voor alleen contextinformatie tonen bij terugscrollen, toont NVDA standaard nooit contextinformatie op uw brailleleesregel.
+Met betrekking tot bovengenoemd voorbeeld houdt dit in dat NVDA weergeeft dat u een lijstitem hebt gefocuseerd.
+Als u de context echter wilt lezen (dat wil zeggen wanneer  u zich in een lijst bevindt en de lijst is onderdeel van een dialoog), moet u uw leesregel terugscrollen.
+
+Om Te tonen contextinformatie aan of uit te zetten vanaf elke willekeurige plaats kunt u een aangepaste invoerhandeling toekennen met behulp van het [dialoogvenster Invoerhandelingen  #InputGestures].
 
 +++ Instellingen toetsenbord (NVDA+control+k) +++
 Dit dialoogvenster vindt u in het NVDA-menu onder “Opties” waar u vervolgens “Toetsenbord” selecteert.
@@ -1384,6 +1480,12 @@ Het vervolgkeuzemenu voor het melden van regelinspringing heeft 4 keuzemogelijkh
 De toonhoogte stijgtvoor elke spatie, en voor een tab, gaat de toon evenveel omhoog als voor 4 spaties.
 - Zowel spraak als pieptonen: Deze optie is een combinatie van de twee hiervoor genoemde mogelijkheden.
 -
+
++++ Windows 10 OCR-instellingen +++[Win10OcrSettings]
+In het NVDA-menu onder Opties  vindt u dit dialoogvenster waar u [Windows 10 OCR #Win10Ocr] kunt configureren.
+
+==== Herkenningstaal ====
+Via het vervolgkeuzemenu kunt u de taal kiezen die voor de tekstherkenning gebruikt moet worden.
 
 +++ Uitspraakwoordenboeken +++
 Via het menu-item Uitspraakwoordenboeken dat te vinden is onder Opties kunt u aangeven hoe NVDA bepaalde woorden of woordgroepen moet uitspreken.
@@ -2410,14 +2512,17 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
 | Geen | --install-silent | Silently stille installatie van  NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
 
-++ Meer uitgebreide aanpassing van de uitspraak van leestekens en  symbolen ++
-Behalve in het [dialoogvenster Uitspraak van Interpunctie en Symbolen #SymbolPronunciation] zijn er nog andere mogelijkheden om de uitspraak van leestekens te beïnvloeden.
-U kunt bij voorbeeld  aangeven dat bepaalde tekens onbewerkt aan de synthesizer worden doorgegeven ( om een pauze in te lassen of het intonatiepatroon te beïnvloeden, etc.) en u kunt aangepaste symbolen toevoegen. 
+++ Systeem-brede Parameters ++[SystemWideParameters]
+U kunt voor NVDA enkele waarden in het systeemregister instellen die systeembreed het gedrag van NVDA beïnvloeden.
+Deze waarden worden in het register onder een van de volgende sleutels opgeslagen:
+- 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
 
-Hiertoe moet u het bestand met de uitspraakdefinities voor symbolen bewerken. 
-Het bestand met de naam  “symbols-xx.dic”, waar xx de gebruikte taalcode is, bevindt zich in de gebruikersconfiguratiemap.
-Informatie over de opmaak van dit bestand leest u in  de paragraaf over de Uitspraak van Interpunctie/Symbolen  in de NVDA Handleiding voor Ontwikkelaars (alleen in het Engels). De handleiding vindt u [in de rubriek voor ontwikkelaars op de NVDA-Website http://community.nvda-project.org/wiki/Development].
-Door gebruikers kunnen echter geen complexe symbolen worden gedefinieerd.
+De volgende waarden kunnen onder deze registersleutel worden ingesteld:
+|| Naam | Type | Mogelijke waarden | Beschrijving |
+| configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | Indien ingeschakeld (enabled), wordt de NVDA gebruikersconfiguratie in de lokale application data opgeslagen in plaats van de roaming application data |
+| serviceDebug | DWORD | 0 (default) to disable, 1 to enable | Indien ingeschakeld (enabled), wordt veilige modus voor windows secure desktops, die gebruik van Python consool en Log viewer moglijk maakt, buiten werking gesteld. Aangezien dit een aantal belangrijke veiligheidsrisico's met zich meebrent,wordt gebruik van deze optie ten zeerste afgeraden |
 
 + Verdere informatie +
 Voor nadere informatie over NVDA of voor hulp kunt u terecht op de website NVDA_URL.
