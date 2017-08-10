@@ -4,10 +4,11 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.3 =
+Lo subrayable de esta versión incluye la entrada de braille contraído, el soporte para nuevas voces Windows OneCore disponibles en Windows 10, el soporte para el OCR integrado en Windows 10, y muchas mejoras significativas referentes al Braille y a la web.
 
 == Nuevas Características ==
 - Se ha añadido una opción Braille para "mostrar mensajes indefinidamente". (#6669)
-- En la lista de mensajes de Microsoft Outlook, se anuncia si un mensaje está marcado. (#6374)
+- En la lista de mensajes de Microsoft Outlook, NVDA ahora anuncia si un mensaje está marcado. (#6374)
 - En Microsoft PowerPoint, ahora se anuncia el tipo exacto de una forma cuando se edita una diapositiva tal como triángulo, círculo, vídeo, flecha, en lugar de sólo 'forma'. (#7111)
 - El contenido matemático (proporcionado como MathML) ahora se soporta en Google Chrome. (#7184)
 - NVDA ahora puede hablar utilizando las nuevas voces Windows OneCore (también conocidas como voces mobile) incluidas en Windows 10. Accede a ellas seleccionando Voces Windows OneCore en el diálogo Sintetizadores de NVDA. (#6159)
@@ -17,30 +18,37 @@ Qué hay de Nuevo en NVDA
 - Añadido el soporte para el control Selector de Fecha que se encuentra en los cuadros de diálogo Citas de Microsoft Outlook. (#7217)
 - Ahora se anuncia la sugerencia actualmente seleccionada en los campos de Windows 10 Mail para/cc y en el campo Opciones de búsqueda de Windows 10. (#6241)
 - Ahora se reproduce un sonido para indicar la aparición de sugerencias en ciertos campos de búsqueda de Windows 10 (Ej.: pantalla de inicio, Opciones de búsqueda, campos de Windows 10 mail para/CC). (#6241)
-- Se anuncian automáticamente las notificaciones en Skype for Business Desktop, tales como cuando alguien inicia una conversación contigo.  (#7281)
-- Se anuncian automáticamente las notificaciones en Microsoft Edge, tales como cuando se inicia una descarga. (#7281)
+- NVDA ahora anuncia automáticamente las notificaciones en Skype for Business Desktop, tales como cuando alguien inicia una conversación contigo.  (#7281)
+- NVDA ahora anuncia automáticamente mensajes de chat entrantes mientras se esté en una conversación en Skype for Business. (#7286)
+- NVDA ahora anuncia automáticamente las notificaciones en Microsoft Edge, tales como cuando se inicia una descarga. (#7281)
 - Ahora puedes escribir tanto en braille contraído como sin contraer en una pantalla braille con un teclado braille. Consulta la sección Entrada Braille de la Guía del Usuario para detalles. (#2439)
 - Ahora puedes introducir caracteres braille Unicode desde el teclado braille en una pantalla braille seleccionando Braille Unicode como la tabla de entrada en Opciones de Braille. (#6449)
 - Añadido el soporte para la pantalla braille SuperBraille utilizada en Taiwan. (#7352)
+- Nuevas tablas de transcripción braille: braille danés computerizado de 8 puntos, Lituano, braille persa computerizado de 8 puntos, Persa grado 1, braille Esloveno computerizado de 8 puntos. (#6188, #6550, #6773, #7367)
+- Mejorada la tabla de braille inglés computerizado de 8 puntos (U.S.), incluyendo el soporte para viñetas, el signo de euro y letras acentuadas. (#6836)
+- NVDA ahora puede utilizar la funcionalidad OCR incluida en Windows 10 para reconocer el texto de imágenes o de aplicaciones inaccesibles. (#7361)
+ - El idioma puede configurarse desde el nuevo diálogo OCR de Windows 10 en las preferencias de NVDA.
+ - Para reconocer el contenido del navegador de objetos actual, pulsa NVDA+r.
+ - Consulta la sección Reconocimiento de Contenidos de la Guía del Usuario para detalles adicionales.
+- Ahora puedes elegir qué información de contexto se muestra en una pantalla braille cuando un objeto tiene el foco utilizando la nueva opción "Presentación de contexto del foco" en el diálogo Opciones de Braille. (#217)
+ - Por ejemplo, las opciones "Rellenar pantalla para cambios de contexto" y "Sólo cuando se desplaza hacia atrás" pueden hacer que trabajar con listas y menúes sea más eficiente, ya que los elementos no cambiarían contínuamente su posición en la pantalla.
+ - Consulta la sección en la opción "Presentación de contexto del foco" en la Guía del Usuario para detalles adicionales y ejemplos.
+- En Firefox y Chrome, NVDA ahora soporta rejillas dinámicas complejas tales como hojas de cálculo donde sólo se pueda cargar o mostrar una parte del contenido (específicamente los atributos aria-rowcount, aria-colcount, aria-rowindex y aria-colindex introducidos en ARIA 1.1). (#7410)
 
 
 == Cambios ==
-- Un gesto no vinculado (script_restart) se ha añadido para permitir que NVDA se reinicie rápidamente. (#6396)
+- Se ha añadido una orden no vinculada para reiniciar NVDA bajo demanda. Puedes encontrarla en la categoría Miscelánea del diálogo Gestos de entrada. (#6396)
 - La distribución de teclado ahora puede configurarse desde el diálogo Bienvenida de NVDA. (#6863)
-- Los nombres de los puntos de referencia se abrevian en Braille como sigue: (#3975)
- - "punto de referencia": "pdr"
- - "título": "tlo"
- - "complementario": "comp"
- - "info de contenido": "cinf"
- - "principal": "main"
- - "navegación": "nav"
- - "búsqueda": "busq"
- - "form": "frm"
- - "region": "rgn"
- - Ejemplo: "punto de referencia de navegación" sería "pdr nav"
+- Se han abreviado muchos más tipos de controles y estados en braille. Los puntos de referencia también se han abreviado. Porfavor consulta "Tipo de Control, estado y Abreviaturas de Puntos de Referencia" en Braille en la Guía del Usuario para una lista completa. (#7188, #3975)
 - Actualizado Espeak-ng a 1.49.1 (#7280).
 - Las listas de tablas de entrada y de salida en el diálogo Opciones de Braille ahora se ordenan alfabéticamente. (#6113)
 - Actualizado el transcriptor braille liblouis a 3.2.0. (#6935)
+- La tabla braille predeterminada ahora es Braille Inglés Unificado Código Grado 1. (#6952)
+- Por omisión, NVDA ahora sólo muestra las partes de la información de contexto que haya cambiado en una pantalla braille cuando se enfoque un objeto. (#217)
+ - Anteriormente, siempre mostraba tanta información como fuera posible, independientemente de si has visto la misma información de contexto antes.
+ - Puedes volver a la anterior cambiando la nueva opción "Presentación de Contexto del Foco" en el diálogo Opciones de Braille a "Rellenar Siempre pantalla".
+- Al utilizar Braille, el cursor puede configurarse para tener una forma diferente al seguir al foco o a la revisión. (#7112)
+- El logo de NVDA se ha actualizado. El logo actualizado de NVDA es una mezcla estilizada de las letras NVDA en blanco, sobre un fondo sólido púrpura. Esto se asegura de que será visible en cualquier color de fondo, y utilizará el color púrpura del logo de NV Access. (#7446)
 
 
 == Corrección de Errores ==
@@ -63,6 +71,10 @@ Qué hay de Nuevo en NVDA
 - Ahora es significativamente más rápido realizar la navegación rápida por encabezados en Microsoft Edge. (#7343)
 - En Microsoft Edge, la navegación en modo exploración ya no se salta secciones largas de ciertas páginas web tales como el tema Wordpress 2015. (#7143)
 - En Microsoft Edge, los puntos de referencia se localizan correctamente en otros idiomas diferentes al inglés. (#7328)
+- El braille ahora sigue correctamente la selección al seleccionar texto más allá del ancho de la pantalla. Por ejemplo, si seleccionas varias líneas con shift+flecha abajo, el braille ahora muestra la última línea que seleccionaste. (#5770)
+- En Firefox, NVDA ya no anuncia falsamente "sección" varias veces al abrir detalles para un tuit en twitter.com. (#5741)
+- Las órdenes de navegación de tabla ya no están disponibles para tablas de diseño en modo Exploración al menos que el anunciado de las tablas de diseño esté habilitado. (#7382)
+- En Firefox y Chrome, las órdenes de navegación de tablas en modo Exploración ahora omiten las celdas ocultas de la tabla. (#6652, #5655)
 
 
 == Cambios para Desarrolladores ==
@@ -70,6 +82,8 @@ Qué hay de Nuevo en NVDA
 - NVDA ahora debe compilarse con Visual Studio Community 2015. Visual Studio Express ya no se soporta. (#7110)
  - Ahora también se requieren las Windows 10 Tools y el SDK, que pueden habilitarse al instalar Visual Studio.
  - Consulta la sección Installed Dependencies del readme para detalles adicionales.
+- El soporte para reconocedores de contenido tales como las herramientas OCR y descripción de imagen pueden implementarse fácilmente utilizando el nuevo paquete contentRecog. (#7361)
+- Ahora se incluye el paquete de Python json package en las compilaciones binarias de NVDA. (#3050)
 
 
 = 2017.2 =

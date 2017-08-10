@@ -592,38 +592,77 @@ Puedes configurar el braille utilizando el  [diálogo Opciones de Braille #Brail
 Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado así como los puntos de referencia.
 
 || Abreviatura | Tipo de Control |
+| apl | aplicación |
+| cit | cita |
 | bt | botón |
+| btdsp | botón desplegable |
+| btrot | botón rotatorio |
+| btdiv | botón divisor |
+| btcom | botón conmutable |
 | cc | cuadro combinado |
 | cv | casilla de verificación |
 | dlg | diálogo |
+| doc | documento |
 | ce | campo de texto editable |
+| pwdedt | edición de contraseña |
+| integrado | objeto integrado |
+| notaf | nota final |
+| notap | nota al pie |
 | gra | gráfico |
-| cN | número de columna de tabla n, ej.: c1, c2. |
-| fN | número de fila de tabla n, ej.: r1, r2. |
+| grp | grupo |
 | enN | encabezado de nivel n, ej.: h1, h2. |
+| ayd | globo de ayuda |
+| pdr | punto de referencia |
 | enl | enlace |
 | enlv | enlace visitado |
 | lst | lista |
-| pdr | punto de referencia |
 | mn | menú |
 | bmn | barra de menú |
+| btmn | botón de menú |
+| elmn | elemento de menú |
+| pnl | panel |
+| barprg | barra de progreso |
 | bto | botón de opción |
+| bardsp | barra de desplazamiento |
+| secc | sección |
+| barst | barra de estado |
+| ctrtab | control tab |
 | tb | tabla |
+| cN | número de columna de tabla n, ej.: c1, c2. |
+| fN | número de fila de tabla n, ej.: r1, r2. |
+| term | terminal |
+| barher | barra de herramientas |
+| cons | consejos |
 | vár | vista en árbol |
+| btvár | botón de vista en árbol |
+| elvár | elemento de vista en árbol |
 | nv N | un elemento de vista en árbol que tiene un nivel jerárquico N|
+| vtn | ventana |
 | ``-----`` | separador |
 
 Los siguientes indicadores de estado  también están definidos:
 || Abreviatura | Estado de Control |
 | ... | mostrado cuando un objeto soporta autocompletado |
-| ( ) | mostrado cuando un objeto (ej.: una casilla de verificación) no está marcado |
-| (x) | mostrado cuando un objeto (ej.: una casilla de verificación) está marcado |
-| (-) | mostrado cuando un objeto (ej.: una casilla de verificación) está  parcialmente marcado |
+| ⢎⣿⡱ | mostrado cuando un objeto (ej. un botón conmutable) está pulsado |
+| ⢎⣀⡱ | mostrado cuando un objeto (ej. un botón conmutable) no está pulsado |
+| ⣏⣿⣹ | mostrado cuando un objeto (ej. una casilla de verificación) está marcado |
+| ⣏⣸⣹ | mostrado cuando un objeto (ej. una casilla de verificación) está parcialmente marcado |
+| ⣏⣀⣹ | mostrado cuando un objeto (ej. una casilla de verificación) no está marcado |
 | - | mostrado cuando un objeto (ej.: un elemento de vista en árbol) es contraíble |
 | + | mostrado cuando un objeto (ej.: un elemento de vista de árbol) es Expandible |
+| *** | mostrado cuando se encuentra un control o un documento protegido |
 | clk | mostrado cuando un objeto es cliqueable |
+| cmnt | mostrado cuando hay un comentario para una celda en una hoja de cálculo o en una pieza de texto en un documento |
+| frml | mostrado cuando hay una fórmula en una celda de una hoja de cálculo |
+| invalid | mostrado cuando se ha hecho una entrada inválida |
+| ldesc | mostrado cuando un objeto (normalmente un gráfico) tiene una descripción larga |
+| mln | mostrado cuando un campo de edición permite escribir varias líneas de texto tales como campos de comentarios en sitios web |
+| req | mostrado cuando se encuentra un campo de edición obligatorio |
 | ro | mostrado cuando un objeto (ej.: un campo de texto editable) es de sólo lectura |
 | sel | mostrado cuando un objeto está seleccionado |
+| nsel | mostrado cuando un objeto no está seleccionado |
+| ordenado asc | mostrado cuando un objeto se ordena ascendentemente |
+| ordenado desc | mostrado cuando un objeto se ordena descendentemente |
 | submnu | mostrado cuando un objeto tiene un desplegable (normalmente un submenú) |
 
 Finalmente, se definieron las siguientes abreviaturas para puntos de referencia:
@@ -650,6 +689,31 @@ Por ejemplo, si estás utilizando un código braille que comienza los números c
 Al pulsar el punto 7 borras la última celda o carácter introducido.
 El punto 8 transcribe cualquier entrada braille y pulsa la tecla intro.
 Pulsando los puntos 7 + 8 transcribe cualquier entrada braille, pero sin añadir un espacio o pulsando intro.
+%kc:endInclude
+
++ Reconocimiento de Contenidos +
+Cuando los autores no proporcionan suficiente información para que un usuario de lector de pantalla determine el contenido de algo, pueden utilizarse varias herramientas para intentar reconocer el contenido desde una imagen.
+NVDA soporta la funcionalidad de reconocimiento óptico de caracteres (OCR) integrada en Windows 10 para reconocer texto desde imágenes.
+Pueden proporcionarse reconocedores de contenido adicionales en complementos de NVDA.
+
+Cuando utilices una orden de reconocimiento de contenido, NVDA reconoce contenido desde el [navegador de objetos #ObjectNavigation] actual.
+Por omisión, el navegador de objetos sigue al foco del sistema o al cursor del modo exploración, así puedes mover normalmente el foco o el cursor del modo exploración donde desees.
+Por ejemplo, si mueves  el cursor del modo exploración a un gráfico, el reconocimiento reconocerá el contenido desde el gráfico por omisión.
+Por lo tanto, podrás desear utilizar la navegación de objetos directamente para, por ejemplo, reconocer el contenido de toda una ventana de aplicación.
+
+Una vez el reconocimiento se complete, el resultado se presentará en un documento similar al modo exploración, permitiéndote leer la información con las teclas del cursor, etc.
+Pulsando intro o espacio activará (normalmente un clic) el texto en el cursor si es posible.
+Pulsando escape descartas el resultado del reconocimiento.
+
+++ OCR de Windows 10 ++[Win10Ocr]
+Windows 10 incluye un OCR para muchos idiomas.
+NVDA puede utilizar esto para reconocer texto desde imágenes o aplicaciones inaccesibles.
+
+Puedes configurar el idioma a utilizar para el reconocimiento de texto en el diálogo de opciones [OCR de Windows 10 #Win10OcrSettings].
+Pueden instalarse idiomas adicionales abriendo el menú Inicio, eligiendo Configuración, seleccionando Hora e Idioma -> Región e Idioma y luego eligiendo Añadir un Idioma.
+
+%kc:beginInclude
+Para reconocer el texto en el actual navegador de objetos utilizando el OCR de Windows 10, pulsa NVDA+r.
 %kc:endInclude
 
 + Características Específicas para Aplicación +
@@ -1034,13 +1098,18 @@ Se aplica al cursor del sistema y al cursor de revisión, pero no al indicador d
 ==== Parpadeo de Cursor ====
 Esta opción permite al cursor braille parpadear.
 Si el parpadeo está desactivado, el cursor braille estará constantemente en la posición "subida".
+El indicador de selección no está afectado por esta opción, siempre es con los puntos 7 y 8 sin parpadear.
 
 ==== Velocidad de Parpadeo del Cursor (ms) ====
 Esta opción es un campo numérico que te permite cambiar la velocidad de parpadeo del cursor en milésimas de segundo.
 
-==== Forma del Cursor ====
-Esta opción te permite elegir la forma (patrón de puntos) del cursor braille.
-El indicador de selección no está afectado por esta opción.
+==== Forma del Cursor para el Foco ====
+Esta opción te permite elegir la forma (patrón de puntos) del cursor braille cuando el braille siga al foco.
+El indicador de selección no está afectado por esta opción, siempre son los puntos 7 y 8 sin parpadear.
+
+==== Forma del Cursor para la Revisión ====
+Esta opción te permite elegir la forma (patrón de puntos) del cursor braille cuando el braille siga a la revisión.
+El indicador de selección no está afectado por esta opción, siempre son los puntos 7 y 8 sin parpadear.
 
 ==== Duración del Mensaje (en seg) ====
 Esta opción es un campo numérico que controla durante cuánto tiempo se muestran los mensajes del sistema en la pantalla braille.
@@ -1073,6 +1142,32 @@ Si esto está deshabilitado, se mostrará tanto como sea posible de la palabra, 
 Cuando desplaces la pantalla, entonces podrás leer el resto de la palabra.
 
 Habilitar esto podría permitir una mayor fluidez en la lectura, pero normalmente requiere desplazar la pantalla más.
+
+==== Presentación de Contexto de Foco ====
+Esta opción te permite elegir qué información de contexto mostrará NVDA en la pantalla braille cuando un objeto obtenga el foco.
+La información de contexto se refiere a la jerarquía de objetos que contengan el foco.
+Por ejemplo, cuando enfoques un elemento de lista, este elemento de lista es parte de una lista.
+Esta lista podría estar contenida en un diálogo, etc.
+Por favor consulta la sección acercqa de [navegación de objetos #ObjectNavigation] para más información acerca de la jerarquía que se aplica a los objetos en NVDA.
+
+Cuando se configure en rellenar pantalla para cambios de contexto, NVDA tratará de mostrar tanta información de contexto como le sea posible en la pantalla braille, pero sólo para las partes del contexto que hayan cambiado.
+Para el ejemplo de arriba, esto significa que cuando el foco cambie por la lista, NVDA mostrará el elemento de lista en la pantalla braille.
+Además, si queda espacio suficiente en la pantalla braille, NVDA tratará de mostrar que el elemento de lista es parte de una lista.
+Si, a continuación, comienzas a moverte por la lista con las teclas de cursor, se supone que eres consciente de estar todavía en la lista.
+Por lo tanto, para los elementos de lista restantes que enfoques, NVDA sólo mostrará el elemento de lista enfocado en la pantalla.
+Para leer el contexto de nuevo (es decir, que estás en una lista y que la lista es parte de un diálogo), tendrás que desplazar tu pantalla braille hacia atrás.
+
+Cuando esta opción esté configurada a rellenar siempre la pantalla, NVDA tratará de mostrar tanta información de contexto como sea posible en la pantalla braille, independientemente de si has visto la misma información de contexto antes.
+Esto tiene la ventaja de que NVDA ajustará tanta información como sea posible en la pantalla.
+Por lo tanto, la desventaja es que siempre hay una diferencia en la posición donde comienza el enfoque en la pantalla braille.
+Esto puede hacer difícil de andar por una lista larga de elementos,  por ejemplo, ya que tendrás que mover contínuamente el dedo para encontrar el comienzo del elemento.
+Este era el conmportamiento predeterminado para NVDA 2017.2 y anteriores.
+
+Cuando configures la opción presentación de contexto del foco en mostrar sólo la información de contexto al desplazarse hacia atrás, NVDA nunca muestra información de contexto en la pantalla braille por omisión.
+Así, en el ejemplo anterior, NVDA mostrará que enfocaste un elemento de lista.
+Por lo tanto, para  leer el contexto (es decir, que estás en una lista y que esta lista es parte de un diálogo), habrás de desplazar la pantalla braille hacia atrás.
+
+Para conmutar la presentación de contexto del foco desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de Entrada #InputGestures].
 
 +++ Opciones de Teclado (NVDA+control+k)+++
 Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Opciones de teclado...". 
@@ -1384,6 +1479,12 @@ El cuadro combinado Anunciar sangría de líneas con tiene cuatro opciones.
 El tono se incrementará en intensidad para cada espacio, y para el tabulador,se incrementará en intensidad equivalente de 4 espacios.
 - Voz y Tonos: esta opción lee la sangría utilizando ambos métodos de arriba.
 -
+
++++ Opciones del OCR de Windows 10 +++[Win10OcrSettings]
+Se puede acceder a este diálogo desde el menú Preferencias de NVDA y te permite configurar el [OCR de Windows 10 #Win10Ocr].
+
+==== Idioma de Reconocimiento ====
+Este cuadro combinado te permite elegir el idioma para utilizar con el reconocimiento de texto.
 
 +++ Diccionarios del Habla +++
 El menú de Diccionarios del habla, (encontrado en el menú Preferencias) contiene diálogos que te permiten controlar el modo en que NVDA pronuncia palabras o frases particulares. 
