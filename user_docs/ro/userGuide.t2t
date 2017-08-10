@@ -45,6 +45,7 @@ Informații despre alte sintetizatoare de voce suportate de NVDA pot fi găsite 
 
 ++ Suport pentru Braille ++
 Pentru utilizatorii care dețin un afișaj braille actualizabil, NVDA poate comunica informația în braille.
+Sunt compatibile tastaturi braille atât cu coduri abreviate cât și neabreviate.
 Vă rugăm citiți secțiunea [Afișaje braille compatibile #AfisajeBraille] pentru informații despre afișajele braille suportate.
 
 NVDA suportă coduri braille pentru multe limbi, inclusiv coduri abreviate, neabreviate și braille pentru calculatoare, pentru multe limbi.
@@ -145,7 +146,7 @@ Consultați secțiunea despre [parametrii la nivel de sistem #ParametriLaNivelDe
 Pentru a porni versiunea portabilă, mergeți în dosarul unde ați dezarhivat NVDA și apăsați „Enter” sau faceți dublu clic pe nvda.exe.
 
 Când NVDA pornește, mai întâi veți auzi câteva tonuri ascendente (care vă anunță că NVDA se încarcă).
-În funcție de cât de rapid este calculatorul sau dacă rulați NVDA de pe un stick USB sau alt dispozitiv mai lent, poate dura puțin timp până pornește.
+În funcție de cât de rapid este calculatorul sau dacă rulați NVDA de pe un stick USB sau alt dispozitiv mai lent, poate dura ceva timp până pornește.
 Dacă pornirea NVDA-ului necesită timp îndelungat, acesta ar trebui să anunțe „NVDA se încarcă. Vă rugăm așteptați...”.
 
 Dacă nu auziți nimic din toate acestea, sau dacă auziți sunetul de eroare al Windows, sau câteva tonuri descendente, asta înseamnă că NVDA are o eroare și e posibil să trebuiască să raportați un defect dezvoltatorilor.
@@ -587,43 +588,82 @@ Dacă afișajul dumneavoastră braille are o tastatură stil Perkins, puteți, d
 
 Vă rugăm să citiți secțiunea [Afișaje braille suportate #AfisajeBraille] pentru informații despre acestea. Puteți configura braille-ul folosind [dialogul de setări braille #SetariBraille]
 
-++ Tip de control, stare și abrevieri ale reperelor ++
-Pentru a se potrivi cât mai multe informații pe un afișaj braille, au fost definite următoarele abrevieri pentru a indica tipul și starea de control, precum și reperele.
+++ Abrevieri pentru tipuri de controale, stări și repere ++
+Pentru a încăpea cât mai multe informații pe un afișaj braille, au fost definite următoarele abrevieri pentru a indica tipul de controale, stările, precum și reperele.
 
 || Abreviere | tip de control |
+| app | aplicație |
+| bqt | citat bloc |
 | btn | buton |
+| drbtn | buton de extindere |
+| spnbtn | buton spin |
+| splbtn | buton divizare |
+| tgbtn | buton comutare |
 | cbo | casetă combinată |
 | chk | casetă de bifat |
 | dlg | dialog |
+| doc | document |
 | edt | câmp de text editabil |
+| pwdedt | modificare parolă |
+| embedded | obiect încorporat |
+| enote | notă de sfârșit |
+| fnote | notă de subsol |
 | gra | grafic |
-| cN | numărul coloanei tabelului n, e.x. c1, c2. |
-| rN | numărul rândului tabelului n, e.x. r1, r2. |
+| grp | grupare |
 | hN | rubrică de nivel n, e.x. h1, h2. |
+| hlp | bulă de ajutor|
+| lmk | reper |
 | lnk | link |
 | vlnk | link vizitat |
 | lst | listă |
-| lmk | reper |
 | mnu | meniu |
 | mnubar | bară de meniu |
+| mnubtn | buton meniu |
+| mnuitem | element de meniu |
+| pnl | panou |
+| prgbar | bară de progres |
 | rbtn | buton rotativ |
-| tb | tabel |
+| scrlbar | bară derulare |
+| sect | secțiune |
+| stbar | bară de stare |
+| tabctl | control tabulator |
+| tbl | tabel |
+| cN | numărul n a coloanei din tabel, ex c1, c2. |
+| rN | numărul n al rândului din tabel, ex r1, r2. |
+| term | terminal |
+| tlbar | bară de unelte |
+| tltip | indiciu |
 | tv | vedere listă extinsă |
+| tvbtn | buton vedere listă extinsă |
+| tvitem | element listă extinsă |
 | lv N | un element din vederea listei extinse  are un nivel erarhic N|
-| ``-----`` | separator |
+| wnd | fereastră |
+| ⠤⠤⠤⠤⠤ | separator |
 
 Următorii indicatori de stare sunt definiți:
 | Abreviere | Stare de control |
-| ... | afișată când un obiect suportă autocompletare |
-| ( ) | afișată când un obiect (e.x. o casetă de bifat) este nebifată |
-| (x) | afișată când un obiect (e.x. o casetă de bifat) este bifată |
-| (-) | afișată când un obiect (e.x. o casetă de bifat) este pe jumătate bifată |
-| - | afișată când un obiect (e.x. un element dintr-o vedere listă extinsă) poate fi redus |
-| + | afișată când un obiect (e.x. un element dintr-o vedere listă extinsă) poate fi extins |
-| clk | afișată când un obiect este clicabil |
-| ro | afișată când un obiect (e.x. un câmp de text editabil) este doar-citire |
-| sel | afișată când un obiect este selectat |
-| submnu | afișată când un obiect are un popup (de obicei un sub-meniu) |
+| ... | afișat când un obiect suportă autocompletare |
+| ⢎⣿⡱ | afișat când un obiect (e.x. un buton de comutare) este apăsat |
+| ⢎⣀⡱ | afișat când un obiect (e.x. un buton de comutare) nu este apăsat |
+| ⣏⣿⣹ | afișat când un obiect (e.x. o casetă de bifat) este bifat |
+| ⣏⣸⣹ | afișat când un obiect (e.x. o casetă de bifat) este parțial bifat |
+| ⣏⣀⣹ | afișat când un obiect (e.x. o casetă de bifat) este nebifat |
+| - | afișat când un obiect (e.x. un element dintr-o vedere listă extinsă) poate fi redus |
+| + | afișat când un obiect (e.x. un element dintr-o vedere listă extinsă) poate fi extins |
+| *** | afișat când este întâlnită o acțiune sau un document protejat |
+| clk | afișat când un obiect este clicabil |
+| cmnt | afișat când există un comentariu pentru o celulă dintr-o foaie de calcul sau o parte din textul unui document |
+| frml | afișat când există o formulă într-o foaie de calcul |
+| invalid | afișat când s-a încercat introducerea unei înregistrări invalide|
+| ldesc | afișat când un obiect (de obicei un grafic) are o descriere lungă |
+| mln | afișat când un câmp de editare permite linii multiple de text, cum sunt câmpurile de comentarii de pe site-urile web |
+| req | afișat când este găsit un câmp obligatoriu de formular |
+| ro | afișat când un obiect (e.x. un câmp de text editabil) este doar-citire |
+| sel | afișat când un obiect este selectat |
+| nsel | afișat când un obiect nu este selectat |
+| sorted asc | afișat când un obiect este ordonat crescător |
+| sorted desc | afișat când un obiect este ordonat descrescător |
+| submnu | afișat când un obiect are un popup (de obicei un sub-meniu) |
 
 În final, următoarele abrevieri pentru repere sunt definite:
 || Abreviere | Reper |
@@ -649,7 +689,31 @@ De exemplu, dacă utilizați un cod braille care începe numerele cu un semn de 
 Apăsarea punctului 7 șterge ultima celulă sau ultimul caracter braille introdus.
 Punctul 8 traduce orice intrare braille și apasă tasta enter.
 Apăsarea punctului 7 plus cea a punctului 8 traduce orice intrare Braille, dar fără să adauge un spațiu sau o apăsare de enter.
+%kc:endInclude
 
++ Recunoașterea de conținut +
+Atunci când autorii nu furnizează suficiente detalii pentru ca un utilizator de cititor de ecran să poată determina conținutul acelui lucru, pot fi folosite diferite unelte pentru a încerca recunoașterea conținutului dintr-o imagine.
+NVDA este compatibil cu funcționalitatea de recunoaștere optică a caracterelor (OCR), integrată în Windows 10, pentru a recunoaște texte dintr-o imagine.
+Pot fi oferite și alte suplimente add-on pentru recunoașterea conținutului.
+
+ Când folosiți o comandă de recunoaștere a conținutului, NVDA descoperă alcătuirea [obiectului navigator #NavigareObiect] curent.
+Implicit, obiectul navigator urmărește focalizarea sistemului sau cursorul din modul examinare, pentru ca să puteți cu ușurință muta focalizarea sau cursorul de examinare unde doriți.
+De exemplu, dacă mutați cursorul de examinare la un grafic, recunoașterea automată va identifica conținut din graficul respectiv în mod implicit.
+Totuși, s-ar putea să vă doriți să folosiți direct navigarea prin obiecte, de exemplu, pentru a recunoaște conținutul unei întregi ferestre de aplicație.
+
+Odată identificarea finalizată, rezultatul va fi prezentat într-un document similar cu modul de examinare, permițându-vă să citiți informația cu tastele cursor, etc.
+Apăsând „Enter” sau „Spațiu”, veți activa (în mod normal prin clic) textul de la cursor, dacă este posibil.
+Apăsând „Escape”, se va diminua rezultatul identificării.
+
+++ Windows 10 OCR ++[Win10Ocr]
+Windows 10 include OCR pentru multe limbi.
+NVDA poate folosi această funcționalitate pentru a recunoaște text din imagini sau aplicații inaccesibile.
+
+Puteți seta limba folosită pentru recunoașterea de text în dialogul de [setări pentru Windows 10 OCR #SetariWin10Ocr] .
+Pot fi instalate limbi adiționale din meniul de Start, alegând „Setări”, apoi „Timp și Limbi” -> „Regiune și Limbă” și apoi alegând „Adaugă limbă nouă”.
+
+%kc:beginInclude
+Pentru a recunoaște textul din obiectul navigator curent, folosind Windows 10 OCR, apăsați NVDA+r.
 %kc:endInclude
 
 + Funcționalități specifice aplicației +
@@ -1019,7 +1083,6 @@ Vă puteți deplasa de la un tabel braille la altul din listă folosind tastele 
 ==== Tabel intrări ====[TabelIntrareBraille]
 Complementar opțiunii anterioare, următoarea setare pe care o veți găsi este caseta combinată pentru tabelul de intrări.
 Tabelul ales va fi folosit pentru traducerea braille, introdus cu tastatura dumneavoastră în format Perkins, de la afișajul dumneavoastră braille în text.
-NVDA este compatibil momentan doar cu intrări braile pentru calculator, deci doar tabele în 8 puncte cu braille pentru calculator vor fi afișate.
 Vă puteți deplasa de la un tabel braille la altul din listă folosind tastele săgeată.
 
 De notat faptul că această opțiune este utilizabilă doar dacă afișajul dumneavoastră braille are o tastatură în format Perkins și această funcționalitate este suportată de driverul afișajului braille.
@@ -1035,13 +1098,18 @@ Se aplică cursorului de scriere al sistemului și cursorului de examinare, dar 
 ==== Cursor intermitent ====
 Această opțiune permite cursorului braille să clipească (să apară intermitent).
 Dacă opțiunea de intermitență este dezactivată, cursorul braille va rămâne constant pe poziția „pornit”.
+Indicatorul de selecție nu este afectat de această opțiune; acesta este întotdeauna punctele 7 și 8 fără intermitență.
 
 ==== Frecvența intermitenței cursorului (ms) ====
 Această opțiune este un câmp numeric care permite schimbarea ratei de clipire a cursorului în milisecunde.
 
-==== Formă cursor ====
-Opțiunea vă permite să alegeți forma (tiparul din puncte a) cursorului braille.
-Indicatorul de selecție nu este influențat de această opțiune.
+==== Formă cursor pentru focalizare ====
+Opțiunea vă permite să alegeți forma (tiparul din puncte a) cursorului braille atunci când braille este asociat la focalizare.
+Indicatorul de selecție nu este influențat de această opțiune; acesta este întotdeauna punctele 7 și 8 fără intermitență.
+
+==== Formă cursor pentru examinare ====
+Această opțiune vă permite să alegeți forma (tiparul din puncte a) cursorului braille atunci când braille este asociat la examinare
+Indicatorul de selecție nu este influențat de această opțiune; acesta este întotdeauna punctele 7 și 8 fără intermitență.
 
 ==== Timp expirare mesaj (sec) ====
 Această opțiune este un câmp numeric care controlează cât timp sunt afișate mesajele NVDA pe afișajul braille.
@@ -1074,6 +1142,32 @@ Dacă opțiunea este dezactivată, se va afișa din cuvânt cât de mult este po
 După ce derulați afișajul, veți putea citi și restul cuvântului.
 
 Activarea acestei opțiuni ar putea permite un citit mai cursiv, dar în general este nevoie să derulați afișajul mai mult.
+
+==== Focalizare pe contextul prezentării ====
+Această opțiune vă perite să alegeți ce  informație de context va prezenta NVDA pe afișajul braille, când un obiect primește focalizarea.
+Informația de context se referă la ierarhia obiectelor care conțin focalizarea.
+De exemplu, când focalizați un element din listă, acest obiect este parte a unei liste.
+La rândul ei, această listă poate fi conținută de un dialog, etc.
+Vă rugăm consultați secțiunea despre [navigarea prin obiecte #NavigareObiect] pentru mai multe informații despre ierarhia care se aplică obiectelor în NVDA.
+
+Când trebuie să umple afișajul cu schimbări ale contextului, NVDA va încerca să afișeze cât mai multă informație pe afișajul braille, dar doar pentru părțile din context care s-au schimbat.
+Pentru exeplul de mai sus, acest lucru înseamnă că la schimbarea focalizării către listă, NVDA vă prezenta elementul din listă pe afișajul braille.
+Mai mult, dacă rămâne suficient spațiu pe afișajul braille, NVDA va încerca să arate că elementul face parte dintr-o listă.
+Dacă veți începe, după aceea, să vă mișcați prin listă cu tastele săgeată, se presupune că știți deja că sunteți în acea listă.
+Astfel, pentru elementele din listă, rămase, pe care le focalizați, NVDA va prezenta doar elementul de listă focalizat pe afișaj.
+Pentru ca să puteți citi contextul din nou (adică faptul că sunteți într-o listă și aceasta este parte dintr-un dialog), va trebui să derulați înapoi afișajul braille.
+
+Când această opțiune este configurată să încarce afișajul de fiecare dată, NVDA va încerca să prezinte pe afișajul braille cât mai multă informație de context posibil, indiferent dacă v-a mai fost afișată aceeași informație de context înainte.
+Avantajul acestei opțiuni este că NVDA va pune, pe cât posibil, cât mai multă informație pe afișaj.
+Cu toate acestea, dezavantajul este că întotdeauna există o diferență a poziției la care începe focalizarea pe afișajul braille.
+Acest lucru poate face dificilă, de exemplu, răsfoirea unei liste lungi de elemente, pentru că va trebui să vă mutați degetul constant pentru a găsi începutul elementului.
+Acesta era comportamentul implicit pentru NVDA 2017.2 și versiunile anterioare.
+
+Când puneți focalizarea pe contextul prezentării pe opțiunea de a vă prezenta contextul doar când derulați înapoi, NVDA nu va arăta informații de context in mod implicit, pe afișajul dumneavoastră braille.
+Astfel, în exemplul de mai sus, NVDA vă arăta că ați focalizat un element de listă.
+Totuși, pentru ca să puteți citi contextul (adică faptul că sunteți într-o listă și aceasta este parte dintr-un dialog), va trebui să derulați înapoi afișajul dumneavoastră braille.
+
+Pentru a activa focalizarea pe contextul prezentării de oriunde, puteți atribui un gest personalizat, folosind [fereastra dialog pentru Gesturi de intrare #GesturiIntrare]
 
 +++ Setări tastatură (NVDA+control+k) +++
 Această fereastră de dialog se găsește în meniul „Preferințe”, „Setări tastatură...”.
@@ -1386,6 +1480,12 @@ Sunetul își va mări amplitudinea cu fiecare spațiu adăugat, iar pentru un t
 - Atât vorbire cât și tonuri: Această opțiune semnalează indentația folosind ambele metode de mai sus.
 -
 
++++ Setări Windows 10 OCR +++[SetariWin10Ocr]
+Această fereastră de dialog poate fi accesată din meniul de „Preferințe“ al NVDA și vă permite configurarea [Windows 10 OCR #Win10Ocr].
+
+==== Limba de recunoaștere ====
+Această casetă combinată vă permite alegerea limbii care va fi folosită pentru recunoașterea de text.
+
 +++ Dicționare de vorbire +++
 Meniul dicționarelor de vorbire (găsit în meniul „Preferințe”), conține ferestre de dialog care vă permit să alegeți modul în care NVDA pronunță anumite cuvinte sau fraze.
 În prezent sunt trei tipuri diferite de dicționare de vorbire.
@@ -1683,7 +1783,7 @@ Pentru a folosi aceste voci, va trebui să instalați două componente:
 Windows 10 include noi voci cunoscute ca „OneCore” sau voci „mobile”. 
 Vocile sunt făcute pentru multe limbi și sunt mai receptive decât vocile Microsoft disponibile prin intermediul Microsoft Speech API versiunea 5.
 
-Vă rugăm să citiți acest articol Microsoft pentru o listă a vocilor disponibile și instrucțiuni cu privire la instalarea lor: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+Vă rugăm să citiți acest articol Microsoft pentru o listă a vocilor disponibile și instrucțiuni cu privire la instalarea lor: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 Vă rugăm să rețineți că vitezele mai mari de vorbire a sintezelor vocale disponibile prin intermediul Narrator-ului nu funcționează momentan cu NVDA.
 De asemenea, viteza pe care o selectați din setările Windows-ului afectează viteza setată în NVDA.
@@ -1735,8 +1835,6 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Mergi înapoi folosind right wiz wheel action | rightWizWheelUp |
 | Mergi înainte folosind right wiz wheel action | rightWizWheelDown |
 | Mută la celula braille | routing |
-| tasta de ștergere înapoi | punct 7 |
-| tasta Enter | punct 8 |
 | tasta shift+tab | bară spațiu braille+punct 1+punct 2 |
 | tasta tab | bară spațiu braille+punct 4+punct 5 |
 | tasta săgeată sus | bară spațiu braille+punct 1 |
@@ -1978,8 +2076,6 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | tasta alt | punct 1+punct 3+punct 4+spațiu |
 | tasta escape | punct 1+punct 5+spațiu |
 | tasta tab | punct 4+punct 5+spațiu |
-| tasta enter | punct 8 |
-| tasta șterge înapoi (backspace) | punct 7 |
 | tasta săgeată sus  | punct 1+spațiu |
 | tasta săgeată jos  | punct 4+spațiu |
 | blochează majuscule (capsLock) | punct 1+punct 3+punct 6+spațiu |
@@ -2126,8 +2222,6 @@ Ambele taste din mijloc sunt mapate la spațiu.
 
 || Nume | Tastă |
 %kc:beginInclude
-| tasta șterge înapoi (backspace) | punct 7 |
-| tasta enter | punct 8 |
 | tasta escape | spațiu cu punct  7 |
 | tasta săgeată sus | spațiu cu punct  2 |
 | tasta săgeată stânga | spațiu cu punct  1 |
@@ -2261,8 +2355,8 @@ Vă rugăm să consultați documentația dispozitivului dumneavoastră BrailleNo
 | tasta Control+acasă | spațiu+punct 1+punct 2+punct 3 |
 | tasta Control+sfârșit | spațiu+punct 4+punct 5+punct 6 |
 | tasta Spațiu | spațiu |
-| tasta Enter | spațiu+punct 8 |
-| tasta șterge înapoi (Backspace) | spațiu+punct 7 |
+| Enter | spațiu+punct 8 |
+| șterge înapoi (Backspace) | spațiu+punct 7 |
 | tast Tab | spațiu+punct 2+punct 3+punct 4+punct 5 (spațiu+t) |
 | tasta Shift+tab | spațiu+punct 1+punct 2+punct 5+punct 6 |
 | tasta Windows | spațiu+punct 2+punct 4+punct 5+punct 6 (spațiu+w) |
@@ -2335,54 +2429,6 @@ Vă rugăm să consultați [lista de asocieri de taste BRLTTY http://mielke.cc/b
 | Mută la celula braille | route (adu cursorul la caracter) |
 %kc:endInclude
 
-+ Abrevieri braille pentru tipul de control și pentru stare +
-Pentru a acomoda cât mai multă informație cu putință pe un afișaj braille, următoarele abrevieri au fost definite pentru indicarea tipului de control și a stării.
-
-|| Abreviere | Tip control |
-| btn | buton |
-| cbo | casetă combinată |
-| chk | casetă de bifat |
-| dlg | dialog |
-| edt | câmp de text editabil |
-| gra | grafic |
-| cN | coloana numărul N din tabel, ex: c1, c2. |
-| rN | rândul numărul N din tabel, ex: r1, r2. |
-| hN | rubrică de nivel N, ex: h1, h2. |
-| lnk | legătură |
-| lst | listă |
-| vlnk | legătură vizitată |
-| mnu | meniu |
-| mnubar | bară de menu |
-| rbtn | buton radio |
-| tb | tabel |
-| tv | structură arborescentă |
-| lv N | un element din arbore are nivelul ierarhic N |
-| ``-----`` | separator |
-
-Sunt definiți și următorii indicatori de stare:
-|| Abreviere | Starea controlului |
-| ... | afișat când un obiect dispune de completare automată |
-| ( ) | afișat când un obiect (de exemplu o casetă de bifat) nu este selectat |
-| (x) | afișat când un obiect (de exemplu o casetă de bifat) este selectat |
-| (-) | afișat când un obiect (de exemplu o casetă de bifat) este selectat parțial |
-| - | afișat când un obiect (de exemplu un element dintr-o structură arborescentă) poate fi restrâns |
-| + | afișat când un obiect (de exemplu un element dintr-o structură arborescentă) poate fi extins |
-| clk | afișat când se poate face clic pe un obiect |
-| ro | afișat când un obiect (de exemplu un câmp text editabil) este în mod exclusiv citire |
-| sel | afișat când un obiect este selectat |
-| submnu | afișat când un obiect are un element contextual (pop-up) (de obicei un meniu secundar) |
-
-În final, următoarele abrevieri pentru repere sunt definite:
-| abreviere | reper |
-| bnnr | banner |
-| cinf | informație conținut |
-| cmpl | complementar |
-| form | formular |
-| main | principal |
-| navi | navigare |
-| srch | căutare |
-| rgn | regiune |
-
 + Subiecte avansate +
 
 ++ Opțiuni în Linie de comandă ++[LinieComanda]
@@ -2426,7 +2472,7 @@ Urmează opțiunile în linie de comandă ale NVDA:
 | None | --install | Instalează NVDA (pornind copia nou-instalată) |
 | None | --install-silent | Instalează NVDA în mod discret (nu pornește copia nou-instalată) |
 
-++ Parametri la nivel de sistem++[ParametriLaNivelDeSistem]
+++ Parametri la nivel de sistem ++[ParametriLaNivelDeSistem]
 NVDA permite setarea unor valori în regiștrii de sistem care modifică comportamentul la nivel de sistem al acestuia.
 Aceste valori sunt stocate în regiștrii, sub una din următoarele chei:
 - Sistem pe 32 de biți: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
@@ -2443,4 +2489,4 @@ Dacă aveți nevoie de informații suplimentare sau asistență în privința NV
 
 Puteți vizita și site-ul comunității românești a NVDA-ului la www.ro-nvda.tk. Acest site le oferă vizitatorilor săi tutoriale audio, text,  voci pentru NVDA puse la dispoziția acestora de membrii comunității, dar și modalitatea de a-i contacta pe cei ce se ocupă cu traducerea NVDA-ului și a suplimentelor sale în limba română. De asemenea, comunitatea mai pune la dispoziția utilizatorilor vorbitori de română și o listă de mailing unde aceștia pot să discute și să pună întrebări în legătură cu NVDA și suplimentele sale. Aceasta este NVDA-romanian-comunity@googlegroups.com.
 
-Ultima actualizare a manualului: 21 iulie 2017, traducere realizată de Dan Pungă, Florian Ionașcu, Nicușor Untilă și Alexandru Matei
+Ultima actualizare a manualului: %%date(%d %b %Y), traducere realizată de Dan Pungă, Florian Ionașcu, Nicușor Untilă și Alexandru Matei
