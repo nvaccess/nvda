@@ -613,6 +613,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					# This begins a new key combination.
 					self._ignoreKeyReleases = False
 					self._keysDown.add(key)
+			elif ext_packet_type == HT_EXTPKT_ATC_INFO:
+				# Ignore ATC packets for now
+				pass
 			else:
 				# Unknown extended packet, log it
 				log.warning("Unhandled extended packet of type %r: %r" %
