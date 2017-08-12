@@ -111,28 +111,10 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def label(self):
 		value = super(VirtualBufferQuickNavItem,self).label
 		if self.itemType is "heading":
+			# Explicitly handle headings here as well, to avoid requesting the Control field attribs
 			return value
 		attrs = self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])
-		name = attrs.get("name", "")
-		if self.itemType == "landmark":
-			labelParts=(name, aria.landmarkRoles[attrs["landmark"]])
-		else:
-			roleRaw = attrs["role"]
-			role = controlTypes.roleLabels[roleRaw]
-			# Translators: Reported label in the elements list for an element which which has no name and value
-			unlabeled = _("Unlabeled")
-			realStates=attrs["states"]
-			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(roleRaw, realStates, controlTypes.REASON_FOCUS, realStates))
-			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(roleRaw, realStates, controlTypes.REASON_FOCUS, realStates))
-			if self.itemType == "formField":
-				if roleRaw in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
-					labelParts = (value or unlabeled, role, positiveStates, negativeStates)
-				else:
-					labelParts = (name or unlabeled, role, positiveStates, negativeStates, value)
-			else: # links and buttons")
-				labelParts = (value or unlabeled, positiveStates, negativeStates)
-		label = " ".join(lp for lp in labelParts if lp)
-		return label
+		return self._getLabelForProperties(attrs.get)
 
 	def isChild(self,parent): 
 		if self.itemType == "heading":
