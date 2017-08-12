@@ -4,10 +4,11 @@ Que hai de Novo no NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.3 =
+O subliñable desta versión inclúe a entrada de braille contraído, o soporte para novas voces Windows OneCore dispoñibles en Windows 10, o soporte para o OCR integrado en Windows 10, e moitas melloras significativas referentes ao Braille e á web.
 
 == Novas Características ==
 - Engadiuse unha opción Braille para "amosar mensaxes indefinidamente". (#6669)
-- Na listaxe de mensaxes do Microsoft Outlook, anúnciase se unha mensaxe está marcada. (#6374)
+- Na listaxe de mensaxes do Microsoft Outlook, o NVDA agora anuncia se unha mensaxe está marcada. (#6374)
 - No Microsoft PowerPoint, agora anúnciase o tipo exacto dunha forma cando se edita unha diapositiva coma triángulo, círculo, vídeo, frecha, en lugar de só 'forma'. (#7111)
 - O contido matemático (proporcionado coma MathML) agora sopórtase en Google Chrome. (#7184)
 - NVDA agora pode falar usando as novas voces Windows OneCore (tamén coñecidas coma voces mobile) incluidas no Windows 10. Accede a elas selecionando Voces Windows OneCore no diálogo Sintetizadores de NVDA. (#6159)
@@ -17,30 +18,37 @@ Que hai de Novo no NVDA
 - Engadido o soporte para o control Selector de Data que se atopa nos cadros de diálogo Citas de Microsoft Outlook. (#7217)
 - Agora anúnciase a suxerencia actualmente selecionada nos campos de Windows 10 Mail para/cc e no campo Opcións de búsqueda de Windows 10. (#6241)
 - Agora reprodúcese un son para indicar a aparición de suxerencias en certos campos de procura do Windows 10 (Ex.: pantalla de inicio, opcións de procura, campos de Windows 10 mail para/CC). (#6241)
-- Anúncianse as notificacións automáticamente no Skype for Business Desktop, coma cando alguén comeza unha conversa contigo.  (#7281)
-- Anúncianse as notificacións automáticamente no Microsoft Edge, coma cando se comeza unha descarga. (#7281)
+- O NVDA agora anuncia as notificacións automáticamente no Skype for Business Desktop, coma cando alguén comeza unha conversa contigo.  (#7281)
+- O NVDA agora anuncia automáticamente mensaxes de chat entrantes mentres se estea nunha conversa en Skype for Business. (#7286)
+- O NVDA agora anuncia as notificacións automáticamente no Microsoft Edge, coma cando se comeza unha descarga. (#7281)
 - Agora podes escrebir tanto en braille contraído coma sen contraer nunha pantalla braille cun teclado braille. Consulta a seción Entrada Braille da Guía do Usuario para detalles. (#2439)
 - Agora podes introducir caracteres braille Unicode dende o teclado braille nunha pantalla braille selecionando Braille Unicode como a táboa de entrada nas Opcións de Braille. (#6449)
 - Engadido o soporte para a pantalla braille SuperBraille usada en Taiwan. (#7352)
+- Novas táboas de transcripción braille: braille danés computerizado de 8 pontos, Lituano, braille persa computerizado de 8 pontos, Persa grao 1, braille Esloveno computerizado de 8 pontos. (#6188, #6550, #6773, #7367)
+- Mellorada a táboa de braille inglés computerizado de 8 pontos (U.S.), incluindo o soporte para viñetas, o signo de euro e letras acentuadas. (#6836)
+- O NVDA agora pode usar a funcionalidade OCR incluida no Windows 10 para recoñecer o texto de imaxes ou de aplicacións inaccesibles. (#7361)
+ - A lingua  pode configurarse dende o novo diálogo OCR de Windows 10 nas preferencias do NVDA.
+ - Para recoñecer o contido do navegador de obxectos actual, preme NVDA+r.
+ - Consulta a seción Recoñecemento de Contidos da Guía do Usuario para detalles adicionais.
+- Agora podes escoller que información de contexto se amosa nunha pantalla braille cando un obxecto ten o foco usando a nova opción "Presentación de contexto do foco" no diálogo Opcións de Braille. (#217)
+ - Por exempro, as opcións "Rechear pantalla para cambios de contexto" e "Só cando se despraza cara atrás" poden facer que traballar con listaxes e menús sexa máis eficiente, xa que os elementos non cambiarían contínuamente a súa posición na pantalla.
+ - Consulta a seción na opción "Presentación de contexto do foco" na Guía do Usuario para detalles adicionais e exempros.
+- En Firefox e Chrome, o NVDA agora soporta grades dinámicas comprexas coma follas de cálculo onde só se poda cargar ou amosar unha parte do contido (específicamente os atributos aria-rowcount, aria-colcount, aria-rowindex e aria-colindex introducidos en ARIA 1.1). (#7410)
 
 
 == Cambios ==
-- Un xesto non vinculado (script_restart) engadiuse para permitir que o NVDA se reinicie rápidamente. (#6396)
+- Engadiuse unha orde non vinculada para reiniciar o NVDA baixo demanda. Podes atopala na categoría Miscelánea do diálogo Xestos de entrada. (#6396)
 - A distribución de teclado agora pode configurarse dende o diálogo Benvida do NVDA. (#6863)
-- Os nomes dos pontos de referencia abrévianse en Braille coma segue: (#3975)
- - "ponto de referencia": "pdr"
- - "título": "tlo"
- - "complementario": "comp"
- - "info de contido": "cinf"
- - "principal": "main"
- - "navegación": "nav"
- - "búsqueda": "busq"
- - "form": "frm"
- - "rexión": "rgn"
- - Exemplo: "ponto de referencia de navegación" sería "pdr nav"
+- Abreviáronse moitos máis tipos de controis e estados en braille. Os pontos de referencia tamén se abreviaron. Porfavor consulta "Tipo de Control, estado e Abreviaturas de Pontos de Referencia" en Braille na Guía do Usuario para unha listaxe compreta. (#7188, #3975)
 - Actualizado o Espeak-ng á 1.49.1 (#7280).
 - As listaxes de táboas de entrada e de saída no diálogo Opcións de Braille agora ordéanse alfabéticamente. (#6113)
 - Actualizado o transcriptor braille liblouis a 3.2.0. (#6935)
+- A tábuoa braille predeterminada agora é Braille Inglés Unificado Código Grao 1. (#6952)
+- De xeito predeterminado, o NVDA agora só amosa as partes da información de contexto que cambiara nunha pantalla braille cando se enfoque un obxecto. (#217)
+ - Anteriormente, sempre amosaba tanta información coma fora posible, independentemente de se viches a mesma información de contexto antes.
+ - Podes voltar á anterior cambiando a nova opción "Presentación de Contexto do Foco" no diálogo Opcións de Braille a "Rechear Sempre pantalla".
+- Ao se usar Braille, o cursor pode configurarse para ter unha forma diferente ao seguer ao foco ou á revisión. (#7112)
+- O logo do NVDA actualizouse. O logo actualizado do NVDA é unha mistura estilizada das letras NVDA en branco, sobre un fondo sólido púrpura. Esto asegúrase de que será visible en calquera cor de fondo, e usará a cor púrpura do logo de NV Access. (#7446)
 
 
 == Corrección de Erros ==
@@ -63,6 +71,10 @@ Que hai de Novo no NVDA
 - Agora é significativamente máis rápido realizar a navegación rápida por cabeceiras no Microsoft Edge. (#7343)
 - No Microsoft Edge, a navegación en modo exploración xa non se salta partes longas de certas páxinas web coma o tema Wordpress 2015. (#7143)
 - No Microsoft Edge, os pontos de referencia localízanse correctamente noutras linguas diferentes do inglés. (#7328)
+- O braille agora segue correctamente a selección ao se selecionar texto máis aló do ancho da pantalla. Por exempro, se selecionas varias liñas con shift+flecha abaixo, o braille agora amosa a última liña que selecionaches. (#5770)
+- En Firefox, o NVDA xa non anuncia falsamente "seción" varias veces ao abrir detalles para un chío en twitter.com. (#5741)
+- A ordes de navegación de táboa xa non están dispoñibles para tablas de desino en modo Exploración a menos que o anunciado das táboas de desino estea habilitado. (#7382)
+- En Firefox e Chrome, as ordes de navegación de táboas en modo Exploración agora omiten as celdas ocultas da táboa. (#6652, #5655)
 
 
 == Cambios para Desenvolvedores ==
@@ -70,6 +82,8 @@ Que hai de Novo no NVDA
 - NVDA agora debe compilarse co Visual Studio Community 2015. Visual Studio Express xa non se soporta. (#7110)
  - Agora tamén se requiren as Windows 10 Tools e o SDK, que poden habilitarse ao se instalar o Visual Studio.
  - Consulta a sección Installed Dependencies do readme para detalles adicionais.
+- O soporte para recoñecedores de contido como as ferramentas OCR e descripción de imaxe poden implementarse sinxelamente usando o novo paquete contentRecog. (#7361)
+- Agora inclúese o paquete de Python json package nas compilacións binarias do NVDA. (#3050)
 
 
 = 2017.2 =
