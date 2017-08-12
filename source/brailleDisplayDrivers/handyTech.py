@@ -526,7 +526,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._sendHidPacket(chr(len(packet_type)+len(data)), packet_type, data)
 		else:
 			self._dev.write(packet_type)
-			if self._model:
+			if self._model and not packet_type == HT_PKT_BRAILLE:
 				self._dev.write(self._model.device_id)
 			self._dev.write(data)
 
