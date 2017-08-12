@@ -1,3 +1,9 @@
+#_UIAHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
@@ -54,7 +60,6 @@ badUIAWindowClassNames=[
 	"RICHEDIT50W",
 	"SysListView32",
 	"_WwG",
-	'_WwN',
 	"EXCEL7",
 	"Button",
 ]
@@ -117,9 +122,11 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_IsEnabledPropertyId:"stateChange",
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
+	UIA_ControllerForPropertyId:"UIA_controllerFor",
 }
 
 UIAEventIdsToNVDAEventNames={
+	UIA_LiveRegionChangedEventId:"liveRegionChange",
 	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
@@ -131,6 +138,7 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
+	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
 class UIAHandler(COMObject):
@@ -216,7 +224,11 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
+		if (
+			not obj
+			or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent)
+			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
+		):
 			return
 		focus=api.getFocusObject()
 		if obj==focus:

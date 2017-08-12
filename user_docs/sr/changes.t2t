@@ -3,6 +3,84 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+Glavne karakteristike ove verzije uključuju unos skraćenog brajevog pisma, podrška za nove Windows OneCore glasove dostupne na Windowsu 10, ugrađena podrška za Windows 10 OCR, i puno značajnih poboljšanja za brajev red i Web.
+== Nove karakteristike ==
+- Podešavanje za brajev red je dodato na opciju"beskonačni prikaz poruka". (#6669)
+- U listi poruka programa Microsoft Outlook, NVDA izgovara označenu poruku. (#6374)
+- U programu Microsoft Powerpoint, precizna vrsta oblika se sada prijavljuje u toku uređivanja slajdova (primeri uključuju: Trougao, krug, video, strelica), umesto ranijeg izgovora " Oblik". (#7111)
+- Matematički sadržaj (ponuđen kao MathML) je sada podržan u programu  Google Chrome. (#7184)
+- NVDA sada može da govori koristeći  nove Windows OneCore glasove  (takođe poznati kao mobilni glasovi) koji su uključeni u Windows 10. Pristupate im izborom opcije Windows OneCore glasovi  u NVDA dijalogu za izbor sintetizatora. (#6159)
+- NVDA Datoteke sa korisničkim podešavanjima se sada mogu čuvati u korisničkom local  folderu foldera app data. Ovo se uključuje menjanjem podešavanja u registry bazi. Pogledajte "Sistemski parametri" u korisničkom uputstvu za više detalja. (#6812)
+- U Web pretraživačima, NVDA sada prijavljuje vrednosti sadrživača mesta   za polja(konkretno, aria-placeholder je sada podržan). (#7004)
+- U režimu pretraživanja programa Microsoft Word, moguća je brza navigacija između pravopisnih grešaka (w i  šift+w) (#6942)
+- Dodata podrška za kontrole izbora datuma u dijalogu za dodavanje podsetnika u programu Microsoft Outlook . (#7217)
+- Trenutno izabran predlog se sada prijavljuje u Windows 10 mail aplikaciji u poljima za izbor primaoca i u polju pretrage Windows 10 aplikacije za podešavanja. (#6241)
+- Zvuk koji obaveštava o dostupnim predlozima se sada reprodukuje u određenim poljima pretrage Windows 10 sistema (Na primer Start ekran, polje pretrage aplikacije podešavanja, polja za unos primaoca u Windows 10 mail aplikaciji). (#6241)
+- NVDA sada automatski prijavljuje Obaveštenja  u aplikaciji Skype za  biznis korisnike, na primer kada neko započne razgovor sa vama.  (#7281)
+- NVDA sada automatski prijavljuje poruke dok ste u prozoru nekog razgovora aplikacije Skype za biznis korisnike. (#7286)
+- Automatsko prijavljivanje obaveštenja u programu Microsoft Edge, na primer kada preuzimanje počne.  (#7281)
+- Sada možete pisati u skraćenom unosu na brajevoj tastaturi brajevog reda. Pogledajte deo brajev unos korisničkog uputstva za više detalja. (#2439)
+- Možete upisati unikodne brajeve znakove sa brajeve tastature izborom unikodne brajeve tabele. (#6449)
+- Dodata podrška za SuperBraille brajev red koji se koristi u Tajvanu. (#7352)
+- Nove brajeve tabele: Danski osmotačkasti kompjuterski brajev kod, Litvanski, Persijski osmotačkasti kompjuterski brajev kod, Persijski stepen 1, Slovenski osmotačkasti kompjuterski brajev kod. (#6188, #6550, #6773, #7367)
+- Poboljšana Engleska(Sjedinjene američke države.) osmotačkasta kompjuterska brajeva tabela, uključujući podršku za nabrajanja, znak za evro i akcentovana slova. (#6836)
+- NVDA sada može koristiti  OCR funkciju koja je uključena u Windows 10 da prepozna tekst slika ili nepristupačnih aplikacija. (#7361)
+ - Jezik možete podesiti iz  novog  Windows 10 OCR dijaloga u meniju podešavanja NVDA menija.
+ - Da prepoznate sadržaj trenutnog navigacionog objekta, pritisnite NVDA+r.
+ - Pogledajte deo prepoznavanje sadržaja u korisničkom uputstvu za više detalja.
+- Sada možete izabrati informacije o sadržaju fokusa koje će se prikazati na brajevom redu korišćenjem nove opcije "Predstavljanje sadržaja fokusa" u dijalogu brajeva podešavanja. (#217)
+ - Na primer, opcije "prikazuj promene sadržaja na brajevom redu" i "samo kada se red pomera unazad" mogu učiniti rad sa menijima i listama lakšim, budući da stavke neće stalno menjati njihovu poziciju na brajevom redu.
+ - Pogledajte deo "Predstavljanje sadržaja fokusa" u korisničkom uputstvu za dodatne primere i detalje.
+- U programima Firefox i  Chrome, NVDA sada podržava dinamičke prikaze mreža kao što su tabele u kojima  se može učitati ili prikazati samo deo sadržaja (konkretno,  aria-rowcount, aria-colcount, aria-rowindex i  aria-colindex atributi koji su ubačeni u  ARIA 1.1). (#7410)
+
+
+== Promene ==
+- Nedodeljena komanda je dodata za ponovno pokretanje programa NVDA. Možete je pronaći u kategoriji razno dijaloga ulazne komande. (#6396)
+- Raspored tastature se sada može podesiti iz dijaloga dobrodošlice. (#6863)
+- Puno novih vrsta kontrola je dobilo svoje skraćenice za brajev red. Orjentiri su takođe dobili skraćenice. Molimo pročitajte "Skraćenice za vrste, stanje kontrola i orjentire" u korisničkom uputstvu za potpunu listu. (#7188, #3975)
+- Espeak-ng je ažuriran na verziju 1.49.1 (#7280).
+- Ulazne i izlazne tabele u dijalogu brajevih podešavanja su sada poređane po abecedi. (#6113)
+- Ažuriran liblouis brajev prevodioc  na verziju 3.2.0. (#6935)
+- Podrazumevana brajeva tabela je sada Engleski brajev kod stepen 1. (#6952)
+- Po podrazumevanim podešavanjima, NVDA sada prikazuje samo deo sadržaja na brajevom redu koji je promenjen kada neki objekat dobije fokus. (#217)
+ - Ranije, informacije o promenama su bile prikazivane kad god je to moguće, bez obzira da li ste videli te informacije ranije.
+ - Možete se vratiti na stariji prikaz menjanjem opcije "Predstavljanje sadržaja fokusa" u dijalogu brajeva podešavanja na opciju "Uvek prikazuj promene sadržaja".
+- Kada koristite brajev red, kursor se može podesiti za drugačiji oblik kada je brajev red vezan za fokus ili pregled. (#7112)
+- NVDA logo je ažuriran. Ažuriran logo su slova NVDA u belom, na ljubičastoj pozadini. Ovo omogućava da bude vidljiv na bilo kojoj pozadini, i koristi ljubičastu boju iz NV Access logoa. (#7446)
+
+
+== Ispravljene greške ==
+- Uređivački div elementi u programu Chrome više ne prijavljuju svoju oznaku kao vrednost u režimu pretraživanja. (#7153)
+- Pritiskanje tastera end dok ste u režimu pretraživanja praznog Microsoft Word dokumenta više ne izaziva grešku. (#7009)
+- Režim pretraživanja je sada ispravno podržan u dokumentima programa Microsoft Edge gde dokument ima posebnu ARIA vrednost document. (#6998)
+- U režimu pretraživanja, možete birati ili poništavati izbor znaka  na kraju reda korišćenjem komande šift+end čak i kada je kursor na poslednjem znaku reda. (#7157)
+- Ako dijalog sadrži traku napredovanja, tekst dijaloga se ažurira kada se traka napredovanja promeni. Ovo znači, na primer, da sada možete čitati preostalo vreme u NVDA-ovom dijalogu"preuzimanje ažuriranja". (#6862)
+- NVDA će sada izgovarati promene izbora u određenim izbornim okvirima sistema Windows 10 na primer automatska reprodukcija u podešavanjima. (#6337).
+- Bespotrebne informacije sada se neće izgovarati kada ulazite u dijalog za dodavanje sastanka/podsetnika programa Microsoft Outlook. (#7216)
+- Pištanja za trake napredovanja koje su beskonačne kao što je provera ažuriranja programa NVDA se sada reprodukuju samo kada su omogućena. (#6759)
+- U programu  Microsoft Excel 2007 i  2003, ćelije se ponovo prijavljuju kada se krećete kroz radni list. (#8243)
+- U Windows 10 Creators ažuriranju i novijim ažuriranjima, režim pretraživanja će ponovo automatski biti omogućen tokom čitanja poruka u Windows 10 Mail aplikaciji. (#7289)
+- Na većini brajevih redova sa brajevom tastaturom, tačka 7 sada briše poslednju dodatu brajevu ćeliju ili znak, a tačka 8 pritiska taster enter. (#6054)
+- Kada se uređuje tekst, dok pomerate kursor(npr. sa kursorskim tasterima ili tasterom backspace), NVDAovo čitanje je preciznije u puno slučajeva, posebno u Chromeu i terminal aplikacijama. (#6424)
+- Sadržaj uređivača opisa programa Microsoft Outlook 2016 sada može da se čita. (#7253)
+- U  Java Swing aplikacijama, NVDA više ne zaustavlja aplikaciju u određenim situacijama navigacije kroz tabele. (#6992)
+- U Windows 10 Creators ažuriranju, NVDA više neće izgovarati obaveštenja više puta. (#7128)
+- U start meniju Windowsa 10, pritiskanje tastera enter nakon pretrage više ne izaziva NVDA da ponovi upisan tekst. (#7370)
+- Brza navigacija kroz naslove u programu Microsoft Edge je sada znatno ubrzana. (#7343)
+- U programu Microsoft Edge, navigacija u režimu pretraživanja više ne preskače delove stranica kao što su Wordpress 2015 tema. (#7143)
+- U programu  Microsoft Edge, obeleživači  se ispravno prijavljuju na drugim jezicima. (#7328)
+- Brajev red sada ispravno prati izbor teksta čak i kada birate tekst koji je veći od brajevog reda. Na primer, Ako birate više redova teksta komandom Šift+ strelica dole, brajev red sada prikazuje poslednji red izabranog teksta. (#5770)
+- U Firefoxu, NVDA više ne izgovara "Sekcija" više puta kada otvarate detalje za tweet na sajtu twitter.com. (#5741)
+- Komande za navigaciju kroz tabele više nisu dostupne za table koje služe samo za izgled osim ako prijavljivanje takvih tabela nije omogućeno. (#7382)
+- U programima  Firefox i  Chrome, komande za navigaciju kroz tabele sada preskaču skrivene ćelije u tabelama. (#6652, #5655)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Molimo pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+
 = 2017.2 =
 Glavne karakteristike ove verzije uključuju podršku za stišavanje pozadinskih zvukova u Windows 10 creators ažuriranju; ispravljeni problemi sa izborom teksta u režimu pretraživanja, uključujući probleme sa komandom izaberi sve; velika poboljšanja za Microsoft Edge podršku; i poboljšanja Web podrške što uključuje izgovor elemenata koji su označeni kao trenutni(koristeći aria-current).
 

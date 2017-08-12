@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-10 00:10+1000\n"
-"PO-Revision-Date: 2017-02-14 19:21+0200\n"
+"POT-Creation-Date: 2017-05-19 00:10+1000\n"
+"PO-Revision-Date: 2017-05-20 11:46+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -2344,6 +2344,34 @@ msgstr "μη επιλεγμένο"
 msgid "not checked"
 msgstr "μη επιλεγμένο"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "δεν έχει πατηθεί"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "τρέχον"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "τρέχουσα σελίδα"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "τρέχον βήμα"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "τρέχουσα θέση"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "τρέχουσα ημερομηνία"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "τρέχουσα ώρα"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2527,10 +2555,13 @@ msgstr ""
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"Αναφέρει την τρέχουσα γραμμή κάτω από το δρομέα της εφαρμογής. Πατώντας αυτό "
-"το πλήκτρο δύο φορές θα γίνει εκφώνηση της τρέχουσας γραμμής ανά χαρακτήρα."
+"Αναφέρει την τρέχουσα γραμμή κάτω από το δρομέα της εφαρμογής. Πατώντας δύο "
+"φορές το πλήκτρο αυτό θα πραγματοποιηθεί εκφώνηση της τρέχουσας γραμμής ανά "
+"χαρακτήρα. Πατώντας τρεις φορές το πλήκτρο αυτό θα πραγματοποιηθεί εκφώνηση "
+"της τρέχουσας γραμμής με τη χρήση περιγραφών χαρακτήρων."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -4523,6 +4554,10 @@ msgstr "στυλ %s"
 msgid "default style"
 msgstr "προεπιλεγμένο στυλ"
 
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "χωρίς περίγραμμα"
+
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
@@ -6355,10 +6390,9 @@ msgid "Error activating profile."
 msgstr "Σφάλμα κατά την ενεργοποίηση του προφίλ."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
+msgid "This profile will be permanently deleted. This action cannot be undone."
 msgstr ""
-"Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το προφίλ; Αυτή η ενέργεια δε "
-"μπορεί να αναιρεθεί"
+"Αυτό το προφίλ θα διαγραφεί οριστικά. Αυτή η ενέργεια δε μπορεί να αναιρεθεί."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -7264,6 +7298,8 @@ msgid "Line &indentation reporting:"
 msgstr "Αναφορά &εσοχής γραμμής: με:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "Απενεργοποιημένη"
 
@@ -7314,6 +7350,21 @@ msgstr "&Κεφαλίδες γραμμών/στηλών"
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
 msgstr "&Συντεταγμένες κελιού"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Στυλ"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Χρώματα και Στυλ"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Περίγραμμα κελιού"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7886,6 +7937,11 @@ msgstr ""
 "περιοχής. Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της σειράς για "
 "αυτό το κελί"
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Φύλλο {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Μήνυμα εισόδου είναι {title}: {message}"
@@ -7911,6 +7967,129 @@ msgstr "Επεξεργασία σχολίου για {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} έως {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "πάνω πλευρά"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "κάτω πλευρά"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "αριστερή πλευρά"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "δεξιά πλευρά"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "προς τα πάνω δεξιά διαγώνιος"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "προς τα κάτω δεξιά διαγώνιος"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "οριζόντια περιγράμματα εκτός των εξωτερικών"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "κατακόρυφα περιγράμματα εκτός των εξωτερικών"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "συνεχή"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "διακεκομμένα"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "παύλα κουκκίδα"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "παύλα κουκκίδα κουκκίδα"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "με κουκκίδες"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "διπλά"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "πλάγιες παύλες κουκκίδες"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "με πολύ μικρές παύλες"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "λεπτά"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "μέτρια"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "παχιά"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "μέτρια παύλα κουκκίδα κουκκίδα"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "μέτρια παύλα κουκκίδα"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "μέτρια διακεκομμένο"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} περιβάλλον περίγραμμα"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} πάνω και κάτω πλευρές"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} αριστερές και δεξιές πλευρές"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} προς τα πάνω δεξιά και προς τα κάτω δεξιά διαγώνιες "
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8947,3 +9126,8 @@ msgstr "Σειρά HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr ""
+#~ "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το προφίλ; Αυτή η ενέργεια δε "
+#~ "μπορεί να αναιρεθεί"

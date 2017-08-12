@@ -1,6 +1,6 @@
 #appModules/nvda.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2011 NV Access Inc
+#Copyright (C) 2008-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -13,6 +13,20 @@ import gui
 import config
 
 nvdaMenuIaIdentity = None
+
+class NvdaDialog(IAccessible):
+	"""Fix to ensure NVDA message dialogs get reported when they pop up.
+	"""
+
+	def _get_presentationType(self):
+		presType = super(NvdaDialog, self).presentationType
+		# Sometimes, NVDA message dialogs briefly report the invisible state
+		# after they're focused.
+		# This causes them to be treated as unavailable and they are thus not reported.
+		# If this dialog is in the foreground, treat it as content.
+		if presType == self.presType_unavailable and self == api.getForegroundObject():
+			return self.presType_content
+		return presType
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -48,3 +62,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not gui.shouldConfigProfileTriggersBeSuspended():
 			config.conf.resumeProfileTriggers()
 		nextHandler()
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.windowClassName == "#32770" and obj.role == controlTypes.ROLE_DIALOG:
+			clsList.insert(0, NvdaDialog)

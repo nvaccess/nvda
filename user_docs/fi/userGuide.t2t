@@ -8,9 +8,11 @@
 %%toc
 
 + Johdanto +
+Tervetuloa NVDA:han!
+
 Non-Visual Desktop Access (NVDA) on ilmainen ja avoimen lähdekoodin ruudunlukuohjelma Microsoft Windows -käyttöjärjestelmälle.
 Synteettisenä puheena ja pistekirjoituksella annettava palaute mahdollistaa sen, että sokeat ja heikkonäköiset voivat käyttää Windows-tietokoneita samoin kustannuksin kuin näkevät henkilöt.
-NVDA:ta kehittää [NV Access http://www.nvaccess.org/] yhteisön jäsenten avustuksella.
+NVDA:ta kehittää [NV Access https://www.nvaccess.org/] yhteisön jäsenten avustuksella.
 
 ++ Yleiset ominaisuudet ++
 NVDA:n avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärjestelmää ja monia kolmannen osapuolen sovelluksia.
@@ -18,7 +20,7 @@ NVDA:n avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärj
 Tärkeimpiä ominaisuuksia ovat:
 - Tuki yleisille sovelluksille, internet-selaimet sekä sähköpostiasiakas-, internet-keskustelu- ja toimisto-ohjelmat mukaan lukien
 - Yli 80 kieltä tukeva sisäänrakennettu puhesyntetisaattori
-- Automaattinen tekstin muotoilutietojen, kuten fontin nimen ja koon, tyylin sekä kirjoitusvirheiden, lukeminen aina kun mahdollista
+- Tekstin muotoilutietojen, kuten fontin nimen ja koon, tyylin sekä kirjoitusvirheiden, lukeminen aina kun mahdollista
 - Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren sijainnin ilmaiseminen äänimerkillä
 - Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen pistenäytöissä, joissa on pistenäppäimistö
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
@@ -42,18 +44,19 @@ NVDA:n mukana toimitetaan [eSpeak NG https://github.com/espeak-ng/espeak-ng], mo
 Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleesta.
 
 ++ Pistenäyttötuki ++
-NVDA voi tulostaa tietonsa pistekirjoituksella sellaisille käyttäjille, joilla on käytössään pistenäyttö.
-Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaletta saadaksesi tietoja tuetuista pistenäytöistä.
+NVDA voi antaa palautteen pistekirjoituksella sellaisille käyttäjille, joilla on käytössään pistenäyttö.
+Lisäksi tuetaan sekä lyhenne- että tavallisen pistekirjoituksen syöttämistä pistekirjoitusnäppäimistöltä.
+Katso tietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
 
-NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepistekirjoitus ja tavallinen sekä monissa kielissä käytettävä tietokonemerkistö.
+NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, lyhennekirjoitus ja tavallinen sekä tietokonemerkistö mukaan lukien.
 
 ++ Lisenssi ja tekijänoikeustiedot ++
 NVDA on copyright NVDA_COPYRIGHT_YEARS NVDA:n tekijät.
 
 NVDA on suojattu GNU General Public License (versio 2) -lisenssillä.
-Voit vapaasti levittää tai muuttaa tätä ohjelmistoa miten tahansa, kunhan toimitat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla.
+Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa, kunhan toimitat lisenssin sen mukana ja pidät lähdekoodin kaikkien saatavilla.
 Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikkia johdannaisia.
-Voit [tarkastella koko lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
+Voit [tarkastella lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
 
 + Järjestelmävaatimukset +
 - Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n, Windows 8:n, Windows 8.1:n ja Windows 10:n versiot (palvelinversiot mukaan lukien).
@@ -132,9 +135,13 @@ Valintaikkuna suljetaan Painamalla OK.
 + Käytön aloittaminen +
 
 ++ NVDA:n käynnistäminen ++
-Jos asensit NVDA:n omalla asennusohjelmallaan, voit käynnistää sen joko painamalla Control+Alt+N tai valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> NVDA.
+Mikäli asensit NVDA:n omalla asennusohjelmallaan, voit käynnistää sen joko painamalla Control+Alt+N tai valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> NVDA.
 Voit käynnistää sen myös kirjoittamalla Suorita-valintaikkunaan NVDA ja painamalla Enter.
-Lisäksi on mahdollista syöttää joitakin [komentorivivalitsimia #CommandLineOptions], joilla NVDA voidaan käynnistää uudelleen (-r), sulkea se (-q), poistaa lisäosat käytöstä (--disable-addons) jne.
+Lisäksi on mahdollista syöttää joitakin [komentorivivalitsimia #CommandLineOptions], joilla NVDA voidaan käynnistää uudelleen (-r), sulkea (-q), poistaa lisäosat käytöstä (--disable-addons) jne.
+
+NVDA:n asennettu versio tallentaa asetukset oletusarvoisesti nykyisen käyttäjän sovellustietojen Roaming-kansioon (esim. "C:\Users\<Käyttäjä>\AppData\Roaming").
+Tämä on mahdollista muuttaa myös niin, että asetukset ladataan em. sijainnin asemesta paikallisten sovellustietojen kansiosta.
+Katso lisätietoja [Järjestelmänlaajuiset parametrit #SystemWideParameters] -kappaleesta.
 
 Käynnistä massamuistiversio menemällä hakemistoon, johon olet purkanut sen ja painamalla Enter nvda.exe-tiedoston kohdalla tai kaksoisnapsauttamalla sitä hiiren vasemmalla painikkeella.
 
@@ -146,11 +153,12 @@ Jos mitään tällaista ei kuulu, tai mikäli kuuluu Windowsin virheääni tai j
 Tarkista NVDA:n verkkosivustolta, miten ohjelmavirheistä ilmoitetaan.
 
 Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa on joitakin perustietoja NVDA-näppäimestä ja -valikosta.
-(Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista).
-Valintaikkunassa on myös kolme valintaruutua.
-Ensimmäisellä voidaan valita, käytetäänkö Capslockia NVDA-näppäimenä.
-Toinen, joka on käytettävissä vain asennetuissa versioissa, määrittää, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
-Kolmannella on mahdollista valita, halutaanko tämän Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
+(Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista.)
+Valintaikkunassa on lisäksi yhdistelmäruutu sekä kolme valintaruutua.
+Yhdistelmäruudusta valitaan näppäimistöasettelu.
+Ensimmäisellä valintaruudulla määritetään, käytetäänkö Capslockia NVDA-näppäimenä.
+Toisella, joka on käytettävissä vain asennetuissa versioissa, valitaan, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen.
+Kolmannella on mahdollista valita, halutaanko Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
 
 ++ Tietoja näppäinkomennoista ++
 
@@ -427,7 +435,7 @@ Tästä voi olla hyötyä täysin sokeille käyttäjille, sillä joskus pelkän 
 
 NVDA tarjoaa käyttäjille tavan ymmärtää, missä hiiri on ruudun mittojen suhteen toistamalla hiiren nykyiset koordinaatit äänimerkkeinä.
 Mitä ylempänä hiiri on ruudulla, sitä korkeampia äänimerkit ovat.
-Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (olettaen, että käytössä on stereokaiuttimet tai kuulokkeet).
+Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (mikäli käytössä on stereokaiuttimet tai kuulokkeet).
 
 Nämä lisäominaisuudet eivät ole oletusarvoisesti käytössä.
 Voit ottaa ne tarvittaessa käyttöön [Hiiriasetukset #MouseSettings]-valintaikkunasta, joka löytyy NVDA:n Asetukset-valikosta.
@@ -501,6 +509,7 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja Shift-näppäimen kanssa p
 - o: upotettu objekti
 - numerot 1 - 6: otsikot tasoilla 1 - 6
 - a: selite (kommentti, muokkaajan muutokset jne)
+- w: kirjoitusvirhe
 -
 Säilöelementtien, kuten luetteloiden ja taulukoiden alkuun tai loppuun siirtymiseen:
 || Nimi | Näppäinkomento | Kuvaus |
@@ -542,7 +551,7 @@ Tämä edellyttää, että MathPlayer 4 on asennettu tietokoneelle.
 Se on ladattavissa ilmaiseksi osoitteesta http://www.dessci.com/en/products/mathplayer/
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
-- MathML Mozilla Firefoxissa ja Microsoft Internet Explorerissa.
+- MathML Mozilla Firefoxissa, Microsoft Internet Explorerissa ja Google Chromessa.
 - Design Science MathType Microsoft Wordissa ja PowerPointissa. MathTypen on oltava asennettuna, jotta tämä toimii. Kokeiluversio riittää.
 - MathML Adobe Readerissa. HUOM: Tämä ei ole vielä virallinen standardi, joten tätä sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
 -
@@ -571,6 +580,141 @@ Lausekkeessa voidaan esimerkiksi liikkua vasemmalla ja oikealla nuolinäppäimel
 Katso lisätietoja MathPlayerin käyttöohjeesta.
 
 Paina Esc-näppäintä, kun haluat palata takaisin dokumenttiin.
+
++ Pistekirjoitus +
+Mikäli sinulla on pistenäyttö, NVDA voi antaa palautteen pistekirjoituksella.
+Jos käyttämässäsi näytössä on Perkins-tyylinen näppäimistö, voit lisäksi syöttää lyhenne- ja tavallista pistekirjoitusta.
+
+Katso tietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
+Voit määrittää pistekirjoitusasetukset [Pistekirjoitusasetukset-valintaikkunasta. #BrailleSettings]
+
+++ Säädintyyppien ja -tilojen sekä kiintopisteiden lyhenteet ++
+Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa sekä kiintopisteitä.
+
+|| Lyhenne | Säätimen tyyppi |
+| sov | sovellus |
+| sln | sisennetty lainaus |
+| pnk | painike |
+| avpnk | avattava painike |
+| askpnk | askelluspainike |
+| jtupnk | jaettu painike |
+| vtpnk | vaihtopainike |
+| yhd | yhdistelmäruutu |
+| vlr | valintaruutu |
+| vli | valintaikkuna |
+| dok | dokumentti |
+| muo | muokattava tekstikenttä |
+| slsmuo | salasanan muokkauskenttä |
+| upotettu | upotettu objekti |
+| lpvte | loppuviite |
+| alvte | alaviite |
+| gra | grafiikka |
+| rhm | ryhmä |
+| oN | otsikko tasolla n, esim. o1, o2. |
+| ohj | ohjeselite |
+| kp | kiintopiste |
+| lnk | linkki |
+| alnk | avattu linkki |
+| lst | luettelo |
+| vko | valikko |
+| vkorvi | valikkorivi |
+| vkopnk | valikkopainike |
+| vkokhde | valikkokohde |
+| pnl | paneeli |
+| edplk | edistymispalkki |
+| vpnk | valintapainike |
+| vrtsplk | vierityspalkki |
+| osa | osa |
+| tlrvi | tilarivi |
+| vlsdn | välilehtisäädin |
+| tlk | taulukko |
+| sN | Taulukon sarakenumero n, esim. s1, s2. |
+| rN | Taulukon rivinumero n, esim. r1, r2. |
+| pte | pääte |
+| tkplk | työkalupalkki |
+| tkvhj | työkaluvihje |
+| pn | puunäkymä |
+| pnpnk | puunäkymäpainike |
+| pnkhde | puunäkymän kohde |
+| ts N | puunäkymän kohteella on hierarkkinen taso N |
+| ikk | ikkuna |
+| ⠤⠤⠤⠤⠤ | erotin |
+
+Seuraavat tilanilmaisimet on myös määritetty:
+|| Lyhenne | Säätimen tila |
+| ... | Näytetään, kun objekti tukee automaattista täydennystä. |
+| ⢎⣿⡱ | Näytetään, kun objektia (esim. vaihtopainiketta) on painettu. |
+| ⢎⣀⡱ | Näytetään, kun objektia (esim. vaihtopainiketta) ei ole painettu. |
+| ⣏⣿⣹ | Näytetään, kun objekti (esim. valintaruutu) on valittuna. |
+| ⣏⣸⣹ | Näytetään, kun objekti (esim. valintaruutu) on osittain valittuna. |
+| ⣏⣀⣹ | Näytetään, kun objekti (esim. valintaruutu) ei ole valittuna. |
+| - | Näytetään, kun objekti (esim. puunäkymän kohde) on tiivistettävissä. |
+| + | Näytetään, kun objekti (esim. puunäkymän kohde) on laajennettavissa. |
+| *** | Näytetään, kun suojattu säädin tai dokumentti havaitaan. |
+| nps | Näytetään, kun objekti on napsautettava. |
+| kmnt | Näytetään, kun laskentataulukon solussa on kommentti tai dokumentissa tekstiä. |
+| kaav | Näytetään, kun laskentataulukon solussa on kaava. |
+| virhe | Näytetään, kun virheellinen syöte on annettu. |
+| ptkvs | Näytetään, kun objektista (yleensä grafiikka) on saatavilla pitkä kuvaus. |
+| mnr | Näytetään, kun muokkauskenttä mahdollistaa useiden tekstirivien kirjoittamisen (esim. verkkosivujen kommenttikentät). |
+| pak | Näytetään, kun pakollinen lomakekenttä havaitaan. |
+| vl | Näytetään, kun objekti (esim. muokattava tekstikenttä) on vain luku -tyyppiä. |
+| val | Näytetään, kun objekti on valittuna. |
+| eval | Näytetään, kun objektia ei ole valittu. |
+| laj nou | Näytetään, kun objekti on lajiteltu nousevasti. |
+| laj lask | Näytetään, kun objekti on lajiteltu laskevasti. |
+| alavko | Näytetään, kun objektilla on ponnahdusvalikko (yleensä alavalikko). |
+
+Kiintopisteille on määritetty seuraavat lyhenteet:
+|| Lyhenne | Kiintopiste |
+| mplk | mainospalkki |
+| stie | sisältötiedot |
+| täyd | täydentävä |
+| lom | lomake |
+| pää | pääsisältö |
+| nav | navigaatio |
+| hku | haku |
+| alu | alue |
+
+++ Pistekirjoituksen syöttäminen ++
+NVDA tukee sekä tavallisen että lyhennepistekirjoituksen syöttämistä pistekirjoitusnäppäimistöllä.
+Käännöstaulukon, jota käytetään pistekirjoituksen kääntämiseen tekstiksi, voit valita käyttäen Pistekirjoitusasetukset-valintaikkunan [Syöttötaulukko #BrailleInputTable]-asetusta.
+
+Kun käytetään tavallista pistekirjoitusta, teksti syötetään heti sitä kirjoitettaessa.
+Lyhennekirjoitusta käytettäessä teksti syötetään painaessasi sanan lopussa Välilyöntiä tai Enteriä.
+Huomaa, että käännös vaikuttaa vain kirjoittamaasi sanaan, ei olemassa olevaan tekstiin.
+Jos esim. käytät pistekirjoitusmerkistöä, jossa numerot alkavat numeromerkillä, ja painat askelpalautinta siirtyäksesi numeron loppuun, sinun on syötettävä numeromerkki uudelleen kirjoittaaksesi lisää numeroita.
+
+%kc:beginInclude
+Pisteen 7 painaminen poistaa viimeksi syötetyn pistesolun tai -merkin.
+Piste 8 kääntää minkä tahansa pistekirjoitussyötteen ja painaa Enter-näppäintä.
+Pisteiden 7 ja 8 painaminen kääntää minkä tahansa pistekirjoitussyötteen lisäämättä välilyöntiä tai painamatta Enteriä.
+%kc:endInclude
+
++ Sisällöntunnistus +
+Kun tekijät eivät tarjoa riittävästi tietoa ruudunlukuohjelman käyttäjälle sisällön määrittämiseen, sitä voidaan yrittää tunnistaa kuvasta eri työkaluja käyttäen.
+NVDA tukee Windows 10:n sisäänrakennettua tekstintunnistustoimintoa kuvien tekstin tunnistamiseen.
+Lisää sisällöntunnistimia voidaan tarjota NVDA:n lisäosina.
+
+Kun käytät sisällöntunnistuskomentoa, NVDA tunnistaa sisällön nykyisestä [navigointiobjektista. #ObjectNavigation]
+Navigointiobjekti seuraa oletusarvoisesti järjestelmän kohdistusta tai selaustilakohdistinta, joten yleensä voit siirtää kohdistuksen tai selaustilakohdistimen haluamaasi kohtaan.
+Jos esim. siirrät selaustilakohdistimen grafiikan kohdalle, sen sisältö tunnistetaan oletuksena.
+Saatat kuitenkin haluta käyttää suoraan objektinavigointia esim. koko sovellusikkunan tunnistamiseen.
+
+Kun tunnistus on suoritettu, tulokset näytetään selaustilaa vastaavassa dokumentissa, joka mahdollistaa tietojen lukemisen nuolinäppäimillä jne.
+Enterin tai välilyönnin painaminen aktivoi (yleensä napsauttaa) kohdistimen kohdalla olevan tekstin, mikäli mahdollista.
+Escin painaminen hylkää tunnistuksen tulokset.
+
+++ Windows 10:n tekstintunnistus ++[Win10Ocr]
+Windows 10 sisältää tekstintunnistuksen useille kielille.
+NVDA voi käyttää sitä kuvissa olevan tekstin tai esteellisten sovellusten tunnistamiseen.
+
+Voit määrittää tekstintunnistuksessa käytettävän kielen [Windows 10:n tekstintunnistus #Win10OcrSettings] -asetusvalintaikkunasta.
+Lisäkieliä voidaan asentaa avaamalla Käynnistä-valikko, valitsemalla Asetukset -> Aika ja kieli -> Alue ja kieli, ja valitsemalla sitten Lisää kieli.
+
+%kc:beginInclude
+Tunnista nykyisen navigointiobjektin teksti Windows 10:n tekstintunnistusta käyttäen painamalla NVDA+R.
+%kc:endInclude
 
 + Sovelluskohtaiset ominaisuudet +
 NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien helpottamiseksi tai mahdollistamaan pääsyn sellaisiin toimintoihin, joiden käyttäminen ei ole ruudunlukuohjelman käyttäjille muilla tavoin mahdollista.
@@ -601,7 +745,7 @@ Katso lisätietoja selaustilasta ja pikanavigoinnista [Selaustila-kappaleesta. #
 %kc:beginInclude
 Elementtiluettelo avataan Microsoft Wordissa selaustilassa oltaessa painamalla NVDA+F7.
 %kc:endInclude
-Elementtiluettelo voi näyttää otsikot, linkit sekä selitteet (joita ovat kommentit ja jäljitettävät muutokset).
+Elementtiluettelo voi näyttää otsikot, linkit ja selitteet (joita ovat kommentit ja jäljitettävät muutokset) sekä virheet (toistaiseksi vain kirjoitusvirheet).
 
 +++ Kommenttien lukeminen +++
 %kc:beginInclude
@@ -676,7 +820,7 @@ Lukittuihin soluihin siirtyminen on mahdollista selaustilassa, joka otetaan käy
 | Lue jäljellä oleva aika | Control+Shift+R | Lukee nykyisen kappaleen jäljellä olevan ajan. |
 %kc:endInclude
 
-Huomautus: Lue jäljellä oleva aika -komento toimii vain foobar2000:n tilarivin muotoilun oletusmerkkijonolla.
+Huom: Lue jäljellä oleva aika -komento toimii vain foobar2000:n tilarivin muotoilun oletusmerkkijonolla.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -714,20 +858,20 @@ Linkkeihin siirtyminen sisältää myös alaviitteet .
 
 +++ Tekstin valitseminen +++
 Voit suorittaa Kindlessä valitulle tekstille eri toimintoja, mukaan lukien sanastomääritelmän hakeminen, huomautusten ja korostusten lisääminen, leikepöydälle kopioiminen sekä verkosta etsiminen.
-Tämä tehdään valitsemalla ensin tekstiä aivan kuten normaalistikin selaustilassa, esim. Shift- ja nuolinäppäimiä käyttäen.
+Tämä tehdään valitsemalla ensin tekstiä kuten normaalistikin selaustilassa, esim. Shift- ja nuolinäppäimiä käyttäen.
 %kc:beginInclude
 Kun olet valinnut tekstin, paina sovellusnäppäintä tai Shift+F10 näyttääksesi käytettävissä olevat vaihtoehdot valinnan käsittelyyn.
 %kc:endInclude
 Mikäli tekstiä ei ole valittuna, vaihtoehdot näytetään kohdistimen kohdalla olevalle sanalle.
 
-+++ Käyttäjän huomautukset +++
-Voit lisätä sanaan tai tekstin kohtaan liittyvän huomautuksen.
++++ Käyttäjän muistiinpanot +++
+Voit lisätä sanaan tai tekstin kohtaan liittyvän muistiinpanon.
 Tämä tehdään valitsemalla ensin haluttu teksti ja avaamalla valinnan vaihtoehdot, kuten edellä on kuvailtu.
 Valitse sitten Add note.
 
-NVDA viittaa selaustilassa luettaessa huomautuksiin kommentteina.
+NVDA viittaa selaustilassa luettaessa muistiinpanoihin kommentteina.
 
-Lue, muokkaa tai poista huomautus seuraavasti:
+Lue, muokkaa tai poista muistiinpano seuraavasti:
 
 + Siirrä kohdistin kommentin sisältävään tekstiin.
 + Avaa valinnan vaihtoehdot, kuten yllä on kuvailtu.
@@ -803,7 +947,7 @@ Tästä yhdistelmäruudusta voidaan valita, mitä puhesyntetisaattoria NVDA käy
 Luettelo NVDA:n tukemista puhesyntetisaattoreista on [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleessa.
 
 Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
-Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla tai näkeville kehittäjille, jotka käyttävät pelkkää Puheen tarkastelu -toimintoa.
+Tästä voi olla hyötyä henkilölle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää Puheen tarkastelu -toimintoa.
  
 ==== Äänilaite ====
 Tästä voit valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
@@ -906,8 +1050,8 @@ NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voit siirtyä missä taha
 | Pienennä nykyistä syntetisaattorin asetusta | NVDA+Control+Nuoli alas | NVDA+Shift+Control+Nuoli alas | Pienentää valittua puheasetusta, esim. vähentää nopeutta, valitsee edellisen puheäänen tai vähentää äänenvoimakkuutta. |
 %kc:endInclude
 
-+++ Pistekirjoituksen asetukset +++
-Pistekirjoituksen asetukset -valintaikkuna voidaan avata valitsemalla Asetukset-valikosta "Pistekirjoitus..."-vaihtoehto.
++++ Pistekirjoitusasetukset +++[BrailleSettings]
+Pistekirjoitusasetukset-valintaikkuna voidaan avata valitsemalla Asetukset-valikosta "Pistekirjoitus..."-vaihtoehto.
 
 ==== Pistenäyttö ====
 Pistekirjoitusasetukset-valintaikkunassa on ensimmäisenä "Pistenäyttö"-yhdistelmäruutu.
@@ -924,7 +1068,7 @@ Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot kä
 
 NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti järjestelmän käytettävissä olevia USB- ja bluetooth-laitteita tutkimalla.
 Joillekin pistenäytöille voidaan kuitenkin itse valita käytettävä portti.
-Vaihtoehtoina ovat "Automaattinen" (joka käskee NVDA:ta käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä sarjaportit, mikäli pistenäyttö tukee sarjaportin kautta liittämistä.
+Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä "sarjaportti", mikäli pistenäyttö tukee sarjaporttiin liittämistä.
 
 Tämä vaihtoehto ei ole käytettävissä, jos pistenäyttö tukee vain automaattista portintunnistusta.
 
@@ -936,16 +1080,15 @@ Se sisältää pistetaulukoita eri kielille ja pistekirjoitusstandardeille sekä
 Valittua taulukkoa käytetään tekstin kääntämiseen pistenäytöllä näytettäväksi pistekirjoitukseksi.
 Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
 
-==== Syöttötaulukko ====
+==== Syöttötaulukko ====[BrailleInputTable]
 Edellistä vaihtoehtoa täydentää Syöttötaulukko-yhdistelmäruutu.
 Valittua taulukkoa käytetään pistenäytön Perkins-tyylisellä pistenäppäimistöllä syötetyn pistekirjoituksen kääntämiseen tekstiksi.
-NVDA tukee tällä hetkellä ainoastaan tietokonemerkistöllä syöttämistä, joten vain 8 pisteen tietokonemerkistön taulukot näytetään.
 Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
 
 Huomaa, että tästä vaihtoehdosta on hyötyä vain, jos pistenäytössä on Perkins-tyylinen -näppäimistö ja mikäli näytön ajuri tukee tätä ominaisuutta.
 Mikäli pistenäppäimistön sisältävä pistenäyttö ei tue syöttöä, siitä huomautetaan [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
 
-==== Laajenna kohdistimen kohdalla oleva sana ====
+	==== Laajenna kohdistimen kohdalla oleva sana ====
 Kun tämä asetus on käytössä, kohdistimen alla oleva sana näytetääntavallisella tietokonemerkistöllä.
 
 ==== Näytä kohdistin ====
@@ -955,17 +1098,25 @@ Asetus vaikuttaa järjestelmä- ja tarkastelukohdistimeen, mutta ei valinnanilma
 ==== Vilkkuva kohdistin ====
 Tämä asetus saa pistekohdistimen vilkkumaan.
 Mikäli vilkkuminen poistetaan käytöstä, kohdistin on aina ylhäällä.
+Tämä asetus ei vaikuta valinnanilmaisimeen, sillä se koostuu pisteistä 7 ja 8, ja on vilkkumaton.
 
 ==== Kohdistimen vilkkumisnopeus (ms) ====
 Tällä asetuksella voit muuttaa kohdistimen vilkkumisnopeutta millisekunteina.
 
-==== Kohdistimen muoto ====
-Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet).
-Asetus ei vaikuta valinnanilmaisimeen.
+==== Kohdistimen muoto kohdistukselle ====
+Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet), kun pistenäyttö on määritetty seuraamaan kohdistusta.
+Tämä asetus ei vaikuta valinnanilmaisimeen, sillä se koostuu aina pisteistä 7 ja 8, ja on vilkkumaton.
+
+==== Kohdistimen muoto tarkastelukohdistimelle ====
+Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet), kun pistenäyttö on määritetty seuraamaan tarkastelukohdistinta.
+Tämä asetus ei vaikuta valinnanilmaisimeen, sillä se koostuu aina pisteistä 7 ja 8, ja on vilkkumaton.
 
 ==== Ilmoitusten aikakatkaisu (sek) ====
-Tämä asetus säätää sitä, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
+Tämä asetus säätää, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.
 Jos arvoksi määritetään 0, ilmoitusten näyttäminen poistetaan kokonaan käytöstä.
+
+==== Näytä ilmoitukset pysyvästi ====
+Tällä asetuksella NVDA:n ilmoitukset näytetään pistenäytöllä pysyvästi.
 
 %kc:setting
 ==== Pistenäyttö seuraa ====[BrailleTether]
@@ -982,15 +1133,41 @@ Asetus ei ole oletusarvoisesti käytössä.
                      
 ==== Vältä sanojen katkaisua ====
 Jos tämä asetus on käytössä, sanaa, joka on liian pitkä mahtuakseen pistenäytölle, ei katkaista.
-Pisterivin lopussa näytetään sen sijaan tyhjää tilaa.
+Pisterivin lopussa näytetään sen sijaan tyhjää.
 Voit lukea koko sanan vierittämällä näyttöä.
 Tätä kutsutaan joskus automaattiseksi rivitykseksi.
-HUOM: Mikäli sana on liian pitkä mahtuakseen näytölle jopa yksistään, se katkaistaan joka tapauksessa.
+HUOM: Mikäli yksittäinen sana on liian pitkä mahtuakseen näytölle, se on silti katkaistava.
 
 Jos tämä asetus ei ole käytössä, sanasta näytetään niin paljon kuin mahdollista, mutta sen loppuosa katkaistaan.
 Voit lukea sanan loppuosan vierittämällä näyttöä.
 
 Asetuksen käyttöön ottaminen saattaa mahdollistaa sujuvamman lukemisen, mutta vaatii yleensä enemmän näytön vierittämistä.
+
+==== Kohdistuskontekstin näyttäminen ====
+Tällä asetuksella voit valita, mitä kontekstitietoja NVDA näyttää pistenäytöllä kohdistuksen siirtyessä objektiin.
+Kontekstitiedot tarkoittavat kohdistuksen sisältävän objektin hierarkiaa.
+Kun esim. siirrät kohdistuksen luettelon kohteeseen, se on osa luetteloa.
+Luettelo puolestaan saattaa olla osa valintaikkunaa jne.
+Katso lisätietoja NVDA:n objektien hierarkiasta [objektinavigointia #ObjectNavigation] käsittelevästä kappaleesta.
+
+Kun asetukseksi on määritetty "täytä näyttö kontekstin muuttuessa", NVDA yrittää näyttää pistenäytöllä mahdollisimman paljon kontekstitietoja, mutta vain kontekstin muuttuneesta osasta.
+Edellä olevassa esimerkissä tämä tarkoittaa, että kun kohdistus siirtyy luetteloon, NVDA näyttää sen kohteen pistenäytöllä.
+Lisäksi, jos pistenäytöllä on tarpeeksi tilaa jäljellä, NVDA yrittää näyttää, että kyseinen kohde on osa luetteloa.
+Mikäli alat liikkua luettelossa nuolinäppäimillä, NVDA olettaa, että tiedät olevasi edelleen luettelossa.
+Joten kaikista jäljellä olevista luettelon kohteista, joihin siirryt, NVDA näyttää pistenäytöllä vain aktiivisena olevan.
+Voit lukea kontekstin uudelleen (ts. että olet luettelossa ja että se on osa valintaikkunaa) vierittämällä näyttöä taaksepäin.
+
+Kun asetukseksi on määritetty "täytä näyttö aina", NVDA yrittää näyttää pistenäytöllä mahdollisimman paljon kontekstitietoja riippumatta siitä, oletko nähnyt samat tiedot aiemmin.
+Tällä on se etu, että NVDA mahduttaa näytölle mahdollisimman paljon tietoa.
+Haittapuolena on kuitenkin, että kohdistus alkaa pistenäytöllä aina eri sijainnista.
+Tämä voi vaikeuttaa esim. pitkän luettelon kohteiden selaamista, sillä sormea on siirrettävä jatkuvasti kohteen alun löytämiseksi.
+NVDA 2017.2 ja aiemmat toimivat oletuksena tällä tavoin.
+
+Kun kohdistuskontekstin näyttäminen -asetus on määritetty näyttämään kontekstitiedot vain taaksepäin vieritettäessä, NVDA ei koskaan näytä oletusarvoisesti kontekstitietoja pistenäytöllä.
+Joten NVDA näyttää edellä olevassa esimerkissä, että kohdistus on luettelon kohteessa.
+Voit lukea kontekstin (ts. että olet luettelossa ja että se on osa valintaikkunaa) vierittämällä pistenäyttöä taaksepäin.
+
+Vaihda Kohdistuskontekstin näyttäminen -asetusta mistä tahansa liittämällä komentoon oma syöte-ele [Syöte-eleet-valintaikkunaa #InputGestures] käyttäen.
 
 +++ Näppäimistöasetukset (NVDA+Control+K) +++                                                                                 
 Tämä valintaikkuna löytyy Asetukset-valikon "Näppäimistö..." -kohdasta.
@@ -1114,9 +1291,9 @@ Se sisältää seuraavat asetukset:
 Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden tullessa näkyviin.
 Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen), kun hiiri siirretään niiden päälle tai toisinaan kun kohdistus siirretään niihin.
 
-==== Lue kuplailmoitukset ====
-Kun tämä valintaruutu on valittuna, NVDA lukee kuplailmoitukset niiden tullessa näkyviin.
-Kuplailmoitukset ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
+==== Lue ohjeselitteet ====
+Kun tämä valintaruutu on valittuna, NVDA lukee ohjeselitteet niiden tullessa näkyviin.
+Ohjeselitteet ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia ja liittyvät järjestelmätapahtumiin, kuten verkkokaapelin irrottamiseen tai ilmoituksiin Windowsin suojausongelmista.
 
 ==== Lue objektien pikanäppäimet ====
 Kun tämä valintaruutu on valittuna, NVDA kertoo objektiin tai säätimeen liitetyn pikanäppäimen.
@@ -1155,6 +1332,13 @@ Jos edistymispalkin sisältävä ikkuna pienennetään tai siirrytään pois sel
 Pikanäppäin: NVDA+5
 
 Ottaa käyttöön tai poistaa käytöstä uuden sisällön lukemisen tietyissä objekteissa, kuten pääteohjelmissa ja keskusteluohjelmien historiasäätimissä.
+
+==== Toista ääni automaattisten ehdotusten tullessa näkyviin ====
+Ottaa käyttöön tai poistaa käytöstä automaattisten ehdotusten ilmoittamisen niiden tullessa näkyviin, ja mikäli  asetus on käytössä, NVDA toistaa äänen, joka ilmaisee tämän.
+Automaattiset ehdotukset ovat luetteloita ehdotetuista kohteista, jotka perustuvat tiettyihin hakukenttiin ja asiakirjoihin syötettyyn tekstiin.
+Kun esim. kirjoitat Windows Vistan ja uudemman Käynnistä-valikon hakukenttään, Windows näyttää luettelon kirjoittamaasi tekstiin perustuvista ehdotuksista.
+Joissakin muokkauskentissä, kuten  useissa Windows 10:n sovellusten hakukentissä, NVDA voi ilmoittaa kirjoittaessasi ehdotusluettelon ilmestymisestä.
+Automaattisten ehdotusten luettelo sulkeutuu siirryttyäsi pois muokkauskentästä, ja NVDA voi joissakin kentissä ilmoittaa siitä.
 
 +++ Syöttömenetelmän asetukset +++
 Syöttömenetelmän asetukset -valintaikkuna löytyy Asetukset-valikosta.
@@ -1289,12 +1473,18 @@ Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja esim. Word
 Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmoitetaan.
 Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 
-- Ei käytössä: NVDA ei käsittele sisennyksiä.
-- Puheella: Jos tämä on valittuna, NVDA sanoo sisennysten määrän muuttuessa jotain sellaista kuin "12 väli" tai "neljä sarkain".
-- Äänimerkeillä: Jos tämä on valittuna, äänimerkit ilmaisevat sisennysten määrän sen muuttuessa.
+- ei käytössä: NVDA ei käsittele sisennyksiä.
+- puheella: Jos tämä on valittuna, NVDA sanoo sisennysten määrän muuttuessa jotain sellaista kuin "12 väli" tai "neljä sarkain".
+- äänimerkeillä: Jos tämä on valittuna, äänimerkit ilmaisevat sisennysten määrän sen muuttuessa.
 Äänimerkin korkeus nousee jokaisen välilyönnin kohdalla, ja sarkainmerkki vastaa neljää välilyöntiä.
-- Puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
+- puheella ja äänimerkeillä: Tämän ollessa valittuna sisennykset ilmoitetaan molempia yllä olevia vaihtoehtoja käyttäen.
 -
+
++++ Windows 10:n tekstintunnistusasetukset +++[Win10OcrSettings]
+Tästä valintaikkunasta, johon pääsee NVDA:n Asetukset-valikosta, voit määrittää [Windows 10:n tekstintunnistusasetukset. #Win10Ocr]
+
+==== Tunnistuksen kieli ====
+Tästä yhdistelmäruudusta voit valita tekstintunnistuksessa käytettävän kielen.
 
 +++ Puhesanastot +++
 Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita, joista voidaan muuttaa tapaa, jolla NVDA lausuu tietyt sanat tai ilmaisut.
@@ -1468,10 +1658,10 @@ Saatat esimerkiksi haluta muokata manuaalisesti käyttöönotettua profiilia tai
 Voit tehdä tämän valitsemalla Asetusprofiilit-valintaikkunassa Poista kaikki käynnistimet käytöstä tilapäisesti -valintaruudun.
 
 ++ Asetustiedostojen sijainti ++
-NVDA:n massamuistiversio tallentaa kaikki asetuksensa, käyttäjän omat sovellusmoduulit ja ajurit hakemistossaan olevaan userConfig-nimiseen hakemistoon.
+NVDA:n massamuistiversio tallentaa kaikki asetukset ja lisäosat hakemistossaan olevaan userConfig-nimiseen alihakemistoon.
 
-Asennettu NVDA:n versio tallentaa kaikki asetuksensa, käyttäjän omat sovellusmoduulit ja ajurit erityiseen Windowsin käyttäjäprofiilissa olevaan NVDA-hakemistoon.
-Tämä tarkoittaa, että jokaisella järjestelmän käyttäjällä voi olla omat NVDA-asetuksensa.
+Asennettu NVDA:n versio tallentaa asetukset ja lisäosat erityiseen Windowsin käyttäjäprofiilissasi olevaan NVDA-hakemistoon.
+Tämä tarkoittaa, että jokaisella järjestelmän käyttäjällä voi olla omat NVDA-asetukset.
 Asennetun NVDA:n asetushakemistoon päästään valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> Selaa käyttäjän asetushakemistoa.
 
 Kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa käytettävät asetukset tallennetaan NVDA:n asennushakemistossa olevaan systemConfig-hakemistoon.
@@ -1589,6 +1779,17 @@ Niiden käyttämiseksi on asennettava seuraavat kaksi komponenttia:
  -
 -
 
+++ Windows OneCore ++
+Windows 10 sisältää uusia puheääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
+Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
+
+Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tästä https://support.microsoft.com/fi-fi/help/22797/windows-10-narrator-tts-voices/] Microsoftin artikkelista.
+
+Huomaa, että Lukijan (Narratorin) suuremmat puhenopeudet eivät ole tällä hetkellä käytettävissä NVDA:n kanssa.
+Lisäksi Windowsin asetuksista valitsemasi puheen nopeus vaikuttaa NVDA:ssa asetettuun puhenopeuteen.
+Näitä ongelmia ei voi ratkaista ilman Windowsiin tehtäviä muutoksia.
+Toivon mukaan ne korjataan tulevassa Windows-päivityksessä.
+
 ++ Audiologic TTS 3 ++
 Tämä on kaupallinen italiankielinen puhesyntetisaattori.
 Se on asennettava tietokoneelle, jotta sitä voidaan käyttää NVDA:lla.
@@ -1634,8 +1835,6 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä taaksepäin oikeaa säätörullaa käyttäen | oikea säätörulla ylös |
 | Siirrä eteenpäin oikeaa säätörullaa käyttäen | oikea säätörulla alas |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
-| Askelpalautin-näppäin | piste 7 |
-| Enter-näppäin | piste 8 |
 | Shift+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 2 |
 | Sarkain-näppäin | välilyönti+pisteet 4 ja 5 |
 | Nuoli ylös -näppäin | välilyönti+piste 1 |
@@ -1652,7 +1851,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Alt+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 |
 | Esc-näppäin | välilyönti+pisteet 1 ja 5 |
 | Windows-näppäin | välilyönti+pisteet 2, 4, 5 ja 6 |
-| välilyöntinäppäin | välilyönti |
+| Välilyöntinäppäin | välilyönti |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | välilyönti+pisteet 1, 2, 3, 4, 5 ja 6 |
 | Lue nykyinen rivi | välilyönti+pisteet 1 ja 4 |
 | NVDA-valikko | välilyönti+pisteet 1, 3, 4 ja 5 |
@@ -1773,7 +1972,7 @@ VarioUltra ja Pronto! käyttävät HID:tä.
 Refreshabraille ja Orbit Reader 20 voivat käyttää HID:tä, mikäli ne on määritelty siten.
 
 Orbit Reader 20:n USB-sarjaporttitilaa tuetaan tällä hetkellä vain Windows 10:ssä.
-Sen sijaan tulisi tavallisesti käyttää USB-HID:tä.
+Sen sijaan tulisi useimmiten käyttää USB-HID:tä.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1877,8 +2076,6 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Alt-näppäin | pisteet 1, 3 ja 4+välilyönti |
 | Esc-näppäin | pisteet 1 ja 5+välilyönti |
 | Sarkain-näppäin | pisteet 4 ja 5+välilyönti |
-| Enter-näppäin | piste 8 |
-| Askelpalautin-näppäin | piste 7 |
 | Nuoli ylös -näppäin | piste 1+välilyönti |
 | Nuoli alas -näppäin | piste 4+välilyönti |
 | Capslock-näppäin | pisteet 1, 3 ja 6+välilyönti |
@@ -2025,8 +2222,6 @@ Molemmat sisemmät näppäimet on määritelty välilyönniksi.
 
 || Nimi | Näppäinkomento |
 %kc:beginInclude
-| askelpalautin-näppäin | piste 7 |
-| Enter-näppäin | piste 8 |
 | Esc-näppäin | välilyönti ja piste 7 |
 | Nuoli ylös -näppäin | välilyönti ja piste 2 |
 | Nuoli vasemmalle -näppäin | välilyönti ja piste 1 |
@@ -2204,6 +2399,16 @@ Katso [EcoBraillen käyttöohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Linea
 | Vaihda Pistenäyttö seuraa -asetusta | A |
 %kc:endInclude
 
+++ SuperBraille ++
+SuperBraille-pistenäyttö, jota käytetään enimmäkseen Taiwanissa, voidaan kytkeä tietokoneeseen joko USB:n tai sarjaportin kautta.
+Koska laitteessa ei ole fyysisiä kirjoitus- tai vieritysnäppäimiä, kaikki komennot on annettava tietokoneen näppäimistöltä.
+Tämän vuoksi, ja jotta säilytetään yhteensopivuus muiden taiwanilaisten ruudunlukuohjelmien kanssa, pistenäytön vierittämistä varten on käytettävissä kaksi komentoa:
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä taaksepäin | Laskinnäppäimistön miinus |
+| Vieritä eteenpäin | Laskinnäppäimistön plus | 
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://www.brltty.com/] on erillinen ohjelma, jonka avulla on mahdollista käyttää entistä useampia pistenäyttöjä.
 Sen käyttämiseksi on asennettava [BRLTTY:n Windows-versio http://www.brltty.com/download.html].
@@ -2223,43 +2428,6 @@ Katso [BRLTTY:n näppäinsidosluetteloita http://mielke.cc/brltty/doc/KeyBinding
 | Siirrä seuraavalle riville | lndn (siirry yksi rivi alaspäin) |
 | siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
-
-+ Säädintyyppien ja -tilojen lyhenteet pistenäytöllä +
-Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa.
-
-|| Lyhenne | Säätimen tyyppi |
-| pnk | painike |
-| yhd | yhdistelmäruutu |
-| vlr | valintaruutu |
-| vli | valintaikkuna |
-| muo | muokattava tekstikenttä |
-| gra | grafiikka |
-| sN | taulukon sarake numero n, esim. s1, s2. |
-| rN | taulukon rivi numero n, esim. r1, r2. |
-| oN | otsikko tasolla n, esim. o1, o2. |
-| lnk | linkki |
-| ltl | luettelo |
-| alnk | avattu linkki |
-| vko | valikko |
-| vkorvi | valikkorivi |
-| vpnk | valintapainike |
-| tl | taulukko |
-| pn | puunäkymä |
-| ts N | puunäkymän kohteella on hierarkkinen taso N |
-| ``-----`` | erotin |
-
-Seuraavat tilanilmaisimet on myös määritetty:
-|| Lyhenne | Säätimen tila |
-| ... | Näytetään, kun objekti tukee automaattista täydennystä. |
-| ( ) | Näytetään, kun objekti (esim. valintaruutu) ei ole valittuna. |
-| (x) | Näytetään, kun objekti (esim. valintaruutu) on valittuna. |
-| (-) | Näytetään, kun objekti (esim. valintaruutu) on osittain valittuna |
-| - | Näytetään, kun objekti (esim. puunäkymän kohde) on suljettavissa. |
-| + | Näytetään, kun objekti (esim. puunäkymän kohde) on avattavissa. |
-| nps | Näytetään, kun objekti on napsautettavissa. |
-| vl | Näytetään, kun objekti (esim. muokattava tekstikenttä) on vain luku -tyyppiä. |
-| val | Näytetään, kun objekti on valittuna. |
-| alavko | Näytetään, kun objektilla on ponnahdusvalikko (yleensä alavalikko). |
 
 + Edistyneet aiheet +
 
@@ -2296,13 +2464,25 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | -f LOKITIEDOSTO | --log-file=LOKITIEDOSTO | Tiedosto, johon lokiviestit tallennetaan. |
 | -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (10 = virheenkorjaus, 20 = tiedot, 30 = varoitus, 40 = virhe, 50 = kriittinen). Oletustasona on varoitus. |
 | -c ASETUSPOLKU | --config-path=ASETUSPOLKU | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
-| -m | --minimal | Ei ääniä, käyttöliittymää, käynnistysilmoitusta jne. |
+| -m | --minimal | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |
 | -s | --secure | Suojattu tila (poistaa käytöstä Python-konsolin). |
 | Ei mitään | --disable-addons | Poistaa lisäosat käytöstä. |
 | Ei mitään | --debug-logging | Ottaa virheenkorjaus-lokitason käyttöön vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason argumentin (""--loglevel"", -l). |
 | Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
+
+++ Järjestelmänlaajuiset parametrit ++[SystemWideParameters]
+Windowsin rekisterissä on mahdollista muuttaa joitakin arvoja, jotka vaikuttavat  NVDA:n järjestelmänlaajuiseen toimintaan.
+Arvot tallennetaan johonkin seuraavista rekisteriavaimista:
+- 32-bittiset järjestelmät: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
+- 64-bittiset järjestelmät: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+-
+
+Seuraavien rekisteriavainten määrittäminen on mahdollista:
+|| Nimi | Tyyppi | Mahdolliset arvot | Kuvaus |
+| configInLocalAppData | DWORD | 0 (oletus) poistaa käytöstä, 1 ottaa käyttöön | Jos tämä asetus otetaan käyttöön, NVDA:n asetukset tallennetaan paikallisten sovellustietojen kansioon. |
+| serviceDebug | DWORD | 0 (oletus) poistaa käytöstä, 1 ottaa käyttöön | Jos tämä asetus otetaan käyttöön, suojattu tila poistetaan käytöstä Windowsin suojatuilla työpöydillä, mikä mahdollistaa Python-konsolin ja lokintarkastelun käytön. Tämän asetuksen käyttöä ei suositella tietoturvan merkittävän heikkenemisen vuoksi. |
 
 + Lisätietoja +
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen verkkosivustolla osoitteessa NVDA_URL.

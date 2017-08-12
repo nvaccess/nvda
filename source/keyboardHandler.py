@@ -354,6 +354,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		if 32 < self.vkCode < 128:
 			return unichr(self.vkCode).lower()
+		if self.vkCode == vkCodes.VK_PACKET:
+			# Unicode character from non-keyboard input.
+			return unichr(self.scanCode)
 		vkChar = winUser.user32.MapVirtualKeyExW(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
 		if vkChar>0:
 			if vkChar == 43: # "+"

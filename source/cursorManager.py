@@ -1,6 +1,6 @@
 #cursorManager.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -98,7 +98,7 @@ class CursorManager(baseObject.ScriptableObject):
 		This must be called before the cursor manager functionality can be used.
 		It is normally called by L{__init__} or L{initOverlayClass}.
 		"""
-		self._lastSelectionMovedStart=False
+		self.isTextSelectionAnchoredAtStart=True
 
 	def _get_selection(self):
 		return self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -111,12 +111,19 @@ class CursorManager(baseObject.ScriptableObject):
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
 		oldInfo=self.makeTextInfo(posConstant)
 		info=oldInfo.copy()
-		info.collapse(end=not self._lastSelectionMovedStart)
-		if not self._lastSelectionMovedStart and not oldInfo.isCollapsed:
+		info.collapse(end=self.isTextSelectionAnchoredAtStart)
+		if self.isTextSelectionAnchoredAtStart and not oldInfo.isCollapsed:
 			info.move(textInfos.UNIT_CHARACTER,-1)
 		if posUnit is not None:
+			# expand and collapse to ensure that we are aligned with the end of the intended unit
 			info.expand(posUnit)
-			info.collapse(end=posUnitEnd)
+			try:
+				info.collapse(end=posUnitEnd)
+			except RuntimeError:
+				# MS Word has a "virtual linefeed" at the end of the document which can cause RuntimeError to be raised.
+				# In this case it can be ignored.
+				# See #7009
+				pass
 			if posUnitEnd:
 				info.move(textInfos.UNIT_CHARACTER,-1)
 		if direction is not None:
@@ -237,7 +244,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if toPosition:
 			newInfo=self.makeTextInfo(toPosition)
 			if oldInfo.isCollapsed:
-				self._lastSelectionMovedStart = newInfo.compareEndPoints(oldInfo, "startToStart") < 0
+				self.isTextSelectionAnchoredAtStart = newInfo.compareEndPoints(oldInfo, "startToStart") >= 0
 		elif unit:
 			# position was not provided, so start from the old selection.
 			newInfo = oldInfo.copy()
@@ -245,14 +252,14 @@ class CursorManager(baseObject.ScriptableObject):
 			if oldInfo.isCollapsed:
 				# Starting a new selection, so set the selection direction
 				# based on the direction of this movement.
-				self._lastSelectionMovedStart = direction < 0
+				self.isTextSelectionAnchoredAtStart = direction > 0
 			# Find the requested unit starting from the active end of the selection.
 			# We can't just move the desired endpoint because this might cause
 			# the end to move before the start in some cases
 			# and some implementations don't support this.
 			# For example, you might shift+rightArrow to select a character in the middle of a word
 			# and then press shift+control+leftArrow to move to the previous word.
-			newInfo.collapse(end=not self._lastSelectionMovedStart)
+			newInfo.collapse(end=self.isTextSelectionAnchoredAtStart)
 			newInfo.move(unit, direction, endPoint="start" if direction < 0 else "end")
 			# Collapse this so we don't have to worry about which endpoint we used here.
 			newInfo.collapse(end=direction > 0)
@@ -260,7 +267,7 @@ class CursorManager(baseObject.ScriptableObject):
 		# Otherwise, newInfo is the collapsed new active endpoint
 		# and we need to set the anchor endpoint.
 		movingSingleEndpoint = toPosition != textInfos.POSITION_ALL
-		if movingSingleEndpoint and self._lastSelectionMovedStart:
+		if movingSingleEndpoint and not self.isTextSelectionAnchoredAtStart:
 			if newInfo.compareEndPoints(oldInfo, "startToEnd") > 0:
 				# We were selecting backwards, but now we're selecting forwards.
 				# For example:
@@ -268,7 +275,7 @@ class CursorManager(baseObject.ScriptableObject):
 				# 2. Shift+leftArrow: selection (0, 1)
 				# 3. Shift+control+rightArrow: next word at 3, so selection (1, 3)
 				newInfo.setEndPoint(oldInfo, "startToEnd")
-				self._lastSelectionMovedStart = False
+				self.isTextSelectionAnchoredAtStart = True
 			else:
 				# We're selecting backwards.
 				# For example:
@@ -283,7 +290,7 @@ class CursorManager(baseObject.ScriptableObject):
 				# 2. Shift+rightArrow: selection (1, 2)
 				# 3. Shift+control+leftArrow: previous word at 0, so selection (0, 1)
 				newInfo.setEndPoint(oldInfo, "endToStart")
-				self._lastSelectionMovedStart = True
+				self.isTextSelectionAnchoredAtStart = False
 			else:
 				# We're selecting forwards.
 				# For example:
@@ -329,18 +336,15 @@ class CursorManager(baseObject.ScriptableObject):
 		line=sel.copy()
 		line.collapse()
 		line.expand(textInfos.UNIT_LINE)
-		compOp="startToStart" if self._lastSelectionMovedStart else "endToStart"
+		compOp="startToStart" if not self.isTextSelectionAnchoredAtStart else "endToStart"
 		if sel.compareEndPoints(line,compOp)>0:
 			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
 
 	def script_selectToEndOfLine(self,gesture):
-		curInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		curInfo.collapse()
-		tempInfo=curInfo.copy()
-		curInfo.expand(textInfos.UNIT_CHARACTER)
-		tempInfo.expand(textInfos.UNIT_LINE)
-		if curInfo.compareEndPoints(tempInfo,"endToEnd")<0:
-			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=1)
+		# #7157: There isn't necessarily a line ending character or insertion point at the end of a line.
+		# Therefore, always allow select to end of line,
+		# even if the caret is already on the last character of the line.
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=1)
 
 	def script_selectToTopOfDocument(self,gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_FIRST)

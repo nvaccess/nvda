@@ -523,6 +523,9 @@ class MSHTML(IAccessible):
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
 
+	def _get_placeholder(self):
+		return self.HTMLAttributes["aria-placeholder"]
+
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False
 		if not IAccessibleObject:
@@ -984,6 +987,10 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
+
+	def event_liveRegionChange(self):
+		# MSHTML live regions are currently handled with custom code in-process
+		pass
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
