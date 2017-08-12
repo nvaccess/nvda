@@ -182,13 +182,13 @@ class Model(AutoPropertyObject):
 		This is the modern protocol, which uses an extended packet to send braille
 		cells. Some displays use an older, simpler protocol. See OldProtocolMixin.
 		"""
-		self._display._sendExtendedPacket(HT_EXTPKT_BRAILLE, "".join(chr(cell) for cell in cells))
+		self._display.sendExtendedPacket(HT_EXTPKT_BRAILLE, "".join(chr(cell) for cell in cells))
 
 
 class OldProtocolMixin(object):
 	def display(self, cells):
 		# TODO: Do we have models with status cells? How to handle these?
-		return self._display._sendPacket(HT_PKT_BRAILLE, [chr(cell) for cell in cells])
+		return self._display.sendPacket(HT_PKT_BRAILLE, [chr(cell) for cell in cells])
 
 
 class TripleActionKeysMixin(object):
@@ -480,7 +480,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			except EnvironmentError:
 				continue
 
-			self._sendPacket(HT_PKT_RESET)
+			self.sendPacket(HT_PKT_RESET)
 			for _i in xrange(3):
 				# An expected response hasn't arrived yet, so wait for it.
 				self._dev.waitForRead(TIMEOUT)
@@ -505,7 +505,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _sendPacket(self, packet_type, data=""):
+	def sendPacket(self, packet_type, data=""):
 		if self.isHid:
 			if self._model:
 				data = self._model.device_id + data
@@ -516,12 +516,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._dev.write(self._model.device_id)
 			self._dev.write(data)
 
-	def _sendExtendedPacket(self, packet_type, data):
+	def sendExtendedPacket(self, packet_type, data):
 		packet = "{length}{ext_type}{data}\x16".format(
 			ext_type=packet_type, data=data,
 			length=chr(len(data) + 1)         # Length is including packet_type
 		)
-		self._sendPacket(HT_PKT_EXTENDED, packet)
+		self.sendPacket(HT_PKT_EXTENDED, packet)
 
 	def _sendHidPacket(self, hid_packet_type, ser_packet_type, data=""):
 		assert(self.isHid)
