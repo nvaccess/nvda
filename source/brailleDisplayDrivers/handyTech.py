@@ -201,7 +201,14 @@ class OldProtocolMixin(object):
 		return self._display.sendPacket(HT_PKT_BRAILLE, [chr(cell) for cell in cells])
 
 
-class TripleActionKeysMixin(object):
+class AtcMixin(object):
+	def __init__(self, display):
+		super(AtcMixin, self).__init__(display)
+		log.debug("Enabling ATC")
+		display.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, True)
+
+
+class TripleActionKeysMixin(AutoPropertyObject):
 	"""Triple action keys
 
 	Most Handy Tech models have so called triple action keys. This keys are
@@ -210,7 +217,7 @@ class TripleActionKeysMixin(object):
 	"""
 	def _get_keys(self):
 		"Add the triple action keys to the keys property"
-		keys = super(TripleActionKeysMixin, self).get_keys()
+		keys = super(TripleActionKeysMixin, self).keys
 		keys.update({
 			0x0C: "leftTakTop",
 			0x14: "leftTakBottom",
@@ -220,7 +227,7 @@ class TripleActionKeysMixin(object):
 		return keys
 
 
-class JoystickMixin(object):
+class JoystickMixin(AutoPropertyObject):
 	"""Joystick
 
 	Some Handy Tech models have a joystick, which can be moved left, right, up,
@@ -229,7 +236,7 @@ class JoystickMixin(object):
 
 	def _get_keys(self):
 		"Add the joystick keys to the keys property"
-		keys = super(JoystickMixin, self).get_keys()
+		keys = super(JoystickMixin, self).keys
 		keys.update({
 			0x74: "joystickLeft",
 			0x75: "joystickRight",
@@ -240,7 +247,7 @@ class JoystickMixin(object):
 		return keys
 
 # pylint: disable=C0111
-class ModularEvolution(TripleActionKeysMixin, Model):
+class ModularEvolution(AtcMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular Evolution"
 
 	def _get_name(self):
@@ -263,19 +270,19 @@ class EasyBraille(OldProtocolMixin, Model):
 	genericName = name = "Easy Braille"
 
 
-class ActiveBraille(TripleActionKeysMixin, Model):
+class ActiveBraille(AtcMixin, TripleActionKeysMixin, Model):
 	device_id = MODEL_ACTIVE_BRAILLE
 	num_cells = 40
 	genericName = name = 'Active Braille'
 
 
-class Actilino(JoystickMixin, TripleActionKeysMixin, Model):
+class Actilino(AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
 	device_id = MODEL_ACTILINO
 	num_cells = 16
 	genericName = name = "Actilino"
 
 
-class ActiveStar40(TripleActionKeysMixin, Model):
+class ActiveStar40(AtcMixin, TripleActionKeysMixin, Model):
 	device_id = MODEL_ACTIVE_STAR_40
 	num_cells = 40
 	name = "Active Star 40"
@@ -288,7 +295,7 @@ class BrailleWave(OldProtocolMixin, Model):
 	genericName = name = "Braille Wave"
 
 	def _get_keys(self):
-		keys = super(BrailleWave, self).keys	# pylint: disable=E1101
+		keys = super(BrailleWave, self).keys
 		keys.update({
 			0x04: "left",
 			0x08: "right",
@@ -520,6 +527,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.close()
 
 	def sendPacket(self, packet_type, data=""):
+		if type(data) == bool or type(data) == int:
+			data = chr(data)
 		if self.isHid:
 			if self._model:
 				data = self._model.device_id + data
@@ -531,6 +540,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.write(data)
 
 	def sendExtendedPacket(self, packet_type, data):
+		if type(data) == bool or type(data) == int:
+			data = chr(data)
 		packet = "{length}{ext_type}{data}\x16".format(
 			ext_type=packet_type, data=data,
 			length=chr(len(data) + 1)         # Length is including packet_type
