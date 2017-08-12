@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2008-2017 NV Access Limited, Bram Duvigneau, Leonard de Ruijter
-
+"Braille display driver for Handy Tech braille displays"
 from collections import OrderedDict
 from cStringIO import StringIO
 import serial # pylint: disable=E0401
@@ -53,6 +53,7 @@ BLUETOOTH_NAMES = {
 }
 
 # Model identifiers
+# pylint: disable=C0103
 MODEL_BRAILLE_WAVE = "\x05"
 MODEL_MODULAR_EVOLUTION_64 = "\x36"
 MODEL_MODULAR_EVOLUTION_88 = "\x38"
@@ -108,6 +109,7 @@ KEY_SPACES = (KEY_LEFT_SPACE, KEY_RIGHT_SPACE,)
 
 
 class Model(AutoPropertyObject):
+	"Extend from this base class to define model specific behavior."
 	#: Device identifier, used in the protocol to identify the device
 	#: @type: string
 	device_id = None
@@ -132,6 +134,7 @@ class Model(AutoPropertyObject):
 		super(Model, self).__init__()
 		self._display = display
 
+	# pylint: disable=R0201
 	def _get_keys(self):
 		"""Basic keymap
 
@@ -182,11 +185,18 @@ class Model(AutoPropertyObject):
 		This is the modern protocol, which uses an extended packet to send braille
 		cells. Some displays use an older, simpler protocol. See OldProtocolMixin.
 		"""
-		self._display.sendExtendedPacket(HT_EXTPKT_BRAILLE, "".join(chr(cell) for cell in cells))
+		self._display.sendExtendedPacket(HT_EXTPKT_BRAILLE,
+			"".join(chr(cell) for cell in cells))
 
 
 class OldProtocolMixin(object):
+	"Mixin for displays using an older protocol to send braille cells"
 	def display(self, cells):
+		"""Write cells to the display according to the old protocol
+
+		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
+		followed by the cells. No model ID or lenghth are included.
+		"""
 		# TODO: Do we have models with status cells? How to handle these?
 		return self._display.sendPacket(HT_PKT_BRAILLE, [chr(cell) for cell in cells])
 
@@ -199,6 +209,7 @@ class TripleActionKeysMixin(object):
 	at the bottom and in the middle.
 	"""
 	def _get_keys(self):
+		"Add the triple action keys to the keys property"
 		keys = super(TripleActionKeysMixin, self).get_keys()
 		keys.update({
 			0x0C: "leftTakTop",
@@ -212,10 +223,12 @@ class TripleActionKeysMixin(object):
 class JoystickMixin(object):
 	"""Joystick
 
-	Some Handy Tech models have a joystick, which can be moved left, right, up, down or clicked on the center.
+	Some Handy Tech models have a joystick, which can be moved left, right, up,
+	down or clicked on the center.
 	"""
 
 	def _get_keys(self):
+		"Add the joystick keys to the keys property"
 		keys = super(JoystickMixin, self).get_keys()
 		keys.update({
 			0x74: "joystickLeft",
@@ -226,6 +239,7 @@ class JoystickMixin(object):
 		})
 		return keys
 
+# pylint: disable=C0111
 class ModularEvolution(TripleActionKeysMixin, Model):
 	genericName = "Modular Evolution"
 
@@ -524,7 +538,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self.sendPacket(HT_PKT_EXTENDED, packet)
 
 	def _sendHidPacket(self, hid_packet_type, ser_packet_type, data=""):
-		assert(self.isHid)
+		assert self.isHid
 		self._dev.write(HT_HID_RPT_InData+hid_packet_type+ser_packet_type+data)
 
 	def _handleKeyRelease(self):
@@ -532,18 +546,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			return
 		# The first key released executes the key combination.
 		try:
-			inputCore.manager.executeGesture(InputGesture(self._model, self._keysDown, self._brailleInput))
+			inputCore.manager.executeGesture(
+				InputGesture(self._model, self._keysDown, self._brailleInput))
 		except inputCore.NoInputGestureAction:
 			pass
-		# Any further releases are just the rest of the keys in the combination being released,
-		# so they should be ignored.
+		# Any further releases are just the rest of the keys in the combination
+		# being released, so they should be ignored.
 		self._ignoreKeyReleases = True
 
+	# pylint: disable=R0912
+	# Pylint complains about many branches, might be worth refactoring
 	def _onReceive(self, data):
 		if self.isHid:
 			# data contains the entire packet.
 			stream = StringIO(data)
-			hid_packet_type = data[1]
 			ser_packet_type = data[2]
 			# Skip the header, so reading the stream will only give the rest of the data
 			stream.seek(3)
@@ -569,7 +585,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		elif ser_packet_type == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
-			assert stream.read(1) == "\x16"    # It seems packets are terminated with \x16
+			assert stream.read(1) == "\x16"	# It seems packets are terminated with \x16
 			ext_packet_type = packet[0]
 			if ext_packet_type == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command, do nothing
@@ -588,7 +604,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					self._keysDown.add(key)
 			else:
 				# Unknown extended packet, log it
-				log.warning("Unhandled extended packet of type %r: %r" % (ext_packet_type, packet))
+				log.warning("Unhandled extended packet of type %r: %r" %
+					(ext_packet_type, packet))
 		else:
 			# Unknown packet type, log it
 			log.warning("Unhandled packet of type %r" % ser_packet_type)
@@ -599,8 +616,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._model.display(cells)
 
 	scriptCategory = SCRCAT_BRAILLE
-	
-	def script_toggleBrailleInput(self, gesture):
+
+	def script_toggleBrailleInput(self, _gesture):
 		self._brailleInput = not self._brailleInput
 		if self._brailleInput:
 			ui.message(_('Braille input enabled'))
@@ -620,8 +637,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"globalCommands.GlobalCommands": {
 			"braille_routeTo": ("br(handyTech):routing",),
 			"braille_scrollBack": (
-				"br(handytech):leftSpace", "br(handytech):leftTakTop", "br(handytech):rightTakTop",
-				"br(handytech):b3", "br(handytech):left",
+				"br(handytech):leftSpace", "br(handytech):leftTakTop",
+				"br(handytech):rightTakTop", "br(handytech):b3", "br(handytech):left",
 				"br(handytech.basicbraille):b3",),
 			"braille_previousLine": ("br(handytech):b4",
 				"br(handytech.basicbraille):b2", "br(handytech.basicbraille):b5",),
@@ -632,9 +649,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"br(handytech):rightTakBottom", "br(handytech):b6", "br(handytech):right",
 				"br(handytech.basicbraille):b6",),
 			"braille_toggleTether": ("br(handytech):b2",),
-			"kb:shift+tab": ("br(handytech):leftTakTop+leftTakBottom", 
+			"kb:shift+tab": ("br(handytech):leftTakTop+leftTakBottom",
 			"br(handytech):escape",),
-			"kb:tab": ("br(handytech):rightTakTop+rightTakBottom",  
+			"kb:tab": ("br(handytech):rightTakTop+rightTakBottom",
 				"br(handytech):return",),
 			"kb:enter": (
 				"br(handytech):leftTakTop+leftTakBottom+rightTakTop+rightTakBottom",
@@ -656,7 +673,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	})
 
 
-# pylint: disable=W0223
+# pylint: disable=W0223, C0301
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
 	source = BrailleDisplayDriver.name
@@ -689,4 +706,3 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			if key in KEY_DOTS:
 				dots |= 1 << (KEY_DOTS[key] - 1)
 		return dots
-
