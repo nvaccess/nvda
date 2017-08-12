@@ -243,7 +243,7 @@ class ModularEvolution64(ModularEvolution):
 	num_cells = 64
 
 
-class EasyBraille(OldProtocolMixin, TripleActionKeysMixin, Model):
+class EasyBraille(OldProtocolMixin, Model):
 	device_id = MODEL_EASY_BRAILLE
 	num_cells = 40
 	genericName = name = "Easy Braille"
