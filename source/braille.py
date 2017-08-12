@@ -1969,7 +1969,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	def _get_identifiers(self):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
 		if self.model:
-			ids.append = [u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id)]
+			ids.extend([u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id)])
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -1989,12 +1989,21 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			return display
 		return super(BrailleDisplayGesture, self).scriptableObject
 
+	#: Compiled regular expression to match an identifier 
+	#: including an optional model name
+	#: @type: RegexObject
+	ID_PARTS_REGEX = re.compile(r"br\((\w+)(\.(\w+))?\):(\w+)", re.U)
+
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
-		idParts = re.findall(r"br\((\w+)\.?(\w+)?\):(\w+)", identifier, re.U)
-		if idParts[0][1]: # The identifier contains a model name
-			return handler.display.description, ": ".join(idParts[0][1:])
+		idParts = cls.ID_PARTS_REGEX.search(identifier)
+		modelName = idParts.group(3)
+		key = idParts.group(4)
+		if modelName: # The identifier contains a model name
+			return handler.display.description, "{modelName}: {key}".format(
+				modelName=modelName, key=key
+			)
 		else:
-			return handler.display.description, idParts[0][2]
+			return handler.display.description, key
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
