@@ -14,7 +14,7 @@ import braille
 import brailleInput
 import inputCore
 import ui
-from baseObject import ScriptableObject
+from baseObject import ScriptableObject, AutoPropertyObject
 from globalCommands import SCRCAT_BRAILLE
 from logHandler import log
 
@@ -107,18 +107,36 @@ KEY_DOTS = {
 KEY_SPACES = (KEY_LEFT_SPACE, KEY_RIGHT_SPACE,)
 
 
-class Model(object):
-	# Device identifier, used in the protocol to identify the device
+class Model(AutoPropertyObject):
+	#: Device identifier, used in the protocol to identify the device
+	#: @type: string
 	device_id = None
 
+	#: A reference to the driver instance
+	#: @type; BrailleDisplayDriver
+	_display = None
+
+	#: A generic name that identifies the model/series, used in gesture identifiers
+	#: @type: string
+	genericName = None
+
+	#: Specific name of this model
+	#: @type: string
+	name = None
+
+	#: Number of braille cells
+	#: @type: int
+	num_cells = 0
+
 	def __init__(self, display):
+		super(Model, self).__init__()
 		self._display = display
 
-	def get_keys(self):
+	def _get_keys(self):
 		"""Basic keymap
 
 		This returns a basic keymap with sensible defaults for all devices.
-		Subclasses should override this method to add model specific keys, 
+		Subclasses should override this method to add model specific keys,
 		or relabel keys. Even if a key isn't available on all devices, add it here
 		if it would make sense for most devices.
 		"""
@@ -158,14 +176,29 @@ class Model(object):
 			0x1E: "n9",
 		})
 
+	def display(self, cells):
+		"""Display cells on the braille display
+
+		This is the modern protocol, which uses an extended packet to send braille
+		cells. Some displays use an older, simpler protocol. See OldProtocolMixin.
+		"""
+		self._display._sendExtendedPacket(HT_EXTPKT_BRAILLE, "".join(chr(cell) for cell in cells))
+
+
+class OldProtocolMixin(object):
+	def display(self, cells):
+		# TODO: Do we have models with status cells? How to handle these?
+		return self._display._sendPacket(HT_PKT_BRAILLE, [chr(cell) for cell in cells])
+
+
 class TripleActionKeysMixin(object):
 	"""Triple action keys
 
-	Most Handy Tech models have so called triple action keys. This keys are 
-	on the left and right side of the cells and can be pressed at the top, 
+	Most Handy Tech models have so called triple action keys. This keys are
+	on the left and right side of the cells and can be pressed at the top,
 	at the bottom and in the middle.
 	"""
-	def get_keys(self):
+	def _get_keys(self):
 		keys = super(TripleActionKeysMixin, self).get_keys()
 		keys.update({
 			0x0C: "leftTakTop",
@@ -182,7 +215,7 @@ class JoystickMixin(object):
 	Some Handy Tech models have a joystick, which can be moved left, right, up, down or clicked on the center.
 	"""
 
-	def get_keys(self):
+	def _get_keys(self):
 		keys = super(JoystickMixin, self).get_keys()
 		keys.update({
 			0x74: "joystickLeft",
@@ -194,30 +227,32 @@ class JoystickMixin(object):
 		return keys
 
 class ModularEvolution(TripleActionKeysMixin, Model):
-	genericName="Modular Evolution"
+	genericName = "Modular Evolution"
+
+	def _get_name(self):
+		return '{name} {cells}'.format(name=self.genericName, cells=self.num_cells)
 
 
 class ModularEvolution88(ModularEvolution):
 	device_id = MODEL_MODULAR_EVOLUTION_88
 	num_cells = 88
-	name = "Modular Evolution 88"
 
 
 class ModularEvolution64(ModularEvolution):
 	device_id = MODEL_MODULAR_EVOLUTION_64
 	num_cells = 64
-	name = "Modular Evolution 64"
 
-class EasyBraille(TripleActionKeysMixin, Model):
+
+class EasyBraille(OldProtocolMixin, TripleActionKeysMixin, Model):
 	device_id = MODEL_EASY_BRAILLE
 	num_cells = 40
-	genericName= name = "Easy Braille"
+	genericName = name = "Easy Braille"
 
 
 class ActiveBraille(TripleActionKeysMixin, Model):
 	device_id = MODEL_ACTIVE_BRAILLE
 	num_cells = 40
-	genericName = name = "Active Braille"
+	genericName = name = 'Active Braille'
 
 
 class Actilino(JoystickMixin, TripleActionKeysMixin, Model):
@@ -233,13 +268,13 @@ class ActiveStar40(TripleActionKeysMixin, Model):
 	genericName = "Active Star"
 
 
-class BrailleWave(Model):
+class BrailleWave(OldProtocolMixin, Model):
 	device_id = MODEL_BRAILLE_WAVE
 	num_cells = 40
 	genericName = name = "Braille Wave"
 
-	def get_keys(self):
-		keys = super(BrailleWave, self).get_keys()
+	def _get_keys(self):
+		keys = super(BrailleWave, self).keys	# pylint: disable=E1101
 		keys.update({
 			0x04: "left",
 			0x08: "right",
@@ -253,12 +288,14 @@ class BrailleWave(Model):
 class BasicBraille(Model):
 	genericName = "Basic Braille"
 
+	def _get_name(self):
+		return '{name} {cells}'.format(name=self.genericName, cells=self.num_cells)
+
 
 def basic_braille_factory(cells, device_id):
 	return type("BasicBraille{cells}".format(cells=cells), (BasicBraille,), {
 		"device_id": device_id,
 		"cells": cells,
-		"name": "Basic Braille {cells}".format(cells=cells),
 	})
 
 BasicBraille16 = basic_braille_factory(16, MODEL_BASIC_BRAILLE_16)
@@ -271,41 +308,43 @@ BasicBraille80 = basic_braille_factory(80, MODEL_BASIC_BRAILLE_80)
 BasicBraille160 = basic_braille_factory(160, MODEL_BASIC_BRAILLE_160)
 
 
-class BrailleStar(TripleActionKeysMixin, Model):
+class BrailleStar(OldProtocolMixin, TripleActionKeysMixin, Model):
 	genericName = "Braille Star"
+
+	def _get_name(self):
+		return '{name} {cells}'.format(name=self.genericName, cells=self.num_cells)
 
 
 class BrailleStar40(BrailleStar):
 	device_id = MODEL_BRAILLE_STAR_40
 	cells = 40
-	name = "Braille Star 40"
 
 
 class BrailleStar80(BrailleStar):
 	device_id = MODEL_BRAILLE_STAR_80
 	cells = 80
-	name = "Braille Star 80"
 
-class Modular(TripleActionKeysMixin, Model):
+
+class Modular(OldProtocolMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular"
+
+	def _get_name(self):
+		return '{name} {cells}'.format(name=self.genericName, cells=self.num_cells)
 
 
 class Modular20(Modular):
 	device_id = MODEL_MODULAR_20
 	cells = 20
-	name = "Modular 20"
 
 
 class Modular40(Modular):
 	device_id = MODEL_MODULAR_40
 	cells = 40
-	name = "Modular 40"
 
 
 class Modular80(Modular):
 	device_id = MODEL_MODULAR_80
 	cells = 80
-	name = "Modular 80"
 
 
 class Bookworm(Model):
@@ -549,7 +588,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					self._keysDown.add(key)
 			else:
 				# Unknown extended packet, log it
-				log.debug("Extended packet of type %r: %r" % (ext_packet_type, packet))
+				log.warning("Unhandled extended packet of type %r: %r" % (ext_packet_type, packet))
 		else:
 			# Unknown packet type, log it
 			log.warning("Unhandled packet of type %r" % ser_packet_type)
@@ -557,7 +596,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def display(self, cells):
 		# cells will already be padded up to numCells.
-		self._sendExtendedPacket(HT_EXTPKT_BRAILLE, "".join(chr(cell) for cell in cells))
+		self._model.display(cells)
 
 	scriptCategory = SCRCAT_BRAILLE
 	
@@ -581,12 +620,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"globalCommands.GlobalCommands": {
 			"braille_routeTo": ("br(handyTech):routing",),
 			"braille_scrollBack": (
-				"br(handytech):leftSpace", "br(handytech):leftTakTop", "br(handytech):rightTakTop", 
+				"br(handytech):leftSpace", "br(handytech):leftTakTop", "br(handytech):rightTakTop",
 				"br(handytech):b3", "br(handytech):left",),
 			"braille_previousLine": ("br(handytech):b4",),
 			"braille_nextLine": ("br(handytech):b5",),
 			"braille_scrollForward": (
-				"br(handytech):rightSpace", "br(handytech):leftTakBottom", 
+				"br(handytech):rightSpace", "br(handytech):leftTakBottom",
 				"br(handytech):rightTakBottom", "br(handytech):b6", "br(handytech):right"),
 			"braille_toggleTether": ("br(handytech):b2",),
 			"kb:shift+tab": ("br(handytech):leftTakTop+leftTakBottom", 
@@ -620,7 +659,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, model, keys, isBrailleInput=False):
 		super(InputGesture, self).__init__()
-		self.model=model.genericName
+		self.model = model.genericName
 		self.keys = set(keys)
 
 		self.keyNames = names = []
@@ -634,7 +673,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				names.append("routing")
 			elif not isBrailleInput:
 				try:
-					names.append(model.get_keys()[key])
+					names.append(model.keys[key])
 				except KeyError:
 					log.debugWarning("Unknown key %d" % key)
 
