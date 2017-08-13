@@ -68,7 +68,7 @@ class CustomCheckableList(wx.CheckListBox):
 		from IAccessibleHandler import accPropServices
 		#Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
-		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[PROPID_ACC_ROLE,PROPID_ACC_STATE]), c_int(2), server.QueryInterface(IAccPropServer), 1)
+		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[PROPID_ACC_ROLE,PROPID_ACC_STATE]), c_int(2), server, 1)
 		#Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
 		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
 
