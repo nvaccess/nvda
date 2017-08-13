@@ -280,8 +280,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			import ui
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
-			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 			elif msg == self.WM_DISPLAYCHANGE:
+				# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 				if lParam%0x10000 > lParam/0x10000:
 					#Translators: The screen is oriented so that it is wider than it is tall.
 					ui.message(_("Landscape" ))
