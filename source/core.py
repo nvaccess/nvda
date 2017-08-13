@@ -298,9 +298,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			sps = winKernel.SYSTEM_POWER_STATUS()
 			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is self.UNKNOWN_BATTERY_STATUS:
 				return
+			#This cache is Necessary because sometimes this event double fires, and  if the battery decreases by 3 percent, this event occurs.
 			if sps.BatteryFlag & self.NO_SYSTEM_BATTERY or sps.ACLineStatus == self.oldBatteryStatus:
 				return
-			#Necessary because sometimes this event double fires, and  if the battery decreases by 3 percent, this event occurs.
 			MessageWindow.oldBatteryStatus = sps.ACLineStatus
 			if  initializing:
 				return #We don't actually want to output anything, just initialize the cache.
