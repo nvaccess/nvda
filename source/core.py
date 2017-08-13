@@ -278,11 +278,13 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			import ui
+			import winUser
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == self.WM_DISPLAYCHANGE:
 				# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
-				if lParam%0x10000 > lParam/0x10000:
+				#The low word is the width and hiword is height.
+				if winUser.LOWORD(lParam) > winUser.HIWORD(lParam):
 					#Translators: The screen is oriented so that it is wider than it is tall.
 					ui.message(_("Landscape" ))
 				else:
