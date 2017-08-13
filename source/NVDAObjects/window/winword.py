@@ -390,6 +390,7 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 	@property
 	def label(self):
 		text=self.collectionItem.text
+		# Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
 		return _(u"spelling: {text}").format(text=text)
 
 class WinWordCollectionQuicknavIterator(object):
