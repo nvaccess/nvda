@@ -274,7 +274,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 
 		def __init__(self, windowName=None):
 			super(MessageWindow, self).__init__(windowName)
-			self.handlePowerStatusChange()
+			self.handlePowerStatusChange(initializing=True)
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
 			import ui
@@ -289,7 +289,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 					#Translators: The screen is oriented in such a way that the height is taller than it is wide.
 					ui.message(_("Portrait"))
 
-		def handlePowerStatusChange(self):
+		def handlePowerStatusChange(self, initializing=False):
 			#Mostly taken from script_say_battery_status, but modified.
 			import ui
 			import winKernel
@@ -300,8 +300,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				return
 			#Necessary because sometimes this event double fires, and  if the battery decreases by 3 percent, this event occurs.
 			MessageWindow.oldBatteryStatus = sps.ACLineStatus
-			if MessageWindow.hasBeenInitialized == False:
-				MessageWindow.hasBeenInitialized = True
+			if  initializing:
 				return #We don't actually want to output anything, just initialize the cache.
 			if sps.ACLineStatus & self.AC_ONLINE:
 				#Translators: Reported when the battery is plugged in, and now is charging.
