@@ -112,7 +112,7 @@ class Model(AutoPropertyObject):
 	"Extend from this base class to define model specific behavior."
 	#: Device identifier, used in the protocol to identify the device
 	#: @type: string
-	device_id = None
+	deviceId = None
 
 	#: A reference to the driver instance
 	#: @type; BrailleDisplayDriver
@@ -128,7 +128,7 @@ class Model(AutoPropertyObject):
 
 	#: Number of braille cells
 	#: @type: int
-	num_cells = 0
+	numCells = 0
 
 	def __init__(self, display):
 		super(Model, self).__init__()
@@ -251,47 +251,47 @@ class ModularEvolution(AtcMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular Evolution"
 
 	def _get_name(self):
-		return '{name} {cells}'.format(name=self.genericName, cells=self.num_cells)
+		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
 
 
 class ModularEvolution88(ModularEvolution):
-	device_id = MODEL_MODULAR_EVOLUTION_88
-	num_cells = 88
+	deviceId = MODEL_MODULAR_EVOLUTION_88
+	numCells = 88
 
 
 class ModularEvolution64(ModularEvolution):
-	device_id = MODEL_MODULAR_EVOLUTION_64
-	num_cells = 64
+	deviceId = MODEL_MODULAR_EVOLUTION_64
+	numCells = 64
 
 
 class EasyBraille(OldProtocolMixin, Model):
-	device_id = MODEL_EASY_BRAILLE
-	num_cells = 40
+	deviceId = MODEL_EASY_BRAILLE
+	numCells = 40
 	genericName = name = "Easy Braille"
 
 
 class ActiveBraille(AtcMixin, TripleActionKeysMixin, Model):
-	device_id = MODEL_ACTIVE_BRAILLE
-	num_cells = 40
+	deviceId = MODEL_ACTIVE_BRAILLE
+	numCells = 40
 	genericName = name = 'Active Braille'
 
 
 class Actilino(AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
-	device_id = MODEL_ACTILINO
-	num_cells = 16
+	deviceId = MODEL_ACTILINO
+	numCells = 16
 	genericName = name = "Actilino"
 
 
 class ActiveStar40(AtcMixin, TripleActionKeysMixin, Model):
-	device_id = MODEL_ACTIVE_STAR_40
-	num_cells = 40
+	deviceId = MODEL_ACTIVE_STAR_40
+	numCells = 40
 	name = "Active Star 40"
 	genericName = "Active Star"
 
 
 class BrailleWave(OldProtocolMixin, Model):
-	device_id = MODEL_BRAILLE_WAVE
-	num_cells = 40
+	deviceId = MODEL_BRAILLE_WAVE
+	numCells = 40
 	genericName = name = "Braille Wave"
 
 	def _get_keys(self):
@@ -310,13 +310,13 @@ class BasicBraille(Model):
 	genericName = "Basic Braille"
 
 	def _get_name(self):
-		return '{name} {cells}'.format(name=self.genericName, cells=self.num_cells)
+		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
 
 
-def basic_braille_factory(cells, device_id):
-	return type("BasicBraille{cells}".format(cells=cells), (BasicBraille,), {
-		"device_id": device_id,
-		"cells": cells,
+def basic_braille_factory(numCells, deviceId):
+	return type("BasicBraille{cells}".format(cells=numCells), (BasicBraille,), {
+		"deviceId": deviceId,
+		"numCells": numCells,
 	})
 
 BasicBraille16 = basic_braille_factory(16, MODEL_BASIC_BRAILLE_16)
@@ -333,16 +333,16 @@ class BrailleStar(OldProtocolMixin, TripleActionKeysMixin, Model):
 	genericName = "Braille Star"
 
 	def _get_name(self):
-		return '{name} {cells}'.format(name=self.genericName, cells=self.num_cells)
+		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
 
 
 class BrailleStar40(BrailleStar):
-	device_id = MODEL_BRAILLE_STAR_40
+	deviceId = MODEL_BRAILLE_STAR_40
 	cells = 40
 
 
 class BrailleStar80(BrailleStar):
-	device_id = MODEL_BRAILLE_STAR_80
+	deviceId = MODEL_BRAILLE_STAR_80
 	cells = 80
 
 
@@ -350,27 +350,27 @@ class Modular(OldProtocolMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular"
 
 	def _get_name(self):
-		return '{name} {cells}'.format(name=self.genericName, cells=self.num_cells)
+		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
 
 
 class Modular20(Modular):
-	device_id = MODEL_MODULAR_20
+	deviceId = MODEL_MODULAR_20
 	cells = 20
 
 
 class Modular40(Modular):
-	device_id = MODEL_MODULAR_40
+	deviceId = MODEL_MODULAR_40
 	cells = 40
 
 
 class Modular80(Modular):
-	device_id = MODEL_MODULAR_80
+	deviceId = MODEL_MODULAR_80
 	cells = 80
 
 
 class Bookworm(Model):
 	# TODO: uses a different protocol
-	device_id = MODEL_BOOKWORM
+	deviceId = MODEL_BOOKWORM
 	cells = 8
 	genericName = name = "Bookworm"
 
@@ -381,7 +381,7 @@ def _all_subclasses(cls):
 		for g in _all_subclasses(s)]
 
 MODELS = {
-	m.device_id: m for m in _all_subclasses(Model) if hasattr(m, 'device_id')
+	m.deviceId: m for m in _all_subclasses(Model) if hasattr(m, 'deviceId')
 }
 
 
@@ -531,12 +531,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			data = chr(data)
 		if self.isHid:
 			if self._model:
-				data = self._model.device_id + data
-			self._sendHidPacket(chr(len(packet_type)+len(data)), packet_type, data)
+				data = self._model.deviceId + data
+			self._sendHidPacket(packet_type, data)
 		else:
 			self._dev.write(packet_type)
 			if self._model and not packet_type == HT_PKT_BRAILLE:
-				self._dev.write(self._model.device_id)
+				self._dev.write(self._model.deviceId)
 			self._dev.write(data)
 
 	def sendExtendedPacket(self, packet_type, data):
@@ -548,9 +548,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		)
 		self.sendPacket(HT_PKT_EXTENDED, packet)
 
-	def _sendHidPacket(self, hid_packet_type, ser_packet_type, data=""):
+	def _sendHidPacket(self, ser_packet_type, data=""):
 		assert self.isHid
-		self._dev.write(HT_HID_RPT_InData+hid_packet_type+ser_packet_type+data)
+		self._dev.write(HT_HID_RPT_InData+chr(len(data)+1)+ser_packet_type+data)
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -585,7 +585,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				log.debug("Unknown model: %r" % model_id)
 				return
 			self._model = MODELS.get(model_id)(self)
-			self.numCells = self._model.num_cells
+			self.numCells = self._model.numCells
 
 		if ser_packet_type == HT_PKT_OK:
 			pass
