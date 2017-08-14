@@ -7,9 +7,9 @@
 import wx
 from wx.lib.mixins import listctrl as listmix
 from gui.accPropServer import *
-from win32con import EVENT_OBJECT_STATECHANGE
 import oleacc
 import winUser
+from winUser import EVENT_OBJECT_STATECHANGE
 import comtypes
 from ctypes import *
 
