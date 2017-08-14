@@ -202,6 +202,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [editableText]
 	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)
+
+[languageDetection]
+	preferredLanguages = string_list
 """).format(latestSchemaVersion=latestSchemaVersion)
 
 #: The configuration specification
