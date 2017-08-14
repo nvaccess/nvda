@@ -13,6 +13,8 @@ import sys
 # Ideally, all of these should get translator comments,
 # but this is not realistic right now.
 # A message should be removed from here once a translator comment is added for it.
+# Note that checkPot will fail with an unexpected success
+# if a translator comment is found for one of these messages.
 EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Focus mode',
 	'%s landmark',
@@ -107,6 +109,10 @@ def checkPot(fileName):
 	"""Returns the number of errors.
 	Also prints error messages and a summary to standard output.
 	"""
+	# This function reads a gettext translation template (pot) line by line,
+	# parsing only the content it needs.
+	# See this link for info about the format of gettext translation files:
+	# https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html
 	errors = 0
 	expectedErrors = 0
 	unexpectedSuccesses = 0
@@ -123,18 +129,22 @@ def checkPot(fileName):
 				# Header.
 				continue
 			if line.startswith("#. Translators: "):
+				# This is a comment for translators.
 				# Example: "#. Translators: a message reported in the SetRowHeader script for Microsoft Word."
 				hasComment = True
 				continue
 			if line.startswith("#: "):
+				# This specifies the files and line numbers where this message was found.
 				# Example: "#: NVDAObjects\window\winword.py:1322"
 				# Strip the "#: " prefix (3 chars).
 				sourceLines.append(line[3:])
 				continue
 			if line.startswith('msgctxt "'):
+				# This is the context used to disambiguate messages.
 				context = getStringFromLine(line)
 				continue
 			if line.startswith("msgid "):
+				# This is the untranslated message.
 				# Get the message.
 				if line == 'msgid ""':
 					# Multi-line msgid.
@@ -142,6 +152,7 @@ def checkPot(fileName):
 					msgid = ""
 					for line in pot:
 						if line.startswith("msgstr "):
+							# This begins the translated message, so msgid has ended.
 							break
 						msgid += getStringFromLine(line)
 				else:
