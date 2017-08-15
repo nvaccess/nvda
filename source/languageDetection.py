@@ -112,9 +112,9 @@ def getScriptCode(chr):
 	characterUnicodeCode = ord(chr)
 	# Number should respect preferred language setting
 	# FullWidthNumber is in Common category, however, it indicates Japanese language context
-	if 0x30 < characterUnicodeCode < 0x39:
+	if 0x30 <= characterUnicodeCode <= 0x39:
 		return "Number"
-	elif 0xff10 < characterUnicodeCode < 0xff19:
+	elif 0xff10 <= characterUnicodeCode <= 0xff19:
 		return "FullWidthNumber"
 	while( mEnd >= mStart ):
 		midPoint = (mStart + mEnd ) >> 1
