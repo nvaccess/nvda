@@ -127,7 +127,7 @@ def getLangID(scriptName ):
 	@rtype: string"""
 	# we are using loop during search to maintain priority
 	for priorityLanguage, priorityScript, priorityDescription in  languagePriorityListSpec:
-		log.debugWarning("priorityLanguage {}, priorityScript {}, priorityDescription {}".format(priorityLanguage, priorityScript, priorityDescription )  )
+		log.debugWarning(u"priorityLanguage {}, priorityScript {}, priorityDescription {}".format(priorityLanguage, priorityScript, priorityDescription )  )
 		if scriptName in priorityScript: 
 			return priorityLanguage
 	#language not found in the languagePriorityListSpec, so check if default language can be applied for the script
@@ -220,7 +220,7 @@ def detectLanguage(text, preferredLanguage =None):
 		if isinstance(item,ScriptChangeCommand):
 			scriptCode = item.scriptCode
 		else:
-			log.debugWarning("script: {} for text {} ".format( scriptCode  , unicode(item).encode("utf-8")  ) )
+			log.debugWarning(u"script: {} for text {} ".format( scriptCode , unicode(item) ) )
 
 	if preferredLanguage:
 		scriptIDForPreferredLanguage = getScriptIDFromLangID( preferredLanguage )
@@ -258,6 +258,6 @@ def detectLanguage(text, preferredLanguage =None):
 		if isinstance(item,LangChangeCommand):
 			tempLanguageCode = item.lang
 		else:
-			log.debugWarning("language: {} for text {} ".format( tempLanguageCode , unicode(item).encode("utf-8")  ) )
+			log.debugWarning(u"language: {} for text {} ".format( tempLanguageCode , unicode(item) ) )
 	log.debugWarning("number of items in script list: {}, number of items in language list: {} preferredLanguage: {}".format(len(tempSequence ) , len(sequenceWithLanguage) , preferredLanguage ) )
 	return sequenceWithLanguage
