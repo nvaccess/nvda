@@ -3,6 +3,94 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+Le migliorie di questa versione possono essere riassunte nel supporto alle voci incluse in Windows10 chiamate CoreVoices, al supporto per l'OCR incluso in Windows10 per il riconoscimento di testo in documenti e app non accessibili, all'immissione di testo con braille contratto (usato in Stati Uniti e Regno Unito), e moltissimi miglioramenti sulla navigazione web e sul braille.
+
+== Novità ==
+- è stata introdotta una nuova impostazione braille che permette o meno di visualizzare i messaggi di stato o di errore per un tempo indefinito. (#6669)
+- Nell'elenco messaggi di Microsoft Outlook, NVDA è in grado di annunciare se un messaggio sia contrassegnato o meno. (#6374)
+- In Microsoft Powerpoint, viene letto il tipo di forma esatta durante la modifica di una diapositiva (come triangolo, cerchio, video, freccia) invece che semplicemente la parola "figura". (#7111)
+- I contenuti di tipo matematico forniti da MathMl vengono gestiti anche in Google Chrome. (#7184)
+- NVDA può utilizzare in maniera diretta le voci presenti in Windows10 chiamate CoreVoices, conosciute anche come Microsoft Mobile voices. Per utilizzarle andare nella finestra sintetizzatore e selezionare Windows CoreVoices. (#6159)
+- I file della configurazione di NVDA possono essere ora salvati anche nella cartella utente dati applicazione (application data). Per attivare questa impostazione è necessario modificare il registro. Si veda la sezione "parametri di sistema" del manuale utente per ulteriori informazioni. (#6812)
+- Nei browser web, ora NVDA legge i valori dei segnaposti per i campi (nello specifico, è supportato aria-placeholder). (#7004)
+- In modalità navigazione mentre si usa Microsoft Word, è possibile passare da un errore di ortografia all'altro con i tasti rapidi di navigazione w o Shift-w. (#6942)
+- Aggiunto il supporto per la selezione della data nella finestra appuntamenti di Microsoft Outlook. (#7217)
+- In Mail di Windows10 viene ora letto il suggerimento selezionato dei campi to, cc, e questo vale anche per la casella di ricerca della finestra impostazioni di Windows10. (#6241)
+- Viene riprodotto un suono per indicare la comparsa di suggerimenti in alcuni campi di ricerca in Windows 10 ( ad esempio schermata del menu avvio, ricerca nelle impostazioni, campi to e cc in Mail, etc). (#6241)
+- NVDA adesso leggerà automaticamente le notifiche in Skype for Business, ad esempio quando qualcuno inizia una conversazione. (#7281) 
+- NVDA ora annuncia i messaggi in arrivo in Skype For Business, se ci si trova all'interno di una conversazione. (#7286)
+- NVDA legge automaticamente le notifiche provenienti da Microsoft Edge, come quando un download ha inizio. (#7281)
+- è possibile digitare il testo sia con il braille non contratto che con quello contratto, nel caso si possieda un display braille munito di tastiera perkins. La funzione è utile prevalentemente in Regno Unito e Stati Uniti. Si veda la sezione immissione del testo in braille del manuale utente per ulteriori informazioni. (#2439)
+- è possibile immettere anche caratteri unicode usando una tastiera braille, selezionando come tabella in scrittura la tabella unicode nelle impostazioni braille. (#6449)
+- Aggiunto il supporto al display braille SuperBraille, diffuso prevalentemente in Taiwan. (#7352)
+- Nuove tabelle di traduzione braille: Danese Braille Computer 8 punti,  Lituano, Persiano braille computer 8 punti, Persiano grado 1, Sloveno braille Computer 8 punti. (#6188, #6550, #6773, #7367)
+- Migliorata la tabella inglese Braille Computer 8 punti, con l'aggiunta del supporto per gli elenchi puntati, il simbolo dell'euro e e le lettere accentate. (#6836)
+- NVDA può utilizzare il sistema di OCR incluso in Windows10 per riconoscere il testo presente in documenti o app non accessibili. (#7361)
+ - La lingua può essere selezionata attraverso la finestra di dialogo OCR Windows 10 presente nel menu preferenze di NVDA.
+ - Per riconoscere il contenuto presente all'interno del navigatore ad oggetti, premere la combinazione NVDA+r.
+ - Si veda la sezione OCR di Windows10 nel manuale utente per ulteriori informazioni.
+- è ora possibile stabilire quali informazioni di contesto siano mostrate in un display braille quando un oggetto riceve il focus utilizzando la nuova impostazione "presentazione delle informazioni di contesto" nella finestra di dialogo impostazioni braille. (#217)
+ - Ad esempio, le nuove opzioni "riempi il display braille se il contesto cambia" e "solo quando si scorre indietro" permettono di lavorare con menu ed elenchi in maniera più efficiente, poiché gli elementi non cambieranno più di posizione nel display braille.
+ - Si veda la sezione "presentazione delle informazioni di contesto" presente nel manuale utente per ulteriori informazioni ed esempi.
+- In Firefox e Chrome, NVDA supporta griglie e tabelle dinamiche molto complesse come fogli di lavoro, anche quando solo parte del contenuto viene caricato o visualizzato (nello specifico, gli attributi aria-rowcount, aria-colcount, aria-rowindex e aria-colindex, introdotti in ARIA 1.1). (#7410)
+
+== Cambiamenti ==
+- è stato aggiunto un comando per riavviare NVDA, al momento non assegnato ad alcun tasto.  Lo si può trovare nella categoria varie della finestra gesti e tasti di immissione del menu preferenze di NVDA. (#6396)
+- è possibile selezionare il layout tastiera dalla schermata di benvenuto di NVDA. (#6863)
+- Sono stati abbreviati in braille un gran numero di tipi di controlli e stati. Anche i punti di riferimento dispongono di abbreviazioni. Si prega di consultare la sezione "tipi di controlli, stato e punti di riferimento" nella sezione dedicata al braille nel manuale utente di NVDA. (#7188, #3975)
+- Aggiornata eSpeak NG alla versione 1.49.1. (#7280)
+- Le tabelle di scrittura e lettura nelle impostazioni braille sono ora ordinate alfabeticamente. (#6113)
+- Aggiornato liblouis braille translator alla versione 3.2.0. (#6935)
+- La tabella braille predefinita è Braille inglese unificato grado 1. (#6952)
+- Da impostazioni predefinite, NVDA ora mostra nel display braille solo le parti di informazioni di contesto che sono cambiate quando un oggetto riceve il focus. (#217)
+ - In precedenza, veniva visualizzato il numero più ampio di informazioni di contesto possibile, non tenendo conto del fatto che quelle informazioni erano già state mostrate all'utente.
+ - è possibile ritornare alle impostazioni delle versioni precedenti modificando la nuova funzione "presentazione delle informazioni di contesto per il focus", nelle impostazioni Braille, selezionando "riempi sempre il display".
+- Quando si utilizza il braille, il cursore può essere configurato in modo tale da apparire con una forma diversa per distinguere tra cursore di sistema e cursore di controllo (#7112)
+- Il logo di NVDA è stato aggiornato. Il nuovo logo è un disegno stilizzato delle lettere NVDA in bianco, su di uno sfondo viola. Questo assicura una visibilità completa con qualsiasi colore di sfondo, e il viola richiama il logo di NvAccess. (#7446)
+
+== Bug corretti ==
+- L'etichetta degli elementi div editabili in Chrome non viene più annunciata con il suo valore, bensì con il nome dell'etichetta stessa, in modalità navigazione. (#7153)
+- In modalità navigazione, la pressione del tasto fine in un documento vuoto di Microsoft Word non causa più la comparsa di un errore di runtime. (#7009)
+- Viene supportata correttamente la modalità navigazione in Microsoft Edge, laddove ad un documento è stato assegnato il ruolo specifico ARIA (document. (#6998)
+- In modalità navigazione, è ora possibile selezionare o deselezionare  fino alla fine della riga servendosi di Shift+fine, anche quando il cursore si trova nell'ultimo carattere della riga. (#7157)
+- Se una finestra contiene una barra di avanzamento, il testo adesso viene aggiornato anche nel display braille quando vi sono dei cambiamenti. Questo significa, per esempio, che si può leggere il tempo rimanente per lo scaricamento nella finestra di aggiornamento di NVDA. (#6862)
+- NVDA will now announce selection changes for certain Windows 10 combo boxes such as AutoPlay in Settings. (#6337).
+- Pointless information is no longer announced when entering Meeting / Appointment creation dialogs in Microsoft Outlook. (#7216)
+- Beeps for indeterminate progress bar dialogs such as the update checker only when progress bar output is configured to include beeps. (#6759)
+- In Microsoft Excel 2003 and 2007, cells are again reported when arrowing around a worksheet. (#8243)
+- In Windows 10 Creators Update and later, browse mode is again automatically enabled when reading emails in Windows 10 Mail. (#7289)
+- On most braille displays with a braille keyboard, dot 7 now erases the last entered braille cell or character, and dot 8 presses the enter key. (#6054)
+- In editable text, when moving the caret (e.g. with the cursor keys or backspace), NVDA's spoken feedback is now more accurate in many cases, particularly in Chrome and terminal applications. (#6424)
+- The content of the Signature Editor in Microsoft Outlook 2016 can now be read. (#7253)
+- In Java Swing applications, NVDA no longer sometimes causes the application to crash when navigating tables. (#6992)
+- In Windows 10 Creators Update, NVDA will no longer announce toast notifications multiple times. (#7128)
+- In The start menu in Windows 10, pressing Enter to close the start menu after a search no longer causes NVDA to announce search text. (#7370)
+- Performing quick navigation to headings in Microsoft Edge is now significantly faster. (#7343)
+- In Microsoft Edge, navigating in browse mode no longer skips large parts of certain web pages such as the Wordpress 2015 theme. (#7143)
+- In Microsoft Edge, landmarks are correctly localized in languages other than English. (#7328)
+- Braille now correctly follows the selection when selecting text beyond the width of the display. For example, if you select multiple lines with shift+downArrow, braille now shows the last line you selected. (#5770)
+- In Firefox, NVDA no longer spuriously reports "section" several times when opening details for a tweet on twitter.com. (#5741)
+- Table navigation commands are no longer available for layout tables in Browse Mode unless reporting of layout tables is enabled. (#7382)
+- In Firefox and Chrome, Browse Mode table navigation commands now skip over hidden table cells. (#6652, #5655)
+
+
+== Changes for Developers ==
+- Timestamps in the log now include milliseconds. (#7163)
+- NVDA must now be built with Visual Studio Community 2015. Visual Studio Express is no longer supported. (#7110)
+ - The Windows 10 Tools and SDK are now also required, which can be enabled when installing Visual Studio.
+ - See the Installed Dependencies section of the readme for additional details.
+- Support for content recognizers such as OCR and image description tools can be easily implemented using the new contentRecog package. (#7361)
+- The Python json package is now included in NVDA binary builds. (#3050)
+
+
+
+
+
+
+
+
+
 = 2017.2 =
 Le principali novità di questa versione comprendono  il supporto completo alla funzione di attenuazione audio nell'aggiornamento Windows10 Creators; risolti molti problemi sulla selezione del testo in modalità navigazione, compresi quelli con il seleziona tutto; grossissimi miglioramenti al supporto per Microsoft Edge; inoltre potenziato il supporto web nell'individuazione dello stato di un elemento, in particolare quello corrente (utilizzando aria-current).
 

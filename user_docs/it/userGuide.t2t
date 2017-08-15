@@ -1098,6 +1098,32 @@ Scorrendo il display, sarà possibile leggere il resto della parola.
 
 L'attivazione di questa funzione permetterà una lettura molto più fluida, ma richiederà di scorrere il display braille molto più spesso.
 
+==== Presentazione delle informazioni contestuali per il focus ====
+Questa impostazione permette di stabilire quali informazioni di contesto NVDA mostrerà sul display braille quando un oggetto riceve il focus.
+Le informazioni di contesto fanno riferimento alla gerarchia di oggetti che contengono il focus.
+Per esempio, quando il focus si trova in un elemento di un elenco, quell'elemento è parte dell'elenco stesso.
+Questo elenco a sua volta può essere contenuto all'interno di una finestra di dialogo, etc.
+Si prega di consultare la sezione [Navigazione ad oggetti #ObjectNavigation] per ulteriori informazioni sulla gerarchia che viene applicata agli oggetti in NVDA.
+
+Quando questa opzione viene impostata su "riempi il display al cambiamento del contesto", NVDA cercherà di mostrare la maggior quantità possibile di informazioni di contesto sul Display Braille, ma soltanto per le parti di contesto che sono cambiate.
+Ritornando all'esempio sopra esposto, questo significa che nel momento in cui il focus va a posizionarsi sull'elenco, NVDA mostrerà l'elemento dell'elenco sul display braille.
+Inoltre, se vi è spazio sufficiente sulla barra braille, NVDA cercherà di mostrare che quell'elemento è parte di un elenco.
+Se poi ci si inizia a spostare con le frecce all'interno dell'elenco, si presume che l'utente sia perfettamente consapevole di trovarsi all'interno dell'elenco.
+Per cui, per gli altri elementi dell'elenco che verranno focalizzati, NVDA mostrerà soltanto il nome di questi elementi, senza ulteriori informazioni.
+Se si desidera rileggere le informazioni di contesto nuovamente (ossia che ci si trova all'interno di un elenco che a sua volta è contenuto in una finestra di dialogo), è necessario scorrere indietro con il display braille.
+
+Quando invece questa opzione è impostata su "riempi sempre il display", NVDA cercherà di mostrare la maggior quantità possibile di informazioni di contesto sulla barra braille, senza tener conto del fatto che queste informazioni sono già state presentate all'utente.
+Questo comporta un vantaggio, ossia che NVDA riempirà sempre il display con il maggior numero di informazioni possibile.
+Lo svantaggio è che la posizione iniziale del focus sul display braille sarà sempre diversa rispetto alla posizione del dito.
+Potrebbe quindi risultare complicato gestire un numero elevato di elementi, in quanto è sempre necessario spostare di continuo il dito per individuare la posizione iniziale dell'elemento.
+Questo è stato il comportamento predefinito in NVDA fino alla versione 2017.2.
+
+Se invece si imposta l'opzione di presentazione delle informazioni di contesto su "solo scorrendo indietro", NVDA non mostrerà mai alcun tipo di informazione di contesto.
+Così, sempre riferendosi all'esempio di prima, NVDA visualizzerà che è stato focalizzato un elemento di un elenco.
+Comunque, se si desidera leggere il contesto (ossia che ci si trova in un elenco e che tale elenco fa parte di una finestra di dialogo), sarà necessario scorrere il proprio display braille indietro.
+
+Per modificare la presentazione delle informazioni di contesto da qualsiasi punto ci si trovi, è necessario assegnare un nuovo gesto o tasto rapido utilizzando la [finestra di dialogo tasti e gesti di immissione #InputGestures].
+
 +++ Impostazioni Tastiera (NVDA+control+k) +++
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce "impostazioni tastiera...". 
 Contiene le seguenti opzioni:
