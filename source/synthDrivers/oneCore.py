@@ -161,7 +161,6 @@ class SynthDriver(SynthDriver):
 			# which will eventually process the queue again.
 			self._dll.ocSpeech_speak(self._handle, item)
 			return
-		self._player.idle()
 		log.debug("Queue empty, done processing")
 		self._isProcessing = False
 
@@ -209,6 +208,13 @@ class SynthDriver(SynthDriver):
 			if prevMarker:
 				self.lastIndex = prevMarker
 			log.debug("Done pushing audio")
+			if not self._queuedSpeech:
+				# There are no more queued utterances at this point, so call idle.
+				# This blocks while waiting for the final chunk to play,
+				# so by the time this is done, there might be something queued.
+				# The call to _processQueue will take care of this.
+				log.debug("Calling idle on audio player")
+				self._player.idle()
 		self._processQueue()
 
 	def _getAvailableVoices(self, onlyValid=True):
