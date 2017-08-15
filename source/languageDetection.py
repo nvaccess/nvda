@@ -26,6 +26,7 @@ scriptIDToLangID = {}
 def initialize():
 	#reverse of langIDToScriptID, required to obtain language id for a specific script 
 	for languageID in langIDToScriptID:
+		langIDToScriptID[languageID] = (langIDToScriptID[languageID] + ('Number',)) if isinstance(langIDToScriptID[languageID], tuple) else (langIDToScriptID[languageID], 'Number')
 		log.debugWarning("script name: {} data type: {}".format( langIDToScriptID[languageID] , type( langIDToScriptID[languageID]) ) )
 		if(isinstance(langIDToScriptID[languageID] ,tuple ) ):
 			for scriptName in langIDToScriptID[languageID]: 
@@ -77,7 +78,7 @@ langIDToScriptID = OrderedDict([
 	("sq" , "Caucasian_Albanian"),
 	("ta" , "Tamil"),
 	("te" , "Telugu"),
-	("ja" , ("Han", "Hiragana", "Katakana")), 
+	("ja" , ("Han", "Hiragana", "Katakana", "FullWidthNumber")), 
 	("zh" , ("Han", "Hiragana", "Katakana")), 
 ])
 
@@ -109,6 +110,12 @@ def getScriptCode(chr):
 	mStart = 0
 	mEnd = len(scriptCode)-1
 	characterUnicodeCode = ord(chr)
+	# Number should respect preferred language setting
+	# FullWidthNumber is in Common category, however, it indicates Japanese language context
+	if 0x30 < characterUnicodeCode < 0x39:
+		return "Number"
+	elif 0xff10 < characterUnicodeCode < 0xff19:
+		return "FullWidthNumber"
 	while( mEnd >= mStart ):
 		midPoint = (mStart + mEnd ) >> 1
 		if characterUnicodeCode < scriptCode[midPoint][0]: 
