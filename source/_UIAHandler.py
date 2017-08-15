@@ -62,6 +62,9 @@ badUIAWindowClassNames=[
 	"_WwG",
 	"EXCEL7",
 	"Button",
+	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
+	# It does not implement caret/selection, and probably has no new text events.
+	"ConsoleWindowClass",
 ]
 
 NVDAUnitsToUIAUnits={
