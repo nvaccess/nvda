@@ -62,6 +62,7 @@ badUIAWindowClassNames=[
 	"_WwG",
 	"EXCEL7",
 	"Button",
+	"ConsoleWindowClass",
 ]
 
 NVDAUnitsToUIAUnits={
