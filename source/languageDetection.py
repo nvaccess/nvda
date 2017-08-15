@@ -78,7 +78,7 @@ langIDToScriptID = OrderedDict([
 	("ta" , "Tamil"),
 	("te" , "Telugu"),
 	("ja" , ("Han", "Hiragana", "Katakana")), 
-("zh" , ("Han", "Hiragana", "Katakana")), 
+	("zh" , ("Han", "Hiragana", "Katakana")), 
 ])
 
 def getLanguagesWithDescriptions(ignoreLanguages=None):
@@ -158,15 +158,6 @@ class ScriptChangeCommand(SpeechCommand):
 	def __repr__(self):
 		return "ScriptChangeCommand (%r)"%self.scriptCode
 
-def shouldChangeScript(oldScript,currentScript):
-	if currentScript != oldScript:
-		if currentScript  in ["Latin", "Han", "Hiragana", "Katakana"] and oldScript in ["Latin", "Han", "Hiragana", "Katakana"]:
-			return False
-		else:
-			return True
-	else:
-		return False
-
 def detectScript(text):
 	"""splits a string if there are multiple scripts in it
 	@param text: the text string
@@ -187,7 +178,7 @@ def detectScript(text):
 		elif unicodedata.category(text[index] ) == "Pe" and len(outerScripts) > 0:
 			currentScript = outerScripts.pop()
 
-# don't change script for combining marks as per UAX 24 section 5.2
+		# don't change script for combining marks as per UAX 24 section 5.2
 		if unicodedata.category(text[index] ) in ["Mn" , "Mc", "Me"]: 
 			continue
 
