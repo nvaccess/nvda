@@ -51,32 +51,53 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 
 	def test_supportsNoKwargs(self):
 		called = []
-		def h():
+		def handler():
 			called.append(True)
-		extensionPoints.callWithSupportedKwargs(h, a=1)
+		extensionPoints.callWithSupportedKwargs(handler, a=1)
 		self.assertEqual(called, [True])
 
 	def test_supportsLessKwargs(self):
 		gotKwargs = {}
-		def h(a=None):
+		def handler(a=None):
 			gotKwargs["a"] = a
-		extensionPoints.callWithSupportedKwargs(h, a=1, b=2)
+		extensionPoints.callWithSupportedKwargs(handler, a=1, b=2)
 		self.assertEqual(gotKwargs, {"a": 1})
 
 	def test_supportsExtraKwargs(self):
 		gotKwargs = {}
-		def h(a=None, b=2):
+		def handler(a=None, b=2):
 			gotKwargs["a"] = a
 			gotKwargs["b"] = b
-		extensionPoints.callWithSupportedKwargs(h, a=1)
+		extensionPoints.callWithSupportedKwargs(handler, a=1)
 		self.assertEqual(gotKwargs, {"a": 1, "b": 2})
 
 	def test_supportsAllKwargs(self):
 		gotKwargs = {}
-		def h(**kwargs):
+		def handler(**kwargs):
 			gotKwargs.update(kwargs)
-		extensionPoints.callWithSupportedKwargs(h, a=1)
+		extensionPoints.callWithSupportedKwargs(handler, a=1)
 		self.assertEqual(gotKwargs, {"a": 1})
+
+	def test_positionalsPassedWhenSupportsNoKwargs(self):
+		"""Test that positional arguments are passed untouched.
+		"""
+		gotArgs = []
+		def handler(a, b):
+			gotArgs.append(a)
+			gotArgs.append(b)
+		extensionPoints.callWithSupportedKwargs(handler, 1, 2)
+		self.assertEqual(gotArgs, [1, 2])
+
+	def test_positionalsPassedWhenSupportsAllKwargs(self):
+		"""Test that positional arguments are passed untouched when the function has **kwargs,
+		since **kwargs is a special case early return in the code.
+		"""
+		gotArgs = []
+		def handler(a, b, **kwargs):
+			gotArgs.append(a)
+			gotArgs.append(b)
+		extensionPoints.callWithSupportedKwargs(handler, 1, 2, c=3)
+		self.assertEqual(gotArgs, [1, 2])
 
 class TestHandlerRegistrar(unittest.TestCase):
 
@@ -166,30 +187,30 @@ class TestAction(unittest.TestCase):
 
 	def test_oneHandler(self):
 		called = []
-		def h():
-			called.append(h)
-		self.action.register(h)
+		def handler():
+			called.append(handler)
+		self.action.register(handler)
 		self.action.notify()
-		self.assertEqual(called, [h])
+		self.assertEqual(called, [handler])
 
 	def test_twoHandlers(self):
 		called = []
-		def h1():
-			called.append(h1)
-		def h2():
-			called.append(h2)
-		self.action.register(h1)
-		self.action.register(h2)
+		def handler1():
+			called.append(handler1)
+		def handler2():
+			called.append(handler2)
+		self.action.register(handler1)
+		self.action.register(handler2)
 		self.action.notify()
-		self.assertEqual(called, [h1, h2])
+		self.assertEqual(called, [handler1, handler2])
 
 	def test_kwargs(self):
 		"""Test that keyword arguments get passed to handlers.
 		"""
 		calledKwargs = {}
-		def h(**kwargs):
+		def handler(**kwargs):
 			calledKwargs.update(kwargs)
-		self.action.register(h)
+		self.action.register(handler)
 		self.action.notify(a=1)
 		self.assertEqual(calledKwargs, {"a": 1})
 
@@ -197,14 +218,14 @@ class TestAction(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers.
 		"""
 		called = []
-		def h1():
+		def handler1():
 			raise Exception("barf")
-		def h2():
-			called.append(h2)
-		self.action.register(h1)
-		self.action.register(h2)
+		def handler2():
+			called.append(handler2)
+		self.action.register(handler1)
+		self.action.register(handler2)
 		self.action.notify()
-		self.assertEqual(called, [h2])
+		self.assertEqual(called, [handler2])
 
 class TestFilter(unittest.TestCase):
 
@@ -216,19 +237,19 @@ class TestFilter(unittest.TestCase):
 		self.filter.apply("value", a=1)
 
 	def test_oneHandler(self):
-		def h(value):
+		def handler(value):
 			return 1
-		self.filter.register(h)
+		self.filter.register(handler)
 		filtered = self.filter.apply(0)
 		self.assertEqual(filtered, 1)
 
 	def test_twoHandlers(self):
-		def h1(value):
+		def handler1(value):
 			return 1
-		def h2(value):
+		def handler2(value):
 			return 2
-		self.filter.register(h1)
-		self.filter.register(h2)
+		self.filter.register(handler1)
+		self.filter.register(handler2)
 		filtered = self.filter.apply(0)
 		self.assertEqual(filtered, 2)
 
@@ -236,20 +257,20 @@ class TestFilter(unittest.TestCase):
 		"""Test that keyword arguments get passed to handlers.
 		"""
 		calledKwargs = {}
-		def h(value, **kwargs):
+		def handler(value, **kwargs):
 			calledKwargs.update(kwargs)
-		self.filter.register(h)
+		self.filter.register(handler)
 		self.filter.apply(0, a=1)
 		self.assertEqual(calledKwargs, {"a": 1})
 
 	def test_handlerException(self):
 		"""Test that a handler which raises an exception doesn't affect later handlers.
 		"""
-		def h1(value):
+		def handler1(value):
 			raise Exception("barf")
-		def h2(value):
+		def handler2(value):
 			return 2
-		self.filter.register(h1)
-		self.filter.register(h2)
+		self.filter.register(handler1)
+		self.filter.register(handler2)
 		filtered = self.filter.apply(0)
 		self.assertEqual(filtered, 2)
