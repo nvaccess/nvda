@@ -39,7 +39,7 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def label(self):
-		return self._getLabelForProperties(self.obj.__getattribute__)
+		return self._getLabelForProperties(lambda prop: getattr(self.obj, prop, None))
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
