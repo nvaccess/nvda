@@ -109,12 +109,16 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def label(self):
-		value = super(VirtualBufferQuickNavItem,self).label
-		if self.itemType is "heading":
-			# Explicitly handle headings here as well, to avoid requesting the Control field attribs
-			return value
-		attrs = self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])
-		return self._getLabelForProperties(attrs.get)
+		attrs = {}
+
+		def propertyGetter(prop):
+			if not attrs:
+				# Lazily fetch the attributes the first time they're needed.
+				# We do this because we don't want to do this if they're not needed at all.
+				attrs.update(self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1]))
+			return attrs.get(prop)
+
+		return self._getLabelForProperties(propertyGetter)
 
 	def isChild(self,parent): 
 		if self.itemType == "heading":

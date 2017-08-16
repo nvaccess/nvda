@@ -199,19 +199,23 @@ class TextInfoQuickNavItem(QuickNavItem):
 	def _getLabelForProperties(self, labelPropertyGetter):
 		"""
 		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
-		@Param labelPropertyGetter: A callable taking 1 argument.
-			For example, if L{itemType} is landmark, the callable must return the landmark type when the landmark argument is provided to it.
-			Alternative attributes or dictionary keys might be name or value.
-			An expected callable might be the __getattribute__ method on an L{NVDAObject}, or the get method on a L{Dict}.
-			Note that L{Dict.get} doesn't raise an exception, it returns None instead.
+		This can be used by subclasses to implement the L{label} property.
+		@Param labelPropertyGetter: A callable taking 1 argument, specifying the property to fetch".
+			For example, if L{itemType} is landmark, the callable must return the landmark type when "landmark" is passed as the property argument.
+			Alternative property names might be name or value.
+			The callable must return None if the property doesn't exist.
+			An expected callable might be get method on a L{Dict},
+			or "lambda property: getattr(self.obj, property, None)" for an L{NVDAObject}.
 		"""
-		value = self.textInfo.text.strip()
+		content = self.textInfo.text.strip()
 		if self.itemType is "heading":
-			return value
+			# Output: displayed text of the heading.
+			return content
 		labelParts = None
 		name = labelPropertyGetter("name")
 		if self.itemType is "landmark":
 			landmark = aria.landmarkRoles.get(labelPropertyGetter("landmark"))
+			# Example output: main menu; navigation
 			labelParts = (name, landmark)
 		else: 
 			role = labelPropertyGetter("role")
@@ -223,15 +227,18 @@ class TextInfoQuickNavItem(QuickNavItem):
 			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
 			if self.itemType is "formField":
 				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
-					labelParts = (value or name or unlabeled, roleText, positiveStates, negativeStates)
+					# Example output: Mute; toggle button; pressed
+					labelParts = (content or name or unlabeled, roleText, positiveStates, negativeStates)
 				else:
-					labelParts = (name or unlabeled, roleText, positiveStates, negativeStates, value)
+					# Example output: Find a repository...; edit; has auto complete; NVDA
+					labelParts = (name or unlabeled, roleText, positiveStates, negativeStates, content)
 			elif self.itemType in ("link", "button"):
-				labelParts = (value or name or unlabeled, positiveStates, negativeStates)
+				# Example output: You have unread notifications; visited
+				labelParts = (content or name or unlabeled, positiveStates, negativeStates)
 		if labelParts:
-			label = " ".join(lp for lp in labelParts if lp)
+			label = "; ".join(lp for lp in labelParts if lp)
 		else:
-			label = value
+			label = content
 		return label
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
