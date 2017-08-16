@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -262,8 +262,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
-		oldBatteryStatus = None
-		hasBeenInitialized = False
 		#Just define these constants here, so we don't have to import win32con
 		WM_POWERBROADCAST = 0x218
 		WM_DISPLAYCHANGE = 0x7e
@@ -274,36 +272,41 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 
 		def __init__(self, windowName=None):
 			super(MessageWindow, self).__init__(windowName)
-			self.handlePowerStatusChange(initializing=True)
+			self.handlePowerStatusChange()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
-			import ui
-			import winUser
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == self.WM_DISPLAYCHANGE:
-				# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
-				#The low word is the width and hiword is height.
-				if winUser.LOWORD(lParam) > winUser.HIWORD(lParam):
-					#Translators: The screen is oriented so that it is wider than it is tall.
-					ui.message(_("Landscape" ))
-				else:
-					#Translators: The screen is oriented in such a way that the height is taller than it is wide.
-					ui.message(_("Portrait"))
+				self.handleScreenOrientationChange(lParam)
 
-		def handlePowerStatusChange(self, initializing=False):
+		def handleScreenOrientationChange(self, lParam):
+			import ui
+			import winUser
+			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
+			#The low word is the width and hiword is height.
+			if winUser.LOWORD(lParam) > winUser.HIWORD(lParam):
+				#Translators: The screen is oriented so that it is wider than it is tall.
+				ui.message(_("Landscape" ))
+			else:
+				#Translators: The screen is oriented in such a way that the height is taller than it is wide.
+				ui.message(_("Portrait"))
+
+		def handlePowerStatusChange(self):
 			#Mostly taken from script_say_battery_status, but modified.
 			import ui
 			import winKernel
 			sps = winKernel.SYSTEM_POWER_STATUS()
 			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is self.UNKNOWN_BATTERY_STATUS:
 				return
-			#This cache is Necessary because sometimes this event double fires, and  if the battery decreases by 3 percent, this event occurs.
-			if sps.BatteryFlag & self.NO_SYSTEM_BATTERY or sps.ACLineStatus == self.oldBatteryStatus:
-				return
-			MessageWindow.oldBatteryStatus = sps.ACLineStatus
-			if  initializing:
+			try:
+				#This cache is Necessary because sometimes this event double fires, and  if the battery decreases by 3 percent, this event occurs.
+				if sps.BatteryFlag & self.NO_SYSTEM_BATTERY or sps.ACLineStatus == self.oldBatteryStatus:
+					return
+			except AttributeError:
 				return #We don't actually want to output anything, just initialize the cache.
+			finally:
+				self.oldBatteryStatus = sps.ACLineStatus
 			if sps.ACLineStatus & self.AC_ONLINE:
 				#Translators: Reported when the battery is plugged in, and now is charging.
 				ui.message(_("Charging battery. %d percent") % sps.BatteryLifePercent)
