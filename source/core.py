@@ -272,6 +272,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 
 		def __init__(self, windowName=None):
 			super(MessageWindow, self).__init__(windowName)
+			self.oldBatteryStatus = None
 			self.handlePowerStatusChange()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
@@ -299,14 +300,17 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			sps = winKernel.SYSTEM_POWER_STATUS()
 			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is self.UNKNOWN_BATTERY_STATUS:
 				return
-			try:
-				#This cache is Necessary because sometimes this event double fires, and  if the battery decreases by 3 percent, this event occurs.
-				if sps.BatteryFlag & self.NO_SYSTEM_BATTERY or sps.ACLineStatus == self.oldBatteryStatus:
-					return
-			except AttributeError:
-				return #We don't actually want to output anything, just initialize the cache.
-			finally:
+			#This cache is Necessary because sometimes this event double fires, and  if the battery decreases by 3 percent, this event occurs.
+			if sps.BatteryFlag & self.NO_SYSTEM_BATTERY:
+				return
+			if self.oldBatteryStatus is None:
+				#Just initializing the cache, do not report anything.
 				self.oldBatteryStatus = sps.ACLineStatus
+				return
+			if sps.ACLineStatus == self.oldBatteryStatus:
+				#Sometimes, this double fires. This also fires when the battery level decreases by 3%.
+				return
+			self.oldBatteryStatus = sps.ACLineStatus
 			if sps.ACLineStatus & self.AC_ONLINE:
 				#Translators: Reported when the battery is plugged in, and now is charging.
 				ui.message(_("Charging battery. %d percent") % sps.BatteryLifePercent)
