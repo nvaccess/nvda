@@ -15,7 +15,6 @@ import cursorManager
 import textInfos
 import browseMode
 from NVDAObjects.UIA import UIA
-import aria
 
 class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -40,10 +39,7 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def label(self):
-		if self.itemType=="landmark":
-			obj=self.obj
-			return " ".join(x for x in (obj.name,aria.landmarkRoles.get(obj.landmark)) if x)
-		return super(UIATextRangeQuickNavItem,self).label
+		return self._getLabelForProperties(lambda prop: getattr(self.obj, prop, None))
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 

@@ -109,14 +109,16 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def label(self):
-		if self.itemType == "landmark":
-			attrs = self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])
-			name = attrs.get("name", "")
-			if name:
-				name += " "
-			return name + aria.landmarkRoles[attrs["landmark"]]
-		else:
-			return super(VirtualBufferQuickNavItem,self).label
+		attrs = {}
+
+		def propertyGetter(prop):
+			if not attrs:
+				# Lazily fetch the attributes the first time they're needed.
+				# We do this because we don't want to do this if they're not needed at all.
+				attrs.update(self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1]))
+			return attrs.get(prop)
+
+		return self._getLabelForProperties(propertyGetter)
 
 	def isChild(self,parent): 
 		if self.itemType == "heading":

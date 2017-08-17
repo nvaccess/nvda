@@ -196,6 +196,51 @@ class TextInfoQuickNavItem(QuickNavItem):
 		caret=self.document.makeTextInfo(textInfos.POSITION_CARET)
 		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
 
+	def _getLabelForProperties(self, labelPropertyGetter):
+		"""
+		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
+		This can be used by subclasses to implement the L{label} property.
+		@Param labelPropertyGetter: A callable taking 1 argument, specifying the property to fetch.
+			For example, if L{itemType} is landmark, the callable must return the landmark type when "landmark" is passed as the property argument.
+			Alternative property names might be name or value.
+			The callable must return None if the property doesn't exist.
+			An expected callable might be get method on a L{Dict},
+			or "lambda property: getattr(self.obj, property, None)" for an L{NVDAObject}.
+		"""
+		content = self.textInfo.text.strip()
+		if self.itemType is "heading":
+			# Output: displayed text of the heading.
+			return content
+		labelParts = None
+		name = labelPropertyGetter("name")
+		if self.itemType is "landmark":
+			landmark = aria.landmarkRoles.get(labelPropertyGetter("landmark"))
+			# Example output: main menu; navigation
+			labelParts = (name, landmark)
+		else: 
+			role = labelPropertyGetter("role")
+			roleText = controlTypes.roleLabels[role]
+			# Translators: Reported label in the elements list for an element which which has no name and value
+			unlabeled = _("Unlabeled")
+			realStates = labelPropertyGetter("states")
+			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
+			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
+			if self.itemType is "formField":
+				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
+					# Example output: Mute; toggle button; pressed
+					labelParts = (content or name or unlabeled, roleText, positiveStates, negativeStates)
+				else:
+					# Example output: Find a repository...; edit; has auto complete; NVDA
+					labelParts = (name or unlabeled, roleText, positiveStates, negativeStates, content)
+			elif self.itemType in ("link", "button"):
+				# Example output: You have unread notifications; visited
+				labelParts = (content or name or unlabeled, positiveStates, negativeStates)
+		if labelParts:
+			label = "; ".join(lp for lp in labelParts if lp)
+		else:
+			label = content
+		return label
+
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 	disableAutoPassThrough = False
@@ -708,6 +753,12 @@ class ElementsListDialog(wx.Dialog):
 		("heading", _("&Headings")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
+		("formField", _("&Form fields")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("button", _("&Buttons")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("landmark", _("Lan&dmarks")),
 	)
 
@@ -778,8 +829,8 @@ class ElementsListDialog(wx.Dialog):
 		self.lastSelectedElementType=elementType
 
 	def initElementType(self, elType):
-		if elType == "link":
-			# Links can be activated.
+		if elType in ("link","button"):
+			# Links and buttons can be activated.
 			self.activateButton.Enable()
 			self.SetAffirmativeId(self.activateButton.GetId())
 		else:
