@@ -592,53 +592,53 @@ Všetky nastavenia týkajúce sa braillovských riadkov a tabuliek nájdete v č
 Aby sa na braillovský riadok dostalo čo najviac informácií, pre prvky, oblasti stránky a stavy sa používajú tieto skratky.
 
 || skratka | typ prvku |
-| app | aplikácia |
-| bqt | citácia |
-| btn | tlačidlo |
-| drbtn | Tlačidlo s kontextovou ponukou |
-| spnbtn | výberové tlačidlo |
-| splbtn | kruhové tlačidlo |
-| tgbtn | prepínacie tlačidlo |
-| cbo | zoznamový rámik |
-| chk | začiarkávacie políčko |
-| doc | dokument |
+| ap | aplikácia |
+| cit | citácia |
+| tlo | tlačidlo |
+| tloko | Tlačidlo s kontextovou ponukou |
+| vybtlo | výberové tlačidlo |
+| krhtlo | kruhové tlačidlo |
+| prtlo | prepínacie tlačidlo |
+| ram | zoznamový rámik |
+| zcp | začiarkávacie políčko |
+| dok | dokument |
 | dlg | dialóg |
-| pwdedt | Heslové editačné pole |
-| embedded | vnorený objekt  |
-| enote | koncová poznámka |
-| fnote | poznámka pod čiarou |
-| edt | editačné textové pole |
+| edt | editačné pole |
+| hesedt | Heslové editačné pole |
+| vnor | 	vnorený objekt  |
+| kpoz | koncová poznámka |
+| cpoz | poznámka pod čiarou |
 | gra | grafika |
-| grp | zoskupenie |
+| skp | zoskupenie |
 | hN | nadpis úrovne, pričom N udáva úroveň, napríklad h1, h2 |
-| hlp | bublinková nápoveda |
-| lmk | oblasť stránky|
-| lnk | odkaz |
-| vlnk | navštívený odkaz |
-| lst | zoznam |
+| bbl | bublinková nápoveda |
+| obl | oblasť stránky|
+| odk | odkaz |
+| nodk | navštívený odkaz |
+| zoz | zoznam |
 | mnu | menu |
-| mnubar | panel ponúk |
-| mnubtn | tlačidlo ponuky |
-| mnuitem | položka menu |
+| ppnk | panel ponúk |
+| pontlo | tlačidlo ponuky |
+| polmnu | položka menu |
 | pnl | panel |
-| prgbar | indikátor priebehu |
-| rbtn | prepínač |
-| scrlbar | posúvač |
-| sect | sekcia |
-| stbar | stavový riadok |
-| tabctl | zoznam záložiek |
+| priebeh | indikátor priebehu |
+| prep | prepínač |
+| pos | posúvač |
+| sekc | sekcia |
+| stav | stavový riadok |
+| zozal | zoznam záložiek |
 | tbl | tabuľka |
-| cN | stĺpec v tabuľke, kde N je číslo stĺpca, napríklad c1, c2. |
+| sN | stĺpec v tabuľke, kde N je číslo stĺpca, napríklad s1, s2. |
 | rN | riadok v tabuľke, kde N je číslo riadka, napríklad r1, r2. |
 | term | terminál |
-| tlbar | panel nástrojov |
-| tltip | kontextová nápoveda |
-| tv | stromové zobrazenie |
-| tvbtn | tlačidlo stromového zobrazenia |
-| tvitem | položka stromového zobrazenia |
-| lv N | položka v stromovom zobrazení, N udáva hierarchickú úroveň |
-| wnd | okno |
-| ⠤⠤⠤⠤⠤ | od
+| panas | panel nástrojov |
+| konap | kontextová nápoveda |
+| sz | stromové zobrazenie |
+| tlosz | tlačidlo stromového zobrazenia |
+| polsz | položka stromového zobrazenia |
+| úro N | položka v stromovom zobrazení, N udáva hierarchickú úroveň |
+| okno | okno |
+| ⠤⠤⠤⠤⠤ | oddeľovač |
 
 Skratkami sú tiež označené tieto stavy:
 || skratka | stav prvku |
@@ -651,30 +651,30 @@ Skratkami sú tiež označené tieto stavy:
 | - | Zobrazuje sa, ak sa dá objekt (napríklad vetva v stromovom zobrazení) zbaliť |
 | + | zobrazuje sa, ak sa dá objekt (napríklad vetva v stromovom zobrazení) rozbaliť |
 | *** | Označuje chránený dokument alebo prvok|
-| clk | zobrazuje sa, ak je objekt klikateľný |
-| cmnt | Označuje komentár v dokumente alebo bunke tabuľky|
-| frml | Označuje vzorec v bunke tabuľky |
-| invalid | Označuje nesprávne zadanú informáciu|
-| ldesc | Označuje, že objekt (zvyčajne obrázok) obsahuje dlhý popis|
-| mln | Označuje viacriadkové editačné pole, najčastejšie vo webových dokumentoch|
-| req | Označuje povinné pole vo formulári |
-| ro | Zobrazuje sa, ak je objekt (napríklad editačné pole) len na čítanie |
-| sel | zobrazuje sa, ak je objekt vybratý |
-| nsel | zobrazí sa,ak objekt nie je vybratý |
-| sorted asc | Zobrazí sa, ak je objekt zobrazený vzostupne|
-| sorted desc | zobrazí sa,ak je objekt zobrazený zostupne|
-| submnu | zobrazuje sa, ak objekt obsahuje podmenu |
+| klik | zobrazuje sa, ak je objekt klikateľný |
+| kmnt | Označuje komentár v dokumente alebo bunke tabuľky|
+| vzor | Označuje vzorec v bunke tabuľky |
+| nespr | Označuje nesprávne zadanú informáciu|
+| popis | Označuje, že objekt (zvyčajne obrázok) obsahuje dlhý popis|
+| vredt | Označuje viacriadkové editačné pole, najčastejšie vo webových dokumentoch|
+| pov | Označuje povinné pole vo formulári |
+| ln | Zobrazuje sa, ak je objekt (napríklad editačné pole) len na čítanie |
+| vybr | zobrazuje sa, ak je objekt vybratý |
+| nvybr | zobrazí sa,ak objekt nie je vybratý |
+| vzost | Zobrazí sa, ak je objekt zobrazený vzostupne|
+| zost | zobrazí sa,ak je objekt zobrazený zostupne|
+| pmnu | zobrazuje sa, ak objekt obsahuje podmenu |
 
 Pre oblasti stránky sa používajú tieto skratky:
 || skratka | Oblasť stránky |
 | bnnr | banner |
-| cinf | Info o bsahu |
-| cmpl | doplnková |
+| obsah | Info o obsahu |
+| dopln | doplnková |
 | form | formulár |
-| main | hlavná |
+| hlav | hlavná |
 | navi | navigácia |
-| srch | vyhľadávanie |
-| rgn | oblasť |
+| hľad | vyhľadávanie |
+| obl | oblasť |
 
 ++ Braillovský zápis ++
 NVDA podporuje písanie textu cez klávesnicu braillovského riadka v plnopise i skratkopise.
@@ -706,7 +706,7 @@ objekt pod kurzorom môžete aktivovať (zvyčajne kliknúť naň) medzerou aleb
 Klávesom ESC zatvoríte okno s rozpoznaným textom.
 
 ++ Windows 10 OCR ++[Win10Ocr]
-priamo v systéme windows 10 je k dispozícii optické rozpoznávanie textu pre mnohé jazyky. V súčasnosti nie je dostupné pre Slovenčinu, len pre Češtinu.
+priamo v systéme windows 10 je k dispozícii optické rozpoznávanie textu pre mnohé jazyky, vrátane Slovenčiny.
 NVDA môže pomocou OCR rozpoznať text v obrázku alebo v neprístupnom okne aplikácie.
 
 jazyk rozpoznávania nastavíte v dialógu [Rozpoznávanie textu OCR #Win10OcrSettings].
@@ -1103,11 +1103,11 @@ Táto možnosť neovplyvňuje zobrazenie vybratého textu. Označenie sa zobrazu
 ==== Rýchlosť blikania kurzora (ms)====
 Ide o číselnú hodnotu, ktorá určuje frekvenciu blikania kurzora braillovského zobrazovača v milisekundách.
 
-==== Tvar kurzora pre fokus ====
+==== Tvar kurzora fokusu ====
 toto nastavenie určuje tvar kurzora (teda kombináciu bodov), ktoré sa zobrazujú, ak je braillovský kurzor zviazaný so systémovým kurzorom.
 Neovplyvňuje však zobrazenie vybratého textu.
 
-==== Tvar kurzora pre prezerací kurzor ====
+==== Tvar prezeracieho  kurzora ====
 toto nastavenie určuje tvar kurzora (teda kombináciu bodov), ktoré sa zobrazujú, ak je braillovský kurzor zviazaný s prezeracím kurzorom.
 Neovplyvňuje však zobrazenie vybratého textu.
 
