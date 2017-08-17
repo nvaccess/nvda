@@ -26,6 +26,7 @@ scriptIDToLangID = {}
 def initialize():
 	#reverse of langIDToScriptID, required to obtain language id for a specific script 
 	for languageID in langIDToScriptID:
+		langIDToScriptID[languageID] = (langIDToScriptID[languageID] + ('Number',)) if isinstance(langIDToScriptID[languageID], tuple) else (langIDToScriptID[languageID], 'Number')
 		log.debugWarning("script name: {} data type: {}".format( langIDToScriptID[languageID] , type( langIDToScriptID[languageID]) ) )
 		if(isinstance(langIDToScriptID[languageID] ,tuple ) ):
 			for scriptName in langIDToScriptID[languageID]: 
@@ -77,8 +78,8 @@ langIDToScriptID = OrderedDict([
 	("sq" , "Caucasian_Albanian"),
 	("ta" , "Tamil"),
 	("te" , "Telugu"),
-	("ja" , ("Han", "Hiragana", "Katakana")), 
-("zh" , ("Han", "Hiragana", "Katakana")), 
+	("ja" , ("Han", "Hiragana", "Katakana", "FullWidthNumber")), 
+	("zh" , ("Han", "Hiragana", "Katakana")), 
 ])
 
 def getLanguagesWithDescriptions(ignoreLanguages=None):
@@ -109,6 +110,12 @@ def getScriptCode(chr):
 	mStart = 0
 	mEnd = len(scriptCode)-1
 	characterUnicodeCode = ord(chr)
+	# Number should respect preferred language setting
+	# FullWidthNumber is in Common category, however, it indicates Japanese language context
+	if 0x30 <= characterUnicodeCode <= 0x39:
+		return "Number"
+	elif 0xff10 <= characterUnicodeCode <= 0xff19:
+		return "FullWidthNumber"
 	while( mEnd >= mStart ):
 		midPoint = (mStart + mEnd ) >> 1
 		if characterUnicodeCode < scriptCode[midPoint][0]: 
@@ -127,7 +134,7 @@ def getLangID(scriptName ):
 	@rtype: string"""
 	# we are using loop during search to maintain priority
 	for priorityLanguage, priorityScript, priorityDescription in  languagePriorityListSpec:
-		log.debugWarning("priorityLanguage {}, priorityScript {}, priorityDescription {}".format(priorityLanguage, priorityScript, priorityDescription )  )
+		log.debugWarning(u"priorityLanguage {}, priorityScript {}, priorityDescription {}".format(priorityLanguage, priorityScript, priorityDescription )  )
 		if scriptName in priorityScript: 
 			return priorityLanguage
 	#language not found in the languagePriorityListSpec, so check if default language can be applied for the script
@@ -158,15 +165,6 @@ class ScriptChangeCommand(SpeechCommand):
 	def __repr__(self):
 		return "ScriptChangeCommand (%r)"%self.scriptCode
 
-def shouldChangeScript(oldScript,currentScript):
-	if currentScript != oldScript:
-		if currentScript  in ["Latin", "Han", "Hiragana", "Katakana"] and oldScript in ["Latin", "Han", "Hiragana", "Katakana"]:
-			return False
-		else:
-			return True
-	else:
-		return False
-
 def detectScript(text):
 	"""splits a string if there are multiple scripts in it
 	@param text: the text string
@@ -187,7 +185,7 @@ def detectScript(text):
 		elif unicodedata.category(text[index] ) == "Pe" and len(outerScripts) > 0:
 			currentScript = outerScripts.pop()
 
-# don't change script for combining marks as per UAX 24 section 5.2
+		# don't change script for combining marks as per UAX 24 section 5.2
 		if unicodedata.category(text[index] ) in ["Mn" , "Mc", "Me"]: 
 			continue
 
@@ -220,7 +218,7 @@ def detectLanguage(text, preferredLanguage =None):
 		if isinstance(item,ScriptChangeCommand):
 			scriptCode = item.scriptCode
 		else:
-			log.debugWarning("script: {} for text {} ".format( scriptCode  , unicode(item).encode("utf-8")  ) )
+			log.debugWarning(u"script: {} for text {} ".format( scriptCode , unicode(item) ) )
 
 	if preferredLanguage:
 		scriptIDForPreferredLanguage = getScriptIDFromLangID( preferredLanguage )
@@ -258,6 +256,6 @@ def detectLanguage(text, preferredLanguage =None):
 		if isinstance(item,LangChangeCommand):
 			tempLanguageCode = item.lang
 		else:
-			log.debugWarning("language: {} for text {} ".format( tempLanguageCode , unicode(item).encode("utf-8")  ) )
+			log.debugWarning(u"language: {} for text {} ".format( tempLanguageCode , unicode(item) ) )
 	log.debugWarning("number of items in script list: {}, number of items in language list: {} preferredLanguage: {}".format(len(tempSequence ) , len(sequenceWithLanguage) , preferredLanguage ) )
 	return sequenceWithLanguage
