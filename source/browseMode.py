@@ -200,7 +200,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		"""
 		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
 		This can be used by subclasses to implement the L{label} property.
-		@Param labelPropertyGetter: A callable taking 1 argument, specifying the property to fetch".
+		@Param labelPropertyGetter: A callable taking 1 argument, specifying the property to fetch.
 			For example, if L{itemType} is landmark, the callable must return the landmark type when "landmark" is passed as the property argument.
 			Alternative property names might be name or value.
 			The callable must return None if the property doesn't exist.
