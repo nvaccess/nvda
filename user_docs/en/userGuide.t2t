@@ -8,9 +8,11 @@ NVDA NVDA_VERSION User Guide
 %%toc
 
 + Introduction +
+Welcome to NVDA!
+
 NonVisual Desktop Access (NVDA) is a free and open source screen reader for the Microsoft Windows operating system.
 Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
-NVDA is developed by [NV Access http://www.nvaccess.org/], with contributions from the community.
+NVDA is developed by [NV Access https://www.nvaccess.org/], with contributions from the community.
 
 ++ General Features ++
 NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
@@ -18,7 +20,7 @@ NVDA allows blind and vision impaired people to access and interact with the Win
 Major highlights include:
 - Support for popular applications including web browsers, email clients, internet chat programs and office suites
 - Built-in speech synthesizer supporting over 80 languages
-- reporting of textual formatting where available such as font name and size, style and spelling errors
+- Reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
 - Ability to run entirely from a USB stick or other portable media without the need for installation
@@ -27,7 +29,7 @@ Major highlights include:
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
-- support for Windows Command Prompt and console applications
+- Support for Windows Command Prompt and console applications
 -
 
 ++ Internationalization ++
@@ -42,12 +44,13 @@ NVDA is bundled with [eSpeak NG https://github.com/espeak-ng/espeak-ng], a free,
 Information about other speech synthesizers that NVDA supports can be found in the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
 
 ++ Braille support ++
-For users that own a refreshable braille display, NVDA can output its information in Braille.
+For users that own a refreshable braille display, NVDA can output its information in braille.
+Both uncontracted and contracted braille input via a braille keyboard is also supported.
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
 
-NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes for many languages.
+NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes.
 
-++ Licence and Copyright ++
+++ License and Copyright ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
 NVDA is covered by the GNU General Public License (Version 2).
@@ -143,16 +146,16 @@ Consult the section about [system wide parameters #SystemWideParameters] for mor
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
 
 As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading).
-Depending on how fast your computer is, or if you are running NVDA off a USB key or other slower medium, it may take a little while to start.
-If it is taking an extra long time, NVDA should say "Loading NVDA. Please wait..."
+Depending on how fast your computer is, or if you are running NVDA off a USB key or other slow media, it may take a little while to start.
+If it is taking an extra-long time to start, NVDA should say "Loading NVDA. Please wait..."
 
 If you don't hear any of this, or you hear the Windows error sound, or a descending set of tones, then this means that NVDA has an error, and you will need to possibly report a bug to the developers.
 Please check out the NVDA website for how to do this.
 
 When NVDA starts for the first time, you will be greeted by a dialog box which provides you with some basic information about the NVDA modifier key and the NVDA menu.
 (Please see further sections about these topics.)
-The dialog box also contains a combobox and three checkboxes.
-The combobox lets you select the keyboard layout.
+The dialog box also contains a combo box and three checkboxes.
+The combo box lets you select the keyboard layout.
 The first checkbox lets you control if NVDA should use the capslock as an NVDA modifier key.
 The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
 The third lets you control if this Welcome dialog should appear each time NVDA starts.
@@ -246,7 +249,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
 | Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
 | Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treated as an NVDA key command |
-| Toggle application sleep mode on and off | NVDA+shift+s | NVDA+shift+z | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable self voicing mode. |
+| Toggle application sleep mode on and off | NVDA+shift+s | NVDA+shift+z | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable sleep mode. |
 %kc:endInclude
 
 ++ Reporting System Information ++
@@ -577,6 +580,141 @@ For example, you can move through the expression with the left and right arrow k
 Please see the MathPlayer documentation for further information.
 
 When you wish to return to the document, simply press the escape key.
+
++ Braille +
+If you own a braille display, NVDA can display information in braille.
+If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
+
+Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
+You can configure braille using the [Braille Settings dialog #BrailleSettings].
+
+++ Control Type, State and Landmark abbreviations ++
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
+
+|| Abbreviation | Control type |
+| app | application |
+| bqt | block quote |
+| btn | button |
+| drbtn | drop down button |
+| spnbtn | spin button |
+| splbtn | split button |
+| tgbtn | toggle button |
+| cbo | combo box |
+| chk | checkbox |
+| dlg | dialog |
+| doc | document |
+| edt | editable text field |
+| pwdedt | password edit |
+| embedded | embedded object |
+| enote | end note |
+| fnote | foot note |
+| gra | graphic |
+| grp | grouping |
+| hN | heading at level n, e.g. h1, h2. |
+| hlp | help baloon |
+| lmk | landmark |
+| lnk | link |
+| vlnk | visited link |
+| lst | list |
+| mnu | menu |
+| mnubar | menu bar |
+| mnubtn | menu button |
+| mnuitem | menu item |
+| pnl | panel |
+| prgbar | progress bar |
+| rbtn | radio button |
+| scrlbar | scroll bar |
+| sect | section |
+| stbar | status bar |
+| tabctl | tab control |
+| tbl | table |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| term | terminal |
+| tlbar | tool bar |
+| tltip | tool tip |
+| tv | tree view |
+| tvbtn | tree view button |
+| tvitem | tree view item |
+| lv N | a tree view item has a hierarchical level N|
+| wnd | window |
+| ⠤⠤⠤⠤⠤ | separator |
+
+The following state indicators are also defined:
+|| Abbreviation | Control state |
+| ... | displayed when an object supports autocompletion |
+| ⢎⣿⡱ | displayed when an object (e.g. a toggle button) is pressed |
+| ⢎⣀⡱ | displayed when an object (e.g. a toggle button) is not pressed |
+| ⣏⣿⣹ | displayed when an object (e.g. a checkbox) is checked |
+| ⣏⣸⣹ | displayed when an object (e.g. a checkbox) is half checked |
+| ⣏⣀⣹ | displayed when an object (e.g. a checkbox) is not checked |
+| - | displayed when an object (e.g. a tree view item) is collapsible |
+| + | displayed when an object (e.g. a tree view item) is Expandable |
+| *** | displayed when a protected control or document is encountered |
+| clk | displayed when an object is clickable |
+| cmnt | displayed when there is a comment for a spreadsheet cell or piece of text in a document |
+| frml | displayed when there is a formula on a spreadsheet cell |
+| invalid | displayed when an invalid entry has been made |
+| ldesc | displayed when an object (usually a graphic) has a long description |
+| mln | displayed when an edit field allows typing multiple lines of text such as comment fields on websites |
+| req | displayed when a required form field is encountered |
+| ro | displayed when an object (e.g. an editable text field) is read-only |
+| sel | displayed when an object is selected |
+| nsel | displayed when an object is not selected |
+| sorted asc | displayed when an object is sorted ascending |
+| sorted desc | displayed when an object is sorted descending |
+| submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
+
+++ Braille Input ++
+NVDA supports entry of both uncontracted and contracted braille via a braille keyboard.
+You can select the translation table used to translate braille into text using the [Input table #BrailleInputTable] setting in the Braille Settings dialog.
+
+When uncontracted braille is being used, text is inserted as soon as it is entered.
+When using contracted braille, text is inserted when you press space or enter at the end of a word.
+Note that translation can only reflect the braille word you are typing and cannot consider existing text.
+For example, if you are using a braille code that begins numbers with a number sign and you press backspace to move to the end of a number, you will need to type the number sign again to enter additional numbers.
+
+%kc:beginInclude
+Pressing dot 7 erases the last entered braille cell or character.
+Dot 8 translates any braille input and presses the enter key.
+Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
+%kc:endInclude
+
++ Content Recognition +
+When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
+NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images.
+Additional content recognizers can be provided in NVDA add-ons.
+
+When you use a content recognition command, NVDA recognizes content from the current [navigator object #ObjectNavigation].
+By default, the navigator object follows the system focus or browse mode cursor, so you can usually just move the focus or browse mode cursor where desired.
+For example, if you move the browse mode cursor to a graphic, recognition will recognize content from the graphic by default.
+However, you may wish to use object navigation directly to, for example, recognize the content of an entire application window.
+
+Once recognition is complete, the result will be presented in a document similar to browse mode, allowing you to read the information with cursor keys, etc.
+Pressing enter or space will activate (normally click) the text at the cursor if possible.
+Pressing escape dismisses the recognition result.
+
+++ Windows 10 OCR ++[Win10Ocr]
+Windows 10 includes OCR for many languages.
+NVDA can use this to recognize text from images or inaccessible applications.
+
+You can set the language to use for text recognition in the [Windows 10 OCR #Win10OcrSettings] settings dialog.
+Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
+
+%kc:beginInclude
+To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.
+%kc:endInclude
 
 + Application Specific Features +
 NVDA provides its own extra features  for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
@@ -912,7 +1050,7 @@ If you wish to quickly change speech settings without going to the Voice setting
 | Decrement current synth setting | NVDA+control+downArrow | NVDA+shift+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
 %kc:endInclude
 
-+++ Braille Settings +++
++++ Braille Settings +++[BrailleSettings]
 The braille settings dialog box can be invoked by going to the preferences menu and then to the braille settings option.
 
 ==== Braille Display ====
@@ -942,10 +1080,9 @@ In this combo box, you will find braille tables for different languages, braille
 The chosen table will be used to translate text into braille to be presented on your braille display.
 You can move from braille table to braille table in the list by using the arrow keys.
 
-==== Input Table ====
+==== Input Table ====[BrailleInputTable]
 Complementary to the previous option, the next setting you will find is the braille input table combo box.
 The chosen table will be used to translate braille entered on your braille display's Perkins-style keyboard into text.
-NVDA currently only supports computer braille input, so only 8 dot computer braille tables will be shown.
 You can move from braille table to braille table in the list by using the arrow keys.
 
 Note that this option is only useful if your braille display has a Perkins-style keyboard and this feature is supported by the braille display driver.
@@ -961,13 +1098,18 @@ It applies to the system caret and review cursor, but not to the selection indic
 ==== Blink Cursor ====
 This option allows the braille cursor to blink.
 If blinking is turned off, the braille cursor will constantly be in the "up" position.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 ==== Cursor Blink Rate (ms) ====
 This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
 
-==== Cursor Shape ====
-This option allows you to choose the shape (dot pattern) of the braille cursor.
-The selection indicator is not affected by this option.
+==== Cursor Shape for Focus ====
+This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to focus.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
+
+==== Cursor Shape for Review ====
+This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
@@ -1000,6 +1142,32 @@ If this is disabled, as much of the word as possible will be displayed, but the 
 When you scroll the display, you will then be able to read the rest of the word.
 
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+
+==== Focus context presentation ====
+This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
+Context information refers to the hierarchy of objects containing the focus.
+For example, when you focus a list item, this list item is part of a list.
+This list might be contained by a dialog, etc.
+Please consult the section about [object navigation #ObjectNavigation] for more information about the hierarchy that applies to objects in NVDA.
+
+When set to fill display for context changes, NVDA will try to display as much context information as possible on the braille display, but only for the parts of the context that have changed.
+For the example above, this means that when changing focus to the list, NVDA will show the list item on the braille display.
+Furthermore, if there is enough space left on the braille display, NVDA will try to show that the list item is part of a list.
+If you then start moving through the list with your arrow keys, it is assumed that you are aware that you are still in the list.
+Thus, for the remaining list items you focus, NVDA will only show the focused list item on the display.
+In order for you to read the context again (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+
+When this option is set to always fill the display, NVDA will try to show as much context information as possible on the braille display, regardless of whether you have seen the same context information before.
+This has the advantage that NVDA will fit as much information as possible on the display.
+However, the downside is that there is always a difference in the position where the focus starts on the braille display.
+This can make it difficult to skim a long list of items, for example, as you will need to continually move your finger to find the start of the item.
+This was the default behavior for NVDA 2017.2 and before.
+
+When you set the focus context presentation option to only show the context information when scrolling back, NVDA never shows context information on your braille display by default.
+Thus, in the example above, NVDA will display that you focused a list item.
+However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+
+To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 +++ Keyboard Settings (NVDA+control+k) +++
 This dialog box is found in the Preferences menu, under "Keyboard settings...".
@@ -1044,7 +1212,7 @@ If on, certain navigation commands (such as quick navigation in browse mode or m
 
 ==== Beep if Typing Lowercase Letters when Caps Lock is On ====
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
-Generally, typing shifted letters with caps lock is unintentional and is usually due to not realising that caps lock is enabled.
+Generally, typing shifted letters with caps lock is unintentional and is usually due to not realizing that caps lock is enabled.
 Therefore, it can be quite helpful to be warned about this.
 
 %kc:setting
@@ -1088,7 +1256,7 @@ The higher the mouse is on the screen, the higher the pitch of the beeps.
 The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
 
 ==== Brightness controls audio coordinates volume ====
-If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse.
+If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controlled by how bright the screen is under the mouse.
 This setting is unchecked by default.
 
 +++ Review Cursor Settings +++
@@ -1179,8 +1347,8 @@ Note that due to the fact that input methods vary greatly by available features 
 
 ==== Automatically report all available candidates ====
 This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
-Having this option on for pictographic input methods such as chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
-However, for phonetic input methods such as chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
+Having this option on for pictographic input methods such as Chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
+However, for phonetic input methods such as Chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
 
 ==== Announce Selected Candidate ====
 This option, which is on by default, allows you to choose whether NVDA should announce the selected candidate when a candidate list appears or when the selection is changed.
@@ -1190,7 +1358,7 @@ Note that even with this option off, the review cursor will still be placed on t
 ==== Always include short character descriptions for candidates ====
 This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when it's selected or when it's automatically read when the candidate list appears.
 Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
-This option may be useful for Korean and japanese input methods.
+This option may be useful for Korean and Japanese input methods.
 
 ==== Report changes to the reading string ====
 Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
@@ -1255,7 +1423,7 @@ This dialog box is found in the Preferences menu, under "Document Formatting..."
 Most of the checkboxes in this dialog are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
-The document formatting options are organised into groups.
+The document formatting options are organized into groups.
 You can configure reporting of:
 - Font
  - Font name
@@ -1273,7 +1441,7 @@ You can configure reporting of:
  - Line numbers
  - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #lineIndentationOptions]
  - Paragraph indentation (e.g. hanging indent, first line indent)
- - Line spacing (single, double etc)
+ - Line spacing (single, double, etc.)
  - Alignment
 - Table information
  - Tables
@@ -1311,6 +1479,12 @@ The Report line indentation with combo box has four options.
 The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
 - Both Speech and Tones: This option reads indentation using both of the above methods.
 -
+
++++ Windows 10 OCR Settings +++[Win10OcrSettings]
+This dialog can be accessed from the NVDA Preferences menu and allows you to configure [Windows 10 OCR #Win10Ocr].
+
+==== Recognition language ====
+This combo box allows you to choose the language to be used for text recognition.
 
 +++ Speech dictionaries +++
 The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases.
@@ -1484,9 +1658,9 @@ For example, you might wish to edit a manually activated profile or your normal 
 You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
 
 ++ Location of Configuration files ++
-Portable versions of NVDA store all settings, custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.
+Portable versions of NVDA store all settings and add-ons in a directory called userConfig, found in the NVDA directory.
 
-Installed versions of NVDA store all settings, custom appModules and custom drivers in a special NVDA directory located in your Windows user profile.
+Installed versions of NVDA store all settings and add-ons in a special NVDA directory located in your Windows user profile.
 This means that each user on the system can have their own NVDA settings.
 To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
 
@@ -1497,7 +1671,7 @@ To change NVDA's configuration on the logon/UAC screens, configure NVDA as you w
 + Extra Tools +
 
 ++ Log Viewer ++
-The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occured up until now from when you last started NVDA.
+The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occurred up until now from when you last started NVDA.
 
 Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it shows the most recent output since the Log viewer was opened.
 These actions are available under the viewer's Log menu.
@@ -1609,7 +1783,7 @@ To use these voices, you will need to install two components:
 Windows 10 includes new voices known as "OneCore" or "mobile" voices.
 Voices are provided for many languages, and they are more responsive than the Microsoft voices available using Microsoft Speech API version 5.
 
-To install voices for additional languages, see this Microsoft article: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
+Please see this Microsoft article for a list of available voices and instructions to install them: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 Please note that the faster rates available with Narrator are not currently available with NVDA.
 Also, the speed you select in the Windows Settings affects the rate set in NVDA.
@@ -1661,8 +1835,6 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move back using right wiz wheel action | rightWizWheelUp |
 | Move forward using right wiz wheel action | rightWizWheelDown |
 | Route to braille cell | routing |
-| backspace key | dot7 |
-| enter key | dot8 |
 | shift+tab key | brailleSpaceBar+dot1+dot2 |
 | tab key | brailleSpaceBar+dot4+dot5 |
 | upArrow key | brailleSpaceBar+dot1 |
@@ -1904,8 +2076,6 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | dot1+dot3+dot4+Space |
 | escape key | dot1+dot5+Space |
 | tab key | dot4+dot5+Space |
-| enter key | dot8 |
-| backspace key | dot7 |
 | upArrow key | dot1+Space |
 | downArrow key | dot4+Space |
 | capsLock | dot1+dot3+dot6+space |
@@ -2052,8 +2222,6 @@ The inner keys are both mapped to space.
 
 || Name | Key |
 %kc:beginInclude
-| backspace key | dot 7 |
-| enter key | dot 8 |
 | escape key | space with dot 7 |
 | upArrow key | space with dot 2 |
 | leftArrow key | space with dot 1 |
@@ -2187,8 +2355,8 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Control+home keys | space+dot1+dot2+dot3 |
 | Control+end keys | space+dot4+dot5+dot6 |
 | Space key | space |
-| Enter key | space+dot8 |
-| Backspace key | space+dot7 |
+| Enter | space+dot8 |
+| Backspace | space+dot7 |
 | Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
 | Shift+tab keys | space+dot1+dot2+dot5+dot6 |
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
@@ -2231,6 +2399,16 @@ Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/
 | Toggle braille tethered to | A |
 %kc:endInclude
 
+++ SuperBraille ++
+The SuperBraille device, mostly available in Taiwan, can be connected to by either USB or serial.
+As the SuperBraille does not have any physical typing keys or scrolling buttons, all input must be performed via a standard computer keyboard.
+Due to this, and to maintain compatibility with other screen readers in Taiwan, two key bindings for scrolling the braille display have been provided:
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | numpadMinus |
+| Scroll braille display forward | numpadPlus | 
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://www.brltty.com/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://www.brltty.com/download.html].
@@ -2250,55 +2428,6 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Move braille display to next line | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
-
-+ Braille control type, state and landmark abbreviations +
-In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
-
-|| Abbreviation | Control type |
-| btn | button |
-| cbo | combo box |
-| chk | checkbox |
-| dlg | dialog |
-| edt | editable text field |
-| gra | graphic |
-| cN | table column number n, e.g. c1, c2. |
-| rN | table row number n, e.g. r1, r2. |
-| hN | heading at level n, e.g. h1, h2. |
-| lnk | link |
-| vlnk | visited link |
-| lst | list |
-| lmk | landmark |
-| mnu | menu |
-| mnubar | menu bar |
-| rbtn | radio button |
-| tb | table |
-| tv | treeview |
-| lv N | a tree view item has a hierarchical level N|
-| ``-----`` | seperator |
-
-The following state indicators are also defined:
-|| Abbreviation | Control state |
-| ... | displayed when an object supports autocompletion |
-| ( ) | displayed when an object (e.g. a checkbox) is not checked |
-| (x) | displayed when an object (e.g. a checkbox) is checked |
-| (-) | displayed when an object (e.g. a checkbox) is half checked |
-| - | displayed when an object (e.g. a tree view item) is collapsible |
-| + | displayed when an object (e.g. a tree view item) is Expandable |
-| clk | displayed when an object is clickable |
-| ro | displayed when an object (e.g. an editable text field) is read-only |
-| sel | displayed when an object is selected |
-| submnu | displayed when an object has a popup (usually a sub-menu) |
-
-Finally, the following abbreviations for landmarks are defined:
-|| Abbreviation | Landmark |
-| bnnr | banner |
-| cinf | content info |
-| cmpl | complementary |
-| form | form |
-| main | main |
-| navi | navigation |
-| srch | search |
-| rgn | region |
 
 + Advanced Topics +
 
@@ -2324,7 +2453,7 @@ Some of the command line options accept additional parameters; e.g. how detailed
 Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
 | nvda -l 10 | Tells NVDA to start with log level set to debug |
 | nvda --log-file=c:\nvda.log |  Tells NVDA to write its log to c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Tels NVDA to start with log level set to info and to write its log to c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Tells NVDA to start with log level set to info and to write its log to c:\nvda.log |
 
 Following are the command line options for NVDA:
 || Short | Long | Description |
@@ -2335,7 +2464,7 @@ Following are the command line options for NVDA:
 | -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
-| -m | --minimal | No sounds, no interface, no start message etc |
+| -m | --minimal | No sounds, no interface, no start message, etc. |
 | -s | --secure | Secure mode (disable Python console) |
 | None | --disable-addons | Addons will have no effect |
 | None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given. |
@@ -2343,7 +2472,7 @@ Following are the command line options for NVDA:
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
 
-++ System wide parameters++[SystemWideParameters]
+++ System Wide Parameters ++[SystemWideParameters]
 NVDA allows some values to be set in the system registry which alter the system wide behavior of NVDA.
 These values are stored in the registry under one of the following keys:
 - 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"

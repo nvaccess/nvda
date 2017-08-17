@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -21,6 +21,7 @@ import eventHandler
 from scriptHandler import isScriptWaiting, willSayAllResume
 import textInfos
 import controlTypes
+from logHandler import log
 
 class EditableText(ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
@@ -42,37 +43,74 @@ class EditableText(ScriptableObject):
 	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
 	announceNewLineText=True
 
-	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
+	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
+
+	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
 		@param bookmark: a bookmark representing the position of the caret before  it was instructed to move
 		@type bookmark: bookmark
 		@param retryInterval: the interval of time in seconds this method should  wait before checking the caret each time.
 		@type retryInterval: float 
-		@param timeout: the over all amount of time in seconds the method should wait before giving up completely.
+		@param timeout: the over all amount of time in seconds the method should wait before giving up completely,
+			C{None} to use the value from the configuration.
 		@type timeout: float
+		@param origWord: The word at the caret before the movement command,
+			C{None} if the word at the caret should not be used to detect movement.
+			This is intended for use with the delete key.
 		@return: a tuple containing a boolean denoting whether this method timed out, and  a TextInfo representing the old or updated caret position or None if interupted by a script or focus event.
 		@rtype: tuple
- 		"""
+		"""
+		if timeout is None:
+			timeoutMs = config.conf["editableText"]["caretMoveTimeoutMs"]
+		else:
+			# This function's arguments are in seconds, but we want ms.
+			timeoutMs = timeout * 1000
+		# time.sleep accepts seconds, so retryInterval is in seconds.
+		# Convert to integer ms to avoid floating point precision errors when adding to elapsed.
+		retryMs = int(retryInterval * 1000)
 		elapsed = 0
 		newInfo=None
-		while elapsed < timeout:
+		while True:
 			if isScriptWaiting():
 				return (False,None)
 			api.processPendingEvents(processEventQueue=False)
 			if eventHandler.isPendingEvents("gainFocus"):
+				log.debug("Focus event. Elapsed: %d ms" % elapsed)
 				return (True,None)
-			#The caret may stop working as the focus jumps, we want to stay in the while loop though
+			# If the focus changes after this point, fetching the caret may fail,
+			# but we still want to stay in this loop.
 			try:
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-				newBookmark = newInfo.bookmark
 			except (RuntimeError,NotImplementedError):
-				newInfo=None
-			else:
-				if newBookmark!=bookmark:
-					return (True,newInfo)
+				newInfo = None
+			# Caret events are unreliable in some controls.
+			# Try to detect with bookmarks.
+			newBookmark = None
+			if newInfo:
+				try:
+					newBookmark = newInfo.bookmark
+				except (RuntimeError,NotImplementedError):
+					pass
+			if newBookmark and newBookmark!=bookmark:
+				log.debug("Caret move detected using bookmarks. Elapsed: %d ms" % elapsed)
+				return (True, newInfo)
+			if origWord is not None and newInfo and elapsed >= self._hasCaretMoved_minWordTimeoutMs:
+				# When pressing delete, bookmarks might not be enough to detect caret movement.
+				# Therefore try detecting if the word under the caret has changed, such as when pressing delete.
+				# some editors such as Mozilla Gecko can have text and units that get out of sync with eachother while a character is being deleted.
+				# Therefore, only check if the word has changed after a particular amount of time has elapsed, allowing the text and units to settle down.
+				wordInfo = newInfo.copy()
+				wordInfo.expand(textInfos.UNIT_WORD)
+				word = wordInfo.text
+				if word != origWord:
+					log.debug("Word at caret changed. Elapsed: %d ms" % elapsed)
+					return (True, newInfo)
+			if elapsed >= timeoutMs:
+				break
 			time.sleep(retryInterval)
-			elapsed += retryInterval
+			elapsed += retryMs
+		log.debug("Caret didn't move before timeout. Elapsed: %d ms" % elapsed)
 		return (False,newInfo)
 
 	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
@@ -198,9 +236,11 @@ class EditableText(ScriptableObject):
 			gesture.send()
 			return
 		bookmark=info.bookmark
+		info.expand(textInfos.UNIT_WORD)
+		word=info.text
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		caretMoved,newInfo=self._hasCaretMoved(bookmark)
+		caretMoved,newInfo=self._hasCaretMoved(bookmark,origWord=word)
 		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,gesture,newInfo)
 		braille.handler.handleCaretMove(self)
 
@@ -235,6 +275,7 @@ class EditableText(ScriptableObject):
 			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
+		self.isTextSelectionAnchoredAtStart=True
 		self.hasContentChangedSinceLastSelection=False
 
 	def detectPossibleSelectionChange(self):
@@ -249,10 +290,19 @@ class EditableText(ScriptableObject):
 		self._lastSelectionPos=newInfo.copy()
 		if not oldInfo:
 			# There's nothing we can do, but at least the last selection will be right next time.
+			self.isTextSelectionAnchoredAtStart=True
 			return
+		self._updateSelectionAnchor(oldInfo,newInfo)
 		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
 		self.hasContentChangedSinceLastSelection=False
 		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
+
+	def _updateSelectionAnchor(self,oldInfo,newInfo):
+		# Only update the value if the selection changed.
+		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
+			self.isTextSelectionAnchoredAtStart=False
+		elif newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
+			self.isTextSelectionAnchoredAtStart=True
 
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
@@ -262,6 +312,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	def reportSelectionChange(self, oldTextInfo):
 		api.processPendingEvents(processEventQueue=False)
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		self._updateSelectionAnchor(oldTextInfo,newInfo)
 		speech.speakSelectionChange(oldTextInfo,newInfo)
 		braille.handler.handleCaretMove(self)
 

@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """High-level functions to speak information.
 """ 
@@ -11,6 +11,7 @@
 import itertools
 import weakref
 import unicodedata
+import time
 import colors
 import globalVars
 from logHandler import log
@@ -326,7 +327,16 @@ def _speakPlaceholderIfEmpty(info, obj, reason):
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
-	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
+	# Choose when we should report the content of this object's textInfo, rather than just the object's value
+	import browseMode
+	shouldReportTextContent=not (
+		# focusEntered should never present text content
+		(reason==controlTypes.REASON_FOCUSENTERED) or
+		# The rootNVDAObject of a browseMode document in browse mode (not passThrough) should never present text content
+		(isinstance(obj.treeInterceptor,browseMode.BrowseModeDocumentTreeInterceptor) and not obj.treeInterceptor.passThrough and obj==obj.treeInterceptor.rootNVDAObject) or
+		# objects that do not report as having navigableText should not report their text content either
+		not obj._hasNavigableText
+	)
 	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
@@ -360,13 +370,13 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		# We definitely aren't reporting any table info at all.
 		allowProperties["rowNumber"]=False
 		allowProperties["columnNumber"]=False
-	if isEditable:
+	if shouldReportTextContent:
 		allowProperties['value']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
 	if reason==controlTypes.REASON_ONLYCACHE:
 		return
-	if isEditable:
+	if shouldReportTextContent:
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
@@ -618,11 +628,32 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				# Translators: Reported when selection is removed.
 				speakMessage(_("selection removed"))
 
+#: The number of typed characters for which to suppress speech.
+_suppressSpeakTypedCharactersNumber = 0
+#: The time at which suppressed typed characters were sent.
+_suppressSpeakTypedCharactersTime = None
+def _suppressSpeakTypedCharacters(number):
+	"""Suppress speaking of typed characters.
+	This should be used when sending a string of characters to the system
+	and those characters should not be spoken individually as if the user were typing them.
+	@param number: The number of characters to suppress.
+	@type number: int
+	"""
+	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
+	_suppressSpeakTypedCharactersNumber += number
+	_suppressSpeakTypedCharactersTime = time.time()
+
+#: The character to use when masking characters in protected fields.
+PROTECTED_CHAR = "*"
+#: The first character which is not a Unicode control character.
+#: This is used to test whether a character should be spoken as a typed character;
+#: i.e. it should have a visual or spatial representation.
+FIRST_NONCONTROL_CHAR = u" "
 def speakTypedCharacters(ch):
-	global curWordChars;
+	global curWordChars
 	typingIsProtected=api.isTypingProtected()
 	if typingIsProtected:
-		realChar="*"
+		realChar=PROTECTED_CHAR
 	else:
 		realChar=ch
 	if unicodedata.category(ch)[0] in "LMN":
@@ -640,7 +671,19 @@ def speakTypedCharacters(ch):
 			log.io("typed word: %s"%typedWord)
 		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
-	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
+	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
+	if _suppressSpeakTypedCharactersNumber > 0:
+		# We primarily suppress based on character count and still have characters to suppress.
+		# However, we time out after a short while just in case.
+		suppress = time.time() - _suppressSpeakTypedCharactersTime <= 0.1
+		if suppress:
+			_suppressSpeakTypedCharactersNumber -= 1
+		else:
+			_suppressSpeakTypedCharactersNumber = 0
+			_suppressSpeakTypedCharactersTime = None
+	else:
+		suppress = False
+	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
 		speakSpelling(realChar)
 
 class SpeakTextInfoState(object):

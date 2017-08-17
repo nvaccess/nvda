@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-23 00:10+1000\n"
-"PO-Revision-Date: 2017-06-26 20:20+0530\n"
+"POT-Creation-Date: 2017-08-14 08:17+1000\n"
+"PO-Revision-Date: 2017-08-12 09:29+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -83,6 +83,7 @@ msgid "unknown input method"
 msgstr "தெரியாத உள்ளீட்டு முறை"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
+#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{layout} - {language} "
 
@@ -92,37 +93,42 @@ msgid "Error in appModule %s"
 msgstr "%s பயன்பாட்டு நிரற்கூறில் பிழை"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "பதாகை"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "நிறைவுண்டாக்கும்"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
 msgstr "உள்ளடக்கத் தகவல்"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "முதன்மை"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "வழிநடத்துதல்"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "தேடுக"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "படிவம்"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "மண்டலம்"
 
@@ -141,15 +147,431 @@ msgstr "பேசும்பொழுதும், ஒலியை எழுப
 msgid "Always duck"
 msgstr "பின்னணி ஒலியை எப்பொழுதும் தாழ்த்தி வைத்திருக்கும்"
 
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "wnd"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "chk"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "rbtn"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "edt"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "btn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "mnubar"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "mnuitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "cbo"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "gra"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "hlp"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "tltip"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "lnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "tv"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "tvitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "tabctl"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "prgbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "scrlbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "stbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "tbl"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "tlbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "drbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "bqt"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "doc"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "app"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "grp"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "embedded"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "enote"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "fnote"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "term"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "sect"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "tgbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "splbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "mnubtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "spnbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "tvbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "pnl"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "pwdedt"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "sel"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "ro"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "submnu"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "req"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "invalid"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "mln"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "clk"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "sorted asc"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "sorted desc"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "ldesc"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "frml"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "cmnt"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "nsel"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "bnnr"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "cmpl"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "cinf"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "main"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "navi"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "srch"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "form"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "புள்ளிகள் 7, 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "புள்ளி 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "எல்லாப் புள்ளிகளும்"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "உள்ளடக்க மாற்றங்களுக்கு காட்சியமைவை நிரப்புக"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "காட்சியமைவை எப்பொழுதும் நிரப்புக"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "பின்னுருட்டும்பொழுது மட்டும்"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "த%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "வரு"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "%s இல்லை"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{total}ல் {number} "
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "மட் %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "கி%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "செ%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "%s முடிவு"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "தன்னியக்கம்"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "புள்ளி"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "புள்ளியுடன் கூடிய இடைவெளி"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "இடைவெளி"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "பிரெயில் விசைப்பலகை"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "ஏதேனுமொரு புள்ளியுடன் கூடிய இடைவெளி"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "புள்ளிகள் எதுவானாலும்"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "அரபி படிநிலை 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "ஃபார்சி படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -180,6 +602,11 @@ msgstr "வெல்ஷ் படிநிலை 2"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "செக் படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "டேனிஷ்  8 புள்ளி கணினி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -223,6 +650,11 @@ msgstr "ஜெர்மானிய படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "கிரேக்கம் (கிரீஸ்)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "ஆங்கிலம் (இங்கிலாந்து) 8 புள்ளி கணினி பிரெயில்"
 
@@ -235,6 +667,16 @@ msgstr "ஆங்கிலம் (இங்கிலாந்து) படி�
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "ஆங்கிலம் (இங்கிலாந்து) படிநிலை 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "ஒருங்கிணைந்த ஆங்கில பிரெயில் குறி படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "ஒருங்கிணைந்த ஆங்கில பிரெயில் குறி படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -275,6 +717,16 @@ msgstr "எஸ்தோனிய படிநிலை 0"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "எத்தியோப்பிய படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "பாரசீகம் 8 புள்ளி கணினி பிரெயில்"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "பாரசீகம் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -330,11 +782,6 @@ msgstr "குஜராத்தி படிநிலை 1"
 #. braille settings dialog.
 msgid "Koine Greek"
 msgstr "காய்ன் கிரேக்கம்"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "கிரேக்கம் (கிரீஸ்) படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -405,6 +852,11 @@ msgstr "கொரிய படிநிலை 2"
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
 msgstr "காஷ்மீரம் படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian"
+msgstr "லித்துவேனியம்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -533,8 +985,13 @@ msgstr "ஸ்லோவாக்கிய  படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
-msgstr "ஸ்லோவீன் படிநிலை 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "ஸ்லோவீனிய 8 புள்ளி கணினி பிரெயில்"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
+msgstr "ஸ்லோவீனியம் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -558,13 +1015,8 @@ msgstr "துருக்கிய படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "ஒருங்கிணைந்த ஆங்கில பிரெயில் குறி படிநிலை 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "ஒருங்கிணைந்த ஆங்கில பிரெயில் குறி படிநிலை 2"
+msgid "Unicode braille"
+msgstr "ஒருங்குறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -575,224 +1027,6 @@ msgstr "சீனம் (ஹாங்காங், காண்டோனீஸ�
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "சீனம் (தைவான், மாண்டரீன்)"
-
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "தொகு"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "வபட்"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "கிபட்"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "பட்"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "பொத்"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "தேர்"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "வாபொ"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "சேர்"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "தொடு"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "உரை"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "கிளை"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "அட்"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "வரை"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "தெரி"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "உபட்"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "பம"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "சொடு"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
-msgid "bnnr"
-msgstr "பதக"
-
-#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
-msgid "cmpl"
-msgstr "நிறை"
-
-#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
-msgid "cinf"
-msgstr "உள்தக"
-
-#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
-msgid "navi"
-msgstr "வழி"
-
-#. Translators: Displayed in braille for the search landmark, normally found on web pages.
-msgid "srch"
-msgstr "தேடு"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgid "rgn"
-msgstr "மண்ட"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "புள்ளிகள் 7, 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "புள்ளி 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "எல்லாப் புள்ளிகளும்"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "த%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "வரு"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "%s இல்லை"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-msgid "{number} of {total}"
-msgstr "{total}ல் {number} "
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "மட் %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "கி%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "செ%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "%s முடிவு"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "தன்னியக்கம்"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "பிரெயில் "
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "புள்ளியுடன் கூடிய இடைவெளி"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "புள்ளி"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "இடைவெளி"
 
 msgid "Focus mode"
 msgstr "குவிமைய நிலை"
@@ -1265,6 +1499,22 @@ msgstr "முந்தைய விளக்கவுரைக்கு நக�
 msgid "no previous annotation"
 msgstr "முந்தைய விளக்கவுரை ஏதுமில்லை"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "அடுத்த பிழைக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "அடுத்த பிழை ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "முந்தைய பிழைக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "முந்தைய பிழை ஏதுமில்லை"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1539,61 +1789,73 @@ msgid "pink-red"
 msgstr "இளஞ்சிவப்பு-சிவப்பு"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "ஒளிர் {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "அடர் {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "அடர் கரு {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "இளம்வெளிர் {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "வெளிர் {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "அடர் வெளிர் {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "மிகையடர் வெளிர் {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} வெள்ளை"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} சாம்பல்"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "அடர் {color} சாம்பல்"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "மிகக் கருமையான {color} சாம்பல்"
@@ -1772,6 +2034,10 @@ msgstr "கடிகாரம்"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "பிரிப்பான்"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "படிவம்"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -2121,7 +2387,8 @@ msgid "bold"
 msgstr "அடர்த்தி"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
+#. Translators: Reported when text is italicized.
+msgid "italic"
 msgstr "சாய்வு"
 
 #. Translators: Describes text formatting.
@@ -2348,13 +2615,13 @@ msgstr "பூட்டப்படாதது"
 msgid "not selected"
 msgstr "தெரிவாகாதது"
 
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "தேர்வாகாதது"
-
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
 msgstr "அழுத்தப்படாதது"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "தேர்வாகாதது"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -3519,6 +3786,7 @@ msgid "AC power on"
 msgstr "மாறுதிசை மின்னோட்டம் இயக்கத்திலுள்ளது"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} மணி நேரம், {minutes:d} நிமிடங்கள் எஞ்சியுள்ளன"
 
@@ -3685,6 +3953,17 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "பிரெயில் கட்டப்படுவதை, குவிமையம், சீராய்வு, ஆகிய இரு நிலைகளுக்கிடையே மாற்றியமைக்கிறது"
 
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "பிரெயில் குவிமைய சூழலளிக்கை: %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "சூழலுணர்த்தும் தகவல் பிரெயிலில் காட்டப்படும் விதத்தை மாற்றியமைக்கவும்"
+
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
 msgstr "பிரெயில் சுட்டி இயங்காது"
@@ -3800,6 +4079,18 @@ msgstr "பிரெயில் விசைப் பலகை மூலம்
 msgid "Moves the braille display to the current focus"
 msgstr "பிரெயில் காட்சியமைவை தற்போதைய குவிமையத்திற்கு நகர்த்தும்"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "இறுதியாக உள்ளிடப்பட்ட பிரெயில் குறியை, அல்லது வரியுருவை அழிக்கிறது"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr "எந்தவொரு பிரெயில் உள்ளீட்டினையும் மொழிபெயர்த்து உள்ளிடு விசையை அழுத்துகிறது"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "எந்தவொரு பிரெயில் உள்ளீட்டினையும் மொழிபெயர்க்கிறது"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "உட்பொருத்திகள் மீளேற்றம் செய்யப்பட்டன"
@@ -3858,6 +4149,16 @@ msgstr "கணக்கு அல்ல"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "கணக்குடனான அளவளாவலைத் துவக்குகிறது"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "விண்டோஸ் 10 எழுத்துணரி கிடைப்பிலில்லை"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr ""
+"விண்டோஸ் 10 எழுத்துணரியைக் கொண்டு நடப்பு வழிகாட்டிப் பொருளின் உள்ளடக்கத்தை உணருகிறது"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4342,10 +4643,9 @@ msgstr "8 முனை நட்சத்திர வடிவம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Arc"
-msgstr "Arabic"
+msgstr "வளைவு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4355,24 +4655,21 @@ msgstr "குமிழி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bent arrow"
-msgstr "இடதம்பு"
+msgstr "வளைந்த அம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bent Up Arrow"
-msgstr "இடதம்பு"
+msgstr "வளைந்த மேலம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bevel"
-msgstr "நிலை"
+msgstr "சாய்தளம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4388,24 +4685,21 @@ msgstr "தகரக் குவளை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart Plus symbol"
-msgstr "தெரிவாகியுள்ள குறியெழுத்தை மாற்றுக"
+msgstr "குறியுடனான விளக்கப்படம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart Star Symbol"
-msgstr "விளக்கப்படத்தின் பகுதி"
+msgstr "நட்சத்திரக் குறி விளக்கப்படம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart X Symbol"
-msgstr "குறியெழுத்து"
+msgstr "X குறி விளக்கப்படம் "
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4435,7 +4729,7 @@ msgstr "முகில் வடிவம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cloud callout"
-msgstr "முகில் வடிவ உரைக்காட்டி"
+msgstr "முகில் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4463,17 +4757,15 @@ msgstr "கன சதுரம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Down Arrow"
-msgstr "கீழம்பு"
+msgstr "வளைந்த கீழம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Ribbon banner"
-msgstr "பதாகை"
+msgstr "நாடாப் பதாகை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4483,17 +4775,15 @@ msgstr "வலைந்த இடதம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Right Arrow"
-msgstr "வலதம்பு"
+msgstr "வளைந்த வலதம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Up Arrow"
-msgstr "மேலம்பு"
+msgstr "வளைந்த மேலம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4509,7 +4799,6 @@ msgstr "பதின்கோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Diagonal stripe"
 msgstr "சாய்வுப் பட்டைக்கோடு"
@@ -4530,7 +4819,7 @@ msgstr "பன்னிருகோணம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Donut"
-msgstr ""
+msgstr "முப்பரிமாண வளைவு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4560,190 +4849,187 @@ msgstr "கீழம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr ""
+msgstr "கீழம்புச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Explosion"
-msgstr ""
+msgstr "சிதறல்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Alternate process flowchart symbol"
-msgstr ""
+msgstr "மாற்றுச் செயலாக்க வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Card flowchart symbol"
-msgstr "தெரிவாகியுள்ள குறியெழுத்தை மாற்றுக"
+msgstr "அட்டை வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Collate flowchart symbol"
-msgstr "தெரிவாகியுள்ள குறியெழுத்தை மாற்றுக"
+msgstr "திரட்டு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Connector flowchart symbol"
-msgstr ""
+msgstr "இணைப்பி வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Data flowchart symbol"
-msgstr ""
+msgstr "தரவு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Decision flowchart symbol"
-msgstr ""
+msgstr "தீர்மான வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Delay flowchart symbol"
-msgstr ""
+msgstr "தாமத வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Direct access storage flowchart symbol"
-msgstr ""
+msgstr "நேரடி அணுகல் சேமிப்பக வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Display flowchart symbol"
-msgstr ""
+msgstr "காட்சியமைவு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Document flowchart symbol"
-msgstr "ஆவணத் தகவல்"
+msgstr "ஆவண வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Extract flowchart symbol"
-msgstr ""
+msgstr "பிரித்தெடுப்பு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Internal storage flowchart symbol"
-msgstr ""
+msgstr "உட்சேமிப்பக வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Magnetic disk flowchart symbol"
-msgstr ""
+msgstr "காந்த வட்டு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual input flowchart symbol"
-msgstr ""
+msgstr "கைமுறை உள்ளீட்டு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual operation flowchart symbol"
-msgstr ""
+msgstr "கைமுறை இயக்க வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Merge flowchart symbol"
-msgstr ""
+msgstr "ஒன்றிணைந்த வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Multi-document flowchart symbol"
-msgstr ""
+msgstr "பல்லாவண வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Offline storage flowchart symbol"
-msgstr ""
+msgstr "முடக்கலை சேமிப்பக வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Off-page connector flowchart symbol"
-msgstr ""
+msgstr "பக்கத் தொடர்பிலா இணைப்பி வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'Or' flowchart symbol"
-msgstr ""
+msgstr "'அல்லது' வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Predefined process flowchart symbol"
-msgstr ""
+msgstr "முன்தீர்மானிக்கப்பட்ட செயலாக்க வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Preparation flowchart symbol"
-msgstr ""
+msgstr "ஆயத்த வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Process flowchart symbol"
-msgstr ""
+msgstr "செயலாக்க வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr ""
+msgstr "துளையிடப்பட்ட நாடா வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr ""
+msgstr "தொடரணுகல் சேமிப்பக வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sort flowchart symbol"
-msgstr ""
+msgstr "வகைப்படுத்தப்பட்ட வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Stored data flowchart symbol"
-msgstr ""
+msgstr "சேமிக்கப்பட்டத் தரவு வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Summing junction flowchart symbol"
-msgstr ""
+msgstr "கூட்டிணைப்பிட வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Terminator flowchart symbol"
-msgstr ""
+msgstr "முடித்துவைப்பி வழிப்படக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4761,25 +5047,25 @@ msgstr "செவ்வகப் படச் சட்டகம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Funnel"
-msgstr ""
+msgstr "கூம்புக் குழாய்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with six teeth"
-msgstr ""
+msgstr "அறுமுனை பற்சக்கரம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with nine teeth"
-msgstr ""
+msgstr "ஒன்பது முனை பற்சக்கரம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Half of rectangular picture frame"
-msgstr ""
+msgstr "அரைச் செவ்வகப் படச் சட்டகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4791,26 +5077,25 @@ msgstr "இதயம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heptagon"
-msgstr ""
+msgstr "எழுகோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Hexagon"
-msgstr ""
+msgstr "அறுகோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Horizontal scroll"
-msgstr "கிடைப் பட்டைக்கோடு"
+msgstr "கிடை உருளை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Isosceles triangle"
-msgstr ""
+msgstr "இருசமப்பக்க முக்கோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4822,7 +5107,7 @@ msgstr "இடதம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Left Arrow"
-msgstr ""
+msgstr "இடதம்புச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4840,7 +5125,7 @@ msgstr "இடதடைப்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Counter-clockwise Circular arrow"
-msgstr ""
+msgstr "இடஞ்சுழி வட்ட அம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4852,7 +5137,7 @@ msgstr "இரட்டை முனை கிடையம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr ""
+msgstr "இரட்டை முனை கிடையம்புச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4864,114 +5149,112 @@ msgstr "இரட்டை முனை வட்ட அம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Ribbon with left and right arrows"
-msgstr ""
+msgstr "இடது வலது அம்புகளைக் கொண்ட நாடா"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left right and up Arrows"
-msgstr "வலதம்பு"
+msgstr "இடது வலது மேல் அம்புகள்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left and up Arrows"
-msgstr "இடதம்பு"
+msgstr "இடது மேல் அம்புகள்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Lightning bolt"
-msgstr "வலது நிலை மாற்றி"
+msgstr "மின்னல் பொறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line Callout"
-msgstr ""
+msgstr "வரிச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with horizontal accent bar"
-msgstr ""
+msgstr "கிடை வலியுறுத்துப் பட்டைச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border and horizontal accent bar"
-msgstr ""
+msgstr "ெல்லைக் கோடு மற்றும் கிடை வலியுறுத்துப் பட்டைச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr "மெல்லிய கிடைப் பட்டைக் கோடு"
+msgstr "கிடைக் கோட்டுச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Callout with diagonal straight line"
-msgstr "மெல்லிய சாய்வுப் பட்டைக்கோடு"
+msgstr "குறுக்கு நேர் கோட்டுச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with diagonal callout line and accent bar"
-msgstr ""
+msgstr "மூலைவிட்ட சுட்டுரைக் கோடும் வலியுறுத்துப் பட்டையும் கொண்ட சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr ""
+msgstr "எல்லைக் கோடும், மூலைவிட்ட நேர்க் கோடும் வலியுறுத்துப் பட்டையும் கொண்ட சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and diagonal callout line"
-msgstr ""
+msgstr "எல்லைக் கோடும், மூலைவிட்ட சுட்டுரைக் கோடும் அற்ற சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled line"
-msgstr ""
+msgstr "கோணத்தையுடைய கோட்டுச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled callout line and accent bar"
-msgstr ""
+msgstr "கோணத்தையுடையச் சுட்டுரைக் கோடும், வலியுறுத்துப் பட்டையும் கொண்டச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, angled callout line, and accent bar"
 msgstr ""
+"எல்லைக் கோடும், கோணத்தையுடையச் சுட்டுரைக் கோடும், வலியுறுத்துப் பட்டையும் கொண்டச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and angled callout line"
-msgstr ""
+msgstr "எல்லைக் கோடும், கோணத்தையுடையச் சுட்டுரைக் கோடும் அற்ற சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with callout line segments forming a U-shape"
-msgstr ""
+msgstr "U-வடிவத்தை உருவாக்கும் சுட்டுரை வரிக் கூறுகளின் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with accent bar and callout line segments forming a U-shape"
 msgstr ""
+"U-வடிவத்தை உருவாக்கும் வலியுறுத்துப் பட்டையையும், சுட்டுரை வரிக் கூறுகளையும் கொண்ட "
+"சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4979,19 +5262,22 @@ msgctxt "shape"
 msgid ""
 "Callout with border, accent bar, and callout line segments forming a U-shape"
 msgstr ""
+"U-வடிவத்தை உருவாக்கும் எல்லைக் கோட்டையும், வலியுறுத்துப் பட்டையையும், சுட்டுரை வரிக் "
+"கூறுகளையும் கொண்ட சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and callout line segments forming a U-shape"
 msgstr ""
+"U-வடிவத்தை உருவாக்கும் எல்லைக் கோடும், வலியுறுத்துப் பட்டையும், சுட்டுரை வரிக் கூறுகளும் "
+"அற்ற சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Line inverse"
-msgstr "வரி எண்கள் (&N)"
+msgstr "தலைகீழ் கோடு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5003,7 +5289,7 @@ msgstr "வகுத்தல் குறி"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Equivalence symbol"
-msgstr ""
+msgstr "கணக்குச் சமக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5021,7 +5307,7 @@ msgstr "பெருக்கல் குறி"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Non-equivalence symbol"
-msgstr ""
+msgstr "கணக்குச் சமமற்றக் குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5039,25 +5325,25 @@ msgstr "நிலா"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid with asymmetrical non-parallel sides"
-msgstr ""
+msgstr "சமச்சீரற்ற, இணைவில்லா பக்கங்களைக் கொண்ட சரிவகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'No' symbol"
-msgstr ""
+msgstr "'இல்லை' குறி"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Notched RightArrow"
-msgstr ""
+msgstr "பிளவுண்ட வலதம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Octagon"
-msgstr ""
+msgstr "எண்கோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5069,55 +5355,55 @@ msgstr "நீள்வட்டம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr ""
+msgstr "நீள்வட்ட சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Parallelogram"
-msgstr ""
+msgstr "இணைவகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Pentagon"
-msgstr ""
+msgstr "ஐங்கோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Incomplete Pie with wedge missing"
-msgstr ""
+msgstr "ஆப்பற்ற முழுமையடையாத வட்ட விளக்கப்படம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr ""
+msgstr "கால் வட்ட விளக்கப்பட ஆப்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque"
-msgstr ""
+msgstr "உலோக வில்லை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque Tabs"
-msgstr ""
+msgstr "உலோக வில்லைக் கீற்றுகள்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Arrows pointing left right up and down"
-msgstr ""
+msgstr "இடது வலது மேல் கீழ் நோக்கியிருக்கும் அம்புகள்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Arrows pointing left right up and down"
-msgstr ""
+msgstr "இடது வலது மேல் கீழ் நோக்கியிருக்கும் அம்புகளைக் கொண்டச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5127,10 +5413,9 @@ msgstr "செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Rectangular callout"
-msgstr "செவ்வகச் சரிவு"
+msgstr "செவ்வகச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5142,7 +5427,7 @@ msgstr "வலதம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr ""
+msgstr "வலதம்புச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5158,40 +5443,39 @@ msgstr "வல அடைப்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right triangle"
-msgstr "வலதொழுங்கு"
+msgstr "செங்குத்து முக்கோணம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with one rounded corner"
-msgstr ""
+msgstr "ஒரு வட்ட மூலையைக் கொண்ட செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two rounded corners diagonally-opposed"
-msgstr ""
+msgstr "எதிர் எதிராக இரு வட்ட மூலைகளைக் கொண்ட செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two-rounded corners that share a side"
-msgstr ""
+msgstr "ஒரு பக்கத்தைப் பகிர்ந்துகொள்ளும் இரு வட்ட மூலைகளைக் கொண்ட செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rounded rectangle"
-msgstr ""
+msgstr "வட்டச் செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rounded rectangle-shaped callout"
-msgstr ""
+msgstr "வட்டச் செவ்வகச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5203,37 +5487,37 @@ msgstr "நகைமுகம்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with one snipped corner"
-msgstr ""
+msgstr "ஒரு முனை நறுக்கப்பட்டச் செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two snipped corners diagonally-opposed"
-msgstr ""
+msgstr "எதிர் எதிராக இரு நறுக்கப்பட்ட முனைகள் கொண்ட செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two snipped corners that share a side"
-msgstr ""
+msgstr "ஒரு பக்கத்தைப் பகிர்ந்துகொள்ளும் இரு நறுக்கப்பட்ட முனைகள் கொண்ட செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with one snipped corner and one rounded corner"
-msgstr ""
+msgstr "ஒரு நறுக்கப்பட்ட முனையையும், ஒரு வட்ட முனையையும் கொண்ட செவ்வகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Four small squares that define a rectangular shape"
-msgstr ""
+msgstr "ஒரு செவ்வகத்தை விளக்கும் நான்கு சிறு சதுரங்கள்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Right Arrow with Stripes"
-msgstr ""
+msgstr "பட்டைக் கோடுகளைக் கொண்ட வலதம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5257,7 +5541,7 @@ msgstr "நீர்த் திவலை"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid"
-msgstr ""
+msgstr "சரிவகம்"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5269,19 +5553,19 @@ msgstr "மேலம்பு"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with UpArrow"
-msgstr ""
+msgstr "மேலம்புச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr ""
+msgstr "மேலும் கீழும் சுட்டும் இரட்டை முனை அம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr ""
+msgstr "மேலும் கீழும் சுட்டும் அம்புகளைக் கொண்டச் சுட்டுரை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5291,10 +5575,9 @@ msgstr "U வடிவ அம்பு"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Vertical scroll"
-msgstr "செங்குத்துப் பட்டைக் கோடு"
+msgstr "செங்குத்து உருளை"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5354,13 +5637,13 @@ msgstr "தகவல்"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Movie"
-msgstr ""
+msgstr "Movie"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Return"
-msgstr ""
+msgstr "Return"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5455,6 +5738,7 @@ msgid "column %s"
 msgstr "நெடுவரிசை %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "{rowCount} கிடைவரிசைகள், {columnCount} நெடுவரிசைகள் கொண்டது"
 
@@ -5498,6 +5782,7 @@ msgstr "உட்பிரிவு %s"
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
 #. {1} will be replaced with the number of text columns.
+#, python-brace-format
 msgid "column {0} of {1}"
 msgstr "நெடுவரிசை {1}ல் {0}"
 
@@ -5550,25 +5835,30 @@ msgstr "எல்லைக் கோடுகள் ஏதுமில்லை"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
+#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} முதல் {color2} வரை"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{backgroundColor} மீது {color}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "பின்னணி {backgroundColor}"
 
+#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "பின்னணி வடிவவிதம் {pattern}"
 
@@ -5631,10 +5921,6 @@ msgstr "வலியுறுத்தப்படாதது"
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
 msgstr "அடர்த்தியில்லை"
-
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "சாய்வு"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
@@ -5776,6 +6062,7 @@ msgid "out of table"
 msgstr "அட்டவணைக்கு வெளியே"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "{columnCount} நெடுவரிசைகள், {rowCount} கிடைவரிசைகள் கொண்ட அட்டவணை"
 
@@ -5856,22 +6143,27 @@ msgid "object mode"
 msgstr "பொருள் நிலை"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "ஒற்றை {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "இரட்டை {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "மும்முறை {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "நான்முறை {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} விரல் {action}"
 
@@ -5953,6 +6245,7 @@ msgstr "என்விடிஏ இற்றாக்கம்"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "என்விடிஏ பதிப்பு {version} கிடைப்பிலுள்ளது."
 
@@ -6047,9 +6340,11 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "மைக்ரோசாஃப்ட் விண்டோசிற்கான இலவச திறந்தநிலை ஆதாரத் திரைநவிலி"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "பதிப்புரிமை (C) {years} என்விடிஏ பங்களிப்பாளர்கள்"
 
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6094,6 +6389,7 @@ msgstr ""
 "'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -6102,6 +6398,7 @@ msgstr ""
 "கூட்டுக்கூறுகளை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும். "
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -6112,10 +6409,12 @@ msgstr ""
 "{width:.1f} விழுக்காடு, உயரம்: திரையின் உயரத்தில் {height:.1f} விழுக்காடு"
 
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{description} இருப்பதுபோல் {symbol}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -6135,6 +6434,10 @@ msgstr "வழிகாட்டிப் பொருளை நகர்த்�
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "வழிகாட்டிப் பொருளை நகர்த்தி, முந்தைய கிடை வரிசையைக் குவிமையத்தில் கொள்ளும்"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "எடுத்துரைகள்"
+
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "இயற்றல்"
@@ -6142,7 +6445,7 @@ msgstr "இயற்றல்"
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
-msgstr "பரிந்துரை எழுத்து"
+msgstr "தேர்வெழுத்து"
 
 msgid "Display"
 msgstr "காட்சியமைவு"
@@ -6166,11 +6469,12 @@ msgstr ""
 "தேர்வுகளைக் காட்டுகிறது "
 
 #. Translators: A position in a Kindle book
-#, no-python-format
+#, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, அமைவிடம் {maxLocation}ல் {curLocation}"
 
 #. Translators: a page in a Kindle book
+#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "{pageNumber}ம் பக்கம்"
 
@@ -6329,10 +6633,12 @@ msgid "Waiting for Outlook..."
 msgstr "ஔட்லுக்கிற்காக காத்துக்கொண்டிருக்கிறது..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} முதல் {endTime} வரை"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "முன்பதிவு {subject}, {time}"
 
@@ -6494,6 +6800,7 @@ msgid "Master Thumbnails"
 msgstr "தலைமைச் சிறுபடங்கள்"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "நிலைப்படம் {slideNumber}"
 
@@ -6502,86 +6809,104 @@ msgid "other item"
 msgstr "பிற உருப்படி"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் இடப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் இடப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
 "அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் மேற்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் மேற்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
 "அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் வலப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் வலப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
 "அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் கீழ்ப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr ""
 "{otherShape} வடிவத்தின் கீழ்ப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
 "அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "{otherShape} வடிவத்தை மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "{otherShape} வடிவத்தின் பின்னால் அமைந்துள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "நிலைப்படத்தின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "நிலைப்படத்தின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "நிலைப்படத்தின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "நிலைப்படத்தின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "நிலைப்படத்தின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "நிலைப்படத்தின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "நிலைப்படத்தின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "நிலைப்படத்தின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
@@ -6596,10 +6921,12 @@ msgstr ""
 "ஒரு பயனர் எவைகளைப் படிக்கலாம் என்று வரையறுக்கிறது."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "நிலைப்படக் காட்சிக் குறிப்புகள் - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "நிலைப்படக் காட்சி - {slideName}"
 
@@ -6688,6 +7015,8 @@ msgstr "Baum/HumanWare/APH/Orbit பிரெயில் காட்சிய�
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "தொடர் நுழைவாயில்: {portName}"
 
@@ -6745,6 +7074,39 @@ msgstr "பேப்பன்மேயர் பிரெயிலெக்ஸ�
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "சேக்கா பிரெயில் காட்சியமைவுகள்"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "சூப்பர் பிரெயில் "
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "எழுத்துணரி முடிவு"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "சுட்டியினிடத்தில் இருக்கும் உரையை இயன்றால் இயக்குகிறது"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "எழுத்துணரு முடிவை நிராகரிக்கவும்"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "எழுத்துணரி முடிவில் ஏற்கெனவே உள்ளது"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "உள்ளடக்கம் பார்வையில் இல்லை"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "உணருகிறது"
+
+msgid "Recognition failed"
+msgstr "உணருதல் தோல்வியடைந்தது"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -6849,7 +7211,7 @@ msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
 msgstr ""
-"சில மொழிகளுக்கான உள்ளீடு இயற்றலையும், பரிந்துரை எழுத்தின் தெரிவினையும் என்ழிடிஏ எவ்வாறு "
+"சில மொழிகளுக்கான உள்ளீடு இயற்றலையும், தேர்வெழுத்தின் தெரிவினையும் என்ழிடிஏ எவ்வாறு "
 "அறிவிக்கிறது என்பதை அமைவடிவமாக்குக"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
@@ -6872,6 +7234,10 @@ msgstr "ஆவண வடிவூட்டம்... (&F)"
 
 msgid "Change settings of document properties"
 msgstr "ஆவண பண்புகளின் அமைப்புகளை மாற்றுக"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "Windows 10 OCR..."
+msgstr "விண்டோஸ் 10 எழுத்துணரி..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7191,6 +7557,7 @@ msgid "Choose Add-on Package File"
 msgstr "கூட்டுக்கூறு தொகுப்புக் கோப்பினைத் தெரிவுச் செய்க"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "என்விடிஏ கூட்டுக்கூறுத் தொகுதி (*.{ext})"
 
@@ -7204,6 +7571,7 @@ msgstr ""
 "வடிவூட்டம்"
 
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -7290,6 +7658,7 @@ msgid "Restart NVDA"
 msgstr "என்விடிஏவை மறுதுவக்குக"
 
 #. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -7302,6 +7671,7 @@ msgstr ""
 "விளக்கம்: {description}\n"
 
 #. Translators: the url part of the About Add-on information
+#, python-brace-format
 msgid "URL: {url}"
 msgstr "இணைய முகவரி: {url}"
 
@@ -7559,6 +7929,7 @@ msgstr ""
 "என்விடிஏவின் முந்தைய படி ஒன்று தங்களின் கணினியில் காணப்படுகிறது. அது இற்றைப்படுத்தப்படும்."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -8024,19 +8395,19 @@ msgstr "உள்ளீடு இயற்றல் அமைப்புகள�
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Automatically report all available &candidates"
-msgstr "இருக்கும் எல்லாப் பரிந்துரை எழுத்துகளையும் தானாக அறிவிக்கவும் (&C)"
+msgstr "இருக்கும் எல்லாத் தேர்வெழுத்துகளையும் தானாக அறிவிக்கவும் (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Announce &selected candidate"
-msgstr "தெரிவாகியுள்ள பரிந்துரை எழுத்தை அறிவிக்கவும் (&S)"
+msgstr "தெரிவாகியுள்ள தேர்வெழுத்தை அறிவிக்கவும் (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Always include short character &description when announcing candidates"
 msgstr ""
-"பரிந்துரை எழுத்துகளை அறிவிக்கும்பொழுது, குறுகிய எழுத்து விளக்கங்களை எப்பொழுதும் "
-"சேர்த்துக் கொள்க (&D)"
+"தேர்வெழுத்துகளை அறிவிக்கும்பொழுது, குறுகிய எழுத்து விளக்கங்களை எப்பொழுதும் சேர்த்துக் "
+"கொள்க (&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -8114,6 +8485,11 @@ msgstr "பின்னணி முன்னேற்றப்பட்டை�
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
 msgstr "ியங்குநிலை உள்ளடக்க மாற்றங்களை அறிவிக்கவும் (&C)"
+
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "தன்னியக்க எடுத்துரைகள் தோன்றும்பொழுது ஒலியை எழுப்புக (&A)"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -8351,6 +8727,14 @@ msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "சுட்டிக்குப் பிறகு ஏற்படும் வடிவூட்ட மாற்றங்களை அறிவிக்கவும் (இது தேக்கத்தை ஏற்படுத்தலாம்)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "விண்டோஸ் 10 எழுத்துணரி"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "எழுத்துணரும் மொழி (&L)"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "எங்காயினும் (&A)"
@@ -8471,9 +8855,13 @@ msgstr "சுட்டி இமைத்தல்"
 msgid "Cursor blink rate (ms)"
 msgstr "சுட்டி இமைக்கும் விகிதம் (நுண்ணொடிகளில்)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "பிரெயில் சுட்டியின் வடிவம் (&S)"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "குவிமையத்திற்கான சுட்டியின் வடிவம் (&F)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "சீராய்விற்கான சுட்டியின் வடிவம் (&R)"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
@@ -8494,6 +8882,10 @@ msgstr "பத்தியாகப் படிக்கவும் (&P)"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "இயலும் இடங்களில் சொற்களின் பிளவைத் தவிர்க்கவும் (&W)"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "குவிமைய சூழலளிக்கை"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -8566,6 +8958,7 @@ msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -8600,7 +8993,7 @@ msgstr "விகிதத்தை மேலேற்றுக (&T)"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
-msgstr ""
+msgstr "விண்டோஸ் ஒன் கோர் குரல்கள்"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -8610,10 +9003,12 @@ msgid "word"
 msgstr "சொல்"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "தற்போதைய திரையின் நிலை {x},{y} படவணுக்கள்"
 
@@ -8649,6 +9044,7 @@ msgid "Taskbar"
 msgstr "பணிப்பட்டை"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB சிவப்பு {rgb.red}, பச்சை {rgb.green}, நீலம் {rgb.blue}"
 
@@ -8816,6 +9212,7 @@ msgid "&Sheets"
 msgstr "தாள்கள் (&S)"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} முதல் {end} வரை"
 
@@ -8831,18 +9228,22 @@ msgstr ""
 "அறிவிக்கும் வசதியைச் செயற்படுத்தவும்."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "நெடுவரிசைத் தலைப்புரையின் துவக்கமாக {address}-ஐ அமைக்கவும்"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} ஏற்கெனவே நெடுவரிசைத் தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "நெடுவரிசைத் தலைப்புரையிலிருந்து {address} நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "நெடுவரிசைத் தலைப்புரையில் {address} காணப்படவில்லை"
 
@@ -8857,18 +9258,22 @@ msgstr ""
 "மறக்கும். "
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையின் துவக்கமாக {address}-ஐ அமைக்கவும்"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} ஏற்கெனவே கிடைவரிசைத் தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையிலிருந்து {address} நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "கிடைவரிசைத் தலைப்புரையில் {address} காணப்படவில்லை"
 
@@ -8883,12 +9288,15 @@ msgstr ""
 "மறக்கும். "
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
 msgid "Sheet {0}, {1}"
 msgstr "தாள் {0}, {1}"
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "உள்ளீட்டுத் தகவல்: {title}: {message}"
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "உள்ளீட்டுத் தகவல்: {message}"
 
@@ -8901,10 +9309,12 @@ msgid "Reports the comment on the current cell"
 msgstr "தற்போதைய சிறுகட்டத்தின் கருத்துரையை அறிவிக்கும்"
 
 #. Translators: Dialog text for
+#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "{address} சிறுகட்டத்திற்கான கருத்துரை தொகுக்கப்படுகிறது"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} முதல் {lastAddress} {lastContent} வரை"
 
@@ -8997,30 +9407,37 @@ msgid "medium dashed"
 msgstr "நடுத்தர சிறுகோடிடப்பட்டது"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{weight} {style}"
 msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{color} {desc}"
 msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} surrounding border"
 msgstr "எல்லையைச் சுற்றிய {desc}"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} top and bottom edges"
 msgstr "{desc} மேல் மற்றும் கீழ் விளிம்புகள்"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} left and right edges"
 msgstr "{desc} இடது மற்றும் வலது விளிம்புகள்"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} up-right and down-right diagonal lines"
 msgstr "{desc} வலது மேல் வலது கீழ் குறுக்குக் கோடுகள்"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
@@ -9375,6 +9792,7 @@ msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "தரவுக் குறிப்பிகள் இல்லாமல் மென்கோடுகளைக் கொண்ட விரவு"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "விளக்கப்படத்தின் தலைப்பு  {chartTitle}, வகை {chartType}"
 
@@ -9402,6 +9820,7 @@ msgstr "தொடர்: "
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
+#, python-brace-format
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} அச்சின் தலைப்பு {axisTitle}"
 
@@ -9415,6 +9834,7 @@ msgid "There are total %d series in this chart"
 msgstr "இந்த விளக்கப்படத்தில் மொத்தம் %d தொடர்கள் உள்ளன"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "தொடர் {number} {name}"
 
@@ -9439,6 +9859,7 @@ msgstr "தரவுப் புள்ளி "
 msgid "item"
 msgstr "உருப்படி"
 
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "தொடர் நிறம்: {colorName} "
 
@@ -9528,51 +9949,61 @@ msgstr "வடிவம்"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} தொடர், {seriesCount}ல் {seriesIndex}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "{previousIndex} புள்ளியிலிருந்து மாற்றம் ஏதுமில்லை"
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
 msgstr "{previousIndex} புள்ளியிலிருந்து {incrementValue} அதிகரிக்கப்பட்டுள்ளது,"
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "{previousIndex} புள்ளியிலிருந்து {decrementValue} குறைக்கப்பட்டுள்ளது,"
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "வகை {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "மதிப்பு {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr "பின்னம் {fractionValue:.2f}  {pointCount}ல் {pointIndex} விழுக்காடு"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr "{segmentType} {pointCount}ல் {pointIndex}"
 
@@ -9585,10 +10016,12 @@ msgid "Secondary"
 msgstr "இரண்டாம்கட்டம்"
 
 #. Translators: Details about an axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr "விளக்கப்பட அச்சு, வகை: {axisType}, குழு: {axisGroup}, தலைப்பு: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
+#, python-brace-format
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
 msgstr "விளக்கப்பட அச்சு, வகை: {axisType}, குழு: {axisGroup}"
 
@@ -9606,6 +10039,7 @@ msgid " squared "
 msgstr "கட்டமிடப்பட்டது"
 
 #. Translators: Details about a chart title in Microsoft Excel.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "விளக்கப்படத்தின் தலைப்பு: {chartTitle}"
 
@@ -9614,6 +10048,7 @@ msgid "Untitled chart"
 msgstr "தலைப்பிடப்படாத விளக்கப்படம்"
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -9626,6 +10061,7 @@ msgid "Chart area "
 msgstr "விளக்கப்படத்தின் பகுதி"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -9650,12 +10086,14 @@ msgstr "குறிவிளக்கி ஏதுமில்லை"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} தொடருக்கான குறிவிளக்கி உள்ளீடு, {seriesCount}ல் {seriesIndex}"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 "{seriesName} தொடருக்கான குறிவிளக்கித் திறவுகோல், {seriesCount}ல் {seriesIndex}"
@@ -9758,11 +10196,18 @@ msgstr "முதன்மைத் தலைப்புரை"
 msgid "Text frame"
 msgstr "உரைச் சட்டகம்"
 
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "கருத்துரை: {text}, படைப்பாளர்: {author}, தேதி: {date}"
 
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}, படைப்பாளர் {author}, தேதி {date}"
+
+#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "எழுத்தாக்கம்: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -9801,12 +10246,14 @@ msgid "Table description"
 msgstr "அட்டவணை விளக்கம்"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், நெடுவரிசை "
 "தலைப்புரையின் துவக்கமாக அமைக்கவும்"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -9814,12 +10261,14 @@ msgstr ""
 "தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , நெடுவரிசை "
 "தலைப்புரையிலிருந்து நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், நெடுவரிசைத் "
@@ -9836,12 +10285,14 @@ msgstr ""
 "மறக்கும். "
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், கிடைவரிசை "
 "தலைப்புரையின் துவக்கமாக அமைக்கவும்"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -9849,12 +10300,14 @@ msgstr ""
 "தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , கிடைவரிசை "
 "தலைப்புரையிலிருந்து நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், கிடைவரிசைத் "
@@ -9941,35 +10394,43 @@ msgid "Moved above blank paragraph"
 msgstr "வெற்றுப் பத்திக்கு மேல் நகர்த்தப்பட்டது"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} பாங்கு, வெளிவரைவு நிலை {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} புள்ளி எழுத்துரு"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} வரியுருக்கள்"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} அங்குலங்கள்"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} செண்டிமீட்டர்கள்"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} மில்லிமீட்டர்கள்"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} புள்ளிகள்"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} பிக்காக்கள்"
 
@@ -10003,6 +10464,11 @@ msgstr "அட்டவணையில் இல்லை"
 msgid "&Annotations"
 msgstr "விளக்கவுரைகள் (&A)"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&errors"
+msgstr "பிழைகள் (&E)"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிரெயில் எட்ஜ்/ஸ்மார்ட் பீட்டில் தொடர்"
@@ -10010,6 +10476,27 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "-----"
+#~ msgstr "-----"
+
+#~ msgid "(x)"
+#~ msgstr "(x)"
+
+#~ msgid "(-)"
+#~ msgstr "(-)"
+
+#~ msgid "( )"
+#~ msgstr "( )"
+
+#~ msgid "Farsi grade 1"
+#~ msgstr "ஃபார்சி படிநிலை 1"
+
+#~ msgid "ITALIC"
+#~ msgstr "சாய்வு"
+
+#~ msgid "braille"
+#~ msgstr "பிரெயில் "
 
 #~ msgid "Are you sure you want to delete this profile? This cannot be undone."
 #~ msgstr ""

@@ -10,6 +10,7 @@ from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 from comtypes.automation import VARIANT
+import time
 import weakref
 import sys
 import numbers
@@ -29,6 +30,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
+import time
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -73,7 +75,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_PositionInSetPropertyId,
 		UIAHandler.UIA_SizeOfSetPropertyId,
 		UIAHandler.UIA_AriaRolePropertyId,
-		UIAHandler.UIA_LocalizedLandmarkTypePropertyId,
+		UIAHandler.UIA_LandmarkTypePropertyId,
 		UIAHandler.UIA_AriaPropertiesPropertyId,
 		UIAHandler.UIA_LevelPropertyId,
 		UIAHandler.UIA_IsEnabledPropertyId,
@@ -843,6 +845,19 @@ class UIA(Window):
 		except COMError:
 			return True
 
+	_lastLiveRegionChangeInfo=(None,None) #: Keeps track of the last live region change (text, time)
+	def _get__shouldAllowUIALiveRegionChangeEvent(self):
+		"""
+		This property decides whether  a live region change event should be allowed. It compaires live region event with the last one received, only allowing the event if the text (name) is different, or if the time since the last one is at least 0.5 seconds. 
+		"""
+		oldText,oldTime=self._lastLiveRegionChangeInfo
+		newText=self.name
+		newTime=time.time()
+		self.__class__._lastLiveRegionChangeInfo=(newText,newTime)
+		if newText==oldText and oldTime is not None and (newTime-oldTime)<0.5:
+			return False
+		return True
+
 	def _getUIAPattern(self,ID,interface,cache=False):
 		punk=self.UIAElement.GetCachedPattern(ID) if cache else self.UIAElement.GetCurrentPattern(ID) 
 		if punk:
@@ -1308,6 +1323,16 @@ class UIA(Window):
 			return
 		return super(UIA, self).event_valueChange()
 
+	def event_UIA_systemAlert(self):
+		"""
+		A base implementation for UI Automation's system Alert event.
+		This just reports the element that received the alert in speech and braille, similar to how focus is presented.
+		Skype for business toast notifications being one example.
+		"""
+		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		# Ideally, we wouldn't use getBrailleTextForProperties directly.
+		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
@@ -1442,6 +1467,20 @@ class Toast_win10(Notification, UIA):
 		event_UIA_window_windowOpen=Notification.event_alert
 	else:
 		event_UIA_toolTipOpened=Notification.event_alert
+	# #7128: in Creators Update (build 15063 and later), due to possible UIA Core problem, toasts are announced repeatedly if UWP apps were used for a while.
+	# Therefore, have a private toast message consultant (toast timestamp and UIA element runtime ID) handy.
+	_lastToastTimestamp = None
+	_lastToastRuntimeID = None
+
+	def event_UIA_window_windowOpen(self):
+		if sys.getwindowsversion().build >= 15063:
+			toastTimestamp = time.time()
+			toastRuntimeID = self.UIAElement.getRuntimeID()
+			if toastRuntimeID == self._lastToastRuntimeID and toastTimestamp-self._lastToastTimestamp < 1.0:
+				return
+			self.__class__._lastToastTimestamp = toastTimestamp
+			self.__class__._lastToastRuntimeID = toastRuntimeID
+		Notification.event_alert(self)
 
 #WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
 #This causes major lags when using this control with Braille in NVDA. (#2759) 

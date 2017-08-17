@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2006-2012 NVDA contributers.
+#Copyright 2011-2017 NV Access Limited, Joseph Lee
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -40,10 +40,19 @@ env = env.Clone()
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
 
-env.Append(CCFLAGS="/W2")
 env.Append(CPPDEFINES=[
+	# The Visual C++ C Runtime deprecates several standard library functions in
+	# preference for _s variants that are specific to Visual C++. This removes
+	# those deprecation warnings.
+	"_CRT_SECURE_NO_WARNINGS",
+	# The Visual C++ C Runtime deprecates standard POSIX APIs that conflict with
+	# reserved ISO C names (like strdup) in favour of non-portable conforming
+	# variants that start with an '_'. This removes those deprecation warnings. */
+	"_CRT_NONSTDC_NO_DEPRECATE",
 	("PACKAGE_VERSION", r'\"%s\"' % getLouisVersion()),
 	("UNICODE_BITS", 16),
+	# Tell liblouis.h that we're exporting liblouis dll functions, not importing them.
+	"_EXPORTING",
 ])
 env.Prepend(CPPPATH=[".", louisSourceDir])
 
@@ -57,9 +66,11 @@ sourceFiles = [
 	"wrappers.c",
 	"logging.c",
 	"pattern.c",
+	"commonTranslationFunctions.c",
+	"utils.c",
 ]
 objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]
-louisLib = env.SharedLibrary("liblouis", objs + ["liblouis.def"])
+louisLib = env.SharedLibrary("liblouis", objs)
 env.Install(sourceDir, louisLib)
 
 louisPython = env.Substfile(outDir.File("__init__.py"), louisRootDir.File("python/louis/__init__.py.in"),
