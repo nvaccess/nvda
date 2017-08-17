@@ -29,6 +29,7 @@ init:
        $versionType = "stable"
       }
      } else {
+      Set-AppveyorBuildVariable "release" "1"
       $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
       # The version is unique even for rebuilds, so we can use it for the AppVeyor version.
       Update-AppveyorBuild -Version $version
