@@ -4,6 +4,7 @@ NVDA 변경된 사항
 %!includeconf: ../changes.t2tconf
 
 = 2017.3 =
+이번 버전의 주 기능들: 점자 약자 입력; 윈도우 10에서 제공하는 OneCore 보이스 지원; 윈도우 10 OCR을 통한 문자 인식; 점자 및 웹 지원 기능 향상 등입니다.
 
 == 새로 추가된 기능들 ==
 - 점자 설정 대화상자에 "점자 메시지를 영구적으로 표시" 설정 추가. (#6669)
@@ -18,28 +19,27 @@ NVDA 변경된 사항
 - 윈도우 10 Mail 받는 사람/CC 필드 및 설정 앱과 같은 컨트롤에서 검색 결과 선택 시 결과가 자동으로 출력되도록 함. (#6241)
 - 윈도우 10 사용 시 시작 메뉴, Mail 앱 및 설정 앱과 같은 곳에서 검색 결과가 나타날때 이것을 사운드로 알릴 수 있도록 함. (#6241)
 - 스카이프 비지니스 사용 시 특정 알림(예: 상대방에게서 메시지를 받았을 때)이 자동으로 출력되도록 함.  (#7281)
-- 스카이프 비지니스 사용시 체팅 도중 새 메시지가 자동으로 출력되도록 함. (#7286)
+- 스카이프 비지니스 사용 시 체팅 도중 새 메시지가 자동으로 출력되도록 함. (#7286)
 - 마이크로소프트 Edge 사용 시 파일 다운로드 시작과 같은 알림 내용이 자동으로 출력되도록 함. (#7281)
 - 점자 키보드가 장착된 점자 디스플레이 사용 시 키보드를 사용하여 정자 및 약자 점자 입력 가능. 사용설명서 내 점자 입력 섹션을 참조 바람. (#2439)
 - 유니코드 점자 코드를 사용하여 유니코드 점형을 입력할 수 있음. (#6449)
 - 타이완에서 보급되는 SuperBraille 디스플레이 지원 추가. (#7352)
 - 점자 표기법: 덴마크어 8점 컴퓨터 점자, 리투아니아어, 페르시아어 8점 컴퓨터 점자, 페르시아어 1종 점자및 슬로베니아어 8점 컴퓨터 점자 추가. (#6188, #6550, #6773, #7367)
 - 미국 영어 8점 컴퓨터 점자 코드 지원 향상(bullet, 유로, 및 엑센트 글자 추가). (#6836)
-- NVDA can now use the OCR functionality included in Windows 10 to recognize the text of images or inaccessible applications. (#7361)
- - The language can be set from the new Windows 10 OCR dialog in NVDA Preferences.
- - To recognize the content of the current navigator object, press NVDA+r.
- - See the Content Recognition section of the User Guide for further details.
-- You can now choose what context information is shown on a braille display when an object gets focus using the new "Focus context presentation" setting in the Braille Settings dialog. (#217)
- - For example, the "Fill display for context changes" and "Only when scrolling back" options can make working with lists and menus more efficient, since the items won't continually change their position on the display.
- - See the section on the "Focus context presentation" setting in the User Guide for further details and examples.
-- 점자 사용시 더 많은 컨트롤 및 스테이트 정보 내용이 간소화됨. 사용설명서내 "점자 사용시 컨트롤, 스테이트 및 랜드마크 정보 내용" 섹션 참고 바람. (#7188)
-- 파이어폭스와 크롬 사용시 컨텐츠 일부만 보여지는 spreadsheet(특히 ARIA 1.1에 추가된 aria-rowcount, aria-colcount, aria-rowindex 및 aria-colindex 속성이 적용된 complex dynamic grid) 탐색 지원 추가.  (#7410)
+- 윈도우 10 사용 시 윈도우 10이 제공하는 OCR 기능을 사용하여 이미지나 접근이 불편한 앱에서 문자 인식이 가능. (#7361)
+ - 윈도우 10 OCR 설정을 통해 인식 언어를 지정할 수 있음.
+ - 현재 객체의 내용을 문자 인식하려면 NVDA+r을 누르기 바람.
+ - 사용설명서 내 문자 인식 섹션을 참조바람.
+- 점자 설정에 추가된 "포커스 내용 출력" 설정을 통해 점자 디스플레이에 포커스 관련 세부 내용이 어떻게 출렭될 것인지를 설정할 수 있음. (#217)
+ - 예를 들어 "포커스 내용 변경 시 출력" 또는 "뒤로 스크롤 시 출력"을 선택하고 목록이나 메뉴를 탐색할 때 내용의 위치가 계속 변경되는 불편함이 어느 정도 해결이 됨.
+ - 더 자세한 정보 및 특정 사례에 대해서는 사용설명서 내 "포커스 내용 출력" 섹션을 참고바람.
+- 파이어폭스와 크롬 사용 시 컨텐츠 일부만 보여지는 spreadsheet(특히 ARIA 1.1에 추가된 aria-rowcount, aria-colcount, aria-rowindex 및 aria-colindex 속성이 적용된 complex dynamic grid) 탐색 지원 추가.  (#7410)
 
 
 == 변경된 기능들 ==
 - NVDA를 곧바로 재시작할 수 있는 명령(script_restart, 명령 할당 않됌) 추가. (#6396)
 - NVDA 시작 대화상자에서 키보드 레이아웃을 설정할 수 있음. (#6863)
-- 점자 사용 시 랜드마크 이름을 표시할 때 다음 약칭을 사용하도록 함: (#3975)
+- 점자 사용 시 더 많은 컨트롤, 상태 및 랜드마크 정보 내용이 간소화됨. 사용설명서 내 "점자 사용 시 컨트롤, 상태 및 랜드마크 정보 내용" 섹션 참고 바람. (#7188, #3975)
  - "landmark": "lmk"
  - "banner": "bnnr"
  - "complementary": "comp"
@@ -54,10 +54,11 @@ NVDA 변경된 사항
 - 점자 설정 대화상자 내 점자 입력 및 출력 표 목록이 가나다순으로 정렬되어 나타나도록 함. (#6113)
 - 리브루이 점자 변환기 3.2.0 버전 사용. (#6935)
 - 기본 점자 표기법이 영어 통합 점자(UEB) 1종 점자로 변경됨. (#6952)
-- By default, NVDA now only shows the parts of the context information that have changed on a braille display when an object gets focus. (#217)
- - Previously, it always showed as much context information as possible, regardless of whether you have seen the same context information before.
- - You can revert to the old behaviour by changing the new "Focus context presentation" setting in the Braille Settings dialog to "Always fill display".
+- 본 버전 이후로 점자 디스플레이 사용 시 포커스된 객체의 내용이 변경되었을 때에만 세부 내용이 출력되도록 함. (#217)
+ - 이전에는 같은 종류의 객체(예: 목록 항목)에 포커스된 경우 같은 세부 내용이 출력되었었음.
+ - 이전 방식을 사용하려면 점자 설정 내 포커스 내용 출력에서 "항상 출력" 옵션을 선택 바람.
 - 점자 사용 시 연계 커서(포커스 또는 리뷰(에 따라 커서 점형을 다르게 표시할 수 있음. (#7112)
+- NVDA 로고가 변경됨. 새 로고는 NV Access의 로고에서 사용된 보라색 바탕에 "NVDA"가 붙여진 텍스트가 하얀색 색상으로 표시되도록 하여 어느 색 바탕에서나 찾기 쉽도록 함. (#7446)
 
 
 == 버그 수정 ==
@@ -80,10 +81,18 @@ NVDA 변경된 사항
 - 마이크로소프트 Edge 사용 시 첫 글자를 이용하여 헤딩 탐색 시 명령 반응 속도가 개선됨.  (#7343)
 - 마이크로소프트 Edge 브라우즈 모드 사용 시 특정 문서 내용(예: Wordpress 2015 테마)을 탐색할 수 없던 문제 수정. (#7143)
 - 마이크로소프트 Edge 사용 시 영어 외 타국어 사용 시 랜드마크 이름이 제대로 출력되지 않던 문제 수정. (#7328)
-- 점자디스플레이의 셀 길이보다 긴 텍스트를 선택할때 선택 내용이 점자로 제대로 표시되도록 함(예: shift+아래 화살표를 눌러 여러줄 선택시 마지막 줄의 내용이 점자로 표시되도록 함). (#5770)
+- 점자 디스플레이의 셀 길이보다 긴 텍스트를 선택할 때 선택 내용이 점자로 제대로 표시되도록 함(예: shift+아래 화살표를 눌러 여러줄 선택 시 마지막 줄의 내용이 점자로 표시되도록 함). (#5770)
 - 파이어폭스 사용 시 twitter.com에서 트위트를 볼때 "섹션"이 반복되어 출력되던 문제 수정. (#5741)
 - 레이아웃 표에서 문서 서식 대화상자 내 레이아웃 표 알림 옵션이 적용되지 않는한 표 셀 탐색 명령을 사용할 수 없도록 변경됨. (#7382)
-- 파이어폭스와 크롬에서 브라우즈 모드를 사용하여 표를 탐색시 셀 탐색 명령이 표에 표시되지 않은 셀을 건너뛰도록 함. (#6652, #5655)
+- 파이어폭스와 크롬에서 브라우즈 모드를 사용하여 표를 탐색 시 셀 탐색 명령이 표에 표시되지 않은 셀을 건너뛰도록 함. (#6652, #5655)
+
+
+== 한국어 번역 관련 ==
+- 마이크로소프트 오피스 관련 문자열 번역이 업데이트됨.
+
+
+== 개발자를 위한 내용 ==
+개발자를 위한 내용에 대해서는 영어판 changes.html 문서를 참조하세요.
 
 
 = 2017.2 =
