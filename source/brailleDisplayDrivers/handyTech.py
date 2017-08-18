@@ -87,6 +87,8 @@ KEY_B5 = 0x13
 KEY_B6 = 0x17
 KEY_B7 = 0x1B
 KEY_B8 = 0x1F
+KEY_LEFT = 0x04
+KEY_RIGHT = 0x08
 KEY_LEFT_SPACE = 0x10
 KEY_RIGHT_SPACE = 0x18
 KEY_ROUTING = 0x20
@@ -157,6 +159,10 @@ class Model(AutoPropertyObject):
 
 			KEY_LEFT_SPACE: "leftSpace",
 			KEY_RIGHT_SPACE: "rightSpace",
+			# Left and right keys, found on Easy Braille and Braille Wave
+			KEY_LEFT: "left",
+			KEY_RIGHT: "right",
+
 			# Modular/BS80 keypad
 			0x01: "b12",
 			0x09: "b13",
@@ -264,11 +270,10 @@ class ModularEvolution64(ModularEvolution):
 	numCells = 64
 
 
-class EasyBraille(OldProtocolMixin, Model):
+class EasyBraille(Model):
 	deviceID = MODEL_EASY_BRAILLE
 	numCells = 40
 	genericName = name = "Easy Braille"
-
 
 class ActiveBraille(AtcMixin, TripleActionKeysMixin, Model):
 	deviceID = MODEL_ACTIVE_BRAILLE
@@ -297,8 +302,6 @@ class BrailleWave(OldProtocolMixin, Model):
 	def _get_keys(self):
 		keys = super(BrailleWave, self).keys
 		keys.update({
-			0x04: "left",
-			0x08: "right",
 			0x0C: "escape",
 			0x14: "return",
 			KEY_LEFT_SPACE: "space",
@@ -644,6 +647,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		'br(handytech):space+b1+b3+b4': 'toggleBrailleInput',
 		'br(handytech):leftSpace+b1+b3+b4': 'toggleBrailleInput',
 		'br(handytech):rightSpace+b1+b3+b4': 'toggleBrailleInput',
+		'br(handytech.easybraille):left+b1+b3+b4': 'toggleBrailleInput',
+		'br(handytech.easybraille):right+b1+b3+b4': 'toggleBrailleInput',
 		'bk:space+dot1+dot2+dot7': 'toggleBrailleInput',
 	}
 
@@ -701,7 +706,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		for key in keys:
 			if isBrailleInput:
 				self.dots = self._calculateDots()
-				if key in KEY_SPACES:
+				if key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille)):
 					self.space = True
 			if key >= KEY_ROUTING:
 				self.routingIndex = key - KEY_ROUTING
