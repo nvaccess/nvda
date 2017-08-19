@@ -177,12 +177,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.initialize()
-	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
-		try:
-			nvwave.playWaveFile("waves\\start.wav")
-		except:
-			pass
-	logHandler.setLogLevelFromConfig()
 	try:
 		lang = config.conf["general"]["language"]
 		import languageHandler
@@ -190,6 +184,17 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
+	import NVDAHelper
+	log.debug("Initializing NVDAHelper")
+	NVDAHelper.initialize()
+	#Unmute the computer.
+	NVDAHelper.localLib.unmuteActiveDevice()
+	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
+		try:
+			nvwave.playWaveFile("waves\\start.wav")
+		except:
+			pass
+	logHandler.setLogLevelFromConfig()
 	import versionInfo
 	log.info("NVDA version %s" % versionInfo.version)
 	log.info("Using Windows version %s" % winVersion.winVersionText)
@@ -205,9 +210,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
-	import NVDAHelper
-	log.debug("Initializing NVDAHelper")
-	NVDAHelper.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()

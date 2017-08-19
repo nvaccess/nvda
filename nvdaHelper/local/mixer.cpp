@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2008-2014 NV Access Limited.
+Copyright 2008-2017 NV Access Limited, Derek Riemer.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -12,7 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 // This file can only compile for Vista and above
-// NVDA will not call this function on lower Loperating Systems
+// NVDA will not call this function on lower operating Systems
 #undef _WIN32_WINNT
 #define _WIN32_WINNT 0x0600  
 
@@ -27,6 +27,7 @@ _COM_SMARTPTR_TYPEDEF(IMMDeviceEnumerator, __uuidof(IMMDeviceEnumerator));
 _COM_SMARTPTR_TYPEDEF(IMMDeviceCollection, __uuidof(IMMDeviceCollection));
 _COM_SMARTPTR_TYPEDEF(IMMDevice, __uuidof(IMMDevice));
 _COM_SMARTPTR_TYPEDEF(IAudioMeterInformation, __uuidof(IAudioMeterInformation));
+_COM_SMARTPTR_TYPEDEF(IAudioEndpointVolume, __uuidof(IAudioEndpointVolume));
 
 /*
 	* Should NVDA delay speech slightly when beginning to duck other audio?
@@ -76,4 +77,37 @@ bool audioDucking_shouldDelay() {
 		return true;
 	}
 	return false;
+}
+
+/*
+	* Tell NVDA to unmute the system.
+	* @return true if NVDA was successfully able to unmute the system, or if no change was necessary or   false if there was an error checking mute status, or setting the new mute status.
+	*/
+bool unmuteActiveDevice() {
+	HRESULT res;
+	IMMDeviceEnumeratorPtr pMMDeviceEnumerator=NULL;
+	res=pMMDeviceEnumerator.CreateInstance(__uuidof(MMDeviceEnumerator),NULL,CLSCTX_INPROC_SERVER);
+	if(res!=S_OK||!pMMDeviceEnumerator) {
+		LOG_ERROR(L"Cannot create MMDeviceEnumerator: "<<res);
+		return false;
+	}
+	IMMDevicePtr pMMDevice=NULL;
+	res = pMMDeviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pMMDevice);
+	if(res!=S_OK||!pMMDevice) {
+		LOG_WARNING(L"Cannot fetch default device"<<res);
+		return false;
+	}
+	IAudioEndpointVolumePtr pAudioEndpointVolume=NULL;
+	res = pMMDevice->Activate(__uuidof(IAudioEndpointVolume),CLSCTX_ALL, NULL, (void**)&pAudioEndpointVolume);
+	if(res!=S_OK||!pAudioEndpointVolume) {
+		LOG_WARNING(L"Cannot Activate Endpoint volume" << res);
+		return false;
+	}
+	//Force the mute state to false, reguardless.
+	res = pAudioEndpointVolume->SetMute(false, NULL);
+	//If we changed it, we get S_OK if not, but success, we get S_FALSE.
+	if(res == S_OK || res == S_FALSE)
+		return true;
+	else
+		return false;
 }
