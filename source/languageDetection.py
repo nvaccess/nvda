@@ -27,15 +27,18 @@ def initialize():
 	#reverse of langIDToScriptID, required to obtain language id for a specific script 
 	for languageID in langIDToScriptID:
 		langIDToScriptID[languageID] = (langIDToScriptID[languageID] + ('Number',)) if isinstance(langIDToScriptID[languageID], tuple) else (langIDToScriptID[languageID], 'Number')
-		log.debugWarning("script name: {} data type: {}".format( langIDToScriptID[languageID] , type( langIDToScriptID[languageID]) ) )
+		#log.debugWarning("script name: {} data type: {}".format( langIDToScriptID[languageID] , type( langIDToScriptID[languageID]) ) )
 		if(isinstance(langIDToScriptID[languageID] ,tuple ) ):
 			for scriptName in langIDToScriptID[languageID]: 
 				if not (scriptName in scriptIDToLangID): scriptIDToLangID[ scriptName ] =  languageID 
 		else:
 			if not (langIDToScriptID[languageID] in scriptIDToLangID):
 				scriptIDToLangID[ langIDToScriptID[languageID] ] =  languageID 
+	# following 2 loops are only for log, they should be removed before final code
+	for languageID in langIDToScriptID:
+		log.debugWarning("script name: {} for language {}".format( langIDToScriptID[languageID] , languageID ) )
 	for scriptName in scriptIDToLangID:
-		log.debugWarning("language name: {} ".format( scriptIDToLangID[ scriptName ] ) ) 	
+		log.debugWarning("language code: {} for script {}".format( scriptIDToLangID[ scriptName ] , scriptName ) ) 	
 	updateLanguagePriorityFromConfig()
 
 def updateLanguagePriorityFromConfig():
@@ -51,11 +54,6 @@ def updateLanguagePriorityFromConfig():
 		pass
 
 langIDToScriptID = OrderedDict([
-	("am" , "Armenian"),
-	("ar" , "Arabic"),
-	("as" , "Bengali"),
-	("bg" , "Cyrillic"),
-	("bn" , "Bengali"),
 	("en" , "Latin"),
 	("af_ZA" , "Latin"),
 	("ca" , "Latin"),
@@ -65,6 +63,11 @@ langIDToScriptID = OrderedDict([
 	("el" , "Latin"),
 	("es" , "Latin"),
 	("fr" , "Latin"),
+	("am" , "Armenian"),
+	("ar" , "Arabic"),
+	("as" , "Bengali"),
+	("bg" , "Cyrillic"),
+	("bn" , "Bengali"),
 	("gu" , "Gujarati"),
 	("kn" , "Kannada"),
 	("ml" , "Malayalam"),
@@ -203,11 +206,11 @@ def detectScript(text):
 	unicodeSequence.append( text[beginIndex:] )
 	return unicodeSequence
 
-def detectLanguage(text, preferredLanguage =None):
+def detectLanguage(text, defaultLanguage =None):
 	"""splits a string if there are multiple languages in it. uses detectScript
 	@param text: the text string
 	@type text: string
-	@param preferredLanguage: The preferred language if it is appropriate
+	@param defaultLanguage: The default language for NVDA 
 	@type preferredLanguage: string or None
 	@return: sequence of language commands and text
 	@rtype: list"""
@@ -220,25 +223,25 @@ def detectLanguage(text, preferredLanguage =None):
 		else:
 			log.debugWarning(u"script: {} for text {} ".format( scriptCode , unicode(item) ) )
 
-	if preferredLanguage:
-		scriptIDForPreferredLanguage = getScriptIDFromLangID( preferredLanguage )
+	if defaultLanguage:
+		scriptIDForDefaultLanguage = getScriptIDFromLangID( defaultLanguage )
 	else:
-		scriptIDForPreferredLanguage = None
+		scriptIDForDefaultLanguage = None
 
 	previousLanguageCode = ""
 	for index in xrange(len(tempSequence )):
 		item= tempSequence [index]
 		if isinstance(item,ScriptChangeCommand):
-			# check if priority language for a script is available, if yes, add that language instead of language from priority list
-			if scriptIDForPreferredLanguage and (item.scriptCode == scriptIDForPreferredLanguage):
-				if index == 0: continue # if it is first item and same as the priority language, language code is already added.
-				languageCode = preferredLanguage 
+			# check if default language for a script is available, if yes, add that language instead of language from priority list
+			if scriptIDForDefaultLanguage and (item.scriptCode in scriptIDForDefaultLanguage ):
+				if index == 0: continue # if it is first item and same as the default language, language code is already added.
+				languageCode = defaultLanguage 
 			else:
 				languageCode = getLangID( item.scriptCode  )  
 			#end if scriptIDForPreferredLanguage and (item.scriptCode == scriptIDForPreferredLanguage):
 
 			if languageCode:
-				if languageCode == previousLanguageCode: continue # if 2 scripts have same language, we don't need to add additional language. 
+				if (languageCode == previousLanguageCode) or ( ( previousLanguageCode == "") and  (languageCode == defaultLanguage ) ): continue # if 2 scripts have same language, we don't need to add additional language. 
 				sequenceWithLanguage.append( LangChangeCommand( languageHandler.normalizeLanguage( languageCode ) ) )
 				previousLanguageCode = languageCode 
 			# end if languageCode
@@ -257,5 +260,5 @@ def detectLanguage(text, preferredLanguage =None):
 			tempLanguageCode = item.lang
 		else:
 			log.debugWarning(u"language: {} for text {} ".format( tempLanguageCode , unicode(item) ) )
-	log.debugWarning("number of items in script list: {}, number of items in language list: {} preferredLanguage: {}".format(len(tempSequence ) , len(sequenceWithLanguage) , preferredLanguage ) )
+	log.debugWarning("number of items in script list: {}, number of items in language list: {} preferredLanguage: {}".format(len(tempSequence ) , len(sequenceWithLanguage) , defaultLanguage ) )
 	return sequenceWithLanguage
