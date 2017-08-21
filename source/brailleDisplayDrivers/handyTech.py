@@ -511,6 +511,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				if self.numCells and self._model:
 					break
 
+			self.sendExtendedPacket(HT_EXTPKT_GET_PROTOCOL_PROPERTIES)
 			if self.numCells:
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
@@ -542,7 +543,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._dev.write(self._model.deviceID)
 			self._dev.write(data)
 
-	def sendExtendedPacket(self, packet_type, data):
+	def sendExtendedPacket(self, packet_type, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
 		packet = "{length}{ext_type}{data}\x16".format(
@@ -554,6 +555,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _sendHidPacket(self, ser_packet_type, data=""):
 		assert self.isHid
 		self._dev.write(HT_HID_RPT_InData+chr(len(data)+1)+ser_packet_type+data)
+
+
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -619,6 +622,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			elif ext_packet_type == HT_EXTPKT_ATC_INFO:
 				# Ignore ATC packets for now
 				pass
+			elif ext_packet_type == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
+				# The third byte of the data seems to contain the cell count
+				# Other protocol properties are unknown for now
+				if packet_length>=3 and self.numCells:
+					assert packet[2]==self.numCells
 			else:
 				# Unknown extended packet, log it
 				log.warning("Unhandled extended packet of type %r: %r" %
