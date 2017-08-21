@@ -592,8 +592,8 @@ Als uw brailleleesregel een toetsenbord heeft van het type Perkins kunt u ook zo
 Raadpleegde paragraaf  [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor informatie over de ondersteunde brailleleesregels.
 U kunt braille configureren via het [dialoogvenster Brailleïnstellingen #BrailleSettings].
 
-+ Brailleleesregelafkortingen met betrekking tot type besturingselement, gebruiksstatus en oriëntatiepunten +
-Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type besturingselement, de gebruiksstatus alsmede oriëntatiepunten.
++ Braille-afkortingen voor besturingselementen, status-indicatoren en oriëntatiepunten +
+Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type en de status van een besturingselement alsmede oriëntatiepunten.
 
 || Afkorting | Type besturingselement |
 | afb | afbeelding |
@@ -644,8 +644,8 @@ Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgen
 | wkbalk | werkbalk |
 | ⠤⠤⠤⠤⠤ | scheiding |
 
-Verder worden de volgende gebruiksstatusaanduidingen gebruikt:
-|| Afkorting | Gebruiksstatus |
+Verder worden de volgende status-indicatoren gebruikt:
+|| Afkorting | status |
 | ... | wordt weergegeven wanneer object autoaanvulling ondersteunt |
 | ⢎⣿⡱ | wordt weergegeven wanneer een object (bijv. een schakelknop) ingedrukt is |
 | ⢎⣀⡱ | wordt weergegeven wanneer een object (bijv. een schakelknop) niet is ingedrukt |
@@ -696,7 +696,7 @@ Door punt 7 + punt 8 in te drukken wordt alle braille-invoer omgezet, maar zonde
 %kc:endInclude
 
 + Inhoudherkenning +
-Wanneer auteurs onvoldoende informatie verschaffen waarmee een gebruiker van een schermleesprogramma kan bepalen om welke inhoud het gaat kunnen verscheidene hulpprogramma's worden gebruikt om de inhoud te herkennen uit een afbeelding.
+Wanneer auteurs onvoldoende informatie verschaffen waarmee een gebruiker van een schermleesprogramma kan bepalen om welke inhoud het gaat, kunnen verscheidene hulpprogramma's worden gebruikt om de inhoud te herkennen uit een afbeelding.
 NVDA ondersteunt de OCR Optical Character Recognition, meestal 'tekstherkenning' genoemd in het nederlands, ) functionaliteit die in Windows 10 is ingebouwd om tekst uit afbeeldingen te herkennen.
 In andere inhoudherkenningsprogramma's kan worden voorzien met behulp van NVDA add-ons.
 
@@ -714,7 +714,7 @@ De OCR-functionaliteit van Windows 10 biedt ondersteuning voor veel talen.
 NVDA kan hiervan gebruik maken om tekst uit afbeeldingen en ontoegankelijke toepassingen te herkennen.
 
 U kunt de tekstherkenningstaal in het dialoogvenster  [Windows 10 OCR #Win10OcrSettings] instellen.
-U kunt extra talen toevoegen door in het menu Start, (of met linker Windowstoets +i) Instellingen te kiezen, Tijd en Taal -> Regio & Taal te selecteren   en dan  Een taal toevoegen te kiezen.
+U kunt extra talen toevoegen door in het menu Start, (of met linker Windows-toets +i) Instellingen te kiezen, Tijd en Taal -> Regio & Taal te selecteren   en dan  Een taal toevoegen te kiezen.
 
 %kc:beginInclude
 Om de tekst in het huidige navigatorobject te herkennen met behulp van Windows 10 OCR drukt u op NVDA+r.
@@ -1091,23 +1091,23 @@ Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven
 
 ==== Cursor weergeven ====
 Met deze optie kunt u de braillecursor in- en uitschakelen.
-Deze mogelijkheid is beschikbaar voor de invoegcursor en de leescursor, maar niet voor de selectieaanwijzer.
+Deze mogelijkheid is beschikbaar voor de invoegcursor en de leescursor, maar niet voor de selectie-indicator.
 
 ==== Knipperende cursor ====
 Met deze optie kunt u een braillecursor laten knipperen.
 Als knipperen wordt uitgezet, blijft de braillecursor steeds in de "omhoog" stand staan.
+Deze optie heeft geen invloedt op de selectie-indicator. Hierop is altijd punt 7 en punt 8 van toepassing en de indicator knippert niet.
 
 ==== Knippersnelheid cursor ====
 In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor bepaalt in milliseconden.
-Deze optie heeft geen invloedt op de selectieaanwijzer. Hierop is altijd punt 7 en punt 8 van toepassing en de aanwijzer knippert niet.
 
 ==== Cursorvorm voor Focus ====
 Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen wanneerbraille de focus moet volgen.
-Deze optie heeft geen invloedt op de selectieaanwijzer. Hierop is altijd punt 7 en punt 8 van toepassing en de aanwijzer knippert niet.
+Deze optie heeft geen invloedt op de selectie-indicator. Hierop is altijd punt 7 en punt 8 van toepassing en de indicator knippert niet.
 
 ==== Leescursorvorm (Review) ====
 Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen wanneerbraille de leescursor (review) moet volgen.
-Deze optie heeft geen invloedt op de selectieaanwijzer. Hierop is altijd punt 7 en punt 8 van toepassing en de aanwijzer knippert niet.
+Deze optie heeft geen invloedt op de selectie-indicator. Hierop is altijd punt 7 en punt 8 van toepassing en de indicator knippert niet.
 
 ==== Time-out voor meldingen (sec.) ====
 In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen op de brailleleesregel worden weergegeven.
