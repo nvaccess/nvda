@@ -208,11 +208,7 @@ class OldProtocolMixin(object):
 
 
 class AtcMixin(object):
-	def __init__(self, display):
-		super(AtcMixin, self).__init__(display)
-		log.debug("Enabling ATC")
-		display.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, True)
-
+	pass
 
 class TripleActionKeysMixin(AutoPropertyObject):
 	"""Triple action keys
@@ -512,6 +508,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					break
 
 			self.sendExtendedPacket(HT_EXTPKT_GET_PROTOCOL_PROPERTIES)
+			if isinstance(self._model, AtcMixin):
+				log.debug("Enabling ATC")
+				self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, True)
 			if self.numCells:
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
@@ -623,10 +622,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Ignore ATC packets for now
 				pass
 			elif ext_packet_type == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
-				# The third byte of the data seems to contain the cell count
-				# Other protocol properties are unknown for now
-				if packet_length>=3 and self.numCells:
-					assert packet[2]==self.numCells
+				log.info("Protocol properties received!")
 			else:
 				# Unknown extended packet, log it
 				log.warning("Unhandled extended packet of type %r: %r" %
