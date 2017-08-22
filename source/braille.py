@@ -1992,7 +1992,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	#: Compiled regular expression to match an identifier 
 	#: including an optional model name
 	#: @type: RegexObject
-	ID_PARTS_REGEX = re.compile(r"br\((\w+)(\.(\w+))?\):([\w|\+]+)", re.U)
+	ID_PARTS_REGEX = re.compile(r"br\((\w+)(\.(\w+))?\):([\w+]+)", re.U)
 
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
