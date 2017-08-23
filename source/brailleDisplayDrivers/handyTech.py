@@ -136,6 +136,11 @@ class Model(AutoPropertyObject):
 		super(Model, self).__init__()
 		self._display = display
 
+	def postInit(self):
+		"""Executed after model initialisation.
+		Subclasses may extend this method.
+		"""
+
 	# pylint: disable=R0201
 	def _get_keys(self):
 		"""Basic keymap
@@ -208,7 +213,11 @@ class OldProtocolMixin(object):
 
 
 class AtcMixin(object):
-	pass
+
+	def postInit(self):
+		super(AtcMixin, self).postInit()
+		log.debug("Enabling ATC")
+		self._display.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, True)		
 
 class TripleActionKeysMixin(AutoPropertyObject):
 	"""Triple action keys
@@ -508,11 +517,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					break
 
 			self.sendExtendedPacket(HT_EXTPKT_GET_PROTOCOL_PROPERTIES)
-			if isinstance(self._model, AtcMixin):
-				log.debug("Enabling ATC")
-				self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, True)
 			if self.numCells:
 				# A display responded.
+				self._model.postInit()
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._model.name, type=portType, port=port))
 				break
