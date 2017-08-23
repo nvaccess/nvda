@@ -150,3 +150,106 @@ class TestLanguageDetection(unittest.TestCase):
 	def test_englishAsDefaultLanguageForNumbers(self):
 		languageCode = languageDetection.getLangID( "Number" )  
 		self.assertEqual("en" , languageCode )
+
+	def test_JapaneseAsDefaultAndEnglishAsPreferred_case1(self):
+		combinedText = u"ウィンドウズ 10 文字認識"
+		config.conf["languageDetection"]["preferredLanguages"] = ("en",)
+		languageDetection.updateLanguagePriorityFromConfig()
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "ja_JP")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			u"ウィンドウズ 10 文字認識",
+		])
+		config.conf["languageDetection"]["preferredLanguages"] = ()
+		languageDetection.updateLanguagePriorityFromConfig()
+		
+	def test_JapaneseAsDefaultAndEnglishAsPreferred_case2(self):
+		combinedText = u"10文字"
+		config.conf["languageDetection"]["preferredLanguages"] = ("en",)
+		languageDetection.updateLanguagePriorityFromConfig()
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "ja_JP")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			u"10文字",
+		])
+		config.conf["languageDetection"]["preferredLanguages"] = ()
+		languageDetection.updateLanguagePriorityFromConfig()
+		
+	def test_JapaneseAsDefaultAndEnglishAsPreferred_case3(self):
+		combinedText = u"Windows 10"
+		config.conf["languageDetection"]["preferredLanguages"] = ("en",)
+		languageDetection.updateLanguagePriorityFromConfig()
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "ja_JP")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			LangChangeCommand('en'),
+			u"Windows ",
+			LangChangeCommand('ja_JP'),
+			u"10",
+		])
+		config.conf["languageDetection"]["preferredLanguages"] = ()
+		languageDetection.updateLanguagePriorityFromConfig()
+		
+	def test_JapaneseAsDefaultAndEnglishAsPreferred_case4(self):
+		combinedText = u"Windows 10 文字認識"
+		config.conf["languageDetection"]["preferredLanguages"] = ("en",)
+		languageDetection.updateLanguagePriorityFromConfig()
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "ja_JP")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			LangChangeCommand('en'),
+			u"Windows ",
+			LangChangeCommand('ja_JP'),
+			u"10 文字認識",
+		])
+		config.conf["languageDetection"]["preferredLanguages"] = ()
+		languageDetection.updateLanguagePriorityFromConfig()
+
+	def test_JapaneseAsDefaultAndEnglishAsPreferred_case5(self):
+		combinedText = u"Windows １０文字認識"
+		config.conf["languageDetection"]["preferredLanguages"] = ("en",)
+		languageDetection.updateLanguagePriorityFromConfig()
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "ja_JP")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			LangChangeCommand('en'),
+			u"Windows ",
+			LangChangeCommand('ja_JP'),
+			u"１０文字認識",
+		])
+		config.conf["languageDetection"]["preferredLanguages"] = ()
+		languageDetection.updateLanguagePriorityFromConfig()
+
+	def test_Japanese_EnglishAsDefault_case1(self):
+		combinedText = u"ウィンドウズ 10 文字認識"
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "en_US")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			LangChangeCommand('ja'),
+			u"ウィンドウズ ",
+			LangChangeCommand('en_US'),
+			u"10 ",
+			LangChangeCommand('ja'),
+			u"文字認識",
+		])
+		
+	def test_Japanese_EnglishAsDefault_case2(self):
+		combinedText = u"10文字"
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "en_US")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			u"10",
+			LangChangeCommand('ja'),
+			u"文字",
+		])
+		
+	def test_Japanese_EnglishAsDefault_case4(self):
+		combinedText = u"Windows 10 文字認識"
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "en_US")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			u"Windows 10 ",
+			LangChangeCommand('ja'),
+			u"文字認識",
+		])
+
+	def test_Japanese_EnglishAsDefault_case5(self):
+		combinedText = u"Windows １０文字認識"
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "en_US")
+		self.compareSpeechSequence(detectedLanguageSequence, [
+			u"Windows ",
+			LangChangeCommand('ja'),
+			u"１０文字認識",
+		])
