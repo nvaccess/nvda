@@ -1998,6 +1998,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
 		idParts = cls.ID_PARTS_REGEX.search(identifier)
+		if not idParts:
+			raise ValueError("Invalid identifier provided: %s"%identifier)
 		modelName = idParts.group(3)
 		key = idParts.group(4)
 		if modelName: # The identifier contains a model name
