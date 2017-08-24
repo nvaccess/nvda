@@ -14,16 +14,46 @@
 
 Import('env')
 
+proxyName="IAccessible2Proxy"
+proxyClsid="{62d295fe-2062-4369-a010-4f59b5e32d5e}"
+d=proxyClsid[1:-1].replace('-','')
+proxyClsid_data="{%s,%s,%s,%s}"%(
+	"0x"+d[0:8],
+	"0x"+d[8:12],
+	"0x"+d[12:16],
+	"{%s}"%(",".join("0x"+d[x:x+2] for x in xrange(16,32,2)))
+)
+
 idlFile=env.Command("ia2.idl","#/miscDeps/include/ia2/ia2.idl",Copy("$TARGET","$SOURCE"))
+manifestFile=env.Substfile(
+	target='ia2.manifest', 
+	source='COMProxy.manifest.subst', 
+	SUBST_DICT={
+		'%proxyClsid%':proxyClsid,
+		'%proxyName%':proxyName,
+	}
+)
 
 tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(source=idlFile)
 
 proxyDll=env.SharedLibrary(
-	target='IAccessible2Proxy',
+	target=proxyName,
 	source=[iidSourceFile,proxySourceFile,dlldataSourceFile],
 	LIBS=['rpcrt4','oleaut32','ole32'],
-	CPPDEFINES=[env['CPPDEFINES'],'WIN32','REGISTER_PROXY_DLL'],
-	LINKFLAGS=[env['LINKFLAGS'],'/export:DllGetClassObject,private','/export:DllCanUnloadNow,private'],
+	CPPDEFINES=[
+		env['CPPDEFINES'],
+		'WIN32',
+		('PROXY_CLSID_IS',proxyClsid_data),
+	],
+	LINKFLAGS=[
+		env['LINKFLAGS'],
+		'/export:DllGetClassObject,private',
+		'/export:DllCanUnloadNow,private',
+		'/export:GetProxyDllInfo,private',
+		'/manifest:embed',
+		'/manifestinput:'+manifestFile[0].path,
+	],
 )
+env.Depends(proxyDll,manifestFile)
 
 Return(['proxyDll','tlbFile','headerFile','iidSourceFile','proxySourceFile','dlldataSourceFile'])

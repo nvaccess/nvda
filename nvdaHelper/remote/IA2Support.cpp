@@ -24,7 +24,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "dllmain.h"
 #include "inProcess.h"
 #include "nvdaInProcUtils.h"
+#include "COMProxyRegistration.h"
 #include "IA2Support.h"
+
+using namespace std;
 
 #define APPLICATION_USER_MODEL_ID_MAX_LENGTH 131
 typedef LONG(WINAPI *GetCurrentApplicationUserModelId_funcType)(UINT32*,PWSTR);
@@ -32,31 +35,11 @@ typedef ULONG(*LPFNDLLCANUNLOADNOW)();
 
 #pragma data_seg(".ia2SupportShared")
 wchar_t IA2DllPath[MAX_PATH]={0};
-IID ia2Iids[]={
-	IID_IAccessible2,
-	IID_IAccessibleAction,
-	IID_IAccessibleApplication,
-	IID_IAccessibleComponent,
-	IID_IAccessibleEditableText,
-	IID_IAccessibleHyperlink,
-	IID_IAccessibleHypertext,
-	IID_IAccessibleImage,
-	IID_IAccessibleRelation,
-	IID_IAccessibleTable,
-	IID_IAccessibleTable2,
-	IID_IAccessibleTableCell,
-	IID_IAccessibleText,
-	IID_IAccessibleValue,
-};
 #pragma data_seg()
 #pragma comment(linker, "/section:.ia2SupportShared,rws")
 
-#define IAccessible2ProxyIID IID_IAccessible2
-
-IID _ia2PSClsidBackups[ARRAYSIZE(ia2Iids)]={0};
 bool isIA2Installed=FALSE;
-HINSTANCE IA2DllHandle=0;
-DWORD IA2RegCooky=0;
+COMProxyRegistration_t* IA2ProxyRegistration;
 HANDLE IA2UIThreadHandle=NULL;
 DWORD IA2UIThreadID=0;
 HANDLE IA2UIThreadUninstalledEvent=NULL;
@@ -65,54 +48,31 @@ bool isIA2Initialized=FALSE;
 bool isIA2SupportDisabled=false;
 
 bool installIA2Support() {
-	LPFNGETCLASSOBJECT IA2Dll_DllGetClassObject;
-	int i;
-	int res;
 	if(isIA2Installed) return FALSE;
-	if((IA2DllHandle=CoLoadLibrary(IA2DllPath,FALSE))==NULL) {
-		LOG_ERROR(L"CoLoadLibrary failed");
-		return FALSE;
+	APTTYPE appType;
+	APTTYPEQUALIFIER aptQualifier;
+	HRESULT res;
+	if((res=CoGetApartmentType(&appType,&aptQualifier))!=S_OK) {
+		if(res!=CO_E_NOTINITIALIZED) {
+			LOG_ERROR(L"Error getting apartment type, code "<<res);
+		}
+		return false;
 	}
-	IA2Dll_DllGetClassObject=(LPFNGETCLASSOBJECT)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllGetClassObject");
-	nhAssert(IA2Dll_DllGetClassObject); //IAccessible2 proxy dll must have this function
-	IUnknown* ia2ClassObjPunk=NULL;
-	if((res=IA2Dll_DllGetClassObject(IAccessible2ProxyIID,IID_IUnknown,(LPVOID*)&ia2ClassObjPunk))!=S_OK) {
-		LOG_ERROR(L"Error calling DllGetClassObject, code "<<res);
-		CoFreeLibrary(IA2DllHandle);
-		IA2DllHandle=0;
-		return FALSE;
-	}
-	if((res=CoRegisterClassObject(IAccessible2ProxyIID,ia2ClassObjPunk,CLSCTX_INPROC_SERVER,REGCLS_MULTIPLEUSE,(LPDWORD)&IA2RegCooky))!=S_OK) {
-		LOG_DEBUGWARNING(L"Error registering class object, code "<<res);
-		ia2ClassObjPunk->Release();
-		CoFreeLibrary(IA2DllHandle);
-		IA2DllHandle=0;
-		return FALSE;
-	}
-	ia2ClassObjPunk->Release();
-	for(i=0;i<ARRAYSIZE(ia2Iids);++i) {
-		CoGetPSClsid(ia2Iids[i],&(_ia2PSClsidBackups[i]));
-		CoRegisterPSClsid(ia2Iids[i],IAccessible2ProxyIID);
+	IA2ProxyRegistration=registerCOMProxy(IA2DllPath);
+	if(!IA2ProxyRegistration) {
+		LOG_ERROR(L"Error registering IAccessible2 proxy");
+		return false;
 	}
 	isIA2Installed=TRUE;
 	return TRUE;
 }
 
 bool uninstallIA2Support() {
-	int i;
-	LPFNDLLCANUNLOADNOW IA2Dll_DllCanUnloadNow;
-	if(!isIA2Installed)
-		return FALSE;
-	for(i=0;i<ARRAYSIZE(ia2Iids);++i) {
-		CoRegisterPSClsid(ia2Iids[i],_ia2PSClsidBackups[i]);
+	if(!isIA2Installed) return false;
+	if(!unregisterCOMProxy(IA2ProxyRegistration)) {
+		LOG_ERROR(L"Error unregistering IAccessible2 proxy");
+		return false;
 	}
-	CoRevokeClassObject(IA2RegCooky);
-	IA2Dll_DllCanUnloadNow=(LPFNDLLCANUNLOADNOW)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllCanUnloadNow");
-	nhAssert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
-	if(IA2Dll_DllCanUnloadNow()==S_OK) {
-		CoFreeLibrary(IA2DllHandle);
-	}
-	IA2DllHandle=0;
 	isIA2Installed=FALSE;
 	return TRUE;
 }
