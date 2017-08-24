@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.3 = 
+Af væsentlige forbedringer i denne version kan nævnes indtastning ved brug af forkortet punktskrift, støtte for de nye Windows OneCore stemmer i Windows 10, indbygget understøttelse for Windows 10 OCR (tekstgenkendelse), samt mange andre forbedringer til punkt og web.
 
 == Nye Funktioner ==
 - En indstilling er blevet tilføjet til dialogen punktindstillinger. Den er "Vis meddelelser på ubestemt tid". (#6669)
@@ -22,28 +23,34 @@
 - Du kan nu indtaste i både forkortet og uforkortet punktskrift på et punktdisplay med et punkttastatur. Se afsnittet "Indtastning med punkt" for flere informationer. (#2439)
 - Du kan nu indtaste Unicode punkttegn fra punkttastaturet på et punktdisplay ved at vælge Unicode-punkt  som indtastningstabel i dialogen "Punktindstillinger". (#6449)
 - Understøtter nu punktdisplayet SuperBraille der bruges i Taiwan. (#7352)
+- Ny punktoversættelsestabeller: Dansk  8-punkt computerpunkt, litauisk, persisk 8-punkt computerpunkt, persisk uforkortet, slovensk 8-punkt computerpunkt. (#6188, #6550, #6773, #7367)
+- Forbedrede punkttabellen for engelsk (U.S) 8-punkt computerpunkt, således at tabellen understøtter punkttegn, eurotegnet såvel som accenterede bogstaver. (#6836)
+- NVDA kan nu benytte tekstgenkendelsesfunktionaliteten indbygget i Windows 10 til genkendelse af tekst i billeder eller utilgængelige applikationer. (#7361)
+ - Sproget til tekstgenkendelse kan indstilles i dialogen Windows 10 OCR i NVDAs indstillinger.
+ - For at udføre tekstgenkendelse på det aktuelle navigatorobjekt, tryk NVDA+R.
+  - Se sektionen om tekstgenkendelse i brugervejledningen for yderligere oplysninger.
+- Du kan nu vælge hvordan sammenhængende informationer vises på et punktdisplay når et objekt har fokus ved brug af indstillingen "Præsentation af fokus sammenhæng" i NVDAs punktindstillinger. (#217)
+ - F.eks. muligheden "fyld display med sammenhængsændringer" og "kun når der rulles" kan gøre arbejde med lister meget nemmere, da punkterne ikke vil ændre deres position hele tiden.
+  - Se afsnittet "Præsentation af fokus sammenhæng" for yderligere informationer og eksempler.
+- NVDA understøtter nu komplekse dynamiske net såsom regneark, hvor kun noget af indholdet er indlæst og vist (specifikt aria-rowcount, aria-colcount, aria-rowindex og aria-colindex attributter introduceret i ARIA 1.1). (#7410)
 
 
 == Ændringer ==
 - En ubunden bevægelse (script_restart) er nu blevet tilføjet således NVDA hurtigt kan genstartes. (#6396)
 - Tastaturlayoutet kan nu indstilles fra NVDAs velkomstdialog. (#6863)
-- Navnene på landmærker er forkortet i punktskrift således: (#3975)
- - "landmærke:" "lmk"
- - "banner": "bnnr"
- - "komplementært": "kmpl"
- - "information om indhold": "iind"
- - "hovedindhold": "hind"
- - "navigation": "navi"
- - "søg": "søg"
- - "formular": "form"
- - "omrråde": "omr"
- - Eksempel: "navigation landmærke" bliver "lmk navi"
+- Mange flere kontroltyper og tilstande har nu tilknyttede forkortelser i punktskrift. Disse kan findes under afsnittet "Punktforkortelser for felttyper, felttilstande og landmærker" i brugervejledningen. (#7188, #3975)
 - Opdaterede eSpeak NG til 1.49.1. (#7280)
 - Listerne over indtastning- og oversættelsestabeller sorteres nu alfabetisk. (#6113)
 - Opdaterede Liblouis Braille Translator til 3.2.0. (#6935)
+- Den punkttabel der benytte som standard er nu Unified English Braille Code grade 1. (#6952)
+- Som standard vil NVDA nu kun vise sammenhængende information på et punktdisplay når de ændres, og når et objekt har fokus. (#217)
+ - Tidligere blev der vist så meget information som muligt, uanset om du havde set informationen før.
+ - Du kan vende tilbage til den tidligere adfærd ved at ændre indstillingen "Præsentation af fokus sammenhæng" i NVDAs punktindstillinger.
+ - Når punkt benyttes kan markøren konfigures til at tage en anden form, når den tøjres til fokus eller læsning. (#7112)
+- NVDA-logoet er blevet opdateret. Det opdaterede NVDA-logo er en stiliseret blanding af bogstaverne NVDA i hvid, på en solid lilla baggrund. Dette sikrer, at det vil være synligt på enhver farvet baggrund, og bruger lilla fra NV Access logo. (# 7446) 
 
-
-== Fejlrettelser ==
+ 
+ == Fejlrettelser ==
 - Redigerbare div-elementer i Chrome har ikke længere deres label rapporteret som deres værdi når gennemsynstilstand benyttes. (#7153)
 - Et tryk på end-tasten i et tomt dokument når gennemsynstilstand er aktiv i Microsoft Word vil ikke længere udløse en Runtime-fejl. (#7009)
 - Gennemsynstilstand er nu korrekt understøttet når et dokument er givet den specifikke ARIA-rolle "document" i Microsoft Edge. (#6998)
@@ -63,6 +70,10 @@
 - Udførelse af bogstavnavigation mellem overskrifter er nu markant hurtigere i Microsoft Edge. (#7343)
 - Navigation i gennemsynstilstand i Microsoft Edge springer ikke længere over store dele af hjemmesider (f.eks. temaet Wordpress 2015 på hjemmesider skabt af Wordpress). (#7143)
 - Landmærker er nu rigtigt lokaliserede i andre sprog end engelsk, når Microsoft Edge benyttes som browser. (#7328)
+- Punkt følger nu korrekt markeringen af tekst, når der markeres mere tekst end der er bredde på displayet. F.eks. vælger du flere linjer med skift+pil ned, vil den sidst valgte linje vises. (#5770)
+- I Firefox rapporterer NVDA ikke længere "sektion" flere gange, når der åbnes detaljer for en tweet på twitter.com. (# 5741)
+- Navigering af layouttabeller ved brug af tastaturkomandoer i gennemsynstilstand er ikke længere muligt, med mindre at rapportering af layouttabeller er slået til. (#7382)
+- NVDA vil nu springe over skjulte tabelceller i Chrome og Firefox, når tabelkommandoer benyttes i gennemsynstilstand. (#6652, #5655)
 
 
 == Ændringer for udviklere ==

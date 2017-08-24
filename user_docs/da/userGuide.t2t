@@ -588,44 +588,83 @@ Hvis dit punktdisplay har et punkttastatur, kan du også indtaste forkortet og u
 Se venligst afsnittet [Understøttede Punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
 Du kan konfigurere punkt ved hjælp af dialogen [Punktindstillinger #BrailleSettings]
 
-++ Punktforkortelser for felttyper, felttilstande og landmærker++
+++ Punktforkortelser for felttyper, felttilstande og landmærker ++
 For at få plads til så meget som muligt på et punktdisplay bruger NVDA følgende forkortelser til at indikere type og tilstand for felter såvel som landmærker.
 
 || Forkortelse | felttype |
+| app | applikation |
+| bkt | blokcitat |
 | knp | knap |
+| drknp | drop down knap |
+| dreknp | drejeknap |
+| splknp | splitknap |
+| seknp | skifteknap |
 | cbo | combo boks |
 | chk | checkboks |
 | dlg | dialog |
+| dok | dokument |
 | edt | redigerbart tekstfelt (editfelt) |
+| adgedt | adgangskode edit |
+| indlejret | indlejret objekt |
+| snote | slutnote |
+| fnote | fodnote |
 | gra | grafik |
-| kN | Nummer på tabelkolonne fs. k1, k2 |
-| rN | Nummer på tabelrække, fx. r1, r2 |
+| grp | gruppering |
 | hN | Overskrift niveau N, fx. h1, h2 |
+| hlp | hjælpeballon |
+| lmk | landmærke |
 | lnk | link |
 | blnk | besøgt link |
-| lst | list |
-| lmk | landmærke |
+| lst | list|
 | mnu | menu |
 | mnuln | menulinje |
+| mnuknp | menuknap |
+| mnupnkt | menupunkt |
+| pnl | panel |
+| bhln | behandlingslinje |
 | rknp | radioknap |
+| rulln | rullelinje |
+| sekt | sektion |
+| stln | statuslinje |
+| fanktl | fanekontrolelement |
 | tb | tabel |
+| kN | Nummer på tabelkolonne fs. k1, k2 |
+| rN | Nummer på tabelrække, fx. r1, r2 |
+| term | terminal |
+| vkln | værktøjslinje |
+| vktip | værktøjstip |
 | tv | trævisning |
+| tvknp | trævisningsknap |
+| tvemne | emne i trævisning |
 | nv N | Et emne i en trævisning har niveau N |
+| vnd | vindue |
 | ``-----`` | skilletegn |
 
 Desuden er følgende indikatorer for tilstande defineret:
 || Forkortelse | tilstand for felt |
 | ... | vises, når et objekt understøtter autofuldførelse |
-| ( ) | bliver vist, når et objekt, fx. en checkboks, ikke er markeret |
-| (x) | bliver vist, når et objekt, fx. en checkboks, er markeret |
-| (-) | bliver vist, når et objekt, fx. en checkboks, er delvist markeret |
+| ⢎⣿⡱ | vises, når et objekt (f.eks. en skifteknap) er trykket |
+| ⢎⣀⡱ | vises, når et objekt (f.eks. en skifteknap) ikke er trykket |
+| ⣏⣿⣹ | bliver vist, når et objekt, fx. en checkboks, er markeret |
+| ⣏⣸⣹ | bliver vist, når et objekt, fx. en checkboks, er delvist markeret |
+| ⣏⣀⣹ | bliver vist, når et objekt, f.eks. en checkboks, er markeret |
 | - | Bliver vist, når et objekt, fx. en trævisning, kan foldes sammen |
 | + | Bliver vist, når et objekt, fx. en trævisning, kan foldes ud |
+| *** | vises, når et beskyttet dokument eller en beskyttet kontrol fremkommer |
 | klk | Bliver vist, når et objekt kan klikkes på |
+| kmnt | vises, når der er en kommentar til et stykke tekst eller en celle i et regneark |
+| frml | vises, når der er en formular på en celle i et regneark |
+|ugyldig | vises, når en ugyldigt indtastning er opstået |
+| lbesk | vises, når et objekt ( typisk en grafik) har en lang beskrivelse |
+| mln | vises, når et tekstfelt tillader at indtaste flere linjer, såsom kommentarfelter på hjemmesider |
+| pkr | vises, når et påkrævet formularfelt forekommer |
 | sb | Bliver vist, når et objekt, fx. et editfelt, er skrivebeskyttet |
 | vlg | Bliver vist, når et objekt er valgt |
+| ivlg | Bliver vist, når et objekt er valgt |
+| sorteret st | vises, når et objekt har stigende sortering |
+| sorteret fa | vises, når et objekt har faldende sortering |
 | umnu | Bliver vist, når et objekt har en pop-up-funktion, som regel en undermenu |
-
+ 
  Til sidst defineres følgende forkortelser for landmærker:
  || Forkortelse | Landmærke |
 | bnnr | banner |
@@ -651,6 +690,31 @@ Et tryk på punkt 7 sletter sidst indtastede punktcelle eller tegn.
 Punkt 8 oversætter alt indtastet punkt og trykker på enter-tasten.
 Ved at trykke på punkt 7 og 8 sammen oversættes det indtastede punktskrift, men tilføjer ikke et mellemrum eller et tryk på enter-tasten.
 %kc:endInclude
+
++ Indholdsgenkendelse +
+Når forfattere ikke giver tilstrækkelig information til en skærmlæserbruger til at bestemme indholdet af noget, kan forskellige værktøjer bruges til at forsøge at genkende indholdet fra et billede.
+NVDA understøtter den optiske tegngenkendelse (OCR) -funktionalitet indbygget i Windows 10 ftil at genkende tekst fra billeder.
+Yderligere indholdsgenkendelse kan leveres i NVDA add-ons.
+
+Når du bruger en kommando til genkendelse af indhold, genkender NVDA indhold fra det aktuelle [navigatorobjekt #ObjectNavigation].
+Som standard følger navigatorobjektet systemfokus eller markøren i gennemsynstilstand, så du kan som regel bare flytte fokusmarkøren eller markøren der benyttes i gennemsynstilstand, hvor du ønsker den.
+Hvis du for eksempel flytter markøren der benyttes i gennemsynstilstand til en grafik, vil tekstgenkendelse udføres på grafikken som standard.
+Du kan også benytte objektnavigering til for eksempel at genkende indholdet af et helt programvindue.
+
+Når tekstgenkendelsen er udført, vil resultatet blive præsenteret i et dokument, der ligner gennemsynstilstand, så du kan læse oplysningerne med markørtaster osv.
+Et tryk på Enter eller mellemrum vil aktivere (normalt klikke) teksten ved markøren, hvis det er muligt.
+Et tryk på escape afviser genkendelsesresultatet.
+
+++ Windows 10 OCR ++ [Win10Ocr]
+Windows 10 indeholder OCR til mange sprog.
+NVDA kan bruge denne funktionalitet til at genkende tekst fra billeder eller utilgængelige applikationer.
+
+Du kan indstille det sprog, der skal bruges til tekstgenkendelse i dialogboksen [Windows 10 OCR # Win10OcrSettings].
+Yderligere sprog kan installeres ved at åbne startmenuen, vælge Indstillinger, vælge Tid og sprog, Område og sprog og derefter vælge Tilføj et sprog.
+
+%Kc:beginInclude
+For at genkende teksten af det aktuelle navigatorobjekt ved hjælp af Windows 10 OCR, skal du trykke på NVDA + r.
+%Kc:endInclude
 
 + Programspecifikke NVDA-kommandoer +
 NVDA har sine egne ekstra kommandoer for nogle programmer. Dette er for at gøre nogle opgaver lettere, eller for at give adgang til funktionalitet som ellers ikke er tilgængelig for brugere af skærmlæsere.
@@ -1029,18 +1093,23 @@ Med denne indstilling kan du få ordet under markøren vist i uforkortet compute
 
 ==== Vis markør ====
 Denne indstilling lader dig slå punktmarkøren til og fra.
-Denne indstilling anvendes til brug af system- og læsemarkøren, men ikke udvælgelses-indikatoren.
+Denne indstilling anvendes til brug af system- og læsemarkøren, men ikke udvælgelsesindikatoren.
 
 ==== Blinkende markør ====
 Denne indstilling gør punktmarkøren i stand til at blinke.
 Hvis dette er slået fra, vil markøren konstant forblive i "op" positionen.
+Udvælgelsesindikatoren er ikke påvirket af denne indstilling, men vil altid forblive punkt 7 og 8 uden disse punkter blinker.
 
 ==== Blinkhastighed for markør (MS) ====
 Denne indstilling er et felt til indtastning af en talværdi. Her har du mulighed for at indtaste markørens blinkhastighed i millisekunder.
 
-==== Markørform ====
-Denne indstilling lader dig vælge formen (punktmønstret) til brugen af din punktmarkør.
-Udvælgelsesindikatoren påvirkes ikke af denne indstilling.
+==== Markørform til fokus ====
+Denne indstilling lader dig vælge formen (punktmønstret) til brugen af punktmarkøren, når punktmarkøren er tøjret til fokus.
+Udvælgelsesindikatoren påvirkes ikke af denne indstilling,  men vil altid forblive punkt 7 og 8 uden disse punkter blinker.
+
+==== Markørform til læsning ====
+Denne indstilling lader dig vælge formen (punktmønstret) til brugen af punktmarkøren, når punktmarkøren er tøjret til fokus.
+Udvælgelsesindikatoren påvirkes ikke af denne indstilling,  men vil altid forblive punkt 7 og 8 uden disse punkter blinker.
 
 ==== Besked vises i (sek) ====
 Denne indstilling er et felt til indtastning af en talværdi, som styrer, hvor længe NVDA-meddelelser vises på punktdisplayet.
@@ -1073,6 +1142,32 @@ Hvis indstillingen er slået fra, vil så meget af ordet som muligt blive vist, 
 Når du så ruller displayet videre, kan du læse resten af ordet.
 
 Hvis du slår denne indstilling til, kan det give en mere flydende læsning, men generelt medfører det, at du skal skifte linje på displayet hyppigere.
+
+==== fokuskontekstpræsentation ====
+Denne indstilling giver dig mulighed for at vælge, hvilke kontekstoplysninger NVDA vil vise på punktdisplayet, når et objekt får fokus.
+Kontekstoplysninger refererer til hierarkiet af objekter, der indeholder fokus.
+For eksempel, når du fokuserer et listeobjekt, er dette liste element en del af en liste.
+Denne liste kan være indeholdt i en dialog mv.
+Se venligst afsnittet om [objektnavigation #ObjectNavigation] for at få flere oplysninger om det hierarki, der gælder for objekter i NVDA.
+
+Når den er indstillet til at udfylde displayet for kontekstændringer, forsøger NVDA at vise så meget kontekstinformation som muligt på punktdisplayet, men kun for de dele af konteksten, der er ændret.
+For eksemplet ovenfor betyder dette, at når du skifter fokus til listen, vil NVDA vise listeemnet på punktdisplayet.
+Desuden vil NVDA forsøge at vise, at listeemnet er en del af en liste, hvis der er tilstrækkelig plads tilbage på punktdisplayet.
+Hvis du så begynder at flytte gennem listen med dine piletaster, antages det at du er klar over, at du stadig er på listen.
+Derfor vil de resterende listeemner, du fokuserer på, kun vise det fokuserede listeemne på displayet.
+For at du kan læse konteksten igen (dvs. at du er på en liste, og at listen er en del af en dialog), skal du rulle dit punktdisplay tilbage.
+
+Når denne indstilling er indstillet til altid at fylde displayet, vil NVDA forsøge at vise så meget kontekstinformation som muligt på punktdisplayet, uanset om du tidligere har set de samme kontekstoplysninger.
+Dette har den fordel, at NVDA vil vise så meget information som muligt på skærmen.
+Ulempen er imidlertid, at der altid er en forskel i den position, hvor fokus befinder sig på punktdisplayet.
+Dette kan gøre det vanskeligt at skimme en lang liste med emner, for eksempel, da du bliver nødt til løbende at flytte din finger for at finde starten på emnet.
+Dette var standardadfærden for NVDA 2017.2 og før.
+
+Når du indstiller fokuskontekstpræsentationsfunktionen til kun at vise kontekstoplysningerne, når du ruller tilbage, viser NVDA som standard aldrig kontekstoplysninger på dit punktdisplay.
+Således vil NVDA i eksemplet ovenfor vise, at du har fokus på et listeemne.
+For at du skal kunne læse konteksten (dvs. at du er på en liste, og at listen er en del af en dialog), skal du rulle dit punktdisplay tilbage.
+
+Hvis du vil skifte fokuskontekstpræsentation fra hvor som helst, skal du tildele en brugerdefineret bevægelse ved hjælp af [Input-bevægelser dialogboksen #InputGestures].
 
 +++ Tastaturindstillinger (NVDA+Ctrl+k) +++
 Denne dialogboks findes i menuen Indstillinger under punktet Tastaturindstillinger...".
@@ -1384,6 +1479,12 @@ Denne combo boks har fire muligheder.
 Tonens toneleje vil forøges ved hvert mellemrum, og for tab vil tonen forøges fire mellemrum.
 - Både Tale og Toner: Denne mulighed vil læse indrykningen ved brug af begge metoder.
 -
+
++++ Indstillinger for Windows 10 tekstgenkendelse +++[Win10OcrSettings]
+Denne dialog kan tilgås fra NVDA-menuen under indstillinger og lader dig konfigurere [Windows 10 Tekstgenkendelse #Win10Ocr]
+
+==== Sprog til tekstgenkendelse ====
+Denne comboboks lader dig vælge det ønskede sprog til brugen af tekstgenkendelse.
 
 +++ Udtaleordbøger  +++
 Menuen Udtaleordbøger, som findes i menuen Indstillinger, indeholder dialogbokse, der giver mulighed for at styre,  hvordan NVDA udtaler bestemte ord eller tekstbidder. 
@@ -2371,7 +2472,7 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
 
-++ Systemspecifikke parametre++[SystemWideParameters]
+++ Systemspecifikke parametre++[System]
 NVDA tillader, at nogle værdier ændres i systemregistreringsdatabasen. Disse ændringer påvirker NVDAs adfærd på et systemspecifikt niveau.
 Disse værdier er gemt i registreringsdatabasen under en af følgende nøgler:
 - 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
