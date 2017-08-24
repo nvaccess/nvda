@@ -139,7 +139,7 @@ Au mai fost rezolvate alte probleme rare de selectare în modul de navigare. (#7
  - În schimb, constantele `speech.REASON_*` și `controlTypes.REASON_*` ar trebui să fie folosite. (#6846)
  - În schimb, setarea pentru sintetizator `i18nName`, `displayName` și `displayNameWithAccelerator` ar trebui să fie folosite. (#6846)
  - `config.validateConfig`. (#6846, #667)
- - `config.save`. (#6846)
+ - `config.save`: Ar trebui să fie folosit în schimb `config.conf.save`. (#6846)
 - Lista de completări în meniul context de autocompletare al consolei Python nu mai prezintă nicio cale care să ducă până la  obiectele simbolului final pentru a fi completată. (#7023)
 - Există acum un cadru de unitate de testare pentru NVDA. (#7026)
 - Testele de unitate și infrastructura sunt localizate în dosarul tests/unit. Vedeți docstring-ul în fișierul tests\unit\__init__.py pentru detalii.
