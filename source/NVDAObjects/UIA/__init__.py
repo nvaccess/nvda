@@ -31,6 +31,7 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
 import time
+from locationHelper import Location
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -1227,7 +1228,7 @@ class UIA(Window):
 		top=int(r[1])
 		width=int(r[2])
 		height=int(r[3])
-		return left,top,width,height
+		return Location(left,top,width,height)
 
 	def _get_value(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
