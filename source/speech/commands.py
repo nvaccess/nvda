@@ -271,7 +271,7 @@ class BeepCommand(BaseCallbackCommand):
 
 	def run(self):
 		import tones
-		tones.beep(self.hz, self.length, left=self.left, right=self.right)
+		tones.beep(self.hz, self.length, left=self.left, right=self.right, isSPeechBeepCommand=True)
 
 	def __repr__(self):
 		return "BeepCommand({hz}, {length}, left={left}, right={right})".format(
@@ -286,7 +286,7 @@ class WaveFileCommand(BaseCallbackCommand):
 
 	def run(self):
 		import nvwave
-		nvwave.playWaveFile(self.fileName, asynchronous=True)
+		nvwave.playWaveFile(self.fileName, asynchronous=True, isSPeechWaveFileCommand=True)
 
 	def __repr__(self):
 		return "WaveFileCommand(%r)" % self.fileName

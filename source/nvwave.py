@@ -1,6 +1,6 @@
 #nvwave.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
+#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ import winKernel
 import wave
 import config
 from logHandler import log
+import extensionPoints
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
@@ -26,6 +27,14 @@ winmm = windll.winmm
 
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
+
+#: Notifies when a wave file is about to be played,
+#: and allows components or add-ons to decide whether the wave file should be played.
+#: For example, when controlling a remote system,
+#: the remote system must be notified of sounds played on the local system.
+#: Also, registrars should be able to suppress playing sounds if desired.
+#: Handlers are called with the same arguments as L{playWaveFile} as keyword arguments.
+decide_playWaveFile = extensionPoints.Decider()
 
 class WAVEFORMATEX(Structure):
 	_fields_ = [
@@ -383,18 +392,28 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 
 fileWavePlayer = None
 fileWavePlayerThread=None
-def playWaveFile(fileName, asynchronous=True):
+def playWaveFile(
+	fileName: str,
+	asynchronous: bool = True,
+	isSPeechWaveFileCommand: bool = False
+):
 	"""plays a specified wave file.
+	@param fileName: the path to the wave file, usually absolute.
 	@param asynchronous: whether the wave file should be played asynchronously
-	@type asynchronous: bool
+		If C{False}, the calling thread is blocked until the wave has finished playing.
+	@param isSPeechWaveFileCommand: whether this wave is played as part of a speech sequence.
 	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
 		fileWavePlayer.stop()
+	if not decide_playWaveFile.decide(fileName=fileName, asynchronous=asynchronous, isSPeechWaveFileCommand=isSPeechWaveFileCommand):
+		log.debug("Playing wave file canceled by handler registered to decide_playWaveFile extension point")
+		return
 	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
+
 	if asynchronous:
 		if fileWavePlayerThread is not None:
 			fileWavePlayerThread.join()
