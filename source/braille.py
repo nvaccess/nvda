@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager
 
 import sys
 import itertools
@@ -25,75 +25,184 @@ import textInfos
 import brailleDisplayDrivers
 import inputCore
 import brailleTables
+from collections import namedtuple
 
 roleLabels = {
-	# Translators: Displayed in braille for an object which is an
-	# editable text field.
-	controlTypes.ROLE_EDITABLETEXT: _("edt"),
 	# Translators: Displayed in braille for an object which is a
-	# list.
-	controlTypes.ROLE_LIST: _("lst"),
+	# window.
+	controlTypes.ROLE_WINDOW: _("wnd"),
 	# Translators: Displayed in braille for an object which is a
-	# menu bar.
-	controlTypes.ROLE_MENUBAR: _("mnubar"),
-	# Translators: Displayed in braille for an object which is a
-	# menu.
-	controlTypes.ROLE_POPUPMENU: _("mnu"),
-	# Translators: Displayed in braille for an object which is a
-	# button.
-	controlTypes.ROLE_BUTTON: _("btn"),
+	# dialog.
+	controlTypes.ROLE_DIALOG: _("dlg"),
 	# Translators: Displayed in braille for an object which is a
 	# check box.
 	controlTypes.ROLE_CHECKBOX: _("chk"),
 	# Translators: Displayed in braille for an object which is a
 	# radio button.
 	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
+	# Translators: Displayed in braille for an object which is an
+	# editable text field.
+	controlTypes.ROLE_EDITABLETEXT: _("edt"),
+	# Translators: Displayed in braille for an object which is a
+	# button.
+	controlTypes.ROLE_BUTTON: _("btn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu bar.
+	controlTypes.ROLE_MENUBAR: _("mnubar"),
+	# Translators: Displayed in braille for an object which is a
+	# menu item.
+	controlTypes.ROLE_MENUITEM: _("mnuitem"),
+	# Translators: Displayed in braille for an object which is a
+	# menu.
+	controlTypes.ROLE_POPUPMENU: _("mnu"),
 	# Translators: Displayed in braille for an object which is a
 	# combo box.
 	controlTypes.ROLE_COMBOBOX: _("cbo"),
 	# Translators: Displayed in braille for an object which is a
+	# list.
+	controlTypes.ROLE_LIST: _("lst"),
+	# Translators: Displayed in braille for an object which is a
+	# graphic.
+	controlTypes.ROLE_GRAPHIC: _("gra"),
+	# Translators: Displayed in braille for an object which is a
+	# help balloon.
+	controlTypes.ROLE_HELPBALLOON: _("hlp"),
+	# Translators: Displayed in braille for an object which is a
+	# tool tip.
+	controlTypes.ROLE_TOOLTIP: _("tltip"),
+	# Translators: Displayed in braille for an object which is a
 	# link.
 	controlTypes.ROLE_LINK: _("lnk"),
-	# Translators: Displayed in braille for an object which is a
-	# dialog.
-	controlTypes.ROLE_DIALOG: _("dlg"),
 	# Translators: Displayed in braille for an object which is a
 	# tree view.
 	controlTypes.ROLE_TREEVIEW: _("tv"),
 	# Translators: Displayed in braille for an object which is a
+	# tree view item.
+	controlTypes.ROLE_TREEVIEWITEM: _("tvitem"),
+	# Translators: Displayed in braille for an object which is a
+	# tab control.
+	controlTypes.ROLE_TABCONTROL: _("tabctl"),
+	# Translators: Displayed in braille for an object which is a
+	# progress bar.
+	controlTypes.ROLE_PROGRESSBAR: _("prgbar"),
+	# Translators: Displayed in braille for an object which is a
+	# scroll bar.
+	controlTypes.ROLE_SCROLLBAR: _("scrlbar"),
+	# Translators: Displayed in braille for an object which is a
+	# status bar.
+	controlTypes.ROLE_STATUSBAR: _("stbar"),
+	# Translators: Displayed in braille for an object which is a
 	# table.
-	controlTypes.ROLE_TABLE: _("tb"),
+	controlTypes.ROLE_TABLE: _("tbl"),
 	# Translators: Displayed in braille for an object which is a
+	# tool bar.
+	controlTypes.ROLE_TOOLBAR: _("tlbar"),
+	# Translators: Displayed in braille for an object which is a
+	# drop down button.
+	controlTypes.ROLE_DROPDOWNBUTTON: _("drbtn"),
+	# Displayed in braille for an object which is a
 	# separator.
-	controlTypes.ROLE_SEPARATOR: _("-----"),
+	controlTypes.ROLE_SEPARATOR: u"⠤⠤⠤⠤⠤",
 	# Translators: Displayed in braille for an object which is a
-	# graphic.
-	controlTypes.ROLE_GRAPHIC: _("gra"),
+	# block quote.
+	controlTypes.ROLE_BLOCKQUOTE: _("bqt"),
+	# Translators: Displayed in braille for an object which is a
+	# document.
+	controlTypes.ROLE_DOCUMENT: _("doc"),
+	# Translators: Displayed in braille for an object which is a
+	# application.
+	controlTypes.ROLE_APPLICATION: _("app"),
+	# Translators: Displayed in braille for an object which is a
+	# grouping.
+	controlTypes.ROLE_GROUPING: _("grp"),
+	# Translators: Displayed in braille for an object which is a
+	# embedded object.
+	controlTypes.ROLE_EMBEDDEDOBJECT: _("embedded"),
+	# Translators: Displayed in braille for an object which is a
+	# end note.
+	controlTypes.ROLE_ENDNOTE: _("enote"),
+	# Translators: Displayed in braille for an object which is a
+	# foot note.
+	controlTypes.ROLE_FOOTNOTE: _("fnote"),
+	# Translators: Displayed in braille for an object which is a
+	# terminal.
+	controlTypes.ROLE_TERMINAL: _("term"),
+	# Translators: Displayed in braille for an object which is a
+	# section.
+	controlTypes.ROLE_SECTION: _("sect"),
+	# Translators: Displayed in braille for an object which is a
+	# toggle button.
+	controlTypes.ROLE_TOGGLEBUTTON: _("tgbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# split button.
+	controlTypes.ROLE_SPLITBUTTON: _("splbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu button.
+	controlTypes.ROLE_MENUBUTTON: _("mnubtn"),
+	# Translators: Displayed in braille for an object which is a
+	# spin button.
+	controlTypes.ROLE_SPINBUTTON: _("spnbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# tree view button.
+	controlTypes.ROLE_TREEVIEWBUTTON: _("tvbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu.
+	controlTypes.ROLE_MENU: _("mnu"),
+	# Translators: Displayed in braille for an object which is a
+	# panel.
+	controlTypes.ROLE_PANEL: _("pnl"),
+	# Translators: Displayed in braille for an object which is a
+	# password edit.
+	controlTypes.ROLE_PASSWORDEDIT: _("pwdedt"),
 }
 
 positiveStateLabels = {
-	# Translators: Displayed in braille when an object (e.g. a check box) is checked.
-	controlTypes.STATE_CHECKED: _("(x)"),
-	# Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-	controlTypes.STATE_HALFCHECKED: _("(-)"),
 	# Translators: Displayed in braille when an object is selected.
 	controlTypes.STATE_SELECTED: _("sel"),
-	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-	controlTypes.STATE_HASPOPUP: _("submnu"),
-	# Translators: Displayed in braille when an object supports autocompletion.
-	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Displayed in braille when an object (e.g. a toggle button) is pressed.
+	controlTypes.STATE_PRESSED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a check box) is checked.
+	controlTypes.STATE_CHECKED: u"⣏⣿⣹",
+	# Displayed in braille when an object (e.g. a check box) is half checked.
+	controlTypes.STATE_HALFCHECKED: u"⣏⣸⣹",
+	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+	controlTypes.STATE_READONLY: _("ro"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 	controlTypes.STATE_EXPANDED: _("-"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
 	controlTypes.STATE_COLLAPSED: _("+"),
-	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-	controlTypes.STATE_READONLY: _("ro"),
+	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+	controlTypes.STATE_HASPOPUP: _("submnu"),
+	# Translators: Displayed in braille when a protected control or a document is encountered.
+	controlTypes.STATE_PROTECTED: _("***"),
+	# Translators: Displayed in braille when a required form field is encountered.
+	controlTypes.STATE_REQUIRED: _("req"),
+	# Translators: Displayed in braille when an invalid entry has been made.
+	controlTypes.STATE_INVALID_ENTRY: _("invalid"),
+	# Translators: Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+	controlTypes.STATE_MULTILINE: _("mln"),
 	# Translators: Displayed in braille when an object is clickable.
 	controlTypes.STATE_CLICKABLE: _("clk"),
+	# Translators: Displayed in braille when an object is sorted ascending.
+	controlTypes.STATE_SORTED_ASCENDING: _("sorted asc"),
+	# Translators: Displayed in braille when an object is sorted descending.
+	controlTypes.STATE_SORTED_DESCENDING: _("sorted desc"),
+	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
+	controlTypes.STATE_HASLONGDESC: _("ldesc"),
+	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+	controlTypes.STATE_HASFORMULA: _("frml"),
+	# Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+	controlTypes.STATE_HASCOMMENT: _("cmnt"),
 }
 negativeStateLabels = {
-	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-	controlTypes.STATE_CHECKED: _("( )"),
+	# Translators: Displayed in braille when an object is not selected.
+	controlTypes.STATE_SELECTED: _("nsel"),
+	# Displayed in braille when an object (e.g. a toggle button) is not pressed.
+	controlTypes.STATE_PRESSED: u"⢎⣀⡱",
+	# Displayed in braille when an object (e.g. a check box) is not checked.
+	controlTypes.STATE_CHECKED: u"⣏⣀⣹",
 }
 
 landmarkLabels = {
@@ -134,6 +243,33 @@ INPUT_END_IND = u" ⣹"
 
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
+
+#: Identifier for a focus context presentation setting that
+#: only shows as much as possible focus context information when the context has changed.
+CONTEXTPRES_CHANGEDCONTEXT = "changedContext"
+#: Identifier for a focus context presentation setting that
+#: shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+CONTEXTPRES_FILL = "fill"
+#: Identifier for a focus context presentation setting that
+#: always shows the object with focus at the very left of the braille display.
+CONTEXTPRES_SCROLL = "scroll"
+#: Focus context presentations associated with their user readable and translatable labels
+focusContextPresentations=[
+	# Translators: The label for a braille focus context presentation setting that
+	# only shows as much as possible focus context information when the context has changed.
+	(CONTEXTPRES_CHANGEDCONTEXT, _("Fill display for context changes")),
+	# Translators: The label for a braille focus context presentation setting that
+	# shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+	# This was the pre NVDA 2017.3 default.
+	(CONTEXTPRES_FILL, _("Always fill display")),
+	# Translators: The label for a braille focus context presentation setting that
+	# always shows the object with focus at the very left of the braille display
+	# (i.e. you will have to scroll back for focus context information).
+	(CONTEXTPRES_SCROLL, _("Only when scrolling back")),
+]
+
+#: Named tuple for a region with start and end positions in a buffer
+RegionWithPositions = namedtuple("RegionWithPositions",("region","start","end"))
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -527,7 +663,19 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field, isAtStart, formatConfig):
+def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
+	"""Generates the braille text for the given format field.
+	@param field: The format field to examine.
+	@type field: {str : str, ...}
+	@param fieldCache: The format field of the previous run; i.e. the cached format field.
+	@type fieldCache: {str : str, ...}
+	@param isAtStart: True if this format field precedes any text in the line/paragraph.
+	This is useful to restrict display of information which should only appear at the start of the line/paragraph;
+	e.g. the line number or line prefix (list bullet/number).
+	@type isAtStart: bool
+	@param formatConfig: The formatting config.
+	@type formatConfig: {str : bool, ...}
+	"""
 	textList = []
 	if isAtStart:
 		if formatConfig["reportLineNumber"]:
@@ -543,6 +691,13 @@ def getFormatFieldBraille(field, isAtStart, formatConfig):
 				# Translators: Displayed in braille for a heading with a level.
 				# %s is replaced with the level.
 				textList.append(_("h%s")%headingLevel)
+	if formatConfig["reportLinks"]:
+		link=field.get("link")
+		oldLink=fieldCache.get("link")
+		if link and link != oldLink:
+			textList.append(roleLabels[controlTypes.ROLE_LINK])
+	fieldCache.clear()
+	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 class TextInfoRegion(Region):
@@ -563,19 +718,9 @@ class TextInfoRegion(Region):
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
-	def _getCursor(self):
-		"""Retrieve the collapsed cursor.
-		This should be the start or end of the selection returned by L{_getSelection}.
-		@return: The cursor.
-		"""
-		try:
-			return self.obj.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
-
 	def _getSelection(self):
 		"""Retrieve the selection.
-		The start or end of this should be the cursor returned by L{_getCursor}.
+		If there is no selection, retrieve the collapsed cursor.
 		@return: The selection.
 		@rtype: L{textInfos.TextInfo}
 		"""
@@ -617,6 +762,7 @@ class TextInfoRegion(Region):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
 		typeform = louis.plain_text
+		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
 				self._isFormatFieldAtStart = False
@@ -651,7 +797,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
+					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -694,6 +840,7 @@ class TextInfoRegion(Region):
 			# We only render fields that aren't at the start of their nodes for the first part of the reading unit.
 			# Otherwise, we'll render fields that have already been rendered.
 			self._skipFieldsNotAtStartOfNode = True
+		info.obj._brailleFormatFieldAttributesCache = formatFieldAttributesCache
 
 	def _getReadingUnit(self):
 		return textInfos.UNIT_PARAGRAPH if config.conf["braille"]["readByParagraph"] else textInfos.UNIT_LINE
@@ -701,19 +848,6 @@ class TextInfoRegion(Region):
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
 		unit = self._getReadingUnit()
-		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
-		# so use the original cursor TextInfo for line and copy for cursor.
-		self._readingInfo = readingInfo = self._getCursor()
-		cursor = readingInfo.copy()
-		# Get the reading unit at the cursor.
-		readingInfo.expand(unit)
-		# Get the selection.
-		sel = self._getSelection()
-		# Restrict the selection to the reading unit at the cursor.
-		if sel.compareEndPoints(readingInfo, "startToStart") < 0:
-			sel.setEndPoint(readingInfo, "startToStart")
-		if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
-			sel.setEndPoint(readingInfo, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
 		self.cursorPos = None
@@ -724,8 +858,33 @@ class TextInfoRegion(Region):
 		self.selectionStart = self.selectionEnd = None
 		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-
 		self._endsWithField = False
+
+		# Selection has priority over cursor.
+		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
+		# and copying the TextInfo breaks this ability.
+		# So use the original TextInfo for line and a copy for cursor/selection.
+		self._readingInfo = readingInfo = self._getSelection()
+		sel = readingInfo.copy()
+		if not sel.isCollapsed:
+			# There is a selection.
+			if self.obj.isTextSelectionAnchoredAtStart:
+				# The end of the range is exclusive, so make it inclusive first.
+				readingInfo.move(textInfos.UNIT_CHARACTER, -1, "end")
+			# Collapse the selection to the unanchored end.
+			readingInfo.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
+			# Get the reading unit at the selection.
+			readingInfo.expand(unit)
+			# Restrict the selection to the reading unit.
+			if sel.compareEndPoints(readingInfo, "startToStart") < 0:
+				sel.setEndPoint(readingInfo, "startToStart")
+			if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
+				sel.setEndPoint(readingInfo, "endToEnd")
+		else:
+			# There is a cursor.
+			# Get the reading unit at the cursor.
+			readingInfo.expand(unit)
+
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
@@ -750,6 +909,7 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
+
 		# Strip line ending characters.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f")
 		rawTextLen = len(self.rawText)
@@ -770,12 +930,17 @@ class TextInfoRegion(Region):
 			self._rawToContentPos.append(self._currentContentPos)
 		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
 			self.cursorPos = rawTextLen - 1
+		# The selection end doesn't have to be checked, Region.update() makes sure brailleSelectionEnd is valid.
 
 		# If this is not the start of the object, hide all previous regions.
-		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		start = readingInfo.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
-		# If this is a multiline control, position it at the absolute left of the display when focused.
-		self.focusToHardLeft = self._isMultiline()
+		# Don't touch focusToHardLeft if it is already true
+		# For example, it can be set to True in getFocusContextRegions when this region represents the first new focus ancestor
+		# Alternatively, BrailleHandler._doNewObject can set this to True when this region represents the focus object and the focus ancestry didn't change
+		if not self.focusToHardLeft:
+			# If this is a multiline control, position it at the absolute left of the display when focused.
+			self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
 		if rawInputIndStart is not None:
@@ -811,7 +976,7 @@ class TextInfoRegion(Region):
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
-				self._getCursor().activate()
+				self._getSelection().activate()
 			except NotImplementedError:
 				pass
 			return
@@ -879,10 +1044,8 @@ class ReviewTextInfoRegion(TextInfoRegion):
 
 	allowPageTurns=False
 
-	def _getCursor(self):
+	def _getSelection(self):
 		return api.getReviewPosition().copy()
-
-	_getSelection = _getCursor
 
 	def _setCursor(self, info):
 		api.setReviewPosition(info)
@@ -933,7 +1096,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		start = 0
 		for region in self.visibleRegions:
 			end = start + len(region.brailleCells)
-			yield region, start, end
+			yield RegionWithPositions(region, start, end)
 			start = end
 
 	def bufferPosToRegionPos(self, bufferPos):
@@ -980,12 +1143,27 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return endPos
 
 	def _set_windowEndPos(self, endPos):
+		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
+		1. Braille display size.
+		2. Whether one of the regions should be shown hard left on the braille display;
+			i.e. because of The configuration setting for focus context representation 
+			or whether the braille region that corresponds with the focus represents a multi line edit box.
+		3. Whether word wrap is enabled."""
 		startPos = endPos - self.handler.displaySize
-		# Get the last region currently displayed.
-		region, regionPos = self.bufferPosToRegionPos(endPos - 1)
-		if region.focusToHardLeft:
-			# Only scroll to the start of this region.
-			restrictPos = endPos - regionPos - 1
+		# Loop through the currently displayed regions in reverse order
+		# If focusToHardLeft is set for one of the regions, the display shouldn't scroll further back than the start of that region
+		for region, regionStart, regionEnd in reversed(list(self.regionsWithPositions)):
+			if regionStart<endPos:
+				if region.focusToHardLeft:
+					# Only scroll to the start of this region.
+					restrictPos = regionStart
+					break
+				elif config.conf["braille"]["focusContextPresentation"]!=CONTEXTPRES_CHANGEDCONTEXT:
+					# We aren't currently dealing with context change presentation
+					# thus, we only need to consider the last region
+					# since it doesn't have focusToHardLeftSet, the window start position isn't restricted
+					restrictPos = 0
+					break
 		else:
 			restrictPos = 0
 		if startPos <= restrictPos:
@@ -1058,7 +1236,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft:
+		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_SCROLL:
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
@@ -1175,16 +1353,28 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			newAncestorsStart = 1
 		# Yield the common regions.
 		for region in oldFocusRegions[0:commonRegionsEnd]:
+			# We are setting focusToHardLeft to False for every cached region.
+			# This is necessary as BrailleHandler._doNewObject checks focusToHardLeft on every region
+			# and sets it to True for the first focus region if the context didn't change.
+			# If we don't do this, BrailleHandler._doNewObject can't set focusToHardLeft properly.
+			region.focusToHardLeft = False
 			yield region
 	else:
 		# Fetch all ancestors.
 		newAncestorsStart = 1
 
+	focusToHardLeftSet = False
 	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
 		if not parent.isPresentableFocusAncestor:
 			continue
 		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
+		if config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT and not focusToHardLeftSet:
+			# We are presenting context changes to the user
+			# Thus, only scroll back as far as the start of the first new focus ancestor
+			# focusToHardLeftSet is used since the first new ancestor isn't always represented by a region
+			region.focusToHardLeft = True
+			focusToHardLeftSet = True
 		region.update()
 		yield region
 
@@ -1365,7 +1555,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			cells[self._cursorPos] |= config.conf["braille"]["cursorShape"]
+			if self.tether == self.TETHER_FOCUS:
+				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeFocus"]
+			else:
+				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeReview"]
 		self._writeCells(cells)
 
 	def _blink(self):
@@ -1452,15 +1645,24 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _doNewObject(self, regions):
 		self.mainBuffer.clear()
+		focusToHardLeftSet = False
 		for region in regions:
+			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
+				# Check focusToHardLeft for every region.
+				# If noone of the regions has focusToHardLeft set to True, set it for the first focus region.
+				if region.focusToHardLeft:
+					focusToHardLeftSet = True
+				elif not focusToHardLeftSet and getattr(region, "_focusAncestorIndex", None) is None:
+					# Going to display a new object with the same ancestry as the previously displayed object.
+					# So, set focusToHardLeft on this region
+					# For example, this applies when you are in a list and start navigating through it
+					region.focusToHardLeft = True
+					focusToHardLeftSet = True
 			self.mainBuffer.regions.append(region)
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
@@ -1492,14 +1694,22 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
+
+	def scrollToCursorOrSelection(self, region):
+		if region.brailleCursorPos is not None:
+			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif not isinstance(region, TextInfoRegion) or not region.obj.isTextSelectionAnchoredAtStart:
+			# It is unknown where the selection is anchored, or it is anchored at the end.
+			if region.brailleSelectionStart is not None:
+				self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		elif region.brailleSelectionEnd is not None:
+			# The selection is anchored at the start.
+			self.mainBuffer.scrollTo(region, region.brailleSelectionEnd - 1)
 
 	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
 	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
@@ -1653,10 +1863,10 @@ def terminate():
 class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	"""Abstract base braille display driver.
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
-	
+
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
-	
+
 	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
 	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
 	These gestures can be mapped in L{gestureMap}.

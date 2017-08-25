@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-14 00:10+1000\n"
-"PO-Revision-Date: 2017-07-16 15:47+0900\n"
+"POT-Creation-Date: 2017-08-04 00:10+1000\n"
+"PO-Revision-Date: 2017-08-06 09:48+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -149,30 +149,15 @@ msgstr "音声とサウンドの出力時にダッキング"
 msgid "Always duck"
 msgstr "常にダッキング"
 
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "編集可能"
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "ウィンドウ"
 
 #. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "リスト"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "メニューバー"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "メニュー"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "ボタン"
+#. dialog.
+msgid "dlg"
+msgstr "ダイアログ"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
@@ -184,10 +169,55 @@ msgstr "チェックボックス"
 msgid "rbtn"
 msgstr "ラジオボタン"
 
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "編集可能"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "ボタン"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "メニューバー"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "メニュー項目"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "メニュー"
+
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
 msgid "cbo"
 msgstr "コンボボックス"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "リスト"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "画像"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "ヘルプ"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "ツールチップ"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
@@ -195,49 +225,137 @@ msgid "lnk"
 msgstr "リンク"
 
 #. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "ダイアログ"
-
-#. Translators: Displayed in braille for an object which is a
 #. tree view.
 msgid "tv"
 msgstr "ツリービュー"
 
 #. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "ツリービュー項目"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "タブコントロール"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "プログレスバー"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "スクロールバー"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "ステータスバー"
+
+#. Translators: Displayed in braille for an object which is a
 #. table.
-msgid "tb"
+msgid "tbl"
 msgstr "テーブル"
 
 #. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "区切り"
+#. tool bar.
+msgid "tlbar"
+msgstr "ツールバー"
 
 #. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "画像"
+#. drop down button.
+msgid "drbtn"
+msgstr "ドロップダウンボタン"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "チェック"
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "引用"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "一部チェック"
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "ドキュメント"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "アプリ"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "グループ"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "埋め込みオブジェクト"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "エンドノート"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "脚注"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "ターミナル"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "セクション"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "トグルボタン"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "スプリットボタン"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "メニューボタン"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "スピンボタン"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "ツリービューボタン"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "パネル"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "パスワードエディット"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "選択"
 
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "サブメニュー"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "候補あり"
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "読み取り専用"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 msgid "-"
@@ -247,17 +365,57 @@ msgstr "展開"
 msgid "+"
 msgstr "折りたたみ"
 
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "読み取り専用"
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "サブメニュー"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "必須"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "正しくない入力内容"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "候補あり"
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "複数行"
 
 #. Translators: Displayed in braille when an object is clickable.
 msgid "clk"
 msgstr "クリック可能"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "チェックなし"
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "昇順ソート済"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "降順ソート済"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "詳細説明"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "数式"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "コメント"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "選択なし"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
@@ -310,6 +468,23 @@ msgstr "8の点"
 #. Translators: The description of a braille cursor shape.
 msgid "All dots"
 msgstr "すべての点"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "変化したら表示"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "常に表示"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "前にスクロールしたら表示"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -402,11 +577,6 @@ msgstr "アラビア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "ペルシャ語1級点字"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Assamese grade 1"
 msgstr "アッサム語1級点字"
 
@@ -434,6 +604,11 @@ msgstr "ウェールズ語2級点字"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "チェコ語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "デンマーク語8点コンピューター点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -498,12 +673,12 @@ msgstr "イギリス英語2級点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
-msgstr "統一英語点字1級点字"
+msgstr "統一英語点字1級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 2"
-msgstr "統一英語点字2級点字"
+msgstr "統一英語点字2級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -544,6 +719,16 @@ msgstr "エストニア語0級点字"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "エチオピア語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "ペルシア語8点コンピューター点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "ペルシア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -672,6 +857,11 @@ msgstr "カシミール語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Lithuanian"
+msgstr "リトアニア語"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Latvian grade 1"
 msgstr "ラトビア語1級点字"
 
@@ -797,7 +987,12 @@ msgstr "スロバキア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "スロベニア語8点コンピューター点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
 msgstr "スロベニア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
@@ -2192,7 +2387,8 @@ msgid "bold"
 msgstr "太字"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
+#. Translators: Reported when text is italicized.
+msgid "italic"
 msgstr "斜体"
 
 #. Translators: Describes text formatting.
@@ -2419,13 +2615,13 @@ msgstr "ロック解除"
 msgid "not selected"
 msgstr "選択なし"
 
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "チェックなし"
-
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
 msgstr "押されていません"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "チェックなし"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -3709,6 +3905,17 @@ msgstr "点字は%sを表示"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "点字表示のフォーカス追従とレビューカーソル追従の切り替え"
 
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "フォーカスの前後の点字表示 %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "フォーカスの前後の点字表示の切り替え"
+
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
 msgstr "点字カーソル非表示"
@@ -3887,6 +4094,15 @@ msgstr "数式ではありません"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "数式の操作を開始"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "Windows 10 文字認識は利用できません"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr "Windows 10 文字認識で現在のナビゲーターオブジェクトの画像を認識"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -5641,10 +5857,6 @@ msgstr "強調なし"
 msgid "no bold"
 msgstr "太字なし"
 
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "斜体"
-
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "斜体なし"
@@ -6722,6 +6934,7 @@ msgstr "Baum/HumanWare/APH/Orbit の点字ディスプレイ"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "シリアルポート: {portName}"
@@ -6780,6 +6993,39 @@ msgstr "Papenmeier ブレイレックスの旧機種"
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "清華点字ディスプレイ"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "認識結果"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "カーソル位置のテキストのアクションを実行"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "画像認識結果を消す"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "認識結果は画像認識できません"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "内容にアクセスできません"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "認識中"
+
+msgid "Recognition failed"
+msgstr "認識失敗"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -6902,6 +7148,10 @@ msgstr "書式情報(&F)..."
 
 msgid "Change settings of document properties"
 msgstr "ドキュメントの書式情報の変更に関する設定"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "Windows 10 OCR..."
+msgstr "Windows 10 文字認識..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8369,6 +8619,14 @@ msgstr "クリック可能(&C)"
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr "カーソル移動後に書式の変化を報告"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "Windows 10 文字認識"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "文字認識の言語(&L)"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "任意の部分(&A)"
@@ -8489,9 +8747,13 @@ msgstr "カーソル点滅"
 msgid "Cursor blink rate (ms)"
 msgstr "カーソル点滅速度(ミリ秒)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "カーソルの形(&S)"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "フォーカス追従のカーソルの形(&F)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "レビューカーソル追従のカーソルの形(&R)"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
@@ -8512,6 +8774,10 @@ msgstr "段落単位で読む(&P)"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "可能な場合単語が切れないようにする(&W)"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "フォーカスの前後の情報"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -10076,6 +10342,24 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
+
+#~ msgid "-----"
+#~ msgstr "区切り"
+
+#~ msgid "(x)"
+#~ msgstr "チェック"
+
+#~ msgid "(-)"
+#~ msgstr "一部チェック"
+
+#~ msgid "( )"
+#~ msgstr "チェックなし"
+
+#~ msgid "Farsi grade 1"
+#~ msgstr "ペルシャ語1級点字"
+
+#~ msgid "ITALIC"
+#~ msgstr "斜体"
 
 #~ msgid "braille"
 #~ msgstr "点字"

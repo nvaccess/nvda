@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-19 00:10+1000\n"
-"PO-Revision-Date: 2017-05-20 11:46+0200\n"
+"POT-Creation-Date: 2017-08-14 08:17+1000\n"
+"PO-Revision-Date: 2017-08-16 15:21+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -99,37 +99,44 @@ msgid "Error in appModule %s"
 msgstr "Σφάλμα στο appModule %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
-msgstr "διαφημιστικό σποτ"
+msgstr "διαφημιστικό"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "συμπληρωματικό"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
 msgstr "πληροφορίες περιεχομένου"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "κύριο"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "πλοήγηση"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "αναζήτηση"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "φόρμα"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
-msgstr "Περιοχή"
+msgstr "περιοχή"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -146,15 +153,431 @@ msgstr "Βύθιση κατά την εκφώνηση και την αναπαρ
 msgid "Always duck"
 msgstr "Πάντα βύθιση"
 
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "παράθυρο"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "παράθυρο διαλόγου"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "πλαίσιο επιλογής"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "κουμπί επιλογής"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "επεξεργασία κειμένου"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "κουμπί"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "γραμμή μενού"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "στοιχείο μενού"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "μενού"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "αναδυόμενο κουτί"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "λίστα"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "γραφικό"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "βοήθεια"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "επεξήγηση"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "σύνδεσμος"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "προβολή δέντρου"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "στοιχείο προβολής δέντρου"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "καρτέλα"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "γραμμή προόδου"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "γραμμή κύλισης"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "γραμμή κατάστασης"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "πίνακας"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "γραμμή εργαλείων"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "Αναπτυσσόμενο"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "παράθεση αποσπάσματος"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "έγγραφο"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "εφαρμογή"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "ομαδοποίηση"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "ενσωματωμένο αντικείμενο"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "σημείωση τέλους"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "Υποσημείωση"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "τερματικό"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "τμήμα"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "κουμπί εναλλαγής"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "κουμπί διαχωρισμού"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "κουμπί μενού"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "ποντενσιόμετρο"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "κουμπί προβολής δέντρου"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "πάνελ"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "επεξεργασία κωδικού"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "επιλεγμένο"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "μόνο για ανάγνωση"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "υπομενού"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "υποχρεωτικό"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "μη έγκυρο"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "πολλαπλών γραμμών"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "με δυνατότητα κλικ"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "αύξουσα ταξινόμηση"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "φθίνουσα ταξινόμηση"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "εκτενής περιγραφή"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "συνάρτηση"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "σχόλιο"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "μη επιλεγμένο"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "διαφημιστικό"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "συμπληρωματικό ορόσημο"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "ορόσημο περιεχομένου"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "κύριο"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "ορόσημο πλοήγησης"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "ορόσημο αναζήτησης"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "φόρμα"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "περιοχή"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Κουκκίδες 7 και 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Κουκκίδα 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Εξάστιγμο"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "Εμφάνιση αλλαγών περιεχομένου στην οθόνη"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "Πάντα πλήρης κάλυψη οθόνης"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "Μόνο κατά την κύλιση προς τα πίσω"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "h%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "με επίσκεψη"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "μη %s"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} από {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "επίπεδο %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "σειρά%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "κελί%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "τέλος %s"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Αυτόματο"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "κουκίδα"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "διάστημα με κουκίδα"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "διάστημα"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "braille πληκτρολογίου"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "διάστημα με κουκίδες"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "κουκίδες"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "Αραβικά βαθμού 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Φαρσί βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -169,7 +592,7 @@ msgstr "βεγγάλι βαθμού 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
-msgstr "Βουλγάρικο οκτάστιγμο braille"
+msgstr "Βουλγαρικό οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -185,6 +608,11 @@ msgstr "Ουαλικά βαθμού 2"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "Τσεχικά βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "Δανικό οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -228,6 +656,11 @@ msgstr "Γερμανικά βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "Ελληνικά (Ελλάδα)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "Αγγλικό (Ηνωμένο Βασίλειο) οκτάστιγμο braille"
 
@@ -240,6 +673,16 @@ msgstr "Αγγλικά (Ηνωμένο Βασίλειο) βαθμού 1"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "Αγγλικά (Ηνωμένο Βασίλειο) βαθμού 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "Αγγλικός Ενοποιημένος Κώδικας Braille βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "Αγγλικός Ενοποιημένος Κώδικας Braille βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -280,6 +723,16 @@ msgstr "Εσθονικά βαθμού 0"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "Αιθιοπικά βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "Περσικό οκτάστιγμο braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "Περσικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -335,11 +788,6 @@ msgstr "Γκουτζεράτι βαθμού 1"
 #. braille settings dialog.
 msgid "Koine Greek"
 msgstr "Ελληνιστική Κοινή"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "Ελληνικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -410,6 +858,11 @@ msgstr "Κορεατικά βαθμού 2"
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
 msgstr "Κασμίρι βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian"
+msgstr "Λιθουανικά"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -538,7 +991,12 @@ msgstr "Σλοβακικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "Σλοβενικό οκτάστιγμο braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
 msgstr "Σλοβενικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -563,13 +1021,8 @@ msgstr "Τουρκικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "Αγγλικός Ενοποιημένος Κώδικας Braille βαθμού 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "Αγγλικός Ενοποιημένος Κώδικας Braille βαθμού 2"
+msgid "Unicode braille"
+msgstr "Unicode braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -580,201 +1033,6 @@ msgstr "Κινεζικά (Χονγκ Κονγκ, Καντονέζικα)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Κινεζικά (Ταϊβάν, Μάνταριν)"
-
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "edt"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "lst"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "mnubar"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "mnu"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "btn"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "chk"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "rbtn"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "cbo"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "lnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "dlg"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "tv"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tb"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "gra"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "sel"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "submnu"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "ro"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "clk"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "Κουκκίδες 7 και 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "Κουκκίδα 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "Εξάστιγμο"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "h%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "vlnk"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "μη %s"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} από {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "lv %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "τέλος %s"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Αυτόματο"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "braille"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "διάστημα με κουκίδα"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "κουκίδα"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "διάστημα"
 
 msgid "Focus mode"
 msgstr "Λειτουργία εστίασης"
@@ -1249,6 +1507,22 @@ msgstr "μετακινείται στην προηγούμενη σημείωσ�
 msgid "no previous annotation"
 msgstr "δεν υπάρχει προηγούμενη σημείωση"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "μετακινείται στο επόμενο σφάλμα"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "δεν υπάρχει επόμενο σφάλμα"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "μετακινείται στο προηγούμενο σφάλμα"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "δεν υπάρχει προηγούμενο σφάλμα"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1294,9 +1568,13 @@ msgstr "&Ενεργοποίηση"
 msgid "&Move to"
 msgstr "&Μετακίνηση σε"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
+msgstr "ορόσημο %s"
+
+#. Translators: This is brailled to indicate a landmark (example output: lmk main).
+#, python-format
+msgid "lmk %s"
 msgstr "ορόσημο %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
@@ -1770,6 +2048,10 @@ msgstr "ρολόι"
 msgid "separator"
 msgstr "διαχωριστικό"
 
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "φόρμα"
+
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
 msgstr "επικεφαλίδα"
@@ -2119,8 +2401,9 @@ msgid "bold"
 msgstr "έντονα"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
-msgstr "ΠΛΑΓΙΑ ΓΡΑΜΜΑΤΑ"
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "πλάγια γράμματα"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2174,6 +2457,12 @@ msgstr "στοιχείο ελέγχου δείκτη κύλισης"
 msgid "calendar"
 msgstr "ημερολόγιο"
 
+msgid "video"
+msgstr "βίντεο"
+
+msgid "audio"
+msgstr "ήχος"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "μη διαθέσιμο"
@@ -2192,7 +2481,7 @@ msgstr "απασχολημένο"
 
 #. Translators: This is presented when a button is pressed.
 msgid "pressed"
-msgstr "πατημένο"
+msgstr "πατήθηκε"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
@@ -2236,7 +2525,7 @@ msgstr "προστατευμένο"
 
 #. Translators: This is presented when a required form field is encountered.
 msgid "required"
-msgstr "απαιτούμενο"
+msgstr "υποχρεωτικό"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
@@ -2313,7 +2602,7 @@ msgstr "Καρφιτσωμένο"
 
 #. Translators: a state that denotes the existance of a formula on a spreadsheet cell
 msgid "has formula"
-msgstr "υπάρχει φόρμουλα"
+msgstr "υπάρχει συνάρτηση"
 
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
@@ -2334,19 +2623,19 @@ msgstr "υπερχείλιση"
 
 #. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
 msgid "unlocked"
-msgstr "μη κλειδωμένο"
+msgstr "ξεκλείδωτο"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "μη επιλεγμένο"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "δεν πατήθηκε"
+
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
 msgstr "μη επιλεγμένο"
-
-#. Translators: This is presented when a button is not pressed.
-msgid "not pressed"
-msgstr "δεν έχει πατηθεί"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -3414,6 +3703,10 @@ msgstr ""
 msgid "Quits NVDA!"
 msgstr "Τερματίζει το NVDA!"
 
+#. Translators: Input help mode message for restart NVDA command.
+msgid "Restarts NVDA!"
+msgstr "Πραγματοποιεί επανεκκίνηση του NVDA"
+
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
 msgstr "Εμφανίζει το μενού του NVDA"
@@ -3772,6 +4065,17 @@ msgstr ""
 "Πραγματοποιεί εναλλαγή της πρόσδεσης του braille μεταξύ της θέσης εστίασης "
 "και θέσης επισκόπησης"
 
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Εστίαση περιεχομένου brail σε παρουσίαση: %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "Εναλλαγή εμφάνισης περιεχομένου σε braille"
+
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
 msgstr "Απενεργοποίηση δρομέα braille"
@@ -3891,6 +4195,18 @@ msgstr "Εισάγει κουκκίδες μέσω braille πληκτρολογ�
 msgid "Moves the braille display to the current focus"
 msgstr "Μετακινεί την οθόνη braille στην τρέχουσα εστίαση"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "Διαγράφει το τελευταίο κελί ή χαρακτήρα σε braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr "Μεταφράζει το περιεχόμενο σε braille και πατά το κουμπί enter"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "Μεταφράζει το περιεχόμενο σε braille"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Επαναφόρτωση των plugins"
@@ -3954,6 +4270,17 @@ msgstr "όχι μαθηματικά"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Έναρξη αλληλεπίδρασης με μαθηματικό περιεχόμενο"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "Δε διατίθεται αναγνώριση χαρακτήρων για τα Windows 10"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr ""
+"Αναγνωρίζει το περιεχόμενο του τρέχοντος αντικειμένου πλοήγησης με την "
+"αναγνώριση χαρακτήρων για τα Windows 10"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4137,7 +4464,7 @@ msgstr "αριστερό βέλος"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right arrow"
-msgstr "δεξί βέλος"
+msgstr "δεξιό βέλος"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "up arrow"
@@ -4375,6 +4702,1074 @@ msgstr "Προεπιλογή χρήστη"
 #, python-format
 msgid "%s cursor"
 msgstr "δρομέας %s"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "10-point star"
+msgstr "Αστέρι 10 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "12-point star"
+msgstr "Αστέρι 12 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "16-point star"
+msgstr "Αστέρι 16 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "24-point star"
+msgstr "Αστέρι 24 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "32-point star"
+msgstr "Αστέρι 32 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "4-point star"
+msgstr "Αστέρι 4 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "5-point star"
+msgstr "Αστέρι 5 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "6-point star"
+msgstr "Αστέρι 6 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "7-point star"
+msgstr "Αστέρι 7 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "8-point star"
+msgstr "Αστέρι 8 ακτίνων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arc"
+msgstr "Τόξο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Balloon"
+msgstr "μπαλόνι"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent arrow"
+msgstr "Λυγισμένο βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent Up Arrow"
+msgstr "Λυγισμένο πάνω βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bevel"
+msgstr "Κορνίζα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Block arc"
+msgstr "Στεφάνη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Can"
+msgstr "Κουτάκι"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Plus symbol"
+msgstr "Σύμβολο πρόσθεσης γραφήματος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Star Symbol"
+msgstr "Σύμβολο αστεριού γραφήματος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart X Symbol"
+msgstr "Σύμβολο Χ γραφήματος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chevron"
+msgstr "Διάστημα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circle with line through center"
+msgstr "Κύκλος τον οποίο διαπερνά μια γραμμή"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circular Arrow"
+msgstr "Στρογγυλό βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud shape"
+msgstr "Σύννεφο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud callout"
+msgstr "Επεξήγηση με σύννεφο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Corner"
+msgstr "Γωνία"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "four snipped corners"
+msgstr "Τέσσερις ψαλιδισμένες γωνίες"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cross"
+msgstr "Σταυρός"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cube"
+msgstr "Κύβος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Down Arrow"
+msgstr "Καμπύλο κάτω βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon banner"
+msgstr "Διαφημιστικό με κορδέλα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Left Arrow"
+msgstr "Καμπύλο αριστερό βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Right Arrow"
+msgstr "Καμπύλο δεξιό βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Arrow"
+msgstr "Καμπύλο πάνω βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Ribbon banner"
+msgstr "Καμπύλο προς τα πάνω διαφημιστικό με κορδέλα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decagon"
+msgstr "Δεκάγωνο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diagonal stripe"
+msgstr "Διαγώνια ρίγα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diamond"
+msgstr "Διαμάντι"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Dodecagon"
+msgstr "Δωδεκάγωνο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Donut"
+msgstr "Κουλούρα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double brace"
+msgstr "Διπλό άγκιστρο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double bracket"
+msgstr "Διπλή αγκύλη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double wave"
+msgstr "Διπλός κυματισμός"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Down Arrow"
+msgstr "Κάτω Βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Down Arrow"
+msgstr "Επεξήγηση με κάτω βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Explosion"
+msgstr "Έκρηξη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Alternate process flowchart symbol"
+msgstr "Σύμβολο εναλλακτιής εργασίας διαγράμματος ροής"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Card flowchart symbol"
+msgstr "Σύμβολο κάρτας γραφήματος ροής"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Collate flowchart symbol"
+msgstr "Σύμβολο συρραφής γραφήματος ροής"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Connector flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής σύνδεσης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Data flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής δεδομένων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decision flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής απόφασης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Delay flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής καθυστέρησης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Direct access storage flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής άμεσης πρόσβασης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Display flowchart symbol"
+msgstr "Εμφάνιση συμβόλου διαγράμματος ροής"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Document flowchart symbol"
+msgstr "Σύμβολο εγγράφου γραφήματος ροής"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Extract flowchart symbol"
+msgstr "Εξαγωγή συμβόλου διαγράμματος ροής"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Internal storage flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής εσωτερικής αποθήκευσης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Magnetic disk flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής μαγνητικού μέσου"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual input flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής μη αυτόματης εισόδου"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual operation flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής μη αυτόματης λειτουργίας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Merge flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής συγχώνευσης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Multi-document flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής πολλαπλού εγγράφου"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Offline storage flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής αποθήκευσης εκτός σύνδεσης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Off-page connector flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής σύνδεσης εκτός σελίδας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'Or' flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής 'ή'"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Predefined process flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής προκαθορισμένης διεργασίας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Preparation flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής προετοιμασίας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Process flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής διεργασίας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Punched tape flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής διάτρητης ταινίας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sequential access storage flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής εξόδου σε ταινία"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sort flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής ταξινόμησης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Stored data flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής αποθηκευμένων δεδομένων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Summing junction flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής λογικού \"και\""
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Terminator flowchart symbol"
+msgstr "Σύμβολο διαγράμματος ροής χαρακτήρα τερματισμού"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Folded corner"
+msgstr "Διπλωμένες γωνίες"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular picture frame"
+msgstr "Ορθογώνια κορνίζα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Funnel"
+msgstr "Χωνι"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with six teeth"
+msgstr "Γρανάζι με έξι δόντια"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with nine teeth"
+msgstr "Γρανάζι με εννιά δόντια"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Half of rectangular picture frame"
+msgstr "Το μισό παραλληλόγραμμης κορνίζας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heart"
+msgstr "Καρδιά"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heptagon"
+msgstr "Επτάγωνο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Hexagon"
+msgstr "Εξάγωνο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Horizontal scroll"
+msgstr "Οριζόντια κύλιση"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Isosceles triangle"
+msgstr "Ισοσκελές τρίγωνο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left Arrow"
+msgstr "Αριστερό Βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Left Arrow"
+msgstr "Επεξήγηση με αριστερό βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left brace"
+msgstr "Αριστερρό άγκιστρο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left bracket"
+msgstr "Αριστερή αγκύλη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Counter-clockwise Circular arrow"
+msgstr "Αριστερόστροφο κυκλικό βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended horizontal Arrow"
+msgstr "Οριζόντιο βέλος δύο άκρων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Double-ended horizontal Arrow"
+msgstr "Επεξήγηση με οριζόντιο βέλος δύο άκρων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Circular arrow"
+msgstr "Κυκλικό βέλος δύο άκρων"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon with left and right arrows"
+msgstr "Κορδέλα με αριστερά και δεξιά βέλη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left right and up Arrows"
+msgstr "Αριστερά δεξιά και πάνω βέλη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left and up Arrows"
+msgstr "Αριστερά και πάνω βέλη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Lightning bolt"
+msgstr "Κεραυνός"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line Callout"
+msgstr "Επεξήγηση με γραμμή"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal accent bar"
+msgstr "Επεξήγηση με οριζόντια γραμμή έμφασης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border and horizontal accent bar"
+msgstr "Επεξήγηση με οριζόντια γραμμή έμφασης και περίγραμμα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal line"
+msgstr "Επεξήγηση με οριζόντια γραμμή"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal straight line"
+msgstr "Επεξήγηση με διαγώνια ευθεία γραμμή"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal callout line and accent bar"
+msgstr "Επεξήγηση με διαγώνια γραμμή επεξήγησης και γραμμή έμφασης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, diagonal straight line and accent bar"
+msgstr "Επεξήγηση με περίγραμμα, διαγώνια ευθεία γραμμή και γραμμή έμφασης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and diagonal callout line"
+msgstr "Επεξήγηση χωρίς περίγραμμα και χωρίς γραμμή επεξήγησης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled line"
+msgstr "Επεξήγηση με γωνίες"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled callout line and accent bar"
+msgstr "Επεξήγηση με γραμμή περιγράμματος με γωνίες και γραμμή έμφασης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, angled callout line, and accent bar"
+msgstr ""
+"Επεξήγηση με περίγραμμα, γραμμή περιγράμματος με γωνίες και γραμμή έμφασης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and angled callout line"
+msgstr "Επεξήγηση χωρίς περίγραμμα και γραμμή επεξήγησης με γωνίες"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with callout line segments forming a U-shape"
+msgstr "Επεξήγηση με τμήματα γραμμής επεξήγησης που σχηματίζουν U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with accent bar and callout line segments forming a U-shape"
+msgstr ""
+"Επεξήγηση με γραμμή έμφασης και τμήματα γραμμής επεξήγησης που σχηματίζουν U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid ""
+"Callout with border, accent bar, and callout line segments forming a U-shape"
+msgstr ""
+"Επεξήγηση με περίγραμμα, γραμμή έμφασης και τμήματα γραμμής επεξήγησης που "
+"σχηματίζουν U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and callout line segments forming a U-shape"
+msgstr ""
+"Επεξήγηση χωρίς περίγραμμα και τμήματα γραμμής επεξήγησης που σχηματίζουν U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line inverse"
+msgstr "Επεξήγηση με διαγώνια ευθεία γραμμή"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Division symbol"
+msgstr "Σύμβολο διαίρεσης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Equivalence symbol"
+msgstr "Σύμβολο ίσον"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Subtraction symbol"
+msgstr "Σύμβολο αφαίρεσης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Multiplication symbol"
+msgstr "Σύμβολο πολλαπλασιαζμού "
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Non-equivalence symbol"
+msgstr "Σύμβολο μη ισότητας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Addition symbol"
+msgstr "Σύμβολο Πρόσθεσης"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Moon"
+msgstr "Σελήνη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid with asymmetrical non-parallel sides"
+msgstr "Τραπέζιο με ασύμμετρες μη παράλληλες πλευρές"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'No' symbol"
+msgstr "Σύμβολο όχι"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Notched RightArrow"
+msgstr "Οδοντωτό δεξιό βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Octagon"
+msgstr "Οκτάγωνο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval"
+msgstr "Οβάλ"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval-shaped callout"
+msgstr "Επεξήγηση με σχήμα οβάλ"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Parallelogram"
+msgstr "Παραλληλόγραμο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Pentagon"
+msgstr "Πεντάγωνο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Incomplete Pie with wedge missing"
+msgstr "Πίτα που της λείπει κομμάτι"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Quarter Pie Wedge"
+msgstr "Εν τέταρτο της πίτας"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque"
+msgstr "Πλακίδιο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque Tabs"
+msgstr "Καρτέλες με πλακίδια"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arrows pointing left right up and down"
+msgstr "Βελάκια που δείχνουν αριστερά δεξιά πάνω και κάτω"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Arrows pointing left right up and down"
+msgstr "Επεξήγηση με βελάκια που δείχνουν αριστερά δεξιά πάνω και κάτω"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle"
+msgstr "Ορθογώνιο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular callout"
+msgstr "Επεξήγηση με ορθογώνιο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow"
+msgstr "Δεξιό Βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Right Arrow"
+msgstr "Επεξήγηση με δεξιό βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right brace"
+msgstr "Ορθογώνια επεξήγηση"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right bracket"
+msgstr "Δεξιά αγκύλη"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right triangle"
+msgstr "Ορθογώνιο τρίγωνο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one rounded corner"
+msgstr "Ορθογώνιο με μια στρογγυλεμένη γωνία"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two rounded corners diagonally-opposed"
+msgstr "Ορθογώνιο με δυο στρογγυλεμένες γωνίες διαγώνια και απέναντι"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two-rounded corners that share a side"
+msgstr "Ορθογώνιο με δυο στρογγυλεμένες γωνίες που μοιράζονται μια πλευρά"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle"
+msgstr "Ορθογώνιο με στρογγυλεμένες γωνίες"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle-shaped callout"
+msgstr "Επεξήγηση σχήματος ορθογώνιου με στρογγυλεμένες γωνίες"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Smiley face"
+msgstr "Χαμογελαστό πρόσωπο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner"
+msgstr "Ορθογώνιο με μια ψαλιδισμένη γωνία"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners diagonally-opposed"
+msgstr "Ορθογώνιο με δυο ψαλιδισμένες γωνίες διαγώνια και απέναντι"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners that share a side"
+msgstr "Ορθογώνιο με δυο ψαλιδισμένες γωνίες που μοιράζονται μια πλευρά"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner and one rounded corner"
+msgstr "Ορθογώνιο με μια ψαλιδισμένη και μια στρογγυλεμένη γωνία"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Four small squares that define a rectangular shape"
+msgstr "Τέσσερα μικρά τετράγωνα που ορίζουν ένα ορθογώνιο σχήμα"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow with Stripes"
+msgstr "Δεξιό βέλος με ρίγες"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sun"
+msgstr "Ήλιος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved arrow"
+msgstr "Καμπύλο βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Water droplet"
+msgstr "Σταγονίδιο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid"
+msgstr "Τραπέζιο"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Up Arrow"
+msgstr "Πάνω Βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with UpArrow"
+msgstr "Επεξήγηση με πάνω βέλος"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Arrow pointing up and down"
+msgstr "Βέλος δυο άκρων που δείχνει πάνω και κάτω"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with arrows that point up and down"
+msgstr "Επεξήγηση με βέλη που δείχνουν πάνω και κάτω"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "U-shaped Arrow"
+msgstr "Βέλος σχήματος U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Vertical scroll"
+msgstr "Κατακόρυφη κύλιση"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Wave"
+msgstr "Κύμα"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Back"
+msgstr "Πίσω"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Beginning"
+msgstr "Αρχή"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Document"
+msgstr "Έγγραφο"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "End"
+msgstr "Τέλος"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Next"
+msgstr "Επόμενο"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Help"
+msgstr "Βοήθεια"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Home"
+msgstr "Αρχή"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Information"
+msgstr "Πληροφορίες"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Movie"
+msgstr "Ταινία"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Return"
+msgstr "Επιστροφή"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Sound"
+msgstr "Ήχος"
 
 #. Translators: The description of the NVDA service.
 msgid ""
@@ -4648,10 +6043,6 @@ msgstr "χωρίς έμφαση"
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
 msgstr "όχι έντονα"
-
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "πλάγια γράμματα"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
@@ -5172,6 +6563,10 @@ msgid "Moves the navigator object and focus to the previous row"
 msgstr ""
 "Μετακινεί το αντικείμενο πλοήγησης και την εστίαση στην προηγούμενη γραμμή"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Υποδείξεις"
+
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "Σύνθεση"
@@ -5304,6 +6699,36 @@ msgstr "Κρυφή Κοινοποίηση:"
 #. Translators: when an email is unread
 msgid "unread"
 msgstr "μη αναγνωσμένο"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "purple flag"
+msgstr "μωβ σημαία"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Orange flag"
+msgstr "Πορτοκαλί σημαία"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Green flag"
+msgstr "Πράσινη σημαία"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Yellow flag"
+msgstr "Κίτρινη σημαία"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Blue flag"
+msgstr "Μπλέ σημαία"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Red flag"
+msgstr "Κόκκινη σημαία"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -5511,6 +6936,10 @@ msgstr "Μικρογραφίες Υποδείγματος"
 msgid "Slide {slideNumber}"
 msgstr "Διαφάνεια {slideNumber}"
 
+#. Translators:   an unlabelled item in Powerpoint another shape is overlapping
+msgid "other item"
+msgstr "άλλο στοιχείο"
+
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5706,6 +7135,7 @@ msgstr "Οθόνες braille Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Σειριακή θύρα: {portName}"
@@ -5764,6 +7194,39 @@ msgstr "Papenmeier BRAILLEX παλαιότερα μοντέλα"
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "οθόνη braille Seika"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "Αποτέλεσμα"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "Ενεργοποιεί το κείμενο στο δρομέα αν είναι δυνατό"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "Απόρριψη του αποτελέσματος αναγνώρισης"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "Είστε ήδη σε αποτέλεσμα αναγνώρισης"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "Το περιεχόμενο δεν είναι δυνατό"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "Αναγνώριση σε εξέλιξη"
+
+msgid "Recognition failed"
+msgstr "Η αναγνώριση απέτυχε"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -5895,6 +7358,10 @@ msgstr "Μορφοποίηση &εγγράφου..."
 
 msgid "Change settings of document properties"
 msgstr "Αλλαγή ρυθμίσεων των ιδιοτήτων του εγγράφου"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "Windows 10 OCR..."
+msgstr "Αναγνώριση χαρακτήρων για τα Windows 10"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -6057,12 +7524,12 @@ msgstr "Έξοδος από το NVDA"
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
+"By default, the numpad Insert and main Insert keys may both be used as the "
 "NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"functions."
 msgstr ""
 "Οι περισσότερες εντολές για τον έλεγχο του NVDA απαιτούν να πατάτε το "
 "πλήκτρο NVDA ταυτόχρονα με άλλα πλήκτρα.\n"
@@ -6072,7 +7539,7 @@ msgstr ""
 "Κλείδωμα Κεφαλαίων ως πλήκτρο NVDA.\n"
 "Πατήστε NVDA+n οποιαδήποτε στιγμή για να ενεργοποιήσετε το μενού του NVDA.\n"
 "Από αυτό το μενού, μπορείτε να διαμορφώσετε το NVDA, να λάβετε βοήθεια και "
-"να αποκτήσετε πρόσβαση σε άλλες λειτουργίες του NVDA.\n"
+"να αποκτήσετε πρόσβαση σε άλλες λειτουργίες του NVDA."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -6086,21 +7553,25 @@ msgstr "Καλώς ήλθατε στο NVDA!"
 msgid "Options"
 msgstr "Επιλογές"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: The label of a combobox in the Welcome dialog.
+#. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr ""
-"Χρήση του πλήκτρου κλειδώματος κεφαλαίων (Caps Lock) ως πλήκτρου "
-"τροποποίησης του NVDA"
+msgid "&Keyboard layout:"
+msgstr "&Διάταξη πληκτρολογίου:"
 
-#. Translators: The label of a check box in the Welcome dialog.
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr ""
+"Χρήση του πλήκτρου κλειδώματος κεφαλαίων ως πλήκτρου τροποποίησης του NVDA"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Αυτόματη εκκίνηση του NVDA μετά τη σύνδεσή μου στα Windows"
 
-#. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
-msgid "Show this dialog when NVDA starts"
-msgstr "Εμφάνιση αυτού του παραθύρου διαλόγου κατά την εκκίνηση του NVDA"
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "&Εμφάνιση αυτού του παραθύρου διαλόγου κατά την εκκίνηση του NVDA"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -6920,7 +8391,7 @@ msgstr "Ποσοστό μεταβολής τόνου στα κεφαλαία"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Say &cap before capitals"
-msgstr "Αναγγελία &κεφαλαίο πριν από τα κεφαλαία"
+msgstr "Αναγγελία &κεφαλαίων"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
@@ -6936,10 +8407,12 @@ msgstr "Χρήση λειτουργίας &εκφώνησης ανά χαρακ�
 msgid "Keyboard Settings"
 msgstr "Ρυθμίσεις Πληκτρολογίου"
 
-#. Translators: This is the label for a combobox in the
+#. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-msgid "&Keyboard layout:"
-msgstr "&Διάταξη πληκτρολογίου:"
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr ""
+"Χρήση του πλήκτρου κλειδώματος κεφαλαίων (Caps Lock) ως πλήκτρου "
+"τροποποίησης του NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7157,6 +8630,11 @@ msgstr "Αναφορά γραμμών προόδου στο υπόβαθρο"
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
 msgstr "Αναφορά αλλαγών δυναμικού &περιεχομένου"
+
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "Αναπαραγωγή ήχου όταν εμφανίζονται αυτοματοποιημένες υποδείξεις"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -7399,6 +8877,14 @@ msgstr ""
 "Αναφορά αλλαγών στη μορφοποίηση μετά το δρομέα (μπορεί να προκαλέσει "
 "καθυστέρηση)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "Αναγνώριση χαρακτήρων για τα Windows 10"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "Γλώσσα &αναγνώρισης"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "&Οπουδήποτε"
@@ -7520,16 +9006,24 @@ msgstr "Εναλλαγή δρομέα"
 msgid "Cursor blink rate (ms)"
 msgstr "Ρυθμός εναλλαγής φωτεινότητας δρομέα (ms)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "Σχήμα &δρομέα:"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "Σχήμα δρομέα για &εστίαση:"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "Σχήμα &δρομέα για αναθεώρηση:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-msgid "Message timeout (sec)"
+msgid "Message &timeout (sec)"
 msgstr "Εκπνοή χρονικού ορίου μηνύματος (δευτερόλεπτα)"
 
+#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+msgid "Show &messages indefinitely"
+msgstr "Εμφάνιση μηνύματος επ αόριστον"
+
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "Braille tethered to:"
+msgid "B&raille tethered to:"
 msgstr "Η οθόνη braille προσδέθηκε στο:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
@@ -7539,6 +9033,10 @@ msgstr "Ανάγνωση κατά &παράγραφο"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "Αποφυγή διαμοιρασμού &λέξεων όταν είναι δυνατό"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "Εστίαση σε περιεχόμενο παρουσίασης"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -7643,6 +9141,10 @@ msgstr "καμμία"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "&Ώθηση ρυθμού"
+
+#. Translators: Description for a speech synthesizer.
+msgid "Windows OneCore voices"
+msgstr "Φωνές Windows OneCore"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -8863,6 +10365,11 @@ msgstr "σχόλιο: {text} από {author} στις {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} από {author} στις {date}"
 
+#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Ορθογραφικός έλεγχος: {text}"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -9119,6 +10626,11 @@ msgstr "Εκτός πίνακα"
 msgid "&Annotations"
 msgstr "&Σημειώσεις"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&errors"
+msgstr "&σφάλματα"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "Σειρά HIMS Braille Sense/Braille EDGE/Smart Beetle"
@@ -9126,6 +10638,27 @@ msgstr "Σειρά HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "-----"
+#~ msgstr "-----"
+
+#~ msgid "(x)"
+#~ msgstr "(x)"
+
+#~ msgid "(-)"
+#~ msgstr "(-)"
+
+#~ msgid "( )"
+#~ msgstr "( )"
+
+#~ msgid "Farsi grade 1"
+#~ msgstr "Φαρσί βαθμού 1"
+
+#~ msgid "ITALIC"
+#~ msgstr "ΠΛΑΓΙΑ ΓΡΑΜΜΑΤΑ"
+
+#~ msgid "braille"
+#~ msgstr "braille"
 
 #~ msgid "Are you sure you want to delete this profile? This cannot be undone."
 #~ msgstr ""

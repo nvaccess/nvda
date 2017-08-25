@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-14 00:10+1000\n"
-"PO-Revision-Date: 2017-07-13 14:20+0300\n"
+"POT-Creation-Date: 2017-08-14 08:17+1000\n"
+"PO-Revision-Date: 2017-08-15 22:37+0300\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "Language: lt\n"
@@ -150,30 +150,15 @@ msgstr "tildyti skaitant tekstą ir skleidžiant kitus garsus"
 msgid "Always duck"
 msgstr "tildyti visada"
 
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "red"
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "wnd"
 
 #. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "sąr"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "mniujst"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "mniu"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "mygt"
+#. dialog.
+msgid "dlg"
+msgstr "dlg"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
@@ -185,10 +170,55 @@ msgstr "varn"
 msgid "rbtn"
 msgstr "akutė"
 
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "red"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "mygt"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "mniujst"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "mnuitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mniu"
+
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
 msgid "cbo"
 msgstr "jungt"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "sąr"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "pav"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "hlp"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "tltip"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
@@ -196,49 +226,137 @@ msgid "lnk"
 msgstr "sait"
 
 #. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "dlg"
-
-#. Translators: Displayed in braille for an object which is a
 #. tree view.
 msgid "tv"
 msgstr "med"
 
 #. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "tvitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "tabctl"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "prgbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "scrlbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "stbar"
+
+#. Translators: Displayed in braille for an object which is a
 #. table.
-msgid "tb"
-msgstr "lent"
+msgid "tbl"
+msgstr "tbl"
 
 #. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
+#. tool bar.
+msgid "tlbar"
+msgstr "tlbar"
 
 #. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "pav"
+#. drop down button.
+msgid "drbtn"
+msgstr "drbtn"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "bqt"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "doc"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "app"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "grp"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "embedded"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "enote"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "fnote"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "term"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "sect"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "tgbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "splbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "mnubtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "spnbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "tvbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "pnl"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "pwdedt"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "paž"
 
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "submniu"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "nered"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 msgid "-"
@@ -248,17 +366,57 @@ msgstr "-"
 msgid "+"
 msgstr "+"
 
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "nered"
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "submniu"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "req"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "invalid"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "mln"
 
 #. Translators: Displayed in braille when an object is clickable.
 msgid "clk"
 msgstr "spust"
 
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "sorted asc"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "sorted desc"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "ldesc"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "frml"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "cmnt"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "nsel"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
@@ -312,6 +470,23 @@ msgstr "aštuntasis taškas"
 msgid "All dots"
 msgstr "visi taškai"
 
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr ""
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr ""
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "Tik tada, kai slenkama atgal"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -356,7 +531,7 @@ msgstr "eil%s"
 #. %s is replaced with the column number.
 #, python-format
 msgid "c%s"
-msgstr "stulp%s"
+msgstr "c%s"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -383,31 +558,23 @@ msgid "space"
 msgstr "tarpas"
 
 #. Translators: Used when describing keys on a braille keyboard.
-#, fuzzy
 msgid "braille keyboard"
-msgstr "%s klaviatūra"
+msgstr "brailio klavietūra"
 
 #. Translators: Used to describe the press of space
 #. along with any dots on a braille keyboard.
-#, fuzzy
 msgid "space with any dots"
-msgstr "tarpas su tašku"
+msgstr "tarpas su bet kuriuo tašku"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
-#, fuzzy
 msgid "any dots"
-msgstr "visi taškai"
+msgstr "bet kurie taškai"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "Arabų 1-ojo laipsnio"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Persų 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -438,6 +605,11 @@ msgstr "Valų 2-ojo laipsnio"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "Čekų 1-ojo laipsnio"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "Danų 8 taškų kompiuterinis Brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -481,9 +653,8 @@ msgstr "Vokiečių 2-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Greek (Greece)"
-msgstr "Graikų (Graikija) 1-ojo lygio"
+msgstr "Graikų (Graikija)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -549,6 +720,16 @@ msgstr "Estų 0-inio laipsnio"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "Etiopų 1-ojo laipsnio"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "persų 8 taškų kompiuterinis Brailis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "Persų 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -677,6 +858,11 @@ msgstr "Kašmyriečių 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Lithuanian"
+msgstr "Lietuvių"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Latvian grade 1"
 msgstr "Latvių 1-ojo lygio"
 
@@ -802,8 +988,13 @@ msgstr "Slovakų 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
-msgstr "Slovėnų 1-ojo lygio"
+msgid "Slovenian 8 dot computer braille"
+msgstr "Slovėnų 8 taškų kompiuterinis Brailis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
+msgstr "Slovėnų 1-ojo laipsnio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -827,9 +1018,8 @@ msgstr "Turkų 1-ojo lygio"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Unicode braille"
-msgstr "Brailio eilutė nenaudojama"
+msgstr "unikodinis brailis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2199,8 +2389,9 @@ msgid "bold"
 msgstr "pusjuodis"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
-msgstr "KURSYVAS"
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "kursyvas"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2426,13 +2617,13 @@ msgstr "atrakintas (-a)"
 msgid "not selected"
 msgstr "neatrinktas (-a)"
 
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "nepažymėtas"
-
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
 msgstr "nenuspausta"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "nepažymėtas"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -2444,7 +2635,7 @@ msgstr "dabartinis puslapis"
 
 #. Translators: Presented when a step item is marked as current in a collection of step items
 msgid "current step"
-msgstr ""
+msgstr "dab. žingsnis"
 
 #. Translators: Presented when a location item is marked as current in a collection of location items
 msgid "current location"
@@ -3767,6 +3958,17 @@ msgstr "Brailio eilutė susieta su %s."
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Susieja Brailio eilutę su peržiūros žymekliu arba su židiniu."
 
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, fuzzy, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Brailio eilutė susieta su %s."
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "Perjungia būdus, kaip kontekstinė informacija yra pateikiama brailiu"
+
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
 msgstr "Brailio žymeklis išjungtas."
@@ -3886,15 +4088,15 @@ msgstr "Nukreipia Brailio eilutę į esamąjį židinį"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Erases the last entered braille cell or character"
-msgstr ""
+msgstr "Išvalo paskutinį brailio langelį arba simbolį"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input and presses the enter key"
-msgstr ""
+msgstr "Interpretuoja Brailio įvestį ir paspaudžia „enter“ klavišą"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
-msgstr ""
+msgstr "Interpretuoja brailio įvestį"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -3953,6 +4155,15 @@ msgstr "Ne matematinis turinys"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Pradeda veiksmus su matematiniu turiniu"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "„Windows 10 OCR“ nepasiekiama"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr "Atpažįsta žvalgomojo objekto turinį naudojant „Windows 10 OCR“"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -5751,10 +5962,6 @@ msgstr "nebe akcentuotas"
 msgid "no bold"
 msgstr "ne pusriebis"
 
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "kursyvas"
-
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "ne kursyvas"
@@ -6855,6 +7062,7 @@ msgstr "„Baum“/„HumanWare“/„APH“/„Orbit“ Brailio eilutės"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Nuoseklusis – {portName}"
@@ -6913,6 +7121,39 @@ msgstr "„Papenmeier BRAILLEX“ ankstesnieji modeliai"
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "„Seika“ Brailio eilutės"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "„SuperBraille“"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "Rezultatas"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "Jei įmanoma, suaktyvina tekstą, esantį prie žymeklio"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr ""
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr ""
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "Turinys nematomas"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "Atpažįstama"
+
+msgid "Recognition failed"
+msgstr "Atpažinimas nepavyko"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -7042,6 +7283,10 @@ msgstr "&Dokumentų formatavimas…"
 
 msgid "Change settings of document properties"
 msgstr "Keisti informavimo apie dokumentų savybes parametrus"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "Windows 10 OCR..."
+msgstr "„Windows 10 OCR“..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8532,6 +8777,14 @@ msgstr ""
 "Pranešti apie formatavimo pakeitimus už žymeklio (gali sulėtinti programos "
 "darbą)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "„Windows 10 OCR“"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "Atpažinimo &kalba:"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "&Bet kur"
@@ -8652,8 +8905,14 @@ msgstr "Mirksintis žymeklis"
 msgid "Cursor blink rate (ms)"
 msgstr "Žymeklio mirksėjimo ciklas (ms)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+#, fuzzy
+msgid "Cursor shape for &focus:"
+msgstr "Žymeklio &forma:"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+#, fuzzy
+msgid "Cursor shape for &review:"
 msgstr "Žymeklio &forma:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
@@ -8662,7 +8921,7 @@ msgstr "Pranešimų galiojimo &laikas (sek.)"
 
 #. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
 msgid "Show &messages indefinitely"
-msgstr ""
+msgstr "Rodyti &pranešimus neribotą laiką"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "B&raille tethered to:"
@@ -8675,6 +8934,11 @@ msgstr "Tekstą &skaityti pastraipomis"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "Jeigu įmanoma, &nekelti žodžių"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+#, fuzzy
+msgid "Focus context presentation:"
+msgstr "tolimesnių anotacijų nėra"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -9076,9 +9340,9 @@ msgstr ""
 "jis. Nuspaudus dukart, pašalina šį langelį iš eilučių antraščių aibės."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Sheet {0}, {1}"
-msgstr "pozicija {x}, {y}"
+msgstr "pozicija {0}, {1}"
 
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
@@ -10002,6 +10266,7 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType} {description}: „{text}“, autorius „{author}“, data – {date}"
 
+#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "rašyba: {text}"
@@ -10271,6 +10536,24 @@ msgstr "„HIMS Braille Sense“/„Braille EDGE“/„Smart Beetle“ serijos"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "„HIMS SyncBraille“"
+
+#~ msgid "-----"
+#~ msgstr "-----"
+
+#~ msgid "(x)"
+#~ msgstr "(x)"
+
+#~ msgid "(-)"
+#~ msgstr "(-)"
+
+#~ msgid "( )"
+#~ msgstr "( )"
+
+#~ msgid "Farsi grade 1"
+#~ msgstr "Persų 1-ojo laipsnio"
+
+#~ msgid "ITALIC"
+#~ msgstr "KURSYVAS"
 
 #~ msgid "braille"
 #~ msgstr "brailis"
