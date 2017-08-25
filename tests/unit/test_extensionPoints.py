@@ -274,3 +274,69 @@ class TestFilter(unittest.TestCase):
 		self.filter.register(handler2)
 		filtered = self.filter.apply(0)
 		self.assertEqual(filtered, 2)
+
+class TestDecider(unittest.TestCase):
+
+	def setUp(self):
+		self.decider = extensionPoints.Decider()
+
+	def test_noHandlers(self):
+		decision = self.decider.decide(a=1)
+		self.assertEqual(decision, True)
+
+	def test_oneHandlerFalse(self):
+		def handler():
+			return False
+		self.decider.register(handler)
+		decision = self.decider.decide()
+		self.assertEqual(decision, False)
+
+	def test_oneHandlerTrue(self):
+		def handler():
+			return True
+		self.decider.register(handler)
+		decision = self.decider.decide()
+		self.assertEqual(decision, True)
+
+	def test_twoHandlersFalseTrue(self):
+		def handler1():
+			return False
+		def handler2():
+			return True
+		self.decider.register(handler1)
+		self.decider.register(handler2)
+		decision = self.decider.decide()
+		self.assertEqual(decision, False)
+
+	def test_twoHandlersTrueFalse(self):
+		def handler1():
+			return True
+		def handler2():
+			return False
+		self.decider.register(handler1)
+		self.decider.register(handler2)
+		decision = self.decider.decide()
+		self.assertEqual(decision, False)
+
+	def test_kwargs(self):
+		"""Test that keyword arguments get passed to handlers.
+		"""
+		calledKwargs = {}
+		def handler(**kwargs):
+			calledKwargs.update(kwargs)
+			return False
+		self.decider.register(handler)
+		self.decider.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerException(self):
+		"""Test that a handler which raises an exception doesn't affect later handlers.
+		"""
+		def handler1():
+			raise Exception("barf")
+		def handler2():
+			return False
+		self.decider.register(handler1)
+		self.decider.register(handler2)
+		decision = self.decider.decide()
+		self.assertEqual(decision, False)

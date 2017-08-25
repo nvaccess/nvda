@@ -201,3 +201,50 @@ class Filter(HandlerRegistrar):
 			except:
 				log.exception("Error running handler %r for %r" % (handler, self))
 		return value
+
+class Decider(HandlerRegistrar):
+	"""Allows interested parties to participate in deciding whether something
+	should be done.
+	For example, input gestures are normally executed,
+	but this might be used to prevent their execution
+	under specific circumstances such as when controlling a remote system.
+
+	First, a Decider is created:
+
+	>>> doSomething = extensionPoints.Decider()
+
+	Interested parties then register to participate in the decision:
+
+	>>> def shouldDoSomething(someArg=None):
+	... 	return False
+	...
+	>>> doSomething.register(shouldDoSomething)
+
+	When the decision is to be made, registered handlers are called until
+	a handler returns False:
+
+	>>> doSomething.decide(someArg=42)
+	False
+
+	If there are no handlers or all handlers return True,
+	the return value is True.
+	"""
+
+	def decide(self, **kwargs):
+		"""Call handlers to make a decision.
+		If a handler returns False, processing stops
+		and False is returned.
+		If there are no handlers or all handlers return True, True is returned.
+		@param kwargs: Arguments to pass to the handlers.
+		@return: The decision.
+		@rtype: bool
+		"""
+		for handler in self.handlers:
+			try:
+				decision = callWithSupportedKwargs(handler, **kwargs)
+			except:
+				log.exception("Error running handler %r for %r" % (handler, self))
+				continue
+			if not decision:
+				return False
+		return True
