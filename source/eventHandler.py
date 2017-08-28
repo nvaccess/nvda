@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2014 NV Access Limited
+#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 
 import threading
 import queueHandler
@@ -16,6 +16,7 @@ from logHandler import log
 import globalPluginHandler
 import config
 import winUser
+import extensionPoints
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -26,9 +27,6 @@ _pendingEventCountsLock=threading.RLock()
 
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
-
-#: Whether the last focus or caret event changed or is about to change the review cursor due to following
-lastReviewMoveDueToFollowing = False
 
 def queueEvent(eventName,obj,**kwargs):
 	"""Queues an NVDA event to be executed.
@@ -98,7 +96,10 @@ class _EventExecuter(object):
 
 	def next(self):
 		func, args = next(self._gen)
-		return func(*args, **self.kwargs)
+		try:
+			return func(*args, **self.kwargs)
+		except TypeError:
+			return extensionPoints.callWithSupportedKwargs(func, *args, **self.kwargs)
 
 	def gen(self, eventName, obj):
 		funcName = "event_%s" % eventName
