@@ -188,7 +188,6 @@ def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False):
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
-	eventHandler.lastReviewMoveDueToFollowing = isCaret
 	braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
 
 def getNavigatorObject():
@@ -233,8 +232,7 @@ def setNavigatorObject(obj,isFocus=False):
 		if isFocus:
 			globalVars.reviewPosition=obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
 			globalVars.reviewPositionObj=globalVars.reviewPosition
-	eventHandler.lastReviewMoveDueToFollowing = isFocus
-	eventHandler.executeEvent("becomeNavigatorObject",obj)
+	eventHandler.executeEvent("becomeNavigatorObject",obj, isFocus=isFocus)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.

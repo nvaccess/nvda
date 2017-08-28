@@ -1476,8 +1476,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def setTether(self, tether, auto=False):
 		if auto and not self.shouldAutoTether:
 			return
-		if auto and tether == self.TETHER_REVIEW and eventHandler.lastReviewMoveDueToFollowing:
-			return
 		if not auto:
 			config.conf["braille"]["tetherTo"] = tether
 		if tether == self._tether:
@@ -1697,10 +1695,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		if shouldAutoTether:
 			self.setTether(self.TETHER_FOCUS, auto=True)
-		elif self._tether != self.TETHER_FOCUS or not self.mainBuffer.regions:
+		elif self._tether != self.TETHER_FOCUS:
 			return
-		region = self.mainBuffer.regions[-1]
-		if region.obj is not obj:
+		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
+		if not region or region.obj is not obj:
 			return
 		region.pendingCaretUpdate=True
 

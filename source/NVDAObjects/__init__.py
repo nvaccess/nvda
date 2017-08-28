@@ -958,10 +958,12 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		speech.cancelSpeech()
 
-	def event_becomeNavigatorObject(self):
+	def event_becomeNavigatorObject(self, isFocus=None):
 		"""Called when this object becomes the navigator object.
+		@param isFocus: true if the navigator object was set due to a focus change.
+		@type isFocus: bool
 		"""
-		braille.handler.handleReviewMove(shouldAutoTether=not eventHandler.lastReviewMoveDueToFollowing)
+		braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
