@@ -24,6 +24,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <objbase.h>
 #include <rpcproxy.h>
 #include <common/log.h>
+#include "dllmain.h"
 #include "COMProxyRegistration.h"
 
 using namespace std;
@@ -33,6 +34,7 @@ typedef void(RPC_ENTRY *LPFNGETPROXYDLLINFO)(ProxyFileInfo***, CLSID**);
 const wchar_t* StringCLSID_StandardMarshaler=L"{00020424-0000-0000-C000-000000000046}";
 
 COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
+	LOG_DEBUG(L"Registering proxy "<<dllPath);
 	int res;
 	// Fetch the CLSID for the standard marshaler which will be used to unregister PS CLSIDs later
 	CLSID clsid_standardMarshaler;
@@ -47,7 +49,9 @@ COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
 		return nullptr;
 	}
 	// load the proxy dll
-	HMODULE dllHandle=LoadLibrary(dllPath);
+	wchar_t absDllPath[MAX_PATH]={0};
+	wsprintf(absDllPath,L"%s\\%s",dllDirectory,dllPath);
+	HMODULE dllHandle=LoadLibrary(absDllPath);
 	if(dllHandle==NULL) {
 		LOG_ERROR(L"LoadLibrary failed for "<<dllPath);
 		return nullptr;
@@ -125,31 +129,38 @@ COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
 			// If not set, then we'll use the standard marshaler clsid on deregistration.
 			if((res=CoGetPSClsid(iid,&clsidBackup))!=S_OK) {
 				clsidBackup=clsid_standardMarshaler;
+			} else {
+				LOG_DEBUG(L"Backed up existing clsid for interface "<<name);
 			}
 			if((res=CoRegisterPSClsid(iid,regClsid))!=S_OK) {
 				LOG_ERROR(L"Unable to register interface "<<name<<L" with proxy stub "<<dllPath<<L", code "<<res);
 				continue;
 			}
 		reg->psClsidBackups.push_back({name,iid,clsidBackup});
+		LOG_DEBUG(L"Registered interface "<<name);
 		}
 		++tempInfoPtr;
 	}
 	// We can now safely free the proxy dll. COM will keep it loaded or re-load it if needed
 	FreeLibrary(dllHandle);
+	LOG_DEBUG(L"Done registering proxy "<<dllPath);
 	return reg;
 }
 
 bool unregisterCOMProxy(COMProxyRegistration_t* reg) {
 	if(!reg) return false;
 	HRESULT res;
+	LOG_DEBUG(L"Unregistering proxy "<<(reg->dllPath));
 	for(auto& backup: reg->psClsidBackups) {
 		if((res=CoRegisterPSClsid(backup.iid,backup.clsid))!=S_OK) {
 			LOG_ERROR(L"Error registering backup PSClsid for interface "<<(backup.name)<<L" from "<<(reg->dllPath)<<L", code "<<res);
 		}
+		LOG_DEBUG(L"Unregistered interface "<<(backup.name));
 	}
 	if((res=CoRevokeClassObject((DWORD)(reg->classObjectRegistrationCookie)))!=S_OK) {
 		LOG_ERROR(L"Error unregistering class object from "<<(reg->dllPath)<<L", code "<<res);
 	}
+	LOG_DEBUG(L"Done unregistering proxy "<<(reg->dllPath));
 	delete reg;
 	return true;
 }

@@ -33,13 +33,9 @@ using namespace std;
 typedef LONG(WINAPI *GetCurrentApplicationUserModelId_funcType)(UINT32*,PWSTR);
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
 
-#pragma data_seg(".ia2SupportShared")
-wchar_t IA2DllPath[MAX_PATH]={0};
-#pragma data_seg()
-#pragma comment(linker, "/section:.ia2SupportShared,rws")
-
 bool isIA2Installed=FALSE;
 COMProxyRegistration_t* IA2ProxyRegistration;
+COMProxyRegistration_t* ISimpleDOMProxyRegistration;
 HANDLE IA2UIThreadHandle=NULL;
 DWORD IA2UIThreadID=0;
 HANDLE IA2UIThreadUninstalledEvent=NULL;
@@ -58,29 +54,31 @@ bool installIA2Support() {
 		}
 		return false;
 	}
-	IA2ProxyRegistration=registerCOMProxy(IA2DllPath);
+	IA2ProxyRegistration=registerCOMProxy(L"IAccessible2Proxy.dll");
 	if(!IA2ProxyRegistration) {
 		LOG_ERROR(L"Error registering IAccessible2 proxy");
-		return false;
+	}
+		ISimpleDOMProxyRegistration=registerCOMProxy(L"ISimpleDOM.dll");
+	if(!ISimpleDOMProxyRegistration) {
+		LOG_ERROR(L"Error registering ISimpleDOM proxy");
 	}
 	isIA2Installed=TRUE;
-	return TRUE;
+	return isIA2Installed;
 }
 
 bool uninstallIA2Support() {
 	if(!isIA2Installed) return false;
-	if(!unregisterCOMProxy(IA2ProxyRegistration)) {
+	if(ISimpleDOMProxyRegistration&&!unregisterCOMProxy(ISimpleDOMProxyRegistration)) {
+		LOG_ERROR(L"Error unregistering ISimpleDOM proxy");
+	} else {
+		ISimpleDOMProxyRegistration=nullptr;
+	}
+	if(IA2ProxyRegistration&&!unregisterCOMProxy(IA2ProxyRegistration)) {
 		LOG_ERROR(L"Error unregistering IAccessible2 proxy");
-		return false;
+	} else {
+		IA2ProxyRegistration=nullptr;
 	}
 	isIA2Installed=FALSE;
-	return TRUE;
-}
-
-bool IA2Support_initialize() {
-	nhAssert(!isIA2Initialized);
-	wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
-	isIA2Initialized=TRUE;
 	return TRUE;
 }
 
