@@ -531,15 +531,23 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	const long childCount = getChildCount(isAriaHidden, pacc);
 
 	const bool isImgMap = role == ROLE_SYSTEM_GRAPHIC && childCount > 0;
+	IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name");
 	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
-	const bool nameIsExplicit = ((IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
+	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
 	const bool nameIsContent = isEmbeddedApp
-		|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU;
-		// || ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !labelVisible);
+		|| role == ROLE_SYSTEM_LINK 
+		|| role == ROLE_SYSTEM_PUSHBUTTON 
+		|| role == IA2_ROLE_TOGGLE_BUTTON 
+		|| role == ROLE_SYSTEM_MENUITEM 
+		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) 
+		|| (role == ROLE_SYSTEM_TEXT && !isEditable) 
+		|| role == IA2_ROLE_HEADING 
+		|| role == ROLE_SYSTEM_PAGETAB 
+		|| role == ROLE_SYSTEM_BUTTONMENU;
 	// Whether this node has a visible label somewhere else in the tree
 	const bool labelVisible = canDetectLabelVisibility // Not all browsers support getting a node's labelledBy node
-		&&nameIsExplicit&&name&&name[0] //this node must actually have an explicit name
+		&& nameIsExplicit && name && name[0] //this node must actually have an explicit name, and not be just an empty string
 		&&(!nameIsContent||role==ROLE_SYSTEM_TABLE) // We only need to know if the name won't be used as content or if it is a table (for table summary)
 		&&isLabelVisible(pacc); // actually do the check
 	// If the node is explicitly labeled for accessibility, and we haven't used the label as the node's content, and the label does not visibly appear anywhere else in the tree (E.g. aria-label on an edit field)
