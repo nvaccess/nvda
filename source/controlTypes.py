@@ -641,6 +641,20 @@ isCurrentLabels = {
 }
 
 def processPositiveStates(role, states, reason, positiveStates):
+	"""Processes the states for an object and returns the positive states to output for a specified reason.
+	For example, if C{STATE_CHECKED} is among the returned states, it means that the processed object is checked.
+	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	@type role: int
+	@param states: Usually the raw states for an object to process.
+	@type states: set
+	@param reason: The reason to process the states for (e.g. C{REASON_FOCUS}.
+	@type reason: str
+	@param positiveStates: Used for REASON_CHANGE, specifies states changed from negative to positive;
+		C{None} if not applicable.
+	@type positiveStates: set
+	@return: The processed positive states.
+	@rtype: set
+	"""
 	positiveStates = positiveStates.copy()
 	# The user never cares about certain states.
 	if role==ROLE_EDITABLETEXT:
@@ -686,6 +700,20 @@ def processPositiveStates(role, states, reason, positiveStates):
 	return positiveStates
 
 def processNegativeStates(role, states, reason, negativeStates):
+	"""Processes the states for an object and returns the negative states to output for a specified reason.
+	For example, if C{STATE_CHECKED} is among the returned states, it means that the processed object is not checked.
+	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	@type role: int
+	@param states: Usually the raw states for an object to process.
+	@type states: set
+	@param reason: The reason to process the states for (e.g. C{REASON_FOCUS}.
+	@type reason: str
+	@param negativeStates: Used for REASON_CHANGE, specifies states changed from positive to negative;
+		C{None} if not applicable.
+	@type negativeStates: set
+	@return: The processed negative states.
+	@rtype: set
+	"""
 	speakNegatives = set()
 	# Add the negative selected state if the control is selectable,
 	# but only if it is either focused or this is something other than a change event.
@@ -716,6 +744,26 @@ def processNegativeStates(role, states, reason, negativeStates):
 		return speakNegatives - states
 
 def processAndLabelStates(role, states, reason, positiveStates, negativeStates, positiveStateLabelDict={}, negativeStateLabelDict={}):
+	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
+	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	@type role: int
+	@param states: Usually the raw states for an object to process.
+	@type states: set
+	@param reason: The reason to process the states for (e.g. C{REASON_FOCUS}.
+	@type reason: str
+	@param positiveStates: Used for REASON_CHANGE, specifies states changed from negative to positive;
+		C{None} if not applicable.
+	@type positiveStates: set
+	@param negativeStates: Used for REASON_CHANGE, specifies states changed from positive to negative;
+		C{None} if not applicable.
+	@type negativeStates: setpositiveStateLabelDict={}, negativeStateLabelDict
+	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive labels as their values.
+	@type positiveStateLabelDict: dict
+	@param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative labels as their values.
+	@type negativeStateLabelDict: dict
+	@return: The labels of the relevant positive and negative states.
+	@rtype: [str, ...]
+	"""
 	mergedStateLabels=[]
 	positiveStates = processPositiveStates(role, states, reason, positiveStates)
 	negativeStates = processNegativeStates(role, states, reason, negativeStates)
