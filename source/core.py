@@ -103,11 +103,14 @@ def resetConfiguration(factoryDefaults=False):
 	"""
 	import config
 	import braille
+	import brailleInput
 	import speech
 	import languageHandler
 	import inputCore
 	log.debug("Terminating braille")
 	braille.terminate()
+	log.debug("Terminating brailleInput")
+	brailleInput.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
 	log.debug("terminating addonHandler")
@@ -125,6 +128,8 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("initializing speech")
 	speech.initialize()
 	#braille
+	log.debug("Initializing brailleInput")
+	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
 	log.debug("Reloading user and locale input gesture maps")
@@ -233,12 +238,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				pass
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
-	import braille
-	log.debug("Initializing braille")
-	braille.initialize()
 	log.debug("Initializing braille input")
 	import brailleInput
 	brailleInput.initialize()
+	import braille
+	log.debug("Initializing braille")
+	braille.initialize()
 	import displayModel
 	log.debug("Initializing displayModel")
 	displayModel.initialize()

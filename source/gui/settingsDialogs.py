@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -28,6 +28,8 @@ import speechDictHandler
 import appModuleHandler
 import queueHandler
 import braille
+import brailleTables
+import brailleInput
 import core
 import keyboardHandler
 import characterProcessing
@@ -956,6 +958,12 @@ class ObjectPresentationDialog(SettingsDialog):
 		self.dynamicContentCheckBox=sHelper.addItem(wx.CheckBox(self,label=dynamicContentText))
 		self.dynamicContentCheckBox.SetValue(config.conf["presentation"]["reportDynamicContentChanges"])
 
+		# Translators: This is the label for a combobox in the
+		# object presentation settings dialog.
+		autoSuggestionsLabelText = _("Play a sound when &auto-suggestions appear")
+		self.autoSuggestionSoundsCheckBox=sHelper.addItem(wx.CheckBox(self,label=autoSuggestionsLabelText))
+		self.autoSuggestionSoundsCheckBox.SetValue(config.conf["presentation"]["reportAutoSuggestionsWithSound"])
+
 	def postInit(self):
 		self.tooltipCheckBox.SetFocus()
 
@@ -969,6 +977,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
+		config.conf["presentation"]["reportAutoSuggestionsWithSound"]=self.autoSuggestionSoundsCheckBox.IsChecked()
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class BrowseModeDialog(SettingsDialog):
@@ -1314,6 +1323,35 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 		super(DocumentFormattingDialog, self).onOk(evt)
 
+class UwpOcrDialog(SettingsDialog):
+	# Translators: The title of the Windows 10 OCR dialog.
+	title = _("Windows 10 OCR")
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Lazily import this.
+		from contentRecog import uwpOcr
+		self.languageCodes = uwpOcr.getLanguages()
+		languageChoices = [
+			languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
+			for lang in self.languageCodes]
+		# Translators: Label for an option in the Windows 10 OCR dialog.
+		languageLabel = _("Recognition &language:")
+		self.languageChoice = sHelper.addLabeledControl(languageLabel, wx.Choice, choices=languageChoices)
+		try:
+			langIndex = self.languageCodes.index(config.conf["uwpOcr"]["language"])
+			self.languageChoice.Selection = langIndex
+		except ValueError:
+			self.languageChoice.Selection = 0
+
+	def postInit(self):
+		self.languageChoice.SetFocus()
+
+	def onOk(self, evt):
+		lang = self.languageCodes[self.languageChoice.Selection]
+		config.conf["uwpOcr"]["language"] = lang
+		super(UwpOcrDialog, self).onOk(evt)
+
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
@@ -1530,25 +1568,27 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.portsList = sHelper.addLabeledControl(portsLabelText, wx.Choice, choices=[])
 		self.updatePossiblePorts()
 
+		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
-		self.tableNames = [table[0] for table in braille.TABLES]
-		tableChoices = [table[1] for table in braille.TABLES]
-		self.tableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=tableChoices)
+		outTables = [table for table in tables if table.output]
+		self.outTableNames = [table.fileName for table in outTables]
+		outTableChoices = [table.displayName for table in outTables]
+		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		try:
-			selection = self.tableNames.index(config.conf["braille"]["translationTable"])
-			self.tableList.SetSelection(selection)
+			selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
+			self.outTableList.SetSelection(selection)
 		except:
 			pass
 
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
-		self.inputTableNames = [table[0] for table in braille.INPUT_TABLES]
-		inputChoices = [table[1] for table in braille.INPUT_TABLES]
-		self.inputTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inputChoices)
+		self.inTables = [table for table in tables if table.input]
+		inTableChoices = [table.displayName for table in self.inTables]
+		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		try:
-			selection = self.inputTableNames.index(config.conf["braille"]["inputTable"])
-			self.inputTableList.SetSelection(selection)
+			selection = self.inTables.index(brailleInput.handler.table)
+			self.inTableList.SetSelection(selection)
 		except:
 			pass
 
@@ -1580,18 +1620,30 @@ class BrailleSettingsDialog(SettingsDialog):
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue() :
 			self.cursorBlinkRateEdit.Disable()
 
-		# Translators: The label for a setting in braille settings to select the cursor shape.
-		cursorShapeLabelText = _("Cursor &shape:")
 		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
 		cursorShapeChoices = [s[1] for s in braille.CURSOR_SHAPES]
-		self.shapeList = sHelper.addLabeledControl(cursorShapeLabelText, wx.Choice, choices=cursorShapeChoices)
+
+		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
+		self.cursorShapeFocusList = sHelper.addLabeledControl(cursorShapeFocusLabelText, wx.Choice, choices=cursorShapeChoices)
 		try:
-			selection = self.cursorShapes.index(config.conf["braille"]["cursorShape"])
-			self.shapeList.SetSelection(selection)
+			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeFocus"])
+			self.cursorShapeFocusList.SetSelection(selection)
 		except:
 			pass
 		if not self.showCursorCheckBox.GetValue():
-			self.shapeList.Disable()
+			self.cursorShapeFocusList.Disable()
+
+		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+		cursorShapeReviewLabelText = _("Cursor shape for &review:")
+		self.cursorShapeReviewList = sHelper.addLabeledControl(cursorShapeReviewLabelText, wx.Choice, choices=cursorShapeChoices)
+		try:
+			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeReview"])
+			self.cursorShapeReviewList.SetSelection(selection)
+		except:
+			pass
+		if not self.showCursorCheckBox.GetValue():
+			self.cursorShapeReviewList.Disable()
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message &timeout (sec)")
@@ -1630,6 +1682,16 @@ class BrailleSettingsDialog(SettingsDialog):
 		wordWrapText = _("Avoid splitting &words when possible")
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+		focusContextPresentationLabelText = _("Focus context presentation:")
+		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
+		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
+		self.focusContextPresentationList = sHelper.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
+		try:
+			index=self.focusContextPresentationValues.index(config.conf["braille"]["focusContextPresentation"])
+		except:
+			index=0
+		self.focusContextPresentationList.SetSelection(index)
 
 	def postInit(self):
 		self.displayList.SetFocus()
@@ -1644,18 +1706,20 @@ class BrailleSettingsDialog(SettingsDialog):
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
-		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
-		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
+		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
+		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
 		config.conf["braille"]["cursorBlinkRate"] = self.cursorBlinkRateEdit.GetValue()
-		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
+		config.conf["braille"]["cursorShapeFocus"] = self.cursorShapes[self.cursorShapeFocusList.GetSelection()]
+		config.conf["braille"]["cursorShapeReview"] = self.cursorShapes[self.cursorShapeReviewList.GetSelection()]
 		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 	def onDisplayNameChanged(self, evt):
@@ -1686,7 +1750,8 @@ class BrailleSettingsDialog(SettingsDialog):
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked() and self.cursorBlinkCheckBox.GetValue())
-		self.shapeList.Enable(evt.IsChecked())
+		self.cursorShapeFocusList.Enable(evt.IsChecked())
+		self.cursorShapeReviewList.Enable(evt.IsChecked())
 
 	def onBlinkCursorChange(self, evt):
 		self.cursorBlinkRateEdit.Enable(evt.IsChecked())

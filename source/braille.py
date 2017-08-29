@@ -1,8 +1,9 @@
+# -*- coding: UTF-8 -*-
 #braille.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager
 
 import sys
 import itertools
@@ -23,379 +24,205 @@ import api
 import textInfos
 import brailleDisplayDrivers
 import inputCore
-
-#: The directory in which liblouis braille tables are located.
-TABLES_DIR = r"louis\tables"
-
-#: The table file names and information.
-TABLES = (
-	# (fileName, displayName, supportsInput),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ar-ar-g1.utb", _("Arabic grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ar-fa.utb", _("Farsi grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("as-in-g1.utb", _("Assamese grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("be-in-g1.utb", _("Bengali grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("bg.ctb", _("Bulgarian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("cy-cy-g1.utb", _("Welsh grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("cy-cy-g2.ctb", _("Welsh grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("cz-cz-g1.utb", _("Czech grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("da-dk-g16.ctb", _("Danish 6 dot grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("da-dk-g18.ctb", _("Danish 8 dot grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("da-dk-g26.ctb", _("Danish 6 dot grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("da-dk-g28.ctb", _("Danish 8 dot grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("de-de-comp8.ctb", _("German 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("de-de-g0.utb", _("German grade 0"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("de-de-g1.ctb", _("German grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("de-de-g2.ctb", _("German grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-gb-comp8.ctb", _("English (U.K.) 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-gb-g1.utb", _("English (U.K.) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-GB-g2.ctb", _("English (U.K.) grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-us-comp8.ctb", _("English (U.S.) 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-us-g1.ctb", _("English (U.S.) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-us-g2.ctb", _("English (U.S.) grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Es-Es-G0.utb", _("Spanish 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("es-g1.ctb", _("Spanish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("et-g0.utb", _("Estonian grade 0"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ethio-g1.ctb", _("Ethiopic grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fi.utb", _("Finnish 6 dot"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-bfu-g2.ctb", _("French (unified) Grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-ca-g1.utb", _("French (Canada) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Fr-Ca-g2.ctb", _("French (Canada) grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ga-g1.utb", _("Irish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ga-g2.ctb", _("Irish grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("gu-in-g1.utb", _("Gujarati grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("gr-bb.ctb", _("Koine Greek"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("gr-gr-g1.utb", _("Greek (Greece) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("he.ctb", _("Hebrew 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("hi-in-g1.utb", _("Hindi grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("hr.ctb", _("Croatian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("hu-hu-comp8.ctb", _("Hungarian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("hu-hu-g1.ctb", _("Hungarian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("is.ctb", _("Icelandic 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("it-it-comp6.utb", _("Italian 6 dot computer braille"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("it-it-comp8.utb", _("Italian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ka-in-g1.utb", _("Kannada grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ko-2006-g1.ctb", _("Korean grade 1 (2006)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ko-2006-g2.ctb", _("Korean grade 2 (2006)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ko-g1.ctb", _("Korean grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ko-g2.ctb", _("Korean grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ks-in-g1.utb", _("Kashmiri grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Lv-Lv-g1.utb", _("Latvian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ml-in-g1.utb", _("Malayalam grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("mn-in-g1.utb", _("Manipuri grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("mn-MN.utb", _("Mongolian"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("mr-in-g1.utb", _("Marathi grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("nl-BE-g0.utb", _("Dutch (Belgium)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("nl-NL-g0.utb", _("Dutch (Netherlands)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("no-no-comp8.ctb", _("Norwegian 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("No-No-g0.utb", _("Norwegian grade 0"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("No-No-g1.ctb", _("Norwegian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("No-No-g2.ctb", _("Norwegian grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("No-No-g3.ctb", _("Norwegian grade 3"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("np-in-g1.utb", _("Nepali grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("or-in-g1.utb", _("Oriya grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("pl-pl-comp8.ctb", _("Polish 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Pl-Pl-g1.utb", _("Polish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("pt-pt-comp8.ctb", _("Portuguese 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Pt-Pt-g1.utb", _("Portuguese grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Pt-Pt-g2.ctb", _("Portuguese grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("pu-in-g1.utb", _("Punjabi grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ru-compbrl.ctb", _("Russian braille for computer code"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ru-ru-g1.utb", _("Russian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("sa-in-g1.utb", _("Sanskrit grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Se-Se-g1.utb", _("Swedish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("sk-g1.ctb", _("Slovak grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("sl-si-g1.utb", _("Slovene grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("sr-g1.ctb", _("Serbian grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("ta-ta-g1.ctb", _("Tamil grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("te-in-g1.utb", _("Telugu grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("tr.ctb", _("Turkish grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("en-ueb-g2.ctb", _("Unified English Braille Code grade 2"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)"), False),
-)
-
-#: Braille tables that support input (only computer braille tables yet).
-INPUT_TABLES = tuple(t for t in TABLES if t[2])
-
-#: Maps old table names to new table names for tables renamed in newer versions of liblouis.
-RENAMED_TABLES = {
-	"da-dk-g16.utb":"da-dk-g16.ctb",
-	"da-dk-g18.utb":"da-dk-g18.ctb",
-	"nl-BE-g1.ctb":"nl-BE-g0.utb",
-	"nl-NL-g1.ctb":"nl-NL-g0.utb",
-	"no-no.ctb":"no-no-comp8.ctb",
-	"sk-sk-g1.utb":"sk-g1.ctb",
-	"UEBC-g1.ctb":"en-ueb-g1.ctb",
-	"UEBC-g2.ctb":"en-ueb-g2.ctb",
-}
+import brailleTables
+from collections import namedtuple
 
 roleLabels = {
-	# Translators: Displayed in braille for an object which is an
-	# editable text field.
-	controlTypes.ROLE_EDITABLETEXT: _("edt"),
 	# Translators: Displayed in braille for an object which is a
-	# list.
-	controlTypes.ROLE_LIST: _("lst"),
+	# window.
+	controlTypes.ROLE_WINDOW: _("wnd"),
 	# Translators: Displayed in braille for an object which is a
-	# menu bar.
-	controlTypes.ROLE_MENUBAR: _("mnubar"),
-	# Translators: Displayed in braille for an object which is a
-	# menu.
-	controlTypes.ROLE_POPUPMENU: _("mnu"),
-	# Translators: Displayed in braille for an object which is a
-	# button.
-	controlTypes.ROLE_BUTTON: _("btn"),
+	# dialog.
+	controlTypes.ROLE_DIALOG: _("dlg"),
 	# Translators: Displayed in braille for an object which is a
 	# check box.
 	controlTypes.ROLE_CHECKBOX: _("chk"),
 	# Translators: Displayed in braille for an object which is a
 	# radio button.
 	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
+	# Translators: Displayed in braille for an object which is an
+	# editable text field.
+	controlTypes.ROLE_EDITABLETEXT: _("edt"),
+	# Translators: Displayed in braille for an object which is a
+	# button.
+	controlTypes.ROLE_BUTTON: _("btn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu bar.
+	controlTypes.ROLE_MENUBAR: _("mnubar"),
+	# Translators: Displayed in braille for an object which is a
+	# menu item.
+	controlTypes.ROLE_MENUITEM: _("mnuitem"),
+	# Translators: Displayed in braille for an object which is a
+	# menu.
+	controlTypes.ROLE_POPUPMENU: _("mnu"),
 	# Translators: Displayed in braille for an object which is a
 	# combo box.
 	controlTypes.ROLE_COMBOBOX: _("cbo"),
 	# Translators: Displayed in braille for an object which is a
+	# list.
+	controlTypes.ROLE_LIST: _("lst"),
+	# Translators: Displayed in braille for an object which is a
+	# graphic.
+	controlTypes.ROLE_GRAPHIC: _("gra"),
+	# Translators: Displayed in braille for an object which is a
+	# help balloon.
+	controlTypes.ROLE_HELPBALLOON: _("hlp"),
+	# Translators: Displayed in braille for an object which is a
+	# tool tip.
+	controlTypes.ROLE_TOOLTIP: _("tltip"),
+	# Translators: Displayed in braille for an object which is a
 	# link.
 	controlTypes.ROLE_LINK: _("lnk"),
-	# Translators: Displayed in braille for an object which is a
-	# dialog.
-	controlTypes.ROLE_DIALOG: _("dlg"),
 	# Translators: Displayed in braille for an object which is a
 	# tree view.
 	controlTypes.ROLE_TREEVIEW: _("tv"),
 	# Translators: Displayed in braille for an object which is a
+	# tree view item.
+	controlTypes.ROLE_TREEVIEWITEM: _("tvitem"),
+	# Translators: Displayed in braille for an object which is a
+	# tab control.
+	controlTypes.ROLE_TABCONTROL: _("tabctl"),
+	# Translators: Displayed in braille for an object which is a
+	# progress bar.
+	controlTypes.ROLE_PROGRESSBAR: _("prgbar"),
+	# Translators: Displayed in braille for an object which is a
+	# scroll bar.
+	controlTypes.ROLE_SCROLLBAR: _("scrlbar"),
+	# Translators: Displayed in braille for an object which is a
+	# status bar.
+	controlTypes.ROLE_STATUSBAR: _("stbar"),
+	# Translators: Displayed in braille for an object which is a
 	# table.
-	controlTypes.ROLE_TABLE: _("tb"),
+	controlTypes.ROLE_TABLE: _("tbl"),
 	# Translators: Displayed in braille for an object which is a
+	# tool bar.
+	controlTypes.ROLE_TOOLBAR: _("tlbar"),
+	# Translators: Displayed in braille for an object which is a
+	# drop down button.
+	controlTypes.ROLE_DROPDOWNBUTTON: _("drbtn"),
+	# Displayed in braille for an object which is a
 	# separator.
-	controlTypes.ROLE_SEPARATOR: _("-----"),
+	controlTypes.ROLE_SEPARATOR: u"⠤⠤⠤⠤⠤",
 	# Translators: Displayed in braille for an object which is a
-	# graphic.
-	controlTypes.ROLE_GRAPHIC: _("gra"),
+	# block quote.
+	controlTypes.ROLE_BLOCKQUOTE: _("bqt"),
+	# Translators: Displayed in braille for an object which is a
+	# document.
+	controlTypes.ROLE_DOCUMENT: _("doc"),
+	# Translators: Displayed in braille for an object which is a
+	# application.
+	controlTypes.ROLE_APPLICATION: _("app"),
+	# Translators: Displayed in braille for an object which is a
+	# grouping.
+	controlTypes.ROLE_GROUPING: _("grp"),
+	# Translators: Displayed in braille for an object which is a
+	# embedded object.
+	controlTypes.ROLE_EMBEDDEDOBJECT: _("embedded"),
+	# Translators: Displayed in braille for an object which is a
+	# end note.
+	controlTypes.ROLE_ENDNOTE: _("enote"),
+	# Translators: Displayed in braille for an object which is a
+	# foot note.
+	controlTypes.ROLE_FOOTNOTE: _("fnote"),
+	# Translators: Displayed in braille for an object which is a
+	# terminal.
+	controlTypes.ROLE_TERMINAL: _("term"),
+	# Translators: Displayed in braille for an object which is a
+	# section.
+	controlTypes.ROLE_SECTION: _("sect"),
+	# Translators: Displayed in braille for an object which is a
+	# toggle button.
+	controlTypes.ROLE_TOGGLEBUTTON: _("tgbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# split button.
+	controlTypes.ROLE_SPLITBUTTON: _("splbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu button.
+	controlTypes.ROLE_MENUBUTTON: _("mnubtn"),
+	# Translators: Displayed in braille for an object which is a
+	# spin button.
+	controlTypes.ROLE_SPINBUTTON: _("spnbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# tree view button.
+	controlTypes.ROLE_TREEVIEWBUTTON: _("tvbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# menu.
+	controlTypes.ROLE_MENU: _("mnu"),
+	# Translators: Displayed in braille for an object which is a
+	# panel.
+	controlTypes.ROLE_PANEL: _("pnl"),
+	# Translators: Displayed in braille for an object which is a
+	# password edit.
+	controlTypes.ROLE_PASSWORDEDIT: _("pwdedt"),
 }
 
 positiveStateLabels = {
-	# Translators: Displayed in braille when an object (e.g. a check box) is checked.
-	controlTypes.STATE_CHECKED: _("(x)"),
-	# Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-	controlTypes.STATE_HALFCHECKED: _("(-)"),
 	# Translators: Displayed in braille when an object is selected.
 	controlTypes.STATE_SELECTED: _("sel"),
-	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-	controlTypes.STATE_HASPOPUP: _("submnu"),
-	# Translators: Displayed in braille when an object supports autocompletion.
-	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Displayed in braille when an object (e.g. a toggle button) is pressed.
+	controlTypes.STATE_PRESSED: u"⢎⣿⡱",
+	# Displayed in braille when an object (e.g. a check box) is checked.
+	controlTypes.STATE_CHECKED: u"⣏⣿⣹",
+	# Displayed in braille when an object (e.g. a check box) is half checked.
+	controlTypes.STATE_HALFCHECKED: u"⣏⣸⣹",
+	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+	controlTypes.STATE_READONLY: _("ro"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 	controlTypes.STATE_EXPANDED: _("-"),
 	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
 	controlTypes.STATE_COLLAPSED: _("+"),
-	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-	controlTypes.STATE_READONLY: _("ro"),
+	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+	controlTypes.STATE_HASPOPUP: _("submnu"),
+	# Translators: Displayed in braille when a protected control or a document is encountered.
+	controlTypes.STATE_PROTECTED: _("***"),
+	# Translators: Displayed in braille when a required form field is encountered.
+	controlTypes.STATE_REQUIRED: _("req"),
+	# Translators: Displayed in braille when an invalid entry has been made.
+	controlTypes.STATE_INVALID_ENTRY: _("invalid"),
+	# Translators: Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+	controlTypes.STATE_MULTILINE: _("mln"),
 	# Translators: Displayed in braille when an object is clickable.
 	controlTypes.STATE_CLICKABLE: _("clk"),
+	# Translators: Displayed in braille when an object is sorted ascending.
+	controlTypes.STATE_SORTED_ASCENDING: _("sorted asc"),
+	# Translators: Displayed in braille when an object is sorted descending.
+	controlTypes.STATE_SORTED_DESCENDING: _("sorted desc"),
+	# Translators: Displayed in braille when an object (usually a graphic) has a long description.
+	controlTypes.STATE_HASLONGDESC: _("ldesc"),
+	# Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+	controlTypes.STATE_HASFORMULA: _("frml"),
+	# Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+	controlTypes.STATE_HASCOMMENT: _("cmnt"),
 }
 negativeStateLabels = {
-	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-	controlTypes.STATE_CHECKED: _("( )"),
+	# Translators: Displayed in braille when an object is not selected.
+	controlTypes.STATE_SELECTED: _("nsel"),
+	# Displayed in braille when an object (e.g. a toggle button) is not pressed.
+	controlTypes.STATE_PRESSED: u"⢎⣀⡱",
+	# Displayed in braille when an object (e.g. a check box) is not checked.
+	controlTypes.STATE_CHECKED: u"⣏⣀⣹",
 }
 
 landmarkLabels = {
 	# Translators: Displayed in braille for the banner landmark, normally found on web pages.
-	"banner": _("bnnr"),
+	"banner": pgettext("braille landmark abbreviation", "bnnr"),
 	# Translators: Displayed in braille for the complementary landmark, normally found on web pages.
-	"complementary": _("cmpl"),
+	"complementary": pgettext("braille landmark abbreviation", "cmpl"),
 	# Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
-	"contentinfo": _("cinf"),
+	"contentinfo": pgettext("braille landmark abbreviation", "cinf"),
 	# Translators: Displayed in braille for the main landmark, normally found on web pages.
-	"main": _("main"),
+	"main": pgettext("braille landmark abbreviation", "main"),
 	# Translators: Displayed in braille for the navigation landmark, normally found on web pages.
-	"navigation": _("navi"),
+	"navigation": pgettext("braille landmark abbreviation", "navi"),
 	# Translators: Displayed in braille for the search landmark, normally found on web pages.
-	"search": _("srch"),
+	"search": pgettext("braille landmark abbreviation", "srch"),
 	# Translators: Displayed in braille for the form landmark, normally found on web pages.
-	"form": _("form"),
+	"form": pgettext("braille landmark abbreviation", "form"),
 	# Strictly speaking, region isn't a landmark, but it is very similar.
 	# Translators: Displayed in braille for a significant region, normally found on web pages.
-	"region": _("rgn"),
+	"region": pgettext("braille landmark abbreviation", "rgn"),
 }
 
 #: Cursor shapes
@@ -409,17 +236,49 @@ CURSOR_SHAPES = (
 )
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
+#: Unicode braille indicator at the start of untranslated braille input.
+INPUT_START_IND = u"⣏"
+#: Unicode braille indicator at the end of untranslated braille input.
+INPUT_END_IND = u" ⣹"
+
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
 
+#: Identifier for a focus context presentation setting that
+#: only shows as much as possible focus context information when the context has changed.
+CONTEXTPRES_CHANGEDCONTEXT = "changedContext"
+#: Identifier for a focus context presentation setting that
+#: shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+CONTEXTPRES_FILL = "fill"
+#: Identifier for a focus context presentation setting that
+#: always shows the object with focus at the very left of the braille display.
+CONTEXTPRES_SCROLL = "scroll"
+#: Focus context presentations associated with their user readable and translatable labels
+focusContextPresentations=[
+	# Translators: The label for a braille focus context presentation setting that
+	# only shows as much as possible focus context information when the context has changed.
+	(CONTEXTPRES_CHANGEDCONTEXT, _("Fill display for context changes")),
+	# Translators: The label for a braille focus context presentation setting that
+	# shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+	# This was the pre NVDA 2017.3 default.
+	(CONTEXTPRES_FILL, _("Always fill display")),
+	# Translators: The label for a braille focus context presentation setting that
+	# always shows the object with focus at the very left of the braille display
+	# (i.e. you will have to scroll back for focus context information).
+	(CONTEXTPRES_SCROLL, _("Only when scrolling back")),
+]
+
+#: Named tuple for a region with start and end positions in a buffer
+RegionWithPositions = namedtuple("RegionWithPositions",("region","start","end"))
+
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
-	role = obj.role
-	states = obj.states
-	return (issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo)
-		or role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL)
-		or controlTypes.STATE_EDITABLE in states
-		or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY not in obj.states))
+	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
+		# #1711: Flat review (using displayModel) should always be presented on the braille display
+		return True
+	else:
+		# Let the NVDAObject choose if the text should be presented
+		return obj._hasNavigableText
 
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
@@ -515,7 +374,7 @@ class Region(object):
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
-			[os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"]),
+			[os.path.join(brailleTables.TABLES_DIR, config.conf["braille"]["translationTable"]),
 				"braille-patterns.cti"],
 			text,
 			# liblouis mutates typeform if it is a list.
@@ -661,6 +520,9 @@ def getBrailleTextForProperties(**propertyValues):
 		except KeyError:
 			log.debugWarning("Aria-current value not handled: %s"%current)
 			textList.append(controlTypes.isCurrentLabels[True])
+	placeholder = propertyValues.get('placeholder', None)
+	if placeholder:
+		textList.append(placeholder)
 	if includeTableCellCoords and  cellCoordsText:
 		textList.append(cellCoordsText)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
@@ -686,7 +548,15 @@ class NVDAObjectRegion(Region):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
 		role = obj.role
-		text = getBrailleTextForProperties(name=obj.name, role=role, roleText=obj.roleText, current=obj.isCurrent,
+		placeholderValue = obj.placeholder
+		if placeholderValue and not obj._isTextEmpty:
+			placeholderValue = None
+		text = getBrailleTextForProperties(
+			name=obj.name,
+			role=role,
+			roleText=obj.roleText,
+			current=obj.isCurrent,
+			placeholder=placeholderValue,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -730,6 +600,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	states = field.get("states", set())
 	value=field.get('value',None)
 	current=field.get('current', None)
+	placeholder=field.get('placeholder', None)
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
@@ -760,7 +631,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":current}
+			"states": states,"value":value, "current":current, "placeholder":placeholder}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -792,7 +663,19 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field, isAtStart, formatConfig):
+def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
+	"""Generates the braille text for the given format field.
+	@param field: The format field to examine.
+	@type field: {str : str, ...}
+	@param fieldCache: The format field of the previous run; i.e. the cached format field.
+	@type fieldCache: {str : str, ...}
+	@param isAtStart: True if this format field precedes any text in the line/paragraph.
+	This is useful to restrict display of information which should only appear at the start of the line/paragraph;
+	e.g. the line number or line prefix (list bullet/number).
+	@type isAtStart: bool
+	@param formatConfig: The formatting config.
+	@type formatConfig: {str : bool, ...}
+	"""
 	textList = []
 	if isAtStart:
 		if formatConfig["reportLineNumber"]:
@@ -808,6 +691,13 @@ def getFormatFieldBraille(field, isAtStart, formatConfig):
 				# Translators: Displayed in braille for a heading with a level.
 				# %s is replaced with the level.
 				textList.append(_("h%s")%headingLevel)
+	if formatConfig["reportLinks"]:
+		link=field.get("link")
+		oldLink=fieldCache.get("link")
+		if link and link != oldLink:
+			textList.append(roleLabels[controlTypes.ROLE_LINK])
+	fieldCache.clear()
+	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 class TextInfoRegion(Region):
@@ -828,19 +718,9 @@ class TextInfoRegion(Region):
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
-	def _getCursor(self):
-		"""Retrieve the collapsed cursor.
-		This should be the start or end of the selection returned by L{_getSelection}.
-		@return: The cursor.
-		"""
-		try:
-			return self.obj.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
-
 	def _getSelection(self):
 		"""Retrieve the selection.
-		The start or end of this should be the cursor returned by L{_getCursor}.
+		If there is no selection, retrieve the collapsed cursor.
 		@return: The selection.
 		@rtype: L{textInfos.TextInfo}
 		"""
@@ -869,8 +749,8 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addFieldText(self, text, contentPos):
-		if self.rawText:
+	def _addFieldText(self, text, contentPos, separate=True):
+		if separate and self.rawText:
 			# Separate this field text from the rest of the text.
 			text = TEXT_SEPARATOR + text
 		self.rawText += text
@@ -882,6 +762,7 @@ class TextInfoRegion(Region):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
 		typeform = louis.plain_text
+		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
 				self._isFormatFieldAtStart = False
@@ -916,7 +797,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
+					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -959,6 +840,7 @@ class TextInfoRegion(Region):
 			# We only render fields that aren't at the start of their nodes for the first part of the reading unit.
 			# Otherwise, we'll render fields that have already been rendered.
 			self._skipFieldsNotAtStartOfNode = True
+		info.obj._brailleFormatFieldAttributesCache = formatFieldAttributesCache
 
 	def _getReadingUnit(self):
 		return textInfos.UNIT_PARAGRAPH if config.conf["braille"]["readByParagraph"] else textInfos.UNIT_LINE
@@ -966,19 +848,6 @@ class TextInfoRegion(Region):
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
 		unit = self._getReadingUnit()
-		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
-		# so use the original cursor TextInfo for line and copy for cursor.
-		self._readingInfo = readingInfo = self._getCursor()
-		cursor = readingInfo.copy()
-		# Get the reading unit at the cursor.
-		readingInfo.expand(unit)
-		# Get the selection.
-		sel = self._getSelection()
-		# Restrict the selection to the reading unit at the cursor.
-		if sel.compareEndPoints(readingInfo, "startToStart") < 0:
-			sel.setEndPoint(readingInfo, "startToStart")
-		if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
-			sel.setEndPoint(readingInfo, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
 		self.cursorPos = None
@@ -989,8 +858,33 @@ class TextInfoRegion(Region):
 		self.selectionStart = self.selectionEnd = None
 		self._isFormatFieldAtStart = True
 		self._skipFieldsNotAtStartOfNode = False
-
 		self._endsWithField = False
+
+		# Selection has priority over cursor.
+		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
+		# and copying the TextInfo breaks this ability.
+		# So use the original TextInfo for line and a copy for cursor/selection.
+		self._readingInfo = readingInfo = self._getSelection()
+		sel = readingInfo.copy()
+		if not sel.isCollapsed:
+			# There is a selection.
+			if self.obj.isTextSelectionAnchoredAtStart:
+				# The end of the range is exclusive, so make it inclusive first.
+				readingInfo.move(textInfos.UNIT_CHARACTER, -1, "end")
+			# Collapse the selection to the unanchored end.
+			readingInfo.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
+			# Get the reading unit at the selection.
+			readingInfo.expand(unit)
+			# Restrict the selection to the reading unit.
+			if sel.compareEndPoints(readingInfo, "startToStart") < 0:
+				sel.setEndPoint(readingInfo, "startToStart")
+			if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
+				sel.setEndPoint(readingInfo, "endToEnd")
+		else:
+			# There is a cursor.
+			# Get the reading unit at the cursor.
+			readingInfo.expand(unit)
+
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
 		# First, the chunk from the start of the reading unit to the start of the selection.
@@ -998,12 +892,24 @@ class TextInfoRegion(Region):
 		chunk.collapse()
 		chunk.setEndPoint(sel, "endToStart")
 		self._addTextWithFields(chunk, formatConfig)
+		# If the user is entering braille, place any untranslated braille before the selection.
+		# Import late to avoid circular import.
+		import brailleInput
+		text = brailleInput.handler.untranslatedBraille
+		if text:
+			rawInputIndStart = len(self.rawText)
+			# _addFieldText adds text to self.rawText and updates other state accordingly.
+			self._addFieldText(INPUT_START_IND + text + INPUT_END_IND, None, separate=False)
+			rawInputIndEnd = len(self.rawText)
+		else:
+			rawInputIndStart = None
 		# Now, the selection itself.
 		self._addTextWithFields(sel, formatConfig, isSelection=True)
 		# Finally, get the chunk from the end of the selection to the end of the reading unit.
 		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
+
 		# Strip line ending characters.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f")
 		rawTextLen = len(self.rawText)
@@ -1024,20 +930,53 @@ class TextInfoRegion(Region):
 			self._rawToContentPos.append(self._currentContentPos)
 		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
 			self.cursorPos = rawTextLen - 1
+		# The selection end doesn't have to be checked, Region.update() makes sure brailleSelectionEnd is valid.
 
 		# If this is not the start of the object, hide all previous regions.
-		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		start = readingInfo.obj.makeTextInfo(textInfos.POSITION_FIRST)
 		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
-		# If this is a multiline control, position it at the absolute left of the display when focused.
-		self.focusToHardLeft = self._isMultiline()
+		# Don't touch focusToHardLeft if it is already true
+		# For example, it can be set to True in getFocusContextRegions when this region represents the first new focus ancestor
+		# Alternatively, BrailleHandler._doNewObject can set this to True when this region represents the focus object and the focus ancestry didn't change
+		if not self.focusToHardLeft:
+			# If this is a multiline control, position it at the absolute left of the display when focused.
+			self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
+		if rawInputIndStart is not None:
+			assert rawInputIndEnd is not None, "rawInputIndStart set but rawInputIndEnd isn't"
+			# These are the start and end of the untranslated input area,
+			# including the start and end indicators.
+			self._brailleInputIndStart = self.rawToBraillePos[rawInputIndStart]
+			self._brailleInputIndEnd = self.rawToBraillePos[rawInputIndEnd]
+			# These are the start and end of the actual untranslated input, excluding indicators.
+			self._brailleInputStart = self._brailleInputIndStart + len(INPUT_START_IND)
+			self._brailleInputEnd = self._brailleInputIndEnd - len(INPUT_END_IND)
+			self.brailleCursorPos = self._brailleInputStart + brailleInput.handler.untranslatedCursorPos
+		else:
+			self._brailleInputIndStart = None
+
 	def routeTo(self, braillePos):
+		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
+			# The user is moving within untranslated braille input.
+			if braillePos < self._brailleInputStart:
+				# The user routed to the start indicator. Route to the start of the input.
+				braillePos = self._brailleInputStart
+			elif braillePos > self._brailleInputEnd:
+				# The user routed to the end indicator. Route to the end of the input.
+				braillePos = self._brailleInputEnd
+			# Import late to avoid circular import.
+			import brailleInput
+			brailleInput.handler.untranslatedCursorPos = braillePos - self._brailleInputStart
+			self.brailleCursorPos = self._brailleInputStart + brailleInput.handler.untranslatedCursorPos
+			brailleInput.handler.updateDisplay()
+			return
+
 		if braillePos == self.brailleCursorPos:
 			# The cursor is already at this position,
 			# so activate the position.
 			try:
-				self._getCursor().activate()
+				self._getSelection().activate()
 			except NotImplementedError:
 				pass
 			return
@@ -1105,10 +1044,8 @@ class ReviewTextInfoRegion(TextInfoRegion):
 
 	allowPageTurns=False
 
-	def _getCursor(self):
+	def _getSelection(self):
 		return api.getReviewPosition().copy()
-
-	_getSelection = _getCursor
 
 	def _setCursor(self, info):
 		api.setReviewPosition(info)
@@ -1159,7 +1096,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		start = 0
 		for region in self.visibleRegions:
 			end = start + len(region.brailleCells)
-			yield region, start, end
+			yield RegionWithPositions(region, start, end)
 			start = end
 
 	def bufferPosToRegionPos(self, bufferPos):
@@ -1206,12 +1143,27 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return endPos
 
 	def _set_windowEndPos(self, endPos):
+		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
+		1. Braille display size.
+		2. Whether one of the regions should be shown hard left on the braille display;
+			i.e. because of The configuration setting for focus context representation 
+			or whether the braille region that corresponds with the focus represents a multi line edit box.
+		3. Whether word wrap is enabled."""
 		startPos = endPos - self.handler.displaySize
-		# Get the last region currently displayed.
-		region, regionPos = self.bufferPosToRegionPos(endPos - 1)
-		if region.focusToHardLeft:
-			# Only scroll to the start of this region.
-			restrictPos = endPos - regionPos - 1
+		# Loop through the currently displayed regions in reverse order
+		# If focusToHardLeft is set for one of the regions, the display shouldn't scroll further back than the start of that region
+		for region, regionStart, regionEnd in reversed(list(self.regionsWithPositions)):
+			if regionStart<endPos:
+				if region.focusToHardLeft:
+					# Only scroll to the start of this region.
+					restrictPos = regionStart
+					break
+				elif config.conf["braille"]["focusContextPresentation"]!=CONTEXTPRES_CHANGEDCONTEXT:
+					# We aren't currently dealing with context change presentation
+					# thus, we only need to consider the last region
+					# since it doesn't have focusToHardLeftSet, the window start position isn't restricted
+					restrictPos = 0
+					break
 		else:
 			restrictPos = 0
 		if startPos <= restrictPos:
@@ -1284,7 +1236,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
 		self.windowStartPos = pos
-		if region.focusToHardLeft:
+		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_SCROLL:
 			return
 		end = self.windowEndPos
 		if end - pos < self.handler.displaySize:
@@ -1401,16 +1353,28 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 			newAncestorsStart = 1
 		# Yield the common regions.
 		for region in oldFocusRegions[0:commonRegionsEnd]:
+			# We are setting focusToHardLeft to False for every cached region.
+			# This is necessary as BrailleHandler._doNewObject checks focusToHardLeft on every region
+			# and sets it to True for the first focus region if the context didn't change.
+			# If we don't do this, BrailleHandler._doNewObject can't set focusToHardLeft properly.
+			region.focusToHardLeft = False
 			yield region
 	else:
 		# Fetch all ancestors.
 		newAncestorsStart = 1
 
+	focusToHardLeftSet = False
 	for index, parent in enumerate(ancestors[newAncestorsStart:ancestorsEnd], newAncestorsStart):
 		if not parent.isPresentableFocusAncestor:
 			continue
 		region = NVDAObjectRegion(parent, appendText=TEXT_SEPARATOR)
 		region._focusAncestorIndex = index
+		if config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT and not focusToHardLeftSet:
+			# We are presenting context changes to the user
+			# Thus, only scroll back as far as the start of the first new focus ancestor
+			# focusToHardLeftSet is used since the first new ancestor isn't always represented by a region
+			region.focusToHardLeft = True
+			focusToHardLeftSet = True
 		region.update()
 		yield region
 
@@ -1591,7 +1555,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			cells[self._cursorPos] |= config.conf["braille"]["cursorShape"]
+			if self.tether == self.TETHER_FOCUS:
+				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeFocus"]
+			else:
+				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeReview"]
 		self._writeCells(cells)
 
 	def _blink(self):
@@ -1678,15 +1645,24 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _doNewObject(self, regions):
 		self.mainBuffer.clear()
+		focusToHardLeftSet = False
 		for region in regions:
+			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
+				# Check focusToHardLeft for every region.
+				# If noone of the regions has focusToHardLeft set to True, set it for the first focus region.
+				if region.focusToHardLeft:
+					focusToHardLeftSet = True
+				elif not focusToHardLeftSet and getattr(region, "_focusAncestorIndex", None) is None:
+					# Going to display a new object with the same ancestry as the previously displayed object.
+					# So, set focusToHardLeft on this region
+					# For example, this applies when you are in a list and start navigating through it
+					region.focusToHardLeft = True
+					focusToHardLeftSet = True
 			self.mainBuffer.regions.append(region)
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
@@ -1718,14 +1694,22 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region.update()
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
-		if region.brailleCursorPos is not None:
-			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		elif region.brailleSelectionStart is not None:
-			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		self.scrollToCursorOrSelection(region)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
+
+	def scrollToCursorOrSelection(self, region):
+		if region.brailleCursorPos is not None:
+			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif not isinstance(region, TextInfoRegion) or not region.obj.isTextSelectionAnchoredAtStart:
+			# It is unknown where the selection is anchored, or it is anchored at the end.
+			if region.brailleSelectionStart is not None:
+				self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+		elif region.brailleSelectionEnd is not None:
+			# The selection is anchored at the start.
+			self.mainBuffer.scrollTo(region, region.brailleSelectionEnd - 1)
 
 	# #6862: The value change of a progress bar change often goes together with changes of other objects in the dialog,
 	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
@@ -1852,7 +1836,7 @@ def initialize():
 	log.info("Using liblouis version %s" % louis.version())
 	# #6140: Migrate to new table names as smoothly as possible.
 	oldTableName = config.conf["braille"]["translationTable"]
-	newTableName = RENAMED_TABLES.get(oldTableName)
+	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
@@ -1879,10 +1863,10 @@ def terminate():
 class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	"""Abstract base braille display driver.
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
-	
+
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
-	
+
 	Drivers should dispatch input such as presses of buttons, wheels or other controls using the L{inputCore} framework.
 	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
 	These gestures can be mapped in L{gestureMap}.

@@ -32,6 +32,7 @@ import speechViewer
 import winUser
 import api
 import guiHelper
+import winVersion
 
 try:
 	import updateCheck
@@ -253,6 +254,9 @@ class MainFrame(wx.Frame):
 	def onDocumentFormattingCommand(self,evt):
 		self._popupSettingsDialog(DocumentFormattingDialog)
 
+	def onUwpOcrCommand(self, evt):
+		self._popupSettingsDialog(UwpOcrDialog)
+
 	def onSpeechSymbolsCommand(self, evt):
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
@@ -367,6 +371,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to open Document Formatting settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change settings of document properties")) 
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
+		if winVersion.isUwpOcrAvailable():
+			# Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+			item = menu_preferences.Append(wx.ID_ANY, _("Windows 10 OCR..."))
+			self.Bind(wx.EVT_MENU, frame.onUwpOcrCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Default speech dictionary dialog.
@@ -872,7 +880,8 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 
 	def done(self):
 		self.timer.Stop()
-		if self.IsActive():
+		pbConf = config.conf["presentation"]["progressBarUpdates"]
+		if pbConf["progressBarOutputMode"] in ("beep", "both") and (pbConf["reportBackgroundProgressBars"] or self.IsActive()):
 			tones.beep(1760, 40)
 		self.Hide()
 		self.Destroy()

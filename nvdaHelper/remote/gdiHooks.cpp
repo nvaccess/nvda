@@ -499,7 +499,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.italic=logFont.lfItalic?true:false;
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
-		if (prevColor != CLR_INVALID && GetBkMode(hdc) == TRANSPARENT) {
+		if (prevColor != CLR_INVALID) {
 			formatInfo.backgroundColor=prevColor;
 		} else {
 			formatInfo.backgroundColor=GetBkColor(hdc);
@@ -546,7 +546,10 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-	COLORREF prevColor = GetPixel(hdc, x, y);
+	COLORREF prevColor = CLR_INVALID;
+	if (GetBkMode(hdc) == TRANSPARENT) {
+		prevColor = GetPixel(hdc, x, y);
+	}
 	//Call the real function
 	BOOL res;
 	{
@@ -730,7 +733,10 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-	COLORREF prevColor = GetPixel(hdc, x, y);
+	COLORREF prevColor = CLR_INVALID;
+	if (GetBkMode(hdc) == TRANSPARENT) {
+		prevColor = GetPixel(hdc, x, y);
+	}
 	//Call the real function
 	BOOL res;
 	{

@@ -23,9 +23,17 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
-		ariaCurrent = attrs.get("IAccessible2::attribute_current")
-		if ariaCurrent != None:
-			attrs['current']= ariaCurrent
+		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
+			attrVal=attrs.get(attr)
+			if attrVal is not None:
+				attrs[attr]=int(attrVal)
+
+		current = attrs.get("IAccessible2::attribute_current")
+		if current is not None:
+			attrs['current']= current
+		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
+		if placeholder is not None:
+			attrs['placeholder']= placeholder
 		accRole=attrs['IAccessible::role']
 		accRole=int(accRole) if accRole.isdigit() else accRole
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
@@ -116,14 +124,15 @@ class Gecko_ia2(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in root.states:
+		if not winUser.isWindow(root.windowHandle):
 			return False
 		try:
-			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IA2UniqueID):
-				return False
-		except:
-			return False
-		return True
+			isDefunct=bool(root.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_DEFUNCT)
+		except COMError:
+			# If IAccessible2 states can not be fetched at all, defunct should be assumed as the object has clearly been disconnected or is dead
+			isDefunct=True
+		return not isDefunct
+
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
@@ -207,6 +216,7 @@ class Gecko_ia2(VirtualBuffer):
 			attrs=[
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]},
+				{"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1],"parent::IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[None]},
 			]
 		elif nodeType=="list":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
@@ -215,7 +225,10 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]}
+			attrs=[
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]},
+				{"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1],"parent::IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[None]},
+			]
 		elif nodeType=="frame":
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_INTERNAL_FRAME]}
 		elif nodeType=="separator":
@@ -257,12 +270,20 @@ class Gecko_ia2(VirtualBuffer):
 			return nextHandler()
 	event_scrollingStart.ignoreIsReady = True
 
+	# NVDA exposes IAccessible2 table interface row and column numbers as table-physicalrownumber and table-physicalcolumnnumber respectively.
+	# These should be used when navigating the physical table (I.e. these values should be provided to the table interfaces).
+	# The presentational table-columnnumber and table-rownumber attributes are normally duplicates of the physical ones, but are overridden  by the values of aria-rowindex and aria-colindex if present.
+	navigationalTableRowNumberAttributeName="table-physicalrownumber"
+	navigationalTableColumnNumberAttributeName="table-physicalcolumnnumber"
+
 	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
 		docHandle = self.rootDocHandle
 		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
 		try:
 			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
 			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			if cell.IA2Attributes.get('hidden'):
+				raise LookupError("Found hidden cell") 
 			return self.makeTextInfo(cell)
 		except (COMError, RuntimeError):
 			raise LookupError

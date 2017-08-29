@@ -417,9 +417,13 @@ the NVDAObject for IAccessible
 		# Some special cases.
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
-		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO") and self.windowControlID==18:
-			from winword import SpellCheckErrorField
-			clsList.append(SpellCheckErrorField)
+		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO"):
+			if self.windowControlID==18:
+				from winword import SpellCheckErrorField
+				clsList.append(SpellCheckErrorField)
+			else:
+				from winword import WordDocument_WwN
+				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
@@ -770,7 +774,8 @@ the NVDAObject for IAccessible
 		if role==0:
 			try:
 				role=self.IAccessibleObject.accRole(self.IAccessibleChildID)
-			except COMError:
+			except COMError as e:
+				log.debugWarning("accRole failed: %s" % e)
 				role=0
 		return role
 
@@ -1022,6 +1027,8 @@ the NVDAObject for IAccessible
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0], IAccessibleChildID=child[1]))
 
 	def _get_IA2Attributes(self):
+		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
+			return {}
 		try:
 			attribs = self.IAccessibleObject.attributes
 		except COMError as e:
@@ -1035,7 +1042,7 @@ the NVDAObject for IAccessible
 		# We currently only care about changes to the accessible drag and drop attributes, which we map to states, so treat this as a stateChange.
 		self.event_stateChange()
 
-	def _get_rowNumber(self):
+	def _get_IA2PhysicalRowNumber(self):
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
@@ -1052,7 +1059,15 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::rowIndex failed", exc_info=True)
 		raise NotImplementedError
 
-	def _get_columnNumber(self):
+	def _get_rowNumber(self):
+		index=self.IA2Attributes.get('rowindex')
+		if index is None and isinstance(self.parent,IAccessible):
+			index=self.parent.IA2Attributes.get('rowindex')
+		if index is None:
+			index=self.IA2PhysicalRowNumber
+		return index
+
+	def _get_IA2PhysicalColumnNumber(self):
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
@@ -1069,7 +1084,13 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::columnIndex failed", exc_info=True)
 		raise NotImplementedError
 
-	def _get_rowCount(self):
+	def _get_columnNumber(self):
+		index=self.IA2Attributes.get('colindex')
+		if index is None:
+			index=self.IA2PhysicalColumnNumber
+		return index
+
+	def _get_IA2PhysicalRowCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
 			try:
 				return self.IAccessibleTableObject.nRows
@@ -1077,13 +1098,25 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::nRows failed", exc_info=True)
 		raise NotImplementedError
 
-	def _get_columnCount(self):
+	def _get_rowCount(self):
+		count=self.IA2Attributes.get('rowcount')
+		if count is None:
+			count=self.IA2PhysicalRowCount
+		return count
+
+	def _get_IA2PhysicalColumnCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
 			try:
 				return self.IAccessibleTableObject.nColumns
 			except COMError:
 				log.debugWarning("IAccessibleTable::nColumns failed", exc_info=True)
 		raise NotImplementedError
+
+	def _get_columnCount(self):
+		count=self.IA2Attributes.get('colcount')
+		if count is None:
+			count=self.IA2PhysicalColumnCount
+		return count
 
 	def _get__IATableCell(self):
 		# Permanently cache the result.

@@ -4,13 +4,12 @@
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
-# formatul pentru regulă este:
-# identificator	expresie regulată
-# Pentru sfârșit de propoziție
+# identifier	regexp
+# Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Pentru delimitări de frază
+# Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
@@ -20,8 +19,7 @@ in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)-(?=[ $£€¥.]?\d)
 
 symbols:
-# formatul pentru regulă este:
-# identificator	înlocuire[[	nivel][	păstrează]][	# nume afișat]
+# identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	punct	all	always	# . sfârșit de propoziție
@@ -37,7 +35,7 @@ negative number	minus	none	norep	# - înaintea unei cifre
 # Whitespace
 \0	nul	# caracterul vid
 \t	tab
-\n	trecere linie nouă
+\n	linie nouă
 \f	întrerupere pagină
 \r	linie nouă
  	spațiu
@@ -63,7 +61,7 @@ $	dolar
 ,	virgulă
 -	cratimă
 .	punct
-/	bară
+/	bară oblică
 :	două puncte
 ;	punct și virgulă
 <	mai mic
@@ -73,7 +71,7 @@ $	dolar
 @	a rond
 [	paranteză pătrată deschisă
 ]	paranteză pătrată închisă
-\\	bară oblică
+\\	bară oblică inversă
 ^	circumflex
 _	liniuță joasă
 `	accent grav
@@ -169,3 +167,20 @@ _	liniuță joasă
 ⊃	superset a lui
 ⊆	submulțime sau egală cu
 ⊇	superset sau egal cu
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	o șeptime	none
+⅑	o noime	none
+⅒	o zecime	none
+⅓	o treime	none
+⅔	două treimi	none
+⅕	o cincime	none
+⅖	două cincimi	none
+⅗	trei cinciminone
+⅘	patru cincimi	none
+⅙	o șesime	none
+⅚	cinci șesimi	none
+⅛	o optime	none
+⅜	trei optimi	none
+⅝	cinci optimi	none
+⅞	șapte optimi	none
