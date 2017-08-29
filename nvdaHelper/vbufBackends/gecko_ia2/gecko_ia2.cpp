@@ -414,6 +414,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		LOG_DEBUG(L"pacc->get_states failed");
 		IA2States=0;
 	}
+	// Remove state_editible from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec. 
+	if(IA2States&IA2_STATE_EDITABLE&&role==ROLE_SYSTEM_TABLE) {
+			IA2States-=IA2_STATE_EDITABLE;
+	}
 	//Add each state that is on, as an attrib
 	for(int i=0;i<32;++i) {
 		int state=1<<i;
