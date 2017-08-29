@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-09 00:10+1000\n"
-"PO-Revision-Date: 2017-06-13 21:35-0700\n"
+"POT-Creation-Date: 2017-08-14 08:17+1000\n"
+"PO-Revision-Date: 2017-08-15 09:01+0900\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "보안 desktop"
+msgstr "보안 데스크탑"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -97,37 +97,42 @@ msgid "Error in appModule %s"
 msgstr "응용모듈 %s에서 오류 발생"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "베너"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "complementary"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
-msgstr "컨텐츠 정보"
+msgstr "content info"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "main"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "navigation"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "검색"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "form"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "구역"
 
@@ -146,15 +151,431 @@ msgstr "음성 및 소리 출력시 도킹"
 msgid "Always duck"
 msgstr "도킹 사용"
 
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "wnd"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "chk"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "rbtn"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "edt"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "btn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "mnubar"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "mnuitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "cbo"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "gra"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "hlp"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "tltip"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "lnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "tv"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "tvitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "tabctl"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "prgbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "scrlbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "stbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "tbl"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "tlbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "drbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "bqt"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "doc"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "app"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "grp"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "embedded"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "enote"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "fnote"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "term"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "sect"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "tgbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "splbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "mnubtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "spnbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "tvbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "pnl"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "pwdedt"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "sel"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "ro"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "submnu"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "req"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "invalid"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "mln"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "clk"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "sorted asc"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "sorted desc"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "ldesc"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "frml"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "cmnt"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "nsel"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "bnnr"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "cmpl"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "cinf"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "main"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "navi"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "srch"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "form"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "7-8점"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "8점"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "점자 셀 전체"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "포커스 이동시 출력"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "항상 세부 내용 출력"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "뒤로 스크롤시에만 출력"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "h%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "vlnk"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "%s 해제"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} / {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "lv %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "r%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "c%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "%s 끝"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "자동 연결"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "dot"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "space with dot"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "스페이스"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "점자 키보드"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "space with any dots"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "any dots"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "아랍어 1종"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Farsi 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -185,6 +606,11 @@ msgstr "웨일즈어 2종"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "체코어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "덴마크어 8점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -228,6 +654,12 @@ msgstr "독일어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Greek (Greece)"
+msgstr "그리스어 (그리스) 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "영어 (영국) 8점 컴퓨터 점자"
 
@@ -240,6 +672,16 @@ msgstr "영어 (영국) 1종"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "영어 (영국) 2종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "영어 (통합) 점자 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "영어 (통합) 점자 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -280,6 +722,16 @@ msgstr "에스토니아어 0종 점자"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "에티오피아어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "페르시아어 8점 컴퓨터 점자"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "페르시아어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -335,11 +787,6 @@ msgstr "구자라트어 1종"
 #. braille settings dialog.
 msgid "Koine Greek"
 msgstr "코 이네 그리스어"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "그리스어 (그리스) 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -410,6 +857,11 @@ msgstr "한국어 2종 (약자)"
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
 msgstr "카시미르어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian"
+msgstr "리투아니아어"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -538,8 +990,13 @@ msgstr "슬로바키아어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
-msgstr "슬라브어 1종"
+msgid "Slovenian 8 dot computer braille"
+msgstr "슬로베니아어 8점 컴퓨터 점자"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
+msgstr "슬로베니아어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -563,13 +1020,8 @@ msgstr "터키어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "영어 (통합) 점자 1종"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "영어 (통합) 점자 2종"
+msgid "Unicode braille"
+msgstr "Unicode 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -580,226 +1032,6 @@ msgstr "중국어 (홍콩, 광동어)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "중국어 (타이완, 북경어)"
-
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "edt"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "lst"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "mnubar"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "mnu"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "btn"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "chk"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "rbtn"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "cbo"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "lnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "dlg"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "tv"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tb"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "gra"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "sel"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "submnu"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "ro"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "clk"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
-msgid "bnnr"
-msgstr "bnnr"
-
-#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
-msgid "cmpl"
-msgstr "cmpl"
-
-#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
-msgid "cinf"
-msgstr "cinf"
-
-#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
-msgid "navi"
-msgstr "navi"
-
-#. Translators: Displayed in braille for the search landmark, normally found on web pages.
-msgid "srch"
-msgstr "srch"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-#, fuzzy
-msgid "rgn"
-msgstr "구역"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "7-8점"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "8점"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "점자 셀 전체"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "h%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "vlnk"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "%s 해제"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} / {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "lv %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "%s 끝"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "자동 연결"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "braille"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "space with dot"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "dot"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "스페이스"
 
 msgid "Focus mode"
 msgstr "포커스 모드"
@@ -1269,6 +1501,22 @@ msgstr "이전 주석으로 이동합니다"
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
 msgstr "이전 주석 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "다음 문자 오류로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "다음 문자 오류 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "이전 문자 오류로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "이전 문자 오류 없음"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1793,6 +2041,10 @@ msgstr "시계"
 msgid "separator"
 msgstr "구분선"
 
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "form"
+
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
 msgstr "헤딩"
@@ -1861,7 +2113,7 @@ msgstr "박스"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
-msgstr "그루핑"
+msgstr "그룹"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
@@ -2141,8 +2393,9 @@ msgid "bold"
 msgstr "bold"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
-msgstr "이텔릭"
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "italic"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2228,7 +2481,7 @@ msgstr "선택됨"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "반만 선택됨"
+msgstr "일부 선택됨"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -2346,7 +2599,7 @@ msgstr "수식 있음"
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "주석 있음"
+msgstr "메모 있음"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
@@ -2368,13 +2621,13 @@ msgstr "잠금 해제됨"
 msgid "not selected"
 msgstr "선택 안됨"
 
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "해제됨"
-
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
 msgstr "눌리지 않음"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "해제됨"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -3347,9 +3600,8 @@ msgid "Quits NVDA!"
 msgstr "NVDA를 종료합니다!"
 
 #. Translators: Input help mode message for restart NVDA command.
-#, fuzzy
 msgid "Restarts NVDA!"
-msgstr "NVDA 재시작"
+msgstr "NVDA를 재시작합니다!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3673,6 +3925,17 @@ msgstr "점자와 %s 커서 연계됨"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "점자디스플레이가 포커스 또는 리뷰 위치를 딸아갈 것인지 토글합니다. "
 
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "점자로 포커스 세부 내용 출력: %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "포커스된 객체의 세부 내용이 점자로 전달되는 방법을 변경합니다"
+
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
 msgstr "점자 커서 해제"
@@ -3786,6 +4049,18 @@ msgstr "점자 키보드를 사용하여 텍스트를 입력합니다."
 msgid "Moves the braille display to the current focus"
 msgstr "점자 디스플레이를 포커스된 객체로 이동합니다"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "이전 입력된 글자를 지웁니다"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr "엔터키를 누르는 동시에 입력된 점형을 텍스트로 변환합니다"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "입력된 점형을 텍스트로 변환합니다"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "플러그인 재등록됨"
@@ -3844,6 +4119,15 @@ msgstr "수학 아님"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "수학 컨텐츠 탐색을 시작합니다"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "윈도우 10 OCR 사용할 수 없음"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr "윈도우 10 OCR 기능을 사용하여 탐색 객체 컨텐츠를 인식합니다"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4270,102 +4554,97 @@ msgstr "%s 커서"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "10-point star"
-msgstr ""
+msgstr "포인트가 10개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "12-point star"
-msgstr ""
+msgstr "포인트가 12개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "16-point star"
-msgstr ""
+msgstr "포인트가 16개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "24-point star"
-msgstr ""
+msgstr "포인트가 24개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "32-point star"
-msgstr ""
+msgstr "포인트가 32개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "4-point star"
-msgstr ""
+msgstr "포인트가 4개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "5-point star"
-msgstr ""
+msgstr "포인트가 5개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "6-point star"
-msgstr ""
+msgstr "포인트가 6개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "7-point star"
-msgstr ""
+msgstr "포인트가 7개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "8-point star"
-msgstr ""
+msgstr "포인트가 8개인 별"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Arc"
-msgstr "아랍어"
+msgstr "p:원호  x:호"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Balloon"
-msgstr "도움말 풍선"
+msgstr "풍선"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bent arrow"
-msgstr "왼쪽 화살표"
+msgstr "굽은 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bent Up Arrow"
-msgstr "왼쪽 화살표"
+msgstr "위로 굽은 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bevel"
-msgstr "레벨"
+msgstr "빗면"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Block arc"
-msgstr ""
+msgstr "막힌 원호"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4398,7 +4677,7 @@ msgstr "기호"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chevron"
-msgstr ""
+msgstr "갈매기형 수장"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4410,7 +4689,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Circular Arrow"
-msgstr ""
+msgstr "원형 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4423,7 +4702,7 @@ msgstr "커서 모양: (&S)"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cloud callout"
-msgstr ""
+msgstr "구름 모양 설명선"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4448,14 +4727,13 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cube"
-msgstr ""
+msgstr "큐브"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Down Arrow"
-msgstr "아래쪽 화살표"
+msgstr "아래로 구부러진 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4468,21 +4746,19 @@ msgstr "베너"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Curved Left Arrow"
-msgstr ""
+msgstr "왼쪽으로 구부러진 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Right Arrow"
-msgstr "오른쪽 화살표"
+msgstr "오른쪽으로 구부러진 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Up Arrow"
-msgstr "윗쪽 화살표"
+msgstr "위로 구부러진 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4494,11 +4770,10 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Decagon"
-msgstr ""
+msgstr "십각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Diagonal stripe"
 msgstr "대각선 줄무늬"
@@ -4507,7 +4782,7 @@ msgstr "대각선 줄무늬"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Diamond"
-msgstr ""
+msgstr "다이아몬드형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4519,30 +4794,28 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Donut"
-msgstr ""
+msgstr "도넛"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double brace"
-msgstr ""
+msgstr "양쪽 중괄호"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Double bracket"
-msgstr "두번 {action}"
+msgstr "양쪽 대괄호"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double wave"
-msgstr ""
+msgstr "이중 물결"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Down Arrow"
 msgstr "아래쪽 화살표"
@@ -4551,13 +4824,13 @@ msgstr "아래쪽 화살표"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr ""
+msgstr "설명선: 위쪽/아래쪽 화살표(&U)"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Explosion"
-msgstr ""
+msgstr "폭발"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4740,7 +5013,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Folded corner"
-msgstr ""
+msgstr "모서리가 접힌 도형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4753,7 +5026,7 @@ msgstr "직각 그라데이션"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Funnel"
-msgstr ""
+msgstr "깔때기"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4777,36 +5050,34 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heart"
-msgstr ""
+msgstr "하트"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heptagon"
-msgstr ""
+msgstr "칠각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Hexagon"
-msgstr ""
+msgstr "육각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Horizontal scroll"
-msgstr "가로 줄"
+msgstr "가로로 말린 두루마리 모양"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Isosceles triangle"
-msgstr ""
+msgstr "이등변 삼각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left Arrow"
 msgstr "왼쪽 화살표"
@@ -4819,17 +5090,15 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left brace"
-msgstr "왼쪽 맞춤"
+msgstr "왼쪽 중괄호"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left bracket"
-msgstr "왼쪽 버튼 클릭"
+msgstr "왼쪽 대괄호"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4877,16 +5146,15 @@ msgstr "왼쪽 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Lightning bolt"
-msgstr "오른쪽 alt"
+msgstr "번개"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line Callout"
-msgstr ""
+msgstr "설명선"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5029,7 +5297,7 @@ msgstr "기호 추가"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Moon"
-msgstr ""
+msgstr "달"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5053,31 +5321,31 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Octagon"
-msgstr ""
+msgstr "팔각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval"
-msgstr ""
+msgstr "타원"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr ""
+msgstr "타원형 모양의 설명선"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Parallelogram"
-msgstr ""
+msgstr "평행 사변형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Pentagon"
-msgstr ""
+msgstr "오각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5095,7 +5363,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque"
-msgstr ""
+msgstr "배지"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5117,21 +5385,18 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Rectangle"
-msgstr "선택가능"
+msgstr "직사각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Rectangular callout"
-msgstr "직각 그라데이션"
+msgstr "사각형 설명선"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right Arrow"
 msgstr "오른쪽 화살표"
@@ -5140,28 +5405,25 @@ msgstr "오른쪽 화살표"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr ""
+msgstr "설명선: 왼쪽/오른쪽 화살표(&L)"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right brace"
-msgstr "오른쪽 맞춤"
+msgstr "오른쪽 중괄호"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right bracket"
-msgstr "오른쪽 버튼 클릭"
+msgstr "오른쪽 대괄호"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right triangle"
-msgstr "오른쪽 맞춤"
+msgstr "직각 삼각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5185,7 +5447,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rounded rectangle"
-msgstr ""
+msgstr "모서리가 둥근 직사각형"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5197,7 +5459,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Smiley face"
-msgstr ""
+msgstr "웃는 얼굴"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5239,14 +5501,13 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sun"
-msgstr ""
+msgstr "해, 태양, sun"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved arrow"
-msgstr "윗쪽 화살표"
+msgstr "구부러진 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5258,14 +5519,13 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid"
-msgstr ""
+msgstr "사다리꼴"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Up Arrow"
-msgstr "윗쪽 화살표"
+msgstr "위쪽 화살표"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5293,88 +5553,81 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Vertical scroll"
-msgstr "세로 줄"
+msgstr "세로로 말린 두루마리 모양"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Wave"
-msgstr ""
+msgstr "물결"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Back"
-msgstr ""
+msgstr "뒤로"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Beginning"
-msgstr "사용 중"
+msgstr "시작"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Document"
 msgstr "문서"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "End"
-msgstr "엔드"
+msgstr ", 종료"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Next"
-msgstr ""
+msgstr "다음"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Help"
-msgstr "도움말 (&H)"
+msgstr "도움말"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Home"
-msgstr ""
+msgstr "홈"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Information"
-msgstr "추가 기능 정보"
+msgstr "정보"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Movie"
-msgstr ""
+msgstr "동영상"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Return"
-msgstr ""
+msgstr "RETURN"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Sound"
-msgstr "sound"
+msgstr "소리"
 
 #. Translators: The description of the NVDA service.
 msgid ""
@@ -5646,10 +5899,6 @@ msgstr "강조 없음"
 msgid "no bold"
 msgstr "볼드 없음"
 
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "italic"
-
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "이탤릭 없음"
@@ -5680,7 +5929,7 @@ msgstr "및줄 없음"
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
 msgid "baseline"
-msgstr "baseline"
+msgstr "기본 글꼴"
 
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
@@ -6160,6 +6409,10 @@ msgstr "포커스와 화면 탐색 객체를 다음 행으로 이동합니다. "
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "포커스와 화면 탐색 객체를 이전 행으로 이동합니다. "
 
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "검색 결과"
+
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "입력 구성"
@@ -6293,34 +6546,33 @@ msgstr "읽지 않음"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-#, fuzzy
 msgid "purple flag"
-msgstr "보라"
+msgstr "보라색 플래그"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Orange flag"
-msgstr ""
+msgstr "주황색 플래그"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Green flag"
-msgstr ""
+msgstr "녹색 플래그"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Yellow flag"
-msgstr ""
+msgstr "노란색 플래그"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Blue flag"
-msgstr ""
+msgstr "파란색 플래그"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Red flag"
-msgstr ""
+msgstr "빨간색 플래그"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -6403,75 +6655,75 @@ msgstr "만약 주석이 있을 경우 이를 읽어줍니다. "
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "제목 개체 틀"
+msgstr "제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
-msgstr "텍스트 개체 틀"
+msgstr "텍스트 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
-msgstr "중앙 제목 자리 표시자"
+msgstr "중앙 제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
-msgstr "부제목 개체 틀"
+msgstr "부제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Title placeholder"
-msgstr "Vertical Title placeholder"
+msgstr "세로 제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Text placeholder"
-msgstr "세로 텍스트 개체 틀"
+msgstr "세로 텍스트 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Object placeholder"
-msgstr "개체 자리 표시자"
+msgstr "개체 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "차트 개체 틀"
+msgstr "차트 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
-msgstr "Bitmap placeholder"
+msgstr "비트맵 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Media Clip placeholder"
-msgstr "Media Clip placeholder"
+msgstr "미디어 클립 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Org Chart placeholder"
+msgstr "조직도 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
-msgstr "표 개체 틀"
+msgstr "표 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "슬라이드 번호 개체 틀"
+msgstr "슬라이드 번호 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
-msgstr "머리글 개체 틀"
+msgstr "머리글 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Footer placeholder"
-msgstr "바닥글 개체 틀"
+msgstr "바닥글 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Date placeholder"
-msgstr "날짜 개체 틀"
+msgstr "날짜 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Object placeholder"
-msgstr "Vertical Object placeholder"
+msgstr "세로 개체 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Picture placeholder"
-msgstr "그림 개체 틀"
+msgstr "그림 삽입"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
@@ -6534,7 +6786,7 @@ msgstr "header item"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 왼쪽 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 왼쪽 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 #, python-brace-format
@@ -6544,7 +6796,7 @@ msgstr "{otherShape}의 왼쪽 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 위 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 위 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6554,7 +6806,7 @@ msgstr "{otherShape}의 위 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 오른쪽 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 오른쪽 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6564,7 +6816,7 @@ msgstr "{otherShape}의 오른쪽 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 아래 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 아래 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6574,12 +6826,12 @@ msgstr "{otherShape}의 아래 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers  {otherShape}"
-msgstr "{otherShape} 커버함"
+msgstr "{otherShape} 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind {otherShape}"
-msgstr "behind {otherShape}에 가려짐"
+msgstr "{otherShape} 가려짐"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 #, python-brace-format
@@ -6725,6 +6977,7 @@ msgstr "Baum/HumanWare/APH/Orbit 디스플레이"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Serial: {portName}"
@@ -6783,6 +7036,39 @@ msgstr "베이펀마이어 브레일렉스 구형 모델"
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "Seika"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "인식 결과"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "커서에 위치한 객체를 활성화합니다"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "문자 인식 창을 닫습니다"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "문자 인식 창이 포커스되어 있음"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "컨텐츠 보이지 않음"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "인식 중"
+
+msgid "Recognition failed"
+msgstr "인식 실패"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -6910,6 +7196,10 @@ msgstr "문서 서식 알림 (&F)..."
 
 msgid "Change settings of document properties"
 msgstr "문서 속성 출력을 설정합니다. "
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "Windows 10 OCR..."
+msgstr "윈도우 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7062,7 +7352,6 @@ msgstr "종료 (&X)"
 msgid "Exit NVDA"
 msgstr "NVDA 종료"
 
-#, fuzzy
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
@@ -7078,7 +7367,7 @@ msgstr ""
 "또한 Caps럭키를 NVDA키로 사용하도록 설정할 수도 있습니다.\n"
 "언제나 NVDA키와 n을 함께 누르면 NVDA 메뉴를 활성화 시킬 수 있습니다.\n"
 "이 메뉴를 통해서 NVDA 환경 설정, 도움말 호출 등 여러 기능들에 접근하실 수 있"
-"습니다.\n"
+"습니다."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -7099,9 +7388,8 @@ msgid "&Keyboard layout:"
 msgstr "키보드 레이아웃 (&K)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "Caps럭을 NVDA 기능키로 사용"
+msgstr "Caps럭을 NVDA 기능키로 사용 (&U)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -7109,9 +7397,8 @@ msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "윈도우 로그인 후 NVDA 자동 실행 (&A)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
 msgid "&Show this dialog when NVDA starts"
-msgstr "NVDA 실행때 이 창 띄우기"
+msgstr "NVDA 실행때 이 창 띄우기 (&S)"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -8147,6 +8434,11 @@ msgstr "배경에 있는 진행율 알림"
 msgid "Report dynamic &content changes"
 msgstr "자동 변경된 컨텐츠 알림 (&C)"
 
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "검색 결과 나타날때 사운드로 알림 (&A)"
+
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
 msgstr "브라우즈 모드"
@@ -8380,6 +8672,14 @@ msgstr "클릭가능 요소 (&C)"
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr "커서 이동시 서식 변경 알림 (속도 저하 가능성 있음)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "윈도우 10 OCR"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "문자 인식 언어 (&L)"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "무제한 (&A)"
@@ -8500,25 +8800,27 @@ msgstr "점자 커서 깜박이"
 msgid "Cursor blink rate (ms)"
 msgstr "커서 깜박이 시간 (ms) (&C)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "커서 모양: (&S)"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "포커스 커서 모양 (&F)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "리뷰 커서 모양 (&R)"
 
 # The translation literally reads, "message alert display time". Borrowed from
 # Braille Sense user guide.
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#, fuzzy
 msgid "Message &timeout (sec)"
-msgstr "알림 메시지 출력 시간 "
+msgstr "알림 메시지 출력 시간(초) (&T)"
 
 #. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
 msgid "Show &messages indefinitely"
 msgstr "점자 메시지를 영구적으로 표시 (&M)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#, fuzzy
 msgid "B&raille tethered to:"
-msgstr "점자 연계 커서"
+msgstr "점자 연계 커서 (&R)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -8527,6 +8829,10 @@ msgstr "문단 단위로 읽기 (&P)"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "가능하면 단어 끊지않고 출력 (&W)"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "포커스 세부 내용 출력:"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -8630,6 +8936,10 @@ msgstr "안 함"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "음성 속도 부스트 (&T)"
+
+#. Translators: Description for a speech synthesizer.
+msgid "Windows OneCore voices"
+msgstr "Windows OneCore"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -9459,12 +9769,12 @@ msgstr "{axisName} 축 {axisTitle}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
-msgstr ""
+msgstr "차트 내 1 개의 계열"
 
 #. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
-msgstr ""
+msgstr "차트 내 %d 개의 계열"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #, python-brace-format
@@ -9797,7 +10107,7 @@ msgid "cell merge"
 msgstr "셀 병합"
 
 msgid "Comments"
-msgstr "Comments"
+msgstr "메모"
 
 msgid "Endnotes"
 msgstr "미주"
@@ -9833,6 +10143,11 @@ msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{description} {revisionType}: {text}; 저자: {author}; 날짜: {date}"
+
+#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "철자: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -9978,27 +10293,25 @@ msgstr "Subscript"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Baseline"
-msgstr "Baseline"
+msgstr "기본 글꼴"
 
 #. Translators: a message reported when a paragraph is moved below another paragraph
 #, python-format
 msgid "Moved below %s"
-msgstr ""
+msgstr "%s 아래로 이동"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
-#, fuzzy
 msgid "Moved below blank paragraph"
-msgstr "문단 단위로 읽기 (&P)"
+msgstr "1줄 아래로 이동"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
 #, python-format
 msgid "Moved above %s"
-msgstr ""
+msgstr "%s 위로 이동"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
-#, fuzzy
 msgid "Moved above blank paragraph"
-msgstr "문단 단위로 읽기 (&P)"
+msgstr "1줄 위로 이동"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
@@ -10043,7 +10356,7 @@ msgstr "{offset:.3g} 피카"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "No comments"
-msgstr "주석 없음"
+msgstr "메모 없음"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -10071,6 +10384,12 @@ msgstr "테이블 아님"
 msgid "&Annotations"
 msgstr "주석 (&A)"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&errors"
+msgstr "오류"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
@@ -10079,5 +10398,29 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
 
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr "프로필을 제거하시겠습니까? 이 엑션은 되돌릴 수 없습니다."
+#~ msgid "tb"
+#~ msgstr "tb"
+
+#~ msgid "-----"
+#~ msgstr "-----"
+
+#~ msgid "(x)"
+#~ msgstr "(x)"
+
+#~ msgid "(-)"
+#~ msgstr "(-)"
+
+#~ msgid "( )"
+#~ msgstr "( )"
+
+#~ msgid "Farsi grade 1"
+#~ msgstr "Farsi 1종"
+
+#~ msgid "Slovene grade 1"
+#~ msgstr "슬라브어 1종"
+
+#~ msgid "ITALIC"
+#~ msgstr "이텔릭"
+
+#~ msgid "Cursor &shape:"
+#~ msgstr "커서 모양: (&S)"

@@ -592,38 +592,77 @@ You can configure braille using the [Braille Settings dialog #BrailleSettings].
 In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
 
 || Abbreviation | Control type |
+| app | application |
+| bqt | block quote |
 | btn | button |
+| drbtn | drop down button |
+| spnbtn | spin button |
+| splbtn | split button |
+| tgbtn | toggle button |
 | cbo | combo box |
 | chk | checkbox |
 | dlg | dialog |
+| doc | document |
 | edt | editable text field |
+| pwdedt | password edit |
+| embedded | embedded object |
+| enote | end note |
+| fnote | foot note |
 | gra | graphic |
-| cN | table column number n, e.g. c1, c2. |
-| rN | table row number n, e.g. r1, r2. |
+| grp | grouping |
 | hN | heading at level n, e.g. h1, h2. |
+| hlp | help baloon |
+| lmk | landmark |
 | lnk | link |
 | vlnk | visited link |
 | lst | list |
-| lmk | landmark |
 | mnu | menu |
 | mnubar | menu bar |
+| mnubtn | menu button |
+| mnuitem | menu item |
+| pnl | panel |
+| prgbar | progress bar |
 | rbtn | radio button |
-| tb | table |
-| tv | treeview |
+| scrlbar | scroll bar |
+| sect | section |
+| stbar | status bar |
+| tabctl | tab control |
+| tbl | table |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| term | terminal |
+| tlbar | tool bar |
+| tltip | tool tip |
+| tv | tree view |
+| tvbtn | tree view button |
+| tvitem | tree view item |
 | lv N | a tree view item has a hierarchical level N|
-| ``-----`` | separator |
+| wnd | window |
+| ⠤⠤⠤⠤⠤ | separator |
 
 The following state indicators are also defined:
 || Abbreviation | Control state |
 | ... | displayed when an object supports autocompletion |
-| ( ) | displayed when an object (e.g. a checkbox) is not checked |
-| (x) | displayed when an object (e.g. a checkbox) is checked |
-| (-) | displayed when an object (e.g. a checkbox) is half checked |
+| ⢎⣿⡱ | displayed when an object (e.g. a toggle button) is pressed |
+| ⢎⣀⡱ | displayed when an object (e.g. a toggle button) is not pressed |
+| ⣏⣿⣹ | displayed when an object (e.g. a checkbox) is checked |
+| ⣏⣸⣹ | displayed when an object (e.g. a checkbox) is half checked |
+| ⣏⣀⣹ | displayed when an object (e.g. a checkbox) is not checked |
 | - | displayed when an object (e.g. a tree view item) is collapsible |
 | + | displayed when an object (e.g. a tree view item) is Expandable |
+| *** | displayed when a protected control or document is encountered |
 | clk | displayed when an object is clickable |
+| cmnt | displayed when there is a comment for a spreadsheet cell or piece of text in a document |
+| frml | displayed when there is a formula on a spreadsheet cell |
+| invalid | displayed when an invalid entry has been made |
+| ldesc | displayed when an object (usually a graphic) has a long description |
+| mln | displayed when an edit field allows typing multiple lines of text such as comment fields on websites |
+| req | displayed when a required form field is encountered |
 | ro | displayed when an object (e.g. an editable text field) is read-only |
 | sel | displayed when an object is selected |
+| nsel | displayed when an object is not selected |
+| sorted asc | displayed when an object is sorted ascending |
+| sorted desc | displayed when an object is sorted descending |
 | submnu | displayed when an object has a popup (usually a sub-menu) |
 
 Finally, the following abbreviations for landmarks are defined:
@@ -650,6 +689,31 @@ For example, if you are using a braille code that begins numbers with a number s
 Pressing dot 7 erases the last entered braille cell or character.
 Dot 8 translates any braille input and presses the enter key.
 Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
+%kc:endInclude
+
++ Content Recognition +
+When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
+NVDA supports the optical character recognition (OCR) functionality built into Windows 10 to recognize text from images.
+Additional content recognizers can be provided in NVDA add-ons.
+
+When you use a content recognition command, NVDA recognizes content from the current [navigator object #ObjectNavigation].
+By default, the navigator object follows the system focus or browse mode cursor, so you can usually just move the focus or browse mode cursor where desired.
+For example, if you move the browse mode cursor to a graphic, recognition will recognize content from the graphic by default.
+However, you may wish to use object navigation directly to, for example, recognize the content of an entire application window.
+
+Once recognition is complete, the result will be presented in a document similar to browse mode, allowing you to read the information with cursor keys, etc.
+Pressing enter or space will activate (normally click) the text at the cursor if possible.
+Pressing escape dismisses the recognition result.
+
+++ Windows 10 OCR ++[Win10Ocr]
+Windows 10 includes OCR for many languages.
+NVDA can use this to recognize text from images or inaccessible applications.
+
+You can set the language to use for text recognition in the [Windows 10 OCR #Win10OcrSettings] settings dialog.
+Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
+
+%kc:beginInclude
+To recognize the text in the current navigator object using Windows 10 OCR, press NVDA+r.
 %kc:endInclude
 
 + Application Specific Features +
@@ -1034,13 +1098,18 @@ It applies to the system caret and review cursor, but not to the selection indic
 ==== Blink Cursor ====
 This option allows the braille cursor to blink.
 If blinking is turned off, the braille cursor will constantly be in the "up" position.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 ==== Cursor Blink Rate (ms) ====
 This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
 
-==== Cursor Shape ====
-This option allows you to choose the shape (dot pattern) of the braille cursor.
-The selection indicator is not affected by this option.
+==== Cursor Shape for Focus ====
+This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to focus.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
+
+==== Cursor Shape for Review ====
+This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
@@ -1073,6 +1142,32 @@ If this is disabled, as much of the word as possible will be displayed, but the 
 When you scroll the display, you will then be able to read the rest of the word.
 
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+
+==== Focus context presentation ====
+This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
+Context information refers to the hierarchy of objects containing the focus.
+For example, when you focus a list item, this list item is part of a list.
+This list might be contained by a dialog, etc.
+Please consult the section about [object navigation #ObjectNavigation] for more information about the hierarchy that applies to objects in NVDA.
+
+When set to fill display for context changes, NVDA will try to display as much context information as possible on the braille display, but only for the parts of the context that have changed.
+For the example above, this means that when changing focus to the list, NVDA will show the list item on the braille display.
+Furthermore, if there is enough space left on the braille display, NVDA will try to show that the list item is part of a list.
+If you then start moving through the list with your arrow keys, it is assumed that you are aware that you are still in the list.
+Thus, for the remaining list items you focus, NVDA will only show the focused list item on the display.
+In order for you to read the context again (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+
+When this option is set to always fill the display, NVDA will try to show as much context information as possible on the braille display, regardless of whether you have seen the same context information before.
+This has the advantage that NVDA will fit as much information as possible on the display.
+However, the downside is that there is always a difference in the position where the focus starts on the braille display.
+This can make it difficult to skim a long list of items, for example, as you will need to continually move your finger to find the start of the item.
+This was the default behavior for NVDA 2017.2 and before.
+
+When you set the focus context presentation option to only show the context information when scrolling back, NVDA never shows context information on your braille display by default.
+Thus, in the example above, NVDA will display that you focused a list item.
+However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+
+To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 +++ Keyboard Settings (NVDA+control+k) +++
 This dialog box is found in the Preferences menu, under "Keyboard settings...".
@@ -1384,6 +1479,12 @@ The Report line indentation with combo box has four options.
 The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
 - Both Speech and Tones: This option reads indentation using both of the above methods.
 -
+
++++ Windows 10 OCR Settings +++[Win10OcrSettings]
+This dialog can be accessed from the NVDA Preferences menu and allows you to configure [Windows 10 OCR #Win10Ocr].
+
+==== Recognition language ====
+This combo box allows you to choose the language to be used for text recognition.
 
 +++ Speech dictionaries +++
 The speech dictionaries menu (found in the Preferences menu) contains dialogs that allow you to manage the way NVDA pronounces particular words or phrases.
@@ -2298,6 +2399,16 @@ Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/
 | Toggle braille tethered to | A |
 %kc:endInclude
 
+++ SuperBraille ++
+The SuperBraille device, mostly available in Taiwan, can be connected to by either USB or serial.
+As the SuperBraille does not have any physical typing keys or scrolling buttons, all input must be performed via a standard computer keyboard.
+Due to this, and to maintain compatibility with other screen readers in Taiwan, two key bindings for scrolling the braille display have been provided:
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | numpadMinus |
+| Scroll braille display forward | numpadPlus | 
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://www.brltty.com/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://www.brltty.com/download.html].
@@ -2361,7 +2472,7 @@ Following are the command line options for NVDA:
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
 
-++ System wide parameters++[SystemWideParameters]
+++ System Wide Parameters ++[SystemWideParameters]
 NVDA allows some values to be set in the system registry which alter the system wide behavior of NVDA.
 These values are stored in the registry under one of the following keys:
 - 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"

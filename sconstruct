@@ -382,7 +382,11 @@ env.Clean('devDocs', [devGuide, devDocs_nvda])
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
-	[f for pattern in ("*.py", "*.pyw", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
+	[f for pattern in ("*.py", "*.pyw", r"*\*.py", r"*\*\*.py")
+		for f in env.Glob(os.path.join(sourceDir.path, pattern))
+		# Exclude comInterfaces, since these don't contain translatable strings
+		# and they cause unknown encoding warnings.
+		if not f.path.startswith("source\\comInterfaces\\")],
 	makePot)
 
 env.Alias("pot", pot)

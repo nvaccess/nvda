@@ -5,7 +5,7 @@
 > A quick summary of the problem you are trying to solve.
 
 ### Description of how this pull request fixes the issue:
-> Please include a quick discussion of how this this change addresses the issue. Please also include any links or external information you may have used in order to address the issue. This helps others to have the same background as you and learn from this work.
+> Please include a quick discussion of how this change addresses the issue. Please also include any links or external information you may have used in order to address the issue. This helps others to have the same background as you and learn from this work.
 
 ### Testing performed:
 

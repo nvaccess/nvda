@@ -4,13 +4,12 @@
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
-# formatul pentru regulă este:
-# identificator	expresie regulată
-# Pentru sfârșit de propoziție
+# identifier	regexp
+# Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Pentru delimitări de frază
+# Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
@@ -20,8 +19,7 @@ in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)-(?=[ $£€¥.]?\d)
 
 symbols:
-# formatul pentru regulă este:
-# identificator	înlocuire[[	nivel][	păstrează]][	# nume afișat]
+# identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	punct	all	always	# . sfârșit de propoziție
@@ -37,7 +35,7 @@ negative number	minus	none	norep	# - înaintea unei cifre
 # Whitespace
 \0	nul	# caracterul vid
 \t	tab
-\n	trecere linie nouă
+\n	linie nouă
 \f	întrerupere pagină
 \r	linie nouă
  	spațiu

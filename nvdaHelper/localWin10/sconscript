@@ -59,7 +59,9 @@ localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
 	source=[
 		env['projectResFile'],
+		'utils.cpp',
 		'oneCoreSpeech.cpp',
+		'uwpOcr.cpp',
 	],
 	LIBS=["oleaut32", localLib[2]],
 )

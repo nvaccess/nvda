@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -16,6 +16,7 @@ import eventHandler
 from displayModel import DisplayModelTextInfo
 import baseObject
 import speech
+import ui
 import api
 import textInfos.offsets
 import config
@@ -168,6 +169,16 @@ class NVDAObject(baseObject.ScriptableObject):
 	#: The TextInfo class this object should use to provide access to text.
 	#: @type: type; L{textInfos.TextInfo}
 	TextInfo=NVDAObjectTextInfo
+
+	#: Indicates if the text selection is anchored at the start.
+	#: The anchored position is the end that doesn't move when extending or shrinking the selection.
+	#: For example, if you have no selection and you press shift+rightArrow to select the next character,
+	#: this will be True.
+	#: In contrast, if you have no selection and you press shift+leftArrow to select the previous character,
+	#: this will be False.
+	#: If the selection is anchored at the end or there is no information this is C{False}.
+	#: @type: bool
+	isTextSelectionAnchoredAtStart=True
 
 	@classmethod
 	def findBestAPIClass(cls,kwargs,relation=None):
@@ -794,7 +805,7 @@ Tries to force this object to take the focus.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
 		@rtype: bool
 		"""
-		if self.presentationType == self.presType_layout:
+		if self.presentationType in (self.presType_layout, self.presType_unavailable):
 			return False
 		if self.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
 			return False
@@ -828,6 +839,13 @@ Tries to force this object to take the focus.
 		log.debug("Potential unimplemented child class: %r" %self)
 		return None
 
+	def _get_landmark(self):
+		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
+		@return: ARIA landmark role else None
+		@rtype: String or None
+		"""
+		return None
+
 	def _reportErrorInPreviousWord(self):
 		try:
 			# self might be a descendant of the text control; e.g. Symphony.
@@ -853,6 +871,14 @@ Tries to force this object to take the focus.
 			return
 		import nvwave
 		nvwave.playWaveFile(r"waves\textError.wav")
+
+	def event_liveRegionChange(self):
+		"""
+		A base implementation for live region change events.
+		"""
+		name=self.name
+		if name:
+			ui.message(name)
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
@@ -1119,3 +1145,18 @@ This code is executed if a gain focus event is received by this object.
 	#: The language/locale of this object.
 	#: @type: basestring
 	language = None
+
+	def _get__hasNavigableText(self):
+		# The generic NVDAObjectTextInfo by itself is never enough to be navigable
+		if self.TextInfo is NVDAObjectTextInfo:
+			return False
+		role = self.role
+		states = self.states
+		if role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT):
+			# Edit fields, terminals and documents  are always navigable
+			return True
+		elif controlTypes.STATE_EDITABLE in states:
+			# Anything that is specifically editable is navigable
+			return True
+		else:
+			return False

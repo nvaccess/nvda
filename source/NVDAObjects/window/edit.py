@@ -823,7 +823,6 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 		if eventHandler.isPendingEvents('valueChange',self):
 			self.hasContentChangedSinceLastSelection=True
 		super(Edit,self).event_caret()
-		self.detectPossibleSelectionChange()
 
 	def event_valueChange(self):
 		self.event_textChange()
