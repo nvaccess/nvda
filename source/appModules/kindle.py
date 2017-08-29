@@ -284,7 +284,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			try:
 				field["mathMl"] = obj.mathMl
 			except LookupError:
-				mathMl = None
+				pass
 		return field
 
 	def getMathMl(self, field):
