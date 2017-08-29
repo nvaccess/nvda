@@ -399,8 +399,4 @@ env.Alias("symbolsArchive", symbolsArchive)
 
 env.Default(dist)
 
-if "tests" in COMMAND_LINE_TARGETS:
-	target = env.SConscript("tests/unit/sconscript", exports=["env"])
-	env.Depends(target, sourceDir)
-	env.AlwaysBuild(target)
-	tests = env.Alias("tests", target)
+env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
