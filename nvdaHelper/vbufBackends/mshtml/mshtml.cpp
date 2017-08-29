@@ -1021,7 +1021,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	// Whether the name is the content of this node.
 	bool nameIsContent = (IARole == ROLE_SYSTEM_LINK || IARole == ROLE_SYSTEM_PUSHBUTTON || IARole == ROLE_SYSTEM_MENUITEM || IARole == ROLE_SYSTEM_GRAPHIC || IARole == ROLE_SYSTEM_PAGETAB
 		|| ariaRole == L"heading" || (nodeName[0] == L'H' && iswdigit(nodeName[1]))
-		|| nodeName == L"OBJECT" || nodeName == L"APPLET" || IARole == ROLE_SYSTEM_APPLICATION || IARole == ROLE_SYSTEM_DIALOG);
+		|| nodeName == L"OBJECT" || nodeName == L"APPLET" || (!isRoot && (IARole == ROLE_SYSTEM_APPLICATION || IARole == ROLE_SYSTEM_DIALOG)));
 	// True if the name definitely came from the author.
 	bool nameFromAuthor=false;
 
