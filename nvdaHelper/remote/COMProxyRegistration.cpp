@@ -174,17 +174,14 @@ bool unregisterCOMProxy(COMProxyRegistration_t* reg) {
 		res=CoRegisterPSClsid(backup.iid,backup.clsid);
 		if(res!=S_OK) {
 			LOG_ERROR(L"Error registering backup PSClsid for interface "<<(backup.name)<<L" from "<<(reg->dllPath)<<L", code "<<res);
-			return false;
 		}
 		LOG_DEBUG(L"Unregistered interface "<<(backup.name));
 	}
 	res=CoRevokeClassObject((DWORD)(reg->classObjectRegistrationCookie));
 	if(res!=S_OK) {
 		LOG_ERROR(L"Error unregistering class object from "<<(reg->dllPath)<<L", code "<<res);
-		return false;
 	}
 	LOG_DEBUG(L"Done unregistering proxy "<<(reg->dllPath));
 	delete reg;
 	return true;
 }
-
