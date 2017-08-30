@@ -384,6 +384,12 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		self.rootIdentifiers[self.rootDocHandle, self.rootID] = self
 
 	def prepare(self):
+		if not self.rootNVDAObject.appModule.helperLocalBindingHandle:
+			# #5758: If NVDA starts with a document already in focus, there will have been no focus event to inject nvdaHelper yet.
+			# So at very least don't try to prepare a virtualBuffer as it will fail.
+			# The user will most likely need to manually move focus away and back again to allow this virtualBuffer to work. 
+			log.debugWarning("appModule has no binding handle to injected code, can't prepare virtualBuffer yet.")
+			return
 		self.shouldPrepare=False
 		self.loadBuffer()
 
