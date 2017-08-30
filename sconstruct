@@ -1,6 +1,6 @@
 ###
 #This file is a part of the NVDA project.
-#URL: http://www.nvaccess.org/
+#URL: https://www.nvaccess.org/
 #Copyright 2010-2017 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
@@ -372,7 +372,7 @@ devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	"--quiet", "--html", "--include-log", "--no-frames",
 	"--name", "NVDA", "--url", "http://www.nvaccess.org/",
 	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
-	"config", "globalPlugins", "gui", "mathPres", "NVDAObjects",
+	"config", "contentRecog", "globalPlugins", "gui", "mathPres", "NVDAObjects",
 	"synthDrivers", "textInfos", "virtualBuffers",
 ]])
 
