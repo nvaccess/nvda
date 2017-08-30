@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2014-2017 NV Access Limited.
+#Copyright (C) 2014-2017 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -42,6 +42,7 @@ for target in (tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFil
 proxyDll=env.COMProxyDll(
 	target='ISimpleDOM',
 	source=[iidSourceFile,proxySourceFile,dlldataSourceFile],
+	# This CLSID must be unique to this dll. A new one can be generated with import comtypes; comtypes.GUID.create_new()
 	proxyClsid="{435E0FC9-344B-41D4-88DD-4CAAD499ACE5}",
 )
 
