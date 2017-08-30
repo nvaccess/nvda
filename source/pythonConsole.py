@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2013 NV Access Limited
+#Copyright (C) 2008-2017 NV Access Limited
 
 import watchdog
 
@@ -249,7 +249,9 @@ class ConsoleUI(wx.Frame):
 		if self.completionAmbiguous:
 			menu = wx.Menu()
 			for comp in completions:
-				item = menu.Append(wx.ID_ANY, comp)
+				# Only show text after the last dot (so as to not keep repeting the class or module in the context menu)
+				label=comp.rsplit('.',1)[-1]
+				item = menu.Append(wx.ID_ANY, label)
 				self.Bind(wx.EVT_MENU,
 					lambda evt, completion=comp: self._insertCompletion(original, completion),
 					item)

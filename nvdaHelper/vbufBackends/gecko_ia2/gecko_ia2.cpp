@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2013 NV Access Limited
+Copyright 2007-2016 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -78,13 +78,18 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 template<typename TableType> inline void fillTableCounts(VBufStorage_controlFieldNode_t* node, IAccessible2* pacc, TableType* paccTable) {
 	wostringstream s;
 	long count = 0;
+	// Fetch row and column counts and add them as two sets of attributes on this vbuf node.
+	// The first set: table-physicalrowcount and table-physicalcolumncount represent the physical topology of the table and can be used programmatically to understand table limits.
+	// The second set: table-rowcount and table-columncount are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTable->get_nRows(&count) == S_OK) {
 		s << count;
+		node->addAttribute(L"table-physicalrowcount", s.str());
 		node->addAttribute(L"table-rowcount", s.str());
 		s.str(L"");
 	}
 	if (paccTable->get_nColumns(&count) == S_OK) {
 		s << count;
+		node->addAttribute(L"table-physicalcolumncount", s.str());
 		node->addAttribute(L"table-columncount", s.str());
 	}
 }
@@ -99,12 +104,14 @@ inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer
 	unk->Release();
 	if (res != S_OK || !acc)
 		return 0;
-	int docHandle, id;
-	if (acc->get_windowHandle((HWND*)&docHandle) != S_OK
+	HWND docHwnd;
+	int id;
+	if (acc->get_windowHandle(&docHwnd) != S_OK
 			|| acc->get_uniqueID((long*)&id) != S_OK) {
 		acc->Release();
 		return 0;
 	}
+	const int docHandle = HandleToUlong(docHwnd);
 	VBufStorage_controlFieldNode_t* node = tableBuffer->getControlFieldNodeWithIdentifier(docHandle, id);
 	if (!node) {
 		acc->Release();
@@ -126,11 +133,17 @@ inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAcc
 	long cellIndex = _wtoi(cellIndexStr.c_str());
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
+	// Fetch row and column extents and add them as attributes on this node.
+	// for rowNumber and columnNumber, store these as two sets of attributes.
+	// The first set: table-physicalrownumber and table-physicalcolumnnumber represent the physical topology of the table and can be used programmatically to fetch other table cells with IAccessibleTable etc.
+	// The second set: table-rownumber and table-columnnumber are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		s << row + 1;
+		node->addAttribute(L"table-physicalrownumber", s.str());
 		node->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
 		s << column + 1;
+		node->addAttribute(L"table-physicalcolumnnumber", s.str());
 		node->addAttribute(L"table-columnnumber", s.str());
 		if (columnExtents > 1) {
 			s.str(L"");
@@ -150,21 +163,22 @@ inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTa
 	wostringstream s;
 	IUnknown** headerCells;
 	long nHeaderCells;
-	IAccessible2* headerCellPacc = NULL;
-	int headerCellDocHandle, headerCellID;
 
 	if ((paccTableCell->*getHeaderCells)(&headerCells, &nHeaderCells) == S_OK && headerCells) {
 		for (int hci = 0; hci < nHeaderCells; hci++) {
+			IAccessible2* headerCellPacc = NULL;
 			if (headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)&headerCellPacc) != S_OK) {
 				headerCells[hci]->Release();
 				continue;
 			}
 			headerCells[hci]->Release();
-			if (headerCellPacc->get_windowHandle((HWND*)&headerCellDocHandle) != S_OK) {
+			HWND hwnd;
+			if (headerCellPacc->get_windowHandle(&hwnd) != S_OK) {
 				headerCellPacc->Release();
 				continue;
 			}
-			headerCellDocHandle = HandleToUlong(findRealMozillaWindow((HWND)UlongToHandle(headerCellDocHandle)));
+			const int headerCellDocHandle = HandleToUlong(findRealMozillaWindow(hwnd));
+			int headerCellID;
 			if (headerCellPacc->get_uniqueID((long*)&headerCellID) != S_OK) {
 				headerCellPacc->Release();
 				continue;
@@ -183,11 +197,17 @@ inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFi
 
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
+	// Fetch row and column extents and add them as attributes on this node.
+	// for rowNumber and columnNumber, store these as two sets of attributes.
+	// The first set: table-physicalrownumber and table-physicalcolumnnumber represent the physical topology of the table and can be used programmatically to fetch other table cells with IAccessibleTable etc.
+	// The second set: table-rownumber and table-columnnumber are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		s << row + 1;
+		node->addAttribute(L"table-physicalrownumber", s.str());
 		node->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
 		s << column + 1;
+		node->addAttribute(L"table-physicalcolumnnumber", s.str());
 		node->addAttribute(L"table-columnnumber", s.str());
 		if (columnExtents > 1) {
 			s.str(L"");
@@ -302,7 +322,7 @@ const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles
 
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-	IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID,
+	IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID, const wchar_t* parentPresentationalRowNumber,
 	bool ignoreInteractiveUnlabelledGraphics
 ) {
 	nhAssert(buffer); //buffer can't be NULL
@@ -316,12 +336,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	wostringstream s;
 
 	//get docHandle -- IAccessible2 windowHandle
-	int docHandle;
-	if(pacc->get_windowHandle((HWND*)&docHandle)!=S_OK) {
+	HWND docHwnd;
+	if(pacc->get_windowHandle(&docHwnd)!=S_OK) {
 		LOG_DEBUG(L"pacc->get_windowHandle failed");
 		return NULL;
 	}
-	docHandle=HandleToUlong(findRealMozillaWindow((HWND)UlongToHandle(docHandle)));
+	const int docHandle=HandleToUlong(findRealMozillaWindow(docHwnd));
 	if(!docHandle) {
 		LOG_DEBUG(L"bad docHandle");
 		return NULL;
@@ -393,6 +413,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if(pacc->get_states(&IA2States)!=S_OK) {
 		LOG_DEBUG(L"pacc->get_states failed");
 		IA2States=0;
+	}
+	// Remove state_editible from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec. 
+	if(IA2States&IA2_STATE_EDITABLE&&role==ROLE_SYSTEM_TABLE) {
+			IA2States-=IA2_STATE_EDITABLE;
 	}
 	//Add each state that is on, as an attrib
 	for(int i=0;i<32;++i) {
@@ -652,6 +676,23 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 	}
 
+	// Add some presentational table attributes
+	// Note these are only for reporting, the physical table attributes (table-physicalrownumber etc) for aiding in navigation etc are added  later on.
+	// propagate table-rownumber down to the cell as Gecko only includes it on the row itself
+	if(parentPresentationalRowNumber) 
+		parentNode->addAttribute(L"table-rownumber",parentPresentationalRowNumber);
+	const wchar_t* presentationalRowNumber=NULL;
+	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex")) != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-rownumber",IA2AttribsMapIt->second);
+		presentationalRowNumber=IA2AttribsMapIt->second.c_str();
+	}
+	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colindex")) != IA2AttribsMap.end())
+		parentNode->addAttribute(L"table-columnnumber",IA2AttribsMapIt->second);
+	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount")) != IA2AttribsMap.end())
+		parentNode->addAttribute(L"table-rowcount",IA2AttribsMapIt->second);
+	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colcount")) != IA2AttribsMap.end())
+		parentNode->addAttribute(L"table-columncount",IA2AttribsMapIt->second);
+
 	BSTR value=NULL;
 	if(pacc->get_accValue(varChild,&value)==S_OK) {
 		if(value&&SysStringLen(value)==0) {
@@ -733,7 +774,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 						continue;
 					}
 					paccHyperlink->Release();
-					if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, ignoreInteractiveUnlabelledGraphics)) {
+					if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, presentationalRowNumber, ignoreInteractiveUnlabelledGraphics)) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in fillVBuf");
@@ -765,7 +806,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					VariantClear(&(varChildren[i]));
 					continue;
 				}
-				if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, ignoreInteractiveUnlabelledGraphics))
+				if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, presentationalRowNumber, ignoreInteractiveUnlabelledGraphics))
 					previousNode=tempNode;
 				else
 					LOG_DEBUG(L"Error in calling fillVBuf");
@@ -801,7 +842,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			}
 		}
 
-		if ((nameIsContent || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME) && !nodeHasUsefulContent(parentNode)) {
+		if (!isEditable && (nameIsContent || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME) && !nodeHasUsefulContent(parentNode)) {
 			// If there is no useful content and the name can be the content,
 			// render the name if there is one.
 			if(name) {

@@ -1,18 +1,19 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA R3899\n"
+"Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-14 00:10+1000\n"
-"PO-Revision-Date: 2016-10-18 20:55+0300\n"
-"Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
-"Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com\n"
+"POT-Creation-Date: 2017-08-04 00:10+1000\n"
+"PO-Revision-Date: 2017-08-03 18:59+0300\n"
+"Last-Translator: DanP <dan.punga@gmail.com>\n"
+"Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
+"florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
 "Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -20,11 +21,11 @@ msgstr "Spațiu de lucru sigur"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
-msgstr "Metodă introducere nativă"
+msgstr "Metodă de introducere nativă"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 msgid "Alpha numeric input"
-msgstr "Metodă introducere alfanumerică"
+msgstr "Metodă de introducere alfanumerică"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 msgid "Full shaped mode"
@@ -93,35 +94,42 @@ msgid "Error in appModule %s"
 msgstr "Eroare în appModule %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "banner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "complementar"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
 msgstr "informația conținutului"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "principal"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "navigare"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "caută"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "formă"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "regiune"
 
@@ -140,15 +148,431 @@ msgstr "Atenuează când la ieșire sunt sunete sau voce"
 msgid "Always duck"
 msgstr "Atenuează totdeauna"
 
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "fereastră"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "chk"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "rbtn"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "edt"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "btn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "mnubar"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "element meniu"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "cbo"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "gra"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "bulă de ajutor"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "indiciu"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "lnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "tv"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "element listă extinsă"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "control tabulator"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "bară progres"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "bară derulare"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "bară stare"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "tabel"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "bară unelte"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "buton de extindere"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "citat bloc"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "document"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "aplicație"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "grupare"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "obiect încorporat"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "notă de sfârșit"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "notă de subsol"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "terminal"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "secțiune"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "button comutare"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "buton divizare"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "buton meniu"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "buton spin"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "buton vedere listă extinsă"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "panou"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "modificare parolă"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "sel"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "ro"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "submnu"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "acțiune sau un document protejat"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "câmp obligatoriu"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "invalid"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "editare linii multiple"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "clk"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "ordonat crescător"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "ordonat descrescător"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "descriere lungă"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "formulă"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "comentariu"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "obiect neselectat"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "bnnr"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "cmpl"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "cinf"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "principal"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "navi"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "srch"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "formă"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "7 și 8 puncte "
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "8 puncte"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Toate punctele"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "Umple afișajul cu schimbări ale contextului"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "Umple afișajul întotdeauna"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "Doar la derularea înapoi"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "h%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "vlnk"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "nu este %s"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} din {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "lv %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "r%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "c%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "final de %s"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automat"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "punct"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "spațiu cu punct"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "spațiu"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "tastatură braille"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "spațiu cu toate punctele"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "toate punctele"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "Arabă grad 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Persană grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -179,6 +603,11 @@ msgstr "Galeză grad 2"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "Cehă grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "Daneză, braille în 8 puncte pentru calculator"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -222,6 +651,11 @@ msgstr "Germană grad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "Greacă (Grecia)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "Engleză(U.K), braille în 8 puncte pentru calculator"
 
@@ -234,6 +668,16 @@ msgstr "Engleză (U.K.) grad 1"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "Engleză (U.K.) grad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "Cod Braille Engleză Unificată grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "Cod Braille Engleză Unificată grad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -274,6 +718,16 @@ msgstr "Estonă grad 0"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "Etiopiană grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "Persană, braille în 8 puncte pentru calculator"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "Persană grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -329,11 +783,6 @@ msgstr "Gujarati grad 1"
 #. braille settings dialog.
 msgid "Koine Greek"
 msgstr "Koine Greek"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "Greacă (Grecia) grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -407,6 +856,11 @@ msgstr "Kashmiri grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Lithuanian"
+msgstr "lituaniană"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Latvian grade 1"
 msgstr "Letonă grad 1"
 
@@ -433,12 +887,12 @@ msgstr "Marathi grad 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Belgium)"
-msgstr "Olandeză (Belgia)"
+msgstr "Neerlandeză (Belgia)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Netherlands)"
-msgstr "Olandeză (Olanda)"
+msgstr "Neerlandeză (Țările de Jos)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -532,7 +986,12 @@ msgstr "Slovacă grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "Slovenă, braille în 8 puncte pentru calculator"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
 msgstr "Slovenă grad 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -557,13 +1016,8 @@ msgstr "Turcă grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "Cod Braille Engleză Unificată grad 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "Cod Braille Engleză Unificată grad 2"
+msgid "Unicode braille"
+msgstr "Braille unicode"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -574,201 +1028,6 @@ msgstr "Chineză (Hong Kong, Cantoneză)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chineză (Taiwan, Mandarină)"
-
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "edt"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "lst"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "mnubar"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "mnu"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "btn"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "chk"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "rbtn"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "cbo"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "lnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "dlg"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "tv"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tb"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "gra"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "sel"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "submnu"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "ro"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "click"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "7 și 8 puncte "
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "8 puncte"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "Toate punctele"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "h%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "vlnk"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "nu este %s"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} din {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "lv %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "final de %s"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automat"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "braille"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "spațiu cu punct"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "punct"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "spațiu"
 
 msgid "Focus mode"
 msgstr "Mod formular"
@@ -797,6 +1056,7 @@ msgstr ""
 "aplicației"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Nesuportat în acest document"
 
@@ -986,19 +1246,19 @@ msgstr "nu există link nevizitat anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
-msgstr "se mută la câmpul următor din formular"
+msgstr "se mută la câmpul formular următor"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next form field"
-msgstr "nu există câmp următor în formular"
+msgstr "nu există câmp formular următor"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous form field"
-msgstr "se mută la câmpul anterior din formular"
+msgstr "se mută la câmpul formular anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous form field"
-msgstr "nu există câmp anterior în formular"
+msgstr "nu există câmp formular anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list"
@@ -1210,19 +1470,19 @@ msgstr "nu există reper anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
-msgstr "se mută la obiectul incorporat următor"
+msgstr "se mută la obiectul încorporat următor"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next embedded object"
-msgstr "nu există obiect incorporat următor"
+msgstr "nu există obiect încorporat următor"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous embedded object"
-msgstr "se mută la obiectul incorporat anterior"
+msgstr "se mută la obiectul încorporat anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous embedded object"
-msgstr "nu există obiect incorporat anterior"
+msgstr "nu există obiect încorporat anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
@@ -1239,6 +1499,22 @@ msgstr "mută la adnotarea anterioară"
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
 msgstr "nu există adnotare anterioară"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "se mută la eroarea următoare"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "nu există eroare următoare"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "se mută la eroarea anterioară"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "nu există eroare anterioară"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1285,12 +1561,17 @@ msgstr "&Pornește"
 msgid "&Move to"
 msgstr "&Mută la"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
 msgstr "%s reper"
 
+#. Translators: This is brailled to indicate a landmark (example output: lmk main).
+#, python-format
+msgid "lmk %s"
+msgstr "lmk %s"
+
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "selectat %s"
@@ -1322,6 +1603,33 @@ msgstr "Jos"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Mută după sfârșitul elementului container, cum ar fi listă sau tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Nu este într-o celulă de tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Marginea tabelului"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "se mută lal rândul următor din tabel"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "se mută la rândul anterior din tabel"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "mută la coloana următoare din tabel"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "mută la coloana anterioară din tabel"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1612,7 +1920,7 @@ msgstr "buton"
 
 #. Translators: Text used to identify menu bar of a program.
 msgid "menu bar"
-msgstr "bară meniu"
+msgstr "bară de meniu"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 msgid "menu item"
@@ -1641,11 +1949,11 @@ msgstr "grafic"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "balon ajutor"
+msgstr "balon de ajutor"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
-msgstr "informație instrument"
+msgstr "indiciu"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
@@ -1674,7 +1982,7 @@ msgstr "glisor"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
-msgstr "bară progres"
+msgstr "bară de progres"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
@@ -1701,24 +2009,25 @@ msgid "row"
 msgstr "rând"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "cadru"
 
 #. Translators: Identifies a tool bar.
 msgid "tool bar"
-msgstr "bară instrumente"
+msgstr "bară de instrumente"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
-msgstr "capăt de coloană"
+msgstr "antet de coloană"
 
 #. Translators: Identifies a row header in tables and spreadsheets.
 msgid "row header"
-msgstr "capăt de rând"
+msgstr "antet de rând"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "buton coborâre"
+msgstr "buton de extindere"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -1727,6 +2036,10 @@ msgstr "ceas"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "separator"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "formă"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -1768,15 +2081,15 @@ msgstr "citat bloc"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
-msgstr "titlu tabel"
+msgstr "antet de tabel"
 
 #. Translators: Identifies a table body (the main body of the table).
 msgid "table body"
-msgstr "corp tabel"
+msgstr "corp de tabel"
 
 #. Translators: Identifies a table footer (text placed at the end of the table).
 msgid "table footer"
-msgstr "subsol tabel"
+msgstr "subsol de tabel"
 
 #. Translators: Identifies a document (for example, a webpage document).
 msgid "document"
@@ -1800,7 +2113,7 @@ msgstr "grupare"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
-msgstr "pagină proprietăți"
+msgstr "pagină de proprietăți"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 msgid "canvas"
@@ -1828,7 +2141,7 @@ msgstr "panou dosare"
 
 #. Translators: Identifies an embedded object such as flash content on webpages.
 msgid "embedded object"
-msgstr "obiect incorporat"
+msgstr "obiect încorporat"
 
 #. Translators: Identifies an end note.
 msgid "end note"
@@ -1934,11 +2247,11 @@ msgstr "meniu detașabil"
 
 #. Translators: Identifies a text frame (a frame window which contains text).
 msgid "text frame"
-msgstr "cadru text"
+msgstr "cadru de text"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "buton activare"
+msgstr "buton de activare"
 
 msgid "border"
 msgstr "margine"
@@ -1973,15 +2286,15 @@ msgstr "listă expandabilă"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
-msgstr "buton separare"
+msgstr "buton de separare"
 
 #. Translators: Identifies a menu button (a button which opens a menu of items).
 msgid "menu button"
-msgstr "buton meniu"
+msgstr "buton de meniu"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 msgid "drop down button grid"
-msgstr "grilă butoane expandabilă"
+msgstr "grilă de butoane de extindere"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
@@ -2013,7 +2326,7 @@ msgstr "spațiu gol"
 
 #. Translators: Identifies a tree view button.
 msgid "tree view button"
-msgstr "buton vedere listă extinsă"
+msgstr "buton de vedere listă extinsă"
 
 #. Translators: Identifies an IP address (an IP address field element).
 msgid "IP address"
@@ -2021,35 +2334,31 @@ msgstr "adresă IP"
 
 #. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
 msgid "desktop icon"
-msgstr "iconiță ecran"
+msgstr "iconiță de ecran"
 
 #. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
 msgstr "alarmă"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "IFrame"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
-msgstr "panou ecran"
+msgstr "panou de ecran"
 
 #. Translators: Identifies an option pane.
 msgid "option pane"
-msgstr "panou opțiuni"
+msgstr "panou de opțiuni"
 
 #. Translators: Identifies a color chooser.
 msgid "color chooser"
-msgstr "selector culori"
+msgstr "selector de culori"
 
 #. Translators: Identifies a file chooser (to select a file or groups of files from a list).
 msgid "file chooser"
-msgstr "selector fișier"
+msgstr "selector de fișiere"
 
 msgid "filler"
-msgstr "instrument umplere"
+msgstr "instrument de umplere"
 
 #. Translators: Identifies a panel control for grouping related options.
 msgid "panel"
@@ -2061,7 +2370,7 @@ msgstr "editare parolă"
 
 #. Translators: Identifies a font chooser.
 msgid "font chooser"
-msgstr "alegere font"
+msgstr "selector de fonturi"
 
 msgid "line"
 msgstr "rând"
@@ -2080,8 +2389,9 @@ msgid "bold"
 msgstr "îngroșat"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
-msgstr "italice"
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "cursiv"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2089,7 +2399,7 @@ msgstr "subliniere"
 
 #. Translators: Describes text formatting.
 msgid "foreground color"
-msgstr "culoare prim plan"
+msgstr "culoare de prim plan"
 
 #. Translators: Describes text formatting.
 msgid "background color"
@@ -2123,10 +2433,10 @@ msgid "data grid"
 msgstr "grilă de date"
 
 msgid "data item"
-msgstr "element din date"
+msgstr "element de date"
 
 msgid "header item"
-msgstr "element din antet"
+msgstr "element de antet"
 
 #. Translators: Identifies a thumb control (a button-like control for changing options).
 msgid "thumb control"
@@ -2134,6 +2444,12 @@ msgstr "control tactil"
 
 msgid "calendar"
 msgstr "calendar"
+
+msgid "video"
+msgstr "video"
+
+msgid "audio"
+msgstr "audio"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2232,17 +2548,17 @@ msgstr "selectabil"
 
 #. Translators: Presented when a control can be moved to using system focus.
 msgid "focusable"
-msgstr "poate fi focalizat"
+msgstr "focalizabil"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
-msgstr "poate fi apăsat"
+msgstr "clicabil"
 
 msgid "editable"
-msgstr "poate fi editat"
+msgstr "editabil"
 
 msgid "checkable"
-msgstr "poate fi bifat"
+msgstr "bifabil"
 
 msgid "draggable"
 msgstr "poate fi tras"
@@ -2301,9 +2617,37 @@ msgstr "deblocat"
 msgid "not selected"
 msgstr "neselectat"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "nu este apăsat"
+
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
 msgstr "nebifat"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "curent"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "pagină curentă"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "etapă curentă"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "locație curentă"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "dată curentă"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "oră curentă"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2335,7 +2679,7 @@ msgstr "Se încarcă NVDA. Vă rugăm așteptați..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
-msgstr "NVDA pornit"
+msgstr "NVDA s-a pornit"
 
 #. Translators: Title of a dialog to find text.
 msgid "Find"
@@ -2383,7 +2727,7 @@ msgstr "Fără selecțiune"
 
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
-msgstr "Copiat în planșetă"
+msgstr "Copiat pe planșetă"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2480,15 +2824,17 @@ msgstr "Modul repaus activat"
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr ""
-"Comută modul repaus în activat sau dezactivat pentru aplicația care rulează"
+"Comută modul repaus în activat sau dezactivat pentru aplicația care rulează."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
 "Anunță linia curentă de sub cursorul aplicației. Apăsarea tastei de două ori "
-"va citi linia curentă."
+"va citi linia curentă. Apăsarea acesteia de trei ori va citi linia utilizând "
+"descrieri de caractere."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2553,27 +2899,27 @@ msgstr ""
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
-msgstr "Nu există opțiuni."
+msgstr "Nu există setări"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "Crește setarea activă curentă din inelul setărilor pentru sintetizare."
+msgstr "Crește setarea activă curentă din inelul setărilor pentru sintetizare"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "Scade setarea activă curentă din inelul setărilor pentru sintetizare."
+msgstr "Scade setarea activă curentă din inelul setărilor pentru sintetizare"
 
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
 "Trece la următoarea opțiune disponibilă din inelul opțiunilor pentru "
-"sintetizare."
+"sintetizare"
 
 #. Translators: Input help mode message for previous synth setting command.
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr ""
 "Trece la opțiunea anterioară, disponibilă din inelul setărilor pentru "
-"sintetizare."
+"sintetizare"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
@@ -2585,7 +2931,7 @@ msgstr "citește caracterele introduse activat"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "Activează sau dezactivează citirea caracterelor introduse."
+msgstr "Activează sau dezactivează citirea caracterelor introduse"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -2597,7 +2943,7 @@ msgstr "citește cuvintele tastate activat"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr "Activează sau dezactivează citirea cuvintelor introduse."
+msgstr "Activează sau dezactivează citirea cuvintelor introduse"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -2613,7 +2959,7 @@ msgid ""
 "characters"
 msgstr ""
 "activează sau dezactivează citirea tastelor de comandă care nu sunt "
-"caractere specifice."
+"caractere specifice"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -2654,11 +3000,11 @@ msgstr "Activează sau dezactivează raportarea schimbărilor atributelor de fon
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "raport versiuni dezactivat"
+msgstr "anunță versiuni dezactivat"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "raport versiuni activat"
+msgstr "anunță versiuni activat"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -3240,15 +3586,15 @@ msgstr ""
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
-msgstr "Mod vorbire dezactivat"
+msgstr "Mod de vorbire dezactivat"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "Speech mode beeps"
-msgstr "Mod vorbire bipuri"
+msgstr "Mod de vorbire bipuri"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "Speech mode talk"
-msgstr "Mod vorbire vorbește"
+msgstr "Mod de vorbire vorbește"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3282,6 +3628,10 @@ msgstr ""
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
 msgstr "Închide NVDA!"
+
+#. Translators: Input help mode message for restart NVDA command.
+msgid "Restarts NVDA!"
+msgstr "Repornește NVDA!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3479,7 +3829,7 @@ msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"Următoarea tastă apăsat nu va fi folosită de NVDA, va trece direct la "
+"Următoarea tastă apăsată nu va fi folosită de NVDA, va trece direct la "
 "Windows."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
@@ -3539,16 +3889,16 @@ msgstr "Arată fereastra de dialog a opțiunilor NVDA pentru compunere intrări"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Arată fereastra de dialog a opțiunile prezentării obiectelor din NVDA"
+msgstr "Arată fereastra de dialog a opțiunilor prezentării obiectelor din NVDA"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Arată fereastra dialog cu opțiunile modului navigare al NVDA"
+msgstr "Arată fereastra de dialog cu opțiunile modului navigare al NVDA"
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr ""
-"Arată fereastra de dialog din NVDA cu opțiunile de format pentru documente"
+"Arată fereastra de dialog din NVDA cu opțiunile de formatare a documentelor"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
@@ -3594,16 +3944,16 @@ msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
-"Activează Managerul de extensii add-on al NVDA pentru a instala și "
-"dezinstala pachete cu extensii add-on pentru NVDA"
+"Activează administratorul de suplimente al NVDA pentru a instala și "
+"dezinstala pachete cu suplimente pentru NVDA"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "monitor vorbire dezactivat"
+msgstr "monitor de vorbire dezactivat"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "monitor vorbire activat"
+msgstr "monitor de vorbire activat"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -3631,6 +3981,18 @@ msgstr "Braille asociat la %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Comută asocierea braille între pozițiile de focalizare și de descrierie"
+
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Focalizare de context al prezentării braille: %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr ""
+"Comută modul în care este prezentată informația despre context în braille"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -3748,6 +4110,18 @@ msgstr "Introduce puncte braille via tastatura braille"
 msgid "Moves the braille display to the current focus"
 msgstr "Mută afișajul braille la focalizarea curentă"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "Șterge ultima celulă braille sau ultimul caracter introdus"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr "Traduce orice intrare braille și apasă tasta enter"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "Traduce orice intrare braille"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Extensii plug-in reîncărcate"
@@ -3799,7 +4173,7 @@ msgstr ""
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "Arată fereastra de dialog a profilurilor de configurare NVDA"
+msgstr "Arată fereastra de dialog a configurării de profiluri NVDA"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -3809,6 +4183,16 @@ msgstr "Nematematic"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Începe interacțiunea cu conținutul matematic"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "Windows 10 OCR indisponibil"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr ""
+"Recunoaște conținutul obiectului navigator curent, folosind Windows 10 OCR"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -3828,7 +4212,7 @@ msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
-msgstr "Locație web NVDA"
+msgstr "Pagina web NVDA"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 msgid "Uninstall NVDA"
@@ -3844,7 +4228,7 @@ msgstr "Documentație"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 msgid "Commands Quick Reference"
-msgstr "Referință Rapidă Comenzi"
+msgstr "Referință Rapidă a Comenzilor"
 
 #. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
@@ -3952,7 +4336,7 @@ msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "intrare"
+msgstr "enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
@@ -3988,7 +4372,7 @@ msgstr "șterge bloc numeric"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
-msgstr "săgeata stânga"
+msgstr "săgeată stânga"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right arrow"
@@ -4012,7 +4396,7 @@ msgstr "bloc numeric"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
-msgstr "captură ecran"
+msgstr "captură de ecran"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "scroll lock"
@@ -4231,6 +4615,1073 @@ msgstr "Implicită a utilizatorului"
 msgid "%s cursor"
 msgstr "%s cursor"
 
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "10-point star"
+msgstr "stea cu 10 puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "12-point star"
+msgstr "stea cu 12 puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "16-point star"
+msgstr "stea cu 16 puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "24-point star"
+msgstr "stea cu 24 de puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "32-point star"
+msgstr "stea cu 32 de puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "4-point star"
+msgstr "stea cu 4 puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "5-point star"
+msgstr "stea cu 5 puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "6-point star"
+msgstr "stea cu 6 puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "7-point star"
+msgstr "stea cu 7 puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "8-point star"
+msgstr "stea cu 8 puncte"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arc"
+msgstr "Arc"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Balloon"
+msgstr "Balon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent arrow"
+msgstr "Săgeată îndoită"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent Up Arrow"
+msgstr "Săgeată sus îndoită"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bevel"
+msgstr "Pantă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Block arc"
+msgstr "bloc de tip arc de cerc"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Can"
+msgstr "Cană"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Plus symbol"
+msgstr "simbolul plus în diagramă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Star Symbol"
+msgstr "simbolul stea în diagramă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart X Symbol"
+msgstr "simbolul X în diagramă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chevron"
+msgstr "paranteză unghiulară"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circle with line through center"
+msgstr "Cerc cu o linie prin centru"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circular Arrow"
+msgstr "Săgeată circulară"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud shape"
+msgstr "Formă de nor"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud callout"
+msgstr "Nor de explicație"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Corner"
+msgstr "Colț"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "four snipped corners"
+msgstr "chenar dreptunghi cu colțuri vizibile"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cross"
+msgstr "cruce"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cube"
+msgstr "cub"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Down Arrow"
+msgstr "Săgeată jos curbată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon banner"
+msgstr "Banner panglică"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Left Arrow"
+msgstr "Săgeată stânga curbată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Right Arrow"
+msgstr "Săgeată dreapta curbată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Arrow"
+msgstr "Săgeată sus curbată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Ribbon banner"
+msgstr "banner panglică curbată sus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decagon"
+msgstr "Decagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diagonal stripe"
+msgstr "Dungă diagonală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diamond"
+msgstr "Romb"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Dodecagon"
+msgstr "Dodecagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Donut"
+msgstr "Gogoașă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double brace"
+msgstr "Acoladă dublă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double bracket"
+msgstr "Paranteză pătrată dublă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double wave"
+msgstr "Val dublu"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Down Arrow"
+msgstr "Săgeată jos"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Down Arrow"
+msgstr "Explicație cu săgeată jos"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Explosion"
+msgstr "Explozie"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Alternate process flowchart symbol"
+msgstr "Simbol al diagramei de flux alternative"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Card flowchart symbol"
+msgstr "Simbol al diagramei de flux"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Collate flowchart symbol"
+msgstr "Simbol al diagramei de comparație"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Connector flowchart symbol"
+msgstr "Simbol al diagramei cercului"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Data flowchart symbol"
+msgstr "Simbol al diagramei paralelipipedului"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decision flowchart symbol"
+msgstr "Simbol al diagramei rombului"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Delay flowchart symbol"
+msgstr "Simbol al diagramei de întârziere"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Direct access storage flowchart symbol"
+msgstr "Simbol al diagramei de acces direct la stocare"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Display flowchart symbol"
+msgstr "Simbol al diagramei de afișare"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Document flowchart symbol"
+msgstr "Simbol al diagramei de document"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Extract flowchart symbol"
+msgstr "Simbol al diagramei de extragere"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Internal storage flowchart symbol"
+msgstr "Simbol al memoriei interne"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Magnetic disk flowchart symbol"
+msgstr "Simbol al discului magnetic"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual input flowchart symbol"
+msgstr "Simbol al diagramei de introducere manuală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual operation flowchart symbol"
+msgstr "Simbol al diagramei de operațiune manuală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Merge flowchart symbol"
+msgstr "Simbol al diagramei de fuziune"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Multi-document flowchart symbol"
+msgstr "Simbol al diagramei de document multiplu"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Offline storage flowchart symbol"
+msgstr "Simbol al diagramei de stocare offline"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Off-page connector flowchart symbol"
+msgstr "Simbol al diagramei conectare în afara paginii"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'Or' flowchart symbol"
+msgstr "Simbol al diagramei „Or”"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Predefined process flowchart symbol"
+msgstr "Simbol al diagramei procesului predefinit"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Preparation flowchart symbol"
+msgstr "Simbolul diagramei de pregătire"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Process flowchart symbol"
+msgstr "Simbol al diagramei procesului"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Punched tape flowchart symbol"
+msgstr "Simbol al diagramei de tip bandă perforată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sequential access storage flowchart symbol"
+msgstr "Simbol al diagramei pentru stocare cu acces secvențial"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sort flowchart symbol"
+msgstr "Simbol al diagramei de sortare"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Stored data flowchart symbol"
+msgstr "Simbol al diagramei date stocate"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Summing junction flowchart symbol"
+msgstr "Simbol al diagramei pentru suma de joncțiune"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Terminator flowchart symbol"
+msgstr "Simbol al diagramei cu nod de sfârșit"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Folded corner"
+msgstr "Colț pliat"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular picture frame"
+msgstr "Cadru de imagine dreptunghiulară"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Funnel"
+msgstr "pâlnie"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with six teeth"
+msgstr "Roată cu șase dinți"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with nine teeth"
+msgstr "roată cu nouă dinți"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Half of rectangular picture frame"
+msgstr "Jumătate de cadru dreptunghiular pentru imagine"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heart"
+msgstr "Inimă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heptagon"
+msgstr "Heptagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Hexagon"
+msgstr "Hexagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Horizontal scroll"
+msgstr "Pergament orizontal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Isosceles triangle"
+msgstr "Triunghi isoscel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left Arrow"
+msgstr "Săgeată stânga"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Left Arrow"
+msgstr "Explicație cu săgeată stânga"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left brace"
+msgstr "Acoladă deschisă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left bracket"
+msgstr "Paranteză pătrată deschisă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Counter-clockwise Circular arrow"
+msgstr "Săgeată circulară în inversul sensului acelor de ceasornic"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended horizontal Arrow"
+msgstr "Săgeată orizontală cu două capete"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Double-ended horizontal Arrow"
+msgstr "Explicație cu săgeată orizontală cu două capete"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Circular arrow"
+msgstr "Săgeată circulară cu două capete"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon with left and right arrows"
+msgstr "Panglică cu săgeți stânga și dreapta"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left right and up Arrows"
+msgstr "Săgeți stânga, dreapta și sus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left and up Arrows"
+msgstr "Săgeți stânga și sus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Lightning bolt"
+msgstr "Fulger"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line Callout"
+msgstr "Linie de explicație"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal accent bar"
+msgstr "Explicație cu bară de accent orizontală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border and horizontal accent bar"
+msgstr "Explicație cu margine și bară de accent orizontală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal line"
+msgstr "Explicație cu linie orizontală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal straight line"
+msgstr "Explicație cu linie dreaptă pe diagonală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal callout line and accent bar"
+msgstr "Explicație cu linie de explicație pe diagonală și bară de accent"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, diagonal straight line and accent bar"
+msgstr "Explicație cu margine, linie dreaptă pe diagonală și bară de accent"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and diagonal callout line"
+msgstr "Explicație fără margine și cu linie explicație pe diagonală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled line"
+msgstr "Explicație cu linie înclinată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled callout line and accent bar"
+msgstr "Explicație cu linie înclinată de explicație și bară de accent"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, angled callout line, and accent bar"
+msgstr "Explicație cu margine, linie de explicație înclinată și bară de accent"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and angled callout line"
+msgstr "Explicație fără margine, dar cu linie de explicație înclinată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with callout line segments forming a U-shape"
+msgstr "Explicație cu segmente de linie de explicație în formă de U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with accent bar and callout line segments forming a U-shape"
+msgstr ""
+"Explicație cu bară de accent și segmente de linie de explicație în formă de U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid ""
+"Callout with border, accent bar, and callout line segments forming a U-shape"
+msgstr ""
+"Explicație cu margine, bară de accent și segmente de linie de explicație în "
+"formă de U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and callout line segments forming a U-shape"
+msgstr ""
+"Explicație fără margine, dar cu segmente de linie de explicație în formă de U"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line inverse"
+msgstr "Linie inversă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Division symbol"
+msgstr "Simbolul matematic al împărțirii"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Equivalence symbol"
+msgstr "Simbolul matematic al echivalenței"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Subtraction symbol"
+msgstr "Simbolul matematic al scăderii"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Multiplication symbol"
+msgstr "Simbolul matematic al înmulțirii"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Non-equivalence symbol"
+msgstr "Simbolul neechivalenței matematice"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Addition symbol"
+msgstr "Simbolul matematic al adunării"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Moon"
+msgstr "Lună"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid with asymmetrical non-parallel sides"
+msgstr "Trapezoid cu laturi asimetrice non-paralele"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'No' symbol"
+msgstr "Simbolul 'nu'"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Notched RightArrow"
+msgstr "Săgeată dreapta crestată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Octagon"
+msgstr "Octagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval"
+msgstr "Oval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval-shaped callout"
+msgstr "Explicație în formă ovală"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Parallelogram"
+msgstr "Paralelogram"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Pentagon"
+msgstr "Pentagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Incomplete Pie with wedge missing"
+msgstr "Formă radială incompletă cu un sector lipsă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Quarter Pie Wedge"
+msgstr "Sector în formă de sfert de structură radială"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque"
+msgstr "Plachetă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque Tabs"
+msgstr "tabulatori de plachetă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arrows pointing left right up and down"
+msgstr "Săgeți îndreptate spre stânga, sus și jos"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Arrows pointing left right up and down"
+msgstr "Explicație cu săgeți îndreptate spre stânga, dreapta, sus și jos"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle"
+msgstr "Dreptunghi"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular callout"
+msgstr "Explicație în formă dreptunghiulară"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow"
+msgstr "Săgeată dreapta"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Right Arrow"
+msgstr "Explicație cu săgeată dreapta"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right brace"
+msgstr "Acoladă închisă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right bracket"
+msgstr "Paranteză pătrată închisă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right triangle"
+msgstr "Triunghi drept"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one rounded corner"
+msgstr "Dreptunghi cu un colț rotunjit"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two rounded corners diagonally-opposed"
+msgstr "Dreptunghi cu două colțuri în diagonală, rotunjite"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two-rounded corners that share a side"
+msgstr "Dreptunghi cu două colțuri pe aceeași latură, rotunjite"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle"
+msgstr "Dreptunghi rotunjit"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle-shaped callout"
+msgstr "Explicație în formă de dreptunghi rotunjit"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Smiley face"
+msgstr "Față zâmbitoare"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner"
+msgstr "Dreptunghi cu un colț decupat"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners diagonally-opposed"
+msgstr "Dreptunghi cu două colțuri diagonale, decupate"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners that share a side"
+msgstr "Dreptunghi cu două colțuri alungite care împart o latură"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner and one rounded corner"
+msgstr "Dreptunghi cu un colț decupat și unul rotunjit"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Four small squares that define a rectangular shape"
+msgstr "Patru pătrate mici care definesc o formă dreptunghiulară"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow with Stripes"
+msgstr "Săgeată dreapta cu dungi"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sun"
+msgstr "Soare"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved arrow"
+msgstr "Săgeată curbată"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Water droplet"
+msgstr "Picătură de apă"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid"
+msgstr "Trapezoid"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Up Arrow"
+msgstr "Săgeată sus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with UpArrow"
+msgstr "Explicație cu săgeată sus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Arrow pointing up and down"
+msgstr "Săgeată cu două capete în sus și în jos"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with arrows that point up and down"
+msgstr "Explicație cu săgeți care sunt îndreptate în sus și în jos"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "U-shaped Arrow"
+msgstr "Săgeată în formă de u"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Vertical scroll"
+msgstr "Pergament vertical"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Wave"
+msgstr "Val"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Back"
+msgstr "Înapoiere"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Beginning"
+msgstr "Început"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Document"
+msgstr "Document"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "End"
+msgstr "Sfârșit"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Next"
+msgstr "Înaintare"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Help"
+msgstr "Ajutor"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Home"
+msgstr "Acasă"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Information"
+msgstr "Informație"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Movie"
+msgstr "Filmare"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Return"
+msgstr "Întoarcere"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Sound"
+msgstr "Sunet"
+
 #. Translators: The description of the NVDA service.
 msgid ""
 "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
@@ -4267,7 +5718,7 @@ msgstr "Emulează apăsarea %s pe tastatura sistemului"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "gol"
+msgstr "spațiu gol"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -4353,6 +5804,43 @@ msgstr "în afara %s"
 msgid "page %s"
 msgstr "pagina %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "secțiunea %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "coloana {0} din {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s coloane"
+
+msgid "continuous section break"
+msgstr "continuă secțiunea"
+
+msgid "new column section break"
+msgstr "coloana nouă a secțiunii"
+
+msgid "new page section break"
+msgstr "pagina nouă a secțiunii"
+
+msgid "even pages section break"
+msgstr "chiar și spațiere între secțiunile paginii"
+
+msgid "odd pages section break"
+msgstr "spațiere adițională între secțiunile paginii"
+
+msgid "column break"
+msgstr "spațiere între coloane"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4369,6 +5857,10 @@ msgstr "stil %s"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "stil implicit"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "fără linii de frontieră"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -4460,10 +5952,6 @@ msgstr "neaccentuat"
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
 msgstr "neîngroșat"
-
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "cursiv"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
@@ -4610,7 +6098,7 @@ msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tabel cu {columnCount} coloane și {rowCount} rânduri"
 
 msgid "NVDA Speech Viewer"
-msgstr "monitor vorbire NVDA"
+msgstr "monitorul de vorbire NVDA"
 
 #. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
@@ -4663,7 +6151,7 @@ msgstr "Volum"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
-msgstr "&Amplitudine sunet"
+msgstr "&Ton"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4939,7 +6427,7 @@ msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
-"Nu s-a putut instala extensia add-on NVDA de la {path}.\n"
+"Nu s-a putut instala suplimentul NVDA de la {path}.\n"
 "Trebuie să rulezi NVDA pentru a putea instala extensii add-on."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
@@ -4964,11 +6452,6 @@ msgstr "{symbol} ca în {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Marginea tabelului"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Mută obiectul de navigare la următoarea coloană"
@@ -4984,6 +6467,10 @@ msgstr "Mută obiectul navigator și focalizarea la următorul rând"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Mută obiectul navigator și focalizarea la rândul precedent"
+
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Sugestii"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -5009,6 +6496,10 @@ msgstr "Nu este redată nicio melodie"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anunță timpul rămas din melodia redată acum, dacă există"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Arată opțiunile relatate la textul selectat sau textul la cursor"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5018,6 +6509,25 @@ msgstr "{bookPercentage}%, locație {curLocation} din {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Pagină {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "evidențiere"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "nicio evidențiere"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s evidențiat"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "În afara evidențierii populare"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5092,6 +6602,36 @@ msgstr "BCC:"
 #. Translators: when an email is unread
 msgid "unread"
 msgstr "necitit"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "purple flag"
+msgstr "steag mov"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Orange flag"
+msgstr "Steag portocaliu"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Green flag"
+msgstr "Steag verde"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Yellow flag"
+msgstr "Steag galben"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Blue flag"
+msgstr "Steag albastru"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Red flag"
+msgstr "Steag roșu"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -5297,6 +6837,10 @@ msgstr "Coordonator miniaturi"
 msgid "Slide {slideNumber}"
 msgstr "Diapozitiv {slideNumber}"
 
+#. Translators:   an unlabelled item in Powerpoint another shape is overlapping
+msgid "other item"
+msgstr "alt element"
+
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5492,6 +7036,7 @@ msgstr "Afișaje Braille Baum/HumanWare/APH"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Port serial: {portName}"
@@ -5551,6 +7096,39 @@ msgstr "Modele mai vechi Papenmeier BRAILLEX"
 msgid "Seika braille displays"
 msgstr "Afișaje Braille Seika"
 
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "Rezultat OCR"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "Activează textul de la cursor, dacă este posibil"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "Revocă rezultatul recunoașterii"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "Deja într-un rezultat al  recunoașterii de conținut"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "Conținutul nu este vizibil"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "În curs de recunoaștere"
+
+msgid "Recognition failed"
+msgstr "Recunoaștere eșuată"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "Configurație aplicată"
@@ -5608,11 +7186,11 @@ msgid "&Synthesizer..."
 msgstr "&Sintetizator..."
 
 msgid "Change the synthesizer to be used"
-msgstr "Schimbă sitetizatorul de folosit"
+msgstr "Schimbă sintetizatorul de folosit"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "Opțiuni &voce..."
+msgstr "Setări &voce..."
 
 # pitch tradus anterior cu amplitudine sunet
 msgid "Choose the voice, rate, pitch and volume to use"
@@ -5620,11 +7198,11 @@ msgstr "Alegeți vocea, ritmul, tonul și volumul ce vor fi folosite"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "Opțiuni &Braille..."
+msgstr "Setări &Braille..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "Opțiuni &tastatură..."
+msgstr "Setări &tastatură..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
@@ -5635,7 +7213,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
-msgstr "Opțiuni &maus..."
+msgstr "Setări &maus..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Schimbă raportarea formei mausului și a obiectului de sub maus"
@@ -5667,7 +7245,7 @@ msgstr "Schimbă raportarea obiectelor"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
-msgstr "Mod &navigare..."
+msgstr "Mod de &navigare..."
 
 msgid "Change virtual buffers specific settings"
 msgstr "Schimbă opțiunile specifice ale zonelor tampon virtuale"
@@ -5678,6 +7256,10 @@ msgstr "&Formatare document..."
 
 msgid "Change settings of document properties"
 msgstr "Schimbă opțiunile proprietăților de document"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "Windows 10 OCR..."
+msgstr "Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -5714,7 +7296,7 @@ msgstr ""
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
-msgstr "&Dicționare vorbire"
+msgstr "&Dicționare de vorbire"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
@@ -5734,7 +7316,7 @@ msgstr "Vezi jurnal"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Monitor vorbire"
+msgstr "Monitor de vorbire"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -5742,7 +7324,7 @@ msgstr "Consolă Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
-msgstr "Administrare extensii &add-on..."
+msgstr "Administrare &suplimente..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -5766,14 +7348,14 @@ msgstr "&Ghidul utilizatorului"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
-msgstr "&Referință Rapidă Comenzi"
+msgstr "&Referință Rapidă a Comenzilor"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
 msgstr "Ce e &nou"
 
 msgid "NVDA &web site"
-msgstr "Locație &web NVDA"
+msgstr "Pagina &web NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
@@ -5789,7 +7371,7 @@ msgstr "Dialog de întâmp&inare..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "Verifică &actualizări..."
+msgstr "Caută &actualizări..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
@@ -5801,11 +7383,11 @@ msgstr "&Ajutor"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "Profiluri &configurare..."
+msgstr "Configurarea &profilurilor"
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr "&Revino la configurația salvată"
+msgstr "&Revenire la configurația salvată"
 
 msgid "Reset all settings to saved state"
 msgstr "Resetează toate preferințele la starea salvată"
@@ -5813,14 +7395,14 @@ msgstr "Resetează toate preferințele la starea salvată"
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "Resetează la configurația i&nițială"
+msgstr "Resetare la configurația &implicită"
 
 msgid "Reset all settings to default state"
 msgstr "Resetează toate preferințele la starea implicită"
 
 #. Translators: The label for the menu item to save current settings.
 msgid "&Save configuration"
-msgstr "&Salvează configurare"
+msgstr "&Salvare configurație"
 
 msgid "Write the current configuration to nvda.ini"
 msgstr "Scrie configurarea curentă în nvda.ini"
@@ -5837,47 +7419,54 @@ msgid "Exit NVDA"
 msgstr "Ieșire NVDA"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
+"By default, the numpad Insert and main Insert keys may both be used as the "
 "NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"functions."
 msgstr ""
-"Bun venit în NVDA!\n"
-"Majoritatea comenzilor pentru controlul NVDA cer să țineți apăsat tasta NVDA "
-"în timp ce apăsați alte taste.\n"
-"Implicit, atât tasta Insert de pe tastele numerice cât și tasta Insert "
-"principală pot fi folosite ca tasta NVDA.\n"
-"Puteți, de asemenea, să configurați NVDA ca să folosească tasta CapsLock "
-"drept tasta NVDA.\n"
-"Apăsați NVDA+n în orice moment pentru a activa meniul NVDA.\n"
-"Din acest meniu puteți configura NVDA, puteți primi ajutor și puteți accesa "
-"alte funcții NVDA.\n"
+"Majoritatea comenzilor pentru controlarea NVDA-ului vă cer să țineți apăsată "
+"tasta NVDA în timp ce apăsați alte taste.\n"
+"În mod implicit, tastele insert de pe blocul numeric și insertul principal "
+"pot fi utilizate ca tastă NVDA. \n"
+"De asemenea, puteți configura NVDA să utilizeze CapsLock ca tastă NVDA.\n"
+"Apăsați NVDA+n oricând pentru a intra în meniul acestuia.\n"
+"Din acest meniu, puteți să configurați NVDA, să obțineți ajutor și să "
+"accesați alte funcții ale sale."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Bun venit în NVDA"
 
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Bun venit în NVDA!"
+
 msgid "Options"
 msgstr "Opțiuni"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: The label of a combobox in the Welcome dialog.
+#. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-msgid "Use CapsLock as an NVDA modifier key"
+msgid "&Keyboard layout:"
+msgstr "&Schemă tastatură:"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
 msgstr "Folosește &CapsLock ca tastă de modificare NVDA"
 
-#. Translators: The label of a check box in the Welcome dialog.
+#. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Pornește NVDA automat după ce mă autentific în Windows"
 
-#. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
-msgid "Show this dialog when NVDA starts"
-msgstr "Arată această fereastră de dialog când pornește NVDA"
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "&Arată această fereastră de dialog când pornește NVDA"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -5904,7 +7493,7 @@ msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
 msgstr ""
-"Toate extensiile add-on sunt dezactivate. Vor fi reactivate la următoarea "
+"Toate suplimentele sunt dezactivate. Vor fi reactivate la următoarea "
 "repornire dacă nu alegeți să le dezactivați din nou."
 
 #. Translators: The label for actions list in the Exit dialog.
@@ -5921,7 +7510,11 @@ msgstr "Repornire"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
-msgstr "Repornire cu extensiile add-on dezactivate"
+msgstr "Repornire cu suplimentele dezactivate"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Repornire cu diagnosticarea activată"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -5929,18 +7522,18 @@ msgstr "Așteptați"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
-msgstr "Administrare extensii add-on"
+msgstr "Administratorul de suplimente"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
 msgid ""
 "All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"Toate extensiile add-on sunt dezactivate. Pentru a le reactiva trebuie "
-"repornit NVDA."
+"Toate suplimentele sunt dezactivate. Pentru a le reactiva trebuie repornit "
+"NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
-msgstr "Extensii add-on instalate"
+msgstr "Suplimente instalate"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 msgid "Package"
@@ -5960,15 +7553,15 @@ msgstr "Autor"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "&Despre extensia add-on..."
+msgstr "&Despre supliment..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "A&jutor extensii add-on"
+msgstr "A&jutorul suplimentului"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
-msgstr "&Dezactivare extensie add-on"
+msgstr "&Dezactivare supliment"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -5983,16 +7576,16 @@ msgstr "&Elimină"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "&Obținere extensii add-on..."
+msgstr "&Obținere suplimente..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
-msgstr "Alegeți fișier cu pachetul extensiei add-on"
+msgstr "Alegeți fișierul cu pachetul suplimentului"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
-msgstr "Pachet NVDA cu extensie add-on (*.{ext})"
+msgstr "Pachetul suplimentului (*.{ext})"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -6000,8 +7593,8 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Deschiderea pachetului cu extensia add-on a eșuat la %s - fișier lipsă sau "
-"format invalid de fișier"
+"Deschiderea pachetului ce conține suplimentul a eșuat la %s - fișier lipsă "
+"sau format invalid de fișier"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
@@ -6011,43 +7604,42 @@ msgid ""
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Sigur doriți instalarea acestei extensii add-on? Instalați extensii add-on "
-"doar din surse de încredere.\n"
-"Extensie add-on: {summary} {version}\n"
+"Sigur doriți instalarea acestui supliment? Instalați suplimentedoar din "
+"surse de încredere.\n"
+"Supliment: {summary} {version}\n"
 "Autor: {author}"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 msgid "Add-on Installation"
-msgstr "Instalare extensie add-on"
+msgstr "Instalare supliment"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 msgid ""
 "A version of this add-on is already installed. Would you like to update it?"
 msgstr ""
-"Este deja instalată o versiune a acestei extensii add-on. Doriți să o "
-"actualizați?"
+"Este deja instalată o versiune a acestui supliment. Doriți să o actualizați?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
-msgstr "Se instalează extensie add-on"
+msgstr "Se instalează suplimentul"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
-msgstr "Așteptați cât timp extensia add-on este instalată."
+msgstr "Așteptați cât timp suplimentul este instalat."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "Instalarea extensiei add-on de la %s a eșuat"
+msgstr "Instalarea suplimentului de la %s a eșuat"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Sigur doriți să înlăturați din NVDA extensia add-on selectată?"
+msgstr "Sigur doriți să înlăturați din NVDA suplimentul selectat?"
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
-msgstr "Eliminare extensie add-on"
+msgstr "Eliminare supliment"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "install"
@@ -6075,15 +7667,15 @@ msgstr "rulează"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
-msgstr "&Activare extensie add-on"
+msgstr "&Activare supliment"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
 msgstr ""
-"Au fost făcute modificări în extensiile add-on. NVDA trebuie repornit pentru "
-"ca modificările să aibă efect. Vreți să reporniți acum?"
+"Au fost făcute modificări în suplimente. NVDA trebuie repornit pentru ca "
+"modificările să aibă efect. Vreți să reporniți acum?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6109,11 +7701,11 @@ msgstr "URL: {url}"
 
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
-msgstr "Informație extensie add-on"
+msgstr "Informația suplimentului"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
-msgstr "Profiluri de configurare"
+msgstr "Configurarea profilurilor"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6125,7 +7717,7 @@ msgstr "&Redenumește"
 
 #. Translators: The label of a button to delete a configuration profile.
 msgid "&Delete"
-msgstr "Ş&terge"
+msgstr "Ș&terge"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
@@ -6162,12 +7754,13 @@ msgid "Error activating profile."
 msgstr "Eroare la activarea profilului"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Sigur vreți să ștergeți acest profil? Acțiunea este ireversibilă."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr ""
+"Acest profil va fi șters permanent. Această acțiune nu poate fi neterminată."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
-msgstr "Confirmă Ştergerea"
+msgstr "Confirmă Ștergerea"
 
 #. Translators: An error displayed when deleting a configuration profile fails.
 msgid "Error deleting profile."
@@ -6214,8 +7807,8 @@ msgstr "Rostește tot"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Eroare la salvarea declanșatoarelor pentru profilurile de configurare - "
-"probabil sistemul de fișiere este în mod exclusiv citire"
+"Eroare la salvarea declanșatoarelor pentru profilul configurat - probabil "
+"sistemul de fișiere este în mod exclusiv citire"
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -6406,7 +7999,7 @@ msgid ""
 msgstr ""
 "Încercați instalarea unei versiuni mai vechi față de versiunea de NVDA "
 "instalată curent. Dacă într-adevăr doriți să reveniți la o versiune "
-"precedentă, ar trebui mai întâi să anulați aceast proces de instalare și să "
+"precedentă, ar trebui mai întâi să anulați acest proces de instalare și să "
 "dezinstalați NVDA complet înainte de a instala versiunea precedentă."
 
 #. Translators: The label of a button to proceed with installation,
@@ -6442,7 +8035,7 @@ msgstr "Selectează dosarul portabil"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
-msgstr "Copiază configurația &utilizator curentă"
+msgstr "Copiază configurația curentă a &utilizatorului"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6569,7 +8162,7 @@ msgid ""
 "system profile could be a security risk. Do you still wish to copy your "
 "settings?"
 msgstr ""
-"Au fost detectate extensii add-on în dosarul de setări utilizator. Copierea "
+"Au fost detectate suplimente în dosarul de setări utilizator. Copierea "
 "acestora în profilul de sistem poate fi un risc de securitate. Doriți, "
 "totuși, să copiați preferințele dumneavoastră?"
 
@@ -6588,9 +8181,9 @@ msgid ""
 "Unable to copy a file. Perhaps it is currently being used by another process "
 "or you have run out of disc space on the drive you are copying to."
 msgstr ""
-"Imposibil de copiat fișier. Este posibil să fie momentan folosit de un alt "
-"proces, sau ați rămas fără spațiu disponibil pe partiția pe care încercați "
-"să-l copiați."
+"Imposibil de copiat un fișier. Este posibil să fie momentan folosit de un "
+"alt proces, sau ați rămas fără spațiu disponibil pe partiția pe care "
+"încercați să-l copiați."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 msgid "Error Copying"
@@ -6603,13 +8196,6 @@ msgstr "Eroare la copierea configurării de utilizator NVDA"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "Copiere reușită a configurării de utilizator NVDA"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "Eroare în fișierul de limbă %s"
-
-msgid "Language Error"
-msgstr "Eroare de limbă"
 
 msgid "This change requires administrator privileges."
 msgstr "Această schimbare cere privilegii de administrator."
@@ -6663,7 +8249,7 @@ msgstr "Eroare în sintetizator"
 
 #. Translators: This is the label for the voice settings dialog.
 msgid "Voice Settings"
-msgstr "Opțiuni voce"
+msgstr "Setări voce"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
@@ -6706,12 +8292,12 @@ msgstr "&Folosește funcționalitatea de silabisire dacă este suportată"
 
 #. Translators: This is the label for the keyboard settings dialog.
 msgid "Keyboard Settings"
-msgstr "Opțiuni tastatură"
+msgstr "Setări tastatură"
 
-#. Translators: This is the label for a combobox in the
+#. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-msgid "&Keyboard layout:"
-msgstr "&Schemă tastatură:"
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "Folosește &CapsLock ca tastă de modificare NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6776,7 +8362,7 @@ msgstr "Trebuie folosită măcar o tastă drept tasta NVDA."
 
 #. Translators: This is the label for the mouse settings dialog.
 msgid "Mouse Settings"
-msgstr "Opțiuni maus"
+msgstr "Setări maus"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6810,7 +8396,7 @@ msgstr "&Luminozitatea controlează volumul coordonatelor audio"
 
 #. Translators: This is the label for the review cursor settings dialog.
 msgid "Review Cursor Settings"
-msgstr "Opțiuni Cursor examinare"
+msgstr "Setări Cursor examinare"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -6834,7 +8420,7 @@ msgstr "Mod &examinare simplă"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 msgid "Input Composition Settings"
-msgstr "Opțiuni pentru Compunere Intrări"
+msgstr "Setări pentru Compunere Intrări"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -6887,7 +8473,7 @@ msgstr "Vorbește și emite bip"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &tooltips"
-msgstr "Anunță &informații instrument"
+msgstr "Anunță &indicii"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -6929,6 +8515,11 @@ msgstr "Anunță barele de progres din &fundal"
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
 msgstr "Anunță schimbările &dinamice de conținut"
+
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "&Redă un sunet când apar autosugestiile"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -7016,7 +8607,7 @@ msgstr "&Atribute font"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "E&mphasis"
-msgstr "&Accentuat"
+msgstr "&Accentuare"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7046,7 +8637,7 @@ msgstr "&Revizii editor"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Spelling e&rrors"
-msgstr "&greșeli de ortografie"
+msgstr "&Greșeli de ortografie"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7061,14 +8652,16 @@ msgstr "&Pagini"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Line &numbers"
-msgstr "&numerele rândurilor"
+msgstr "&numere de rânduri"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "&Anunțareindentație rând"
+msgstr "&Anunțare indentație rând"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "dezactivat"
 
@@ -7120,6 +8713,21 @@ msgstr "&Antet rând/coloană"
 msgid "Cell c&oordinates"
 msgstr "&Coordonate celulă"
 
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Stiluri"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "Atât culori cât și stiluri"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Marginile celulei"
+
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
 msgid "Elements"
@@ -7151,6 +8759,14 @@ msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Anunță schimbări de formatare după cursor (poate produce  o întârziere)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "Windows 10 OCR"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "&Limba recunoașterii:"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "&Oriunde"
@@ -7169,7 +8785,7 @@ msgstr "Editează termenul din dicționar"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "&Şablon"
+msgstr "&Șablon"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
@@ -7184,13 +8800,17 @@ msgstr "&Comentariu"
 msgid "&Type"
 msgstr "&Scrie"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Este necesar un model."
+
+msgid "Dictionary Entry Error"
+msgstr "Eroare la introducere în dicționar"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Eroare de expresie regulată: \"%s\""
-
-msgid "Dictionary Entry Error"
-msgstr "Eroare la introducere în dicționar"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7203,7 +8823,7 @@ msgstr "Comentariu"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 msgid "Pattern"
-msgstr "Şablon"
+msgstr "Șablon"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
@@ -7233,7 +8853,7 @@ msgstr "Adaugă intrare în dicționar"
 
 #. Translators: This is the label for the braille settings dialog.
 msgid "Braille Settings"
-msgstr "Opțiuni Braiile"
+msgstr "Setări Braiile"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -7259,21 +8879,33 @@ msgstr "&Dezvoltă cuvântul de la cursor în braille pentru calculator"
 msgid "&Show cursor"
 msgstr "Arată c&ursor"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Cursor intermitent"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "&Rata intemitenței cusorului (ms)"
+msgstr "&Frecvența intermitenței cursorului (ms)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "&Formă cursor"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "Formă cursor pentru &focalizare:"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "Formă cursor pentru &examinare:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-msgid "Message timeout (sec)"
+msgid "Message &timeout (sec)"
 msgstr "&Timp expirare mesaj (sec)"
 
+#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+msgid "Show &messages indefinitely"
+msgstr "Arată &mesajele pe termen nelimitat"
+
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "Braille tethered to:"
-msgstr "Braille asociat la:"
+msgid "B&raille tethered to:"
+msgstr "B&raille asociat la:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -7282,6 +8914,10 @@ msgstr "Citire &paragraf cu paragraf"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "Evită despărțirea &cuvintelor când e posibil"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "Focalizare pe contextul prezentării"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -7388,6 +9024,10 @@ msgid "Rate boos&t"
 msgstr "Amplificare &rată vorbire"
 
 #. Translators: Description for a speech synthesizer.
+msgid "Windows OneCore voices"
+msgstr "Voci Windows OneCore"
+
+#. Translators: Description for a speech synthesizer.
 msgid "No speech"
 msgstr "Fără vorbire"
 
@@ -7432,28 +9072,6 @@ msgstr ""
 "Activează sau dezactivează păstrarea aspectului ecranului în timpul redării "
 "conținutului documentului"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Nu este într-o celulă de tabel"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "se mută lal rândul următor din tabel"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "se mută la rândul anterior din tabel"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "mută la coloana următoare din tabel"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "mută la coloana anterioară din tabel"
-
 msgid "Taskbar"
 msgstr "Bară de activități"
 
@@ -7491,7 +9109,7 @@ msgstr "automat"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
 msgid "diagonal crosshatch"
-msgstr "hașurare diagonală"
+msgstr "diagonală hașurată"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
@@ -7699,6 +9317,11 @@ msgstr ""
 "toate celulele aflate mai jos și la dreapta ei în interiorul acestei regiuni."
 "Apăsând de două ori se va omite antetul de rând curent acestei celule."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "Foaie {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Mesajul de intrare este {title}: {message}"
@@ -7724,6 +9347,129 @@ msgstr "Editare comentariu pentru celula {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} până la {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "margine superioară"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "margine inferioară"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "margine stângă"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "margine dreaptă"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "linie diagonală în colțul superior drept"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "linie diagonală în colțul inferior drept"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "margini orizontale cu excepția celor din exterior"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "margini verticale cu excepția celor din exterior"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "continuu"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "punctată"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "cratimă punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "cratimă punct punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "punctat"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "dublu"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "punct mediu înclinat"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "diafan"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "subțire"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "mediu"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "gros"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "cratimă medie punct punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "cratimă medie punct"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "punctat mediu"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "margine din jur {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "marginea superioară și cea inferioară {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "marginea din stânga și cea din dreapta {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "liniile diagonale sus-dreapta și jos-dreapta {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 # adăugat "plană" pentru claritate
 #. Translators: A type of chart in Microsoft Excel.
@@ -8494,6 +10240,10 @@ msgstr "comentariu: {text} de către {author} în {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} de {author} în {date}"
 
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Ortografie: {text}"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -8745,6 +10495,11 @@ msgstr "Nu este în tabel"
 msgid "&Annotations"
 msgstr "&Adnotări"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&errors"
+msgstr "&erori"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
@@ -8753,991 +10508,26 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "&Profile"
-#~ msgstr "&Profil"
+#~ msgid "-----"
+#~ msgstr "-----"
 
-#~ msgid "Language"
-#~ msgstr "Limbă"
+#~ msgid "(x)"
+#~ msgstr "(x)"
 
-#~ msgid "Log level"
-#~ msgstr "Nivelul jurnalului"
+#~ msgid "(-)"
+#~ msgstr "(-)"
 
-#~ msgid "Keyboard layout"
-#~ msgstr "Schemă tastatură"
+#~ msgid "( )"
+#~ msgstr "( )"
 
-#~ msgid "text reporting unit"
-#~ msgstr "unitate de raportare a textului"
+#~ msgid "Farsi grade 1"
+#~ msgstr "Persană grad 1"
 
-#~ msgid "Progress bar output"
-#~ msgstr "Anunț bară de progres"
+#~ msgid "ITALIC"
+#~ msgstr "ITALIC"
 
-#~ msgid "Report &font name"
-#~ msgstr "Anunță &nume font"
+#~ msgid "braille"
+#~ msgstr "braille"
 
-#~ msgid "Report font &size"
-#~ msgstr "Anunță &mărime font"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Anunță &alinierea"
-
-#~ msgid "Report &colors"
-#~ msgstr "Anunță &culori"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Anunță co&mentarii"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Anunță a&ccentuarea"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Anunță st&il"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Anunță &erori de ortografie"
-
-#~ msgid "Report &pages"
-#~ msgstr "Anunță &pagini"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Anunță spațiere &linie"
-
-#~ msgid "Report &tables"
-#~ msgstr "Anunță &tabele"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Anunță &anteturi de rând sau coloană din tabel"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Anunță le&gături"
-
-#~ msgid "Report &headings"
-#~ msgstr "Anunță &rubrici"
-
-#~ msgid "Report &lists"
-#~ msgstr "Anunță &liste"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Anunță &citate în bloc"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Anunță r&epere"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Anunță &cadre"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Anunță dacă e &clicabil"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Activează sau dezactivează raportarea indentației de rând"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Celula curentă nu este editabilă"
-
-#~ msgid "checker"
-#~ msgstr "tablă de șah"
-
-#~ msgid "crisscross"
-#~ msgstr "intersectat"
-
-#~ msgid "down"
-#~ msgstr "jos"
-
-#~ msgid "gray16"
-#~ msgstr "gri16"
-
-#~ msgid "gray25"
-#~ msgstr "gri25"
-
-#~ msgid "gray50"
-#~ msgstr "gri50"
-
-#~ msgid "gray75"
-#~ msgstr "gri75"
-
-#~ msgid "grid"
-#~ msgstr "grilă"
-
-#~ msgid "light down"
-#~ msgstr "deschis spre jos"
-
-#~ msgid "light up"
-#~ msgstr "deschis spre sus"
-
-#~ msgid "light vertical"
-#~ msgstr "deschis vertical"
-
-#~ msgid "semi gray75"
-#~ msgstr "semi gri75"
-
-#~ msgid "up"
-#~ msgstr "sus"
-
-#~ msgid "unknown color"
-#~ msgstr "culoare necunoscută"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "albastru Alice"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "alb antic"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "aqua"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "acvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "azur"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "bej"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "roz-portocaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "migdale înălbite"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "albastru"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "albastru-violaceu"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "nisipiu"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "albastru-cenușiu"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "galben-verzui"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "ciocolatiu"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "corai"
-
-# sună cam forțat
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "de culoarea albăstrelei"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "galben-deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "carmin"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "albastru închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "cyan închis"
-
-# traducere forțată...
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "culoarea splinuței închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "verde închis"
-
-# varianta "kaki" are pronunție dificilă pe sintetizator
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "kakiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "magenta închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "verde-măsliniu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "portocaliu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "orhidee închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "roșu închis"
-
-# forțată
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "culoarea somonului închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "verde-marin închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "albastru-cenușiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "gri-cenușiu închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "turcoaz închis"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "violet închis"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "roz intens"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "azur intens"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "gri pal"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "azur-luminos Dodger"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "cărămiziu"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "alb-rozaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "verde de pădure"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fucsia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "albastru-cenușiu Gainsboro"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "alb de fantomă"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "auriu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "culoarea splinuței"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "gri"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "galben-verzui"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "pepene galben"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "roz viu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "roșu oxid de fier"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "indigo"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "fildeș"
-
-# varianta "kaki" are pronunție dificilă pe sintetizator
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "kakiu"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "levănțică"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "levănțică rozalie"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "verde gazon"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Șifon"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "albastru deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "corai deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "cyan deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "splinuță deschis gălbui"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "verde deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "roz deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "culoarea somonului deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "verde-marin deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "azur deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "gri-cenușiu deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "albastru-metalic deschis"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "galben deschis"
-
-# sau "limetă" ?
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "limetă"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "limetă verzuie"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "pânză de in"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "maro"
-
-# "pronunțat" fiind mai mic pe scara intensității decât "închis"="dark"
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "acvamarin pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "albastru pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "orhidee pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "purpuriu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "verde-marin pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "albastru-cenușiu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "verde de primăvară pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "turcoaz pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "violet-cărămiziu pronunțat"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "albastru miezu-nopții"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "verde lichior de mentă"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "roz pal"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "mocasin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "alb-portocaliu Navajo"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "bleumarin"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "dantelă ștearsă"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "oliv"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "olive-kakiu"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "roșu-portocaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "orhidee"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "culoarea splinuței pală"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "verde pal"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "turcoaz pal"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "violet-cărămiziu pal"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "portocaliu pal Papaya"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "puf de piersică"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "brun Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "roz"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "prună"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "albastru foarte pal"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "roșu"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "brun-rozaliu"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "albastru intens regal"
-
-# sau..."brun-bronz pronunțat"?
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "brun ca șaua"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "culoarea somonului"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "brun-nisipiu"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "verde marin"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "scoică"
-
-# nu cunosc culoarea...
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "sienna"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "argintiu"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "azur"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "albastru-cenușiu"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "gri-cenușiu"
-
-# forțat
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "culoare de nea"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "verde-primăvăratec"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "albastru-metalic"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "cafeniu"
-
-# "cyan închis"
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "albastru-verzui închis"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "violet ciulin"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "roșu tomată"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "turcoaz"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "violet"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "culoarea grâului"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "culoare fum-alb"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Marcarea începutului trebuie să se afle în același obiect"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "anunță erori ortografie dezactivat"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "anunță erori ortografie activat"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Activează sau dezactivează raportarea erorilor de ortografie"
-
-#~ msgid "grammar error"
-#~ msgstr "eroare de ortografie"
-
-#~ msgid "out of grammar error"
-#~ msgstr "în afara erorii de ortografie"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Anunță &erori de ortografie"
-
-#~ msgid "browse mode"
-#~ msgstr "mod navigare"
-
-#~ msgid "activate"
-#~ msgstr "activează"
-
-#~ msgid "no next"
-#~ msgstr "următor inexistent"
-
-#~ msgid "no previous"
-#~ msgstr "anterior inexistent"
-
-#~ msgid "edge of table"
-#~ msgstr "marginea tabelului"
-
-#~ msgid "%g characters"
-#~ msgstr "%g caractere"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "fără comentarii"
-
-#~ msgid "layout %s"
-#~ msgstr "plan %s"
-
-#~ msgid "%s embedded object"
-#~ msgstr "%s obiect incorporat"
-
-#~ msgid "NVDA Excel Cell Editor"
-#~ msgstr "Editor NVDA în celule de Excel"
-
-#~ msgid "Enter cell contents"
-#~ msgstr "Introduceți conținutul celulei"
-
-#~ msgid "Extends the selection and speaks the last selected cell"
-#~ msgstr "Extinde selecțiunea și pronunță ultima celulă selectată"
-
-#~ msgid "%s %s through %s %s"
-#~ msgstr "%s %s prin %s %s"
-
-#~ msgid "Slovak"
-#~ msgstr "slovacă"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s din %s"
-
-#~ msgid "line feed"
-#~ msgstr "introducere rând"
-
-#~ msgid "page break"
-#~ msgstr "pagină nouă"
-
-#~ msgid "carriage return"
-#~ msgstr "de la capăt"
-
-#~ msgid "quote"
-#~ msgstr "ghilimele"
-
-#~ msgid "number"
-#~ msgstr "număr"
-
-#~ msgid "dollar"
-#~ msgstr "dolar"
-
-#~ msgid "percent"
-#~ msgstr "procent"
-
-#~ msgid "tick"
-#~ msgstr "bifă"
-
-#~ msgid "left paren"
-#~ msgstr "paranteză stânga"
-
-#~ msgid "plus"
-#~ msgstr "plus"
-
-#~ msgid "comma"
-#~ msgstr "virgulă"
-
-#~ msgid "dash"
-#~ msgstr "cratimă"
-
-#~ msgid "slash"
-#~ msgstr "bară diagonală"
-
-#~ msgid "semi"
-#~ msgstr "punct și virgulă"
-
-#~ msgid "less"
-#~ msgstr "minus"
-
-#~ msgid "equals"
-#~ msgstr "egal"
-
-#~ msgid "greater"
-#~ msgstr "plus"
-
-#~ msgid "question"
-#~ msgstr "semn de întrebare"
-
-#~ msgid "at"
-#~ msgstr "la"
-
-#~ msgid "left bracket"
-#~ msgstr "paranteză dreaptă stânga"
-
-#~ msgid "back slash"
-#~ msgstr "bară diagonală inversă"
-
-#~ msgid "right bracket"
-#~ msgstr "paranteză dreaptă dreapta"
-
-#~ msgid "left brace"
-#~ msgstr "acoladă stânga"
-
-#~ msgid "bar"
-#~ msgstr "bară"
-
-#~ msgid "right brace"
-#~ msgstr "acoladă dreapta"
-
-#~ msgid "tilda"
-#~ msgstr "tildă"
-
-#~ msgid "bullet"
-#~ msgstr "bulet"
-
-#~ msgid "dot dot dot"
-#~ msgstr "puncte puncte"
-
-#~ msgid "lime"
-#~ msgstr "verde deschis"
-
-#~ msgid "navy blue"
-#~ msgstr "bleumarin"
-
-#~ msgid "teal"
-#~ msgstr "albastru verzui"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Fișier de configurare format greșit"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, devine implicit %s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Eroare la analizarea fișierului de configurare: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Erori în fișierul de configurare '%s':\n"
-#~ "%s"
-
-#~ msgid "equation"
-#~ msgstr "ecuație"
-
-#~ msgid "speak punctuation"
-#~ msgstr "citește punctuația"
-
-#~ msgid ""
-#~ "Toggles on and off the speaking of punctuation. When on NVDA will say the "
-#~ "names of punctuation symbols, when off it will be up to the synthesizer "
-#~ "as to how it speaks punctuation"
-#~ msgstr ""
-#~ "Pornește sau oprește citirea punctuației. Când e activat, NVDA va spune "
-#~ "numele semnelor de punctuație, când e dezactivat sintetizatorul va alege "
-#~ "cum citește punctuația."
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nu există descriere simplă pentru acest obiect"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Nu există obiect la poziția descrierii simple"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Nu există informație asupra locației pentru obiectul navigator"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Nu există informație asupra locației pentru ecran"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Anunță înălțimea, lățimea și poziția obiectului navigator curent"
-
-#~ msgid "Sets the keyboard focus to the navigator object"
-#~ msgstr "Pune punctul focalizat din taste pe obiectul navigator"
-
-#~ msgid "No parents"
-#~ msgstr "Nu există surse"
-
-#~ msgid ""
-#~ "Sets the navigator object to the parent of the object it is currently on "
-#~ "and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe sursa obiectului pe care se află pe moment și "
-#~ "îl pronunță"
-
-#~ msgid ""
-#~ "Sets the navigator object to the object previous to the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe obiectul dinaintea celui pe care se află pe "
-#~ "moment și îl pronunță"
-
-#~ msgid "No children"
-#~ msgstr "Nu există rezultate"
-
-#~ msgid ""
-#~ "Sets the navigator object to the first child object of the one it is "
-#~ "currently on and speaks it"
-#~ msgstr ""
-#~ "Pune obiectul navigator pe primul obiect rezultat din cel pe care se află "
-#~ "pe moment și îl pronunță"
-
-#~ msgid "default action failed"
-#~ msgstr "acțiune implicită eșuată"
-
-#~ msgid ""
-#~ "Moves the system caret to the position of the review cursor , in the "
-#~ "current navigator object"
-#~ msgstr ""
-#~ "Mută cursorul de scriere al sistemului la poziția cursorului de examinare "
-#~ "în obiectul navigator curent"
-
-#~ msgid "beeps"
-#~ msgstr "semnale sonore"
-
-#~ msgid "talk"
-#~ msgstr "vorbește"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "anunță obiectul cu punctul focalizat"
-
-#~ msgid "Shows the NVDA virtual buffers settings dialog"
-#~ msgstr ""
-#~ "Arată fereastra de dialog a setărilor zonei tampon virtuale din NVDA"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "încarcă configurația salvată a NVDA, suprascriind schimbările curente"
-
-#, fuzzy
-#~ msgid "Please close  the other NVDA settings dialog first"
-#~ msgstr "Arată fereastra de dialog a setărilor mousului din NVDA"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Sigur doriți să închideți NVDA?"
-
-#~ msgid "copyright"
-#~ msgstr "copyright"
-
-#~ msgid "url"
-#~ msgstr "url"
-
-#~ msgid "Virtual &buffers..."
-#~ msgstr "&Zone tampon virtuale..."
-
-#~ msgid "Readme"
-#~ msgstr "Citește-mă"
-
-#~ msgid "NVDA"
-#~ msgstr "NVDA"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Avertizează înainte de închiderea NVDA"
-
-#~ msgid "&Speak all punctuation"
-#~ msgstr "&Pronunță toate semnele de punctuație"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "Crește amplitudinea sunetului pentru majuscule"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Urmărește &focalizarea din taste"
-
-#~ msgid "virtual buffers"
-#~ msgstr "zone tampon virtuale"
-
-#~ msgid "Regular &expression"
-#~ msgstr "&Expresii obișnuite"
-
-#~ msgid "&edit"
-#~ msgstr "&editează"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&Tabel traducere:"
-
-#~ msgid "unselecting %s"
-#~ msgstr "deselectare %s"
-
-#~ msgid "female 1"
-#~ msgstr "femeie 1"
-
-#~ msgid "female 2"
-#~ msgstr "femeie 2"
-
-#~ msgid "male 1"
-#~ msgstr "bărbat 1"
-
-#~ msgid "male 2"
-#~ msgstr "bărbat 2"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Prezintă o listă de linkuri, titluri și repere"
+#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
+#~ msgstr "Sigur vreți să ștergeți acest profil? Acțiunea este ireversibilă."

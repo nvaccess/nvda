@@ -91,6 +91,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 - 读取用户帐户控制(UAC)界面时，不能尝试启动具有管理权限的应用程序。
 - Windows 8： 无法使用触摸屏进行输入。
 - Windows 8：无法在 Windows 商店应用提供诸如浏览模式和朗读输入字符的特性。
+- windows8 或其后版本：无法提供音频闪避特性。
 -
 
 ++ 安装 NVDA ++
@@ -643,7 +644,10 @@ NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
 - 表格：这里列举了工作表中所有的表格。
 在所列表格中按下“F2”可重命名该表格。
 按下“回车键”或点击“移动到”按钮可以直接移动到所选的表格中。
--
+- 表单： 这里将列举所有工作表内所包含的表单
+对于每一个表单，元素列表将显示每一个地址所覆盖的单元格的替代文本
+选择一个表单项目之后按下“回车”或点击“移动到”按钮即可跳转到该表单项目。
+ -
 
 +++ 朗读注释 +++
 %kc:beginInclude
@@ -660,7 +664,7 @@ NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
 +++ 表单 +++
 Excel 工作部可包含表单。
 您可以使用“元素列表”对话框查看他们或字母F 和 shift+F 来跳转。
-当您使用浏览模式移动到某个表单项后，您可以使用回车键或空格键切换到焦点模式，您可以与之交互，方法取决于当前所在处的控件。
+当您使用浏览模式移动到某个表单项后，您可以使用“回车”键或“空格”键切换到焦点模式，您可以与之交互，方法取决于当前所在处的控件。
 更多有关于浏览模式或单键导航使用方面的信息，请查阅[浏览模式张节 #BrowseMode]。
 
 ++ Microsoft PowerPoint ++
@@ -780,6 +784,9 @@ NVDA 支持的合成器列表可以在[支持的语音合成器 #SupportedSpeech
 - 输出语音或声音时闪避：仅当在 NVDA 朗读或播放声音时减小其他声音的音量。这可能不能作用于所有合成器。
 - 总是闪避：在 NVDA 运行的全过程中，其他音频音量会被保持在一个较低的水平上。
 -
+
+此选项紧在已安装的NVDA版本上可用。
+临时的NVDA或者便携版NVDA都无法提供音频闪避功能。
 
 +++ 语音设置 (NVDA+control+v) +++[VoiceSettings]
 在“选项”菜单的“语音设置”对话框，包含着允许您定义语音声音的选项。
@@ -1196,31 +1203,42 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 此对话框的大多数复选框都是用来配置，在您用光标浏览整个文档时朗读什么类型的格式信息。
 例如，如果您选择了“朗读字体名称”复选框，每次您用光标进入拥有不同字体的文本时，字体名称就会被读出。
 
+文档格式信息已经被编成群组了。
 您可以配置的朗读有：
-- 字体名称
-- 字体大小
--字体属性
-- 对齐方式
-- 颜色
-- 注释
-- 编辑者修订
-- 强调
-- 文本样式
-- 拼写错误
-- 页码
-- 行数
-- 缩进
-- 段落缩进 (如悬挂式缩进、首行缩进)
-- 行间距（如单倍行间距，双倍行间距等等）
-- 表格
-- 表格的行/列标题
-- 表格单元的坐标
-- 链接
-- 标题
-- 列表
-- 引用区
-- 路标
-- 框架
+- 字体
+ - 字体名称
+ - 字体大小
+ - 字体属性
+ - 强调
+ - 缩进
+ - 颜色
+- 文档信息
+ - 注释
+ - 编辑者修订
+ - 拼写错误
+- 页面和间距
+ - Page numbers
+ - 行数
+ - 行首缩进提示方式 [(关闭，语音，声音，语音和声音) #lineIndentationOptions]
+ - 段落缩进 (例如悬挂式缩进，首行缩进)
+ - 行间距 (单行行间距，双倍行间距等)
+ - 对齐方式
+- 表格信息
+ - 表格
+ - 行/列标题
+ - 单元坐标
+- 元素
+ - 标题
+ - 链接
+ - 列表
+ - 引用去
+ - 地标
+ - 框架
+ - 可点击
+ -
+-
+
+
 -如果某些东西可点击
 -
 
@@ -1231,7 +1249,18 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 
  默认情况下，NVDA 会检测系统输入焦点或者浏览光标所在位置的格式信息，某些情况也会检测这一行的剩余部分，前提是这样做不会降低执行效率。
 
-在文档校对时为某些程序(如 Microsoft Word)启用此选项非常实用，因为格式信息很重要。
+在文档校对时为某些程序(如 Wordpa	d)启用此选项非常实用，因为格式信息很重要。
+
+==== 行缩进的提示方式 ====
+此选项允许您定义如何提示行首位置的缩进。
+“行缩进的提示方式为”组合框包含四个选项：
+
+- 关闭： NVDA不会特别提示行首缩进情况。
+- 语音： 如果语音选项选中，当缩进个数发生变化时，NVDA 就会读出形如“12个空格”或“4个制表符”这样的内容。
+- 声音： 若“声音”选项选中，当缩进数量发生了改变时声音会反馈缩进变化的量。
+每增加一个空格或一个制表符，音调升高一个半音，也会为四个连续空格而升高伴音。
+- 语音和声音：此选项将使用上述两种方式来提示缩进。
+-
 
 +++ 语音字典 +++
 “语音字典”对话框，可用来为特定词语或者短语指定特殊的朗读方法，他可以再“选项”菜单下的“语音字典”找到。
@@ -1428,6 +1457,10 @@ NVDA 的语音字典比之单词替换更为强大。
 
 要想起用朗读查看器，可以再 NVDA 的“工具”菜单选中。
 取消选中菜单即可停用。
+
+朗读查看器窗口包含选项“启动时显示朗读查看器”
+如果选中， NVDA 会在启动时打开朗读查看器。
+此窗口若被关闭，重新打开时也将以相同的尺寸出现在相同的位置。
 
 当朗读查看器启用时，它会不断地更新，从而向您显示最近朗读的文本。
 然而，当您点击或把焦点放在查看器之内，NVDA 就会暂停文本的更新，您可以轻松的选择或者复制已有的文本。
@@ -1691,16 +1724,22 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt+shift+tab key | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille Displays ++
-Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
+++ Baum/Humanware/APH/Orbit Braille Displays ++
+Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] and [Orbit http://www.orbitresearch.com/] displays are supported when connected via USB, bluetooth or serial.
 These include:
-- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
+- HumanWare: Brailliant, BrailleConnect, Brailliant2
 - APH: Refreshabraille
+- Orbit: Orbit Reader 20
 -
 Some other displays manufactured by Baum may also work, though this has not been tested.
 
-If connecting via USB to displays other than the VarioUltra, Pronto! or Refreshabraille with USB mode set to HID, you must first install the USB drivers provided by the manufacturer.
+If connecting via USB to displays which do not use HID, you must first install the USB drivers provided by the manufacturer.
+The VarioUltra and Pronto! use HID.
+The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
+
+The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
+USB HID should generally be used instead.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.

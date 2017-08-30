@@ -22,14 +22,17 @@ import versionInfo
 import speech
 import queueHandler
 import core
+import guiHelper
 from settingsDialogs import *
 import speechDictHandler
 import languageHandler
+import keyboardHandler
 import logViewer
 import speechViewer
 import winUser
 import api
 import guiHelper
+import winVersion
 
 try:
 	import updateCheck
@@ -239,6 +242,9 @@ class MainFrame(wx.Frame):
 	def onDocumentFormattingCommand(self,evt):
 		self._popupSettingsDialog(DocumentFormattingDialog)
 
+	def onUwpOcrCommand(self, evt):
+		self._popupSettingsDialog(UwpOcrDialog)
+
 	def onSpeechSymbolsCommand(self, evt):
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
@@ -353,6 +359,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to open Document Formatting settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change settings of document properties")) 
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
+		if winVersion.isUwpOcrAvailable():
+			# Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+			item = menu_preferences.Append(wx.ID_ANY, _("Windows 10 OCR..."))
+			self.Bind(wx.EVT_MENU, frame.onUwpOcrCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Default speech dictionary dialog.
@@ -561,45 +571,67 @@ class WelcomeDialog(wx.Dialog):
 	This dialog is displayed the first time NVDA is started with a new configuration.
 	"""
 
-	WELCOME_MESSAGE = _(
-		"Welcome to NVDA!\n"
+	# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
+	WELCOME_MESSAGE_DETAIL = _(
 		"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-		"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
-		"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+		"From this menu, you can configure NVDA, get help and access other NVDA functions."
 	)
 
 	def __init__(self, parent):
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super(WelcomeDialog, self).__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		welcomeText = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE)
-		mainSizer.Add(welcomeText,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		# Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+		# bold lettering 
+		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
+		welcomeTextHeader.SetFont(wx.Font(18, wx.NORMAL, wx.NORMAL, wx.BOLD))
+		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+		mainSizer.Add(welcomeTextHeader,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
+		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
+		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
-		self.capsAsNVDAModifierCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Use CapsLock as an NVDA modifier key"))
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
+		# Translators: The label of a combobox in the Welcome dialog.
+		kbdLabelText = _("&Keyboard layout:")
+		layouts = keyboardHandler.KeyboardInputGesture.LAYOUTS
+		self.kbdNames = sorted(layouts)
+		kbdChoices = [layouts[layout] for layout in self.kbdNames]
+		self.kbdList = sHelper.addLabeledControl(kbdLabelText, wx.Choice, choices=kbdChoices)
+		try:
+			index = self.kbdNames.index(config.conf["keyboard"]["keyboardLayout"])
+			self.kbdList.SetSelection(index)
+		except:
+			log.error("Could not set Keyboard layout list to current layout",exc_info=True) 
+		# Translators: The label of a checkbox in the Welcome dialog.
+		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
+		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(self, label=capsAsNVDAModifierText))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
-		optionsSizer.Add(self.capsAsNVDAModifierCheckBox,flag=wx.TOP|wx.LEFT,border=10)
-		# Translators: The label of a check box in the Welcome dialog.
-		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("&Automatically start NVDA after I log on to Windows"))
+		# Translators: The label of a checkbox in the Welcome dialog.
+		startAfterLogonText = _("&Automatically start NVDA after I log on to Windows")
+		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
-		optionsSizer.Add(self.startAfterLogonCheckBox,flag=wx.TOP|wx.LEFT,border=10)
-		# Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
-		self.showWelcomeDialogAtStartupCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Show this dialog when NVDA starts"))
+		# Translators: The label of a checkbox in the Welcome dialog.
+		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
+		self.showWelcomeDialogAtStartupCheckBox = sHelper.addItem(wx.CheckBox(self, label=showWelcomeDialogAtStartupText))
 		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
-		optionsSizer.Add(self.showWelcomeDialogAtStartupCheckBox,flag=wx.TOP|wx.LEFT,border=10)
-		mainSizer.Add(optionsSizer,flag=wx.LEFT|wx.TOP|wx.RIGHT,border=20)
-		mainSizer.Add(self.CreateButtonSizer(wx.OK),flag=wx.TOP|wx.BOTTOM|wx.ALIGN_CENTER_HORIZONTAL,border=20)
+		mainSizer.Add(optionsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
-		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
-		self.capsAsNVDAModifierCheckBox.SetFocus()
+		self.SetSizer(mainSizer)
+		self.kbdList.SetFocus()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onOk(self, evt):
+		layout = self.kbdNames[self.kbdList.GetSelection()]
+		config.conf["keyboard"]["keyboardLayout"] = layout
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.capsAsNVDAModifierCheckBox.IsChecked()
 		if self.startAfterLogonCheckBox.Enabled:
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
@@ -607,7 +639,7 @@ class WelcomeDialog(wx.Dialog):
 		try:
 			config.conf.save()
 		except:
-			log.debugWarning("could not save",exc_info=True)
+			log.debugWarning("Could not save",exc_info=True)
 		self.EndModal(wx.ID_OK)
 
 	@classmethod
@@ -734,7 +766,9 @@ class ExitDialog(wx.Dialog):
 		# Translators: An option in the combo box to choose exit action.
 		_("Restart"),
 		# Translators: An option in the combo box to choose exit action.
-		_("Restart with add-ons disabled")]
+		_("Restart with add-ons disabled"),
+		# Translators: An option in the combo box to choose exit action.
+		_("Restart with debug logging enabled")]
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
@@ -756,7 +790,9 @@ class ExitDialog(wx.Dialog):
 		elif action == 1:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,True)
+			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,disableAddons=True)
+		elif action == 3:
+			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
 		self.Destroy()
 
 	def onCancel(self, evt):
@@ -822,7 +858,8 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 
 	def done(self):
 		self.timer.Stop()
-		if self.IsActive():
+		pbConf = config.conf["presentation"]["progressBarUpdates"]
+		if pbConf["progressBarOutputMode"] in ("beep", "both") and (pbConf["reportBackgroundProgressBars"] or self.IsActive()):
 			tones.beep(1760, 40)
 		self.Hide()
 		self.Destroy()

@@ -39,6 +39,8 @@ import inputCore
 import virtualBuffers
 import characterProcessing
 from baseObject import ScriptableObject
+import core
+import winVersion
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -138,12 +140,13 @@ class GlobalCommands(ScriptableObject):
 		except (NotImplementedError, RuntimeError):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
-		if scriptHandler.getLastScriptRepeatCount()==0:
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
-			speech.speakSpelling(info.text)
+			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	# Translators: Input help mode message for report current line command.
-	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
+	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line. Pressing three times will spell the line using character descriptions.")
 	script_reportCurrentLine.category=SCRCAT_SYSTEMCARET
 
 	def script_leftMouseClick(self,gesture):
@@ -1232,7 +1235,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		# Toggle browse mode pass-through.
 		vbuf.passThrough = not vbuf.passThrough
-		if isinstance(vbuf,browseMode.BrowseModeDocumentTreeInterceptor):
+		if isinstance(vbuf,browseMode.BrowseModeTreeInterceptor):
 			# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 			# If we're disabling pass-through, re-enable auto-pass-through.
 			vbuf.disableAutoPassThrough = vbuf.passThrough
@@ -1245,6 +1248,11 @@ class GlobalCommands(ScriptableObject):
 		gui.quit()
 	# Translators: Input help mode message for quit NVDA command.
 	script_quit.__doc__=_("Quits NVDA!")
+
+	def script_restart(self,gesture):
+		core.restart()
+	# Translators: Input help mode message for restart NVDA command.
+	script_restart.__doc__=_("Restarts NVDA!")
 
 	def script_showGui(self,gesture):
 		gui.showGui()
@@ -1271,6 +1279,7 @@ class GlobalCommands(ScriptableObject):
 			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
+			"reportBorderStyle":True,"reportBorderColor":True,
 		}
 		textList=[]
 		info=api.getReviewPosition()
@@ -1290,7 +1299,7 @@ class GlobalCommands(ScriptableObject):
 
 		repeats=scriptHandler.getLastScriptRepeatCount()
 		if repeats==0:
-			text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
+			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
 			if text:
 				textList.append(text)
 
@@ -1301,7 +1310,7 @@ class GlobalCommands(ScriptableObject):
 				
 			ui.message(" ".join(textList))
 		elif repeats==1:
-			text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
+			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
 			if text:
 				textList.append(text)
 
@@ -1690,6 +1699,25 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
 	script_braille_toggleTether.category=SCRCAT_BRAILLE
 
+	def script_braille_toggleFocusContextPresentation(self, gesture):
+		values = [x[0] for x in braille.focusContextPresentations]
+		labels = [x[1] for x in braille.focusContextPresentations]
+		try:
+			index = values.index(config.conf["braille"]["focusContextPresentation"])
+		except:
+			index=0
+		newIndex = (index+1) % len(values)
+		config.conf["braille"]["focusContextPresentation"] = values[newIndex]
+		braille.invalidateCachedFocusAncestors(0)
+		braille.handler.handleGainFocus(api.getFocusObject())
+		# Translators: Reports the new state of braille focus context presentation.
+		# %s will be replaced with the context presentation setting.
+		# For example, the full message might be "Braille focus context presentation: fill display for context changes"
+		ui.message(_("Braille focus context presentation: %s")%labels[newIndex].lower())
+	# Translators: Input help mode message for toggle braille focus context presentation command.
+	script_braille_toggleFocusContextPresentation.__doc__ = _("Toggle the way context information is presented in braille")
+	script_braille_toggleFocusContextPresentation.category=SCRCAT_BRAILLE
+
 	def script_braille_toggleShowCursor(self, gesture):
 		if config.conf["braille"]["showCursor"]:
 			# Translators: The message announced when toggling the braille cursor.
@@ -1710,13 +1738,17 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Braille cursor is turned off"))
 			return
 		shapes = [s[0] for s in braille.CURSOR_SHAPES]
+		if braille.handler.tether == braille.handler.TETHER_FOCUS:
+			cursorShape = "cursorShapeFocus"
+		else:
+			cursorShape = "cursorShapeReview"
 		try:
-			index = shapes.index(config.conf["braille"]["cursorShape"]) + 1
+			index = shapes.index(config.conf["braille"][cursorShape]) + 1
 		except:
 			index = 1
 		if index >= len(braille.CURSOR_SHAPES):
 			index = 0
-		config.conf["braille"]["cursorShape"] = braille.CURSOR_SHAPES[index][0]
+		config.conf["braille"][cursorShape] = braille.CURSOR_SHAPES[index][0]
 		shapeMsg = braille.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)
@@ -1883,6 +1915,24 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
 	script_braille_toFocus.category=SCRCAT_BRAILLE
 
+	def script_braille_eraseLastCell(self, gesture):
+		brailleInput.handler.eraseLastCell()
+	# Translators: Input help mode message for a braille command.
+	script_braille_eraseLastCell.__doc__= _("Erases the last entered braille cell or character")
+	script_braille_eraseLastCell.category=SCRCAT_BRAILLE
+
+	def script_braille_enter(self, gesture):
+		brailleInput.handler.enter()
+	# Translators: Input help mode message for a braille command.
+	script_braille_enter.__doc__= _("Translates any braille input and presses the enter key")
+	script_braille_enter.category=SCRCAT_BRAILLE
+
+	def script_braille_translate(self, gesture):
+		brailleInput.handler.translate()
+	# Translators: Input help mode message for a braille command.
+	script_braille_translate.__doc__= _("Translates any braille input")
+	script_braille_translate.category=SCRCAT_BRAILLE
+
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
@@ -2010,6 +2060,17 @@ class GlobalCommands(ScriptableObject):
 		mathPres.interactWithMathMl(mathMl)
 	# Translators: Describes a command.
 	script_interactWithMath.__doc__ = _("Begins interaction with math content")
+
+	def script_recognizeWithUwpOcr(self, gesture):
+		if not winVersion.isUwpOcrAvailable():
+			# Translators: Reported when Windows 10 OCR is not available.
+			ui.message(_("Windows 10 OCR not available"))
+			return
+		from contentRecog import uwpOcr, recogUi
+		recog = uwpOcr.UwpOcr()
+		recogUi.recognizeNavigatorObject(recog)
+	# Translators: Describes a command.
+	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
 	__gestures = {
 		# Basic
@@ -2182,6 +2243,9 @@ class GlobalCommands(ScriptableObject):
 
 		# Braille keyboard
 		"bk:dots" : "braille_dots",
+		"bk:dot7" : "braille_eraseLastCell",
+		"bk:dot8" : "braille_enter",
+		"bk:dot7+dot8" : "braille_translate",
 
 		# Tools
 		"kb:NVDA+f1": "navigatorObject_devInfo",
@@ -2190,6 +2254,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 		"kb:NVDA+alt+m": "interactWithMath",
+		"kb:NVDA+r": "recognizeWithUwpOcr",
 	}
 
 #: The single global commands instance.

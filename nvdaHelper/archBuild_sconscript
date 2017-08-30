@@ -35,8 +35,18 @@ signExec=env['signExec'] if env['certFile'] else None
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WS03')])
-env.Append(CCFLAGS=['/W3','/WX']);
+env.Append(CCFLAGS=['/W3','/WX'])
+if 'analyze' in debug:
+	env.Append(CCFLAGS=['/analyze'])
+	# Disable: Inconsistent annotation for 'x': this instance has no annotations.
+	# Seems all MIDL-generated code from idl files don't add annotations 
+	env.Append(CCFLAGS='/wd28251')
+	# Disable: 'x': unreferenced formal parameter
+	# We use a great deal of hook functions where we have no need for various parameters 
+	env.Append(CCFLAGS='/wd4100')
+
 env.Append(CXXFLAGS=['/EHsc'])
+
 env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
 env.Append(LINKFLAGS=['/incremental:no','/WX'])
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
@@ -64,19 +74,6 @@ env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
 Export('env')
-
-import versionInfo
-projectRCSubstDict={
-	'%version_year%':env['version_year'],
-	'%version_major%':env['version_major'],
-	'%version_minor%':env['version_minor'],
-	'%version_build%':env['version_build'],
-	'%copyright%':env['copyright'],
-	'%publisher%':env['publisher'],
-	'%version%':env['version'],
-	'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
-}
-env['projectResFile']=env.RES(env.Substfile('nvda.rc.subst',SUBST_DICT=projectRCSubstDict))
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
 Export('acrobatAccessRPCStubs')
