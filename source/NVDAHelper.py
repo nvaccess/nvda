@@ -477,3 +477,23 @@ def terminate():
 	VBuf_getTextInRange=None
 	localLib.nvdaHelperLocal_terminate()
 	localLib=None
+
+LOCAL_WIN10_DLL_PATH = ur"lib\nvdaHelperLocalWin10.dll"
+def getHelperLocalWin10Dll():
+	"""Get a ctypes WinDLL instance for the nvdaHelperLocalWin10 dll.
+	This is a C++/CX dll used to provide access to certain UWP functionality.
+	"""
+	return windll[LOCAL_WIN10_DLL_PATH]
+
+def bstrReturn(address):
+	"""Handle a BSTR returned from a ctypes function call.
+	This includes freeing the memory.
+	This is needed for nvdaHelperLocalWin10 functions which return a BSTR.
+	"""
+	# comtypes.BSTR.from_address seems to cause a crash for some reason. Not sure why.
+	# Just access the string ourselves.
+	# This will terminate at a null character, even though BSTR allows nulls.
+	# We're only using this for normal, null-terminated strings anyway.
+	val = wstring_at(address)
+	windll.oleaut32.SysFreeString(address)
+	return val

@@ -183,7 +183,6 @@ def setReviewPosition(reviewPosition,clearNavigatorObject=True):
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
-	import braille
 	braille.handler.handleReviewMove()
 
 def getNavigatorObject():

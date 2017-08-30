@@ -1,6 +1,6 @@
 #browseMode.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2016 NV Access Limited
+#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -687,6 +687,15 @@ qn("annotation", key="a",
 	prevDoc=_("moves to the previous annotation"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous annotation"))
+qn("error", key="w",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next error"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next error"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous error"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous error"))
 del qn
 
 class ElementsListDialog(wx.Dialog):
@@ -1486,7 +1495,10 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		try:
 			item = next(self._iterNodesByType("container", "up", range))
 		except (NotImplementedError,StopIteration):
-			return
+			try:
+				item = next(self._iterNodesByType("landmark", "up", range))
+			except (NotImplementedError,StopIteration):
+				return
 		return item.textInfo
 
 	def script_moveToStartOfContainer(self,gesture):
@@ -1530,6 +1542,11 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
+	#: The controlField attribute name that should be used as the row number when navigating in a table. By default this is the same as the presentational attribute name
+	navigationalTableRowNumberAttributeName="table-rownumber"
+	#: The controlField attribute name that should be used as the column number when navigating in a table. By default this is the same as the presentational attribute name
+	navigationalTableColumnNumberAttributeName="table-columnnumber"
+
 	def _getTableCellCoords(self, info):
 		"""
 		Fetches information about the deepest table cell at the given position.
@@ -1542,17 +1559,29 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		if info.isCollapsed:
 			info = info.copy()
 			info.expand(textInfos.UNIT_CHARACTER)
-		for field in reversed(info.getTextWithFields()):
+		fields=list(info.getTextWithFields())
+		# If layout tables should not be reported, we should First record the ID of all layout tables so that we can skip them when searching for the deepest table
+		layoutIDs=set()
+		if not config.conf["documentFormatting"]["includeLayoutTables"]:
+			for field in fields:
+				if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart" and field.field.get('table-layout'):
+					tableID=field.field.get('table-id')
+					if tableID is not None:
+						layoutIDs.add(tableID)
+		for field in reversed(fields):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
 			attrs = field.field
-			if "table-id" in attrs and "table-rownumber" in attrs:
+			tableID=attrs.get('table-id')
+			if tableID is None or tableID in layoutIDs:
+				continue
+			if self.navigationalTableColumnNumberAttributeName in attrs and not attrs.get('table-layout'):
 				break
 		else:
 			raise LookupError("Not in a table cell")
 		return (attrs["table-id"],
-			attrs["table-rownumber"], attrs["table-columnnumber"],
+			attrs[self.navigationalTableRowNumberAttributeName], attrs[self.navigationalTableColumnNumberAttributeName],
 			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
 
 	def _getTableCellAt(self,tableID,startPos,row,column):
@@ -1567,13 +1596,16 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		@type column: int
 		@returns: the table cell's position in the document
 		@rtype: L{textInfos.TextInfo}
+		@raises: LookupError if the cell does not exist 
 		"""
 		raise NotImplementedError
 
+	_missingTableCellSearchLimit=3 #: The number of missing  cells L{_getNearestTableCell} is allowed to skip over to locate the next available cell
 	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		"""
 		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
 		For example, this is used to move to the cell in the next column, previous row, etc.
+		This method will skip over missing table cells (where L{_getTableCellAt} raises LookupError), up to the number of times set by _missingTableCellSearchLimit set on this instance.
 		@param tableID: the ID of the table
 		@param startPos: the position in the document to start searching from.
 		@type startPos: L{textInfos.TextInfo}
@@ -1603,19 +1635,28 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		elif axis == "column":
 			destCol += origColSpan if movement == "next" else -1
 
-		if destCol < 1 or destRow<1:
-			# Optimisation: We're definitely at the edge of the column or row.
-			raise LookupError
-
-		return self._getTableCellAt(tableID,startPos,destRow,destCol)
+		# Try and fetch the cell at these coordinates, though  if a  cell is missing, try  several more times moving the coordinates on by one cell each time
+		limit=self._missingTableCellSearchLimit
+		while limit>0:
+			limit-=1
+			if destCol < 1 or destRow<1:
+				# Optimisation: We're definitely at the edge of the column or row.
+				raise LookupError
+			try:
+				return self._getTableCellAt(tableID,startPos,destRow,destCol)
+			except LookupError:
+				pass
+			if axis=="row":
+				destRow+=1 if movement=="next" else -1
+			else:
+				destCol+=1 if movement=="next" else -1
+		raise LookupError
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		if isScriptWaiting():
 			return
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
-		#  For now, table movement includes layout tables even if reporting of layout tables is disabled.
-		formatConfig["includeLayoutTables"]=True
 		try:
 			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:

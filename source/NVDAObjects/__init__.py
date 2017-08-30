@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -16,6 +16,7 @@ import eventHandler
 from displayModel import DisplayModelTextInfo
 import baseObject
 import speech
+import ui
 import api
 import textInfos.offsets
 import config
@@ -24,6 +25,7 @@ import appModuleHandler
 import treeInterceptorHandler
 import braille
 import globalPluginHandler
+import brailleInput
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -167,6 +169,16 @@ class NVDAObject(baseObject.ScriptableObject):
 	#: The TextInfo class this object should use to provide access to text.
 	#: @type: type; L{textInfos.TextInfo}
 	TextInfo=NVDAObjectTextInfo
+
+	#: Indicates if the text selection is anchored at the start.
+	#: The anchored position is the end that doesn't move when extending or shrinking the selection.
+	#: For example, if you have no selection and you press shift+rightArrow to select the next character,
+	#: this will be True.
+	#: In contrast, if you have no selection and you press shift+leftArrow to select the previous character,
+	#: this will be False.
+	#: If the selection is anchored at the end or there is no information this is C{False}.
+	#: @type: bool
+	isTextSelectionAnchoredAtStart=True
 
 	@classmethod
 	def findBestAPIClass(cls,kwargs,relation=None):
@@ -793,7 +805,7 @@ Tries to force this object to take the focus.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
 		@rtype: bool
 		"""
-		if self.presentationType == self.presType_layout:
+		if self.presentationType in (self.presType_layout, self.presType_unavailable):
 			return False
 		if self.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_LISTITEM, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_EDITABLETEXT):
 			return False
@@ -817,6 +829,22 @@ Tries to force this object to take the focus.
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+
+	def _get_placeholder(self):
+		"""If it exists for this object get the value of the placeholder text.
+		For example this might be the aria-placeholder text for a field in a web page.
+		@return: the placeholder text else None
+		@rtype: String or None
+		"""
+		log.debug("Potential unimplemented child class: %r" %self)
+		return None
+
+	def _get_landmark(self):
+		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
+		@return: ARIA landmark role else None
+		@rtype: String or None
+		"""
+		return None
 
 	def _reportErrorInPreviousWord(self):
 		try:
@@ -843,6 +871,14 @@ Tries to force this object to take the focus.
 			return
 		import nvwave
 		nvwave.playWaveFile(r"waves\textError.wav")
+
+	def event_liveRegionChange(self):
+		"""
+		A base implementation for live region change events.
+		"""
+		name=self.name
+		if name:
+			ui.message(name)
 
 	def event_typedCharacter(self,ch):
 		if config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"] and (
@@ -906,6 +942,7 @@ This code is executed if a gain focus event is received by this object.
 """
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
+		brailleInput.handler.handleGainFocus(self)
 
 	def event_foreground(self):
 		"""Called when the foreground window changes.
@@ -937,6 +974,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
+			brailleInput.handler.handleCaretMove(self)
 			review.handleCaretMove(self)
 
 	def _get_flatReviewPosition(self):
@@ -971,6 +1009,14 @@ This code is executed if a gain focus event is received by this object.
 
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
+
+	def _get__isTextEmpty(self):
+		"""
+		@return C{True} if the text contained in the object is considered empty by the underlying implementation. In most cases this will match {isCollapsed}, however some implementations may consider a single space or line feed as an empty range.
+		"""
+		ti = self.makeTextInfo(textInfos.POSITION_FIRST)
+		ti.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
+		return ti.isCollapsed
 
 	@staticmethod
 	def _formatLongDevInfoString(string, truncateLen=250):
@@ -1099,3 +1145,18 @@ This code is executed if a gain focus event is received by this object.
 	#: The language/locale of this object.
 	#: @type: basestring
 	language = None
+
+	def _get__hasNavigableText(self):
+		# The generic NVDAObjectTextInfo by itself is never enough to be navigable
+		if self.TextInfo is NVDAObjectTextInfo:
+			return False
+		role = self.role
+		states = self.states
+		if role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT):
+			# Edit fields, terminals and documents  are always navigable
+			return True
+		elif controlTypes.STATE_EDITABLE in states:
+			# Anything that is specifically editable is navigable
+			return True
+		else:
+			return False
