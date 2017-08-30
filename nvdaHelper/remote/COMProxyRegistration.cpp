@@ -108,7 +108,11 @@ COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
 	DeactivateActCtx(0,actCtxCookie);
 	ReleaseActCtx(hActCtx);
 	if(res!=S_OK) {
-		LOG_ERROR(L"Error fetching class object for "<<dllPath<<L", code "<<res);
+		if(res==CO_E_NOTINITIALIZED) {
+			LOG_DEBUGWARNING(L"Could not fetch class object as COM is not yet initialized.");
+		} else {
+			LOG_ERROR(L"Error fetching class object for "<<dllPath<<L", code "<<res);
+		}
 		FreeLibrary(dllHandle);
 		return nullptr;
 	}

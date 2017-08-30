@@ -45,22 +45,19 @@ bool isIA2SupportDisabled=false;
 
 bool installIA2Support() {
 	if(isIA2Installed) return FALSE;
-	APTTYPE appType;
-	APTTYPEQUALIFIER aptQualifier;
-	HRESULT res;
-	if((res=CoGetApartmentType(&appType,&aptQualifier))!=S_OK) {
-		if(res!=CO_E_NOTINITIALIZED) {
-			LOG_ERROR(L"Error getting apartment type, code "<<res);
-		}
-		return false;
-	}
+	// Register IAccessible2 proxy dll
+	// Note that one of the reasons this may fail is because COM is not initialized in this thread yet.
+	// We can't check this easily though as CoGetApartmentType is only available from windows 7 onwards
 	IA2ProxyRegistration=registerCOMProxy(L"IAccessible2Proxy.dll");
 	if(!IA2ProxyRegistration) {
-		LOG_ERROR(L"Error registering IAccessible2 proxy");
+		LOG_DEBUGWARNING(L"Error registering IAccessible2 proxy");
+		return false;
 	}
+		// Register ISimpleDOM proxy
 		ISimpleDOMProxyRegistration=registerCOMProxy(L"ISimpleDOM.dll");
 	if(!ISimpleDOMProxyRegistration) {
-		LOG_ERROR(L"Error registering ISimpleDOM proxy");
+		LOG_DEBUGWARNING(L"Error registering ISimpleDOM proxy");
+		return false;
 	}
 	isIA2Installed=TRUE;
 	return isIA2Installed;
