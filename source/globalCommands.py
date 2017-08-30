@@ -2030,13 +2030,13 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleConfigProfileTriggers(self,gesture):
 		if config.conf.profileTriggersEnabled:
+			config.conf.disableProfileTriggers()
 			# Translators: The message announced when temporarily disabling all configuration profile triggers.
 			state = _("Configuration profile triggers disabled")
-			config.conf.profileTriggersEnabled=False
 		else:
+			config.conf.enableProfileTriggers()
 			# Translators: The message announced when re-enabling all configuration profile triggers.
 			state = _("Configuration profile triggers enabled")
-			config.conf.profileTriggersEnabled=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle configuration profile triggers command.
 	script_toggleConfigProfileTriggers.__doc__=_("Disables or enables all configuration profile triggers. Disabling takes effect until NVDA is restarted")
