@@ -116,242 +116,242 @@ NonVisual Desktop Access (NVDA) е бесплатен читач за екран
 Оваа опција ви овозможува да одберете дали НВДА ќе создаде кратенка на работната површина со која ќе може да го активирате.
 Така доколку ја одберете оваа опција ќе ја добиете кратенката контрол+алт+n  со која ќе можете да го вклучите НВДА во кое било време и кое било место.
 
-+++ Копирај ја преносната конфигурација на корисничката сметка во моментот +++
-Оваа опција ви овозможува да одберете дали  НВДА да ја префрли корисничката конфигурација, од оној НВДА што работи во тој момент во конфигурацијата на оној Виндовс корисник што е најавен во тој момент, за инсталираната копија од НВДА. 
- This will not  copy the configuration for   any other users  of this system nor to the system configuration for use at Windows Logon and other secure screens.
-This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
++++ Копирај ја преносната конфигурација на оваа корисничка сметка +++
+Оваа опција ви овозможува да одберете дали  НВДА да ја префрли корисничката конфигурација, од оној НВДА што работи и е инсталиран во тој момент во конфигурацијата на оној Виндовс корисник што е најавен во тој момент.
+Истото нема да ја ископира конфигурацијата  на ниту еден друг корисник во системот, ниту пак ќе ја ископира конфигурацијата во системот со која     НВДА би можел да се користи на Виндовс екранот за најава или другите заштитени екрани.
+Оваа опција е достапна само при инсталирање на НВДА од преносна копија, не и кога ќе се инсталира НВДА од преземената датотека за инсталирање.
 
-++ Creating a Portable Copy ++
-If creating a portable copy directly from the NVDA download  package, simply press the Create Portable Copy button.
-If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
+++ Креирање на преносна копија ++
+Доколку сакате да креирате преносна копија за НВДА директно од датотеката за инсталирање, едноставно претиснете на копчето креирај преносна копија.
+Во случај веќе да сте го затвориле овој дијалог или пак веќе користите инсталирана копија од НВДА, одберете ја опцијата креирај преносна копија што можете да ја пронајдете во менито за НВДА па подменито алатки.
 
-The Dialog that appears allows you to choose where the portable copy should be created.
-This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
-There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
- This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
-Pressing Continue will create the portable copy.
-Once creation is complete, a message will appear telling you it was successful.
-Press OK to dismiss this dialog.
+Дијалогот што ќе се појави ви дозволува да  одберете каде да биде направена преносната копија.
+Тоа место на кое сакате да ја создадете  преносната копија од НВДА, може да одберете да биде на вашиот преносен диск или пак на УСБ стик или која и да е друга преносна меморија.
+Тука постои и можност да одберете дали НВДА да ја ископира НВДА корисничката конфигурација за Виндовс екранот за најава, во новосоздадената преносна копија од НВДА за и таа да ја користи истата.
+ Оваа можност е само кога се прави преносна копија од веќе инсталирана копија од НВДА, но не и кога се креира преносна копија од преземената датотека за инсталирање.
+Понатаму претискајќи го копчето продолжи, ќе се креира нова копија. 
+Штом ќе заврши создавањето на новата преносна копија, ќе слушнете порака дека создавањето било успешно.
+Претиснете го копчето во ред за да го исклучите овој дијалок.
 
-+ Getting started with NVDA +
++   Почеток со користење на НВДА   +
 
-++ Launching NVDA ++
-If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
-Additionally you can type NVDA into the Run dialog and press Enter.
-You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable add-ons (--disable-addons), etc.
+++ Вклучување на НВДА ++
+Доколку сте го инсталирале НВДА преку преземената датотека за инсталирање, тогаш за да го вклучите потребно е да претиснете    контрол+алт+н, или да  го изберете НВДА  од НВДА менито во иконката програми во старт менито.
+Дополнителен начин за вклучување е  да напишете NVDA во ран дијалогот и да претиснете ентер.
+Исто така можете и да додадете неколку [наредби во командната линија #CommandLineOptions] со кои би можеле да го рестартирате НВДА (-r), излез од него (-q), исклучување на додатоците за НВДА (--disable-addons) и тн.
 
-For installed copies, NVDA stores the configuration in the roaming application data folder of the current user by default (e.g. "C:\Users\<user>\AppData\Roaming").
-It is possible to change this in a way that NVDA loads its configuration from the local application data folder instead.
-Consult the section about [system wide parameters #SystemWideParameters] for more details.
+За инсталираните копии, НВДА под дифолт ја зачувува конфигурацијата во roaming application data фолдерот од моменталниот корисник (на пр. "C:\Users\<user>\AppData\Roaming").
+Тоа може да се промени, на тој начин што НВДА ќе ги вчитува своите нагодувања од   фолдерот local application data.
+За повеќе детали, прочитајте го поглавјето [целокупни параметри #SystemWideParameters].
 
-To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
+За да ја вклучите преносната копија, влезете во директориумот  каде што сте ја  креирале таа копија и  притиснете  ентер  или двапати кликнете  со глувчето на nvda.exe.
 
-As NVDA starts, you will first hear an ascending set of tones (telling you that NVDA is loading).
-Depending on how fast your computer is, or if you are running NVDA off a USB key or other slow media, it may take a little while to start.
-If it is taking an extra-long time to start, NVDA should say "Loading NVDA. Please wait..."
+Кога се вклучува нвда, прво ќе слушнете еден звук од разложен акорд нагоре, па известување за тоа дека нвда се вчитува.
+Во зависност од брзината на вашиот компјутер или пак дали сакате да го користите НВДА од преносен диск, УСБ или друга побавна надворешна меморија, вклучувањето би можело и да потрае одредено време.
+Ако за вчитувањето е потребно дополнително време, ќе  го слушнете изразот "НВДА се вчитува. Ве молиме почекајте..."
 
-If you don't hear any of this, or you hear the Windows error sound, or a descending set of tones, then this means that NVDA has an error, and you will need to possibly report a bug to the developers.
-Please check out the NVDA website for how to do this.
+Доколку не слушнете ништо од ова, или пак го чуете звукот за грешка од Виндовс, или звук од разложен акорд надолу, ова значи дека има проблем при вчитувањето со НВДА и вие би требало да го пријавите овој баг на девелоперите.
+Ве молиме, отворете ја  веб-страницата од НВДА за да видите како се прави тоа.
 
-When NVDA starts for the first time, you will be greeted by a dialog box which provides you with some basic information about the NVDA modifier key and the NVDA menu.
-(Please see further sections about these topics.)
-The dialog box also contains a combo box and three checkboxes.
-The combo box lets you select the keyboard layout.
-The first checkbox lets you control if NVDA should use the capslock as an NVDA modifier key.
-The second specifies whether NVDA should start automatically after you log on to Windows and is only available for installed copies of NVDA.
-The third lets you control if this Welcome dialog should appear each time NVDA starts.
+Кога го вклучувате НВДА за прв пат, ќе ви се отвори прозорче со најосновните информации за помошното копче за НВДА, и менито од НВДА.
+(Ве молиме погледнете ги следните поглавја за повеќе детали поврзани со тоа.)
+Ова прозорче исто така содржи една кутија за избор и 3 копчиња за обележување.
+Кутијата за избор ви овозможува да го одберете видот на компјутер што го користите.
+Првото копче за обележување ви дозволува да одберете дали капс-лок копчето да се користи како НВДА помошно копче.
+Второто копче за обележување ви овозможува да одберете дали НВДА автоматски да се вклучува по најавата на Виндовс заштитниот екран и истото се однесува само на инсталираните копии од НВДА.
+Третото копче за обележување ви дозволува да одберете дали да се појавува ова прозорче при секое ново вклучување на НВДА.
 
-++ About NVDA keyboard commands ++
+++ За НВДА тастатурните кратенки ++
 
-+++ The NVDA Modifier Key +++
-Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
-Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
++++ Помошното копче за НВДА +++
+Повеќето одделни тастатурни кратенки во НВДА се состојат од истовремено притискање на така нареченото НВДА помошно копче и едно или повеќе од  преостанатите копчиња од тастатурата.
+Позабележителни исклучоци од кажаното предмалку се командите за преглед на текстот при десктоп компјутерите, во кој се користат поединечните копчиња од нумпадот, а постојат и други исклучоци од ова.
 
-NVDA can be configured so that the numpad Insert, Extended Insert and/or capslock key can be used as the NVDA modifier key.
-By default, both the numpad Insert and Extended Insert keys are set as NVDA modifier keys.
+НВДА може да се конфигурира на тој начин што инсертот од нампадот, регуларниот инсерт и /или копчето капс-лок  може да се користат како помошни копчиња за НВДА.
+Сами по себе, регуларниот инсерт и инсертот од нампадот се поставени и функционираат како помошни копчиња за НВДА.
 
-If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn capslock on when you have set capslock to be an NVDA modifier key), you can press the key twice in quick succession.
+Доколку сакате некое од помошните копчиња за НВДА да ја извршува неговата основна функција, односно исто како и да не е вклучен НВДА, (на пр. кога сакате да пишувате со вклучен капс-лок, а тој не се вклучува бидејќи истовремено сте го поставиле кап-лок копчето да биде помошно копче за НВДА), тогаш само треба да го претиснете набрзина двапати тоа копче и тоа ќе ја има својата основна функција.
 
-+++ Keyboard Layouts +++
-NVDA currently comes with two sets of key commands (known as keyboard layouts): the desktop layout and the laptop layout.
-By default, NVDA  is set to use the Desktop layout, though you can switch to the Laptop layout in the Keyboard Settings, found under Preferences in the NVDA menu.
++++ Видови на тастатури +++
+Во моментот НВДА доаѓа со два сета на командни копчиња (Попознати како видови на тастатури): десктоп тастатура и лаптоп тастатура.
+Под дифолт, НВДА е нагоден да ја користи десктоп тестатурата, но ова вие можете да го промените во лаптоп тестатура во нагодувањата за тестатура, што можете да ги најдете во  Preferences во НВДА менито.
 
-The Desktop layout makes heavy use of the numpad (with numlock off).
-Although most laptops do not have a physical numpad, some laptops can emulate one by holding down the FN key and pressing letters and numbers on the right-hand side of the keyboard (7, 8, 9, u, i, o, j, k, l, etc.).
-If your laptop cannot do this or does not allow you to turn numlock off, you may want to switch to the Laptop layout instead.
+Десктоп тастатурата предизвикува зачестено користење на нампадот  (со исклучен нам-лок).
+Иако повеќето лаптоп компјутери немаат вграден нампад, поголемиот број од нив можат да ја емитираат неговата функција, држејќи го копчето FN и претискајќи ги  буквите и броевите  од страната каде што стои десната рака на тастатурата (7, 8, 9, u, i, o, j, k, l, и тн.).
+Доколку вашиот лаптоп неможе да го прави ова или не ви дозволува да го   исклучите нампадот, тогаш би требало да ја промените тастатурата и да ја користите онаа за лаптоп.
 
-++ NVDA Touch Gestures ++
-If you are running NVDA on a device with a touch screen and running Windows 8 or higher, you can also control NVDA directly via the touch screen.
-While NVDA is running, all touch input will go directly to NVDA. 
-Therefore, actions that can be performed normally without NVDA will not work.
+++ НВДА гестикулации за екрани на допир ++
+Доколку користите НВДА на уред со екран на допир, и на тој уред имате Виндовс 8 или понова верзија од тоа, тогаш можете да го управувате уредот користејќи го НВДА директно од екранот на допир.
+Се додека НВДА е вклучен, сите гестикулации направени врз екранот на допир ќе бидат испратени до НВДА.
+Затоа оние работи што можат да се направат кога НВДА е исклучен, ќе бидат привремено недостапни.
 
-+++ Exploring the Screen +++
-The most basic action you can perform with the touch screen is to announce the control or text at any point on the screen.
-To do this, place one finger anywhere on the screen.
-You can also keep your finger on the screen and move it around to read other controls and text that your finger moves over.
++++ Истражување на екранот +++
+Најосновното нешто што можете да го направите преку екранот на допир е да го дознаете текстот или објектот што се наоѓа на која било точка од екранот.
+За да го направите тоа, ставете еден прст каде било врз него.
+Исто така, може да го движите вашиот прст во разни насоки  по површината од екранот и НВДА да ви кажува што се наоѓа под него.
 
-+++ Touch Gestures +++
-When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touch screen.
-Following are some instructions on how to perform the various touch gestures.
++++ Гестикулации за допир +++
+Кога подоцна во овој водич за корисници ќе се објаснуваат командите за НВДА, овие ќе ги најдете  во листата со гестикулации за допир и истите би можеле да ги користите за активирање на таа команда преку екранот на допир.
+Следуваат неколку инструкции за тоа како да правите најразлични гестикулации за допир.
 
-==== Taps ====
-Tap the screen quickly with one or more fingers.
+==== тапнувања ====
+Тапни го екранот набрзина со еден или повеќе прсти.
 
-Tapping once with one  finger is simply known as a tap.
-Tapping with 2 fingers at the same time is a 2-finger tap and so on.
+Тапнувањето само еднаш со еден прст е познато како  тапнување.
+Тапнувањето еднаш со два прста истовремено е познато како двопрстовно тапнување и така натаму.
 
-If the same tap is performed one or more times again in quick succession, NVDA will instead treat this as a multi-tap gesture.
-Tapping twice will result in a double tap.
-Tapping 3 times will result in a triple tap and so on.
-Of course, these multi-tap gestures also recognize how many fingers were used, so it's possible to have gestures like a 2-finger triple tap, a 4-finger tap, etc. 
+Ако истото тапнување го направите еднаш или повеќе пати повторувајќи го забрзано, НВДА ќе го смета ова за мулти-тап гестикулација.
+Тапнувањето двапати ќе се смета како двојно тапнување.
+Тапнувањето трипати ќе се смета како тројно тапнување и така натаму.
+Се разбира дека овие мулти-тап гестикулации можат да препознаат колку прсти се користени, па така можни се гестикулации како двопрстовно тројно тапнување, четворопрстовно тапнување и тн.
 
-==== Flicks ====
-Quickly swipe your finger across the screen.
+==== Лизгање ====
+Лизгајте го брзо вашиот прст по екранот.
 
-There are 4 possible flick gestures depending on the direction: flick left, flick right, flick up and flick down.
+Постојат четири можни гестикулации на лизгање, во зависност од насоката: лизгање на лево, лизгање на десно, лизгање нагоре и лизгање надолу.
 
-Just like taps, more than one finger can be used to perform the gesture.
-Therefore, gestures such as 2-finger flick up and 4-finger flick left are all possible.
+Исто и како кај тапнувањата, и овде може да се користат повеќе прсти при правењето на гестикулацијата.
+Па така, гестикулации како двопрстовно лизгање нагоре или четворопрстовно лизгање на лево се исто така можни.
 
-+++ Touch Modes +++
-As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
-The two modes are text mode and object mode. 
-Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
-For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
-If the command does not have a mode listed, it will work in any mode.
-
-%kc:beginInclude
-To toggle touch modes, perform a 3-finger tap.
-%kc:endInclude
-
-++ Input Help Mode ++
-Many NVDA commands are mentioned throughout the rest of this user guide, but an easy way to explore all the different commands is to turn on input help.
-
-To turn on input help, press NVDA+1.
-To turn it off, press NVDA+1 again.
-While in input help, performing any input gesture (such as pressing a key or performing a touch gesture) will report the action and describe what it does (if anything).
-The actual  commands will not execute while in input help mode.
-
-++ The NVDA menu ++
-The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, access additional tools and exit NVDA.
-
-To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard or perform a 2-finger double tap on the touch screen.
-You can also get to the NVDA menu via the Windows system tray.
-Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the Windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
-When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
-
-++ Basic NVDA commands ++
-%kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| Stop speech | Control | control | 2-finger tap | Instantly stops speaking |
-| Pause Speech | shift | shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
-| NVDA Menu | NVDA+n | NVDA+n | 2-finger double tap | Pops up the NVDA menu to allow you to access preferences, tools, help, etc. |
-| Toggle Speech Mode | NVDA+s | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
-| Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
-| Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
-| Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treated as an NVDA key command |
-| Toggle application sleep mode on and off | NVDA+shift+s | NVDA+shift+z | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable sleep mode. |
-%kc:endInclude
-
-++ Reporting System Information ++
-%kc:beginInclude
-|| Name | key | Description |
-| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
-| Report battery status | NVDA+shift+b | Reports the battery status i.e. whether AC power is in use or the current charge percentage. |
-| Report clipboard text | NVDA+c | Reports the Text in the clipboard if there is any. |
-%kc:endInclude
-
-+ Navigating with NVDA +
-NVDA allows you to explore and navigate the system in several ways, including both normal interaction and review.
-
-++ Objects ++[Objects]
-Each Application and the operating system itself consist of many objects.
-An object is a single item such as a piece of text, button, checkbox, slider, list or editable text field.
-
-++ Navigating with the System Focus ++[SystemFocus]
-The system focus, also known simply as the focus, is the [object #Objects] which receives keys typed on the keyboard.
-For example, if you are typing into an editable text field, the editable text field has the focus.
-
-The most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
-As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
-
-There are some key commands that are useful when moving with the System focus:
-%kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Report current focus | NVDA+tab | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
-| Report title | NVDA+t | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Read active window | NVDA+b | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
-| Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. Pressing twice will spell the information |
-%kc:endInclude
-
-++ Navigating with the System Caret ++[SystemCaret]
-When an [object #Objects] that allows navigation and/or editing of text is [focused #SystemFocus], you can move through the text using the system caret, also known as the edit cursor.
-
-When the focus is on an object that has the system caret, you can use the arrow keys, page up, page down, home, end, etc. to move through the text.
-You can also change the text if the control supports editing.
-NVDA will announce as you move by character, word and line, and will also announce as you select and unselect text.
-
-NVDA provides the following key commands in relation to the system caret:
-%kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Say all | NVDA+downArrow | NVDA+a | Starts reading from the current position of the system caret, moving it along as it goes |
-| Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
-| Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
-| Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
-| Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
-
-
-When within a table, the following key commands are also available:
-|| Name | Key | Description |
-| Move to previous column | control+alt+leftArrow | Moves the system caret to the previous column (staying in the same row) |
-| Move to next column | control+alt+rightArrow | Moves the system caret to the next column (staying in the same row) |
-| Move to previous row | control+alt+upArrow | Moves the system caret to the previous row (staying in the same column) |
-| Move to next row | control+alt+downArrow | Moves the system caret to the next row (staying in the same column) |
-%kc:endInclude
-
-++ Object Navigation ++[ObjectNavigation]
-Most of the time, you will work with applications using commands which move the [focus #SystemFocus] and the [caret #SystemCaret].
-However, sometimes, you may wish to explore the current application or the Operating System without moving the focus or caret.
-You may also wish to work with [objects #Objects] that cannot be accessed normally using the keyboard.
-In these cases, you can use object navigation.
-
-Object navigation allows you to move between and obtain information about individual [objects #Objects].
-When you move to an object, NVDA will report it similarly to the way it reports the system focus.
-For a way to review all text as it appears on the screen, you can instead use [screen review #ScreenReview].
-
-Rather than having to move back and forth between every single object on the system, the objects are organized hierarchically.
-This means that some objects contain other objects and you must move inside them to access the objects they contain.
-For example, a list contains list items, so you must move inside the list in order to access its items.
-If you have moved to a list item, moving next and previous will take you to other list items in the same list.
-Moving to a list item's containing object will take you back to the list.
-You can then move past the list if you wish to access other objects.
-Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
-
-The object currently being reviewed is called the navigator object.
-Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
-By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
-
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
-
-To navigate by object, use the following commands:
++++ Модови за допир +++
+Затоа што има многу повеќе НВДА команди од тоа што може да постојат гестикулации за допир, НВДА има неколку модови за допир кои можете да ги менувате, со цел да дојдете до одредени супсетови од достапните команди.
+Двата мода меѓу кој можете да одберете се модот за текст и модот за објекти. 
+Одредени НВДА команди што ќе се најдат во овој документ би можеле да содржат и мод за допир напишан во загради после гестикулациите за допир.
+На пример, лизгање нагоре (мод за текст) што значи дека командата ќе се изврши доколку лизгате нагоре, но само во модот за текст.
+Доколку до таа команда не е посочен модот, тоа значи дека таа треба да работи во сите модови.
 
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| Report current object | NVDA+numpad5 | NVDA+shift+o | none | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
-| Move to containing object | NVDA+numpad8 | NVDA+shift+upArrow | flick up (object mode) | Moves to the object containing the current navigator object |
-| Move to previous object | NVDA+numpad4 | NVDA+shift+leftArrow | flick left (object mode) | Moves to the object before the current navigator object |
-| Move to next object | NVDA+numpad6 | NVDA+shift+rightArrow | flick right (object mode) | Moves to the object after the current navigator object |
-| Move to first contained object | NVDA+numpad2 | NVDA+shift+downArrow | flick down (object mode) | Moves to the first object contained by the current navigator object |
-| Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
-| Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
-| Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report review cursor location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
+За префрлување од еден на друг мод, направете тропрстовно тапнување.
 %kc:endInclude
 
-Note: numpad keys require numlock key to be turned off to work properly.
+++ Мод за помош при внесување ++
+Повеќето од НВДА командите се спомнати во понатамошниот дел од овој водич за корисници, но полесен начин за да ги истражете сите нив е да го вклучите модот за помош при внесување.
 
-++ Reviewing Text ++[ReviewingText]
+За да го вклучите модот за помош при внесување, претиснете НВДА+1.
+За да го исклучите, повторно претиснете нвда+1.
+Кога сте во модот за помош при внес, претискајќи некоја комбинација или правејќи некоја гестикулација за допир, НВДА ќе ја соопшти истата и ќе ви каже што точно можете да направите притискајќи/правејќи го тоа, во случај ако тоа што сте го направиле е некоја постоечка команда.
+Сепак вистинските команди ќе бидат само соопштени, но не и извршени во овој мод за помош.
+
+++ Менито од НВДА ++
+Менито од НВДА ви овозможува да ги контролирате различните нагодувања во НВДА, да добиете помош, да ја сочувате или вратите вашата конфигурација, да ги изменувате речниците за говор, да пристапите до одредени дополнителни алатки и да излезете од НВДА.
+
+За да го отворите менито за НВДА од каде и да сте на вашиот Виндовс додека НВДА е вклучен, само претиснете ја комбинацијата НВДА+н или направете двопрстовно двојно тапнување каде било врз екранот на допир.
+Исто така, до него можете да дојдете преку Виндовсовата лента за известувања
+Или притискајќи го копчето апликации на вашата тастатура, или кликајќи со десниот клик на иконката од НВДА, или пак пристапете до лентата за известувања притискајќи го копчето со виндовс лого+б, па притискајте ја долната стрелка се додека не го пронајдете НВДА и тогаш притиснете го копчето апликации кое најчесто се наоѓа лево од десниот контрол.
+Штом ќе се појави менито, можете да ги користите стрелките за навигација низ него и копчето ентер за да активирате нешто од работите таму.
+
+++ Основни команди за НВДА ++
+%kc:beginInclude
+|| Име на командата | Комбинација за десктоп | Комбинација за лаптоп | За допир | Опис |
+| Прекини го говорот | контрол | контрол | двопрстовно тапнување | нагло го прекинува говорот |
+| Паузирај го говорот | шифт | шифт | нема команда | нагло го паузира говорот. претискајќи го уште еднаш, ќе продолжи со говорот од онаму каде што застанал (серазбира доколку синтетизаторот ја дозволува оваа можност) |
+| NVDA мени | НВДА+н | НВДА+н | двопрстовно тапнување на екранот | го отвара менито за НВДА, со цел да пристапите до различните нагодувања, алатки, помош и тн. |
+| Промена на начинот на изговор | НВДА+с | НВДА+с | нема команда | Го менува начинот на изговор, меѓу говор, титкање и исклучено. |
+| вклучување или исклучување на модот за помош | НВДА+1 | НВДА+1 | нема команда | Претискајќи на кое било копче во овој мод, истото ќе биде соопштено, како и опис за онаа НВДА команда што е поврзана со него |
+| Излез од НВДА | НВДА+q | НВДА+q | нема комбинација | излегува од НВДА |
+| Игнорирај ја следната претисната комбинација | НВДА+Ф2 | НВДА+Ф2 | нема комбинација | Прави НВДА во целост да го игнорира следното претиснато копче или комбинација, па дури и тоа да е една од комбинациите за НВДА |
+| Вклучи го, односно исклучи го апликацискиот мод за спиење | НВДА+шифт+с | НВДА+шифт+з | нема комбинација | Модот за спиење ги исклучува сите НВДА команди, како и говорот или брајовото за моменталната апликација. Ова е корисно во апликации што имаат вграден говор или свои карактеристики на читач за екран. Притиснете ја оваа команда уште еднаш за да го исклучите модот за спиење. |
+%kc:endInclude
+
+++ Известувања за системските информации ++
+%kc:beginInclude
+|| Име на командата | Комбинација | опис |
+| Соопшти го времето и датумот | НВДА+ф12 | Претискајќи го еднаш го кажува времето, а претискајќи го двапати го кажува датумот |
+| Соопшти го статусот на батеријата | НВДА+шифт+б | Го соопштува статусот на батеријата како дали таа се полни во тој момент и колку проценти е потрошена, односно наполнета. |
+| Соопшти го текстот на клипбордот | НВДА+Ц | Го соопштува текстот што се наоѓа на клипбордот, доколку на него има некој текст. |
+%kc:endInclude
+
++ Навигирање со НВДА +
+НВДА ви овозможува да навигирате и да го истражувате вашиот систем, на неколку начини, меѓу кои нормална интеракција и интеракциски преглед.
+
+++ Објекти ++[Objects]
+Секоја апликација, како и самиот оперативен систем, се состојат од голем број на објекти.
+Под објект се подразбираат нештата како: дел од текст, копче, кутија за одбирање, лизгач, листа или полиња за впишување на текст.
+
+++ Навигирање со системскиот фокус ++[SystemFocus]
+Системскиот фокус, уште попознат едноставно само како фокус,   е [object #Objects] којшто ги прима знаците напишани на тастатурата.
+На пример, доколку пишувате некаков текст во поле за впишување текст, тоа поле за впишување на текст го има фокусот на себе.
+
+Најчестиот начин за навигирање низ Виндовс користејќи го НВДА е едноставно движење на системскиот фокус, употребувајќи ги  стандардните Виндовсни тастатурни комбинации, како што е претискањето на таб и шифт+таб за движење напред/назад по контролите, притискањето на алт да ве однесе во лентата за мени и тогаш користејќи ги стрелките да се движите низ различните менија, како и користејќи го алт+таб да се движите меѓу вклучените програми во тој момент.
+Ако го правите ова, НВДА ќе известува за оној објект што е во фокусот во тој момент, информации како: име на објектот, тип, вредност, состојба, опис, тастатурна кратенка и информации за местото на кое се наоѓа.
+
+Следуваат неколку прилично корисни комбинации што можете да ги користите при движењето на системскиот фокус:
+%kc:beginInclude
+|| Име на комбинацијата | комбинации за десктоп | Комбинации за лаптоп | Опис |
+| Извести за моменталниот фокус | НВДА+таб | НВДА+таб |Ги соопштува моменталниот објект или контрола на кој фокусот се наоѓа во тој момент. Претискајќи го ова двапати, ќе го соопшти истото изговорајќи го буква по буква. |
+| Извести за насловот | НВДА+т | НВДА+т | Го соопштува насловот на моментално активното прозорче. Ако се стисне двапати, Истото ќе биде изговорено буква по буква, а доколку претиснете трипати по ред, НВДА ќе го ископира тој наслов во клипбордот. |
+| Прочитај се во моментално активното прозорче | НВДА+б | НВДА+б | Ги чита сите контроли што се наоѓаат во моментално активното прозорче. (Корисно е при Дијалошки прозорчиња). |
+| Прочитај ја статусната лента | НВДА+ЕНД | НВДА+шифт+енд | Ја чита статусната лента, доколку НВДА успее да ја пронајде. Исто така го преместува НВДА навигацискиот објект на тоа место. Доколку се претисне истото двапати, ќе го чуете истото но буква по буква. |
+%kc:endInclude
+
+++ Навигирање со системскиот курсор ++[SystemCaret]
+Кога некој [object #Objects] што овозможува навигирање и/или уредување на текстот, е [фокусиран #SystemFocus], тогаш можете да се движите низ текстот користејќи го системскиот курсор, кој уште е познат како курсор за уредување.
+
+Кога фокусот е на објект на којшто се наоѓа и системскиот курсор, ќе можете да ги користите стрелките, хом, енд, пејџ ап,пејџ даун и тн. за да се движите низ текстот.
+Доколку таа контрола поддржува уредување, тогаш ќе можете да го менувате и напишаниот текст.
+Како што се движите, НВДА ќе ги соопштува знаците, зборовите и редовите, исто така ќе го соопшти и текстот што сте го, односно не сте го обележале.
+
+НВДА ги има следните комбинации поврзани со користење на системскиот курсор:
+%kc:beginInclude
+|| Име на комбинацијата | Комбинација за десктоп | Комбинација за лаптоп | Опис |
+| Изговори се | НВДА+долна стрелка | НВДА+a | за почнува со читање од моменталната позиција на системскиот курсор, следејќи го со читање како што тој се движи. |
+| Прочитај ја моменталната линија | НВДА+горна стрелка | НВДА+l | Ја чита онаа линија на која во тој момент се наоѓа системскиот курсор. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
+| Прочитај го текстот што е обележан во моментов | НВДА+шифт+горна стрелка | НВДА+шифт+s | Го чита текстот што е обележан во моментот. |
+| следна реченица | алт+долна стрелка | алт+долна стрелка | Го носи курсорот на следната реченица и ја изговара. (Поддржано е само во Мајкрософт ворд и аутлук) |
+| Претходна реченица | алт+горна стрелка | алт+горна стрелка | Го носи курсорот на претходната реченица и ја изговара. (Поддржано е само во Мајкрософт ворд и аутлук) |
+
+
+Кога сте во табела, вам ви се достапни следниве команди:
+|| Име на командата | комбинација | Опис |
+| Ве носи на претходната колона | контрол+алт+лева стрелка | Го носи системскиот курсор на претходната колона (останувајќи во истиот ред) |
+| Ве носи на следната колона | контрол+алт+десна стрелка | Го носи системскиот курсор на следната колона (останувајќи во истиот ред) |
+| Ве носи на следниот ред | контрол+алт+горна стрелка | Го носи системскиот курсор на претходниот ред (останувајќи во истата колона) |
+| Ве носи на следниот ред | контрол+алт+долна стрелка | Го носи системскиот курсор на следниот ред (останувајќи во истата колона) |
+%kc:endInclude
+
+++ Навигирање низ објектите ++[ObjectNavigation]
+Најголем дел од времето, вие ќе работите во апликации, користејќи команди кои ги движат [фокусот #SystemFocus] и  [курсорот #SystemCaret].
+Сепак, понекогаш би можеле да посакате да истражите некоја апликација или оперативниот систем, без да ги движите фокусот или курсорот.
+Исто така, можно е да посакате да работите со оние [објекти #Objects] на кои неможете да им пристапите, користејќи ги вообичајните тастатурни команди.
+Во овој случај, можете да го користите објектното навигирање.
+
+Објектното навигирање ви овозможува да  се движите низ објектите, и да добивате дополнителни информации за одредени  [објекти #Objects].
+Кога ќе се позиционирате на некој објект, НВДА ќе го соопшти истиот, налик на соопштувањето на системскиот фокус.
+Доколку сакате да го прочитате целиот текст што се наоѓа на екранот, би можеле да користите [преглед на екранот #ScreenReview].
+
+Наместо да одите напрет-назат постојано за секој можен објект во системот,  објектите се подредени по хиерархија.
+Ова значи дека некои објекти се надредени и содржат други подредени објекти во себе, па за да им пристапите на подредените објекти, мора прво да влезете во надредените објекти.
+На пример, секоја листа во себе содржи нешта во листата, па за да им пристапите на тие нешта, мора да влезете во листата прво.
+Доколку сте отишле до одредено нешто во листата, движејќи се напред-назат ќе им пристапите на оние нешта од листата што следат или му претходат на она нешто врз кое се наоѓате во моментот.
+Поместувајќи се нагоре од оној објект што ги содржи нештата во листата, ќе се вратите назат во самиот надреден објект на таа листа.
+Тогаш би можеле да ја оставите листата доколку сакате да им пристапите на останатите објекти.
+Налик на ова, лентата со алатки во себе содржи  контроли, па за да им пристапите на нив, мора да влезете внатре во таа лента со алатки.
+
+Објектот што во тој момент го разгледувате е наречен навигаторски објект.
+Штом ќе дојдете до одреден објект, можете да видите што содржи истиот користејќи ги [командите за преглед на текст #ReviewingText], за ова е потребно да сте во [Модот за преглед на објекти #ObjectReview].
+Под дифолт, навигаторскиот објект се движи истовремено со системскиот фокус, сепак оваа појава може да биде вклучена или исклучена.
+
+Имајте на ум дека под дифолт, брајовиот дисплеј ги следи [фокусот #SystemFocus] и [курсорот #SystemCaret], наместо   објектното навигирање и прегледувачот на текст.
+Доколку сакате тој да ги следи објектното навигирање и прегледувачот на текст, тогаш ќе треба да [Го конфигурирате брајовиот дисплеј да се насочи на тој #BrailleTether] прегледувач.
+
+За да навигирате објект по објект, користете ги следните команди:
+
+%kc:beginInclude
+|| Име на командата | Команда за десктоп | Команда за лаптоп | За допир | Опис |
+| Соопшти го моменталниот објект | НВДА+numpad5 | НВДА+шифт+o | нема команда | Го соопштува моменталниот навигаторски објект. Претискајќи ја истата команда двапати, ја изговара истата информација буква по буква, а претискајќи го тоа трипати, го копира името и вредноста на овој објект ставајќи го на клипбордот. |
+| Премести се на надредениот објект | НВДА+numpad8 | НВДА+шифт+горна стрелка | клизнете нагоре (само во мод за објекти) | Ве преместува на објектот што го содржи навигаторскиот објект на кој сте позиционирани во моментот |
+| Премести се на претходниот објект | НВДА+numpad4 | НВДА+шифт+лева стрелка | Клизнете на лево (само во модот за објекти) | Ве преместува на претходниот објект од исто рамниште на моменталниот навигаторски објект |
+| Премести се на следниот објект | НВДА+numpad6 | НВДА+шифт+десна стрелка | клизнете на десно (само во модот за објекти) | Ве преместува во следниот објект од исто рамниште на моменталниот навигаторски објект |
+| Премести се на првиот подреден објект | НВДА+numpad2 | НВДА+шифт+долна стрелка | Клизнете надолу (само во модот за објекти) | Ве преместува на првиот подреден објект на моменталниот навигаторски објект |
+| Премести го објектот на објектниот фокус | НВДА+numpadМинус | НВДА+бекспејс | нема команда | Ве преместува на објектот на кој што се  наоѓа  системскиот фокус, исто така го позиционира курсорот за преглед на местото од системскиот курсор, доколку тој се прикажува |
+| Активирај го моменталниот навигаторски објект | НВДА+numpadЕнтер | НВДА+ентер | двојно тапнување | Го активира   моменталниот навигаторски објект (налик на кликање  врз него со глувчето или претискање спејс кога над објектот се наоѓа системскиот фокус) |
+| Премести ги системските фокус или курсор на моменталната позиција за преглед | НВДА+шифт+numpadМинус | НВДА+шифт+бекспејс | нема команда | Доколку се притисне еднаш, го преместува системскиот фокус на моменталниот навигаторски објект, претискајќи го истото двапати го преместува системскиот курсор на позицијата од курсорот за преглед |
+| Соопшти ја локацијата на курсорот за преглед | НВДА+numpadИзбриши | НВДА+избриши | нема команда | соопштува информации поврзани со местоположбата на текстот или објектот под курсорот за преглед. На пример, ова би можело да ги вклучува процентите од еден документ, далечината на страницата од работ или егзактната позиција на екранот. Претискајќи го истото двапати би можело да ви даде дополнителни информации. |
+%kc:endInclude
+
+Внимавајте: со цел да работат копчињата од бројчаникот, потребно е бројчаничното катанче да е отворено.
+
+++ Преглед на текст ++[ReviewingText]
 NVDA allows you to read the contents of the [screen #ScreenReview], current [document #DocumentReview] or current [object #ObjectReview] by character, word or line.
 This is mostly useful in places (including Windows command consoles) where there is no [system caret #SystemCaret].
 For example, you might use it to review the text of a long information message in a dialog.
