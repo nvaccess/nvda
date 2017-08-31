@@ -60,7 +60,7 @@ except:
 
 # Check OS version requirements
 import winVersion
-if not winVersion.canRunVc2010Builds():
+if not winVersion.isSupportedOS():
 	winUser.MessageBox(0, unicode(ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION)), None, winUser.MB_ICONERROR)
 	sys.exit(1)
 
