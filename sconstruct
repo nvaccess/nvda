@@ -142,11 +142,7 @@ def signExec(target,source,env):
 env['signExec']=signExec
 
 #architecture-specific environments
-archTools=['default','windowsSdk','midl','msrpc']
-# MSVC analysis is only available in newer Windows SDKs
-# So if required, remove the Windows SDK 7.1 (XP) tool
-if 'analyze' in env['nvdaHelperDebugFlags']:
-	archTools.remove('windowsSdk')
+archTools=['default','midl','msrpc']
 env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
 env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
 # Hack around odd bug where some tool [after] msvc states that static and shared objects are different

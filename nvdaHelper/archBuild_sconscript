@@ -34,7 +34,14 @@ release=env['release']
 signExec=env['signExec'] if env['certFile'] else None
 
 #Some defines and includes for the environment
-env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WS03')])
+env.Append(
+	CPPDEFINES=[
+		'UNICODE',
+		'_CRT_SECURE_NO_DEPRECATE',
+		('LOGLEVEL','${nvdaHelperLogLevel}'),
+		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
+	]
+)
 env.Append(CCFLAGS=['/W3','/WX'])
 if 'analyze' in debug:
 	env.Append(CCFLAGS=['/analyze'])
@@ -48,7 +55,13 @@ if 'analyze' in debug:
 env.Append(CXXFLAGS=['/EHsc'])
 
 env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
-env.Append(LINKFLAGS=['/incremental:no','/WX'])
+env.Append(
+	LINKFLAGS=[
+		'/incremental:no',
+		'/WX'
+		'/subsystem:windows,6.01',
+	]
+)
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
