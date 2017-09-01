@@ -75,9 +75,8 @@ build_script:
  - 'echo scons args: %sconsArgs%'
  - py scons.py source %sconsArgs%
  # We don't need launcher to run tests, so run the tests before launcher.
- # We also build the translation template (pot) just to ensure it succeeds.
- - py scons.py tests pot %sconsArgs%
- # We don't actually need the pot as a build artifact though.
+ - py scons.py tests %sconsArgs%
+ # The pot gets built by tests, but we don't actually need it as a build artifact.
  - del output\*.pot
  - 'echo scons output targets: %sconsOutTargets%'
  - py scons.py %sconsOutTargets% %sconsArgs%

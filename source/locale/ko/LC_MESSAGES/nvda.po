@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-04 00:10+1000\n"
-"PO-Revision-Date: 2017-08-05 12:34-0700\n"
+"POT-Creation-Date: 2017-08-14 08:17+1000\n"
+"PO-Revision-Date: 2017-08-15 09:01+0900\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -474,19 +474,19 @@ msgstr "점자 셀 전체"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr ""
+msgstr "포커스 이동시 출력"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 msgid "Always fill display"
-msgstr ""
+msgstr "항상 세부 내용 출력"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
 #. (i.e. you will have to scroll back for focus context information).
 msgid "Only when scrolling back"
-msgstr ""
+msgstr "뒤로 스크롤시에만 출력"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -2113,7 +2113,7 @@ msgstr "박스"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
-msgstr "그루핑"
+msgstr "그룹"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
@@ -2481,7 +2481,7 @@ msgstr "선택됨"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "반만 선택됨"
+msgstr "일부 선택됨"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -2599,7 +2599,7 @@ msgstr "수식 있음"
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "주석 있음"
+msgstr "메모 있음"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
@@ -3930,11 +3930,11 @@ msgstr "점자디스플레이가 포커스 또는 리뷰 위치를 딸아갈 것
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr ""
+msgstr "점자로 포커스 세부 내용 출력: %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
-msgstr ""
+msgstr "포커스된 객체의 세부 내용이 점자로 전달되는 방법을 변경합니다"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -5929,7 +5929,7 @@ msgstr "및줄 없음"
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
 msgid "baseline"
-msgstr "baseline"
+msgstr "기본 글꼴"
 
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
@@ -6655,75 +6655,75 @@ msgstr "만약 주석이 있을 경우 이를 읽어줍니다. "
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "제목 개체 틀"
+msgstr "제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
-msgstr "텍스트 개체 틀"
+msgstr "텍스트 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
-msgstr "중앙 제목 자리 표시자"
+msgstr "중앙 제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
-msgstr "부제목 개체 틀"
+msgstr "부제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Title placeholder"
-msgstr "Vertical Title placeholder"
+msgstr "세로 제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Text placeholder"
-msgstr "세로 텍스트 개체 틀"
+msgstr "세로 텍스트 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Object placeholder"
-msgstr "개체 자리 표시자"
+msgstr "개체 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "차트 개체 틀"
+msgstr "차트 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
-msgstr "Bitmap placeholder"
+msgstr "비트맵 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Media Clip placeholder"
-msgstr "Media Clip placeholder"
+msgstr "미디어 클립 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Org Chart placeholder"
+msgstr "조직도 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
-msgstr "표 개체 틀"
+msgstr "표 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "슬라이드 번호 개체 틀"
+msgstr "슬라이드 번호 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
-msgstr "머리글 개체 틀"
+msgstr "머리글 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Footer placeholder"
-msgstr "바닥글 개체 틀"
+msgstr "바닥글 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Date placeholder"
-msgstr "날짜 개체 틀"
+msgstr "날짜 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Object placeholder"
-msgstr "Vertical Object placeholder"
+msgstr "세로 개체 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Picture placeholder"
-msgstr "그림 개체 틀"
+msgstr "그림 삽입"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
@@ -6786,7 +6786,7 @@ msgstr "header item"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 왼쪽 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 왼쪽 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 #, python-brace-format
@@ -6796,7 +6796,7 @@ msgstr "{otherShape}의 왼쪽 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 위 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 위 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6806,7 +6806,7 @@ msgstr "{otherShape}의 위 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 오른쪽 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 오른쪽 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6816,7 +6816,7 @@ msgstr "{otherShape}의 오른쪽 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 아래 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 아래 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6826,12 +6826,12 @@ msgstr "{otherShape}의 아래 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers  {otherShape}"
-msgstr "{otherShape} 커버함"
+msgstr "{otherShape} 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind {otherShape}"
-msgstr "behind {otherShape}에 가려짐"
+msgstr "{otherShape} 가려짐"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 #, python-brace-format
@@ -7051,12 +7051,12 @@ msgstr "커서에 위치한 객체를 활성화합니다"
 
 #. Translators: Describes a command.
 msgid "Dismiss the recognition result"
-msgstr "문자 인식창을 닫습니다"
+msgstr "문자 인식 창을 닫습니다"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 msgid "Already in a content recognition result"
-msgstr "문자 인식창이 포커스되어 있음"
+msgstr "문자 인식 창이 포커스되어 있음"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the content is not visible.
@@ -7065,7 +7065,7 @@ msgstr "컨텐츠 보이지 않음"
 
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 msgid "Recognizing"
-msgstr "인식중"
+msgstr "인식 중"
 
 msgid "Recognition failed"
 msgstr "인식 실패"
@@ -8832,7 +8832,7 @@ msgstr "가능하면 단어 끊지않고 출력 (&W)"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr ""
+msgstr "포커스 세부 내용 출력:"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -9769,12 +9769,12 @@ msgstr "{axisName} 축 {axisTitle}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
-msgstr ""
+msgstr "차트 내 1 개의 계열"
 
 #. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
-msgstr ""
+msgstr "차트 내 %d 개의 계열"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #, python-brace-format
@@ -10107,7 +10107,7 @@ msgid "cell merge"
 msgstr "셀 병합"
 
 msgid "Comments"
-msgstr "Comments"
+msgstr "메모"
 
 msgid "Endnotes"
 msgstr "미주"
@@ -10144,6 +10144,7 @@ msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{description} {revisionType}: {text}; 저자: {author}; 날짜: {date}"
 
+#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "철자: {text}"
@@ -10292,27 +10293,25 @@ msgstr "Subscript"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Baseline"
-msgstr "Baseline"
+msgstr "기본 글꼴"
 
 #. Translators: a message reported when a paragraph is moved below another paragraph
 #, python-format
 msgid "Moved below %s"
-msgstr ""
+msgstr "%s 아래로 이동"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
-#, fuzzy
 msgid "Moved below blank paragraph"
-msgstr "문단 단위로 읽기 (&P)"
+msgstr "1줄 아래로 이동"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
 #, python-format
 msgid "Moved above %s"
-msgstr ""
+msgstr "%s 위로 이동"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
-#, fuzzy
 msgid "Moved above blank paragraph"
-msgstr "문단 단위로 읽기 (&P)"
+msgstr "1줄 위로 이동"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
@@ -10357,7 +10356,7 @@ msgstr "{offset:.3g} 피카"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "No comments"
-msgstr "주석 없음"
+msgstr "메모 없음"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."

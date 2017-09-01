@@ -3,6 +3,89 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.3 =
+Lo resinyable d'ista versión inclui a dentrada d'o braille contraito, o suporte pa las nuevas voces Windows OneCore disponibles en o Windows 10, o suporte pa l'OCR integrau en o Windows 10 y muitas milloras significativas referents a o Braille y a la web.
+
+== Nuevas Caracteristicas ==
+- S'ha adhibiu una opción Braille a "amostrar os mensaches indefinidament". (#6669)
+- En a lista de mensaches d'o Microsoft Outlook, o NVDA agora anuncia si bell mensache ye marcau. (#6374)
+- En o Microsoft PowerPoint agora s'anuncia o tipo exacto d'una forma en que s'edita una diapositiva tal como trianglo, cerclo, vidio, flecha, en cuenta de nomás "forma". (#7111)
+- O conteniu matematico (furniu como MathML) agora se suporta en o Google Chrome. (#7184)
+- O NVDA agora puet charrar fendo servir as nuevas voces Windows OneCore (tamién conoixidas como voces mobils) incluidas en o Windows 10. Accedes ta ellas trigando Voces Windows OneCore en o dialogo de sintetizadors d'o NVDA. (#6159)
+- Os fichers de configuración de l'usuario d'o NVDA agora se pueden almagazenar en o directorio local de datos d'aplicación de l'usuario. Ixo s'activa a traviés d'una propiedat en o rechistro. Mira-te 'parametros d'o sistema' en a guida de l'usuario pa mas detalles. (#6812)
+- En os navegadors web o NVDA agora anuncia as valors d'os marcadors de posición d'os campos (especificament, agora se suporta aria-placeholder). (#7004)
+- En o modo de navegación pa o Microsoft Word agora ye posible navegar por as  errors d'ortografía fendo servir a navegación rapeda (w y mayus+w) (#6942)
+- S'ha adhibiu suporte pa o control selector de data trobau en os dialogos d'escayecimiento d'o Microsoft Outlook. (#7217)
+- A sucherencia actualment seleccionada agora s'anuncia en os campos pa y cc d'o correu d'o Windows 10 y o campo de busca d'o Windows 10. (#6241)
+- Agora se reproduz un son pa endicar l'aparición d'as sucherencias en bells campos de busca en o Windows 10 (p. eix. pantalla d'inicio, opcions de busca, campos pa y cc d'o correu d'o Windows 10). (#6241)
+- O NVDA agora anuncia automaticament as Notificacions en o Skype de negocio pa l'escritorio  tals como quan belún prencipia una conversa con tu.  (#7281)
+- O NVDA agora anuncia automaticament os mensaches de conversa dentrants entre que se siga en una conversa en o Skype pa negocios. (#7286)
+- O NVDA agora anuncia automaticament as notificacions en o Microsoft Edge tals como quan prencipia bella descarga.  (#7281)
+- Agora puetz escribir tanto en braille contraito como en no contraito en una linia braille con un teclau braille. Mira-te a secciónde dentrada braille d'a guida de l'usuario pa detalles. (#2439)
+- Agora puetz ficar caracters braille Unicode dende o teclau braille en una linia braille seleccionando braille Unicode como a tabla de dentrada en as opcions d'o braille. (#6449)
+- S'ha adhibiu o suporte pa la linia braille SuperBraille emplegada en Taiwán. (#7352)
+- Nuevas tablas de transcripción braille: braille danés computerizau de 8 puntos, Lituano, braille persa computerizau de 8 puntos, Persa grau 1, braille Esloveno computerizau de 8 puntos. (#6188, #6550, #6773, #7367)
+- S'ha amillorau a tabla d'o braille anglés computerizau de 8 puntos (U.S.), incluindo o suporte pa vinyetas, o signo d'euro y as letras accentugadas. (#6836)
+- O NVDA agora puet emplegar a funcionalidat OCR incluida en o Windows 10 pa reconoixer o texto d'imachens u d'aplicacions inaccesibles. (#7361)
+ - L'idioma se puet configurar dende o nuevo dialogo OCR d'o Windows 10 en as preferencias d'o NVDA.
+ - Pa reconoixer o conteniu d'o navegador d'obchectos actual preta NVDA+r.
+ - Consulta la sección de reconoixencia de Contenius d'a Guida de l'usuario pa detalles adicionals.
+- Agora puetz esleyir qué información de contexto s'amuestra en una linia braille quan bell obchecto tien o foco fendo servir a nueva opción "Presentación de contexto d'o foco" en o dialogo d'opcions d'o Braille. (#217)
+ - Por eixemplo, as opcions "replenar a pantalla pa cambios de contexto" y "nomás en desplazar-se-ne enta zaga" pueden fer que treballar con as listas y menús siga mas eficient, ya que os elementos no cambiarían continament a suya posición en a linia.
+ - Consulta la sección en a opción "Presentación de contexto d'o foco" en a Guida de l'usuario pa detalles adicionals y eixemplos.
+- En o Firefox y o Chrome o NVDA agora suporta reixetas dinamicas compleixas tals como fuellas de cálculo end que nomás se puet cargar u amostrar una parti d'o conteniu (especificament os atributos aria-rowcount, aria-colcount, aria-rowindex y aria-colindex introducius en ARIA 1.1). (#7410)
+
+
+== Cambios ==
+- S'ha adhibiu una orden no vinculada (script_restart) pa permitir renchegar o NVDA rapedament. Puetz trobar-la en a categoría Miscelania d'o dialogo de cenyos de dentrada. (#6396)
+- A distribución d'o teclau agora se puet configurar dende o dialogo de bienvenida d'o NVDA. (#6863)
+- S'ha abreviau muitos más tipos de controls y estaus en braille. Os puntos de referencia tamién s'han abreviaus. Porfavor consulta "Tipo de control, estau y abreviaduras de Puntos de Referencia" en Braille en a guida de l'usuario pa una lista completa. (#7188, #3975)
+- S'ha esviellau l'eSpeak-ng ta 1.49.1 (#7280).
+- As listas de tablas de dentrada y de salida en o dialogo d'opcions d'o Braille agora s'ordinan alfabeticament. (#6113)
+- S'ha esviellau o transcriptor braille liblouis ta 3.2.0. (#6935)
+- A tabla braille predeterminada agora ye braille anglés unificau codigo Grau 1. (#6952)
+- Por defecto lo NVDA agora no amuestra que as partis d'a información d'o contexto que haigan cambiadas en una linia braille en que s'enfoque un obchecto. (#217)
+ - Anteriorment amostraba siempre tanta información como estase posible independientment de si hebas visto a mesma información d'o contexto antis.
+ - Puetz tornar ta l'anterior cambiando a nueva opción "Presentación d'o Contexto d'o Foco" en o dialogo d'opcions d'o Braille ta "replenar Siempre a pantalla".
+- En emplegar o braille, o cursor se puet configurar pa tener una forma diferent en seguir a lo foco u a la revisión. (#7112)
+- O logo d'o NVDA s'ha esviellau. O logo esviellau d'o NVDA ye una mezcla estilizada d'as letras NVDA en blanco sobre un fondo soliu purpura. Ixo asegura que será visible en qualsiquier color de fundo, y ferá servir a color purpura d'o logo de NV Access. (#7446)
+
+
+== Corrección d'errors ==
+- Os elementos div editables en o Chrome ya no tienen a suya etiqueta anunciada como a suya valor entre que se siga en o modo de navegación. (#7153)
+- Pretar a fin entre que se ye en o modo de navegación d'un documento laso d'o Microsoft Word ya no fa una error en tiempo d'execución. (#7009)
+- O modo de navegación agora se suporta correctament en o Microsoft Edge quan a un documento se l'haiga dau bel rol ARIA especifico de documento. (#6998)
+- En o modo de navegación agora puetz seleccionar u deseleccionar dica la fin d'a linia fendo servir mayus+fin mesmo quan o cursor siga sobre o zaguer caracter d'a linia. (#7157)
+- Si bell dialogo contién una barra de progreso, o texto d'o dialogo agora s'esviella en braille en que a barra de progreso cambeye. Ixo significa, por eixemplo, que o tiempo restant agora puet leyer-se en o dialogo d'o NVDA "Se son descargando Actualizacions". (#6862)
+- O NVDA agora anunciará os cambios de selección pa bells quadros combinaus d'o Windows 10 tals como as opcions d'autoreproducción. (#6337).
+- A información inservible ya no s'anuncia en dentrar en dialogos de creyación de conferencias u escayecimientos en o Microsoft Outlook. (#7216)
+- Os chuflius pa dialogos de barra de progreso indeterminada tals como o comprebador d'actualizacions nomás quan a salida de barras de progreso ye configurada pa includir chuflius. (#6759)
+- En o Microsoft Excel 2007 y 2003 se torna a anunciar as celdas en mover-se-ne por una fuella de treballo. (#8243)
+- En l'actualización Windows 10 Creators y posteriors s'asegura que o modo de navegación s'activa de nuevas automaticament en leyer correus electronicos en o correu d'o Windows 10. (#7289)
+- En a mas gran parti de linias braille con un teclau braille, o punto 7 agora borra a zaguera celda u caracter braille ficau, y o punto 8 preta a tecla intro. (#6054)
+- En o texto editable, en mover o cursor (p. eix. con as teclas d'o cursor u retroceso), a respuesta charrada d'o NVDA agora ye mas precisa en muitos casos, especialment en o Chrome y as aplicacions de terminal. (#6424)
+- Agora se puet leyer o conteniu de leditor de sinyaturas en o Microsoft Outlook 2016. (#7253)
+- En as aplicacions de Java Swing o NVDA ya no fa que l'aplicación se penche bella vez en navegar por as tablas. (#6992)
+- En l'actualización Windows 10 Creators, o NVDA ya no anunciará las notificacions de birosta qualques veces. (#7128)
+- En o menú Inicio d'o Windows 10 en pretar l'intro pa zarrar-lo dimpués d'una busca ya no se produz que o NVDA anuncie mirar texto. (#7370)
+- Fer a navegación rapeda por capiters agora ye significativament mas rapedo en o Microsoft Edge. (#7343)
+- En o Microsoft Edge a navegación en o modo de navegación ya no se brinca seccions largas de bellas pachinas web tals como o tema WordPress 2015. (#7143)
+- En o Microsoft Edge os puntos de referencia se localizan correctament en atros idiomas diferents a l'anglés. (#7328)
+- O braille agora sigue correctament a selección en seleccionar texto dillá de l'amplo d'a pantalla. Por eixemplo, si seleccionas qualques linias con mayus+flecha abaixo, o braille agora amuestra la zaguera linia que seleccionés. (#5770)
+- En o Firefox o NVDA ya no anuncia falsament "sección" qualques veces en ubrir os detalles pa un tuit en o twitter.com. (#5741)
+- Os comandos de navegación de tabla ya no son disponibles pa las tablas de disenyo en o modo de navegación, fueras que l'anunciau d'as tablas de disenyo siga activau. (#7382)
+- En o Firefox y o Chrome os comandos de navegación de tablas en o modo de navegación agora omiten as celdas ocultas d'a tabla. (#6652, #5655)
+
+
+== Cambios pa os desembolicadors ==
+ - As calendatas en o rechistro agora incluyen os milisegundos. (#7163)
+- O NVDA agora s'ha de construir con Visual Studio Community 2015. O Visual Studio Express ya no se suporta. (#7110)
+ - Tamién se requiere agora as ferramientas y o SDK d'o Windows 10  que se pueden activar en instalar o Visual Studio.
+ - Mira-te a sección de dependencias instaladas d'o leye-me pa detalles adicionals.
+- O suporte pa reconoixedors de conteniu tals como as ferramientas OCR y descripción d'imachen pueden implementar-se facilament fendo servir o nuevo paquete contentRecog. (#7361)
+- Agora s'inclui o paquete de Python json package en as compilacions binarias d'o NVDA. (#3050)
+
+
 = 2017.2 =
 Lo resinyable d'ista versión inclui suporte completo pa l'achiquida d'audio en l'actualización Creators d'o Windows 10, apanyos pa qualques problemas de selección en o modo de navegación, incluindo problemas con seleccionar-lo tot, milloras significants en o suporte d'o Microsoft Edge y milloras en a web tals como a indicación d'elementos marcaus como actuals (fendo servir aria-current).
 

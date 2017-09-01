@@ -494,7 +494,6 @@ class EdgeNode(UIA):
 		return False
 
 	def _get_landmark(self):
-		"""Fetches the aria landmark role for this object."""
 		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
 		if not landmarkId: # will be 0 for non-landmarks
 			return None
