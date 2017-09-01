@@ -319,20 +319,36 @@ class UIAHandler(COMObject):
 		if hasattr(UIAElement,"_nearestWindowHandle"):
 			# Called previously. Use cached result.
 			return UIAElement._nearestWindowHandle
+		# Code for broken WDAG where processID is 0
 		try:
-			window=UIAElement.cachedNativeWindowHandle
+			processID=UIAElement.cachedProcessId
+		except COMError:
+			processID=0
+		if not processID:
+			# Jump up to at least where the processID is not 0
+			condition=self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_ProcessIdPropertyId,0))
+			cacheRequest=self.clientObject.CreateCacheRequest()
+			cacheRequest.addProperty(UIA_ProcessIdPropertyId)
+			walker=self.clientObject.CreateTreeWalker(condition)
+			element=walker.NormalizeElementBuildCache(UIAElement,cacheRequest)
+			processID=element.cachedProcessID
+		else:
+			element=UIAElement
+		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		if appModule.appName==u'hvsirdpclient':
+			condition=self.clientObject.CreatePropertyCondition(UIA_ClassNamePropertyId,u'ApplicationFrameWindow')
+			walker=self.clientObject.createTreeWalker(condition)
+		else:
+			# Not WDAG, just walk up to the nearest valid windowHandle
+			walker=self.windowTreeWalker
+		try:
+			new=walker.NormalizeElementBuildCache(element,self.windowCacheRequest)
+		except COMError:
+			return None
+		try:
+			window=new.cachedNativeWindowHandle
 		except COMError:
 			window=None
-		if not window:
-			# This element reports no window handle, so use the nearest ancestor window handle.
-			try:
-				new=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
-			except COMError:
-				return None
-			try:
-				window=new.cachedNativeWindowHandle
-			except COMError:
-				window=None
 		# Cache for future use to improve performance.
 		UIAElement._nearestWindowHandle=window
 		return window
@@ -346,6 +362,10 @@ class UIAHandler(COMObject):
 			return False
 		if processID==windll.kernel32.GetCurrentProcessId():
 			return False
+		# if ProcessID is 0, then this is native UIA (MSAA bridging would never do this)
+		# for now WDAG is doing this
+		if not processID:
+			return True
 		# Whether this is a native element depends on whether its window natively supports UIA.
 		windowHandle=self.getNearestWindowHandle(UIAElement)
 		if windowHandle:

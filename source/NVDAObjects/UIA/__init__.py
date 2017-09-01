@@ -1211,7 +1211,7 @@ class UIA(Window):
 			return UIA(UIAElement=e)
 		raise NotImplementedError
 
-	def _get_processID(self):
+	def _get_UIAProcessID(self):
 		return self.UIAElement.cachedProcessId
 
 	def _get_location(self):
