@@ -145,8 +145,12 @@ class Model(AutoPropertyObject):
 
 	def postInit(self):
 		"""Executed after model initialisation.
-		Subclasses may extend this method.
+
+		Subclasses may extend this method to perform actions on initialization 
+		of the display. Don't use __init__ for this, since the model ID has 
+		not been set, which is needed for sending packets to the display.
 		"""
+		pass
 
 	# pylint: disable=R0201
 	def _get_keys(self):
