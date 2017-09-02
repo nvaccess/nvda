@@ -51,7 +51,7 @@ USB_IDS_HID = {
 BLUETOOTH_NAMES = {
 	"Actilino AL",
 	"Active Braille AB",
-	"Active Star" AS,
+	"Active Star AS",
 	"Basic Braille BB",
 	"Braillino BL",
 	"Braille Star BS",
@@ -150,7 +150,7 @@ class Model(AutoPropertyObject):
 		of the display. Don't use __init__ for this, since the model ID has 
 		not been set, which is needed for sending packets to the display.
 		"""
-		pass
+		self._display.sendExtendedPacket(HT_EXTPKT_GET_PROTOCOL_PROPERTIES)
 
 	# pylint: disable=R0201
 	def _get_keys(self):
@@ -310,7 +310,7 @@ class ActiveStar40(AtcMixin, TripleActionKeysMixin, Model):
 	genericName = "Active Star"
 
 
-class BrailleWave(OldProtocolMixin, Model):
+class BrailleWave(Model):
 	deviceID = MODEL_BRAILLE_WAVE
 	numCells = 40
 	genericName = name = "Braille Wave"
@@ -348,7 +348,7 @@ BasicBraille80 = basic_braille_factory(80, MODEL_BASIC_BRAILLE_80)
 BasicBraille160 = basic_braille_factory(160, MODEL_BASIC_BRAILLE_160)
 
 
-class BrailleStar(OldProtocolMixin, TripleActionKeysMixin, Model):
+class BrailleStar(TripleActionKeysMixin, Model):
 	genericName = "Braille Star"
 
 	def _get_name(self):
@@ -365,7 +365,7 @@ class BrailleStar80(BrailleStar):
 	cells = 80
 
 
-class Modular(OldProtocolMixin, TripleActionKeysMixin, Model):
+class Modular(TripleActionKeysMixin, Model):
 	genericName = "Modular"
 
 	def _get_name(self):
@@ -527,7 +527,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				if self.numCells and self._model:
 					break
 
-			self.sendExtendedPacket(HT_EXTPKT_GET_PROTOCOL_PROPERTIES)
 			if self.numCells:
 				# A display responded.
 				self._model.postInit()
@@ -550,30 +549,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def sendPacket(self, packet_type, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
+		if self._model:
+			data = self._model.deviceID + data
 		if self.isHid:
-			if self._model:
-				data = self._model.deviceID + data
 			self._sendHidPacket(packet_type, data)
 		else:
-			self._dev.write(packet_type)
-			if self._model and not packet_type == HT_PKT_BRAILLE:
-				self._dev.write(self._model.deviceID)
-			self._dev.write(data)
+			self._dev.write(packet_type + data)
 
 	def sendExtendedPacket(self, packet_type, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
 		packet = "{length}{ext_type}{data}\x16".format(
 			ext_type=packet_type, data=data,
-			length=chr(len(data) + 1)         # Length is including packet_type
+			length=chr(len(data) + len(packet_type))
 		)
 		self.sendPacket(HT_PKT_EXTENDED, packet)
 
-	def _sendHidPacket(self, ser_packet_type, data=""):
+	def _sendHidPacket(self, packet_type, data=""):
 		assert self.isHid
-		self._dev.write(HT_HID_RPT_InData+chr(len(data)+1)+ser_packet_type+data)
-
-
+		self._dev.write(HT_HID_RPT_InData + chr(len(data) + len(packet_type)) + \
+			packet_type + data)
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -605,21 +600,24 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		model_id = stream.read(1)
 		if not self._model:
 			if not model_id in MODELS:
-				log.debug("Unknown model: %r" % model_id)
-				return
+				log.warning("Unknown model: %r" % model_id)
+				raise RuntimeError(
+					"The model with ID %r is not supported by this driver" % model_id)
 			self._model = MODELS.get(model_id)(self)
 			self.numCells = self._model.numCells
+		elif self._model.deviceID != model_id:
+			# Somehow the model ID of this display changed, probably another display 
+			# plugged in the same (already open) serial port.
+			self.terminate()
 
-		if ser_packet_type == HT_PKT_OK:
+		if ser_packet_type == HT_PKT_OK or ser_packet_type == HT_PKT_ACK:
 			pass
-		elif ser_packet_type == HT_PKT_ACK:
-			log.debug("ACK received")
 		elif ser_packet_type == HT_PKT_NAK:
-			log.info("NAK received!")
+			log.debugWarning("NAK received!")
 		elif ser_packet_type == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
-			assert stream.read(1) == "\x16"	# It seems packets are terminated with \x16
+			assert stream.read(1) == "\x16"	# Extended packets are terminated with \x16
 			ext_packet_type = packet[0]
 			if ext_packet_type == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command, do nothing
@@ -640,7 +638,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Ignore ATC packets for now
 				pass
 			elif ext_packet_type == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
-				log.info("Protocol properties received!")
+				self._protocolProperties = namedtuple(
+					versionMajor=ord(packet[0]), versionMinor=ord(packet[1]), 
+					numCells=ord(packet[2]), hasSensitivity=bool(ord(packet[3])),
+					maximumSensitivity=ord(packet[4]), hasFirmness=ord(packet[5]),
+					maximumFirmness=ord(packet[6]), rest=[ord(x) for x in packet[7:]]
+				)
+				log.info("Protocol properties: %r" % self._protocolProperties)
 			else:
 				# Unknown extended packet, log it
 				log.warning("Unhandled extended packet of type %r: %r" %
