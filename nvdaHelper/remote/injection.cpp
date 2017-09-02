@@ -214,6 +214,9 @@ if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32
 	inProcess_terminate();
 	//Unregister any windows hooks registered so far
 	killRunningWindowsHooks();
+	// Unregister inproc winEvent callback
+	UnhookWinEvent(inprocWinEventHookID);
+	inprocWinEventHookID=0;
 	//Release and close the thread mutex
 	ReleaseMutex(threadMutex);
 	CloseHandle(threadMutex);
