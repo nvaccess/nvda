@@ -255,7 +255,7 @@ class UIAHandler(COMObject):
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent("gainFocus",windowHandle=window):
 			return
-		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		obj=NVDAObjects.UIA.UIA(windowHandle=window,UIAElement=sender)
 		if not obj or not obj.shouldAllowUIAFocusEvent:
 			return
 		eventHandler.queueEvent("gainFocus",obj)
@@ -365,6 +365,10 @@ class UIAHandler(COMObject):
 		# if ProcessID is 0, then this is native UIA (MSAA bridging would never do this)
 		# for now WDAG is doing this
 		if not processID:
+			return True
+		# WDAG UIAElements should always be classed as native
+		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		if appModule.appName==u'hvsirdpclient':
 			return True
 		# Whether this is a native element depends on whether its window natively supports UIA.
 		windowHandle=self.getNearestWindowHandle(UIAElement)

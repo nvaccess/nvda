@@ -817,8 +817,6 @@ class UIA(Window):
 
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
-		if UIACachedWindowHandle:
-			windowHandle=UIACachedWindowHandle
 		if not windowHandle:
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
@@ -1060,7 +1058,7 @@ class UIA(Window):
 		return presentationType 
 
 	def correctAPIForRelation(self, obj, relation=None):
-		if obj and self.windowHandle != obj.windowHandle and not obj.UIAElement.cachedNativeWindowHandle:
+		if obj and self.windowHandle != obj.windowHandle and (not obj.UIAElement.cachedNativeWindowHandle or obj.windowHandle!=obj.UIAElement.cachedNativeWindowHandle):
 			# The target element is not the root element for the window, so don't change API class; i.e. always use UIA.
 			return obj
 		return super(UIA, self).correctAPIForRelation(obj, relation)
@@ -1136,7 +1134,7 @@ class UIA(Window):
 			return children
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
-			windowHandle=e.cachedNativeWindowHandle or self.windowHandle
+			windowHandle=self.windowHandle
 			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
 		return children
 
