@@ -49,7 +49,14 @@ USB_IDS_HID = {
 
 # pylint: disable=C0330
 BLUETOOTH_NAMES = {
-
+	"Actilino AL",
+	"Active Braille AB",
+	"Active Star" AS,
+	"Basic Braille BB",
+	"Braillino BL",
+	"Braille Star BS",
+	"Braille Wave BW",
+	"Easy Braille EBR",
 }
 
 # Model identifiers
