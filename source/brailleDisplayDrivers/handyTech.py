@@ -29,8 +29,9 @@ USB_IDS_SER = {
 	"VID_0921&PID_1200", # GoHubs chip
 }
 
+# Newer displays have a native HID processor
 # pylint: disable=C0330
-USB_IDS_HID = {
+USB_IDS_HID_NATIVE = {
 	"VID_1FE4&PID_0054", # Active Braille
 	"VID_1FE4&PID_0081", # Basic Braille 16
 	"VID_1FE4&PID_0082", # Basic Braille 20
@@ -42,10 +43,16 @@ USB_IDS_HID = {
 	"VID_1FE4&PID_008B", # Basic Braille 160
 	"VID_1FE4&PID_0061", # Actilino
 	"VID_1FE4&PID_0064", # Active Star 40
+}
+
+# Some older displays use a HID converter and an internal serial interface
+USB_IDS_HID_CONVERTER = {
 	"VID_1FE4&PID_0003", # USB-HID adapter
 	"VID_1FE4&PID_0074", # Braille Star 40
 	"VID_1FE4&PID_0044", # Easy Braille
 }
+
+USB_IDS_HID = USB_IDS_HID_NATIVE + USB_IDS_HID_CONVERTER
 
 # pylint: disable=C0330
 BLUETOOTH_NAMES = {
@@ -469,7 +476,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	@classmethod
 	def _getAutoPorts(cls, comPorts):
 		for portInfo in hwPortUtils.listHidDevices():
-			if portInfo.get("usbID") in USB_IDS_HID:
+			if portInfo.get("usbID") in USB_IDS_HID_CONVERTER:
+				yield portInfo["devicePath"], "USB HID serial converter"
+			if portInfo.get("usbID") in USB_IDS_HID_NATIVE:
 				yield portInfo["devicePath"], "USB HID"
 		# Try bluetooth ports last.
 		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
@@ -514,6 +523,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
+					if portType == "USB HID serial converter":
+						# This is either the standalone HID adapter cable for older displays,
+						# or an older display with a HID - serial adapter built in
+						# Send a flush to open the serial channel
+						self._dev.write(HT_HID_RPT_InCommand + HT_HID_CMD_FlushBuffers)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY,
 						timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
