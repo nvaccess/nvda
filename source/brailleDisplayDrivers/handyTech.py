@@ -91,7 +91,6 @@ MODEL_BRAILLE_STAR_80 = "\x78"
 MODEL_MODULAR_20 = "\x80"
 MODEL_MODULAR_80 = "\x88"
 MODEL_MODULAR_40 = "\x89"
-MODEL_BOOKWORM = "\x90"
 
 # Key constants
 KEY_B1 = 0x03
@@ -407,13 +406,6 @@ class Modular40(Modular):
 class Modular80(Modular):
 	deviceID = MODEL_MODULAR_80
 	cells = 80
-
-
-class Bookworm(Model):
-	# TODO: uses a different protocol
-	deviceID = MODEL_BOOKWORM
-	cells = 8
-	genericName = name = "Bookworm"
 
 
 # Model dict for easy lookup
