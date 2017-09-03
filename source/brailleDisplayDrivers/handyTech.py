@@ -60,7 +60,6 @@ BLUETOOTH_NAMES = {
 	"Active Braille AB",
 	"Active Star AS",
 	"Basic Braille BB",
-	"Braillino BL",
 	"Braille Star BS",
 	"Braille Wave BW",
 	"Easy Braille EBR",
@@ -85,7 +84,6 @@ MODEL_BASIC_BRAILLE_48 = "\x8A"
 MODEL_BASIC_BRAILLE_64 = "\x86"
 MODEL_BASIC_BRAILLE_80 = "\x87"
 MODEL_BASIC_BRAILLE_160 = "\x8B"
-MODEL_BRAILLINO = "\x72"
 MODEL_BRAILLE_STAR_40 = "\x74"
 MODEL_BRAILLE_STAR_80 = "\x78"
 MODEL_MODULAR_20 = "\x80"
