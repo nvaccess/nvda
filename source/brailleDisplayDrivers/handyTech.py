@@ -71,6 +71,7 @@ BLUETOOTH_NAMES = {
 MODEL_BRAILLE_WAVE = "\x05"
 MODEL_MODULAR_EVOLUTION_64 = "\x36"
 MODEL_MODULAR_EVOLUTION_88 = "\x38"
+MODEL_MODULAR_CONNECT_88 = "\x3A"
 MODEL_EASY_BRAILLE = "\x44"
 MODEL_ACTIVE_BRAILLE = "\x54"
 MODEL_CONNECT_BRAILLE_40 = "\x55"
@@ -212,22 +213,11 @@ class Model(AutoPropertyObject):
 		"""Display cells on the braille display
 
 		This is the modern protocol, which uses an extended packet to send braille
-		cells. Some displays use an older, simpler protocol. See OldProtocolMixin.
+		cells. Some very old displays use an older, simpler protocol
+		which is currently not implemented in this driver.
 		"""
 		self._display.sendExtendedPacket(HT_EXTPKT_BRAILLE,
 			"".join(chr(cell) for cell in cells))
-
-
-class OldProtocolMixin(object):
-	"Mixin for displays using an older protocol to send braille cells"
-	def display(self, cells):
-		"""Write cells to the display according to the old protocol
-
-		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
-		followed by the cells. No model ID or lenghth are included.
-		"""
-		# TODO: Do we have models with status cells? How to handle these?
-		return self._display.sendPacket(HT_PKT_BRAILLE, [chr(cell) for cell in cells])
 
 
 class AtcMixin(object):
@@ -275,6 +265,14 @@ class JoystickMixin(AutoPropertyObject):
 		})
 		return keys
 
+
+class ModularConnect88(TripleActionKeysMixin, Model):
+	deviceID = MODEL_MODULAR_CONNECT_88
+	genericName = "Modular Connect"
+	name = "Modular Connect 88"
+	numCells = 88
+
+
 # pylint: disable=C0111
 class ModularEvolution(AtcMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular Evolution"
@@ -302,6 +300,13 @@ class ActiveBraille(AtcMixin, TripleActionKeysMixin, Model):
 	deviceID = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'
+
+
+class ConnectBraille40(TripleActionKeysMixin, Model):
+	deviceID = MODEL_CONNECT_BRAILLE_40
+	numCells = 40
+	genericName = "Connect Braille"
+	name = "Connect Braille 40"
 
 
 class Actilino(AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
@@ -377,6 +382,16 @@ class Modular(TripleActionKeysMixin, Model):
 
 	def _get_name(self):
 		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
+
+	def display(self, cells):
+		"""Display braille on the display with empty status cells
+
+		The Modular serie has 4 status cells.
+		These cells need to be included in the braille data, but since NVDA doesn't
+		support status cells, we just send empty cells.
+		"""
+		cells = "\x00" * 4 + cells
+		super(Modular, self).display(cells)
 
 
 class Modular20(Modular):
