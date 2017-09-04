@@ -155,7 +155,6 @@ class Model(AutoPropertyObject):
 		of the display. Don't use __init__ for this, since the model ID has 
 		not been set, which is needed for sending packets to the display.
 		"""
-		self._display.sendExtendedPacket(HT_EXTPKT_GET_PROTOCOL_PROPERTIES)
 
 	# pylint: disable=R0201
 	def _get_keys(self):
@@ -571,7 +570,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self._model:
 			data = self._model.deviceID + data
 		if self.isHid:
-			self._sendHidPacket(packet_type, data)
+			self._sendHidPacket(packet_type+data)
 		else:
 			self._dev.write(packet_type + data)
 
@@ -584,10 +583,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		)
 		self.sendPacket(HT_PKT_EXTENDED, packet)
 
-	def _sendHidPacket(self, packet_type, data=""):
+	def _sendHidPacket(self, packet):
 		assert self.isHid
-		self._dev.write(HT_HID_RPT_InData + chr(len(data) + len(packet_type)) + \
-			packet_type + data)
+		maxBlockSize = self._dev._writeSize-3
+		# When the packet length exceeds C{writeSize}, the packet is split up into several packets.
+		# These packets are of size C{blockSize}.
+		# They contain C{HT_HID_RPT_InData}, the length of the data block,
+		# the data block itself and a terminating null character.
+		bytesRemaining = packet
+		while bytesRemaining:
+			blockSize = min(maxBlockSize, len(bytesRemaining))
+			hidPacket = HT_HID_RPT_InData + chr(blockSize) + bytesRemaining[:blockSize] + "\x00"
+			self._dev.write(hidPacket)
+			bytesRemaining = bytesRemaining[blockSize:]
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -657,13 +665,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Ignore ATC packets for now
 				pass
 			elif ext_packet_type == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
-				self._protocolProperties = namedtuple(
-					versionMajor=ord(packet[0]), versionMinor=ord(packet[1]), 
-					numCells=ord(packet[2]), hasSensitivity=bool(ord(packet[3])),
-					maximumSensitivity=ord(packet[4]), hasFirmness=ord(packet[5]),
-					maximumFirmness=ord(packet[6]), rest=[ord(x) for x in packet[7:]]
-				)
-				log.info("Protocol properties: %r" % self._protocolProperties)
+				pass
 			else:
 				# Unknown extended packet, log it
 				log.warning("Unhandled extended packet of type %r: %r" %
