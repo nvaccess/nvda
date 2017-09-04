@@ -217,6 +217,9 @@ addTable("hi-in-g1.utb", _("Hindi grade 1"))
 addTable("hr-comp8.utb", _("Croatian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("hr-g1.ctb", _("Croatian grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("hu-hu-comp8.ctb", _("Hungarian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
