@@ -67,6 +67,7 @@ RENAMED_TABLES = {
 	"da-dk-g18.utb":"da-dk-g18.ctb",
 	"en-us-comp8.ctb" : "en-us-comp8-ext.utb",
 	"gr-gr-g1.utb":"el.ctb",
+	"hr.ctb":"hr-comp8.utb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
 	"no-no.ctb":"no-no-comp8.ctb",
