@@ -410,17 +410,6 @@ class VoiceSettingsSlider(wx.Slider):
 		self.SetValue(newValue)
 
 class VoiceSettingsDialog(SettingsDialog):
-	#Choices for numbers combo box in Voice settings.
-	DIGIT_CHOICES = [
-		# Translators: Choice in a combo box for speaking full numbers.
-		_("Full numbers"),
-		# Translators: Choice in a combo box for speaking numbers as digits.
-		_("Digits"),
-		# Translators: Choice in a combo box for speaking numbers as double digits.
-		_("Double digits"),
-		# Translators: Choice in a combo box for speaking numbers as triple digits.
-		_("Triple digits")]
-
 	# Translators: This is the label for the voice settings dialog.
 	title = _("Voice Settings")
 
@@ -537,11 +526,6 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.beepForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = beepForCapsText))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 
-		
-		# Translators: Label for a combo box for setting how nvda speaks numbers.
-		speakNumbersText = _("Speak &numbers as")
-		self.digitsCombo = settingsSizerHelper.addLabeledControl(speakNumbersText, wx.Choice, choices=self.DIGIT_CHOICES)
-		self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
 		# Translators: This is the label for a checkbox in the
 		# voice settings dialog.
 		useSpellingFunctionalityText = _("Use &spelling functionality if supported")
@@ -617,7 +601,6 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"][getSynth().name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
-		config.conf["speech"]["readNumbersAs"]=self.digitsCombo.GetSelection()
 		config.conf["speech"][getSynth().name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 		super(VoiceSettingsDialog, self).onOk(evt)
 
