@@ -35,6 +35,7 @@ Le migliorie di questa versione possono essere riassunte nel supporto alle voci 
  - Si veda la sezione "presentazione delle informazioni di contesto" presente nel manuale utente per ulteriori informazioni ed esempi.
 - In Firefox e Chrome, NVDA supporta griglie e tabelle dinamiche molto complesse come fogli di lavoro, anche quando solo parte del contenuto viene caricato o visualizzato (nello specifico, gli attributi aria-rowcount, aria-colcount, aria-rowindex e aria-colindex, introdotti in ARIA 1.1). (#7410)
 
+
 == Cambiamenti ==
 - è stato aggiunto un comando per riavviare NVDA, al momento non assegnato ad alcun tasto.  Lo si può trovare nella categoria varie della finestra gesti e tasti di immissione del menu preferenze di NVDA. (#6396)
 - è possibile selezionare il layout tastiera dalla schermata di benvenuto di NVDA. (#6863)
@@ -48,6 +49,7 @@ Le migliorie di questa versione possono essere riassunte nel supporto alle voci 
  - è possibile ritornare alle impostazioni delle versioni precedenti modificando la nuova funzione "presentazione delle informazioni di contesto per il focus", nelle impostazioni Braille, selezionando "riempi sempre il display".
 - Quando si utilizza il braille, il cursore può essere configurato in modo tale da apparire con una forma diversa per distinguere tra cursore di sistema e cursore di controllo (#7112)
 - Il logo di NVDA è stato aggiornato. Il nuovo logo è un disegno stilizzato delle lettere NVDA in bianco, su di uno sfondo viola. Questo assicura una visibilità completa con qualsiasi colore di sfondo, e il viola richiama il logo di NvAccess. (#7446)
+
 
 == Bug corretti ==
 - L'etichetta degli elementi div editabili in Chrome non viene più annunciata con il suo valore, bensì con il nome dell'etichetta stessa, in modalità navigazione. (#7153)
@@ -74,6 +76,7 @@ Le migliorie di questa versione possono essere riassunte nel supporto alle voci 
 - In Firefox, NVDA non annuncerà di continuo la parola "sezione" quando viene aperta la finestra dettagli di un tweet in twitter.com (#5741)
 - I comandi di navigazione tabella non sono più disponibili nelle tabelle di layout, in modalità navigazione,  a meno che non sia espressamente attivata l'opzione "leggi tabelle di layout". (#7382)
 - In Firefox e Chrome, i comandi di navigazione tabelle salteranno le celle nascoste di tale tabella. (#6652, #5655)
+
 
 == Cambiamenti per sviluppatori, in inglese ==
 - Timestamps in the log now include milliseconds. (#7163)
