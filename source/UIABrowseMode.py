@@ -294,6 +294,9 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="embeddedObject":
+			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_PaneControlTypeId,UIAHandler.UIA_AriaRolePropertyId:[u"application",u"alertdialog",u"dialog"]})
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		raise NotImplementedError
 
 	def _activateNVDAObject(self,obj):

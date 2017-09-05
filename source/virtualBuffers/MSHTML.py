@@ -324,7 +324,10 @@ class MSHTML(VirtualBuffer):
 				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word(lr.upper()) for lr in aria.htmlNodeNameToAriaLandmarkRoles]}
 				]
 		elif nodeType == "embeddedObject":
-			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
+			attrs = [
+				{"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET","AUDIO","VIDEO"]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
+			]
 		elif nodeType == "separator":
 			attrs = {"IHTMLDOMNode::nodeName": ["HR"]}
 		else:

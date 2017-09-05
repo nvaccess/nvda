@@ -504,7 +504,7 @@ The following keys by themselves jump to the next available element, while addin
 - m: frame
 - g: graphic
 - d: landmark
-- o: embedded object
+- o: embedded object (audio and video player, application, dialog, etc.)
 - 1 to 6: headings at levels 1 to 6 respectively
 - a: annotation (comment, editor revision, etc.)
 - w: spelling error
@@ -533,9 +533,10 @@ Once you have chosen an item, you can use the provided buttons in the dialog to 
 %kc:endInclude
 
 ++ Embedded Objects ++
-Pages can include rich content using technologies such as Adobe Flash and Sun Java, as well as applications and dialogs.
+Pages can include rich content using technologies such as Adobe Flash, Oracle Java and HTML5, as well as applications and dialogs.
 Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
-You can press enter on these objects to interact with them.
+You can quickly move to them using the o and shift+o embedded object single letter navigation keys.
+To interact with these objects, you can press enter on them.
 If it is accessible, you can then tab around it and interact with it like any other application.
 A key command is provided to return to the original page containing the embedded object:
 %kc:beginInclude
