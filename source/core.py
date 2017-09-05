@@ -332,7 +332,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
-	elif globalVars.appArgs.portablePath and globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent:
+	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
