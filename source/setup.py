@@ -198,6 +198,17 @@ setup(
 			"copyright": copyright,
 			"company_name": publisher,
 		},
+		{
+			"script":"nvda_appx.pyw",
+			"dest_base":"nvda_appx",
+			"uac_info": ("asInvoker", False),
+			"icon_resources":[(1,"images/nvda.ico")],
+			"version":"%s.%s.%s.%s"%(version_year,version_major,version_minor,version_build),
+			"description":"NVDA application",
+			"product_version":version,
+			"copyright":copyright,
+			"company_name":publisher,
+		},
 	],
 	service=[{
 		"modules": ["nvda_service"],

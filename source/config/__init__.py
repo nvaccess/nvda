@@ -30,6 +30,8 @@ import winKernel
 import profileUpgrader
 from .configSpec import confspec
 
+isAppX=False
+
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
@@ -91,7 +93,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	Most callers will want the C{globalVars.appArgs.configPath variable} instead.
 	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
-	if installedUserConfigPath and (isInstalledCopy() or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
 		return installedUserConfigPath
 	return u'.\\userConfig\\'
 

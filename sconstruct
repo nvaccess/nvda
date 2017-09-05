@@ -119,10 +119,11 @@ Export('sourceLibDir64')
 buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
 outputDir=Dir(env['outputDir'])
+Export('outputDir')
 devDocsOutputDir=outputDir.Dir('devDocs')
 
 # An action to sign an executable with certFile.
-signExecCmd = ["signtool", "sign", "/f", certFile]
+signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
 if certPassword:
 	signExecCmd.extend(("/p", certPassword))
 if certTimestampServer:
@@ -392,6 +393,8 @@ symbolsList.extend(env.Glob(os.path.join(sourceLibDir.path,'*.pdb')))
 symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
 symbolsArchive = env.ZipArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
 env.Alias("symbolsArchive", symbolsArchive)
+
+env.SConscript("appx/sconscript",exports=["env"],variant_dir='build\\appx')
 
 env.Default(dist)
 

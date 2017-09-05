@@ -1,0 +1,61 @@
+import subprocess
+import versionInfo
+
+Import(['env'])
+
+def getCertPublisher(env):
+	certFile=env.get('certFile')
+	if not certFile:
+		return env['publisher']
+	certPassword=env.get('certPassword')
+	cmd=['certutil','-dump']
+	if certPassword:
+		cmd.extend(['-p',certPassword])
+	cmd.append(File('#'+certFile).abspath.replace('/','\\'))
+	lines=subprocess.check_output(cmd).splitlines()
+	linePrefix='Subject: '
+	for line in lines:
+		if line.startswith(linePrefix):
+			subject=line[len(linePrefix):].rstrip()
+			return subject
+
+signExec=env['signExec'] if env['certFile'] else None
+certPublisher=getCertPublisher(env)
+
+# Make a copy of the dist dir produced by py2exe 
+# And also place some extra appx specific images in there
+appxContent=env.Command(
+	target='content',
+	source=[Dir("#dist"),Dir('#appx/appx_images')],
+	action=[
+		Delete("$TARGET"),
+		Copy("$TARGET","${SOURCES[0]}"),
+		Copy("${TARGET}\\appx_images","${SOURCES[1]}"),
+	]
+)
+# Ensure that it is always copied as we can't tell if dist changed 
+env.AlwaysBuild(appxContent)
+# Create a preconfig xml file for making the appx
+priConfig=env.Command(File('priConfig.xml'),appxContent,"makepri createconfig /cf $TARGET /dq lang-en-US >NUL",CHDIR=appxContent)
+env.Depends(priConfig,appxContent)
+# Create an appx manifest with version and publisher etc all filled in 
+manifest=env.Substfile(
+	'manifest.xml',
+	'manifest.xml.subst',
+	SUBST_DICT={
+		'%name%':versionInfo.name,
+		'%version%':"%s.%s.%s.%s"%(versionInfo.version_year,versionInfo.version_major,versionInfo.version_minor,env['version_build']),
+		'%certPublisher%':certPublisher,
+		'%publisher%':env['publisher'],
+		'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
+		'%description%':versionInfo.description,
+	},
+)
+# Create a pri file indexing all thiles to be included in the appx
+priFile,mapFile=env.Command(['appx.pri','appx.map.txt'],[appxContent,priConfig,manifest],"makepri new /v /pr ${SOURCES[0]} /cf ${SOURCES[1]} /manifest ${SOURCES[2]} /mf appx /of ${TARGETS[0]} /o >NUL")
+# Package the appx
+appx=env.Command(File('#output\\nvda.appx'),[manifest,mapFile],"makeappx pack /p $TARGET /m ${SOURCES[0]} /f ${SOURCES[1]} >${TARGET}.txt")
+if signExec:
+	env.AddPostAction(appx,[signExec])
+env.Depends(appx,appxContent)
+env.Alias('appx',appx)
