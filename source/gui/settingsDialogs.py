@@ -281,7 +281,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# add the label, the categories tree, and the settings panel to a 2 by 2 grid.
 		# The label should span two columns, so that the start of the categories tree
 		# and the start of the settings panel are at the same vertical position.
-		gridBagSizer.Add(categoriesLabel, pos=(0,0), span=(1,0))
+		gridBagSizer.Add(categoriesLabel, pos=(0,0), span=(1,2))
 		gridBagSizer.Add(self.categoryTree, pos=(1,0), flag=wx.EXPAND)
 		gridBagSizer.Add(self.container, pos=(1,1))
 		gridBagSizer.AddGrowableCol(1)
@@ -322,12 +322,14 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		if self.categoryTree.Count<len(self.categoryTreeItems):
 			evt.Skip()
 			return
+		self.container.Freeze()
 		if self.currentCategory:
 			self.currentCategory.onPanelDeactivated()
 		self.currentCategory=self.categoryTree.GetItemPyData(evt.Item)
 		self.currentCategory.onPanelActivated()
 		# call setupScrolling so that the controls apear in their expected locations.
 		self.container.SetupScrolling()
+		self.container.Thaw()
 
 	def onOk(self,evt):
 		for panel in self.getCategoryInstances():
