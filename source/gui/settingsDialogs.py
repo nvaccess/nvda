@@ -554,22 +554,12 @@ class SynthesizerPanel(SettingsPanel):
 			return
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
-		if getSynth().name is not newSynth:
-			if not setSynth(newSynth):
-				# Translators: This message is presented when
-				# NVDA is unable to load the selected
-				# synthesizer.
-				gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
-				return 
-			# We should create a new instance of the voice settings panel
-			dialog=self.GrandParent
-			index=dialog.categoryClasses.index(VoiceSettingsPanel)
-			treeItem=dialog.categoryTreeItems[index]
-			panel=dialog.categoryTree.GetItemPyData(treeItem)
-			panel.Destroy()
-			panel=VoiceSettingsPanel(self.Parent)
-			dialog.categoryTree.SetItemPyData(treeItem, panel)
-			panel.Hide()
+		if getSynth().name is not newSynth and not setSynth(newSynth):
+			# Translators: This message is presented when
+			# NVDA is unable to load the selected
+			# synthesizer.
+			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
+			return 
 		if audioDucking.isAudioDuckingSupported():
 			index=self.duckingList.GetSelection()
 			config.conf['audio']['audioDuckingMode']=index
@@ -700,7 +690,10 @@ class VoiceSettingsPanel(SettingsPanel):
 		return checkbox
 
 	def onPanelActivated(self):
-		self.updateVoiceSettings()
+		if getSynth().name is not self._synth:
+			self.sizerDict.clear()
+			self.settingsSizer.Clear(deleteWindows=True)
+			self.makeSettings(self.settingsSizer)
 		super(VoiceSettingsPanel,self).onPanelActivated()
 
 	def makeSettings(self, settingsSizer):
@@ -765,6 +758,7 @@ class VoiceSettingsPanel(SettingsPanel):
 	def updateVoiceSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
 		synth=getSynth()
+		self._synth=synth.name
 		#firstly check already created options
 		for name,sizer in self.sizerDict.iteritems():
 			if name == changedSetting:
