@@ -201,6 +201,12 @@ class SettingsPanel(wx.Panel):
 		MultiCategorySettingsDialog is responsible for cleaning up the panel when Cancel is pressed.
 		"""
 
+	def refresh(self):
+		"""Performs optional refreshing of the panel contents.
+		This will be executed after saving when the parent's dialog apply button is pressed.
+		Sub-classes should extendthis method.
+		"""
+
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
 	A multi category settings dialog consists of a tree view with settings categories on the left side, 
@@ -338,6 +344,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def onApply(self,evt):
 		for panel in self.getCategoryInstances():
 			panel.onSave()
+			panel.refresh()
+		# call setupScrolling so that the controls apear in their expected locations.
+		self.container.SetupScrolling()
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 class GeneralSettingsPanel(SettingsPanel):
@@ -535,18 +544,32 @@ class SynthesizerPanel(SettingsPanel):
 		self.duckingList.SetSelection(index)
 		if not audioDucking.isAudioDuckingSupported():
 			self.duckingList.Disable()
+		self.updateSynthesizerList()
 
-	def onPanelActivated(self):
+	def updateSynthesizerList(self):
 		driverList=getSynthList()
 		self.synthNames=[x[0] for x in driverList]
 		options=[x[1] for x in driverList]
+		self.synthList.Clear()
 		self.synthList.AppendItems(options)
 		try:
 			index=self.synthNames.index(getSynth().name)
 			self.synthList.SetSelection(index)
 		except:
 			pass
-		super(SynthesizerPanel,self).onPanelActivated()
+
+	def onPanelDeactivated(self):
+		newSynth=self.synthNames[self.synthList.GetSelection()]
+		if getSynth().name is not newSynth and gui.messageBox(
+			# Translators: A confirmation message presented when
+			# a user changed the selected synthesizer but didn't yet apply the changes.
+			_("You appear to have changed your prefered synthesizer. Do you wish to apply your new synthesizer settings as recommended before proceeding?"),
+			# Translators: The title of a confirmation message presented when
+			# a user changed the selected synthesizer but didn't yet apply the changes.
+			_("Synthesizer Change"),wx.YES|wx.NO|wx.ICON_WARNING,self
+		)==wx.YES:
+			self.onSave()
+		super(SynthesizerPanel,self).onPanelDeactivated()
 
 	def onSave(self):
 		if not self.synthNames:
@@ -690,10 +713,8 @@ class VoiceSettingsPanel(SettingsPanel):
 		return checkbox
 
 	def onPanelActivated(self):
-		if getSynth().name is not self._synth:
-			self.sizerDict.clear()
-			self.settingsSizer.Clear(deleteWindows=True)
-			self.makeSettings(self.settingsSizer)
+		if getSynth().name is not self._synth.name:
+			self.refresh()
 		super(VoiceSettingsPanel,self).onPanelActivated()
 
 	def makeSettings(self, settingsSizer):
@@ -757,8 +778,7 @@ class VoiceSettingsPanel(SettingsPanel):
 
 	def updateVoiceSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
-		synth=getSynth()
-		self._synth=synth.name
+		synth=self._synth=getSynth()
 		#firstly check already created options
 		for name,sizer in self.sizerDict.iteritems():
 			if name == changedSetting:
@@ -809,15 +829,22 @@ class VoiceSettingsPanel(SettingsPanel):
 		super(VoiceSettingsPanel,self).onDiscard()
 
 	def onSave(self):
-		getSynth().saveSettings()
+		synth = getSynth()
+		synth.saveSettings()
 		config.conf["speech"]["autoLanguageSwitching"]=self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
-		config.conf["speech"][getSynth().name]["capPitchChange"]=self.capPitchChangeEdit.Value
-		config.conf["speech"][getSynth().name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
-		config.conf["speech"][getSynth().name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
-		config.conf["speech"][getSynth().name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
+		config.conf["speech"][synth.name]["capPitchChange"]=self.capPitchChangeEdit.Value
+		config.conf["speech"][synth.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
+		config.conf["speech"][synth.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
+		config.conf["speech"][synth.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
+
+	def refresh(self):
+		self.sizerDict.clear()
+		self.settingsSizer.Clear(deleteWindows=True)
+		self.makeSettings(self.settingsSizer)
+		super(VoiceSettingsPanel,self).refresh()
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
