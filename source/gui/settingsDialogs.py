@@ -1252,16 +1252,11 @@ class DocumentFormattingPanel(SettingsPanel):
 		panelText =_("The following options control the types of document formatting reported by NVDA.")
 		sHelper.addItem(wx.StaticText(self, label=panelText))
 
-		scrolledItems = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		scrolledItemsBorder = wx.BoxSizer(wx.VERTICAL)
-		scrolledItemsBorder.Add(scrolledItems.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag = wx.ALL|wx.EXPAND, proportion=1)
-		sHelper.addItem(scrolledItemsBorder, flag=wx.EXPAND, proportion=1)
-
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
 		fontGroupText = _("Font")
 		fontGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=fontGroupText), wx.VERTICAL))
-		scrolledItems.addItem(fontGroup)
+		sHelper.addItem(fontGroup)
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -1303,7 +1298,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# document formatting settings panel
 		documentInfoGroupText = _("Document information")
 		docInfoGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=documentInfoGroupText), wx.VERTICAL))
-		scrolledItems.addItem(docInfoGroup)
+		sHelper.addItem(docInfoGroup)
 		
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -1327,7 +1322,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# document formatting settings panel
 		pageAndSpaceGroupText = _("Pages and spacing")
 		pageAndSpaceGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=pageAndSpaceGroupText), wx.VERTICAL))
-		scrolledItems.addItem(pageAndSpaceGroup)
+		sHelper.addItem(pageAndSpaceGroup)
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -1381,7 +1376,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# document formatting settings panel
 		tablesGroupText = _("Table information")
 		tablesGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=tablesGroupText), wx.VERTICAL))
-		scrolledItems.addItem(tablesGroup)
+		sHelper.addItem(tablesGroup)
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -1424,7 +1419,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# document formatting settings panel
 		elementsGroupText = _("Elements")
 		elementsGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=elementsGroupText), wx.VERTICAL))
-		scrolledItems.addItem(elementsGroup, flag=wx.EXPAND, proportion=1)
+		sHelper.addItem(elementsGroup, flag=wx.EXPAND, proportion=1)
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -1873,9 +1868,6 @@ class BrailleSettingsPanel(SettingsPanel):
 		except:
 			pass
 		self.updatePossiblePorts()
-
-	def onPanelActivated(self):
-		super(BrailleSettingsPanel,self).onPanelActivated()
 
 	def onSave(self):
 		if not self.displayNames:
