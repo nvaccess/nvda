@@ -12,6 +12,7 @@ def getCertPublisher(env):
 	if certPassword:
 		cmd.extend(['-p',certPassword])
 	cmd.append(File('#'+certFile).abspath.replace('/','\\'))
+	print cmd
 	lines=subprocess.check_output(cmd).splitlines()
 	linePrefix='Subject: '
 	for line in lines:
