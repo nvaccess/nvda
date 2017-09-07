@@ -1364,7 +1364,7 @@ class GlobalCommands(ScriptableObject):
 		elif scriptHandler.getLastScriptRepeatCount()==1:
 			speech.speakSpelling(text)
 		else:
-			if api.copyToClip(title):
+			if api.copyToClip(text):
 				ui.message(_("%s copied to clipboard")%text)
 	# Translators: Input help mode message for report status line text command.
 	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the title to the clipboard")
