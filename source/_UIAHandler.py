@@ -291,6 +291,9 @@ class UIAHandler(COMObject):
 			return False
 		import NVDAObjects.window
 		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
+		# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
+		if windowClass=='RAIL_WINDOW':
+			return True
 		# There are certain window classes that just had bad UIA implementations
 		if windowClass in badUIAWindowClassNames:
 			return False
@@ -362,14 +365,6 @@ class UIAHandler(COMObject):
 			return False
 		if processID==windll.kernel32.GetCurrentProcessId():
 			return False
-		# if ProcessID is 0, then this is native UIA (MSAA bridging would never do this)
-		# for now WDAG is doing this
-		if not processID:
-			return True
-		# WDAG UIAElements should always be classed as native
-		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
-		if appModule.appName==u'hvsirdpclient':
-			return True
 		# Whether this is a native element depends on whether its window natively supports UIA.
 		windowHandle=self.getNearestWindowHandle(UIAElement)
 		if windowHandle:
