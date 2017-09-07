@@ -42,13 +42,13 @@ priConfig=env.Command(File('priConfig.xml'),appxContent,"makepri createconfig /c
 env.Depends(priConfig,appxContent)
 # Create an appx manifest with version and publisher etc all filled in 
 manifest=env.Substfile(
-	File('#output/manifest.xml'),
+	"manifest.xml",
 	'manifest.xml.subst',
 	SUBST_DICT={
 		'%name%':versionInfo.name,
 		'%version%':"%s.%s.%s.%s"%(versionInfo.version_year,versionInfo.version_major,versionInfo.version_minor,env['version_build']),
 		'%certPublisher%':certPublisher,
-		'%publisher%':'NV Access', #env['publisher'],
+		'%publisher%':env['publisher'],
 		'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
 		'%description%':versionInfo.description,
 	},
@@ -63,8 +63,8 @@ priFile,mapFile=env.Command(
 	],
 )
 # Package the appx
-appx=env.Command(File('#output\\nvda.appx'),[manifest,mapFile],"makeappx pack /p $TARGET /m ${SOURCES[0]} /f ${SOURCES[1]}")
+appx=env.Command(File('#output\\nvda.appx'),[manifest,appxContent],"makeappx pack /p $TARGET /m ${SOURCES[0]} /d ${SOURCES[1]}")
 if signExec:
 	env.AddPostAction(appx,[signExec])
 env.Depends(appx,appxContent)
-env.Alias('appx',manifest)
+env.Alias('appx',appx)
