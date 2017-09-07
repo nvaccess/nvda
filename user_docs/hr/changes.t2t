@@ -2,6 +2,30 @@
 
 
 %!includeconf: ../changes.t2tconf
+ 
+ 
+= 2017.4 =
+
+== Nove značajke ==
+- U načinu pregleda sada je moguće preskakati orjentire koristeći prečac prebacivanja između sadrživaća (zarez/shift+zarez). (#5482)
+- U Firefoxu, Chromeu i u Internet Exploreru, brza navigacija do uređivačkih polja i obrazaca sada uključuje tekstualna polja bogatog uređivanja (npr. contentEditable). (#5534)
+- U internet preglednicima,, popis elemenata može izlistavati obrasce i gumbe. (#588)
+
+
+== Izmjene ==
+- Web dijaloški okviri u Firefox i Chrome web preglednicima sada automatski koriste način pregleda, osim ako to nije web aplikacija. (#4493)
+- U načinu pregeda, pritiskanje tabulatora i kretanje prećicama za brzo kretanje ne izgovaraju prebacivanje izvan sadrživaća poput popisa i tablica, što čini kretanje bržim. (#2591)
+- U načinu pregleda za Firefox i Chrome, Imena grupa polja obrazaca prilikom premještanja po njima sa prečicama za brzo kretanje ili prilikom pritiskanja taba. (#3321)
+
+
+== Ispravke grešaka ==
+- Linkovi se sada ispravno prikazuju u aplikacijama poput Microsoft Worda. (#6780)
+- NVDA više ne postaje značajno sporiji prilikom otvaranja više kartica u Firefox ili Chrome web preglednicima. (#3138)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
 
 = 2017.3 =
 Novosti u ovoj inačici uključuju unos brajevog kratkopisa, podrška za nove Windows OneCore glasove dostupne u Windowsima 10, ugrađenu podršku za Windows 10 OCR, i puno značajnih poboljšanja koje se tiču brajice i weba.
