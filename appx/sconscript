@@ -7,11 +7,8 @@ def getCertPublisher(env):
 	certFile=env.get('certFile')
 	if not certFile:
 		return env['publisher']
-	certPassword=env.get('certPassword')
-	cmd=['certutil','-dump']
-	if certPassword:
-		cmd.extend(['-p',certPassword])
-	cmd.append(File('#'+certFile).abspath.replace('/','\\'))
+	certPassword=env.get('certPassword','')
+	cmd=['certutil','-dump','-p',certPassword,File('#'+certFile).abspath.replace('/','\\')]
 	print cmd
 	lines=subprocess.check_output(cmd).splitlines()
 	linePrefix='Subject: '
