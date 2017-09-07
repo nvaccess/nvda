@@ -22,60 +22,60 @@ symbols:
 
 # Complex symbols
 . sentence ending	точка	all	always
-! sentence ending	узвичник	all	always
+! sentence ending	извичник	all	always
 ? sentence ending	впрашалник	all	always
 ; phrase ending	точка запирка	most	always
-: phrase ending	двоточка	most	always
+: phrase ending	дветочки	most	always
 точка		none	always
 in-word '	апостроф	all	norep
 negative number	минус	none	norep
 
 # Whitespace
-\0	празно	char	# null
+\0	празнина	char	# null
 \t	таб
 \n	нов ред	char
-\f	прелом на страница	none
-\r	враќање на каретката	char
- 	размак	char
- 	размак	char	# no-break space
+\f	крај на страница	none
+\r	нов ред	char
+ 	спејс	char
+ 	спејс	char	# no-break space
 
 # Standard punctuation/symbols
-!	bang	all
-"	quote	most
-\#	number	some
-$	dollar	all	norep
-£	pound	all	norep
-€	euro	all	norep
-¢	Cents	all	norep
-¥	Yen	all	norep
-₹	Rupee	some	norep
-%	percent	some
-&	and	some
-'	tick	all
-(	left paren	most	always
-)	right paren	most	always
-*	star	some
-+	plus	some
-,	comma	all	always
--	dash	most
-.	dot	some
-/	slash	some
-:	colon	most	norep
-;	semi	most
-<	less	some
->	greater	some
-=	equals	some
-?	question	all
-@	at	some
+!	извичник	all
+"	наводници	most
+\#	број	some
+$$	dollar	all	norep
+£	фунта	all	norep
+€	евро	all	norep
+¢	цент	all	norep
+¥	јен	all	norep
+₹	Рупија	some	norep
+%	процент	some
+&	амперсант	some
+'	тицк	all
+(	отворена заграда	most	always
+)	затворена заграда	most	always
+*	ѕвездичка	some
++	плус	some
+,	запирка	all	always
+-	цртичка	most
+.	точка	some
+/	коса црта	some
+:	дветочки	most	norep
+;	точка запирка	most
+<	помало	some
+>	поголемо	some
+=	еднакво	some
+?	прашалник	all
+@	ет	some
 [	left bracket	most
 ]	right bracket	most
-\\	backslash	most
-^	caret	most
-_	line	most
-`	graav	most
+\\	obrna crta	most
+^	karet	most
+_	podvlečeno	most
+`	akcent	most
 {	left brace	most
 }	right brace	most
-|	bar	most
+|	okomita crtička	most
 ~	tilda	most
 
 # Other characters
