@@ -50,9 +50,9 @@ manifest=env.Substfile(
 	},
 )
 # Create a pri file indexing all thiles to be included in the appx
-priFile,mapFile=env.Command(['appx.pri','appx.map.txt'],[appxContent,priConfig,manifest],"makepri new /v /pr ${SOURCES[0]} /cf ${SOURCES[1]} /manifest ${SOURCES[2]} /mf appx /of ${TARGETS[0]} /o >NUL")
+priFile,mapFile=env.Command(['appx.pri','appx.map.txt'],[appxContent,priConfig,manifest],"makepri new /v /pr ${SOURCES[0]} /cf ${SOURCES[1]} /manifest ${SOURCES[2]} /mf appx /of ${TARGETS[0]} /o")
 # Package the appx
-appx=env.Command(File('#output\\nvda.appx'),[manifest,mapFile],"makeappx pack /p $TARGET /m ${SOURCES[0]} /f ${SOURCES[1]} >${TARGET}.txt")
+appx=env.Command(File('#output\\nvda.appx'),[manifest,mapFile],"makeappx pack /p $TARGET /m ${SOURCES[0]} /f ${SOURCES[1]}")
 if signExec:
 	env.AddPostAction(appx,[signExec])
 env.Depends(appx,appxContent)
