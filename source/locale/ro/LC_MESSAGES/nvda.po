@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 00:10+1000\n"
-"PO-Revision-Date: 2017-08-25 14:44+0200\n"
+"POT-Creation-Date: 2017-09-01 00:10+1000\n"
+"PO-Revision-Date: 2017-09-02 11:52+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -1036,6 +1036,10 @@ msgstr "Mod formular"
 msgid "Browse mode"
 msgstr "Mod navigare"
 
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "Neetichetat"
+
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
 msgstr "Navigare cu o singură literă dezactivată"
@@ -1529,6 +1533,16 @@ msgstr "&Legături"
 #. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Rubrici"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Câmpuri formular"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Butoane"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -4220,15 +4234,15 @@ msgstr "Dezinstalează NVDA"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
 msgid "Explore NVDA user configuration directory"
-msgstr "Explorează dosarul NVDA pentru configurație utilizator"
+msgstr "Explorează dosarul NVDA pentru configuraţia utilizatorului"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
 msgid "Documentation"
-msgstr "Documentație"
+msgstr "Documentaţie"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 msgid "Commands Quick Reference"
-msgstr "Referință Rapidă a Comenzilor"
+msgstr "Referinţă Rapidă a Comenzilor"
 
 #. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
@@ -9235,11 +9249,6 @@ msgstr "Fo&rmule"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "&Câmpuri formular"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "&Foi"
 
@@ -10232,15 +10241,22 @@ msgstr "Antet principal"
 msgid "Text frame"
 msgstr "Cadru text"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "comentariu: {text} de către {author} în {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} de {author} în {date}"
 
-#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "Ortografie: {text}"

@@ -523,9 +523,9 @@ Tarama kipinde kalarak harfleri kısayol olarak kullanmak istiyorsanız tek harf
 Mevcut belge için tek harf dolaşımını açıp kapatmak için, NVDA+shift+space tuşlarını kullanın.
 %kc:endInclude
 
-++ Öge Listesi ++
-Öge listesi, uygulamaya bağlı olarak değişen, belgedeki çeşitli ögelerin listesine erişminizi sağlamaktadır.
-Örneğin, web tarayıcıları için bunlar, bağlantı, başlık ya da sınır imi olabilir.
+++ Öğe Listesi ++
+Öğe listesi, uygulamaya bağlı olarak değişen, belgedeki çeşitli ögelerin listesine erişminizi sağlamaktadır.
+Örneğin, web tarayıcıları için bunlar, bağlantı, başlık, form alanı, düğme ya da sınır imi olabilir.
 Seçim düğmeleri, bu öge türlerinden  hangilerinin görüntüleneceğini belirlemenizi sağlar.
 İletişim kutusuna, bir de sayfada aradığınız şeye göre listeyi daraltabileceğiniz bir yazı alanı eklenmiştir.
 İlgilendiğiniz ögeyi belirledikten sonra, iletişim kutusundaki düğmeleri kullanarak imleci ögenin üzerine taşıyabilir veya ögeyi etkinleştirebilirsiniz.
@@ -696,14 +696,14 @@ Mesela, rakam işaretiyle başlayıp girdiğiniz bazı rakamlardan sonra geri si
 7. ve 8. noktalara birlikte basarsanız aralık ya da enter tuşuna basılmaksızın braille girişi metne çevrilir.
 %kc:endInclude
 
-+ İçerik Tanıma +
++ Görsel İçerik Tanıma +
 Yazarlar bir şeyin içeriğiyle ilgili ekran okuyucuların algılayabileceği tarzda yeterli bilgi sunmadıklarında, bir görüntünün içeriğinin tanınması için çeşitli araçlar kullanılabilir.
-NVDA görüntülerin içerisindeki metnin tanınması için Windows 10'la sunulan (OCR) işlevini optik karakter tanımayı destekler .
+NVDA görüntülerin içerisindeki metnin tanınması için Windows 10'la sunulan (OCR) işlevini optik karakter tanımayı destekler.
 Başka içerik tanıma araçları NVDA eklentisi olarak sunulmaktadır.
 
-İçerik tanıma komutu kullandığınızda, NVDA [nesne sunucusu #ObjectNavigation] tarafından odaklanan nesne içeriğini  tanımaya çalışır.
+İçerik tanıma (OCR) komutu kullandığınızda, NVDA [nesne sunucusu #ObjectNavigation] tarafından odaklanan nesne içeriğini  tanımaya çalışır.
 Varsayılan olarak, nesne sunucusu  sistem odağı ya da  tarama kipi imlecini takip eder, dolayısıyla yalnızca odağı ya da tarama kipi imlecini  istediğiniz noktaya getirip tanıma işlemini başlatabilirsiniz.
-Mesela, tarama kipi imlecini bir grafiğe taşıdıktan sonra, tanıma işlemi bu grafikle sunulan içeriği için yapılır.
+Mesela, tarama kipi imlecini bir grafiğe taşıdıktan sonra, tanıma işlemi bu grafikle sunulan içerik için yapılır.
 Bununla birlikte, nesne sunucusunu doğrudan tanıma işlemi yapılacak nesne üzerine de götürüp tanıma işlemini başlatabilirsiniz.
 
 Tanıma işlemi tamamlandıktan sonra, sonuç tarama kipinde gösterilir ve yön tuşlarını kullanarak içerik üzerinde dolaşabilirsiniz.
@@ -1486,10 +1486,10 @@ Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 -
 
 +++ Windows 10 OCR Ayarları +++[Win10OcrSettings]
-This dialog can be accessed from the NVDA Preferences menu and allows you to configure [Windows 10 OCR #Win10Ocr].
+Bu iletişim kutusuna NVDA Tercihler menüsünden erişilebilir ve [Windows 10 OCR ayarlarını #Win10Ocr] yapılandırmanızı sağlar.
 
-==== Recognition language ====
-This combo box allows you to choose the language to be used for text recognition.
+==== Tanıma dili ====
+Bu açılır kutu metin tanıma için kullanılacak dili seçmek için kullanılır.
 
 +++ Konuşma Sözlükleri +++
 Tercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük veya öbeklerin NVDA tarafından nasıl söyleneceğini ayarlayabileceğiniz iletişim kutularını içermektedir.
