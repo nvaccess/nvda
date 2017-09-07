@@ -18,6 +18,7 @@ def getCertPublisher(env):
 	for line in lines:
 		if line.startswith(linePrefix):
 			subject=line[len(linePrefix):].rstrip()
+			print subject
 			return subject
 
 signExec=env['signExec'] if env['certFile'] else None
@@ -41,7 +42,7 @@ priConfig=env.Command(File('priConfig.xml'),appxContent,"makepri createconfig /c
 env.Depends(priConfig,appxContent)
 # Create an appx manifest with version and publisher etc all filled in 
 manifest=env.Substfile(
-	'manifest.xml',
+	File('#output/manifest.xml'),
 	'manifest.xml.subst',
 	SUBST_DICT={
 		'%name%':versionInfo.name,
@@ -66,4 +67,4 @@ appx=env.Command(File('#output\\nvda.appx'),[manifest,mapFile],"makeappx pack /p
 if signExec:
 	env.AddPostAction(appx,[signExec])
 env.Depends(appx,appxContent)
-env.Alias('appx',appx)
+env.Alias('appx',manifest)
