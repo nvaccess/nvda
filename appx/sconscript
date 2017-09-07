@@ -57,7 +57,7 @@ priFile,mapFile=env.Command(
 	target=['appx.pri','appx.map.txt'],
 	source=[appxContent,priConfig,manifest],
 	action=[
-		"makepri new /v /pr ${SOURCES[0]} /cf ${SOURCES[1]} /manifest ${SOURCES[2]} /mf appx /of ${TARGETS[0]} /o >${TARGET}.unicode",
+		"-makepri new /v /pr ${SOURCES[0]} /cf ${SOURCES[1]} /manifest ${SOURCES[2]} /mf appx /of ${TARGETS[0]} /o >${TARGET}.unicode",
 		PrintUnicodeFileAction,
 	],
 )
