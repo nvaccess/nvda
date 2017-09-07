@@ -1,7 +1,7 @@
 import subprocess
 import versionInfo
 
-Import(['env'])
+Import(['env','outFilePrefix'])
 
 def getCertPublisher(env):
 	certFile=env.get('certFile')
@@ -47,7 +47,7 @@ appxContent=env.Command(
 # Ensure that it is always copied as we can't tell if dist changed 
 env.AlwaysBuild(appxContent)
 # Package the appx
-appx=env.Command(File('#output\\nvda_%s.appx'%env['version']),appxContent,"makeappx pack /p $TARGET /d $SOURCE")
+appx=env.Command(File('#output\\%s.appx'%outFilePrefix),appxContent,"makeappx pack /p $TARGET /d $SOURCE")
 if signExec:
 	env.AddPostAction(appx,[signExec])
 #env.Depends(appx,appxContent)

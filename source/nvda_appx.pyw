@@ -198,7 +198,6 @@ import config
 config.isAppX=True
 try:
 	import core
-	winUser.MessageBox(0, u"Launching NVDA", u"NVDA", 0)
 	core.main()
 except:
 	log.critical("core failure",exc_info=True)
