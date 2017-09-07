@@ -3,10 +3,6 @@ import versionInfo
 
 Import(['env'])
 
-def PrintUnicodeFileAction(target,source,env):
-	output=open(target[0].path+'.unicode','rb').read().decode('u16',errors='replace').encode('utf8',errors='replace')
-	print output
-
 def getCertPublisher(env):
 	certFile=env.get('certFile')
 	if not certFile:
@@ -18,7 +14,6 @@ def getCertPublisher(env):
 	for line in lines:
 		if line.startswith(linePrefix):
 			subject=line[len(linePrefix):].rstrip()
-			print subject
 			return subject
 
 signExec=env['signExec'] if env['certFile'] else None
@@ -51,20 +46,8 @@ appxContent=env.Command(
 )
 # Ensure that it is always copied as we can't tell if dist changed 
 env.AlwaysBuild(appxContent)
-# Create a preconfig xml file for making the appx
-priConfig=env.Command(File('priConfig.xml'),appxContent,"makepri createconfig /cf $TARGET /dq lang-en-US >NUL",CHDIR=appxContent)
-env.Depends(priConfig,appxContent)
-# Create a pri file indexing all thiles to be included in the appx
-priFile,mapFile=env.Command(
-	target=['appx.pri','appx.map.txt'],
-	source=[appxContent,priConfig,manifest],
-	action=[
-		"-makepri new /v /pr ${SOURCES[0]} /cf ${SOURCES[1]} /manifest ${SOURCES[2]} /mf appx /of ${TARGETS[0]} /o >${TARGET}.unicode",
-		PrintUnicodeFileAction,
-	],
-)
 # Package the appx
-appx=env.Command(File('#output\\nvda.appx'),[manifest,appxContent],"makeappx pack /p $TARGET /d ${SOURCES[1]}")
+appx=env.Command(File('#output\\nvda_%s.appx'%env['version']),appxContent,"makeappx pack /p $TARGET /d $SOURCE")
 if signExec:
 	env.AddPostAction(appx,[signExec])
 #env.Depends(appx,appxContent)
