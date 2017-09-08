@@ -23,8 +23,8 @@ Import(
 	'clientInstallDir',
 )
 
-# We only support compiling with MSVC 14 (2015)
-if not env.get('MSVC_VERSION','').startswith('14.'):
+# We only support compiling with MSVC 14.1 (2017)
+if not env.get('MSVC_VERSION')=='14.1':
 	raise RuntimeError("Microsoft Visual C++ 14 not found")
 
 
