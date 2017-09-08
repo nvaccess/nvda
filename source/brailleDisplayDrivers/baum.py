@@ -333,6 +333,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		super(InputGesture, self).__init__()
 		# Model identifiers should not contain spaces.
 		self.model = model.replace(" ", "")
+		assert(self.model.isalnum())
 		self.keysDown = dict(keysDown)
 
 		self.keyNames = names = []

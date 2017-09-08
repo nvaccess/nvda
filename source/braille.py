@@ -1947,7 +1947,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_model(self):
 		"""The string used to identify all gestures from a specific braille display model.
-		This should generally be a short version of the model name, without spaces.
+		This should be an alphanumeric short version of the model name, without spaces.
 		This string will be included in the source portion of gesture identifiers.
 		For example, if this was C{alvaBC6},
 		the model string could look like C{680},
@@ -1990,8 +1990,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			return display
 		return super(BrailleDisplayGesture, self).scriptableObject
 
-	#: Compiled regular expression to match an identifier 
-	#: including an optional model name
+	#: Compiled regular expression to match an identifier including an optional model name
+	#: The model name should be an alphanumeric string without spaces.
 	#: @type: RegexObject
 	ID_PARTS_REGEX = re.compile(r"br\((\w+)(\.(\w+))?\):([\w+]+)", re.U)
 
