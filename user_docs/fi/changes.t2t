@@ -3,6 +3,29 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+== Uudet ominaisuudet ==
+- Selaustilassa on nyt mahdollista siirtyä kiintopisteiden alkuun tai niiden ohi säilön loppuun/alkuun siirtäviä komentoja (pilkku/Shift+pilkku) käyttäen. (#5482)
+- Muokkaus- ja lomakekenttiin siirtävillä pikanavigointikomennoilla on nyt Firefoxissa, Chromessa ja Internet Explorerissa mahdollista siirtyä muokattavaan monimuotoiseen tekstisisältöön (esim. contentEditable). (#5534)
+- Elementtilista voi nyt näyttää verkkoselaimissa  luettelon lomakekentistä ja painikkeista. (#588)
+
+
+== Muutokset ==
+- Verkkopohjaiset valintaikkunat käyttävät nyt Firefoxissa ja Chromessa automaattisesti selaustilaa, ellei olla verkkosovelluksessa. (#4493)
+- Sarkaimella ja pikanavigointinäppäimillä siirtyminen ei enää ilmoita selaustilassa siirtymistä pois säilöistä, kuten luetteloista ja taulukoista, mikä tekee navigoinnista tehokkaampaa. (#2591)
+- Lomakekenttäryhmien nimi ilmoitetaan nyt selaustilassa, kun niihin siirrytään pikanavigointikomennoilla tai sarkaimella Firefoxissa ja Chromessa. (#3321)
+
+
+== Korjatut ohjelmavirheet ==
+- Linkit ilmaistaan nyt pistekirjoituksella sellaisissa sovelluksissa kuin Microsoft Word. (#6780)
+- NVDA ei muutu enää huomattavasti hitaammaksi, kun Firefox- tai Chrome-verkkoselaimissa on avoinna useita välilehtiä. (#3138)
+
+
+== Muutokset kehittäjille (englanniksi) ==
+- "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
+
+
 = 2017.3 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat lyhennepistekirjoituksen syöttäminen, tuki uusille Windows 10:n OneCore-äänille, sisäänrakennettu tuki Windows 10:n tekstintunnistukselle sekä useat merkittävät pistekirjoitukseen ja verkon selaamiseen liittyvät parannukset.
 
@@ -34,7 +57,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat lyhennepistekirjoituks
  - Esim. "täytä näyttö kontekstin muuttuessa"- ja "vain taaksepäin vieritettäessä" -vaihtoehdot voivat tehdä luetteloiden ja valikkojen käytöstä tehokkaampaa, koska kohteiden sijainti näytöllä ei jatkuvasti muutu.
  - Katso lisätietoja ja esimerkkejä käyttöoppaan "Kohdistuskontekstin näyttäminen" -kappaleesta.
 - NVDA tukee nyt Firefoxissa ja Chromessa monimuotoisia dynaamisia ruudukoita, kuten laskentataulukoita, joissa saatetaan ladata tai näyttää vain osa sisällöstä (erityisesti tuetaan ARIA 1.1:ssä esiteltyjä aria-rowcount-, aria-colcount-, aria-rowindex- ja aria-colindex-attribuutteja). (#7410)
-- Kohdistimen muoto voidaan määrittää pistenäyttöä käytettäessä erilaiseksi riippuen siitä, seurataanko kohdistusta vai tarkastelukohdistinta. (#7112)
+- Kohdistimen muoto voidaan määrittää pistenäyttöä käytettäessä erilaiseksi riippuen siitä, seurataanko kohdistusta vai tarkastelukohdistinta. (#7122)
 - NVDA-logo on päivitetty. Uusi logo on tyylitelty sekoitus valkoisista kirjaimista N, V, D ja A yhtenäisellä, violetilla taustalla. Tämä varmistaa, että se näkyy kaikenvärisillä taustoilla, ja siinä käytetään NV Accessin logon violettia väriä. (#7446)
 
 
