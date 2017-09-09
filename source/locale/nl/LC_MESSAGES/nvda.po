@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 00:10+1000\n"
+"POT-Creation-Date: 2017-08-18 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Leonard de Ruijter <leonard@babbage.com>\n"
 "Language-Team: \n"
@@ -96,49 +96,41 @@ msgid "Error in appModule %s"
 msgstr "Fout in appModule %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "banner"
 msgstr "banner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "complementary"
 msgstr "aanvullend"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "content info"
 msgstr "inhoudsinformatie"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "main"
 msgstr "hoofdinhoud"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "navigation"
 msgstr "navigatie"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "search"
 msgstr "zoeken"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "form"
 msgstr "formulier"
 
 #. Translators: Reported for a significant region, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "region"
 msgstr "gebied"
@@ -146,7 +138,7 @@ msgstr "gebied"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr "Geen onderdrukking "
+msgstr "Geen onderdrukking"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -158,15 +150,431 @@ msgstr "Onderdrukken bij spraak- en geluidsuitvoer"
 msgid "Always duck"
 msgstr "Altijd onderdrukken"
 
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "vns"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "slv"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "kr"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "iv"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "kn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "mnubalk"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "mnuitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "vkl"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "afb"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "hlp"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "flits"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "lnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "bst"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "bstitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "tabbld"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "vgbalk"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "schfbalk"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "stbalk"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "tbl"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "wkbalk"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "uschfkn"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "bct"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "doc"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "app"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "grp"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "ingebed"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "enoot"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "vnoot"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "prmpt"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "sect"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "schkn"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "splkn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "mnukn"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "drkzkn"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "bstkn"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "pnl"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "wwinv"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "sel"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "al"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "submnu"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "veist"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "ongeldig"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "mrg"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "klb"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "sort afl"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "sort afl"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "lbeschr"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "frml"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "opm"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "nsel"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "bnnr"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "aanv"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "iinf"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "hoofd"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "navi"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "zoek"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "form"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "gbd"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Punten 7 en 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Punt 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Alle punten"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "Leesregel vullen voor contextveranderingen"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "Leesregel altijd vullen"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "Alleen bij terugscrollen"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "k%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "blnk"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "niet %s"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} van {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "nv %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "r%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "c%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "%s einde"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatisch"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "punt"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "spatie met punt"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "spatie"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "brailletoetsenbord"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "spatie met willekeurige punten"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "willekeurige punten"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "Arabisch graad 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Farsi graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -197,6 +605,11 @@ msgstr "Wels graad 2"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "Tsjechisch graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "Deens 8 punt computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -240,6 +653,11 @@ msgstr "Duits graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "Grieks (Griekenland)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "Engels (V.K.) 8 punt computerbraille"
 
@@ -252,6 +670,16 @@ msgstr "Engels (V.K.) graad 1"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "Engels (V.K.) graad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "Uniforme Engelse braillecode graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "Uniforme Engelse braillecode graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -292,6 +720,16 @@ msgstr "Ests graad 0"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "Ethiopisch graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "Perzisch 8 punt computerbraille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "Perzisch graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -347,11 +785,6 @@ msgstr "Gujarati graad 1"
 #. braille settings dialog.
 msgid "Koine Greek"
 msgstr "Koinè Grieks"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "Grieks (Griekenland) graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -422,6 +855,11 @@ msgstr "Koreaans graad 2"
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
 msgstr "Kasjmiri graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian"
+msgstr "Litouws"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -550,7 +988,12 @@ msgstr "Slowaaks graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "Sloveens 8 punt computerbraille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
 msgstr "Sloveens graad 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -575,13 +1018,8 @@ msgstr "Turks graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "Uniforme Engelse braillecode graad 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "Uniforme Engelse braillecode graad 2"
+msgid "Unicode braille"
+msgstr "Unicode braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -592,249 +1030,6 @@ msgstr "Chinees (Hong kong, Cantonees)"
 #. braille settings dialog.
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chinees (Taiwan, Mandarijn)"
-
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "iv"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "li"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "mnubalk"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "mnu"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "kn"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "slv"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "kr"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "vkl"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "lnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "dlg"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "bmst"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tb"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "afb"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "sel"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "smnu"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "al"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "klb"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
-#, fuzzy
-msgctxt "braille landmark abbreviation"
-msgid "bnnr"
-msgstr "bnnr"
-
-#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
-#, fuzzy
-msgctxt "braille landmark abbreviation"
-msgid "cmpl"
-msgstr "aanv"
-
-#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
-#, fuzzy
-msgctxt "braille landmark abbreviation"
-msgid "cinf"
-msgstr "iinf"
-
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
-#, fuzzy
-msgctxt "braille landmark abbreviation"
-msgid "main"
-msgstr "hoofdinhoud"
-
-#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
-#, fuzzy
-msgctxt "braille landmark abbreviation"
-msgid "navi"
-msgstr "navi"
-
-#. Translators: Displayed in braille for the search landmark, normally found on web pages.
-#, fuzzy
-msgctxt "braille landmark abbreviation"
-msgid "srch"
-msgstr "zoek"
-
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#, fuzzy
-msgctxt "braille landmark abbreviation"
-msgid "form"
-msgstr "formulier"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-#, fuzzy
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "gebied"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "Punten 7 en 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "Punt 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "Alle punten"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "k%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "blnk"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "niet %s"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} van {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "nv %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "%s einde"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatisch"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "braille"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "spatie met punt"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "punt"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "spatie"
 
 msgid "Focus mode"
 msgstr "Focusmodus"
@@ -1375,7 +1570,7 @@ msgstr "%s oriëntatiepunt"
 #. Translators: This is brailled to indicate a landmark (example output: lmk main).
 #, python-format
 msgid "lmk %s"
-msgstr "oriënt %s"
+msgstr "ortp %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #. Translators: Announces selected text. %s is replaced with the text.
@@ -2122,7 +2317,7 @@ msgstr "markering"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
-msgstr "draaiknop"
+msgstr "draaikeuzeknop"
 
 #. Translators: Identifies a sound clip on websites.
 msgid "sound"
@@ -2197,8 +2392,9 @@ msgid "bold"
 msgstr "vet"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
-msgstr "CURSIEF"
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "cursief"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2340,7 +2536,7 @@ msgstr "beschikt over auto aanvullen"
 
 #. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "multi line"
-msgstr "meervoudig"
+msgstr "meerdere regels"
 
 msgid "iconified"
 msgstr "van pictogram voorzien"
@@ -2424,13 +2620,13 @@ msgstr "ontgrendeld"
 msgid "not selected"
 msgstr "niet geselecteerd"
 
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "uitgeschakeld"
-
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
 msgstr "niet ingedrukt"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "uitgeschakeld"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -2913,7 +3109,7 @@ msgstr "Regelinspringing melden uit"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Cycles through line indentation settings"
-msgstr "Schakelt tussen Regelinspringing instellingen "
+msgstr "Schakelt tussen Regelinspringing instellingen"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -3427,9 +3623,8 @@ msgid "Quits NVDA!"
 msgstr "Sluit NVDA af!"
 
 #. Translators: Input help mode message for restart NVDA command.
-#, fuzzy
 msgid "Restarts NVDA!"
-msgstr "Herstart NVDA"
+msgstr "Herstart NVDA!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3777,6 +3972,19 @@ msgstr "Braille aan %s gekoppeld"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Schakelen van de koppeling van braille aan de leescursor of de focus"
 
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Te tonen focuscontext in braille: %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr ""
+"Schakelt tussen de manieren waarop contextinformatie wordt gepresenteerd in "
+"braille"
+
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
 msgstr "Braillecursor uit"
@@ -3892,6 +4100,18 @@ msgstr "Voert braillepunten in via het brailletoetsenbord"
 msgid "Moves the braille display to the current focus"
 msgstr "Verplaatst de brailleleesregel naar de huidige focus"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "Wist de laatst ingevoerde braillecel of het laatste karakter"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr "Zet braille-invoer in en activeert de enter-toets"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "Zet braille-invoer om"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Plugins zijn opnieuw geladen"
@@ -3953,6 +4173,15 @@ msgstr "Geen wiskunde"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Begint interactie met wiskundige inhoud"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "Windows 10 OCR niet beschikbaar"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr "Herkent de inhoud van het huidige navigatorobject met Windows 10 OCR "
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4132,19 +4361,19 @@ msgstr "numeriek delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
-msgstr "Pijl links"
+msgstr "pijl links"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right arrow"
-msgstr "Pijl rechts"
+msgstr "pijl rechts"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "up arrow"
-msgstr "Pijl omhoog"
+msgstr "pijl omhoog"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "down arrow"
-msgstr "Pijl omlaag"
+msgstr "pijl omlaag"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "applications"
@@ -4437,37 +4666,33 @@ msgstr "Ster: 8 punten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Arc"
-msgstr "Arabisch"
+msgstr "Boog"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Balloon"
-msgstr "helpballon"
+msgstr "Ballon"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bent arrow"
-msgstr "Pijl links"
+msgstr "Gebogen pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Bent Up Arrow"
-msgstr "Pijl links"
+msgstr "Gebogen pijl omhoog"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Bevel"
-msgstr ""
+msgstr "Schuine rand"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4483,24 +4708,21 @@ msgstr "Kan"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart Plus symbol"
-msgstr "Geselecteerd symbool aanpassen"
+msgstr "Grafiek plussymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart Star Symbol"
-msgstr "Grafiekgebied "
+msgstr "Grafiek stersymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart X Symbol"
-msgstr "Symbool"
+msgstr "Grafiek X-symbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4522,10 +4744,9 @@ msgstr "Draaiende pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Cloud shape"
-msgstr "Cursor&vorm:"
+msgstr "Wolkvorm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4535,10 +4756,9 @@ msgstr "Wolk bijschrift"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Corner"
-msgstr "hoeken"
+msgstr "Hoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4560,17 +4780,15 @@ msgstr "Kubus"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Down Arrow"
-msgstr "Pijl omlaag"
+msgstr "Gekromde pijl omlaag"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Ribbon banner"
-msgstr "banner"
+msgstr "Lintbanner"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4580,17 +4798,15 @@ msgstr "Gekromde pijl naar links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Right Arrow"
-msgstr "Pijl rechts"
+msgstr "Gekromde pijl rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Up Arrow"
-msgstr "Pijl omhoog"
+msgstr "Gekromde pijl omhoog"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4606,10 +4822,9 @@ msgstr "Tienhoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Diagonal stripe"
-msgstr "gestreept diagonaal"
+msgstr "Diagonale streep"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4637,10 +4852,9 @@ msgstr "Accolade"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Double bracket"
-msgstr "tweemaal {action}"
+msgstr "Dubbele rechte haak"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4650,7 +4864,6 @@ msgstr "Dubbele golf"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Down Arrow"
 msgstr "Pijl omlaag"
@@ -4675,17 +4888,15 @@ msgstr "Alternatief proces stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Card flowchart symbol"
-msgstr "Geselecteerd symbool aanpassen"
+msgstr "Kaart stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Collate flowchart symbol"
-msgstr "Geselecteerd symbool aanpassen"
+msgstr "Verzameling stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4725,10 +4936,9 @@ msgstr "Weergave stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Document flowchart symbol"
-msgstr "Documentinformatie"
+msgstr "Document stroomdiagramsymbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4852,10 +5062,9 @@ msgstr "Ezelsoor"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Rectangular picture frame"
-msgstr "kleurovergang rechthoekig"
+msgstr "Rechthoekige fotolijst"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4867,25 +5076,25 @@ msgstr "Trechter"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with six teeth"
-msgstr ""
+msgstr "Tandwiel met zes tanden"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with nine teeth"
-msgstr ""
+msgstr "Tandwiel met negen tanden"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Half of rectangular picture frame"
-msgstr ""
+msgstr "Helft van rechthoekige fotolijst"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heart"
-msgstr ""
+msgstr "Hart"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4901,10 +5110,9 @@ msgstr "Zeshoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Horizontal scroll"
-msgstr "gestreept horizontaal"
+msgstr "Horizontale rol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4914,7 +5122,6 @@ msgstr "Gelijkbenige driehoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left Arrow"
 msgstr "Pijl links"
@@ -4927,17 +5134,15 @@ msgstr "Bijschrift met pijl naar links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left brace"
-msgstr "Links uitgelijnd"
+msgstr "Accolade openen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left bracket"
-msgstr "Linker klik"
+msgstr "Rechte haak openen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4949,132 +5154,127 @@ msgstr "Tegen de klok in draaiende pijl"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Dubbelzijdige horizontale pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Bijschrift met dubbelzijdige horizontale pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Circular arrow"
-msgstr ""
+msgstr "Dubbelzijdige ronde pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Ribbon with left and right arrows"
-msgstr ""
+msgstr "Linkt met pijlen links en rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left right and up Arrows"
-msgstr "Pijl rechts"
+msgstr "Pijlen links, rechts en omhoog"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left and up Arrows"
-msgstr "Pijl links"
+msgstr "Pijlen links en omhoog"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Lightning bolt"
-msgstr "rechter alt"
+msgstr "Bolbliksem"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line Callout"
-msgstr ""
+msgstr "Lijn bijschrift"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with horizontal accent bar"
-msgstr ""
+msgstr "Bijschrift met horizontale accentbalk"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border and horizontal accent bar"
-msgstr ""
+msgstr "Bijschrift met rand en horizontale accentbalk"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr "gestreept dun horizontaal"
+msgstr "Bijschrift met horizontale lijn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Callout with diagonal straight line"
-msgstr "gestreept dun diagonaal"
+msgstr "Bijschrift met rechte diagonale lijn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with diagonal callout line and accent bar"
-msgstr ""
+msgstr "Bijschrift met diagonale bijschriftlijn en accentbalk"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr ""
+msgstr "Bijschrift met rand, rechte diagonale lijn en accentbalk"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and diagonal callout line"
-msgstr ""
+msgstr "Bijschrift zonder rand en met diagonale bijschriftlijn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled line"
-msgstr ""
+msgstr "Bijschrift met hoekige lijn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled callout line and accent bar"
-msgstr ""
+msgstr "Bijschrift met hoekige bijschriftlijn en accentbalk"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, angled callout line, and accent bar"
-msgstr ""
+msgstr "Bijschrift met rand, hoekige bijschriftlijn en accentbalk"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and angled callout line"
-msgstr ""
+msgstr "Bijschrift zonder rand en met hoekige bijschriftlijn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with callout line segments forming a U-shape"
-msgstr ""
+msgstr "Bijschrift met bijschriftlijnsegmenten die een U vormen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with accent bar and callout line segments forming a U-shape"
-msgstr ""
+msgstr "Bijschrift met accentbalk en bijschriftlijnsegmenten die een U vormen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5082,122 +5282,121 @@ msgctxt "shape"
 msgid ""
 "Callout with border, accent bar, and callout line segments forming a U-shape"
 msgstr ""
+"Bijschrift met rand, accentbalk en bijschriftlijnsegmenten die een U vormen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and callout line segments forming a U-shape"
-msgstr ""
+msgstr "Bijschrift zonder rand en met bijschriftlijnsegmenten die een U vormen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Line inverse"
-msgstr "Regel&nummers"
+msgstr "Omgekeerde lijn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Division symbol"
-msgstr ""
+msgstr "Wiskunde deelteken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Equivalence symbol"
-msgstr ""
+msgstr "Wiskunde gelijk-aan-teken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Subtraction symbol"
-msgstr ""
+msgstr "Wiskunde minteken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Multiplication symbol"
-msgstr ""
+msgstr "Wiskunde vermenigvuldigingsteken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Non-equivalence symbol"
-msgstr ""
+msgstr "Wiskunde niet-gelijk-aan-teken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Math Addition symbol"
-msgstr "Symbool toevoegen"
+msgstr "Wiskunde plusteken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Moon"
-msgstr ""
+msgstr "Maan"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid with asymmetrical non-parallel sides"
-msgstr ""
+msgstr "Trapezium met asymmetrische niet-parallelle zijden"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'No' symbol"
-msgstr ""
+msgstr "\"Nee\"-symbool"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Notched RightArrow"
-msgstr ""
+msgstr "Getande pijl rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Octagon"
-msgstr ""
+msgstr "Achthoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval"
-msgstr ""
+msgstr "Ovaal"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr ""
+msgstr "Ovaalvormig bijschrift"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Parallelogram"
-msgstr ""
+msgstr "Parallellogram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Pentagon"
-msgstr ""
+msgstr "Vijfhoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Incomplete Pie with wedge missing"
-msgstr ""
+msgstr "Onvolledige Taart met ontbrekend stuk"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr ""
+msgstr "Kwartstuk taart"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5209,19 +5408,19 @@ msgstr "Broche"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque Tabs"
-msgstr ""
+msgstr "Brochestukken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Arrows pointing left right up and down"
-msgstr ""
+msgstr "links, rechts, omhoog en omlaag wijzende pijlen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Arrows pointing left right up and down"
-msgstr ""
+msgstr "Bijschrift met links, rechts, omhoog en omlaag wijzende pijlen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5245,7 +5444,7 @@ msgstr "Pijl rechts"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr ""
+msgstr "Bijschrift met pijl rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5269,79 +5468,79 @@ msgstr "Rechthoekige driehoek"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with one rounded corner"
-msgstr ""
+msgstr "Rechthoek met één afgeronde hoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two rounded corners diagonally-opposed"
-msgstr ""
+msgstr "Rechthoek met twee afgeronde hoeken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two-rounded corners that share a side"
-msgstr ""
+msgstr "Rechthoek met twee afgeronde hoeken aan de zelfde zijde"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rounded rectangle"
-msgstr ""
+msgstr "Afgeronde rechtoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rounded rectangle-shaped callout"
-msgstr ""
+msgstr "afgerond rechthoekig gevormd Bijschrift"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Smiley face"
-msgstr ""
+msgstr "Smileygezicht "
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with one snipped corner"
-msgstr ""
+msgstr "Rechthoek met één geknipte hoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two snipped corners diagonally-opposed"
-msgstr ""
+msgstr "Rechthoek met twee geknipte hoeken"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with two snipped corners that share a side"
-msgstr ""
+msgstr "Rechthoek met twee geknipte hoeken aan de zelfde zijde"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle with one snipped corner and one rounded corner"
-msgstr ""
+msgstr "Rechthoek met één geknipte hoek en één afgeronde hoek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Four small squares that define a rectangular shape"
-msgstr ""
+msgstr "Vier kleine vierkanten die samen een rechthoek vormen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Right Arrow with Stripes"
-msgstr ""
+msgstr "Pijl rechts met Strepen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sun"
-msgstr ""
+msgstr "Zon"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5353,13 +5552,13 @@ msgstr "Gekromde pijl"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Water droplet"
-msgstr ""
+msgstr "Waterdruppel"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid"
-msgstr ""
+msgstr "Trapezium"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5371,25 +5570,25 @@ msgstr "Pijl omhoog"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with UpArrow"
-msgstr ""
+msgstr "Bijschrift met pijl omhoog"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr ""
+msgstr "Dubbelzijdige omhoog en omlaag wijzende pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr ""
+msgstr "Bijschrift met omhoog en omlaag wijzende pijlen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "U-shaped Arrow"
-msgstr ""
+msgstr "U-vormige pijl"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5401,13 +5600,13 @@ msgstr "Verticale rol"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Wave"
-msgstr ""
+msgstr "Golf"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Back"
-msgstr ""
+msgstr "Vorige"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5431,7 +5630,7 @@ msgstr "Einde"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Next"
-msgstr ""
+msgstr "Volgende"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5443,7 +5642,7 @@ msgstr "Help"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Home"
-msgstr ""
+msgstr "Start"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5455,13 +5654,13 @@ msgstr "Infomratie"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Movie"
-msgstr ""
+msgstr "Film"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Return"
-msgstr ""
+msgstr "Return"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5739,10 +5938,6 @@ msgstr "Niet benadrukt"
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
 msgstr "vet uit"
-
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "cursief"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
@@ -6259,7 +6454,7 @@ msgstr "Verplaatst navigatorobject en focus naar de vorige rij"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
-msgstr ""
+msgstr "Suggesties"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6403,27 +6598,27 @@ msgstr "Paarse flag"
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Orange flag"
-msgstr ""
+msgstr "Oranje vlag"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Green flag"
-msgstr ""
+msgstr "Groene vlag"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Yellow flag"
-msgstr ""
+msgstr "Gele vlag"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Blue flag"
-msgstr ""
+msgstr "Blauwe vlag"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Red flag"
-msgstr ""
+msgstr "Rode vlag"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -6827,6 +7022,7 @@ msgstr "Baum/HumanWare/APH/Orbit brailleleesregels"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Serieel: {portName}"
@@ -6885,6 +7081,39 @@ msgstr "Papenmeier BRAILLEX oudere modellen"
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "Seika brailleleesregels"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "Resultaat"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "Activeert de tekst bij de cursor wanneer mogelijk"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "Sluit het herkenningsresultaat"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "Reeds in een inhoudherkenningsresultaat"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "Inhoud is niet zichtbaar"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "Bezig met herkennen"
+
+msgid "Recognition failed"
+msgstr "Herkenning mislukt"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -7012,6 +7241,10 @@ msgstr "Documento&pmaak..."
 
 msgid "Change settings of document properties"
 msgstr "Wijzig de instellingen van de documenteigenschappen"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "Windows 10 OCR..."
+msgstr "&Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7722,7 +7955,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "Gebruik NVDA op het &aanmeldscherm van Windows "
+msgstr "Gebruik NVDA op het &aanmeldscherm van Windows"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8492,7 +8725,7 @@ msgstr "&Lijsten"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Block &quotes"
-msgstr "&Citaatblokken"
+msgstr "Blok&citaten"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -8508,6 +8741,14 @@ msgstr "&Klikbaar"
 #. document formatting settings dialog.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr "Opmaakwijzigingen achter de cursor melden (kan vertraging veroorzaken)"
+
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "Windows 10 OCR"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "Herkennings&taal:"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -8629,9 +8870,13 @@ msgstr "Knipperende cursor"
 msgid "Cursor blink rate (ms)"
 msgstr "&Knippersnelheid cursor (miliseconden)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "Cursor&vorm:"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "Cursorvorm voor &focus:"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "Cursorvorm voor leescu&rsor:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
@@ -8652,6 +8897,10 @@ msgstr "Lezen per &alinea"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "Waar mogelijk &woorden niet splitsen"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "Te tonen Focuscontext:"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -8759,7 +9008,7 @@ msgstr "Snelheidsboos&t"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
-msgstr ""
+msgstr "Windows OneCore stemmen"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -9969,9 +10218,10 @@ msgstr "opmerking: {text} door {author} op {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} door {author} op {date}"
 
-#, fuzzy, python-brace-format
+#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#, python-brace-format
 msgid "spelling: {text}"
-msgstr "spelfout"
+msgstr "spelling: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -10218,9 +10468,8 @@ msgstr "&Aantekeningen"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&errors"
-msgstr "Fout"
+msgstr "fout&en"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10229,6 +10478,27 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "-----"
+#~ msgstr "-----"
+
+#~ msgid "(x)"
+#~ msgstr "(x)"
+
+#~ msgid "(-)"
+#~ msgstr "(-)"
+
+#~ msgid "( )"
+#~ msgstr "( )"
+
+#~ msgid "Farsi grade 1"
+#~ msgstr "Farsi graad 1"
+
+#~ msgid "ITALIC"
+#~ msgstr "CURSIEF"
+
+#~ msgid "braille"
+#~ msgstr "braille"
 
 #~ msgid "Are you sure you want to delete this profile? This cannot be undone."
 #~ msgstr ""

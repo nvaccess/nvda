@@ -3,45 +3,23 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.2 = 
-Af væsentlige forbedringer i denne version af NVDA kan nævnes fuld understøttelse for lyddæmpning i Windows 10 Creators Update, rettelser for flere problemer mht. udvalg af elementer i gennemsynstilstand (herunder vælg alt), markante forbedringer til understøttelse af Microsoft Edge, og forbedringer på internettet, herunder når elementer markeres som aktuelle ved brug af aria-current.
+= 2017.4 = 
 
 == Nye Funktioner ==
-- Information for cellekanter i Microsoft Excel kan nu rapporteres med NVDA+F. (#3044)
-- Tilføjede støtte for aria.current attributter. (#6358)
-- Støtter automatisk skift af sprog i Microsoft Edge. (#6852)
-- Støtter Windows Lommeregner på Windows 10 Enterprise LTSB (Long-Term Servicing Branch) og Server. (#6914)
-- Ved at udføre kommandoen til at læse den aktuelle linje tre gange hurtigt, vil linjen blive stavet ved brug af tegnbeskrivelser. (#6893)
-- Nyt sprog: Burmesisk
-- Unicode op og ned samt brøksymboler udtales nu som forventet. (#3805)
+- Det er nu muligt at springe til starten og forbi landmærker ved brug af kommandoerne til at springe til starten og slutningen af indholdselementer (komma og skift+komma). (#5482)
+- Bogstavnavigation til editfelter og formularfelter inkluderer nu redigerbart RTF-indhold (f.eks. contentEditable). (#5534)
+- Elementlisten er nu i stand til at vise formularfelter og knapper i webbrowsere. (#588)
 
 
 == Ændringer ==
-- Når simpel læsning benyttes til at navigere i applikationer der gør brug af UI Automation, bliver flere non-content beholdere ignoreret så navigation bliver lettere. (#6948, #6950)
+- Webdialoger bruger nu automatisk gennemsynstilstand i Chrome og Firefox, med mindre du befinder dig indeni en webapplikation. (#4493)
+- Ved brug af tab og bogstavnavigation i gennemsynstilstand, vil NVDA ikke længere annoncere hvert indholdselement, du navigere ud af, såsom tabeller og lister. Dette gør navigation hurtigere. (#2591)
+- NVDA vil nu oplæse grupper af formularfelter når disse får fokus ved brug af bogstavnavigation og tab-tasten i Chrome og Firefox. (#3321)
 
-
-== Fejlrettelser ==
-- Menupunkter på websider (menupunkt, checkboks og radioknapper) kan nu aktiveres i gennemsynstilstand. (#6735)
-- Rapportering af navneark i Excel er nu oversat. (#6848)
-- Når dialogen "Bekræft sletning" i indstillingsprofiler er aktiv, kan tasten Esc benyttes til at afvise dialogen. (#6851)
-- Rettede nogle nedbrud i Mozilla Firefox og andre Gecko-applikationer, hvor funktionen multi-process er slået til. (#6885)
-- Rapportering af baggrundsfarven er nu mere præcis i skærmlæsning, når tekst tegnes med en gennemsigtig baggrund. (#6467)
-- Forbedrede støtte for aria.describedby i Internet Explorer 11, herunder i iframes og når mere end et ID er angivet. (#5784)
-- NVDAs lyddæmpning virker nu i Windows Creators Update som den gjorde i tidligere Windows versioner (Dæmp når der udsendes tale og lyde, Altid dæmp, og Ingen lyddæmpning er tilgængelige). (#6933)
-- NVDA vil ikke længere undgå at navigere eller rapportere bestemte (UIA) kontroller hvor en tastaturgenvej ikke er defineret. (#6779)
-- To tomme mellemrum er ikke længere tilføjet for informationer om tastaturgenveje for bestemte(UIA) kontroller. (#6790)
-- Bestemte tastekombinationer på HIMS displays (f.eks. mellemrum+4) vil ikke længere tilfældigt fejle. (#3157)
-- Rettede en fejl der gjorde, at tilkobling af et punktdisplay kunne fejle i nogle tilfæld, når en serielport åbnes på et system der benyttede et andet sprog end engelsk. (#6845)
-- Reducerede chancen for at beskadige konfigurationsfilen, når Windows lukkes ned. Konfigurationsfiler skrives nu til en midlertidig fil før den erstatter den aktuelle konfigurationsfil. (#3165)
-- Når kommandoen til at læse den aktuelle linje udføres to gange hurtigt, vil det tilpassende sprog benyttes til udtalen af tegn. (#6726)
-- Navigation ved brug af linjer er nu 3x hurtigere i Microsoft Edge i Windows Creators Update. (#6994)
-- NVDA vil ikke længere rapportere "Web Runtime grouping", når der bliver fokuseret  på et dokument i Microsoft Edge i Windows Creators Update. (#6948)
-- Alle eksisterende versioner af SecureCRT er nu understøttet. (#6302)
-- Adobe Acrobat Reader går ikke længere ned i bestemte PDF-dokumenter (specifikt dem, der indeholdte tomme ActualText attributter). (#7021, #7034)
-- Interaktive tabeller (Aria grids) springes ikke længere over i Microsoft Edge, når der navigeres mellem tabeller ved brug af T og skift+T. (#6977)
-- Når der trykkes skift+hjem i gennemsynstilstand og der er valgt forude, vil kommandoen fravælge til begyndelsen af linjen som forventet. (#5746)
-- Når kommandoen vælg alt (CTRL+A) benyttes i gennemsynstilstand, vil kommandoen nu ikke længere undgå at vælge alt tekst, hvis markøren ikke er placeret på tekstens begyndelse. (#6909)
-- Rettede nogle andre sjældne problemer mht. udvalg af indhold i gennemsynstilstand. (#7131)
+ 
+ == Fejlrettelser ==
+- Links bliver nu oplyst på punkt i Microsoft Word. (#6780)
+- NVDA vil ikke længere blive mærkbart langsom, når der er flere faner åbnede i Chrome eller Firefox webbrowsere. (#3138)
 
 
 == Ændringer for udviklere ==

@@ -196,6 +196,51 @@ class TextInfoQuickNavItem(QuickNavItem):
 		caret=self.document.makeTextInfo(textInfos.POSITION_CARET)
 		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
 
+	def _getLabelForProperties(self, labelPropertyGetter):
+		"""
+		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
+		This can be used by subclasses to implement the L{label} property.
+		@Param labelPropertyGetter: A callable taking 1 argument, specifying the property to fetch.
+			For example, if L{itemType} is landmark, the callable must return the landmark type when "landmark" is passed as the property argument.
+			Alternative property names might be name or value.
+			The callable must return None if the property doesn't exist.
+			An expected callable might be get method on a L{Dict},
+			or "lambda property: getattr(self.obj, property, None)" for an L{NVDAObject}.
+		"""
+		content = self.textInfo.text.strip()
+		if self.itemType is "heading":
+			# Output: displayed text of the heading.
+			return content
+		labelParts = None
+		name = labelPropertyGetter("name")
+		if self.itemType is "landmark":
+			landmark = aria.landmarkRoles.get(labelPropertyGetter("landmark"))
+			# Example output: main menu; navigation
+			labelParts = (name, landmark)
+		else: 
+			role = labelPropertyGetter("role")
+			roleText = controlTypes.roleLabels[role]
+			# Translators: Reported label in the elements list for an element which which has no name and value
+			unlabeled = _("Unlabeled")
+			realStates = labelPropertyGetter("states")
+			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
+			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
+			if self.itemType is "formField":
+				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
+					# Example output: Mute; toggle button; pressed
+					labelParts = (content or name or unlabeled, roleText, positiveStates, negativeStates)
+				else:
+					# Example output: Find a repository...; edit; has auto complete; NVDA
+					labelParts = (name or unlabeled, roleText, positiveStates, negativeStates, content)
+			elif self.itemType in ("link", "button"):
+				# Example output: You have unread notifications; visited
+				labelParts = (content or name or unlabeled, positiveStates, negativeStates)
+		if labelParts:
+			label = "; ".join(lp for lp in labelParts if lp)
+		else:
+			label = content
+		return label
+
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 	disableAutoPassThrough = False
@@ -708,6 +753,12 @@ class ElementsListDialog(wx.Dialog):
 		("heading", _("&Headings")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
+		("formField", _("&Form fields")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("button", _("&Buttons")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("landmark", _("Lan&dmarks")),
 	)
 
@@ -778,8 +829,8 @@ class ElementsListDialog(wx.Dialog):
 		self.lastSelectedElementType=elementType
 
 	def initElementType(self, elType):
-		if elType == "link":
-			# Links can be activated.
+		if elType in ("link","button"):
+			# Links and buttons can be activated.
 			self.activateButton.Enable()
 			self.SetAffirmativeId(self.activateButton.GetId())
 		else:
@@ -1284,8 +1335,10 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	def event_focusEntered(self,obj,nextHandler):
 		if obj==self.rootNVDAObject:
 			self._enteringFromOutside = True
-		if self.passThrough:
-			 nextHandler()
+		# Even if passThrough is enabled, we still completely drop focusEntered events here. 
+		# In order to get them back when passThrough is enabled, we replay them with the _replayFocusEnteredEvents method in event_gainFocus.
+		# The reason for this is to ensure that focusEntered events are delayed until a focus event has had a chance to disable passthrough mode.
+		# As in this case we would  not want them.
 
 	def _shouldIgnoreFocus(self, obj):
 		"""Determines whether focus on a given object should be ignored.
@@ -1317,6 +1370,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		self._enteringFromOutside=False
 		if not self.isReady:
 			if self.passThrough:
+				self._replayFocusEnteredEvents()
 				nextHandler()
 			return
 		if enteringFromOutside and not self.passThrough and self._lastFocusObj==obj:
@@ -1327,6 +1381,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			return
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
+				self._replayFocusEnteredEvents()
 				return nextHandler()
 			return 
 		if not self.passThrough and self._shouldIgnoreFocus(obj):
@@ -1363,8 +1418,11 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 			else:
-				if not oldPassThrough:
-					self._replayFocusEnteredEvents()
+				# Although we are going to speak the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
+				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
+				# See #7435 for a discussion on this.
+				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_ONLYCACHE)
+				self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
 			self._set_selection(focusInfo,reason=controlTypes.REASON_FOCUS)
@@ -1375,6 +1433,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 			else:
+				self._replayFocusEnteredEvents()
 				return nextHandler()
 
 		self._postGainFocus(obj)
@@ -1495,7 +1554,10 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		try:
 			item = next(self._iterNodesByType("container", "up", range))
 		except (NotImplementedError,StopIteration):
-			return
+			try:
+				item = next(self._iterNodesByType("landmark", "up", range))
+			except (NotImplementedError,StopIteration):
+				return
 		return item.textInfo
 
 	def script_moveToStartOfContainer(self,gesture):
@@ -1539,6 +1601,11 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
+	#: The controlField attribute name that should be used as the row number when navigating in a table. By default this is the same as the presentational attribute name
+	navigationalTableRowNumberAttributeName="table-rownumber"
+	#: The controlField attribute name that should be used as the column number when navigating in a table. By default this is the same as the presentational attribute name
+	navigationalTableColumnNumberAttributeName="table-columnnumber"
+
 	def _getTableCellCoords(self, info):
 		"""
 		Fetches information about the deepest table cell at the given position.
@@ -1551,17 +1618,29 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		if info.isCollapsed:
 			info = info.copy()
 			info.expand(textInfos.UNIT_CHARACTER)
-		for field in reversed(info.getTextWithFields()):
+		fields=list(info.getTextWithFields())
+		# If layout tables should not be reported, we should First record the ID of all layout tables so that we can skip them when searching for the deepest table
+		layoutIDs=set()
+		if not config.conf["documentFormatting"]["includeLayoutTables"]:
+			for field in fields:
+				if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart" and field.field.get('table-layout'):
+					tableID=field.field.get('table-id')
+					if tableID is not None:
+						layoutIDs.add(tableID)
+		for field in reversed(fields):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
 			attrs = field.field
-			if "table-id" in attrs and "table-rownumber" in attrs:
+			tableID=attrs.get('table-id')
+			if tableID is None or tableID in layoutIDs:
+				continue
+			if self.navigationalTableColumnNumberAttributeName in attrs and not attrs.get('table-layout'):
 				break
 		else:
 			raise LookupError("Not in a table cell")
 		return (attrs["table-id"],
-			attrs["table-rownumber"], attrs["table-columnnumber"],
+			attrs[self.navigationalTableRowNumberAttributeName], attrs[self.navigationalTableColumnNumberAttributeName],
 			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
 
 	def _getTableCellAt(self,tableID,startPos,row,column):
@@ -1576,13 +1655,16 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		@type column: int
 		@returns: the table cell's position in the document
 		@rtype: L{textInfos.TextInfo}
+		@raises: LookupError if the cell does not exist 
 		"""
 		raise NotImplementedError
 
+	_missingTableCellSearchLimit=3 #: The number of missing  cells L{_getNearestTableCell} is allowed to skip over to locate the next available cell
 	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		"""
 		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
 		For example, this is used to move to the cell in the next column, previous row, etc.
+		This method will skip over missing table cells (where L{_getTableCellAt} raises LookupError), up to the number of times set by _missingTableCellSearchLimit set on this instance.
 		@param tableID: the ID of the table
 		@param startPos: the position in the document to start searching from.
 		@type startPos: L{textInfos.TextInfo}
@@ -1612,19 +1694,28 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		elif axis == "column":
 			destCol += origColSpan if movement == "next" else -1
 
-		if destCol < 1 or destRow<1:
-			# Optimisation: We're definitely at the edge of the column or row.
-			raise LookupError
-
-		return self._getTableCellAt(tableID,startPos,destRow,destCol)
+		# Try and fetch the cell at these coordinates, though  if a  cell is missing, try  several more times moving the coordinates on by one cell each time
+		limit=self._missingTableCellSearchLimit
+		while limit>0:
+			limit-=1
+			if destCol < 1 or destRow<1:
+				# Optimisation: We're definitely at the edge of the column or row.
+				raise LookupError
+			try:
+				return self._getTableCellAt(tableID,startPos,destRow,destCol)
+			except LookupError:
+				pass
+			if axis=="row":
+				destRow+=1 if movement=="next" else -1
+			else:
+				destCol+=1 if movement=="next" else -1
+		raise LookupError
 
 	def _tableMovementScriptHelper(self, movement="next", axis=None):
 		if isScriptWaiting():
 			return
 		formatConfig=config.conf["documentFormatting"].copy()
 		formatConfig["reportTables"]=True
-		#  For now, table movement includes layout tables even if reporting of layout tables is disabled.
-		formatConfig["includeLayoutTables"]=True
 		try:
 			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:
