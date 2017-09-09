@@ -110,7 +110,7 @@ class RecogImageInfo(object):
 		return self.screenLeft + int(x / self.resizeFactor)
 
 	def convertYToScreen(self, y):
-		"""Convert an x coordinate in the recognized image to an x coordinate on the screen.
+		"""Convert an y coordinate in the recognized image to a y coordinate on the screen.
 		"""
 		return self.screenTop + int(y / self.resizeFactor)
 

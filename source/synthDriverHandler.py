@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
 
 from copy import deepcopy
 import os
@@ -22,6 +22,7 @@ _audioOutputDevice=None
 
 def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
+	config.configProfileSwitched.register(handleConfigProfileSwitch)
 
 def changeVoice(synth, voice):
 	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).

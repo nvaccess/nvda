@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2016 NV Access Limited, Babbage B.V.
+#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V.
 
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -252,7 +252,10 @@ class Gecko_ia2(VirtualBuffer):
 					"name": [VBufStorage_findMatch_notEmpty]}
 				]
 		elif nodeType=="embeddedObject":
-			attrs={"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet"])}
+			attrs=[
+				{"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet","audio","video"])},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
+			]
 		else:
 			return None
 		return attrs

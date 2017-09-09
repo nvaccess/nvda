@@ -27,12 +27,19 @@ import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
 import winKernel
+import extensionPoints
 import profileUpgrader
 from .configSpec import confspec
 
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
+
+#: Notifies when the configuration profile is switched.
+#: This allows components to apply changes required by the new configuration.
+#: For example, braille switches braille displays if necessary.
+#: Handlers are called with no arguments.
+configProfileSwitched = extensionPoints.Action()
 
 def initialize():
 	global conf
@@ -333,14 +340,7 @@ class ConfigManager(object):
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		import synthDriverHandler
-		synthDriverHandler.handleConfigProfileSwitch()
-		import brailleInput
-		brailleInput.handler.handleConfigProfileSwitch()
-		import braille
-		braille.handler.handleConfigProfileSwitch()
-		import audioDucking
-		audioDucking.handleConfigProfileSwitch()
+		configProfileSwitched.notify()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")

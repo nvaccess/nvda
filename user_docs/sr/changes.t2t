@@ -3,6 +3,29 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+== Nove karakteristike ==
+- U režimu  pretraživanja, sada je moguće doći do kraja ili početka orjentira komandama za prelazak na početak ili kraj sadrživača (zarez/šift+zarez). (#5482)
+- U programima Firefox, Internet explorer i Chrome, brza navigacija po poljima za uređivanje ili unos teksta sada uključuje obogaćena tekstualna polja označena kao contentEditable. (#5534)
+- U web pretraživačima, lista elemenata sada može prikazati polja za uređivanje i dugmiće. (#588)
+
+
+== Promene ==
+- Web dijalozi u pretraživačima Firefox i Chrome sada automatski koriste režim pretraživanja, osim ako se radi u Web aplikaciji. (#4493)
+- U režimu pretraživanja, korišćenje tastera tab ili brze navigacije više ne izgovara početak i kraj sadrživača na primer liste, što čini navigaciju jednostavnijom. (#2591)
+- U režimu pretraživanja programa Firefox i Chrome, imena grupa polja za uređivanje se sada izgovaraju kada koristite brzu navigaciju ili taster tab. (#3321)
+
+
+== Ispravljene greške ==
+- Linkovi se sada ispravno prepoznaju na brajevom redu u aplikacijama kao što je Microsoft Word. (#6780)
+- NVDA više ne postaje znatno sporiji kada imate puno otvorenih kartica u programima Firefox i Chrome. (#3138)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
 = 2017.3 =
 Glavne karakteristike ove verzije uključuju unos skraćenog brajevog pisma, podrška za nove Windows OneCore glasove dostupne na Windowsu 10, ugrađena podrška za Windows 10 OCR, i puno značajnih poboljšanja za brajev red i Web.
 == Nove karakteristike ==
@@ -41,12 +64,12 @@ Glavne karakteristike ove verzije uključuju unos skraćenog brajevog pisma, pod
 - Puno novih vrsta kontrola je dobilo svoje skraćenice za brajev red. Orjentiri su takođe dobili skraćenice. Molimo pročitajte "Skraćenice za vrste, stanje kontrola i orjentire" u korisničkom uputstvu za potpunu listu. (#7188, #3975)
 - Espeak-ng je ažuriran na verziju 1.49.1 (#7280).
 - Ulazne i izlazne tabele u dijalogu brajevih podešavanja su sada poređane po abecedi. (#6113)
-- Ažuriran liblouis brajev prevodioc  na verziju 3.2.0. (#6935)
+- Ažuriran liblouis brajev prevodilac  na verziju 3.2.0. (#6935)
 - Podrazumevana brajeva tabela je sada Engleski brajev kod stepen 1. (#6952)
 - Po podrazumevanim podešavanjima, NVDA sada prikazuje samo deo sadržaja na brajevom redu koji je promenjen kada neki objekat dobije fokus. (#217)
  - Ranije, informacije o promenama su bile prikazivane kad god je to moguće, bez obzira da li ste videli te informacije ranije.
  - Možete se vratiti na stariji prikaz menjanjem opcije "Predstavljanje sadržaja fokusa" u dijalogu brajeva podešavanja na opciju "Uvek prikazuj promene sadržaja".
-- Kada koristite brajev red, kursor se može podesiti za drugačiji oblik kada je brajev red vezan za fokus ili pregled. (#7112)
+- Kada koristite brajev red, kursor se može podesiti za drugačiji oblik kada je brajev red vezan za fokus ili pregled. (#7122)
 - NVDA logo je ažuriran. Ažuriran logo su slova NVDA u belom, na ljubičastoj pozadini. Ovo omogućava da bude vidljiv na bilo kojoj pozadini, i koristi ljubičastu boju iz NV Access logoa. (#7446)
 
 

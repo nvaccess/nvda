@@ -3,6 +3,29 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+== Nuevas Características ==
+- En modo exploración, ahora es posible saltar al inicio de los puntos de referencia utilizando las órdenes saltar al final o al principio del contenedor (coma/shift+coma). (#5482)
+- En Firefox, Chrome e Internet Explorer, la navegación rápida por campos de edición y campos de formulario ahora incluye contenido de texto enriquecido editable (ej.: contentEditable). (#5534)
+- En navegadores web, la Lista de Elementos ahora puede listar campos de formulario y botones. (#588)
+
+
+== Cambios ==
+- Los diálogos web en los navegadores Firefox y Chrome ahora utilizan el modo exploración automáticamente, al menos que se esté en una aplicación web. (#4493)
+- En modo exploración, al tabular o moverse con las órdenes de teclas de navegación rápida ya no anuncia saliendo de contenedores tales como listas y tablas, Lo cual hace la navegación más eficaz. (#2591)
+- En modo exploración para Firefox y Chrome, ahora se anuncian los nombres de grupos de campos de formulario al moverse dentro de ellos con la navegación rápida o cuando se tabula. (#3321)
+
+
+== Corrección de Errores ==
+- Los enlaces ahora se indican en braille en aplicaciones tales como Microsoft Word. (#6780)
+- NVDA ya no se vuelve notablemente más lento cuando estén abiertas muchas pestañas en los navegadores web Firefox o Chrome. (#3138)
+
+
+== Cambios para Desarrolladores ==
+- "scons tests" ahora busca que las cadenas traducibles tengan comentarios para los traductores. También puedes ejecutar esto sólo con "scons checkPot". (#7492)
+
+
 = 2017.3 =
 Lo subrayable de esta versión incluye la entrada de braille contraído, el soporte para nuevas voces Windows OneCore disponibles en Windows 10, el soporte para el OCR integrado en Windows 10, y muchas mejoras significativas referentes al Braille y a la web.
 
@@ -31,7 +54,7 @@ Lo subrayable de esta versión incluye la entrada de braille contraído, el sopo
  - Para reconocer el contenido del navegador de objetos actual, pulsa NVDA+r.
  - Consulta la sección Reconocimiento de Contenidos de la Guía del Usuario para detalles adicionales.
 - Ahora puedes elegir qué información de contexto se muestra en una pantalla braille cuando un objeto tiene el foco utilizando la nueva opción "Presentación de contexto del foco" en el diálogo Opciones de Braille. (#217)
- - Por ejemplo, las opciones "Rellenar pantalla para cambios de contexto" y "Sólo cuando se desplaza hacia atrás" pueden hacer que trabajar con listas y menúes sea más eficiente, ya que los elementos no cambiarían contínuamente su posición en la pantalla.
+ - Por ejemplo, las opciones "Rellenar pantalla para cambios de contexto" y "Sólo cuando se desplaza hacia atrás" pueden hacer que trabajar con listas y menús sea más eficiente, ya que los elementos no cambiarían contínuamente su posición en la pantalla.
  - Consulta la sección en la opción "Presentación de contexto del foco" en la Guía del Usuario para detalles adicionales y ejemplos.
 - En Firefox y Chrome, NVDA ahora soporta rejillas dinámicas complejas tales como hojas de cálculo donde sólo se pueda cargar o mostrar una parte del contenido (específicamente los atributos aria-rowcount, aria-colcount, aria-rowindex y aria-colindex introducidos en ARIA 1.1). (#7410)
 
