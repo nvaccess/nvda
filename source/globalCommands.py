@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+﻿# -*- coding: UTF-8 -*-
 #globalCommands.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -1365,6 +1365,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakSpelling(text)
 		else:
 			if api.copyToClip(text):
+				# Translators: The message presented when the status bar is copied to the clipboard.
 				ui.message(_("%s copied to clipboard")%text)
 	# Translators: Input help mode message for report status line text command.
 	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the title to the clipboard")
