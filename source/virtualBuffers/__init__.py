@@ -618,7 +618,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		containerField=None
 		while controlFields:
 			field=controlFields.pop()
-			if field.getPresentationCategory(controlFields,formatConfig)==field.PRESCAT_CONTAINER:
+			if field.getPresentationCategory(controlFields,formatConfig)==field.PRESCAT_CONTAINER or field.get("landmark"):
 				containerField=field
 				break
 		if not containerField: return None

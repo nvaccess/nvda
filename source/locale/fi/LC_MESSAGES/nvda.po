@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-04 00:10+1000\n"
-"PO-Revision-Date: 2017-08-06 08:48+0200\n"
+"POT-Creation-Date: 2017-08-18 00:10+1000\n"
+"PO-Revision-Date: 2017-08-18 16:05+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1539,7 +1539,7 @@ msgstr "Kii&ntopisteet"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
-msgstr "Elementtiluettelo"
+msgstr "Elementtilista"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1830,7 +1830,7 @@ msgstr "haalean{color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "tummanhaalean{color}"
+msgstr "tummanhaalea {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
 #, python-brace-format
@@ -2666,11 +2666,11 @@ msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Syöte-eletiedostossa on virheitä.\n"
+"Syötekomentotiedostossa on virheitä.\n"
 "Lisätietoja löytyy lokitiedostosta."
 
 msgid "gesture map File Error"
-msgstr "Virhe syöte-eletiedostossa"
+msgstr "Virhe syötekomentotiedostossa"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -3638,7 +3638,7 @@ msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta lähtien "
+"Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta alkaen "
 "siirtäen samalla sitä."
 
 #. Translators: Input help mode message for say all with system caret command.
@@ -3910,7 +3910,7 @@ msgstr "Avaa symbolien puhumisen asetusten valintaikkunan."
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Avaa syöte-eleiden valintaikkunan."
+msgstr "Avaa Syötekomennot-valintaikkunan."
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -7288,7 +7288,7 @@ msgstr "&Välimerkkien ja symboleiden puhuminen..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "Syöte-e&leet..."
+msgstr "Syöte&komennot..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -8525,7 +8525,7 @@ msgstr "Automaattinen vuorovaikutustila kohdistuksen muuttuessa"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for caret movement"
-msgstr "Automaattinen vuorovaikutustila kohdistinta liikutettaessa"
+msgstr "Automaattinen vuorovaikutustila kohdistinta siirrettäessä"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -8535,7 +8535,7 @@ msgstr "Ilmaise vuorovaikutus- ja selaustilat äänimerkillä"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "Estä mui&den kuin komentoeleiden pääsy dokumenttiin"
+msgstr "Estä mui&den kuin syötekomentojen pääsy dokumenttiin"
 
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
@@ -8945,7 +8945,7 @@ msgstr "Symboli \"%s\" on jo olemassa."
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
-msgstr "Syöte-eleet"
+msgstr "Syötekomennot"
 
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
@@ -8961,13 +8961,13 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "Anna syöte-ele:"
+msgstr "Anna syötekomento:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Virhe tallennettaessa käyttäjän määrittämiä eleitä - tiedostojärjestelmä "
-"luultavasti vain luku -tyyppiä."
+"Virhe tallennettaessa käyttäjän määrittämiä syötekomentoja - "
+"tiedostojärjestelmä on luultavasti vain luku -tyyppiä."
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10201,6 +10201,7 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
+#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "Kirjoitusvirhe: {text}"
