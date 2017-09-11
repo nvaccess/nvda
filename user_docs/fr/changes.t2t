@@ -3,6 +3,29 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+== Nouvelles Fonctionnalités ==
+- En mode navigation, il est maintenant possible d'aller à la fin ou au début d'une région en utilisant les commandes de saut à la fin ou au début d'un conteneur (virgule/maj+virgule). (#5482)
+- Sous Firefox, Chrome et Internet Explorer, la navigation rapide vers les zones de saisie et les champs de formulaire inclut maintenant les champs texte riche (ex : contentEditable). (#5534)
+- Dans les navigateurs web, La Liste d'Éléments peut maintenant lister les champs de formulaire et les boutons. (#588)
+ 
+
+== Changements ==
+- Les dialogues web dans les navigateurs Firefox et Chrome utilisent maintenant automatiquement le mode navigation, sauf à l'intérieur d'une application web. (#4493)
+- En mode navigation, tabuler ou naviguer avec les touches de navigation rapide n'annonce plus la sortie de conteneurs tels que les listes et les tableaux, ce qui rend la navigation plus efficace. (#2591)
+- En mode navigation sous Firefox ou Chrome, le nom des groupes de champs de formulaires est maintenant annoncés quand on y accède par navigation rapide ou en tabulant. (#3321)
+
+
+== Corrections de Bogues ==
+- Les liens sont maintenant indiqués en braille dans les applications telles que Microsoft Word. (#6780)
+- NVDA ne ralentit plus notablement quand beaucoup d'onglets sont ouverts dans les navigateurs Firefox ou Chrome. (#3138)
+
+
+== Changements pour les Développeurs ==
+- "scons tests" vérifie maintenant que les chaîne traduisibles ont des commentaires pour les traducteurs. Vous pouvez exécuter seulement cette vérification par "scons checkPot". (#7492)
+
+
 = 2017.3 =
 Les points forts de cette version incluent la saisie de braille abrégé, le support des nouvelles voix OneCore Voices disponibles sous Windows 10, le support intégré de la reconnaissance de caractères de Windows 10, et beaucoup d'améliorations significatives concernant le braille et le web.
 

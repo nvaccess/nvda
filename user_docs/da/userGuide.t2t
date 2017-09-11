@@ -525,7 +525,7 @@ Du kan slå bogstavnavigering til og fra i det aktuelle dokument ved at trykke p
  
 ++ Elementlisten ++
 Elementlisten giver adgang til en liste med  forskellige typer elementer i dokumentet, alt efter hvilket program du bruger.
-F.eks., i web-browsere kan kan elementlisten vise links, overskrifter og landemærker.
+F.eks., i web-browsere kan kan elementlisten vise links, overskrifter, knapper og landmærker.
 Med radioknapper kan du skifte mellem de forskellige typer elementer.
 Ved hjælp af Et editfelt kan du filtrere listen, så du kan søge efter et bestemt element på siden.
 Når du har valgt et element, kan du bruge knapperne i dialogen til at flytte til, eller aktivere det pågældende element.
@@ -694,26 +694,26 @@ Ved at trykke på punkt 7 og 8 sammen oversættes det indtastede punktskrift, me
 + Indholdsgenkendelse +
 Når forfattere ikke giver tilstrækkelig information til en skærmlæserbruger til at bestemme indholdet af noget, kan forskellige værktøjer bruges til at forsøge at genkende indholdet fra et billede.
 NVDA understøtter den optiske tegngenkendelse (OCR) -funktionalitet indbygget i Windows 10 ftil at genkende tekst fra billeder.
-Yderligere indholdsgenkendelse kan leveres i NVDA add-ons.
+Yderligere indholdsgenkendelse kan leveres i tilføjelser til NVDA.
 
 Når du bruger en kommando til genkendelse af indhold, genkender NVDA indhold fra det aktuelle [navigatorobjekt #ObjectNavigation].
 Som standard følger navigatorobjektet systemfokus eller markøren i gennemsynstilstand, så du kan som regel bare flytte fokusmarkøren eller markøren der benyttes i gennemsynstilstand, hvor du ønsker den.
 Hvis du for eksempel flytter markøren der benyttes i gennemsynstilstand til en grafik, vil tekstgenkendelse udføres på grafikken som standard.
-Du kan også benytte objektnavigering til for eksempel at genkende indholdet af et helt programvindue.
+Du kan også benytte objektnavigation til for eksempel at genkende indholdet af et helt programvindue.
 
 Når tekstgenkendelsen er udført, vil resultatet blive præsenteret i et dokument, der ligner gennemsynstilstand, så du kan læse oplysningerne med markørtaster osv.
 Et tryk på Enter eller mellemrum vil aktivere (normalt klikke) teksten ved markøren, hvis det er muligt.
 Et tryk på escape afviser genkendelsesresultatet.
 
-++ Windows 10 OCR ++ [Win10Ocr]
+++ Windows 10 OCR ++[Win10Ocr]
 Windows 10 indeholder OCR til mange sprog.
 NVDA kan bruge denne funktionalitet til at genkende tekst fra billeder eller utilgængelige applikationer.
 
-Du kan indstille det sprog, der skal bruges til tekstgenkendelse i dialogboksen [Windows 10 OCR # Win10OcrSettings].
+Du kan indstille det sprog, der skal bruges til tekstgenkendelse i dialogboksen [Windows 10 Tekstgenkendelse #Win10OcrSettings].
 Yderligere sprog kan installeres ved at åbne startmenuen, vælge Indstillinger, vælge Tid og sprog, Område og sprog og derefter vælge Tilføj et sprog.
 
 %Kc:beginInclude
-For at genkende teksten af det aktuelle navigatorobjekt ved hjælp af Windows 10 OCR, skal du trykke på NVDA + r.
+For at genkende teksten af det aktuelle navigatorobjekt ved hjælp af Windows 10 Tekstgenkendelse, skal du trykke på NVDA + r.
 %Kc:endInclude
 
 + Programspecifikke NVDA-kommandoer +

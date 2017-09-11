@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 00:10+1000\n"
-"PO-Revision-Date: 2017-08-23 15:42+0200\n"
+"POT-Creation-Date: 2017-09-01 00:10+1000\n"
+"PO-Revision-Date: 2017-09-03 09:12+0200\n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <kontakt@nvda.dk>\n"
 "Language: da_DK\n"
@@ -1048,6 +1048,11 @@ msgstr "fokustilstand"
 msgid "Browse mode"
 msgstr "Gennemsynstilstand"
 
+#. Translators: Reported label in the elements list for an element which which has no name and value
+#, fuzzy
+msgid "Unlabeled"
+msgstr "navn"
+
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
 msgstr "Bogstavnavigation fra"
@@ -1541,6 +1546,17 @@ msgstr "Lin&ks"
 #. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Overskrifter"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Formularfelter"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Buttons"
+msgstr "knap"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7627,8 +7643,8 @@ msgid ""
 msgstr ""
 "Er du sikker på, at du ønsker at installere dette tilføjelsesprogram? Du bør "
 "kun installere tilføjelser fra kilder, du har tillid til.\n"
-"Addon: {summary} {version}\n"
-"Author: {author}"
+"Tilføjelse: {summary} {version}\n"
+"Forfatter: {author}"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
@@ -7972,7 +7988,7 @@ msgstr "Installér NVDA"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "Aktivér knappen Fortsæt for at installere NVDA på harddisken"
+msgstr "Aktivér knappen Fortsæt for at installere NVDA på harddisken."
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid ""
@@ -9248,11 +9264,6 @@ msgstr "&Formler"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "&Formularfelter"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "&Ark"
 
@@ -10240,15 +10251,22 @@ msgstr "Primær sidehoved"
 msgid "Text frame"
 msgstr "tekstramme"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "kommentar: {text} af {author} den {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} af {author} den {date}"
 
-#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "stavning: {text}"
