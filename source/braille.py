@@ -1964,9 +1964,9 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		for globalMap in globalMaps:
 			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
 				if gesture.startswith("br({source})".format(source=cls.name)) and scriptCls is globalCommands.GlobalCommands and scriptName.startswith("kb"):
-					script = scriptHandler._makeKbEmulateScript(scriptName)
-					if script.emuGesture.isModifier:
-						yield set(gesture.split(":")[1].split("+")), set(script.emuGesture._keyNamesInDisplayOrder)
+					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
+					if emuGesture.isModifier:
+						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
