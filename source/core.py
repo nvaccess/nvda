@@ -269,10 +269,15 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		UNKNOWN_BATTERY_STATUS = 0xFF
 		AC_ONLINE = 0X1
 		NO_SYSTEM_BATTERY = 0X80
+		#States for screen orientation
+		ORIENTATION_NOT_INITIALIZED = 0
+		ORIENTATION_PORTRAIT = 1
+		ORIENTATION_LANDSCAPE = 2
 
 		def __init__(self, windowName=None):
 			super(MessageWindow, self).__init__(windowName)
 			self.oldBatteryStatus = None
+			self.orientationCache = self.ORIENTATION_NOT_INITIALIZED
 			self.handlePowerStatusChange()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
@@ -286,12 +291,18 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			import winUser
 			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 			#The low word is the width and hiword is height.
-			if winUser.LOWORD(lParam) > winUser.HIWORD(lParam):
+			if (winUser.LOWORD(lParam) > winUser.HIWORD(lParam):
+				if self.orientationCache == self.ORIENTATION_LANDSCAPE:
+					return
 				#Translators: The screen is oriented so that it is wider than it is tall.
 				ui.message(_("Landscape" ))
+				self.orientationCache = self.ORIENTATION_LANDSCAPE
 			else:
+				if self.orientationCache == self.ORIENTATION_PORTRAIT:
+					return
 				#Translators: The screen is oriented in such a way that the height is taller than it is wide.
 				ui.message(_("Portrait"))
+				self.orientationCache = self.ORIENTATION_PORTRAIT	
 
 		def handlePowerStatusChange(self):
 			#Mostly taken from script_say_battery_status, but modified.
