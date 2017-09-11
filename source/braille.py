@@ -664,7 +664,19 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field, isAtStart, formatConfig):
+def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
+	"""Generates the braille text for the given format field.
+	@param field: The format field to examine.
+	@type field: {str : str, ...}
+	@param fieldCache: The format field of the previous run; i.e. the cached format field.
+	@type fieldCache: {str : str, ...}
+	@param isAtStart: True if this format field precedes any text in the line/paragraph.
+	This is useful to restrict display of information which should only appear at the start of the line/paragraph;
+	e.g. the line number or line prefix (list bullet/number).
+	@type isAtStart: bool
+	@param formatConfig: The formatting config.
+	@type formatConfig: {str : bool, ...}
+	"""
 	textList = []
 	if isAtStart:
 		if formatConfig["reportLineNumber"]:
@@ -680,6 +692,13 @@ def getFormatFieldBraille(field, isAtStart, formatConfig):
 				# Translators: Displayed in braille for a heading with a level.
 				# %s is replaced with the level.
 				textList.append(_("h%s")%headingLevel)
+	if formatConfig["reportLinks"]:
+		link=field.get("link")
+		oldLink=fieldCache.get("link")
+		if link and link != oldLink:
+			textList.append(roleLabels[controlTypes.ROLE_LINK])
+	fieldCache.clear()
+	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 class TextInfoRegion(Region):
@@ -744,6 +763,7 @@ class TextInfoRegion(Region):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
 		typeform = louis.plain_text
+		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
 				self._isFormatFieldAtStart = False
@@ -778,7 +798,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
+					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -821,6 +841,7 @@ class TextInfoRegion(Region):
 			# We only render fields that aren't at the start of their nodes for the first part of the reading unit.
 			# Otherwise, we'll render fields that have already been rendered.
 			self._skipFieldsNotAtStartOfNode = True
+		info.obj._brailleFormatFieldAttributesCache = formatFieldAttributesCache
 
 	def _getReadingUnit(self):
 		return textInfos.UNIT_PARAGRAPH if config.conf["braille"]["readByParagraph"] else textInfos.UNIT_LINE
@@ -1427,6 +1448,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
+		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1435,6 +1457,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
+		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
 		if self.display:
 			self.display.terminate()
 			self.display = None

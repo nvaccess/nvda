@@ -3,6 +3,36 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+== New Features ==
+- In browse mode, it is now possible to skip past/to the start of landmarks using the skip to end/beginning of container commands (comma/shift+comma). (#5482)
+- In Firefox, Chrome and Internet Explorer, quick navigation to edit fields and form fields now includes editable rich text content (I.e. contentEditable). (#5534)
+- In web browsers, the Elements List can now list form fields and buttons. (#588)
+- Initial support for Windows 10 on ARM64. (#7508)
+
+
+== Changes ==
+- The minimum supported Operating System for NVDA is now Windows 7 with Service Pack 1, or Windows Server 2008 R2 with Service Pack 1. (#7546)
+- Web dialogs in Firefox and Chrome web browsers now automatically use browse Mode, unless inside of a web application. (#4493)
+- In browse mode, tabbing and moving with quick navigation commands no longer announces jumping out of containers such as lists and tables, which makes navigating more efficient. (#2591)
+- In Browse mode for Firefox and Chrome, the name of form field groups are now announced when moving into them with quick navigation or when tabbing. (#3321)
+- In browse mode, the quick navigation command for embedded objects (o and shift+o) now includes audio and video elements as well as elements with the aria roles application and dialog. (#7239)
+
+
+== Bug Fixes ==
+- Links are now indicated in braille in applications such as Microsoft Word. (#6780)
+- NVDA no longer becomes noticeably slower when many tabs are open in either Firefox or Chrome web browsers. (#3138)
+- Cursor routing for the MDV Lilli Braille display no longer incorrectly moves one braille cell ahead of where it should be. (#7469)
+- In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
+
+
+== Changes for Developers ==
+- "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
+- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
+- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
+
+
 = 2017.3 =
 Highlights of this release include input of contracted braille, support for new Windows OneCore voices available on Windows 10, in-built support for Windows 10 OCR, and many significant improvements regarding Braille and the web.
 
@@ -47,7 +77,7 @@ Highlights of this release include input of contracted braille, support for new 
 - By default, NVDA now only shows the parts of the context information that have changed on a braille display when an object gets focus. (#217)
  - Previously, it always showed as much context information as possible, regardless of whether you have seen the same context information before.
  - You can revert to the old behaviour by changing the new "Focus context presentation" setting in the Braille Settings dialog to "Always fill display".
-- When using Braille, the cursor can be configured to be a different shape when tethered to focus or review. (#7112)
+- When using Braille, the cursor can be configured to be a different shape when tethered to focus or review. (#7122)
 - The NVDA logo has been updated. The updated NVDA logo is a stylised blend of the letters NVDA in white, on a solid purple background. This ensures it will be visible on any colour background, and uses the purple from the NV Access logo. (#7446)
 
 

@@ -59,11 +59,9 @@ This applies to both original and modified copies of this software, plus any der
 For further details, you can [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + System Requirements +
-- Operating Systems: all 32-bit and 64-bit editions of Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 and Windows 10 (including Server operating Systems)
- - For Windows XP 32-bit, NVDA requires Service Pack 2 or higher.
- - For Windows Server 2003, NVDA requires Service Pack 1 or higher.
- - For Windows Vista, NVDA requires Service Pack 2 and the [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
- Both of these should be installed if all available updates are applied via Windows Update.
+- Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
+ - For Windows 7, NVDA requires Service Pack 1 or higher.
+ - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
 - Memory: 256 mb or more of RAM
 - Processor speed: 1.0 ghz or above
 - About 90 MB of storage space.
@@ -506,7 +504,7 @@ The following keys by themselves jump to the next available element, while addin
 - m: frame
 - g: graphic
 - d: landmark
-- o: embedded object
+- o: embedded object (audio and video player, application, dialog, etc.)
 - 1 to 6: headings at levels 1 to 6 respectively
 - a: annotation (comment, editor revision, etc.)
 - w: spelling error
@@ -525,7 +523,7 @@ To toggle single letter navigation on and off for the current document, press NV
 
 ++ The Elements List ++
 The elements list provides access to a list of various types of elements in the document as appropriate for the application.
-For example, in web browsers, the elements list can list links, headings or landmarks.
+For example, in web browsers, the elements list can list links, headings, form fields, buttons or landmarks.
 Radio buttons allow you to switch between the different types of elements.
 An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page.
 Once you have chosen an item, you can use the provided buttons in the dialog to move to or activate that item.
@@ -535,9 +533,10 @@ Once you have chosen an item, you can use the provided buttons in the dialog to 
 %kc:endInclude
 
 ++ Embedded Objects ++
-Pages can include rich content using technologies such as Adobe Flash and Sun Java, as well as applications and dialogs.
+Pages can include rich content using technologies such as Adobe Flash, Oracle Java and HTML5, as well as applications and dialogs.
 Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
-You can press enter on these objects to interact with them.
+You can quickly move to them using the o and shift+o embedded object single letter navigation keys.
+To interact with these objects, you can press enter on them.
 If it is accessible, you can then tab around it and interact with it like any other application.
 A key command is provided to return to the original page containing the embedded object:
 %kc:beginInclude

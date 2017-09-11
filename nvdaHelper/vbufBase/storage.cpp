@@ -148,16 +148,30 @@ inline void outputEscapedAttribute(wostringstream& out, const wstring& text) {
 }
 
 bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& attribs, const std::wregex& regexp) {
-	wostringstream test;
+	wostringstream regexpInput;
+	wstring parentPrefix=L"parent::";
 	for (vector<wstring>::const_iterator attribName = attribs.begin(); attribName != attribs.end(); ++attribName) {
-		outputEscapedAttribute(test, *attribName);
-		test << L":";
-		VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(*attribName);
-		if (foundAttrib != attributes.end())
-			outputEscapedAttribute(test, foundAttrib->second);
-		test << L";";
+		outputEscapedAttribute(regexpInput, *attribName);
+		regexpInput << L":";
+		// A given attribute can start with a parent prefix, which means the parent node will be checked for that attribute instead of this one. 
+		// E.g. "parent::IAccessible2::role".
+		// Although we will only redirect  the attribute to the parent if the parent prefix is found at the very beginning of the string (I.e. index 0),
+		// an attribute like "blah_grandparent::color" is not an error and will be processed literally like any other attribute.
+		if(this->parent&&attribName->find(parentPrefix)==0) {
+			VBufStorage_attributeMap_t::const_iterator foundAttrib = this->parent->attributes.find(attribName->substr(parentPrefix.length()));
+			if (foundAttrib != this->parent->attributes.end()) {
+				outputEscapedAttribute(regexpInput, foundAttrib->second);
+			}
+			regexpInput << L";";
+		} else { // not a parent attribute
+			VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(*attribName);
+			if (foundAttrib != attributes.end()) {
+				outputEscapedAttribute(regexpInput, foundAttrib->second);
+			}
+			regexpInput << L";";
+		}
 	}
-	return regex_match(test.str(), regexp);
+	return regex_match(regexpInput.str(), regexp);
 }
 
 int VBufStorage_fieldNode_t::calculateOffsetInTree() const {

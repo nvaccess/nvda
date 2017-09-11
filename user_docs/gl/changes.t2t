@@ -3,6 +3,29 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+== Novas Características ==
+- No modo exploración, agora é posible saltar ao comezo dos pontos de referencia usando as ordes saltar ao final ou ao comezo do contedor (coma/shift+coma). (#5482)
+- En Firefox, Chrome e Internet Explorer, a navegación rápida por campos de edición e campos de formulario agora inclúe contido de texto enriquecido editable (ex.: contentEditable). (#5534)
+- En navegadores web, a Lista de Elementos agora pode listar campos de formulario e botóns. (#588)
+
+
+== Cambios ==
+- Os diálogos web nos navegadores Firefox e Chrome agora usan o modo exploración automáticamente, a non ser que se estea nunha aplicación web. (#4493)
+- No modo exploración, ao se tabular ou se mover coas ordes de teclas de navegación rápida xa non anuncia saíndo de contedores coma listas e táboas, o que fai a navegación máis eficaz. (#2591)
+- En modo exploración para Firefox e Chrome, agora anúncianse os nomes de grupos de campos de formulario ao se mover dentro deles coa navegación rápida ou cando se tabula. (#3321)
+
+
+== Corrección de Erros ==
+- As ligas agora indícanse en braille en aplicacións coma no Microsoft Word. (#6780)
+- O NVDA xa non se volta notablemente máis lento cando estean abertas moitas pestanas nos navegadores web Firefox ou Chrome. (#3138)
+
+
+== Cambios para Desenvolvedores ==
+- "scons tests" agora procura que as cadeas traducibles teñan comentarios para os traductores. Tamén podes executar esto só con "scons checkPot". (#7492)
+
+
 = 2017.3 =
 O subliñable desta versión inclúe a entrada de braille contraído, o soporte para novas voces Windows OneCore dispoñibles en Windows 10, o soporte para o OCR integrado en Windows 10, e moitas melloras significativas referentes ao Braille e á web.
 
