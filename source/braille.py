@@ -26,7 +26,6 @@ import brailleDisplayDrivers
 import inputCore
 import brailleTables
 from collections import namedtuple
-import re
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -664,19 +663,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
-def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
-	"""Generates the braille text for the given format field.
-	@param field: The format field to examine.
-	@type field: {str : str, ...}
-	@param fieldCache: The format field of the previous run; i.e. the cached format field.
-	@type fieldCache: {str : str, ...}
-	@param isAtStart: True if this format field precedes any text in the line/paragraph.
-	This is useful to restrict display of information which should only appear at the start of the line/paragraph;
-	e.g. the line number or line prefix (list bullet/number).
-	@type isAtStart: bool
-	@param formatConfig: The formatting config.
-	@type formatConfig: {str : bool, ...}
-	"""
+def getFormatFieldBraille(field, isAtStart, formatConfig):
 	textList = []
 	if isAtStart:
 		if formatConfig["reportLineNumber"]:
@@ -692,13 +679,6 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				# Translators: Displayed in braille for a heading with a level.
 				# %s is replaced with the level.
 				textList.append(_("h%s")%headingLevel)
-	if formatConfig["reportLinks"]:
-		link=field.get("link")
-		oldLink=fieldCache.get("link")
-		if link and link != oldLink:
-			textList.append(roleLabels[controlTypes.ROLE_LINK])
-	fieldCache.clear()
-	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 class TextInfoRegion(Region):
@@ -763,7 +743,6 @@ class TextInfoRegion(Region):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
 		typeform = louis.plain_text
-		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
 				self._isFormatFieldAtStart = False
@@ -798,7 +777,7 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
-					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
+					text = getFormatFieldBraille(field, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
 					# Map this field text to the start of the field's content.
@@ -841,7 +820,6 @@ class TextInfoRegion(Region):
 			# We only render fields that aren't at the start of their nodes for the first part of the reading unit.
 			# Otherwise, we'll render fields that have already been rendered.
 			self._skipFieldsNotAtStartOfNode = True
-		info.obj._brailleFormatFieldAttributesCache = formatFieldAttributesCache
 
 	def _getReadingUnit(self):
 		return textInfos.UNIT_PARAGRAPH if config.conf["braille"]["readByParagraph"] else textInfos.UNIT_LINE
@@ -1448,7 +1426,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
-		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1457,7 +1434,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
 		if self.display:
 			self.display.terminate()
 			self.display = None
@@ -1952,7 +1928,6 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
-	Optionally, L{model} can be provided to allow for model specific gestures.
 	L{routingIndex} should be provided for routing buttons.
 	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
@@ -1968,17 +1943,6 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		raise NotImplementedError
 
-	def _get_model(self):
-		"""The string used to identify all gestures from a specific braille display model.
-		This should generally be a short version of the model name, without spaces.
-		This string will be included in the source portion of gesture identifiers.
-		For example, if this was C{alvaBC6},
-		a model string would look like C{BC680}
-		a display specific gesture identifier might be C{br(alvaBC6.BC680):etouch1}.
-		@rtype: str; C{None} if model specific gestures are not supported
-		"""
-		return None
-
 	def _get_id(self):
 		"""The unique, display specific id for this gesture.
 		@rtype: str
@@ -1991,8 +1955,6 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_identifiers(self):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
-		if self.model:
-			ids.extend([u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id)])
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -2012,21 +1974,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			return display
 		return super(BrailleDisplayGesture, self).scriptableObject
 
-	#: Compiled regular expression to match an identifier 
-	#: including an optional model name
-	#: @type: RegexObject
-	ID_PARTS_REGEX = re.compile(r"br\((\w+)(\.(\w+))?\):([\w+]+)", re.U)
-
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
-		idParts = cls.ID_PARTS_REGEX.search(identifier)
-		modelName = idParts.group(3)
-		key = idParts.group(4)
-		if modelName: # The identifier contains a model name
-			return handler.display.description, "{modelName}: {key}".format(
-				modelName=modelName, key=key
-			)
-		else:
-			return handler.display.description, key
+		return handler.display.description, identifier.split(":", 1)[1]
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
