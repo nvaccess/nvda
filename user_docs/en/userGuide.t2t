@@ -2484,6 +2484,9 @@ Following are the command line options for NVDA:
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
+| None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
+| None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
+| None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
 
 ++ System Wide Parameters ++[SystemWideParameters]
 NVDA allows some values to be set in the system registry which alter the system wide behavior of NVDA.
