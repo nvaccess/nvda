@@ -716,19 +716,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"braille_routeTo": ("br(handyTech):routing",),
 			"braille_scrollBack": (
 				"br(handytech):leftSpace", "br(handytech):leftTakTop",
-				"br(handytech):rightTakTop", "br(handytech):b3", "br(handytech):left",
-				"br(handytech.basicbraille):b3",),
-			"braille_previousLine": ("br(handytech):b4",
-				"br(handytech.basicbraille):b2", "br(handytech.basicbraille):b5",),
-			"braille_nextLine": ("br(handytech):b5",
-				"br(handytech.basicbraille):b4", "br(handytech.basicbraille):b7",),
+				"br(handytech):rightTakTop", "br(handytech):b3", "br(handytech):left",),
+			"braille_previousLine": ("br(handytech):b4",),
+			"braille_nextLine": ("br(handytech):b5",),
 			"braille_scrollForward": (
 				"br(handytech):rightSpace", "br(handytech):leftTakBottom",
-				"br(handytech):rightTakBottom", "br(handytech):b6", "br(handytech):right",
-				"br(handytech.basicbraille):b6",),
+				"br(handytech):rightTakBottom", "br(handytech):b6", "br(handytech):right",),
 			"braille_toggleTether": ("br(handytech):b2",),
+			"braille_toggleFocusContextPresentation": (
+				"br(handytech):b7",),
+			"braille_toggleShowCursor": ("br(handytech):b1",),
 			"kb:shift+tab": ("br(handytech):leftTakTop+leftTakBottom",
-			"br(handytech):escape",),
+				"br(handytech):escape",),
 			"kb:tab": ("br(handytech):rightTakTop+rightTakBottom",
 				"br(handytech):return",),
 			"kb:enter": (
