@@ -515,6 +515,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
 		self._brailleInput = False
+		self._pendingCells = []
+		self._awaitingACK = False
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
@@ -637,7 +639,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# plugged in the same (already open) serial port.
 			self.terminate()
 
-		if ser_packet_type == HT_PKT_OK or ser_packet_type == HT_PKT_ACK:
+		if ser_packet_type in (HT_PKT_OK, HT_PKT_ACK):
 			pass
 		elif ser_packet_type == HT_PKT_NAK:
 			log.debugWarning("NAK received!")
@@ -647,8 +649,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			assert stream.read(1) == "\x16"	# Extended packets are terminated with \x16
 			ext_packet_type = packet[0]
 			if ext_packet_type == HT_EXTPKT_CONFIRMATION:
-				# Confirmation of a command, do nothing
-				pass
+				# Confirmation of a command.
+				if packet[1] == HT_PKT_ACK:
+					self._awaitingACK = False
+					if self._pendingCells:
+						self.display(self._pendingCells)
+				elif packet[1] == HT_PKT_NAK:
+					log.debugWarning("NAK received!")
 			elif ext_packet_type == HT_EXTPKT_KEY:
 				key = ord(packet[1])
 				release = (key & KEY_RELEASE) != 0
@@ -676,8 +683,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 
 	def display(self, cells):
-		# cells will already be padded up to numCells.
-		self._model.display(cells)
+		if not self._awaitingACK:
+			# cells will already be padded up to numCells.
+			self._model.display(cells)
+			self._awaitingACK = True
+			self._pendingCells = []
+		else:
+			self._pendingCells = cells
 
 	scriptCategory = SCRCAT_BRAILLE
 
