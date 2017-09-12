@@ -158,7 +158,7 @@ class TestLanguageDetection(unittest.TestCase):
 		detectedLanguageSequence = languageDetection.detectLanguage(combinedText, "ja_JP")
 		self.compareSpeechSequence(detectedLanguageSequence, [
 			u"ウィンドウズ 10 文字認識",
-		])
+			])
 		config.conf["languageDetection"]["preferredLanguages"] = ()
 		languageDetection.updateLanguagePriorityFromConfig()
 		
@@ -253,3 +253,19 @@ class TestLanguageDetection(unittest.TestCase):
 			LangChangeCommand('ja'),
 			u"１０文字認識",
 		])
+
+	def test_englishWithGreekTextWithEnglishAsDefaultAndPreferedLanguageAsHindi(self):
+		combinedText = u"gamma (γ) is"
+		testSequence = []
+		testSequence.append ( u"gamma (" )
+		testSequence.append ( LangChangeCommand( "el") )
+		testSequence.append ( u"γ" )
+		testSequence.append ( LangChangeCommand( "en") )
+		testSequence.append ( u") is" )
+		config.conf["languageDetection"]["preferredLanguages"] = ("en",)
+		languageDetection.updateLanguagePriorityFromConfig()
+		detectedLanguageSequence = languageDetection.detectLanguage(combinedText , "en" )
+		config.conf["languageDetection"]["preferredLanguages"] = ()
+		languageDetection.updateLanguagePriorityFromConfig()
+		self.compareSpeechSequence(detectedLanguageSequence  , testSequence) 
+
