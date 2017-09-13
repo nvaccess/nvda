@@ -324,20 +324,12 @@ class UIAHandler(COMObject):
 			return UIAElement._nearestWindowHandle
 		# Code for broken WDAG where processID is 0
 		try:
-			processID=UIAElement.cachedProcessId
+			processID=UIAElement.cachedProcessID
 		except COMError:
-			processID=0
-		if not processID:
-			# Jump up to at least where the processID is not 0
-			condition=self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_ProcessIdPropertyId,0))
-			cacheRequest=self.clientObject.CreateCacheRequest()
-			cacheRequest.addProperty(UIA_ProcessIdPropertyId)
-			walker=self.clientObject.CreateTreeWalker(condition)
-			element=walker.NormalizeElementBuildCache(UIAElement,cacheRequest)
-			processID=element.cachedProcessID
-		else:
-			element=UIAElement
+			return None
 		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
+		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
 		if appModule.appName==u'hvsirdpclient':
 			condition=self.clientObject.CreatePropertyCondition(UIA_ClassNamePropertyId,u'ApplicationFrameWindow')
 			walker=self.clientObject.createTreeWalker(condition)
@@ -345,7 +337,7 @@ class UIAHandler(COMObject):
 			# Not WDAG, just walk up to the nearest valid windowHandle
 			walker=self.windowTreeWalker
 		try:
-			new=walker.NormalizeElementBuildCache(element,self.windowCacheRequest)
+			new=walker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
 		except COMError:
 			return None
 		try:
