@@ -277,7 +277,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		def __init__(self, windowName=None):
 			super(MessageWindow, self).__init__(windowName)
 			self.oldBatteryStatus = None
-			self.orientationCache = (self.ORIENTATION_NOT_INITIALIZED,0,0)
+			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
+			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
@@ -293,19 +294,20 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			#The low word is the width and hiword is height.
 			width = winUser.LOWORD(lParam)
 			height = winUser.HIWORD(lParam)
+			self.orientationCoordsCache = (width,height)
 			if width > height:
-				#Check to see if the height and width are the same. If so, it's actually a screen flip, and we want to alert of those!
-				if self.orientationCache[0] == self.ORIENTATION_LANDSCAPE and self.orientationCache[1:] != (width,height):
+				# If the height and width are the same, it's actually a screen flip, and we do want to alert of those!
+				if self.orientationStateCache == self.ORIENTATION_LANDSCAPE and self.orientationCoordsCache != (width,height):
 					return
 				#Translators: The screen is oriented so that it is wider than it is tall.
 				ui.message(_("Landscape" ))
-				self.orientationCache = (self.ORIENTATION_LANDSCAPE,width,height)
+				self.orientationStateCache = self.ORIENTATION_LANDSCAPE
 			else:
-				if self.orientationCache == self.ORIENTATION_PORTRAIT and self.orientationCache[1:] != (width,height):
+				if self.orientationStateCache == self.ORIENTATION_PORTRAIT and self.orientationCoordsCache != (width,height):
 					return
 				#Translators: The screen is oriented in such a way that the height is taller than it is wide.
 				ui.message(_("Portrait"))
-				self.orientationCache = (self.ORIENTATION_PORTRAIT, width, height)
+				self.orientationStateCache = self.ORIENTATION_PORTRAIT
 
 		def handlePowerStatusChange(self):
 			#Mostly taken from script_say_battery_status, but modified.
