@@ -269,10 +269,16 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		UNKNOWN_BATTERY_STATUS = 0xFF
 		AC_ONLINE = 0X1
 		NO_SYSTEM_BATTERY = 0X80
+		#States for screen orientation
+		ORIENTATION_NOT_INITIALIZED = 0
+		ORIENTATION_PORTRAIT = 1
+		ORIENTATION_LANDSCAPE = 2
 
 		def __init__(self, windowName=None):
 			super(MessageWindow, self).__init__(windowName)
 			self.oldBatteryStatus = None
+			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
+			self.orientationCoordsCache = (0,0)
 			self.handlePowerStatusChange()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
@@ -286,12 +292,22 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			import winUser
 			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
 			#The low word is the width and hiword is height.
-			if winUser.LOWORD(lParam) > winUser.HIWORD(lParam):
+			width = winUser.LOWORD(lParam)
+			height = winUser.HIWORD(lParam)
+			self.orientationCoordsCache = (width,height)
+			if width > height:
+				# If the height and width are the same, it's actually a screen flip, and we do want to alert of those!
+				if self.orientationStateCache == self.ORIENTATION_LANDSCAPE and self.orientationCoordsCache != (width,height):
+					return
 				#Translators: The screen is oriented so that it is wider than it is tall.
 				ui.message(_("Landscape" ))
+				self.orientationStateCache = self.ORIENTATION_LANDSCAPE
 			else:
+				if self.orientationStateCache == self.ORIENTATION_PORTRAIT and self.orientationCoordsCache != (width,height):
+					return
 				#Translators: The screen is oriented in such a way that the height is taller than it is wide.
 				ui.message(_("Portrait"))
+				self.orientationStateCache = self.ORIENTATION_PORTRAIT
 
 		def handlePowerStatusChange(self):
 			#Mostly taken from script_say_battery_status, but modified.
