@@ -126,7 +126,7 @@ class Model(AutoPropertyObject):
 	"Extend from this base class to define model specific behavior."
 	#: Device identifier, used in the protocol to identify the device
 	#: @type: string
-	deviceID = None
+	deviceId = None
 
 	#: A reference to the driver instance
 	#: @type; BrailleDisplayDriver
@@ -263,7 +263,7 @@ class JoystickMixin(AutoPropertyObject):
 
 
 class ModularConnect88(TripleActionKeysMixin, Model):
-	deviceID = MODEL_MODULAR_CONNECT_88
+	deviceId = MODEL_MODULAR_CONNECT_88
 	genericName = "Modular Connect"
 	name = "Modular Connect 88"
 	numCells = 88
@@ -278,48 +278,48 @@ class ModularEvolution(AtcMixin, TripleActionKeysMixin, Model):
 
 
 class ModularEvolution88(ModularEvolution):
-	deviceID = MODEL_MODULAR_EVOLUTION_88
+	deviceId = MODEL_MODULAR_EVOLUTION_88
 	numCells = 88
 
 
 class ModularEvolution64(ModularEvolution):
-	deviceID = MODEL_MODULAR_EVOLUTION_64
+	deviceId = MODEL_MODULAR_EVOLUTION_64
 	numCells = 64
 
 
 class EasyBraille(Model):
-	deviceID = MODEL_EASY_BRAILLE
+	deviceId = MODEL_EASY_BRAILLE
 	numCells = 40
 	genericName = name = "Easy Braille"
 
 class ActiveBraille(AtcMixin, TripleActionKeysMixin, Model):
-	deviceID = MODEL_ACTIVE_BRAILLE
+	deviceId = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'
 
 
 class ConnectBraille40(TripleActionKeysMixin, Model):
-	deviceID = MODEL_CONNECT_BRAILLE_40
+	deviceId = MODEL_CONNECT_BRAILLE_40
 	numCells = 40
 	genericName = "Connect Braille"
 	name = "Connect Braille 40"
 
 
 class Actilino(AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
-	deviceID = MODEL_ACTILINO
+	deviceId = MODEL_ACTILINO
 	numCells = 16
 	genericName = name = "Actilino"
 
 
 class ActiveStar40(AtcMixin, TripleActionKeysMixin, Model):
-	deviceID = MODEL_ACTIVE_STAR_40
+	deviceId = MODEL_ACTIVE_STAR_40
 	numCells = 40
 	name = "Active Star 40"
 	genericName = "Active Star"
 
 
 class BrailleWave(Model):
-	deviceID = MODEL_BRAILLE_WAVE
+	deviceId = MODEL_BRAILLE_WAVE
 	numCells = 40
 	genericName = name = "Braille Wave"
 
@@ -340,9 +340,9 @@ class BasicBraille(Model):
 		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
 
 
-def basicBrailleFactory(numCells, deviceID):
+def basicBrailleFactory(numCells, deviceId):
 	return type("BasicBraille{cells}".format(cells=numCells), (BasicBraille,), {
-		"deviceID": deviceID,
+		"deviceId": deviceId,
 		"numCells": numCells,
 	})
 
@@ -364,12 +364,12 @@ class BrailleStar(TripleActionKeysMixin, Model):
 
 
 class BrailleStar40(BrailleStar):
-	deviceID = MODEL_BRAILLE_STAR_40
+	deviceId = MODEL_BRAILLE_STAR_40
 	numCells = 40
 
 
 class BrailleStar80(BrailleStar):
-	deviceID = MODEL_BRAILLE_STAR_80
+	deviceId = MODEL_BRAILLE_STAR_80
 	numCells = 80
 
 
@@ -391,17 +391,17 @@ class Modular(TripleActionKeysMixin, Model):
 
 
 class Modular20(Modular):
-	deviceID = MODEL_MODULAR_20
+	deviceId = MODEL_MODULAR_20
 	numCells = 20
 
 
 class Modular40(Modular):
-	deviceID = MODEL_MODULAR_40
+	deviceId = MODEL_MODULAR_40
 	numCells = 40
 
 
 class Modular80(Modular):
-	deviceID = MODEL_MODULAR_80
+	deviceId = MODEL_MODULAR_80
 	numCells = 80
 
 
@@ -411,7 +411,7 @@ def _allSubclasses(cls):
 		for g in _allSubclasses(s)]
 
 MODELS = {
-	m.deviceID: m for m in _allSubclasses(Model) if hasattr(m, 'deviceID')
+	m.deviceId: m for m in _allSubclasses(Model) if hasattr(m, 'deviceId')
 }
 
 
@@ -487,16 +487,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# Try bluetooth ports last.
 		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
 			port = portInfo["port"]
-			hwID = portInfo["hardwareID"]
-			if hwID.startswith(r"FTDIBUS\COMPORT"):
+			hwId = portInfo["hardwareID"]
+			if hwId.startswith(r"FTDIBUS\COMPORT"):
 				# USB.
 				# TODO: It seems there is also another chip (Gohubs) used in some models?
 				portType = "USB serial"
 				try:
-					usbID = hwID.split("&", 1)[1]
+					usbId = hwId.split("&", 1)[1]
 				except IndexError:
 					continue
-				if usbID not in USB_IDS_SER:
+				if usbId not in USB_IDS_SER:
 					continue
 			elif "bluetoothName" in portInfo:
 				# Bluetooth.
@@ -570,7 +570,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
 		if self._model:
-			data = self._model.deviceID + data
+			data = self._model.deviceId + data
 		if self.isHid:
 			self._sendHidPacket(packetType+data)
 		else:
@@ -634,7 +634,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					"The model with ID %r is not supported by this driver" % modelId)
 			self._model = MODELS.get(modelId)(self)
 			self.numCells = self._model.numCells
-		elif self._model.deviceID != modelId:
+		elif self._model.deviceId != modelId:
 			# Somehow the model ID of this display changed, probably another display 
 			# plugged in the same (already open) serial port.
 			self.terminate()
