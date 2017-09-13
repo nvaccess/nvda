@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,7 +18,7 @@ import audioDucking
 import NVDAHelper
 import globalVars
 import speech
-from synthDriverHandler import SynthDriver,VoiceInfo
+from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import config
 import nvwave
 from logHandler import log
@@ -72,9 +72,37 @@ class constants:
 	SVSFlagsAsync = 1
 	SVSFPurgeBeforeSpeak = 2
 	SVSFIsXML = 8
+	# From the SpeechVoiceEvents enum: https://msdn.microsoft.com/en-us/library/ms720886(v=vs.85).aspx
+	SVEEndInputStream = 4
+	SVEBookmark = 16
+
+class SapiSink(object):
+	"""Handles SAPI event notifications.
+	See https://msdn.microsoft.com/en-us/library/ms723587(v=vs.85).aspx
+	"""
+
+	def __init__(self, synth):
+		self.synth = synth
+
+	def Bookmark(self, streamNum, pos, bookmark, bookmarkId):
+		synthIndexReached.notify(synth=self.synth, index=bookmarkId)
+
+	def EndStream(self, streamNum, pos):
+		synthDoneSpeaking.notify(synth=self.synth)
 
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
+	supportedCommands = {
+		speech.IndexCommand,
+		speech.CharacterModeCommand,
+		speech.LangChangeCommand,
+		speech.BreakCommand,
+		speech.PitchCommand,
+		speech.RateCommand,
+		speech.VolumeCommand,
+		speech.PhonemeCommand,
+	}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 
 	COM_CLASS = "SAPI.SPVoice"
 
@@ -100,7 +128,8 @@ class SynthDriver(SynthDriver):
 		self._initTts(_defaultVoiceToken)
 
 	def terminate(self):
-		del self.tts
+		self._eventsConnection = None
+		self.tts = None
 
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
@@ -167,6 +196,8 @@ class SynthDriver(SynthDriver):
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
+		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(self))
+		self.tts.EventInterests = constants.SVEBookmark | constants.SVEEndInputStream
 
 	def _set_voice(self,value):
 		tokens = self._getVoiceTokens()
