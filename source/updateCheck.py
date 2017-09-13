@@ -233,8 +233,9 @@ class UpdateResultDialog(wx.Dialog):
 			self.urls = updateInfo["launcherUrl"].split(" ")
 			self.fileHash = updateInfo.get("launcherHash")
 			if isPendingUpdate() and state["pendingUpdateVersion"] == updateInfo["version"]:
-				# Translators: A message indicating that an updated version of NVDA is already pending to be installed.
-				message = _("The latest update is already pending to be installed.")
+				# Translators: A message indicating that an updated version of NVDA has been downloaded
+				# and is pending to be installed.
+				message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
 			else:
 				# Translators: A message indicating that an updated version of NVDA is available.
 				# {version} will be replaced with the version; e.g. 2011.3.
@@ -300,18 +301,8 @@ class UpdateAskInstallDialog(wx.Dialog):
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
 		super(UpdateAskInstallDialog, self).__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		if not storeUpdatesDirWritable:
-			# Translators: A message indicating that an updated version of NVDA can either be installed or discarded.
-			message=_("You can either install it now, or discard the update and download it again at a later time.")
-		else:
-			# Translators: A message indicating that an updated version of NVDA can be installed, postponed or discarded.
-			message=_("You can install it now, or install it later from the NVDA menu or the exit dialog, if enabled.\n")
-		mainSizer.Add(wx.StaticText(self, label=
-			# Translators: A message indicating that an updated version of NVDA is ready to be installed.
-			_("Update is ready to install.\n")+message+
-			# Translators: A message telling the user that it is possible to discard a downloaded update.
-			_("Alternatively, you can discard the update and download it again at a later time.")
-		))
+		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
+		mainSizer.Add(wx.StaticText(self, label=_("Update is ready to install.\n")))
 		# Translators: The label of a button to install an NVDA update.
 		item = wx.Button(self, label=_("&Install update"))
 		item.Bind(wx.EVT_BUTTON, lambda evt: executeUpdate())
@@ -340,8 +331,10 @@ class UpdateAskInstallDialog(wx.Dialog):
 		except:
 			gui.messageBox(
 				# Translators: The message when a downloaded update file could not be preserved.
-				_("The downloaded file could not be postponed properly."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
+				_("Unable to postpone update."),
+				# Translators: The title of the message when a downloaded update file could not be preserved.
+				_("Error"),
+				wx.OK | wx.ICON_ERROR)
 			finalDest=self.destPath
 		state["pendingUpdateFile"]=finalDest
 		state["pendingUpdateVersion"]=self.version
