@@ -696,10 +696,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def script_toggleBrailleInput(self, _gesture):
 		self._brailleInput = not self._brailleInput
 		if self._brailleInput:
+			# Translators: message when braille input is enabled
 			ui.message(_('Braille input enabled'))
 		else:
+			# Translators: message when braille input is disabled
 			ui.message(_('Braille input disabled'))
 
+	# Translators: description of the script to toggle braille input
 	script_toggleBrailleInput.__doc__ = _("Toggle braille input")
 
 	__gestures = {
