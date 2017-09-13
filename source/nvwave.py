@@ -97,11 +97,18 @@ class WavePlayer(object):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	"""
+	#: Minimum length of buffer (in ms) before audio is played.
+	MIN_BUFFER_MS = 300
+	#: Flag used to signal that L{stop} has been called.
+	STOPPING = "stopping"
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
-	_global_waveout_lock = threading.RLock()	
+	_global_waveout_lock = threading.RLock()
 	_audioDucker=None
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True,wantDucking=True):
+	def __init__(self, channels, samplesPerSec, bitsPerSample,
+			outputDevice=WAVE_MAPPER, closeWhenIdle=True, wantDucking=True,
+			buffered=False
+		):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@type channels: int
@@ -115,6 +122,8 @@ class WavePlayer(object):
 		@type closeWhenIdle: bool
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
 		@type wantDucking: bool
+		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
+		@type buffered: bool
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -131,6 +140,15 @@ class WavePlayer(object):
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
+		if buffered:
+			#: Minimum size of the buffer before audio is played.
+			#: However, this is ignored if an C{onDone} callback is provided to L{feed}.
+			self._minBufferSize = samplesPerSec * channels * (bitsPerSample / 8) / 1000 * self.MIN_BUFFER_MS
+			self._buffer = ""
+		else:
+			self._minBufferSize = None
+		#: Function to call when the previous chunk of audio has finished playing.
+		self._prevOnDone = None
 		self._waveout = None
 		self._waveout_event = winKernel.kernel32.CreateEventW(None, False, False, None)
 		self._waveout_lock = threading.RLock()
@@ -158,15 +176,27 @@ class WavePlayer(object):
 			self._waveout = waveout.value
 			self._prev_whdr = None
 
-	def feed(self, data):
+	def feed(self, data, onDone=None):
 		"""Feed a chunk of audio data to be played.
 		This is normally synchronous.
 		However, synchronisation occurs on the previous chunk, rather than the current chunk; i.e. calling this while no audio is playing will begin playing the chunk but return immediately.
 		This allows for uninterrupted playback as long as a new chunk is fed before the previous chunk has finished playing.
 		@param data: Waveform audio in the format specified when this instance was constructed.
 		@type data: str
+		@param onDone: Function to call when this chunk has finished playing.
+		@type onDone: callable
 		@raise WindowsError: If there was an error playing the audio.
 		"""
+		if not self._minBufferSize:
+			return self._feedUnbuffered(data, onDone=onDone)
+		self._buffer += data
+		# If onDone was specified, we must play audio regardless of the minimum buffer size
+		# so we can accurately call onDone at the end of this chunk.
+		if onDone or len(self._buffer) > self._minBufferSize:
+			self._feedUnbuffered(self._buffer, onDone=onDone)
+			self._buffer = ""
+
+	def _feedUnbuffered(self, data, onDone=None):
 		if self._audioDucker and not self._audioDucker.enable():
 			return
 		whdr = WAVEHDR()
@@ -185,6 +215,10 @@ class WavePlayer(object):
 					raise e
 			self.sync()
 			self._prev_whdr = whdr
+			# Don't call onDone if stop was called,
+			# as this chunk has been truncated in that case.
+			if self._prevOnDone is not self.STOPPING:
+				self._prevOnDone = onDone
 
 	def sync(self):
 		"""Synchronise with playback.
@@ -202,6 +236,12 @@ class WavePlayer(object):
 				with self._global_waveout_lock:
 					winmm.waveOutUnprepareHeader(self._waveout, LPWAVEHDR(self._prev_whdr), sizeof(WAVEHDR))
 			self._prev_whdr = None
+			if self._prevOnDone is not None and self._prevOnDone is not self.STOPPING:
+				try:
+					self._prevOnDone()
+				except:
+					log.exception("Error calling onDone")
+				self._prevOnDone = None
 
 	def pause(self, switch):
 		"""Pause or unpause playback.
@@ -229,6 +269,14 @@ class WavePlayer(object):
 		If L{closeWhenIdle} is C{True}, the output device will be closed.
 		A subsequent call to L{feed} will reopen it.
 		"""
+		if not self._minBufferSize:
+			return self._idleUnbuffered()
+		if self._buffer:
+			self._feedUnbuffered(self._buffer)
+			self._buffer = ""
+		return self._idleUnbuffered()
+
+	def _idleUnbuffered(self):
 		with self._lock:
 			self.sync()
 			with self._waveout_lock:
@@ -242,9 +290,12 @@ class WavePlayer(object):
 		"""Stop playback.
 		"""
 		if self._audioDucker: self._audioDucker.disable()
+		if self._minBufferSize:
+			self._buffer = ""
 		with self._waveout_lock:
 			if not self._waveout:
 				return
+			self._prevOnDone = self.STOPPING
 			try:
 				with self._global_waveout_lock:
 					# Pausing first seems to make waveOutReset respond faster on some systems.
@@ -254,7 +305,8 @@ class WavePlayer(object):
 				# waveOutReset seems to fail randomly on some systems.
 				pass
 		# Unprepare the previous buffer and close the output device if appropriate.
-		self.idle()
+		self._idleUnbuffered()
+		self._prevOnDone = None
 
 	def close(self):
 		"""Close the output device.
