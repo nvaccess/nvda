@@ -255,7 +255,7 @@ class UIAHandler(COMObject):
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent("gainFocus",windowHandle=window):
 			return
-		obj=NVDAObjects.UIA.UIA(windowHandle=window,UIAElement=sender)
+		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj or not obj.shouldAllowUIAFocusEvent:
 			return
 		eventHandler.queueEvent("gainFocus",obj)
@@ -322,7 +322,6 @@ class UIAHandler(COMObject):
 		if hasattr(UIAElement,"_nearestWindowHandle"):
 			# Called previously. Use cached result.
 			return UIAElement._nearestWindowHandle
-		# Code for broken WDAG where processID is 0
 		try:
 			processID=UIAElement.cachedProcessID
 		except COMError:
