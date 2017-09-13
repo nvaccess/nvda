@@ -340,20 +340,20 @@ class BasicBraille(Model):
 		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
 
 
-def basic_braille_factory(numCells, deviceID):
+def basicBrailleFactory(numCells, deviceID):
 	return type("BasicBraille{cells}".format(cells=numCells), (BasicBraille,), {
 		"deviceID": deviceID,
 		"numCells": numCells,
 	})
 
-BasicBraille16 = basic_braille_factory(16, MODEL_BASIC_BRAILLE_16)
-BasicBraille20 = basic_braille_factory(20, MODEL_BASIC_BRAILLE_20)
-BasicBraille32 = basic_braille_factory(32, MODEL_BASIC_BRAILLE_32)
-BasicBraille40 = basic_braille_factory(40, MODEL_BASIC_BRAILLE_40)
-BasicBraille48 = basic_braille_factory(48, MODEL_BASIC_BRAILLE_48)
-BasicBraille64 = basic_braille_factory(64, MODEL_BASIC_BRAILLE_64)
-BasicBraille80 = basic_braille_factory(80, MODEL_BASIC_BRAILLE_80)
-BasicBraille160 = basic_braille_factory(160, MODEL_BASIC_BRAILLE_160)
+BasicBraille16 = basicBrailleFactory(16, MODEL_BASIC_BRAILLE_16)
+BasicBraille20 = basicBrailleFactory(20, MODEL_BASIC_BRAILLE_20)
+BasicBraille32 = basicBrailleFactory(32, MODEL_BASIC_BRAILLE_32)
+BasicBraille40 = basicBrailleFactory(40, MODEL_BASIC_BRAILLE_40)
+BasicBraille48 = basicBrailleFactory(48, MODEL_BASIC_BRAILLE_48)
+BasicBraille64 = basicBrailleFactory(64, MODEL_BASIC_BRAILLE_64)
+BasicBraille80 = basicBrailleFactory(80, MODEL_BASIC_BRAILLE_80)
+BasicBraille160 = basicBrailleFactory(160, MODEL_BASIC_BRAILLE_160)
 
 
 class BrailleStar(TripleActionKeysMixin, Model):
@@ -406,12 +406,12 @@ class Modular80(Modular):
 
 
 # Model dict for easy lookup
-def _all_subclasses(cls):
+def _allSubclasses(cls):
 	return cls.__subclasses__() + [g for s in cls.__subclasses__()
-		for g in _all_subclasses(s)]
+		for g in _allSubclasses(s)]
 
 MODELS = {
-	m.deviceID: m for m in _all_subclasses(Model) if hasattr(m, 'deviceID')
+	m.deviceID: m for m in _allSubclasses(Model) if hasattr(m, 'deviceID')
 }
 
 
@@ -566,22 +566,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def sendPacket(self, packet_type, data=""):
+	def sendPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
 		if self._model:
 			data = self._model.deviceID + data
 		if self.isHid:
-			self._sendHidPacket(packet_type+data)
+			self._sendHidPacket(packetType+data)
 		else:
-			self._dev.write(packet_type + data)
+			self._dev.write(packetType + data)
 
-	def sendExtendedPacket(self, packet_type, data=""):
+	def sendExtendedPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
-		packet = "{length}{ext_type}{data}\x16".format(
-			ext_type=packet_type, data=data,
-			length=chr(len(data) + len(packet_type))
+		packet = "{length}{extType}{data}\x16".format(
+			extType=packetType, data=data,
+			length=chr(len(data) + len(packetType))
 		)
 		self.sendPacket(HT_PKT_EXTENDED, packet)
 
@@ -618,37 +618,37 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self.isHid:
 			# data contains the entire packet.
 			stream = StringIO(data)
-			ser_packet_type = data[2]
+			serPacketType = data[2]
 			# Skip the header, so reading the stream will only give the rest of the data
 			stream.seek(3)
 		else:
-			ser_packet_type = data
+			serPacketType = data
 			# data only contained the packet type. Read the rest from the device.
 			stream = self._dev
 
-		model_id = stream.read(1)
+		modelId = stream.read(1)
 		if not self._model:
-			if not model_id in MODELS:
-				log.warning("Unknown model: %r" % model_id)
+			if not modelId in MODELS:
+				log.warning("Unknown model: %r" % modelId)
 				raise RuntimeError(
-					"The model with ID %r is not supported by this driver" % model_id)
-			self._model = MODELS.get(model_id)(self)
+					"The model with ID %r is not supported by this driver" % modelId)
+			self._model = MODELS.get(modelId)(self)
 			self.numCells = self._model.numCells
-		elif self._model.deviceID != model_id:
+		elif self._model.deviceID != modelId:
 			# Somehow the model ID of this display changed, probably another display 
 			# plugged in the same (already open) serial port.
 			self.terminate()
 
-		if ser_packet_type in (HT_PKT_OK, HT_PKT_ACK):
+		if serPacketType in (HT_PKT_OK, HT_PKT_ACK):
 			pass
-		elif ser_packet_type == HT_PKT_NAK:
+		elif serPacketType == HT_PKT_NAK:
 			log.debugWarning("NAK received!")
-		elif ser_packet_type == HT_PKT_EXTENDED:
+		elif serPacketType == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
 			assert stream.read(1) == "\x16"	# Extended packets are terminated with \x16
-			ext_packet_type = packet[0]
-			if ext_packet_type == HT_EXTPKT_CONFIRMATION:
+			extPacketType = packet[0]
+			if extPacketType == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command.
 				if packet[1] == HT_PKT_ACK:
 					self._awaitingACK = False
@@ -656,7 +656,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						self.display(self._pendingCells)
 				elif packet[1] == HT_PKT_NAK:
 					log.debugWarning("NAK received!")
-			elif ext_packet_type == HT_EXTPKT_KEY:
+			elif extPacketType == HT_EXTPKT_KEY:
 				key = ord(packet[1])
 				release = (key & KEY_RELEASE) != 0
 				if release:
@@ -668,18 +668,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					# This begins a new key combination.
 					self._ignoreKeyReleases = False
 					self._keysDown.add(key)
-			elif ext_packet_type == HT_EXTPKT_ATC_INFO:
+			elif extPacketType == HT_EXTPKT_ATC_INFO:
 				# Ignore ATC packets for now
 				pass
-			elif ext_packet_type == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
+			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				pass
 			else:
 				# Unknown extended packet, log it
 				log.warning("Unhandled extended packet of type %r: %r" %
-					(ext_packet_type, packet))
+					(extPacketType, packet))
 		else:
 			# Unknown packet type, log it
-			log.warning("Unhandled packet of type %r" % ser_packet_type)
+			log.warning("Unhandled packet of type %r" % serPacketType)
 
 
 	def display(self, cells):
