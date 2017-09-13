@@ -12,7 +12,7 @@ import sys
 from collections import OrderedDict
 import ctypes
 import _winreg
-from synthDriverHandler import SynthDriver, VoiceInfo
+from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
 import config
 import nvwave
@@ -89,6 +89,17 @@ class SynthDriver(SynthDriver):
 		SynthDriver.PitchSetting(),
 		SynthDriver.VolumeSetting(),
 	)
+	supportedCommands = {
+		speech.IndexCommand,
+		speech.CharacterModeCommand,
+		speech.LangChangeCommand,
+		speech.BreakCommand,
+		speech.PitchCommand,
+		speech.RateCommand,
+		speech.VolumeCommand,
+		speech.PhonemeCommand,
+	}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 	# These are all controlled via SSML, so we only need attributes, not properties.
 	rate = None
 	pitch = None
@@ -162,6 +173,7 @@ class SynthDriver(SynthDriver):
 			# so by the time this is done, there might be something queued.
 			log.debug("Calling idle on audio player")
 			self._player.idle()
+			synthDoneSpeaking.notify(synth=self)
 		if self._queuedSpeech:
 			item = self._queuedSpeech.pop(0)
 			self._wasCancelled = False
@@ -191,7 +203,6 @@ class SynthDriver(SynthDriver):
 			markers = markers.split('|')
 		else:
 			markers = []
-		prevMarker = None
 		prevPos = 0
 
 		# Push audio up to each marker so we can sync the audio with the markers.
@@ -199,25 +210,20 @@ class SynthDriver(SynthDriver):
 			if self._wasCancelled:
 				break
 			name, pos = marker.split(':')
+			index = int(name)
 			pos = int(pos)
 			# pos is a time offset in 100-nanosecond units.
 			# Convert this to a byte offset.
 			# Order the equation so we don't have to do floating point.
 			pos = pos * BYTES_PER_SEC / HUNDRED_NS_PER_SEC
 			# Push audio up to this marker.
-			self._player.feed(data[prevPos:pos])
-			# _player.feed blocks until the previous chunk of audio is complete, not the chunk we just pushed.
-			# Therefore, indicate that we've reached the previous marker.
-			if prevMarker:
-				self.lastIndex = prevMarker
-			prevMarker = int(name)
+			self._player.feed(data[prevPos:pos],
+				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index))
 			prevPos = pos
 		if self._wasCancelled:
 			log.debug("Cancelled, stopped pushing audio")
 		else:
 			self._player.feed(data[prevPos:])
-			if prevMarker:
-				self.lastIndex = prevMarker
 			log.debug("Done pushing audio")
 		self._processQueue()
 
