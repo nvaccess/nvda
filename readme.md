@@ -208,20 +208,26 @@ scons launcher version=test1
 ## Running Automated Tests
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
-Currently, NVDA has only one kind of automated testing: unit tests.
+Currently, NVDA has two kinds of automated testing: unit tests and translatable string checks.
 
-To run the unit tests, first change directory to the root of the NVDA source distribution as above.
+To run the tests, first change directory to the root of the NVDA source distribution as above.
 Then, run:
 
 ```
 scons tests
 ```
 
-To run only specific tests, specify them using the `unitTests` variable on the command line.
+To run only specific unit tests, specify them using the `unitTests` variable on the command line.
 The tests should be provided as a comma separated list.
 Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
 For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
 
 ```
 scons tests unitTests=test_cursorManager.TestMove,test_cursorManager.TestSelection
+```
+
+To run only the translatable string checks (which check that all translatable strings have translator comments), run:
+
+```
+scons checkPot
 ```
