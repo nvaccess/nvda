@@ -45,7 +45,10 @@ HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
-  
+
+# The name of the WDAG (Windows Defender Application Guard) process
+WDAG_PROCESS_NAME=u'hvsirdpclient'
+
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
@@ -329,7 +332,7 @@ class UIAHandler(COMObject):
 		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
 		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
 		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
-		if appModule.appName==u'hvsirdpclient':
+		if appModule.appName==WDAG_PROCESS_NAME:
 			condition=self.clientObject.CreatePropertyCondition(UIA_ClassNamePropertyId,u'ApplicationFrameWindow')
 			walker=self.clientObject.createTreeWalker(condition)
 		else:
