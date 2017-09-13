@@ -825,6 +825,13 @@ Tries to force this object to take the focus.
 		"""
 		return False
 
+	def _get_shouldAcceptShowHideCaretEvent(self):
+		"""Some objects/applications send show/hide caret events when we don't expect it, such as when the cursor is blinking.
+		@return: if show/hide caret events should be accepted for this object.
+		@rtype: Boolean
+		"""
+		return True
+
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
