@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/_espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2012 NV Access Limited, Peter Vágner
+#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,11 +17,14 @@ import os
 import codecs
 
 isSpeaking = False
-lastIndex = None
+onIndexReached = None
 bgThread=None
 bgQueue = None
 player = None
 espeakDLL=None
+#: Keeps count of the number of bytes pushed for the current utterance.
+#: This is necessary because index positions are given as ms since the start of the utterance.
+_numBytesPushed = 0
 
 #Parameter bounds
 minRate=80
@@ -120,23 +123,39 @@ t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 @t_espeak_callback
 def callback(wav,numsamples,event):
 	try:
-		global player, isSpeaking, lastIndex
+		global player, isSpeaking, _numBytesPushed
 		if not isSpeaking:
 			return 1
+		indexes = []
 		for e in event:
 			if e.type==espeakEVENT_MARK:
-				lastIndex=int(e.id.name)
+				indexNum = int(e.id.name)
+				# e.audio_position is ms since the start of this utterance.
+				# Convert to bytes since the start of the utterance.
+				# samplesPerSec * 2 bytes per sample / 1000 ms per sec gives us bytes per ms.
+				indexByte = e.audio_position * player.samplesPerSec * 2 / 1000
+				# Subtract bytes in the utterance that have already been handled
+				# to give us the byte offset into the samples for this callback.
+				indexByte -= _numBytesPushed
+				indexes.append((indexNum, indexByte))
 			elif e.type==espeakEVENT_LIST_TERMINATED:
 				break
 		if not wav:
 			player.idle()
+			onIndexReached(None)
 			isSpeaking = False
 			return 0
 		if numsamples > 0:
-			try:
-				player.feed(string_at(wav, numsamples * sizeof(c_short)))
-			except:
-				log.debugWarning("Error feeding audio to nvWave",exc_info=True)
+			wav = string_at(wav, numsamples * sizeof(c_short))
+			prevByte = 0
+			for indexNum, indexByte in indexes:
+				player.feed(wav[prevByte:indexByte],
+					onDone=lambda indexNum=indexNum: onIndexReached(indexNum))
+				prevByte = indexByte
+				if not isSpeaking:
+					return 1
+			player.feed(wav[prevByte:])
+			_numBytesPushed += len(wav)
 		return 0
 	except:
 		log.error("callback", exc_info=True)
@@ -170,10 +189,11 @@ def _execWhenDone(func, *args, **kwargs):
 		func(*args, **kwargs)
 
 def _speak(text):
-	global isSpeaking
+	global isSpeaking, _numBytesPushed
 	uniqueID=c_int()
 	isSpeaking = True
 	flags = espeakCHARS_WCHAR | espeakSSML | espeakPHONEMES
+	_numBytesPushed = 0
 	return espeakDLL.espeak_Synth(text,0,0,0,0,flags,byref(uniqueID),0)
 
 def speak(text):
@@ -181,7 +201,7 @@ def speak(text):
 	_execWhenDone(_speak, text, mustBeAsync=True)
 
 def stop():
-	global isSpeaking, bgQueue, lastIndex
+	global isSpeaking, bgQueue
 	# Kill all speech from now.
 	# We still want parameter changes to occur, so requeue them.
 	params = []
@@ -198,7 +218,6 @@ def stop():
 		bgQueue.put(item)
 	isSpeaking = False
 	player.stop()
-	lastIndex=None
 
 def pause(switch):
 	global player
@@ -270,8 +289,13 @@ def espeak_errcheck(res, func, args):
 		raise RuntimeError("%s: code %d" % (func.__name__, res))
 	return res
 
-def initialize():
-	global espeakDLL, bgThread, bgQueue, player
+def initialize(indexCallback=None):
+	"""
+	@param indexCallback: A function which is called when eSpeak reaches an index.
+		It is called with one argument:
+		the number of the index or C{None} when speech stops.
+	"""
+	global espeakDLL, bgThread, bgQueue, player, onIndexReached
 	espeakDLL=cdll.LoadLibrary(r"synthDrivers\espeak.dll")
 	espeakDLL.espeak_Info.restype=c_char_p
 	espeakDLL.espeak_Synth.errcheck=espeak_errcheck
@@ -286,14 +310,17 @@ def initialize():
 		os.path.abspath("synthDrivers"),0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
-	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
+	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16,
+		outputDevice=config.conf["speech"]["outputDevice"],
+		buffered=True)
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = Queue.Queue()
 	bgThread=BgThread()
 	bgThread.start()
+	onIndexReached = indexCallback
 
 def terminate():
-	global bgThread, bgQueue, player, espeakDLL 
+	global bgThread, bgQueue, player, espeakDLL , onIndexReached
 	stop()
 	bgQueue.put((None, None, None))
 	bgThread.join()
@@ -303,6 +330,7 @@ def terminate():
 	player.close()
 	player=None
 	espeakDLL=None
+	onIndexReached = None
 
 def info():
 	return espeakDLL.espeak_Info()
