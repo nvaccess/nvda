@@ -365,12 +365,12 @@ class BrailleStar(TripleActionKeysMixin, Model):
 
 class BrailleStar40(BrailleStar):
 	deviceID = MODEL_BRAILLE_STAR_40
-	cells = 40
+	numCells = 40
 
 
 class BrailleStar80(BrailleStar):
 	deviceID = MODEL_BRAILLE_STAR_80
-	cells = 80
+	numCells = 80
 
 
 class Modular(TripleActionKeysMixin, Model):
@@ -392,17 +392,17 @@ class Modular(TripleActionKeysMixin, Model):
 
 class Modular20(Modular):
 	deviceID = MODEL_MODULAR_20
-	cells = 20
+	numCells = 20
 
 
 class Modular40(Modular):
 	deviceID = MODEL_MODULAR_40
-	cells = 40
+	numCells = 40
 
 
 class Modular80(Modular):
 	deviceID = MODEL_MODULAR_80
-	cells = 80
+	numCells = 80
 
 
 # Model dict for easy lookup
