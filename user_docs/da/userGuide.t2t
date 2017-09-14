@@ -59,11 +59,9 @@ Dette gælder både originale og modificerede kopier af softwaren, plus software
 For yderligere oplysninger, kan du [læse den fulde licens. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systemkrav +
-- Operativsystemer: alle 32-bit og 64-bit versioner af Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 og Windows 10 (inkl. server-styresystemer).
- - For Windows XP 32-bit kræver NVDA Service Pack 2 eller højere.
- - For Windows Server 2003 kræver NVDA Service Pack 1 eller højere.
- - For Windows Vista kræves NVDA Service Pack 2 og [KB2763674 https://support.microsoft.com/en-us/kb/2763674] opdatering.
- begge disse skulle være installeret hvis alle tilgængelige opdateringer er anvendt via Windows update.
+- Operativsystemer: alle 32-bit og 64-bit versioner af Windows 7, Windows 8, Windows 8.1 og Windows 10, samt alle serverstyresystemer fra Server 2008 R2.
+ - For Windows 7 kræver NVDA Service Pack 1 eller højere.
+ - For Windows Server 2008  R2 kræver NVDA Service Pack 1 eller højere.
 - Hukommelse: 256 MB eller mere RAM
 - Processor hastighed: 1,0 GHz eller højere
 - Omkring 90 MB lagerplads.
@@ -506,7 +504,7 @@ Hvis du trykker en af de følgende taster ned alene, hopper du til den næste fo
 - m: ramme
 - g: grafik
 - d: landmærke
-- o: indlejret objekt
+- o: indlejret objekt (lyd- og videoafspiller, apllikation, dialog, osv.)
 - 1-6: overskrifter på niveauer fra 1 til 6.
 - a: Annotation (kommentar, revision o.s.v.)
 - w: Stavefejl
@@ -535,8 +533,9 @@ Når du har valgt et element, kan du bruge knapperne i dialogen til at flytte ti
 %kc:endInclude
 
 ++ Indlejrede objekter ++
-Sider kan ved hjælp af teknologier som Adobe Flash og Sun Java omfatte meget dynamisk indhold, såsom applikationer og dialoger.
+Sider kan ved hjælp af teknologier som Adobe Flash, Oracle Java og HTML5 omfatte meget dynamisk indhold, såsom applikationer og dialoger.
 Når man støder på disse objekter i i et dokument, vil NVDA henholdsvist annoncere "Indlejret objekt", "applikation" og "dialog".
+Du kan hurtigt flytte til dem ved brug af O og skift+O bogstavnavigationstasterne til indlejrede objekter.
 Du kan trykke Enter på disse objekter for at aktivere dem.
 Hvis objektet er tilgængeligt, kan du derefter tabbe rundt indenfor det og interagere med det som ethvert andet program
 du kan med et tastetryk vende tilbage til den oprindelige side, der indeholder det indlejrede objekt:
@@ -705,8 +704,8 @@ Når tekstgenkendelsen er udført, vil resultatet blive præsenteret i et dokume
 Et tryk på Enter eller mellemrum vil aktivere (normalt klikke) teksten ved markøren, hvis det er muligt.
 Et tryk på escape afviser genkendelsesresultatet.
 
-++ Windows 10 OCR ++[Win10Ocr]
-Windows 10 indeholder OCR til mange sprog.
+++ Windows 10 Tekstgenkendelse ++[Win10Ocr]
+Windows 10 indeholder tekstgenkendelsesfunktionalitet til mange sprog.
 NVDA kan bruge denne funktionalitet til at genkende tekst fra billeder eller utilgængelige applikationer.
 
 Du kan indstille det sprog, der skal bruges til tekstgenkendelse i dialogboksen [Windows 10 Tekstgenkendelse #Win10OcrSettings].
