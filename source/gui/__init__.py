@@ -409,9 +409,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 				# Translators: The label for the menu item to install NVDA on the computer.
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
-		# Translators: The label for the menu item to reload plugins.
-		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
-		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
+		if not config.isAppX:
+			# Translators: The label for the menu item to reload plugins.
+			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 

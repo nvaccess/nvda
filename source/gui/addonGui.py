@@ -298,7 +298,7 @@ Description: {description}
 		# Add-ons cannot be installed into a Windows store version of NVDA
 		if config.isAppX:
 			# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app 
-			gui.messageBox(_("Add-ons cannot be installed in the Windows Store version of NVDA", 
+			gui.messageBox(_("Add-ons cannot be installed in the Windows Store version of NVDA"), 
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
