@@ -434,7 +434,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param obj: The object to activate.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		obj.doAction()
+		try:
+			obj.doAction()
+		except NotImplementedError:
+			log.debugWarning("doAction not implemented")
 
 	def _activatePosition(self,obj=None):
 		if not obj:
