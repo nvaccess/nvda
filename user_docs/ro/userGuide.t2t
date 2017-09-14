@@ -59,11 +59,9 @@ Acest lucru se aplică atât originalului cât și copiilor modificate ale progr
 Pentru alte detalii, puteți [vedea licența online. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] (în engleză)
 
 + Cerințe de sistem +
-- Sisteme de operare: toate versiunile Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 și Windows 10 pe 32 biți și 64 biți  (inclusiv versiunile Server ale sistemelor de operare).
-- Pentru Windows XP 32-biți, NVDA are nevoie de Service Pack 2 sau o versiune superioară
-- Pentru Windows Server 2003, NVDA are nevoie de Service Pack 1 sau o versiune superioară
-- Pentru Windows Vista, NVDA are nevoie de Service Pack 2 și actualizarea [KB2763674 https://support.microsoft.com/en-us/kb/2763674]. 
-Ambele ar trebui să fie instalate, dacă toate actualizările disponibile sunt făcute prin Actualizarea Windows. 
+- Sisteme de operare: toate versiunile Windows 7, Windows 8, Windows 8.1 și Windows 10 pe 32 biți și 64 biți, precum și versiunile Server ale lor pornind de la Windows Server 2008 R2.
+ - Pentru Windows 7, NVDA necesită Service Pack 1 sau o actualizare superioară.
+ - Pentru Windows Server 2008 R2, NVDA necesită Service Pack 1 sau o actualizare superioară.
 - Memorie: 256 MB de RAM sau mai mult.
 - Viteza procesorului: 1.0 GHz sau mai mult
 - Aproximativ 90 MB de spațiu de stocare.
@@ -499,7 +497,7 @@ Următoarele taste trec direct la elementul următor disponibil, iar combinându
 - e: câmp de editare
 - b: buton
 - x: casetă pentru bifat (x similar cu marcajul unei bife)
-- c: listă de selecție (c de la combo box, casetă combo)
+- c: listă de selecție (c de la combo box, casetă combinată)
 - r: buton rotativ
 - q: citat bloc (q de la quote)
 - s: separator
@@ -536,7 +534,7 @@ Odată ce ați ales un element, puteți folosi butoanele din fereastra de dialog
 %kc:endInclude
 
 ++ Obiecte încorporate ++
-Paginile pot include conținut complex folosind tehnologii ca Adobe Flash și Sun Java, precum și aplicații și dialoguri.
+Paginile pot include conținut complex folosind tehnologii ca Adobe Flash, Oracle Java și HTML5, precum și aplicații și dialoguri.
 Când acestea sunt întâlnite în modul navigare, NVDA va anunța „obiect incorporat”, „aplicație” sau „dialog”, respectiv.
 Puteți apăsa Enter pe aceste obiecte pentru a interacționa cu ele.
 Dacă este accesibil, puteți naviga prin el și puteți interacționa cu el la fel cu orice altă aplicație.
