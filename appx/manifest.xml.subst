@@ -13,7 +13,7 @@
        <DisplayName>%productName%</DisplayName>
        <PublisherDisplayName>%publisher%</PublisherDisplayName>
              <Description>%description%</Description>
-      <Logo>appx_images/nvda_150x150.png</Logo>
+      <Logo>appx_images/nvda_44x44.png</Logo>
     </Properties>
     <Resources>
       <Resource Language="en" />
@@ -31,7 +31,7 @@ MaxVersionTested="10.0.16278.100"
     <Applications>
       <Application 
 Id="%name%" 
-Executable="nvda_appx.exe" 
+Executable="nvda_noUIAccess.exe" 
 EntryPoint="Windows.FullTrustApplication"
 >
         <uap:VisualElements 

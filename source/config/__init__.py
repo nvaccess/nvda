@@ -30,6 +30,7 @@ import winKernel
 import profileUpgrader
 from .configSpec import confspec
 
+#: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
 
 #: The active configuration, C{None} if it has not yet been loaded.
@@ -94,6 +95,13 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
 	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+		if isAppX:
+			# NVDA is running as a Windows Store application.
+			# Although Windows will redirect %APPDATA% to a user directory specific to the Windows Store application,
+			# It also makes existing %APPDATA% files available here. 
+			# We cannot share NVDA user config directories  with other copies of NVDA as their config may be using add-ons
+			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
+			installedUserConfigPath+='_appx'
 		return installedUserConfigPath
 	return u'.\\userConfig\\'
 
@@ -115,7 +123,10 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("addons", "appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins","profiles"):
+	subdirs=["speechDicts","profiles"]
+	if not isAppX:
+		subdirs.extend(["addons", "appModules","brailleDisplayDrivers","synthDrivers","globalPlugins"])
+	for subdir in subdirs:
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
@@ -277,7 +288,7 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
 	@type subdir: str
 	"""
-	if globalVars.appArgs.disableAddons:
+	if isAppX or globalVars.appArgs.disableAddons:
 		return
 	if not subdir:
 		subdir = module.__name__

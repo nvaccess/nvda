@@ -34,6 +34,16 @@ from logHandler import log
 import winUser
 import winKernel
 
+# Find out if NVDA is running as a Windows Store application
+bufLen=ctypes.c_int()
+try:
+	GetCurrentPackageFullName=ctypes.windll.kernel32.GetCurrentPackageFullName
+except AttributeError:
+	config.isAppX=False
+else:
+	bufLen=ctypes.c_int()
+	config.isAppX=True #(GetCurrentPackageFullName(ctypes.byref(bufLen),None)==0)
+
 class NoConsoleOptionParser(argparse.ArgumentParser):
 	"""A commandline option parser that shows its messages using dialogs,  as this pyw file has no dos console window associated with it"""
 
@@ -191,7 +201,7 @@ except AttributeError:
 	pass
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
-if not isSecureDesktop:
+if not isSecureDesktop and not config.isAppX:
 	import easeOfAccess
 	easeOfAccess.notify(3)
 try:
@@ -201,7 +211,7 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
-	if not isSecureDesktop:
+	if not isSecureDesktop and not config.isAppX:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
