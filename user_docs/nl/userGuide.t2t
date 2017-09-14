@@ -59,12 +59,10 @@ Dit is van toepassing voor zowel originele als aangepaste kopieën van de softwa
 Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systeemvereisten +
-- Besturingssysteem: alle 32-bit en 64-bit edities van Windows XP, Windows Vista, Windows 7, Windows 8 en Windows 10 (inclusief Server besturingssystemen). 
-- Voor Windows XP 32-bit heeft NVDA Service Pack 2 of hoger nodig.
-- Voor Windows Server 2003 heeft NVDA Service Pack 1 of hoger nodig.
-- Voor Windows Vista heeft NVDA service pack 2 nodig alsmede update [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
-- Deze moeten allebei worden geïnstalleerd als alle beschikbare updates zijn toegepast via Windows Update.
-- Geheugen: 256 MB RAM of meer.
+- Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
+- Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
+- Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
+- - Geheugen: 256 MB RAM of meer.
 - Processorsnelheid: 1.0 ghz of hoger.
 - Opslagcapaciteit: ongeveer 90 MB vrije ruimte.
 -
@@ -510,7 +508,7 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 - m: frame (kader)
 - g: graphic (afbeelding)
 - d: ARIA oriëntatiepunt in een Internetomgeving
-- o: embedded object (ingebed object)
+- o: embedded object (ingebed object), (audio- en videospeler, toepassing, dialoogvenster, etc.)
 - 1 tot en met 6: respectievelijk, kop op niveau 1, 2, 3, 4, 5 en 6.
 - a: annotatie (invoeroptie voor notities, opmerkingen e.d.).
  - w: spelfout
@@ -529,7 +527,7 @@ Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen druk
 
 ++ De lijst met elementen ++
 Via de lijst met elementen krijgt u toegang tot de verschillende, bij de toepassing behorende, elementtypes in het document.
-Als u zich bij voorbeeld in een webbrowser bevindt, kan de lijst met elementen koppen, koppelingen (links) of oriëntatiepunten bevatten. 
+Als u zich bij voorbeeld in een webbrowser bevindt, kan de lijst met elementen koppen, koppelingen (links), formuliervelden, knoppen of oriëntatiepunten bevatten. 
 Met behulp van keuzerondjes kunt u wisselen tussen de verschillende elementtypes.
 In het dialoogvenster treft u ook een invoerveld aan waarmee u de lijst kunt filteren zodat u gerichter naar iets kunt zoeken op de pagina.
 Als u uw keuze eenmaal gemaakt hebt, kunt u met de aanwezige knoppen in het dialoogvenster naar dat onderdeel springen of het activeren.
@@ -539,8 +537,9 @@ Als u uw keuze eenmaal gemaakt hebt, kunt u met de aanwezige knoppen in het dial
 %kc:endInclude
 
 ++ Ingebedde objecten ++
-De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Adobe Flash of Sun Java, maar ook met applicaties en dialoogvensters.
+De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Adobe Flash, Oracle Java en HTML5, maar ook met applicaties en dialoogvensters.
 Wanneer u iets dergelijks tegenkomt in bladermodus zal NVDA dit respectievelijk melden als “Ingebed (Embedded) Object”, “applicatie”, of “dialoogvenster.
+Met de letternavigatietoetsen o en Shift + o kunt u hier snel naar toe navigeren.
 Door op Enter te drukken wordt interactie met zulke objecten mogelijk.
 Als het object toegankelijk is, kunt u het met de TAB-toets verkennen en bewerkingen uitvoeren zoals u dat ook in andere toepassingen gewend bent.
 Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkelijke pagina waarop zich het object bevindt. 
