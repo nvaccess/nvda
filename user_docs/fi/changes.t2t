@@ -9,17 +9,22 @@
 - Selaustilassa on nyt mahdollista siirtyä kiintopisteiden alkuun tai niiden ohi säilön loppuun/alkuun siirtäviä komentoja (pilkku/Shift+pilkku) käyttäen. (#5482)
 - Muokkaus- ja lomakekenttiin siirtävillä pikanavigointikomennoilla on nyt Firefoxissa, Chromessa ja Internet Explorerissa mahdollista siirtyä muokattavaan monimuotoiseen tekstisisältöön (esim. contentEditable). (#5534)
 - Elementtilista voi nyt näyttää verkkoselaimissa  luettelon lomakekentistä ja painikkeista. (#588)
+- Perustuki Windows 10:lle ARM64-alustalla. (#7508)
 
 
 == Muutokset ==
+- Vanhin NVDA:n tukema käyttöjärjestelmä on nyt Windows 7 Service Pack 1 -päivityksellä tai Windows Server 2008 R2 Service Pack 1 -päivityksellä. (#7546)
 - Verkkopohjaiset valintaikkunat käyttävät nyt Firefoxissa ja Chromessa automaattisesti selaustilaa, ellei olla verkkosovelluksessa. (#4493)
 - Sarkaimella ja pikanavigointinäppäimillä siirtyminen ei enää ilmoita selaustilassa siirtymistä pois säilöistä, kuten luetteloista ja taulukoista, mikä tekee navigoinnista tehokkaampaa. (#2591)
 - Lomakekenttäryhmien nimi ilmoitetaan nyt selaustilassa, kun niihin siirrytään pikanavigointikomennoilla tai sarkaimella Firefoxissa ja Chromessa. (#3321)
+- Upotettuihin objekteihin selaustilassa siirtävä pikanavigointikomento (O ja Shift+O) siirtää nyt ääni- ja videoelementteihin sekä sellaisiin, jotka on merkitty sovellus- ja valintaikkuna-ARIA-rooleilla. (#7239)
 
 
 == Korjatut ohjelmavirheet ==
 - Linkit ilmaistaan nyt pistekirjoituksella sellaisissa sovelluksissa kuin Microsoft Word. (#6780)
 - NVDA ei muutu enää huomattavasti hitaammaksi, kun Firefox- tai Chrome-verkkoselaimissa on avoinna useita välilehtiä. (#3138)
+- MDV Lilli -pistenäytön kohdistimensiirtonäppäimet eivät enää virheellisesti siirrä yhtä pistesolua edemmäs kuin pitäisi. (#7469)
+- HTML5:n required-attribuuttia tuetaan nyt ilmaisemaan lomakekentän pakollisuutta. (#7321)
 
 
 == Muutokset kehittäjille (englanniksi) ==
