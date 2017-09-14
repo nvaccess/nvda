@@ -9,17 +9,22 @@ Quoi de Neuf dans NVDA
 - En mode navigation, il est maintenant possible d'aller à la fin ou au début d'une région en utilisant les commandes de saut à la fin ou au début d'un conteneur (virgule/maj+virgule). (#5482)
 - Sous Firefox, Chrome et Internet Explorer, la navigation rapide vers les zones de saisie et les champs de formulaire inclut maintenant les champs texte riche (ex : contentEditable). (#5534)
 - Dans les navigateurs web, La Liste d'Éléments peut maintenant lister les champs de formulaire et les boutons. (#588)
+- Support initial de Windows 10 sur ARM64. (#7508)
  
 
 == Changements ==
+- Le système d'exploitation minimum maintenant supporté par NVDA est Windows 7 avec Service Pack 1, ou Windows Server 2008 R2 avec Service Pack 1. (#7546)
 - Les dialogues web dans les navigateurs Firefox et Chrome utilisent maintenant automatiquement le mode navigation, sauf à l'intérieur d'une application web. (#4493)
 - En mode navigation, tabuler ou naviguer avec les touches de navigation rapide n'annonce plus la sortie de conteneurs tels que les listes et les tableaux, ce qui rend la navigation plus efficace. (#2591)
 - En mode navigation sous Firefox ou Chrome, le nom des groupes de champs de formulaires est maintenant annoncés quand on y accède par navigation rapide ou en tabulant. (#3321)
+- En mode navigation, les commandes de navigation rapide pour les objets embarqués (o et maj+o) incluent maintenant les éléments audio et vidéo ainsi que les éléments avec un rôle aria application et dialogue. (#7239)
 
 
 == Corrections de Bogues ==
 - Les liens sont maintenant indiqués en braille dans les applications telles que Microsoft Word. (#6780)
 - NVDA ne ralentit plus notablement quand beaucoup d'onglets sont ouverts dans les navigateurs Firefox ou Chrome. (#3138)
+- Le routage curseur pour l'afficheur braille MDV Lilli ne se positionne plus incorrectement une cellule plus loin que la position prévue. (#7469)
+- Sous Internet Explorer et autres documents MSHTML, l'attribut HTML5 requis pour indiquer l'état d'un champ de formulaire est maintenant supporté. (#7321)
 
 
 == Changements pour les Développeurs ==

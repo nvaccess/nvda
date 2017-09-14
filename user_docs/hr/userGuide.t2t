@@ -59,12 +59,10 @@ Ovo se primjenjuje na originalni i izmjenjeni softver, kao i na rad koji je iz t
 Za više pojedinosti, možete [pogledati cijelu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Zahtjevi Sustava +
-- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, windows 8.1, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
- - Za Windows XP 32-bitni operacijski sustav, NVDA zahtjeva Servisni paket 2 ili viši.
- - Za Windows Server 2003, NVDA zahtjeva Servisni paket 1 ili viši.
-- za windowse Vista, NVDA zahtjeva servisni paket 2 i [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
- Obje komponente moraju biti instalirane ako su sve nadogradnje preuzete preko windows update servisa.
-- Memorija: 256 mb ili više RAM-a
+- Operativni sustavi: sva 32-bitna i 64-bitna izdanja Windowsa 7, Windowsa 8, Windowsa 8.1, Windowsa 10, i svih Serverskih Operacijskih Sustava počevši od Windows Server 2008 R2.
+ - Za Windowse 7, NVDA zahtjeva Servisni Pack 1 ili viši.
+ - Za Windows Server 2008 R2, NVDA zahtjeva Servisni Paket 1 ili Viši.
+- Memorija: 256 mb ili više RAMA
 - Brzina procesora: 1.0 ghz ili više
 - Oko 90 MB prostora na hard disku.
 -
@@ -506,7 +504,7 @@ Sljedeće tipke služe da bi se prešlo na idući dostupni element, dodavanjem s
 - m: okvir
 - g: slika
 - d: orjentir
-- o: ugrađeni objekt
+- o: ugrađeni objekt (audio i video player, aplikacija, dijaloški okvir, itd.)
 - 1 do 6: naslovi od 1 do 6
 - a: zabilješka (komentar, revizija urednika, itd.)
 - w: pravopisna pogreška
@@ -535,9 +533,10 @@ Jednom kad ste odabrali stavku, možete koristiti ponuđene gumbe u dijaloškom 
 %kc:endInclude
 
 ++ ugrađeni objekti ++
-Web stranice mogu uključivati obogaćeni sadržaj koristeći tehnologije kao što su Adobe Flash i Sun Java, kao i aplikacije i dijaloške okvire.
+Web stranice mogu uključivati obogaćeni sadržaj koristeći tehnologije kao što su Adobe Flash, Oracle Java, i HTML5, kao i aplikacije i dijaloške okvire.
 NVDA će izgovoriti "ugrađeni objekt", "aplikacija" ili "dijaloški okvir" Gdje su takvi objekti otkriveni.
-Možete pritisnuti enter da biste mogli manipulirati tim objektima.
+Možete se brzo kretati po njima koristeći o i shift+o prečace za brzo kretanje po ugrađenim objektima.
+Kako biste mogli ući u interakciju s tim objektima, možete na njima pritisnuti enter.
 Ako je pristupačan, možete u njemu pritiskati tab i koristiti ga kao uobičajenu aplikaciju.
 Dostupan je prečac koji služi za vraćanje na izvornu stranicu koja sadrži taj ugrađeni objekt:
 %kc:beginInclude

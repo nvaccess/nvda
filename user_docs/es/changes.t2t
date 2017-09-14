@@ -9,17 +9,22 @@ Qué hay de Nuevo en NVDA
 - En modo exploración, ahora es posible saltar al inicio de los puntos de referencia utilizando las órdenes saltar al final o al principio del contenedor (coma/shift+coma). (#5482)
 - En Firefox, Chrome e Internet Explorer, la navegación rápida por campos de edición y campos de formulario ahora incluye contenido de texto enriquecido editable (ej.: contentEditable). (#5534)
 - En navegadores web, la Lista de Elementos ahora puede listar campos de formulario y botones. (#588)
+- Soporte inicial para Windows 10 en ARM64. (#7508)
 
 
 == Cambios ==
+- El menor Sistema Operativo soportado por NVDA ahora es Windows 7 con el Service Pack 1, o Windows Server 2008 R2 con el Service Pack 1. (#7546)
 - Los diálogos web en los navegadores Firefox y Chrome ahora utilizan el modo exploración automáticamente, al menos que se esté en una aplicación web. (#4493)
 - En modo exploración, al tabular o moverse con las órdenes de teclas de navegación rápida ya no anuncia saliendo de contenedores tales como listas y tablas, Lo cual hace la navegación más eficaz. (#2591)
 - En modo exploración para Firefox y Chrome, ahora se anuncian los nombres de grupos de campos de formulario al moverse dentro de ellos con la navegación rápida o cuando se tabula. (#3321)
+- En modo exploración, las órdenes de navegación rápida para objetos integrados (o y shift+o) ahora incluyen elementos de audio y vídeo así como elementos con los roles aria application y dialog. (#7239)
 
 
 == Corrección de Errores ==
 - Los enlaces ahora se indican en braille en aplicaciones tales como Microsoft Word. (#6780)
 - NVDA ya no se vuelve notablemente más lento cuando estén abiertas muchas pestañas en los navegadores web Firefox o Chrome. (#3138)
+- El enrutamiento de cursor para las pantallas MDV Lilli Braille ya no mueve incorrectamente una celda braille antes de donde debería estar. (#7469)
+- En Internet Explorer y otros documentos MSHTML, el atributo HTML5 requerido ahora se soporta para indicar el estado requerido de un campo de formulario. (#7321)
 
 
 == Cambios para Desarrolladores ==

@@ -59,16 +59,14 @@ Ovo važi za originalne i različite verzije ovog programa, plus bilo koji drugi
 Za više detalja, možete[videti celu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Sistemski zahtevi +
-- Operativni sistemi: sve 32-bitne i 64-bitne verzije Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 i Windows 10 (uključujući server operativne sisteme)
- - za  Windows XP 32-bit, NVDA zahteva Service Pack 2 ili noviji.
- - Za Windows Server 2003, NVDA zahteva Service Pack 1 ili noviji.
- - Za Windows Vista, NVDA zahteva Service Pack 2 i[KB2763674 https://support.microsoft.com/en-us/kb/2763674] ažuriranje.
- Oba trebaju biti instalirana ako su primenjena sva ažuriranja koristeći Windows Update.
+ - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih  sistema Windows 7, Windows 8, Windows 8.1, Windows 10, i sve server verzije Windows operativnog sistema počevši od  Windows Server 2008 R2.
+ - za Windows 7, NVDA zahteva Service Pack 1 ili noviji.
+ - za Windows Server 2008 R2, NVDA zahteva Service Pack 1 ili noviji.
+Oba trebaju biti instalirani ako su primenjena sva ažuriranja koristeći Windows Update.
 - Memorija: 256 mb ili više RAM memorije
 - Brzina procesora: 1.0 ghz ili više
 - Oko 90 MB prostora.
 -
-
 + Dobijanje i podešavanje programa NVDA +
 Ako još uvek niste preuzeli NVDA, možete ga preuzeti sa stranice [www.nvaccess.org NVDA_URL].
 
@@ -506,7 +504,7 @@ Sledeći tasteri skaču na sledeći dostupan element, dok dodavanje šift taster
 - m: Okvir
 - g: Slika
 - d: Region
-- o: Umetnuti objekat
+- o: Umetnuti objekat (audio i  video playeri, aplikacije, dijalozi, etc.)
 - 1 do 6: Naslovi nivoa 1 do 6
 - a: Napomena (komentar, revizija autora, i tako dalje.)
 - w: Greška u pravopisu
@@ -535,9 +533,10 @@ Nakon što izaberete stavku, možete koristiti dva dugmeta u dijalogu da dođete
 %kc:endInclude
 
 ++ Umetnuti objekti ++
-Stranice mogu uključiti obogaćene elemente koristeći tehnologije kao što su Adobe Flash i Sun Java, kao i aplikacije i dijaloge.
+Stranice mogu uključiti obogaćene elemente koristeći tehnologije kao što su Adobe Flash,  Oracle Java i  HTML5, kao i aplikacije i dijaloge.
 Kada naiđete na njih u dokumentu režima pretraživanja, NVDA će izgovoriti"Umetnuti objekat", "Aplikacija" ili"Dijalog".
-Možete pritisnuti enter na ovakve objekte da ih aktivirate.
+Možete se brzo kretati između njih koristeći o i  šift+o tastere za brzu navigaciju kroz umetnute objekte.
+Za interakciju sa ovim objektima, možete pritisnuti enter na njih.
 Ako je pristupačan, možete koristiti taster tab za interakciju kao i u drugim aplikacijama.
 Postoji komanda za vraćanje na stranicu koja sadrži ovakav objekat:
 %kc:beginInclude
