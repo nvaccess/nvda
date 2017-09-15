@@ -21,6 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <mmdeviceapi.h>
 #include <endpointvolume.h>
+#include <Mmddk.h>
 #include <common/log.h>
 
 _COM_SMARTPTR_TYPEDEF(IMMDeviceEnumerator, __uuidof(IMMDeviceEnumerator));
@@ -30,9 +31,41 @@ _COM_SMARTPTR_TYPEDEF(IAudioMeterInformation, __uuidof(IAudioMeterInformation));
 _COM_SMARTPTR_TYPEDEF(IAudioEndpointVolume, __uuidof(IAudioEndpointVolume));
 
 /*
-	* Should NVDA delay speech slightly when beginning to duck other audio?
-	* @return true if other audio is playing or there is an error for any device. Or in other words, false only if all devices can be checked, and they  all have a peak of 0. 
-	*/
+	* Given an input waveOut id, convert to an EndPoint ID.
+*/
+WCHAR *waveOutIDToEndpointID(const int waveOutID){
+	MMRESULT mmr;
+	size_t endpointIDSize;
+	//We have to convert to an HWAVEOUT for sending the message.
+	//Get the size of the endpoint ID string.
+	mmr = waveOutMessage((HWAVEOUT)IntToPtr(waveOutID),
+		DRV_QUERYFUNCTIONINSTANCEIDSIZE,
+		(DWORD_PTR)&endpointIDSize, NULL);
+	if (mmr != MMSYSERR_NOERROR) {
+		return nullptr; //Asking the driver for the size of the endpoint id string failed.
+	}
+	//Need to include room for the null at the end.
+	endpointIDSize += 1;
+	//WCHAR *endpointID = (WCHAR*)CoTaskMemAlloc(endpointIDSize);
+	WCHAR *endpointID = new WCHAR[endpointIDSize];
+	if(endpointID == nullptr) //out of memory!
+		return nullptr;
+	endpointID[endpointIDSize] = '\0';
+	mmr = waveOutMessage((HWAVEOUT)IntToPtr(waveOutID),
+	DRV_QUERYFUNCTIONINSTANCEID,
+	(DWORD_PTR)endpointID,
+	endpointIDSize);
+	if (mmr != MMSYSERR_NOERROR)
+	{
+		return nullptr; //Can't get endpoint id from the device.
+	}
+	return endpointID;
+}
+
+/*
+* Should NVDA delay speech slightly when beginning to duck other audio?
+* @return true if other audio is playing or there is an error for any device. Or in other words, false only if all devices can be checked, and they  all have a peak of 0. 
+*/
 bool audioDucking_shouldDelay() {
 	HRESULT res;
 	IMMDeviceEnumeratorPtr pMMDeviceEnumerator=NULL;
@@ -81,9 +114,10 @@ bool audioDucking_shouldDelay() {
 
 /*
 	* Tell NVDA to unmute the system.
+	* @param: deviceID: The device id (from waveOut) needed to fetch this device.
 	* @return true if NVDA was successfully able to unmute the system, or if no change was necessary or   false if there was an error checking mute status, or setting the new mute status.
 	*/
-bool unmuteActiveDevice() {
+bool unmuteActiveDevice(const int deviceID) {
 	HRESULT res;
 	IMMDeviceEnumeratorPtr pMMDeviceEnumerator=NULL;
 	res=pMMDeviceEnumerator.CreateInstance(__uuidof(MMDeviceEnumerator),NULL,CLSCTX_INPROC_SERVER);
@@ -92,9 +126,20 @@ bool unmuteActiveDevice() {
 		return false;
 	}
 	IMMDevicePtr pMMDevice=NULL;
-	res = pMMDeviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pMMDevice);
+	if(dfeviceID == -1){
+		
+		return false;
+	}
+	else {
+		WCHAR *id = waveOutIDToEndpointID(deviceID);
+		if(id == nullptr){
+			return false;
+		}
+		res = pMMDeviceEnumerator->GetDevice((LPCWSTR)id, &pMMDevice);
+		delete[] id;
+	}
 	if(res!=S_OK||!pMMDevice) {
-		LOG_WARNING(L"Cannot fetch default device"<<res);
+		LOG_WARNING(L"Cannot fetch requested device"<<res);
 		return false;
 	}
 	IAudioEndpointVolumePtr pAudioEndpointVolume=NULL;

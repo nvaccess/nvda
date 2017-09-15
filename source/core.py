@@ -187,8 +187,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
-	#Unmute the computer.
-	NVDAHelper.localLib.unmuteActiveDevice()
+	if not globalVars.appArgs.minimal:
+		#Unmute the computer.
+		outputDev = nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"])
+		log.info("output Device %s" % outputDev)
+		NVDAHelper.localLib.unmuteActiveDevice(outputDev)
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
