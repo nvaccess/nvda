@@ -150,8 +150,20 @@ bool unmuteActiveDevice(const int deviceID) {
 	//Force the mute state to false, reguardless.
 	res = pAudioEndpointVolume->SetMute(false, NULL);
 	//If we changed it, we get S_OK if not, but success, we get S_FALSE.
-	if(res == S_OK || res == S_FALSE)
-		return true;
-	else
+	if(!(res == S_OK || res == S_FALSE))
 		return false;
+	UINT step=0;
+	UINT stepCount=0;
+	res = pAudioEndpointVolume->GetVolumeStepInfo(&step, &stepCount);
+	if(res != S_OK)
+		return false;
+	if(step == 0){
+		//Move the volume up 5 steps. We could do it by math, but this way, we know it moved exactly 5 steps, no rounding error from us.
+		for(UINT i=0;i<5;i++){
+			res = pAudioEndpointVolume->VolumeStepUp(NULL);
+			if(res != S_OK)
+				return false;
+		}
+	}
+	return true;
 }
