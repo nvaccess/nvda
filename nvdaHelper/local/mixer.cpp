@@ -126,9 +126,8 @@ bool unmuteActiveDevice(const int deviceID) {
 		return false;
 	}
 	IMMDevicePtr pMMDevice=NULL;
-	if(dfeviceID == -1){
-		
-		return false;
+	if(deviceID == -1){
+		res = pMMDeviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pMMDevice);	
 	}
 	else {
 		WCHAR *id = waveOutIDToEndpointID(deviceID);
