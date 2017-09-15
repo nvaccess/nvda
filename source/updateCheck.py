@@ -50,7 +50,7 @@ try:
 except OSError:
 	if not os.path.isdir(storeUpdatesDir):
 		log.debugWarning("Default download path for updates %s could not be created."%storeUpdatesDir)
-		
+
 #: Persistent state information.
 #: @type: dict
 state = None
@@ -103,18 +103,30 @@ def checkForUpdate(auto=False):
 		return None
 	return info
 
-def _get_pendingUpdate():
+def getPendingUpdate():
+	"""Returns the path to the pending update, if any. Returns C{None} otherwise.
+	@rtype: str
+	"""
 	try:
 		pendingUpdateFile=state["pendingUpdateFile"]
-	except:
-		pendingUpdateFile=False
-	if not pendingUpdateFile or not os.path.isfile(pendingUpdateFile):
+	except KeyError:
 		return None
-	return pendingUpdateFile
+	else:
+		if pendingUpdateFile and os.path.isfile(pendingUpdateFile):
+			return pendingUpdateFile
+		else:
+			state["pendingUpdateFile"] = None
+	return None
+
+def isPendingUpdate():
+	"""Returns whether there is a pending update.
+	@rtype: bool
+	"""
+	return bool(getPendingUpdate())
 
 def executeUpdate(destPath=None):
 	if not destPath:
-		destPath=pendingUpdate
+		destPath=getPendingUpdate()
 	if not destPath:
 		return
 	state["pendingUpdateFile"]=None
@@ -310,15 +322,11 @@ class UpdateAskInstallDialog(wx.Dialog):
 		mainSizer.Add(item)
 		if storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
-			item = wx.Button(self, label=_("&Postpone update"))
-			item.Bind(wx.EVT_BUTTON, self.onPostponeButton)
+			item = wx.Button(self, wx.ID_CLOSE, label=_("&Postpone update"))
+			item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
 			mainSizer.Add(item)
-		# Translators: The label of a button to discard an NVDA update.
-		item = wx.Button(self, wx.ID_CLOSE, label=_("&Discard update"))
-		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		sizer.Add(item)
-		self.Bind(wx.EVT_CLOSE, self.onDiscard)
-		self.EscapeId = wx.ID_CLOSE
+			self.Bind(wx.EVT_CLOSE, self.onPostponeButton)
+			self.EscapeId = wx.ID_CLOSE
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
@@ -339,14 +347,7 @@ class UpdateAskInstallDialog(wx.Dialog):
 		state["pendingUpdateFile"]=finalDest
 		state["pendingUpdateVersion"]=self.version
 		saveState()		
-		self.Close()
-
-	def onDiscardButton(self, evt):
-		state["pendingUpdateFile"]=None
-		state["pendingUpdateVersion"]=None
-		state["removeFile"] = self.destPath
-		saveState()
-		self.Close()
+		self.Destroy()
 
 class UpdateDownloader(object):
 	"""Download and start installation of an updated version of NVDA, presenting appropriate user interface.
@@ -558,12 +559,9 @@ def initialize():
 		}
 
 	# check the pending version against the current version
-	try:
-		if state["pendingUpdateVersion"] == versionInfo.version:
-			raise
-	except:
+	if state["pendingUpdateVersion"] == versionInfo.version:
 		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
-	# remove all updates files except the one that is currently pending (if any)
+	# remove all update files except the one that is currently pending (if any)
 	try:
 		for file in os.listdir(storeUpdatesDir):
 			f=os.path.join(storeUpdatesDir, file)
@@ -571,7 +569,7 @@ def initialize():
 				os.remove(f)
 				log.debug("Update file %s removed"%f)
 	except OSError:
-		pass
+		log.warning("Unable to remove old update file %s"%f, exc_info=True)
 
 	if config.conf["update"]["autoCheck"] and not globalVars.appArgs.launcher:
 		autoChecker = AutoUpdateChecker()
