@@ -242,8 +242,6 @@ class UpdateResultDialog(wx.Dialog):
 
 		if updateInfo:
 			self.isInstalled = config.isInstalledCopy()
-			self.urls = updateInfo["launcherUrl"].split(" ")
-			self.fileHash = updateInfo.get("launcherHash")
 			if isPendingUpdate() and state["pendingUpdateVersion"] == updateInfo["version"]:
 				# Translators: A message indicating that an updated version of NVDA has been downloaded
 				# and is pending to be installed.
@@ -296,7 +294,7 @@ class UpdateResultDialog(wx.Dialog):
 		DonateRequestDialog(gui.mainFrame, self._download)
 
 	def _download(self):
-		UpdateDownloader(self.urls, fileHash=self.fileHash).start()
+		UpdateDownloader(self.updateInfo).start()
 		self.Destroy()
 
 	def onLaterButton(self, evt):
@@ -309,28 +307,33 @@ class UpdateAskInstallDialog(wx.Dialog):
 	def __init__(self, parent, destPath, version):
 		self.destPath=destPath
 		self.version = version
-		storeUpdatesDirWritable=os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir)
+		storeUpdatesDirWritable=os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
 		super(UpdateAskInstallDialog, self).__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
 		mainSizer.Add(wx.StaticText(self, label=_("Update is ready to install.\n")))
 		# Translators: The label of a button to install an NVDA update.
-		item = wx.Button(self, label=_("&Install update"))
-		item.Bind(wx.EVT_BUTTON, lambda evt: executeUpdate())
+		item = wx.Button(self, wx.ID_OK, label=_("&Install update"))
+		item.Bind(wx.EVT_BUTTON, self.onInstallButton)
 		item.SetFocus()
 		mainSizer.Add(item)
 		if storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
 			item = wx.Button(self, wx.ID_CLOSE, label=_("&Postpone update"))
-			item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
+			item.Bind(wx.EVT_BUTTON, self.onPostponeButton)
 			mainSizer.Add(item)
-			self.Bind(wx.EVT_CLOSE, self.onPostponeButton)
 			self.EscapeId = wx.ID_CLOSE
+		else:
+			self.EscapeId = wx.ID_OK
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		self.Show()
+
+	def onInstallButton(self, evt):
+		executeUpdate(self.destPath)
+		self.Destroy()
 
 	def onPostponeButton(self, evt):
 		finalDest=os.path.join(storeUpdatesDir, os.path.basename(self.destPath))
@@ -354,17 +357,16 @@ class UpdateDownloader(object):
 	To use, call L{start} on an instance.
 	"""
 
-	def __init__(self, urls, fileHash=None):
+	def __init__(self, updateInfo):
 		"""Constructor.
-		@param urls: URLs to try for the update file.
-		@type urls: list of str
-		@param fileHash: The SHA-1 hash of the file as a hex string.
-		@type fileHash: basestring
+		@param updateInfo: update information such as possible URLs, version and the SHA-1 hash of the file as a hex string.
+		@type updateInfo: dict
 		"""
-		self.urls = urls
-		self.version = version
+		self.updateInfo = updateInfo
+		self.urls = updateInfo["launcherUrl"].split(" ")
+		self.version = updateInfo["version"]
+		self.fileHash = updateInfo.get("launcherHash")
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
-		self.fileHash = fileHash
 
 	def start(self):
 		"""Start the download.

@@ -780,14 +780,15 @@ class ExitDialog(wx.Dialog):
 		# Translators: The label for actions list in the Exit dialog.
 		labelText=_("What would you like to &do?")
 		self.actions = [
-		# Translators: An option in the combo box to choose exit action.
-		_("Exit"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart with add-ons disabled"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart with debug logging enabled")]
+			# Translators: An option in the combo box to choose exit action.
+			_("Exit"),
+			# Translators: An option in the combo box to choose exit action.
+			_("Restart"),
+			# Translators: An option in the combo box to choose exit action.
+			_("Restart with add-ons disabled"),
+			# Translators: An option in the combo box to choose exit action.
+			_("Restart with debug logging enabled")
+		]
 		if updateCheck and updateCheck.isPendingUpdate():
 			# Translators: An option in the combo box to choose exit action.
 			self.actions.append(_("Run pending update"))
