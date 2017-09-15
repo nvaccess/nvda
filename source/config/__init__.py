@@ -6,7 +6,10 @@
 #See the file COPYING for more details.
 
 """Manages NVDA configuration.
+The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
+In addition, this module provides three actions: profile switch notifier, an action to be performed when NVDA saves settings, and action to be performed when NVDA is asked to reload configuration from disk or reset settings to factory defaults.
 """ 
+
 import globalVars
 import _winreg
 import ctypes
@@ -32,14 +35,20 @@ import profileUpgrader
 from .configSpec import confspec
 
 #: The active configuration, C{None} if it has not yet been loaded.
-#: @type: ConfigObj
+#: @type: ConfigManager
 conf = None
 
 #: Notifies when the configuration profile is switched.
-#: This allows components to apply changes required by the new configuration.
+#: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
 #: Handlers are called with no arguments.
 configProfileSwitched = extensionPoints.Action()
+#: Notifies when NVDA is saving current configuration.
+#: Handlers are called with no arguments.
+saveConfig = extensionPoints.Action()
+#: Notifies when configuration is reloaded from disk or factory defaults are applied.
+#: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
+resetConfig = extensionPoints.Action()
 
 def initialize():
 	global conf
@@ -488,6 +497,7 @@ class ConfigManager(object):
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
+		saveConfig.notify()
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
@@ -499,6 +509,7 @@ class ConfigManager(object):
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
+		resetConfig.notify(factoryDefaults=factoryDefaults)
 
 	def createProfile(self, name):
 		"""Create a profile.
