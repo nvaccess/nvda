@@ -479,8 +479,11 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
-			# Translators: The label for the menu item to run a pending update.
-			item = self.runPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY, _("Run pending &update"), _("Execute a previously downloaded NVDA update"))
+			item = self.runPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
+				# Translators: The label for the menu item to run a pending update.
+				_("Run pending &update"),
+				# Translators: The description for the menu item to run a pending update.
+				_("Execute a previously downloaded NVDA update"))
 			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
 			self.Bind(wx.EVT_UPDATE_UI, frame.onUpdatePendingUpdateMenuItemCommand, item)
 		self.menu.AppendSeparator()
