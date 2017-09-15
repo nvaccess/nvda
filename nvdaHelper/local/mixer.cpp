@@ -113,11 +113,12 @@ bool audioDucking_shouldDelay() {
 }
 
 /*
-	* Tell NVDA to unmute the system.
-	* @param: deviceID: The device id (from waveOut) needed to fetch this device.
+	* Tell NVDA to apply unmuting and volume gain to systems where the audio is not perceivable. 
+	* This only applys fixes to devices which are muted, or at volume 0, definitely not audible.
+	* @param: deviceID: The device id (from waveOut) needed to fetch this device. the mapper is also supported.
 	* @return true if NVDA was successfully able to unmute the system, or if no change was necessary or   false if there was an error checking mute status, or setting the new mute status.
 	*/
-bool unmuteActiveDevice(const int deviceID) {
+bool applyActiveDeviceAudioFixes(const int deviceID) {
 	HRESULT res;
 	IMMDeviceEnumeratorPtr pMMDeviceEnumerator=NULL;
 	res=pMMDeviceEnumerator.CreateInstance(__uuidof(MMDeviceEnumerator),NULL,CLSCTX_INPROC_SERVER);

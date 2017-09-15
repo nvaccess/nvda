@@ -191,7 +191,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		#Unmute the computer.
 		outputDev = nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"])
 		log.info("output Device %s" % outputDev)
-		NVDAHelper.localLib.unmuteActiveDevice(outputDev)
+		NVDAHelper.localLib.applyActiveDeviceAudioFixes(outputDev)
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
