@@ -45,7 +45,7 @@ conf = None
 configProfileSwitched = extensionPoints.Action()
 #: Notifies when NVDA is saving current configuration.
 #: Handlers are called with no arguments.
-configSave = extensionPoints.Action()
+configSaved = extensionPoints.Action()
 #: Notifies when configuration is reloaded from disk or factory defaults are applied.
 #: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
 configReset = extensionPoints.Action()
@@ -497,7 +497,7 @@ class ConfigManager(object):
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
-		configSave.notify()
+		configSaved.notify()
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
