@@ -133,10 +133,21 @@ def executeUpdate(destPath=None):
 	state["pendingUpdateVersion"]=None
 	state["removeFile"] = destPath
 	saveState()
+	if config.isInstalledCopy():
+		exeCuteParams = u"--install -m"
+	else:
+		portablePath = os.getcwdu()
+		if os.access(portablePath, os.W_OK):
+			exeCuteParams = u"--create-portable --portable-path {portablePath} --config-path {configPath}".format(
+				portablePath=portablePath,
+				configPath=os.path.abspath(globalVars.appArgs.configPath)
+			)
+		else:
+			exeCuteParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	shellapi.ShellExecute(None, None,
 		destPath.decode("mbcs"),
-		u"--install -m" if config.isInstalledCopy() else u"--launcher",
+		executeParams,
 		None, winUser.SW_SHOWNORMAL)
 
 class UpdateChecker(object):
