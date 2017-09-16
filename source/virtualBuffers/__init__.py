@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2015 NV Access Limited, Peter Vágner
+#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
 
 import time
 import threading
@@ -109,14 +109,16 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def label(self):
-		if self.itemType == "landmark":
-			attrs = self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])
-			name = attrs.get("name", "")
-			if name:
-				name += " "
-			return name + aria.landmarkRoles[attrs["landmark"]]
-		else:
-			return super(VirtualBufferQuickNavItem,self).label
+		attrs = {}
+
+		def propertyGetter(prop):
+			if not attrs:
+				# Lazily fetch the attributes the first time they're needed.
+				# We do this because we don't want to do this if they're not needed at all.
+				attrs.update(self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1]))
+			return attrs.get(prop)
+
+		return self._getLabelForProperties(propertyGetter)
 
 	def isChild(self,parent): 
 		if self.itemType == "heading":
@@ -218,6 +220,38 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			return u""
 		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,False) or u""
 
+	def _getPlaceholderAttribute(self, attrs, placeholderAttrsKey):
+		"""Gets the placeholder attribute to be used.
+		@return: The placeholder attribute when there is no content within the ControlField.
+		None when the ControlField has content.
+		@note: The content is considered empty if it holds a single space.
+		"""
+		placeholder = attrs.get(placeholderAttrsKey)
+		# For efficiency, only check if it is valid to return placeholder when we have a placeholder value to return.
+		if not placeholder:
+			return None
+		# Get the start and end offsets for the field. This can be used to check if the field has any content.
+		try:
+			start, end = self._getOffsetsFromFieldIdentifier(
+				int(attrs.get('controlIdentifier_docHandle')),
+				int(attrs.get('controlIdentifier_ID')))
+		except (LookupError, ValueError):
+			log.debugWarning("unable to get offsets used to fetch content")
+			return placeholder
+		else:
+			valueLen = end - start
+			if not valueLen: # value is empty, use placeholder
+				return placeholder
+			# Because fetching the content of the field could result in a large amount of text
+			# we only do it in order to check for space.
+			# We first compare the length by comparing the offsets, if the length is less than 2 (ie
+			# could hold space)
+			if valueLen < 2:
+				controlFieldText = self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text
+				if not controlFieldText or controlFieldText == ' ':
+					return placeholder
+		return None
+
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
 		end=self._endOffset
@@ -260,6 +294,12 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		tableLayout=attrs.get('table-layout')
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
+
+		# convert some table attributes to ints
+		for attr in ("table-id","table-rownumber","table-columnnumber","table-rowsspanned","table-columnsspanned"):
+			attrVal=attrs.get(attr)
+			if attrVal is not None:
+				attrs[attr]=int(attrVal)
 
 		isHidden=attrs.get('isHidden')
 		if isHidden:
@@ -385,7 +425,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
 			# Translators: Reported when a page reloads (example: after refreshing a webpage).
-			speech.speakMessage(_("Refreshed"))
+			ui.message(_("Refreshed"))
 		if api.getFocusObject().treeInterceptor == self:
 			self.event_treeInterceptor_gainFocus()
 
@@ -461,10 +501,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		if config.conf["virtualBuffers"]["useScreenLayout"]:
 			# Translators: Presented when use screen layout option is toggled.
-			speech.speakMessage(_("use screen layout on"))
+			ui.message(_("Use screen layout on"))
 		else:
 			# Translators: Presented when use screen layout option is toggled.
-			speech.speakMessage(_("use screen layout off"))
+			ui.message(_("Use screen layout off"))
 	# Translators: the description for the toggleScreenLayout script on virtualBuffers.
 	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 
@@ -474,7 +514,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
-			return iter(())
+			raise NotImplementedError
 		return self._iterNodesByAttribs(attribs, direction, pos,nodeType)
 
 	def _iterNodesByAttribs(self, attribs, direction="next", pos=None,nodeType=None):
@@ -501,22 +541,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			yield VirtualBufferQuickNavItem(nodeType,self,node,startOffset.value,endOffset.value)
 			offset=startOffset
 
-	def _getTableCellCoords(self, info):
-		if info.isCollapsed:
-			info = info.copy()
-			info.expand(textInfos.UNIT_CHARACTER)
-		for field in reversed(info.getTextWithFields()):
-			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
-				# Not a control field.
-				continue
-			attrs = field.field
-			if "table-id" in attrs and "table-rownumber" in attrs:
-				break
-		else:
-			raise LookupError("Not in a table cell")
-		return (int(attrs["table-id"]),
-			int(attrs["table-rownumber"]), int(attrs["table-columnnumber"]),
-			int(attrs.get("table-rowsspanned", 1)), int(attrs.get("table-columnsspanned", 1)))
+	def _getTableCellAt(self,tableID,startPos,row,column):
+		try:
+			return next(self._iterTableCells(tableID,row=row,column=column))
+		except StopIteration:
+			raise LookupError
 
 	def _iterTableCells(self, tableID, startPos=None, direction="next", row=None, column=None):
 		attrs = {"table-id": [str(tableID)]}
@@ -533,19 +562,6 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			yield item.textInfo
 
 	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
-		if not axis:
-			# First or last.
-			if movement == "first":
-				startPos = None
-				direction = "next"
-			elif movement == "last":
-				startPos = self.makeTextInfo(textInfos.POSITION_LAST)
-				direction = "previous"
-			try:
-				return next(self._iterTableCells(tableID, startPos=startPos, direction=direction))
-			except StopIteration:
-				raise LookupError
-
 		# Determine destination row and column.
 		destRow = origRow
 		destCol = origCol
@@ -561,8 +577,8 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		# Optimisation: Try searching for exact destination coordinates.
 		# This won't work if they are covered by a cell spanning multiple rows/cols, but this won't be true in the majority of cases.
 		try:
-			return next(self._iterTableCells(tableID, row=destRow, column=destCol))
-		except StopIteration:
+			return self._getTableCellAt(tableID,startPos,destRow,destCol)
+		except LookupError:
 			pass
 
 		# Cells are grouped by row, so in most cases, we simply need to search in the right direction.
@@ -590,54 +606,6 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			else:
 				raise LookupError
 
-	def _tableMovementScriptHelper(self, movement="next", axis=None):
-		if isScriptWaiting():
-			return
-		formatConfig=config.conf["documentFormatting"].copy()
-		formatConfig["reportTables"]=True
-		formatConfig["includeLayoutTables"]=True
-		try:
-			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
-		except LookupError:
-			# Translators: The message reported when a user attempts to use a table movement command
-			# when the cursor is not within a table.
-			ui.message(_("Not in a table cell"))
-			return
-
-		try:
-			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
-		except LookupError:
-			# Translators: The message reported when a user attempts to use a table movement command
-			# but the cursor can't be moved in that direction because it is at the edge of the table.
-			ui.message(_("edge of table"))
-			# Retrieve the cell on which we started.
-			info = next(self._iterTableCells(tableID, row=origRow, column=origCol))
-
-		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
-		info.collapse()
-		self.selection = info
-
-	def script_nextRow(self, gesture):
-		self._tableMovementScriptHelper(axis="row", movement="next")
-	# Translators: the description for the next table row script on virtualBuffers.
-	script_nextRow.__doc__ = _("moves to the next table row")
-
-
-	def script_previousRow(self, gesture):
-		self._tableMovementScriptHelper(axis="row", movement="previous")
-	# Translators: the description for the previous table row script on virtualBuffers.
-	script_previousRow.__doc__ = _("moves to the previous table row")
-
-	def script_nextColumn(self, gesture):
-		self._tableMovementScriptHelper(axis="column", movement="next")
-	# Translators: the description for the next table column script on virtualBuffers.
-	script_nextColumn.__doc__ = _("moves to the next table column")
-
-	def script_previousColumn(self, gesture):
-		self._tableMovementScriptHelper(axis="column", movement="previous")
-	# Translators: the description for the previous table column script on virtualBuffers.
-	script_previousColumn.__doc__ = _("moves to the previous table column")
-
 	def _isSuitableNotLinkBlock(self,range):
 		return (range._endOffset-range._startOffset)>=self.NOT_LINK_BLOCK_MIN_LEN
 
@@ -652,7 +620,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		containerField=None
 		while controlFields:
 			field=controlFields.pop()
-			if field.getPresentationCategory(controlFields,formatConfig)==field.PRESCAT_CONTAINER:
+			if field.getPresentationCategory(controlFields,formatConfig)==field.PRESCAT_CONTAINER or field.get("landmark"):
 				containerField=field
 				break
 		if not containerField: return None
@@ -671,6 +639,9 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	def _handleUpdate(self):
 		"""Handle an update to this buffer.
 		"""
+		if not self.VBufHandle:
+			# #4859: The buffer was unloaded after this method was queued.
+			return
 		braille.handler.handleUpdate(self)
 
 	def getControlFieldForNVDAObject(self, obj):
@@ -690,8 +661,4 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	__gestures = {
 		"kb:NVDA+f5": "refreshBuffer",
 		"kb:NVDA+v": "toggleScreenLayout",
-		"kb:control+alt+downArrow": "nextRow",
-		"kb:control+alt+upArrow": "previousRow",
-		"kb:control+alt+rightArrow": "nextColumn",
-		"kb:control+alt+leftArrow": "previousColumn",
 	}

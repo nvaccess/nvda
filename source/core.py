@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
+#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -53,6 +53,8 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		gui.WelcomeDialog.run()
+	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
+		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
@@ -60,7 +62,7 @@ def doStartupDialogs():
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
 
-def restart(disableAddons=False):
+def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
 	if globalVars.appArgs.launcher:
 		import wx
@@ -77,8 +79,14 @@ def restart(disableAddons=False):
 		sys.argv.remove('--disable-addons')
 	except ValueError:
 		pass
+	try:
+		sys.argv.remove('--debug-logging')
+	except ValueError:
+		pass
 	if disableAddons:
 		options.append('--disable-addons')
+	if debugLogging:
+		options.append('--debug-logging')
 	try:
 		sys.argv.remove("--ease-of-access")
 	except ValueError:
@@ -95,11 +103,14 @@ def resetConfiguration(factoryDefaults=False):
 	"""
 	import config
 	import braille
+	import brailleInput
 	import speech
 	import languageHandler
 	import inputCore
 	log.debug("Terminating braille")
 	braille.terminate()
+	log.debug("Terminating brailleInput")
+	brailleInput.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
 	log.debug("terminating addonHandler")
@@ -117,6 +128,8 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("initializing speech")
 	speech.initialize()
 	#braille
+	log.debug("Initializing brailleInput")
+	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
 	log.debug("Reloading user and locale input gesture maps")
@@ -185,8 +198,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# Set a reasonable timeout for any socket connections NVDA makes.
 	import socket
 	socket.setdefaulttimeout(10)
-	log.debug("Initializing addons system.")
+	log.debug("Initializing add-ons system")
 	addonHandler.initialize()
+	if globalVars.appArgs.disableAddons:
+		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
@@ -205,11 +220,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
 	log.info("Using wx version %s"%wx.version())
-	app = wx.App(redirect=False)
-	# HACK: wx currently raises spurious assertion failures when a timer is stopped but there is already an event in the queue for that timer.
-	# Unfortunately, these assertion exceptions are raised in the middle of other code, which causes problems.
-	# Therefore, disable assertions for now.
-	app.SetAssertMode(wx.PYAPP_ASSERT_SUPPRESS)
+	class App(wx.App):
+		def OnAssert(self,file,line,cond,msg):
+			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
+			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
+	app = App(redirect=False)
 	# We do support QueryEndSession events, but we don't want to do anything for them.
 	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
 	def onEndSession(evt):
@@ -223,19 +238,18 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				pass
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
-	import braille
-	log.debug("Initializing braille")
-	braille.initialize()
 	log.debug("Initializing braille input")
 	import brailleInput
 	brailleInput.initialize()
+	import braille
+	log.debug("Initializing braille")
+	braille.initialize()
 	import displayModel
 	log.debug("Initializing displayModel")
 	displayModel.initialize()
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
-
 	import audioDucking
 	if audioDucking.isAudioDuckingSupported():
 		# the GUI mainloop must be running for this to work so delay it
@@ -457,9 +471,8 @@ def requestPump():
 
 def callLater(delay, callable, *args, **kwargs):
 	"""Call a callable once after the specified number of milliseconds.
-	This is currently a thin wrapper around C{wx.CallLater},
-	but this should be used instead for calls which aren't just for UI,
-	as it notifies watchdog appropriately.
+	As the call is executed within NVDA's core queue, it is possible that execution will take place slightly after the requested time.
+	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
 	This function can be safely called from any thread.
 	"""
 	import wx
@@ -469,9 +482,5 @@ def callLater(delay, callable, *args, **kwargs):
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
 
 def _callLaterExec(callable, args, kwargs):
-	import watchdog
-	watchdog.alive()
-	try:
-		return callable(*args, **kwargs)
-	finally:
-		watchdog.asleep()
+	import queueHandler
+	queueHandler.queueFunction(queueHandler.eventQueue,callable,*args, **kwargs)

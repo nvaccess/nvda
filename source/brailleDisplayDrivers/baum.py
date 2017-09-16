@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2015 NV Access Limited
+#Copyright (C) 2010-2017 NV Access Limited
 
 import time
 from collections import OrderedDict
@@ -87,6 +87,18 @@ USB_IDS_HID = {
 	"VID_0904&PID_4005", # Pronto! 40 V3
 	"VID_0904&PID_4007", # Pronto! 18 V4
 	"VID_0904&PID_4008", # Pronto! 40 V4
+	"VID_0904&PID_6001", # SuperVario2 40
+	"VID_0904&PID_6002", # SuperVario2 24
+	"VID_0904&PID_6003", # SuperVario2 32
+	"VID_0904&PID_6004", # SuperVario2 64
+	"VID_0904&PID_6005", # SuperVario2 80
+	"VID_0904&PID_6006", # Brailliant2 40
+	"VID_0904&PID_6007", # Brailliant2 24
+	"VID_0904&PID_6008", # Brailliant2 32
+	"VID_0904&PID_6009", # Brailliant2 64
+	"VID_0904&PID_600A", # Brailliant2 80
+	"VID_0904&PID_6201", # Vario 340
+	"VID_0483&PID_A1D3", # Orbit Reader 20
 }
 
 BLUETOOTH_NAMES = (
@@ -99,12 +111,13 @@ BLUETOOTH_NAMES = (
 	"BrailleConnect",
 	"Pronto!",
 	"VarioUltra",
+	"Orbit Reader 20",
 )
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "baum"
 	# Translators: Names of braille displays.
-	description = _("Baum/HumanWare/APH braille displays")
+	description = _("Baum/HumanWare/APH/Orbit braille displays")
 	isThreadSafe = True
 
 	@classmethod
@@ -143,6 +156,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					continue
 				if usbID not in USB_IDS_SER:
 					continue
+			elif hwID == r"USB\VID_0483&PID_5740&REV_0200":
+				# Generic STMicroelectronics Virtual COM Port used by Orbit Reader 20.
+				portType = "USB serial"
 			elif "bluetoothName" in portInfo:
 				# Bluetooth.
 				portType = "bluetooth"
@@ -174,9 +190,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except EnvironmentError:
 				continue
 			if self.isHid:
-				# Some displays don't support BAUM_PROTOCOL_ONOFF.
+				try:
+					# It's essential to send protocol on for the Orbit Reader 20.
+					self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
+				except EnvironmentError:
+					# Pronto! and VarioUltra don't support BAUM_PROTOCOL_ONOFF.
+					pass
+				# Explicitly request device info.
+				# Even where it's supported, BAUM_PROTOCOL_ONOFF doesn't always return device info.
 				self._sendRequest(BAUM_REQUEST_INFO, 0)
-			else:
+			else: # Serial
 				# If the protocol is already on, sending protocol on won't return anything.
 				# First ensure it's off.
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
@@ -310,7 +333,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		super(InputGesture, self).__init__()
 		self.keysDown = dict(keysDown)
 
-		self.keyNames = names = set()
+		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.iteritems():
 			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xfc:
 				# This is braille input.
@@ -321,14 +344,14 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				for index in xrange(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):
 						self.routingIndex = index
-						names.add("routing")
+						names.append("routing")
 						break
 			elif group == BAUM_ROUTING_KEY:
 				self.routingIndex = groupKeysDown - 1
-				names.add("routing")
+				names.append("routing")
 			else:
 				for index, name in enumerate(KEY_NAMES[group]):
 					if groupKeysDown & (1 << index):
-						names.add(name)
+						names.append(name)
 
 		self.id = "+".join(names)

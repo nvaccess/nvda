@@ -1,0 +1,124 @@
+version: "{branch}-{build}"
+
+branches:
+ only:
+  - master
+  - next
+  - rc
+  - /try-.*/
+  # For tags, branch = tag if GitHub couldn't work out the base branch.
+  - /release-.*/
+
+environment:
+ PY_PYTHON: 2.7-32
+ encFileKey:
+  secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+ mozillaSymsAuthToken:
+  secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
+ symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
+
+init:
+ - ps: |
+     if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
+      # Strip "release-" prefix.
+      $version = $env:APPVEYOR_REPO_TAG_NAME.Substring(8)
+      Set-AppveyorBuildVariable "release" "1"
+      if ($env:APPVEYOR_REPO_TAG_NAME.Contains("rc")) {
+       $versionType = "beta"
+      } else {
+       $versionType = "stable"
+      }
+     } else {
+      $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+      # The version is unique even for rebuilds, so we can use it for the AppVeyor version.
+      Update-AppveyorBuild -Version $version
+      if (!$env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
+       $versionType = "snapshot:$env:APPVEYOR_REPO_BRANCH"
+      }
+     }
+     Set-AppveyorBuildVariable "version" $version
+     if ($versionType) {
+      Set-AppveyorBuildVariable "versionType" $versionType
+     }
+
+clone_depth: 1
+
+install:
+ - cd appveyor
+ # Decrypt files.
+ - openssl enc -aes-256-cbc -d -pass pass:%encFileKey% -in authenticode.pfx.enc -out authenticode.pfx
+ - openssl enc -aes-256-cbc -d -pass pass:%encFileKey% -in ssh_id_rsa.enc -out ssh_id_rsa
+ # Install ssh stuff.
+ - copy ssh_id_rsa %userprofile%\.ssh\id_rsa
+ - type ssh_known_hosts >> %userprofile%\.ssh\known_hosts
+ - cd ..
+ - git submodule update --init
+
+build_script:
+ - ps: |
+     $sconsOutTargets = "launcher"
+     $sconsArgs = "version=$env:version"
+     if ($env:release) {
+      $sconsOutTargets += " changes userGuide developerGuide"
+      $sconsArgs += " release=1"
+     }
+     if ($env:versionType) {
+      $sconsArgs += " updateVersionType=$env:versionType"
+     }
+     $sconsArgs += ' publisher="NV Access"'
+     $sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
+     $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
+     # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
+     # It's possible to work around this, but the workarounds have annoying side effects.
+     Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
+     Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
+ - 'echo scons args: %sconsArgs%'
+ - py scons.py source %sconsArgs%
+ # We don't need launcher to run tests, so run the tests before launcher.
+ - py scons.py tests %sconsArgs%
+ # The pot gets built by tests, but we don't actually need it as a build artifact.
+ - del output\*.pot
+ - 'echo scons output targets: %sconsOutTargets%'
+ - py scons.py %sconsOutTargets% %sconsArgs%
+ # Build symbol store.
+ - ps: |
+     foreach ($syms in
+      # We don't just include source\*.dll because that would include system dlls.
+      "source\liblouis.dll", "source\*.pdb",
+      "source\lib\*.dll", "source\lib\*.pdb",
+      # We include source\lib64\*.exe to cover nvdaHelperRemoteLoader.
+      "source\lib64\*.dll", "source\lib64\*.exe", "source\lib64\*.pdb",
+      "source\synthDrivers\*.dll", "source\synthDrivers\*.pdb"
+     ) {
+      & $env:symstore add /s symbols /compress -:NOREFS /t NVDA /f $syms
+     }
+ - cd symbols
+ - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
+ - cd ..
+
+artifacts:
+ - path: output\*
+ - path: output\*\*
+
+deploy_script:
+ - ps: |
+     if ($env:versionType) {
+      # Not a try build.
+      # Notify our server.
+      $exe = Get-ChildItem -Name output\*.exe
+      $hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
+      $data = @{
+       jobId=$env:APPVEYOR_JOB_ID;
+       commit=$env:APPVEYOR_REPO_COMMIT;
+       version=$env:version; versionType=$env:versionType;
+       avVersion=$env:APPVEYOR_BUILD_VERSION;
+       branch=$env:APPVEYOR_REPO_BRANCH;
+       exe=$exe; hash=$hash;
+       artifacts=$artifacts
+      }
+      ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+      # Upload symbols to Mozilla.
+      Start-FileDownload https://github.com/mozilla/gecko-dev/raw/master/toolkit/crashreporter/tools/win32/dump_syms_vc1800.exe -FileName appveyor\dump_syms.exe
+      py -m pip install requests
+      py appveyor\mozillaSyms.py
+     }

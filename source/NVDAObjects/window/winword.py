@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Manish Agrawal
+#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -13,6 +13,7 @@ import uuid
 import operator
 import locale
 import collections
+import colorsys
 import sayAllHandler
 import eventHandler
 import braille
@@ -40,6 +41,14 @@ from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
+
+#wdLineSpacing rules
+wdLineSpaceSingle=0
+wdLineSpace1pt5=1
+wdLineSpaceDouble=2
+wdLineSpaceAtLeast=3
+wdLineSpaceExactly=4
+wdLineSpaceMultiple=5
 
 # wdMeasurementUnits
 wdInches=0
@@ -149,6 +158,63 @@ wdRevisionCellInsertion=16
 wdRevisionCellDeletion=17
 wdRevisionCellMerge=18
 
+# MsoThemeColorSchemeIndex 
+msoThemeAccent1=5
+msoThemeAccent2=6
+msoThemeAccent3=7
+msoThemeAccent4=8
+msoThemeAccent5=9
+msoThemeAccent6=10
+msoThemeDark1=1
+msoThemeDark2=3
+msoThemeFollowedHyperlink=12
+msoThemeHyperlink=11
+msoThemeLight1=2
+msoThemeLight2=4
+
+# WdThemeColorIndex 
+wdNotThemeColor=-1
+wdThemeColorAccent1=4
+wdThemeColorAccent2=5
+wdThemeColorAccent3=6
+wdThemeColorAccent4=7
+wdThemeColorAccent5=8
+wdThemeColorAccent6=9
+wdThemeColorBackground1=12
+wdThemeColorBackground2=14
+wdThemeColorHyperlink=10
+wdThemeColorHyperlinkFollowed=11
+wdThemeColorMainDark1=0
+wdThemeColorMainDark2=2
+wdThemeColorMainLight1=1
+wdThemeColorMainLight2=3
+wdThemeColorText1=13
+wdThemeColorText2=15
+
+# Word Field types
+FIELD_TYPE_REF = 3 # cross reference field
+FIELD_TYPE_HYPERLINK = 88 # hyperlink field
+
+# Mapping from http://www.wordarticles.com/Articles/Colours/2007.php#UIConsiderations
+WdThemeColorIndexToMsoThemeColorSchemeIndex={
+	wdThemeColorMainDark1:msoThemeDark1,
+	wdThemeColorMainLight1:msoThemeLight1,
+	wdThemeColorMainDark2:msoThemeDark2,
+	wdThemeColorMainLight2:msoThemeLight2,
+	wdThemeColorAccent1:msoThemeAccent1,
+	wdThemeColorAccent2:msoThemeAccent2,
+	wdThemeColorAccent3:msoThemeAccent3,
+	wdThemeColorAccent4:msoThemeAccent4,
+	wdThemeColorAccent5:msoThemeAccent5,
+	wdThemeColorAccent6:msoThemeAccent6,
+	wdThemeColorHyperlink:msoThemeHyperlink,
+	wdThemeColorHyperlinkFollowed:msoThemeFollowedHyperlink,
+	wdThemeColorBackground1:msoThemeLight1,
+	wdThemeColorText1:msoThemeDark1,
+	wdThemeColorBackground2:msoThemeLight2,
+	wdThemeColorText2:msoThemeDark2,
+}
+
 wdRevisionTypeLabels={
 	# Translators: a Microsoft Word revision type (inserted content) 
 	wdRevisionInsert:_("insertion"),
@@ -237,25 +303,26 @@ NVDAUnitsToWordUnits={
 }
 
 formatConfigFlagsMap={
-	"reportFontName":1,
-	"reportFontSize":2,
-	"reportFontAttributes":4,
-	"reportColor":8,
-	"reportAlignment":16,
-	"reportStyle":32,
-	"reportSpellingErrors":64,
-	"reportPage":128,
-	"reportLineNumber":256,
-	"reportTables":512,
-	"reportLists":1024,
-	"reportLinks":2048,
-	"reportComments":4096,
-	"reportHeadings":8192,
-	"autoLanguageSwitching":16384,	
-	"reportRevisions":32768,
-	"reportParagraphIndentation":65536,
+	"reportFontName":0x1,
+	"reportFontSize":0x2,
+	"reportFontAttributes":0x4,
+	"reportColor":0x8,
+	"reportAlignment":0x10,
+	"reportStyle":0x20,
+	"reportSpellingErrors":0x40,
+	"reportPage":0x80,
+	"reportLineNumber":0x100,
+	"reportTables":0x200,
+	"reportLists":0x400,
+	"reportLinks":0x800,
+	"reportComments":0x1000,
+	"reportHeadings":0x2000,
+	"autoLanguageSwitching":0x4000,
+	"reportRevisions":0x8000,
+	"reportParagraphIndentation":0x10000,
+	"reportLineSpacing":0x40000,
 }
-formatConfigFlag_includeLayoutTables=131072
+formatConfigFlag_includeLayoutTables=0x20000
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -296,10 +363,16 @@ class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
 		author=self.collectionItem.author
 		date=self.collectionItem.date
 		text=self.collectionItem.range.text
+		# Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+		# {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 		return _(u"comment: {text} by {author} on {date}").format(author=author,text=text,date=date)
 
 	def rangeFromCollectionItem(self,item):
 		return item.scope
+
+class WordDocumentFieldQuickNavItem(WordDocumentCollectionQuickNavItem):
+	def rangeFromCollectionItem(self,item):
+		return item.result
 
 class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 	@property
@@ -309,7 +382,23 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		date=self.collectionItem.date
 		description=self.collectionItem.formatDescription or ""
 		text=(self.collectionItem.range.text or "")[:100]
+		# Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+		# {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+		# {description} will be replaced with a description of the formatting changes, if any.
+		# {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
+
+class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
+
+	def rangeFromCollectionItem(self,item):
+		return item
+
+	@property
+	def label(self):
+		text=self.collectionItem.text
+		# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+		# {text} will be replaced with the text of the spelling error.
+		return _(u"spelling: {text}").format(text=text)
 
 class WinWordCollectionQuicknavIterator(object):
 	"""
@@ -363,7 +452,15 @@ class WinWordCollectionQuicknavIterator(object):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
-			item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			try:
+				item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			except COMError:
+				message = ("Error iterating over item with "
+					"type: {type}, iteration direction: {dir}, total item count: {count}, item at index: {index}"
+					"\nThis could be caused by an issue with some element within or a corruption of the word document."
+					).format(type=self.itemType, dir=self.direction, count=itemCount, index=index)
+				log.debugWarning(message ,exc_info=True)
+				continue
 			itemRange=item.rangeObj
 			# Skip over the item we're already on.
 			if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
@@ -374,8 +471,18 @@ class WinWordCollectionQuicknavIterator(object):
 			isFirst=False
 
 class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentFieldQuickNavItem
 	def collectionFromRange(self,rangeObj):
-		return rangeObj.hyperlinks
+		return rangeObj.fields
+
+	def filter(self, item):
+		t = item.type
+		if t == FIELD_TYPE_REF:
+			fieldText = item.code.text.strip().split(' ')
+			# ensure that the text has a \\h in it
+			return any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) )
+		return t == FIELD_TYPE_HYPERLINK
+
 
 class CommentWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentCommentQuickNavItem
@@ -386,6 +493,11 @@ class RevisionWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterato
 	quickNavItemClass=WordDocumentRevisionQuickNavItem
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.revisions
+
+class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentSpellingErrorQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.spellingErrors
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
@@ -410,6 +522,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			unit=textInfos.UNIT_SENTENCE
 		return unit
 
+	def copyToClipboard(self):
+		self._rangeObj.copy()
+		return True
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		f=self._rangeObj.find
 		f.text=text
@@ -431,6 +547,37 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		links=tempRange.hyperlinks
 		if links.count>0:
 			links[1].follow()
+			return
+		tempRange.expand(wdParagraph)
+		fields=tempRange.fields
+		for field in (fields.item(i) for i in xrange(1, fields.count+1)):
+			if field.type != FIELD_TYPE_REF:
+				continue
+			fResult = field.result
+			fResult.moveStart(wdCharacter,-1) # move back one visible character (passed the hidden text eg the code for the reference).
+			fResStart = fResult.start +1 # don't include the character before the hidden text.
+			fResEnd = fResult.end
+			rObjStart = self._rangeObj.start
+			rObjEnd = self._rangeObj.end
+			# check to see if the _rangeObj is inside the fResult range
+			if not (fResStart <= rObjStart and fResEnd >= rObjEnd):
+				continue
+			# text will be something like ' REF _Ref457210120 \\h '
+			fieldText = field.code.text.strip().split(' ')
+			# the \\h field indicates that the field is a link
+			if not any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) ):
+				log.debugWarning("no \\h for field xref: %s" % field.code.text)
+				continue
+			bookmarkKey = fieldText[1] # we want the _Ref12345 part
+			# get book mark start, we need to look at the whole document to find the bookmark.
+			tempRange.Expand(wdStory)
+			bMark = tempRange.bookmarks(bookmarkKey)
+			self._rangeObj.setRange(bMark.start, bMark.start)
+			self.updateCaret()
+			tiCopy = self.copy()
+			tiCopy.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			braille.handler.handleCaretMove(self)
 			return
 
 	def _expandToLineAtCaret(self):
@@ -471,6 +618,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif isinstance(position,textInfos.offsets.Offsets):
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(position.startOffset,position.endOffset)
+		elif isinstance(position,WordDocumentTextInfo):
+			# copying from one textInfo to another
+			self._rangeObj=position._rangeObj.duplicate
 		else:
 			raise NotImplementedError("position: %s"%position)
 
@@ -490,6 +640,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		if self.obj.ignoreEditorRevisions:
 			formatConfigFlags&=~formatConfigFlagsMap['reportRevisions']
+		if self.obj.ignorePageNumbers:
+			formatConfigFlags&=~formatConfigFlagsMap['reportPage']
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -562,6 +714,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						field['name']=fieldTitle
 						field['alwaysReportName']=True
 		if role is not None: field['role']=role
+		if role==controlTypes.ROLE_TABLE and field.get('longdescription'):
+			field['states']=set([controlTypes.STATE_HASLONGDESC])
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)
@@ -595,6 +749,28 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _normalizeFormatField(self,field,extraDetail=False):
 		_startOffset=int(field.pop('_startOffset'))
 		_endOffset=int(field.pop('_endOffset'))
+		lineSpacingRule=field.pop('wdLineSpacingRule',None)
+		lineSpacingVal=field.pop('wdLineSpacing',None)
+		if lineSpacingRule is not None:
+			lineSpacingRule=int(lineSpacingRule)
+			if lineSpacingRule==wdLineSpaceSingle:
+				# Translators: single line spacing
+				field['line-spacing']=pgettext('line spacing value',"single")
+			elif lineSpacingRule==wdLineSpaceDouble:
+				# Translators: double line spacing
+				field['line-spacing']=pgettext('line spacing value',"double")
+			elif lineSpacingRule==wdLineSpace1pt5:
+				# Translators:  line spacing of 1.5 lines
+				field['line-spacing']=pgettext('line spacing value',"1.5 lines")
+			elif lineSpacingRule==wdLineSpaceExactly:
+				# Translators: exact (minimum) line spacing
+				field['line-spacing']=pgettext('line spacing value',"exact")
+			elif lineSpacingRule==wdLineSpaceAtLeast:
+				# Translators: line spacing of at least x point
+				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
+			elif lineSpacingRule==wdLineSpaceMultiple:
+				# Translators: line spacing of x lines
+				field['line-spacing']=pgettext('line spacing value',"%.1f lines")%(float(lineSpacingVal)/12.0)
 		revisionType=int(field.pop('wdRevisionType',0))
 		if revisionType==wdRevisionInsert:
 			field['revision-insertion']=True
@@ -606,38 +782,24 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
-			field['color']=colors.RGB.fromCOLORREF(int(color))		
+			field['color']=self.obj.winwordColorToNVDAColor(int(color))
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
-				field['language']=self._getLanguageFromLcid(languageId)
+				field['language']=languageHandler.windowsLCIDToLocaleName(languageId)
 		except:
 			log.debugWarning("language error",exc_info=True)
 			pass
-		fontSize=field.get("font-size")
-		fontSizePt = float(fontSize[0:-2]) if fontSize and fontSize[-2:] == "pt" and float(fontSize[0:-2]) > 0.0 else None
 		for x in ("first-line-indent","left-indent","right-indent","hanging-indent"):
 			v=field.get(x)
 			if not v: continue
 			v=float(v)
 			if abs(v)<0.001:
 				v=None
-			elif fontSizePt:
-				# translators: the value in characters for a paragraph indenting
-				v=_("%g characters") % (v / fontSizePt)
 			else:
-				# Translators: the value in points for a paragraph indenting
-				v=_("%g pt") % v
+				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
 		return field
-
-	def _getLanguageFromLcid(self, lcid):
-		"""
-		gets a normalized locale from a lcid
-		"""
-		lang = locale.windows_locale[lcid]
-		if lang:
-			return languageHandler.normalizeLanguage(lang)
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE: 
@@ -694,7 +856,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if end:
 			oldEndOffset=self._rangeObj.end
 		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
-		if end and self._rangeObj.end<oldEndOffset:
+		newEndOffset = self._rangeObj.end
+		# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
+		# a case where you called move end then collapse until the size of the range is no longer being reduced.
+		# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+		if end and newEndOffset < oldEndOffset :
 			raise RuntimeError
 
 	def copy(self):
@@ -723,7 +889,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
 		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
 		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
-		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (_rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
+		if (direction>0 and endPoint!="end"
+			and unit not in (wdCharacter,wdWord) # moving by units of line or more
+			and (_rangeObj.start+1) == self.obj.WinwordDocumentObject.range().end # character after the range start is the end of the document range
+			):
 			return 0
 		return res
 
@@ -787,11 +956,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		except:
 			raise LookupError("Couldn't get MathML from MathType")
 
-class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
-
-	def _get_shouldIncludeLayoutTables(self):
-		return config.conf['documentFormatting']['includeLayoutTables']
-
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
@@ -799,14 +963,17 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 			position=textInfos.POSITION_CARET
 		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position,_rangeObj=_rangeObj)
 
-	InnerTextInfoClass=WordDocumentTextInfoForTreeInterceptor
-
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.obj.rootNVDAObject
 
 class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
+
+	def _activateLongDesc(self,controlField):
+		longDesc=controlField.get('longdescription')
+		# Translators: the title of the message dialog desplaying an MS Word table description.
+		ui.browseableMessage(longDesc,_("Table description"))
 
 	def _get_isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
@@ -849,10 +1016,12 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			comments=CommentWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 			revisions=RevisionWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
-		elif nodeType=="table":
-			 return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType in ("table","container"):
+			return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType=="error":
+			return SpellingErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="graphic":
-			 return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
@@ -899,6 +1068,34 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
 
+	def winwordColorToNVDAColor(self,val):
+		if val>=0:
+			# normal RGB value
+			return colors.RGB.fromCOLORREF(val).name
+		elif (val&0xffffffff)==0xff000000:
+			# Translators: the default (automatic) color in Microsoft Word
+			return _("default color")
+		elif ((val>>28)&0xf)==0xd and ((val>>16)&0xff)==0x00:
+			# An MS word color index Plus intencity
+			# Made up of MS Word Theme Color index, hsv value ratio (MS Word darker percentage) and hsv saturation ratio (MS Word lighter percentage)
+			# Info: http://www.wordarticles.com/Articles/Colours/2007.php#UIConsiderations
+			saturationRatio=(val&0xff)/255.0
+			valueRatio=((val>>8)&0xff)/255.0
+			themeColorIndex=(val>>24)&0x0f
+			# Convert the MS Word theme color index to an MS Office color scheme index
+			schemeColorIndex=WdThemeColorIndexToMsoThemeColorSchemeIndex[themeColorIndex]
+			# Lookup the  rgb value for the MS Office scheme color index based on the current theme
+			colorref=self.WinwordDocumentObject.documentTheme.themeColorScheme(schemeColorIndex).rgb
+			# Convert the rgb value to hsv and apply the saturation and value ratios
+			rgb=tuple(x/255.0 for x in colors.RGB.fromCOLORREF(colorref))
+			hsv=colorsys.rgb_to_hsv(*rgb)
+			hsv=(hsv[0],hsv[1]*saturationRatio,hsv[2]*valueRatio)
+			rgb=colorsys.hsv_to_rgb(*hsv)
+			name=colors.RGB(rgb[0]*255,rgb[1]*255,rgb[2]*255).name
+			return name
+		else:
+			raise ValueError("Unknown color format %x %x %x %x"%((val>>24)&0xff,(val>>16)&0xff,(val>>8)&0xff,val&0xff))
+
 	def _get_ignoreEditorRevisions(self):
 		try:
 			ignore=not self.WinwordWindowObject.view.showRevisionsAndComments
@@ -907,6 +1104,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ignore=False
 		self.ignoreEditorRevisions=ignore
 		return ignore
+
+	#: True if page numbers (as well as section numbers and column numbers) should be ignored. Such as in outlook.
+	ignorePageNumbers = False
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
@@ -933,6 +1133,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
 		rows=table.rows
+		numHeaderRows=0
 		for rowIndex in xrange(rows.count): 
 			try:
 				row=rows.item(rowIndex+1)
@@ -943,7 +1144,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			except (COMError,AttributeError,NameError):
 				headingFormat=0
 			if headingFormat==-1: # is a header row
-				headerCellTracker.addHeaderCellInfo(rowNumber=row.index,columnNumber=1,isColumnHeader=True,isRowHeader=False)
+				numHeaderRows+=1
+			else:
+				break
+		if numHeaderRows>0:
+			headerCellTracker.addHeaderCellInfo(rowNumber=1,columnNumber=1,rowSpan=numHeaderRows,isColumnHeader=True,isRowHeader=False)
 
 	def populateHeaderCellTrackerFromBookmarks(self,headerCellTracker,bookmarks):
 		for x in bookmarks: 
@@ -1036,11 +1241,25 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			textList=[]
 			if columnHeader:
 				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
-					headerCell=table.cell(headerRowNumber,columnNumber)
+					tempColumnNumber=columnNumber
+					while tempColumnNumber>=1:
+						try:
+							headerCell=table.cell(headerRowNumber,tempColumnNumber)
+						except COMError:
+							tempColumnNumber-=1
+							continue
+						break
 					textList.append(headerCell.range.text)
 			else:
 				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
-					headerCell=table.cell(rowNumber,headerColumnNumber)
+					tempRowNumber=rowNumber
+					while tempRowNumber>=1:
+						try:
+							headerCell=table.cell(tempRowNumber,headerColumnNumber)
+						except COMError:
+							tempRowNumber-=1
+							continue
+						break
 					textList.append(headerCell.range.text)
 			text=" ".join(textList)
 			if text:
@@ -1203,13 +1422,44 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: (self.WinwordSelectionObject.font.superscript,self.WinwordSelectionObject.font.subscript))
 		if val[0]:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("superscript"))
+			ui.message(_("Superscript"))
 		elif val[1]:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("subscript"))
+			ui.message(_("Subscript"))
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("baseline"))
+			ui.message(_("Baseline"))
+
+	def script_moveParagraphDown(self,gesture):
+		oldBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+		gesture.send()
+		if self._hasCaretMoved(oldBookmark)[0]:
+			info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+			info.collapse()
+			info.move(textInfos.UNIT_PARAGRAPH,-1,endPoint="start")
+			lastParaText=info.text.strip()
+			if lastParaText:
+				# Translators: a message reported when a paragraph is moved below another paragraph
+				ui.message(_("Moved below %s")%lastParaText)
+			else:
+				# Translators: a message reported when a paragraph is moved below a blank paragraph 
+				ui.message(_("Moved below blank paragraph"))
+
+	def script_moveParagraphUp(self,gesture):
+		oldBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+		gesture.send()
+		if self._hasCaretMoved(oldBookmark)[0]:
+			info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+			info.collapse()
+			info.move(textInfos.UNIT_PARAGRAPH,1)
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			lastParaText=info.text.strip()
+			if lastParaText:
+				# Translators: a message reported when a paragraph is moved above another paragraph
+				ui.message(_("Moved above %s")%lastParaText)
+			else:
+				# Translators: a message reported when a paragraph is moved above a blank paragraph 
+				ui.message(_("Moved above blank paragraph"))
 
 	def script_increaseDecreaseOutlineLevel(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
@@ -1221,6 +1471,16 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.size)
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
+
+	def script_caret_moveByCell(self,gesture):
+		gesture.send()
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable=info._rangeObj.tables.count>0
+		isCollapsed=info.isCollapsed
+		if inTable:
+			info.expand(textInfos.UNIT_CELL)
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+			braille.handler.handleCaretMove(self)
 
 	def script_tab(self,gesture):
 		gesture.send()
@@ -1289,9 +1549,21 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 						ui.message(text)
 						return
 		# Translators: a message when there is no comment to report in Microsoft Word
-		ui.message(_("no comments"))
+		ui.message(_("No comments"))
 	# Translators: a description for a script
 	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
+
+	def script_changeLineSpacing(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda:self.WinwordSelectionObject.ParagraphFormat.LineSpacingRule)
+		if val == wdLineSpaceSingle:
+			# Translators: a message when switching to single line spacing  in Microsoft word
+			ui.message(_("Single line spacing"))
+		elif val == wdLineSpaceDouble:
+			# Translators: a message when switching to double line spacing  in Microsoft word
+			ui.message(_("Double line spacing"))
+		elif val == wdLineSpace1pt5:
+			# Translators: a message when switching to 1.5 line spaceing  in Microsoft word
+			ui.message(_("1.5 line spacing"))
 
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -1338,7 +1610,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
-		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_PARAGRAPH)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True
@@ -1385,12 +1657,17 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+e":"toggleAlignment",
 		"kb:control+r":"toggleAlignment",
 		"kb:control+j":"toggleAlignment",
+		"kb:alt+shift+downArrow":"moveParagraphDown",
+		"kb:alt+shift+upArrow":"moveParagraphUp",
 		"kb:alt+shift+rightArrow":"increaseDecreaseOutlineLevel",
 		"kb:alt+shift+leftArrow":"increaseDecreaseOutlineLevel",
 		"kb:control+shift+n":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+1":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+2":"increaseDecreaseOutlineLevel",
 		"kb:control+alt+3":"increaseDecreaseOutlineLevel",
+		"kb:control+1":"changeLineSpacing",
+		"kb:control+2":"changeLineSpacing",
+		"kb:control+5":"changeLineSpacing",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 		"kb:NVDA+shift+c":"setColumnHeader",
@@ -1402,6 +1679,14 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+downArrow":"nextParagraph",
 		"kb:control+upArrow":"previousParagraph",
+		"kb:alt+home":"caret_moveByCell",
+		"kb:alt+end":"caret_moveByCell",
+		"kb:alt+pageUp":"caret_moveByCell",
+		"kb:alt+pageDown":"caret_moveByCell",
+		"kb:alt+shift+home":"caret_changeSelection",
+		"kb:alt+shift+end":"caret_changeSelection",
+		"kb:alt+shift+pageUp":"caret_changeSelection",
+		"kb:alt+shift+pageDown":"caret_changeSelection",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 		"kb:NVDA+alt+c":"reportCurrentComment",
@@ -1436,4 +1721,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("error", _("&errors")),
 	)

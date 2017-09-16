@@ -20,6 +20,9 @@ class ChromeVBuf(GeckoVBuf):
 	def __contains__(self, obj):
 		if obj.windowHandle != self.rootNVDAObject.windowHandle:
 			return False
+		if not isinstance(obj,ia2Web.Ia2Web):
+			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
+			return False
 		accId = obj.IA2UniqueID
 		if accId == self.rootID:
 			return True
@@ -27,13 +30,13 @@ class ChromeVBuf(GeckoVBuf):
 			self.rootNVDAObject.IAccessibleObject.accChild(accId)
 		except COMError:
 			return False
-		return True
+		return not self._isNVDAObjectInApplication(obj)
 
 class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self):
 		states = self.states
-		if controlTypes.STATE_READONLY in states and controlTypes.STATE_BUSY not in states:
+		if controlTypes.STATE_EDITABLE not in states and controlTypes.STATE_BUSY not in states:
 			return ChromeVBuf
 		return super(Document, self).treeInterceptorClass
 

@@ -37,19 +37,19 @@ interface DisplayModel {
 /**
  * Retreaves the text within the given rectangle (in client coordinates), within the given window.
   */
-	error_status_t getWindowTextInRect([in] handle_t bindingHandle, [in] const long windowHandle, const boolean includeDescendantWindows, [in] const int left, [in] const int top, [in] const int right, [in] const int bottom, [in] const int minHorizontalWhitespace, [in] const int minVerticalWhitespace, [in] const boolean stripOuterWhitespace, [out,string] BSTR* text, [out, string] BSTR* characterPoints);
+	error_status_t getWindowTextInRect([in] handle_t bindingHandle, [in] const unsigned long windowHandle, const boolean includeDescendantWindows, [in] const int left, [in] const int top, [in] const int right, [in] const int bottom, [in] const int minHorizontalWhitespace, [in] const int minVerticalWhitespace, [in] const boolean stripOuterWhitespace, [out,string] BSTR* text, [out, string] BSTR* characterPoints);
 
 	error_status_t getCaretRect([in] handle_t bindingHandle, [in] const long threadID, [out] long* left, [out] long* top, [out] long* right, [out] long* bottom);
 
 /**
  * Get the coordinates of the current focus rectangle if it exists.
  */
-	error_status_t getFocusRect([in] handle_t bindingHandle, [in] const long hwnd, [out] long* left, [out] long* top, [out] long* right, [out] long* bottom);
+	error_status_t getFocusRect([in] handle_t bindingHandle, [in] const unsigned long hwnd, [out] long* left, [out] long* top, [out] long* right, [out] long* bottom);
 
 /**
  * Request that text change notifications be sent when text is updated in the given window.
  * @param enable if true then notifications will start or if already started a reference count will be increased. If flase then the reference count will be decreased and if it hits 0 notifications will stop.
  */
-	error_status_t requestTextChangeNotificationsForWindow([in] handle_t bindingHandle, [in] const long windowHandle, [in] const BOOL enable);
+	error_status_t requestTextChangeNotificationsForWindow([in] handle_t bindingHandle, [in] const unsigned long windowHandle, [in] const BOOL enable);
 
 }

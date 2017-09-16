@@ -71,6 +71,7 @@ class HTMLAttribCache(object):
 	def __init__(self,HTMLNode):
 		self.HTMLNode=HTMLNode
 		self.cache={}
+		self.containsCache={}
 
 	def __getitem__(self,item):
 		try:
@@ -84,9 +85,23 @@ class HTMLAttribCache(object):
 		self.cache[item]=value
 		return value
 
+	def __contains__(self,item):
+		try:
+			return self.containsCache[item]
+		except LookupError:
+			pass
+		contains=item in self.cache
+		if not contains:
+			try:
+				contains=self.HTMLNode.hasAttribute(item)
+			except (COMError,NameError):
+				pass
+		self.containsCache[item]=contains
+		return contains
+
 nodeNamesToNVDARoles={
 	"FRAME":controlTypes.ROLE_FRAME,
-	"IFRAME":controlTypes.ROLE_FRAME,
+	"IFRAME":controlTypes.ROLE_INTERNALFRAME,
 	"FRAMESET":controlTypes.ROLE_DOCUMENT,
 	"BODY":controlTypes.ROLE_DOCUMENT,
 	"TH":controlTypes.ROLE_TABLECELL,
@@ -169,6 +184,12 @@ def locateHTMLElementByID(document,ID):
 			try:
 				element=document.all.item(ID)
 			except:
+				element=None
+		if element is None: #getElementsByName doesn't return element with specified ID in IE11 (#5784)
+			try:
+				element=document.getElementByID(ID)
+			except COMError as e:
+				log.debugWarning("document.getElementByID failed with COMError %s"%e)
 				element=None
 	except COMError as e:
 		log.debugWarning("document.getElementsByName failed with COMError %s"%e)
@@ -273,7 +294,10 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		else:
 			self._rangeObj=self.obj.HTMLNode.createTextRange()
 		if position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
-			activeElement=self.obj.HTMLNode.document.activeElement
+			try:
+				activeElement=self.obj.HTMLNode.document.activeElement
+			except COMError:
+				activeElement=None
 			if not activeElement or self.obj.HTMLNode.uniqueNumber!=activeElement.uniqueNumber:
 				raise RuntimeError("Only works with currently selected element")
 			if not editableBody:
@@ -508,8 +532,14 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
+	def _get_isCurrent(self):
+		return self.HTMLAttributes["aria-current"]
+
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
+
+	def _get_placeholder(self):
+		return self.HTMLAttributes["aria-placeholder"]
 
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False
@@ -607,16 +637,7 @@ class MSHTML(IAccessible):
 		ariaRole=self.HTMLAttributes['aria-role']
 		if ariaRole=="gridcell":
 			return True
-		res=super(MSHTML,self).shouldAllowIAccessibleFocusEvent
-		if not res:
-			# #4667: Internet Explorer 11 correctly fires focus events for aria-activeDescendant, but fails to set the focused state.
-			# Therefore check aria-activeDescendant manually and let the focus events through  in this case.
-			activeElement=self.HTMLNode.document.activeElement
-			if activeElement:
-				activeID=activeElement.getAttribute('aria-activedescendant')
-				if activeID and activeID==self.HTMLNode.ID:
-					res=True
-		return res
+		return super(MSHTML,self).shouldAllowIAccessibleFocusEvent
 
 	def _get_name(self):
 		ariaLabelledBy=self.HTMLAttributes['aria-labelledBy']
@@ -729,8 +750,9 @@ class MSHTML(IAccessible):
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
 			states.add(state)
+		htmlRequired='required' in self.HTMLAttributes
 		ariaRequired=self.HTMLAttributes['aria-required']
-		if ariaRequired=="true":
+		if htmlRequired or ariaRequired=="true":
 			states.add(controlTypes.STATE_REQUIRED)
 		ariaSelected=self.HTMLAttributes['aria-selected']
 		if ariaSelected=="true":
@@ -761,6 +783,17 @@ class MSHTML(IAccessible):
 		nodeName=self.HTMLNodeName
 		if nodeName=="TEXTAREA":
 			states.add(controlTypes.STATE_MULTILINE)
+		# #4667: Internet Explorer 11 correctly fires focus events for aria-activeDescendant, but fails to set the focused state.
+		# Therefore check aria-activeDescendant manually and set these states if this is the active descendant. 
+		try:
+			activeElement=self.HTMLNode.document.activeElement
+		except COMError:
+			activeElement=None
+		if activeElement:
+			activeID=activeElement.getAttribute('aria-activedescendant')
+			if activeID and activeID==self.HTMLNode.ID:
+				states.add(controlTypes.STATE_FOCUSABLE)
+				states.add(controlTypes.STATE_FOCUSED)
 		return states
 
 	def _get_isContentEditable(self):
@@ -970,6 +1003,10 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
+
+	def event_liveRegionChange(self):
+		# MSHTML live regions are currently handled with custom code in-process
+		pass
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.

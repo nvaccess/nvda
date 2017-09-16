@@ -14,6 +14,7 @@ import speech
 import inputCore
 import os
 from baseObject import ScriptableObject
+from globalCommands import SCRCAT_BRAILLE
 
 COM_CLASS = "HtBrailleDriverServer.HtBrailleDriver"
 HT_KEYS = {}
@@ -80,6 +81,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def display(self, cells):
 		self._server.displayText(cells)
+
+	scriptCategory = SCRCAT_BRAILLE
 
 	def script_showConfig(self, gesture):
 		self._server.startConfigDialog(False)

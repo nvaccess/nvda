@@ -1,8 +1,12 @@
 #appModules/explorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
+"""App module for Windows Explorer (aka Windows shell).
+Provides workarounds for controls such as identifying Start button, notification area and others.
+"""
 
 from comtypes import COMError
 import time
@@ -21,7 +25,8 @@ from NVDAObjects.UIA import UIA
 class MultitaskingViewFrameWindow(UIA):
 	shouldAllowUIAFocusEvent=False
 
-# suppress focus ancestry for task switching list items if alt is held down (alt+tab)
+
+# Suppress focus ancestry for task switching list items if alt is held down (alt+tab)
 class MultitaskingViewFrameListItem(UIA):
 
 	def _get_container(self):
@@ -30,7 +35,8 @@ class MultitaskingViewFrameListItem(UIA):
 		else:
 			return super(MultitaskingViewFrameListItem,self).container
 
-# support for Win8 start screen search suggestions.
+
+# Support for Win8 start screen search suggestions.
 class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
@@ -39,17 +45,18 @@ class SuggestionListItem(UIA):
 		self.reportFocus()
 		super(SuggestionListItem,self).event_UIA_elementSelected()
 
-#win8hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
+
+# Windows 8 hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
 	shouldAllowIAccessibleFocusEvent=False
 
-#Class for menu items  for Windows Places and Frequently used Programs (in start menu)
+
+# Class for menu items  for Windows Places and Frequently used Programs (in start menu)
 class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 
-	#When focus moves to these items, an extra focus is fired on the parent
-	#However NVDA redirects it to the real focus.
-	#But this means double focus events on the item, so filter the second one out
-	#Ticket #474
+	# #474: When focus moves to these items, an extra focus is fired on the parent
+	# However NVDA redirects it to the real focus.
+	# But this means double focus events on the item, so filter the second one out
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		res=super(SysListView32MenuItem,self).shouldAllowIAccessibleFocusEvent
 		if not res:
@@ -58,6 +65,7 @@ class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 		if type(focus)!=type(self) or (self.event_windowHandle,self.event_objectID,self.event_childID)!=(focus.event_windowHandle,focus.event_objectID,focus.event_childID):
 			return True
 		return False
+
 
 class ClassicStartMenu(Window):
 	# Override the name, as Windows names this the "Application" menu contrary to all documentation.
@@ -68,6 +76,7 @@ class ClassicStartMenu(Window):
 		# In Windows XP, the Start button will get focus first, so silence this.
 		speech.cancelSpeech()
 		super(ClassicStartMenu, self).event_gainFocus()
+
 
 class NotificationArea(IAccessible):
 	"""The Windows notification area, a.k.a. system tray.
@@ -100,6 +109,7 @@ class NotificationArea(IAccessible):
 			return
 		super(NotificationArea, self).event_gainFocus()
 
+
 class GridTileElement(UIA):
 
 	role=controlTypes.ROLE_TABLECELL
@@ -114,17 +124,19 @@ class GridTileElement(UIA):
 		return " ".join(descriptionStrings)
 		return description
 
+
 class GridListTileElement(UIA):
 	role=controlTypes.ROLE_TABLECELL
 	description=None
+
 
 class GridGroup(UIA):
 	"""A group in the Windows 8 Start Menu.
 	"""
 	presentationType=UIA.presType_content
 
-	#Normally the name is the first tile which is rather redundant
-	#However some groups have custom header text which should be read instead
+	# Normally the name is the first tile which is rather redundant
+	# However some groups have custom header text which should be read instead
 	def _get_name(self):
 		child=self.firstChild
 		if isinstance(child,UIA):
@@ -135,14 +147,15 @@ class GridGroup(UIA):
 			if automationID=="GridListGroupHeader":
 				return child.name
 
+
 class ImmersiveLauncher(UIA):
-	#When the win8 start screen openes, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
-	#Ignore focus events on this object.
+	# When the Windows 8 start screen opens, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
+	# Ignore focus events on this object.
 	shouldAllowUIAFocusEvent=False
 
 
 class StartButton(IAccessible):
-	"""For Windows 8.1 and 10 RTM Start buttons to be recognized as proper buttons and to suppress selection announcement."""
+	"""For Windows 8.1 and 10 Start buttons to be recognized as proper buttons and to suppress selection announcement."""
 
 	role = controlTypes.ROLE_BUTTON
 
@@ -177,7 +190,7 @@ class AppModule(appModuleHandler.AppModule):
 		if windowClass == "ToolbarWindow32":
 			# Check whether this is the notification area, a.k.a. system tray.
 			if isinstance(obj.parent, ClassicStartMenu):
-				return #This can't be a notification area
+				return # This can't be a notification area
 			try:
 				# The toolbar's immediate parent is its window object, so we need to go one further.
 				toolbarParent = obj.parent.parent
@@ -190,7 +203,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, NotificationArea)
 				return
 
-		# #5178: Start button in Windows 8.1 and 10 RTM should not have been a list in the first place.
+		# #5178: Start button in Windows 8.1 and 10 should not have been a list in the first place.
 		if windowClass == "Start" and role in (controlTypes.ROLE_LIST, controlTypes.ROLE_BUTTON):
 			if role == controlTypes.ROLE_LIST:
 				clsList.remove(List)
@@ -241,8 +254,8 @@ class AppModule(appModuleHandler.AppModule):
 			obj.description = None
 			return
 
-		#The Address bar is embedded inside a progressbar, how strange.
-		#Lets hide that
+		# The Address bar is embedded inside a progressbar, how strange.
+		# Lets hide that
 		if windowClass=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
 			obj.presentationType=obj.presType_layout
 
@@ -258,6 +271,10 @@ class AppModule(appModuleHandler.AppModule):
 			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window before and after it appears.
 			# This causes NVDA to report "unknown", so ignore it.
 			# We can't do this using shouldAllowIAccessibleFocusEvent because this isn't checked for foreground.
+			return
+
+		if wClass == "WorkerW" and obj.role == controlTypes.ROLE_PANE and obj.name is None:
+			# #6671: Never allow WorkerW thread to send gain focus event, as it causes 'pane" to be announced when minimizing windows or moving to desktop.
 			return
 
 		nextHandler()

@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
+#Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
 
 import wx
 import threading
@@ -99,6 +99,24 @@ touchWindow=None
 touchThread=None
 
 class TouchInputGesture(inputCore.InputGesture):
+	"""
+	Represents a gesture performed on a touch screen.
+	Possible actions are:
+	* Tap: a finger touches the screen only for a very short amount of time.
+	* Flick{Left|Right|Up|Down}: a finger swipes the screen in a particular direction.
+	* Tap and hold: a finger taps the screen but then again touches the screen, this time remaining held.
+	* Hover down: A finger touches the screen long enough for the gesture to not be a tap, and it is also not already part of a tap and hold. 
+	* Hover: a finger is still touching the screen, and may be moving around. Only the most recent finger to be hovering causes these gestures.
+	* Hover up: a finger that was classed as a hover, releases contact with the screen.
+	All actions accept for Hover down, Hover and Hover up, can be made up of multiple fingers. It is possible to have things such as a 3-finger tap, or a 2-finger Tap and Hold, or a 4 finger Flick right.
+	Taps maybe pluralized (I.e. a tap very quickly followed by another tap of the same number of fingers will be represented by a double tap, rather than two separate taps). Currently double, tripple and quadruple plural taps are detected.
+	Tap and holds can be pluralized also (E.g. a double tap and hold means that there were two taps before the hold).
+	Actions also communicate if other fingers are currently held while performing the action. E.g. a hold+tap is when a finger touches the screen long enough to become a hover, and a tap with another finger is performed, while the first finger remains on the screen. Holds themselves also can be made of multiple fingers.
+	Based on all of this, gestures could be as complicated as a 5-finger hold + 5-finger quadruple tap and hold.
+	To find out the generalized point on the screen at which the gesture was performed, use this gesture's x and y properties.
+	If low-level information  about the fingers and sub-gestures making up this gesture is required, the gesture's tracker and preheldTracker properties can be accessed. 
+	See touchHandler.MultitouchTracker for definitions of the available properties.
+	"""
 
 	counterNames=["single","double","tripple","quodruple"]
 
@@ -120,30 +138,32 @@ class TouchInputGesture(inputCore.InputGesture):
 		if self.tracker.action in (touchTracker.action_hover,touchTracker.action_hoverUp): return None
 		return super(TouchInputGesture,self).speechEffectWhenExecuted
 
-	def __init__(self,tracker,mode):
+	def _get_reportInInputHelp(self):
+		return self.tracker.action!=touchTracker.action_hover
+
+	def __init__(self,preheldTracker,tracker,mode):
 		super(TouchInputGesture,self).__init__()
 		self.tracker=tracker
+		self.preheldTracker=preheldTracker
 		self.mode=mode
-
-	def _get__rawIdentifiers(self):
-		ID=""
-		if self.tracker.numHeldFingers>0:
-			ID+="%dfinger_hold+"%self.tracker.numHeldFingers
-		if self.tracker.numFingers>1:
-			ID+="%dfinger_"%self.tracker.numFingers
-		if self.tracker.actionCount>1:
-			ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
-		ID+=self.tracker.action
-		IDs=[]
-		IDs.append("TS(%s):%s"%(self.mode,ID))
-		IDs.append("ts:%s"%ID)
-		return IDs
-
-	def _get_logIdentifier(self):
-		return self._rawIdentifiers[0]
+		self.x=tracker.x
+		self.y=tracker.y
 
 	def _get_identifiers(self):
-		return [x.lower() for x in self._rawIdentifiers] 
+		IDs=[]
+		for includeHeldFingers in ([True,False] if self.preheldTracker else [False]):
+			ID=""
+			if self.preheldTracker:
+				ID+=("%dfinger_hold+"%self.preheldTracker.numFingers) if includeHeldFingers else "hold+"
+			if self.tracker.numFingers>1:
+				ID+="%dfinger_"%self.tracker.numFingers
+			if self.tracker.actionCount>1:
+				ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
+			ID+=self.tracker.action
+			# "ts" is the gesture identifier source prefix for "touch screen".
+			IDs.append("ts(%s):%s"%(self.mode,ID))
+			IDs.append("ts:%s"%ID)
+		return IDs
 
 	RE_IDENTIFIER = re.compile(r"^ts(?:\((.+?)\))?:(.*)$")
 
@@ -226,8 +246,8 @@ class TouchHandler(threading.Thread):
 		if msg>=_WM_POINTER_FIRST and msg<=_WM_POINTER_LAST:
 			flags=winUser.HIWORD(wParam)
 			touching=(flags&POINTER_MESSAGE_FLAG_INRANGE) and (flags&POINTER_MESSAGE_FLAG_FIRSTBUTTON)
-			x=winUser.LOWORD(lParam)
-			y=winUser.HIWORD(lParam)
+			x=winUser.GET_X_LPARAM(lParam)
+			y=winUser.GET_Y_LPARAM(lParam)
 			ID=winUser.LOWORD(wParam)
 			if touching:
 				self.trackerManager.update(ID,x,y,False)
@@ -244,8 +264,8 @@ class TouchHandler(threading.Thread):
 		self._curTouchMode=mode
 
 	def pump(self):
-		for tracker in self.trackerManager.emitTrackers():
-			gesture=TouchInputGesture(tracker,self._curTouchMode)
+		for preheldTracker,tracker in self.trackerManager.emitTrackers():
+			gesture=TouchInputGesture(preheldTracker,tracker,self._curTouchMode)
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:

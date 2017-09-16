@@ -52,7 +52,7 @@ class OrderedWinEventLimiter(object):
 	Only allow one event for one specific object at a time, though push it further forward in time if a duplicate tries to get added. This is true for both generic and focus events.
  	"""
 
-	def __init__(self,maxFocusItems=3):
+	def __init__(self,maxFocusItems=4):
 		"""
 		@param maxFocusItems: the amount of focus changed events allowed to be queued.
 		@type maxFocusItems: integer
@@ -83,9 +83,6 @@ class OrderedWinEventLimiter(object):
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
 				return False
-			#We do not need a focus event on an object if we already got a foreground event for it
-			if (winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,threadID) in self._focusEventCache:
-				return False
 			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
 			return True
 		elif eventID==winUser.EVENT_SYSTEM_FOREGROUND:
@@ -95,12 +92,10 @@ class OrderedWinEventLimiter(object):
 			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
-				return True
 		elif eventID==winUser.EVENT_OBJECT_HIDE:
 			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
-				return True
 		elif eventID in MENU_EVENTIDS:
 			self._lastMenuEvent=(next(self._eventCounter),eventID,window,objectID,childID,threadID)
 			return True
@@ -446,22 +441,25 @@ def accParent(ia,child):
 	except:
 		return None
 
-def accNavigate(ia,child,direction):
-	res=None
+def accNavigate(pacc,childID,direction):
 	try:
-		res=ia.accNavigate(direction,child)
-		if isinstance(res,int):
-			new_ia=ia
-			new_child=res
-		elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=normalizeIAccessible(res)
-			new_child=0
-		else:
-			raise RuntimeError
-		return (new_ia,new_child)
-	except:
-		pass
-
+		res=pacc.accNavigate(direction,childID)
+	except COMError:
+		res=None
+	if not res:
+		return None
+	elif isinstance(res,int):
+		if childID==0 and oleacc.NAVDIR_UP<=direction<=oleacc.NAVDIR_PREVIOUS:
+			parentRes=accParent(pacc,0)
+			if not parentRes:
+				return None
+			pacc=parentRes[0]
+		return pacc,res
+	elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+		return normalizeIAccessible(res,0),0
+	else:
+		log.debugWarning("Unknown IAccessible type: %s"%res,stack_info=True)
+		return None
 
 winEventIDsToNVDAEventNames={
 winUser.EVENT_SYSTEM_DESKTOPSWITCH:"desktopSwitch",
@@ -488,9 +486,11 @@ winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
 winUser.EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
 winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
 winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
+winUser.EVENT_OBJECT_LIVEREGIONCHANGED:"liveRegionChange",
 IA2_EVENT_TEXT_CARET_MOVED:"caret",
 IA2_EVENT_DOCUMENT_LOAD_COMPLETE:"documentLoadComplete",
 IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:"IA2AttributeChange",
+IA2_EVENT_PAGE_CHANGED:"pageChange",
 }
 
 def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
@@ -857,10 +857,18 @@ def pumpAll():
 	focusWinEvents=[]
 	validFocus=False
 	fakeFocusEvent=None
+	focus=eventHandler.lastQueuedFocusObject
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
+		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
+		showHideCaretEvent = focus and isEventOnCaret and winEvent[0] in [winUser.EVENT_OBJECT_SHOW, winUser.EVENT_OBJECT_HIDE]
 		# #4001: Ideally, we'd call shouldAcceptEvent in winEventCallback,
 		# but this causes focus issues when starting applications.
-		if not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
+		# #7332: If this is a show event, which would normally be dropped by `shouldAcceptEvent` and this event is for the caret,
+		# later it will be mapped to a caret event, so skip `shouldAcceptEvent`
+		if showHideCaretEvent:
+			if not focus.shouldAcceptShowHideCaretEvent:
+				continue
+		elif not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
 			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
@@ -875,7 +883,9 @@ def pumpAll():
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
 				processDesktopSwitchWinEvent(*winEvent[1:])
-			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW:
+			# we dont want show caret events to be processed by `processShowWinEvent`, instead they should be 
+			# handled by `processGenericWinEvent`
+			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW and not isEventOnCaret:
 				processShowWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
 				# If there is no valid focus event, we may need to use this to fake the focus later.
