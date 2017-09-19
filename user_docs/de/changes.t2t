@@ -9,17 +9,22 @@
 - Im Lesemodus können die Tasten Komma und Umschalt+Komma verwendet werden, um vor oder hinter Sprungmarken zu navigieren. (#5482)
 - Im Lesemodus können Sie mit den Schnellnavigationstasten für Eingabefelder und Formularfelder nun auch zu Rich-Text-Eingabefeldern navigieren. (#5534)
 - In Web-Browsern enthält die Elementliste nun auch Formularfelder und Schalter. (#588)
+- Grundlegende Unterstützung für Windows 10 auf ARM64. (#7508)
 
 
 == Änderungen ==
+- NVDA benötigt mindestens Windows 7 Service Pack 1 oder Windows Server 2008 R2 Service Pack 1. (#7546)
 - In Firefox und Chrome wird in Web-Dialogen der Lesemodus verwendet, es sei denn, die Webdialoge befinden sich in Webanwendungen. (#4493)
 - Beim Navigieren im Lesemodus wird das Verlassen von Containern nicht mehr ausdrücklich angezeigt. (#2591)
 - In Firefox und Chrome werden die Namen von Gruppen angezeigt, wenn Sie zu einem Formularfeld springen. (#3321)
+- Die Schnellnavigationstasten für eingebettete Objekte (O und Umschalt+O) berücksichtigen Audio- und Video-Elemente ebenso wie Web-Anwendungen und Web-Dialoge. (#7239)
 
 
 == Fehlerkorrekturen ==
 - In Anwendungen, wie Microsoft Word, werden Links nun in Braille angezeigt. (#6780)
 - Wenn in Firefox oder Chrome viele Registerkarten geöffnet sind, reagiert NVDA nun schneller. (#3138)
+- Die Cursorroutingtasten von MDV Lilli-Braillezeilen funktionieren nun korrekt. (#7469)
+- Im Internet Explorer und anderen MSHTML-Dokumenten wird das Attribut Required korrekt unterstützt. (#7321)
 
 
 == Änderungen für Entwickler ==

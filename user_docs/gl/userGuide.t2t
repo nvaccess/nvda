@@ -59,11 +59,9 @@ Esto aplícase ao orixinal e ás copias modificadas do programa, máis calquer s
 Para máis detalles, podes [ver a licencia completa.  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requerimentos do Sistema +
-- Sistemas Operativos: todas as versións de 32 e 64 bits de Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 e Windows 10 (incluíndo sistemas operativos servidor), poderá funcionar parcialmente en Windows 2000.
- - Para o Windows XP 32 bits, NVDA require o Service Pack 2 ou superior.
- - Para o Windows Server 2003, NVDA require o Service Pack 1 ou superior.
- - Para Windows Vista, NVDA require o Service Pack 2 e a actualización [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
- Ambos deberíanse de instalar se todas as actualizacións dispoñibles se aplicaron a través do Windows Update.
+- Sistemas operativos: todas as edicións de 32 e 64 bits do Windows 7, Windows 8, Windows 8.1, Windows 10 e todos os sistemas operativos servidor comezando dende o Windows Server 2008 R2..
+ - Para o Windows 7, NVDA require do Service Pack 1 ou superior.
+ - Para o Windows Server 2008 R2, NVDA require do Service Pack 1 ou superior.
 - Memoria: 256 mb ou máis de RAM
 - Velocidade de Procesador: 1.0 ghz ou superior
 - Aproximadamente 90 MB de espazo de almacenamento.
@@ -506,7 +504,7 @@ A seguintes teclas elas soas saltan ao seguinte campo, ca tecla shift saltan ao 
 - m: marco
 - g: gráfico
 - d: ponto de referencia
-- o: obxecto empotrado
+- o: obxecto empotrado (reproductor de audio e vídeo, aplicación, diálogo, etc.)
 - 1 a 6: cabeceiras da 1 á 6 respectivamente
 - a: anotación (comentario, revisión do editor, etc.)
 - w: erro de ortografía
@@ -535,9 +533,10 @@ Unha vez escollas un elemento, podes utilizar os botóns proporcionados no diál
 %kc:endInclude
 
 ++ Obxectos Empotrados ++
-As páxinas poden incluir contido enriquecido utilizando tecnoloxías como Adobe Flash e Sun Java, así coma aplicacións e diálogos.
+As páxinas poden incluir contido enriquecido utilizando tecnoloxías como Adobe Flash, Oracle Java e HTML5, así coma aplicacións e diálogos.
 onde estas se atopen nun modo virtual, NVDA anunciará "obxecto integrado", "aplicación" ou "diálogo", respectivamente.
-podes premer intro sobre esos obxectos para interactuar con eles. 
+Podes moverte rápidamente cara eles usando as teclas de navegación dunha soa tecla de obxectos integrados o e shift+o.
+Para interactuar con estos obxectos, podes premer intro sobre eles.
 Se é acesible, entón podes tabular por eles e interactuar como con calquera outra aplicación. 
 Proporciónase unha orde de teclado para voltar á páxina.
 %kc:beginInclude

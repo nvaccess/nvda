@@ -9,17 +9,22 @@ Que hai de Novo no NVDA
 - No modo exploración, agora é posible saltar ao comezo dos pontos de referencia usando as ordes saltar ao final ou ao comezo do contedor (coma/shift+coma). (#5482)
 - En Firefox, Chrome e Internet Explorer, a navegación rápida por campos de edición e campos de formulario agora inclúe contido de texto enriquecido editable (ex.: contentEditable). (#5534)
 - En navegadores web, a Lista de Elementos agora pode listar campos de formulario e botóns. (#588)
+- Soporte inicial para o Windows 10 en ARM64. (#7508)
 
 
 == Cambios ==
+- O menor Sistema Operativo soportado polo NVDA agora é o Windows 7 co Service Pack 1, ou o Windows Server 2008 R2 co Service Pack 1. (#7546)
 - Os diálogos web nos navegadores Firefox e Chrome agora usan o modo exploración automáticamente, a non ser que se estea nunha aplicación web. (#4493)
 - No modo exploración, ao se tabular ou se mover coas ordes de teclas de navegación rápida xa non anuncia saíndo de contedores coma listas e táboas, o que fai a navegación máis eficaz. (#2591)
 - En modo exploración para Firefox e Chrome, agora anúncianse os nomes de grupos de campos de formulario ao se mover dentro deles coa navegación rápida ou cando se tabula. (#3321)
+- No modo exploración, as ordes de navegación rápida para obxectos integrados (o e shift+o) agora inclúen elementos de audio e vídeo así coma elementos cos roles aria application e dialog. (#7239)
 
 
 == Corrección de Erros ==
 - As ligas agora indícanse en braille en aplicacións coma no Microsoft Word. (#6780)
 - O NVDA xa non se volta notablemente máis lento cando estean abertas moitas pestanas nos navegadores web Firefox ou Chrome. (#3138)
+- O enrutamento do cursor para as pantallas MDV Lilli Braille xa non move incorrectamente unha celda braille antes de onde debería estar. (#7469)
+- No Internet Explorer e outros documentos MSHTML, o atributo HTML5 requerido agora sopórtase para indicar o estado requerido dun campo de formulario. (#7321)
 
 
 == Cambios para Desenvolvedores ==

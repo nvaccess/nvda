@@ -10,17 +10,22 @@
 - U načinu pregleda sada je moguće preskakati orjentire koristeći prečac prebacivanja između sadrživaća (zarez/shift+zarez). (#5482)
 - U Firefoxu, Chromeu i u Internet Exploreru, brza navigacija do uređivačkih polja i obrazaca sada uključuje tekstualna polja bogatog uređivanja (npr. contentEditable). (#5534)
 - U internet preglednicima,, popis elemenata može izlistavati obrasce i gumbe. (#588)
+- Initial support for Windows 10 on ARM64. (#7508)
 
 
 == Izmjene ==
+- The minimum supported Operating System for NVDA is now Windows 7 with Service Pack 1, or Windows Server 2008 R2 with Service Pack 1. (#7546)
 - Web dijaloški okviri u Firefox i Chrome web preglednicima sada automatski koriste način pregleda, osim ako to nije web aplikacija. (#4493)
 - U načinu pregeda, pritiskanje tabulatora i kretanje prećicama za brzo kretanje ne izgovaraju prebacivanje izvan sadrživaća poput popisa i tablica, što čini kretanje bržim. (#2591)
 - U načinu pregleda za Firefox i Chrome, Imena grupa polja obrazaca prilikom premještanja po njima sa prečicama za brzo kretanje ili prilikom pritiskanja taba. (#3321)
+- In browse mode, the quick navigation command for embedded objects (o and shift+o) now includes audio and video elements as well as elements with the aria roles application and dialog. (#7239)
 
 
 == Ispravke grešaka ==
 - Linkovi se sada ispravno prikazuju u aplikacijama poput Microsoft Worda. (#6780)
 - NVDA više ne postaje značajno sporiji prilikom otvaranja više kartica u Firefox ili Chrome web preglednicima. (#3138)
+- Cursor routing for the MDV Lilli Braille display no longer incorrectly moves one braille cell ahead of where it should be. (#7469)
+- In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
 
 
 == Izmjene za razvojne programere ==

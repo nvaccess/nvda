@@ -9,17 +9,22 @@ Ce este nou în NVDA
 - În modul de navigare este acum posibil să treceți peste / până la începutul reperelor, utilizând comenzile pentru a trece la sfârșitul / începutul containerelor. (virgulă/shift+virgulă). (#5482)
 - În Firefox, în Chrome și în Internet Explorer, navigarea rapidă la câmpurile de editare și la câmpurile formular include acum conținut de text îmbogățit (I.e. contentEditable). (#5534)
 - În navigatoarele web, lista elementelor poate lista acum câmpuri formular și butoane. (#588)
+- Suport inițial pentru Windows 10 pe ARM64. (#7508)
 
 
 == Modificări ==
+- Sistemul minim de operare acceptat de NVDA este acum Windows 7 cu Service Pack 1 sau Windows Server 2008 R2 cu Service Pack 1. (#7546)
 - Dialogurile web din Firefox Chrome folosesc automat modul de navigare dacă nu se află în cadrul unei aplicații web. (#4493)
 - În modul de navigare, tabularea și deplasarea cu comenzile de navigare rapidă nu mai anunță „salt în afara containerelor”, cum ar fi liste și tabele, ceea ce face navigarea mai eficientă. (#2591)
 - În modul de navigare pentru Firefox și Chrome, numele grupurilor de câmpuri formular sunt anunțate atunci când se deplasează la ele cu navigarea rapidă sau când se tabulează. (#3321)
+- În modul de navigare, comanda navigării rapide pentru obiectele încorporate )O și shift+o) include acum elementele audio și video, precum și elementele cu aplicația și dialogul rolurilor aria. (#7239)
 
 
 == Rezolvări Defecte ==
 - Link-urile sunt indicate acum în braille în aplicații precum Microsoft Word. (#6780)
 - NVDA nu mai este considerat mai lent atunci când multe file sunt deschise în browserele web Firefox sau Chrome. (#3138)
+- Rotirea cursorului pentru afișajul MDV Lilli Braille nu mai deplasează incorect o celulă braille înainte de unde ar trebui să fie. (#7469)
+- În Internet Explorer și în alte documente MSHTML, atributul HTML5 necesar este suportat acum pentru a indica starea necesară a unui câmp formular. (#7321)
 
 
 == Modificări pentru dezvoltatori ==

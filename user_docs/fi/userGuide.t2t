@@ -59,11 +59,9 @@ Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikki
 Voit [tarkastella lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
 
 + Järjestelmävaatimukset +
-- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n, Windows 8:n, Windows 8.1:n ja Windows 10:n versiot (palvelinversiot mukaan lukien).
- - 32-bittisessä Windows XP:ssä on oltava asennettuna Service Pack 2 tai uudempi.
- - Windows Server 2003:ssa on oltava asennettuna Service Pack 1 tai uudempi.
- - Windows Vistassa NVDA tarvitsee toimiakseen Service Pack 2:n sekä [KB2763674 https://support.microsoft.com/en-us/kb/2763674]-päivityksen.
-Nämä molemmat tulisi asentaa, mikäli kaikkien käytettävissä olevien päivitysten asentamiseen käytetään Windows Updatea.
+- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows 7:n, Windows 8:n, Windows 8.1:n ja Windows 10:n versiot sekä palvelinversiot Windows Server 2008 R2:sta alkaen.
+ - Windows 7:ssä on oltava asennettuna Service Pack 1 tai uudempi.
+ - Windows Server 2008 R2:ssa on oltava asennettuna Service Pack 1 tai uudempi.
 - Muistia (RAM): 256 Mt tai enemmän
 - Suoritin: 1 GHz tai nopeampi
 - Levytilaa n. 90 Mt.
@@ -506,7 +504,7 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja Shift-näppäimen kanssa p
 - m: kehys
 - g: grafiikka
 - d: kiintopiste
-- o: upotettu objekti
+- o: upotettu objekti (ääni- ja videosoitin, sovellus, valintaikkuna jne.)
 - numerot 1 - 6: otsikot tasoilla 1 - 6
 - a: selite (kommentti, muokkaajan muutokset jne)
 - w: kirjoitusvirhe
@@ -535,8 +533,9 @@ Kun haluttu kohde on valittu, sen kohdalle voidaan siirtyä tai se voidaan avata
 %kc:endInclude
 
 ++ Upotetut objektit ++
-Sivut voivat sisältää monipuolista sisältöä, joka käyttää sellaisia tekniikoita kuin Flash ja Java, kuten myös sovelluksia ja valintaikkunoita.
+Sivut voivat sisältää monipuolista sisältöä, joka käyttää sellaisia teknologioita kuin Flash, Java, HTML5, kuten myös sovelluksia ja valintaikkunoita.
 Kun selaustilassa tullaan niiden kohdalle, NVDA ilmoittaa "upotettu objekti", "sovellus" tai "valintaikkuna".
+Niihin voidaan siirtyä nopeasti käyttäen upotettuihin objekteihin siirtäviä pikanavigointinäppäimiä O ja Shift+O.
 Näiden objektien kanssa voidaan olla vuorovaikutuksessa painamalla Enteriä niiden kohdalla.
 Jos objekti on saavutettava, siinä voidaan liikkua sarkaimella ja olla sen kanssa vuorovaikutuksessa kuten missä tahansa muussakin sovelluksessa.
 Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin sisältävälle sivulle:
