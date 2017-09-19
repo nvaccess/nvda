@@ -26,6 +26,7 @@ import brailleDisplayDrivers
 import inputCore
 import brailleTables
 from collections import namedtuple
+import scriptHandler
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -1948,6 +1949,25 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	#: @type: L{inputCore.GlobalGestureMap}
 	gestureMap = None
 
+	@classmethod
+	def _getModifierGestures(cls):
+		"""Retrieves modifier gestures from this display driver's L{gestureMap}
+		that are bound to modifier only keyboard emulate scripts.
+		@return: the ids of the display keys and the associated generalised modifier names
+		@rtype: generator of (set, set)
+		"""
+		import globalCommands
+		# Ignore the locale gesture map when searching for braille display gestures
+		globalMaps = [inputCore.manager.userGestureMap]
+		if cls.gestureMap:
+			globalMaps.append(cls.gestureMap)
+		for globalMap in globalMaps:
+			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
+				if gesture.startswith("br({source})".format(source=cls.name)) and scriptCls is globalCommands.GlobalCommands and scriptName.startswith("kb"):
+					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
+					if emuGesture.isModifier:
+						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)
+
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
@@ -1996,6 +2016,49 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		if isinstance(display, baseObject.ScriptableObject):
 			return display
 		return super(BrailleDisplayGesture, self).scriptableObject
+
+	def _get_script(self):
+		# Overrides L{inputCore.InputGesture._get_script} to support modifier keys.
+		script=scriptHandler.findScript(self)
+		if script:
+			self.script = script
+			return self.script
+		# No script for this gesture has been found, so process this gesture for possible modifiers. 
+		# For example, if L{self.id} is 'key1+key2',
+		# key1 is bound to 'kb:control' and key2 to 'kb:tab',
+		# this gesture should execute 'kb:control+tab'.
+		# Combining modifiers with braille input (#7306) is not yet supported.
+		gestureKeys = set(self.keyNames)
+		gestureModifiers = set()
+		for keys, modifiers in handler.display._getModifierGestures():
+			if keys<gestureKeys:
+				gestureModifiers |= modifiers
+				gestureKeys -= keys
+		if not gestureModifiers:
+			# No modifier assignments found in this gesture.
+			return None
+		# Find a script for L{gestureKeys}.
+		fakeGestureId = u"br({source}):{id}".format(source=self.source, id="+".join(gestureKeys))
+		scriptNames = []
+		globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
+		for globalMap in globalMaps:
+			scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId) if scriptName.startswith("kb"))
+		if not scriptNames:
+			# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
+			return None
+		# We can't bother about multiple scripts for a gesture, we will just use the first one
+		scriptName = "kb:{modifiers}+{keys}".format(
+			modifiers="+".join(gestureModifiers),
+			keys=scriptNames[0].split(":")[1]
+		)
+		self.script = scriptHandler._makeKbEmulateScript(scriptName)
+		return self.script
+
+	def _get_keyNames(self):
+		"""The names of the keys that are part of this gesture.
+		@rtype: list
+		"""
+		return self.id.split("+")
 
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
