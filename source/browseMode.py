@@ -1569,7 +1569,7 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		container=self.getEnclosingContainerRange(info)
 		if not container:
 			# Translators: Reported when the user attempts to move to the start or end of a container
-						# (list, table, etc.) but there is no container. 
+			# (list, table, etc.) but there is no container. 
 			ui.message(_("Not in a container"))
 			return
 		container.collapse()
