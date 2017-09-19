@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-14 08:17+1000\n"
-"PO-Revision-Date: 2017-08-15 20:17+0800\n"
-"Last-Translator: Kvark <kvark128@yandex.ru>\n"
+"POT-Creation-Date: 2017-09-01 00:10+1000\n"
+"PO-Revision-Date: 2017-08-31 22:11+0400\n"
+"Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1036,6 +1036,10 @@ msgstr "Режим редактирования"
 msgid "Browse mode"
 msgstr "Режим обзора"
 
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "Без ярлыка"
+
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
 msgstr "Быстрая навигация выключена"
@@ -1532,6 +1536,16 @@ msgstr "&Заголовки"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Поля форм"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Кнопки"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Lan&dmarks"
@@ -1919,7 +1933,7 @@ msgstr "Редактор"
 
 #. Translators: The word used to identify a button such as OK button.
 msgid "button"
-msgstr "Кнопка"
+msgstr "кнопка"
 
 #. Translators: Text used to identify menu bar of a program.
 msgid "menu bar"
@@ -1932,31 +1946,31 @@ msgstr "Элемент меню"
 #. Translators: The word used for menus such as edit menu.
 #. Translators: Identifies a menu such as file menu.
 msgid "menu"
-msgstr "Меню"
+msgstr "меню"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 msgid "combo box"
-msgstr "Комбинированный список"
+msgstr "комбинированный список"
 
 #. Translators: The word used for lists such as folder list.
 msgid "list"
-msgstr "Список"
+msgstr "список"
 
 #. Translators: Used to identify a list item such as email list items.
 msgid "list item"
-msgstr "Элемент списка"
+msgstr "элемент списка"
 
 #. Translators: The word used to identify graphics such as webpage graphics.
 msgid "graphic"
-msgstr "Графика"
+msgstr "графика"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "Всплывающее системное сообщение"
+msgstr "всплывающее системное сообщение"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
-msgstr "Всплывающая подсказка"
+msgstr "всплывающая подсказка"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
@@ -9220,11 +9234,6 @@ msgstr "Фо&рмулы"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "&Поля форм"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "&Листы"
 
@@ -10227,15 +10236,22 @@ msgstr "Первичный заголовок"
 msgid "Text frame"
 msgstr "Текстовый фрейм"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "примечание: {text}. {author}, {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}. {author}, {date}"
 
-#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "орфография: {text}"

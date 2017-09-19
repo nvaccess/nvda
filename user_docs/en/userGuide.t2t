@@ -544,15 +544,18 @@ A key command is provided to return to the original page containing the embedded
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
 
-+ Reading Mathematical Content +
++ Reading Mathematical Content +[ReadingMath]
 Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
 This requires that MathPlayer 4 is installed on the computer.
 MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
 
 NVDA supports the following types of mathematical content:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
-- Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient.
-- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+- Design Science MathType in Microsoft Word and PowerPoint.
+MathType needs to be installed in order for this to work. The trial version is sufficient.
+- MathML in Adobe Reader.
+Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+- Math in Kindle for PC for books with accessible math.
 -
 
 When reading a document, NVDA will speak any supported mathematical content where it occurs.
@@ -576,7 +579,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the MathPlayer documentation for further information.
+Please see the MathPlayer documentation about navigation commands for further information: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 When you wish to return to the document, simply press the escape key.
 
@@ -854,6 +857,9 @@ You can manually turn to the next page with the pageDown key and turn to the pre
 
 Single letter navigation is supported for links and graphics, but only within the current page.
 Navigating by link also includes footnotes.
+
+NVDA provides early support for reading and interactive navigation of mathematical content for books with accessible math.
+Please see the [Reading Mathematical Content #ReadingMath] section for further information.
 
 +++ Text Selection +++
 Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
