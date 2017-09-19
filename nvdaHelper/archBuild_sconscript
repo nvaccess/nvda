@@ -108,7 +108,7 @@ env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
 env.Append(
 	LINKFLAGS=[
 		'/incremental:no',
-		'/WX'
+		'/WX',
 		'/subsystem:windows,6.01',
 	]
 )
@@ -122,10 +122,7 @@ else:
 	env.Append(CCFLAGS='/GL')
 	env.Append(LINKFLAGS=['/LTCG'])
 
-if 'debugCRT' in debug:
-	env.Append(CCFLAGS=['/MTd'])
-else:
-	env.Append(CCFLAGS=['/MT'])
+if 'debugCRT' not in debug:
 	env.Append(CPPDEFINES=['NDEBUG'])
 
 if 'RTC' in debug:
@@ -135,6 +132,15 @@ if 'RTC' in debug:
 #We always want debug symbols
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+
+win10env=env.Clone()
+win10env.Append(CXXFLAGS='/ZW')
+Export('win10env')
+
+if 'debugCRT' in debug:
+	env.Append(CCFLAGS=['/MTd'])
+else:
+	env.Append(CCFLAGS=['/MT'])
 
 Export('env')
 
@@ -168,6 +174,10 @@ if TARGET_ARCH=='x86':
 	if signExec:
 		env.AddPostAction(localLib[0],[signExec])
 	env.Install(libInstallDir,localLib)
+	win10localLib=env.SConscript('localWin10/sconscript',)
+	if signExec:
+		env.AddPostAction(win10localLib[0],[signExec])
+	env.Install(libInstallDir,win10localLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
