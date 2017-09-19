@@ -154,6 +154,14 @@ def removeOldProgramFiles(destPath):
 			else:
 				os.remove(fn)
 
+	# #7546: Remove old version-specific libs
+	for topDir in ('lib','lib64'):
+		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
+			for d in subdirs:
+				tryRemoveFile(os.path.join(parent,d),numRetries=1,rebootOK=True)
+			for f in files:
+				tryRemoveFile(os.path.join(parent,f),numRetries=1,rebootOK=True)
+
 	# #4235: mpr.dll is a Windows system dll accidentally included with
 	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
 	fn = os.path.join(destPath, "mpr.dll")
