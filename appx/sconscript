@@ -43,7 +43,7 @@ manifest=env.Substfile(
 	'manifest.xml.subst',
 	SUBST_DICT={
 		'%name%':versionInfo.name,
-		'%version%':"%s.%s.%s.%s"%(versionInfo.version_year,versionInfo.version_major,versionInfo.version_minor,env['version_build']),
+		'%version%':"%s.%s.%s.%s"%(versionInfo.version_year,versionInfo.version_major,env['version_build'],0),
 		'%certPublisher%':certPublisher,
 		'%publisher%':env['publisher'],
 		'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),

@@ -65,7 +65,7 @@ build_script:
      if ($env:versionType) {
       $sconsArgs += " updateVersionType=$env:versionType"
      }
-     $sconsArgs += ' publisher="NV Access"'
+     $sconsArgs += ' publisher="NV Access Limited"'
      $sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
      $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
      # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
