@@ -62,7 +62,7 @@ manifest=env.Substfile(
 		'%packageName%':packageName,
 		'%packageVersion%':packageVersion,
 		'%packagePublisher%':packagePublisher,
-		'%packagePublisherDisplayName%':packagePublisherDisplayName,
+		'%publisher%':packagePublisherDisplayName,
 		'%productName%':productName,
 		'%description%':versionInfo.description,
 	},
