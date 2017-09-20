@@ -660,3 +660,14 @@ class EditableTextWithSuggestions(NVDAObject):
 		"""
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
 			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
+
+class WebDialog(NVDAObject):
+	"""
+	A dialog that will use a treeInterceptor if its parent currently does.
+	This  can be used to ensure that dialogs on the web get browseMode by default, unless inside an ARIA application
+	"""
+
+	def _get_shouldCreateTreeInterceptor(self):
+		if self.parent.treeInterceptor:
+			return True
+		return False
