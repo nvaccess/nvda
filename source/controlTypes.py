@@ -543,7 +543,7 @@ stateLabels={
 	STATE_DRAGGABLE:_("draggable"),
 	STATE_DRAGGING:_("dragging"),
 	# Translators: Reported where an object which is being dragged can be dropped.
-	# This is only reported for objects which support accessible drag and drop.
+	# This is only reported for objects that support accessible drag and drop.
 	STATE_DROPTARGET:_("drop target"),
 	STATE_SORTED:_("sorted"),
 	STATE_SORTED_ASCENDING:_("sorted ascending"),
@@ -642,12 +642,12 @@ isCurrentLabels = {
 
 def processPositiveStates(role, states, reason, positiveStates):
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
-	For example, if C{STATE_CHECKED} is among the returned states, it means that the processed object is checked.
+	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
 	@type role: int
-	@param states: Usually the raw states for an object to process.
+	@param states: The raw states for an object to process.
 	@type states: set
-	@param reason: The reason to process the states for (e.g. C{REASON_FOCUS}.
+	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
 	@type reason: str
 	@param positiveStates: Used for REASON_CHANGE, specifies states changed from negative to positive;
 		C{None} if not applicable.
@@ -701,12 +701,12 @@ def processPositiveStates(role, states, reason, positiveStates):
 
 def processNegativeStates(role, states, reason, negativeStates):
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
-	For example, if C{STATE_CHECKED} is among the returned states, it means that the processed object is not checked.
+	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is not checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
 	@type role: int
-	@param states: Usually the raw states for an object to process.
+	@param states: The raw states for an object to process.
 	@type states: set
-	@param reason: The reason to process the states for (e.g. C{REASON_FOCUS}.
+	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
 	@type reason: str
 	@param negativeStates: Used for REASON_CHANGE, specifies states changed from positive to negative;
 		C{None} if not applicable.
@@ -747,9 +747,9 @@ def processAndLabelStates(role, states, reason, positiveStates, negativeStates, 
 	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
 	@type role: int
-	@param states: Usually the raw states for an object to process.
+	@param states: The raw states for an object to process.
 	@type states: set
-	@param reason: The reason to process the states for (e.g. C{REASON_FOCUS}.
+	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
 	@type reason: str
 	@param positiveStates: Used for REASON_CHANGE, specifies states changed from negative to positive;
 		C{None} if not applicable.
@@ -771,7 +771,7 @@ def processAndLabelStates(role, states, reason, positiveStates, negativeStates, 
 		if state in positiveStates:
 			mergedStateLabels.append(positiveStateLabelDict.get(state, stateLabels[state]))
 		elif state in negativeStates:
-			# Translators: Indicates that a particular state on an object is negated.
+			# Translators: Indicates that a particular state of an object is negated.
 			# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 			# but this still might be used in some other cases.
 			# %s will be replaced with the full identifier of the negated state (e.g. selected).

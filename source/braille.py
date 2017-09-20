@@ -476,7 +476,9 @@ def getBrailleTextForProperties(**propertyValues):
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
 	if states:
-		textList.extend(controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states,None,positiveStateLabels,negativeStateLabels))
+		textList.extend(
+			controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states, None, positiveStateLabels, negativeStateLabels)
+		)
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")
