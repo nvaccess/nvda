@@ -640,7 +640,7 @@ isCurrentLabels = {
 	"time":_("current time"),
 }
 
-def processPositiveStates(role, states, reason, positiveStates):
+def processPositiveStates(role, states, reason, positiveStates=None):
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
@@ -649,13 +649,12 @@ def processPositiveStates(role, states, reason, positiveStates):
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
 	@type reason: str
-	@param positiveStates: Used for REASON_CHANGE, specifies states changed from negative to positive;
-		C{None} if not applicable.
+	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
 	@type positiveStates: set
 	@return: The processed positive states.
 	@rtype: set
 	"""
-	positiveStates = positiveStates.copy()
+	positiveStates = positiveStates.copy() if positiveStates is not None else states.copy()
 	# The user never cares about certain states.
 	if role==ROLE_EDITABLETEXT:
 		positiveStates.discard(STATE_EDITABLE)
@@ -699,7 +698,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(STATE_EDITABLE)
 	return positiveStates
 
-def processNegativeStates(role, states, reason, negativeStates):
+def processNegativeStates(role, states, reason, negativeStates=None):
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
 	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is not checked.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
@@ -708,12 +707,13 @@ def processNegativeStates(role, states, reason, negativeStates):
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
 	@type reason: str
-	@param negativeStates: Used for REASON_CHANGE, specifies states changed from positive to negative;
-		C{None} if not applicable.
+	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
 	@type negativeStates: set
 	@return: The processed negative states.
 	@rtype: set
 	"""
+	if reason == REASON_CHANGE and not isinstance(negativeStates, set):
+		raise TypeError("negativeStates must be a set for this reason")
 	speakNegatives = set()
 	# Add the negative selected state if the control is selectable,
 	# but only if it is either focused or this is something other than a change event.
@@ -743,7 +743,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
 
-def processAndLabelStates(role, states, reason, positiveStates, negativeStates, positiveStateLabelDict={}, negativeStateLabelDict={}):
+def processAndLabelStates(role, states, reason, positiveStates=None, negativeStates=None, positiveStateLabelDict={}, negativeStateLabelDict={}):
 	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
 	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
 	@type role: int
@@ -751,11 +751,9 @@ def processAndLabelStates(role, states, reason, positiveStates, negativeStates, 
 	@type states: set
 	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
 	@type reason: str
-	@param positiveStates: Used for REASON_CHANGE, specifies states changed from negative to positive;
-		C{None} if not applicable.
+	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
 	@type positiveStates: set
-	@param negativeStates: Used for REASON_CHANGE, specifies states changed from positive to negative;
-		C{None} if not applicable.
+	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
 	@type negativeStates: setpositiveStateLabelDict={}, negativeStateLabelDict
 	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive labels as their values.
 	@type positiveStateLabelDict: dict
