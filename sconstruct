@@ -395,7 +395,11 @@ symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
 symbolsArchive = env.ZipArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
 env.Alias("symbolsArchive", symbolsArchive)
 
-env.SConscript("appx/sconscript",exports=["env"],variant_dir='build\\appx')
+appx_storeSubmition=env.SConscript("appx/sconscript",exports={'env':env,'isStoreSubmition':True},variant_dir='build\\appx_storeSubmition')
+installed_appx_storeSubmition=env.Install('output',appx_storeSubmition)
+appx_sideLoadable=env.SConscript("appx/sconscript",exports={'env':env,'isStoreSubmition':False},variant_dir='build\\appx_sideLoadable')
+installed_appx_sideLoadable=env.Install('output',appx_sideLoadable)
+env.Alias('appx',[installed_appx_storeSubmition,installed_appx_sideLoadable])
 
 env.Default(dist)
 

@@ -4,14 +4,14 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
   <Identity 
-  Name="NVAccessLimited.NVDANonVisualDesktopAccess" 
-  Version="%version%"
-  Publisher="CN=83B1DA31-9B66-442C-88AB-77B4B815E1DE"
+  Name="%packageName%" 
+  Version="%packageVersion%"
+  Publisher="%packagePublisher%"
   ProcessorArchitecture="x86" 
   />
     <Properties>
        <DisplayName>%productName%</DisplayName>
-       <PublisherDisplayName>NV access Limited</PublisherDisplayName>
+       <PublisherDisplayName>%publisher%</PublisherDisplayName>
              <Description>%description%</Description>
       <Logo>appx_images/nvda_44x44.png</Logo>
     </Properties>
@@ -30,7 +30,7 @@ MaxVersionTested="10.0.16278.100"
       </Capabilities>
     <Applications>
       <Application 
-Id="%name%" 
+Id="mainExecutable" 
 Executable="nvda_noUIAccess.exe" 
 EntryPoint="Windows.FullTrustApplication"
 >

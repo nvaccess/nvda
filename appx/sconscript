@@ -1,7 +1,11 @@
 import subprocess
 import versionInfo
 
-Import(['env','outFilePrefix'])
+Import([
+	'env',
+	'outFilePrefix',
+	'isStoreSubmition',
+])
 
 def getCertPublisher(env):
 	certFile=env.get('certFile')
@@ -16,8 +20,20 @@ def getCertPublisher(env):
 			subject=line[len(linePrefix):].rstrip()
 			return subject
 
+packageName="NVAccessLimited.NVDANonVisualDesktopAccess"
+packageVersion="%s.%s.%s.%s"%(versionInfo.version_year,versionInfo.version_major,env['version_build'],0)
+if isStoreSubmition:
+	packageFileName=outFilePrefix+"_storeSubmition.appx"
+	packagePublisher="CN=83B1DA31-9B66-442C-88AB-77B4B815E1DE"
+	packagePublisherDisplayName="NV Access Limited"
+	productName="NVDA Screen Reader (Windows Store Edition)" 
+else:
+	packageFileName=outFilePrefix+"_sideLoadable.appx"
+	packagePublisher=getCertPublisher(env)
+	packagePublisherDisplayName=env['publisher']
+	productName="NVDA Screen Reader (Windows Desktop Bridge Edition)" 
+
 signExec=env['signExec'] if env['certFile'] else None
-certPublisher=getCertPublisher(env)
 
 # Files from NVDA's distribution that cannot be included in the appx due to policy or security restrictions
 excludedDistFiles=[
@@ -35,6 +51,7 @@ excludedDistFiles=[
 	'lib/VBufBackend_mshtml.dll',
 	'lib/VBufBackend_webKit.dll',
 	'lib64',
+	'uninstall.exe',
 ]
 
 # Create an appx manifest with version and publisher etc all filled in 
@@ -42,11 +59,11 @@ manifest=env.Substfile(
 	"AppxManifest.xml",
 	'manifest.xml.subst',
 	SUBST_DICT={
-		'%name%':versionInfo.name,
-		'%version%':"%s.%s.%s.%s"%(versionInfo.version_year,versionInfo.version_major,env['version_build'],0),
-		'%certPublisher%':certPublisher,
-		'%publisher%':env['publisher'],
-		'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
+		'%packageName%':packageName,
+		'%packageVersion%':packageVersion,
+		'%packagePublisher%':packagePublisher,
+		'%packagePublisherDisplayName%':packagePublisherDisplayName,
+		'%productName%':productName,
 		'%description%':versionInfo.description,
 	},
 )
@@ -65,5 +82,9 @@ appxContent=env.Command(
 # Ensure that it is always copied as we can't tell if dist changed 
 env.AlwaysBuild(appxContent)
 # Package the appx
-appx=env.Command(File('#output\\%s.appx'%outFilePrefix),appxContent,"makeappx pack /p $TARGET /d $SOURCE")
-env.Alias('appx',appx)
+appx=env.Command(packageFileName,appxContent,"makeappx pack /p $TARGET /d $SOURCE")
+if signExec and not isStoreSubmition:
+	env.AddPostAction(appx,signExec)
+
+Return(['appx'])
+
