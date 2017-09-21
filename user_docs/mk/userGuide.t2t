@@ -1132,213 +1132,213 @@ The selection indicator is not affected by this option, it is always dots 7 and 
 Под дифолт, отоа е исклучено.
 
 ==== Избегнувај ја поделбата на зборовите на крајот од брајовиот дисплеј ====
-Доколку ова е вклучено, зборот што е преголем за прикажување на крајот од брајовиот дисплеј,  прикажува.
-Instead, there will be some blank space at the end of the display.
-When you scroll the display, you will be able to read the entire word.
-This is sometimes called "word wrap".
-Note that if the word is too large to fit on the display even by itself, the word must still be split.
+Доколку ова е вклучено, зборот што е преголем за прикажување на крајот од брајовиот дисплеј нема да биде прикажан.
+Тоа значи дека на крајот од дисплејот ќе остане празно место.
+Кога ќе скролате понатаму со дисплејот, тогаш ќе го најдете целосниот збор.
+Понекогаш ова се нарекува "без делење/прелом на зборот".
+Имајте на ум дека доколку самиот збор е до толку голем колку што ни целиот дисплеј не би можел да го собере, тогаш тој збор сепак мора да биде поделен.
 
-If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
-When you scroll the display, you will then be able to read the rest of the word.
+Доколку ова е исклучено, на дисплејот ќе се прикаже онолку колку што е можно од крајниот збор, а останатото ќе се префрли во другиот ред.
+Кога го скролате дисплејот, тогаш ќе бидете во состојба да го прочитате остатокот од зборот.
 
-Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+Вклучувањето на ова би можело да помогне за пофлуентно читање, но генерално оваа опција бара повеќе скролање.
 
-==== Focus context presentation ====
-This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
-Context information refers to the hierarchy of objects containing the focus.
-For example, when you focus a list item, this list item is part of a list.
-This list might be contained by a dialog, etc.
-Please consult the section about [object navigation #ObjectNavigation] for more information about the hierarchy that applies to objects in NVDA.
+==== Фокусирање на прикажаната содржина ====
+Оваа опција ви овозможува да одберете која информација од контекстот да ја прикаже НВДА на брајовиот дисплеј, во случај кога некој објект ќе биде во фокусот.
+Поимот информација од контекстот се однесува на хиерархијата од објекти што се во фокусот.
+На пример, кога ќе го поставите објектот на едно нешто од некоја листа, ова нешто во листата е само дел од таа листа.
+Оваа листа пак, може да биде дел од некој дијалог и тн.
+Ве молиме погледнете го одделот [објектна навигација #ObjectNavigation] за повеќе информации поврзани со хиерархијата во која се подредени објектите во НВДА.
 
-When set to fill display for context changes, NVDA will try to display as much context information as possible on the braille display, but only for the parts of the context that have changed.
-For the example above, this means that when changing focus to the list, NVDA will show the list item on the braille display.
-Furthermore, if there is enough space left on the braille display, NVDA will try to show that the list item is part of a list.
-If you then start moving through the list with your arrow keys, it is assumed that you are aware that you are still in the list.
-Thus, for the remaining list items you focus, NVDA will only show the focused list item on the display.
-In order for you to read the context again (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+Кога е нагоден на, пополни го екранот за промени во контекстот, НВДА ќе се обиде да прикаже што е можно повеќе информации од контекстот на брајовиот дисплеј, но само за оние делови од контекстот што веќе се промениле.
+На пример, ова значи дека кога ќе го префрлите фокусот на некоја листа, НВДА ќе го прикаже првото нешто во таа листа на брајовиот дисплеј.
+Дополнително, доколку има преостанато доволно простор на брајовиот дисплеј, НВДА ќе се обиде да покаже дека тоа нешто што го читате и припаѓа на некоја листа.
+Од овде доколку продолжите да се движите низ листата, битребало да знаете веќе дека сеуште се наоѓате во неа.
+Затоа кога ќе го поставите фокусот на преостанатите нешта во листата, НВДА ќе ги прикажува само нив.
+Со цел да ја препрочитате целата содржина што сте ја поминале, (да кажеме дека се наоѓате во некоја листа која што се наоѓа во некој дијалог и вие сакате да го прочитате него), потребно ќе ви е да скролате наназад со вашиот брајов дисплеј.
 
-When this option is set to always fill the display, NVDA will try to show as much context information as possible on the braille display, regardless of whether you have seen the same context information before.
-This has the advantage that NVDA will fit as much information as possible on the display.
-However, the downside is that there is always a difference in the position where the focus starts on the braille display.
-This can make it difficult to skim a long list of items, for example, as you will need to continually move your finger to find the start of the item.
-This was the default behavior for NVDA 2017.2 and before.
+Кога оваа опција е нагодена на, секогаш исполнувај го дисплејот, НВДА ќе се обиде да прикаже што е можно повеќе информации, без оглед на тоа дали некои од нив веќе сте ги прочитале.
+Предноста на ова е што НВДА наеднаш ќе прикаже максимален број на информации.
+сепак, лошата страна на ова е тоа што постојано почетокот од фокусот се наоѓа на разни места од дисплејот.
+Опцијава може да ја отежне прегледноста на подолгите листи, така што постојано ќе треба да го движите вашиот прст со цел да најдете каде започнуваат нештата од листата.
+Ова беше автоматски нагодено за НВДА 2017.2 и верзиите претходно.
 
-When you set the focus context presentation option to only show the context information when scrolling back, NVDA never shows context information on your braille display by default.
-Thus, in the example above, NVDA will display that you focused a list item.
-However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+Кога ќе ја нагодите опцијата за фокусирање на прикажаната содржина на прикажете ја информацијата од контекстот само при скролање наназад, НВДА никогаш нема да ги прикажува информациите од контекстот сам по себе .
+Од примерот погоре, можете да забележите дека НВДА ќе прикаже дека сте го поставиле фокусот на некое нешто од листата.
+Сепак, со цел да го прочитате целиот контекст (да речеме дека се наоѓате во некоја листа, а таа пак е дел од некој дијалог), потребно ќе биде да скролате назад на брајовиот дисплеј.
 
-To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+За да ја вклучувате/исклучувате опцијата фокусирање на прикажаната содржина од каде било, вемолиме поставете си сопствена команда користејќи го [дијалогот за команди за внес #InputGestures].
 
-+++ Keyboard Settings (NVDA+control+k) +++
-This dialog box is found in the Preferences menu, under "Keyboard settings...".
-It contains the following options:
++++ Тастатурни нагодувања (НВДА+контрол+k) +++
+Овој дијалошки прозорец се наоѓа во менито  за карактеристики, под "нагодувањето за тастатура..."
+Ги содржи следниве опции:
 
-==== Keyboard layout ====
-This combo box lets you choose what type of keyboard layout NVDA should use. Currently the two that come with NVDA are Desktop and Laptop.
+==== Тастатурен распоред ====
+Оваа кутија за избирање ви овозможува да одберете каков тип на тастатурен распоред да користи НВДА. Моментално двата што доаѓаат заедно со НВДА се десктоп тастатурен распоред и лаптоп тастатурен распоред.
 
-==== Use capslock as an NVDA modifier key ====
-If this checkbox is checked, capslock can be used as an NVDA modifier key.
+==== Користи го капслок како помошно копче за НВДА ====
+Доколку оваа кутија за означување е означена, капслок ќе се користи како помошно копче за НВДА.
 
-==== Use extended insert as an NVDA modifier key ====
-If this checkbox is checked, the extended insert key (usually found above the arrow keys, near home and end) can be used as an NVDA modifier key.
+==== Користи го вграденото инсерт копче како помошно копче за НВДА ====
+Доколку оваа кутија за означување е означена, вграденото инсерт копче (што вообичаено се наоѓа над стрелките, во близина на копчињата хом и енд) ќе работи како помошно копче за НВДА.
 
-==== Use numpad insert as an NVDA modifier key ====
-If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
+==== Користи го инсерт копчето од бројчаникот како помошно копче за НВДА ====
+Доколку оваа кутија за означување е означена, копчето инсерт од бројчаничката тастатура ќе работи како помошно копче за НВДА.
 
-If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
-Therefore, The Keyboard Settings dialog will display an error message if all keys are unselected when pressing Ok.
-After dismissing the error message, you must select at least one before being able to press Ok to dismiss the dialog properly.
-
-%kc:setting
-==== Speak Typed Characters ====
-Key: NVDA+2
-
-When enabled, NVDA will announce all characters you type on the keyboard.
+Ако не одберете ниту едно копче да работи како НВДА помошно копче, тогаш може да имате проблеми при користење на некои команди од НВДА.
+Затоа дијалогот за тастатурни нагодувања ќе прикаже порака на грешка доколку претиснете во ред, а не сте избрале ниту едно копче како помошно копче за НВДА.
+После отстранувањето на пораката на грешка, потребно ќе биде да означите барем едно од помошните копчиња, со цел да можете да претиснете на копчето во ред и да го затворите правилно овој дијалог.
 
 %kc:setting
-==== Speak Typed Words ====
-Key: NVDA+3
+==== Изговорај ги знаците што се пишуваат ====
+Команда: НВДА+2
 
-When enabled, NVDA will announce all words you type on the keyboard.
-
-==== Speech interrupt for typed characters ====
-If on, this option will cause speech to be interrupted each time a character is typed. This is on by default.
-
-==== Speech interrupt for Enter key ====
-If on, this option will cause speech to be interrupted each time the Enter key is pressed. This is on by default.
-
-==== Allow skim reading in Say All ====
-If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
-
-==== Beep if Typing Lowercase Letters when Caps Lock is On ====
-When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
-Generally, typing shifted letters with caps lock is unintentional and is usually due to not realizing that caps lock is enabled.
-Therefore, it can be quite helpful to be warned about this.
+Кога е вклучено, НВДА ќе ги изговара знаците како што ќе ги пишувате на тастатурата.
 
 %kc:setting
-==== Speak Command Keys ====
-Key: NVDA+4
+==== Изговорај ги зборовите што се пишуваат ====
+Команда: НВДА+3
 
-When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
+Кога е вклучено, НВДА ќе ги изговара зборовите како што ќе ги пишувате на тастатурата.
 
-==== Play sound for spelling errors while typing ====
-When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
-This option is only available if reporting of spelling errors is enabled in NVDA's [Document Formatting Settings #DocumentFormattingSettings] dialog.
+==== Прекини го изговорот при внесување на некој знак ====
+Ако е вклучена, оваа опција прави да се прекине говорот секогаш при претискање на некој знак. Под дифолт, ова е вклучено.
 
-==== Handle keys from other applications ====
-This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA. 
-This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the Unikey typing software as it will  cause incorrect character input.
+==== Прекини го изговорот при притискање на копчето ентер ====
+Доколку е вклучена, оваа опција прави да се прекине говорот при претискање на копчето ентер. Ова е вклучено под дифолт.
 
-+++ Mouse Settings (NVDA+control+m) +++[MouseSettings]
-The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...".
-It contains the following options:
+==== Дозволи непрекинато читање во изговори се ====
+Доколку е вклучено, одредени команди за навигација како што се (еднознаковните копчиња за брза навигација во модот за пребарување или движење нез некој документ по линија или по пасус) не го запираат говорот, туку само се префрлате на новото место и изговорот продолжува.
 
-==== Report Mouse Shape Changes ====
-A checkbox, that when checked means that NVDA will announce the shape of the mouse pointer each time it changes.
-The mouse pointer in Windows changes shape to convey certain information such as when something is editable, or when something is loading etc.
+==== Титкај доколку се пишуваат мали букви кога капслок е уклучен ====
+Кога е уклучено, ќе се слушне титкање ако држејќи го шифт се напише буква, додека капслок е уклучен.
+Во принцип, пишувањето на букви држејќи го шифт кога капслок е вклучен, најчесто е ненамерна појава и се случува доколку не забележите дека капслок веќе е уклучен.
+Затоа, би било доста корисно да бидете предупредени за оваа ненамерна грешка.
 
 %kc:setting
-==== Enable mouse tracking ====
-Key: NVDA+m
+==== Изговарај ги командните копчиња ====
+Команда: НВДА+4
 
-When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
+Кога е вклучено, НВДА ќе ги изговара сите копчиња што не се знаци тогаш кога ќе бидат претискани. Овде се вбројуваат и командните комбинации како контрол плус некоја друга буква на пример.
 
-==== Text unit resolution ====
-If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken.
-The options are character, word, line and paragraph.
+==== Титни кога ќе се јави грешка при пишување ====
+Кога е вклучено, краток зуечки звук ќе се појави тогаш кога ќе има грешка во зборот кој штотуку сте го напишале.
+Оваа опција е поврзана и достапна само доколку истовремено е активирано соопштувањето на грешките при пишување во дијалогот од [нагодувања за обликување на документи #DocumentFormattingSettings].
 
-==== Report role when mouse enters object ====
-If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves inside it.
+==== Користи ги командите од другите апликации ====
+Оваа опција му овозможува на корисникот да ги контролира апликациите со нивните сопствени команди како што се некои тастатури на допир или командите од виндовсовиот препознавач на глас, дури иако зададената команда била процесуирана од НВДА. 
+Оваа опција е вклучена под дифолт, но сепак некои корисници би сакале да ја исклучат, како оние што пишуваат виетнамски со унифицираниот тастатурен софтвер, бидејќи пишувањето со ова нешто, ќе предизвикува грешки при истото.
 
-==== Play audio coordinates when mouse moves ====
-Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
-The higher the mouse is on the screen, the higher the pitch of the beeps.
-The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
++++ Нагодувања за глувчето (НВДА+контрол+m) +++[MouseSettings]
+Дијалогот за нагодувањата за глувчето се наоѓа во подменито карактеристики, под опцијата "Нагодувања за глувчето...".
+Се состои од следниве опции:
 
-==== Brightness controls audio coordinates volume ====
-If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controlled by how bright the screen is under the mouse.
-This setting is unchecked by default.
-
-+++ Review Cursor Settings +++
-Found in the Preferences menu under "Review Cursor...".
-This dialog contains the following options:
+==== Соопшти ги промените кај курсорот од глувчето ====
+Кутија за означување, која доколку е означена прави НВДА да ги соопштува промените под курсорот од глувчето секогаш кога тие ќе се случат.
+Курсорот од глувчето во Виндовс ја менува својата форма за да пренесе одредени информации, како кога нешто може да се уреди, или пак нешто се вчитува и тн.
 
 %kc:setting
-==== Follow System Focus ====
-Key: NVDA+7
+==== Вклучи го следењето на глувчето ====
+Команда: НВДА+m
 
-When enabled, The review cursor will always be placed in the same object as the current system focus whenever the focus changes.
+Кога е вклучено, НВДА ќе го чита текстот што се наоѓа под курсорот од глувчето во тој момент, секогаш кога ќе го придвижите по екранот. Ова ќе ви помогне да пронајдете некои работи што се на екранот, користејќи го вашето физичко глувче, наместо да го барате истото користејќи ја објектната навигација.
 
-%kc:setting
-==== Follow System Caret ====
-Key: NVDA+6
+==== Резолуција на текстуалната единица ====
+Доколку го нагодите НВДА да го соопштува текстот што се наоѓа под глувчето кога го движите истото, оваа опција ви овозможува да одберете точно колку од текстот да ви биде прочитан.
+Можните опции се знак, збор, ред или пасус.
 
-When enabled, the review cursor will automatically be moved to the position of the System caret each time it moves.
+==== Соопшти ја улогата кога глувчето ќе се најде над некој објект ====
+Ако оваа кутија за означување е означена, НВДА ќе ја соопшти улогата (типот) на објектот штом курсорот од глувчето ќе се позиционира на него.
 
-==== Follow mouse cursor ====
-When enabled, the review cursor will follow the mouse as it moves.
+==== Титкај ги аудио-координатите кога се движи глувчето ====
+Означувајќи ја оваа кутија за означување, се предизвикува титкање од НВДА така како што се движи глувчето, со цел корисникот да знае во кој дел од екранот се наоѓа самиот курсор од глувчето.
+Колку што е погоре курсорот од глувчето во однос на екранот, толку повисок е тонот од титкањето.
+Колку полево, односно подесно се наоѓа курсорот од глувчето во однос на екранот, толку полево, односно подесно ќе го слушате титкањето (претпоставувајќи дека се користат стерео звучници или слушалки).
 
-==== Simple Review mode ====
-When enabled, NVDA will filter the hierarchy of objects that can be navigated to exclude objects that aren't of interest to the user; e.g. invisible objects and objects used only for layout purposes.
+==== Осветленоста ја контролира јачината на гласноста од аудио координатите ====
+Ако "титкањето на аудио-координатите додека се движи глувчето" кутијата за означување е означена, во тој случај, означувањето и на оваа кутија за означување ќе направи гласноста на тоа титкање да зависи од светлината на екранот.
+Ова нагодување не е означено под дифолт.
 
-To toggle simple review mode from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
-
-+++ Object Presentation Settings (NVDA+control+o) +++
-Found in the Preferences menu under "Object Presentation...".
-This dialog box contains the following options:
-
-==== Report Tool Tips ====
-A checkbox that when checked tells NVDA to report tool tips as they appear.
-Many Windows and controls show a small message (or tool tip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
-
-==== Report Help Balloons ====
-This checkbox when checked tells NVDA to report help balloons as they appear.
-Help Balloons are like tool tips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
-
-==== Report Object Shortcut Keys ====
-When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
-For example the File menu on a menu bar may have a shortcut key of alt+f.
-
-==== Report object position information ====
-This option lets you choose whether you wish to have an object's position (e.g. 1 of 4) reported when moving to the object with the focus or object navigation.
-
-==== Guess Object Position Information when unavailable ====
-If reporting of object position information is turned on, this option allows NVDA to guess object position information when it is otherwise unavailable for a particular control.
-
-When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
-
-==== Report Object descriptions ====
-Uncheck this checkbox if you don't wish to have the description reported along with objects.
++++ Нагодувања за курсорот за преглед +++
+Се наоѓа во подменито за карактеристики, во опцијата "курсор за преглед...".
+Овој дијалог ги содржи следниве опции:
 
 %kc:setting
-==== Progress bar output ====
-Key: NVDA+u
+==== Следи го системскиот фокус ====
+Команда: НВДА+7
 
-This option controls how NVDA reports progress bar updates to you.
+Кога е вклучено, курсорот за преглед секогаш ќе биде поставен врз истиот објект каде што е поставен и системскиот фокус, патем ќе го следи истиот секогаш кога тој ќе се придвижи.
 
-It has the following options:
-- Off: Progress bars will not be reported as they change.
-- Speak: This option tells NVDA to speak the progress bar in percentages. Each time the progress bar changes, NVDA will speak the new value.
-- Beep: This tells NVDA to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.
-- Beep and speak: This option tells NVDA to both beep and speak when a progress bar updates.
+%kc:setting
+==== Следи го системскиот курсор ====
+Команда: НВДА+6
+
+Кога е вклучено, курсорот за преглед автоматски ќе го следи системскиот курсор како што овој се движи.
+
+====Следи го курсорот од глувчето ====
+Кога е вклучено, курсорот за преглед ќе го следи курсорот од глувчето како што тој се движи.
+
+==== Мод за поедноставен преглед ====
+Кога е вклучено, НВДА ќе ја филтрира хиерархијата од објектите на кои може да им се пристапи, со цел да се отфрлат оние објекти што не се од некаков интерест за корисникот; на пр. скриените објекти или објектите користени само за пополнување на тастатурниот распоред.
+
+За да може да го вклучувате/исклучувате поедноставениот мод за преглед од каде било, ве молиме направете си корисничка комбинацијаp, користејќи го [дијалогот за внес на команди #InputGestures].
+
++++ Нагодувања за приказ на објекти (НВДА+контрол+o) +++
+Се наоѓа во подменито карактеристики, во опцијата "приказ на објекти...".
+Овој дијалошки прозорец ги има следниве опции:
+
+==== Соопштувај ги видовите алатки ====
+Кутија за означување, која откако ќе ја означите, прави НВДА да ги изговара видовите алатки како што ќе наидат.
+Многу често во Виндовс и во некои контроли има кратки пораки (т.н. видови на алатки), кои НВДА ќе ги прочита кога ќе го поставите курсорот од глувчето врз нив, или понекогаш кога ќе го поставите фокусот над нив.
+
+==== Соопшти ги балончињата за помош ====
+Кога оваа кутија за означување е означена, прави НВДА да ги изговара балончињата за помош откако тие ќе бидат прикажани.
+Балончињата за помош се слични со видовите алатки, но од нив се разликуваат во должината на текстот и се поврзани со системските известувања како известување дека мрежниот кабел бил исклучен, или да ве известат за проблеми со Виндовс заштитата.
+
+==== Соопштувај ги кратенките за објектите ====
+Кога оваа кутија за означување е означена, изговарајќи го објектот или контролата, НВДА истовремено ќе ја соопшти и кратенката направена за неа.
+На пример, фаел менито на лентата за мени би можело да содржи кратенка алт+f.
+
+==== Соопшти ги информациите поврзани со позицијата на објектот ====
+Оваа опција ви овозможува да одберете дали сакате да ја добиете позицијата од објектот (на пр. 1 од 4) соопштена кога се движите низ објектите со фокусот, односно објектната навигација.
+
+==== Претпостави ја позицијата за објектот кога таа е недостапна ====
+Доколку соопштувањето на информацијата за објектот е вклучено, оваа опција му овозможува на НВДА да ја претпостави информацијата за позиционираноста на објектот, која во друг случај е недостапна за одредени контроли.
+
+Кога е уклучена, НВДА ќе ги соопштува информациите за повеќе контроли, како што се менијата и лентите за алатки, сепак овие информации би можеле да бидат делумно непрецизни.
+
+==== Соопштувај го описот за објектите ====
+Неозначувајте ја оваа кутија за означување ако несакате да ви биде даден опис заедно со соопштувањето на името на објектот.
+
+%kc:setting
+==== Приказ на лентата за прогрес ====
+Команда: НВДА+u
+
+Оваа опција го контролира начинот на кој НВДА ви го соопштува процесот за нештата во прогрес.
+
+Во неа ги има следните можности:
+- исклучено: прогресот нема да биде соопштуван како што се менува.
+- Изговарај: Со ова, НВДА во проценти ќе го искажува процесот кој е во прогрес. Секогаш кога ќе се јави промена во прогресот, НВДА ќе ја изговори таа вредност.
+- титкај: Со ова, НВДА ќе титка секој пат кога ќе има промени во прогресот. Колку што ќе биде повисок тонот од титкањето, толку поблизу сте до комплетирањето на процесот.
+- Титкај и изговарај: Со ова, НВДА истовремено ќе го има и титкањето и изговорот на процентите при соопштување на процесите во прогрес.
 -
 
-==== Report background progress bars ====
-This is an option that, when checked, tells NVDA to keep reporting a progress bar, even if it is not physically in the foreground.
-If you minimize or switch away from a window that contains a progress bar, NVDA will keep track of it, allowing you to do other things while NVDA tracks the progress bar.
+==== Соопшти го прогресот што се одвива во позадина ====
+Ова е опција, која доколку е означена, прави НВДА да го соопштува прогресот што е во траење, дури иако истиот не е на преден план на екранот.
+Доколку го минимизирате или се префрлите на груго прозорче од она на кое што постои процес кој е во прогрес, НВДА ќе ве известува за него, дозволувајќи ви истовремено да работите нешто друго и да бидете известени за она што се случува со прогресот.
 
 %kc:setting
-==== Report dynamic content changes ====
-Key: NVDA+5
+==== Соопштувај ги промените во динамичната содржина ====
+Команда: НВДА+5
 
-Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
+Го вклучува/исклучува соопштувањето на новата содржина во одредени објекти како што се терминалите и историските контроли од програмите за разговор.
 
-==== Play a sound when auto-suggestions appear ====
-Toggles announcement of appearance of auto-suggestions, and if enabled, NVDA will play a sound to indicate this.
-Auto-suggestions are lists of suggested entries based on text entered into certain edit fields and documents.
-For example, when you enter text into the search box in Start menu in Windows Vista and later, Windows displays a list of suggestions based on what you typed.
-For some edit fields such as search fields in various Windows 10 apps, NVDA can notify you that a list of suggestions has appeared when you type text.
-The auto-suggestions list will close once you move away from the edit field, and for some fields, NVDA can notify you of this when this happens.
+==== Титни кога ќе се појави авто-сугестија ====
+Го вклучува/исклучува соопштувањето на изгледот од авто-сугестиите и доколку е вклучено, НВДА ќе отсвири звук за да укаже на ова.
+Авто-сугестиите се листа што се состои од предложени веќе пополнети полиња за пишување, кои се засноваат врз претходно напишаниот текст, односно претходно пополнетиот документ.
+На пример, кога ќе внесете некој текст во кутијата за пребарување во старт-менито, во Виндовс Виста и подоцна, Самиот Виндовс предложува листа на термини за пребарување, засновани на она што претходно сте го барале.
+За некои полиња за пишување/уредување, како во некои програми во Виндовс10, НВДА самиот може да ве извести за листата од предлози што се појавува, тогаш кога го пишувате текстот.
+Листата за авто-сугестија ќе се затвори, во тој момент кога ќе се тргнете од полето за пишување/уредување на текст, а за некои од овие полиња, НВДА дури и ќе ве информира за тоа кога ова ќе се случи.
 
 +++ Input Composition Settings +++
 The Input Composition Settings dialog can be found under the Preferences menu.
