@@ -1,5 +1,5 @@
 #IAccProcServer.py:
-#A part of NonVisual Desktop Access (NVDA)
+	#A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2017 NV Access Limited, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -38,8 +38,9 @@ PROPID_ACC_NAV_FIRSTCHILD = GUID("{cfd02558-557b-4c67-84f9-2a09fce40749}")
 PROPID_ACC_NAV_LASTCHILD = GUID("{302ecaa5-48d5-4f8d-b671-1a8d20a77832}")
 
 class IAccPropServer_Impl(COMObject):
-	"""Base class for implementing a COM interace for AccPropServer.
-	Please override the _GetPropValue method, not GetPropValue, because GetPropValue wraps _getPropValue to catch and log exceptions (Which for some reason NVDA's logger misses when they occur in GetPropValue).
+	"""Base class for implementing a COM interface for AccPropServer.
+	Please override the _GetPropValue method, not GetPropValue.
+	GetPropValue wraps _getPropValue to catch and log exceptions (Which for some reason NVDA's logger misses when they occur in GetPropValue).
 	"""
 	
 	_com_interfaces_ = [
@@ -57,7 +58,14 @@ class IAccPropServer_Impl(COMObject):
 
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
 		"""use this method to implement GetPropValue. It  is wrapped by the callback GetPropValue to handle exceptions.
-		See  https://msdn.microsoft.com/en-us/library/windows/desktop/dd373681(v=vs.85).aspx for instructions.
+		See https://msdn.microsoft.com/en-us/library/windows/desktop/dd373681(v=vs.85).aspx for instructions on implementing accPropServers.
+		See https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx for instructions specifically about this method.
+		@param pIDString: Contains a string that identifies the property being requested.
+		@type pIDString: A weird comtypes thing you should not mess with.
+		@param dwIDStringLen: Specifies the length of the identity string specified by the pIDString parameter.
+		@type dwIDStringLen: technically dwordd
+		@param idProp: Specifies a GUID indicating the desired property.
+		@type idProp: One of the above GUIDS
 		"""
 		raise NotImplementedError
 
