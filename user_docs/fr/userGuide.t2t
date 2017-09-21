@@ -59,11 +59,9 @@ Ceci s'applique aussi bien à la version originale qu'aux copies modifiées de c
 Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://www.gnu.org/licenses/gpl.html].
 
 + Configuration système requise +
-- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 et Windows 10 (y compris les versions serveur).
- - Pour Windows XP 32 bits, NVDA requiert le service pack 2 ou plus récent.
- - Pour Windows Server 2003, NVDA requiert le service pack 1 ou plus récent.
- - Pour Windows Vista, NVDA requiert le Service Pack 2 et la mise à jour [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
- Les deux devraient être installés si toutes les mises à jours disponibles ont été appliquées via Windows Update.
+- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows 7, Windows 8, Windows 8.1 et Windows 10 (y compris les versions serveur).
+ - Pour Windows 7, NVDA requiert le Service Pack 1 ou au-delà.
+ - Pour Windows Server 2008 R2, NVDA requiert le Service Pack 1 ou au-delà.
 - Mémoire : 256 Mo de RAM ou plus.
 - Vitesse processeur : 1.0 GHz ou plus.
 - Environ 90 MO d'espace disque.
@@ -506,7 +504,7 @@ Les touches suivantes permettent d'aller à l'élément suivant. En les combinan
 - m : cadre
 - g : graphique
 - d : région
-- o : objet embarqué
+- o : objet embarqué (lecteur audio et vidéo, application, dialogue etc.)
 - 1 ... 6 : Titres 1 ... 6.
 - a: annotation (commentaire, révision de l'éditeur, etc.)
 - w: fautes d'orthographe
@@ -525,7 +523,7 @@ Pour activer ou désactiver la navigation rapide pour le document courant, press
 
 ++ La liste d'éléments ++
 La liste d'éléments donne accès à une liste de différents types d'éléments dans le document, de manière appropriée à l'application.
-Par exemple, dans les navigateurs web, la liste d'éléments peut afficher des liens, des titres ou des régions.
+Par exemple, dans les navigateurs web, la liste d'éléments peut afficher les liens, les titres, les champs de formulaire, les boutons ou les régions.
 Des boutons radio vous permettent de choisir entre les différents types d'éléments. 
 Une zone d'édition est également présente dans le dialogue, elle vous permet de filtrer la liste pour faciliter la recherche d'un élément particulier dans la page. 
 Quand vous avez choisi un élément, des boutons vous permettent de vous y rendre ou de l'activer.
@@ -535,9 +533,10 @@ Quand vous avez choisi un élément, des boutons vous permettent de vous y rendr
 %kc:endInclude
 
 ++ Les objets embarqués ++
-Certaines pages peuvent inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java, tout comme des applications ou des dialogues.
+Certaines pages peuvent inclure du contenu riche utilisant des technologies comme Adobe Flash, Oracle Java et HTML5, tout comme des applications ou des dialogues.
 Quand il en rencontre dans un document, NVDA annonce "objet embarqué", "application", ou "dialogue" respectivement.
-Vous pouvez actionner "entrée" sur ces objets pour interagir avec eux. 
+Vous pouvez vous y rendre rapidement en utilisant les touches de navigation rapide pour objets embarqués o et maj+o.
+Pour interagir avec ces objets, vous pouvez presser Entrer sur eux.
 Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application. 
 Une touche de commande permet de retourner à la page contenant l'objet embarqué.
 %kc:beginInclude

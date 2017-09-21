@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-14 08:17+1000\n"
-"PO-Revision-Date: 2017-08-17 07:13-0300\n"
+"POT-Creation-Date: 2017-09-15 00:10+1000\n"
+"PO-Revision-Date: 2017-09-15 19:49-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clcaul@live.com>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever97@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Basepath: e:/NVDA\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: source\n"
@@ -1040,6 +1040,10 @@ msgstr "Modo de foco"
 msgid "Browse mode"
 msgstr "Modo de navegação"
 
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "Sem rótulo"
+
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
 msgstr "Desligada navegação com caracteres"
@@ -1532,6 +1536,16 @@ msgstr "Lin&ques"
 #. document formatting settings dialog.
 msgid "&Headings"
 msgstr "Cabeçal&hos"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Campos de &formulário"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Botão"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -9192,11 +9206,6 @@ msgstr "Fó&rmulas"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "Campos de &formulário"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "&Planilhas"
 
@@ -10187,15 +10196,22 @@ msgstr "Cabeçalho principal"
 msgid "Text frame"
 msgstr "Freime de texto"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "comentário: {text} por {author} em {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} em {date}"
 
-#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "escrito: {text}"
