@@ -11,6 +11,7 @@
 - In web browsers, the Elements List can now list form fields and buttons. (#588)
 - Initial support for Windows 10 on ARM64. (#7508)
 - Early support for reading and interactive navigation of mathematical content for Kindle books with accessible math. (#7536)
+- Added support for Azardi e-book reader. (#5848)
 
 
 == Changes ==
@@ -29,6 +30,10 @@
 - In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
 - Braille displays are now updated when typing Arabic characters in a left-aligned WordPad document (#511).
 - Accessible labels for controls in Mozilla Firefox are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- On windows 10 Creaters Update, NVDA can again access Firefox after a restart of NVDA. (#7269)
+- When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
+- It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
+- The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
 
 
 == Changes for Developers ==
