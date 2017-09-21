@@ -109,14 +109,16 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	@property
 	def label(self):
-		if self.itemType == "landmark":
-			attrs = self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])
-			name = attrs.get("name", "")
-			if name:
-				name += " "
-			return name + aria.landmarkRoles[attrs["landmark"]]
-		else:
-			return super(VirtualBufferQuickNavItem,self).label
+		attrs = {}
+
+		def propertyGetter(prop):
+			if not attrs:
+				# Lazily fetch the attributes the first time they're needed.
+				# We do this because we don't want to do this if they're not needed at all.
+				attrs.update(self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1]))
+			return attrs.get(prop)
+
+		return self._getLabelForProperties(propertyGetter)
 
 	def isChild(self,parent): 
 		if self.itemType == "heading":
@@ -382,6 +384,12 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		self.rootIdentifiers[self.rootDocHandle, self.rootID] = self
 
 	def prepare(self):
+		if not self.rootNVDAObject.appModule.helperLocalBindingHandle:
+			# #5758: If NVDA starts with a document already in focus, there will have been no focus event to inject nvdaHelper yet.
+			# So at very least don't try to prepare a virtualBuffer as it will fail.
+			# The user will most likely need to manually move focus away and back again to allow this virtualBuffer to work. 
+			log.debugWarning("appModule has no binding handle to injected code, can't prepare virtualBuffer yet.")
+			return
 		self.shouldPrepare=False
 		self.loadBuffer()
 
