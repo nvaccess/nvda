@@ -14,6 +14,7 @@ import sayAllHandler
 import api
 import review
 from baseObject import ScriptableObject
+from documentBase import TextContainerObject
 import braille
 import speech
 import config
@@ -23,7 +24,7 @@ import textInfos
 import controlTypes
 from logHandler import log
 
-class EditableText(ScriptableObject):
+class EditableText(TextContainerObject,ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
 	This does not handle the selection change keys.
 	To have selection changes reported, the object must notify of selection changes.

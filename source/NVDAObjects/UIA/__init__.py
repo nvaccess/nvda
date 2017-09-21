@@ -260,9 +260,11 @@ class UIATextInfo(textInfos.TextInfo):
 			self.collapse(True)
 		elif position==textInfos.POSITION_ALL:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
-		elif isinstance(position,UIA):
+		elif isinstance(position,UIA) or isinstance(position,UIAHandler.IUIAutomationElement):
+			if isinstance(position,UIA):
+				position=position.UIAElement
 			try:
-				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position)
 			except COMError:
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range

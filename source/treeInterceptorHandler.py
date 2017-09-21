@@ -6,6 +6,7 @@
 
 from logHandler import log
 import baseObject
+import documentBase
 import api
 import review
 import textInfos
@@ -133,7 +134,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		"""Prepares this treeInterceptor so that it becomes ready to accept event/script input."""
 		raise NotImplementedError
 
-class DocumentTreeInterceptor(TreeInterceptor):
+class DocumentTreeInterceptor(documentBase.TextContainerObject,TreeInterceptor):
 	"""A TreeInterceptor that supports document review."""
 
 	#: Indicates if the text selection is anchored at the start.
@@ -145,12 +146,6 @@ class DocumentTreeInterceptor(TreeInterceptor):
 	#: If the selection is anchored at the end or there is no information this is C{False}.
 	#: @type: bool
 	isTextSelectionAnchoredAtStart=True
-
-	def _get_TextInfo(self):
-		raise NotImplementedError
-
-	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
 
 class RootProxyTextInfo(textInfos.TextInfo):
 

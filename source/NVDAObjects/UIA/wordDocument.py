@@ -9,7 +9,7 @@ import eventHandler
 import controlTypes
 import speech
 import api
-from UIABrowseMode import UIABrowseModeDocument
+from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation
 from . import UIA, UIATextInfo
 
 class WordDocumentTextInfo(UIATextInfo):
@@ -124,6 +124,13 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
 
-class WordDocument(WordDocumentNode):
+	def _get_role(self):
+		role=super(WordDocumentNode,self).role
+		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
+		if role==controlTypes.ROLE_UNKNOWN:
+			role=controlTypes.ROLE_EDITABLETEXT
+		return role
+
+class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode):
 	treeInterceptorClass=WordBrowseModeDocument
 	shouldCreateTreeInterceptor=False
