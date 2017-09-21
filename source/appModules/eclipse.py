@@ -30,10 +30,6 @@ class AutocompletionListView(IAccessible):
 	def _get_name(self):
 		return AUTOCOMPLETION_LIST_NAME
 
-	def event_hide(self):
-		# NVDA filters the hide events, even requesting them, so it doesn't work:
-		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
-
 class AutocompletionListItem(IAccessible):
 
 	def event_selection(self):
@@ -87,7 +83,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self,processID,appName=None):
 		super(AppModule,self).__init__(processID,appName)
-		eventHandler.requestEvents("hide", processID, self.LIST_VIEW_CLASS)
+		eventHandler.requestEvents("destroy", processID, "#32770")
 
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "SysTreeView32" and obj.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_CHECKBOX) and controlTypes.STATE_FOCUSED not in obj.states:
@@ -103,7 +99,7 @@ class AppModule(appModuleHandler.AppModule):
 			if (obj.role == controlTypes.ROLE_LISTITEM
 				and obj.parent.parent.parent.role == controlTypes.ROLE_DIALOG
 				and obj.parent.parent.parent.parent.parent == api.getDesktopObject()
-				and obj.parent.parent.parent.parent.next.firstChild.role == controlTypes.ROLE_BUTTON):
+				and obj.parent.parent.parent.parent.simpleNext.role == controlTypes.ROLE_BUTTON):
 				clsList.insert(0, AutocompletionListItem)
 		except:
 			pass
@@ -112,7 +108,7 @@ class AppModule(appModuleHandler.AppModule):
 			if (obj.role == controlTypes.ROLE_LIST
 				and obj.parent.parent.role == controlTypes.ROLE_DIALOG
 				and obj.parent.parent.parent.parent == api.getDesktopObject()
-				and obj.parent.parent.parent.next.firstChild.role == controlTypes.ROLE_BUTTON):
+				and obj.parent.parent.parent.simpleNext.role == controlTypes.ROLE_BUTTON):
 				clsList.insert(0, AutocompletionListView)
 		except:
 			pass
