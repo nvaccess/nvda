@@ -21,6 +21,7 @@ import winKernel
 import winUser
 import eventHandler
 from logHandler import log
+import UIAUtils
 
 from comtypes.gen.UIAutomationClient import *
 
@@ -333,7 +334,7 @@ class UIAHandler(COMObject):
 		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
 		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
 		if appModule.appName==WDAG_PROCESS_NAME:
-			condition=self.clientObject.CreatePropertyCondition(UIA_ClassNamePropertyId,u'ApplicationFrameWindow')
+			condition=UIAUtils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:[u'ApplicationFrameWindow',u'CabinetWClass']})
 			walker=self.clientObject.createTreeWalker(condition)
 		else:
 			# Not WDAG, just walk up to the nearest valid windowHandle
