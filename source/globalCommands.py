@@ -2036,14 +2036,14 @@ class GlobalCommands(ScriptableObject):
 		else:
 			config.conf.enableProfileTriggers()
 			# Explicitly trigger profiles for the current application.
-			mod=api.getForegroundObject().appModule
+			mod = api.getForegroundObject().appModule
 			trigger = mod._configProfileTrigger = appModuleHandler.AppProfileTrigger(mod.appName)
 			trigger.enter()
 			# Translators: The message announced when re-enabling all configuration profile triggers.
 			state = _("Configuration profile triggers enabled")
 		ui.message(state)
 	# Translators: Input help mode message for toggle configuration profile triggers command.
-	script_toggleConfigProfileTriggers.__doc__=_("Disables or enables all configuration profile triggers. Disabling takes effect until NVDA is restarted")
+	script_toggleConfigProfileTriggers.__doc__=_("Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted")
 	script_toggleConfigProfileTriggers.category=SCRCAT_CONFIG
 
 	def script_interactWithMath(self, gesture):
