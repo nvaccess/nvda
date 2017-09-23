@@ -134,26 +134,26 @@ class _RectMixin:
 	def toLogical(self, hwnd):
 		left,top=self.topLeft.toLogical(hwnd)
 		right,bottom=self.bottomRight.toLogical(hwnd)
-		if type(self) is Location:
+		if isinstance(self, Location):
 			return Location(left,top,right-left,bottom-top)
 		return Rect(left,top,right,bottom)
 
 	def toPhysical(self, hwnd):
 		left,top=self.topLeft.toPhysical(hwnd)
 		right,bottom=self.bottomRight.toPhysical(hwnd)
-		if type(self) is Location:
+		if isinstance(self, Location):
 			return Location(left,top,right-left,bottom-top)
 		return Rect(left,top,right,bottom)
 
 	def toClient(self, hwnd):
 		left, top =self.topLeft.toClient(hwnd)
-		if type(self) is Location:
+		if isinstance(self, Location):
 			return Location(left, top, self.width, self.height)
 		return Rect(left, top, left+self.width, top+self.height)
 
 	def toScreen(self, hwnd):
 		left,top=self.topLeft.toScreen(hwnd)
-		if type(self) is Location:
+		if isinstance(self, Location):
 			return Location(left, top, self.width, self.height)
 		return Rect(left, top, left+self.width, top+self.height)
 
@@ -237,7 +237,7 @@ class _RectMixin:
 		if not isinstance(other,_RECT_CLASSES):
 			return NotImplemented
 		left,top,right,bottom=self.left-other.left,self.top-other.top,self.right-other.right,self.bottom-other.bottom
-		if type(self) is Location:
+		if isinstance(self, Location):
 			return Location(left,top,right-left,bottom-top)
 		return Rect(left,top,right,bottom)
 
@@ -261,7 +261,7 @@ class _RectMixin:
 		bottom=min(self.bottom,other.bottom)
 		if left>right or top>bottom:
 			left=top=right=bottom=0
-		if type(self) is Location:
+		if isinstance(self, Location):
 			return Location(left,top,right-left,bottom-top)
 		return Rect(left,top,right,bottom)
 
