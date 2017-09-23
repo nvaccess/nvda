@@ -85,7 +85,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 class AutocompletionListItem(IAccessible):
 
 	def event_selection(self):
-		# Fixme: I don't know if it is the correct way to do this.
+		# This is to avoid duplicated selection events:
 		if not self.appModule.selectedItem:
 			api.getDesktopObject().objectWithFocus().event_suggestionsOpened()
 
