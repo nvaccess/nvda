@@ -232,6 +232,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	// Defaults.
 	this->shouldDisableTableHeaders = false;
 	this->hasEncodedAccDescription = false;
+	this->canDetectLabelVisibility=false;
 
 	IServiceProvider* serv = NULL;
 	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
@@ -258,6 +259,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	iaApp = NULL;
 
 	if (wcscmp(toolkitName, L"Gecko") == 0) {
+		this->canDetectLabelVisibility=true;
 		if (wcsncmp(toolkitVersion, L"1.", 2) == 0) {
 			if (wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0) {
 				// Gecko 1.9.2.x.
@@ -279,11 +281,11 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-bool isLabelVisible(IAccessible2* acc) {
+bool isLabelVisible(IAccessible2* pacc2) {
 	VARIANT child, target;
 	child.vt = VT_I4;
 	child.lVal = 0;
-	if (acc->accNavigate(NAVRELATION_LABELLED_BY, child, &target) != S_OK)
+	if (pacc2->accNavigate(NAVRELATION_LABELLED_BY, child, &target) != S_OK)
 		return false;
 	IAccessible2* targetAcc;
 	HRESULT res;
@@ -533,11 +535,31 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	const long childCount = getChildCount(isAriaHidden, pacc);
 
 	const bool isImgMap = role == ROLE_SYSTEM_GRAPHIC && childCount > 0;
+	IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name");
+	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
+	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
 	const bool nameIsContent = isEmbeddedApp
-		|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
-		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
-
+		|| role == ROLE_SYSTEM_LINK 
+		|| role == ROLE_SYSTEM_PUSHBUTTON 
+		|| role == IA2_ROLE_TOGGLE_BUTTON 
+		|| role == ROLE_SYSTEM_MENUITEM 
+		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) 
+		|| (role == ROLE_SYSTEM_TEXT && !isEditable) 
+		|| role == IA2_ROLE_HEADING 
+		|| role == ROLE_SYSTEM_PAGETAB 
+		|| role == ROLE_SYSTEM_BUTTONMENU;
+	// Whether this node has a visible label somewhere else in the tree
+	const bool labelVisible = canDetectLabelVisibility // Not all browsers support getting a node's labelledBy node
+		&& nameIsExplicit && name && name[0] //this node must actually have an explicit name, and not be just an empty string
+		&&(!nameIsContent||role==ROLE_SYSTEM_TABLE) // We only need to know if the name won't be used as content or if it is a table (for table summary)
+		&&isLabelVisible(pacc); // actually do the check
+	// If the node is explicitly labeled for accessibility, and we haven't used the label as the node's content, and the label does not visibly appear anywhere else in the tree (E.g. aria-label on an edit field)
+	// then ensure that the label is always reported along withe the node
+	// We must exclude tables from this though as table summaries / captions are handled very specifically
+	if(canDetectLabelVisibility&&nameIsExplicit&&!nameIsContent&&(role!=ROLE_SYSTEM_TABLE)&&!labelVisible) {
+		parentNode->addAttribute(L"alwaysReportName",L"true");
+	}
 
 	IAccessibleText* paccText=NULL;
 	IAccessibleHypertext* paccHypertext=NULL;
@@ -581,7 +603,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			|| isEmbeddedApp
 			|| role == ROLE_SYSTEM_OUTLINE
 			|| role == ROLE_SYSTEM_EQUATION
-			|| (nameIsContent && (IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true")
+			|| (nameIsContent && nameIsExplicit)
 		) {
 			renderChildren = false;
 		}
@@ -668,7 +690,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 				(!description.empty() && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, description))) ||
 				// If there is no caption, the summary (if any) is the name.
 				// There is no caption if the label isn't visible.
-				(name && !isLabelVisible(pacc) && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
+				(name && !labelVisible && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
 			) {
 				if(!locale.empty()) tempNode->addAttribute(L"language",locale);
 				previousNode = tempNode;

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-14 08:17+1000\n"
-"PO-Revision-Date: 2017-08-10 16:24+0100\n"
+"POT-Creation-Date: 2017-09-15 00:10+1000\n"
+"PO-Revision-Date: 2017-09-07 16:16+0200\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1039,6 +1039,10 @@ msgstr "mod fokusa"
 msgid "Browse mode"
 msgstr "Mod pregleda"
 
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "neobilježeno"
+
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
 msgstr "Brzo kretanje je isključeno"
@@ -1531,6 +1535,16 @@ msgstr "link&ovi"
 #. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Naslovi"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Polja obrazca"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Gumbi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -9208,11 +9222,6 @@ msgstr "&formule"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "Polja obrazca"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "&radni listovi"
 
@@ -10198,15 +10207,22 @@ msgstr "Primarno zaglavlje"
 msgid "Text frame"
 msgstr "Tekstualni okvir"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentar: {text} od strane {author} datuma {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} datuma {date}"
 
-#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "pravopis: {text}"
