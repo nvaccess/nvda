@@ -17,92 +17,89 @@ class Point(namedtuple("Point",("x","y"))):
 	"""Represents a point on the screen."""
 
 	def __add__(self,other):
-		if not isinstance(other,_POINT_CLASSES):
+		"""Returns a new L{Point} with its coordinates representing the additions of the original x and y coordinates."""
+		if not isinstance(other,POINT_CLASSES):
 			return NotImplemented
 		return Point((self.x+other.x),(self.y+other.y))
 
 	def __radd__(self,other):
+		"""Returns a new L{Point} with x = self.x + other.x and y = self.y + other.y."""
 		return self.__add__(other)
 
-	def __lt__(self, other):
+	def __sub__(self,other):
+		if not isinstance(other,POINT_CLASSES):
+			return NotImplemented
+		return Point((self.x-other.x),(self.y-other.y))
+
+	def __rsub__(self,other):
+		return self.__sub__(other)
+
+	def __lt__(self,other):
 		"""
 		Returns whether self is less than other.
-		This first compares y, than x coordinates.
+		This first compares y, then x coordinates.
 		For example: (x=4,y=3) < (x=3,y=4) because self.y is less than other.y.
-		To compare in opposite order (i.e. compare x, than y), use tuple(self) < tuple(other)
+		To compare in opposite order (i.e. compare x, then y), use tuple(self) < tuple(other)
 		"""
-		if not isinstance(other,_POINT_CLASSES):
+		if not isinstance(other,POINT_CLASSES):
 			try:
 				other=toPoint(other)
 			except ValueError:
 				return False
 		return (self.y, self.x) < (other.y, other.x)
 
-	def __le__(self, other):
+	def __le__(self,other):
 		"""
 		Returns whether self is less than or equal to other.
-		This first compares y, than x coordinates.
+		This first compares y, then x coordinates.
 		For example: (x=4,y=3) < (x=3,y=4) because self.y is less than other.y.
-		To compare in opposite order (i.e. compare x, than y), use tuple(self) <= tuple(other)
+		To compare in opposite order (i.e. compare x, then y), use tuple(self) <= tuple(other)
 		"""
-		if not isinstance(other,_POINT_CLASSES):
+		if not isinstance(other,POINT_CLASSES):
 			try:
 				other=toPoint(other)
 			except ValueError:
 				return False
 		return (self.y, self.x) <= (other.y, other.x)
 
-	def __gt__(self, other):
+	def __gt__(self,other):
 		"""
 		Returns whether self is greater than other.
-		This first compares y, than x coordinates.
+		This first compares y, then x coordinates.
 		For example: (x=3,y=4) > (x=4,y=3) because self.y is greater than other.y.
-		To compare in opposite order (i.e. compare x, than y), use tuple(self) > tuple(other)
+		To compare in opposite order (i.e. compare x, then y), use tuple(self) > tuple(other)
 		"""
-		if not isinstance(other,_POINT_CLASSES):
+		if not isinstance(other,POINT_CLASSES):
 			try:
 				other=toPoint(other)
 			except ValueError:
 				return False
 		return (self.y, self.x) > (other.y, other.x)
 
-	def __ge__(self, other):
+	def __ge__(self,other):
 		"""
 		Returns whether self is greater than or equal to other.
-		This first compares y, than x coordinates.
+		This first compares y, then x coordinates.
 		For example: (x=3,y=4) > (x=4,y=3) because self.y is greater than other.y.
-		To compare in opposite order (i.e. compare x, than y), use tuple(self) >= tuple(other)
+		To compare in opposite order (i.e. compare x, then y), use tuple(self) >= tuple(other)
 		"""
-		if not isinstance(other,_POINT_CLASSES):
+		if not isinstance(other,POINT_CLASSES):
 			try:
 				other=toPoint(other)
 			except ValueError:
 				return False
 		return (self.y, self.x) >= (other.y, other.x)
 
-	def __eq__(self, other):
-		if not isinstance(other,_POINT_CLASSES):
+	def __eq__(self,other):
+		if not isinstance(other,POINT_CLASSES):
 			try:
 				other=toPoint(other)
 			except ValueError:
 				return False
 		return self.x==other.x and self.y==other.y
 
-	def __neq__(self, other):
-		if not isinstance(other,_POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
-		return self.x!=self.x or self.y!=other.y
-
-	def __sub__(self,other):
-		if not isinstance(other,_POINT_CLASSES):
-			return NotImplemented
-		return Point((self.x-other.x),(self.y-other.y))
-
-	def __rsub__(self,other):
-		return self.__sub__(other)
+	def __neq__(self,other):
+		return not (self==other)
 
 	def toPOINT(self):
 		"""Converts self to a L{ctypes.wintypes.POINT}"""
@@ -170,10 +167,10 @@ class _RectMixin:
 		return Point((self.left+self.right)/2, (self.top+self.bottom)/2)
 
 	def __contains__(self,other):
-		"""Returns whether other is a part of self."""
-		if isinstance(other,_POINT_CLASSES):
+		"""Returns whether other is a part of this rectangle."""
+		if isinstance(other,POINT_CLASSES):
 			return other.x >= self.left < self.right and other.y >= self.top < self.bottom
-		if isinstance(other,_RECT_CLASSES):
+		if isinstance(other,RECT_CLASSES):
 			return self>other
 		try:
 			other=toRect(other)
@@ -181,60 +178,55 @@ class _RectMixin:
 			return False
 		return self>other
 
-	def __lt__(self, other):
-		"""Returns whether self is a subset of other (i.e. whether all points in self are contained by other)."""
-		if not isinstance(other,_RECT_CLASSES):
+	def __lt__(self,other):
+		"""Returns whether this rectangle is a subset of other (i.e. whether all points in this rectangle are contained by other)."""
+		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRect(other)
 			except ValueError:
 				return False
 		return self<=other and self!=other
 
-	def __le__(self, other):
-		"""Returns whether self is a subset of or equal to other."""
-		if not isinstance(other,_RECT_CLASSES):
+	def __le__(self,other):
+		"""Returns whether this rectangle is a subset of or equal to other."""
+		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRect(other)
 			except ValueError:
 				return False
 		return self.left >= other.left and self.top >= other.top and self.right <= other.right and self.bottom <= other.bottom
 
-	def __gt__(self, other):
-		"""Returns whether self is a superset of other (i.e. whether all points of other are contained by self)."""
-		if not isinstance(other,_RECT_CLASSES):
+	def __gt__(self,other):
+		"""Returns whether this rectangle is a superset of other (i.e. whether all points of other are contained by this rectangle)."""
+		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRect(other)
 			except ValueError:
 				return False
 		return self>=other and self!=other
 
-	def __ge__(self, other):
+	def __ge__(self,other):
 		"""Returns whether self is a superset of or equal to other."""
-		if not isinstance(other,_RECT_CLASSES):
+		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRect(other)
 			except ValueError:
 				return False
 		return other.left >= self.left and other.top >= self.top and other.right <= self.right and other.bottom <= self.bottom
 
-	def __eq__(self, other):
-		if not isinstance(other,_RECT_CLASSES):
+	def __eq__(self,other):
+		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRect(other)
 			except ValueError:
 				return False
 		return other.left == self.left and other.top == self.top and other.right == self.right and other.bottom == self.bottom
 
-	def __neq__(self, other):
-		if not isinstance(other,_RECT_CLASSES):
-			try:
-				other=toRect(other)
-			except ValueError:
-				return False
-		return not (other.left == self.left and other.top == self.top and other.right == self.right and other.bottom == self.bottom)
+	def __neq__(self,other):
+		return not (self==other)
 
 	def __sub__(self,other):
-		if not isinstance(other,_RECT_CLASSES):
+		if not isinstance(other,RECT_CLASSES):
 			return NotImplemented
 		left,top,right,bottom=self.left-other.left,self.top-other.top,self.right-other.right,self.bottom-other.bottom
 		if isinstance(self, Location):
@@ -250,7 +242,7 @@ class _RectMixin:
 		this results in Rect(left=20,top=20,right=25,bottom=25).
 		No intersect results in a rectangle with zeroed coordinates.
 		"""
-		if not isinstance(other,_RECT_CLASSES):
+		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRect(other)
 			except ValueError:
@@ -269,7 +261,10 @@ class _RectMixin:
 		return self.__and__(other)
 
 class Location(_RectMixin, namedtuple("Location",("left","top","width","height"))):
-	"""Represents a rectangle on the screen, based on left and top coordinates, width and height."""
+	"""
+	Represents a rectangle on the screen, based on left and top coordinates, width and height.
+	To represent a rectangle using left, top, right and bottom coordinates, use L{Rect}.
+	"""
 
 	@property
 	def right(self):
@@ -285,6 +280,7 @@ class Location(_RectMixin, namedtuple("Location",("left","top","width","height")
 class Rect(_RectMixin, namedtuple("Rect",("left","top","right","bottom"))):
 	"""Represents a rectangle on the screen.
 	By convention, the right and bottom edges of the rectangle are normally considered exclusive.
+	To represent a rectangle based on width and height instead, use L{Location}.
 	"""
 
 	@property
@@ -302,10 +298,10 @@ def toRect(*params):
 	"""
 	Converts the given input to L{Rect}.
 	Input should be one of the following types:
-		* One of l{_RECT_CLASSES}.
-		* One of L{_POINT_CLASSES}: converted to L{Rect} square of one pixel.
+		* One of l{RECT_CLASSES}.
+		* One of L{POINT_CLASSES}: converted to L{Rect} square of one pixel.
 		* List or tuple of integers: 4 treated as L{Rect}, 2 treated as L{Point}.
-		* List or tuple of mixed types from L{_RECT_CLASSES} or L{_POINT_CLASSES}: converted to L{Rect} containing all input.
+		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{Rect} containing all input.
 	"""
 	if len(params)==0:
 		raise TypeError("This function takes at least 1 argument (0 given)")
@@ -313,9 +309,9 @@ def toRect(*params):
 		param=params[0]
 		if isinstance(param,Rect):
 			return param
-		if isinstance(param,_RECT_CLASSES):
+		if isinstance(param,RECT_CLASSES):
 			return Rect(param.left,param.top,param.right,param.bottom)
-		if isinstance(param,_POINT_CLASSES):
+		if isinstance(param,POINT_CLASSES):
 			# Right and bottom edges of the resulting rectangle are considered exclusive
 			x,y=point.x,point.y
 			return Rect(x,y,x+1,y+1)
@@ -336,10 +332,10 @@ def toRect(*params):
 	xs=[]
 	ys=[]
 	for param in params:
-		if isinstance(param,_RECT_CLASSES):
+		if isinstance(param,RECT_CLASSES):
 			xs.extend((param.left,param.right))
 			ys.extend((param.top,param.bottom))
-		elif isinstance(param,_POINT_CLASSES):
+		elif isinstance(param,POINT_CLASSES):
 			xs.append(param.x)
 			ys.append(param.y)
 		else:
@@ -354,10 +350,10 @@ def toLocation(*params):
 	"""
 	Converts the given input to L{Location}.
 	Input should be one of the following types:
-		* One of l{_RECT_CLASSES}.
-		* One of L{_POINT_CLASSES}: converted to L{Location} square of one pixel.
+		* One of l{RECT_CLASSES}.
+		* One of L{POINT_CLASSES}: converted to L{Location} square of one pixel.
 		* List or tuple of integers: 4 treated as L{Rect}, 2 treated as L{Point}.
-		* List or tuple of mixed types from L{_RECT_CLASSES} or L{_POINT_CLASSES}: converted to L{Location} containing all input.
+		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{Location} containing all input.
 	"""
 	if len(params)==0:
 		raise TypeError("This function takes at least 1 argument (0 given)")
@@ -365,7 +361,7 @@ def toLocation(*params):
 		param=params[0]
 		if isinstance(param,Location):
 			return param
-		if not isinstance(param,_RECT_CLASSES+_POINT_CLASSES) and isinstance(param,(tuple,list)):
+		if not isinstance(param,RECT_CLASSES+POINT_CLASSES) and isinstance(param,(tuple,list)):
 			# One indexable in another indexable doesn't make sence, so treat the inner indexable as outer indexable
 			params=param
 	if len(params)==4 and all(isinstance(param,(int,long)) for param in params):
@@ -378,7 +374,7 @@ def toLocation(*params):
 def toPoint(*params):
 	"""
 	Converts the given input to L{Point}.
-	Input should either be one of L{_POINT_CLASSES}, 2 integers or one double word.
+	Input should either be one of L{POINT_CLASSES}, 2 integers or one double word.
 	"""
 	if not len(params) in (1,2):
 		raise TypeError("This function takes 1 or 2 arguments (%d given)"%len(params))
@@ -386,7 +382,7 @@ def toPoint(*params):
 		param=params[0]
 		if isinstance(param,Point):
 			return param
-		if isinstance(param,_POINT_CLASSES):
+		if isinstance(param,POINT_CLASSES):
 			return Point(param.x,param.y)
 		if isinstance(param,(int,long)):
 			return Point(winUser.GET_X_LPARAM(param),winUser.GET_Y_LPARAM(param))
@@ -396,7 +392,7 @@ def toPoint(*params):
 
 #: Classes which support conversion to locationHelper Points using their x and y properties.
 #: type: tuple
-_POINT_CLASSES=(Point, POINT, textInfos.Point, wx.Point)
+POINT_CLASSES=(Point, POINT, textInfos.Point, wx.Point)
 #: Classes which support conversion to locationHelper Rects and Locations using their left, top, right and bottom properties.
 #: type: tuple
-_RECT_CLASSES=(Rect, Location, RECT, SMALL_RECT, textInfos.Rect, wx.Rect)
+RECT_CLASSES=(Rect, Location, RECT, SMALL_RECT, textInfos.Rect, wx.Rect)
