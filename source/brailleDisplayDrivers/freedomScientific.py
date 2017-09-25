@@ -7,7 +7,9 @@
 from ctypes import *
 from ctypes.wintypes import *
 from collections import OrderedDict
+from cStringIO import StringIO
 import itertools
+import os
 import hwPortUtils
 import braille
 import inputCore
@@ -15,122 +17,110 @@ from baseObject import ScriptableObject
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 from logHandler import log
 import brailleInput
+import hwIo
+import serial
+import _winreg
 
-#Try to load the fs braille dll
-try:
-	fsbLib=windll.fsbrldspapi
-except:
-	fsbLib=None
 
-#Map the needed functions in the fs braille dll
-if fsbLib:
-	fbOpen=getattr(fsbLib,'_fbOpen@12')
-	fbGetCellCount=getattr(fsbLib,'_fbGetCellCount@4')
-	fbWrite=getattr(fsbLib,'_fbWrite@16')
-	fbClose=getattr(fsbLib,'_fbClose@4')
-	fbConfigure=getattr(fsbLib, '_fbConfigure@8')
-	fbGetDisplayName=getattr(fsbLib, "_fbGetDisplayName@12")
-	fbGetFirmwareVersion=getattr(fsbLib,  "_fbGetFirmwareVersion@12")
-	fbBeep=getattr(fsbLib, "_fbBeep@4")
+TIMEOUT = 0.2
+BAUD_RATE = 15200
+PARITY = serial.PARITY_NONE
 
-FB_INPUT=1
-FB_DISCONNECT=2
-FB_EXT_KEY=3
-
-LRESULT=c_long
-HCURSOR=c_long
-
-appInstance=windll.kernel32.GetModuleHandleW(None)
-
-nvdaFsBrlWm=windll.user32.RegisterWindowMessageW(u"nvdaFsBrlWm")
-
-inputType_keys=3
-inputType_routing=4
-inputType_wizWheel=5
+# Vendor/product IDs of Freedom Scientific USB devices
+USB_IDS = {
+	"VID_0F4E&PID_0114",
+}
 
 # Names of freedom scientific bluetooth devices
-bluetoothNames = (
+BLUETOOTH_NAMES = (
 	"F14", "Focus 14 BT",
 	"Focus 40 BT",
 	"Focus 80 BT",
 )
 
-keysPressed=0
-extendedKeysPressed=0
-@WNDPROC
-def nvdaFsBrlWndProc(hwnd,msg,wParam,lParam):
-	global keysPressed, extendedKeysPressed
-	keysDown=0
-	extendedKeysDown=0
-	if msg==nvdaFsBrlWm and wParam in (FB_INPUT, FB_EXT_KEY):
-		if wParam==FB_INPUT:
-			inputType=lParam&0xff
-			if inputType==inputType_keys:
-				keyBits=lParam>>8
-				keysDown=keyBits
-				keysPressed |= keyBits
-			elif inputType==inputType_routing:
-				routingIndex=(lParam>>8)&0xff
-				isRoutingPressed=bool((lParam>>16)&0xff)
-				isTopRoutingRow=bool((lParam>>24)&0xff)
-				if isRoutingPressed:
-					gesture=RoutingGesture(routingIndex,isTopRoutingRow)
-					try:
-						inputCore.manager.executeGesture(gesture)
-					except inputCore.NoInputGestureAction:
-						pass
-			elif inputType==inputType_wizWheel:
-				numUnits=(lParam>>8)&0x7
-				isRight=bool((lParam>>12)&1)
-				isDown=bool((lParam>>11)&1)
-				#Right's up and down are rversed, but NVDA does not want this
-				if isRight: isDown=not isDown
-				for unit in xrange(numUnits):
-					gesture=WizWheelGesture(isDown,isRight)
-					try:
-						inputCore.manager.executeGesture(gesture)
-					except inputCore.NoInputGestureAction:
-						pass
-		elif wParam==FB_EXT_KEY:
-			keyBits=lParam>>4
-			extendedKeysDown=keyBits
-			extendedKeysPressed|=keyBits
-		if keysDown==0 and extendedKeysDown==0 and (keysPressed!=0 or extendedKeysPressed!=0):
-			gesture=KeyGesture(keysPressed,extendedKeysPressed)
-			keysPressed=extendedKeysPressed=0
-			try:
-				inputCore.manager.executeGesture(gesture)
-			except inputCore.NoInputGestureAction:
-				pass
-		return 0
-	else:
-		return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
+MODELS = {
+	"Focus 14": 14,
+	"Focus 40": 40,
+	"Focus 44": 44,
+	"Focus 70": 70,
+	"Focus 80": 80,
+	"Focus 84": 84,
+	"pm display 20": 20,
+	"pm display 40": 40,
+}
 
-nvdaFsBrlWndCls=WNDCLASSEXW()
-nvdaFsBrlWndCls.cbSize=sizeof(nvdaFsBrlWndCls)
-nvdaFsBrlWndCls.lpfnWndProc=nvdaFsBrlWndProc
-nvdaFsBrlWndCls.hInstance=appInstance
-nvdaFsBrlWndCls.lpszClassName=u"nvdaFsBrlWndCls"
+# Packet types
+FS_PKT_QUERY = "\x00"
+FS_PKT_ACK = "\x01"
+FS_PKT_NAK = "\x02"
+FS_PKT_KEY = "\x03"
+FS_PKT_ROUTING = "\x04"
+FS_PKT_WHEEL = "\x05"
+FS_PKT_HVADJ = "\x08"
+FS_PKT_BEEP = "\x09"
+FS_PKT_CONFIG = "\x0F"
+FS_PKT_INFO = "\x80"
+FS_PKT_WRITE = "\x81"
+FS_PKT_EXT_KEY = "\x82"
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 
 	name="freedomScientific"
 	# Translators: Names of braille displays.
 	description=_("Freedom Scientific Focus/PAC Mate series")
+	isThreadSafe = True
 
 	@classmethod
 	def check(cls):
-		return bool(fsbLib)
+		try:
+			next(cls._getAutoPorts(cls._getBluetoothPorts()))
+		except StopIteration:
+			return False
+		return True
 
 	@classmethod
 	def getPossiblePorts(cls):
-		ports = OrderedDict([cls.AUTOMATIC_PORT, ("USB", "USB",)])
+		ports = OrderedDict()
+		comPorts = cls._getBluetoothPorts()
 		try:
-			cls._getBluetoothPorts().next()
-			ports["bluetooth"] = "Bluetooth"
+			next(cls._getAutoPorts(comPorts))
+			ports.update((cls.AUTOMATIC_PORT,))
 		except StopIteration:
 			pass
+		for portInfo in comPorts:
+			# Translators: Name of a serial communications port.
+			ports[portInfo["port"]] = _("Bluetooth: {portName}").format(
+				portName=portInfo["friendlyName"])
 		return ports
+
+	@classmethod
+	def _getAutoPorts(cls, comPorts):
+		# USB
+		for usbId in USB_IDS:
+			try:
+				rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\%s" % usbId)
+			except WindowsError:
+				continue
+			else:
+				with rootKey:
+					for index in itertools.count():
+						try:
+							keyName = _winreg.EnumKey(rootKey, index)
+						except WindowsError:
+							break
+						try:
+							with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
+								yield _winreg.QueryValueEx(paramsKey, "SymbolicName")[0], "USB"
+						except WindowsError:
+								continue
+
+		# Bluetooth
+		for portInfo in comPorts:
+			btName = portInfo["bluetoothName"]
+			if not any(btName == prefix or btName.startswith(prefix + " ") for prefix in BLUETOOTH_NAMES):
+				continue
+			yield portInfo["port"], "bluetooth"
 
 	@classmethod
 	def _getBluetoothPorts(cls):
@@ -139,9 +129,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 				btName = p["bluetoothName"]
 			except KeyError:
 				continue
-			if not any(btName == prefix or btName.startswith(prefix + " ") for prefix in bluetoothNames):
+			if not any(btName == prefix or btName.startswith(prefix + " ") for prefix in BLUETOOTH_NAMES):
 				continue
-			yield p["port"].encode("mbcs")
+			yield p["port"]
 
 	wizWheelActions=[
 		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
@@ -151,6 +141,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	]
 
 	def __init__(self, port="auto"):
+		self.numCells = 0
+		self._ackPending = False
 		self.leftWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
 		action=self.leftWizWheelActionCycle.next()
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1])
@@ -160,54 +152,126 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		self.gestureMap.add("br(freedomScientific):rightWizWheelUp",*action[1])
 		self.gestureMap.add("br(freedomScientific):rightWizWheelDown",*action[2])
 		super(BrailleDisplayDriver,self).__init__()
-		self._messageWindowClassAtom=windll.user32.RegisterClassExW(byref(nvdaFsBrlWndCls))
-		self._messageWindow=windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaFsBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
+		tryPorts = ()
 		if port == "auto":
-			portsToTry = itertools.chain(["USB"], self._getBluetoothPorts())
-		elif port == "bluetooth":
-			portsToTry = self._getBluetoothPorts()
-		else: # USB
-			portsToTry = ["USB"]
-		fbHandle=-1
-		for port in portsToTry:
-			fbHandle=fbOpen(port,self._messageWindow,nvdaFsBrlWm)
-			if fbHandle!=-1:
-				break
-		if fbHandle==-1:
-			windll.user32.DestroyWindow(self._messageWindow)
-			windll.user32.UnregisterClassW(self._messageWindowClassAtom,appInstance)
-			raise RuntimeError("No display found")
-		self.fbHandle=fbHandle
+			tryPorts = self._getAutoPorts(self._getBluetoothPorts())
+		else:
+			tryPorts = [p for p in self._getBluetoothPorts() if p == port]
+
+		for port, portType in tryPorts:
+			self.isUsb = portType.startswith("USB")
+			# Try talking to the display.
+			try:
+				if self.isUsb:
+					self._dev = hwIo.Bulk(port, 1, 0, self._onReceive, writeSize=4, onReceiveSize=64)
+				else:
+					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
+			except EnvironmentError:
+				pass
+
+		# Send an identification request
+		self._sendPacket(FS_PKT_QUERY)
+		self._dev.waitForRead(TIMEOUT)
+		self._dev.waitForRead(TIMEOUT)
+		numCells = self.numCells
+		if not numCells:
+			raise RuntimeError("No Freedom Scientific display found")
 		self._configureDisplay()
-		numCells=self.numCells
 		self.gestureMap.add("br(freedomScientific):topRouting1","globalCommands","GlobalCommands","braille_scrollBack")
 		self.gestureMap.add("br(freedomScientific):topRouting%d"%numCells,"globalCommands","GlobalCommands","braille_scrollForward")
 
 	def terminate(self):
-		super(BrailleDisplayDriver,self).terminate()
-		fbClose(self.fbHandle)
-		windll.user32.DestroyWindow(self._messageWindow)
-		windll.user32.UnregisterClassW(self._messageWindowClassAtom,appInstance)
+		try:
+			super(BrailleDisplayDriver, self).terminate()
+		finally:
+			# Make sure the device gets closed.
+			# If it doesn't, we may not be able to re-open it later.
+			self._dev.close()
 
-	def _get_numCells(self):
-		return fbGetCellCount(self.fbHandle)
+	def _sendPacket(self, packetType, arg1="\x00", arg2="\x00", arg3="\x00", data=""):
+		def handleArg(arg):
+			if type(arg) == int:
+				return chr(arg)
+			return arg
+		arg1 = handleArg(arg1)
+		arg2 = handleArg(arg2)
+		arg3 = handleArg(arg3)
+		packet = [packetType, arg1, arg2, arg3, data]
+		if data:
+			packet.append(chr(self._calculateChecksum(''.join(packet))))
+		self._dev.write("".join(packet))
+
+	def _onReceive(self, data):
+		# TODO: Serial!
+		data = StringIO(data)
+
+		packetType = data.read(1)
+		arg1 = data.read(1)
+		arg2 = data.read(1)
+		arg3 = data.read(1)
+		log.debug("Got packet of type %r with args: %r %r %r" % (packetType, arg1, arg2, arg3))
+		# Info response is the only packet with payload and checksum
+		if packetType == FS_PKT_INFO:
+			length = ord(arg1)
+			payload = data.read(length)
+			checksum = ord(data.read(1))
+			calculatedChecksum = self._calculateChecksum(packetType + arg1 + arg2 + arg3 + payload)
+			assert calculatedChecksum == checksum, "Checksum mismatch, expected %s but got %s" % (checksum, payload[-1])
+		else:
+			payload = ""
+
+		self._handlePacket(packetType, arg1, arg2, arg3, payload)
+
+	def _handlePacket(self, packetType, arg1, arg2, arg3, payload):
+		if packetType == FS_PKT_ACK:
+			log.debug("ACK received")
+			self._ackPending = False
+		elif packetType == FS_PKT_NAK:
+			log.debugWarning("NAK received!")
+			self._ackPending = False
+
+		elif packetType == FS_PKT_INFO:
+			self._manufacturer = payload[:24].replace("\x00", "")
+			self._model = payload[24:40].replace("\x00", "")
+			self._firmwareVersion = payload[40:48].replace("\x00", "")
+			self.numCells = MODELS.get(self._model, 0)
+			log.debug("Device info: manufacturer: %s model: %s, version: %s" % (self._manufacturer, self._model, self._firmwareVersion))
+		elif packetType == FS_PKT_WHEEL:
+			wheelNumber = ((ord(arg1) >> 3) & 0X7)
+			count = ord(arg1) & 0X7
+			if wheelNumber < 2:
+				isRight = False
+			else:
+				isRight = True
+			isDown = wheelNumber % 2 == 1
+			if isRight:
+				isDown = not isDown
+			for i in xrange(count):
+				gesture = WizWheelGesture(isDown, isRight)
+				try:
+					inputCore.manager.executeGesture(gesture)
+				except inputCore.NoInputGestureAction:
+					pass
+		else:
+			log.debug("Unknown packet of type: %r" % packetType)
+
+	def _calculateChecksum(self, data):
+		checksum = 0
+		for byte in data:
+			checksum -= ord(byte)
+		checksum = checksum & 0xFF
+		return checksum
+
 
 	def display(self,cells):
 		cells="".join([chr(x) for x in cells])
-		fbWrite(self.fbHandle,0,len(cells),cells)
+		self._sendPacket(FS_PKT_WRITE, chr(self.numCells), 0, 0, cells)
 
 	def _configureDisplay(self):
-		# See what display we are connected to
-		displayName= firmwareVersion=""
-		buf = create_string_buffer(16)
-		if fbGetDisplayName(self.fbHandle, buf, 16):
-			displayName=buf.value
-		if fbGetFirmwareVersion(self.fbHandle, buf, 16):
-			firmwareVersion=buf.value
-		if displayName and firmwareVersion and displayName=="Focus" and ord(firmwareVersion[0])>=ord('3'):
+		if self._model and self._firmwareVersion and self._model.startswith("Focus") and ord(self._firmwareVersion[0]) >= ord('3'):
 			# Focus 2 or later. Make sure extended keys support is enabled.
-			log.debug("Activating extended keys on freedom Scientific display. Display name: %s, firmware version: %s.", displayName, firmwareVersion)
-			fbConfigure(self.fbHandle, 0x02)
+			log.debug("Activating extended keys on freedom Scientific display. Display name: %s, firmware version: %s.", self._model, self._firmwareVersion)
+			self._sendPacket(FS_PKT_CONFIG, "\x01")
 
 	def script_toggleLeftWizWheelAction(self,gesture):
 		action=self.leftWizWheelActionCycle.next()
