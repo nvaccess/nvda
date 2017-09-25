@@ -192,10 +192,6 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 			_winreg.SetValueEx(k,config.CONFIG_IN_LOCAL_APPDATA_SUBKEY,None,_winreg.REG_DWORD,int(configInLocalAppData))
 	if easeOfAccess.isSupported:
 		registerEaseOfAccess(installDir)
-	else:
-		import nvda_service
-		nvda_service.installService(installDir)
-		nvda_service.startService()
 	if startOnLogonScreen is not None:
 		config._setStartOnLogonScreen(startOnLogonScreen)
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
@@ -229,15 +225,6 @@ def isDesktopShortcutInstalled():
 	return os.path.isfile(shortcutPath)
 
 def unregisterInstallation(keepDesktopShortcut=False):
-	import nvda_service
-	try:
-		nvda_service.stopService()
-	except:
-		pass
-	try:
-		nvda_service.removeService()
-	except:
-		pass
 	if easeOfAccess.isSupported:
 		try:
 			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
