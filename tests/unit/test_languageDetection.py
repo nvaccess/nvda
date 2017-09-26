@@ -15,6 +15,8 @@ class TestLanguageDetection(unittest.TestCase):
 
 	def setUp(self):
 		languageDetection.initialize()
+		config.conf["languageDetection"]["disableScriptDetection"] = "false" 
+		languageDetection.updateLanguagePriorityFromConfig()
 
 	def compareSpeechSequence(self , sequence1 , sequence2 ):
 		try:

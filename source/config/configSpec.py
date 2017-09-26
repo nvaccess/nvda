@@ -205,6 +205,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [languageDetection]
 	preferredLanguages = string_list
+	disableScriptDetection = boolean(default=true)
 """).format(latestSchemaVersion=latestSchemaVersion)
 
 #: The configuration specification

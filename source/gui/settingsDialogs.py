@@ -2170,40 +2170,42 @@ class LanguageDetectionDialog(SettingsDialog):
 			# Translators: A message in the Language Detection dialog informing that Automatic language switching must be enabled.
 			label=_("Automatic language detection only occurs when Automatic language switching is enabled in Voice Settings.")))
 		self.languageListChanged = False
-		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label for the list of preferred languages in the Language Detection dialog.
-		languageLabel=wx.StaticText(self,-1,label=_("&Preferred languages:"))
-		languageSizer.Add(languageLabel)
-		languageListID=wx.NewId()
+		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
 		self.languageNames = list(languageDetection.languagePriorityListSpec)
-		self.languageList=wx.ListBox(self,languageListID,choices=[x[2] for x in self.languageNames])
+		languageChoices =[x[2] for x in self.languageNames]
+		# Translators: The label for the list of preferred languages in the Language Detection dialog.
+		languageLabelText = _("&Preferred languages:")
+		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
+		# Translators: tooltip text for the list of preferred languages in the Language Detection dialog.
+		self.languageList.SetToolTip(wx.ToolTip("Choose the language that you want for a script such as latin."))
+
 		if self.languageNames:
 			self.languageList.SetSelection(0)
-		languageSizer.Add(self.languageList)
-		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
-		moveUpButtonID=wx.NewId()
+
+		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in the Language Detection dialog to increase the priority of a language.
-		moveUpButton=wx.Button(self,moveUpButtonID,_("Move &up"),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnMoveUp,id=moveUpButtonID)
-		settingsSizer.Add(moveUpButton)
-		moveDownButtonID=wx.NewId()
+		self.moveUpButton= bHelper.addButton(self, label=_("Move &up")) 
+		self.moveUpButton.Bind(wx.EVT_BUTTON, self.OnMoveUp )
 		# Translators: The label for a button in the Language Detection dialog to decrease the priority of a language.
-		moveDownButton=wx.Button(self,moveDownButtonID,_("move &down"),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnMoveDown,id=moveDownButtonID)
-		settingsSizer.Add(moveDownButton)
-		addButtonID=wx.NewId()
+		self.moveDownButton = bHelper.addButton(self, label=_("Move &Down")) 
+		self.moveDownButton.Bind(wx.EVT_BUTTON, self.OnMoveDown )
 		# Translators: The label for a button in the Language Detection dialog to add a new language.
-		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnAdd,id=addButtonID)
-		settingsSizer.Add(addButton)
-		removeButtonID=wx.NewId()
+		self.addButton = bHelper.addButton(self, label=_("&add")) 
+		self.addButton.Bind(wx.EVT_BUTTON, self.OnAdd )
 		# Translators: The label for a button in the Language Detection dialog to remove a language.
-		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnRemove,id=removeButtonID)
-		settingsSizer.Add(removeButton)
+		self.removeButton = bHelper.addButton(self, label=_("&Remove")) 
+		self.removeButton.Bind(wx.EVT_BUTTON, self.OnRemove )
+		settingsSizerHelper.addItem(bHelper.sizer) 
+		# Translators: The label for the checkbox in the Language Detection dialog to disable script detection.
+		disableCheckboxText = _("&DisableScript Detection")
+		self.disableScriptDetectionCheckbox = wx.CheckBox(self,label= disableCheckboxText )
+		self.disableScriptDetectionCheckbox.SetValue(config.conf["languageDetection"]["disableScriptDetection"]  )
+		settingsSizerHelper.addItem(self.disableScriptDetectionCheckbox )
 
 	def postInit(self):
 		self.languageList.SetFocus()
+		self.disableScriptDetectionCheckbox.SetValue(config.conf["languageDetection"]["disableScriptDetection"]  )
 
 	def OnMoveUp(self,evt):
 		if not self.languageNames:
@@ -2248,6 +2250,7 @@ class LanguageDetectionDialog(SettingsDialog):
 			languageList = [item[0] for item in self.languageNames]
 			config.conf["languageDetection"]["preferredLanguages"] = languageList
 			languageDetection.updateLanguagePriorityFromConfig()
+		config.conf["languageDetection"]["disableScriptDetection"]  = self.disableScriptDetectionCheckbox.IsChecked()
 		super( LanguageDetectionDialog , self).onOk(evt)
 
 	def updateList(self,currentSelection=0):

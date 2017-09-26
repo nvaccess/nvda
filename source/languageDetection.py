@@ -60,7 +60,7 @@ langIDToScriptID = OrderedDict([
 	("cs" , "Latin"),
 	("da" , "Latin"),
 	("de" , "Latin"),
-	("el" , ("Latin" , "Greek")),
+	("el" , ("Latin" , "Greek" ) ),
 	("es" , "Latin"),
 	("fi" , "Latin"),
 	("fr" , "Latin"),
@@ -230,6 +230,11 @@ def detectLanguage(text, defaultLanguage =None):
 	@return: sequence of language commands and text
 	@rtype: list"""
 	sequenceWithLanguage= []
+	if config.conf["languageDetection"]["disableScriptDetection"]:  
+		sequenceWithLanguage.append( text)
+		return sequenceWithLanguage
+
+
 	tempSequence = detectScript(text)
 	scriptCode = ""
 	for item in tempSequence: 
