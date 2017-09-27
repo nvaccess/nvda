@@ -143,6 +143,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	def __init__(self, port="auto"):
 		self.numCells = 0
 		self._ackPending = False
+		self._keyBits = 0
+		self._extendedKeyBits = 0
 		self.leftWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
 		action=self.leftWizWheelActionCycle.next()
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1])
@@ -163,7 +165,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			# Try talking to the display.
 			try:
 				if self.isUsb:
-					self._dev = hwIo.Bulk(port, 1, 0, self._onReceive, writeSize=4, onReceiveSize=64)
+					self._dev = hwIo.Bulk(port, 1, 0, self._onReceive, writeSize=0, onReceiveSize=56)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
 			except EnvironmentError:
@@ -211,7 +213,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		arg3 = data.read(1)
 		log.debug("Got packet of type %r with args: %r %r %r" % (packetType, arg1, arg2, arg3))
 		# Info response is the only packet with payload and checksum
-		if packetType == FS_PKT_INFO:
+		if packetType in (FS_PKT_INFO, FS_PKT_EXT_KEY):
 			length = ord(arg1)
 			payload = data.read(length)
 			checksum = ord(data.read(1))
@@ -252,8 +254,62 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 					inputCore.manager.executeGesture(gesture)
 				except inputCore.NoInputGestureAction:
 					pass
+		elif packetType == FS_PKT_KEY:
+			keyBits = ord(arg1) | (ord(arg2) << 8) | (ord(arg3) << 16)
+			self._handleKeys(keyBits)
+		elif packetType == FS_PKT_EXT_KEY:
+			keyBits = ord(payload[0]) >> 4
+			self._handleExtendedKeys(keyBits)
 		else:
 			log.debug("Unknown packet of type: %r" % packetType)
+
+	def _updateKeyBits(self, keyBits, oldKeyBits, keyCount):
+		isRelease = False
+		keyBitsBeforeRelease = 0
+		newKeysPressed = False
+		keyBit = 0X1
+		keyBits |= oldKeyBits & ~((0X1 << keyCount) - 1)
+		while oldKeyBits != keyBits:
+			oldKey = oldKeyBits & keyBit
+			newKey = keyBits & keyBit
+
+			if oldKey and not newKey:
+				# A key has been released
+				isRelease = True
+				keyBitsBeforeRelease = oldKeyBits
+				oldKeyBits &= ~keyBit
+			elif newKey and not oldKey:
+				oldKeyBits |= keyBit
+				newKeysPressed = True
+		
+			keyBit <<= 1
+		return oldKeyBits, isRelease, keyBitsBeforeRelease, newKeysPressed
+		
+	def _handleKeys(self, keyBits):
+		keyBits, isRelease, keyBitsBeforeRelease, newKeysPressed = self._updateKeyBits(keyBits, self._keyBits, 24)
+		if newKeysPressed:
+			self._ignoreKeyReleases = False
+		self._keyBits = keyBits
+		if isRelease and not self._ignoreKeyReleases:
+			gesture = KeyGesture(keyBitsBeforeRelease, self._extendedKeyBits)
+			try:
+				inputCore.manager.executeGesture(gesture)
+			except inputCore.NoInputGestureAction:
+				pass
+			self._ignoreKeyReleases = True
+
+	def _handleExtendedKeys(self, keyBits):
+		keyBits, isRelease, keyBitsBeforeRelease, newKeysPressed = self._updateKeyBits(keyBits, self._extendedKeyBits, 24)
+		if newKeysPressed:
+			self._ignoreKeyReleases = False
+		self._extendedKeyBits = keyBits
+		if isRelease and not self._ignoreKeyReleases:
+			gesture = KeyGesture(self._keyBits, keyBitsBeforeRelease)
+			try:
+				inputCore.manager.executeGesture(gesture)
+			except inputCore.NoInputGestureAction:
+				pass
+			self._ignoreKeyReleases = True
 
 	def _calculateChecksum(self, data):
 		checksum = 0
@@ -261,7 +317,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			checksum -= ord(byte)
 		checksum = checksum & 0xFF
 		return checksum
-
 
 	def display(self,cells):
 		cells="".join([chr(x) for x in cells])
@@ -271,7 +326,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		if self._model and self._firmwareVersion and self._model.startswith("Focus") and ord(self._firmwareVersion[0]) >= ord('3'):
 			# Focus 2 or later. Make sure extended keys support is enabled.
 			log.debug("Activating extended keys on freedom Scientific display. Display name: %s, firmware version: %s.", self._model, self._firmwareVersion)
-			self._sendPacket(FS_PKT_CONFIG, "\x01")
+			self._sendPacket(FS_PKT_CONFIG, "\x02")
 
 	def script_toggleLeftWizWheelAction(self,gesture):
 		action=self.leftWizWheelActionCycle.next()
