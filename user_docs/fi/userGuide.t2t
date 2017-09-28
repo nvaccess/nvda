@@ -544,22 +544,25 @@ Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin
 | Siirrä upotetun objektin sisältävään selaustiladokumenttiin | NVDA+Ctrl+Väli | Siirtää kohdistuksen pois nykyisestä upotetusta objektista dokumenttiin, jossa se on. |
 %kc:endInclude
 
-+ Matemaattisen sisällön lukeminen +
++ Matemaattisen sisällön lukeminen +[ReadingMath]
 NVDA:lla on mahdollista lukea ja liikkua vuorovaikutteisesti tuetussa matemaattisessa sisällössä Design Sciencen MathPlayer 4:ää käyttäen.
 Tämä edellyttää, että MathPlayer 4 on asennettu tietokoneelle.
 Se on ladattavissa ilmaiseksi osoitteesta http://www.dessci.com/en/products/mathplayer/
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
 - MathML Mozilla Firefoxissa, Microsoft Internet Explorerissa ja Google Chromessa.
-- Design Science MathType Microsoft Wordissa ja PowerPointissa. MathTypen on oltava asennettuna, jotta tämä toimii. Kokeiluversio riittää.
-- MathML Adobe Readerissa. HUOM: Tämä ei ole vielä virallinen standardi, joten tätä sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
+- Design Science MathType Microsoft Wordissa ja PowerPointissa.
+MathTypen on oltava asennettuna. Kokeiluversio riittää.
+- MathML Adobe Readerissa.
+Huomaa, että tämä ei ole vielä virallinen standardi, joten sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
+- Math Kindle for PC:ssä kirjoille, joissa on esteetöntä matemaattista sisältöä.
 -
 
 NVDA puhuu aina dokumenttia luettaessa kaiken siinä mahdollisesti olevan tuetun matemaattisen sisällön.
 Mikäli käytät pistenäyttöä, sisältö näytetään myös pistekirjoituksena.
 
 ++ Vuorovaikutteinen liikkuminen ++
-Jos käytät pääasiassa pelkkää puhetta, haluat luultavasti useimmissa tilanteissa tutkia lauseketta pienemmissä osissa sen sijaan, että kuuntelisit sen kerralla kokonaan.
+Jos käytät pääasiassa pelkkää puhetta, haluat useimmiten luultavasti tutkia lauseketta pienemmissä osissa sen sijaan, että kuuntelisit sen kerralla kokonaan.
 
 Tämä tehdään selaustilassa oltaessa siirtämällä kohdistin matemaattiseen sisältöön ja painamalla Enter.
 
@@ -574,9 +577,9 @@ Tarkastelukohdistin seuraa oletusarvoisesti järjestelmäkohdistinta, joten voit
 | Vuorovaikutus matemaattisen sisällön kanssa | NVDA+Alt+M | Aloittaa vuorovaikutuksen matemaattisen sisällön kanssa. |
 %kc:endInclude
 
-Voit käyttää tällä hetkellä MathPlayer-komentoja kuten nuolinäppäimiä lausekkeen tutkimiseen.
+Voit käyttää lausekkeen tutkimiseen MathPlayer-komentoja, kuten nuolinäppäimiä.
 Lausekkeessa voidaan esimerkiksi liikkua vasemmalla ja oikealla nuolinäppäimellä sekä zoomata johonkin tiettyyn osaan kuten murtolukuun Nuoli alas -näppäintä käyttäen.
-Katso lisätietoja MathPlayerin käyttöohjeesta.
+Katso MathPlayerin ohjeesta lisätietoja selauskomennoista: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Paina Esc-näppäintä, kun haluat palata takaisin dokumenttiin.
 
@@ -855,6 +858,9 @@ Voit kääntää manuaalisesti seuraavalle sivulle painamalla Page down -näppä
 Pikaselausta tuetaan linkeille ja grafiikoille, mutta vain nykyisellä sivulla.
 Linkkeihin siirtyminen sisältää myös alaviitteet.
 
+NVDA tarjoaa alkeellisen tuen kirjojen esteettömän matemaattisen sisällön lukemiselle ja vuorovaikutteiselle selaukselle.
+Katso lisätietoja [Matemaattisen sisällön lukeminen #ReadingMath] -kappaleesta.
+
 +++ Tekstin valitseminen +++
 Voit suorittaa Kindlessä valitulle tekstille eri toimintoja, mukaan lukien sanastomääritelmän hakeminen, huomautusten ja korostusten lisääminen, leikepöydälle kopioiminen sekä verkosta etsiminen.
 Tämä tehdään valitsemalla ensin tekstiä kuten normaalistikin selaustilassa, esim. Shift- ja nuolinäppäimiä käyttäen.
@@ -876,6 +882,14 @@ Lue, muokkaa tai poista muistiinpano seuraavasti:
 + Avaa valinnan vaihtoehdot, kuten yllä on kuvailtu.
 + Valitse Edit note.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Lisättyjen kirjojen taulukkonäkymässä:
+|| Name | Key | Description |
+| Enter | Enter | Avaa valitun kirjan. |
+| Pikavalikko | Sovellusnäppäin | Avaa pikavalikon valitulle kirjalle. |
+%kc:endInclude
 
 + NVDA:n asetusten määrittäminen +
 
