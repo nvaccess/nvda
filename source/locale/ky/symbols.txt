@@ -1,0 +1,160 @@
+﻿#locale/ru/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	точка	all	always
+! sentence ending	восклицательный знак	all	always
+? sentence ending	вопросительный знак	all	always
+; phrase ending	точка с запятой	most	always
+: phrase ending	двоеточие	most	always
+decimal point		none	always
+in-word '	апостроф	all	norep
+negative number	минус	none	norep
+
+# Whitespace
+\0	чисто	char	# null
+\t	таб
+\n	перевод строки	char
+\f	разделитель страниц	none
+\r	возврат каретки	char
+ 	пробел	char
+ 	пробел	char	# неразрывный пробел
+
+# Standard punctuation/symbols
+!	восклицательный знак	all
+"	кавычка	most
+\#	решётка	some
+$	доллар	all	norep
+£	фунт	all	norep
+€	евро	all	norep
+¢	центы	all	norep
+¥	иена	all	norep
+₹	рупия	some	norep
+₽	рубль	some
+₴	гривна	some
+圓	юань	some
+%	процент	some
+&	амперсант	some
+'	апостроф	all
+(	левая круглая	most	always
+)	правая круглая	most	always
+*	звёздочка	some
++	плюс	some
+,	запятая	all	always
+-	дефис	most
+.	точка	some
+/	косая черта	some
+:	двоеточие	most	norep
+;	точка с запятой	most
+<	меньше	some
+>	больше	some
+=	равно	some
+?	вопросительный знак	all
+@	собака	some
+[	левая квадратная	most
+]	правая квадратная	most
+\\	обратная косая черта	most
+^	крышка	most
+_	подчёркивание	most
+`	обратный апостроф	most
+{	левая фигурная	most
+}	правая фигурная	most
+|	вертикальная черта	most
+~	тильда	most
+
+# Other characters
+•	маркер	some
+…	многоточие	all	always
+...	точка точка точка	all	always
+	маркер	some
+“	левая кавычка	most
+”	правая кавычка	most
+‘	левая одиночная кавычка	most
+’	правая одиночная кавычка	most
+–	тире	most	always
+—	длинное тире	most
+●	кружок	most
+¨	дириезис	most
+‎	метка слева на право	char
+‏	метка справа на лево	char
+■	чёрный квадрат	some
+▪	чёрный квадрат	some
+◾	чёрный квадрат	some
+◦	полый маркер	some
+➔	стрелка вправо	some
+§	раздел	all
+°	градусов	some
+«	левая двойная угловая
+»	правая двойная угловая
+µ	микро	some
+¹	надстрочный знак 1	some
+²	надстрочный знак 2	some
+³	надстрочный знак 3	some
+®	зарегистрировано	some
+™	Торговая марка	some
+©	Авторское право	some
+±	плюс минус	some
+−	минус	some
+×	умножить	some
+÷	разделить на	some
+≈	приблизительно равно	some
+≠	не равно	some
+≪	много меньше	some
+≫	много больше	some
+←	стрелка влево	some
+→	стрелка вправо	some
+✓	отметка	some
+✔	отметка	some
+№	номер	some
+
+#Mathematical Operators U+2200 to U+220F
+
+∀	для всех	none
+∁	дополнение	none
+∂	частный дифференциал	none
+∃	существует	none
+∄	не существует	none
+∅	пустое множество	none
+∆	инкремент	none
+∇	набла	none
+∈	принадлежит	none
+∉	не принадлежит	none
+∊	малое принадлежит	none
+∋	содержит как член	none
+∌	не содержит как член	none
+∍	малое содержит как член	none
+∎	конец доказательства	none
+∏	N-арное произведение	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-арная сумма	none
+√	квадратный корень	none
+∛	кубический корень	none
+∜	корень четвёртой степени	none
+∝	пропорционально	none
+∞	бесконечность	none
+∟	прямой угол	none
+∠	угол	none
+∥	параллельно	none
+∦	не параллельно	none
+∧	логическое и	none
+∨	логическое или	none
+∩	пересечение	none
+∪	объединение	none
+∫	интеграл	none
+∴	влечёт	none
+∵	поскольку	none
+∶	относится	none
+∷	пропорционально	none
+≤	меньше либо равно	none
+≥	больше либо равно	none
+⊂	содержится в	none
+⊃	содержит	none
+⊆	содержится либо равно	none
+⊇	содержит либо равно	none
