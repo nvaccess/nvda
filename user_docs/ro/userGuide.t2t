@@ -544,15 +544,18 @@ Există o tastă de comandă pentru revenirea la pagina originală care conține
 | Trece în mod navigare la documentul care conține obiectul | NVDA+control+spațiu | Mută focalizarea în afară obiectului incorporat curent și în documentul care îl conține |
 %kc:endInclude
 
-+ Citirea conținutului matematic +
-Folosind MathPlayer 4 creat de Design Science, NVDA poate citi și naviga interactiv prin conținutul matematic compatibil.
++ Citirea conținutului matematic +[ReadingMath]
+ Folosind MathPlayer 4 creat de Design Science, NVDA poate citi și naviga interactiv prin conținutul matematic compatibil.
 Pentru acest lucru este nevoie ca MathPlayer 4 să fie instalat pe calculatorul dumneavoastră.
 MathPlayer este disponibil ca descărcare gratuită la: http://www.dessci.com/en/products/mathplayer/
 
 NVDA este compatibil cu următoarele tipuri de conținut matematic:
 - MathML în Mozilla Firefox, Microsoft Internet Explorer și Google Chrome.
-- MathType de la Design Science în Microsoft Word și PowerPoint. MathType trebui să fie instalat pentru a avea această funcționalitate. Este suficientă versiunea de probă.
-- MathML în AdobeReader. De notat că acesta nu este un standard oficial încă, deci momentan nu există un software disponibil public care să producă acest conținut.
+- MathType de la Design Science în Microsoft Word și PowerPoint.
+MathType trebuie să fie instalat pentru a avea această funcționalitate. Este suficientă versiunea de probă.
+- MathML în AdobeReader.
+De notat că acesta nu este un standard oficial încă, deci momentan nu există un software disponibil public care să producă acest conținut.
+- Matematică în Kindle pentru PC pentru cărți cu matematică accesibilă.
 -
 
 Când citește un document, NVDA va pronunța orice conținut matematic compatibil atunci când îl întâlnește.
@@ -576,7 +579,7 @@ Implicit, cursorul de examinare urmează cursorul de scriere al sistemului, deci
 
 În acest moment, puteți folosi comenzi ale MathPlayer, cum ar fi tastele săgeți, pentru a cerceta expresia .
 De exemplu, vă puteți mișca prin expresie cu tastele săgeată stânga și dreapta și focaliza pe o porțiune a expresiei cum ar fi o fracție, folosind tasta săgeată jos.
-Consultați documentația MathPlayer pentru informații suplimentare.
+Consultați documentația MathPlayer despre comenzile de navigare pentru informații suplimentare: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Când doriți să vă reîntoarceți la document, pur și simplu apăsați tasta „escape”.
 
@@ -875,6 +878,14 @@ Pentru a vizualiza, edita sau șterge o notă:
 + Accesați opțiunile pentru selecție după cum este descris mai sus.
 + Alegeți „Editează notă”.
 +
+
+++ Azardi ++
+%kc:beginInclude
+În vizualizarea de tabel a cărților adăugate:
+|| Nume | Tastă | Descriere |
+| Enter | enter | Deschide cartea selectată. |
+| Context meniu | aplicații | Deschide meniul context al cărții selectate. |
+%kc:endInclude
 
 + Configurarea NVDA +
 
