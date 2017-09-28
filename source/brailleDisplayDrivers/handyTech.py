@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Bram Duvigneau, Leonard de Ruijter
+#Copyright (C) 2008-2017 NV Access Limited, Bram Duvigneau, Leonard de Ruijter, Babbage B.V.
 "Braille display driver for Handy Tech braille displays"
 from collections import OrderedDict
 from cStringIO import StringIO
@@ -517,6 +517,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._brailleInput = False
 		self._pendingCells = []
 		self._awaitingACK = False
+		self.hidSerialBuffer = ""
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
@@ -525,11 +526,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		for port, portType in tryPorts:
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == "USB HID"
+			self.isHid = portType.startswith("USB HID")
+			self.isHidSerial = portType == "USB HID serial converter"
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
-					if portType == "USB HID serial converter":
+					if self.isHidSerial:
 						# This is either the standalone HID adapter cable for older displays,
 						# or an older display with a HID - serial adapter built in
 						# Send a flush to open the serial channel
@@ -538,6 +540,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY,
 						timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
 			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
 				continue
 
 			self.sendPacket(HT_PKT_RESET)
@@ -615,7 +618,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# pylint: disable=R0912
 	# Pylint complains about many branches, might be worth refactoring
 	def _onReceive(self, data):
-		if self.isHid:
+		if self.isHidSerial:
+			# The HID serial converter seems to wrap one or two bytes into a single HID packet
+			length = ord(data[1])
+			self.hidSerialBuffer+=data[2:(2+length)]
+			if not (
+				(self.hidSerialBuffer[0]==HT_PKT_EXTENDED and self.hidSerialBuffer[-1]=="\x16") or
+				(self.hidSerialBuffer[0]!=HT_PKT_EXTENDED and len(self.hidSerialBuffer)==2)
+			):
+				return
+			stream = StringIO(self.hidSerialBuffer)
+			self.hidSerialBuffer = ""
+			serPacketType = stream.read(1)
+		elif self.isHid:
 			# data contains the entire packet.
 			stream = StringIO(data)
 			serPacketType = data[2]
