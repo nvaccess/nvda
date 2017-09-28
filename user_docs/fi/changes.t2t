@@ -10,6 +10,8 @@
 - Muokkaus- ja lomakekenttiin siirtävillä pikaselauskomennoilla on nyt Firefoxissa, Chromessa ja Internet Explorerissa mahdollista siirtyä muokattavaan monimuotoiseen tekstisisältöön (esim. contentEditable). (#5534)
 - Elementtilista voi nyt näyttää verkkoselaimissa  luettelon lomakekentistä ja painikkeista. (#588)
 - Perustuki Windows 10:lle ARM64-alustalla. (#7508)
+- Alkeellinen tuki Kindle-kirjojen esteettömän matemaattisen sisällön lukemiselle ja vuorovaikutteiselle selaamiselle. (#7536)
+- Lisätty tuki Azardi-e-kirjalukijalle. (#5848)
 
 
 == Muutokset ==
@@ -17,7 +19,8 @@
 - Verkkopohjaiset valintaikkunat käyttävät nyt Firefoxissa ja Chromessa automaattisesti selaustilaa, ellei olla verkkosovelluksessa. (#4493)
 - Sarkaimella ja pikaselausnäppäimillä siirtyminen ei enää ilmoita selaustilassa siirtymistä pois säilöistä, kuten luetteloista ja taulukoista, mikä tekee navigoinnista tehokkaampaa. (#2591)
 - Lomakekenttäryhmien nimi ilmoitetaan nyt selaustilassa, kun niihin siirrytään pikaselauskomennoilla tai sarkaimella Firefoxissa ja Chromessa. (#3321)
-- Upotettuihin objekteihin selaustilassa siirtävä pikaselauskomento (O ja Shift+O) siirtää nyt ääni- ja videoelementteihin sekä sellaisiin, jotka on merkitty sovellus- ja valintaikkuna-ARIA-rooleilla. (#7239)
+- Upotettuihin objekteihin selaustilassa siirtävä pikaselauskomento (O ja Shift+O) siirtää nyt ääni- ja videoelementteihin sekä sellaisiin, jotka on merkitty application- ja dialog-ARIA-rooleilla. (#7239)
+- Espeak-ng on päivitetty versioksi 01919cd48a566cdf34347784b2e74554b376e900. Tämä ratkaisee joitakin virallisen version tuottamisessa olleita ongelmia. (#7385)
 
 
 == Korjatut ohjelmavirheet ==
@@ -25,10 +28,18 @@
 - NVDA ei muutu enää huomattavasti hitaammaksi, kun Firefox- tai Chrome-verkkoselaimissa on avoinna useita välilehtiä. (#3138)
 - MDV Lilli -pistenäytön kohdistimensiirtonäppäimet eivät enää virheellisesti siirrä yhtä pistesolua edemmäs kuin pitäisi. (#7469)
 - HTML5:n required-attribuuttia tuetaan nyt ilmaisemaan lomakekentän pakollisuutta. (#7321)
+- Pistenäyttö päivittyy nyt kirjoitettaessa arabialaisia merkkejä vasemmalle tasattuun WordPad-dokumenttiin. (#511)
+- Säätimien esteettömät selitteet ilmoitetaan nyt herkemmin selaustilassa Mozilla Firefoxissa, kun selite ei näy sisältönä. (#4773)
+- Firefoxia on taas mahdollista käyttää NVDA:lla sen uudelleenkäynnistyksen jälkeen windows 10:n Creators-päivityksessä. (#7269)
+- Selaustila on taas käytettävissä, kun NVDA käynnistetään uudelleen Mozilla Firefoxin ollessa aktiivisena. Saatat tosin joutua siirtymään Alt+Sarkain-näppäinyhdistelmällä pois Firefoxista ja taas takaisin. (#5758)
+- Matemaattisen sisällön käyttäminen on mahdollista Google Chromessa järjestelmissä, joissa ei ole asennettuna Mozilla Firefoxia. (#7308)
+- Käyttöjärjestelmän ja muiden sovellusten pitäisi olla vakaampia heti NVDA:n asennuksen jälkeen ennen uudelleenkäynnistystä verrattaessa aiempien NVDA-versioiden asennuksiin. (#7563)
 
 
 == Muutokset kehittäjille (englanniksi) ==
 - "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
+- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
+- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
 
 
 = 2017.3 =
