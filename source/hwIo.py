@@ -97,7 +97,11 @@ class IoBase(object):
 		ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 
 	def __del__(self):
-		self.close()
+		try:
+			self.close()
+		except:
+			if _isDebug():
+				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
 
 	def _asyncRead(self):
 		# Wait for _readSize bytes of data.
