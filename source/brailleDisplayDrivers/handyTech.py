@@ -517,7 +517,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._brailleInput = False
 		self._pendingCells = []
 		self._awaitingACK = False
-		self.hidSerialBuffer = ""
+		self._hidSerialBuffer = ""
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
@@ -621,14 +621,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self.isHidSerial:
 			# The HID serial converter seems to wrap one or two bytes into a single HID packet
 			length = ord(data[1])
-			self.hidSerialBuffer+=data[2:(2+length)]
+			self._hidSerialBuffer+=data[2:(2+length)]
 			if not (
-				(self.hidSerialBuffer[0]==HT_PKT_EXTENDED and self.hidSerialBuffer[-1]=="\x16") or
-				(self.hidSerialBuffer[0]!=HT_PKT_EXTENDED and len(self.hidSerialBuffer)==2)
+				(self._hidSerialBuffer[0]==HT_PKT_EXTENDED and self._hidSerialBuffer[-1]=="\x16") or
+				(self._hidSerialBuffer[0]!=HT_PKT_EXTENDED and len(self._hidSerialBuffer)==2)
 			):
 				return
-			stream = StringIO(self.hidSerialBuffer)
-			self.hidSerialBuffer = ""
+			stream = StringIO(self._hidSerialBuffer)
+			self._hidSerialBuffer = ""
 			serPacketType = stream.read(1)
 		elif self.isHid:
 			# data contains the entire packet.
