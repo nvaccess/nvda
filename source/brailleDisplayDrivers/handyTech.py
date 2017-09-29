@@ -262,6 +262,24 @@ class JoystickMixin(AutoPropertyObject):
 		return keys
 
 
+class StatusRoutingMixin(AutoPropertyObject):
+	"""Status routing keys
+
+	Some Handy Tech models have four status routing keys.
+	"""
+
+	def _get_keys(self):
+		"Add the status routing keys to the keys property"
+		keys = super(StatusRoutingMixin, self).keys
+		keys.update({
+			0x70: "statusRouting1",
+			0x71: "statusRouting2",
+			0x72: "statusRouting3",
+			0x73: "statusRouting4",
+		})
+		return keys
+
+
 class ModularConnect88(TripleActionKeysMixin, Model):
 	deviceId = MODEL_MODULAR_CONNECT_88
 	genericName = "Modular Connect"
@@ -373,7 +391,7 @@ class BrailleStar80(BrailleStar):
 	numCells = 80
 
 
-class Modular(TripleActionKeysMixin, Model):
+class Modular(StatusRoutingMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular"
 
 	def _get_name(self):
@@ -386,7 +404,7 @@ class Modular(TripleActionKeysMixin, Model):
 		These cells need to be included in the braille data, but since NVDA doesn't
 		support status cells, we just send empty cells.
 		"""
-		cells = "\x00" * 4 + cells
+		cells = [0] * 4 + cells
 		super(Modular, self).display(cells)
 
 
@@ -784,7 +802,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.dots = self._calculateDots()
 				if key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille)):
 					self.space = True
-			if key >= KEY_ROUTING:
+			if key >= KEY_ROUTING and key < KEY_ROUTING + model.numCells:
 				self.routingIndex = key - KEY_ROUTING
 				names.append("routing")
 			elif not isBrailleInput:
