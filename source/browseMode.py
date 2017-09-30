@@ -1762,12 +1762,12 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 
 	def script_toggleIncludeLayoutTables(self,gesture):
 		if config.conf["documentFormatting"]["includeLayoutTables"]:
-			# Translators: The message announced when toggling the include layout tables document formatting setting.
-			state = _("include layout tables off")
+			# Translators: The message announced when toggling the include layout tables browse mode setting.
+			state = _("layout tables off")
 			config.conf["documentFormatting"]["includeLayoutTables"]=False
 		else:
-			# Translators: The message announced when toggling the report tables document formatting setting.
-			state = _("include layout tables on")
+			# Translators: The message announced when toggling the include layout tables browse mode setting.
+			state = _("layout tables on")
 			config.conf["documentFormatting"]["includeLayoutTables"]=True
 		ui.message(state)
 	# Translators: Input help mode message for include layout tables command.
