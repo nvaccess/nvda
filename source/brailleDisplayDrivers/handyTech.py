@@ -803,7 +803,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.dots = self._calculateDots()
 				if key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille)):
 					self.space = True
-			if key >= KEY_ROUTING and key < KEY_ROUTING + model.numCells:
+			if KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
 				self.routingIndex = key - KEY_ROUTING
 				names.append("routing")
 			elif not isBrailleInput:
