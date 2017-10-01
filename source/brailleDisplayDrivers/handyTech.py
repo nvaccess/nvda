@@ -661,7 +661,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		elif serPacketType == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
-			assert stream.read(1) == "\x16"	# Extended packets are terminated with \x16
+			terminator = stream.read(1)
+			assert terminator == "\x16"	# Extended packets are terminated with \x16
 			extPacketType = packet[0]
 			if extPacketType == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command.
