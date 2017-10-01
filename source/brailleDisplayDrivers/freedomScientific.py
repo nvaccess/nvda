@@ -54,7 +54,7 @@ FS_PKT_QUERY = "\x00"
 FS_PKT_ACK = "\x01"
 FS_PKT_NAK = "\x02"
 FS_PKT_KEY = "\x03"
-FS_PKT_ROUTING = "\x04"
+FS_PKT_BUTTON = "\x04"
 FS_PKT_WHEEL = "\x05"
 FS_PKT_HVADJ = "\x08"
 FS_PKT_BEEP = "\x09"
@@ -254,6 +254,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 					inputCore.manager.executeGesture(gesture)
 				except inputCore.NoInputGestureAction:
 					pass
+		elif packetType == FS_PKT_BUTTON:
+			key = ord(arg1)
+			isPress = (ord(arg2) & 0X01) != 0
+			keyGroup = ord(arg3)
+			isTopRow = (self._model.lower().startswith("focus") and keyGroup == -1) or \
+				(self._model.lower().startswith("pm display") and keyGroup == 1)
+			if isPress:
+				# Ignore keypresses, 
+				return
+			gesture = RoutingGesture(key, isTopRow)
+			try:
+				inputCore.manager.executeGesture(gesture)
+			except inputCore.NoInputGestureAction:
+				pass
 		elif packetType == FS_PKT_KEY:
 			keyBits = ord(arg1) | (ord(arg2) << 8) | (ord(arg3) << 16)
 			self._handleKeys(keyBits)
