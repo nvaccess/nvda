@@ -21,7 +21,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <shlwapi.h>
 #include <sddl.h>
 #include <common/log.h>
-#include "ia2Support.h"
 #include "apiHook.h"
 #include "nvdaController.h"
 #include "nvdaControllerInternal.h"
@@ -214,6 +213,9 @@ if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32
 	inProcess_terminate();
 	//Unregister any windows hooks registered so far
 	killRunningWindowsHooks();
+	// Unregister inproc winEvent callback
+	UnhookWinEvent(inprocWinEventHookID);
+	inprocWinEventHookID=0;
 	//Release and close the thread mutex
 	ReleaseMutex(threadMutex);
 	CloseHandle(threadMutex);
@@ -321,10 +323,6 @@ BOOL injection_initialize(int secureMode) {
 		return FALSE;
 	}
 	nhAssert(dllHandle);
-	if(!IA2Support_initialize()) {
-		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (injection_initialize)",0);
-		return FALSE;
-	}
 	outprocMgrThreadHandle=CreateThread(NULL,0,outprocMgrThreadFunc,NULL,0,&outprocMgrThreadID);
 	outprocInitialized=TRUE;
 	return TRUE;
