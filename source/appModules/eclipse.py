@@ -73,6 +73,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 		ui.message(obj.basicText)
 
+	# Translators: Input help mode message for the 'read documentation script
 	script_readDocumentation.__doc__ = _("Tries to read documentation for this Autocompletion entry.")
 
 	__gestures = {
