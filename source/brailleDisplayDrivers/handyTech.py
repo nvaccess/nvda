@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Bram Duvigneau, Leonard de Ruijter, Babbage B.V.
+#Copyright (C) 2008-2017 NV Access Limited, Bram Duvigneau, Leonard de Ruijter (Babbage B.V.), Felix Grützmacher (Handy Tech Elektronik GmbH)
 "Braille display driver for Handy Tech braille displays"
 from collections import OrderedDict
 from cStringIO import StringIO
@@ -262,15 +262,15 @@ class JoystickMixin(AutoPropertyObject):
 		return keys
 
 
-class StatusRoutingMixin(AutoPropertyObject):
-	"""Status routing keys
+class StatusCellMixin(AutoPropertyObject):
+	"""Status cells and routing keys
 
-	Some Handy Tech models have four status routing keys.
+	Some Handy Tech models have four status cells with corresponding routing keys.
 	"""
 
 	def _get_keys(self):
 		"Add the status routing keys to the keys property"
-		keys = super(StatusRoutingMixin, self).keys
+		keys = super(StatusCellMixin, self).keys
 		keys.update({
 			0x70: "statusRouting1",
 			0x71: "statusRouting2",
@@ -278,6 +278,16 @@ class StatusRoutingMixin(AutoPropertyObject):
 			0x73: "statusRouting4",
 		})
 		return keys
+
+	def display(self, cells):
+		"""Display braille on the display with empty status cells
+
+		Some displays (e.g. Modular series) have 4 status cells.
+		These cells need to be included in the braille data, but since NVDA doesn't
+		support status cells, we just send empty cells.
+		"""
+		cells = [0] * 4 + cells
+		super(StatusCellMixin, self).display(cells)
 
 
 class ModularConnect88(TripleActionKeysMixin, Model):
@@ -391,21 +401,11 @@ class BrailleStar80(BrailleStar):
 	numCells = 80
 
 
-class Modular(StatusRoutingMixin, TripleActionKeysMixin, Model):
+class Modular(StatusCellMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular"
 
 	def _get_name(self):
 		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
-
-	def display(self, cells):
-		"""Display braille on the display with empty status cells
-
-		The Modular serie has 4 status cells.
-		These cells need to be included in the braille data, but since NVDA doesn't
-		support status cells, we just send empty cells.
-		"""
-		cells = [0] * 4 + cells
-		super(Modular, self).display(cells)
 
 
 class Modular20(Modular):
@@ -758,20 +758,31 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"braille_nextLine": ("br(handytech):b5",),
 			"braille_scrollForward": (
 				"br(handytech):rightSpace", "br(handytech):leftTakBottom",
-				"br(handytech):rightTakBottom", "br(handytech):b6", "br(handytech):right",),
+				"br(handytech):rightTakBottom", "br(handytech):b6", "br(handytech):right",
+			),
 			"braille_toggleTether": ("br(handytech):b2",),
-			"braille_toggleFocusContextPresentation": (
-				"br(handytech):b7",),
+			"braille_toggleFocusContextPresentation": ("br(handytech):b7",),
 			"braille_toggleShowCursor": ("br(handytech):b1",),
-			"kb:shift+tab": ("br(handytech):leftTakTop+leftTakBottom",
-				"br(handytech):escape",),
-			"kb:tab": ("br(handytech):rightTakTop+rightTakBottom",
-				"br(handytech):return",),
+			"kb:shift+tab": (
+				"br(handytech):leftTakTop+leftTakBottom",
+				"br(handytech):escape",
+			),
+			"kb:tab": (
+				"br(handytech):rightTakTop+rightTakBottom",
+				"br(handytech):return",
+			),
 			"kb:enter": (
 				"br(handytech):leftTakTop+leftTakBottom+rightTakTop+rightTakBottom",
-				"br(handytech):b8", "br(handytech):escape+return",),
+				"br(handytech):b8",
+				"br(handytech):escape+return",
+				"br(handytech):joystickAction",
+			),
 			"kb:alt": ("br(handytech):b2+b4+b5",),
 			"kb:escape": ("br(handytech):b4+b6",),
+			"kb:upArrow": ("br(handytech):joystickUp",),
+			"kb:downArrow": ("br(handytech):joystickDown",),
+			"kb:leftArrow": ("br(handytech):joystickLeft",),
+			"kb:rightArrow": ("br(handytech):joystickRight",),
 			"kb:1": ("br(handytech):n1",),
 			"kb:2": ("br(handytech):n2",),
 			"kb:3": ("br(handytech):n3",),
