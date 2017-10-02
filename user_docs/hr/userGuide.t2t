@@ -544,15 +544,18 @@ Dostupan je prečac koji služi za vraćanje na izvornu stranicu koja sadrži ta
 | Prebaci se na dokument sadržaja u načinu pregleda | NVDA+kontrol+razmak | pomiće kursor iz ugrađenog objekta u dokument koji ga sadrži |
 %kc:endInclude
 
-+ Čitanje matematičkog sadržaja +
++ Čitanje matematičkog sadržaja +[ReadingMath]
 Koristeći MathPlayer4 tvrtke Design Science, NVDA može čitati i istovremeno biti u interakciji sa podržanim matematičkim sadržajem.
 Ovo zahtjeva instaliranu kopiju MathPlayera na vašem računalu.
 MathPlayer je dostupan za besplatno preuzimanje sa adrese: http://www.dessci.com/en/products/mathplayer/
 
 NVDA podržava slijedeće vrste matematičkog sadržaja:
 - MathML u Mozilla Firefoxu, Google Chromeu i Microsoft Internet Exploreru.
-- Design Science MathType u Microsoft Wordu i PowerPointu. MathType mora biti instaliran kako bi ova mogućnost radila. Probna inačica je dovoljna.
-- MathML u Adobe Readeru. Imajte na umu da ovo još uvijek nije službeni standard, dakle, ne postoji javno dostupan softver kojim se može izrađivati ovakav sadržaj.
+- Design Science MathType u Microsoft Wordu i PowerPointu.
+MathType mora biti instaliran, kako bi ovo radilo. Probna inačica je dovoljna.
+- MathML u Adobe Readeru.
+Imajte na umu, da ovo još uvijek nije službeni standard, stoga ne postoji dostupan softver sa kojim se može praviti takav tip sadržaja.
+- Matematika u Kindle za PC za knjige sa pristupačnom matematikom.
 -
 
 Dok čitate dokument, NVDA će izgovarati bilo koji podržani matematički sadržaj gdje se pojavi.
@@ -576,7 +579,7 @@ Podrazumijevano, pregledni kursor prati kursor sustava, dakle, uobičajeno može
 
 U tom trenutku, možete koristiti tipkovničke prečace MathPlayer-a da biste se kretali po sadržaju.
 Na primjer, možete se pomicati po izrazu uz pomoć lijeve i desne strelice ili dublje zagledavati u izraz poput jednadžbe koristeći strelicu dolje.
-Molimo pročitajte uputstvo za upotrebu MathPlayer-a za više informacija.
+Za više informacija o prečacima za kretanje po matematičkom sadržaju, molimo pogledajte dokumentaciju MathPlayera: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Kada se želite vratiti u dokument, pritisnite escape tipku.
 
@@ -855,6 +858,9 @@ možete se ručno prebacivati na slijedeću stranicu uz pomoć tipke pageDown i 
 Brzo kretanje je podržano za linkove i grafike, ali samo za trenutnu stranicu.
 Kretanje po linkovima također uključuje fusnote.
 
+NVDA podržava matematiku u Kindleu za PC sa knjigama koje imaju pristupačnu matematiku.
+Za više informacija, molimo pogledajte poglavlje [čitanje matematičkog sadržaja #ReadingMath].
+
 +++ označavanje teksta +++
 Kindle vam omogučuje izvođenje različitih funkcija na označenom tekstu, uključujući izvlačenje objašnjenja iz rječnika, dodavanje bilježaka i oznaka, kopiranje teksta u međuspremnik i pretraživanje interneta.
 Kako bi ste mogli učiniti jednu od ovih radnji, prvo označite tekst na način kako biste ga inače označavali u načinu pregleda; NPR. koristeći shift i kursorske tipke.
@@ -876,8 +882,16 @@ Kako biste pregledali, uredili ili izbrisali bilješku:
 + Pristupite opcijama označenog teksta kako je to opisano iznad.
 + Odaberite opciju "Uredi bilješku". Napomena: budući da hrvatski prevoditelj NVDA čitača ekrana ne zna je li amazon lokaliziran na hrvatski, preveo je nazive opcija u postupcima za rad s tekstom.
 +
+ 
+++ Azardi ++
+%kc:beginInclude
+Kada se nalazite u tabličnom pregledu dodanih knjiga:
+|| naziv | Prečac | Opis |
+| Enter | enter | otvara označenu knjigu. |
+| Kontekstni izbornik | aplikacijska tipka | Okvara kontekstni izbornik za označenu knjigu. |
+%kc:endInclude
 
-+ Podešavanje NVDA +
++ Podešavanje NVDA čitača ekrana +
 
 ++ Postavke ++
 %kc:settingsSection: || Naziv | Prečac za stolna računala | Prečac za prijenosna računala | Opis |

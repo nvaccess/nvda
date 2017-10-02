@@ -1,117 +1,183 @@
 ﻿#locale/pt_BR/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011 NV Access Inc
+#Copyright (c) 2011-2017 NVDA Contributors, Cleverson Casarin Uliana, Rui Batista, Marlin Rodrigues da Silva, Tiago Melo Casal
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
-# Sentence endings.
-. fim de sentença	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! fim de sentença	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? fim de sentença	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; fim de período	(?<=[^\s;]);(?=\s|$)
-: fim de período	(?<=[^\s:]):(?=\s|$)
 # Others
-ponto decimal	(?<=\d),(?=\d)
-' em palavra	(?<=[^\W_])['’]
-número negativo	(?<!\w)-(?=[$£€¥]?\d)
+# pt_BR: em português o separador decimal é , (vírgula)
+decimal point	(?<![^\d -])\,(?=\d)
+# pt_BR: em português o separador de milhares clássico é . (ponto)
+thousands separator	(?<=\d)\.(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. fim de sentença	ponto	all	always
-! fim de sentença	exclamação	all	always
-? fim de sentença	interrogação	all	always
-; fim de período	ponto e vírgula	most	always
-: fim de período	dois pontos	most	always
-ponto decimal		none	always
-' em palavra	apóstrofo	all	norep
-número negativo	menos	none	norep
+. sentence ending	ponto	# . fim de sentença
+! sentence ending	exclamação	# ! fim de sentença
+? sentence ending	interrogação	# ? fim de sentença
+; phrase ending	ponto e vírgula	# ; fim de período
+: phrase ending	dois pontos	# : fim de período
+decimal point		# separador decimal
+in-word '	apóstrofo	# ' em palavra
+negative number	menos	# número negativo
+thousands separator	ponto	all	norep	# clássico separador de milhares
 
 # Whitespace
-\0	em branco	char
+\0	em branco	# nulo
 \t	tab
-\n	nova linha	char
-\f	quebra de página	none
-\r	retôrno	char
- 	espaço	char
- 	espaço	char	# no-break space
+\n	nova linha
+\f	quebra de página
+\r	retôrno
+ 	espaço
+ 	espaço sem quebra	# espaço sem quebra
 
 # Standard punctuation/symbols
-!	exclamação	all
-"	aspas	most
-\#	cardinal	most
-$	cifrão	all	norep
-£	libra	all	norep
-€	euro	all	norep
-¢	Centavos	all	norep
-¥	iene	all	norep
-%	porcento	some
-&	êh comercial	some
-'	apóstrofo	all
-(	abre parênteses	most
-)	fecha parênteses	most
-*	asterisco	some
-+	mais	some
-,	vírgula	all	always
--	hífen	most
-.	ponto	some
-/	barra	some
-:	dois pontos	most	norep
-;	ponto e vírgula	most
-<	menor	most
->	maior	most
-=	igual	some
-?	interrogação	all
-@	arrôba	some
-[	abre colchetes	most
-]	fecha colchetes	most
-\\	barra invertida	most
-^	circunflexo	most
-_	sublinhado	most
-`	grave	most
-{	abre chaves	most
-}	fecha chaves	most
-|	barra vertical	most
-~	til	most
+!	exclamação
+"	aspas
+\#	cardinal
+$	cifrão
+£	libra
+€	euro
+¢	Centavos
+¥	Iene
+# pt_BR: em "₹	Rúpya" usado a forma acentuada para pronúncia correta com os sintetizadores
+₹	Rúpya
+%	porcento
+# pt_BR: em "&	êh comercial" usado "êh" para pronúncia correta com alguns sintetizadores
+&	êh comercial
+'	apóstrofo
+(	abre parêntesis
+)	fecha parêntesis
+*	asterisco
++	mais
+,	vírgula
+-	hífen
+.	ponto
+/	barra
+:	dois pontos
+;	ponto e vírgula
+<	menor
+>	maior
+=	igual
+?	interrogação
+# pt_BR: em "@	arrôba" usado letra acentuada "ô" para pronúncia correta com alguns sintetizadores
+@	arrôba
+[	abre colchete
+]	fecha colchete
+\\	barra invertida
+^	circunflexo
+_	sublinha
+`	grave
+{	abre chave
+}	fecha chave
+|	barra vertical
+~	til
 
 # Other characters
-•	bolinha	some
-…	reticências	all	always
-...	reticências	all	always
-	bolinha	some
-“	aspas esquerdas	most
-”	aspas direitas	most
-‘	apóstrofo esquerdo	most
-’	apóstrofo direito	most
-–	travessão N	most
-—	travessão M	most
-●	círculo	most
-¨	trema	most
-‎	esquerda para direita	char
-‏	direita para esquerda	char
-■	barra vertical cortada	some
-▪	barra vertical cortada	some
-◾	barra vertical cortada	some
-◦	bolinha branca	some
-➔	seta à direita	some
-§	parágrafo	all
-°	graus	some
-«	abre aspas duplas
-»	fecha aspas duplas
-µ	micro	some
-¹	1 superescrito	some
-²	2 superescrito	some
-³	3 superescrito	some
-®	registrado	some
-™	marca registrada	some
-©	Copyright	some
-±	mais ou menos	most
-×	vezes	most
-÷	dividido por	most
-←	seta à esquerda	some
-→	seta à direita	some
-✓	marca	some
-✔	marca	some
+•	bolinha
+…	reticências
+...	ponto ponto ponto
+# pt_BR: deixado texto original do caractere ""(U+F0B7), diferenciando por não ser o mesmo que caractere "•" (U+2022)
+	bullet
+“	abre aspas
+”	fecha aspas
+‘	apóstrofo esquerdo
+’	apóstrofo direito
+–	traço
+—	travessão
+●	círculo
+¨	trema
+‎	esquerda para direita
+‏	direita para esquerda
+■	quadrado negro
+▪	quadradinho negro
+◾	quadradinho médio negro
+◦	bolinha branca
+➔	seta apontando para direita
+§	parágrafo
+°	graus
+«	abre aspas angulares
+»	fecha aspas angulares
+µ	micro
+¹	1 sobrescrito
+²	2 sobrescrito
+³	3 sobrescrito
+®	registrado
+™	marca registrada
+©	Copyright
+±	mais ou menos
+×	vezes
+÷	dividido por
+←	seta para esquerda
+↑	seta para cima
+→	seta para direita
+↓	seta para baixo
+✓	marca de seleção
+✔	marca de seleção em negrito
+
+#Mathematical Operators U+2200 to U+220F
+∀	para todo
+∁	complemento
+∂	derivada parcial
+∃	existe
+∄	não existe
+∅	conjunto vazio
+∆	incremento
+∇	nabla
+∈	pertence
+∉	não pertence
+∊	pertence pequeno
+∋	contém como membro
+∌	não contém como membro
+∍	contém como membro pequeno
+∎	fim de prova
+∏	produto n-ário
+
+# Miscellaneous Mathematical Operators
+∑	somatório n-ário
+√	raíz quadrada
+∛	raíz cúbica
+∜	raiz quarta
+∝	proporcional a
+∞	infinito
+∟	ângulo reto
+∠	ângulo
+∥	paralelo a
+∦	não paralelo a
+# pt_BR: em "∧	êh lógico" usado "êh" para pronúncia correta com alguns sintetizadores
+∧	êh lógico
+∨	ou lógico
+∩	interseção
+∪	união
+∫	integral
+∴	portanto
+# pt_BR: em "∵	porquê" usado a forma acentuada para pronúncia correta com alguns sintetizadores
+∵	porquê
+∶	razão
+∷	proporção
+≤	menor ou igual a
+≥	maior ou igual a
+⊂	subconjunto de
+⊃	superconjunto de
+⊆	subconjunto de ou igual a
+⊇	superconjunto de ou igual a
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	um sétimo
+⅑	um nono
+⅒	um décimo
+⅓	um terço
+⅔	dois terços
+⅕	um quinto
+⅖	dois quintos
+⅗	três quintos
+⅘	quatro quintos
+⅙	um sexto
+⅚	cinco sextos
+⅛	um oitavo
+⅜	três oitavos
+⅝	cinco oitavos
+⅞	sete oitavos

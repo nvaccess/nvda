@@ -3,6 +3,43 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+== Nieuwe Functies ==
+- In bladermodus is het nu mogelijk om  voorbij/naar het begin van een oriëntatiepunt te springen met behulp van de commando's ga voorbij/naar het begin van een containerelement (comma/shift+comma). (#5482)
+- In Firefox, Chrome en Internet Explorer omvat snelnavigatie naar invoer- en formuliervelden nu ook invoervelden met opmaakondersteuning (D.w.z. contentEditable). (#5534)
+- In web browsers kan de elementenlijst nu formuliervelden en knoppen weergeven. (#588)
+- Initiële ondersteuning voor Windows 10 op ARM64. (#7508)
+- Vroege ondersteuning voor het lezen van en interactief navigeren door wiskundige inhoud voor Kindle boeken, mits deze inhoud toegankelijk is. (#7536)
+- Ondersteuning toegevoegd voor Azardi e-book reader. (#5848)
+
+
+== Veranderingen ==
+- Het miminimaal door NVDA ondersteunde besturingssysteem is nu Windows 7 met Service Pack 1, of Windows Server 2008 R2 met Service Pack 1. (#7546)
+- Webdialoogvensters in Firefox en Chrome web browsers gebruiken nu automatisch bladermodus, tenzij binnen een webapplicatie. (#4493)
+- In bladermodus meldt het gebruik van tab of snelnavigatiecommando's niet langer het verlaten van containers zoals lijsten en tabellen, waardoor navigatie efficiënter wordt. (#2591)
+- In bladermodus voor Firefox en Chrome wordt nu de naam van formulierveldgroeperingen gemeld wanneer daarin genavigeerd wordt met snelnavigatie of tab. (#3321)
+- In bladermodusomvat het snelnavigatiecommando voor ingebedde objecten (o en shift+o) nu zowel elementen van het type audio en video als met de aria roles application en dialog. (#7239)
+- Espeak-ng is bijgewerkt (naar commit 01919cd48a566cdf34347784b2e74554b376e900), wat enkele problemen oplost met het produceren van release builds. (#7385)
+
+
+== Opgeloste Problemen ==
+- Links worden nu als zodanig weergegeven in braille in applicaties zoals Microsoft Word. (#6780)
+- NVDA wordt niet langer merkbaar langzamer wanneer er veel tabbladen geopend zijn in Firefox of Chrome web browsers. (#3138)
+- Cursor routing for the MDV Lilli Braille display no longer incorrectly moves one braille cell ahead of where it should be. (#7469)
+- In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
+- Braille displays are now updated when typing Arabic characters in a left-aligned WordPad document (#511).
+- Accessible labels for controls in Mozilla Firefox are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- On windows 10 Creaters Update, NVDA can again access Firefox after a restart of NVDA. (#7269)
+- When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
+- It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
+- The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2017.3 =
 Hoogtepunten in deze versie zijn invoer van braille kortschrift, ondersteuning voor nieuwe Windows OneCore stemmen beschikbaar in Windows 10, ingebouwde ondersteuning voor Windows 10 OCR, en veel significante verbeteringen voor Braille en het web.
 

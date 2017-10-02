@@ -23,10 +23,10 @@ symbols:
 # Complex symbols
 . sentence ending	точка	all	always
 ! sentence ending	извичник	all	always
-? sentence ending	впрашалник	all	always
+? sentence ending	прашалник	all	always
 ; phrase ending	точка запирка	most	always
 : phrase ending	дветочки	most	always
-точка		none	always
+. точка		none	always
 in-word '	апостроф	all	norep
 negative number	минус	none	norep
 
@@ -43,15 +43,15 @@ negative number	минус	none	norep
 !	извичник	all
 "	наводници	most
 \#	број	some
-$$	dollar	all	norep
+$$	долар	all	norep
 £	фунта	all	norep
 €	евро	all	norep
 ¢	цент	all	norep
 ¥	јен	all	norep
 ₹	Рупија	some	norep
-%	процент	some
-&	амперсант	some
-'	тицк	all
+%	отсто	some
+&	и	some
+'	апостроф	all
 (	отворена заграда	most	always
 )	затворена заграда	most	always
 *	ѕвездичка	some
@@ -66,13 +66,13 @@ $$	dollar	all	norep
 >	поголемо	some
 =	еднакво	some
 ?	прашалник	all
-@	ет	some
+@	мајмунче	some
 [	left bracket	most
 ]	right bracket	most
-\\	obrna crta	most
+\\	обратна коса црта	most
 ^	karet	most
-_	podvlečeno	most
-`	akcent	most
+_	подвлечено	most
+`	акцент	most
 {	left brace	most
 }	right brace	most
 |	okomita crtička	most
@@ -80,15 +80,15 @@ _	podvlečeno	most
 
 # Other characters
 •	bullet	some
-…	dot dot dot	all	always
-...	dot dot dot	all	always
+…	триточки	all	always
+...	триточки	all	always
 	bullet	some
-“	left quote	most
-”	right quote	most
+“	отвори наводници	most
+”	затвори наводници	most
 ‘	left tick	most
 ’	right tick	most
-–	en dash	most	always
-—	em dash	most
+–	цртичка	most	always
+—	цртичка	most
 ●	circle	most
 ¨	diaeresis	most
 ‎	left to right mark	char
@@ -110,14 +110,14 @@ _	podvlečeno	most
 ™	Trademark	some
 ©	Copyright	some
 ±	Plus or Minus	some
-×	times	some
-÷	divide by	some
-←	left arrow	some
-↑	up arrow	some
-→	right arrow	some
-↓	down arrow	some
-✓	check	some
-✔	check	some
+×	помножено со 	some
+÷	поделено со 	some
+←	стрелка налево	some
+↑	стрелка нагоре	some
+→	стрелка надесно	some
+↓	стрелка надолу	some
+✓	ознака	some
+✔	голема ознака	some
 
 #Mathematical Operators U+2200 to U+220F
 ∀	for all	none
@@ -165,18 +165,18 @@ _	podvlečeno	most
 ⊇	superset of or equal to	none
 
 # Vulgur Fractions U+2150 to U+215E
-⅐	one seventh	none
-⅑	one ninth	none
-⅒	one tenth	none
-⅓	one third	none
-⅔	two thirds	none
-⅕	one fifth	none
-⅖	two fifths	none
-⅗	three fifths	none
-⅘	four fifths	none
-⅙	one sixth	none
-⅚	five sixths	none
-⅛	one eighth	none
-⅜	three eights	none
-⅝	five eighths	none
-⅞	seven eighths	none
+⅐	една седмина	none
+⅑	една деветина	none
+⅒	една десетина	none
+⅓	една третина	none
+⅔	две третини	none
+⅕	една петина	none
+⅖	две петини	none
+⅗	три петини	none
+⅘	четири петини	none
+⅙	една шестина	none
+⅚	пет шестини	none
+⅛	една осмина	none
+⅜	три осмини	none
+⅝	пет осмини	none
+⅞	седум осмини	none
