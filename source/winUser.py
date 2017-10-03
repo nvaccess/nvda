@@ -1,6 +1,6 @@
 #winUser.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -322,9 +322,15 @@ def MAKEWORD(lo,hi):
 
 def LOWORD(long):
 	return long&0xFFFF
- 
+
 def HIWORD(long):
 	return long>>16
+
+def GET_X_LPARAM(lp):
+	return c_short(LOWORD(lp)).value
+
+def GET_Y_LPARAM(lp):
+	return c_short(HIWORD(lp)).value
 
 def MAKELONG(lo,hi):
 	return (hi<<16)+lo

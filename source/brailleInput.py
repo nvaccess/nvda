@@ -88,6 +88,7 @@ class BrailleInputHandler(object):
 		self.untranslatedCursorPos = 0
 		#: The time at which uncontracted characters were sent to the system.
 		self._uncontSentTime = None
+		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
 
 	@property
 	def table(self):
