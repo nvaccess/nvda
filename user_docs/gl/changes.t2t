@@ -10,6 +10,8 @@ Que hai de Novo no NVDA
 - En Firefox, Chrome e Internet Explorer, a navegación rápida por campos de edición e campos de formulario agora inclúe contido de texto enriquecido editable (ex.: contentEditable). (#5534)
 - En navegadores web, a Lista de Elementos agora pode listar campos de formulario e botóns. (#588)
 - Soporte inicial para o Windows 10 en ARM64. (#7508)
+- Soporte preliminar para a lectura e a navegación interactiva de contido matemático para libros Kindle coas matemáticas acessibles. (#7536)
+- Engadido o soporte para o lector de libros dixitais Azardi. (#5848)
 
 
 == Cambios ==
@@ -18,6 +20,7 @@ Que hai de Novo no NVDA
 - No modo exploración, ao se tabular ou se mover coas ordes de teclas de navegación rápida xa non anuncia saíndo de contedores coma listas e táboas, o que fai a navegación máis eficaz. (#2591)
 - En modo exploración para Firefox e Chrome, agora anúncianse os nomes de grupos de campos de formulario ao se mover dentro deles coa navegación rápida ou cando se tabula. (#3321)
 - No modo exploración, as ordes de navegación rápida para obxectos integrados (o e shift+o) agora inclúen elementos de audio e vídeo así coma elementos cos roles aria application e dialog. (#7239)
+- Actualizouse o Espeak-ng (a commit 01919cd48a566cdf34347784b2e74554b376e900), esto resolve algúns problemas coa produción de versións. (#7385)
 
 
 == Corrección de Erros ==
@@ -25,10 +28,18 @@ Que hai de Novo no NVDA
 - O NVDA xa non se volta notablemente máis lento cando estean abertas moitas pestanas nos navegadores web Firefox ou Chrome. (#3138)
 - O enrutamento do cursor para as pantallas MDV Lilli Braille xa non move incorrectamente unha celda braille antes de onde debería estar. (#7469)
 - No Internet Explorer e outros documentos MSHTML, o atributo HTML5 requerido agora sopórtase para indicar o estado requerido dun campo de formulario. (#7321)
+- As pantallas braille agora actualízanse ao se escrebir caracteres arábigos nun documento WordPad aliñado á esquerda (#511).
+- As etiquetas acesibles para controis en Mozilla Firefox agora anúncianse máis sinxelamente no modo exploración cando a etiqueta non aparezca coma contido por si mesma. (#4773)
+- Na actualización windows 10 Creators, o NVDA pode aceder de novo ao Firefox despois dun reinicio do NVDA. (#7269)
+- Cando se reinicie o NVDA co Mozilla Firefox enfocado, o modo exploración estará dispoñible novamente, aíndaque é posible que teñas que premer alt+tab e voltar a premelo de novo. (#5758)
+- Agora é posible aceder a contido matemático en Google Chrome nun sistema sen Mozilla Firefox instalado. (#7308)
+- O sistema operativo e outras aplicacións deberían seren máis estables directamente despois de instalar o NVDA antes de reiniciar, en comparación coas instalacións de versións anteriores do NVDA. (#7563)
 
 
 == Cambios para Desenvolvedores ==
 - "scons tests" agora procura que as cadeas traducibles teñan comentarios para os traductores. Tamén podes executar esto só con "scons checkPot". (#7492)
+- Agora hai un novo módulo extensionPoints que proporciona un framework xenérico para permitir a extensibilidade de código en pontos específicos no código. Esto permite que as partes interesadas se rexistren para seren notificadas cando ocurra algunha acción (extensionPoints.Action), para modificar un tipo específico de dato (extensionPoints.Filter) ou para participar na decisión de se se fará algo (extensionPoints.Decider). (#3393)
+- Agora podes rexistrarte para seren notificado acerca dos cambios de perfiles de configuración a través da acción config.configProfileSwitched. (#3393)
 
 
 = 2017.3 =

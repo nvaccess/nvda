@@ -544,15 +544,18 @@ Proporciónase unha orde de teclado para voltar á páxina.
 | Mover ao contido do modo Navegación | NVDA+control+espazo | Move o foco fora do actual obxecto empotrado e pono dentro do documento que o contén |
 %kc:endInclude
 
-+ Lendo Contido Matemático +
++ Lendo Contido Matemático +[ReadingMath]
 Usando MathPlayer 4 from Design Science, NVDA pode ler e navegar interactivamente polo contido matemático soportado.
 Esto require que MathPlayer 4 estea instalado no computador.
 MathPlayer está dispoñible como unha descarga gratuita dende: http://www.dessci.com/en/products/mathplayer/
 
 NVDA soporta os seguintes tipos de contidos matemáticos:
 - MathML en Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
-- Design Science MathType en Microsoft Word e PowerPoint. MathType necesita estaren instalado para que esto funcione. A versión trial é suficiente.
-- MathML en Adobe Reader. Ten en conta que esto non é un estándar official aínda, así que non hai actualmente software dispoñible para o público que poda producir este contido.
+- Design Science MathType en Microsoft Word e PowerPoint.
+MathType necesita estaren instalado para que esto funcione. A versión trial é suficiente.
+- MathML en Adobe Reader.
+Ten en conta que esto non é un estándar official aínda, así que non hai actualmente software dispoñible para o público que poda producir este contido.
+- Matemáticas en Kindle para PC para libros coas matemáticas accesibles.
 -
 
 Ao ler un documento, NVDA falará calquera contido matemático soportado onde apareza.
@@ -576,7 +579,7 @@ Por omisión, o cursor de revisión segue ao cursor do sistema, así podes utili
 
 Neste ponto, podes utilizar ordes de MathPlayer como as teclas de cursor para explorar a  expresión.
 Por exemplo, podes moverte a través da expresión cas teclas de frecha  esquerda ou dereita e achegarte a unha porción da expresión como unha fracción utilizando a tecla de frecha abaixo.
-Por favor consulta a documentación do MathPlayer para información adicional.
+Por favor consulta a documentación do MathPlayer para información adicional: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm.
 
 Cando desexes voltar ao documento, simplemente preme a tecla escape.
 
@@ -855,6 +858,9 @@ Podes pasar á seguinte páxina manualmente coa tecla avPáx e voltar á anterio
 Sopórtase a navegación cunha soa tecla para ligas e gráficos, pero só dentro da páxina actual.
 A navegación por ligas tamén inclúe notas ao pé.
 
+O NVDA proporciona soporte preliminar para a lectura e a navegación interactiva de contido matemático para libros coas matemáticas accesibles.
+Por favor consulta a seción [Lendo Contido Matemático #ReadingMath] para información adicional.
+
 +++ Seleción de Texto +++
 Kindle permíteche realizar varias funcións no texto selecionado, incluindo obter unha definición de diccionario, engadir notas e facer resaltados, copiar o texto ao portapapeis e procurar na web.
 Para facer esto, primeiro seleciona texto coma o farías normalmente en modo exploración; ex.: usando shift e as teclas de cursor.
@@ -876,6 +882,14 @@ Para ver, editar ou borrar unha nota:
 + Accede ás opcións para a seleción segundo se descrebiu arriba.
 + Escolle Editar Nota.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Cando se estea na táboa de vista de libros engadidos:
+|| Nome | Tecla | Descripción |
+| Entrar | intro | Abre o libro selecionado. |
+| Menú de Contexto | aplicaciónss | Abre o menú de contexto para o texto selecionado. |
+%kc:endInclude
 
 + Configurando o NVDA +
 

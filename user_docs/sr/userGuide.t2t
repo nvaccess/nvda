@@ -544,15 +544,18 @@ Postoji komanda za vraćanje na stranicu koja sadrži ovakav objekat:
 | Premesti se na sadržan dokument režima pretraživanja| NVDA+control+razmak | Prebacuje fokus van umetnutog objekta i vraća ga na dokument koji ga sadrži|
 %kc:endInclude
 
-+ Čitanje matematičkog sadržaja+
++ Čitanje matematičkog sadržaja +[ReadingMath]
 Koristeći program MathPlayer 4 kompanije Design Science, NVDA može čitati matematički sadržaj.
 Ovo zahteva da program MathPlayer 4 bude instaliran na računaru.
 MathPlayer je dostupan za besplatno preuzimanje sa: http://www.dessci.com/en/products/mathplayer/
 
 NVDA podržava sledeće vrste matematičkog sadržaja:
 - MathML u programima Mozilla Firefox, Microsoft Internet Explorer i  Google Chrome.
-- Design Science vrsta matematike u programu Microsoft Word i PowerPoint. Ova vrsta mora prvo da bude instalirana da bi ovo radilo. Probna verzija je dovoljna.
-- MathML u programu Adobe Reader. Napomena da ovo još uvek nije zvaničan standard, tako da trenutno nema javno dostupnog programa koji može praviti ovakav sadržaj.
+- Design Science vrsta matematike u programu Microsoft Word i PowerPoint. 
+Ova vrsta mora prvo da bude instalirana da bi ovo radilo. Probna verzija je dovoljna.
+- MathML u programu Adobe Reader.
+Napomena da ovo još uvek nije zvaničan standard, tako da trenutno nema javno dostupnog programa koji može praviti ovakav sadržaj.
+- Matematika u programu  Kindle za računar za knjige sa pristupačnom matematikom.
 -
 
 Kada čitate dokument, NVDA će izgovoriti sav podržan matematički sadržaj na mestima na kojima se pojavi.
@@ -576,7 +579,7 @@ Podrazumevano, pregledni kursor prati sistemski kursor, tako da obično možete 
 
 Nakon toga, možete koristiti komande programa MathPlayer kao što su strelice da istražujete sadržaj.
 Na primer, možete se pomerati kroz izraz koristeći strelice levo i desno kao i uveličati deo izraza strelicom dole.
-Molimo pročitajte dokumentaciju programa MathPlayer za više informacija.
+Molimo pročitajte MathPlayer dokumentaciju o komandama za navigaciju za dodatne informacije: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Kada želite da se vratite u dokument, jednostavno pritisnite taster escape.
 
@@ -855,6 +858,9 @@ Možete ručno preći na prethodnu stranicu tasterom page up ili na sledeću tas
 Navigacija jednim slovom je podržana za slike i linkove, ali samo na trenutnoj stranici.
 Navigacija linkovima takođe uključuje fusnote.
 
+NVDA pruža ranu podršku za čitanje i interakciju sa matematičkim sadržajem u knjigama sa pristupačnom matematikom.
+Molimo pogledajte deo [čitanje matematičkog sadržaja #ReadingMath] za dodatne informacije.
+
 +++ Izbor teksta +++
 Kindle vam dozvoljava više različitih funkcija sa izabranim tekstom, uključujući pretragu definicije iz rečnika, dodavanje napomena i obeležavanje, kopiranje teksta u privremenu memoriju i pretraga Weba.
 Da to uradite, izaberite tekst kao i obično u režimu pretraživanja korišćenjem tastera šift i tastera za pomeranje kursora.
@@ -876,6 +882,14 @@ Da prikažete, uredite ili obrišete napomenu:
 + Pristupite opcijama izbora koje su opisane iznad.
 + Izaberite uredi napomenu.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Kada ste u prikazu tabele dodatih knjiga:
+|| Ime | Komanda | Opis |
+| Enter | enter | Otvara izabranu knjigu. |
+| Kontekstni meni | Aplikacioni taster| Otvara kontekstni meni za izabranu knjigu. |
+%kc:endInclude
 
 + Podešavanje programa NVDA +
 

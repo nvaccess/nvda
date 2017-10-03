@@ -9,7 +9,9 @@
 - U režimu  pretraživanja, sada je moguće doći do kraja ili početka orjentira komandama za prelazak na početak ili kraj sadrživača (zarez/šift+zarez). (#5482)
 - U programima Firefox, Internet explorer i Chrome, brza navigacija po poljima za uređivanje ili unos teksta sada uključuje obogaćena tekstualna polja označena kao contentEditable. (#5534)
 - U web pretraživačima, lista elemenata sada može prikazati polja za uređivanje i dugmiće. (#588)
-- U režimu pretraživanja, komanda brze navigacije za umetnute objekte (o i  šift+o) sada uključuje elemente za zvuk i video kao i elemente sa ARIA vrednostima aplikacije i dijaloga. (#7239)
+- Početna podrška za  Windows 10 na  ARM64 procesorima. (#7508)
+- Rana podrška za čitanje i interakciju sa matematičkim sadržajem u programu Kindle books sa  accessible math. (#7536)
+- Dodata podrška za Azardi čitač elektronskih knjiga. (#5848)
 
 
 == Promene ==
@@ -17,7 +19,8 @@
 - Web dijalozi u pretraživačima Firefox i Chrome sada automatski koriste režim pretraživanja, osim ako se radi u Web aplikaciji. (#4493)
 - U režimu pretraživanja, korišćenje tastera tab ili brze navigacije više ne izgovara početak i kraj sadrživača na primer liste, što čini navigaciju jednostavnijom. (#2591)
 - U režimu pretraživanja programa Firefox i Chrome, imena grupa polja za uređivanje se sada izgovaraju kada koristite brzu navigaciju ili taster tab. (#3321)
-- Početna podrška za  Windows 10 na  ARM64 procesorima. (#7508)
+- U režimu pretraživanja, komanda brze navigacije za umetnute objekte (o i  šift+o) sada uključuje elemente za zvuk i video kao i elemente sa ARIA vrednostima aplikacije i dijaloga. (#7239)
+- Espeak-ng je ažuriran (na  commit 01919cd48a566cdf34347784b2e74554b376e900), ovo ispravlja određene greške sa objavljivanjem novih verzija. (#7385)
 
 
 == Ispravljene greške ==
@@ -25,6 +28,12 @@
 - NVDA više ne postaje znatno sporiji kada imate puno otvorenih kartica u programima Firefox i Chrome. (#3138)
 - Prebacivanje kursora za  MDV Lilli brajev red više ne pomera kursor za jednu ćeliju unapred od očekivane pozicije. (#7469)
 - U programu  Internet Explorer i drugim  MSHTML dokumentima, HTML5 potreban atribut je sada podržan za izgovor stanja polja za uređivanje. (#7321)
+- Brajev red se sada ispravno ažurira kada pišete dokumente na Arapskom u programu word pad sa poravnanjem na levoj strani (#511).
+- Imena za kontrole u programu Mozilla firefox u režimu pretraživanja se sada bolje prijavljuju kada ime nije deo sadržaja. (#4773)
+- Na Windows 10 creators ažuriranju, NVDA može ponovo pristupiti programu Firefox čak i kada se NVDA ponovo pokrene. (#7269)
+- Kada ponovo pokrenete program NVDA dok je program Mozilla firefox fokusiran, režim pretraživanja će ponovo biti dostupan, ali možda ćete morati da koristite komandu alt+tab da se prebacite na neki drugi prozor a nakon toga vratite u Firefox. (#5758)
+- Sada je moguće pristupiti matematičkom sadržaju u programu Google Chrome čak i na sistemima gde program Mozilla Firefox nije instaliran. (#7308)
+- Druge aplikacije i sam operativni sistem bi trebalo da budu stabilniji nakon instalacije programa NVDA bez ponovnog pokretanja, u poređenju sa instalacijom prethodnih verzija. (#7563)
 
 
 == Promene za programere ==
