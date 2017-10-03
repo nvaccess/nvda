@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import sys
 import itertools
@@ -26,6 +26,7 @@ import brailleDisplayDrivers
 import inputCore
 import brailleTables
 from collections import namedtuple
+import re
 import scriptHandler
 
 roleLabels = {
@@ -1971,6 +1972,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
+	Optionally, L{model} can be provided to facilitate model specific gestures.
 	L{routingIndex} should be provided for routing buttons.
 	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
@@ -1986,6 +1988,17 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		raise NotImplementedError
 
+	def _get_model(self):
+		"""The string used to identify all gestures from a specific braille display model.
+		This should be an alphanumeric short version of the model name, without spaces.
+		This string will be included in the source portion of gesture identifiers.
+		For example, if this was C{alvaBC6},
+		the model string could look like C{680},
+		and a corresponding display specific gesture identifier might be C{br(alvaBC6.680):etouch1}.
+		@rtype: str; C{None} if model specific gestures are not supported
+		"""
+		return None
+
 	def _get_id(self):
 		"""The unique, display specific id for this gesture.
 		@rtype: str
@@ -1998,6 +2011,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_identifiers(self):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
+		if self.model:
+			# Model based ids should take priority.
+			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id))
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -2060,8 +2076,23 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		return self.id.split("+")
 
+	#: Compiled regular expression to match an identifier including an optional model name
+	#: The model name should be an alphanumeric string without spaces.
+	#: @type: RegexObject
+	ID_PARTS_REGEX = re.compile(r"br\((\w+)(\.(\w+))?\):([\w+]+)", re.U)
+
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
-		return handler.display.description, identifier.split(":", 1)[1]
+		idParts = cls.ID_PARTS_REGEX.search(identifier)
+		if not idParts:
+			raise ValueError("Invalid identifier provided: %s"%identifier)
+		modelName = idParts.group(3)
+		key = idParts.group(4)
+		if modelName: # The identifier contains a model name
+			return handler.display.description, "{modelName}: {key}".format(
+				modelName=modelName, key=key
+			)
+		else:
+			return handler.display.description, key
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
