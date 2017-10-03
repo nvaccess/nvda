@@ -1,4 +1,4 @@
-﻿What's New in NVDA
+What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
@@ -23,6 +23,8 @@
 - In Browse mode for Firefox and Chrome, the name of form field groups are now announced when moving into them with quick navigation or when tabbing. (#3321)
 - In browse mode, the quick navigation command for embedded objects (o and shift+o) now includes audio and video elements as well as elements with the aria roles application and dialog. (#7239)
 - Espeak-ng has been updated (to commit 01919cd48a566cdf34347784b2e74554b376e900), this resolves some issues with producing release builds. (#7385)
+- It is now possible to press the report status bar command three times to copy the status bar text to the clipboard. (#1785)
+
 
 
 == Bug Fixes ==
