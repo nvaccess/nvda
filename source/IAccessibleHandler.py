@@ -92,12 +92,10 @@ class OrderedWinEventLimiter(object):
 			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
-				return True
 		elif eventID==winUser.EVENT_OBJECT_HIDE:
 			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
-				return True
 		elif eventID in MENU_EVENTIDS:
 			self._lastMenuEvent=(next(self._eventCounter),eventID,window,objectID,childID,threadID)
 			return True
@@ -859,10 +857,18 @@ def pumpAll():
 	focusWinEvents=[]
 	validFocus=False
 	fakeFocusEvent=None
+	focus=eventHandler.lastQueuedFocusObject
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
+		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
+		showHideCaretEvent = focus and isEventOnCaret and winEvent[0] in [winUser.EVENT_OBJECT_SHOW, winUser.EVENT_OBJECT_HIDE]
 		# #4001: Ideally, we'd call shouldAcceptEvent in winEventCallback,
 		# but this causes focus issues when starting applications.
-		if not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
+		# #7332: If this is a show event, which would normally be dropped by `shouldAcceptEvent` and this event is for the caret,
+		# later it will be mapped to a caret event, so skip `shouldAcceptEvent`
+		if showHideCaretEvent:
+			if not focus.shouldAcceptShowHideCaretEvent:
+				continue
+		elif not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
 			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
@@ -877,7 +883,9 @@ def pumpAll():
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
 				processDesktopSwitchWinEvent(*winEvent[1:])
-			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW:
+			# we dont want show caret events to be processed by `processShowWinEvent`, instead they should be 
+			# handled by `processGenericWinEvent`
+			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW and not isEventOnCaret:
 				processShowWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
 				# If there is no valid focus event, we may need to use this to fake the focus later.

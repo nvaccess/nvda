@@ -1,3 +1,9 @@
+#displayModel.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
+
 from ctypes import *
 from ctypes.wintypes import RECT
 from comtypes import BSTR
@@ -13,6 +19,10 @@ from textInfos.offsets import OffsetsTextInfo
 import watchdog
 from logHandler import log
 import windowUtils
+
+def wcharToInt(c):
+	i=ord(c)
+	return c_short(i).value
 
 def detectStringDirection(s):
 	direction=0
@@ -168,7 +178,7 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	characterLocations = []
 	cpBufIt = iter(cpBuf)
 	for cp in cpBufIt:
-		characterLocations.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt))))
+		characterLocations.append((wcharToInt(cp), wcharToInt(next(cpBufIt)), wcharToInt(next(cpBufIt)), wcharToInt(next(cpBufIt))))
 	return text, characterLocations
 
 def getFocusRect(obj):

@@ -169,10 +169,23 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
 	finally:
-		# #6017: handle typed characters for UWP apps in Win10 RS2 and above where we can't detect typed characters in-process 
+		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process 
 		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
 		focus=api.getFocusObject()
-		if winVersion.winVersion.build>=14986 and not gestureExecuted and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS and focus.windowClassName.startswith('Windows.UI.Core'):
+		if (
+			# This is only possible in Windows 10 RS2 and above
+			winVersion.winVersion.build>=14986
+			# And we only want to do this if the gesture did not result in an executed action 
+			and not gestureExecuted 
+			# and not if this gesture is a modifier key
+			and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
+			and ( # Either of
+				# We couldn't inject in-process, and its not a console window (console windows have their own specific typed character support)
+				(not focus.appModule.helperLocalBindingHandle and focus.windowClassName!='ConsoleWindowClass')
+				# or the focus is within a UWP app, where WM_CHAR never gets sent 
+				or focus.windowClassName.startswith('Windows.UI.Core')
+			)
+		):
 			keyStates=(ctypes.c_byte*256)()
 			for k in xrange(256):
 				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
