@@ -8,6 +8,7 @@
 from collections import OrderedDict
 from cStringIO import StringIO
 import serial # pylint: disable=E0401
+import weakref
 import hwPortUtils
 import hwIo
 import braille
@@ -128,9 +129,9 @@ class Model(AutoPropertyObject):
 	#: @type: string
 	deviceId = None
 
-	#: A reference to the driver instance
+	#: A weak reference to the driver instance
 	#: @type; BrailleDisplayDriver
-	_display = None
+	_displayRef = None
 
 	#: A generic name that identifies the model/series, used in gesture identifiers
 	#: @type: string
@@ -146,7 +147,8 @@ class Model(AutoPropertyObject):
 
 	def __init__(self, display):
 		super(Model, self).__init__()
-		self._display = display
+		# Use a weak reference due to a circular reference  between Model and Display
+		self._displayRef = weakref.ref(display)
 
 	def postInit(self):
 		"""Executed after model initialisation.
@@ -155,6 +157,14 @@ class Model(AutoPropertyObject):
 		of the display. Don't use __init__ for this, since the model ID has 
 		not been set, which is needed for sending packets to the display.
 		"""
+
+	def _get__display(self):
+		"The L{BrailleDisplayDriver} which initialized this Model instance"
+		# self._displayRef is a weakref, call it to get the object
+		if self._displayRef and callable(self._displayRef):
+			return self._displayRef()
+		else:
+			return None
 
 	# pylint: disable=R0201
 	def _get_keys(self):
@@ -425,6 +435,14 @@ class Modular80(Modular):
 
 # Model dict for easy lookup
 def _allSubclasses(cls):
+	"""List all direct and indirect subclasses of cls
+
+	This function calls itself recursively to return all subclasses of cls.
+
+	@param cls: the base class to list subclasses of
+	@type cls: class
+	@rtype list[class]
+	"""
 	return cls.__subclasses__() + [g for s in cls.__subclasses__()
 		for g in _allSubclasses(s)]
 
@@ -477,7 +495,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	@classmethod
 	def check(cls):
-		# TODO: Probably return False if there is no serial port at all?
 		return True
 
 	@classmethod
@@ -508,7 +525,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			hwId = portInfo["hardwareID"]
 			if hwId.startswith(r"FTDIBUS\COMPORT"):
 				# USB.
-				# TODO: It seems there is also another chip (Gohubs) used in some models?
+				# TODO: It seems there is also another chip (Gohubs) used in some models. See if we can autodetect that as well.
 				portType = "USB serial"
 				try:
 					usbId = hwId.split("&", 1)[1]
@@ -662,7 +679,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		modelId = stream.read(1)
 		if not self._model:
 			if not modelId in MODELS:
-				log.warning("Unknown model: %r" % modelId)
+				log.debugWarning("Unknown model: %r" % modelId)
 				raise RuntimeError(
 					"The model with ID %r is not supported by this driver" % modelId)
 			self._model = MODELS.get(modelId)(self)
@@ -709,11 +726,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				pass
 			else:
 				# Unknown extended packet, log it
-				log.warning("Unhandled extended packet of type %r: %r" %
+				log.debugWarning("Unhandled extended packet of type %r: %r" %
 					(extPacketType, packet))
 		else:
 			# Unknown packet type, log it
-			log.warning("Unhandled packet of type %r" % serPacketType)
+			log.debugWarning("Unhandled packet of type %r" % serPacketType)
 
 
 	def display(self, cells):
