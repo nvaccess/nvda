@@ -97,11 +97,7 @@ class IoBase(object):
 		ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 
 	def __del__(self):
-		try:
-			self.close()
-		except:
-			if _isDebug():
-				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
+		self.close()
 
 	def _asyncRead(self):
 		# Wait for _readSize bytes of data.
@@ -244,7 +240,9 @@ class Hid(IoBase):
 		if handle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open failed: %s" % ctypes.WinError())
+			self._file = None
 			raise ctypes.WinError()
+		self._file = handle
 		pd = ctypes.c_void_p()
 		if not ctypes.windll.hid.HidD_GetPreparsedData(handle, byref(pd)):
 			raise ctypes.WinError()
@@ -296,5 +294,8 @@ class Hid(IoBase):
 			raise ctypes.WinError()
 
 	def close(self):
+		if not self._file:
+			return
 		super(Hid, self).close()
 		winKernel.closeHandle(self._file)
+		self._file = None
