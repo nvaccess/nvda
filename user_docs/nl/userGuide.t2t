@@ -548,16 +548,18 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 | Terug naar inhoud van document | NVDA+control+spatiebalk | Verplaatst de focus van het huidige ingevoegde object naar “het document waarin het zich bevindt |
 %kc:endInclude
 
-+ Inhoud van wiskundige aard lezen +
++ Inhoud van wiskundige aard lezen +[ReadingMath]
 Met MathPlayer 4 van Design Science, kan NVDA ondersteunde wiskundige inhoud lezen en u er interactief in laten navigeren.
 Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
 MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
-- Design Science MathType in Microsoft Word and PowerPoint. MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
-- MathML in Adobe Reader. NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
--
+- Design Science MathType in Microsoft Word and PowerPoint. 
+MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
+- MathML in Adobe Reader. 
+NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
+- Wiskunde in Kindle voor pc voor boeken met toegankelijke wiskundige inhoud.
 
 Bij het lezen van een document zal NVDA alle ondersteunde wiskundige inhoud voorlezen wanneer deze voorkomt.
 Als u een brailleleesregel gebruikt, wordt deze ook in braille weergegeven.
@@ -580,7 +582,7 @@ Standaard volgt de leescursor de systeemcursor, dus kunt u deze gewoonlijk gebru
 
 Nu kunt u MathPlayer-commando’s zoals de pijltjestoetsen gebruiken om de stelling te verkennen.
 U kunt bij voorbeeld  horizontaal door de stelling gaan met de linker en rechter pijltoets en inzoemen op een onderdeel van de stelling zoals een breuk  met behulp van  pijl omlaag.
-Raadpleeg de documentatie bij MathPlayer  voor nadere informatie.
+Raadpleeg de documentatie van MathPlayer  over navigatiecommando's voor nadere informatie: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Als u naar het document wilt teruggaan drukt u op Escape.
 
@@ -858,6 +860,9 @@ U kunt ook handmatig naar de volgende pagina gaan  met de Pagina Omlaag-toets,en
 Navigeren met een enkele lettertoets wordt ondersteund voor koppelingen en afbeeldingen maar alleen binnen de huidige pagina.
 Bij het navigeren tussen koppelingen (links) worden ook voetnoten meegenomen.
 
+NVDA biedt ondersteuning (nog in een pril stadium)  bij  het lezen  van en het interactief navigeren door wiskundige inhoud voor  boeken met toegankelijke wiskunde.
+Raadpleeg hierover het onderdeel  [Inhoud van Wiskundige Aard Lezen #ReadingMath] voor meer informatie.
+
 +++ Tekstselectie +++
 Met Kindle kunt u verschillende handelingen met betrekking tot geselecteerde tekst, uitvoeren, waaronder het verkrijgen van een definitie uit een woordenboek, het toevoegen van aantekeningen en tekstmarkeringen, het kopiëren van tekst naar het klembord en het doorzoeken van een webpagina. 
 Daartoe dient u eerst tekst op de gebruikelijke manier te selecteren in de bladermodus, bijv. met shift en de cursortoetsen.
@@ -879,6 +884,14 @@ Om een aantekening te bekijken, bewerken of verwijderen:
 + roept u het Windows contextmenu op met de opties voor de selectie,
 + kiest u "Aantekening bewerken".
 +
+
+++ Azardi ++
+%kc:beginInclude
+Wanneer u in de tabelweergave  van toegevoegde boeken bent:
+|| Naam | Toets | Beschrijving |
+| Enter | enter | Opent het geselecteerde boek. |
+| Contextmenu | Toepassingen | Opent het contextmenu voor het geselecteerde boek. |
+%kc:endInclude
 
 + NVDA configureren +
 

@@ -10,6 +10,10 @@ NVDA 변경된 사항
 - 파이어폭스, 크롬 및 인터넷 익스플로러 사용시 편집창 및 폼 필드 첫 글자 명령을 사용하여 rich edit 편집창(예: contentEditable)으로 이동할 수 있음. (#5534)
 - 웹 브라우저 사용시 요소 목록 대화상자를 통해 폼 필드와 버튼 목록을 확인할 수 있음. (#588)
 - ARM64 기반 Windows 10 지원 추가. (#7508)
+- Kindle 사용시 접근 가능한 수학 컨텐츠 읽기 및 탐색이 가능함 (초기 지원 단계임). (#7536)
+- Azardi 독서기 앱 지원 추가. (#5848)
+- 추가 기능 업데이트시 추가 기능 버전이 표시되도록 함. (#5324)
+- NVDA 실행 명령 목록에 휴대용 버전 생성 관련 명령 추가. (#6329)
 
 
 == 변경된 기능들 ==
@@ -17,7 +21,8 @@ NVDA 변경된 사항
 - 파이어폭스 및 크롬에서 웹 대화상자가 열렸을때 웹 앱에 위치하지 않은한 브라우즈 모드가 작동하도록 함. (#4493)
 - 웹 브라우저 사용시 효율성을 높이기 위해 탭 또는 첫 글자 명령을 사용하여 사이트 탐색시 컨테이너 요소(목록, 표 등)의 끝 메시지가 출력되지 않도록 함. (#2591)
 - 파이어폭스 및 크롬에서 브라우즈 모드 사용시 탭 또는 첫 글자 명령을 사용하여 폼 필드로 옮길시 필드 그룹 이름이 출력되도록 함. (#3321)
-- In browse mode, the quick navigation command for embedded objects (o and shift+o) now includes audio and video elements as well as elements with the aria roles application and dialog. (#7239)
+- 부라우즈 모드 사용시 다음 및 이전 임베디드 객체(o/shift+o) 명령을 통해 오디오, 비디오 및 aria 앱 또는 대화상자로 표시된 요소로 이동할 수 있음. (#7239)
+- 상태 표시줄 명령을 세번 눌러 표시줄 내용을 클립보드에 복사할 수 있음. (#1785)
 
 
 == 버그 수정 ==
@@ -25,6 +30,12 @@ NVDA 변경된 사항
 - 파이어폭스 및 크롬 사용시 수많은 탭이 열렸을때 NVDA의 반응 속도가 느려지던 문제 수정. (#3138)
 - MDV Lilli 점자디스플레이 사용시 라우팅 버튼을 눌렀을때 커서가 점자셀보다 한칸 앞에 위치하던 문제 수정. (#7469)
 - In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
+- Braille displays are now updated when typing Arabic characters in a left-aligned WordPad document (#511).
+- Accessible labels for controls in Mozilla Firefox are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- On windows 10 Creaters Update, NVDA can again access Firefox after a restart of NVDA. (#7269)
+- When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
+- It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
+- The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
 
 
 = 2017.3 =
