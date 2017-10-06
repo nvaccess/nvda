@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NVDA Contributors
+#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -531,17 +531,27 @@ the NVDAObject for IAccessible
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
 
-	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
+	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None,parent=None,indexInParent=None):
 		"""
-@param pacc: a pointer to an IAccessible object
-@type pacc: ctypes.POINTER(IAccessible)
-@param child: A child ID that will be used on all methods of the IAccessible pointer
-@type child: int
-@param hwnd: the window handle, if known
-@type hwnd: int
-@param objectID: the objectID for the IAccessible Object, if known
-@type objectID: int
-"""
+		@param windowHandle: the window handle, if known.
+		@type windowHandle: int
+		@param IAccessibleObject: a pointer to an IAccessible object.
+		@type IAccessibleObject: ctypes.POINTER(IAccessible)
+		@param IAccessibleChildID: A child ID that will be used on methods of the IAccessible pointer.
+		@type IAccessibleChildID: int
+		@param event_windowHandle: the window handle event parameter.
+		@type event_windowHandle: int
+		@param event_objectID: the objectID for the IAccessible Object, if known.
+		@type event_objectID: int
+		@param event_childID: The child ID event parameter that will be used on methods of the IAccessible pointer.
+		@type event_childID: int
+		@param parent: The parent for this object if caching is required.
+			This is provided for objects for which accNavigate is not fully implemented.
+		@type parent: L{NVDAObject}
+		@type indexInParent: This object's index in the parent's children.
+			This is provided for objects for which accNavigate is not fully implemented.
+		@type indexInParent: int
+		"""
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
 
@@ -598,6 +608,11 @@ the NVDAObject for IAccessible
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
+		if parent:
+			self.parent = parent
+		# If indexInParent is implemented (i.e. IAccessible2), that index should always take precedence
+		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2) and indexInParent is not None:
+			self.indexInParent=indexInParent
 		super(IAccessible,self).__init__(windowHandle=windowHandle)
 
 		try:
@@ -927,60 +942,108 @@ the NVDAObject for IAccessible
 
 	def _get_next(self):
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_NEXT)
+		kwargs=dict()
 		if not res:
-			return None
+			if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+				return None
+			try:
+				curIndex = self.indexInParent
+			except NotImplementedError:
+				return None
+			newIndex = curIndex+1
+			if newIndex>=self.parent.childCount:
+				return None
+			children=IAccessibleHandler.accessibleChildren(self.parent.IAccessibleObject,newIndex,1)
+			if not children:
+				return None
+			res=children[0]
+			kwargs.update(indexInParent=newIndex, parent=self.parent)
 		if res[0]==self.IAccessibleObject:
 			#A sanity check for childIDs.
 			if self.IAccessibleChildID>0 and res[1]>self.IAccessibleChildID:
-				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
+				kwargs.update(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
+				return IAccessible(**kwargs)
 		else:
-			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
+			kwargs.update(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+			return self.correctAPIForRelation(IAccessible(**kwargs))
 
 	def _get_previous(self):
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_PREVIOUS)
+		kwargs=dict()
 		if not res:
-			return None
+			if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+				return None
+			try:
+				curIndex = self.indexInParent
+			except NotImplementedError:
+				return None
+			newIndex = curIndex-1
+			if newIndex>=self.parent.childCount or newIndex<0:
+				return None
+			children=IAccessibleHandler.accessibleChildren(self.parent.IAccessibleObject,newIndex,1)
+			if not children:
+				return None
+			res=children[0]
+			kwargs.update(indexInParent=newIndex, parent=self.parent)
 		if res[0]==self.IAccessibleObject:
 			#A sanity check for childIDs.
 			if self.IAccessibleChildID>1 and res[1]<self.IAccessibleChildID:
-				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
+				kwargs.update(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=res[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=res[1])
+				return IAccessible(**kwargs)
 		else:
-			return self.correctAPIForRelation(IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1]))
+			kwargs.update(IAccessibleObject=res[0],IAccessibleChildID=res[1])
+			return self.correctAPIForRelation(IAccessible(**kwargs))
 
 	def _get_firstChild(self):
 		child=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_FIRSTCHILD)
+		accNavigateYieldedChild=bool(child)
 		if not child and self.IAccessibleChildID==0:
 			children=IAccessibleHandler.accessibleChildren(self.IAccessibleObject,0,1)
 			if len(children)>0:
 				child=children[0]
-		if child and child[0]==self.IAccessibleObject:
-			#A sanity check for childIDs.
-			if self.IAccessibleChildID==0 and child[1]>0: 
-				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1])
-		elif child:
-			obj=IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])
-			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
-				return self.correctAPIForRelation(obj)
+		if child:
+			kwargs = dict()
+			if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and not accNavigateYieldedChild:
+				# Work around IAccessible implementations where accNavigate is not implemented.
+				kwargs.update(indexInParent=0, parent=self)
+			if child[0]==self.IAccessibleObject:
+				#A sanity check for childIDs.
+				if self.IAccessibleChildID==0 and child[1]>0: 
+					kwargs.update(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1])
+					return IAccessible(**kwargs)
+			else:
+				kwargs.update(IAccessibleObject=child[0],IAccessibleChildID=child[1])
+				obj=IAccessible(**kwargs)
+				if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
+					return self.correctAPIForRelation(obj)
 
 	def _get_lastChild(self):
 		child=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,oleacc.NAVDIR_LASTCHILD)
+		childCount=0
+		accNavigateYieldedChild=bool(child)
 		if not child and self.IAccessibleChildID==0:
 			try:
 				childCount=self.IAccessibleObject.accChildCount
 			except COMError:
-				childCount=0
+				pass
 			if childCount>0:
 				children=IAccessibleHandler.accessibleChildren(self.IAccessibleObject,childCount-1,1)
 				if len(children)>0:
 					child=children[-1]
-		if child and child[0]==self.IAccessibleObject:
-			#A sanity check for childIDs.
-			if self.IAccessibleChildID==0 and child[1]>0: 
-				return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1])
-		elif child:
-			obj=IAccessible(IAccessibleObject=child[0],IAccessibleChildID=child[1])
-			if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
-				return self.correctAPIForRelation(obj)
+		if child:
+			kwargs=dict()
+			if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and not accNavigateYieldedChild:
+				# Work around IAccessible implementations where accNavigate is not implemented.
+				kwargs.update(indexInParent=childCount-1, parent=self)
+			if child[0]==self.IAccessibleObject:
+				#A sanity check for childIDs.
+				if self.IAccessibleChildID==0 and child[1]>0: 
+					return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=child[1],event_windowHandle=self.event_windowHandle,event_objectID=self.event_objectID,event_childID=child[1])
+			else:
+				kwargs.update(IAccessibleObject=child[0],IAccessibleChildID=child[1])
+				obj=IAccessible(**kwargs)
+				if (obj and winUser.isDescendantWindow(self.windowHandle,obj.windowHandle)) or self.windowHandle==winUser.getDesktopWindow():
+					return self.correctAPIForRelation(obj)
 
 	def _get_children(self):
 		if self.IAccessibleChildID!=0:
