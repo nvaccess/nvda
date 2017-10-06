@@ -62,6 +62,9 @@ badUIAWindowClassNames=[
 	"_WwG",
 	"EXCEL7",
 	"Button",
+	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
+	# It does not implement caret/selection, and probably has no new text events.
+	"ConsoleWindowClass",
 ]
 
 NVDAUnitsToUIAUnits={
@@ -126,6 +129,7 @@ UIAPropertyIdsToNVDAEventNames={
 }
 
 UIAEventIdsToNVDAEventNames={
+	UIA_LiveRegionChangedEventId:"liveRegionChange",
 	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
@@ -223,7 +227,11 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
+		if (
+			not obj
+			or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent)
+			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
+		):
 			return
 		focus=api.getFocusObject()
 		if obj==focus:
