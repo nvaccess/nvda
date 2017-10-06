@@ -10,6 +10,8 @@ Ce este nou în NVDA
 - În Firefox, în Chrome și în Internet Explorer, navigarea rapidă la câmpurile de editare și la câmpurile formular include acum conținut de text îmbogățit (I.e. contentEditable). (#5534)
 - În navigatoarele web, lista elementelor poate lista acum câmpuri formular și butoane. (#588)
 - Suport inițial pentru Windows 10 pe ARM64. (#7508)
+- Suport prematur pentru citirea și navigarea interactivă a conținutului matematic pentru cărțile Kindle cu matematica accesibilă. (#7536)
+- A fost adăugat suportul pentru cititorul de cărți electronice Azardi. (#5848)
 
 
 == Modificări ==
@@ -18,6 +20,7 @@ Ce este nou în NVDA
 - În modul de navigare, tabularea și deplasarea cu comenzile de navigare rapidă nu mai anunță „salt în afara containerelor”, cum ar fi liste și tabele, ceea ce face navigarea mai eficientă. (#2591)
 - În modul de navigare pentru Firefox și Chrome, numele grupurilor de câmpuri formular sunt anunțate atunci când se deplasează la ele cu navigarea rapidă sau când se tabulează. (#3321)
 - În modul de navigare, comanda navigării rapide pentru obiectele încorporate )O și shift+o) include acum elementele audio și video, precum și elementele cu aplicația și dialogul rolurilor aria. (#7239)
+- A fost actualizat Espeak NG (la commit-ul 01919cd48a566cdf34347784b2e74554b376e900), aceasta rezolvă niște probleme cu producerea lansărilor de compilări. (#7385)
 
 
 == Rezolvări Defecte ==
@@ -25,10 +28,18 @@ Ce este nou în NVDA
 - NVDA nu mai este considerat mai lent atunci când multe file sunt deschise în browserele web Firefox sau Chrome. (#3138)
 - Rotirea cursorului pentru afișajul MDV Lilli Braille nu mai deplasează incorect o celulă braille înainte de unde ar trebui să fie. (#7469)
 - În Internet Explorer și în alte documente MSHTML, atributul HTML5 necesar este suportat acum pentru a indica starea necesară a unui câmp formular. (#7321)
+- Afișajele braille sunt acum actualizate la tastarea de caractere arabe într-un document WordPad aliniat la stânga. (#511).
+- Etichetele accesibile pentru comenzile din Mozilla Firefox sunt raportate acum mult mai ușor în modul de navigare atunci când eticheta nu apare drept conținut în sine. (#4773)
+- În windows 10 Creaters Update, NVDA poate accesa din nou Firefox-ul după o repornire a lui. (#7269)
+- La repornirea NVDA-ului cu focalizarea pe Mozilla Firefox, modul de navigare va fi din nou disponibil, deși e posibil să fiți nevoit să vă duceți cu alt+tab pe o altă fereastră și să reveniți din nou după aceea. (#5758)
+- Acum este posibilă accesarea conținutului matematic din Google Chrome pe un sistem fără ca Mozilla Firefox să fie instalat. (#7308)
+- Ar trebui ca sistemele de operare și alte aplicații să fie mult mai stabile în mod direct imediat după instalarea NVDA-ului înainte de repornire, după cum au fost comparate cu instalările versiunilor anterioare ale NVDA-ului. (#7563)
 
 
 == Modificări pentru dezvoltatori ==
 - "scons tests" nu verifică dacă string-urile ce pot fi traduse au comentariile traducătorului. Puteți rula asta singur cu "scons checkPot". (#7492)
+- Acum există un nou modul de extensie care oferă un framework generic pentru a activa extensibilitatea codului la punctele specifice din el. Acest lucru permite părților interesate să se înregistreze pentru a fi notificate atunci când are loc o acțiune (extensionPoints.Action), să modifice un anumit tip de date (extensionPoints.Filter) sau să participe la luarea unei decizii atunci când se va face ceva (extensionPoints.Decider). (#3393)
+- Acum vă puteți înregistra pentru a fi notificat atunci când configurarea profilului se comută prin acțiunea config.configProfileSwitched. (#3393)
 
 
 = 2017.3 =
