@@ -158,9 +158,13 @@ def removeOldProgramFiles(destPath):
 	for topDir in ('lib','lib64'):
 		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
 			for d in subdirs:
-				tryRemoveFile(os.path.join(parent,d),numRetries=1,rebootOK=True)
+				path=os.path.join(parent,d)
+				try:
+					os.rmdir(path)
+				except OSError as e:
+					log.debugWarning("Failed to remove directory %s, %s"%(path,e))
 			for f in files:
-				tryRemoveFile(os.path.join(parent,f),numRetries=1,rebootOK=True)
+				tryRemoveFile(os.path.join(parent,f),tempDir=destPath)
 
 	# #4235: mpr.dll is a Windows system dll accidentally included with
 	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
@@ -323,32 +327,51 @@ def _deleteKeyAndSubkeys(key, subkey):
 class RetriableFailure(Exception):
 	pass
 
-def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
-	dirPath=os.path.dirname(path)
-	tempPath=tempfile.mktemp(dir=dirPath)
-	try:
-		os.rename(path,tempPath)
-	except (WindowsError,IOError):
-		raise RetriableFailure("Failed to rename file %s before  remove"%path)
-	for count in xrange(numRetries):
+def tryRemoveFile(path,numTries=6,retryInterval=0.5,tempDir=None):
+	"""
+	Tries to remove a file multiple times using veris strategies.
+	It first tries a simple delete. If that fails, it tries to rename the file to a temp file in the given temp directory, and marks it for delete on next reboot.
+	If both the delete and or the rename fail, the function waits a small period of time and tries to remove the file again, just in case the file was temporarily locked.
+	@param path: the path to the file that should be removed
+	@ type path: string
+	@param numTries: the number of times the file should try to be removed.
+	@type numTries: int
+	@param retryInterval: the number of seconds the function waits before trying to remove the file again.
+	@type retryInterval: float
+	@param tempDir: the path to the temporary directory where files marked for delete on reboot should be stored.
+	This directory should be on the same physical drive as the file being removed.
+	A value of None (default) uses the same directory as the file being removed.
+	@type tempDir: string
+	@raises: RetriableFailure if the file could not be removed at all.
+	"""
+	if not tempDir:
+		tempDir=os.path.dirname(path)
+	for count in xrange(numTries):
+		if count>0:
+			log.debugWarning("Will try to remove file again after delay")
+			time.sleep(retryInterval)
 		try:
-			if os.path.isdir(tempPath):
-				shutil.rmtree(tempPath)
+			if os.path.isdir(path):
+				shutil.rmtree(path)
 			else:
-				os.remove(tempPath)
+				os.remove(path)
 			return
-		except OSError:
-			pass
-		time.sleep(retryInterval)
-	if rebootOK:
-		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
+		except OSError as e:
+			log.debugWarning("Failed to delete file %s, %s, will try renaming"%(path,e))
+		# The file could not be removed.
+		# Rename it to a temporary file, and try removing on reboot if allowed
+		tempPath=tempfile.mktemp(dir=tempDir)
+		log.debug("Renaming %s to %s"%(path,tempPath))
+		try:
+			os.rename(path,tempPath)
+		except (WindowsError,IOError) as e:
+			log.debugWarning("Failed to rename file %s before  remove on reboot"%path)
+			continue
 		MoveFileEx=windll.kernel32.MoveFileExW if isinstance(tempPath,unicode) else windll.kernel32.MoveFileExA
-		MoveFileEx("\\\\?\\"+tempPath,None,4)
+		log.debug("Marking file for delete on reboot: %s"%tempPath)
+		if not MoveFileEx("\\\\?\\"+tempPath,None,4):
+			log.error("Could not mark file for remove on reboot: %s, %s"%(tempPath,ctypes.WinError()))
 		return
-	try:
-		os.rename(tempPath,path)
-	except:
-		log.error("Unable to rename back to %s before retriable failier"%path)
 	raise RetriableFailure("File %s could not be removed"%path)
 
 def tryCopyFile(sourceFilePath,destFilePath):
@@ -361,13 +384,8 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
 			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
-		tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
-		try:
-			os.rename(destFilePath,tempPath)
-		except (WindowsError,OSError):
-			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
-			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
-		windll.kernel32.MoveFileExW(tempPath,None,4)
+		tryRemoveFile(destFilePath)
+		log.debug("Trying to copy again after remove")
 		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 			errorCode=GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
