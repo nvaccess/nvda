@@ -433,7 +433,6 @@ class Modular80(Modular):
 	numCells = 80
 
 
-# Model dict for easy lookup
 def _allSubclasses(cls):
 	"""List all direct and indirect subclasses of cls
 
@@ -441,11 +440,12 @@ def _allSubclasses(cls):
 
 	@param cls: the base class to list subclasses of
 	@type cls: class
-	@rtype list[class]
+	@rtype: [class]
 	"""
 	return cls.__subclasses__() + [g for s in cls.__subclasses__()
 		for g in _allSubclasses(s)]
 
+# Model dict for easy lookup
 MODELS = {
 	m.deviceId: m for m in _allSubclasses(Model) if hasattr(m, 'deviceId')
 }
