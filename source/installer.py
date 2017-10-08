@@ -327,6 +327,21 @@ def _deleteKeyAndSubkeys(key, subkey):
 class RetriableFailure(Exception):
 	pass
 
+def deleteFileOnReboot(path):
+	"""
+	Marks a file for delete on reboot.
+	This uses Windows' MoveFileEx (either unicode or ascii depending on the given path) and also prepends'\\?\' to allow for long file names.
+	"""
+	MoveFileEx=windll.kernel32.MoveFileExW if isinstance(path,unicode) else windll.kernel32.MoveFileExA
+	return MoveFileEx("\\\\?\\"+path,None,4)
+
+def copyFile(sourceFilePath,destFilePath):
+	"""
+	Copies the file at sourcePath to destPath.
+	This uses Windows' CopyFile and prepends'\\?\' to allow for long file names.
+	"""
+	return windll.kernel32.CopyFileW(u'\\\\?\\'+sourceFilePath,u'\\\\?\\'+destFilePath,False)
+
 def tryRemoveFile(path,numTries=6,retryInterval=0.5,tempDir=None):
 	"""
 	Tries to remove a file multiple times using veris strategies.
@@ -367,26 +382,21 @@ def tryRemoveFile(path,numTries=6,retryInterval=0.5,tempDir=None):
 		except (WindowsError,IOError) as e:
 			log.debugWarning("Failed to rename file %s before  remove on reboot"%path)
 			continue
-		MoveFileEx=windll.kernel32.MoveFileExW if isinstance(tempPath,unicode) else windll.kernel32.MoveFileExA
 		log.debug("Marking file for delete on reboot: %s"%tempPath)
-		if not MoveFileEx("\\\\?\\"+tempPath,None,4):
-			log.error("Could not mark file for remove on reboot: %s, %s"%(tempPath,ctypes.WinError()))
+		if not deleteFileOnReboot(tempPath):
+			log.error("Could not mark file for remove on reboot: %s"%tempPath)
 		return
 	raise RetriableFailure("File %s could not be removed"%path)
 
 def tryCopyFile(sourceFilePath,destFilePath):
-	if not sourceFilePath.startswith('\\\\'):
-		sourceFilePath=u"\\\\?\\"+sourceFilePath
-	if not destFilePath.startswith('\\\\'):
-		destFilePath=u"\\\\?\\"+destFilePath
-	if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
+	if copyFile(sourceFilePath,destFilePath)==0:
 		errorCode=GetLastError()
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
 			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
 		tryRemoveFile(destFilePath)
 		log.debug("Trying to copy again after remove")
-		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
+		if copyFile(sourceFilePath,destFilePath)==0:
 			errorCode=GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
