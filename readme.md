@@ -40,6 +40,7 @@ The following dependencies need to be installed on your system:
 	* Download from https://www.visualstudio.com/downloads/
 	* When installing Visual Studio, you need to enable the following:
 		On the Workloads tab, in the Windows group:
+			* Universal Windows Platform Development
 			* Desktop development with C++
 		* Then in the Summary list, under Desktop for C++, Optional grouping, ensure the following is selected:
 			* VC++ 2017 v141 toolset (x86,x64)
