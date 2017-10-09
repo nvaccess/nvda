@@ -124,14 +124,10 @@ KEY_SPACES = (KEY_LEFT_SPACE, KEY_RIGHT_SPACE,)
 
 
 class Model(AutoPropertyObject):
-	"Extend from this base class to define model specific behavior."
+	"""Extend from this base class to define model specific behavior."""
 	#: Device identifier, used in the protocol to identify the device
 	#: @type: string
 	deviceId = None
-
-	#: A weak reference to the driver instance
-	#: @type; BrailleDisplayDriver
-	_displayRef = None
 
 	#: A generic name that identifies the model/series, used in gesture identifiers
 	#: @type: string
@@ -147,7 +143,7 @@ class Model(AutoPropertyObject):
 
 	def __init__(self, display):
 		super(Model, self).__init__()
-		# Use a weak reference due to a circular reference  between Model and Display
+		# A weak reference to the driver instance, used due to a circular reference  between Model and Display
 		self._displayRef = weakref.ref(display)
 
 	def postInit(self):
