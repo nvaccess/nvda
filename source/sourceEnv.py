@@ -19,6 +19,11 @@ PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "miscDeps", "python"),
 )
 
+#Check for existance of each Python dir
+for path in PYTHON_DIRS:
+	if not os.path.exists(path):
+		raise OSError("Path %s does not exist. Perhaps try running git submodule update --init"%path)
+
 # sys.path[0] will always be the current dir, which should take precedence.
 # Insert our include paths after that.
 sys.path[1:1] = PYTHON_DIRS
