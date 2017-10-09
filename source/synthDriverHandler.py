@@ -35,7 +35,7 @@ def changeVoice(synth, voice):
 	else:  globalVars.settingsRing = SynthSettingsRing(synth)
 	speechDictHandler.loadVoiceDict(synth)
 
-def _getSynthDriver(name):
+def getSynthDriver(name):
 	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
 
 def getSynthList():
@@ -46,7 +46,7 @@ def getSynthList():
 		if name.startswith('_'):
 			continue
 		try:
-			synth=_getSynthDriver(name)
+			synth=getSynthDriver(name)
 		except:
 			log.error("Error while importing SynthDriver %s"%name,exc_info=True)
 			continue
@@ -84,7 +84,7 @@ def setSynth(name,isFallback=False):
 	else:
 		prevSynthName = None
 	try:
-		newSynth=_getSynthDriver(name)()
+		newSynth=getSynthDriver(name)()
 		if config.conf["speech"].isSet(name):
 			newSynth.loadSettings()
 		else:

@@ -562,15 +562,18 @@ class SynthesizerPanel(SettingsPanel):
 
 	def onPanelDeactivated(self):
 		newSynth=self.synthNames[self.synthList.GetSelection()]
-		if getSynth().name is not newSynth and gui.messageBox(
-			# Translators: A confirmation message presented when
-			# a user changed the selected synthesizer but didn't yet apply the changes.
-			_("You appear to have changed your prefered synthesizer. Do you wish to apply your new synthesizer settings as recommended before proceeding?"),
-			# Translators: The title of a confirmation message presented when
-			# a user changed the selected synthesizer but didn't yet apply the changes.
-			_("Synthesizer Change"),wx.YES|wx.NO|wx.ICON_WARNING,self
-		)==wx.YES:
-			self.onSave()
+		if getSynth().name is not newSynth:
+			# Try to initialize the driver
+			try:
+				tempDriver = getSynthDriver(newSynth)()
+			except:
+				# Translators: This message is presented when
+				# leaving the synthesizer settings panel and NVDA is
+				# unable to load the selected synthesizer.
+				gui.messageBox(_("Could not load the %s synthesizer. You will not be able to save your settings until you select another synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
+			else:
+				# Terminate the just initialized synth.
+				tempDriver.terminate()
 		super(SynthesizerPanel,self).onPanelDeactivated()
 
 	def onSave(self):
