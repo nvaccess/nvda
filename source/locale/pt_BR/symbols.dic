@@ -6,9 +6,8 @@
 complexSymbols:
 # identifier	regexp
 # Others
-# pt_BR: em português o separador decimal é , (vírgula)
+# pt_BR: em português o separador decimal é , (vírgula) e o separador de milhares clássico é . (ponto)
 decimal point	(?<![^\d -])\,(?=\d)
-# pt_BR: em português o separador de milhares clássico é . (ponto)
 thousands separator	(?<=\d)\.(?=\d)
 
 symbols:
@@ -43,7 +42,7 @@ $	cifrão
 €	euro
 ¢	Centavos
 ¥	Iene
-# pt_BR: em "₹	Rúpya" usado a forma acentuada para pronúncia correta com os sintetizadores
+# pt_BR: em "₹	Rúpya" usado a forma acentuada para uma melhor pronúncia com sintetizadores
 ₹	Rúpya
 %	porcento
 # pt_BR: em "&	êh comercial" usado "êh" para pronúncia correta com alguns sintetizadores
@@ -158,8 +157,10 @@ _	sublinha
 ∵	porquê
 ∶	razão
 ∷	proporção
-≤	menor ou igual a
-≥	maior ou igual a
+# pt_BR: "menor quê" usado circunflexo para pronúncia correta com alguns sintetizadores
+≤	menor quê ou igual a
+# pt_BR: "maior quê" usado circunflexo para pronúncia correta com alguns sintetizadores
+≥	maior quê ou igual a
 ⊂	subconjunto de
 ⊃	superconjunto de
 ⊆	subconjunto de ou igual a
