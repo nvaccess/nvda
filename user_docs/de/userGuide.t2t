@@ -544,15 +544,18 @@ Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukeh
 | Zum Inhalt des Lesemodus zurückkehren | NVDA+Steuerung+Leertaste | Verlässt den Fokus des eingebetteten Objekts und kehrt in den Lesemodus zurück. |
 %kc:endInclude
 
-+ Mathematische Inhalte lesen +
++ Mathematische Inhalte lesen +[ReadingMath]
 Sie können Mathplayer 4 von Design Science verwenden, um mit NVDA in mathematischen Inhalten zu navigieren.
 Hierfür ist die Installation von Mathplayer 4 notwendig.
 Mathplayer kann hier heruntergeladen werden: http://www.dessci.com/en/products/mathplayer/
 
 NVDA unterstützt die folgende mathematischen Inhalte:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer und Google Chrome.
-- Design Science MathType in Microsoft Word und PowerPoint. Mathtype muss installiert sein. Die Testversion ist hierfür ausreichend.
-- MathML in Adobe Reader. Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
+- Design Science MathType in Microsoft Word und PowerPoint.
+Mathtype muss installiert sein. Die Testversion ist hierfür ausreichend.
+- MathML in Adobe Reader.
+Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
+- Mathematik in Kindle für PC für Bücher mit barrierefreier Mathematik.
 -
 
 Wenn Sie ein Dokument lesen, das mathematischen Inhalt enthält, liest NVDA diesen vor, sofern dieser von NVDA unterstützt wird.
@@ -576,7 +579,7 @@ Standardmäßig ist der NVDA-Cursor an den Systemcursor gekoppelt. Sie können A
 
 Jetzt können Sie die Tastenkombinationen von Mathplayer (zum Beispiel Pfeiltasten) verwenden, um innerhalb des Ausdrucks zu navigieren.
 Verwenden Sie beispielsweise die Pfeiltasten links und rechts, um zwischen den Teilen eines Ausdrucks zu navigieren. Um in einen Teilausdruck abzusteigen, verwenden Sie die Pfeiltaste nach unten.
-Weiter Informationen hierzu finden Sie in der Dokumentation zu mathplayer.
+Weitere Informationen hierzu finden Sie in der englischen Dokumentation zu mathplayer: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Um die Navigation im Ausdruck zu beenden, drücken Sie die Escape-Taste.
 
@@ -855,6 +858,9 @@ Sie können auch manuell zwischen den Seiten blättern. Verwenden Sie hierfür d
 Die Schnellnavigation für Links und Grafiken funktioniert auf der aktuellen Seite.
 Die Linknavigation beinhaltet auch Fußnoten.
 
+NVDA bietet frühe Unterstützung beim Lesen und interaktiver Navigation von mathematischen Inhalten für Bücher mit barrierefreier Mathematik.
+Für weitere Informationen lesen Sie den Abschnitt [Mathematische Inhalte lesen #ReadingMath]
+
 +++ Markieren von Text +++
 (noch nicht übersetzt) Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
 To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
@@ -876,6 +882,14 @@ Eine Notiz lesen, bearbeiten oder löschen:
 + Rufen Sie die Markierungsoptionen wie oben beschrieben auf..
 + Wählen Sie Notiz bearbeiten.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Wenn sich sich in der Tabellenansicht der hinzugefügten Bücher befinden:
+|| Name | Taste | Beschreibung |
+| Eingabe | Eingabe | Öffnet das ausgewählte buch. |
+| Kontextmenü | Anwendungen | Öffnet das Kontextmenü für das ausgewählte Buch. |
+%kc:endInclude
 
 + NVDA konfigurieren +
 
