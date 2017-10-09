@@ -395,7 +395,7 @@ class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
 		return _(u"{text}").format(text=text)
 
 	def moveTo(self):
-		chartNVDAObj = _msOfficeChart.OfficeChart(windowHandle=self.document.rootNVDAObject.windowHandle, officeApplicationObject=self.rangeObj.Document.Application, officeShapeObject=self.collectionItem)
+		chartNVDAObj = _msOfficeChart.OfficeChart(windowHandle= self.document.rootNVDAObject.windowHandle, officeApplicationObject=self.rangeObj.Document.Application, officeChartObject=self.collectionItem.Chart , initialDocument  = self.document.rootNVDAObject )
 		eventHandler.queueEvent("gainFocus",chartNVDAObj)
 
 class WinWordCollectionQuicknavIterator(object):
@@ -546,7 +546,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		newRng.End=newRng.End+1
 		if newRng.InlineShapes.Count >= 1:
 			if newRng.InlineShapes[1].Type==wdInlineShapeChart:
-				return eventHandler.queueEvent('gainFocus',_msOfficeChart.OfficeChart(windowHandle=self.obj.windowHandle, officeApplicationObject=self.obj.WinwordDocumentObject.Application, officeShapeObject=newRng.InlineShapes[1]))
+				return eventHandler.queueEvent('gainFocus',_msOfficeChart.OfficeChart(windowHandle= self.obj.windowHandle, officeApplicationObject=self.obj.WinwordDocumentObject.Application, officeChartObject=newRng.InlineShapes[1].Chart , initialDocument = self.obj ))
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -1647,6 +1647,14 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
+	def focusOnActiveDocument(self, officeChartObject):
+		rangeStart=officeChartObject.Parent.Range.Start
+		self.WinwordApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
+		import api
+		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+
+
 
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",

@@ -520,8 +520,9 @@ class OfficeChart(OfficeChartElementList):
 
 	role=controlTypes.ROLE_CHART
 
-	def __init__(self,windowHandle, officeApplicationObject, officeShapeObject,keyIndex=0):
-		super(OfficeChart,self).__init__(windowHandle=windowHandle  , officeChartObject = officeShapeObject.Chart )
+	def __init__(self,windowHandle, officeApplicationObject, officeChartObject, initialDocument , keyIndex=0):
+		super(OfficeChart,self).__init__(windowHandle=windowHandle  , officeChartObject = officeChartObject )
+		self.initialDocument = initialDocument 
 		self.officeApplicationObject=officeApplicationObject
 		try:
 			seriesCount=self.officeChartObject.SeriesCollection().Count
@@ -580,9 +581,9 @@ class OfficeChart(OfficeChartElementList):
 	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def script_disablePassThrough(self, gesture):
-		rangeStart=self.officeShapeObject.Range.Start
-		self.officeApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
-		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+		log.debugWarning("script_disablePassThrough")
+		self.initialDocument.focusOnActiveDocument(self.officeChartObject) 
+	script_disablePassThrough.canPropagate=True
 
 	__gestures = {
 				"kb:upArrow":"previousElement",

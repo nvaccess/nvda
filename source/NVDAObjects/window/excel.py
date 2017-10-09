@@ -644,8 +644,15 @@ class ExcelBase(Window):
 		elif isChartActive:
 			selection = self.excelWindowObject.ActiveChart
 			import _msOfficeChart
-			obj = _msOfficeChart.OfficeChart( windowHandle=self.windowHandle , officeApplicationObject = self.excelWindowObject , officeShapeObject = selection.Parent )  
+			obj = _msOfficeChart.OfficeChart( windowHandle=self.windowHandle , officeApplicationObject = self.excelWindowObject , officeChartObject = selection , initialDocument = self)  
 		return obj
+
+	def focusOnActiveDocument(self, officeChartObject):
+		log.debugWarning("focusOnActiveDocument")
+		cell=self.excelWindowObject.ActiveCell
+		cell.Activate()
+		cellObj=self._getSelection()
+		eventHandler.queueEvent("gainFocus",cellObj)
 
 
 class Excel7Window(ExcelBase):
