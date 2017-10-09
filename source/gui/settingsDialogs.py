@@ -565,7 +565,7 @@ class SynthesizerPanel(SettingsPanel):
 		if getSynth().name is not newSynth:
 			# Try to initialize the driver
 			try:
-				tempDriver = getSynthDriver(newSynth)()
+				tempDriver = getSynthInstance(newSynth)
 			except:
 				# Translators: This message is presented when
 				# leaving the synthesizer settings panel and NVDA is

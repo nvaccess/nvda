@@ -35,7 +35,7 @@ def changeVoice(synth, voice):
 	else:  globalVars.settingsRing = SynthSettingsRing(synth)
 	speechDictHandler.loadVoiceDict(synth)
 
-def getSynthDriver(name):
+def _getSynthDriver(name):
 	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
 
 def getSynthList():
@@ -46,7 +46,7 @@ def getSynthList():
 		if name.startswith('_'):
 			continue
 		try:
-			synth=getSynthDriver(name)
+			synth=_getSynthDriver(name)
 		except:
 			log.error("Error while importing SynthDriver %s"%name,exc_info=True)
 			continue
@@ -68,6 +68,22 @@ def getSynthList():
 def getSynth():
 	return _curSynth
 
+def getSynthInstance(name):
+	newSynth=_getSynthDriver(name)()
+	if config.conf["speech"].isSet(name):
+		newSynth.loadSettings()
+	else:
+		# Create the new section.
+		config.conf["speech"][name]={}
+		if newSynth.isSupported("voice"):
+			voice=newSynth.voice
+		else:
+			voice=None
+		# We need to call changeVoice here so that required initialisation can be performed.
+		changeVoice(newSynth,voice)
+		newSynth.saveSettings() #save defaults
+	return newSynth
+
 def setSynth(name,isFallback=False):
 	global _curSynth,_audioOutputDevice
 	if name is None: 
@@ -84,20 +100,7 @@ def setSynth(name,isFallback=False):
 	else:
 		prevSynthName = None
 	try:
-		newSynth=getSynthDriver(name)()
-		if config.conf["speech"].isSet(name):
-			newSynth.loadSettings()
-		else:
-			# Create the new section.
-			config.conf["speech"][name]={}
-			if newSynth.isSupported("voice"):
-				voice=newSynth.voice
-			else:
-				voice=None
-			# We need to call changeVoice here so that required initialisation can be performed.
-			changeVoice(newSynth,voice)
-			newSynth.saveSettings() #save defaults
-		_curSynth=newSynth
+		_curSynth=getSynthInstance(name)
 		_audioOutputDevice=config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"]=name
