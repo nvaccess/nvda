@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager
+#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import sys
 import itertools
@@ -26,6 +26,8 @@ import brailleDisplayDrivers
 import inputCore
 import brailleTables
 from collections import namedtuple
+import re
+import scriptHandler
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -1948,9 +1950,29 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	#: @type: L{inputCore.GlobalGestureMap}
 	gestureMap = None
 
+	@classmethod
+	def _getModifierGestures(cls):
+		"""Retrieves modifier gestures from this display driver's L{gestureMap}
+		that are bound to modifier only keyboard emulate scripts.
+		@return: the ids of the display keys and the associated generalised modifier names
+		@rtype: generator of (set, set)
+		"""
+		import globalCommands
+		# Ignore the locale gesture map when searching for braille display gestures
+		globalMaps = [inputCore.manager.userGestureMap]
+		if cls.gestureMap:
+			globalMaps.append(cls.gestureMap)
+		for globalMap in globalMaps:
+			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
+				if gesture.startswith("br({source})".format(source=cls.name)) and scriptCls is globalCommands.GlobalCommands and scriptName.startswith("kb"):
+					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
+					if emuGesture.isModifier:
+						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)
+
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
+	Optionally, L{model} can be provided to facilitate model specific gestures.
 	L{routingIndex} should be provided for routing buttons.
 	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
@@ -1966,6 +1988,17 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		raise NotImplementedError
 
+	def _get_model(self):
+		"""The string used to identify all gestures from a specific braille display model.
+		This should be an alphanumeric short version of the model name, without spaces.
+		This string will be included in the source portion of gesture identifiers.
+		For example, if this was C{alvaBC6},
+		the model string could look like C{680},
+		and a corresponding display specific gesture identifier might be C{br(alvaBC6.680):etouch1}.
+		@rtype: str; C{None} if model specific gestures are not supported
+		"""
+		return None
+
 	def _get_id(self):
 		"""The unique, display specific id for this gesture.
 		@rtype: str
@@ -1978,6 +2011,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_identifiers(self):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
+		if self.model:
+			# Model based ids should take priority.
+			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id))
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -1997,8 +2033,66 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			return display
 		return super(BrailleDisplayGesture, self).scriptableObject
 
+	def _get_script(self):
+		# Overrides L{inputCore.InputGesture._get_script} to support modifier keys.
+		script=scriptHandler.findScript(self)
+		if script:
+			self.script = script
+			return self.script
+		# No script for this gesture has been found, so process this gesture for possible modifiers. 
+		# For example, if L{self.id} is 'key1+key2',
+		# key1 is bound to 'kb:control' and key2 to 'kb:tab',
+		# this gesture should execute 'kb:control+tab'.
+		# Combining modifiers with braille input (#7306) is not yet supported.
+		gestureKeys = set(self.keyNames)
+		gestureModifiers = set()
+		for keys, modifiers in handler.display._getModifierGestures():
+			if keys<gestureKeys:
+				gestureModifiers |= modifiers
+				gestureKeys -= keys
+		if not gestureModifiers:
+			# No modifier assignments found in this gesture.
+			return None
+		# Find a script for L{gestureKeys}.
+		fakeGestureId = u"br({source}):{id}".format(source=self.source, id="+".join(gestureKeys))
+		scriptNames = []
+		globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
+		for globalMap in globalMaps:
+			scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId) if scriptName.startswith("kb"))
+		if not scriptNames:
+			# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
+			return None
+		# We can't bother about multiple scripts for a gesture, we will just use the first one
+		scriptName = "kb:{modifiers}+{keys}".format(
+			modifiers="+".join(gestureModifiers),
+			keys=scriptNames[0].split(":")[1]
+		)
+		self.script = scriptHandler._makeKbEmulateScript(scriptName)
+		return self.script
+
+	def _get_keyNames(self):
+		"""The names of the keys that are part of this gesture.
+		@rtype: list
+		"""
+		return self.id.split("+")
+
+	#: Compiled regular expression to match an identifier including an optional model name
+	#: The model name should be an alphanumeric string without spaces.
+	#: @type: RegexObject
+	ID_PARTS_REGEX = re.compile(r"br\((\w+)(\.(\w+))?\):([\w+]+)", re.U)
+
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
-		return handler.display.description, identifier.split(":", 1)[1]
+		idParts = cls.ID_PARTS_REGEX.search(identifier)
+		if not idParts:
+			raise ValueError("Invalid identifier provided: %s"%identifier)
+		modelName = idParts.group(3)
+		key = idParts.group(4)
+		if modelName: # The identifier contains a model name
+			return handler.display.description, "{modelName}: {key}".format(
+				modelName=modelName, key=key
+			)
+		else:
+			return handler.display.description, key
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
