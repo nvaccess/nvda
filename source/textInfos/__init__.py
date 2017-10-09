@@ -78,8 +78,11 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG, controlTypes.ROLE_MATH):
+		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_MATH):
 			return self.PRESCAT_MARKER
+		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
+			# Applications and dialogs should be reported as markers when embedded within content, but not when they themselves are the root
+			return self.PRESCAT_MARKER if ancestors else self.PRESCAT_LAYOUT 
 		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			return self.PRESCAT_CELL
 		elif (

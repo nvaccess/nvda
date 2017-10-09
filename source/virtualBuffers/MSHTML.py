@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2016 NV Access Limited, Babbage B.V.
+#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 import eventHandler
@@ -77,7 +77,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_EDITABLE)
 		if 'HTMLAttrib::onclick' in attrs or 'HTMLAttrib::onmousedown' in attrs or 'HTMLAttrib::onmouseup' in attrs:
 			states.add(controlTypes.STATE_CLICKABLE)
-		if attrs.get('HTMLAttrib::aria-required','false')=='true':
+		if 'HTMLAttrib::required' in attrs or attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
 		description=None
 		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
@@ -164,8 +164,8 @@ class MSHTML(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
 		# As virtualBuffers must be created at all times for MSHTML to support live regions,
-		# Force focus mode for anything other than a document (e.g. dialog, application)
-		if rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT:
+		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)  
+		if rootNVDAObject.role==controlTypes.ROLE_APPLICATION or (rootNVDAObject.role==controlTypes.ROLE_DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
 			self.disableAutoPassThrough=True
 			self.passThrough=True
 
@@ -264,14 +264,23 @@ class MSHTML(VirtualBuffer):
 		elif nodeType=="formField":
 			attrs=[
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_OUTLINE],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]},
+				# Focusable edit fields (input type=text, including readonly ones)
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
+				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
 				{"IHTMLDOMNode::nodeName":["SELECT"]},
 				{"HTMLAttrib::role":["listbox"]},
 			]
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1],"IHTMLElement::isContentEditable":[1]}
+			attrs=[
+				# Focusable edit fields (input type=text, including readonly ones)
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
+				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
+			]
 		elif nodeType=="radioButton":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="comboBox":
@@ -315,7 +324,10 @@ class MSHTML(VirtualBuffer):
 				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word(lr.upper()) for lr in aria.htmlNodeNameToAriaLandmarkRoles]}
 				]
 		elif nodeType == "embeddedObject":
-			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
+			attrs = [
+				{"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET","AUDIO","VIDEO"]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
+			]
 		elif nodeType == "separator":
 			attrs = {"IHTMLDOMNode::nodeName": ["HR"]}
 		else:

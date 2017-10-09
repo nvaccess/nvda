@@ -55,6 +55,11 @@ class TestFocusContextPresentation(unittest.TestCase):
 		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2].end)
 		# This also means that the window start position is equal to the start position of the 3rd region
 		self.assertEqual(braille.handler.buffer.windowStartPos,self.regionsWithPositions[2].start)
+		# Scroll the braille window back
+		braille.handler.scrollBack()
+		# Both the focus object and its parents should be visible
+		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2].end)
+		self.assertEqual(braille.handler.buffer.windowStartPos,0)
 
 	def test_changedContext(self):
 		"""Test for the case where the focus object as well as ancestry differences should be visible on the display"""
@@ -71,6 +76,11 @@ class TestFocusContextPresentation(unittest.TestCase):
 		# Only the focus object should be visible now, equivalent to scroll only
 		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2].end)
 		self.assertEqual(braille.handler.buffer.windowStartPos,self.regionsWithPositions[2].start)
+		# Scroll the braille window back
+		braille.handler.scrollBack()
+		# Both the focus object and its parents should be visible
+		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2].end)
+		self.assertEqual(braille.handler.buffer.windowStartPos,0)
 		# Clean up the cached focus ancestors
 		# specifically, the desktop object (ancestor 0) has no associated region
 		# We will keep the region for the dialog (ancestor 1) and consider the list (ancestor 2) as new for this test
@@ -82,3 +92,35 @@ class TestFocusContextPresentation(unittest.TestCase):
 		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2].end)
 		# The window start position is equal to the start position of the 2nd region
 		self.assertEqual(braille.handler.buffer.windowStartPos,self.regionsWithPositions[1].start)
+
+class TestDisplayTextForGestureIdentifier(unittest.TestCase):
+	"""A test for the regular expression code that handles display gesture identifiers."""
+
+	def test_regex(self):
+		regex = braille.BrailleDisplayGesture.ID_PARTS_REGEX
+		self.assertEqual(
+			regex.search('br(noBraille.noModel):noKey1+noKey2').groups(),
+			('noBraille', '.noModel', 'noModel', 'noKey1+noKey2')
+		)
+		self.assertEqual(
+			regex.search('br(noBraille):noKey1+noKey2').groups(),
+			('noBraille', None, None, 'noKey1+noKey2')
+		)
+		# Also try a string which doesn't match the pattern
+		self.assertEqual(
+			regex.search('br[noBraille.noModel]:noKey1+noKey2'),
+			None
+		)
+
+	def test_identifierWithModel(self):
+		self.assertEqual(
+			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille.noModel):noKey1+noKey2'),
+			(u'No braille', 'noModel: noKey1+noKey2')
+		)
+
+	def test_identifierWithoutModel(self):
+		self.assertEqual(
+			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille):noKey1+noKey2'),
+			(u'No braille', 'noKey1+noKey2')
+		)
+
