@@ -205,8 +205,9 @@ setup(
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
 		# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
-		# Explicitly include it so we don't break some add-ons.
-		"includes": ["nvdaBuiltin", "bisect"],
+		# Also, the service executable used win32api, which some add-ons use for various purposes.
+		# Explicitly include them so we don't break some add-ons.
+		"includes": ["nvdaBuiltin", "bisect", "win32api"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
