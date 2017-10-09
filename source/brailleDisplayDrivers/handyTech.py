@@ -159,12 +159,9 @@ class Model(AutoPropertyObject):
 		"""
 
 	def _get__display(self):
-		"The L{BrailleDisplayDriver} which initialized this Model instance"
+		"""The L{BrailleDisplayDriver} which initialized this Model instance"""
 		# self._displayRef is a weakref, call it to get the object
-		if self._displayRef and callable(self._displayRef):
-			return self._displayRef()
-		else:
-			return None
+		return self._displayRef()
 
 	# pylint: disable=R0201
 	def _get_keys(self):
@@ -241,7 +238,7 @@ class TripleActionKeysMixin(AutoPropertyObject):
 	at the bottom and in the middle.
 	"""
 	def _get_keys(self):
-		"Add the triple action keys to the keys property"
+		"""Add the triple action keys to the keys property"""
 		keys = super(TripleActionKeysMixin, self).keys
 		keys.update({
 			0x0C: "leftTakTop",
@@ -260,7 +257,7 @@ class JoystickMixin(AutoPropertyObject):
 	"""
 
 	def _get_keys(self):
-		"Add the joystick keys to the keys property"
+		"""Add the joystick keys to the keys property"""
 		keys = super(JoystickMixin, self).keys
 		keys.update({
 			0x74: "joystickLeft",
@@ -279,7 +276,7 @@ class StatusCellMixin(AutoPropertyObject):
 	"""
 
 	def _get_keys(self):
-		"Add the status routing keys to the keys property"
+		"""Add the status routing keys to the keys property"""
 		keys = super(StatusCellMixin, self).keys
 		keys.update({
 			0x70: "statusRouting1",
