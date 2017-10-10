@@ -22,6 +22,8 @@ from logHandler import log
 import addonHandler
 import easeOfAccess
 
+MOVEFILE_DELAY_UNTIL_REBOOT=4
+
 _wsh=None
 def _getWSH():
 	global _wsh
@@ -331,16 +333,20 @@ def deleteFileOnReboot(path):
 	"""
 	Marks a file for delete on reboot.
 	This uses Windows' MoveFileEx (either unicode or ascii depending on the given path) and also prepends'\\?\' to allow for long file names.
+	@return: True if  the action was successfull. False otherwise.
+	@rtype: boolean
 	"""
 	MoveFileEx=windll.kernel32.MoveFileExW if isinstance(path,unicode) else windll.kernel32.MoveFileExA
-	return MoveFileEx("\\\\?\\"+path,None,4)
+	return MoveFileEx("\\\\?\\"+path,None,MOVEFILE_DELAY_UNTIL_REBOOT)!=0
 
 def copyFile(sourceFilePath,destFilePath):
 	"""
 	Copies the file at sourcePath to destPath.
 	This uses Windows' CopyFile and prepends'\\?\' to allow for long file names.
+	@return: True if  the action was successfull. False otherwise.
+	@rtype: boolean
 	"""
-	return windll.kernel32.CopyFileW(u'\\\\?\\'+sourceFilePath,u'\\\\?\\'+destFilePath,False)
+	return windll.kernel32.CopyFileW(u'\\\\?\\'+sourceFilePath,u'\\\\?\\'+destFilePath,False)!=0
 
 def tryRemoveFile(path,numTries=6,retryInterval=0.5,tempDir=None):
 	"""
@@ -384,7 +390,7 @@ def tryRemoveFile(path,numTries=6,retryInterval=0.5,tempDir=None):
 			continue
 		log.debug("Marking file for delete on reboot: %s"%tempPath)
 		if not deleteFileOnReboot(tempPath):
-			log.error("Could not mark file for remove on reboot: %s"%tempPath)
+			log.warning("Could not mark file for remove on reboot: %s"%tempPath)
 		return
 	raise RetriableFailure("File %s could not be removed"%path)
 
