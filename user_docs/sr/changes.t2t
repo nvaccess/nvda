@@ -3,6 +3,43 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+== Nove karakteristike ==
+- U režimu  pretraživanja, sada je moguće doći do kraja ili početka orjentira komandama za prelazak na početak ili kraj sadrživača (zarez/šift+zarez). (#5482)
+- U programima Firefox, Internet explorer i Chrome, brza navigacija po poljima za uređivanje ili unos teksta sada uključuje obogaćena tekstualna polja označena kao contentEditable. (#5534)
+- U web pretraživačima, lista elemenata sada može prikazati polja za uređivanje i dugmiće. (#588)
+- Početna podrška za  Windows 10 na  ARM64 procesorima. (#7508)
+- Rana podrška za čitanje i interakciju sa matematičkim sadržajem u programu Kindle books sa  accessible math. (#7536)
+- Dodata podrška za Azardi čitač elektronskih knjiga. (#5848)
+
+
+== Promene ==
+- Minimalni zahtevan operativni sistem za  NVDA je sada  Windows 7 sa  Service Packom 1, ili Windows Server 2008 R2 sa  Service Packom 1. (#7546)
+- Web dijalozi u pretraživačima Firefox i Chrome sada automatski koriste režim pretraživanja, osim ako se radi u Web aplikaciji. (#4493)
+- U režimu pretraživanja, korišćenje tastera tab ili brze navigacije više ne izgovara početak i kraj sadrživača na primer liste, što čini navigaciju jednostavnijom. (#2591)
+- U režimu pretraživanja programa Firefox i Chrome, imena grupa polja za uređivanje se sada izgovaraju kada koristite brzu navigaciju ili taster tab. (#3321)
+- U režimu pretraživanja, komanda brze navigacije za umetnute objekte (o i  šift+o) sada uključuje elemente za zvuk i video kao i elemente sa ARIA vrednostima aplikacije i dijaloga. (#7239)
+- Espeak-ng je ažuriran (na  commit 01919cd48a566cdf34347784b2e74554b376e900), ovo ispravlja određene greške sa objavljivanjem novih verzija. (#7385)
+
+
+== Ispravljene greške ==
+- Linkovi se sada ispravno prepoznaju na brajevom redu u aplikacijama kao što je Microsoft Word. (#6780)
+- NVDA više ne postaje znatno sporiji kada imate puno otvorenih kartica u programima Firefox i Chrome. (#3138)
+- Prebacivanje kursora za  MDV Lilli brajev red više ne pomera kursor za jednu ćeliju unapred od očekivane pozicije. (#7469)
+- U programu  Internet Explorer i drugim  MSHTML dokumentima, HTML5 potreban atribut je sada podržan za izgovor stanja polja za uređivanje. (#7321)
+- Brajev red se sada ispravno ažurira kada pišete dokumente na Arapskom u programu word pad sa poravnanjem na levoj strani (#511).
+- Imena za kontrole u programu Mozilla firefox u režimu pretraživanja se sada bolje prijavljuju kada ime nije deo sadržaja. (#4773)
+- Na Windows 10 creators ažuriranju, NVDA može ponovo pristupiti programu Firefox čak i kada se NVDA ponovo pokrene. (#7269)
+- Kada ponovo pokrenete program NVDA dok je program Mozilla firefox fokusiran, režim pretraživanja će ponovo biti dostupan, ali možda ćete morati da koristite komandu alt+tab da se prebacite na neki drugi prozor a nakon toga vratite u Firefox. (#5758)
+- Sada je moguće pristupiti matematičkom sadržaju u programu Google Chrome čak i na sistemima gde program Mozilla Firefox nije instaliran. (#7308)
+- Druge aplikacije i sam operativni sistem bi trebalo da budu stabilniji nakon instalacije programa NVDA bez ponovnog pokretanja, u poređenju sa instalacijom prethodnih verzija. (#7563)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
 = 2017.3 =
 Glavne karakteristike ove verzije uključuju unos skraćenog brajevog pisma, podrška za nove Windows OneCore glasove dostupne na Windowsu 10, ugrađena podrška za Windows 10 OCR, i puno značajnih poboljšanja za brajev red i Web.
 == Nove karakteristike ==
@@ -41,12 +78,12 @@ Glavne karakteristike ove verzije uključuju unos skraćenog brajevog pisma, pod
 - Puno novih vrsta kontrola je dobilo svoje skraćenice za brajev red. Orjentiri su takođe dobili skraćenice. Molimo pročitajte "Skraćenice za vrste, stanje kontrola i orjentire" u korisničkom uputstvu za potpunu listu. (#7188, #3975)
 - Espeak-ng je ažuriran na verziju 1.49.1 (#7280).
 - Ulazne i izlazne tabele u dijalogu brajevih podešavanja su sada poređane po abecedi. (#6113)
-- Ažuriran liblouis brajev prevodioc  na verziju 3.2.0. (#6935)
+- Ažuriran liblouis brajev prevodilac  na verziju 3.2.0. (#6935)
 - Podrazumevana brajeva tabela je sada Engleski brajev kod stepen 1. (#6952)
 - Po podrazumevanim podešavanjima, NVDA sada prikazuje samo deo sadržaja na brajevom redu koji je promenjen kada neki objekat dobije fokus. (#217)
  - Ranije, informacije o promenama su bile prikazivane kad god je to moguće, bez obzira da li ste videli te informacije ranije.
  - Možete se vratiti na stariji prikaz menjanjem opcije "Predstavljanje sadržaja fokusa" u dijalogu brajeva podešavanja na opciju "Uvek prikazuj promene sadržaja".
-- Kada koristite brajev red, kursor se može podesiti za drugačiji oblik kada je brajev red vezan za fokus ili pregled. (#7112)
+- Kada koristite brajev red, kursor se može podesiti za drugačiji oblik kada je brajev red vezan za fokus ili pregled. (#7122)
 - NVDA logo je ažuriran. Ažuriran logo su slova NVDA u belom, na ljubičastoj pozadini. Ovo omogućava da bude vidljiv na bilo kojoj pozadini, i koristi ljubičastu boju iz NV Access logoa. (#7446)
 
 
@@ -59,7 +96,7 @@ Glavne karakteristike ove verzije uključuju unos skraćenog brajevog pisma, pod
 - NVDA će sada izgovarati promene izbora u određenim izbornim okvirima sistema Windows 10 na primer automatska reprodukcija u podešavanjima. (#6337).
 - Bespotrebne informacije sada se neće izgovarati kada ulazite u dijalog za dodavanje sastanka/podsetnika programa Microsoft Outlook. (#7216)
 - Pištanja za trake napredovanja koje su beskonačne kao što je provera ažuriranja programa NVDA se sada reprodukuju samo kada su omogućena. (#6759)
-- U programu  Microsoft Excel 2007 i  2003, ćelije se ponovo prijavljuju kada se krećete kroz radni list. (#8243)
+- U programu  Microsoft Excel 2007 i  2003, ćelije se ponovo prijavljuju kada se krećete kroz radni list. (#7243)
 - U Windows 10 Creators ažuriranju i novijim ažuriranjima, režim pretraživanja će ponovo automatski biti omogućen tokom čitanja poruka u Windows 10 Mail aplikaciji. (#7289)
 - Na većini brajevih redova sa brajevom tastaturom, tačka 7 sada briše poslednju dodatu brajevu ćeliju ili znak, a tačka 8 pritiska taster enter. (#6054)
 - Kada se uređuje tekst, dok pomerate kursor(npr. sa kursorskim tasterima ili tasterom backspace), NVDAovo čitanje je preciznije u puno slučajeva, posebno u Chromeu i terminal aplikacijama. (#6424)

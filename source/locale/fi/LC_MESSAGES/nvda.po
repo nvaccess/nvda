@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-04 00:10+1000\n"
-"PO-Revision-Date: 2017-08-06 08:48+0200\n"
+"POT-Creation-Date: 2017-09-15 00:10+1000\n"
+"PO-Revision-Date: 2017-09-14 20:15+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1036,13 +1036,17 @@ msgstr "Vuorovaikutustila"
 msgid "Browse mode"
 msgstr "Selaustila"
 
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "Ei nimeä"
+
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Pikanavigointi pois"
+msgstr "Pikaselaus pois"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Pikanavigointi käytössä"
+msgstr "Pikaselaus käytössä"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -1050,10 +1054,10 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Ottaa käyttöön pikanavigointinäppäimet tai poistaa ne käytöstä. Kun "
-"näppäimet ovat käytössä, määrättyjen kirjainten painaminen selaustilassa "
-"siirtää sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole "
-"käytössä, niiden painallukset välitetään suoraan sovellukselle."
+"Ottaa käyttöön pikaselausnäppäimet tai poistaa ne käytöstä. Kun näppäimet "
+"ovat käytössä, määrättyjen kirjainten painaminen selaustilassa siirtää "
+"sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole käytössä, "
+"niiden painallukset välitetään suoraan sovellukselle."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -1532,6 +1536,16 @@ msgstr "&Otsikot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Lom&akekentät"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Painikkeet"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Lan&dmarks"
@@ -1539,7 +1553,7 @@ msgstr "Kii&ntopisteet"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
-msgstr "Elementtiluettelo"
+msgstr "Elementtilista"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1830,7 +1844,7 @@ msgstr "haalean{color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "tummanhaalean{color}"
+msgstr "tummanhaalea {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
 #, python-brace-format
@@ -2666,11 +2680,11 @@ msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Syöte-eletiedostossa on virheitä.\n"
+"Syötekomentotiedostossa on virheitä.\n"
 "Lisätietoja löytyy lokitiedostosta."
 
 msgid "gesture map File Error"
-msgstr "Virhe syöte-eletiedostossa"
+msgstr "Virhe syötekomentotiedostossa"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -3618,8 +3632,7 @@ msgstr ""
 "Vaihtaa selaus- ja vuorovaikutustilojen välillä. Vuorovaikutustilassa "
 "näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä "
 "mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa "
-"ollessasi voit liikkua dokumentissa kohdistimella, pikanavigointinäppäimillä "
-"jne."
+"ollessasi voit liikkua dokumentissa kohdistimella, pikaselausnäppäimillä jne."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3638,7 +3651,7 @@ msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta lähtien "
+"Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta alkaen "
 "siirtäen samalla sitä."
 
 #. Translators: Input help mode message for say all with system caret command.
@@ -3910,7 +3923,7 @@ msgstr "Avaa symbolien puhumisen asetusten valintaikkunan."
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Avaa syöte-eleiden valintaikkunan."
+msgstr "Avaa Syötekomennot-valintaikkunan."
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -7288,7 +7301,7 @@ msgstr "&Välimerkkien ja symboleiden puhuminen..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "Syöte-e&leet..."
+msgstr "Syöte&komennot..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -8525,7 +8538,7 @@ msgstr "Automaattinen vuorovaikutustila kohdistuksen muuttuessa"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for caret movement"
-msgstr "Automaattinen vuorovaikutustila kohdistinta liikutettaessa"
+msgstr "Automaattinen vuorovaikutustila kohdistinta siirrettäessä"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -8535,7 +8548,7 @@ msgstr "Ilmaise vuorovaikutus- ja selaustilat äänimerkillä"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "Estä mui&den kuin komentoeleiden pääsy dokumenttiin"
+msgstr "Estä mui&den kuin syötekomentojen pääsy dokumenttiin"
 
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
@@ -8945,7 +8958,7 @@ msgstr "Symboli \"%s\" on jo olemassa."
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
-msgstr "Syöte-eleet"
+msgstr "Syötekomennot"
 
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
@@ -8961,13 +8974,13 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "Anna syöte-ele:"
+msgstr "Anna syötekomento:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Virhe tallennettaessa käyttäjän määrittämiä eleitä - tiedostojärjestelmä "
-"luultavasti vain luku -tyyppiä."
+"Virhe tallennettaessa käyttäjän määrittämiä syötekomentoja - "
+"tiedostojärjestelmä on luultavasti vain luku -tyyppiä."
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -9197,11 +9210,6 @@ msgstr "K&ommentit"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "K&aavat"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "Lom&akekentät"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10192,15 +10200,23 @@ msgstr "Ensisijainen ylätunniste"
 msgid "Text frame"
 msgstr "Tekstikehys"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "kommentti: {text}, muokkaaja: {author}, päiväys: {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "Kirjoitusvirhe: {text}"
