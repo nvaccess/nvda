@@ -278,7 +278,7 @@ Hai algunhas ordes de teclado útis cando nos movamos co foco:
 | Anunciar foco actual | NVDA+tab | NVDA+tab | anuncia o obxecto actual ou control que teña o foco do sistema. Premendo dúas veces deletreará a información  |
 | Anunciar título | NVDA+t | NVDA+t | Anuncia o título da ventá activa actualmente. Premendo dúas veces deletreará a información. Premendo tres veces copiaráa ao portapapeis |
 | Ler a ventá activa | NVDA+b | NVDA+b | le todos os controis na ventá actualmente activa (útil para diálogos) |
-| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia a barra de estado se NVDA atopa unha. Tamén move o navegador de obxectos a esta localización. preméndo dúas veces deletreará a información |
+| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia a barra de estado se NVDA atopa unha. Tamén move o navegador de obxectos a esta localización. preméndo dúas veces deletreará a información. Premendo tres veces copiaráa ao portapapeis |
 %kc:endInclude
 
 ++ Navegando co Cursor do Sistema ++[SystemCaret]
@@ -2484,6 +2484,9 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | None | --debug-logging | Habilita o nivel depuración no rexistro só para esta execución. Esta opción anulará calquera outro argumento do nivel do rexistro ( ""--loglevel"", -l) dado. |
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
+| None | --create-portable | Crea unha copia portable do NVDA (comezando a copia recentemente creada). Require especificarse --portable-path |
+| None | --create-portable-silent | Crea unha copia portable do NVDA (non comeza a copia recentemente instalada). Require expecificarse --portable-path |
+| None | --portable-path=PORTABLEPATH | A ruta onde se creará unha copia portable |
 
 ++ Parámetros do Sistema ++[SystemWideParameters]
 NVDA permite configurar algúns valores no rexistro do sistema que alteran o comportamento de todo o sistema do NVDA.
