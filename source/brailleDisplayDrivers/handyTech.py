@@ -643,21 +643,46 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# being released, so they should be ignored.
 		self._ignoreKeyReleases = True
 
+	def _handleAck(self):
+		if not self._awaitingACK:
+			return
+		self._awaitingACK = False
+		if self._pendingCells:
+			self.display(self._pendingCells)
+
 	# pylint: disable=R0912
 	# Pylint complains about many branches, might be worth refactoring
 	def _onReceive(self, data):
 		if self.isHidSerial:
 			# The HID serial converter seems to wrap one or two bytes into a single HID packet
-			length = ord(data[1])
-			self._hidSerialBuffer+=data[2:(2+length)]
-			if not (
-				(self._hidSerialBuffer[0]==HT_PKT_EXTENDED and self._hidSerialBuffer[-1]=="\x16") or
-				(self._hidSerialBuffer[0]!=HT_PKT_EXTENDED and len(self._hidSerialBuffer)==2)
-			):
+			hidLength = ord(data[1])
+			self._hidSerialBuffer+=data[2:(2+hidLength)]
+			currentBufferLength=len(self._hidSerialBuffer)
+			# We only support the extended packet based protocol
+			# Thus, the only non-extended packet we expect is the device identification, which is of type HT_PKT_OK and two bytes in size
+			serPacketType = self._hidSerialBuffer[0]
+			if serPacketType!=HT_PKT_EXTENDED and currentBufferLength>=2:
+				stream = StringIO(self._hidSerialBuffer)
+				self._hidSerialBuffer = ""
+			# Extended packets are at least 5 bytes in size.
+			elif serPacketType==HT_PKT_EXTENDED and currentBufferLength>=5:
+				# Check whether our packet is complete
+				# The second byte is the model, the third byte is the data length, excluding the terminator
+				packet_length = ord(self._hidSerialBuffer[2])+4
+				if len(self._hidSerialBuffer)<packet_length:
+					# The packet is not yet complete
+					return
+				# We have a complete packet, but it must be isolated from another packet that could have landed in the buffer
+				if len(self._hidSerialBuffer)>packet_length:
+					stream = StringIO(self._hidSerialBuffer[:packet_length])
+					self._hidSerialBuffer = self._hidSerialBuffer[packet_length:]
+				else:
+					assert self._hidSerialBuffer.endswith("\x16")	# Extended packets are terminated with \x16
+					stream = StringIO(self._hidSerialBuffer)
+					self._hidSerialBuffer = ""
+			else:
 				return
-			stream = StringIO(self._hidSerialBuffer)
-			self._hidSerialBuffer = ""
-			serPacketType = stream.read(1)
+			stream.seek(1)
 		elif self.isHid:
 			# data contains the entire packet.
 			stream = StringIO(data)
@@ -682,8 +707,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# plugged in the same (already open) serial port.
 			self.terminate()
 
-		if serPacketType in (HT_PKT_OK, HT_PKT_ACK):
+		if serPacketType==HT_PKT_OK:
 			pass
+		elif serPacketType == HT_PKT_ACK:
+			# This is unexpected, but we need to make sure that we handle old style ack
+			self._handleAck()
 		elif serPacketType == HT_PKT_NAK:
 			log.debugWarning("NAK received!")
 		elif serPacketType == HT_PKT_EXTENDED:
@@ -695,9 +723,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if extPacketType == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command.
 				if packet[1] == HT_PKT_ACK:
-					self._awaitingACK = False
-					if self._pendingCells:
-						self.display(self._pendingCells)
+					self._handleAck()
 				elif packet[1] == HT_PKT_NAK:
 					log.debugWarning("NAK received!")
 			elif extPacketType == HT_EXTPKT_KEY:
