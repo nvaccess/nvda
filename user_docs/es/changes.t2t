@@ -12,6 +12,8 @@ Qué hay de Nuevo en NVDA
 - Soporte inicial para Windows 10 en ARM64. (#7508)
 - Soporte preliminar para la lectura y la navegación interactiva de contenido matemático para libros Kindle con matemáticas accessibles. (#7536)
 - Añadido soporte para el lector de libros digitales Azardi. (#5848)
+- La información de versión para complementos ahora se anuncia cuando se estén actualizando. (#5324)
+- Añadido el soporte para nuevos parámetros de línea de órdenes para crear una copia portable de NVDA. (#6329)
 
 
 == Cambios ==
@@ -21,6 +23,8 @@ Qué hay de Nuevo en NVDA
 - En modo exploración para Firefox y Chrome, ahora se anuncian los nombres de grupos de campos de formulario al moverse dentro de ellos con la navegación rápida o cuando se tabula. (#3321)
 - En modo exploración, las órdenes de navegación rápida para objetos integrados (o y shift+o) ahora incluyen elementos de audio y vídeo así como elementos con los roles aria application y dialog. (#7239)
 - Se ha actualizado Espeak-ng (a commit 01919cd48a566cdf34347784b2e74554b376e900), esto resuelve algunos problemas con la producción de versiones. (#7385)
+- En la tercera activación de la orden 'leer bara de estado', su contenido se copia al portapapeles. (#1785)
+- Al asignar gestos a teclas en una pantalla Baum, puedes limitarlas al modelo de la pantalla braille en uso (ej.: VarioUltra o Pronto). (#7517)
 
 
 == Corrección de Errores ==
@@ -40,6 +44,10 @@ Qué hay de Nuevo en NVDA
 - "scons tests" ahora busca que las cadenas traducibles tengan comentarios para los traductores. También puedes ejecutar esto sólo con "scons checkPot". (#7492)
 - Ahora hay un nuevo módulo extensionPoints que proporciona un framework genérico para permitir la extensibilidad de código en puntos específicos en el código. Esto permite que las partes interesadas se registren para ser notificadas cuando ocurra alguna acción (extensionPoints.Action), para modificar un tipo específico de dato (extensionPoints.Filter) o para participar en la decisión de si se hará algo (extensionPoints.Decider). (#3393)
 - Ahora puedes registrarte para ser notificado acerca de los cambios de perfiles de configuración a través de la acción config.configProfileSwitched. (#3393)
+- Los gestos de pantalla braille que emulan teclas modificadoras del teclado del sistema (tales como control y alt) ahora pueden conbinarse con otras teclas emuladas del teclado del sistema sin definición explícita. (#6213) 
+ - Por ejemplo: si tienes una tecla de la pantalla vinculada a la tecla alt y otra tecla de la pantalla a flecha abajo, al combinar estas teclas resultará la emulación de alt+flecha abajo.
+- La clase braille.BrailleDisplayGesture ahora tiene una propiedad de modelo extra. Si se proporciona, pulsando una tecla generará una adicional, texto específico de identificador de modelo, esto permite a un usuario vincular gestos limitados a un modelo de pantalla braille específico. 
+ - Consulta el controlador de baum como un ejemlo para esta funcionalidad nueva.
 
 
 = 2017.3 =

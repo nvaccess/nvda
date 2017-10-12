@@ -278,7 +278,7 @@ Hay algunas órdenes de teclado útiles cuando nos movamos con el foco:
 | Anunciar foco actual | NVDA+tab | NVDA+tab | anuncia el objeto actual o control que tenga el foco del sistema. Pulsando dos veces deletreará la información  |
 | Anunciar título | NVDA+t | NVDA+t | Anuncia el título de la ventana activa actualmente. Pulsando dos veces deletreará la información. Pulsándolo tres veces la copiará al portapapeles |
 | Leer la ventana activa | NVDA+b | NVDA+b | lee todos los controles en la ventana actualmente activa (útil para diálogos) |
-| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia la barra de estado si NVDA encuentra una. También mueve el navegador de objetos a esta localización. Pulsándola dos veces deletreará la información |
+| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia la barra de estado si NVDA encuentra una. También mueve el navegador de objetos a esta localización. Pulsándola dos veces deletreará la información. Pulsándola tres veces la copiará al portapapeles |
 %kc:endInclude
 
 ++ Navegando con el Cursor del Sistema ++[SystemCaret]
@@ -2484,6 +2484,9 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 | None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
 | None | --install | Se instala NVDA iniciando la nueva copia instalada |
 | None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
+| None | --create-portable | Crea una copia portable de NVDA (iniciando la copia recientemente creada). Requiere especificarse --portable-path |
+| None | --create-portable-silent | Crea una copia portable de NVDA (no inicia la copia recientemente instalada). Requiere expecificarse --portable-path |
+| None | --portable-path=PORTABLEPATH | La ruta donde se creará una copia portable |
 
 ++ Parámetros del Sistema ++[SystemWideParameters]
 NVDA permite configurar algunos valores en el registro del sistema que alteran el comportamiento de todo el sistema de NVDA.
