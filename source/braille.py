@@ -1104,6 +1104,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			yield RegionWithPositions(region, start, end)
 			start = end
 
+	_cache_rawToBraillePos=True
 	def _get_rawToBraillePos(self):
 		"""@return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
 		@rtype: [int, ...]
@@ -1113,6 +1114,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			rawToBraillePos.extend(p+regionStart for p in region.rawToBraillePos)
 		return rawToBraillePos
 
+	_cache_brailleToRawPos=True
 	def _get_brailleToRawPos(self):
 		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
 		@rtype: [int, ...]
