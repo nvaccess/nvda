@@ -12,6 +12,8 @@ Ce este nou în NVDA
 - Suport inițial pentru Windows 10 pe ARM64. (#7508)
 - Suport prematur pentru citirea și navigarea interactivă a conținutului matematic pentru cărțile Kindle cu matematica accesibilă. (#7536)
 - A fost adăugat suportul pentru cititorul de cărți electronice Azardi. (#5848)
+- Acum, este raportată informația versiunii suplimentelor când se face o actualizare. (#5324)
+- A fost adăugat suportul pentru noii parametri ai liniei de comandă pentru a crea o copie portabilă a NVDA-ului. (#6329)
 
 
 == Modificări ==
@@ -21,6 +23,8 @@ Ce este nou în NVDA
 - În modul de navigare pentru Firefox și Chrome, numele grupurilor de câmpuri formular sunt anunțate atunci când se deplasează la ele cu navigarea rapidă sau când se tabulează. (#3321)
 - În modul de navigare, comanda navigării rapide pentru obiectele încorporate )O și shift+o) include acum elementele audio și video, precum și elementele cu aplicația și dialogul rolurilor aria. (#7239)
 - A fost actualizat Espeak NG (la commit-ul 01919cd48a566cdf34347784b2e74554b376e900), aceasta rezolvă niște probleme cu producerea lansărilor de compilări. (#7385)
+- La a treia activare a comenzii de citire a barei de stare, conținutul va fi copiat pe planșetă. (#1785)
+- Când se atribuie gesturi la taste pentru un afișaj Baum, le puteți limita la modelul afișajului braille în uz (ex: VarioUltra sau Pronto). (#7517)
 
 
 == Rezolvări Defecte ==
@@ -40,8 +44,12 @@ Ce este nou în NVDA
 - "scons tests" nu verifică dacă string-urile ce pot fi traduse au comentariile traducătorului. Puteți rula asta singur cu "scons checkPot". (#7492)
 - Acum există un nou modul de extensie care oferă un framework generic pentru a activa extensibilitatea codului la punctele specifice din el. Acest lucru permite părților interesate să se înregistreze pentru a fi notificate atunci când are loc o acțiune (extensionPoints.Action), să modifice un anumit tip de date (extensionPoints.Filter) sau să participe la luarea unei decizii atunci când se va face ceva (extensionPoints.Decider). (#3393)
 - Acum vă puteți înregistra pentru a fi notificat atunci când configurarea profilului se comută prin acțiunea config.configProfileSwitched. (#3393)
+- Gesturile afișajului braille care simulează modificatoare de taste ale tastaturii sistemului (cum ar fi control și alt) pot fi combinate acum cu alte taste ale tastaturii simulate fără definiție explicită. (#6213) 
+ - De exemplu: dacă aveți o tastă pe afișaj legată la tasta alt și o altă tastă de afișaj pentru a putea apăsa săgeată jos, combinarea acestor taste va rezulta simularea alt+săgeată jos.
+- Clasa braille.BrailleDisplayGesture are acum o proprietate extra model. Dacă e furnizată, apăsarea unei taste va genera un identificator de gest suplimentar, specific pentru model. Aceasta îi permite unui utilizator să lege gesturile limitate la un model specific de afișaje braille. 
+ - Încercați driver-ul Baum ca exemplu pentru această nouă funcționalitate.
 
-
+ 
 = 2017.3 =
 Caracteristicile principale ale acestei lansări includ intrările pentru braille abreviat, compatibilitate pentru noile voci Windows OneCore disponibile în Windows 10, integrare în aplicație a Windows 10 OCR și multe alte îmbunătățiri semnificative pentru braille și internet.
 
