@@ -92,3 +92,35 @@ class TestFocusContextPresentation(unittest.TestCase):
 		self.assertEqual(braille.handler.buffer.windowEndPos,self.regionsWithPositions[2].end)
 		# The window start position is equal to the start position of the 2nd region
 		self.assertEqual(braille.handler.buffer.windowStartPos,self.regionsWithPositions[1].start)
+
+class TestDisplayTextForGestureIdentifier(unittest.TestCase):
+	"""A test for the regular expression code that handles display gesture identifiers."""
+
+	def test_regex(self):
+		regex = braille.BrailleDisplayGesture.ID_PARTS_REGEX
+		self.assertEqual(
+			regex.search('br(noBraille.noModel):noKey1+noKey2').groups(),
+			('noBraille', '.noModel', 'noModel', 'noKey1+noKey2')
+		)
+		self.assertEqual(
+			regex.search('br(noBraille):noKey1+noKey2').groups(),
+			('noBraille', None, None, 'noKey1+noKey2')
+		)
+		# Also try a string which doesn't match the pattern
+		self.assertEqual(
+			regex.search('br[noBraille.noModel]:noKey1+noKey2'),
+			None
+		)
+
+	def test_identifierWithModel(self):
+		self.assertEqual(
+			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille.noModel):noKey1+noKey2'),
+			(u'No braille', 'noModel: noKey1+noKey2')
+		)
+
+	def test_identifierWithoutModel(self):
+		self.assertEqual(
+			braille.BrailleDisplayGesture.getDisplayTextForIdentifier('br(noBraille):noKey1+noKey2'),
+			(u'No braille', 'noKey1+noKey2')
+		)
+

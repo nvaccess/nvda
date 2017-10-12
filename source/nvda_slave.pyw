@@ -2,10 +2,20 @@
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
+import gettext
+import locale
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+try:
+	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+except:
+	gettext.install('nvda',unicode=True)
+
 import pythonMonkeyPatches
 
 import sys
 import os
+import versionInfo
 import logHandler
 if hasattr(sys, "frozen"):
 	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
@@ -73,7 +83,7 @@ def main():
 				raise ValueError("Addon path was not provided.")
 			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 			import ctypes
-			h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
+			h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(u"lib",versionInfo.version,u"nvdaHelperRemote.dll")),0,0x8)
 			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
 			ret = remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
 			if ret != 0:
