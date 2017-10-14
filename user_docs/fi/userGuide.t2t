@@ -278,7 +278,7 @@ Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 | Lue nykyinen kohdistus | NVDA+Sarkain | NVDA+Sarkain | Kertoo nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
 | Lue ikkunan nimi | NVDA+T | NVDA+T | Lukee aktiivisen ikkunan nimen. Kahdesti painettaessa nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle. |
 | Lue aktiivinen ikkuna | NVDA+B | NVDA+B | Lukee kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa). |
-| Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. Kahdesti painettaessa tiedot tavataan. |
+| Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa ne kopioidaan leikepöydälle. |
 %kc:endInclude
 
 ++ Järjestelmäkohdistimella liikkuminen ++[SystemCaret]
@@ -2484,6 +2484,9 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
+| Ei mitään | --create-portable | Luo ja käynnistää NVDA:n massamuistiversion. Parametri --portable-path on myös määritettävä. |
+| Ei mitään | --create-portable-silent | Luo NVDA:n massamuistiversion, eikä käynnistä sitä luonnin jälkeen. Parametri --portable-path on myös määritettävä. |
+| Ei mitään | --portable-path=POLKU | Hakemistopolku, jonne massamuistiversio luodaan. |
 
 ++ Järjestelmänlaajuiset parametrit ++[SystemWideParameters]
 Windowsin rekisterissä on mahdollista muuttaa joitakin arvoja, jotka vaikuttavat  NVDA:n järjestelmänlaajuiseen toimintaan.

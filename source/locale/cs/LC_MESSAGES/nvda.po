@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-06 16:34+0100\n"
+"POT-Creation-Date: 2017-10-06 00:10+1000\n"
+"PO-Revision-Date: 2017-10-05 17:15+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -3328,6 +3328,7 @@ msgid "No navigator object"
 msgstr "Žádný prohlížený objekt"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s zkopírováno do schránky"
@@ -3651,10 +3652,12 @@ msgstr "Stavový řádek nenalezen"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým objektem. "
-"Stiskne-li se dvakrát za sebou, bude vyhláskován"
+"Stiskne-li se dvakrát za sebou, bude vyhláskován. Stiskne-li se třikrát za "
+"sebou, bude zkopírován do schránky"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7502,10 +7505,21 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Instalace doplňku"
 
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+msgid ""
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"Chystáte se instalovat verzi {newVersion} {summary}, která je již "
+"nainstalována. Chcete ji přesto aktualizovat?"
+
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
-msgstr "Verze tohoto doplňku je již nainstalována. Chcete ji aktualizovat?"
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Verze tohoto doplňku je již nainstalována. Chcete aktualizovat {summary} "
+"version {curVersion} na verzi {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7913,6 +7927,10 @@ msgstr "Vyberte adresář pro přenosnou verzi"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "&Zkopírovat aktuální uživatelské nastavení"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Spustit novou přenosnou kopii po vytvoření"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.

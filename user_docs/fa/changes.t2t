@@ -12,6 +12,8 @@
 - پشتیبانی اولیه از ویندوز ۱۰ روی ARM64. (#7508)
 - پشتیبانی اولیه از خواندن و تعامل با محتوای ریاضی برای کتاب‌های کیندل با ریاضی دسترس‌پذیر. (#7536)
 - پشتیبانی از برنامه‌ی کتاب‌خوانِ الکترونیکِ Azardi افزوده شد. (#5848)
+- اطلاعات شماره‌ی نگارشِ افزونه‌ها هنگامِ به‌روزرسانی اعلام میشود. (#5324)
+- پارامتر‌های جدیدی در خطِ فرمانِ NBDA برای ساختن نسخه‌ی قابل حمل اضافه شد. (#6329)
 
 
 == تغییرات ==
@@ -21,6 +23,8 @@
 - در فایرفاکس و کروم، نام گروه‌های فیلدهای یک فرم هنگامی که با کلیدهای پیمایش سریع یا تب روی آن‌ها حرکت میکنید اعلام میشوند. (#3321)
 - در حالت مرور، فرمان پیمایش سریع برای اشیاء توکار (O و Shift+O)، از این به بعد سازه‌های صوتی و ویدیویی را نیز همانند سازه‌های برنامه و پنجره‌ی محاوره‌ای شامل میشود. (#7239)
 - Espeak-ng به نسخه‌ی آزمایشی (commit) 01919cd48a566cdf34347784b2e74554b376e900 به‌روز شد. این نسخه، اشکالی که هنگام تولید انتشارها ایجاد میشد را برطرف کرده است. (#7385)
+- حالا میتوانید برای کپی کردن اطلاعات نوار وضعیت در کلیپ‌برد، فرمانِ «اعلام نوار وضعیت» را سه بار -پشت سر هم- اجرا کنید. (#1785)
+- When assigning gestures to keys on a Baum display, you can limit them to the model of the braille display in use (e.g. VarioUltra or Pronto). (#7517)
 
 
 == رفع اشکال ==
@@ -40,6 +44,10 @@
 - "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
 - There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
 - You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
+- Braille display gestures that emulate system keyboard key modifiers (such as control and alt) can now be combined with other emulated system keyboard keys without explicit definition. (#6213) 
+ - For example: if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
+- The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
+ - See the baum driver as an example for this new functionality.
 
 
 = 2017.3 =

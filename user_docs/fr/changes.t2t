@@ -12,6 +12,8 @@ Quoi de Neuf dans NVDA
 - Support initial de Windows 10 sur ARM64. (#7508)
 - Support initial pour la lecture et la navigation dans du contenu mathématique pour les livres Kindle avec mathématique accessible. (#7536)
 - Ajout du support du lecteur de livres électroniques Azardi. (#5848)
+- Lors de la mise à jour d'un module complémentaire, l'information de version est maintenant annoncée. (#5324)
+- Ajout de nouveaux paramètres de ligne de commande pour créer une copie portable de NVDA. (#6329)
  
 
 == Changements ==
@@ -21,6 +23,8 @@ Quoi de Neuf dans NVDA
 - En mode navigation sous Firefox ou Chrome, le nom des groupes de champs de formulaires est maintenant annoncés quand on y accède par navigation rapide ou en tabulant. (#3321)
 - En mode navigation, les commandes de navigation rapide pour les objets embarqués (o et maj+o) incluent maintenant les éléments audio et vidéo ainsi que les éléments avec un rôle aria application et dialogue. (#7239)
 - Espeak-ng a été mis à jour (au niveau 01919cd48a566cdf34347784b2e74554b376e900), Cela résout quelques problèmes dans la productions des builds. (#7385)
+- À la troisième activation de la commande de lecture de la barre d'état, le contenu de celle-ci est copié dans le presse-papiers. (#1785)
+- Sur un terminal Baum, l'assignation d'un geste de commande à une touche peut être limitée au modèle de terminal en cours d'utilisation (ex : VarioUltra ou Pronto). (#7517)
 
 
 == Corrections de Bogues ==
@@ -40,6 +44,10 @@ Quoi de Neuf dans NVDA
 - "scons tests" vérifie maintenant que les chaîne traduisibles ont des commentaires pour les traducteurs. Vous pouvez exécuter seulement cette vérification par "scons checkPot". (#7492)
 - Il y a maintenant un nouveau module extensionPoints qui fournit une infrastructure générique pour permettre des extensions de code à certains points spécifique dans le code. Cela permet aux parties intéressées de s'enregistrer pour être notifiées quand une action se produit (extensionPoints.Action), pour modifier un type particulier de données (extensionPoints.Filter) ou pour participer à la décision pour savoir si quelque chose doit être fait (extensionPoints.Decider). (#3393)
 - Vous pouvez maintenant vous enregistrer pour être averti lors d'un changement de profil de configuration via l'Action config.configProfileSwitched. (#3393)
+- Les gestes pour afficheur braille qui émulent des modificateurs de touches du clavier du système (comme contrôle et alt) peuvent maintenant être combinées avec d'autres touches émulées sans définition explicite. (#6213) 
+ - Par exemple: si vous avez sur votre afficheur une touche affectée à la touche alt et une autre à flècheBas, la combinaison de ces touches résultera en émulation de alt+flècheBas.
+- La classe braille.BrailleDisplayGesture possède maintenant une propriété model. si elle est fournie, l'appui d'une touche générera un identificateur additionnel de geste spécifique au modèle de terminal. Cela permet à l'utilisateur d'affecter des gestes commande spécifiques limités à un modèle de terminal. 
+ - Pour un exemple de cette nouvelle fonctionnalité, regardez le pilote Baum.
 
 
 = 2017.3 =
