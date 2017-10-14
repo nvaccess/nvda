@@ -1697,9 +1697,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self._tether != self.TETHER_FOCUS:
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
-		if not region or region.obj is not obj:
-			return
-		region.pendingCaretUpdate=True
+		if region and region.obj==obj:
+			region.pendingCaretUpdate=True
+		else:
+			# The caret moved in a different object than the review position.
+			self._doNewObject(getFocusRegions(obj, review=False))
 
 	def handlePendingCaretUpdate(self):
 		"""Checks to see if the final text region needs its caret updated and if so calls _doCursorMove for the region."""
