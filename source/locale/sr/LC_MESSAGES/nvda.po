@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
+"POT-Creation-Date: 2017-10-06 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jovic <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -3353,6 +3353,7 @@ msgid "No navigator object"
 msgstr "nema navigacionog objekta"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s kopirano u privremenu memoriju"
@@ -3682,10 +3683,12 @@ msgstr "Nije pronađena statusna traka"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
-"čita statusnu traku trenutne aplikacije i pomera navigator ka njoj. Ako se "
-"pritisne dvaput, sriče informaciju"
+"čita statusnu traku trenutne aplikacije i pomera navigacioni objekat ka "
+"njoj. Ako se pritisne dvaput, sriče informaciju. Ako se pritisne tri puta, "
+"kopira statusnu traku u privremenu memoriju."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7591,11 +7594,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Instalacija dodatka"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Neka verzija ovog dodatka je već instalirana. Želite li da je ažurirate?"
+"Upravo instalirate verziju {newVersion} dodatka {summary}, koja je već "
+"instalirana. Da li i dalje želite da ažurirate dodatak?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Verzija ovog dodatka je već instalirana. Da li želite da ažurirate dodatak "
+"{summary} sa verzije {curVersion} na verziju {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8007,6 +8022,10 @@ msgstr "Izaberite fasciklu za prenosnu kopiju"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Kopiraj trenutna korisnička &podešavanja"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Pokreni novu portabilnu kopiju nakon pravljenja"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.

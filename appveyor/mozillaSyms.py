@@ -14,12 +14,11 @@ import sys
 import zipfile
 import requests
 
-NVDA_VERSION=os.getenv('version')
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 DUMP_SYMS = os.path.join(SCRIPT_DIR, "dump_syms.exe")
 NVDA_SOURCE = os.path.join(os.path.dirname(SCRIPT_DIR), "source")
-NVDA_LIB = os.path.join(NVDA_SOURCE, "lib",NVDA_VERSION)
-NVDA_LIB64 = os.path.join(NVDA_SOURCE, "lib64",NVDA_VERSION)
+NVDA_LIB = os.path.join(NVDA_SOURCE, "lib")
+NVDA_LIB64 = os.path.join(NVDA_SOURCE, "lib64")
 ZIP_FILE = os.path.join(SCRIPT_DIR, "mozillaSyms.zip")
 URL = 'https://crash-stats.mozilla.com/symbols/upload'
 
