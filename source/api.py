@@ -232,7 +232,7 @@ def setNavigatorObject(obj,isFocus=False):
 		if isFocus:
 			globalVars.reviewPosition=obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
 			globalVars.reviewPositionObj=globalVars.reviewPosition
-	eventHandler.executeEvent("becomeNavigatorObject",obj, isFocus=isFocus)
+	eventHandler.executeEvent("becomeNavigatorObject",obj,isFocus=isFocus)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.

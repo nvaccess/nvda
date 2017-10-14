@@ -19,7 +19,7 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 			return winConsoleHandler.WinConsoleTextInfo
 		return super(WinConsole,self).TextInfo
 
-	def event_becomeNavigatorObject(self, isFocus=None):
+	def event_becomeNavigatorObject(self, isFocus=False):
 		if winConsoleHandler.consoleObject is not self:
 			if winConsoleHandler.consoleObject:
 				winConsoleHandler.disconnectConsole()

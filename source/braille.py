@@ -28,7 +28,6 @@ import brailleTables
 from collections import namedtuple
 import re
 import scriptHandler
-import eventHandler
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a

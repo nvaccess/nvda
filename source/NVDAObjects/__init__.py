@@ -958,7 +958,7 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		speech.cancelSpeech()
 
-	def event_becomeNavigatorObject(self, isFocus=None):
+	def event_becomeNavigatorObject(self, isFocus=False):
 		"""Called when this object becomes the navigator object.
 		@param isFocus: true if the navigator object was set due to a focus change.
 		@type isFocus: bool
