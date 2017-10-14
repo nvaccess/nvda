@@ -23,7 +23,7 @@ import _winreg
 
 
 TIMEOUT = 0.2
-BAUD_RATE = 15200
+BAUD_RATE = 57600
 PARITY = serial.PARITY_NONE
 
 # Vendor/product IDs of Freedom Scientific USB devices
@@ -131,7 +131,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 				continue
 			if not any(btName == prefix or btName.startswith(prefix + " ") for prefix in BLUETOOTH_NAMES):
 				continue
-			yield p["port"]
+			yield p
 
 	wizWheelActions=[
 		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
@@ -143,6 +143,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	def __init__(self, port="auto"):
 		self.numCells = 0
 		self._ackPending = False
+		self._pendingCells = []
 		self._keyBits = 0
 		self._extendedKeyBits = 0
 		self.leftWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
@@ -204,10 +205,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		self._dev.write("".join(packet))
 
 	def _onReceive(self, data):
-		# TODO: Serial!
-		data = StringIO(data)
-
-		packetType = data.read(1)
+		if self.isUsb:
+			data = StringIO(data)
+			packetType = data.read(1)
+		else:
+			packetType = data
+			data = self._dev
+		
 		arg1 = data.read(1)
 		arg2 = data.read(1)
 		arg3 = data.read(1)
@@ -227,10 +231,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	def _handlePacket(self, packetType, arg1, arg2, arg3, payload):
 		if packetType == FS_PKT_ACK:
 			log.debug("ACK received")
-			self._ackPending = False
+			self._awaitingAck = False
+			if self._pendingCells:
+				self.display(self._pendingCells)
 		elif packetType == FS_PKT_NAK:
 			log.debugWarning("NAK received!")
-			self._ackPending = False
+			self._awaitingAck = False
+			if self._pendingCells:
+				self.display(self._pendingCells)
 
 		elif packetType == FS_PKT_INFO:
 			self._manufacturer = payload[:24].replace("\x00", "")
@@ -333,8 +341,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		return checksum
 
 	def display(self,cells):
-		cells="".join([chr(x) for x in cells])
-		self._sendPacket(FS_PKT_WRITE, chr(self.numCells), 0, 0, cells)
+		if not self._awaitingAck:
+			cells="".join([chr(x) for x in cells])
+			self._sendPacket(FS_PKT_WRITE, chr(self.numCells), 0, 0, cells)
+			self._awaitingAck = True
+			self._pendingCells = []
+		else:
+			self._pendingCells = cells
 
 	def _configureDisplay(self):
 		if self._model and self._firmwareVersion and self._model.startswith("Focus") and ord(self._firmwareVersion[0]) >= ord('3'):
