@@ -1784,8 +1784,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not shouldAutoTether and self._tether != self.TETHER_REVIEW:
 			return
 		reviewPos = api.getReviewPosition()
-		#if reviewPos.obj == api.getFocusObject() and config.conf["reviewCursor"]["followFocus"]:
-			#return
 		if shouldAutoTether:
 			self.setTether(self.TETHER_REVIEW, auto=True)
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None

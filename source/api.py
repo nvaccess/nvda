@@ -177,8 +177,13 @@ def getReviewPosition():
 		globalVars.reviewPosition,globalVars.reviewPositionObj=review.getPositionForCurrentMode(obj)
 		return globalVars.reviewPosition
 
-def setReviewPosition(reviewPosition,clearNavigatorObject=True, isCaret=False):
-	"""Sets a TextInfo instance as the review position. if clearNavigatorObject is true, It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
+def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False):
+	"""Sets a TextInfo instance as the review position.
+	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
+		In that case, the next time the navigator object is asked for it fetches it from the review position.
+	@type clearNavigatorObject: bool
+	@param isCaret: Whether the review position is changed due to caret following.
+	@type isCaret: bool
 	"""
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
