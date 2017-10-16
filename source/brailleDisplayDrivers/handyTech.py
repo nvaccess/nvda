@@ -661,9 +661,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# We only support the extended packet based protocol
 			# Thus, the only non-extended packet we expect is the device identification, which is of type HT_PKT_OK and two bytes in size
 			serPacketType = self._hidSerialBuffer[0]
-			if serPacketType!=HT_PKT_EXTENDED and currentBufferLength>=2:
-				stream = StringIO(self._hidSerialBuffer)
-				self._hidSerialBuffer = ""
+			if serPacketType!=HT_PKT_EXTENDED:
+				if currentBufferLength>2:
+					stream = StringIO(self._hidSerialBuffer[:2])
+					self._hidSerialBuffer = self._hidSerialBuffer[2:]
+				elif currentBufferLength==2:
+					stream = StringIO(self._hidSerialBuffer)
+					self._hidSerialBuffer = ""
+				else:
+					# The packet is not yet complete
+					return
 			# Extended packets are at least 5 bytes in size.
 			elif serPacketType==HT_PKT_EXTENDED and currentBufferLength>=5:
 				# Check whether our packet is complete
@@ -681,6 +688,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					stream = StringIO(self._hidSerialBuffer)
 					self._hidSerialBuffer = ""
 			else:
+				# The packet is not yet complete
 				return
 			stream.seek(1)
 		elif self.isHid:
