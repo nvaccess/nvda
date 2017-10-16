@@ -1,6 +1,6 @@
 #scriptHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ from logHandler import log
 import inputCore
 import globalPluginHandler
 import braille
+import keyLabels
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
@@ -35,7 +36,7 @@ def _makeKbEmulateScript(scriptName):
 		# __name__ must be str; i.e. can't be unicode.
 		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName
-	func.__doc__ = _("Emulates pressing %s on the system keyboard") % keyName
+	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
 
 def _getObjScript(obj, gesture, globalMapScripts):
@@ -72,7 +73,7 @@ def findScript(gesture):
 	if globalMap:
 		globalMaps.append(globalMap)
 	for globalMap in globalMaps:
-		for identifier in gesture.identifiers:
+		for identifier in gesture.normalizedIdentifiers:
 			globalMapScripts.extend(globalMap.getScriptsForGesture(identifier))
 
 	# Gesture specific scriptable object.
@@ -111,7 +112,7 @@ def findScript(gesture):
 		return func
 	for obj in reversed(api.getFocusAncestors()):
 		func = _getObjScript(obj, gesture, globalMapScripts)
-		if func and getattr(func, 'canPropagate', False): 
+		if func and getattr(func, 'canPropagate', False):
 			return func
 
 	# Global commands.

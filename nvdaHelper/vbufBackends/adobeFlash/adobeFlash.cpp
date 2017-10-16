@@ -47,11 +47,11 @@ void CALLBACK AdobeFlashVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHO
 		return;
 	}
 
-	int docHandle=(int)hwnd;
+	int docHandle=HandleToUlong(hwnd);
 	int ID=(childID==CHILDID_SELF&&objectID>0)?objectID:childID;
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		AdobeFlashVBufBackend_t* backend=NULL;
-		HWND rootWindow=(HWND)((*i)->rootDocHandle);
+		HWND rootWindow=(HWND)UlongToHandle(((*i)->rootDocHandle));
 		if(rootWindow!=hwnd)
 			continue;
 		backend=static_cast<AdobeFlashVBufBackend_t*>(*i);
@@ -189,7 +189,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 		WCHAR* wclass = (WCHAR*)malloc(sizeof(WCHAR) * 256);
 		if (!wclass)
 			return;
-		if (GetClassName((HWND)docHandle, wclass, 256) == 0) {
+		if (GetClassName((HWND)UlongToHandle(docHandle), wclass, 256) == 0) {
 			free(wclass);
 			return;
 		}
@@ -199,7 +199,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 
 	DWORD_PTR res=0;
 	//Get an IAccessible by sending WM_GETOBJECT directly to bypass any proxying, to speed things up.
-	if (SendMessageTimeout((HWND)docHandle, WM_GETOBJECT, 0, isWindowless ? ID : OBJID_CLIENT, SMTO_ABORTIFHUNG, 2000, &res) == 0 || res == 0) {
+	if (SendMessageTimeout((HWND)UlongToHandle(docHandle), WM_GETOBJECT, 0, isWindowless ? ID : OBJID_CLIENT, SMTO_ABORTIFHUNG, 2000, &res) == 0 || res == 0) {
 		//Failed to send message or window does not support IAccessible
 		return;
 	}

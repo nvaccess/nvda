@@ -3,15 +3,19 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """Keyboard support"""
 
+import ctypes
+import sys
 import time
 import re
 import wx
+import winVersion
 import winUser
 import vkCodes
+import eventHandler
 import speech
 import ui
 from keyLabels import localizedKeyLabels
@@ -22,6 +26,7 @@ import api
 import winInputHook
 import inputCore
 import tones
+import core
 
 ignoreInjected=False
 
@@ -72,6 +77,7 @@ def isNVDAModifierKey(vkCode,extended):
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
+	gestureExecuted=False
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
 		# Injected keys should be ignored in some cases.
@@ -145,6 +151,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 
 		try:
 			inputCore.manager.executeGesture(gesture)
+			gestureExecuted=True
 			trappedKeys.add(keyCode)
 			if canModifiersPerformAction(gesture.generalizedModifiers):
 				# #3472: These modifiers can perform an action if pressed alone
@@ -161,6 +168,35 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				return False
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
+	finally:
+		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process 
+		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
+		focus=api.getFocusObject()
+		if (
+			# This is only possible in Windows 10 RS2 and above
+			winVersion.winVersion.build>=14986
+			# And we only want to do this if the gesture did not result in an executed action 
+			and not gestureExecuted 
+			# and not if this gesture is a modifier key
+			and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
+			and ( # Either of
+				# We couldn't inject in-process, and its not a console window (console windows have their own specific typed character support)
+				(not focus.appModule.helperLocalBindingHandle and focus.windowClassName!='ConsoleWindowClass')
+				# or the focus is within a UWP app, where WM_CHAR never gets sent 
+				or focus.windowClassName.startswith('Windows.UI.Core')
+			)
+		):
+			keyStates=(ctypes.c_byte*256)()
+			for k in xrange(256):
+				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
+			charBuf=ctypes.create_unicode_buffer(5)
+			hkl=ctypes.windll.user32.GetKeyboardLayout(focus.windowThreadID)
+			# In previous Windows builds, calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
+			# However, ToUnicodeEx now can take a new flag of 0x4, which stops it from destroying keyboard state, thus allowing us to safely call it here.
+			res=ctypes.windll.user32.ToUnicodeEx(vkCode,scanCode,keyStates,charBuf,len(charBuf),0x4,hkl)
+			if res>0:
+				for ch in charBuf[:res]: 
+					eventHandler.queueEvent("typedCharacter",focus,ch=ch)
 	return True
 
 def internal_keyUpEvent(vkCode,scanCode,extended,injected):
@@ -331,6 +367,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		if 32 < self.vkCode < 128:
 			return unichr(self.vkCode).lower()
+		if self.vkCode == vkCodes.VK_PACKET:
+			# Unicode character from non-keyboard input.
+			return unichr(self.scanCode)
 		vkChar = winUser.user32.MapVirtualKeyExW(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
 		if vkChar>0:
 			if vkChar == 43: # "+"
@@ -346,21 +385,16 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
 	def _get_modifierNames(self):
-		modTexts = set()
+		modTexts = []
 		for modVk, modExt in self.generalizedModifiers:
 			if isNVDAModifierKey(modVk, modExt):
-				modTexts.add("NVDA")
+				modTexts.append("NVDA")
 			else:
-				modTexts.add(self.getVkName(modVk, None))
-
+				modTexts.append(self.getVkName(modVk, None))
 		return modTexts
 
 	def _get__keyNamesInDisplayOrder(self):
 		return tuple(self.modifierNames) + (self.mainKeyName,)
-
-	def _get_logIdentifier(self):
-		return u"kb({layout}):{key}".format(layout=self.layout,
-			key="+".join(self._keyNamesInDisplayOrder))
 
 	def _get_displayName(self):
 		return "+".join(
@@ -370,9 +404,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else localizedKeyLabels.get(key.lower(), key) for key in self._keyNamesInDisplayOrder)
 
 	def _get_identifiers(self):
-		keyNames = set(self.modifierNames)
-		keyNames.add(self.mainKeyName)
-		keyName = "+".join(keyNames).lower()
+		keyName = "+".join(self._keyNamesInDisplayOrder)
 		return (
 			u"kb({layout}):{key}".format(layout=self.layout, key=keyName),
 			u"kb:{key}".format(key=keyName)
@@ -386,6 +418,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# #3468: This key is unknown to Windows.
 			# This could be for an event such as gyroscope movement,
 			# so don't report it.
+			return False
+		if self.vkCode in self.TOGGLE_KEYS:
+			# #5490: Dont report for keys that toggle on off.
+			# This is to avoid them from being reported twice: once by the 'speak command keys' feature,
+			# and once to announce that the state has changed.
 			return False
 		return not self.isCharacter
 
@@ -419,7 +456,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def reportExtra(self):
 		if self.vkCode in self.TOGGLE_KEYS:
-			wx.CallLater(30, self._reportToggleKey)
+			core.callLater(30, self._reportToggleKey)
 
 	def _reportToggleKey(self):
 		toggleState = winUser.getKeyState(self.vkCode) & 1
@@ -545,7 +582,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 inputCore.registerGestureSource("kb", KeyboardInputGesture)
 
 def injectRawKeyboardInput(isPress, code, isExtended):
-	"""Injet raw input from a system keyboard that is not handled natively by Windows.
+	"""Inject raw input from a system keyboard that is not handled natively by Windows.
 	For example, this might be used for input from a QWERTY keyboard on a braille display.
 	NVDA will treat the key as if it had been pressed on a normal system keyboard.
 	If it is not handled by NVDA, it will be sent to the operating system.

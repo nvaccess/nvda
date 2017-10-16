@@ -12,6 +12,7 @@ from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
 import locale
 import watchdog
+import eventHandler
 
 #Window messages
 SCI_POSITIONFROMPOINT=2022
@@ -124,6 +125,9 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _setCaretOffset(self,offset):
 		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GOTOPOS,offset,0)
+		# #5678: A caret event sometimes doesn't get fired when we do this,
+		# so fake one just in case.
+		eventHandler.executeEvent("caret", self.obj)
 
 	def _getSelectionOffsets(self):
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETSELECTIONSTART,0,0)

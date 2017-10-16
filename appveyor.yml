@@ -13,11 +13,11 @@ environment:
  PY_PYTHON: 2.7-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+ mozillaSymsAuthToken:
+  secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
 
 init:
- # We don't want Visual Studio 2013, so clobber it.
- - ps: Remove-ItemProperty hklm:\Software\WOW6432Node\Microsoft\VisualStudio\12.0\Setup\VC ProductDir
  - ps: |
      if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
       # Strip "release-" prefix.
@@ -56,27 +56,44 @@ install:
 
 build_script:
  - ps: |
-     $sconsArgs = "launcher version=$env:version"
+     $sconsOutTargets = "launcher"
+     $sconsArgs = "version=$env:version"
      if ($env:release) {
-      $sconsArgs += " changes userGuide developerGuide release=1"
+      $sconsOutTargets += " changes userGuide developerGuide"
+      $sconsArgs += " release=1"
      }
      if ($env:versionType) {
       $sconsArgs += " updateVersionType=$env:versionType"
      }
      $sconsArgs += ' publisher="NV Access"'
      $sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
+     $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
      # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
      # It's possible to work around this, but the workarounds have annoying side effects.
+     Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
- - py scons.py %sconsArgs%
+ - py scons.py source %sconsArgs%
+ # We don't need launcher to run tests, so run the tests before launcher.
+ - py scons.py tests %sconsArgs%
+ # The pot gets built by tests, but we don't actually need it as a build artifact.
+ - del output\*.pot
+ - 'echo scons output targets: %sconsOutTargets%'
+ - py scons.py %sconsOutTargets% %sconsArgs%
  # Build symbol store.
  - ps: |
-     foreach ($syms in "source\*.pdb", "source\lib\*.pdb", "source\lib64\*.pdb", "source\synthDrivers\*.pdb") {
+     foreach ($syms in
+      # We don't just include source\*.dll because that would include system dlls.
+      "source\liblouis.dll", "source\*.pdb",
+      "source\lib\*.dll", "source\lib\*.pdb",
+      # We include source\lib64\*.exe to cover nvdaHelperRemoteLoader.
+      "source\lib64\*.dll", "source\lib64\*.exe", "source\lib64\*.pdb",
+      "source\synthDrivers\*.dll", "source\synthDrivers\*.pdb"
+     ) {
       & $env:symstore add /s symbols /compress -:NOREFS /t NVDA /f $syms
      }
  - cd symbols
- - 7z a -tzip -r ..\output\symbols.zip *.pd_
+ - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
  - cd ..
 
 artifacts:
@@ -87,6 +104,7 @@ deploy_script:
  - ps: |
      if ($env:versionType) {
       # Not a try build.
+      # Notify our server.
       $exe = Get-ChildItem -Name output\*.exe
       $hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
       $data = @{
@@ -99,4 +117,8 @@ deploy_script:
        artifacts=$artifacts
       }
       ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+      # Upload symbols to Mozilla.
+      Start-FileDownload https://github.com/mozilla/gecko-dev/raw/master/toolkit/crashreporter/tools/win32/dump_syms_vc1800.exe -FileName appveyor\dump_syms.exe
+      py -m pip install requests
+      py appveyor\mozillaSyms.py
      }

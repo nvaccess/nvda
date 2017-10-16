@@ -17,6 +17,7 @@ import controlTypes
 import api
 import watchdog
 import braille
+import ui
 
 # message used to sent many messages to winamp's main window. 
 # most all of the IPC_* messages involve sending the message in the form of:
@@ -80,7 +81,7 @@ class winampMainWindow(IAccessible):
 			else:
 				# Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now off.
 				onOff=pgettext("shuffle", "off")
-			speech.speakMessage(onOff)
+			ui.message(onOff)
 
 	def script_repeatToggle(self,gesture):
 		gesture.send()
@@ -92,7 +93,7 @@ class winampMainWindow(IAccessible):
 			else:
 				# Translators: the user has pressed the repeat track toggle in winamp, repeat is now off.
 				onOff=pgettext("repeat", "off")
-			speech.speakMessage(onOff)
+			ui.message(onOff)
 
 	__gestures = {
 		"kb:s": "shuffleToggle",

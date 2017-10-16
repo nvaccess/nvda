@@ -37,11 +37,28 @@ class HeaderCellTracker(object):
 		return self.infosDict.get((rowNumber,columnNumber))
 
 	def iterPossibleHeaderCellInfosFor(self,rowNumber,columnNumber,minRowNumber=None,maxRowNumber=None,minColumnNumber=None,maxColumnNumber=None,columnHeader=False):
-		for key in (self.listByRow if columnHeader else self.listByColumn):
+		for key in self.listByRow: #(self.listByColumn if columnHeader else self.listByRow):
 			info=self.infosDict[key]
 			if (info.minColumnNumber and info.minColumnNumber>columnNumber) or (info.maxColumnNumber and info.maxColumnNumber<columnNumber) or (info.minRowNumber and info.minRowNumber>rowNumber) or (info.maxRowNumber and info.maxRowNumber<rowNumber):
+				# Skipping this possible header as the requested coordinates are outside the header's allowed range
 				continue
 			if (minColumnNumber and minColumnNumber>info.columnNumber) or (maxColumnNumber and maxColumnNumber<info.columnNumber) or (minRowNumber and minRowNumber>info.rowNumber) or (maxRowNumber and maxRowNumber<info.rowNumber):
+				# Skipping this possible header as its coordinates are outside the requested range
 				continue
-			if (columnHeader and info.isColumnHeader and (info.rowNumber+info.rowSpan-1)<rowNumber and info.columnNumber<=columnNumber) or (not columnHeader and info.isRowHeader and (info.columnNumber+info.colSpan-1)<columnNumber and info.rowNumber<=rowNumber):
-				yield info
+			if (columnHeader and not info.isColumnHeader) or (not columnHeader and not info.isRowHeader):
+				# Skipping this possible header as it is the wrong type of header
+				continue
+			if columnHeader and info.columnNumber<=columnNumber:
+				if info.rowNumber<=rowNumber<(info.rowNumber+info.rowSpan):
+					# We never want to yield column headers when actually on column headers
+					return
+				elif (info.rowNumber+info.rowSpan)<=rowNumber:
+					# Found a valid column header for these coordinates
+					yield info
+			if not columnHeader and info.rowNumber<=rowNumber:
+				if info.columnNumber<=columnNumber<(info.columnNumber+info.colSpan):
+					# We never want to yield row headers when actually on row headers
+					return
+				elif (info.columnNumber+info.colSpan)<=columnNumber:
+					# Found a valid row header for these coordinates
+					yield info

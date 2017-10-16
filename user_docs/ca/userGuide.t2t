@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION Guia d'usuari 
+NVDA NVDA_VERSION Guia d'usuari 
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -58,12 +58,13 @@ Si en vols saber més, pots en_[veure la llicència completa. http://www.gnu.org
 
 + Requisits de sistema +
 - Sistemes operatius: totes les versions de 32 bits i de 64 bits de Windows XP, Windows Vista, Windows 7, Windows 8 i Windows 10 (inclosos els sistemes operatius de servidor)
- - Per a Windows XP de 32 bits, cal el Service Pack 2 o superior.
- - Per a Windows Server 2003, cal el Service Pack 1 o superior.
-- Memòria RAM: 256 MB o més
-- Velocitat de processador: 1.0 GHz o més
+ - Per al Windows XP de 32 bits, cal el Service Pack 2 o superior.
+ - Per al Windows Server 2003, cal el Service Pack 1 o superior.
+ - Per al Windows vista, cal esl Service Pack 2 i l'actualització [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+ - Totes dues s'han d'instal·lar si totes les actualitzacions disponibles s'apliquen a través del Windows Update.
+- Memòria RAM: 256 MB o més.
+- Velocitat de processador: 1.0 GHz o més.
 - Espai de disc de 50 MB aproximadament.
--
 
 + Descàrrega i instal·lació de NVDA +
 Si encara no tens una còpia de NVDA, pots descarregar-te-la de [www.nvaccess.org NVDA_URL].
@@ -541,7 +542,7 @@ MathPlayer es pot descarregar gratuïtament de: http://www.dessci.com/en/product
 
 NVDA és compatible amb els següents tipus de contingut matemàtic:
 - MathML a Mozilla Firefox i a Microsoft Internet Explorer.
-- Design Science MathType a Microsoft Word i PowerPoint. 
+- Design Science MathType a Microsoft Word i PowerPoint. És necessari instal·lar MathType per a que funcioni. Amb la versió de prova és suficient.
 - MathML a Adobe reader. Has de tenir en compte que això no és un estàndar oficial encara, i actualment no hi ha cap programari disponible públicament que pugui produir aquest contingut.
 - 
 
@@ -574,6 +575,10 @@ Quan vulguis tornar al document, simplement prem la tecla Escapada.
 NVDA disposa d'algunes ordres pròpies addicionals per a algunes aplicacions, per facilitar algunes tasques o per donar accés a funcionalitats que altrament no serien accessibles als usuaris de lectors de pantalla.
 
 ++ Microsoft Word ++
+NVDA pot anunciar automàticament els encapçalaments de files i columnes apropiades en navegar per les taules del Microsoft Word.
+Això requereix, en primer lloc, que l'opció d'informar sobre els encapçalaments de la fila / columna de les taules en el diàleg de formatació de documents estigui activada.
+En segon lloc, NVDA necessita conèixer quina fila o columna conté els encapçalaments de la taula.
+Desprès de moure't a la primera cel·la en la columna o fila que conté els encapçalaments, utilitza una de les ordres següents:
 %kc:beginInclude
 || Nom | Tecla | Descripció |
 | Informa del comentari actual | NVDA+Alt+c | Informa del text del comentari que es troba a la posició del cursor del sistema. | 
@@ -581,13 +586,73 @@ NVDA disposa d'algunes ordres pròpies addicionals per a algunes aplicacions, pe
 | Estableix com a encapçalament de fila | NVDA+Maj+r | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la columna que conté encapçalaments de fila, i així ho hauria d'anunciar automàticament quan et mous entre les files sota aquesta columna. Si prems dos cops, deixa de ser l’encapçalament. | 
 %kc:endInclude
 
+Aquestes configuracions es poden emmagatzemar en els documents com a marcadors, compatibles amb altres lectors de pantalla com ara el Jaws. Això vol dir que altres usuraris del lector de pantalla que obrin aquest llibre més endavant, tindran configurats automàticament els encapçalaments de les files i columnes.
+
++++ Mode de navegació en el Microsoft Word +++
+
+%kc:beginInclude
+Per activar i desactivar el mode de navegació al Microsoft Word, prem NVDA+barra espaiadora.
+%kc:endInclude
+Per saber-ne més sobre el mode de navegació i la navegació ràpida, vegeu la [secció mode de navegació #BrowseMode].
+
+++++ La llista d'elements ++++
+%kc:beginInclude
+Mentre estiguis en el mode de navegació en el Microsoft Word, pots accedir a la llista d'elements prement NVDA+f7.
+%kc:endInclude
+La llista d'elements pot llistar encapçalaments, enllaços i anotacions (que inclouen comentaris i seguiment de canvis).
+
++++ Informar dels comentaris +++
+%kc:beginInclude
+Per informar sobre els comentaris en la posició actual del cursor, prem NVDA+alt+c.
+%kc:endInclude
+Tots els comentaris del document incloent-hi altres seguiment de canvis també poden ser llistats en la llista d'elements del NVDA en seleccionar les anotacions com a tipus.
+
 ++ Microsoft Excel ++
+
++++ Lectura automàtica dels encapçalaments de columnes i files +++
+NVDA pot anunciar automàticament els encapçalaments de les files i columnes apropiades al navegar pels fulls de l'Excel.
+Això requereix, primer de tot, activar l'opció Informa dels encapçalaments de files / columnes del diàleg Formatació del document del NVDA.
+En segon lloc, NVDA necessita conèixer quina fila o columna conté els encapçalaments.
+Desprès de moure't a la primera cel·la en la columna o fila que conté els encapçalaments, utilitza una de les ordres següents:
 %kc:beginInclude
 || Nom | Tecla | Descripció |
 | Estableix com a encapçalament de columna | NVDA+Maj+c | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la fila que conté encapçalaments de columna, i així ho hauria d'anunciar automàticament quan et mous entre les columnes sota aquesta fila. Si prems dos cops, deixa de ser l’encapçalament. | 
 | Estableix com a encapçalament de fila | NVDA+Maj+r | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la columna que conté encapçalaments de fila, i així ho hauria d'anunciar automàticament quan et mous entre les files sota aquesta columna. Si prems dos cops, deixa de ser l’encapçalament. | 
 | Informa del comentari actual | NVDA+Alt+c | Informa del text del comentari de la cel·la actual, si és que n'hi ha. | 
-|Diàleg de llista d'elements | NVDA+f7| Obre el Diàleg de llista d'elements i mostra gràfics, cel·les amb comentaris o cel·les amb fòrmules. |
+| Diàleg de llista d'elements | NVDA+f7 | Obre el Diàleg de llista d'elements i mostra gràfics, cel·les amb comentaris, cel·les amb fòrmules, o fulls. |
+%kc:endInclude
+Aquesta configuració es pot desar al llibre com un nom de rangs definit, i és compatible amb altres lectors de pantalla com ara el Jaws. Això vol dir que altres usuraris del lector de pantalla que obrin aquest llibre més endavant, tindran configurats automàticament els encapçalaments de les files i columnes.
+
++++ La llista d'elements +++
+
+D'una manera similar al web, NVDA té una llista d'elements per al Microsoft Excel que et permet llistar i accedir a diferents tipus d'informació.
+%kc:beginInclude
+Per accedir a la llista d'elements de l'Excel, prem NVDA+f7.
+%kc:endInclude
+Els tipus d'informació disponibles a la llista d'elements són:
+- Gràfic: la llista de tots els gràfics al llibre.
+Seleccionant un gràfic i prement la tecla d'inserció o movent-te al botó fa que el gràfic rebi el focus per navegar i llegir amb les tecles de direcció.
+- Comentari: la llista de totes les cel·les en el llibre que contenen comentaris.
+L'adreça de la cel·la amb els comentaris es mostra per cadascuna de les cel·les.
+Prémer la tecla d'inserció o movent-te al botó en un comentari llistat et mourà automàticament a aquesta cel·la. 
+- Fórmula: la llista de totes les cel·les en el llibre que contenen una fórmula.
+L'adreça de la cel·la amb la seva fórmula es mostra per cadascuna de les cel·les.
+Prémer la tecla d'inserció o moure't al botó en una fórmula llistada et mourà directament a aquesta cel·la. 
+- Full: la llista de tots els fulls en el llibre. 
+Prémer f2 en un full llistat permet reanomenar-lo.
+Prémer la tecla d'inserció o moure't al botó en el full llistat et permet moure't a aquest full.
+-
+
++++ Informar dels comentaris +++
+%kc:beginInclude
+Per informar sobre els comentaris de la cel·la que té el focus, prem NVDA+alt+c.
+%kc:endInclude
+Tots els comentaris del llibre també poden ser llistats a la llista d'elements del NVDA.
+
++++ Lectura de les cel·les protegides +++
+Si un llibre està protegit, no serà possible moure el focus a les cel·les bloquejades per a l'edició.
+%kc:beginInclude
+Per poder moure't a cel·les bloquejades, canvia al mode de navegació prement NVDA+Barra espaiadora, i desprès utilitza les ordres de moviments estàndards de l'Excel com ara les fletxes de direcció, per moure't al voltant de totes les cel·les del full de càlcul actual.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1106,6 +1171,7 @@ Pots configurar si vols que s'informi de:
 - Alineació
 - Colors
 - Revisions de l'editor
+- Èmfasi
 - Estil
 - Errors ortogràfics
 - Números de pàgina
@@ -1174,8 +1240,18 @@ L'idioma del qual s'està editant la pronunciació del símbols es mostrarà en 
 Tingues en compte que el diàleg respecta l'opció "Confia en l'idioma de la veu per processar els símbols i els caràcters" del [Diàleg de configuració de veus #VoiceSettings]; és a dir, usa l'idioma de la veu abans que el llenguatge global configurat per NVDA quan aquesta 
 
 Per canviar un símbol, primer l'has de seleccionar a la llista de símbols.
-El camp Reemplaçament et permet canviar el text que es verbalitzarà en comptes del símbol.
-Si uses el camp Nivell, pots ajustar el nivell més baix en el qual el símbol es verbalitzarà.
+- El camp Reemplaçament et permet canviar el text que es verbalitzarà en comptes del símbol.
+- Si uses el camp Nivell, pots ajustar el nivell més baix en el qual el símbol es verbalitzarà.
+- The Send actual symbol to synthesizer field specifies when the symbol itself (en contrast amb el seu reemplaçament) hauria de ser enviat al sintetitzador.
+Això és útil si el símbol provoca la pausa del sintetitzador o canvia la inflexió de la veu.
+Per exemple, una coma provoca la pausa del sintetitzador.
+Hi ha tres opcions:
+ - mai: mai envia el símbol actual al sintetitzador.
+ - sempre: sempre envia el símbol actual al sintetitzador.
+ - només per sota del nivell dels símbols: només envia el símbol actual si el nivell de veu del símbol configurat és més baix que el nivell establert per aquest símbol.
+ Per exemple, pots utilitzar aquesta opció per a que un símbol tingui el seu reemplaçament verbalitzat als nivells més alts sense pausa, mentre que es continua indicant amb una pausa als nivells més baixos.
+ -
+ -
 
 Pots afegir nous símbols prement el botó Afegir.
 En el diàleg que apareix, entra el símbol i prem el botó D'acord.
@@ -1565,7 +1641,7 @@ Consulta la documentació de línia per obtenir la descripció d'on es troben aq
 ++ Baum/Humanware/APH Braille Displays ++
 NVDA és compatible amb algunes línies en_[Baum http://www.baum.de/cms/en/], en_[HumanWare http://www.humanware.com/] i en_[APH http://www.aph.org/] si es connecten via USB o Bluetooth.
 Aquestes inclouen:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (només Bluetooth), Pronto! (només Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -

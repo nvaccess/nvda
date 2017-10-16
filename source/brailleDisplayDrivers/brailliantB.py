@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2015 NV Access Limited
+#Copyright (C) 2012-2017 NV Access Limited
 
 import os
 import _winreg
@@ -254,7 +254,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:tab": ("br(brailliantB):space+dot4+dot6",),
 			"kb:alt": ("br(brailliantB):space+dot1+dot3+dot4",),
 			"kb:escape": ("br(brailliantB):space+dot1+dot5",),
-			"kb:enter": ("br(brailliantB):dot8",),
 			"kb:windows+d": ("br(brailliantB):c1+c4+c5",),
 			"kb:windows": ("br(brailliantB):space+dot3+dot4",),
 			"kb:alt+tab": ("br(brailliantB):space+dot2+dot3+dot4+dot5",),
@@ -270,7 +269,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		super(InputGesture, self).__init__()
 		self.keyCodes = set(keys)
 
-		self.keyNames = names = set()
+		self.keyNames = names = []
 		isBrailleInput = True
 		for key in self.keyCodes:
 			if isBrailleInput:
@@ -284,11 +283,11 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 					self.dots = 0
 					self.space = False
 			if key >= FIRST_ROUTING_KEY:
-				names.add("routing")
+				names.append("routing")
 				self.routingIndex = key - FIRST_ROUTING_KEY
 			else:
 				try:
-					names.add(KEY_NAMES[key])
+					names.append(KEY_NAMES[key])
 				except KeyError:
 					log.debugWarning("Unknown key with id %d" % key)
 
