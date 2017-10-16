@@ -276,10 +276,8 @@ class ListItemWithoutColumnSupport(IAccessible):
 			value=self.displayText
 		if not value:
 			return None
-		#Some list view items in Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
-		value=value.replace(u'\u200E','')
-		value=value.replace(u'\u200F','')
-		return value
+		#Some list view items in Windows Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
+		return value.replace(u'\u200E','').replace(u'\u200F','')
 
 	def _get_positionInfo(self):
 		index=self.IAccessibleChildID
@@ -395,10 +393,8 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			else:
 				textList.append(content)
 		name = "; ".join(textList)
-		#Some list view items in Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
-		name=name.replace(u'\u200E','')
-		name=name.replace(u'\u200F','')
-		return name
+		#Some list view items in Windows Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
+		return name.replace(u'\u200E','').replace(u'\u200F','')
 
 	value = None
 
