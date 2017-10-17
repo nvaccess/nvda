@@ -278,7 +278,7 @@ Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim foku
 | Prijavi trenutni fokus| NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče|
 | Prijavi naslov| NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju|
 | Čitaj aktivan prozor| NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
-| Prijavi statusnu traku| NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče|
+| Prijavi statusnu traku| NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju|
 %kc:endInclude
 
 ++ Navigacija sa sistemskim kursorom++[SystemCaret]
@@ -2484,6 +2484,9 @@ Slede opcije komandne linije za NVDA:
 | Nema| --no-sr-flag  | Ne menjaj globalnu oznaku čitača ekrana na sistemu|
 | Nema | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
 | Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
+| Nema | --create-portable | Pravi prenosnu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --create-portable-silent | Pravi prenosnu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --portable-path=AdresaKopije | Adresa na kojoj će portabilna kopija biti napravljena|
 
 ++ Sistemski parametri++[SystemWideParameters]
 NVDA dozvoljava promenu određenih vrednosti u sistemskoj registry bazi koje menjaju ponašanje programa NVDA.
