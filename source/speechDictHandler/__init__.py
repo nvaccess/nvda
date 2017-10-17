@@ -11,10 +11,11 @@ import os
 import codecs
 import api
 import config
+from . import dictFormatUpgrade
+from .speechDictVars import speechDictsPath
 
 dictionaries = {}
 dictTypes = ("temp", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
-speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechDicts")
 
 # Types of speech dictionary entries:
 ENTRY_TYPE_ANYWHERE = 0 # String can match anywhere
@@ -118,9 +119,16 @@ def loadVoiceDict(synth):
 	"""Loads appropriate dictionary for the given synthesizer.
 It handles case when the synthesizer doesn't support voice setting.
 """
+	try:
+		dictFormatUpgrade.doAnyUpgrades(synth)
+	except:
+		log.error("error trying to upgrade dictionaries", exc_info=True)
+		pass
 	if synth.isSupported("voice"):
-		voiceName = synth.availableVoices[synth.voice].name
-		fileName=r"%s\%s-%s.dic"%(speechDictsPath,synth.name,api.filterFileName(voiceName))
+		voice = synth.availableVoices[synth.voice].name
+		baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
 	else:
-		fileName=r"%s\%s.dic"%(speechDictsPath,synth.name)
+		baseName=r"{synth}.dic".format(synth=synth.name)
+	voiceDictsPath = dictFormatUpgrade.voiceDictsPath
+	fileName= os.path.join(voiceDictsPath, synth.name, baseName)
 	dictionaries["voice"].load(fileName)
