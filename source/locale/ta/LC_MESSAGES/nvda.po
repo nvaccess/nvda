@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-02 12:22+0530\n"
+"POT-Creation-Date: 2017-10-06 00:10+1000\n"
+"PO-Revision-Date: 2017-10-08 12:48+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -3338,6 +3338,7 @@ msgid "No navigator object"
 msgstr "வழிகாட்டிப் பொருள் ஏதுமில்லை"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
@@ -3660,10 +3661,12 @@ msgstr "நிலைக் கோடு காணப்படவில்லை"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "தற்போதையப் பயன்பாட்டின் நிலைப்பட்டையைப் படித்து, வழிகாட்டியை அவிடத்திற்கு நகர்த்தும். இரு "
-"முறை அழுத்தினால், தகவலை எழுத்துகளாகப் படிக்கும். "
+"முறை அழுத்தினால், தகவலை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், நிலைப் பட்டையை "
+"பிடிப்புப் பலகைக்குப் படியெடுக்கும். "
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7540,11 +7543,21 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "கூட்டுக்கூறு நிறுவுதல்"
 
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+msgid ""
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"{summary} கூட்டுக்கூறின் {newVersion} பதிப்பை நிறுவ இருக்கிறீர்கள், இது ஏற்கெனவே "
+"நிறுவப்பட்டுள்ளதாகத் தோன்றுகிறது. இருப்பினும் இற்றைப்படுத்த விரும்புகிறீர்களா?"
+
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
 msgstr ""
-"கூட்டுக்கூறின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. இதை இற்றைப்படுத்த விரும்புகிறீர்களா?"
+"{summary} கூட்டுக்கூறின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. {curVersion} "
+"பதிப்பை, {newVersion} என்கிற புதியப் பதிப்பைக் கொண்டு  இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7954,6 +7967,10 @@ msgstr "பெயர்த்தகு அடைவைத் தெரிவு�
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "தற்போதைய பயனர் அமைவடிவத்தைப் படியெடுக்கவும் (&U)"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "புதிய பெயர்த்தகு படி உருவாக்கப்பட்டவுடன் அதை இயக்கவும். (&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.

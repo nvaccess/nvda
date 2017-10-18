@@ -2523,7 +2523,9 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | Geen | --no-sr-flag  | Verander de systeem-brede vlag voor de schermlezer niet. |
 | Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
 | Geen | --install-silent | Silently stille installatie van  NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
-
+| Geen | --Create-portable | Draagbare kopie van NVDA wordt aangemaakt  (waarbij de aangemaakte kopie vervolgens opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
+| Geen | --Create-portable-silent | Draagbare kopie van NVDA wordt aangemaakt (waarbij aangemaakte kopie vervolgens niet opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
+| Geen | --portable-path=PORTABLEPATH | Het pad waar een draagbare kopie wordt aangemaakt. |
 ++ Systeem-brede Parameters ++[SystemWideParameters]
 U kunt voor NVDA enkele waarden in het systeemregister instellen die systeem-breed het gedrag van NVDA beïnvloeden.
 Deze waarden worden in het register onder een van de volgende sleutels opgeslagen:
