@@ -21,7 +21,9 @@ class AppModule(appModuleHandler.AppModule):
 		# Therefore, move the navigator object to that item if possible.
 		speech.cancelSpeech()
 		if obj.UIAElement.cachedClassName == "ListViewItem":
-			obj = obj.parent.previous.firstChild
+			obj = obj.parent.previous
+			ui.message(obj.name)
+			obj = obj.firstChild
 		if obj is not None:
 			api.setNavigatorObject(obj)
 			obj.reportFocus()
