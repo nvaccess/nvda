@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 CLSID curTSFClsID={0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
-bool isUIElementMgrSafe=false;
 
 
 bool fetchRangeExtent(ITfRange* pRange, long* start, ULONG* length) {
@@ -182,13 +181,11 @@ bool TsfSink::Initialize() {
 				hr = src->AdviseSink(IID_ITfActiveLanguageProfileNotifySink,(ITfActiveLanguageProfileNotifySink*)this, &mLangProfCookie);
 			}
 		}
-		if(isUIElementMgrSafe) {
-			if (hr == S_OK) {
-				hr = mpThreadMgr->QueryInterface(IID_ITfUIElementMgr,(void**)&mpUIElementMgr);
-			}
-			if (hr == S_OK) {
-				hr = src->AdviseSink(IID_ITfUIElementSink,(ITfUIElementSink*)this, &mUIElementCookie);
-			}
+		if (hr == S_OK) {
+			hr = mpThreadMgr->QueryInterface(IID_ITfUIElementMgr,(void**)&mpUIElementMgr);
+		}
+		if (hr == S_OK) {
+			hr = src->AdviseSink(IID_ITfUIElementSink,(ITfUIElementSink*)this, &mUIElementCookie);
 		}
 		src->Release();
 		src = NULL;
@@ -647,8 +644,6 @@ TsfSink* fetchCurrentTsfSink() {
 }
 
 void TSF_inProcess_initialize() {
-	//Allow use of UIElementMgr on Vista and higher (crashes things on XP)
-	if((GetVersion()&0xff)>5) isUIElementMgrSafe=true;
 	// Initialize TLS and use window hook to create TSF sink in each thread
 	gTsfIndex = TlsAlloc();
 	if (gTsfIndex != TLS_OUT_OF_INDEXES)

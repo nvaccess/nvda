@@ -10,6 +10,10 @@
 - Im Lesemodus können Sie mit den Schnellnavigationstasten für Eingabefelder und Formularfelder nun auch zu Rich-Text-Eingabefeldern navigieren. (#5534)
 - In Web-Browsern enthält die Elementliste nun auch Formularfelder und Schalter. (#588)
 - Grundlegende Unterstützung für Windows 10 auf ARM64. (#7508)
+- Grundlegende Unterstützung beim Lesen von und Navigieren in mathematischen Inhalten in Kindle-Büchern. (#7536)
+- Unterstützung für Azardi e-book reader. (#5848)
+- Beim Aktualisieren von NVDA-Erweiterungen werden Versionsinformationen angegeben. (#5324)
+- Neue Kommandozeilenparameter zum Erstellen einer portablen Version von NVDA wurden hinzugefügt. (#6329)
 
 
 == Änderungen ==
@@ -18,6 +22,9 @@
 - Beim Navigieren im Lesemodus wird das Verlassen von Containern nicht mehr ausdrücklich angezeigt. (#2591)
 - In Firefox und Chrome werden die Namen von Gruppen angezeigt, wenn Sie zu einem Formularfeld springen. (#3321)
 - Die Schnellnavigationstasten für eingebettete Objekte (O und Umschalt+O) berücksichtigen Audio- und Video-Elemente ebenso wie Web-Anwendungen und Web-Dialoge. (#7239)
+- Espeak-ng wurde auf Revision 01919cd48a566cdf34347784b2e74554b376e900 aktualisiert, Dadurch werden einige Probleme in der Aussprache behoben. (#7385)
+- Bei dreimaligem Drücken der Tastenkombination zum Lesen der statuszeile wird diese in die zwischenablage kopiert. (#1785)
+- Beim Zuweisen von NVDA-Befehlen an Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (z. B. Baum Varioultra, Baum Pronto). (#7517)
 
 
 == Fehlerkorrekturen ==
@@ -25,10 +32,22 @@
 - Wenn in Firefox oder Chrome viele Registerkarten geöffnet sind, reagiert NVDA nun schneller. (#3138)
 - Die Cursorroutingtasten von MDV Lilli-Braillezeilen funktionieren nun korrekt. (#7469)
 - Im Internet Explorer und anderen MSHTML-Dokumenten wird das Attribut Required korrekt unterstützt. (#7321)
+- Die Anzeige in Braille wird beim Eingeben arabischer Zeichen aktualisiert. (#511).
+- in Firefox wird die Beschriftung von Formularelementen auch dann angezeigt, wenn die Beschriftung nicht auf den Formularelementen selbst zu finden ist. (#4773)
+- Unter windows 10 Creaters Update funktioniert die NVDA-Unterstützung von Firefox auch dann noch, wenn Sie NVDA neu starten. (#7269)
+- Wenn Sie NVDA neu starten, während Firefox im Vordergrund ist, steht der Lesemodus wieder zur Verfügung, auch wenn Sie den Fokus mit alt+tab aus Firefox hinaus und wieder hineinbewegen müssen. (#5758)
+- Unterstützung mathematischer Inhalte in Google Chrome sowie auf Systemen, auf denen Firefox nicht installiert ist. (#7308)
+- Das Betriebssystem und Anwendungen sollten nun nach der Installation von NVDA stabiler laufen (verglichen mit vorigen Versionen von NVDA). (#7563)
 
 
 == Änderungen für Entwickler ==
 - Beim Ausführen von "scons tests" wird geprüft, ob sämtliche übersetzbaren Zeichenketten Kommentare besitzen. Dieser Test kann auch separat ausgeführt werden. Benutzen Sie dafür den Befehl "scons checkPot". (#7492)
+- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
+- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
+- Braille display gestures that emulate system keyboard key modifiers (such as control and alt) can now be combined with other emulated system keyboard keys without explicit definition. (#6213) 
+ - For example: if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
+- The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
+ - See the baum driver as an example for this new functionality.
 
 
 = 2017.3 =

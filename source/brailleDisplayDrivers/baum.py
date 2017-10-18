@@ -281,7 +281,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if not self._ignoreKeyReleases:
 					# The first key released executes the key combination.
 					try:
-						inputCore.manager.executeGesture(InputGesture(self._keysDown))
+						inputCore.manager.executeGesture(InputGesture(self._deviceID, self._keysDown))
 					except inputCore.NoInputGestureAction:
 						pass
 					# Any further releases are just the rest of the keys in the combination being released,
@@ -329,8 +329,11 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keysDown):
+	def __init__(self, model, keysDown):
 		super(InputGesture, self).__init__()
+		# Model identifiers should not contain spaces.
+		self.model = model.replace(" ", "")
+		assert(self.model.isalnum())
 		self.keysDown = dict(keysDown)
 
 		self.keyNames = names = []

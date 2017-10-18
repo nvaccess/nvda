@@ -13,47 +13,20 @@
 ###
 
 import os
+import glob
 
 Import(
-	'env',
+	'win10env',
 	'sourceDir',
-	'libInstallDir',
 	'localLib',
 )
 
-TARGET_ARCH=env['TARGET_ARCH']
-debug=env['nvdaHelperDebugFlags']
-release=env['release']
-signExec=env['signExec'] if env['certFile'] else None
+env=win10env.Clone()
+
 progFilesX86 = os.getenv("ProgramFiles(x86)")
 if not progFilesX86:
 	# 32 bit system, so only one Program Files directory.
 	progFilesX86 = os.getenv("ProgramFiles")
-
-env.Append(CPPDEFINES=[
-	'UNICODE', '_CRT_SECURE_NO_DEPRECATE',
-	('LOGLEVEL','${nvdaHelperLogLevel}')])
-env.Append(CCFLAGS=['/W3', '/WX'])
-env.Append(CXXFLAGS=['/EHsc', '/ZW', 
-	r'/AI%s\Microsoft Visual Studio 14.0\VC\vcpackages' % progFilesX86,
-	r'/AI%s\Windows Kits\10\UnionMetadata' % progFilesX86])
-env.Append(CPPPATH=[Dir('..').abspath])
-env.Append(LINKFLAGS=['/incremental:no', '/WX'])
-env.Append(LINKFLAGS='/release') # We always want a checksum in the header
-
-if not release: 
-	env.Append(CCFLAGS=['/Od'])
-else:
-	env.Append(CCFLAGS='/O2')
-	env.Append(CCFLAGS='/GL')
-	env.Append(LINKFLAGS=['/LTCG'])
-
-if 'RTC' in debug:
-	env.Append(CCFLAGS=['/RTCsu'])
-
-# We always want debug symbols
-env.Append(PDB='${TARGET}.pdb')
-env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
@@ -65,14 +38,23 @@ localWin10Lib = env.SharedLibrary(
 	],
 	LIBS=["oleaut32", localLib[2]],
 )
-if signExec:
-	env.AddPostAction(localWin10Lib[0], [signExec])
-env.Install(libInstallDir, localWin10Lib)
 
 # UWP dlls can only be dynamically linked with the CRT,
 # but some systems might not have this version of the CRT.
 # Therefore, we must include it.
-vcRedist = os.path.join(progFilesX86, r"Microsoft Visual Studio 14.0\VC\redist\onecore\x86\Microsoft.VC140.CRT")
+# VS 2017 keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
+# Therefore  Search these versioned directories from newest to oldest  to collect all the files we need.
+vcRedistDirs = glob.glob(os.path.join(progFilesX86, r"Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.1*\onecore\x86\Microsoft.VC141.CRT"))
+if len(vcRedistDirs)==0:
+	raise RuntimeError("Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed") 
+vcRedistDirs.sort(reverse=True)
 for fn in ("msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll"):
-	fn = os.path.join(vcRedist, fn)
-	env.Install(sourceDir, fn)
+	for vcRedistDir in vcRedistDirs:
+		path = os.path.join(vcRedistDir, fn)
+		if os.path.isfile(path):
+			env.Install(sourceDir, path)
+			break
+		else:
+			raise RuntimeError("Could not locate %s. Perhaps the Universal Windows Platform component in visual Studio is not installed"%fn) 
+
+Return(['localWin10Lib'])

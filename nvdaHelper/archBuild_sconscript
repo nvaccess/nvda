@@ -73,9 +73,9 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 	return proxyDll
 env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
 
-# We only support compiling with MSVC 14 (2015)
-if not env.get('MSVC_VERSION','').startswith('14.'):
-	raise RuntimeError("Microsoft Visual C++ 14 not found")
+# We only support compiling with MSVC 14.1 (2017)
+if not env.get('MSVC_VERSION')=='14.1':
+	raise RuntimeError("Visual C++ 14.1 (Visual Studio 2017) not found")
 
 
 TARGET_ARCH=env['TARGET_ARCH']
@@ -84,7 +84,14 @@ release=env['release']
 signExec=env['signExec'] if env['certFile'] else None
 
 #Some defines and includes for the environment
-env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WS03')])
+env.Append(
+	CPPDEFINES=[
+		'UNICODE',
+		'_CRT_SECURE_NO_DEPRECATE',
+		('LOGLEVEL','${nvdaHelperLogLevel}'),
+		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
+	]
+)
 env.Append(CCFLAGS=['/W3','/WX'])
 if 'analyze' in debug:
 	env.Append(CCFLAGS=['/analyze'])
@@ -98,7 +105,13 @@ if 'analyze' in debug:
 env.Append(CXXFLAGS=['/EHsc'])
 
 env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
-env.Append(LINKFLAGS=['/incremental:no','/WX'])
+env.Append(
+	LINKFLAGS=[
+		'/incremental:no',
+		'/WX',
+		'/subsystem:windows,6.01',
+	]
+)
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
@@ -109,10 +122,7 @@ else:
 	env.Append(CCFLAGS='/GL')
 	env.Append(LINKFLAGS=['/LTCG'])
 
-if 'debugCRT' in debug:
-	env.Append(CCFLAGS=['/MTd'])
-else:
-	env.Append(CCFLAGS=['/MT'])
+if 'debugCRT' not in debug:
 	env.Append(CPPDEFINES=['NDEBUG'])
 
 if 'RTC' in debug:
@@ -122,6 +132,15 @@ if 'RTC' in debug:
 #We always want debug symbols
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+
+win10env=env.Clone()
+win10env.Append(CXXFLAGS='/ZW')
+Export('win10env')
+
+if 'debugCRT' in debug:
+	env.Append(CCFLAGS=['/MTd'])
+else:
+	env.Append(CCFLAGS=['/MT'])
 
 Export('env')
 
@@ -155,6 +174,10 @@ if TARGET_ARCH=='x86':
 	if signExec:
 		env.AddPostAction(localLib[0],[signExec])
 	env.Install(libInstallDir,localLib)
+	win10localLib=env.SConscript('localWin10/sconscript',)
+	if signExec:
+		env.AddPostAction(win10localLib[0],[signExec])
+	env.Install(libInstallDir,win10localLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
