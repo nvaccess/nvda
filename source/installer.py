@@ -426,7 +426,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
 	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
-	removeOldLibFiles(destPath,rebootOK=True)
+	removeOldLibFiles(installDir,rebootOK=True)
 
 def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")
