@@ -143,7 +143,7 @@ def removeOldLibFiles(destPath,rebootOK=False):
 	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
 	@type rebootOK: boolean
 	"""
-	for topDir in ('lib','lib64'):
+	for topDir in (u'lib',u'lib64'):
 		currentLibPath=os.path.join(destPath,topDir,versionInfo.version)
 		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
 			if parent==currentLibPath:
