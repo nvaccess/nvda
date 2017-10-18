@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2017.3 =
+Những chức năng nổi bật trong phiên bản này là cho phép nhập liệu chữ nổi viết tắt, hỗ trợ các giọng OneCore trên Windows 10, chức năng nhận dạng với Windows 10 OCR và rất nhiều những cải thiện quan trọng khác cho màn hình nổi và web.
 
 == Tính Năng Mới ==
 - Thêm một thiết lập chữ nổi mới là "Hiển thị thông điệp không xác định". (#6669)
@@ -18,29 +19,36 @@
 - NVDA đã đọc gợi ý đang chọn ở trường To/CC của Windows 10 Mail và ô tìm kiếm của cửa sổ Settings trên Windows 10. (#6241)
 - Sẽ phát âm thanh khi có gợi ý ở các ô tìm kiếm trên Windows 10, ví dụ như ô tìm kiếm ở màn hình khởi động, cửa sổ settings, To/CC của Windows Mail. (#6241)
 - Tự động đọc các thông báo của bản Skype Business cho desktop khi có người bắt đầu cuộc trò chuyện với bạn. (#7281)
-- Tự động đọc thông báo trong Microsoft Edge, ví dụ khi có download được bắt đầu. (#7281)
+- Tự động thông báo tin nhắn mới khi đứng tại cửa sổ trò chuyện của bản Skype for Business. (#7286)
+- Tự động đọc thông báo trong Microsoft Edge, ví dụ khi có một download được bắt đầu. (#7281)
 - Có thể nhập liệu cả chữ nổi đầy đủ và viết tắt với bàn phím chữ nổi trên màn hình nổi. Xem phần nhập liệu chữ nổi trong tài liệu hướng dẫn sử dụng để biết thêm thông tin. (#2439)
 - Bạn có thể nhập ký tự chữ nổi Unicode với bàn phím chữ nổi trên màn hình nổi bằng cách chọn Chữ nổi Unicode ở mục bảng đầu vào trong hộp thoại thiết lập màn hình nổi. (#6449)
 - Hỗ trợ màn hình nổi SuperBraille được sử dụng nhiều ở Đài Loan. (#7352)
+- Các bảng chuyển đổi chữ nổi mới: Danish 8 dot computer braille, Lithuanian, Persian 8 dot computer braille, Persian grade 1, Slovenian 8 dot computer braille. (#6188, #6550, #6773, #7367)
+- Cập nhật bảng chuyển đổi chữ nổi cho tiếng Anh Mỹ, bao gồm những dấu bullet, ký hiệu euro và những ký tự có dấu. (#6836)
+- Hiện NVDA có thể sử dụng chức năng OCR của Windows 10 để nhận dạng văn bản từ hình ảnh và những ứng dụng không tiếp cận. (#7361)
+ - Có thể chọn ngôn ngữ từ hộp thoại Windows 10 OCR trong thực đơn tùy chọn của NVDA. 
+ - Nhấn NVDA+r để nhận dạng đối tượng điều hướng hiện tại.
+  - Xem thêm phần Nhận Dạng Nội Dung trong tài liệu hướng dẫn sử dụng để biết thêm thông tin.
+  - Bạn có thể chọn thông tin ngữ cảnh nào được hiển thị trên màn hình nổi khi đối tượng có focus trong mục "Trình bày ngữ cảnh tại focus" trong hộp thoại thiết lập màn hình nổi. (#217)
+ - Ví dụ: hai tùy chọn "Điền trên màn hình khi thay đổi ngữ cảnh" và "Chỉ khi cuộn lại" sẽ hoạt động tốt với loại danh sách và thực đơn, vì vị trí các mục sẽ không thay đổi liên tục trên màn hình.
+  - Xem phần "Trình bày ngữ cảnh tại focus" trong tài liệu hướng dẫn sử dụng để biết thêm thông tin.
+- Trong Firefox và Chrome, NVDA đã hỗ trợ những đối tượng lưới động phức tạp, ví dụ như các bảng tính mà nó chỉ tải hoặc hiển thị một vài nội dung.  Cụ thể, là hỗ trợ những thuộc tính aria giới thiệu trong phiên bản 1.1 như aria-rowcount, aria-colcount, aria-rowindex và aria-colindex. (#7410)
 
 
 == Thay Đổi ==
-- Thêm thao tác chưa được gán phím (script_restart) để giúp khởi động lại NVDA nhanh hơn. (#6396)
+- Thêm thao tác chưa được gán phím (script_restart) để giúp khởi động lại NVDA nhanh hơn. Xem trong phần các lệnh tổng hợp trong hộp thoại quản lý thao tác của NVDA. (#6396)
 - Có thể cài đặt kiểu bàn phím ở cửa sổ chào mừng của NVDA. (#6863)
-- Tên của các cột mốc (landmark) đã được viết tắt như sau: (#3975)
- -  "landmark" (cột mốc): "lmk"
- - "banner" (biểu ngữ): "bnnr"
- - "complementary" (bổ trợ): "comp"
- - "contentinfo" (thông tin nội dung): "cinf"
- - "main" (chính): "main"
- - "navigation" (điều hướng): "nav"
- - "search" (tìm kiếm): "srch"
- - "form" (biểu mẫu): "frm"
- - "region" (vùng): "rgn"
- - Ví dụ:  "navigation landmark" sẽ là  "lmk nav"
+  - Thêm nhiều định nghĩa viết tắt cho các cột mốc và trạng thái của điều khiển. Xem phần viết tắt cho các cột mốc và trạng thái điều khiển trong tài liệu hướng dẫn sử dụng để biết đầy đủ danh sách các định nghĩa viết tắt này. (#7188)
 - Đã cập nhật Espeak-ng lên phiên bản 1.49.1 (#7280).
 - Đã sắp xếp các mục trong danh sách bảng đầu vào và đầu ra của hộp thoại thiết lập màn hình nổi theo an-pha-bê. (#6113)
 - Cập nhật trình chuyển dịch chữ nổi liblouis lên bản  3.2.0. (#6935)
+- Bảng mã chữ nổi cấp 1 UEBC tiếng Anh được chọn là bảng mã mặc định. (#6952)
+- Mặc định, NVDA chỉ hiển thị những phần thông tin ngữ cảnh mà nó thay đổi trên màn hình nổi mỗi khi một đối tượng có focus. (#217)
+ - Trước đây, nó sẽ hiển thị tất cả thông tin ngữ cảnh cho dù bạn đã thấy thông tin ngữ cảnh đó rồi.
+ - Bạn có thể chọn hiển thị theo cách cũ bằng cách chọn "Luôn luôn điền trên màn hình" ở tùy chọn "Trình bày ngữ cảnh tại focus" trong hộp thoại thiết lập màn hình nổi.
+- Có thể chọn hình dạng con trỏ nổi khi chọn chế độ đi theo focus hoặc con trỏ duyệt. (#7112)
+ - Cập nhật logo của NVDA. Logo được cập nhật theo kiểu pha trộn giữa các ký tự NVDA với chữ màu trắng trên nền màu tía. Điều này sẽ giúp có thể nhìn thấy logo NVDA trên những màu nền khác. Sử dụng cùng màu tía với logo của NV Access. (#7446)
 
 
 == Sửa Lỗi ==
@@ -50,9 +58,9 @@
 - Ở chế độ duyệt, nhấn shift+end đã có thể chọn hoặc bỏ chọn về cuối dòng, ngay cả khi dấu nháy nằm tại ký tự cuối của dòng đó. (#7157)
 - Nếu hộp thoại có thanh tiến trình, văn bản hộp thoại sẽ được cập nhật khi thanh tiến trình thay đổi. Ví dụ, thời gian còn lại trong hộp thoại tải NVDA đã có thể đọc bằng văn bản với NVDA. (#6862)
 - NVDA sẽ thông báo các thay đổi vùng chọn trong một số hộp xổ của Windows 10, ví dụ như hộp xổ Autoplay trong phần Settings. (#6337).
-- Không còn thông báo thông tin không tồn tại ơ hộp thoại tạo lịch hẹn hay cuộc họp của Microsoft Outlook. (#7216)
+- Không còn thông báo thông tin không tồn tại ở hộp thoại tạo lịch hẹn hay cuộc họp của Microsoft Outlook. (#7216)
 - Bíp ở các hộp thoại có thanh tiến trình không xác định như hộp thoại kiểm tra bản cập nhật, khi thiết lập cho thanh tiến trình bao gồm lựa chọn bíp. (#6759)
-- Đã đọc lại các ô khi di chuyển bằng mũi tên trong Microsoft Excel 2003 và 2007. (#8243)
+- Đã đọc lại các ô khi di chuyển bằng mũi tên trong bảng tính với Microsoft Excel 2003 và 2007. (#8243)
 - Chế độ duyệt đã được tự động bật khi đọc email trong Windows 10 Mail với bản Windows 10 creator update và những bản sau này. (#7289)
 - Ở hầu hết màn hình nổi có bàn phím chữ nổi, chấm 7 sẽ dùng để xóa ký tự hoặc ô được nhập trước đó và chấm 8 là phím enter. (#6054)
 - Khi đứng ở văn bản có thể chỉnh sửa và di chuyển dấu nháy, ví dụ với phím mũi tên hoặc xóa lùi, NVDA đã đọc chính xác hơn, đặc biệt là trong Google Chrome và những ứng dụng đầu cuối. (#6424)
@@ -63,6 +71,10 @@
 - Di chuyển nhanh giữa các tiêu đề trong Microsoft Edge đã cải thiện nhanh hơn rất nhiều. (#7343)
 - NVDA không còn bỏ qua nhiều phần lớn nội dung trang web trên một số website như giao diện Wordpress 2015 khi ở chế độ duyệt của Microsoft Edge. (#7143)
 - Trong Microsoft Edge, các cột mốc (landmarks) đã được bản địa hóa, thay vì dùng tiếng Anh như thường lệ. (#7328)
+- Con trỏ Braille đã đi theo vùng chọn khi vùng chọn lớn hơn màn hình nổi.  Ví dụ, khi nhấn shift+mũi tên xuống để chọn nhiều dòng, màn hình nổi sẽ hiển thị dòng chọn cuối cùng. (#5770)
+- Ở Firefox, NVDA không còn đọc "Section" nhiều lần khi mở mục chi tiết của bài viết trên trang Twitter. (#5741)
+- Các lệnh di chuyển trong bảng không có hiệu lực với loại bảng bố cục nếu không bật tùy chọn thông báo bảng bố cục. (#7382)
+- Trong Firefox và Chrome, khi thực hiện lệnh di chuyển trong bảng ở chế độ duyệt sẽ bỏ qua những ô có thuộc tính ẩn. (#6652, #5655)
 
 
 == Thay Đổi cho Nhà Phát Triển ==
@@ -70,7 +82,9 @@
 - NVDA phải được build với Visual Studio Community 2015. Đã ngưng hỗ trợ cho bộ Visual Studio Express. (#7110)
  - Cũng yêu cầu cài đặt thêm bộ Windows 10 Tools và SDK; có thể chọn khi cài đặt Visual Studio.
  - Vui lòng xem phần hướng dẫn cài đặt các gói phụ thuộc để biết thêm thông tin.
- 
+ - Hỗ trợ những trình nhận dạng nội dung như công cụ mô tả ảnh và OCR, đã có thể dễ dàng thực hiện với gói ContentRecog mới. (#7361)
+- Gói Python json đã được biên dịch chung với bản chạy NVDA. (#3050)
+
 
 = 2017.2 =
 Một số điểm nổi bật trong bản phát hành này bao gồm: hỗ trợ đầy đủ các chế độ giảm âm lượng ứng dụng khác trên Windows 10 Creators Update; Sửa một số  vấn đề khi chọn ở chế độ duyệt ví dụ như chọn tất cả; cải thiện khả năng làm việc với  Microsoft Edge; và cải thiện nhiều hỗ trợ cho web ví dụ như nhận biết các thành phần sử dụng ARIA-current.

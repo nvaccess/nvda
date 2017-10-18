@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 12:37+1000\n"
-"PO-Revision-Date: 2017-08-02 23:51-0700\n"
+"POT-Creation-Date: 2017-09-29 00:10+1000\n"
+"PO-Revision-Date: 2017-08-30 20:29-0700\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -97,49 +97,41 @@ msgid "Error in appModule %s"
 msgstr "응용모듈 %s에서 오류 발생"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "banner"
 msgstr "베너"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "complementary"
 msgstr "complementary"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "content info"
-msgstr "컨텐츠 정보"
+msgstr "content info"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "main"
 msgstr "main"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "navigation"
 msgstr "navigation"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "search"
 msgstr "검색"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "form"
 msgstr "form"
 
 #. Translators: Reported for a significant region, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "region"
 msgstr "구역"
@@ -428,52 +420,44 @@ msgid "nsel"
 msgstr "nsel"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
-#, fuzzy
 msgctxt "braille landmark abbreviation"
 msgid "bnnr"
 msgstr "bnnr"
 
 #. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
-#, fuzzy
 msgctxt "braille landmark abbreviation"
 msgid "cmpl"
 msgstr "cmpl"
 
 #. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
-#, fuzzy
 msgctxt "braille landmark abbreviation"
 msgid "cinf"
 msgstr "cinf"
 
 #. Translators: Displayed in braille for the main landmark, normally found on web pages.
-#, fuzzy
 msgctxt "braille landmark abbreviation"
 msgid "main"
 msgstr "main"
 
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
-#, fuzzy
 msgctxt "braille landmark abbreviation"
 msgid "navi"
 msgstr "navi"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
-#, fuzzy
 msgctxt "braille landmark abbreviation"
 msgid "srch"
 msgstr "srch"
 
 #. Translators: Displayed in braille for the form landmark, normally found on web pages.
-#, fuzzy
 msgctxt "braille landmark abbreviation"
 msgid "form"
 msgstr "form"
 
 #. Translators: Displayed in braille for a significant region, normally found on web pages.
-#, fuzzy
 msgctxt "braille landmark abbreviation"
 msgid "rgn"
-msgstr "구역"
+msgstr "rgn"
 
 #. Translators: The description of a braille cursor shape.
 msgid "Dots 7 and 8"
@@ -490,19 +474,19 @@ msgstr "점자 셀 전체"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr ""
+msgstr "포커스 이동시 출력"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 msgid "Always fill display"
-msgstr ""
+msgstr "항상 세부 내용 출력"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
 #. (i.e. you will have to scroll back for focus context information).
 msgid "Only when scrolling back"
-msgstr ""
+msgstr "뒤로 스크롤시에만 출력"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -575,21 +559,18 @@ msgid "space"
 msgstr "스페이스"
 
 #. Translators: Used when describing keys on a braille keyboard.
-#, fuzzy
 msgid "braille keyboard"
-msgstr "%s 키보드 레이아웃"
+msgstr "점자 키보드"
 
 #. Translators: Used to describe the press of space
 #. along with any dots on a braille keyboard.
-#, fuzzy
 msgid "space with any dots"
-msgstr "space with dot"
+msgstr "space with any dots"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
-#, fuzzy
 msgid "any dots"
-msgstr "점자 셀 전체"
+msgstr "any dots"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1039,9 +1020,8 @@ msgstr "터키어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Unicode braille"
-msgstr "점자 출력 끔"
+msgstr "Unicode 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1059,6 +1039,11 @@ msgstr "포커스 모드"
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "브라우즈 모드"
+
+#. Translators: Reported label in the elements list for an element which which has no name and value
+#, fuzzy
+msgid "Unlabeled"
+msgstr "레이블"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1523,24 +1508,20 @@ msgid "no previous annotation"
 msgstr "이전 주석 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the next error"
-msgstr "다음 구분선으로 이동합니다"
+msgstr "다음 문자 오류로 이동합니다"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no next error"
-msgstr "다음 구분선 없음"
+msgstr "다음 문자 오류 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the previous error"
-msgstr "이전 구분선으로 이동합니다"
+msgstr "이전 문자 오류로 이동합니다"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no previous error"
-msgstr "이전 구분선 없음"
+msgstr "이전 문자 오류 없음"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1555,6 +1536,17 @@ msgstr "링크 (&K)"
 #. document formatting settings dialog.
 msgid "&Headings"
 msgstr "헤딩 (&H)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "폼 필드 (&F)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Buttons"
+msgstr "버튼"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2137,7 +2129,7 @@ msgstr "박스"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
-msgstr "그루핑"
+msgstr "그룹"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
@@ -2505,7 +2497,7 @@ msgstr "선택됨"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "반만 선택됨"
+msgstr "일부 선택됨"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -2623,7 +2615,7 @@ msgstr "수식 있음"
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "주석 있음"
+msgstr "메모 있음"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
@@ -3624,9 +3616,8 @@ msgid "Quits NVDA!"
 msgstr "NVDA를 종료합니다!"
 
 #. Translators: Input help mode message for restart NVDA command.
-#, fuzzy
 msgid "Restarts NVDA!"
-msgstr "NVDA 재시작"
+msgstr "NVDA를 재시작합니다!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3955,11 +3946,11 @@ msgstr "점자디스플레이가 포커스 또는 리뷰 위치를 딸아갈 것
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr ""
+msgstr "점자로 포커스 세부 내용 출력: %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
-msgstr ""
+msgstr "포커스된 객체의 세부 내용이 점자로 전달되는 방법을 변경합니다"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -5954,7 +5945,7 @@ msgstr "및줄 없음"
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
 msgid "baseline"
-msgstr "baseline"
+msgstr "기본 글꼴"
 
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
@@ -6571,9 +6562,8 @@ msgstr "읽지 않음"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-#, fuzzy
 msgid "purple flag"
-msgstr "보라"
+msgstr "보라색 플래그"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
@@ -6681,75 +6671,75 @@ msgstr "만약 주석이 있을 경우 이를 읽어줍니다. "
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "제목 개체 틀"
+msgstr "제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
-msgstr "텍스트 개체 틀"
+msgstr "텍스트 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
-msgstr "중앙 제목 자리 표시자"
+msgstr "중앙 제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
-msgstr "부제목 개체 틀"
+msgstr "부제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Title placeholder"
-msgstr "Vertical Title placeholder"
+msgstr "세로 제목 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Text placeholder"
-msgstr "세로 텍스트 개체 틀"
+msgstr "세로 텍스트 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Object placeholder"
-msgstr "개체 자리 표시자"
+msgstr "개체 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "차트 개체 틀"
+msgstr "차트 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
-msgstr "Bitmap placeholder"
+msgstr "비트맵 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Media Clip placeholder"
-msgstr "Media Clip placeholder"
+msgstr "미디어 클립 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Org Chart placeholder"
+msgstr "조직도 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
-msgstr "표 개체 틀"
+msgstr "표 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "슬라이드 번호 개체 틀"
+msgstr "슬라이드 번호 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
-msgstr "머리글 개체 틀"
+msgstr "머리글 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Footer placeholder"
-msgstr "바닥글 개체 틀"
+msgstr "바닥글 입력"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Date placeholder"
-msgstr "날짜 개체 틀"
+msgstr "날짜 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Object placeholder"
-msgstr "Vertical Object placeholder"
+msgstr "세로 개체 삽입"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Picture placeholder"
-msgstr "그림 개체 틀"
+msgstr "그림 삽입"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
@@ -6812,7 +6802,7 @@ msgstr "header item"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 왼쪽 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 왼쪽 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 #, python-brace-format
@@ -6822,7 +6812,7 @@ msgstr "{otherShape}의 왼쪽 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 위 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 위 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6832,7 +6822,7 @@ msgstr "{otherShape}의 위 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 오른쪽 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 오른쪽 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6842,7 +6832,7 @@ msgstr "{otherShape}의 오른쪽 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} 아래 {distance:.3g} 포인트 커버함"
+msgstr "{otherShape} 아래 {distance:.3g} 포인트 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
@@ -6852,12 +6842,12 @@ msgstr "{otherShape}의 아래 {distance:.3g} 포인트 뒤에 가려짐"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers  {otherShape}"
-msgstr "{otherShape} 커버함"
+msgstr "{otherShape} 가림"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 #, python-brace-format
 msgid "behind {otherShape}"
-msgstr "behind {otherShape}에 가려짐"
+msgstr "{otherShape} 가려짐"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 #, python-brace-format
@@ -7064,9 +7054,8 @@ msgid "Seika braille displays"
 msgstr "Seika"
 
 #. Translators: Names of braille displays.
-#, fuzzy
 msgid "SuperBraille"
-msgstr "점자 출력"
+msgstr "SuperBraille"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7078,21 +7067,21 @@ msgstr "커서에 위치한 객체를 활성화합니다"
 
 #. Translators: Describes a command.
 msgid "Dismiss the recognition result"
-msgstr "텍스트 인식창을 닫습니다"
+msgstr "문자 인식 창을 닫습니다"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 msgid "Already in a content recognition result"
-msgstr "텍스트 인식창이 포커스되어 있음"
+msgstr "문자 인식 창이 포커스되어 있음"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the content is not visible.
 msgid "Content is not visible"
-msgstr "컨텐츠가 보이지 않습니다"
+msgstr "컨텐츠 보이지 않음"
 
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 msgid "Recognizing"
-msgstr "인식중"
+msgstr "인식 중"
 
 msgid "Recognition failed"
 msgstr "인식 실패"
@@ -7379,7 +7368,6 @@ msgstr "종료 (&X)"
 msgid "Exit NVDA"
 msgstr "NVDA 종료"
 
-#, fuzzy
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
@@ -7395,7 +7383,7 @@ msgstr ""
 "또한 Caps럭키를 NVDA키로 사용하도록 설정할 수도 있습니다.\n"
 "언제나 NVDA키와 n을 함께 누르면 NVDA 메뉴를 활성화 시킬 수 있습니다.\n"
 "이 메뉴를 통해서 NVDA 환경 설정, 도움말 호출 등 여러 기능들에 접근하실 수 있"
-"습니다.\n"
+"습니다."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -7416,9 +7404,8 @@ msgid "&Keyboard layout:"
 msgstr "키보드 레이아웃 (&K)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "Caps럭을 NVDA 기능키로 사용"
+msgstr "Caps럭을 NVDA 기능키로 사용 (&U)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -7426,9 +7413,8 @@ msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "윈도우 로그인 후 NVDA 자동 실행 (&A)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
-#, fuzzy
 msgid "&Show this dialog when NVDA starts"
-msgstr "NVDA 실행때 이 창 띄우기"
+msgstr "NVDA 실행때 이 창 띄우기 (&S)"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -8708,7 +8694,7 @@ msgstr "윈도우 10 OCR"
 
 #. Translators: Label for an option in the Windows 10 OCR dialog.
 msgid "Recognition &language:"
-msgstr "텍스트 인식 언어 (&L)"
+msgstr "문자 인식 언어 (&L)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -8841,18 +8827,16 @@ msgstr "리뷰 커서 모양 (&R)"
 # The translation literally reads, "message alert display time". Borrowed from
 # Braille Sense user guide.
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#, fuzzy
 msgid "Message &timeout (sec)"
-msgstr "알림 메시지 출력 시간 "
+msgstr "알림 메시지 출력 시간(초) (&T)"
 
 #. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
 msgid "Show &messages indefinitely"
 msgstr "점자 메시지를 영구적으로 표시 (&M)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#, fuzzy
 msgid "B&raille tethered to:"
-msgstr "점자 연계 커서"
+msgstr "점자 연계 커서 (&R)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -8864,7 +8848,7 @@ msgstr "가능하면 단어 끊지않고 출력 (&W)"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr ""
+msgstr "포커스 세부 내용 출력:"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -9176,11 +9160,6 @@ msgstr "주석 (&O)"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "수식 (&R)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "폼 필드 (&F)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -9801,12 +9780,12 @@ msgstr "{axisName} 축 {axisTitle}"
 
 #. Translators: Indicates that there is 1 series in a chart.
 msgid "There is 1 series in this chart"
-msgstr ""
+msgstr "차트 내 1 개의 계열"
 
 #. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
-msgstr ""
+msgstr "차트 내 %d 개의 계열"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #, python-brace-format
@@ -10139,7 +10118,7 @@ msgid "cell merge"
 msgstr "셀 병합"
 
 msgid "Comments"
-msgstr "Comments"
+msgstr "메모"
 
 msgid "Endnotes"
 msgstr "미주"
@@ -10168,17 +10147,25 @@ msgstr "Primary header"
 msgid "Text frame"
 msgstr "텍스트 프레임"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{description} {revisionType}: {text}; 저자: {author}; 날짜: {date}"
 
-#, fuzzy, python-brace-format
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
 msgid "spelling: {text}"
-msgstr "철자 오류"
+msgstr "철자: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -10324,27 +10311,25 @@ msgstr "Subscript"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Baseline"
-msgstr "Baseline"
+msgstr "기본 글꼴"
 
 #. Translators: a message reported when a paragraph is moved below another paragraph
 #, python-format
 msgid "Moved below %s"
-msgstr ""
+msgstr "%s 아래로 이동"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
-#, fuzzy
 msgid "Moved below blank paragraph"
-msgstr "문단 단위로 읽기 (&P)"
+msgstr "1줄 아래로 이동"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
 #, python-format
 msgid "Moved above %s"
-msgstr ""
+msgstr "%s 위로 이동"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
-#, fuzzy
 msgid "Moved above blank paragraph"
-msgstr "문단 단위로 읽기 (&P)"
+msgstr "1줄 위로 이동"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
@@ -10389,7 +10374,7 @@ msgstr "{offset:.3g} 피카"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "No comments"
-msgstr "주석 없음"
+msgstr "메모 없음"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -10430,30 +10415,3 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
-
-#~ msgid "tb"
-#~ msgstr "tb"
-
-#~ msgid "-----"
-#~ msgstr "-----"
-
-#~ msgid "(x)"
-#~ msgstr "(x)"
-
-#~ msgid "(-)"
-#~ msgstr "(-)"
-
-#~ msgid "( )"
-#~ msgstr "( )"
-
-#~ msgid "Farsi grade 1"
-#~ msgstr "Farsi 1종"
-
-#~ msgid "Slovene grade 1"
-#~ msgstr "슬라브어 1종"
-
-#~ msgid "ITALIC"
-#~ msgstr "이텔릭"
-
-#~ msgid "Cursor &shape:"
-#~ msgstr "커서 모양: (&S)"
