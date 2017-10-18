@@ -36,12 +36,16 @@ The NVDA source depends on several other packages to run correctly.
 The following dependencies need to be installed on your system:
 
 * [Python](http://www.python.org/), version 2.7.13, 32 bit
-* Microsoft Visual Studio Community 2015 with Update 3:
-	* To download, you will need to [join the Visual Studio Dev Essentials program](https://my.visualstudio.com/Benefits?wt.mc_id=o~msft~vscom~devessentials-hero~30569&campaign=o~msft~vscom~devessentials-hero~30569).
-		After you have joined, Visual Studio Community 2015 with Update 3 will be available on the Downloads tab.
+* Microsoft Visual Studio 2017 Community, Version 15.3 or later:
+	* Download from https://www.visualstudio.com/downloads/
 	* When installing Visual Studio, you need to enable the following:
-		* In Visual C++: Common Tools for Visual C++ 2015, Windows XP Support for C++
-		* Windows and Web Development -> Universal Windows App Development Tools -> Tools (1.4.1) and Windows 10 SDK (10.0.14393)
+		On the Workloads tab, in the Windows group:
+			* Universal Windows Platform Development
+			* Desktop development with C++
+		* Then in the Summary list, under Desktop for C++, Optional grouping, ensure the following is selected:
+			* VC++ 2017 v141 toolset (x86,x64)
+			* Windows 10 SDK (10.0.15063.0) for Desktop C++ x86 and x64
+
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
@@ -208,20 +212,26 @@ scons launcher version=test1
 ## Running Automated Tests
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
-Currently, NVDA has only one kind of automated testing: unit tests.
+Currently, NVDA has two kinds of automated testing: unit tests and translatable string checks.
 
-To run the unit tests, first change directory to the root of the NVDA source distribution as above.
+To run the tests, first change directory to the root of the NVDA source distribution as above.
 Then, run:
 
 ```
 scons tests
 ```
 
-To run only specific tests, specify them using the `unitTests` variable on the command line.
+To run only specific unit tests, specify them using the `unitTests` variable on the command line.
 The tests should be provided as a comma separated list.
 Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
 For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
 
 ```
 scons tests unitTests=test_cursorManager.TestMove,test_cursorManager.TestSelection
+```
+
+To run only the translatable string checks (which check that all translatable strings have translator comments), run:
+
+```
+scons checkPot
 ```

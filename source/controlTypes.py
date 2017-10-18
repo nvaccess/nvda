@@ -456,7 +456,7 @@ roleLabels={
 	# Translators: Describes text formatting.
 	ROLE_BOLD:_("bold"),
 	# Translators: Describes text formatting.
-	ROLE_ITALIC:_("ITALIC"),
+	ROLE_ITALIC:_("italic"),
 	# Translators: Describes text formatting.
 	ROLE_UNDERLINE:_("underline"),
 	# Translators: Describes text formatting.
@@ -569,10 +569,10 @@ stateLabels={
 negativeStateLabels={
 	# Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 	STATE_SELECTED:_("not selected"),
-	# Translators: This is presented when a checkbox is not checked.
-	STATE_CHECKED:_("not checked"),
 	# Translators: This is presented when a button is not pressed.
 	STATE_PRESSED:_("not pressed"),
+	# Translators: This is presented when a checkbox is not checked.
+	STATE_CHECKED:_("not checked"),
 }
 
 silentRolesOnFocus={

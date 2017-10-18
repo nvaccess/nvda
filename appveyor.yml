@@ -1,3 +1,4 @@
+os: Visual Studio 2017
 version: "{branch}-{build}"
 
 branches:
@@ -76,6 +77,8 @@ build_script:
  - py scons.py source %sconsArgs%
  # We don't need launcher to run tests, so run the tests before launcher.
  - py scons.py tests %sconsArgs%
+ # The pot gets built by tests, but we don't actually need it as a build artifact.
+ - del output\*.pot
  - 'echo scons output targets: %sconsOutTargets%'
  - py scons.py %sconsOutTargets% %sconsArgs%
  # Build symbol store.

@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -42,6 +42,8 @@ class EditableText(ScriptableObject):
 
 	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
 	announceNewLineText=True
+
+	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
@@ -93,8 +95,11 @@ class EditableText(ScriptableObject):
 			if newBookmark and newBookmark!=bookmark:
 				log.debug("Caret move detected using bookmarks. Elapsed: %d ms" % elapsed)
 				return (True, newInfo)
-			if origWord is not None and newInfo:
+			if origWord is not None and newInfo and elapsed >= self._hasCaretMoved_minWordTimeoutMs:
 				# When pressing delete, bookmarks might not be enough to detect caret movement.
+				# Therefore try detecting if the word under the caret has changed, such as when pressing delete.
+				# some editors such as Mozilla Gecko can have text and units that get out of sync with eachother while a character is being deleted.
+				# Therefore, only check if the word has changed after a particular amount of time has elapsed, allowing the text and units to settle down.
 				wordInfo = newInfo.copy()
 				wordInfo.expand(textInfos.UNIT_WORD)
 				word = wordInfo.text
@@ -270,6 +275,7 @@ class EditableText(ScriptableObject):
 			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except:
 			self._lastSelectionPos=None
+		self.isTextSelectionAnchoredAtStart=True
 		self.hasContentChangedSinceLastSelection=False
 
 	def detectPossibleSelectionChange(self):
@@ -284,10 +290,19 @@ class EditableText(ScriptableObject):
 		self._lastSelectionPos=newInfo.copy()
 		if not oldInfo:
 			# There's nothing we can do, but at least the last selection will be right next time.
+			self.isTextSelectionAnchoredAtStart=True
 			return
+		self._updateSelectionAnchor(oldInfo,newInfo)
 		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
 		self.hasContentChangedSinceLastSelection=False
 		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
+
+	def _updateSelectionAnchor(self,oldInfo,newInfo):
+		# Only update the value if the selection changed.
+		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
+			self.isTextSelectionAnchoredAtStart=False
+		elif newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
+			self.isTextSelectionAnchoredAtStart=True
 
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
@@ -297,6 +312,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 	def reportSelectionChange(self, oldTextInfo):
 		api.processPendingEvents(processEventQueue=False)
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		self._updateSelectionAnchor(oldTextInfo,newInfo)
 		speech.speakSelectionChange(oldTextInfo,newInfo)
 		braille.handler.handleCaretMove(self)
 
