@@ -278,7 +278,7 @@ Există câteva comenzi din taste care sunt utile când vă deplasați cu focali
 | Raportează focalizarea curentă | NVDA+tab | NVDA+tab | Anunță obiectul sau controlul curent focalizat. Apăsând de două ori va pronunța pe litere informația |
 | Raportează titlu | NVDA+t | NVDA+t | Anunță titlul ferestrei active. Apăsând de două ori va pronunța pe litere informația. Apăsând de trei ori o va copia pe planșetă |
 | Citește fereastra activă | NVDA+b | NVDA+b | Citește toate controalele din fereastra curent activă (util pentru ferestrele de dialog) |
-| Raportează bara de stare | NVDA+end | NVDA+shift+end | Raportează bara de stare, dacă este găsită de NVDA. În plus mută obiectul navigator la această poziție. Apăsând de două ori va pronunța informația pe litere |
+| Raportează bara de stare | NVDA+end | NVDA+shift+end | Raportează bara de stare, dacă este găsită de NVDA. În plus mută obiectul navigator la această poziție. Apăsând de două ori va pronunța informația pe litere. Apăsând de trei ori o va copia pe planșetă |
 %kc:endInclude
 
 ++ Navigarea cu cursorul de scriere al sistemului ++[CursorScriereSistem]
@@ -2480,6 +2480,9 @@ Urmează opțiunile în linie de comandă ale NVDA:
 | None | --no-sr-flag  | Indicator „Nu schimba cititorul de ecran la nivel global pentru sistem” |
 | None | --install | Instalează NVDA (pornind copia nou-instalată) |
 | None | --install-silent | Instalează NVDA în mod discret (nu pornește copia nou-instalată) |
+| None | --create-portable | Creează o copie portabilă a NVDA-ului (pornind copia nou creată). Necesită --portable-path pentru a fi specificată |
+| None | --create-portable-silent | Creează o copie portabilă a NVDA-ului (nu pornește copia nou instalată). Necesită --portable-path pentru a fi specificată |
+| None | --portable-path=PORTABLEPATH | Calea în care va fi creată o copie portabilă |
 
 ++ Parametri la nivel de sistem ++[ParametriLaNivelDeSistem]
 NVDA permite setarea unor valori în regiștrii de sistem care modifică comportamentul la nivel de sistem al acestuia.

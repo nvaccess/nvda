@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-15 00:10+1000\n"
-"PO-Revision-Date: 2017-09-14 20:15+0200\n"
+"POT-Creation-Date: 2017-10-06 00:10+1000\n"
+"PO-Revision-Date: 2017-10-09 08:20+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -2958,18 +2958,18 @@ msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen sanojen puhumise
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "Komentonäppäinten puhuminen pois"
+msgstr "Komentonäppäimien puhuminen pois"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "Komentonäppäinten puhuminen käytössä"
+msgstr "Komentonäppäimien puhuminen käytössä"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
-"Ottaa käyttöön ja poistaa käytöstä sellaisten näppäinten puhumisen, jotka "
+"Ottaa käyttöön ja poistaa käytöstä sellaisten näppäimien puhumisen, jotka "
 "eivät ole kirjaimia, numeroita eivätkä muita merkkejä."
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
@@ -3362,6 +3362,7 @@ msgid "No navigator object"
 msgstr "Ei navigointiobjektia"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s kopioitu leikepöydälle"
@@ -3689,10 +3690,12 @@ msgstr "Tilariviä ei löydy"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Lukee nykyisen sovelluksen tilarivin ja siirtää navigointiobjektin sen "
-"kohdalle. Kahdesti painettaessa tiedot tavataan."
+"kohdalle. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa ne "
+"kopioidaan leikepöydälle."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7611,11 +7614,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Lisäosan asennus"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Tästä lisäosasta on jo asennettu toinen versio. Haluatko päivittää sen?"
+"Olet asentamassa versiota {newVersion} lisäosasta {summary}, joka on jo "
+"asennettu. Haluatko silti päivittää?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Tämä lisäosa on jo asennettu. Haluatko päivittää {summary}-version "
+"{curVersion} versioon {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8022,6 +8037,10 @@ msgstr "Valitse massamuistiversion hakemisto"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Kopioi &käyttäjän nykyiset asetukset"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Käynnistä uusi massamuistiversio luonnin jälkeen"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.

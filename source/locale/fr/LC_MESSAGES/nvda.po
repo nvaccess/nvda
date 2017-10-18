@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-01 08:20+0200\n"
+"POT-Creation-Date: 2017-10-06 00:10+1000\n"
+"PO-Revision-Date: 2017-10-05 16:24+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -3359,6 +3359,7 @@ msgid "No navigator object"
 msgstr "Pas d'objet navigateur"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s copié dans le presse-papiers"
@@ -3685,10 +3686,12 @@ msgstr "Ligne d'état non trouvée"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Lire la barre d'état de l'application courante et y amener l'objet "
-"navigateur. Deux appuis: épeler l'information"
+"navigateur. Deux appuis: épeler l'information. Trois appuis: copier la barre "
+"d'état dans le presse-papiers"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7612,12 +7615,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Installation du module complémentaire"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Une version de ce module complémentaire est déjà installée. Voulez-vous la "
-"mettre à jour ?"
+"Vous êtes sur le point d'installer la version {newVersion} de {summary}, qui "
+"semble être déjà installée. Voulez-vous quand-même mettre à jour ?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Une version de ce module est déjà installée. Voulez-vous mettre à jour "
+"{summary} de la version {curVersion} à la version {newVersion} ?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8036,6 +8050,10 @@ msgstr "Choisir le répertoire portable"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Copier la configuration &utilisateur courante"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Démarrer la nouvelle copie portable après création"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
