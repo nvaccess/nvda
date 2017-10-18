@@ -22,8 +22,6 @@ from logHandler import log
 import addonHandler
 import easeOfAccess
 
-MOVEFILE_DELAY_UNTIL_REBOOT=4
-
 _wsh=None
 def _getWSH():
 	global _wsh
@@ -137,6 +135,36 @@ def copyUserConfig(destPath):
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
 
+def removeOldLibFiles(destPath,rebootOK=False):
+	"""
+	Removes library files from previous versions of NVDA.
+	@param destPath: The path where NVDA is installed.
+	@ type destPath: string
+	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
+	@type rebootOK: boolean
+	"""
+	for topDir in ('lib','lib64'):
+		currentLibPath=os.path.join(destPath,topDir,versionInfo.version)
+		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
+			if parent==currentLibPath:
+				# Lib dir for current installation. Don't touch this!
+				log.debug("Skipping current install lib path: %s"%parent)
+				continue
+			for d in subdirs:
+				path=os.path.join(parent,d)
+				log.debug("Removing old lib directory: %s"%path)
+				try:
+					os.rmdir(path)
+				except OSError as e:
+					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %s, Error: %s"%(path,e))
+			for f in files:
+				path=os.path.join(parent,f)
+				log.debug("Removing old lib file: %s"%path)
+				try:
+					tryRemoveFile(path,numRetries=2,rebootOK=rebootOK)
+				except RetriableFailure:
+					log.warning("A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %s"%path)
+
 def removeOldProgramFiles(destPath):
 	# #3181: Remove espeak-ng-data\voices except for variants.
 	# Otherwise, there will be duplicates if voices have been moved in this new eSpeak version.
@@ -155,18 +183,6 @@ def removeOldProgramFiles(destPath):
 				shutil.rmtree(fn)
 			else:
 				os.remove(fn)
-
-	# #7546: Remove old version-specific libs
-	for topDir in ('lib','lib64'):
-		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
-			for d in subdirs:
-				path=os.path.join(parent,d)
-				try:
-					os.rmdir(path)
-				except OSError as e:
-					log.debugWarning("Failed to remove directory %s, %s"%(path,e))
-			for f in files:
-				tryRemoveFile(os.path.join(parent,f),tempDir=destPath)
 
 	# #4235: mpr.dll is a Windows system dll accidentally included with
 	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
@@ -329,80 +345,52 @@ def _deleteKeyAndSubkeys(key, subkey):
 class RetriableFailure(Exception):
 	pass
 
-def deleteFileOnReboot(path):
-	"""
-	Marks a file for delete on reboot.
-	This uses Windows' MoveFileEx (either unicode or ascii depending on the given path) and also prepends'\\?\' to allow for long file names.
-	@return: True if  the action was successfull. False otherwise.
-	@rtype: boolean
-	"""
-	MoveFileEx=windll.kernel32.MoveFileExW if isinstance(path,unicode) else windll.kernel32.MoveFileExA
-	return MoveFileEx("\\\\?\\"+path,None,MOVEFILE_DELAY_UNTIL_REBOOT)!=0
-
-def copyFile(sourceFilePath,destFilePath):
-	"""
-	Copies the file at sourcePath to destPath.
-	This uses Windows' CopyFile and prepends'\\?\' to allow for long file names.
-	@return: True if  the action was successfull. False otherwise.
-	@rtype: boolean
-	"""
-	return windll.kernel32.CopyFileW(u'\\\\?\\'+sourceFilePath,u'\\\\?\\'+destFilePath,False)!=0
-
-def tryRemoveFile(path,numTries=6,retryInterval=0.5,tempDir=None):
-	"""
-	Tries to remove a file multiple times using veris strategies.
-	It first tries a simple delete. If that fails, it tries to rename the file to a temp file in the given temp directory, and marks it for delete on next reboot.
-	If both the delete and or the rename fail, the function waits a small period of time and tries to remove the file again, just in case the file was temporarily locked.
-	@param path: the path to the file that should be removed
-	@ type path: string
-	@param numTries: the number of times the file should try to be removed.
-	@type numTries: int
-	@param retryInterval: the number of seconds the function waits before trying to remove the file again.
-	@type retryInterval: float
-	@param tempDir: the path to the temporary directory where files marked for delete on reboot should be stored.
-	This directory should be on the same physical drive as the file being removed.
-	A value of None (default) uses the same directory as the file being removed.
-	@type tempDir: string
-	@raises: RetriableFailure if the file could not be removed at all.
-	"""
-	if not tempDir:
-		tempDir=os.path.dirname(path)
-	for count in xrange(numTries):
-		if count>0:
-			log.debugWarning("Will try to remove file again after delay")
-			time.sleep(retryInterval)
+def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
+	dirPath=os.path.dirname(path)
+	tempPath=tempfile.mktemp(dir=dirPath)
+	try:
+		os.rename(path,tempPath)
+	except (WindowsError,IOError):
+		raise RetriableFailure("Failed to rename file %s before  remove"%path)
+	for count in xrange(numRetries):
 		try:
-			if os.path.isdir(path):
-				shutil.rmtree(path)
+			if os.path.isdir(tempPath):
+				shutil.rmtree(tempPath)
 			else:
-				os.remove(path)
+				os.remove(tempPath)
 			return
-		except OSError as e:
-			log.debugWarning("Failed to delete file %s, %s, will try renaming"%(path,e))
-		# The file could not be removed.
-		# Rename it to a temporary file, and try removing on reboot if allowed
-		tempPath=tempfile.mktemp(dir=tempDir)
-		log.debug("Renaming %s to %s"%(path,tempPath))
-		try:
-			os.rename(path,tempPath)
-		except (WindowsError,IOError) as e:
-			log.debugWarning("Failed to rename file %s before  remove on reboot"%path)
-			continue
-		log.debug("Marking file for delete on reboot: %s"%tempPath)
-		if not deleteFileOnReboot(tempPath):
-			log.warning("Could not mark file for remove on reboot: %s"%tempPath)
+		except OSError:
+			pass
+		time.sleep(retryInterval)
+	if rebootOK:
+		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
+		MoveFileEx=windll.kernel32.MoveFileExW if isinstance(tempPath,unicode) else windll.kernel32.MoveFileExA
+		MoveFileEx("\\\\?\\"+tempPath,None,4)
 		return
+	try:
+		os.rename(tempPath,path)
+	except:
+		log.error("Unable to rename back to %s before retriable failier"%path)
 	raise RetriableFailure("File %s could not be removed"%path)
 
 def tryCopyFile(sourceFilePath,destFilePath):
-	if copyFile(sourceFilePath,destFilePath)==0:
+	if not sourceFilePath.startswith('\\\\'):
+		sourceFilePath=u"\\\\?\\"+sourceFilePath
+	if not destFilePath.startswith('\\\\'):
+		destFilePath=u"\\\\?\\"+destFilePath
+	if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 		errorCode=GetLastError()
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
 			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
-		tryRemoveFile(destFilePath)
-		log.debug("Trying to copy again after remove")
-		if copyFile(sourceFilePath,destFilePath)==0:
+		tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
+		try:
+			os.rename(destFilePath,tempPath)
+		except (WindowsError,OSError):
+			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
+			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
+		windll.kernel32.MoveFileExW(tempPath,None,4)
+		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 			errorCode=GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
@@ -438,6 +426,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
 	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
+	removeOldLibFiles(destPath,rebootOK=True)
 
 def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")
@@ -466,6 +455,7 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	tryCopyFile(os.path.join(destPath,"nvda_noUIAccess.exe"),os.path.join(destPath,"nvda.exe"))
 	if shouldCopyUserConfig:
 		copyUserConfig(os.path.join(destPath,'userConfig'))
+	removeOldLibFiles(destPath,rebootOK=False)
 
 def registerEaseOfAccess(installDir):
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH, 0,
