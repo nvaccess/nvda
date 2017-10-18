@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """Upgrade speech dict files
 """
@@ -18,6 +18,9 @@ voiceDictsPath = os.path.join(speechDictsPath, r"voiceDicts.v1")
 voiceDictsBackupPath = os.path.join(speechDictsPath, r"voiceDictsBackup.v0")
 
 def createVoiceDictFileName(synthName, voiceName):
+	""" Creates a filename used for the voice dictionary files.
+	this is in the format synthName-voiceName.dic
+	"""
 	fileNameFormat = u"{synth}-{voice}.dic"
 	return fileNameFormat.format(
 			synth = synthName,
@@ -25,6 +28,8 @@ def createVoiceDictFileName(synthName, voiceName):
 			)
 
 def doAnyUpgrades(synth):
+	""" Do any upgrades required for the synth passed in.
+	"""
 	# We know the transform required for Espeak, so try regardless of
 	# the synth currently set.
 	_doEspeakDictUpgrade()
@@ -40,9 +45,8 @@ def doAnyUpgrades(synth):
 	_doSynthVoiceDictBackupAndMove(synth.name)
 
 def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None):
-	""" move all files for the synth to the backup dir
-			for each file in the backup dir copy it to the synthvoice dir 
-			using the new name if it we have one.
+	""" Move all files for the synth to the backup dir for each file in the backup
+	dir copy it to the synthvoice dir using the new name if it we have one.
 	"""
 	import shutil
 	
