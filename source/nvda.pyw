@@ -24,6 +24,14 @@ import pythonMonkeyPatches
 import ctypes
 import locale
 import gettext
+
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+try:
+	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+except:
+	gettext.install('nvda',unicode=True)
+
 import time
 import argparse
 import win32con
@@ -50,13 +58,6 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 		sys.exit(2)
 
 globalVars.startTime=time.time()
-
-#Localization settings
-locale.setlocale(locale.LC_ALL,'')
-try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
-except:
-	gettext.install('nvda',unicode=True)
 
 # Check OS version requirements
 import winVersion
