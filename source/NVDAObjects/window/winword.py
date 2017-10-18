@@ -1722,5 +1722,5 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("annotation", _("&Annotations")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("error", _("&errors")),
+		("error", _("&Errors")),
 	)
