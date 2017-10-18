@@ -52,6 +52,7 @@ What's New in NVDA
  - For example: if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
 - The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
  - See the baum driver as an example for this new functionality.
+- NVDA is now compiled with Visual Studio 2017 and the Windows 10 SDK. (#7568)
 
 
 = 2017.3 =
