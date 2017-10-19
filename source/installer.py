@@ -156,7 +156,7 @@ def removeOldLibFiles(destPath,rebootOK=False):
 				try:
 					os.rmdir(path)
 				except OSError as e:
-					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %s, Error: %s"%(path,e))
+					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r, Error: %s"%(path,e))
 			for f in files:
 				path=os.path.join(parent,f)
 				log.debug("Removing old lib file: %s"%path)
