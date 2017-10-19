@@ -8,44 +8,47 @@
 %%toc
 
 + Úvod +
+Vítejte v NVDA!
+
 NonVisual Desktop Access (NVDA) je otevřený a volně šiřitelný odečítač obrazovky pro operační systém Microsoft Windows.
 Díky zpětné vazbě hlasových výstupů a braillských řádků zpřístupňuje NVDA nevidomým a zrakově postiženým práci na počítači s operačním systémem Windows za stejnou finanční částku jako vidícím osobám.
 Vývoj NVDA zastřešuje organizace [NV Access http://www.nvaccess.org/], za pomoci příspěvků od členů komunity.
 
 ++ Základní  informace ++
-NVDA je odečítač obrazovky pro operační systém Windows umožňující uživateli pracovat s počítačem bez nutnosti vidět na obrazovku. NVDA získává od operačního systému informace o tom, kde se uživatel právě nachází, jaká okna a ovládací prvky jsou právě na obrazovce, sleduje, k jakým změnám v systému dochází. Získané informace pak zpracovává a prezentuje uživateli formou mluvené řeči tvořené hlasovým výstupem, aby uživatel věděl, co se na obrazovce děje. Texty uživatelského rozhraní a zprávy programu jsou nyní přeloženy do 40 různých jazyků. NVDA by měl být schopen číst texty v libovolném jazyce, pro který je v systému přítomen hlasový výstup.
+NVDA umožňuje nevidomým a zrakově postiženým pracovat s operačním systémem Windows a mnoha aplikacemi třetích stran.
 
 Nejvýznamnější přednosti programu: 
 - Podpora pro populární aplikace včetně internetových prohlížečů, emailových klientů, programů sloužících na okamžitou komunikaci a kancelářských balíků
-- Vestavěný hlasový výstup, s podporou více než čtyřiceti jazyků
+- Vestavěný hlasový výstup, s podporou více než 80 jazyků
 - Oznamování informací o formátování textu jako např. název a velikost písma, styl textu či pravopisné chyby
 - Automatické ohlašování textu pod kurzorem myši a volitelná akustická indikace pozice myši
-- Podpora mnoha braillských řádků
+- Podpora mnoha braillských řádků včetně vstupu pro počítačové Braillovo písmo pro řádky s braillskou klávesnicí
 - Možnost spuštění programu z USB klíče nebo jiného přenosného zařízení bez nutnosti instalace
 - Snadný ozvučený instalátor
-- Přeložený do 43 jazyků
+- Přeložený do 50 jazyků
 - Podpora pro moderní operační systémy Windows a to jak pro 32 bitové, tak i 64 bitové verze
 - Možnost spouštění na přihlašovací a jiných zabezpečených obrazovkách systému Windows
-- Kompatibilita s různými rozhraními sloužícími na spřístupnění aplikací: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation jen ve Windows 7 a novějších)
+- Kompatibilita s různými rozhraními sloužícími na spřístupnění aplikací: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation
 - Podpora prostředí příkazového řádku a konzolových aplikací
 -
 
 ++ Mezinárodní podpora ++
 Je nezbytné, aby lidé, kdekoli na světě, hovořící jakýmkoli jazykem, měli stejný přístup k speciálním technologiím. 
-NVDA byl dodnes přeložen do těchto 41 jazyků: afrikánština, albánština, amharština, arabština, brazilská portugalština, bulharština, čeština, dánština, finština, francouzština, galicíjština, gruzínština, hebrejština, hindština, holandština, chorvatština, islandština, italština, japonština, korejština, maďarština, nepálština, němčina, norština, polština, portugalština, rumunština, ruština, řečtina, slovenština, slovinština, srbština, španělština, švédština, tamilština, thajština, taiwanská čínština, tradiční čínština, turečtina, ukrajinština a vietnamština. 
+Vedle angličtiny byl NVDA dodnes přeložen do těchto 50 jazyků: afrikánština, albánština, amharština, arabština, aragónština, barmština, brazilská portugalština, bulharština, čeština, dánština, finština, francouzština, galicijština, gruzínština, hebrejština, hindština, holandština, chorvatština, irština, islandština, italština, japonština, kannadština, katalánština, kolumbijská španělština, korejština, litevština, maďarština, nepálština, němčina, norština, pandžábština, perština, polština, portugalština, rumunština, ruština, řečtina, slovenština, slovinština, srbština, španělština, švédština, tamilština, thajština, taiwanská čínština, tradiční čínština, turečtina, ukrajinština a vietnamština. 
 
 ++ Podpora hlasového výstupu ++
 Bez ohledu na poskytování hlášení a rozhraní v několika jazycích NVDA nabízí možnost čtení textů v jakémkoli jazyce, jestliže je dostupný hlasový výstup pro daný jazyk. 
 
-NVDA je distribuován s vícejazyčným volně šiřitelným/open-source hlasovým výstupem [eSpeak http://espeak.sourceforge.net/].
+NVDA je distribuován s vícejazyčným volně šiřitelným/open-source hlasovým výstupem [eSpeak NG https://github.com/espeak-ng/espeak-ng].
 
 Informace o dalších hlasových výstupech podporovaných programem NVDA naleznete v kapitole [Podporované Hlasové Výstupy #SupportedSpeechSynths].
 
 ++ Podpora braillských řádků ++
 Pro uživatele, kteří vlastní braillský řádek, umožňuje NVDA hmatový výstup v braillově písmu. 
+Je podporován braillský vstup pro plnopis i zkratkopis přes braillskou klávesnici.
 Informace o podporovaných typech braillských řádků naleznete v kapitole [Podporované Braillské Řádky #SupportedBrailleDisplays].
 
-NVDA podporuje různé kódové tabulky, které tak umožňují číst hmatový výstup ve více jazycích. V mnoha případech existují tabulky pro plnopis i zkratkopis pro kterýkoli národ, který čte a píše braillovým písmem. 
+NVDA podporuje různé kódové tabulky včetně plnopisu, zkratkopisu a počítačového písma.
 
 ++ Licence a autorská práva ++
 NVDA je chráněn autorskými právy Copyright NVDA_COPYRIGHT_YEARS Tým NVDA 
@@ -56,14 +59,16 @@ Toto se vztahuje jak na původní, tak upravené kopie tohoto programu a také n
 Kompletní licenci najdete na [této stránce http://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
 
 + Systémové požadavky +
-- NVDA je možno spustit na všech 32 i 64 - bitových verzích systému Windows XP, Vista, 7, 8 a rovněž v serverových edicích Windows. 
+- NVDA je možno spustit na všech 32 i 64 - bitových verzích systému Windows 7, Windows 8, Windows 8.1, Windows 10 a rovněž v serverových edicích Windows od verze Windows Server 2008 R2. 
+ - Pro Windows 7 je vyžadována aktualizace Service Pack 1.
+ - Pro Windows Server 2008 R2 je vyžadována aktualizace Service Pack 1.
 - Měli byste mít nejméně 256 MB operační paměti.
-- Výkonnost procesoru se odhaduje na 1 GHz nebo rychlejší. NVDA lze spustit i na pomalejších počítačích, ale start programu bude pomalý a přinejmenším se to projeví např. na načítání internetových stránek.
-- Měli byste mít aspoň 50 MB volného místa na disku.
+- Výkonnost procesoru se odhaduje na 1 GHz nebo rychlejší.
+- Měli byste mít aspoň 90 MB volného místa na disku.
 -
 
 + Jak získat  a nainstalovat NVDA +
-Pokud dosud nevlastníte kopii programu NVDA, můžete si ji stáhnout ze stránek: [www.nvda-project.org NVDA_URL].
+Pokud dosud nevlastníte kopii programu NVDA, můžete si ji stáhnout ze stránek: [www.nvaccess.org NVDA_URL].
 
 Vejděte do sekce Download, kde naleznete přímý odkaz ke stažení nejnovější verze NVDA. 
 
@@ -80,6 +85,15 @@ Pokud však chcete NVDA na CD a jiných médiích jen pročtení, měli byste po
 Momentálně není možné spustit přenosnou kopii na médiích jen pro čtení.
 
 Je také možné používat dočasnou kopii pro demonstrační účely, ovšem spouštění NVDA pokaždé tímto způsobem může být zdlouhavé.
+
+++ Omezení přenosné a dočasné kopie ++
+Kromě toho, že nelze spustit přenosné či dočasné kopie automaticky po přihlášení, mají ještě následující omezení:
+- Nelze komunikovat s aplikacemi, které běží s administrátorským oprávněním, pokud NVDA sám nemá tato oprávnění (nedoporučuje se).
+- Nelze číst obrazovku kontroly uživatelského účtu (UAC) při spuštění aplikace s administrátorským oprávněním.
+- Windows 8 a pozdější: není podporován vstup z dotykové obrazovky.
+- Windows 8 a pozdější: nelze zpřístupnit režim prohlížení a hlášení psaných znaků v aplikacích Windows Store.
+- Windows 8 a pozdější: není podporováno tlumení zvuku.
+-
 
 ++ Instalace NVDA ++
 Pokud instalujete NVDA přímo z instalačního balíčku, stiskněte tlačítko nainstalovat NVDA.
