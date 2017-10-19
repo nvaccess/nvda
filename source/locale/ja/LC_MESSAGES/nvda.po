@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 00:10+1000\n"
-"PO-Revision-Date: 2017-10-06 14:34+0900\n"
+"POT-Creation-Date: 2017-10-13 00:10+1000\n"
+"PO-Revision-Date: 2017-10-18 16:25+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -2687,6 +2687,24 @@ msgstr "ジェスチャーマップファイルエラー"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDAを読み込み中です。お待ちください..."
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "横長の向き"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "縦長の向き"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "バッテリー %d パーセント 充電中"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "バッテリー %d パーセント 充電していません"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
