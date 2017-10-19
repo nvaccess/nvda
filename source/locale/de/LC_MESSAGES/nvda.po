@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 00:10+1000\n"
+"POT-Creation-Date: 2017-10-13 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: David Parduhn <xkill85@gmx.net>\n"
+"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -2700,6 +2700,24 @@ msgstr "Fehler in der Zuweisungsdatei für Eingabemethoden!"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA wird geladen. Bitte warten..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Querformat"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Portrait"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Batterie wird aufgeladen: %d Prozent"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Batterie wird nicht aufgeladen: %d Prozent"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA ist bereit."
@@ -2715,7 +2733,7 @@ msgstr "Geben Sie die zu suchende Zeichenkette ein."
 #. Translators: An option in find dialog to perform case-sensitive search.
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
 msgid "Case &sensitive"
-msgstr "Groß-/Kleinschreibung &beachten"
+msgstr "Groß- / Kleinschreibung &beachten"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -8587,7 +8605,7 @@ msgstr "Im Hinter&grund befindliche Fortschrittsbalken ausgeben"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
-msgstr "dynamische Änderungen des &Inhaltes ansagen"
+msgstr "Dynamische Änderungen im &Inhalt ansagen"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
@@ -8834,19 +8852,19 @@ msgstr ""
 
 #. Translators: The title of the Windows 10 OCR dialog.
 msgid "Windows 10 OCR"
-msgstr "Windows 10 Texterkennung"
+msgstr "Windows 10-Texterkennung"
 
 #. Translators: Label for an option in the Windows 10 OCR dialog.
 msgid "Recognition &language:"
-msgstr "Erkennungssprache"
+msgstr "Erkennungs&sprache:"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
-msgstr "&überall"
+msgstr "Über&all"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "Whole &word"
-msgstr "ganze &Wörter"
+msgstr "Ganze &Wörter"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Regular expression"
@@ -8858,7 +8876,7 @@ msgstr "Wörterbucheintrag bearbeiten"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "&Muster"
+msgstr "&Vorgabe"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
@@ -8896,7 +8914,7 @@ msgstr "Kommentar"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 msgid "Pattern"
-msgstr "Muster"
+msgstr "Vorgabe"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
@@ -8904,7 +8922,7 @@ msgstr "Ersetzen durch"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
-msgstr "Groß-/Kleinschreibung beachten"
+msgstr "Groß- / Kleinschreibung beachten"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
