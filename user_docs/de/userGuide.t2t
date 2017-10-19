@@ -278,7 +278,7 @@ Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 | Aktuellen Fokus ansagen | NVDA+Tabulatortaste | NVDA+Tabulatortaste | Spricht das aktuell fokussierte Objekt. Bei zweimal Drücken werden die Informationen buchstabiert. |
 | Titelleiste ansagen | NVDA+T | NVDA+T | Liest die Titelleiste der aktuellen Anwendung vor. Bei zweimal Drücken, werden die Informationen buchstabiert. Bei drei Mal wird der Text in die Zwischenablage kopiert. Diese Information wird auch in Braille angezeigt. |
 | Aktives Fenster vorlesen | NVDA+B | NVDA+B | Liest alle Steuerelemente im aktiven Fenster vor (hilfreich für Dialogfelder). |
-| Statuszeile ausgeben | NVDA+ende | NVDA+umschalt+Ende | gibt die Statuszeile aus, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Wenn Sie diese Tastenkombination zweimal drücken, wird die Statuszeile buchstabiert. |
+| Statuszeile ausgeben | NVDA+ende | NVDA+umschalt+Ende | gibt die Statuszeile aus, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Wenn Sie diese Tastenkombination zweimal drücken, wird die Statuszeile buchstabiert. Wenn Sie die Tastenkombination dreimal drücken, wird die Statuszeile in die Zwischenablage kopiert. |
 %kc:endInclude
 
 ++ Mit dem System-Cursor navigieren ++[SystemCaret]
@@ -588,7 +588,7 @@ Wenn Sie eine Braillezeile besitzen, kann NVDA diese verwenden, um Informationen
 Falls Ihre Braillezeile eine Tastatur besitzt, können Sie außerdem Kurz-, Voll- oder Basisschrift eingeben.
 
 Bitte sehen Sie im Abschnitt [unterstützte Braillezeilen #SupportedBrailleDisplays] nach, um zu erfahren, ob Ihre Braillezeile unterstützt wird.
-Verwenden Sie den [Dialog "Brailleeinstellungen" #BrailleSettings], um NVDA an Ihre Braillezeile anzupassen.
+Verwenden Sie den [Dialog "Braille-Einstellungen" #BrailleSettings], um NVDA an Ihre Braillezeile anzupassen.
 
 ++ Abkürzungen für Steuerelementtypen, Statusanzeigen und Sprungmarken ++
 Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende Abkürzungen für Steuerelementtypen, Statusanzeigen und Sprungmarken festgelegt.
@@ -678,9 +678,9 @@ Die folgenden Abkürzungen werden für Sprungmarken verwendet:
 | srch | Suche |
 | rgn | region |
 
-++ Brailleeingabe ++
+++ Braille-Eingabe ++
 NVDA unterstützt die Eingabe von Kurz-, Voll- und Basisschrift über eine Brailletastatur.
-Verwenden sie die Einstellung ["Brailleeingabetabelle" #BrailleInputTable] in den Brailleeinstellungen, um zu bestimmen, welche Übersetzungstabelle Sie verwenden wollen.
+Verwenden Sie die Einstellung ["Braille-Eingabetabelle" #BrailleInputTable] in den Braille-Einstellungen, um zu bestimmen, welche Übersetzungstabelle Sie verwenden wollen.
 
 Wenn Sie Basisschrift eingeben, wird der eingegebene Text unmittelbar nach der Eingabe über die Brailletastatur in das aktuelle Programm eingefügt.
 Wenn Sie Kurz- oder Vollschrift eingeben, wird der Text erst in die aktuelle Anwendung eingefügt, wenn Sie ein Wort mit der Leertaste beenden.
@@ -707,15 +707,15 @@ Wenn die Erkennung abgeschlossen ist, wird das Erkennungsergebnis in einem Dokum
 Drücken Sie die Leertaste oder die eingabetaste, um den Text (üblicherweise durch Klicken) zu aktivieren.
 Drücken Sie Escape, um das Erkennungsergebnis zu schließen.
 
-++ Windows 10 OCR ++[Win10Ocr]
+++ Windows 10-Texterkennung ++[Win10Ocr]
 windows 10 enthält eine optische Zeichenerkennung für viele Sprachen.
 Sie können diese zeichenerkennung verwenden, um Text aus Grafiken oder unzugänglichen Anwendungen auszulesen.
 
-Sie können die Erkennungssprache einstellen, indem Sie den Dialog [Windows 10 OCR #Win10OcrSettings] in den NVDA-Einstellungen aufrufen.
+Sie können die Erkennungssprache einstellen, indem Sie den Dialog [Windows 10-Texterkennung #Win10OcrSettings] in den NVDA-Einstellungen aufrufen.
 Zusätzliche Sprachen können Sie in den Einstellungen von Windows unter Zeit und Sprache -> Region und Sprache -> Sprache hinzufügen installieren.
 
 %kc:beginInclude
-Drücken Sie NVDA+r, um den Text im aktuellen Navigatorobjekt mit Hilfe der Windows 10 OCR zu erkennen.
+Drücken Sie NVDA+r, um den Text im aktuellen Navigatorobjekt mit Hilfe der Windows 10-Texterkennung zu erkennen.
 %kc:endInclude
 
 + Anwendungsspezifische Funktionen +
@@ -885,7 +885,7 @@ Eine Notiz lesen, bearbeiten oder löschen:
 
 ++ Azardi ++
 %kc:beginInclude
-Wenn sich sich in der Tabellenansicht der hinzugefügten Bücher befinden:
+Wenn sie sich in der Tabellenansicht der hinzugefügten Bücher befinden:
 || Name | Taste | Beschreibung |
 | Eingabe | Eingabe | Öffnet das ausgewählte buch. |
 | Kontextmenü | Anwendungen | Öffnet das Kontextmenü für das ausgewählte Buch. |
@@ -1493,7 +1493,7 @@ Die Einrückung um einen Tabulator entspricht hierbei der Einrückung um vier Le
 - beides: dies ist eine Kombination der beiden obigen Optionen.
 -
 
-+++ Einstellungen für die Texterkennung in Windows 10 +++[Win10OcrSettings]
++++ Einstellungen für die Windows 10-Texterkennung +++[Win10OcrSettings]
 Diesen Dialog finden Sie in den NVDA-Einstellungen. Er erlaubt die Konfiguration der [Optischen Zeichenerkennung für Windows 10 #Win10Ocr].
 
 ==== Erkennungssprache ====
@@ -1794,18 +1794,18 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
 
 ++ Windows OneCore-Stimmen ++
 Windows 10 enthält neue Stimmen, die als "Mobile" oder "OneCore"-Stimmen bekannt sind.
-Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft Sapi 5-Stimmen in früheren Windows-versionen.
+Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft SAPI 5-Stimmen in früheren Windows-versionen.
 
-Informationen darüber, wie Sie Stimmen in zusätzlichen Sprachen installieren, finden Sie im folgenden Artikel: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/help/22797/windows-10-narrator-tts-voices] finden Sie eine Beschreibung, wie Sie zusätzliche Stimmen und Sprachen installieren können.
 
-Bitte bedenken Sie auch, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
+Bitte bedenken Sie dabei, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
 Eine Änderung der Sprechgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprechgeschwindigkeit in NVDA.
-Dieses Problem kann nur durch Änderungen an Windows behoben werden.
+Dieses Problem kann nur durch Änderungen in Windows behoben werden.
 Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
 
 ++ AudioLogic TTS 3 ++
 Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
-Um sie in NVDA nutzen zu können, müssen sie die Sprachausgabe auf Ihrem System installiert haben.
+Um sie in NVDA nutzen zu können, müssen Sie die Sprachausgabe auf Ihrem System installiert haben.
 Für weitere Informationenbesuchen Sie bitte die AudioLogic-Website unter http://www.audiologic.it/.
 
 Diese Sprachausgabe unterstützt die [Buchstabierfunktionalität #VoiceSpellingFunctionality] nicht.
@@ -1821,12 +1821,12 @@ Ein Teil des Erlöses aus dem Verkauf von Vocalizer fließt als Spende an NV Acc
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
 
-++ Die Focus/PAC-Mate-Serien von FreedomScientific ++
-Die Braillezeilen Focus 40 Blue und alle PAC-Mate-Zeilen von der amerikanischen Firma [FreedomScientific http://www.freedomscientific.com/] werden unterstützt.
+++ Die Focus- und PacMate-Serien von FreedomScientific ++
+Die Braillezeilen Focus 40 Blue und alle PacMate-Zeilen von der amerikanischen Firma [FreedomScientific http://www.freedomscientific.com/] werden unterstützt.
 Die Treiber für die Braillezeilen von FreedomScientific müssen auf Ihrem System vorab installiert sein.
 Falls Sie sie noch nicht installiert haben, können Sie die Treiber von der Website [hier http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] herunterladen.
 Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, werden die Treiber für alle Braillezeilen gleichermaßen von FreedomScientific unterstützt.
-Wenn Sie eine 64-Bit-Version von windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von diesem Link installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
+Wenn Sie eine 64-Bit-Version von windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von dieser Adresse installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
 
 Für gewöhnlich kann NVDA den verwendeten Anschluss automatisch erkennen, gleichgültig ob die Braillezeile per USB oder per Bluetooth verbunden ist.
 Beim Konfigurieren der Braillezeile können Sie jedoch die Verbindungsart ausdrücklich festlegen, indem Sie als anschluss entweder USB oder Bluetooth auswählen.
@@ -2174,7 +2174,7 @@ Folgende Braillezeilen werden unterstützt:
 -
 
 Falls BrxCom installiert ist, wird es benutzt.
-BrxCom ist ein Programm, welches Brailleeingabe unabhängig von Screenreadern ermöglicht. 
+BrxCom ist ein Programm, welche Braille-Eingabe unabhängig von Screenreadern ermöglicht. 
 Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
 Die Braille-Eingabe ist bei den Modellen Trio und Braillex Live verfügbar.
 
@@ -2484,6 +2484,9 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
+| keine | --create-portable | Erstellt und startet eine neue portable Version von NVDA. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
+| keine | --create-portable-silent | Erstellt eine neue portable Kopie von NVDA, ohne diese zu starten. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
+| keine | --portable-path=Ordner | Gibt den Ordner an, in dem die portable Version erstellt werden soll. |
 
 ++ Systemparameter ++[SystemWideParameters]
 Sie können einige Werte in der Registrierdatenbank von Windows verwenden, um das Verhalten von NVDA zu beeinflussen.
