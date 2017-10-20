@@ -531,24 +531,25 @@ the NVDAObject for IAccessible
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
 
-	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None,parent=None,indexInParent=None):
+	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,
+		event_windowHandle=None,event_objectID=None,event_childID=None,parent=None,indexInParent=None):
 		"""
 		@param windowHandle: the window handle, if known.
 		@type windowHandle: int
 		@param IAccessibleObject: a pointer to an IAccessible object.
 		@type IAccessibleObject: ctypes.POINTER(IAccessible)
-		@param IAccessibleChildID: A child ID that will be used on methods of the IAccessible pointer.
+		@param IAccessibleChildID: a child ID that will be used on methods of the IAccessible pointer.
 		@type IAccessibleChildID: int
 		@param event_windowHandle: the window handle event parameter.
 		@type event_windowHandle: int
 		@param event_objectID: the objectID for the IAccessible Object, if known.
 		@type event_objectID: int
-		@param event_childID: The child ID event parameter that will be used on methods of the IAccessible pointer.
+		@param event_childID: the child ID event parameter that will be used on methods of the IAccessible pointer.
 		@type event_childID: int
-		@param parent: The parent for this object if caching is required.
+		@param parent: the parent for this object if caching is required.
 			This is provided for objects for which accNavigate is not fully implemented.
 		@type parent: L{NVDAObject}
-		@type indexInParent: This object's index in the parent's children.
+		@type indexInParent: this object's index in the parent's children.
 			This is provided for objects for which accNavigate is not fully implemented.
 		@type indexInParent: int
 		"""
