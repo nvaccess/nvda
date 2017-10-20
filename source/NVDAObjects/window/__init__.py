@@ -46,7 +46,7 @@ class WindowProcessHandleContainer(object):
  
 	def __init__(self,windowHandle):
 		"""
-		@param windowHandle: the handle of the window whos process handle should be retreaved.
+		@param windowHandle: the handle of the window whose process handle should be retrieved.
 		@type windowHandle: int
 		"""
 		self.windowHandle=windowHandle
