@@ -143,27 +143,27 @@ def removeOldLibFiles(destPath,rebootOK=False):
 	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
 	@type rebootOK: boolean
 	"""
-	for topDir in (u'lib',u'lib64'):
+	for topDir in ('lib','lib64'):
 		currentLibPath=os.path.join(destPath,topDir,versionInfo.version)
 		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
 			if parent==currentLibPath:
 				# Lib dir for current installation. Don't touch this!
-				log.debug("Skipping current install lib path: %s"%parent)
+				log.debug("Skipping current install lib path: %r"%parent)
 				continue
 			for d in subdirs:
 				path=os.path.join(parent,d)
-				log.debug("Removing old lib directory: %s"%path)
+				log.debug("Removing old lib directory: %r"%path)
 				try:
 					os.rmdir(path)
-				except OSError as e:
-					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %s, Error: %s"%(path,e))
+				except OSError:
+					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r"%path)
 			for f in files:
 				path=os.path.join(parent,f)
-				log.debug("Removing old lib file: %s"%path)
+				log.debug("Removing old lib file: %r"%path)
 				try:
 					tryRemoveFile(path,numRetries=2,rebootOK=rebootOK)
 				except RetriableFailure:
-					log.warning("A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %s"%path)
+					log.warning("A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"%path)
 
 def removeOldProgramFiles(destPath):
 	# #3181: Remove espeak-ng-data\voices except for variants.
