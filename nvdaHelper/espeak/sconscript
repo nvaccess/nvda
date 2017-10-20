@@ -77,11 +77,11 @@ def espeak_compileDict_buildAction(target,source,env):
 		lang=source[0].name.split('_')[0]
 		v=espeak_VOICE(languages=lang+'\x00')
 		if espeak.espeak_SetVoiceByProperties(ctypes.byref(v))!=0:
-			print "espeak_compileDict_action: failed to switch to language %s"%lang
+			print("espeak_compileDict_action: failed to switch to language %s"%lang)
 			return 1
 		dictPath=os.path.split(source[0].abspath)[0]+'/'
 		if espeak.espeak_ng_CompileDictionary(dictPath,None,0,None)!=0:
-			print "espeak_compileDict_action: failed to compile dictionary for  language %s"%lang
+			print("espeak_compileDict_action: failed to compile dictionary for  language %s"%lang)
 			return
 	finally:
 		espeak.espeak_Terminate()

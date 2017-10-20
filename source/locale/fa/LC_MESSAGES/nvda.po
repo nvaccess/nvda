@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-07 10:14+0330\n"
+"POT-Creation-Date: 2017-10-13 00:10+1000\n"
+"PO-Revision-Date: 2017-10-12 19:28+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -2689,6 +2689,24 @@ msgstr "خطا در فایلِ نقشه‌ی فرمانهای کلیدی لمس�
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA دارد بارگذاری می‌شود. لطفا شکیبا باشید..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "افقی"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "عمودی"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "در حالِ شارژ. %d درصد"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "شارژ نمیشود. %d درصد"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA آغاز به کار کرد."
@@ -3346,6 +3364,7 @@ msgid "No navigator object"
 msgstr "پِیمایِشگری وجود ندارد."
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s در کلیپ‌برد کپی شد."
@@ -3662,10 +3681,12 @@ msgstr "هیچ خطِّ وضعیتی یافت نشد"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "نوارِ وضعیتِ برنامه‌ی جاری را میخوانَد و پِیمایِشگر را به محل قرارگیری آن میبَرَد. "
-"اگر دو بار فشرده شود، اطلاعات را هِجّی میکند."
+"اگر دو بار فشرده شود، اطلاعات را هِجّی میکند. اگر سه بار فشرده شود، نوارِ وضعیت "
+"را در کلیپ‌برد کپی میکند."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7571,11 +7592,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "نصبِ افزونه"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"نسخه ای از این افزونه قبلا نصب شده است. آیا میخواهید آنرا بروزرسانی کنید؟"
+"شما دارید نگارشِ {newVersion} از افزونه‌ی {summary} را نصب میکنید که به نظر "
+"میرسد قبلا نصب شده باشد. آیا همچنان میخواهید به‌روزش کنید؟"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"نسخه‌ای از این افزونه قبلا نصب شده است. آیا میخواهید افزونه‌ی {summary} را از "
+"نگارشِ {curVersion} به نگارشِ {newVersion} به‌روز کنید؟"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7979,6 +8012,10 @@ msgstr "انتخابِ پوشه‌ی نسخه‌ی قابلِ حمل"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "کپیِ تنظیماتِ &کاربرِ فعلی"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&اجرای نسخه‌ی قابلِ حملِ جدید پس از ایجاد"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.

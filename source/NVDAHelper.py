@@ -18,8 +18,12 @@ from logHandler import log
 import time
 import globalVars
 
-versionedLibPath=os.path.join('lib',versionInfo.version)
-versionedLib64Path=os.path.join('lib64',versionInfo.version)
+versionedLibPath='lib'
+versionedLib64Path='lib64'
+if getattr(sys,'frozen',None):
+	# Not running from source. Libraries are in a version-specific directory
+	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
+	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)
 
 _remoteLib=None
 _remoteLoader64=None
