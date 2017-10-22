@@ -1,3 +1,4 @@
+os: Visual Studio 2017
 version: "{branch}-{build}"
 
 branches:
@@ -85,9 +86,9 @@ build_script:
      foreach ($syms in
       # We don't just include source\*.dll because that would include system dlls.
       "source\liblouis.dll", "source\*.pdb",
-      "source\lib\$env:version\*.dll", "source\lib\$env:version\*.pdb",
+      "source\lib\*.dll", "source\lib\*.pdb",
       # We include source\lib64\*.exe to cover nvdaHelperRemoteLoader.
-      "source\lib64\$env:version\*.dll", "source\lib64\$env:version\*.exe", "source\lib64\$env:version\*.pdb",
+      "source\lib64\*.dll", "source\lib64\*.exe", "source\lib64\*.pdb",
       "source\synthDrivers\*.dll", "source\synthDrivers\*.pdb"
      ) {
       & $env:symstore add /s symbols /compress -:NOREFS /t NVDA /f $syms

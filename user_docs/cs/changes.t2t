@@ -4,6 +4,45 @@
 %!includeconf: ../changes.t2tconf
 
 
+= 2017.4 =
+
+== Novinky ==
+- V režimu prohlížení je možné posunovat se na konec či začátek oblastí pomocí příkazů čárka/shift+čárka pro přeskočení skupiny prvků. (#5842)
+- Ve Firefoxu, Chrome a Internet Exploreru rychlá navigace po editačních polích a formulářových prvcích přechází i na upravitelný text (např. contentEditable). (#5534)
+- Ve webových prohlížečích v seznamu prvků je teď možné najít formulářové prvky a tlačítka. (#588)
+- Počáteční podpora Windows 10 na ARM64. (#7508)
+- Raná podpora čtení a interaktivní navigace matematického obsahu pro knihy Kindle s přístupným matematickým obsahem. (#7536)
+- Přidaná podpora pro čtečku e-knih Azardi. (#5848)
+- Při aktualizaci doplňků NVDA oznámí verzi doplňku. (#5324)
+- Přidaná podpora pro vytvoření přenosné kopie pomocí příkazového řádku. (#6329)
+- Podpora Microsoft Edge přes strážce aplikace Windows Defender. (#7600)
+- Pokud používáte laptop nebo tablet, NVDA oznámí, jestli se baterie nabíjí či nikoliv, a změny při otáčení obrazovky. (#4574, #4612)
+
+
+== Změny ==
+- Minimálně podporovaný operační systém je nyní Windows 7 s aktualizací Service Pack 1 nebo Windows Server 2008 R2 s aktualizací Service Pack 1. (#7546)
+- Dialogová okna ve Firefoxu a Chrome jsou automaticky v režimu prohlížení, pokud nejsou uvnitř webové aplikace. (#4493)
+- Při pohybu tabulátorem nebo rychlé navigaci v režimu prohlížení se již neoznamuje vyskočení z prvků jako např. seznamu nebo tabulky, což zlepší účinnost navigace. (#2591)
+- V režimu prohlížení ve Firefoxu a Chrome při pohybu tabulátorem nebo rychlé navigaci NVDA oznámí názvy skupin formulářových prvků. (#3321)
+- V režimu prohlížení při pohybu po vnořených objektech o/shift+o jsou nyní podporovány prvky audio a video a prvky s Aria rolemi application a dialog. (#7239)
+- Aktualizace Espeak-NG (commit 01919cd48a566cdf34347784b2e74554b376e900) řeší některé problémy při vytváření verzí. (#7385)
+- Po třetí aktivaci příkazu pro oznámení stavového řádku se obsah stavového řádku zkopíruje do schránky. (#1785)
+- U braillského řádku Baum je možné omezit příkazy kláves při jejich přiřazení na model řádku, který se právě používá (např. VarioUltra nebo Pronto). (#7517)
+
+
+== Opravy ==
+- Odkazy jsou nyní zobrazeny v braillu v aplikacích jako Microsoft Word. (#6780)
+- NVDA již není nápadně pomalý, pokud je otebřeno více záložek v prohlížečích Firefox nebo Chrome. (#3138)
+- Při přesunutí kurzoru u braillského řádku MDV Lilly již nedochází k nesprávnému posunutí vpřed o jeden znak navíc. (#7469)
+- V prohlížeči Internet Explorer a jiných dokumentech MSHTML je nyní podporován atribut HTML5 required pro zobrazení požadovaného stavu formulářového prvku. (#7321)
+- Braillské řádky se nyní aktualizují při psaní arabských znaků ve Wordpadu v dokumentu se zarovnáním vlevo. (#511)
+- Přístupné štítky pro ovládací prvky v prohlížeči Mozilla Firefox jsou rychleji oznámeny v režimu prohlížení, když se štítek neobjeví jako samotný obsah. (#4773)
+- Ve Windows 10 Creators Update je Firefox znovu přístupný po restartu NVDA. (#7269)
+- Při restartu NVDA, pokud je Mozilla Firefox v zaměření, režim prohlížení bude znovu dostupný, i když možná budete muset přejít sem a tam klávesami alt+tab. (#5758)
+- Matematický obsah je nyní přístupný v Google Chrome, aniž by musel být v systému nainstalovaný Mozilla Firefox. (#7308)
+- Operační systém a další aplikace by měly být stabilnější hned po instalaci NVDA před restartem ve srovnání s předchozími verzemi NVDA. (#7563)
+
+
 = 2013.1 =
 Highlights of this release include a more intuitive and consistent laptop keyboard layout; basic support for Microsoft PowerPoint; support for long descriptions in web browsers; and support for input of computer braille for braille displays which have a braille keyboard.
 

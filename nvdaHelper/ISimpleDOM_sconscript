@@ -31,7 +31,7 @@ idlFile=env.Substfile(
 
 tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(
 	source=idlFile,
-	MIDLFLAGS=['/c_ext','/I',Dir('.')],
+	MIDLFLAGS=[env['MIDLFLAGS'],'/c_ext','/I',Dir('.')],
 )
 # #7036: hack: Ignore midl.exe when deciding to rebuild, as its position in the dependencies
 # is different in the run before the idl files are copied versus subsequent runs.

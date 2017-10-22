@@ -222,8 +222,8 @@ setup(
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
-		("lib/%s"%version, glob("lib/%s/*.dll"%version)),
-		("lib64/%s"%version, glob("lib64/%s/*.dll"%version) + glob("lib64/%s/*.exe"%version)),
+		("lib/%s"%version, glob("lib/*.dll")),
+		("lib64/%s"%version, glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*")),
