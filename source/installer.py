@@ -455,7 +455,7 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	tryCopyFile(os.path.join(destPath,"nvda_noUIAccess.exe"),os.path.join(destPath,"nvda.exe"))
 	if shouldCopyUserConfig:
 		copyUserConfig(os.path.join(destPath,'userConfig'))
-	removeOldLibFiles(destPath,rebootOK=False)
+	removeOldLibFiles(destPath,rebootOK=True)
 
 def registerEaseOfAccess(installDir):
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH, 0,
