@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 00:10+1000\n"
-"PO-Revision-Date: 2017-10-05 17:15+0100\n"
+"POT-Creation-Date: 2017-10-13 00:10+1000\n"
+"PO-Revision-Date: 2017-10-17 19:35+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -96,7 +96,7 @@ msgstr "Chyba v aplikačním modulu %s"
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
 msgid "banner"
-msgstr "baner"
+msgstr "záhlaví"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgctxt "aria"
@@ -331,7 +331,7 @@ msgstr "nabtlo"
 #. Translators: Displayed in braille for an object which is a
 #. spin button.
 msgid "spnbtn"
-msgstr "okrtlo"
+msgstr "čslnk"
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view button.
@@ -419,7 +419,7 @@ msgstr "nvybr"
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
 msgid "bnnr"
-msgstr "bnr"
+msgstr "zhlv"
 
 #. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
@@ -2313,7 +2313,7 @@ msgstr "indikátor"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
-msgstr "okrouhlé tlačítko"
+msgstr "číselník"
 
 #. Translators: Identifies a sound clip on websites.
 msgid "sound"
@@ -2676,6 +2676,24 @@ msgstr "chyba souboru mapy vstupních příkazů"
 msgid "Loading NVDA. Please wait..."
 msgstr "Načítám, prosím čekejte..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Krajina"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Portrét"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Nabíjí se baterie. %d procent"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Nenabíjí se baterie. %d procent"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA spuštěn"
@@ -2742,7 +2760,7 @@ msgstr "Myš"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Speech"
-msgstr "Mluvení"
+msgstr "Řeč"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration"
@@ -3082,7 +3100,7 @@ msgstr "Zapíná a vypíná hlášení čísel řádků"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
-msgstr "Hlásit zarovnání mluvením"
+msgstr "Hlásit zarovnání řečí"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with tones"
@@ -3090,7 +3108,7 @@ msgstr "Hlásit zarovnání zvuky"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech and tones"
-msgstr "Hlásit zarovnání mluvením i zvuky"
+msgstr "Hlásit zarovnání řečí i zvuky"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation off"
@@ -5148,7 +5166,7 @@ msgstr "Šipky vlevo, vpravo a nahoru"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Left and up Arrows"
-msgstr "Śipky vlevo a nahoru"
+msgstr "Šipky vlevo a nahoru"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -8556,7 +8574,7 @@ msgstr "Vypnuto"
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
-msgstr "Mluvení"
+msgstr "Řeč"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -8564,7 +8582,7 @@ msgstr "Zvuky"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
 msgid "Both  Speech and Tones"
-msgstr "Mluvení i zvuky"
+msgstr "Řeč i zvuky"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
