@@ -4,6 +4,9 @@ NVDA is a free, open source screen reader for Microsoft Windows.
 It is developed by NV Access in collaboration with a global community of contributors.
 To learn more about NVDA or download a copy, visit the main [NV Access](http://www.nvaccess.org/) website.
 
+## appveyor status
+[![Build status](https://ci.appveyor.com/api/projects/status/github/nvaccess/nvda?branch=master&svg=true)](https://ci.appveyor.com/project/nvaccess/nvda)
+
 ## Key Project Links
 * [NV Access](http://www.nvaccess.org/): The main home of NVDA
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
