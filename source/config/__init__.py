@@ -316,6 +316,10 @@ class ConfigManager(object):
 		self._shouldHandleProfileSwitch = True
 		self._pendingHandleProfileSwitch = False
 		self._suspendedTriggers = None
+		# Never save the config if running securely or if running from the launcher.
+		# When running from the launcher we dont save settings becuase the user may decide not to install this version,
+		# and these settings may not be compatible with with the already installed version. See #7688
+		self._shouldWriteProfile = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		self._initBaseConf()
 		#: Maps triggers to profiles.
 		self.triggersToProfiles = None
@@ -378,7 +382,7 @@ class ConfigManager(object):
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
 		try:
-			profileUpgrader.upgrade(profile, self.validator)
+			profileUpgrader.upgrade(profile, self.validator, self._writeProfileToFile, self._shouldWriteProfile)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
 			log.info(u"Config before schema update:\n%s" % profileCopy, exc_info=False)
@@ -469,19 +473,21 @@ class ConfigManager(object):
 			return
 		self._dirtyProfiles.add(self.profiles[-1].name)
 
+	def _writeProfileToFile(self, filename, profile):
+		with FaultTolerantFile(filename) as f:
+			profile.write(f)
+
 	def save(self):
 		"""Save all modified profiles and the base configuration to disk.
 		"""
-		if globalVars.appArgs.secure:
-			# Never save the config if running securely.
+		if not self._shouldWriteProfile:
+			log.info("Not writting profile, either --secure or --launcher args present")
 			return
 		try:
-			with FaultTolerantFile(self.profiles[0].filename) as f:
-				self.profiles[0].write(f)
+			_writeProfileToFile(self.profiles[0].filename, self.profiles[0])
 			log.info("Base configuration saved")
 			for name in self._dirtyProfiles:
-				with FaultTolerantFile(self._profileCache[name].filename) as f:
-					self._profileCache[name].write(f)
+				_writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except Exception as e:
