@@ -14,7 +14,6 @@ import hwPortUtils
 import braille
 import inputCore
 from baseObject import ScriptableObject
-from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 from logHandler import log
 import brailleInput
 import hwIo
@@ -63,6 +62,30 @@ FS_PKT_INFO = "\x80"
 FS_PKT_WRITE = "\x81"
 FS_PKT_EXT_KEY = "\x82"
 
+def _makeTranslationTable(dotsTable):
+	def isoDot(number):
+		return 1 << ((number + 1) - 1)
+	
+	outputTable = [0] * 256
+	for byte in xrange(256):
+		cell = 0
+		for dot in xrange(8):
+			if byte & isoDot(dot):
+				cell |= dotsTable[dot]
+		outputTable[byte] = cell
+	return outputTable
+
+def _translate(cells, dotsTable):
+	outCells = [0] * len(cells)
+	for i, cell in enumerate(cells):
+		outCells[i] = dotsTable[cell]
+	return outCells
+
+FOCUS_1_DOTS_TABLE = [
+	0X01, 0X02, 0X04, 0X10, 0X20, 0X40, 0X08, 0X80
+]
+
+FOCUS_1_TRANSLATION_TABLE = _makeTranslationTable(FOCUS_1_DOTS_TABLE)
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 
@@ -146,6 +169,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		self._pendingCells = []
 		self._keyBits = 0
 		self._extendedKeyBits = 0
+		self.translationTable = None
 		self.leftWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
 		action=self.leftWizWheelActionCycle.next()
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1])
@@ -170,15 +194,24 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
 			except EnvironmentError:
-				pass
+				continue
 
-		# Send an identification request
-		self._sendPacket(FS_PKT_QUERY)
-		self._dev.waitForRead(TIMEOUT)
-		self._dev.waitForRead(TIMEOUT)
-		numCells = self.numCells
-		if not numCells:
+			# Send an identification request
+			self._sendPacket(FS_PKT_QUERY)
+			for _i in xrange(1):
+				self._dev.waitForRead(TIMEOUT)
+				if self.numCells and self._model:
+					break
+			if self.numCells:
+				# A display responded.
+				log.info("Found {device} connected via {type} ({port})".format(
+					device=self._model, type=portType, port=port))
+				break
+			self._dev.close
+
+		else:
 			raise RuntimeError("No Freedom Scientific display found")
+
 		self._configureDisplay()
 		self.gestureMap.add("br(freedomScientific):topRouting1","globalCommands","GlobalCommands","braille_scrollBack")
 		self.gestureMap.add("br(freedomScientific):topRouting%d"%numCells,"globalCommands","GlobalCommands","braille_scrollForward")
@@ -245,6 +278,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			self._model = payload[24:40].replace("\x00", "")
 			self._firmwareVersion = payload[40:48].replace("\x00", "")
 			self.numCells = MODELS.get(self._model, 0)
+			if self.numCells in (44, 70, 84,):
+				# Focus 1: apply custom translation table
+				self.translationTable = FOCUS_1_TRANSLATION_TABLE
 			log.debug("Device info: manufacturer: %s model: %s, version: %s" % (self._manufacturer, self._model, self._firmwareVersion))
 		elif packetType == FS_PKT_WHEEL:
 			wheelNumber = ((ord(arg1) >> 3) & 0X7)
@@ -341,6 +377,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		return checksum
 
 	def display(self,cells):
+		if self.translationTable:
+			cells = _translate(cells, FOCUS_1_DOTS_TABLE)
 		if not self._awaitingAck:
 			cells="".join([chr(x) for x in cells])
 			self._sendPacket(FS_PKT_WRITE, chr(self.numCells), 0, 0, cells)
