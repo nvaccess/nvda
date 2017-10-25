@@ -31,8 +31,8 @@ def doAnyUpgrades(synth):
 	""" Do any upgrades required for the synth passed in.
 	"""
 	if globalVars.appArgs.launcher:
-		# When running from the launcher we dont upgrade dicts becuase the user may decide not to install this version,
-		# and the dict location may not be compatible with with the already installed version. See #7688
+		# When running from the launcher we don't upgrade dicts because the user may decide not to install this version,
+		# and the dict location may not be compatible with the already installed version. See #7688
 		# We allow the upgrade when secure arg is present so that dictionaries work on secure screens.
 		return
 

@@ -12,7 +12,7 @@ from . import profileUpgradeSteps
 
 SCHEMA_VERSION_KEY = "schemaVersion"
 
-def upgrade(profile, validator, writeProfileToFileFunc, shouldWriteProfileToFile):
+def upgrade(profile, validator, writeProfileToFileFunc):
 	""" Upgrade a profile in memory and validate it
 	If it is safe to do so, as defined by shouldWriteProfileToFile, the profile is written out.
 	"""
@@ -26,7 +26,7 @@ def upgrade(profile, validator, writeProfileToFileFunc, shouldWriteProfileToFile
 	try:
 		# write out the configuration once the upgrade has been validated. This means that if NVDA crashes for some
 		# other reason the file does not need to be upgraded again.
-		if shouldWriteProfileToFile:
+		if writeProfileToFileFunc:
 			writeProfileToFileFunc(profile.filename, profile)
 	except Exception as e:
 		log.warning("Error saving configuration; probably read only file system")
