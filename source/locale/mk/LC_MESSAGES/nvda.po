@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-57432f4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-29 00:10+1000\n"
-"PO-Revision-Date: 2017-10-02 07:51+0100\n"
+"POT-Creation-Date: 2017-10-13 00:10+1000\n"
+"PO-Revision-Date: 2017-10-16 06:57+0100\n"
 "Last-Translator: Kristijan Lazarev <kristijan.lazarev@gmail.com>\n"
 "Language-Team: мк <LL@li.org>\n"
 "Language: mk\n"
@@ -2694,6 +2694,24 @@ msgstr "грешка во датотеката од командите"
 msgid "Loading NVDA. Please wait..."
 msgstr "се вчитува НВДА, ве молиме почекајте..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "хоризонтално"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "портрет"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Батеријата се полни. %d отсто"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Полнењето е запрено, Батеријата има. %d проценти"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA е вклучен"
@@ -3374,6 +3392,7 @@ msgid "No navigator object"
 msgstr "нема навигаторски објект"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s е копирано на клипбордот"
@@ -3488,7 +3507,7 @@ msgstr ""
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
-msgstr "на почеток"
+msgstr "најгоре"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3711,10 +3730,13 @@ msgstr "не е пронајдена линија што треба да го с
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
-"ја чита лентата за статус на моменталната апликација и го носи навигаторот "
-"на неа. Доколку се притисне двапати, ја изговара информацијата буква по буква"
+"Ја чита статусната лента од моменталната апликација и го поставува "
+"навигаторскиот курсор на неа. Ако се притисне двапати, ја изговара таа "
+"информација буква по буква. А ако се притисне трипати, го копира она од "
+"статусната лента на клипбордот."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3760,7 +3782,7 @@ msgstr ""
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
-msgstr "нема ажурирање на лентата за прогрес"
+msgstr "не информирај за ажурирањата од лентата за прогрес"
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "Speak progress bar updates"
@@ -3871,7 +3893,7 @@ msgstr ""
 #. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
 #, python-format
 msgid "Currently running application is %s"
-msgstr "%s е апликацијата отворена во овој момент"
+msgstr "%s е моментално отворената апликација."
 
 #. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
 #. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
@@ -3890,7 +3912,7 @@ msgstr ""
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
-msgstr "го прикажува нвда диалогот за генералните нагодувања"
+msgstr "го прикажува нвда диалогот за општите нагодувања"
 
 #. Translators: Input help mode message for go to synthesizer dialog command.
 msgid "Shows the NVDA synthesizer dialog"
@@ -4379,7 +4401,7 @@ msgstr "нумерички ентер"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
-msgstr "побегни"
+msgstr "ескејп"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
@@ -7656,12 +7678,24 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "инсталација на додаток"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Постара верзија од овој додаток е веќе инсталирана. Би сакал ли да ја "
-"ажурираш истата?"
+"Пред инсталирање си на верзијата {newVersion} од {summary}, која се чини "
+"дека веќе претходно е инсталирана. Затоа наместо инсталирање, дали би сакал "
+"да ја ажурираш истата?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Постара верзија од овој додаток е веќе инсталирана. Па би сакал ли да ја "
+"ажурираш верзијата {summary} {curVersion} на верзијата {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8081,6 +8115,10 @@ msgstr "одбери го преносниот директориум"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "ископирај ја моменталната  &корисничка конфигурација"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Вклучи ја новата преносна верзија по создавањето"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
