@@ -43,6 +43,7 @@ class AppArgs:
 	configPath = UNIT_DIR.decode("mbcs")
 	secure = False
 	disableAddons = True
+	launcher = False
 globalVars.appArgs = AppArgs()
 
 # We depend on the current directory to load some files;
