@@ -44,16 +44,24 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 		os.makedirs(os.path.dirname(path))
 	shortcutExists=os.path.isfile(path)
 	short=wsh.CreateShortcut(path)
-	short.TargetPath=targetPath
-	if arguments:
+	needsSave=not shortcutExists
+	if short.targetPath!=targetPath:
+		short.TargetPath=targetPath
+		needsSave=True
+	if arguments and short.arguments!=arguments:
 		short.arguments=arguments
+		needsSave=True
 	if not shortcutExists and hotkey:
 		short.Hotkey=hotkey
-	if iconLocation:
+		needsSave=True
+	if iconLocation and short.iconLocation!=iconLocation:
 		short.IconLocation=iconLocation
-	if workingDirectory:
+		needsSave=True
+	if workingDirectory and short.workingDirectory!=workingDirectory:
 		short.workingDirectory=workingDirectory
-	short.Save()
+		needsSave=True
+	if needsSave:
+		short.Save()
 
 def getStartMenuFolder(noDefault=False):
 	try:
