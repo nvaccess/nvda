@@ -27,6 +27,7 @@ Qué hay de Nuevo en NVDA
 - Se ha actualizado Espeak-ng (a commit 01919cd48a566cdf34347784b2e74554b376e900), esto resuelve algunos problemas con la producción de versiones. (#7385)
 - En la tercera activación de la orden 'leer bara de estado', su contenido se copia al portapapeles. (#1785)
 - Al asignar gestos a teclas en una pantalla Baum, puedes limitarlas al modelo de la pantalla braille en uso (ej.: VarioUltra o Pronto). (#7517)
+- La tecla rápida para el campo filtrar en la lista de elementos en modo exploración se cambió de alt+f a alt+e. (#7569)
 
 
 == Corrección de Errores ==
@@ -40,6 +41,7 @@ Qué hay de Nuevo en NVDA
 - Cuando se reinicie NVDA con Mozilla Firefox enfocado, el modo exploración estará disponible nuevamente, aunque es posible que tengas que pulsar alt+tab y volver a pulsarlo de nuevo. (#5758)
 - Ahora es posible acceder a contenido matemático en Google Chrome en un sistema sin Mozilla Firefox instalado. (#7308)
 - El sistema operativo y otras aplicaciones deberían ser más estables directamente después de instalar NVDA antes de reiniciar, en comparación con las instalaciones  de versiones anteriores de NVDA. (#7563)
+- Al utilizar una orden de reconocimiento de contenido (ej.: NVDA+r), ahora NVDA anuncia un mensaje de error en lugar de no hacer nada si el navegador de objetos ha desaparecido. (#7567)
 
 
 == Cambios para Desarrolladores ==
@@ -50,6 +52,7 @@ Qué hay de Nuevo en NVDA
  - Por ejemplo: si tienes una tecla de la pantalla vinculada a la tecla alt y otra tecla de la pantalla a flecha abajo, al combinar estas teclas resultará la emulación de alt+flecha abajo.
 - La clase braille.BrailleDisplayGesture ahora tiene una propiedad de modelo extra. Si se proporciona, pulsando una tecla generará una adicional, texto específico de identificador de modelo, esto permite a un usuario vincular gestos limitados a un modelo de pantalla braille específico. 
  - Consulta el controlador de baum como un ejemlo para esta funcionalidad nueva.
+- NVDA ahora se compila con Visual Studio 2017 y el SDK Windows 10. (#7568)
 
 
 = 2017.3 =

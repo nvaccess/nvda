@@ -27,6 +27,7 @@ What's New in NVDA
 - Espeak-ng has been updated (to commit 01919cd48a566cdf34347784b2e74554b376e900), this resolves some issues with producing release builds. (#7385)
 - On the third activation of the 'read status bar' command, it's contents is copied to the clipboard. (#1785)
 - When assigning gestures to keys on a Baum display, you can limit them to the model of the braille display in use (e.g. VarioUltra or Pronto). (#7517)
+- The hotkey for the filter field in the elements list in browse mode is changed from alt+f to alt+e. (#7569)
 
 
 == Bug Fixes ==
@@ -40,6 +41,7 @@ What's New in NVDA
 - When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
 - It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
 - The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
+- When using a content recognition command (e.g. NVDA+r), NVDA now reports an error message instead of nothing if the navigator object has disappeared. (#7567)
 
 
 == Changes for Developers ==
@@ -50,6 +52,7 @@ What's New in NVDA
  - For example: if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
 - The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
  - See the baum driver as an example for this new functionality.
+- NVDA is now compiled with Visual Studio 2017 and the Windows 10 SDK. (#7568)
 
 
 = 2017.3 =

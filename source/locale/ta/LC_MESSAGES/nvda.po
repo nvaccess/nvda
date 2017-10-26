@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 00:10+1000\n"
-"PO-Revision-Date: 2017-10-14 20:03+0530\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
+"PO-Revision-Date: 2017-10-19 20:13+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -1026,9 +1026,12 @@ msgstr "சீனம் (ஹாங்காங், காண்டோனீஸ�
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "சீனம் (தைவான், மாண்டரீன்)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "குவிமைய நிலை"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "உலாவும் நிலை"
@@ -1067,7 +1070,7 @@ msgstr "இவ்வாவணத்தில் இருக்கும் ப�
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
-msgstr "ஆவணத்திலுள்ள தற்போதையப் பொருளை இயக்குகிறது"
+msgstr "ஆவணத்திலுள்ளநடப்புப் பொருளை இயக்குகிறது"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1559,8 +1562,8 @@ msgstr "வகை"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
+msgid "Filt&er by:"
+msgstr "இதைக் கொண்டு வடிகட்டுக (&E):"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1595,8 +1598,8 @@ msgstr "நெடுவிளக்கம் ஏதுமில்லை"
 msgid "Shows the long description at this position if one is found."
 msgstr "இந்நிலையில் நெடுவிளக்கம் ஏதேனும் இருந்தால், அதைக் காண்பிக்கும்"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "கொள்களத்தில் இல்லை"
 
@@ -2719,23 +2722,23 @@ msgstr "கண்டறிதலில் பிழை"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
-msgstr "தற்போதைய சுட்டியின் இடத்திலுருந்து ஒரு உரையைக் கண்டறியவும்"
+msgstr "சுட்டியின் நடப்பு இடத்திலுருந்து ஒரு உரையைக் கண்டறிக"
 
 #. Translators: Input help message for find next command.
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் அடுத்த தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
-"எங்கேவென்று கண்டறியவும்"
+"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் அடுத்த தோற்றம், சுட்டியின் நடப்பு நிலையிலிருந்து "
+"எங்கேவென்று கண்டறிக"
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் முந்தைய தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
-"எங்கேவென்று கண்டறியவும்"
+"ஏற்கெனவே உள்ளீடுச் செய்யப்பட்ட உரையின் முந்தைய தோற்றம், சுட்டியின் நடப்பு நிலையிலிருந்து "
+"எங்கேவென்று கண்டறிக"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
@@ -2846,7 +2849,7 @@ msgid ""
 "twice will spell the current line. Pressing three times will spell the line "
 "using character descriptions."
 msgstr ""
-"கணினிச் சுட்டியின் கீழுள்ள வரியைப் படிக்கும். இருமுறை அழுத்தினால், வரியை எழுத்துகளாக "
+"கணினிச் சுட்டியின் கீழுள்ள நடப்பு வரியைப் படிக்கும். இருமுறை அழுத்தினால், வரியை எழுத்துகளாக "
 "படிக்கும். மும்முறை அழுத்தினால், வரியை எழுத்து விளக்கங்களைக் கொண்டு படிக்கும். "
 
 #. Translators: Reported when left mouse button is clicked.
@@ -2855,7 +2858,7 @@ msgstr "இடது சொடுக்கு"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "சொடுக்கியின் இடது பொத்தான் தற்போதைய நிலையில் ஒருமுறை சொடுக்கப்படும்"
+msgstr "சொடுக்கியின் இடது பொத்தான் நடப்பு நிலையில் ஒருமுறை சொடுக்கப்படும்"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
@@ -2863,7 +2866,7 @@ msgstr "வலது சொடுக்கு"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "சொடுக்கியின் வலது பொத்தான் தற்போதைய நிலையில் ஒருமுறை சொடுக்கப்படும்"
+msgstr "சொடுக்கியின் வலது பொத்தான் நடப்பு நிலையில் ஒருமுறை சொடுக்கப்படும்"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
@@ -2906,7 +2909,7 @@ msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"ஒருமுறை அழுத்தினால் தற்போதைய நேரத்தையும், இருமுறை அழுத்தினால் இன்றையத் தேதியையும் "
+"ஒருமுறை அழுத்தினால், நடப்பு நேரத்தையும், இருமுறை அழுத்தினால், நடப்புத் தேதியையும் "
 "அறிவிக்கும்"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
@@ -2915,11 +2918,11 @@ msgstr "அமைப்புகள் ஏதுமில்லை"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், தற்போது இயக்கத்திலிருக்கும் அமைப்பைக் கூட்டுகிறது"
+msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், நடப்பில் இருக்கும் அமைப்பைக் கூட்டுகிறது"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், தற்போது இயக்கத்திலிருக்கும் அமைப்பைக் குறைக்கிறது"
+msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், நடப்பில் இருக்கும் அமைப்பைக் குறைக்கிறது"
 
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
@@ -10387,7 +10390,7 @@ msgstr "விளக்கவுரைகள் (&A)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+msgid "&Errors"
 msgstr "பிழைகள் (&E)"
 
 #. Translators: The name of a series of braille displays.

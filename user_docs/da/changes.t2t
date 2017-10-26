@@ -10,6 +10,12 @@
 - Bogstavnavigation til editfelter og formularfelter inkluderer nu redigerbart RTF-indhold (f.eks. contentEditable). (#5534)
 - Elementlisten er nu i stand til at vise formularfelter og knapper i webbrowsere. (#588)
 - Første version af NVDA der understøtter Windows 10 på ARM64-processorarkitekturen. (#7508)
+- Støtte for interaktiv navigation og læsning af matematisk indhold i Kindle-bøger, der benytter Accessible Math. (#7536)
+- Understøtter nu Azardi til læsning af e-bøger. (#5848)
+- Information om versionen bliver nu rapporteret når en tilføjelsespakke opdateres. (#5324)
+- Tilføjede nye kommandolinjeparametre til brug af oprettelse af flytbare kopier af NVDA. (#6329)
+- Understøtter nu Microsoft Edge, når applikationen køres fra Windows Defender Application Guard. (#7600)
+- Hvis NVDA afvikles på en bærbar PC eller en tablet, vil NVDA oplyse når en strømforsyning tilsluttes eller frakobels, samt når skærmretningen ændres. (#4574, #4612)
 
 
 == Ændringer ==
@@ -17,6 +23,10 @@
 - Ved brug af tab og bogstavnavigation i gennemsynstilstand, vil NVDA ikke længere annoncere hvert indholdselement, du navigere ud af, såsom tabeller og lister. Dette gør navigation hurtigere. (#2591)
 - NVDA vil nu oplæse grupper af formularfelter når disse får fokus ved brug af bogstavnavigation og tab-tasten i Chrome og Firefox. (#3321)
 - Bogstavnavigationstasterne for indlejrede objekter (O og skift+O) vil nu også hoppe til lyd- og videoafspillere, samt elementer med ARIA-rollerne dialog og applikation. (#7239)
+- Espeak-ng er blevet opdateret (til commit 01919cd48a566cdf34347784b2e74554b376e900). . Dette retter nogle problemer med hensyn til produktion af release builds. (#7385)
+- Ved et tredje tryk af kommandoen til læsning af statuslinjen, vil dens indhold blive kopieret til udklipsholderen. (#1785)
+- Når der tildeles taster til et Baum-display, kan man nu begrænse tasterne til den aktuellele model af punktdisplay der benyttes (.f.eks. VarioUltra og Pronto). (#7517)
+- Genvejsttasten til filtreringsfeltet i elementlisten er ændret fra ALT+F til ALT+E. (#7569)
 
 
 == Fejlrettelser ==
@@ -24,6 +34,13 @@
 - NVDA vil ikke længere blive mærkbart langsom, når der er flere faner åbnede i Chrome eller Firefox webbrowsere. (#3138)
 - Markørflytning på punktdisplayet MDV Lilli vil ikke længere fejlagtigt flytte markøren en punktcelle foran dens position, hvortil markøren oprindeligt skulle flyttes. (#7469)
 - Attributten HTML5 required er nu understøttet i Internet Explorer og andre MSHTML-dokumenter, hvor et felt indikeres som "påkrævet". (#7321)
+- Punktdisplays opdateres nu når der skrives arabiske bogtaver i et venstrejusteret Wordpad-dokument. (#511)
+- Der er nu større sandsynlighed for at tilgængelige labels i Mozilla Firefox rapporteres i gennemsynstilstand, selv hvis det  pågælgende label ikke selv vises som indhold. (#4773)
+- NVDA kan nu igen pålideligt benytte Firefox efter NVDA er blevet genstartet i Windows 10 Creaters Update. (#7269)
+- Hvis NVDA bliver genstartet når Mozilla Firefox har fokus, kan NVDA nu igen benytte gennemsynstilstand. Det er sandsynligt, at du skal benytte ALT+Tabfor at flytte væk fra applikationen og tilbage til den igen. (#5758)
+- Det er nu muligt at få adgang til matematisk indhold i Google Chrome på et system, hvor Mozilla Firefox ikke er installeret. (#7308)
+- Operativsystemet samt andre programmer bør være mere stabile efter en installation af NVDA og før genstart i forhold til tidligere versioner. (#7563)
+- Når en kommando til tekstgenkendelse benyttes (f.eks. NVDA+R), vil NVDA nu rapportere en fejlmeddelse hvis navigatorobjektet er forsvundet. (#7567)
 
 
 == Ændringer for udviklere ==
