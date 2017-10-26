@@ -26,7 +26,8 @@
 - در حالت مرور، فرمان پیمایش سریع برای اشیاء توکار (O و Shift+O)، از این به بعد سازه‌های صوتی و ویدیویی را نیز همانند سازه‌های برنامه و پنجره‌ی محاوره‌ای شامل میشود. (#7239)
 - Espeak-ng به نسخه‌ی آزمایشی (commit) 01919cd48a566cdf34347784b2e74554b376e900 به‌روز شد. این نسخه، اشکالی که هنگام تولید انتشارها ایجاد میشد را برطرف کرده است. (#7385)
 - حالا میتوانید برای کپی کردن اطلاعات نوار وضعیت در کلیپ‌برد، فرمانِ «اعلام نوار وضعیت» را سه بار -پشت سر هم- اجرا کنید. (#1785)
-- When assigning gestures to keys on a Baum display, you can limit them to the model of the braille display in use (e.g. VarioUltra or Pronto). (#7517)
+- هنگامی که فرمان‌هایی را به کلیدهای نمایشگر Baum اختصاص میدهید، میتوانید آن فرمان‌ها را به مدلِ نمایشگر بریل مورد استفاده، مثلا VarioUltra یا Pronto محدود کنید. (#7517)
+- در پنجره‌ی فهرست سازه‌ها، فیلد «فیلتر کردن با» به «محدود کردن به» تغییر نام داد. به سبب این تغییر، کلید سریع این فیلد از آلْت+ف به آلْت+ح تغییر یافت. (#7569)
 
 
 == رفع اشکال ==
@@ -39,7 +40,8 @@
 - در روزامدِ Creaters ویندوز ۱۰، NVDA میتواند بعد از راه‌اندازی مجدد، دوباره به فایرفاکس دسترسی پیدا کند. (#7269)
 - هنگامی که NVDA را در حالی که فایرفاکس در تیررس است از نو راه‌اندازی کنید، حالت مرور دوباره وجود خواهد داشت؛ هرچند ممکن است لازم باشد Alt+Tab را برای رفتن و برگشتن به پنجره‌ی فایرفاکس بزنید. (#5758)
 - از این پس دسترسی به محتوای ریاضی در کروم، در سیستمی که فایرفاکس رویش نصب نیست امکان‌پذیر است. (#7308)
-- سیستم‌عامل و دیگر برنامه‌ها،  همانند نسخه‌های پیشینِ NVDA، بلافاصله پس از نصب و پیش از راه‌اندازیِ مجدد، باید پایدارتر باشند. (#7563)
+- سیستم‌عامل و دیگر برنامه‌ها،  همانند نسخه‌های پیشینِ NVDA، بلافاصله پس از نصب و پیش از راه‌اندازیِ مجدد، باید پایدارتر عمل کنند. (#7563)
+- هنگامی که از یک فرمان بازشناسی محتوا، مثلا NVDA+R استفاده میکنید، در صورتی که پیمایشگر ناپدید شود، NVDA یک پیغام خطا میدهد. پیش از این در چنین موردی NVDA چیزی اعلام نمیکرد. (#7567)
 
 
 == Changes for Developers ==
@@ -50,6 +52,7 @@
  - For example: if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
 - The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
  - See the baum driver as an example for this new functionality.
+- NVDA is now compiled with Visual Studio 2017 and the Windows 10 SDK. (#7568)
 
 
 = 2017.3 =
