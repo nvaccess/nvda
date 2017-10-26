@@ -10,7 +10,7 @@
 - Im Lesemodus können Sie mit den Schnellnavigationstasten für Eingabefelder und Formularfelder nun auch zu Rich-Text-Eingabefeldern navigieren. (#5534)
 - In Web-Browsern enthält die Elementliste nun auch Formularfelder und Schalter. (#588)
 - Grundlegende Unterstützung für Windows 10 auf ARM64. (#7508)
-- Grundlegende Unterstützung beim Lesen von und Navigieren in mathematischen Inhalten in Kindle-Büchern. (#7536)
+- Grundlegende Unterstützung beim Lesen von und Navigieren in mathematischen Inhalten in Kindle-Büchern, welche barrierefreie Mathematik berücksichtigen. (#7536)
 - Unterstützung für den Azardi eBook Reader. (#5848)
 - Beim Aktualisieren von NVDA-Erweiterungen werden Versionsinformationen angegeben. (#5324)
 - Neue Kommandozeilenparameter zum Erstellen einer portablen Version von NVDA wurden hinzugefügt. (#6329)
@@ -21,26 +21,26 @@
 == Änderungen ==
 - NVDA benötigt mindestens Windows 7 Service Pack 1 oder Windows Server 2008 R2 Service Pack 1. (#7546)
 - In Firefox und Google Chrome wird in Web-Dialogen der Lesemodus verwendet, es sei denn, die Webdialoge befinden sich in Webanwendungen. (#4493)
-- Beim Navigieren im Lesemodus wird das Verlassen von Containern nicht mehr ausdrücklich angezeigt. (#2591)
+- Beim Navigieren im Lesemodus mittels Tab oder Schnellnavigationstasten wird das Verlassen von Containern wie Listen und Tabellen nicht mehr ausdrücklich angezeigt. (#2591)
 - In Firefox und Google Chrome werden die Namen von Formulargruppen angezeigt, wenn Sie zu einem Formularfeld springen. (#3321)
 - Die Schnellnavigationstasten für eingebettete Objekte (O und Umschalt+O) berücksichtigen Audio- und Video-Elemente ebenso wie Web-Anwendungen und Web-Dialoge. (#7239)
 - eSpeak-NG wurde auf Revision 01919cd48a566cdf34347784b2e74554b376e900 aktualisiert, Dadurch werden einige Probleme in der Aussprache behoben. (#7385)
 - Bei dreimaligem Drücken der Tastenkombination zum Lesen der statuszeile wird diese in die Zwischenablage kopiert. (#1785)
-- Beim Zuweisen von NVDA-Befehlen an Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (zum Beispiel Baum Vario Ultra, Baum Pronto). (#7517)
-
+- Beim Zuweisen von NVDA-Befehlen an Baum-Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (zum Beispiel Baum Vario Ultra, Baum Pronto). (#7517)
+- Die Tastenkombination zum direkten Anspringen des Suchfeldes in der Elementliste wurde von alt+f in alt+e geändert. (#7569)
 
 == Fehlerkorrekturen ==
 - In Anwendungen, wie Microsoft Word, werden Links nun in Braille angezeigt. (#6780)
 - Wenn in Firefox oder Google Chrome viele Registerkarten geöffnet sind, reagiert NVDA nun schneller. (#3138)
-- Die Cursor-Routingtasten von MDV Lilli-Braillezeilen funktionieren nun korrekt. (#7469)
-- Im Internet Explorer und anderen MSHTML-Dokumenten wird das Attribut Required korrekt unterstützt. (#7321)
+- Die Cursor-Routingtasten von MDV Lilli-Braillezeilen platzieren den Cursor nicht mehr eine Position hinter die gedrückte Position. (#7469)
+- Im Internet Explorer und anderen MSHTML-Dokumenten wird das Attribut Required korrekt unterstützt, sodass NVDA angiebt, dass ein Formularfeld zwingend ausgefüllt werden muss. (#7321)
 - Die Anzeige in Braille wird beim Eingeben arabischer Zeichen aktualisiert. (#511).
 - In Firefox wird die Beschriftung von Formularelementen auch dann angezeigt, wenn die Beschriftung nicht auf den Formularelementen selbst zu finden ist. (#4773)
 - Unter Windows 10 Creators Update funktioniert die NVDA-Unterstützung von Firefox auch dann noch, wenn Sie NVDA neu starten. (#7269)
 - Wenn Sie NVDA neu starten, während Firefox im Vordergrund ist, steht der Lesemodus wieder zur Verfügung, auch wenn Sie den Fokus mit alt+tab aus Firefox hinaus und wieder hineinbewegen müssen. (#5758)
-- Unterstützung mathematischer Inhalte in Google Chrome sowie auf Systemen, auf denen Firefox nicht installiert ist. (#7308)
+- Unterstützung mathematischer Inhalte in Google Chrome auf Systemen, auf denen Firefox nicht installiert ist. (#7308)
 - Das Betriebssystem und die Anwendungen sollten nun nach der Installation von NVDA stabiler laufen (verglichen mit vorherigen Versionen von NVDA). (#7563)
-
+- Wenn das Navigatorobjekt beim Aufruf der Inhaltserkennung (z. B. mit nvda+r) verschwunden sein sollte, zeigt NVDA eine Warnmeldung an. (#7567)
 
 == Änderungen für Entwickler ==
 - Beim Ausführen von "scons tests" wird geprüft, ob sämtliche übersetzbaren Zeichenketten Kommentare besitzen. Dieser Test kann auch separat ausgeführt werden. Benutzen Sie dafür den Befehl "scons checkPot". (#7492)
@@ -50,7 +50,7 @@
  - For example: if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
 - The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
  - See the baum driver as an example for this new functionality.
-
+- NVDA wird nun mit Visual Studio 2017 und the Windows 10 SDK compiliert. (#7568)
 
 = 2017.3 =
 Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift über eine Braillezeile, die Unterstützung von Windows OneCore-Stimmen, die Unterstützung von OCR unter Windows 10 sowie viele Verbesserungen bei der Braille-ausgabe.
@@ -95,7 +95,7 @@ Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift üb
 - Standardmäßig zeigt NVDA nur noch dann den Kontext eines Objektes an, wenn ein neues Objekt den Fokus erhält. (#217)
  - Zuvor wurde der Kontext auch dann angezeigt, wenn er sich nicht geändert hat.
  - Sie können das alte Verhalten erzwingen, indem Sie in den Braille-Einstellungen von NVDA die Option "Kontext anzeigen" auf "immer" umstellen.
-- In den Braille-Einstellungen können - je nach Kopplung der Braillezeile - unterschiedliche Cursofformen eingestellt werden. (#7112)
+- In den Braille-Einstellungen können - je nach Kopplung der Braillezeile - unterschiedliche Cursofformen eingestellt werden. (#7122)
 - Das Logo von NVDA wurde geändert. Es zeigt nun die Buchstaben NVDA in weißer Schrift auf rotem Hintergrund. (#7446)
 
 
