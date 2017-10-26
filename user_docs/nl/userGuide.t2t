@@ -59,12 +59,10 @@ Dit is van toepassing voor zowel originele als aangepaste kopieën van de softwa
 Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systeemvereisten +
-- Besturingssysteem: alle 32-bit en 64-bit edities van Windows XP, Windows Vista, Windows 7, Windows 8 en Windows 10 (inclusief Server besturingssystemen). 
-- Voor Windows XP 32-bit heeft NVDA Service Pack 2 of hoger nodig.
-- Voor Windows Server 2003 heeft NVDA Service Pack 1 of hoger nodig.
-- Voor Windows Vista heeft NVDA service pack 2 nodig alsmede update [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
-- Deze moeten allebei worden geïnstalleerd als alle beschikbare updates zijn toegepast via Windows Update.
-- Geheugen: 256 MB RAM of meer.
+- Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
+- Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
+- Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
+- - Geheugen: 256 MB RAM of meer.
 - Processorsnelheid: 1.0 ghz of hoger.
 - Opslagcapaciteit: ongeveer 90 MB vrije ruimte.
 -
@@ -284,8 +282,8 @@ Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfoc
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
 | Huidige focus melden | NVDA+tab | NVDA+tab | laat horen welk object of besturingselement momenteel is gefocusseerd. Bij tweemaal indrukken wordt informatie gespeld |
 | Titel/naam melden | NVDA+t | NVDA+t | Laat horen hoe het momenteel actieve venster heet. Bij tweemaal indrukken wordt de informatie gespeld. Bij driemaal indrukken wordt deze naar het klembord gekopieerd. |
-| Actieve venster voorlezen | NVDA+b | NVDA+b | Leest de inhoud (knoppen, uitklapnenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
-| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. Bij tweemaal indrukken wordt de informatie gespeld. |
+| Actieve venster voorlezen | NVDA+b | NVDA+b | Leest de inhoud (knoppen, vervolgkeuzenenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
+| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. Bij tweemaal indrukken wordt de informatie gespeld. Driemaal drukken zorgt ervoor dat deze naar het klembord wordt gekopieerd. |
 %kc:endInclude
 
 ++ Navigeren met de systeemcursor ++[SystemCaret]
@@ -510,7 +508,7 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 - m: frame (kader)
 - g: graphic (afbeelding)
 - d: ARIA oriëntatiepunt in een Internetomgeving
-- o: embedded object (ingebed object)
+- o: embedded object (ingebed object), (audio- en videospeler, toepassing, dialoogvenster, etc.)
 - 1 tot en met 6: respectievelijk, kop op niveau 1, 2, 3, 4, 5 en 6.
 - a: annotatie (invoeroptie voor notities, opmerkingen e.d.).
  - w: spelfout
@@ -529,7 +527,7 @@ Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen druk
 
 ++ De lijst met elementen ++
 Via de lijst met elementen krijgt u toegang tot de verschillende, bij de toepassing behorende, elementtypes in het document.
-Als u zich bij voorbeeld in een webbrowser bevindt, kan de lijst met elementen koppen, koppelingen (links) of oriëntatiepunten bevatten. 
+Als u zich bij voorbeeld in een webbrowser bevindt, kan de lijst met elementen koppen, koppelingen (links), formuliervelden, knoppen of oriëntatiepunten bevatten. 
 Met behulp van keuzerondjes kunt u wisselen tussen de verschillende elementtypes.
 In het dialoogvenster treft u ook een invoerveld aan waarmee u de lijst kunt filteren zodat u gerichter naar iets kunt zoeken op de pagina.
 Als u uw keuze eenmaal gemaakt hebt, kunt u met de aanwezige knoppen in het dialoogvenster naar dat onderdeel springen of het activeren.
@@ -539,8 +537,9 @@ Als u uw keuze eenmaal gemaakt hebt, kunt u met de aanwezige knoppen in het dial
 %kc:endInclude
 
 ++ Ingebedde objecten ++
-De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Adobe Flash of Sun Java, maar ook met applicaties en dialoogvensters.
+De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Adobe Flash, Oracle Java en HTML5, maar ook met applicaties en dialoogvensters.
 Wanneer u iets dergelijks tegenkomt in bladermodus zal NVDA dit respectievelijk melden als “Ingebed (Embedded) Object”, “applicatie”, of “dialoogvenster.
+Met de letternavigatietoetsen o en Shift + o kunt u hier snel naar toe navigeren.
 Door op Enter te drukken wordt interactie met zulke objecten mogelijk.
 Als het object toegankelijk is, kunt u het met de TAB-toets verkennen en bewerkingen uitvoeren zoals u dat ook in andere toepassingen gewend bent.
 Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkelijke pagina waarop zich het object bevindt. 
@@ -549,16 +548,18 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 | Terug naar inhoud van document | NVDA+control+spatiebalk | Verplaatst de focus van het huidige ingevoegde object naar “het document waarin het zich bevindt |
 %kc:endInclude
 
-+ Inhoud van wiskundige aard lezen +
++ Inhoud van wiskundige aard lezen +[ReadingMath]
 Met MathPlayer 4 van Design Science, kan NVDA ondersteunde wiskundige inhoud lezen en u er interactief in laten navigeren.
 Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
 MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
-- Design Science MathType in Microsoft Word and PowerPoint. MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
-- MathML in Adobe Reader. NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
--
+- Design Science MathType in Microsoft Word and PowerPoint. 
+MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
+- MathML in Adobe Reader. 
+NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
+- Wiskunde in Kindle voor pc voor boeken met toegankelijke wiskundige inhoud.
 
 Bij het lezen van een document zal NVDA alle ondersteunde wiskundige inhoud voorlezen wanneer deze voorkomt.
 Als u een brailleleesregel gebruikt, wordt deze ook in braille weergegeven.
@@ -581,7 +582,7 @@ Standaard volgt de leescursor de systeemcursor, dus kunt u deze gewoonlijk gebru
 
 Nu kunt u MathPlayer-commando’s zoals de pijltjestoetsen gebruiken om de stelling te verkennen.
 U kunt bij voorbeeld  horizontaal door de stelling gaan met de linker en rechter pijltoets en inzoemen op een onderdeel van de stelling zoals een breuk  met behulp van  pijl omlaag.
-Raadpleeg de documentatie bij MathPlayer  voor nadere informatie.
+Raadpleeg de documentatie van MathPlayer  over navigatiecommando's voor nadere informatie: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Als u naar het document wilt teruggaan drukt u op Escape.
 
@@ -859,6 +860,9 @@ U kunt ook handmatig naar de volgende pagina gaan  met de Pagina Omlaag-toets,en
 Navigeren met een enkele lettertoets wordt ondersteund voor koppelingen en afbeeldingen maar alleen binnen de huidige pagina.
 Bij het navigeren tussen koppelingen (links) worden ook voetnoten meegenomen.
 
+NVDA biedt ondersteuning (nog in een pril stadium)  bij  het lezen  van en het interactief navigeren door wiskundige inhoud voor  boeken met toegankelijke wiskunde.
+Raadpleeg hierover het onderdeel  [Inhoud van Wiskundige Aard Lezen #ReadingMath] voor meer informatie.
+
 +++ Tekstselectie +++
 Met Kindle kunt u verschillende handelingen met betrekking tot geselecteerde tekst, uitvoeren, waaronder het verkrijgen van een definitie uit een woordenboek, het toevoegen van aantekeningen en tekstmarkeringen, het kopiëren van tekst naar het klembord en het doorzoeken van een webpagina. 
 Daartoe dient u eerst tekst op de gebruikelijke manier te selecteren in de bladermodus, bijv. met shift en de cursortoetsen.
@@ -880,6 +884,14 @@ Om een aantekening te bekijken, bewerken of verwijderen:
 + roept u het Windows contextmenu op met de opties voor de selectie,
 + kiest u "Aantekening bewerken".
 +
+
+++ Azardi ++
+%kc:beginInclude
+Wanneer u in de tabelweergave  van toegevoegde boeken bent:
+|| Naam | Toets | Beschrijving |
+| Enter | enter | Opent het geselecteerde boek. |
+| Contextmenu | Toepassingen | Opent het contextmenu voor het geselecteerde boek. |
+%kc:endInclude
 
 + NVDA configureren +
 
@@ -2511,7 +2523,9 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | Geen | --no-sr-flag  | Verander de systeem-brede vlag voor de schermlezer niet. |
 | Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
 | Geen | --install-silent | Silently stille installatie van  NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
-
+| Geen | --Create-portable | Draagbare kopie van NVDA wordt aangemaakt  (waarbij de aangemaakte kopie vervolgens opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
+| Geen | --Create-portable-silent | Draagbare kopie van NVDA wordt aangemaakt (waarbij aangemaakte kopie vervolgens niet opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
+| Geen | --portable-path=PORTABLEPATH | Het pad waar een draagbare kopie wordt aangemaakt. |
 ++ Systeem-brede Parameters ++[SystemWideParameters]
 U kunt voor NVDA enkele waarden in het systeemregister instellen die systeem-breed het gedrag van NVDA beïnvloeden.
 Deze waarden worden in het register onder een van de volgende sleutels opgeslagen:

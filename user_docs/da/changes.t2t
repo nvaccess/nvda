@@ -9,17 +9,21 @@
 - Det er nu muligt at springe til starten og forbi landmærker ved brug af kommandoerne til at springe til starten og slutningen af indholdselementer (komma og skift+komma). (#5482)
 - Bogstavnavigation til editfelter og formularfelter inkluderer nu redigerbart RTF-indhold (f.eks. contentEditable). (#5534)
 - Elementlisten er nu i stand til at vise formularfelter og knapper i webbrowsere. (#588)
+- Første version af NVDA der understøtter Windows 10 på ARM64-processorarkitekturen. (#7508)
 
 
 == Ændringer ==
 - Webdialoger bruger nu automatisk gennemsynstilstand i Chrome og Firefox, med mindre du befinder dig indeni en webapplikation. (#4493)
 - Ved brug af tab og bogstavnavigation i gennemsynstilstand, vil NVDA ikke længere annoncere hvert indholdselement, du navigere ud af, såsom tabeller og lister. Dette gør navigation hurtigere. (#2591)
 - NVDA vil nu oplæse grupper af formularfelter når disse får fokus ved brug af bogstavnavigation og tab-tasten i Chrome og Firefox. (#3321)
+- Bogstavnavigationstasterne for indlejrede objekter (O og skift+O) vil nu også hoppe til lyd- og videoafspillere, samt elementer med ARIA-rollerne dialog og applikation. (#7239)
 
- 
- == Fejlrettelser ==
+
+== Fejlrettelser ==
 - Links bliver nu oplyst på punkt i Microsoft Word. (#6780)
 - NVDA vil ikke længere blive mærkbart langsom, når der er flere faner åbnede i Chrome eller Firefox webbrowsere. (#3138)
+- Markørflytning på punktdisplayet MDV Lilli vil ikke længere fejlagtigt flytte markøren en punktcelle foran dens position, hvortil markøren oprindeligt skulle flyttes. (#7469)
+- Attributten HTML5 required er nu understøttet i Internet Explorer og andre MSHTML-dokumenter, hvor et felt indikeres som "påkrævet". (#7321)
 
 
 == Ændringer for udviklere ==

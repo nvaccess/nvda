@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-02 11:52+0200\n"
+"POT-Creation-Date: 2017-10-13 00:10+1000\n"
+"PO-Revision-Date: 2017-10-12 18:56+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -1563,7 +1563,7 @@ msgstr "Tip:"
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "&Filter by:"
-msgstr "&Fltrează după:"
+msgstr "&Filtrează după:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -2691,6 +2691,24 @@ msgstr "Eroare în fișierul de asociere gesturi"
 msgid "Loading NVDA. Please wait..."
 msgstr "Se încarcă NVDA. Vă rugăm așteptați..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Peisaj"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Portret"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Se încarcă bateria. %d la sută"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Nu se încarcă bateria. %d la sută"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA s-a pornit"
@@ -3362,6 +3380,7 @@ msgid "No navigator object"
 msgstr "Nu există obiect navigator"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s copiat pe planșetă"
@@ -3696,10 +3715,12 @@ msgstr "Fără bară de stare"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Citește bara de stare a aplicației curente și mută navigatorul pe ea. Dacă e "
-"apăsat de două ori, pronunță informația"
+"apăsat de două ori, pronunță informația. Dacă e apăsat de trei ori, copiază "
+"bara de stare pe planșetă"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3817,7 +3838,7 @@ msgstr "Nu există baterie pentru sistem"
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
 msgid "%d percent"
-msgstr "%d procente"
+msgstr "%d la sută"
 
 #. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
 msgid "AC power on"
@@ -7362,7 +7383,7 @@ msgstr "&Ghidul utilizatorului"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
-msgstr "&Referință Rapidă a Comenzilor"
+msgstr "&Referinţă Rapidă a Comenzilor"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
@@ -7628,11 +7649,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Instalare supliment"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Este deja instalată o versiune a acestui supliment. Doriți să o actualizați?"
+"Sunteți pe punctul de a instala versiunea {newVersion} a {summary}, care se "
+"pare că este deja instalată. Doriți, totuși, să actualizați?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"O versiune a acestui supliment este deja instalată. Doriți să actualizați "
+"versiunea {summary} {curVersion} la versiunea {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7944,7 +7977,7 @@ msgstr "NVDA instalat cu succes."
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Instalarea ta NVDA a fost actualizată cu succes."
+msgstr "Instalarea dumneavoastră NVDA a fost actualizată cu succes."
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -8050,6 +8083,10 @@ msgstr "Selectează dosarul portabil"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Copiază configurația curentă a &utilizatorului"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Pornește copia portabilă după creare"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
