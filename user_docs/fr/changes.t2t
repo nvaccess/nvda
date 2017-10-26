@@ -15,7 +15,7 @@ Quoi de Neuf dans NVDA
 - Lors de la mise à jour d'un module complémentaire, l'information de version est maintenant annoncée. (#5324)
 - Ajout de nouveaux paramètres de ligne de commande pour créer une copie portable de NVDA. (#6329)
 - Support de Microsoft Edge s'exécutant sous Windows Defender Application Guard (#7600)
-- S'il s'exécute sur un portable ou une tablette, NVDA annonce maintenant si le chargeur est connecté ou déconnecté, et quand l'orientation de l'écran change. (#4574, #4612)
+- S'il s'exécute sur un PC portable ou une tablette, NVDA annonce maintenant si le chargeur est connecté ou déconnecté, et quand l'orientation de l'écran change. (#4574, #4612)
  
 
 == Changements ==
@@ -27,6 +27,7 @@ Quoi de Neuf dans NVDA
 - Espeak-ng a été mis à jour (au niveau 01919cd48a566cdf34347784b2e74554b376e900), Cela résout quelques problèmes dans la productions des builds. (#7385)
 - À la troisième activation de la commande de lecture de la barre d'état, le contenu de celle-ci est copié dans le presse-papiers. (#1785)
 - Sur un terminal Baum, l'assignation d'un geste de commande à une touche peut être limitée au modèle de terminal en cours d'utilisation (ex : VarioUltra ou Pronto). (#7517)
+- le raccourci clavier du champ de filtre de la liste d'éléments en mode navigation est passé de alt+f à alt+e. (#7569)
 
 
 == Corrections de Bogues ==
@@ -40,6 +41,7 @@ Quoi de Neuf dans NVDA
 - Quand on redémarre NVDA avec Mozilla Firefox en focus, le mode navigation reste disponible, bien que vous puissiez avoir besoin de quitter la fenêtre et d'y revenir. (#5758)
 - Il est maintenant possible d'accéder à du contenu mathématique sous Google Chrome sur un système où Mozilla Firefox n'est pas installé. (#7308)
 - Le système d'exploitation et les autres applications devraient être plus stables juste après l'installation de NVDA avant de redémarrer le système, comparativement aux versions précédentes de NVDA. (#7563)
+- Quand on utilise une commande de reconnaissance de contenu (ex :  NVDA+r), NVDA annonce maintenant un message d'erreur si l'objet navigateur a disparu. (#7567)
 
 
 == Changements pour les Développeurs ==
@@ -50,6 +52,7 @@ Quoi de Neuf dans NVDA
  - Par exemple: si vous avez sur votre afficheur une touche affectée à la touche alt et une autre à flècheBas, la combinaison de ces touches résultera en émulation de alt+flècheBas.
 - La classe braille.BrailleDisplayGesture possède maintenant une propriété model. si elle est fournie, l'appui d'une touche générera un identificateur additionnel de geste spécifique au modèle de terminal. Cela permet à l'utilisateur d'affecter des gestes commande spécifiques limités à un modèle de terminal. 
  - Pour un exemple de cette nouvelle fonctionnalité, regardez le pilote Baum.
+- NVDA est maintenant compilé avec Visual Studio 2017 et le SDK Windows 10. (#7568)
 
 
 = 2017.3 =
