@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 00:10+1000\n"
-"PO-Revision-Date: 2017-10-17 08:42+0800\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
+"PO-Revision-Date: 2017-10-26 10:50+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -118,7 +118,7 @@ msgstr "主要內容區"
 #. Translators: Reported for the navigation landmark, normally found on web pages.
 msgctxt "aria"
 msgid "navigation"
-msgstr "導航區"
+msgstr "導覽區"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
 msgctxt "aria"
@@ -1035,9 +1035,12 @@ msgstr "中文（香港）粵語"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "中文（台灣）注音"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "焦點模式"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "瀏覽模式"
@@ -1048,11 +1051,11 @@ msgstr "未標記的"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "單鍵瀏覽關"
+msgstr "單鍵導覽關"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "單鍵瀏覽開"
+msgstr "單鍵導覽開"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -1060,7 +1063,7 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"切換單鍵瀏覽的開關，當開啟時，會依照所按的按鍵跳至頁面上所對應屬性的位置，當"
+"切換單鍵導覽的開關，當開啟時，會依照所按的按鍵跳至頁面上所對應屬性的位置，當"
 "關閉時，將失去作用，而直接將訊息傳到應用程式。"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
@@ -1566,8 +1569,8 @@ msgstr "種類"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "輸入篩選字串(&F)："
+msgid "Filt&er by:"
+msgstr "輸入篩選字串 (&E)："
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1602,8 +1605,8 @@ msgstr "沒有長說明"
 msgid "Shows the long description at this position if one is found."
 msgstr "顯示所指位置的長說明"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "不在清單或表格中"
 
@@ -2768,7 +2771,7 @@ msgstr "文字瀏覽"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Object navigation"
-msgstr "物件瀏覽"
+msgstr "物件導覽"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System caret"
@@ -3575,7 +3578,9 @@ msgid ""
 "pass straight through to the application, allowing you to interact directly "
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
-msgstr "切換瀏覽模式或焦點模式，在焦點模式的編輯區可輸入字串"
+msgstr ""
+"切換瀏覽模式或焦點模式，在焦點模式的編輯區可輸入字串。當在瀏覽模式時，可以使"
+"用游標導覽文件，例如快速導覽鍵。"
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -4047,13 +4052,13 @@ msgstr ""
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "將導航器物件移到後一個並讀出項目"
+msgstr "將導覽器物件移到後一個並讀出項目"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "將導航器物件移到前一個並讀出項目"
+msgstr "將導覽器物件移到前一個並讀出項目"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -10311,8 +10316,8 @@ msgstr "標記 (&A)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "錯誤(&E)"
+msgid "&Errors"
+msgstr "錯誤 (&E)"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
