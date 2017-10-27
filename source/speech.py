@@ -239,6 +239,10 @@ def getCharDescListFromText(text,locale):
 	return charDescList
 
 def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, **allowedProperties):
+	speechSequence=getObjectPropertiesSpeech(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, **allowedProperties)
+	speak(speechSequence)
+
+def getObjectPropertiesSpeech(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, **allowedProperties):
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
@@ -299,20 +303,22 @@ def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCo
 		if _prefixSpeechCommand is not None:
 			speechSequence.append(_prefixSpeechCommand)
 		speechSequence.append(text)
-		speak(speechSequence)
+		return speechSequence
 
-def _speakPlaceholderIfEmpty(info, obj, reason):
-	""" attempt to speak placeholder attribute if the textInfo 'info' is empty
-	@return: True if info was considered empty, and we attempted to speak the placeholder value.
-	False if info was not considered empty.
+def _getPlaceholderSpeechIfEmpty(info, obj, reason):
+	""" attempt to fetch placeholder speech  if the textInfo 'info' is empty
+	@return: a speech sequence. It may be empty if it should not be spoken.
 	"""
 	textEmpty = obj._isTextEmpty
 	if textEmpty:
-		speakObjectProperties(obj,reason=reason,placeholder=True)
-		return True
-	return False
+		return getObjectPropertiesSpeech(obj,reason=reason,placeholder=True)
+	return []
 
 def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None):
+	speechSequence=getObjectSpeech(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand)
+	speak(speechSequence)
+
+def getObjectSpeech(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
@@ -361,32 +367,38 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 	if shouldReportTextContent:
 		allowProperties['value']=False
 
-	speakObjectProperties(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, **allowProperties)
+	speechSequence=getObjectPropertiesSpeech(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, **allowProperties)
 	if reason==controlTypes.REASON_ONLYCACHE:
 		return
 	if shouldReportTextContent:
+		speechSequence.append(EndUtteranceCommand())
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
 				# if there is selected text, then there is a value and we do not report placeholder
 				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-				speakSelectionMessage(_("selected %s"),info.text)
+				speechSequence.append(_("selected")+" ")
+				speechSequence.extend(getTextInfoSpeech(info,reason=controlTypes.REASON_CARET))
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				_speakPlaceholderIfEmpty(info, obj, reason)
-				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				speechSequence.extend(_getPlaceholderSpeechIfEmpty(info, obj, reason))
+				speechSequence.extend(getTextInfoSpeech(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET))
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			if not _speakPlaceholderIfEmpty(newInfo, obj, reason):
-				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
+			placeholderSpeech=_getPlaceholderSpeechIfEmpty(newInfo, obj, reason)
+			if placeholderSpeech:
+				speechSequence.extend(placeholderSpeech)
+			else:
+				speechSequence.extend(getTextInfoSpeech(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET))
 	elif role==controlTypes.ROLE_MATH:
 		import mathPres
 		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
-				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl))
+				speechSequence.extend(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl))
 			except (NotImplementedError, LookupError):
 				pass
+	return speechSequence
 
 def speakText(text,reason=controlTypes.REASON_MESSAGE,symbolLevel=None):
 	"""Speaks some text.
@@ -425,13 +437,16 @@ def getIndentationSpeech(indentation, formatConfig):
 	@return: The phrase to be spoken.
 	@rtype: unicode
 	"""
+	speechSequence=[]
 	speechIndentConfig = formatConfig["reportLineIndentation"]
 	toneIndentConfig = formatConfig["reportLineIndentationWithTones"] and speechMode == speechMode_talk
 	if not indentation:
 		if toneIndentConfig:
-			tones.beep(IDT_BASE_FREQUENCY, IDT_TONE_DURATION)
+			speechSequence.append(BeepCommand(IDT_BASE_FREQUENCY, IDT_TONE_DURATION))
 		# Translators: This is spoken when the given line has no indentation.
-		return (_("no indent") if speechIndentConfig else "")
+		if speechIndentConfig:
+			speechSequence.append(_("no indent"))
+		return speechSequence
 
 	#The non-breaking space is semantically a space, so we replace it here.
 	indentation = indentation.replace(u"\xa0", u" ")
@@ -456,11 +471,13 @@ def getIndentationSpeech(indentation, formatConfig):
 		if quarterTones <= IDT_MAX_SPACES:
 			#Remove me during speech refactor.
 			pitch = IDT_BASE_FREQUENCY*2**(quarterTones/24.0) #24 quarter tones per octave.
-			tones.beep(pitch, IDT_TONE_DURATION)
+			speechSequence.append(BeepCommand(pitch, IDT_TONE_DURATION))
 		else: 
 			#we have more than 72 spaces (18 tabs), and must speak it since we don't want to hurt the users ears.
 			speak = True
-	return (" ".join(res) if speak else "")
+	if speak:
+		speechSequence.extend(res)
+	return speechSequence
 
 # Speech priorities.
 #: Indicates that a speech sequence should have normal priority.
@@ -726,6 +743,14 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 		return
 
 def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, onlyInitialFields=False, suppressBlanks=False):
+	speechSequence=getTextInfoSpeech(info, useCache=useCache, formatConfig=formatConfig, unit=unit, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, onlyInitialFields=onlyInitialFields, suppressBlanks=suppressBlanks)
+	if reason==controlTypes.REASON_SAYALL:
+		return speakWithoutPauses(speechSequence)
+	else:
+		speak(speechSequence)
+		return True
+
+def getTextInfoSpeech(info, useCache=True, formatConfig=None, unit=None, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, onlyInitialFields=False, suppressBlanks=False):
 	onlyCache=reason==controlTypes.REASON_ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
@@ -851,19 +876,21 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 		language=newFormatField.get('language')
 		speechSequence.append(LangChangeCommand(language))
 		lastLanguage=language
+	else:
+		lastLanguage=None
 
 	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
 		if not onlyCache:
 			if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
-				speak(speechSequence)
+				pass
 			if not onlyInitialFields: 
-				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
+				speechSequence.extend(getSpeechForSpelling(textWithFields[0], locale=lastLanguage))
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
 			if not isinstance(useCache,SpeakTextInfoState):
 				speakTextInfoState.updateObj()
-		return
+		return speechSequence
 
 	#Move through the field commands, getting speech text for all controlStarts, controlEnds and formatChange commands
 	#But also keep newControlFieldStack up to date as we will need it for the ends
@@ -929,9 +956,10 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 			# Indentation must be spoken in the default language,
 			# but the initial format field specified a different language.
 			# Insert the indentation before the LangChangeCommand.
-			speechSequence.insert(-1, indentationSpeech)
+			indetnationSpeech.append(speechSequence[-1])
+			speechSequence[-1:]=indentationSpeech
 		else:
-			speechSequence.append(indentationSpeech)
+			speechSequence.extend(indentationSpeech)
 		if speakTextInfoState: speakTextInfoState.indentationCache=allIndentation
 	# Don't add this text if it is blank.
 	relativeBlank=True
@@ -966,12 +994,8 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 		if not isinstance(useCache,SpeakTextInfoState):
 			speakTextInfoState.updateObj()
 
-	if not onlyCache and speechSequence:
-		if reason==controlTypes.REASON_SAYALL:
-			return speakWithoutPauses(speechSequence)
-		else:
-			speak(speechSequence)
-			return True
+	if not onlyCache:
+		return speechSequence
 
 def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber

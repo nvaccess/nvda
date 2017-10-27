@@ -1319,11 +1319,11 @@ the NVDAObject for IAccessible
 			api.processPendingEvents()
 		if self in api.getFocusAncestors():
 			return
-		speech.cancelSpeech()
-		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		speechSequence=speech.getObjectSpeech(self, reason=controlTypes.REASON_FOCUS)
 		for child in self.recursiveDescendants:
 			if controlTypes.STATE_FOCUSABLE in child.states:
-				speech.speakObject(child, reason=controlTypes.REASON_FOCUS)
+				speechSequence.extend(speech.getObjectSpeech(child, reason=controlTypes.REASON_FOCUS))
+		speech.speak(speechSequence,priority=speech.SPRI_NOW)
 
 	def event_caret(self):
 		focus = api.getFocusObject()
