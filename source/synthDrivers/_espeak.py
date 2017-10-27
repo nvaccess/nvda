@@ -127,9 +127,7 @@ def callback(wav,numsamples,event):
 		if not isSpeaking:
 			return 1
 		indexes = []
-		print "events"
 		for e in event:
-			print repr(e.type)
 			if e.type==espeakEVENT_MARK:
 				indexNum = int(e.id.name)
 				# e.audio_position is ms since the start of this utterance.
@@ -143,17 +141,13 @@ def callback(wav,numsamples,event):
 			elif e.type==espeakEVENT_LIST_TERMINATED:
 				break
 		if not wav:
-			print "not wav"
 			player.idle()
 			onIndexReached(None)
 			isSpeaking = False
 			return 0
-		print "numSamples %s"%numsamples
 		wav = string_at(wav, numsamples * sizeof(c_short)) if numsamples>0 else ""
 		prevByte = 0
-		print "speak"
 		for indexNum, indexByte in indexes:
-			print repr(indexNum)
 			player.feed(wav[prevByte:indexByte],
 				onDone=lambda indexNum=indexNum: onIndexReached(indexNum))
 			prevByte = indexByte
@@ -203,7 +197,6 @@ def _speak(text):
 
 def speak(text):
 	global bgQueue
-	print "xml: %s"%text
 	_execWhenDone(_speak, text, mustBeAsync=True)
 
 def stop():
