@@ -159,20 +159,10 @@ def setStartAfterLogon(enable):
 		except WindowsError:
 			pass
 
-SERVICE_FILENAME = u"nvda_service.exe"
-
-def isServiceInstalled():
-	if not os.path.isfile(SERVICE_FILENAME):
-		return False
-	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SYSTEM\CurrentControlSet\Services\nvda")
-		val = _winreg.QueryValueEx(k, u"ImagePath")[0].replace(u'"', u'')
-		return os.stat(val) == os.stat(SERVICE_FILENAME)
-	except (WindowsError, OSError):
-		return False
-
 def canStartOnSecureScreens():
-	return isInstalledCopy() and (easeOfAccess.isSupported or isServiceInstalled())
+	# No more need to check for the NVDA service nor presence of Ease of Access, as only Windows 7 SP1 and higher is supported.
+	# This function will be transformed into a flag in a future release.
+	return isInstalledCopy()
 
 def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess

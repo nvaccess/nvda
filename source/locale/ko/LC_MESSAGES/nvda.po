@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-29 00:10+1000\n"
-"PO-Revision-Date: 2017-08-30 20:29-0700\n"
+"POT-Creation-Date: 2017-10-13 00:10+1000\n"
+"PO-Revision-Date: 2017-10-12 07:38-0700\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -654,9 +654,8 @@ msgstr "독일어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Greek (Greece)"
-msgstr "그리스어 (그리스) 1종"
+msgstr "그리스어 (그리스)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1544,9 +1543,8 @@ msgstr "폼 필드 (&F)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Buttons"
-msgstr "버튼"
+msgstr "버튼 (&B)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2697,6 +2695,24 @@ msgstr "제스쳐 맵 파일 오류"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA 실행 준비중, 잠시만 기다려 주십시요"
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "가로"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "세로"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "%d 퍼센트 전원 사용"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "%d 퍼센트 베터리 사용"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA 시작"
@@ -3350,6 +3366,7 @@ msgid "No navigator object"
 msgstr "탐색 객체 없음"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s 클립보드에 복사됨"
@@ -3665,10 +3682,11 @@ msgstr "표시줄을 찾을 수 없음"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "현재 응용프로그램의 상태 표시줄을 읽고 탐색 객체를 그곳으로 이동합니다. 두번 "
-"누르면 정보를 발음합니다."
+"누르면 정보를 발음하고 세번 누르면 표시줄 내용을 클립보드에 복사합니다."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -6400,7 +6418,7 @@ msgstr ""
 "퍼센트"
 
 #. Translators: a message announcing a candidate's character and description.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{description}"
 
@@ -7565,12 +7583,25 @@ msgstr "추가 기능 설치"
 
 # Literally means: The add-on already exists. Would you like to update to
 # installing version?
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"이미 설치되어 있는 추가 기능입니다. 설치하고자 하는 버전으로 업데이트 하시겠"
-"습니까? "
+"{summary} 추가 기능이 이미 설치되어 있습니다. 새 버전 {newVersion}으로 업데이"
+"트 하시겠습니까?"
+
+# Literally means: The add-on already exists. Would you like to update to
+# installing version?
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"{summary} {curVersion}이 설치되어 있습니다. 새 버전 {newVersion}으로 업데이"
+"트 하시겠습니까?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7974,6 +8005,10 @@ msgstr "휴대용 버전 설치 폴더를 선택하십시오"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "현재 사용자 환경 복사 (&U)"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr ""
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.

@@ -278,7 +278,7 @@ Quelques touches de commandes utiles pour naviguer avec le focus :
 | Annonce du focus courant | NVDA+tab | NVDA+tab | Annonce l'objet en cours ou le contrôle qui a le focus système. Un double appui épelle l'information |
 | Annonce du titre | NVDA+t | NVDA+t | Annonce le titre de la fenêtre active. Un double appui épelle l'information, un triple appui la copie dans le presse-papiers |
 | Lecture de la fenêtre active | NVDA+b | NVDA+b | lit tous les contrôles de la fenêtre active (utile pour les dialogues) |
-| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état. Un double appui épelle l'information |
+| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état. Un double appui épelle l'information. Un triple appui la copie dans le presse-papiers |
 %kc:endInclude
 
 ++ Naviguer avec le curseur système ++[SystemCaret]
@@ -544,15 +544,18 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 | Aller au document contenant l'objet | NVDA+contrôle+espace | Retire le focus à l'objet embarqué en cours et le rend au document contenant l'objet |
 %kc:endInclude
 
-+ Lecture de Contenu Mathématique +
++ Lecture de Contenu Mathématique +[ReadingMath]
 En utilisant MathPlayer 4 de Design Science, NVDA peut lire et naviguer interactivement dans le contenu mathématique supporté.
 Cela nécessite que MathPlayer 4 soit installé sur l'ordinateur.
 MathPlayer est disponible en téléchargement gratuit sur : http://www.dessci.com/en/products/mathplayer/
 
 NVDA supporte les types de contenu mathématiques suivants :
 - MathML sous Mozilla Firefox, Microsoft Internet Explorer et Google Chrome.
-- Design Science MathType sous Microsoft Word et PowerPoint. MathType doit être installé pour que cela fonctionne. La version de démonstration est suffisante.
-- MathML sous Adobe Reader. Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
+- Design Science MathType sous Microsoft Word et PowerPoint. 
+MathType doit être installé pour que cela fonctionne. La version de démonstration est suffisante.
+- MathML sous Adobe Reader. 
+Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
+- Math sous Kindle for PC pour les livres avec du contenu mathématique accessible.
 -
 
 Durant la lecture d'un document, NVDA annoncera tout contenu mathématique supporté quand il se présente.
@@ -576,7 +579,7 @@ Par défaut, le curseur de revue suit le curseur système, vous pouvez donc gén
 
 Arrivé là, vous pouvez utiliser les commandes MathPlayer telles que les flèches pour explorer l'expression.
 Par exemple, vous pouvez vous déplacer dans l'expression avec les flèches gauche et droite puis zoomer sur une partie de l'expression telle qu'une fraction en utilisant la flèche basse.
-Veuillez consulter la documentation de MathPlayer pour plus d'information.
+Veuillez consulter la documentation de MathPlayer pour plus d'information sur les commandes de navigation.
 
 Quand vous voulez retourner au document, pressez simplement la touche échap.
 
@@ -855,6 +858,9 @@ Vous pouvez aller manuellement à la page suivante en pressant la touche PageSui
 La navigation par simple lettre est supportée pour les liens et les graphiques, mais seulement dans la page en cours.
 La navigation par liens inclut également les notes de bas de page.
 
+NVDA fournit une ébauche de support pour la lecture et la navigation interactive de contenu mathématique pour les livres avec du contenu mathématique accessible.
+Veuillez consulter la section [Lecture de Contenu Mathématique #ReadingMath] pour plus d'informations.
+
 +++ Sélection de Texte +++
 Kindle vous permet d'exécuter diverses fonctions relatives au texte sélectionné, incluant l'obtention d'une définition du dictionnaire, l'ajout de notes et de surlignages, la copie du texte dans le presse-papiers et la recherche sur le web.
 Pour faire cela, sélectionnez d'abord le texte comme vous le feriez normalement en mode navigation; ex: en utilisant maj et les touches curseur.
@@ -876,6 +882,14 @@ Pour afficher, éditer ou effacer une note.
 + Accédez aux options de sélection comme décrit plus haut.
 + Choisissez Éditer la Note.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Quand vous êtes dans le tableau des livres ajoutés :
+|| Nom | Touche | Description |
+| Entrer | entrer | Ouvre le livre sélectionné. |
+| Menu contextuel | applications | Ouvre le menu contextuel pour le livre sélectionné. |
+%kc:endInclude
 
 + Configurer NVDA +
 
@@ -2470,6 +2484,9 @@ Voici les options de ligne de commande de NVDA :
 | Aucune | --no-sr-flag | Ne change pas l'indicateur système global de revue d'écran |
 | Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
 | Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |
+| Aucune | --create-portable | Crée une copie portable de NVDA (puis démarre la copie nouvellement créée). --portable-path doit être spécifié |
+| Aucune | --create-portable-silent | Crée une copie portable de NVDA (sans démarrer la copie nouvellement créée). --portable-path doit être spécifié |
+| Aucune | --portable-path=PORTABLEPATH | L'emplacement où la copie portable sera créée |
 
 ++Paramètres Système++[SystemWideParameters]
 NVDA permet de définir certaines valeurs dans la base de registre du système ce qui modifie le comportement général de NVDA.

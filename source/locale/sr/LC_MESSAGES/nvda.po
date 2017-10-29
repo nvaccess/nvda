@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 00:10+1000\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Nikola Jovic <wwenikola123@gmail.com>\n"
+"Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
@@ -1033,9 +1033,12 @@ msgstr "kineski (Hong kong, kantonski)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "kineski (Tajvan, mandarinski)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "režim fokusiranja"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Režim pretraživanja"
@@ -1565,7 +1568,7 @@ msgstr "Tip:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
+msgid "Filt&er by:"
 msgstr "&Izdvoji po:"
 
 #. Translators: The label of a button to activate an element
@@ -1601,8 +1604,8 @@ msgstr "Nema dugog opisa"
 msgid "Shows the long description at this position if one is found."
 msgstr "Prikazuje dug opis na ovom mestu ako je pronađen."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Nije u sadrživaču"
 
@@ -2692,6 +2695,24 @@ msgstr "greška u datoteci sa rasporedom komandi"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Učitavanje NVDA. Molimo sačekajte..."
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Horizontalno"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Uspravno"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Punjenje baterije. %d procenata"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Punjenje baterije zaustavljeno. %d procenata"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -10473,7 +10494,7 @@ msgstr "&Zabeleške"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+msgid "&Errors"
 msgstr "Gr&eške"
 
 #. Translators: The name of a series of braille displays.

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 00:10+1000\n"
-"PO-Revision-Date: 2017-10-06 22:04+0300\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
+"PO-Revision-Date: 2017-10-20 13:46+0300\n"
 "Last-Translator: Volodymyr <vlodko@torba.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -195,7 +195,7 @@ msgstr "м"
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
 msgid "cbo"
-msgstr "кспис"
+msgstr "кспс"
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
@@ -205,7 +205,7 @@ msgstr "спс"
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
 msgid "gra"
-msgstr "зобр"
+msgstr "граф"
 
 #. Translators: Displayed in braille for an object which is a
 #. help balloon.
@@ -260,7 +260,7 @@ msgstr "табл"
 #. Translators: Displayed in braille for an object which is a
 #. tool bar.
 msgid "tlbar"
-msgstr "пінстр"
+msgstr "пінст"
 
 #. Translators: Displayed in braille for an object which is a
 #. drop down button.
@@ -285,7 +285,7 @@ msgstr "дод"
 #. Translators: Displayed in braille for an object which is a
 #. grouping.
 msgid "grp"
-msgstr "груп"
+msgstr "грп"
 
 #. Translators: Displayed in braille for an object which is a
 #. embedded object.
@@ -310,7 +310,7 @@ msgstr "терм"
 #. Translators: Displayed in braille for an object which is a
 #. section.
 msgid "sect"
-msgstr "рздл"
+msgstr "секц"
 
 #. Translators: Displayed in braille for an object which is a
 #. toggle button.
@@ -340,7 +340,7 @@ msgstr "кндер"
 #. Translators: Displayed in braille for an object which is a
 #. panel.
 msgid "pnl"
-msgstr "Пан"
+msgstr "пан"
 
 #. Translators: Displayed in braille for an object which is a
 #. password edit.
@@ -385,11 +385,11 @@ msgstr "..."
 
 #. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "mln"
-msgstr "полред"
+msgstr "багряд"
 
 #. Translators: Displayed in braille when an object is clickable.
 msgid "clk"
-msgstr "клік"
+msgstr "клк"
 
 #. Translators: Displayed in braille when an object is sorted ascending.
 msgid "sorted asc"
@@ -401,7 +401,7 @@ msgstr "сортзасп"
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
-msgstr "мідеоп"
+msgstr "деоп"
 
 #. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
 msgid "frml"
@@ -1028,9 +1028,12 @@ msgstr "Chinese (Hong Kong, Cantonese)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chinese (Taiwan, Mandarin)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "Режим редагування"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Режим огляду"
@@ -1561,8 +1564,8 @@ msgstr "Введіть:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&Фільтрувати за:"
+msgid "Filt&er by:"
+msgstr "Фільтр&увати за:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1597,8 +1600,8 @@ msgstr "Немає детального опису"
 msgid "Shows the long description at this position if one is found."
 msgstr "Відображає повний опис у поточній позиції, якщо його буде знайдено"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Поза контейнером"
 
@@ -2694,6 +2697,24 @@ msgstr "Помилка файла з прив'язкою жестів"
 msgid "Loading NVDA. Please wait..."
 msgstr "Завантаження NVDA, зачекайте будь ласка..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Альбомна"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Книжкова"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Батарея заряджається. %d percent"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Батарея не заряджається. %d percent"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA запущено"
@@ -3067,15 +3088,15 @@ msgstr "Вмикає або вимикає повідомлення про зм�
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "Промовляти про граматичні помилки вимкнено"
+msgstr "Промовляти орфографічні помилки вимкнено"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "Промовляти про граматичні помилки увімкнено"
+msgstr "Промовляти орфографічні помилки увімкнено"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr "Вмикає або вимикає повідомлення про граматичні помилки"
+msgstr "Вмикає або вимикає повідомлення про орфографічні помилки"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
@@ -6075,11 +6096,11 @@ msgstr "Поза коментарем"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
-msgstr "Граматична помилка"
+msgstr "орфографічна помилка"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "Поза граматичною помилкою"
+msgstr "поза орфографічною помилкою"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -8352,7 +8373,7 @@ msgstr "Промовляти &Командні клавіші"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Play sound for &spelling errors while typing"
-msgstr "Відтворювати звук для &граматичних помилок під час введення"
+msgstr "Відтворювати звук для &орфографічних помилок під час введення"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8636,7 +8657,7 @@ msgstr "&Редакторські ревізії"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Spelling e&rrors"
-msgstr "Граматичні по&милки"
+msgstr "Орфографічні по&милки"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -10248,7 +10269,7 @@ msgstr "{revisionType} {description}: {text} переглянув {author} on {d
 #. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
-msgstr "орфографія: {text}Граматична помилка"
+msgstr "орфографія: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -10491,8 +10512,8 @@ msgstr "&Анотація"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "&помилки"
+msgid "&Errors"
+msgstr "&Помилки"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"

@@ -17,6 +17,12 @@ Methods in test classes should have a C{test_} prefix.
 import os
 import sys
 
+import locale
+import gettext
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+gettext.install('nvda',unicode=True)
+
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
 # The path to the top of the repo.
