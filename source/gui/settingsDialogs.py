@@ -396,9 +396,9 @@ class VoiceSettingsSlider(wx.Slider):
 			newValue = min(self.Value + self.LineSize, self.Max)
 		elif key == wx.WXK_DOWN:
 			newValue = max(self.Value - self.LineSize, self.Min)
-		elif key == wx.WXK_PRIOR:
+		elif key == wx.WXK_PAGEUP:
 			newValue = min(self.Value + self.PageSize, self.Max)
-		elif key == wx.WXK_NEXT:
+		elif key == wx.WXK_PAGEDOWN:
 			newValue = max(self.Value - self.PageSize, self.Min)
 		elif key == wx.WXK_HOME:
 			newValue = self.Max
