@@ -87,14 +87,14 @@ class BrailleEdge(Model):
 			0x20<<16: "f6",
 			0x40<<16: "f7",
 			0x80<<16: "f8",
-			0x01<<24: "leftUpArrow",
-			0x02<<24: "leftDownArrow",
-			0x04<<24: "leftLeftArrow",
-			0x08<<24: "leftRightArrow",
-			0x10<<24: "rightUpArrow",
-			0x20<<24: "rightDownArrow",
-			0x40<<24: "rightLeftArrow",
-			0x80<<24: "rightRightArrow",
+			0x01<<24: "leftSideUpArrow",
+			0x02<<24: "leftSideDownArrow",
+			0x04<<24: "leftSideLeftArrow",
+			0x08<<24: "leftSideRightArrow",
+			0x10<<24: "rightSideUpArrow",
+			0x20<<24: "rightSideDownArrow",
+			0x40<<24: "rightSideLeftArrow",
+			0x80<<24: "rightSideRightArrow",
 		})
 		return keys
 
@@ -478,57 +478,206 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
-			"kb:leftAlt": ("br(hims.braillesenseqwerty):dot1+dot3+dot4+space",),
-			"kb:capsLock": ("br(hims.braillesenseqwerty):dot1+dot3+dot6+space",),
-			"kb:tab": ("br(hims.braillesenseqwerty):dot4+dot5+space",),
-			"kb:shift+alt+tab": ("br(hims.braillesenseqwerty):advance2+advance3+advance1",),
-			"kb:alt+tab": ("br(hims.braillesenseqwerty):advance2+advance3",),
-			"kb:shift+tab": ("br(hims.braillesenseqwerty):dot1+dot2+space",),
-			"kb:end": ("br(hims.braillesenseqwerty):dot4+dot6+space",),
-			"kb:control+end": ("br(hims.braillesenseqwerty):dot4+dot5+dot6+space",),
-			"kb:home": ("br(hims.braillesenseqwerty):dot1+dot3+space",),
-			"kb:control+home": ("br(hims.braillesenseqwerty):dot1+dot2+dot3+space",),
-			"kb:leftArrow": ("br(hims.braillesenseqwerty):dot3+space",),
-			"kb:control+shift+leftArrow": ("br(hims.braillesenseqwerty):dot2+dot8+space+advance1",),
-			"kb:control+leftArrow": ("br(hims.braillesenseqwerty):dot2+space",),
-			"kb:shift+alt+leftArrow": ("br(hims.braillesenseqwerty):dot2+dot7+advance1",),
-			"kb:alt+leftArrow": ("br(hims.braillesenseqwerty):dot2+dot7",),
-			"kb:rightArrow": ("br(hims.braillesenseqwerty):dot6+space",),
-			"kb:control+shift+rightArrow": ("br(hims.braillesenseqwerty):dot5+dot8+space+advance1",),
-			"kb:control+rightArrow": ("br(hims.braillesenseqwerty):dot5+space",),
-			"kb:shift+alt+rightArrow": ("br(hims.braillesenseqwerty):dot5+dot7+advance1",),
-			"kb:alt+rightArrow": ("br(hims.braillesenseqwerty):dot5+dot7",),
-			"kb:pageUp": ("br(hims.braillesenseqwerty):dot1+dot2+dot6+space",),
-			"kb:control+pageUp": ("br(hims.braillesenseqwerty):dot1+dot2+dot6+dot8+space",),
-			"kb:upArrow": ("br(hims.braillesenseqwerty):dot1+space",),
-			"kb:control+shift+upArrow": ("br(hims.braillesenseqwerty):dot2+dot3+dot8+space+advance1",),
-			"kb:control+upArrow": ("br(hims.braillesenseqwerty):dot2+dot3+space",),
-			"kb:shift+alt+upArrow": ("br(hims.braillesenseqwerty):dot2+dot3+dot7+advance1",),
-			"kb:alt+upArrow": ("br(hims.braillesenseqwerty):dot2+dot3+dot7",),
-			"kb:shift+upArrow": ("br(hims.braillesenseqwerty):leftSideScrollDown+space",),
-			"kb:pageDown": ("br(hims.braillesenseqwerty):dot3+dot4+dot5+space",),
-			"kb:control+pageDown": ("br(hims.braillesenseqwerty):dot3+dot4+dot5+dot8+space",),
-			"kb:downArrow": ("br(hims.braillesenseqwerty):dot4+space",),
-			"kb:control+shift+downArrow": ("br(hims.braillesenseqwerty):dot5+dot6+dot8+space+advance1",),
-			"kb:control+downArrow": ("br(hims.braillesenseqwerty):dot5+dot6+space",),
-			"kb:shift+alt+downArrow": ("br(hims.braillesenseqwerty):dot5+dot6+dot7+advance1",),
-			"kb:alt+downArrow": ("br(hims.braillesenseqwerty):dot5+dot6+dot7",),
-			"kb:shift+downArrow": ("br(hims.braillesenseqwerty):space+rightSideScrollDown",),
-			"kb:escape": ("br(hims.braillesenseqwerty):dot1+dot5+space",),
-			"kb:delete": ("br(hims.braillesenseqwerty):dot1+dot3+dot5+space",),
-			"kb:f1": ("br(hims.braillesenseqwerty):dot1+dot2+dot5+space",),
-			"kb:f3": ("br(hims.braillesenseqwerty):dot1+dot2+dot4+dot8",),
-			"kb:f4": ("br(hims.braillesenseqwerty):dot7+advance3",),
-			"kb:windows+b": ("br(hims.braillesenseqwerty):dot1+dot2+advance1",),
-			"kb:windows+d": ("br(hims.braillesenseqwerty):dot1+dot4+dot5+advance1",),
-			"braille_routeTo": ("br(hims):routing",),
-			"braille_scrollBack": ("br(hims):leftScrollUp","br(hims):rightScrollUp","br(hims):leftScroll",),
-			"braille_scrollForward": ("br(hims):leftScrollDown","br(hims):rightScrollDown","br(hims):rightScroll",),
-			"review_previousLine": ("br(hims):rightUpArrow",),
-			"review_nextLine": ("br(hims):rightDownArrow",),
-			"review_previousCharacter": ("br(hims):rightLeftArrow",),
-			"review_nextCharacter": ("br(hims):rightRightArrow",),
-			"braille_toFocus": ("br(hims):leftScrollUp+leftScrollDown","br(hims):rightScrollUp+rightScrollDown","br(hims):leftScroll+rightScroll",),
+			"kb:control": (
+				"br(hims.smartbeetle):f1",
+				"br(hims.brailleedge):f3",
+			),
+			"kb:windows": (
+				"br(hims.smartbeetle):f2",
+				"br(hims):f7",
+			),
+			"kb:alt": (
+				"br(hims):dot1+dot3+dot4+space",
+				"br(hims.smartbeetle):f3",
+				"br(hims):f2",
+				"br(hims.brailleedge):f4",
+			),
+			"kb:shift": (
+				"br(hims):f5",
+			),
+			"kb:insert": (
+				"br(hims):dot2+dot4+space",
+				"br(hims):f6",
+			),
+			"kb:applications": (
+				"br(hims):dot1+dot2+dot3+dot4+space",
+				"br(hims):f8",
+			),
+			"kb:capsLock": (
+				"br(hims):dot1+dot3+dot6+space",
+			),
+			"kb:tab": (
+				"br(hims):dot4+dot5+space",
+				"br(hims):f3",
+				"br(hims.brailleedge):f2",
+			),
+			"kb:shift+alt+tab": (
+				"br(hims):f2+f3+f1",
+			),
+			"kb:alt+tab": (
+				"br(hims):f2+f3",
+			),
+			"kb:shift+tab": (
+				"br(hims):dot1+dot2+space",
+			),
+			"kb:end": (
+				"br(hims):dot4+dot6+space",
+			),
+			"kb:control+end": (
+				"br(hims):dot4+dot5+dot6+space",
+			),
+			"kb:home": (
+				"br(hims):dot1+dot3+space",
+				"br(hims.smartbeetle):f4",
+			),
+			"kb:control+home": (
+				"br(hims):dot1+dot2+dot3+space",
+			),
+			"kb:alt+f4": (
+				"br(hims):dot1+dot3+dot5+dot6+space",
+			),
+			"kb:leftArrow": (
+				"br(hims):dot3+space",
+				"br(hims):leftSideLeftArrow",
+			),
+			"kb:control+shift+leftArrow": (
+				"br(hims):dot2+dot8+space+f1",
+			),
+			"kb:control+leftArrow": (
+				"br(hims):dot2+space",
+			),
+			"kb:shift+alt+leftArrow": (
+				"br(hims):dot2+dot7+f1",
+			),
+			"kb:alt+leftArrow": (
+				"br(hims):dot2+dot7",
+			),
+			"kb:rightArrow": (
+				"br(hims):dot6+space",
+				"br(hims):leftSideRightArrow",
+			),
+			"kb:control+shift+rightArrow": (
+				"br(hims):dot5+dot8+space+f1",
+			),
+			"kb:control+rightArrow": (
+				"br(hims):dot5+space",
+			),
+			"kb:shift+alt+rightArrow": (
+				"br(hims):dot5+dot7+f1",
+			),
+			"kb:alt+rightArrow": (
+				"br(hims):dot5+dot7",
+			),
+			"kb:pageUp": (
+				"br(hims):dot1+dot2+dot6+space",
+			),
+			"kb:control+pageUp": (
+				"br(hims):dot1+dot2+dot6+dot8+space",
+			),
+			"kb:upArrow": (
+				"br(hims):dot1+space",
+				"br(hims):leftSideUpArrow",
+			),
+			"kb:control+shift+upArrow": (
+				"br(hims):dot2+dot3+dot8+space+f1",
+			),
+			"kb:control+upArrow": (
+				"br(hims):dot2+dot3+space",
+			),
+			"kb:shift+alt+upArrow": (
+				"br(hims):dot2+dot3+dot7+f1",
+			),
+			"kb:alt+upArrow": (
+				"br(hims):dot2+dot3+dot7",
+			),
+			"kb:shift+upArrow": (
+				"br(hims):leftSideScrollDown+space",
+			),
+			"kb:pageDown": (
+				"br(hims):dot3+dot4+dot5+space",
+			),
+			"kb:control+pageDown": (
+				"br(hims):dot3+dot4+dot5+dot8+space",
+			),
+			"kb:downArrow": (
+				"br(hims):dot4+space",
+				"br(hims):leftSideDownArrow",
+			),
+			"kb:control+shift+downArrow": (
+				"br(hims):dot5+dot6+dot8+space+f1",
+			),
+			"kb:control+downArrow": (
+				"br(hims):dot5+dot6+space",
+			),
+			"kb:shift+alt+downArrow": (
+				"br(hims):dot5+dot6+dot7+f1",
+			),
+			"kb:alt+downArrow": (
+				"br(hims):dot5+dot6+dot7",
+			),
+			"kb:shift+downArrow": (
+				"br(hims):space+rightSideScrollDown",
+			),
+			"kb:escape": (
+				"br(hims):dot1+dot5+space",
+				"br(hims):f4",
+				"br(hims.brailleedge):f1",
+			),
+			"kb:delete": (
+				"br(hims):dot1+dot3+dot5+space",
+				"br(hims):dot1+dot4+dot5+space",
+			),
+			"kb:f1": (
+				"br(hims):dot1+dot2+dot5+space",
+			),
+			"kb:f3": (
+				"br(hims):dot1+dot2+dot4+dot8",
+			),
+			"kb:f4": (
+				"br(hims):dot7+f3",
+			),
+			"kb:windows+b": (
+				"br(hims):dot1+dot2+f1",
+			),
+			"kb:windows+d": (
+				"br(hims):dot1+dot4+dot5+f1",
+			),
+			"kb:control+insert": (
+				"br(hims.smartbeetle):f1+rightScroll",
+			),
+			"kb:alt+insert": (
+				"br(hims.smartbeetle):f3+rightScroll",
+			),
+			"braille_routeTo": (
+				"br(hims):routing",
+			),
+			"braille_scrollBack": (
+				"br(hims):leftScrollUp",
+				"br(hims):rightScrollUp",
+				"br(hims):leftScroll",
+			),
+			"braille_scrollForward": (
+				"br(hims):leftScrollDown",
+				"br(hims):rightScrollDown",
+				"br(hims):rightScroll",
+			),
+			"review_previousLine": (
+				"br(hims):rightSideUpArrow",
+			),
+			"review_nextLine": (
+				"br(hims):rightSideDownArrow",
+			),
+			"review_previousCharacter": (
+				"br(hims):rightSideLeftArrow",
+			),
+			"review_nextCharacter": (
+				"br(hims):rightSideRightArrow",
+			),
+			"braille_toFocus": (
+				"br(hims):leftScrollUp+leftScrollDown",
+				"br(hims):rightScrollUp+rightScrollDown",
+				"br(hims):leftScroll+rightScroll",
+			),
 		}
 	})
 
