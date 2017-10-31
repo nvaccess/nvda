@@ -1765,6 +1765,19 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	# Translators: the description for the previous table column script on browseMode documents.
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
+	def script_toggleIncludeLayoutTables(self,gesture):
+		if config.conf["documentFormatting"]["includeLayoutTables"]:
+			# Translators: The message announced when toggling the include layout tables browse mode setting.
+			state = _("layout tables off")
+			config.conf["documentFormatting"]["includeLayoutTables"]=False
+		else:
+			# Translators: The message announced when toggling the include layout tables browse mode setting.
+			state = _("layout tables on")
+			config.conf["documentFormatting"]["includeLayoutTables"]=True
+		ui.message(state)
+	# Translators: Input help mode message for include layout tables command.
+	script_toggleIncludeLayoutTables.__doc__=_("Toggles on and off the inclusion of layout tables in browse mode")
+
 	NOT_LINK_BLOCK_MIN_LEN = 30
 	def _isSuitableNotLinkBlock(self,range):
 		return len(range.text)>=self.NOT_LINK_BLOCK_MIN_LEN
