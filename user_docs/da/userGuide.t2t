@@ -278,7 +278,7 @@ Der er nogle nyttige kommandoer, når du flytter fokus rundt i systemet:
 | Sig det aktuelle fokus | NVDA+Tab | NVDA+Tab | annoncerer det aktuelle objekt eller kontrol, der er i fokus. Tryk to gange for at få oplysningerne stavet |
 | Sig titel | NVDA+t | NVDA+t | annoncerer titlen på det aktive vindue. Tryk to gange for at få oplysningerne stavet. Tryk tre gange for at kopiere til udklipsholderen. |
 | Læs det aktive vindue | NVDA+b | NVDA+b | Læser alle kontrolelementerne i det aktive vindue (nyttigt i dialogbokse) |
-| Læs statuslinje | NVDA+End | NVDA+Shift+End | Annoncerer statuslinjen hvis NVDA kan finde den. Det flytter også navigatorobjektet til denne position. Tryk to gange for at få stavet informationen. |
+| Læs statuslinje | NVDA+End | NVDA+Shift+End | Annoncerer statuslinjen hvis NVDA kan finde den. Det flytter også navigatorobjektet til denne position. Tryk to gange for at få stavet informationen. Et tredje tryk vil kopiere informationen til udklipsholderen. |
 %kc:endInclude
 
 ++ Navigering med systemmarkøren ++[SystemCaret]
@@ -544,15 +544,18 @@ du kan med et tastetryk vende tilbage til den oprindelige side, der indeholder d
 | Gå til det overordnede dokument i gennemsynstilstand | NVDA+Ctrl+Mellemrum | Flytter fokus ud af det aktuelle indlejrede objekt og ind i dokumentet, som indeholder objektet |
 %kc:endInclude
 
-+ Læsning af matematisk materiale +
++ Læsning af matematisk materiale +[ReadingMath]
 Ved hjælp af MathPlayer 4 fra Design Science kan du med NVDA læse og navigere interaktivt i matematisk materiale.
 Dette kræver, at MathPlayer 4 er installeret på computeren.
 MathPlayer kan hentes gratis fra: http://www.dessci.com/en/products/mathplayer/
 
 NVDA understøtter følgende typer matematisk indhold:
 - MathML i Mozilla Firefox, Microsoft Internet Explorer og Google Chrome.
-- Design Science MathType i Microsoft Word og PowerPoint. MathType skal være installeret, for at dette kan virke. Prøveversionen er tilstrækkelig.
-- MathML i Adobe Reader. Bemærk, at dette endnu ikke er en officiel standard, så der er i øjeblikket ingen offentligt tilgængelige programmer, som kan producere dette indhold.
+- Design Science MathType i Microsoft Word og PowerPoint.
+MathType skal være installeret, for at dette kan virke. Prøveversionen er tilstrækkelig.
+- MathML i Adobe Reader.
+Bemærk, at dette endnu ikke er en officiel standard, så der er i øjeblikket ingen offentligt tilgængelige programmer, som kan producere dette indhold.
+- Matematisk indhold i Kindle for PC, hvis bøgerne benytter Accessible Math.
 -
 
 Når du læser et dokument, vil NVDA udtale understøttet matematisk indhold der, hvor det forekommer.
@@ -576,7 +579,7 @@ Som udgangspunkt følger læsemarkøren systemmarkøren, så som regel kan du ba
 
 På dette tidspunkt kan du bruge MathPlayer-kommandoer, såsom piletasterne, til at udforske udtrykket.
 For eksempel kan du flytte gennem udtrykket med Venstre- og Højre-pil og zoome ind på en del af udtrykket, f.eks. en brøk, med Pil-ned.
-Se venligst dokumentationen til MathPlayer for flere oplysninger.
+Læs venligst dokumentationen om navigationskommandoer til MathPlayer for flere oplysninger: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Når du vil tilbage til dokumentet, skal du simpelthen trykke på Escape-tasten.
 
@@ -855,6 +858,9 @@ Du kan manuelt gå til den næste side med tasten side ned, og gå til forrige s
 Bogstavnavigation er understøttet for links og grafik, men kun indenfor den aktuelle side.
 Navigering ved hjælp af links vil også inkludere fodnoter.
 
+NVDA understøtter læsning af matematisk indhold i Kindle-bøger der benytter Accessible Math.
+Se venligst afsnittet [Læsning af matematisk materiale #ReadingMath] for yderligere oplysninger.
+
 +++ Valg af tekst +++
 Kindle lader dig udføre diverse funktioner på udvalgt tekst, såsom at slå ord op i en ordbog, tilføje noter og fremhævelser, kopiere tekst til udklipsholderen og søge på nettet.
 For at gøre dette, skal du først vælge tekst som du normalt ville gøre det i gennemsynstilstand f.eks. ved at bruge skift og piletasterne.
@@ -876,6 +882,14 @@ For at vise, redigere eller slette en note:
 + Vis menuen til behandlingen af udvalgt tekst, som beskrevet ovenfor.
 + Vælg "Edit Note".
 + 
+
+++ Azardi ++
+%kc:beginInclude
+Når du befinder dig i tabelvisningen for tilføjede bøger:
+|| Navn | Tast | Beskrivelse |
+| Enter | enter | Åbner den valgte bog. |
+| Kontekstmenu | applikationer | Åbner kontekstmenuen for den valgte bog. |
+%kc:endInclude
 
 + opsætning af NVDA+
 
@@ -2470,6 +2484,9 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | Ingen | --no-sr-flag  | Lad være med at ændre det globale skærmlæserflag |
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
+| Ingen | --create-portable | Opretter en flytbar kopi af NVDA (starter den nyoprettede kopi). Kræver --portable-path angives |
+| Ingen | --create-portable-silent | Opretter en flytbar kopi af NVDA (starter ikke den nyoprettede kopi). Kræver --portable-path angives |
+| Ingen | --portable-path=PORTABLEPATH | Stien hvor den flytbare kopi oprettes |
 
 ++ Systemspecifikke parametre++[System]
 NVDA tillader, at nogle værdier ændres i systemregistreringsdatabasen. Disse ændringer påvirker NVDAs adfærd på et systemspecifikt niveau.

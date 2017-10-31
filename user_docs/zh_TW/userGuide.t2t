@@ -59,11 +59,9 @@ NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 更詳細的內容，請上網 [查看完整版授權辦法 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]。 
 
 + 系統需求 + 
-- 作業系統：32及64位元微軟Windows XP、Windows Vista、Windows 7、Windows 8、Windows 8.1及Window 10（含伺服器作業系統）
- - 使用XP 32位元電腦，作業系統需要安裝SP 2或以上的等級；
- - 使用Windows 2003伺服器則需安裝SP 1或以上的等級。
- - 使用 Windows Vista：需 SP 2及 [KB2763674 https://support.microsoft.com/en-us/kb/2763674] 更新。
- 若Windows 有任何適用的更新，前述二項均應隨之更新。  
+- 作業系統：32及64位元微軟Windows 7、Windows 8、Windows 8.1及Window 10，和Windows Server 2008 R2以上所有的伺服器作業系統。
+ - 使用Windows 7，NVDA需要SP 1以上的等級。
+ - 使用Windows Server 2008 R2，NVDA需要SP 1以上的等級。
 - RAM 記憶體：需要 256MB 以上
 - CPU 速度：1.0Ghz或以上
 - 約需要90 MB 的儲存空間
@@ -280,7 +278,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 | 讀出目前焦點 | NVDA+tab | NVDA+tab | 讀出目前焦點所在的物件或控制項，連按兩次將拼讀其資訊。 |
 | 讀出視窗標題 | NVDA+t | NVDA+t | 讀出目前作用中的視窗標題，連按兩下拼讀標題，連按三下複製標題到剪貼簿。 |
 | 讀出作用中的視窗內容 | NVDA+b | NVDA+b | 讀出目前作用中視窗所有的控制項（尤其在對話框中很有用）。 |
-| 讀出狀態列的訊息 | NVDA+end | NVDA+shift+end | 如果可讀取的話，讀出目前應用程式的狀態列內容，且將導航器移到該處的物件，連按兩次將拼讀其資訊 |
+| 讀出狀態列的訊息 | NVDA+end | NVDA+shift+end | 如果可讀取的話，讀出目前應用程式的狀態列內容，且將導航器移到該處的物件，連按兩次將拼讀其資訊，連按三次會複製到剪貼簿 |
 %kc:endInclude 
 
 ++ 以系統編輯游標導航 ++[SystemCaret]
@@ -508,7 +506,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 - m: 頁框 (frame)
 - g: 圖片 (graphic)
 - d: 地標 (landmark)
-- o: 嵌入式物件 (embedded object)
+- o: 嵌入式物件（音訊和影片播放程式、應用程式、對話框、等） (embedded object)
 - 主鍵盤上的1到6： 第一層級到第六層級標題。 
 - a: 註記（註解、修訂、等） (annotation) 
 - w: 拼字錯誤 (spelling error)
@@ -528,7 +526,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 ++ 元件清單 ++
 
 元件清單提供了一個可以快速到達文件內不同類型元件的一個清單；
-例如，以瀏覽器開啟網頁，啟用元件清單後，可以清單列出該網頁上的連結、標題及地標等不同類型的元件，您可利用選擇鈕來選擇前述的其中一個元件。
+例如，以瀏覽器開啟網頁，啟用元件清單後，可以清單列出該網頁上的連結、標題、表單區、按鈕及地標等不同類型的元件，您可利用選擇鈕來選擇前述的其中一個元件。
 在此對話框內也提供一個可編輯文字方塊，您可填入關鍵字以過濾並找尋所要的項目。
 一旦前述控制項選定後，您可以使用對話框所提供的按鈕「移到」 或「啟動」所選的項目，以執行指令。
 %kc:beginInclude
@@ -537,9 +535,10 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 %kc:endInclude
 
 ++ 嵌入式物件 ++
-有些網頁像Adobe Flash 或 Sun Java採用了一些嵌入式物件的技術，以豐富其頁面的呈現。
+有些網頁像Adobe Flash、Oracle Java 或 HTML5 採用了一些嵌入式物件的技術，以豐富其頁面的呈現。
 當在瀏覽模式時，游標遇到這些元件，NVDA會分別讀出「嵌入式物件」、「應用程式」或「對話框」等的提示。
-此時，您可按 Enter 以便與此項目互動。
+若要快速的移到這些物件，您可使用 o 及 shift+o，單鍵導航的操作
+要進入並與這些項目互動，您可在移到後，接著按 Enter。
 如果它是無障礙可及取的，則可如一般的應用程式那樣以 Tab 四處移動看看。
 下列的快速鍵用來回到包含此嵌入式物件的原來網頁頁面：
 %kc:beginInclude
@@ -547,15 +546,18 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 | 回到包含物件的瀏覽模式 | NVDA+Ctrl+空格 | 焦點離開目前的嵌入式物件回到包含該物件的文件中。 |
 %kc:endInclude
 
-+ 報讀數學內容 +
++ 報讀數學內容 +[ReadingMath]
 利用 Design Science 開發的數學播放軟體 (MathPlayer 4)，NVDA 可以在含有數學內容的文件中，與之互動式瀏覽，並將其讀出，
 這需要在此台電腦已安裝了數學公式播放軟體 4的狀況下方有效。 
 該軟體可以從以下的網址免費下載： http://www.dessci.com/en/products/mathplayer/
 
 NVDA 支援以下數學格式的內容：
 - Mozilla Firefox 、微軟 IE 及 Google Chrome 上的數學標記語言。
-- 以 Design Science MathType 在微軟 Word 及 PowerPoint 上編輯的數學公式，要先安裝 MathType  公式編輯器方可生效，只需安裝試用版即可。 
-- Adobe Reader 的數學標記語言（此種標記語言還沒有成為正式的標準格式，因為目前還沒有可供大眾使用的應用程式可以製作其數學內容。）
+- 以 Design Science MathType 在微軟 Word 及 PowerPoint 上編輯的數學公式。
+要先安裝 MathType 公式編輯器方可生效，只需安裝試用版即可。 
+- Adobe Reader 的數學標記語言。
+此種標記語言還沒有成為正式的標準格式，因為目前還沒有可供大眾使用的應用程式可以製作其數學內容。
+- 在PC版  Kindle 內含可及性數學的電子書。 
 -
 
 當報讀一份文件時，NVDA 可讀出含有支援前述格式的數學內容。
@@ -578,7 +580,7 @@ NVDA 支援以下數學格式的內容：
 
 在此狀況下，您可以使用數學播放軟體的指令，如以方向鍵來檢視公式的內容。
 例如：您可以使用左右方向鍵在公式內移動，也可以使用向下鍵在分式內，拉近檢視公式中的某一部分。
-欲進一步瞭解詳細說明，請參見數學播放軟體的相關文件。
+欲進一步瞭解詳細說明，請參見數學播放軟體瀏覽指令的相關文件： https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 當您要回到原來文件時，只需按一下 Escape 鍵。
 
@@ -859,6 +861,9 @@ NVDA可支援在視窗作業系統上的Amazon Kindle for PC閱讀和瀏覽書�
 單鍵導航可跳「連結」及「圖片」，但僅限於當前頁面。
 利用連結來瀏覽，也會包含註腳。
 
+ NVDA 提供初步的支持朗讀那些具可及性數學的電子書籍與數學公式裡的內容之互動檢閱。
+欲進一步瞭解，請參見 [報讀數學內容 #ReadingMath] 一節。
+
 +++ 選取文字 +++
 對於選擇的文字Kindle允許執行各種功能，包含查字典、添加註記和強調、複製文字到剪貼簿和搜尋網頁。
 要執行此功能，首先選擇文字，正如您在一般瀏覽模式下，例如：按 shift和檢閱游標鍵。
@@ -880,6 +885,14 @@ NVDA可支援在視窗作業系統上的Amazon Kindle for PC閱讀和瀏覽書�
 + 選擇如上述的選項。
 + 選擇「編輯註記」選項。
 +
+
+++ Azardi ++
+%kc:beginInclude
+當以表格檢視書目時：
+|| 名稱 | 按鍵 | 說明 |
+| Enter | enter | 打開選取的書。 |
+| Context menu | applications | 打開選取的書目錄。 |
+%kc:endInclude
 
 + NVDA 設定 +
 
@@ -2469,8 +2482,11 @@ nvda -q
 | None | --disable-addons | 附加元件將不起作用 |
 | None | --debug-logging | 僅對本次執行啟用除錯等級的事件紀錄，這個設定會覆蓋其他事件紀錄的指定等級之內容。( ""--loglevel"", -l) |
 | None | --no-sr-flag  | 不要改變預設螢幕報讀軟體的標記符號
-| None | --install | 安裝 NVDA（開始安裝一個新的版本） |
-| None | --install-silent | 靜音安裝 NVDA （並非安裝一個 NVDA 新的版本） |
+| None | --install | 安裝 NVDA（啟動新安裝的版本） |
+| None | --install-silent | 靜默安裝 NVDA （不啟動新安裝的版本） |
+| None | --create-portable | 建立可攜式版NVDA（啟動新建立的版本）。 需求 --可攜式路徑需要指定 |
+| None | --create-portable-silent | 建立可攜式版NVDA（啟動新安裝的版本）。 需求 --可攜式路徑需要指定 |
+| None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
 
 ++ 系統性參數 ++[SystemWideParameters]
 NVDA 允許設定一些在系統登錄檔的值，這些會全區域改變 NVDA 在系統上的行為。 

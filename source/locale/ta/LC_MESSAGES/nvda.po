@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-02 12:22+0530\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
+"PO-Revision-Date: 2017-10-19 20:13+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -1026,9 +1026,12 @@ msgstr "சீனம் (ஹாங்காங், காண்டோனீஸ�
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "சீனம் (தைவான், மாண்டரீன்)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "குவிமைய நிலை"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "உலாவும் நிலை"
@@ -1067,7 +1070,7 @@ msgstr "இவ்வாவணத்தில் இருக்கும் ப�
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
-msgstr "ஆவணத்திலுள்ள தற்போதையப் பொருளை இயக்குகிறது"
+msgstr "ஆவணத்திலுள்ளநடப்புப் பொருளை இயக்குகிறது"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1559,8 +1562,8 @@ msgstr "வகை"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
+msgid "Filt&er by:"
+msgstr "இதைக் கொண்டு வடிகட்டுக (&E):"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1595,8 +1598,8 @@ msgstr "நெடுவிளக்கம் ஏதுமில்லை"
 msgid "Shows the long description at this position if one is found."
 msgstr "இந்நிலையில் நெடுவிளக்கம் ஏதேனும் இருந்தால், அதைக் காண்பிக்கும்"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "கொள்களத்தில் இல்லை"
 
@@ -2675,6 +2678,24 @@ msgstr "gesture வரைப்பட கோப்புப் பிழை"
 msgid "Loading NVDA. Please wait..."
 msgstr "என்விடிஏ ஏற்றப்படுகிறது. கருணைக்கூர்ந்து காத்திருக்கவும்..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "கிடைநீள திரைத் தளவமைப்பு"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "செங்குத்து திரைத் தளவமைப்பு"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "மின்கலம் மின்னேற்றப்படுகிறது. %d விழுக்காடு"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "மின்கலம் மின்னேற்றப்படவில்லை. %d விழுக்காடு"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "என்விடிஏ துவங்கிவிட்டது"
@@ -2701,23 +2722,23 @@ msgstr "கண்டறிதலில் பிழை"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
-msgstr "தற்போதைய சுட்டியின் இடத்திலுருந்து ஒரு உரையைக் கண்டறியவும்"
+msgstr "சுட்டியின் நடப்பு இடத்திலுருந்து ஒரு உரையைக் கண்டறிக"
 
 #. Translators: Input help message for find next command.
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் அடுத்த தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
-"எங்கேவென்று கண்டறியவும்"
+"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் அடுத்த தோற்றம், சுட்டியின் நடப்பு நிலையிலிருந்து "
+"எங்கேவென்று கண்டறிக"
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் முந்தைய தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
-"எங்கேவென்று கண்டறியவும்"
+"ஏற்கெனவே உள்ளீடுச் செய்யப்பட்ட உரையின் முந்தைய தோற்றம், சுட்டியின் நடப்பு நிலையிலிருந்து "
+"எங்கேவென்று கண்டறிக"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
@@ -2828,7 +2849,7 @@ msgid ""
 "twice will spell the current line. Pressing three times will spell the line "
 "using character descriptions."
 msgstr ""
-"கணினிச் சுட்டியின் கீழுள்ள வரியைப் படிக்கும். இருமுறை அழுத்தினால், வரியை எழுத்துகளாக "
+"கணினிச் சுட்டியின் கீழுள்ள நடப்பு வரியைப் படிக்கும். இருமுறை அழுத்தினால், வரியை எழுத்துகளாக "
 "படிக்கும். மும்முறை அழுத்தினால், வரியை எழுத்து விளக்கங்களைக் கொண்டு படிக்கும். "
 
 #. Translators: Reported when left mouse button is clicked.
@@ -2837,7 +2858,7 @@ msgstr "இடது சொடுக்கு"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "சொடுக்கியின் இடது பொத்தான் தற்போதைய நிலையில் ஒருமுறை சொடுக்கப்படும்"
+msgstr "சொடுக்கியின் இடது பொத்தான் நடப்பு நிலையில் ஒருமுறை சொடுக்கப்படும்"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
@@ -2845,7 +2866,7 @@ msgstr "வலது சொடுக்கு"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "சொடுக்கியின் வலது பொத்தான் தற்போதைய நிலையில் ஒருமுறை சொடுக்கப்படும்"
+msgstr "சொடுக்கியின் வலது பொத்தான் நடப்பு நிலையில் ஒருமுறை சொடுக்கப்படும்"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
@@ -2888,7 +2909,7 @@ msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"ஒருமுறை அழுத்தினால் தற்போதைய நேரத்தையும், இருமுறை அழுத்தினால் இன்றையத் தேதியையும் "
+"ஒருமுறை அழுத்தினால், நடப்பு நேரத்தையும், இருமுறை அழுத்தினால், நடப்புத் தேதியையும் "
 "அறிவிக்கும்"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
@@ -2897,11 +2918,11 @@ msgstr "அமைப்புகள் ஏதுமில்லை"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், தற்போது இயக்கத்திலிருக்கும் அமைப்பைக் கூட்டுகிறது"
+msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், நடப்பில் இருக்கும் அமைப்பைக் கூட்டுகிறது"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், தற்போது இயக்கத்திலிருக்கும் அமைப்பைக் குறைக்கிறது"
+msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், நடப்பில் இருக்கும் அமைப்பைக் குறைக்கிறது"
 
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
@@ -3338,6 +3359,7 @@ msgid "No navigator object"
 msgstr "வழிகாட்டிப் பொருள் ஏதுமில்லை"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
@@ -3660,10 +3682,12 @@ msgstr "நிலைக் கோடு காணப்படவில்லை"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "தற்போதையப் பயன்பாட்டின் நிலைப்பட்டையைப் படித்து, வழிகாட்டியை அவிடத்திற்கு நகர்த்தும். இரு "
-"முறை அழுத்தினால், தகவலை எழுத்துகளாகப் படிக்கும். "
+"முறை அழுத்தினால், தகவலை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், நிலைப் பட்டையை "
+"பிடிப்புப் பலகைக்குப் படியெடுக்கும். "
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7540,11 +7564,21 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "கூட்டுக்கூறு நிறுவுதல்"
 
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+msgid ""
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"{summary} கூட்டுக்கூறின் {newVersion} பதிப்பை நிறுவ இருக்கிறீர்கள், இது ஏற்கெனவே "
+"நிறுவப்பட்டுள்ளதாகத் தோன்றுகிறது. இருப்பினும் இற்றைப்படுத்த விரும்புகிறீர்களா?"
+
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
 msgstr ""
-"கூட்டுக்கூறின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. இதை இற்றைப்படுத்த விரும்புகிறீர்களா?"
+"{summary} கூட்டுக்கூறின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. {curVersion} "
+"பதிப்பை, {newVersion} என்கிற புதியப் பதிப்பைக் கொண்டு  இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7954,6 +7988,10 @@ msgstr "பெயர்த்தகு அடைவைத் தெரிவு�
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "தற்போதைய பயனர் அமைவடிவத்தைப் படியெடுக்கவும் (&U)"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "புதிய பெயர்த்தகு படி உருவாக்கப்பட்டவுடன் அதை இயக்கவும். (&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -10352,7 +10390,7 @@ msgstr "விளக்கவுரைகள் (&A)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+msgid "&Errors"
 msgstr "பிழைகள் (&E)"
 
 #. Translators: The name of a series of braille displays.

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-01 15:33+0900\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
+"PO-Revision-Date: 2017-10-19 23:30+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1030,9 +1030,12 @@ msgstr "中国語点字(香港、広東語)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "中国語点字(台湾、標準中国語)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "フォーカスモード"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "ブラウズモード"
@@ -1561,8 +1564,8 @@ msgstr "種別"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "フィルター(&F)"
+msgid "Filt&er by:"
+msgstr "フィルター(&E)"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1597,8 +1600,8 @@ msgstr "詳細説明なし"
 msgid "Shows the long description at this position if one is found."
 msgstr "詳細説明がある場合に表示"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "コンテナ内ではありません"
 
@@ -2688,6 +2691,24 @@ msgstr "ジェスチャーマップファイルエラー"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDAを読み込み中です。お待ちください..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "横長の向き"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "縦長の向き"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "バッテリー %d パーセント 充電中"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "バッテリー %d パーセント 充電していません"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA起動"
@@ -3335,6 +3356,7 @@ msgid "No navigator object"
 msgstr "ナビゲーターオブジェクトなし"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%sをクリップボードにコピーしました"
@@ -3641,10 +3663,11 @@ msgstr "ステータスバーがみつかりません"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "アプリのステータスバーを読み上げてナビゲーターオブジェクトを移動。2回押すとス"
-"ペルを報告"
+"ペルを報告。3回押すとクリップボードにコピー"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7511,10 +7534,22 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "アドオンのインストール"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
-msgstr "このアドオンはすでにインストールされています。更新しますか？"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"{summary} はインストール済みです。バージョン {newVersion} に更新しますか？"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"{summary} バージョン {curVersion} がインストール済みです。バージョン "
+"{newVersion} に更新しますか？"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7924,6 +7959,10 @@ msgstr "ポータブル版を作成する場所"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "現在のユーザー設定をコピー(&U)"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "作成したポータブル版を実行(&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -10349,7 +10388,7 @@ msgstr "コメント(&A)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+msgid "&Errors"
 msgstr "スペルミス(&E)"
 
 #. Translators: The name of a series of braille displays.

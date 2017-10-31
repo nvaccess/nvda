@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-22 00:10+1000\n"
-"PO-Revision-Date: 2017-09-26 00:58+0200\n"
+"POT-Creation-Date: 2017-10-06 00:10+1000\n"
+"PO-Revision-Date: 2017-10-30 09:19+0100\n"
 "Last-Translator: zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -44,7 +44,7 @@ msgstr "polovični alfanumerički"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "polovični katakana"
+msgstr "polovična katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
@@ -68,7 +68,7 @@ msgstr "hiragana rimski"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
 msgid "katakana roman"
-msgstr "katakana rimski"
+msgstr "katakana roman"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
@@ -3358,6 +3358,7 @@ msgid "No navigator object"
 msgstr "nema objekta navigatora"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s kopirano u međuspremnik"
@@ -3689,10 +3690,12 @@ msgstr "Statusna linija nije pronađena"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "čita trenutnu traku stanja aplikacije i premiješta kursor za navigaciju na "
-"istu. Ako je pritisnuto dva puta, slovka informaciju."
+"istu. Ako je pritisnuto dva puta, slovka informaciju, ako je pritisnuto tri "
+"putta, kopira ju u međuspremnik."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7610,10 +7613,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Instalacija dodatka"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
-msgstr "Inačica ovog dodatka je već instalirana. Želite li ažurirati dodatak?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"Instalirat ćete inačicu {newVersion} dodatka {summary}, koja je već "
+"instalirana. Želite li još uvijek nadograditi?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Inačica ovog dodatka je već instalirana. Želite li nadograditi {summary} "
+"inačicu {curVersion} na inačicu {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8028,6 +8044,10 @@ msgstr "Odaberite direktorij za prijenosnu kopiju"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Kopiraj trenutnu &korisničku konfiguraciju"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Pokreni novu prijenosnu kopiuj poslije stvaranja"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
