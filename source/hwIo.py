@@ -32,7 +32,7 @@ class IoBase(object):
 	"""
 
 	def __init__(self, fileHandle, onReceive, writeFileHandle=None, onReceiveSize=1, writeSize=None):
-		"""Constructr.
+		"""Constructor.
 		@param readFileHandle: A handle to an open I/O device opened for overlapped I/O.
 			If L{writeFileHandle} is specified, this is only for input
 		@param onReceive: A callable taking the received data as its only argument.
@@ -82,7 +82,7 @@ class IoBase(object):
 	def write(self, data):
 		if _isDebug():
 			log.debug("Write: %r" % data)
-		size = max(self._writeSize, len(data))
+		size = self._writeSize or len(data)
 		buf = ctypes.create_string_buffer(size)
 		buf.raw = data
 		if not ctypes.windll.kernel32.WriteFile(self._writeFile, data, size, None, byref(self._writeOl)):
@@ -97,8 +97,9 @@ class IoBase(object):
 		if _isDebug():
 			log.debug("Closing")
 		self._onReceive = None
-		ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
-		if self._writeFile is not self._file:
+		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
+			ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
+		if hasattr(self, "_writeFile") and self._writeFile not in (self._file, INVALID_HANDLE_VALUE):
 			ctypes.windll.kernel32.CancelIoEx(self._writeFile, byref(self._readOl))
 
 	def __del__(self):
@@ -342,5 +343,7 @@ class Bulk(IoBase):
 
 	def close(self):
 		super(Bulk, self).close()
-		winKernel.closeHandle(self._file)
-		winKernel.closeHandle(self._writeFile)
+		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
+			winKernel.closeHandle(self._file)
+		if hasattr(self, "_writeFile") and self._writeFile is not INVALID_HANDLE_VALUE:
+			winKernel.closeHandle(self._writeFile)
