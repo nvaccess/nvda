@@ -1,27 +1,30 @@
-﻿Što je novo u NVDA
+Što je novo u NVDA
 
 
 %!includeconf: ../changes.t2tconf
  
- 
 = 2017.4 =
 
 == Nove značajke ==
-- U načinu pregleda sada je moguće preskakati orjentire koristeći prečac prebacivanja između sadrživaća (zarez/shift+zarez). (#5482)
-- U Firefoxu, Chromeu i u Internet Exploreru, brza navigacija do uređivačkih polja i obrazaca sada uključuje tekstualna polja bogatog uređivanja (npr. contentEditable). (#5534)
+- U načinu pregleda, sada je moguće preskakati orjentire koristeći prečac prebacivanja između sadrživaća (zarez/shift+zarez). (#5482)
+- U Firefoxu, Chromeu i u Internet Exploreru, brza navigacija do uređivačkih polja i obrazaca sada uključuje tekstualna polja bogatog uređivanja (NPR. contentEditable). (#5534)
 - U internet preglednicima, popis elemenata može izlistavati obrasce i gumbe. (#588)
-- Prvobitna podrška za Windows 10 na ARM64. (#7508)
+- Prvobitna podrška za Windows 10 na ARM64 platformama. (#7508)
 - Rana podrška za čitanje i kretanje po matematičkom sadržaju za Kindle knjige sa pristupačnom matematikom. (#7536)
 - Dodana podrška za Azardi čitač elektronskih knjiga. (#5848)
+- Prilikom ažuriranja, sada se izgovara broj inačice dodatka. (#5324)
+- Dodana podrška za nove parametre komandne linije za stvaranje prijenosne kopije. (#6329)
 
 
 == Izmjene ==
 - Minimalna podržana inačica operativnih sustava za NVDA sada je Windows 7 sa servisnim paketom 1, ili Windows Server 2008 R2 sa servisnim paketom 1. (#7546)
 - Web dijaloški okviri u Firefox i Chrome web preglednicima sada automatski koriste način pregleda, osim ako to nije web aplikacija. (#4493)
-- U načinu pregleda, pritiskanje tabulatora i kretanje prećicama za brzo kretanje ne izgovaraju prebacivanje izvan sadrživaća poput popisa i tablica, što čini kretanje bržim. (#2591)
+- U načinu pregleda, pritiskanje tabulatora i kretanje prečicama za brzo kretanje ne izgovaraju prebacivanje izvan sadrživaća poput popisa i tablica, što čini kretanje bržim. (#2591)
 - U načinu pregleda za Firefox i Chrome, Imena grupa polja obrazaca prilikom premještanja po njima sa prečicama za brzo kretanje ili prilikom pritiskanja taba. (#3321)
 - U načinu pregleda, prečac za brzo kretanje po ugrađenim objektima (o i shift+o) sada uključuje audio i video playere, kao i elemente s aria atributima application i dialog. (#7239)
 - Espeak-ng je nadograđen (na reviziju 01919cd48a566cdf34347784b2e74554b376e900), To popravlja greške prilikom izdavanja stabilnih inačica. (#7385)
+- Prilikom treće aktivacije komande 'čitaj statusnu traku', sadržaj iste kopira se u međuspremnik. (#1785)
+- Prilikom dodjele prečaca na Baumovom brajičnom redku, sada je moguče ograničiti iste za model na kojem se koriste (npr. VarioUltra ili Pronto). (#7517)
 
 
 == Ispravke grešaka ==
@@ -35,7 +38,7 @@
 - Prilikom ponovnog pokretanja NVDA sa Mozilla Firefox u fokusu, način pregleda će ponovno biti dostupan, međutim, trebalo bi pritisnuti alt tab, da se prebaci na drugu aplikaciju, te ponovno da se vratimo na Firefox. (#5758)
 - Sada je moguć pristup matematičkom Sadržaju u Google Chromeu na sustavu bez instaliranog Mozilla Firefox web preglednika. (#7308)
 - Operacijski sustav i druge aplikacije trebale bi biti stabilnije neposredno poslije instalacije NVDA prije ponovnog pokretanja, usporedno sa prijašnjim inačicama NVDA čitača zaslona. (#7563)
-
+ 
 
 == Izmjene za razvojne programere ==
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 00:10+1000\n"
-"PO-Revision-Date: 2017-10-12 07:38-0700\n"
+"POT-Creation-Date: 2017-10-27 00:10+1000\n"
+"PO-Revision-Date: 2017-10-28 10:59-0700\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -1032,9 +1032,12 @@ msgstr "중국어 (홍콩, 광동어)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "중국어 (타이완, 북경어)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "포커스 모드"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "브라우즈 모드"
@@ -1565,8 +1568,8 @@ msgstr "유형"
 # Translation: "Find from elements list".
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "특정 요소 이름 검색 (&F)"
+msgid "Filt&er by:"
+msgstr "특정 요소 이름 검색 (&E)"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1601,8 +1604,8 @@ msgstr "상세 설명 없음"
 msgid "Shows the long description at this position if one is found."
 msgstr "현 위치에 상세 설명이 있다면 그 내용을 보여줍니다."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "컨테이너 요소 아님"
 
@@ -5663,13 +5666,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "소리"
 
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"윈도우 로그인, UACㅇ와 같은 보안창에서 NVDA를 사용할 수 있도록 도와주비다"
-
 msgid "Type help(object) to get help about object."
 msgstr "Type help(object) to get help about object."
 
@@ -6418,7 +6414,7 @@ msgstr ""
 "퍼센트"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{description}"
 
@@ -8008,7 +8004,7 @@ msgstr "현재 사용자 환경 복사 (&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr ""
+msgstr "휴대용 버전 생성후 곧바로 실행 (&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -10440,7 +10436,7 @@ msgstr "주석 (&A)"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #, fuzzy
-msgid "&errors"
+msgid "&Errors"
 msgstr "오류"
 
 #. Translators: The name of a series of braille displays.
@@ -10450,3 +10446,9 @@ msgstr "HIMS 한소네/브레일 엣지/스마트 비틀"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid ""
+#~ "Allows NVDA to run on the Windows Logon screen, UAC screen and other "
+#~ "secure screens."
+#~ msgstr ""
+#~ "윈도우 로그인, UACㅇ와 같은 보안창에서 NVDA를 사용할 수 있도록 도와주비다"

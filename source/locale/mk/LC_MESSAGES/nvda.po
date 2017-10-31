@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-57432f4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 00:10+1000\n"
-"PO-Revision-Date: 2017-10-16 06:57+0100\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
+"PO-Revision-Date: 2017-10-26 08:42+0100\n"
 "Last-Translator: Kristijan Lazarev <kristijan.lazarev@gmail.com>\n"
 "Language-Team: мк <LL@li.org>\n"
 "Language: mk\n"
@@ -25,7 +25,7 @@ msgstr "вообичаен внес"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 msgid "Alpha numeric input"
-msgstr "Алфанумерички влес"
+msgstr "Алфанумерички внес"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 msgid "Full shaped mode"
@@ -1029,9 +1029,12 @@ msgstr "кинески (Хонк-конг) кантонезиски"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "кинески (Тајван) мандарински"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "мод за фокусирање"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "мод за пребарување"
@@ -1562,8 +1565,8 @@ msgstr "вид:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&филтрирај според:"
+msgid "Filt&er by:"
+msgstr "Filt&er by:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1598,8 +1601,8 @@ msgstr "не постои поопширен опис"
 msgid "Shows the long description at this position if one is found."
 msgstr "Го прикажува долгиот опис на оваа позиција доколку тој постои."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "не сте во контејнерот"
 
@@ -8228,7 +8231,7 @@ msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
 "Користи го НВДА на виндовсовиот екран за најава (потребна е администраторска "
-"дозвола за тоа)"
+"дозвола)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
@@ -8236,7 +8239,7 @@ msgid ""
 "administrator privileges)"
 msgstr ""
 "користи ги моментално зачуваните нагодувања на екранот за најавување и "
-"другите заштитени екрани (потребна е администраторска дозвола за тоа)"
+"другите заштитени екрани (потребна е администраторска дозвола)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -10593,8 +10596,8 @@ msgstr "&анотации"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "&грешки"
+msgid "&Errors"
+msgstr "&Грешки"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"

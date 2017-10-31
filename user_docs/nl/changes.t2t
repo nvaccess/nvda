@@ -12,6 +12,10 @@
 - Initiële ondersteuning voor Windows 10 op ARM64. (#7508)
 - Vroege ondersteuning voor het lezen van en interactief navigeren door wiskundige inhoud voor Kindle boeken, mits deze inhoud toegankelijk is. (#7536)
 - Ondersteuning toegevoegd voor Azardi e-book reader. (#5848)
+- Bij het updaten van add-ons wordt nu versie-informatie gemeld. (#5324)
+- Ondersteuning toegevoegd voor nieuwe commandoregelopties om een draagbare versie van NVDA aan te maken. (#6329)
+- Ondersteuning voor Microsoft Edge toegevoegd wanneer dit draait binnen Windows Defender Application Guard (#7600)
+- Wanneer NVDA gebruikt wordt op een laptop of tablet wordt het vanaf nu gemeld als er een adapter wordt aangesloten/losgekoppeld en als de schermstand wijzigt. (#4574, #4612)
 
 
 == Veranderingen ==
@@ -21,6 +25,9 @@
 - In bladermodus voor Firefox en Chrome wordt nu de naam van formulierveldgroeperingen gemeld wanneer daarin genavigeerd wordt met snelnavigatie of tab. (#3321)
 - In bladermodusomvat het snelnavigatiecommando voor ingebedde objecten (o en shift+o) nu zowel elementen van het type audio en video als met de aria roles application en dialog. (#7239)
 - Espeak-ng is bijgewerkt (naar commit 01919cd48a566cdf34347784b2e74554b376e900), wat enkele problemen oplost met het produceren van release builds. (#7385)
+- Bij het derde keer activeren van het 'lees statusbalk' commando wordt de inhoud van de statusbalk naar het klembord gekopieerd. (#1785)
+- Bij het toewijzen van invoerhandelingen voor een Baum leesregel is het nu mogelijk om specifieke toewijzingen te doen voor het model van de brailleleesregel die momenteel in gebruik is (bijv. VarioUltra of Pronto). (#7517)
+- De sneltoets van het filterveld in de elementenlijst in bladermodus is gewijzigd van alt+f in alt+e. (#7569)
 
 
 == Opgeloste Problemen ==
@@ -34,6 +41,7 @@
 - When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
 - It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
 - The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
+- When using a content recognition command (e.g. NVDA+r), NVDA now reports an error message instead of nothing if the navigator object has disappeared. (#7567)
 
 
 == Veranderingen voor Ontwikkelaars ==

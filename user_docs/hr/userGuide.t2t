@@ -278,7 +278,7 @@ Postoji nekoliko tipkovničkih prečaca koji su korisni za kretanje po objektima
 | Izvijesti o trenutnom fokusu | NVDA+tab | NVDA+tab | Obavještava o objektuk oji je trenutno u fokusu. Kad pritisnete dvaput, slovkat će izgovoreno |
 | Izvijesti o naslovu | NVDA+t | NVDA+t | Izvještava o naslovu trenutnog prozora. Kad pritisnete dvaput, NVDA će slovkati izgovoreno. Kad pritisnete triput kopirat ćete naslov u međuspremnik. |
 | Pročitaj trenutni prozor | NVDA+b | NVDA+b | čita sve kontrole u trenutno aktivnom prozoru (korisno za dijaloške okvire) |
-| čitaj statusnu traku | NVDA+end | NVDA+shift+end | ČIta traku stanja ako ju NVDA pronađe. također premješta objekt navigacije na tu lokaciju. Kada se pritisne dvaput, informacija na statusnoj traci bit će slovkana |
+| čitaj statusnu traku | NVDA+end | NVDA+shift+end | Čita traku stanja ako ju NVDA pronađe. također premješta objekt navigacije na tu lokaciju. Kada se pritisne dvaput, informacija na statusnoj traci bit će slovkana, a ako se pritisne tri puta, bit će kopirana u međuspremnik. |
 %kc:endInclude
 
 ++ Kretanje pomoću kursora sustava ++[SystemCaret]
@@ -2484,6 +2484,9 @@ Sljede opcije naredbenog retka za NVDA:
 | Nema | --no-sr-flag  | Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu |
 | Nema | --install | Instalira NVDA, pritom pokrečući novoinstaliranu kopiju |
 | Nema | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
+| Nema | --create-portable | Stvara prijenosnu inačicu NVDA (pri tome ponovno pokrečući novostvorenu kopiju). Zahtjeva određenu funkciju --portable-path |
+| Nema | --create-portable-silent | Stvara prijenosnu inačicu NVDA (ne pokreće novostvorenu kopiju). zahtjeva određen parametar --portable-path |
+| Nema | --portable-path=PORTABLEPATH | putanja u koju prijenosna inačica treba biti stvorena |
 
 ++ Cijelosustavni parametri++[SystemWideParameters]
 NVDA omogućava izmjenu nekih postavki u registru, koje mijenjaju cijelosistemsko ponašanje NVDA.
