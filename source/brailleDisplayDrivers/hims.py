@@ -413,7 +413,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if firstByte=="\x1c":
 			# A device is identifying itself
 			deviceId=stream.read(2)
-			assert stream.read(1) == "\x1f" # When a device identifies itself, the packets ends with 0x1f
+			# When a device identifies itself, the packets ends with 0x1f
+			assert stream.read(1) == "\x1f"
 			self._handleIdentification(deviceId)
 		elif firstByte=="\xfa":
 			# Command packets are ten bytes long
