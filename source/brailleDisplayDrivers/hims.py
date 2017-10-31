@@ -264,11 +264,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			tryPorts = ((port, "serial",None),)
 		for port, portType, identifier in tryPorts:
-			self.isBulk = portType.startswith("USB bulk")
+			self.isBulk = portType=="USB bulk"
 			# Try talking to the display.
 			try:
 				if self.isBulk:
-					self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, writeSize=4, onReceiveSize=10)
+					# onReceiveSize based on max packet size according to USB endpoint information.
+					self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, writeSize=0, onReceiveSize=64)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
 			except EnvironmentError:
@@ -283,13 +284,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if self.numCells:
 					break
 			if not self.numCells:
+				log.debugWarning("No response from potential Hims display")
 				self._dev.close()
 				continue
-			if portType.startswith("USB serial"):
+			if portType=="USB serial":
 				self._model = SyncBraille(self)
 			elif self.isBulk:
 				self._sendIdentificationRequests(usbId=identifier)
-			elif identifier:
+			elif portType=="bluetooth" and identifier:
 				self._sendIdentificationRequests(bluetoothPrefix=identifier)
 			else:
 				self._sendIdentificationRequests()
