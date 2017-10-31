@@ -187,7 +187,7 @@ bluetoothPrefixes={modelCls.bluetoothPrefix for id, modelCls in modelMap if mode
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "hims"
 	# Translators: The name of a series of braille displays.
-	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/SyncBraille series")
+	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series")
 	isThreadSafe = True
 
 	@classmethod
