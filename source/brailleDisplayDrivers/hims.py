@@ -79,10 +79,10 @@ class BrailleEdge(Model):
 	def _get_keys(self):
 		keys = super(BrailleEdge, self)._get_keys()
 		keys.update({
-			0x01<<16: "leftScrollUp",
-			0x02<<16: "rightScrollUp",
-			0x04<<16: "rightScrollDown",
-			0x08<<16: "leftScrollDown",
+			0x01<<16: "leftSideScrollUp",
+			0x02<<16: "rightSideScrollUp",
+			0x04<<16: "rightSideScrollDown",
+			0x08<<16: "leftSideScrollDown",
 			0x10<<16: "f5",
 			0x20<<16: "f6",
 			0x40<<16: "f7",
@@ -108,8 +108,8 @@ class BrailleSense2S(BrailleSense):
 	def _get_keys(self):
 		keys = super(BrailleSense2S, self)._get_keys()
 		keys.update({
-			0x20<<8: "leftScroll",
-			0x40<<8: "rightScroll",
+			0x20<<8: "leftSideScroll",
+			0x40<<8: "rightSideScroll",
 		})
 		return keys
 
@@ -119,10 +119,10 @@ class BrailleSense4S(BrailleSense):
 	def _get_keys(self):
 		keys = super(BrailleSense4S, self)._get_keys()
 		keys.update({
-			0x01<<16: "leftScrollUp",
-			0x02<<16: "leftScrollDown",
-			0x04<<16: "rightScrollUp",
-			0x08<<16: "rightScrollDown",
+			0x01<<16: "leftSideScrollUp",
+			0x02<<16: "leftSideScrollDown",
+			0x04<<16: "rightSideScrollUp",
+			0x08<<16: "rightSideScrollDown",
 		})
 		return keys
 
@@ -140,11 +140,11 @@ class SmartBeetle(BrailleSense4S):
 		keys.update({
 			0x04<<8: "f4",
 			0x10<<8: "f2",
-			0x04<<16: "leftScroll",
-			0x08<<16: "rightScroll",
+			0x04<<16: "leftSideScroll",
+			0x08<<16: "rightSideScroll",
 			# Once in a while, a Beetle sends the wrong key codes for left and right scroll.
-			0x20<<8: "leftScroll",
-			0x40<<8: "rightScroll",
+			0x20<<8: "leftSideScroll",
+			0x40<<8: "rightSideScroll",
 		})
 		return keys
 
@@ -163,10 +163,10 @@ class SyncBraille(Model):
 
 	def _get_keys(self):
 		return OrderedDict({
-			0x10<<8: "leftScrollUp",
-			0x20<<8: "rightScrollUp",
-			0x40<<8: "rightScrollDown",
-			0x80<<8: "leftScrollDown",
+			0x10<<8: "leftSideScrollUp",
+			0x20<<8: "rightSideScrollUp",
+			0x40<<8: "rightSideScrollDown",
+			0x80<<8: "leftSideScrollDown",
 		})
 
 modelMap = [(cls.deviceId,cls) for cls in (
@@ -480,6 +480,42 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
+					"braille_routeTo": (
+				"br(hims):routing",
+			),
+			"braille_scrollBack": (
+				"br(hims):leftSideScrollUp",
+				"br(hims):rightSideScrollUp",
+				"br(hims):leftSideScroll",
+			),
+			"braille_scrollForward": (
+				"br(hims):leftSideScrollDown",
+				"br(hims):rightSideScrollDown",
+				"br(hims):rightSideScroll",
+			),
+			"braille_previousLine": (
+				"br(hims):leftSideScrollUp+rightSideScrollUp",
+			),
+			"braille_nextLine": (
+				"br(hims):leftSideScrollDown+rightSideScrollDown",
+			),
+			"review_previousLine": (
+				"br(hims):rightSideUpArrow",
+			),
+			"review_nextLine": (
+				"br(hims):rightSideDownArrow",
+			),
+			"review_previousCharacter": (
+				"br(hims):rightSideLeftArrow",
+			),
+			"review_nextCharacter": (
+				"br(hims):rightSideRightArrow",
+			),
+			"braille_toFocus": (
+				"br(hims):leftSideScrollUp+leftSideScrollDown",
+				"br(hims):rightSideScrollUp+rightSideScrollDown",
+				"br(hims):leftSideScroll+rightSideScroll",
+			),
 			"kb:control": (
 				"br(hims.smartbeetle):f1",
 				"br(hims.brailleedge):f3",
@@ -645,40 +681,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"br(hims):dot1+dot4+dot5+f1",
 			),
 			"kb:control+insert": (
-				"br(hims.smartbeetle):f1+rightScroll",
+				"br(hims.smartbeetle):f1+rightSideScroll",
 			),
 			"kb:alt+insert": (
-				"br(hims.smartbeetle):f3+rightScroll",
-			),
-			"braille_routeTo": (
-				"br(hims):routing",
-			),
-			"braille_scrollBack": (
-				"br(hims):leftScrollUp",
-				"br(hims):rightScrollUp",
-				"br(hims):leftScroll",
-			),
-			"braille_scrollForward": (
-				"br(hims):leftScrollDown",
-				"br(hims):rightScrollDown",
-				"br(hims):rightScroll",
-			),
-			"review_previousLine": (
-				"br(hims):rightSideUpArrow",
-			),
-			"review_nextLine": (
-				"br(hims):rightSideDownArrow",
-			),
-			"review_previousCharacter": (
-				"br(hims):rightSideLeftArrow",
-			),
-			"review_nextCharacter": (
-				"br(hims):rightSideRightArrow",
-			),
-			"braille_toFocus": (
-				"br(hims):leftScrollUp+leftScrollDown",
-				"br(hims):rightScrollUp+rightScrollDown",
-				"br(hims):leftScroll+rightScroll",
+				"br(hims.smartbeetle):f3+rightSideScroll",
 			),
 		}
 	})
