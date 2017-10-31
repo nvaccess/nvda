@@ -20,7 +20,7 @@ import brailleInput
 from baseObject import AutoPropertyObject
 
 TIMEOUT = 0.2
-BAUD_RATE = 15200
+BAUD_RATE = 115200
 PARITY = serial.PARITY_NONE
 
 class Model(AutoPropertyObject):
@@ -158,10 +158,8 @@ class BrailleSenseQX(BrailleSenseQ):
 	deviceId="\x53\x58" # SX
 
 class SyncBraille(Model):
-	"""@Warning: Currently not supported by this driver.
-	Might be supported later.
-	"""
 	name = "SyncBraille"
+	usbId = "VID_0403&PID_6001"
 
 	def _get_keys(self):
 		return OrderedDict({
@@ -194,20 +192,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
-		try:
-			next(cls._getAutoPorts(cls.getBluetoothPorts()))
-		except StopIteration:
-			return False
 		return True
-
-	@classmethod
-	def getBluetoothPorts(cls):
-		return (portInfo for portInfo in hwPortUtils.listComPorts() if "bluetoothName" in portInfo)
 
 	@classmethod
 	def getPossiblePorts(cls):
 		ports = OrderedDict()
-		comPorts = cls.getBluetoothPorts()
+		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
 		try:
 			next(cls._getAutoPorts(comPorts))
 			ports.update((cls.AUTOMATIC_PORT,))
@@ -215,14 +205,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			pass
 		for portInfo in comPorts:
 			# Translators: Name of a serial communications port.
-			ports[portInfo["port"]] = _("Bluetooth: {portName}").format(
-				portName=portInfo["friendlyName"])
+			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
 		return ports
 
 	@classmethod
 	def _getAutoPorts(cls, comPorts):
 		# USB bulk
 		for bulkId in USB_IDS_BULK:
+			portType = "USB bulk"
 			try:
 				rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\%s"%bulkId)
 			except WindowsError:
@@ -236,36 +226,43 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 							break
 						try:
 							with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-								yield _winreg.QueryValueEx(paramsKey, "SymbolicName")[0], "USB bulk", bulkId
+								yield _winreg.QueryValueEx(paramsKey, "SymbolicName")[0], portType, bulkId
 						except WindowsError:
 							continue
-
-		# Bluetooth
-		for portInfo in comPorts:
-			btName = portInfo["bluetoothName"]
-			for prefix in bluetoothPrefixes:
-				if btName.startswith(prefix):
-					btPrefix=prefix
-					break
-			else:
-				btPrefix = None
-	
-			yield portInfo['port'], "bluetooth", btPrefix
+		# Try bluetooth ports last.
+		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
+			port = portInfo["port"]
+			hwID = portInfo["hardwareID"]
+			if hwID.startswith(r"FTDIBUS\COMPORT"):
+				# USB.
+				portType = "USB serial"
+				try:
+					usbID = hwID.split("&", 1)[1]
+				except IndexError:
+					continue
+				if usbID is not SyncBraille.usbId:
+					continue
+				yield portInfo['port'], portType, usbID
+			elif "bluetoothName" in portInfo:
+				# Bluetooth.
+				portType = "bluetooth"
+				btName = portInfo["bluetoothName"]
+				for prefix in bluetoothPrefixes:
+					if btName.startswith(prefix):
+						btPrefix=prefix
+						break
+				else:
+					btPrefix = None
+				yield portInfo['port'], portType, btPrefix
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._model = None
 		if port == "auto":
-			tryPorts = self._getAutoPorts(self.getBluetoothPorts())
+			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
 		else:
-			try:
-				btName = next(portInfo.get("bluetoothName","") for portInfo in hwPortUtils.listComPorts() if portInfo.get("port")==port)
-				btPrefix = next(prefix for prefix in bluetoothPrefixes if btName.startswith(prefix))
-				tryPorts = ((port, "bluetooth", btPrefix),)
-			except StopIteration:
-				tryPorts = ()
-
+			tryPorts = ((port, "serial",None),)
 		for port, portType, identifier in tryPorts:
 			self.isBulk = portType.startswith("USB bulk")
 			# Try talking to the display.
@@ -277,17 +274,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except EnvironmentError:
 				continue
 
-			# Send a cell count request, which is not strictly necessary at this point.
-			# However, it seems that the first sent request after opening the device doesn't come through
-			# and we really want to make sure that our identification request comes through
+			# Send a cell count request twice, since it seems that the first sent request doesn't come through
 			self._sendCellCountRequest()
-			self._dev.waitForRead(TIMEOUT)
-			if self.isBulk:
+			self._sendCellCountRequest()
+			for i in xrange(3):
+				# An expected response hasn't arrived yet, so wait for it.
+				self._dev.waitForRead(TIMEOUT)
+				if self.numCells:
+					break
+			if not self.numCells:
+				self._dev.close()
+				continue
+			if portType.startswith("USB serial"):
+				self._model = SyncBraille(self)
+			elif self.isBulk:
 				self._sendIdentificationRequests(usbId=identifier)
-			else:
+			elif identifier:
 				self._sendIdentificationRequests(bluetoothPrefix=identifier)
+			else:
+				self._sendIdentificationRequests()
 			self._dev.waitForRead(TIMEOUT)
-
 			if self._model:
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
