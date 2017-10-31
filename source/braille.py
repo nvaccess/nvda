@@ -1511,11 +1511,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleGainFocus(api.getFocusObject())
 
+	#: Maps old braille display driver names to new drivers superseeding old drivers.
+	RENAMED_DRIVERS = {
+		"syncBraille":"hims"
+	}
+
 	def setDisplayByName(self, name, isFallback=False):
 		if not name:
 			self.display = None
 			self.displaySize = 0
 			return
+		# Deal with renamed drivers, such as syncBraille
+		name = self.RENAMED_DRIVERS.get(name,name)
 		# See if the user have defined a specific port to connect to
 		if name not in config.conf["braille"]:
 			# No port was set.
