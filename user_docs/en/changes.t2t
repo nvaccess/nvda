@@ -33,6 +33,8 @@ What's New in NVDA
 - An unbound command has been added for browse mode to toggle the inclusion of layout tables on the fly. You can find this command in the Browse mode category of the Input Gestures dialog. (#7634)
 - Upgraded liblouis braille translator to 3.3.0. (#7565)
 - The hotkey for the regular expression radio button in the dictionary dialog is changed from alt+r to alt+e. (#6782)
+- Voice dictionary files are now versioned and have been moved to the 'speechDicts/voiceDicts.v1' directory. (#7592)
+- Versioned files (user configuration, voice dictionaries) modifications are no longer saved when NVDA is run from the launcher. (#7688)
 
 
 == Bug Fixes ==
