@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-22 00:10+1000\n"
-"PO-Revision-Date: 2017-09-27 15:28+0800\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
+"PO-Revision-Date: 2017-10-26 10:50+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -118,7 +118,7 @@ msgstr "主要內容區"
 #. Translators: Reported for the navigation landmark, normally found on web pages.
 msgctxt "aria"
 msgid "navigation"
-msgstr "導航區"
+msgstr "導覽區"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
 msgctxt "aria"
@@ -1035,9 +1035,12 @@ msgstr "中文（香港）粵語"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "中文（台灣）注音"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "焦點模式"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "瀏覽模式"
@@ -1048,11 +1051,11 @@ msgstr "未標記的"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "單鍵瀏覽關"
+msgstr "單鍵導覽關"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "單鍵瀏覽開"
+msgstr "單鍵導覽開"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -1060,7 +1063,7 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"切換單鍵瀏覽的開關，當開啟時，會依照所按的按鍵跳至頁面上所對應屬性的位置，當"
+"切換單鍵導覽的開關，當開啟時，會依照所按的按鍵跳至頁面上所對應屬性的位置，當"
 "關閉時，將失去作用，而直接將訊息傳到應用程式。"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
@@ -1566,8 +1569,8 @@ msgstr "種類"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "輸入篩選字串(&F)："
+msgid "Filt&er by:"
+msgstr "輸入篩選字串 (&E)："
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1602,8 +1605,8 @@ msgstr "沒有長說明"
 msgid "Shows the long description at this position if one is found."
 msgstr "顯示所指位置的長說明"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "不在清單或表格中"
 
@@ -2696,6 +2699,24 @@ msgstr "手勢對應檔有誤"
 msgid "Loading NVDA. Please wait..."
 msgstr "載入NVDA中，請稍後..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "橫式螢幕"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "直式螢幕"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "充電中，百分之 %d"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "沒有在充電，百分之 %d"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA已啟動"
@@ -2750,7 +2771,7 @@ msgstr "文字瀏覽"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Object navigation"
-msgstr "物件瀏覽"
+msgstr "物件導覽"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System caret"
@@ -3331,6 +3352,7 @@ msgid "No navigator object"
 msgstr "沒有瀏覽物件"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s 已複製到剪貼簿"
@@ -3556,7 +3578,9 @@ msgid ""
 "pass straight through to the application, allowing you to interact directly "
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
-msgstr "切換瀏覽模式或焦點模式，在焦點模式的編輯區可輸入字串"
+msgstr ""
+"切換瀏覽模式或焦點模式，在焦點模式的編輯區可輸入字串。當在瀏覽模式時，可以使"
+"用游標導覽文件，例如快速導覽鍵。"
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3608,8 +3632,11 @@ msgstr "找不到狀態列"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
-msgstr "讀出目前應用程式的狀態列，並將導航器移至該處。連按兩次，則拼讀其資訊。"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
+msgstr ""
+"讀出目前應用程式的狀態列，並將導航器移到此處，連按兩下拼讀資訊，連按三下將狀"
+"態列複製到剪貼簿"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4025,13 +4052,13 @@ msgstr ""
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "將導航器物件移到後一個並讀出項目"
+msgstr "將導覽器物件移到後一個並讀出項目"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "將導航器物件移到前一個並讀出項目"
+msgstr "將導覽器物件移到前一個並讀出項目"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -7455,10 +7482,22 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "附加元件安裝"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
-msgstr "此附加元件的先前版本已經安裝。是否更新？"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"您即將要安裝版本  {summary} 之 {newVersion}，此版本已經安裝了，是否仍要更新？"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"已安裝了先前版本的附加元件，是否要將 {summary} 版本 {curVersion} 更新到版本 "
+"{newVersion}？"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7855,6 +7894,10 @@ msgstr "選擇可攜式版目錄"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "複製目前的使用者設定檔(&U)"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "產生後建立新的可攜式版 (&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -10273,8 +10316,8 @@ msgstr "標記 (&A)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "錯誤(&E)"
+msgid "&Errors"
+msgstr "錯誤 (&E)"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"

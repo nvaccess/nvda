@@ -1065,6 +1065,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The regions in this buffer.
 		#: @type: [L{Region}, ...]
 		self.regions = []
+		#: The raw text of the entire buffer.
+		self.rawText = ""
 		#: The position of the cursor in L{brailleCells}, C{None} if no region contains the cursor.
 		#: @type: int
 		self.cursorPos = None
@@ -1080,6 +1082,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		This removes all regions and resets the window position to 0.
 		"""
 		self.regions = []
+		self.rawText = ""
 		self.cursorPos = None
 		self.brailleCursorPos = None
 		self.brailleCells = []
@@ -1100,6 +1103,28 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			end = start + len(region.brailleCells)
 			yield RegionWithPositions(region, start, end)
 			start = end
+
+	_cache_rawToBraillePos=True
+	def _get_rawToBraillePos(self):
+		"""@return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
+		@rtype: [int, ...]
+		"""
+		rawToBraillePos = []
+		for region, regionStart, regionEnd in self.regionsWithPositions:
+			rawToBraillePos.extend(p+regionStart for p in region.rawToBraillePos)
+		return rawToBraillePos
+
+	_cache_brailleToRawPos=True
+	def _get_brailleToRawPos(self):
+		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
+		@rtype: [int, ...]
+		"""
+		brailleToRawPos = []
+		start = 0
+		for region in self.visibleRegions:
+			brailleToRawPos.extend(p+start for p in region.brailleToRawPos)
+			start+=len(region.rawText)
+		return brailleToRawPos
 
 	def bufferPosToRegionPos(self, bufferPos):
 		for region, start, end in self.regionsWithPositions:
@@ -1122,6 +1147,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# Resort to the start of the last region.
 			return start
 		raise LookupError("No such position")
+
+	def bufferPositionsToRawText(self, startPos, endPos):
+		return self.rawText[self.brailleToRawPos[startPos]:self.brailleToRawPos[endPos-1]+1]
 
 	def bufferPosToWindowPos(self, bufferPos):
 		if not (self.windowStartPos <= bufferPos < self.windowEndPos):
@@ -1247,15 +1275,18 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			self.windowEndPos = end
 
 	def update(self):
+		self.rawText = ""
 		self.brailleCells = []
 		self.cursorPos = None
 		start = 0
 		if log.isEnabledFor(log.IO):
 			logRegions = []
 		for region in self.visibleRegions:
+			rawText = region.rawText
 			if log.isEnabledFor(log.IO):
-				logRegions.append(region.rawText)
+				logRegions.append(rawText)
 			cells = region.brailleCells
+			self.rawText+=rawText
 			self.brailleCells.extend(cells)
 			if region.brailleCursorPos is not None:
 				self.cursorPos = start + region.brailleCursorPos
@@ -1274,6 +1305,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			return self.bufferPosToWindowPos(self.cursorPos)
 		except LookupError:
 			return None
+
+	def _get_windowRawText(self):
+		return self.bufferPositionsToRawText(self.windowStartPos,self.windowEndPos)
 
 	def _get_windowBrailleCells(self):
 		return self.brailleCells[self.windowStartPos:self.windowEndPos]
