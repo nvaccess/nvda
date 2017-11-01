@@ -285,7 +285,13 @@ def NVDAObjectHasUsefulText(obj):
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
 
-def getDisplayList():
+def getDisplayList(excludeNegativeChecks=True):
+	"""Gets a list of available display driver names with their descriptions.
+	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
+	@type excludeNegativeChecks: bool
+	@return: list of tuples with driver names and descriptions.
+	@rtype: [(str,unicode)]
+	"""
 	displayList = []
 	# The display that should be placed at the end of the list.
 	lastDisplay = None
@@ -299,7 +305,7 @@ def getDisplayList():
 				exc_info=True)
 			continue
 		try:
-			if display.check():
+			if not excludeNegativeChecks or display.check():
 				if display.name == "noBraille":
 					lastDisplay = (display.name, display.description)
 				else:
