@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -361,7 +361,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
 		if winVersion.isUwpOcrAvailable():
 			# Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-			item = menu_preferences.Append(wx.ID_ANY, _("Windows 10 OCR..."))
+			item = menu_preferences.Append(wx.ID_ANY, _("&Windows 10 OCR..."))
 			self.Bind(wx.EVT_MENU, frame.onUwpOcrCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
