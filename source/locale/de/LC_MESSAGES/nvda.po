@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
+"POT-Creation-Date: 2017-11-02 17:11+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: David Parduhn <xkill85@gmx.net>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -803,6 +803,11 @@ msgstr "Kroatisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Kroatische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Ungarisches 8-Punkt-Computerbraille"
 
@@ -1020,6 +1025,11 @@ msgstr "Türkische Vollschrift"
 #. braille settings dialog.
 msgid "Unicode braille"
 msgstr "Unicode-Braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Vietnamesischee Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1653,6 +1663,18 @@ msgstr "springt zur nächsten Tabellenspalte"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "springt zur vorigen Tabellenspalte"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Layout-Tabellen nicht Ausgeben"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Layout-Tabellen ausgeben"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Schaltet die Ausgabe von Layout-Tabellen im Lesemodus ein oder aus."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -7121,12 +7143,21 @@ msgstr "Bildschirmweises Scrollen"
 msgid "line scroll"
 msgstr "Zeilenweises Scrollen"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech Braillezeilen"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Zeige das Handy Tech Treiber Einstellungsfenster."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Brailleeingabe an"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Brailleeingabe aus"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Schaltet Braille-Eingabe ein oder aus"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7319,8 +7350,8 @@ msgid "Change settings of document properties"
 msgstr "Einstellungen der Dokumenteigenschaften ändern"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "Windows 10 Texterkennung..."
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 Texterkennung..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8862,8 +8893,8 @@ msgid "Whole &word"
 msgstr "Ganze &Wörter"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "&Regulärer Ausdruck"
+msgid "Regular &expression"
+msgstr "R&egulärer Ausdruck"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10607,3 +10638,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Zeige das Handy Tech Treiber Einstellungsfenster."
