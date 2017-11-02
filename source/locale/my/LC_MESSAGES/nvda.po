@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-d9b0092\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 00:10+1000\n"
-"PO-Revision-Date: 2017-10-18 19:07+0630\n"
+"POT-Creation-Date: 2017-10-30 20:16+1000\n"
+"PO-Revision-Date: 2017-11-01 17:15+0630\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: my\n"
@@ -1031,9 +1031,12 @@ msgstr "တရုတ်(ဟောင်ကောင်၊ကွမ်တုန�
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "တရုတ်(ထိုင်ဝမ်၊မန်ဒရင်း)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "စနစ်အသက်ဝင်နည်းလမ်းပုံစံ"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "ရှာဖွေသွားလာကြည့်ရှုနည်းလမ်းပုံစံ"
@@ -1559,7 +1562,7 @@ msgstr "အမျိုးအစား:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
+msgid "Filt&er by:"
 msgstr "စိစစ်ယူရန်:"
 
 #. Translators: The label of a button to activate an element
@@ -1595,8 +1598,8 @@ msgstr "ရှင်းလင်းဖော်ပြချက်အရှည်
 msgid "Shows the long description at this position if one is found."
 msgstr "ဤနေရာတွင်ရှင်းလင်းဖော်ပြချက်အရှည်တွေ့လျှင်ပြသပါ"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "ထည့်သွင်းရာတစ်ခုအထဲတွင်မရှိပါ"
 
@@ -3460,7 +3463,9 @@ msgid "Moves the review cursor to the previous character of the current navigato
 msgstr "ခြုံငုံကြည့်ရှုမှုအညွှန်းမြားကိုလက်ရှိလမ်းညွှန်ဝတ္ထု၏ယခင်စာလုံးသင်္ကေတသို့ရွှေ့ပြီး ၎င်းအကြောင်းပြန်ပြောရန်"
 
 #. Translators: Input help mode message for report current character under review cursor command.
-msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
+msgid ""
+"Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and "
+"hexadecimal"
 msgstr "ခြုံငုံကြည့်ရှုသည့်အညွှန်းမြားရှိရာနေရာမှလက်ရှိလမ်းညွှန်ဝတ္ထု၏စာလုံးသင်္ကေတအကြောင်း  ပြန်ပြောရန်။ဤခလုတ်ကိုနှစ်ချက်နှိပ်လျှင်စာလုံးသင်္ကေတ၏ ပုံဖော်ရှင်းပြမှု သို့မဟုတ် ဥပမာကို ပြောပြသည်။သုံးကြိမ်နှိပ်လျှင်စာလုံးသင်္ကေတကိုကိုယ်စားပြုသည့်ကိန်းဂဏန်းတန်ဖိုးကိုဆယ်လီကိန်း နှင့် တစ်ဆယ့်ခြောက်လီကိန်းပုံစံများဖြင့်ပြောပြသည်"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
@@ -3496,7 +3501,9 @@ msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "စနစ်အသက်ဝင်မှုကို စနစ်အသက်ဝင်မှုပါသည့်နောက်ထပ်အနီးဆုံးမှတ်တမ်းဖိုင်သို့ရွှေ့ရန်"
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, "
+"quick navigation keys, etc."
 msgstr "လှည့်လည်သွားလာသည့်ပုံစံနှင့်စနစ်အသက်ဝင်ဖမ်းယူမှုပုံစံအကြားပြောင်းလဲရန်။စနစ်အသက်ဝင်ပုံစံတွင်   နှိပ်လိုက်သည့်ခလုတ်သည်အသုံးချဆော့ဖ်ဝဲသို့တိုက်ရိုက်ရောက်ရှိပြီးအထိန်းနည်းလမ်းတစ်ခုဖြင့်တိုက်ရိုက် တုံ့ပြန်ဆက်သွယ်ခွင့်ပြုသည်။လှည့်လည်သွားလာသည့်ပုံစံအထဲတွင်သင်သည်မှတ်တမ်းဖိုင်အတွင်းအညွှန်းမြား၊ အမြန် သွားလာမှုခလုတ်များဖြင့်သွားလာနိုင်သည်"
 
 #. Translators: Input help mode message for quit NVDA command.
@@ -5462,10 +5469,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "အသံ "
 
-#. Translators: The description of the NVDA service.
-msgid "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure screens."
-msgstr "Windows Logon ဖန်သားပြင်အမြင်၊ UAC ဖန်သားပြင်အမြင် နှင့်အခြားလုံခြုံရေးဖန်သားပြင်အမြင်တို့တွင် NVDA ကိုလည်ပတ်ခွင့်ပြုရန်"
-
 msgid "Type help(object) to get help about object."
 msgstr "ဝတ္ထုအကြောင်းအကူအညီရရန် help(object) ဟုရိုက်သွင်းပါ"
 
@@ -6160,7 +6163,8 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants "
+"it. This applies to both original and modified copies of this software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
 "It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
@@ -6693,7 +6697,9 @@ msgstr "ဆလိုက်အနားစွန်းအောက်ဘက်ပ
 
 #. Translators: The description for a script
 msgid "Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA"
-msgstr "ဟောပြောသူမှတ်စုများ အကြောင်း သို့မဟုတ် ဆလိုက်အတွင်းပါဝင်သည့်အမှန်တကယ်  အကြောင်းအရာများအကြောင်းပြန်ပြောခြင်း အကြားအပြာင်းအလဲလုပ်ခြင်း။  ဤသို့ပြုလုပ်ခြင်းသည်ဖန်သားပြင်အပေါ်မြင်ရသည်ကိုမပြောင်းလဲစေဘဲအသုံးပြုသူမှ                                                                                NVDA ဖြင့်ဖတ်ရှုနိုင်သည့်အရာအပေါ်သာပြောင်းလဲသည်။"
+msgstr ""
+"ဟောပြောသူမှတ်စုများ အကြောင်း သို့မဟုတ် ဆလိုက်အတွင်းပါဝင်သည့်အမှန်တကယ်  အကြောင်းအရာများအကြောင်းပြန်ပြောခြင်း အကြားအပြာင်းအလဲလုပ်ခြင်း။  ဤသို့ပြုလုပ်ခြင်းသည်ဖန်သားပြင်အပေါ်မြင်ရသည်ကိုမပြောင်းလဲစေဘဲအသုံးပြုသူမှ                                                                                "
+"NVDA ဖြင့်ဖတ်ရှုနိုင်သည့်အရာအပေါ်သာပြောင်းလဲသည်။"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
@@ -7719,7 +7725,9 @@ msgstr "ဆက်လက်လုပ်ဆောင်ရန်"
 
 #. Translators: A warning presented when the user attempts to downgrade NVDA
 #. to an older version.
-msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing "
+"the earlier version."
 msgstr ""
 "သင်သည်လက်ရှိထည့်သွင်းတပ်ဆင်ထားသောဗားရှင်းထက်\n"
 "ပို၍အစောပိုင်းကျသော NVDA ကို ထည့်သွင်းတပ်ဆင်ရန်ကြိုးစားနေသည်။\n"
@@ -10147,7 +10155,7 @@ msgstr "တွဲဖက်မှတ်ချက်"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+msgid "&Errors"
 msgstr "&အမှားများ"
 
 #. Translators: The name of a series of braille displays.
@@ -10157,31 +10165,3 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle စီးရီး"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "-----"
-#~ msgstr "-----"
-
-#~ msgid "(x)"
-#~ msgstr "(x)"
-
-#~ msgid "(-)"
-#~ msgstr "(-)"
-
-#~ msgid "( )"
-#~ msgstr ""
-#~ "\t\n"
-#~ "( )"
-
-#~ msgid "Farsi grade 1"
-#~ msgstr "ဖရာစီ ဂရိတ် ၁"
-
-#~ msgid "ITALIC"
-#~ msgstr "စာလုံးစောင်း"
-
-#~ msgid "braille"
-#~ msgstr "ဘရေး"
-
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr ""
-#~ "ဤကောက်ကြောင်းကိုဖျက်ချင်သည်မှာသေချာပါသလား။ဤလုပ်ဆောင်မှုကို\n"
-#~ "ပြန်ပြင်၍မရနိုင်ပါ"
