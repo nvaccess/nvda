@@ -1927,29 +1927,37 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
+NVDA supports most displays from [Handy Tech http://www.handytech.de/] when connected via USB, serial port or bluetooth.
 For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
 
-Braille input is not yet supported.
-
-Following are the key assignments for this display with NVDA.
+The following displays are not supported out of the box, but can be used via [Handy Tech's universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] and NVDA add-on:
+- Braillino
+- Bookworm
+- Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+-
+Following are the key assignments for Handy Tech displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | left, up |
-| Scroll braille display forward | right, down |
+| Scroll braille display back | left, up, b3 |
+| Scroll braille display forward | right, down, b6 |
 | Move braille display to previous line | b4 |
 | Move braille display to next line | b5 |
 | Route to braille cell | routing |
-| shift+tab key | esc |
+| shift+tab key | esc, left triple action key up+down |
 | alt key | b2+b4+b5 |
 | escape key | b4+b6 |
-| tab key | enter |
-| enter key | esc+enter |
-| upArrow key | leftSpace |
-| downArrow key | rightSpace |
+| tab key | enter, right triple action key up+down |
+| enter key | esc+enter, left+right triple action key up+down, joystickAction |
+| upArrow key | joystickUp |
+| downArrow key | joystickDown |
+| leftArrow key | joystickLeft |
+| rightArrow key | joystickRight |
 | NVDA Menu | b2+b4+b5+b6 |
-| Handy Tech configuration | b4+b8 |
+| Toggle braille tethered to | b2 |
+| Toggle the braille cursor | b1 |
+| Toggle focus context presentation | b7 |
+| Toggle braille input | space+b1+b3+b4 (space+capital B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
