@@ -55,6 +55,26 @@ def CreateFile(fileName,desiredAccess,shareMode,securityAttributes,creationDispo
 	return res
 
 
+def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
+	res = kernel32.CreateWaitableTimerW(securityAttributes, manualReset, name)
+	if res==0:
+		raise ctypes.WinError()
+	return res
+
+def setWaitableTimer(handle, dueTime, period, completionRoutine, arg=None, resume=False):
+	res = kernel32.SetWaitableTimer(
+		handle,
+		# due time is in 100 nanosecond intervals, relative time should be negated.
+		byref(LARGE_INTEGER(dueTime*-10000)),
+		period,
+		completionRoutine,
+		arg,
+		resume
+	)
+	if res==0:
+		raise ctypes.WinError()
+	return True
+
 
 def openProcess(*args):
 	return kernel32.OpenProcess(*args)
