@@ -25,7 +25,7 @@ Glavne karakteristike uključuju:
 - Podrška za puno brajevih redova, uključujući unos teksta za brajeve redove koji imaju tastaturu
 - Sposobnost da se u potpunosti pokrene sa USB memorije bez potrebe za instalacijom
 - Govorna instalacija koja je laka za korišćenje
-- Preveden na 50 jezika
+- Preveden na 51 jezika
 - Podrška za moderne Windows operativne sisteme uključujući 32 bitne i 64 bitne verzije
 - Sposobnost da se pokrene na Windows ekranu za prijavljivanje i drugim bezbednim ekranima
 - Podrška za standardne interfejse pristupačnosti kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation (UI Automation podržan samo na Windowsu 7 i novijim)
@@ -34,7 +34,7 @@ Glavne karakteristike uključuju:
 
 ++ Internacionalizacija ++
 Važno je da ljudi gde god da se nalaze na svetu, bez obzira koji jezik govore, dobiju jednak pristup tehnologiji.
-Pored Engleskog, NVDA je preveden na 50 jezika uključujući: Afrikanski, Albanski, Amharski, Arapski, Aragoneski, Brazilsko Portugalski, Bugarski, Burmese, Katalonski, Kolumbijsko Španski, Hrvatski, Češki, Danski, Holandski, Farsi, Finski, Francuski, Galski, Gruzijski, Nemački, Grčki, Hebrejski, Indijski, Mađarski, Islandski, Irski, Italijanski, Japanski, Kannada, Korejski, Litvanski, Nepali, Norveški, Poljski, Portugalski, Pundžabi, Rumunski, Ruski, Srpski, Slovački, Slovenski, Španski, Švetski, Tamil, Tajvanski, Tradicionalan i pojednostavljen Kineski, Turski, Ukrajinski i Vijetnamski.
+Pored Engleskog, NVDA je preveden na 51 jezika uključujući: Afrikanski, Albanski, Amharski, Arapski, Aragoneski, Brazilsko Portugalski, Bugarski, Burmese, Katalonski, Kolumbijsko Španski, Hrvatski, Češki, Danski, Holandski, Farsi, Finski, Francuski, Galski, Gruzijski, Nemački, Grčki, Hebrejski, Indijski, Mađarski, Islandski, Irski, Italijanski, Japanski, Kannada, Korejski, Litvanski, Makedonski, Nepali, Norveški, Poljski, Portugalski, Pundžabi, Rumunski, Ruski, Srpski, Slovački, Slovenski, Španski, Švetski, Tamil, Tajvanski, Tradicionalan i pojednostavljen Kineski, Turski, Ukrajinski i Vijetnamski.
 
 ++ Podrška za sintetizatore govora ++
 Pored pružanja svojih poruka i interfejsa na jednom od podržanih jezika, NVDA takođe dozvoljava korisniku da čita tekst na bilo kom jeziku, dokle god imaju sintetizator koji podržava taj jezik.
@@ -579,7 +579,7 @@ Podrazumevano, pregledni kursor prati sistemski kursor, tako da obično možete 
 
 Nakon toga, možete koristiti komande programa MathPlayer kao što su strelice da istražujete sadržaj.
 Na primer, možete se pomerati kroz izraz koristeći strelice levo i desno kao i uveličati deo izraza strelicom dole.
-Molimo pročitajte MathPlayer dokumentaciju o komandama za navigaciju za dodatne informacije: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
+Molimo pročitajte [ MathPlayer dokumentaciju o komandama za navigaciju za dodatne informacije https://www.dessci.com/en/products/mathplayer/navigation_commands.htm]
 
 Kada želite da se vratite u dokument, jednostavno pritisnite taster escape.
 
@@ -1412,6 +1412,8 @@ Kada je isključena, neće biti izgovorene niti je ih moguće naći brzom naviga
 Ali, sadržaj tabela će biti uključen kao normalan tekst.
 Ova opcija je isključena po podrazumevanim podešavanjima.
 
+Da uključite i isključite tabele za izgled bilo gde da se nalazite, molimo podesite komandu koristeći [dijalog za ulazne komande#InputGestures].
+
 ==== Podešavanje prijavljivanja polja kao što su linkovi i naslovi====
 Molimo pročitajte opcije u[dijalogu podešavanja formatiranja dokumenta#DocumentFormattingSettings] da podesite polja koja se prijavljuju u toku navigacije, kao što su linkovi, naslovi i tabele.
 
@@ -1713,7 +1715,7 @@ Ime dodatka, status, autor i verzija su prikazani za svaki dodatak, ali se dodat
 Ako postoji pomoć za odabran dodatak, možete dobiti pomoć aktiviranjem dugmeta pomoć za dodatak.
 
 Da pretražujete i preuzmete dodatke sa Interneta, aktivirajte dugme nabavi dodatke.
-Ovo dugme otvara[NVDA stranicu dodataka http://addons.nvda-project.org/].
+Ovo dugme otvara[NVDA stranicu dodataka https://addons.nvda-project.org/].
 Ako je NVDA instaliran i pokrenut na sistemu, možete otvoriti dodatak direktno iz pretraživača da započnete instalaciju.
 U suprotnom, sačuvajte dodatak i pratite uputstva u nastavku.
 
@@ -1748,14 +1750,14 @@ Da pristupite upravljaču dodataka bilo gde, dodajte prilagođenu komandu korist
 
 ++ Python konzola ++
 NVDA python konzola, koja se nalazi u alatima u NVDA meniju, je alat za programere koji je koristan za otklanjanje grešaka, opšti pristup programu NVDA ili pristup elementima pristupačnosti neke aplikacije.
-Za više informacija, pročitajte uputstvo za programere dostupno u[delu za programere NVDA Web stranice http://community.nvda-project.org/wiki/Development].
+Za više informacija, pročitajte uputstvo za programere dostupno u[delu za programere NVDA Web stranice https://community.nvda-project.org/wiki/Development].
 
 ++ Ponovo učitaj dodatke ++
 Ova stavka, kada se aktivira, ponovo učitava dodatke za aplikacije i dodatke bez ponovnog pokretanja programa NVDA, što može biti korisno za programere.
 
 + Podržani sintetizatori govora+[SupportedSpeechSynths]
 Ovaj deo sadrži informacije o govornim sintetizatorima koje NVDA podržava.
-Za opširniju listu besplatnih i komercionalnih sintetizatora koje možete preuzeti i kupiti za korišćenje sa programom NVDA, pročitajte stranicu[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Za opširniju listu besplatnih i komercionalnih sintetizatora koje možete preuzeti i kupiti za korišćenje sa programom NVDA, pročitajte stranicu[https://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] je ugrađen u NVDA i ne zahteva posebne komponente ili drajvere.
@@ -1925,29 +1927,36 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i r
 %kc:endInclude
 
 ++ Handy Tech brajevi redovi ++
-NVDA podržava sve brajeve redove firme [Handy Tech http://www.handytech.de/] kada su povezani putem USB ili Bluetooth veze.
+NVDA podržava vvećinu  brajevih redova  firme [Handy Tech http://www.handytech.de/] kada su povezani putem USB, bluetooth veze ili putem serijskog porta.
 Za starije brajeve redove, koji se povezuju USB vezom, morate instalirati Usb drajvere na vaš sistem.
 
-Unos brajevih znakova još nije podržan.
-
-Ovo su tasterske prečice za korišćenje ovog brajevog reda uz pomoć NVDA.
+Sledeći redovi nisu podržani, ali se mogu koristiti putem[Handy Techovih univerzalnih drivera https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] i NVDA dodatka:
+- Braillino
+- Bookworm
+- Modularni redovi sa verzijom softvera 1.13 ili nižom. Molimo imajte na umu da se softver ovih redova može ažurirati.
+-
+Slede komande za Handy Tech redove sa programom NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reda da biste znali gde se određeni tasteri nalaze.
 %kc:beginInclude
 || Ime | Komanda |
-| Pomeri brajev red za red unazad | levo, gore |
-| Pomeri brajev red za red  napred | desno, dole |
+| Pomeri brajev red za red unazad | levo, gore, B3 |
+| Pomeri brajev red za red  napred | desno, dole, B6 |
 | Premesti brajev red na prethodni red | b4 |
 | Premesti brajev red na sledeći red | b5 |
 | Prebaci se na brajevu ćeliju | routing |
-| shift+tab | esc |
+| shift+tab | esc, levi trostruki akcijski taster gore+dole |
 | alt | b2+b4+b5 |
 | escape | b4+b6 |
-| tab | enter |
-| enter | esc+enter |
-| strelicaGore | leviRazmak |
-| strelicaDole | desniRazmak |
+| tab | enter, desni trostruki akcijski taster gore+dole |
+| enter | esc+enter, Levi+desni trostruki akcijski taster gore+dole, AkcijaDžojstika|
+| strelicaGore | Džojstik gore |
+| strelicaDole | Džojstik dole |
+| StrelicaLevo | Džojstik levo |
+| StrelicaDesno  | Džojstik desno |
 | NVDA meni | b2+b4+b5+b6 |
-| Handy Tech podešavanja | b4+b8 |
+| Menjanje vezivanja brajevog reda| b2 |
+| Menjanje predstavljanja sadržaja fokusa| b7 |
+| Uključivanje i isključivanje brajevog unosa| Razmak+b1+b3+b4 (Razmak +veliko B) |
 %kc:endInclude
 
 ++ MDV Lilli ++

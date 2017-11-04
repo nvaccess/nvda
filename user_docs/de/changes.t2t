@@ -1,9 +1,12 @@
-Was ist Neu in NVDA
+Was ist neu in NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 =
+Schwerpunkt dieser Version sind zahlreiche Verbesserungen und Fehlerkorrekturen am lesemodus. Hierzu zählen die standardmäßige Verwendung des lesemodus in Webdialogen, eine verbesserte Anzeige von Beschriftungen von Gruppenfeldern im lesemodus, die Unterstützung neuer Windows-10-Technologien wie Windows Defender Application Guard und Windows 10 auf ARM64, sowie die automatische ausgabe der ausrichtung (hoch- oder Querformat) des Akkustatus.
+Bitte beachten Sie, dass diese Version von NVDA unter Windows XP und Windows Vista nicht mehr ausgeführt werden kann. Sie benötigen mindestens Windows 7 Service pack 1.
+
 
 == Neue Funktionen ==
 - Im Lesemodus können die Tasten Komma und Umschalt+Komma verwendet werden, um vor oder hinter Sprungmarken zu navigieren. (#5482)
@@ -16,6 +19,10 @@ Was ist Neu in NVDA
 - Neue Kommandozeilenparameter zum Erstellen einer portablen Version von NVDA wurden hinzugefügt. (#6329)
 - Microsoft Edge wird unterstützt, wenn es innerhalb von Windows Defender Application Guard ausgeführt wird. (#7600)
 - Wenn NVDA auf einem Laptop oder einem Tablet ausgeführt wird, werden Sie benachrichtigt, wenn Sie ein Netzteil anschließen, abziehen oder wenn sich die Bildschirmausrichtung ändert. (#4574, #4612)
+- neue Sprache: Mazedonisch.
+- Neue Braille-Übersetzungstabellen: kroatische Vollschrift, vietnamesische Vollschrift. (#7518, #7565)
+- Das Braillezeilenmodell Actilino von handy Tech wird unterstützt. (#7590)
+- die Brailleeingabe auf handytech-Braillezeilen wird unterstützt. (#7590)
 
 
 == Änderungen ==
@@ -24,10 +31,17 @@ Was ist Neu in NVDA
 - Beim Navigieren im Lesemodus mittels Tab oder Schnellnavigationstasten wird das Verlassen von Containern wie Listen und Tabellen nicht mehr ausdrücklich angezeigt. (#2591)
 - In Firefox und Google Chrome werden die Namen von Formulargruppen angezeigt, wenn Sie zu einem Formularfeld springen. (#3321)
 - Die Schnellnavigationstasten für eingebettete Objekte (O und Umschalt+O) berücksichtigen Audio- und Video-Elemente ebenso wie Web-Anwendungen und Web-Dialoge. (#7239)
-- eSpeak-NG wurde auf Revision 01919cd48a566cdf34347784b2e74554b376e900 aktualisiert, Dadurch werden einige Probleme in der Aussprache behoben. (#7385)
+- eSpeak-NG wurde auf Version 1.49.2 aktualisiert, Dadurch werden einige Probleme in der Aussprache behoben. (#7385)
 - Bei dreimaligem Drücken der Tastenkombination zum Lesen der statuszeile wird diese in die Zwischenablage kopiert. (#1785)
 - Beim Zuweisen von NVDA-Befehlen an Baum-Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (zum Beispiel Baum Vario Ultra, Baum Pronto). (#7517)
 - Die Tastenkombination zum direkten Anspringen des Suchfeldes in der Elementliste wurde von alt+f in alt+e geändert. (#7569)
+- Im Dialog Einstellungen / Eingaben gibt es in der Kategorie Lesemodus einen neuen (noch nicht zugewiesenen) Befehl. Mit diesem Befehl können Sie Layout-Tabellen ein- oder ausblenden. (#7634)
+- Liblouis wurde auf Version 3.3.0 aktualisiert. (#7565)
+- Die Tastenkombination zum Aktivieren von regulären Ausdrücken als Ersetzungskriterium im Wörterbuchdialog wurde von alt+r auf alt+e geändert. (#6782)
+- Die Aussprachewörterbücher werden nun versioniert und wurden in den Ordner 'speechDicts/voiceDicts.v1' verschoben. (#7592)
+- Versionierte Dateien (Benutzerkonfiguration, Aussprachewörterbücher) werden nicht gespeichert, wenn NVDA von Launcher aus ausgeführt wird. (#7688)
+- Die Braillezeilenmodelle Braillino, Buchwurm und Modular (mit der alten Firmware) werden nicht mehr ohne weiteres unterstützt. Um diese Braillezeilenmodelle zu verwenden, müssen Sie den Handytech-Universaltreiber und die NVDA-Erweiterung installieren. (#7590)
+
 
 == Fehlerkorrekturen ==
 - In Anwendungen, wie Microsoft Word, werden Links nun in Braille angezeigt. (#6780)
@@ -41,6 +55,8 @@ Was ist Neu in NVDA
 - Unterstützung mathematischer Inhalte in Google Chrome auf Systemen, auf denen Firefox nicht installiert ist. (#7308)
 - Das Betriebssystem und die Anwendungen sollten nun nach der Installation von NVDA stabiler laufen (verglichen mit vorherigen Versionen von NVDA). (#7563)
 - Wenn das Navigatorobjekt beim Aufruf der Inhaltserkennung (z. B. mit nvda+r) verschwunden sein sollte, zeigt NVDA eine Warnmeldung an. (#7567)
+- Das Zurückscrollen bei Freedom Scientific-Braillezeilen funktioniert nun ordnungsgemäß. (#7713)
+
 
 == Änderungen für Entwickler ==
 - Beim Ausführen von "scons tests" wird geprüft, ob sämtliche übersetzbaren Zeichenketten Kommentare besitzen. Dieser Test kann auch separat ausgeführt werden. Benutzen Sie dafür den Befehl "scons checkPot". (#7492)
@@ -51,6 +67,7 @@ Was ist Neu in NVDA
 - The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
  - See the baum driver as an example for this new functionality.
 - NVDA wird nun mit Visual Studio 2017 und the Windows 10 SDK compiliert. (#7568)
+
 
 = 2017.3 =
 Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift über eine Braillezeile, die Unterstützung von Windows OneCore-Stimmen, die Unterstützung von OCR unter Windows 10 sowie viele Verbesserungen bei der Braille-ausgabe.

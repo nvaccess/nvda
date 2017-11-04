@@ -25,7 +25,7 @@ Zu den wichtigsten Funktionen gehören:
 - Unterstützung für zahlreiche Braillezeilen (auch mit Eingabe via Braille-Tastatur).
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung durch Sprachausgaben.
-- Übersetzt in rund 50 Sprachen.
+- Übersetzt in rund 51 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -34,7 +34,7 @@ Zu den wichtigsten Funktionen gehören:
 
 ++ Internationalisierung ++
 Egal, welche Sprache die Menschen auf der Welt sprechen, dass alle den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 50 Sprachen übersetzt, darunter sind neben Englisch: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Argonesisch, Portugiesisch (Brasilien), Bulgarisch, Birmanisch, Katalanisch, Spanisch (Kolumbien), Kroatisch, Tschechisch, Dänisch, Niederländisch, Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Deutsch, Hebräisch, Hindi (Nordindien), Ungarisch, Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Koreanisch, Litauisch, Nepalesisch, Norwegisch, Polnisch, Portugiesisch, Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch, Schwedisch, Tamilisch, Thai, Chinesisch (traditionell und vereinfacht), Türkisch, Ukrainisch sowie Vietnamesisch.
+NVDA wurde bislang in 51 Sprachen übersetzt, darunter sind neben Englisch: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Argonesisch, Portugiesisch (Brasilien), Bulgarisch, Birmanisch, Katalanisch, Spanisch (Kolumbien), Kroatisch, Tschechisch, Dänisch, Niederländisch, Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Deutsch, Hebräisch, Hindi (Nordindien), Ungarisch, Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Koreanisch, Litauisch, mazedonisch, Nepalesisch, Norwegisch, Polnisch, Portugiesisch, Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch, Schwedisch, Tamilisch, Thai, Chinesisch (traditionell und vereinfacht), Türkisch, Ukrainisch sowie Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
@@ -579,7 +579,7 @@ Standardmäßig ist der NVDA-Cursor an den Systemcursor gekoppelt. Sie können A
 
 Jetzt können Sie die Tastenkombinationen von Mathplayer (zum Beispiel Pfeiltasten) verwenden, um innerhalb des Ausdrucks zu navigieren.
 Verwenden Sie beispielsweise die Pfeiltasten links und rechts, um zwischen den Teilen eines Ausdrucks zu navigieren. Um in einen Teilausdruck abzusteigen, verwenden Sie die Pfeiltaste nach unten.
-Weitere Informationen hierzu finden Sie in der englischen Dokumentation zu mathplayer: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
+Weitere Informationen hierzu finden Sie in der [MathPlayer-Dokumentation zu Navigationsbefehlen https://www.dessci.com/en/products/mathplayer/navigation_commands.htm].
 
 Um die Navigation im Ausdruck zu beenden, drücken Sie die Escape-Taste.
 
@@ -1412,6 +1412,8 @@ Anderenfalls werden Layout-Tabellen weder angezeigt noch über die Schnellnaviga
 Der Inhalt der Tabellen wird aber dennoch normal angezeigt.
 Die Option ist standardmäßig deaktiviert.
 
+Um die Ausgabe von Layout-Tabellen zur Laufzeit ein- oder auszuschalten, müssen Sie den Dialog "[Eingaben #InputGestures]" verwenden, um eine Tastenkombination zuzuweisen.
+
 ==== Ansagen für Elemente konfigurieren ====
 Bitte beachten Sie die Optionen im Dialog[Einstellungen für die Dokumentformatierungen #DocumentFormattingSettings], um festzulegen, welche Elemente wie Links, Überschriften und Tabellen beim Navigieren angesagt werden sollen.
 
@@ -1713,7 +1715,7 @@ Für jede Erweiterung wird Ihnen der Name, der Status,die Versionsnummer und der
 Falls für diese Erweiterung eine Hilfedatei verfügbar ist, können Sie diese mit dem Schalter "Hilfe für diese Erweiterung" aufrufen.
 
 Um weitere Erweiterungen herunterzuladen und zu installieren, klicken Sie auf den Schalter "Erweiterungen herunterladen...".
-Hiermit wird die Webseite für NVDA-Erweiterungen http://addons.nvda-project.org geöffnet.
+Hiermit wird die Webseite für NVDA-Erweiterungen https://addons.nvda-project.org geöffnet.
 Falls NVDA installiert ist und gerade verwendet wird, können Sie Erweiterungen direkt vom Browser aus installieren.
 Andernfalls müssen Sie die Erweiterung speichern und wie unten beschrieben vorgehen, um eine Erweiterung zu installieren.
 
@@ -1748,14 +1750,14 @@ Um denDialog Erweiterungen verwalten per Tastenkombination aufrufen zu können, 
 
 ++ Python-Konsole ++
 Die in NVDA integrierte Python-Konsole ist im NVDA-Menü unter "Extras" zu finden. Sie ist ein nützliches Entwicklungswerkzeug zum beheben von Fehlern, zum allgemeinen Überprüfen der internen Komponente in NVDA sowie zur Überprüfung der Hierarchie der Zugänglichkeit einer Anwendung.
-Für weitere Informationen sehen Sie sich bitte den [Teilbereich "Entwicklung" auf der englischen Website http://community.nvda-project.org/wiki/Development] an.
+Für weitere Informationen sehen Sie sich bitte das [NVDA-Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html] an.
 
 ++ Plugins erneut laden ++
 Dieser Eintrag, einmal aktiviert, lädt alle Anwendungsmodule sowie globale Plugins neu ohne, dass NVDA extra neu gestartet wird.
 
 + Unterstützte Sprachausgaben +[SupportedSpeechSynths]
 Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Sprachausgaben.
-eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 Die in NVDA fest integrierte [eSpeak NG https://github.com/espeak-ng/espeak-ng],]-Sprachausgabe erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
@@ -1925,29 +1927,37 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:endInclude
 
 ++ HandyTech-Braillezeilen ++
-Alle Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via USB und BlueTooth unterstützt.
-Für einige USB-Zeilen werden die Treiber auf Ihrem System für den USB-Port von HandyTech benötigt.
+Die meisten Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via USB und BlueTooth unterstützt.
+bei älteren Usb-Braillezeilen werden Sie den Universaltreiber von handy Tech installieren müssen.
 
-Die Eingabe von Braille-Zeichen wird noch nicht unterstützt.
+die folgenden Braillezeilenmodelle werden nich ohne weiteres unterstützt; sie können sie jedoch unter Zuhilfenahme des [universaltreibers https://handytech.de/de/service/kundenservice/service-software/universeller-braillezeilentreiber] und der NVDA-Erweiterung verwenden:
+- Braillino
+- Bookworm
+- Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
 
 Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:beginInclude
 || Name | Taste |
-| Braillezeile zurück scrollen | Links, nach oben |
-| Braillezeile weiter scrollen | Rechts, nach unten |
+| Braillezeile zurück scrollen | Links, nach oben, b3 |
+| Braillezeile weiter scrollen | Rechts, nach unten, b6 |
 | Eine Zeile nach oben springen | B4 |
 | Eine Zeile nach unten springen | B5 |
 | Zum Brailemodul springen | Routing |
-| Umschalt+Tabulatortaste | ESC |
+| Umschalt+Tabulatortaste | ESC, left triple action key up+down  |
 | Alt-Taste | B2+B4+B5 |
 | Escape-Taste | B4+B6 |
-| Tabulatortaste | Eingabe |
-| Eingabetaste | ESC+Eingabe |
-| Pfeiltaste nach oben | Linke Leertaste |
-| Pfeiltaste nach unten | Rechte Leertaste |
+| Tabulatortaste | Eingabe, right triple action key up+down |
+| Eingabetaste | ESC+Eingabe, left+right triple action key up+down, joystickAction |
+| Pfeiltaste nach oben | joystick auf |
+| Pfeiltaste nach unten | Joystick ab |
+| Pfeiltasta nach links | joystick nach links |
+| Pfeiltaste nach rechts | Joystick nach rechts |
 | NVDA-Menü | B2+B4+B5+B6 |
-| HandyTech-Konfiguration | B4+B8 |
+| Kopplung der Braillezeile ändern | b2 |
+| Braille-Cursor ein-/ausblenden | b1 |
+| Braille-Kontextanzeige umschalten | b7 |
+| Braille-Eingabe ein-/ausschalten | Leertaste+b1+b3+b4 (Leertaste+Großbuchstabe B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
