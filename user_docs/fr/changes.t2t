@@ -4,6 +4,9 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 =
+Points forts de cette version : beaucoup de corrections et d'améliorations dans le support du web incluant le mode navigation pour les dialogues web par défaut, Meilleure annonce des étiquettes de groupes de champs en mode navigation, support de nouvelles technologies Windows 10 telles que Windows Defender Application Guard et Windows 10 sur ARM64, et l'annonce automatique de l'orientation écran et de l'état de la batterie.  
+Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows Vista. Le minimum requis pour NVDA est maintenant windows 7 avec Service Pack 1.
+
 
 == Nouvelles Fonctionnalités ==
 - En mode navigation, il est maintenant possible d'aller à la fin ou au début d'une région en utilisant les commandes de saut à la fin ou au début d'un conteneur (virgule/maj+virgule). (#5482)
@@ -16,6 +19,10 @@ Quoi de Neuf dans NVDA
 - Ajout de nouveaux paramètres de ligne de commande pour créer une copie portable de NVDA. (#6329)
 - Support de Microsoft Edge s'exécutant sous Windows Defender Application Guard (#7600)
 - S'il s'exécute sur un PC portable ou une tablette, NVDA annonce maintenant si le chargeur est connecté ou déconnecté, et quand l'orientation de l'écran change. (#4574, #4612)
+- Nouvelle langue : Macédonien.
+- Nouvelles tables d'affichage braille : Croate intégral, Vietnamien intégral. (#7518, #7565)
+- Le support de l'afficheur braille Actilino de Handy Tech a été ajouté. (#7590)
+- La saisie braille pour les afficheurs Handy Tech est maintenant supportée. (#7590)
  
 
 == Changements ==
@@ -24,10 +31,15 @@ Quoi de Neuf dans NVDA
 - En mode navigation, tabuler ou naviguer avec les touches de navigation rapide n'annonce plus la sortie de conteneurs tels que les listes et les tableaux, ce qui rend la navigation plus efficace. (#2591)
 - En mode navigation sous Firefox ou Chrome, le nom des groupes de champs de formulaires est maintenant annoncés quand on y accède par navigation rapide ou en tabulant. (#3321)
 - En mode navigation, les commandes de navigation rapide pour les objets embarqués (o et maj+o) incluent maintenant les éléments audio et vidéo ainsi que les éléments avec un rôle aria application et dialogue. (#7239)
-- Espeak-ng a été mis à jour (au niveau 01919cd48a566cdf34347784b2e74554b376e900), Cela résout quelques problèmes dans la productions des builds. (#7385)
+- Espeak-ng a été mis à jour (à la version 1.49.2), Cela résout quelques problèmes dans la productions des builds. (#7385)
 - À la troisième activation de la commande de lecture de la barre d'état, le contenu de celle-ci est copié dans le presse-papiers. (#1785)
 - Sur un terminal Baum, l'assignation d'un geste de commande à une touche peut être limitée au modèle de terminal en cours d'utilisation (ex : VarioUltra ou Pronto). (#7517)
 - le raccourci clavier du champ de filtre de la liste d'éléments en mode navigation est passé de alt+f à alt+e. (#7569)
+- Une commande non assignée a été ajoutée pour activer/désactiver l'inclusion des tables de disposition à la volée en mode navigation. Vous trouverez cette commande dans la catégorie Mode Navigation du dialogue Gestes de commandes. (#7634)
+- Mise à jour du traducteur braille Liblouis à la version 3.3.0. (#7565)
+- Les fichiers de dictionnaires vocaux sont maintenant versionnés et ont été déplacés vers le répertoire 'speechDicts/voiceDicts.v1'. (#7592)
+- Les modifications des fichiers versionnés (configuration utilisateur, dictionnaires vocaux) ne sont plus sauvegardés quand NVDA est exécuté depuis le lanceur. (#7688)
+- Les afficheurs braille Handy Tech Braillino, Bookworm et Modular (avec un ancien microprogramme) ne sont plus supportés nativement. Veuillez installer le pilote universel Handy Tech et le module complémentaire NVDA pour utiliser ces afficheurs. (#7590)
 
 
 == Corrections de Bogues ==
@@ -42,6 +54,7 @@ Quoi de Neuf dans NVDA
 - Il est maintenant possible d'accéder à du contenu mathématique sous Google Chrome sur un système où Mozilla Firefox n'est pas installé. (#7308)
 - Le système d'exploitation et les autres applications devraient être plus stables juste après l'installation de NVDA avant de redémarrer le système, comparativement aux versions précédentes de NVDA. (#7563)
 - Quand on utilise une commande de reconnaissance de contenu (ex :  NVDA+r), NVDA annonce maintenant un message d'erreur si l'objet navigateur a disparu. (#7567)
+- La fonction de défilement arrière a été corrigée pour les afficheurs Freedom Scientific comportant une barre de stickers gauche. (#7713)
 
 
 == Changements pour les Développeurs ==

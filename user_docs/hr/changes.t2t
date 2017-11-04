@@ -14,6 +14,8 @@
 - Dodana podrška za Azardi čitač elektronskih knjiga. (#5848)
 - Prilikom ažuriranja, sada se izgovara broj inačice dodatka. (#5324)
 - Dodana podrška za nove parametre komandne linije za stvaranje prijenosne kopije. (#6329)
+- Podrška za Microsoft Edge koji je pokrenut u zaštitniku aplikacije Windows defendera (#7600)
+- Ako je pokrenut na prijenosnom ili tablet računalu, NVDA će sada izgovarati dali je punjač spojen ili odspojen, te promjenu položaja zaslona. (#4574, #4612)
 
 
 == Izmjene ==
@@ -25,6 +27,7 @@
 - Espeak-ng je nadograđen (na reviziju 01919cd48a566cdf34347784b2e74554b376e900), To popravlja greške prilikom izdavanja stabilnih inačica. (#7385)
 - Prilikom treće aktivacije komande 'čitaj statusnu traku', sadržaj iste kopira se u međuspremnik. (#1785)
 - Prilikom dodjele prečaca na Baumovom brajičnom redku, sada je moguče ograničiti iste za model na kojem se koriste (npr. VarioUltra ili Pronto). (#7517)
+- tipkovni prečac u popisu elemenata u načinu pregleda promijenjen je sa  alt+f na kombinaciju alt+e. Bilješka prevoditelja: ovo ne važi za hrvatsku inačicu NVDA. (#7569)
 
 
 == Ispravke grešaka ==
@@ -38,6 +41,7 @@
 - Prilikom ponovnog pokretanja NVDA sa Mozilla Firefox u fokusu, način pregleda će ponovno biti dostupan, međutim, trebalo bi pritisnuti alt tab, da se prebaci na drugu aplikaciju, te ponovno da se vratimo na Firefox. (#5758)
 - Sada je moguć pristup matematičkom Sadržaju u Google Chromeu na sustavu bez instaliranog Mozilla Firefox web preglednika. (#7308)
 - Operacijski sustav i druge aplikacije trebale bi biti stabilnije neposredno poslije instalacije NVDA prije ponovnog pokretanja, usporedno sa prijašnjim inačicama NVDA čitača zaslona. (#7563)
+- Prilikom korištenja prečaca za prepoznavanje sadržaja (npr. NVDA+r), ako objekt navigatora nestane, NVDA izgovara poruku o pogrešci umjesto nikakve poruke. (#7567)
  
 
 == Izmjene za razvojne programere ==
