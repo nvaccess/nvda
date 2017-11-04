@@ -29,6 +29,7 @@ class Model(AutoPropertyObject):
 	# user readable name for the device
 	name = ""
 	numCells = 0 #0 means undefined, needs to be requested for
+	bluetoothPrefix = ""
 
 	def __init__(self, display):
 		self._display = display
