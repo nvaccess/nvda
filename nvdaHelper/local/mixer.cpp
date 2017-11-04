@@ -11,10 +11,6 @@ Copyright 2008-2017 NV Access Limited, Derek Riemer.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
-// This file can only compile for Vista and above
-// NVDA will not call this function on lower operating Systems
-#undef _WIN32_WINNT
-#define _WIN32_WINNT 0x0600  
 
 #include <comdef.h>
 #include <comip.h>

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-04 00:10+1000\n"
+"POT-Creation-Date: 2017-10-20 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -1033,12 +1033,19 @@ msgstr "kineski (Hong kong, kantonski)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "kineski (Tajvan, mandarinski)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "režim fokusiranja"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Režim pretraživanja"
+
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "Nema oznaku"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1535,6 +1542,16 @@ msgstr "&Zaglavlja"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "polja za &unos"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Dugmići"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Lan&dmarks"
@@ -1551,7 +1568,7 @@ msgstr "Tip:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
+msgid "Filt&er by:"
 msgstr "&Izdvoji po:"
 
 #. Translators: The label of a button to activate an element
@@ -1587,8 +1604,8 @@ msgstr "Nema dugog opisa"
 msgid "Shows the long description at this position if one is found."
 msgstr "Prikazuje dug opis na ovom mestu ako je pronađen."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Nije u sadrživaču"
 
@@ -2679,6 +2696,24 @@ msgstr "greška u datoteci sa rasporedom komandi"
 msgid "Loading NVDA. Please wait..."
 msgstr "Učitavanje NVDA. Molimo sačekajte..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Horizontalno"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Uspravno"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Punjenje baterije. %d procenata"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Punjenje baterije zaustavljeno. %d procenata"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA pokrenut"
@@ -3339,6 +3374,7 @@ msgid "No navigator object"
 msgstr "nema navigacionog objekta"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s kopirano u privremenu memoriju"
@@ -3668,10 +3704,12 @@ msgstr "Nije pronađena statusna traka"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
-"čita statusnu traku trenutne aplikacije i pomera navigator ka njoj. Ako se "
-"pritisne dvaput, sriče informaciju"
+"čita statusnu traku trenutne aplikacije i pomera navigacioni objekat ka "
+"njoj. Ako se pritisne dvaput, sriče informaciju. Ako se pritisne tri puta, "
+"kopira statusnu traku u privremenu memoriju."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7577,11 +7615,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Instalacija dodatka"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Neka verzija ovog dodatka je već instalirana. Želite li da je ažurirate?"
+"Upravo instalirate verziju {newVersion} dodatka {summary}, koja je već "
+"instalirana. Da li i dalje želite da ažurirate dodatak?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Verzija ovog dodatka je već instalirana. Da li želite da ažurirate dodatak "
+"{summary} sa verzije {curVersion} na verziju {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7993,6 +8043,10 @@ msgstr "Izaberite fasciklu za prenosnu kopiju"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Kopiraj trenutna korisnička &podešavanja"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Pokreni novu portabilnu kopiju nakon pravljenja"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -9184,11 +9238,6 @@ msgstr "&Formule"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "polja za &unos"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "&Listovi"
 
@@ -10176,14 +10225,22 @@ msgstr "Primarno zaglavlje"
 msgid "Text frame"
 msgstr "Okvir za tekst"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentar: {text} napisao {author} na dan {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} na dan {date}"
 
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "Pisanje: {text}"
@@ -10437,7 +10494,7 @@ msgstr "&Zabeleške"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+msgid "&Errors"
 msgstr "Gr&eške"
 
 #. Translators: The name of a series of braille displays.

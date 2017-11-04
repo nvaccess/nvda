@@ -59,11 +59,9 @@ This applies to both original and modified copies of this software, plus any der
 For further details, you can [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + System Requirements +
-- Operating Systems: all 32-bit and 64-bit editions of Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 and Windows 10 (including Server operating Systems)
- - For Windows XP 32-bit, NVDA requires Service Pack 2 or higher.
- - For Windows Server 2003, NVDA requires Service Pack 1 or higher.
- - For Windows Vista, NVDA requires Service Pack 2 and the [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
- Both of these should be installed if all available updates are applied via Windows Update.
+- Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
+ - For Windows 7, NVDA requires Service Pack 1 or higher.
+ - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
 - Memory: 256 mb or more of RAM
 - Processor speed: 1.0 ghz or above
 - About 90 MB of storage space.
@@ -280,7 +278,7 @@ There are some key commands that are useful when moving with the System focus:
 | Report current focus | NVDA+tab | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
 | Report title | NVDA+t | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Read active window | NVDA+b | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
-| Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. Pressing twice will spell the information |
+| Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 %kc:endInclude
 
 ++ Navigating with the System Caret ++[SystemCaret]
@@ -506,7 +504,7 @@ The following keys by themselves jump to the next available element, while addin
 - m: frame
 - g: graphic
 - d: landmark
-- o: embedded object
+- o: embedded object (audio and video player, application, dialog, etc.)
 - 1 to 6: headings at levels 1 to 6 respectively
 - a: annotation (comment, editor revision, etc.)
 - w: spelling error
@@ -525,7 +523,7 @@ To toggle single letter navigation on and off for the current document, press NV
 
 ++ The Elements List ++
 The elements list provides access to a list of various types of elements in the document as appropriate for the application.
-For example, in web browsers, the elements list can list links, headings or landmarks.
+For example, in web browsers, the elements list can list links, headings, form fields, buttons or landmarks.
 Radio buttons allow you to switch between the different types of elements.
 An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page.
 Once you have chosen an item, you can use the provided buttons in the dialog to move to or activate that item.
@@ -535,9 +533,10 @@ Once you have chosen an item, you can use the provided buttons in the dialog to 
 %kc:endInclude
 
 ++ Embedded Objects ++
-Pages can include rich content using technologies such as Adobe Flash and Sun Java, as well as applications and dialogs.
+Pages can include rich content using technologies such as Adobe Flash, Oracle Java and HTML5, as well as applications and dialogs.
 Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
-You can press enter on these objects to interact with them.
+You can quickly move to them using the o and shift+o embedded object single letter navigation keys.
+To interact with these objects, you can press enter on them.
 If it is accessible, you can then tab around it and interact with it like any other application.
 A key command is provided to return to the original page containing the embedded object:
 %kc:beginInclude
@@ -545,15 +544,18 @@ A key command is provided to return to the original page containing the embedded
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
 
-+ Reading Mathematical Content +
++ Reading Mathematical Content +[ReadingMath]
 Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
 This requires that MathPlayer 4 is installed on the computer.
 MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
 
 NVDA supports the following types of mathematical content:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
-- Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient.
-- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+- Design Science MathType in Microsoft Word and PowerPoint.
+MathType needs to be installed in order for this to work. The trial version is sufficient.
+- MathML in Adobe Reader.
+Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+- Math in Kindle for PC for books with accessible math.
 -
 
 When reading a document, NVDA will speak any supported mathematical content where it occurs.
@@ -577,7 +579,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the MathPlayer documentation for further information.
+Please see the MathPlayer documentation about navigation commands for further information: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 When you wish to return to the document, simply press the escape key.
 
@@ -856,6 +858,9 @@ You can manually turn to the next page with the pageDown key and turn to the pre
 Single letter navigation is supported for links and graphics, but only within the current page.
 Navigating by link also includes footnotes.
 
+NVDA provides early support for reading and interactive navigation of mathematical content for books with accessible math.
+Please see the [Reading Mathematical Content #ReadingMath] section for further information.
+
 +++ Text Selection +++
 Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
 To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
@@ -877,6 +882,14 @@ To view, edit or delete a note:
 + Access the options for the selection as described above.
 + Choose Edit Note.
 +
+
+++ Azardi ++
+%kc:beginInclude
+When in the table view of added books:
+|| Name | Key | Description |
+| Enter | enter | Opens the selected book. |
+| Context menu | applications | Opens the context menu for the selected book. |
+%kc:endInclude
 
 + Configuring NVDA +
 
@@ -1398,6 +1411,8 @@ When on, NVDA will treat these as normal tables, reporting them based on [Docume
 When off, they will not be reported nor found with quick navigation.
 However, the content of the tables will still be included as normal text.
 This option is turned off by default.
+
+To toggle inclusion of layout tables from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 ==== Configuring reporting of fields such as links and headings ====
 Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are reported when navigating, such as links, headings and tables.
@@ -2471,6 +2486,9 @@ Following are the command line options for NVDA:
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
+| None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
+| None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
+| None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
 
 ++ System Wide Parameters ++[SystemWideParameters]
 NVDA allows some values to be set in the system registry which alter the system wide behavior of NVDA.

@@ -24,6 +24,14 @@ import pythonMonkeyPatches
 import ctypes
 import locale
 import gettext
+
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+try:
+	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+except:
+	gettext.install('nvda',unicode=True)
+
 import time
 import argparse
 import win32con
@@ -51,16 +59,9 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 
 globalVars.startTime=time.time()
 
-#Localization settings
-locale.setlocale(locale.LC_ALL,'')
-try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
-except:
-	gettext.install('nvda',unicode=True)
-
 # Check OS version requirements
 import winVersion
-if not winVersion.canRunVc2010Builds():
+if not winVersion.isSupportedOS():
 	winUser.MessageBox(0, unicode(ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION)), None, winUser.MB_ICONERROR)
 	sys.exit(1)
 
@@ -85,6 +86,9 @@ parser.add_argument('--no-sr-flag',action="store_false",dest='changeScreenReader
 installGroup = parser.add_mutually_exclusive_group()
 installGroup.add_argument('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
 installGroup.add_argument('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
+installGroup.add_argument('--create-portable',action="store_true",dest='createPortable',default=False,help="Creates a portable copy of NVDA (starting the new copy after installation)")
+installGroup.add_argument('--create-portable-silent',action="store_true",dest='createPortableSilent',default=False,help="Creates a portable copy of NVDA silently (does not start the new copy after installation).")
+parser.add_argument('--portable-path',dest='portablePath',default=None,type=decodeMbcs,help="The path where a portable copy will be created")
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),

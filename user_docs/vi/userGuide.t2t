@@ -710,13 +710,13 @@ Công cụ nhận dạng Windows 10 OCR hỗ trợ nhiều ngôn ngữ khác nha
 NVDA có thể dùng công cụ này để nhận dạng văn bản trong hình ảnh và những ứng dụng không tiếp cận.
 
 Bạn có thể chọn ngôn ngữ nhận dạng trong hộp thoại thiết lập [Windows 10 OCR #Win10OcrSettings].
-Có thể cài đặt thêm ngôn ngữ nhận dạng bằng cách mở start menu, chọn Settings, mở Time & Language -> Region & Language và chọn Add a language.
+Có thể cài đặt thêm ngôn ngữ nhận dạng bằng cách mở start menu, chọn Settings (cài đặt), mở Time & Language (ngôn ngữ và thời gian) -> Region & Language (ngôn ngữ và vùng), sau đó chọn Add a language (thêm ngôn ngữ).
 
 %kc:beginInclude
 Nhấn NVDA+r để nhận dạng với Windows 10 OCR.
 %kc:endInclude
 
- + Phím tắt cho một số ứng dụng +
++ Phím tắt cho một số ứng dụng +
 NVDA cung cấp một số phím tắt mở rộng để hỗ trợ người dùng thao tác trên một số ứng dụng.
 
 ++ Microsoft Word ++
@@ -1098,13 +1098,18 @@ Nó có hiệu lực đối với dấu nháy hệ thống và con trỏ duyệt
 ==== Nhấp Nháy Con Trỏ ====
 Tùy chọn này dùng để cho phép con trỏ nhấp nháy hay không.
 Nếu tắt, con trỏ nổi sẽ luôn luôn ở tình trạng nổi và không nhấp nháy.
+Dấu báo vùng chọn không thay đổi, vẫn sử dụng chấm 7 và 8 và không nháy.
 
 ==== Tốc Độ Nháy Của Con Trỏ (ms) ====
 Tùy chọn này là ô nhập liệu chữ số, cho phép bạn nhập tốc độ nhấp nháy của con trỏ theo đơn vị mili giây.
 
-==== Hình Dạng Con Trỏ ====
-Tùy chọn này cho phép bạn chọn hình dạng (kiểu mẫu theo chấm) cho con trỏ nổi.
-Tùy chọn này không có tác dụng đối với chỉ báo vùng chọn.
+==== Hình Dạng Con Trỏ tại Focus ====
+Tùy chọn này cho phép chọn hình dạng, kiểu mẫu chấm cho con trỏ nổi khi đi theo focus.
+Chỉ báo vùng chọn vẫn sử dụng chấm 7 và 8 và không nháy. Nó không bị ảnh hưởng bởi tùy chọn này.
+
+==== Hình Dạng Con Trỏ Khi Duyệt ====
+Tùy chọn này cho phép chọn hình dạng, kiểu mẫu chấm cho con trỏ nổi khi đi theo con trỏ duyệt.
+Chỉ báo vùng chọn vẫn sử dụng chấm 7 và 8 và không nháy. Nó không bị ảnh hưởng bởi tùy chọn này.
 
 ==== Thời Gian Kết Thúc Thông Điệp (bằng Giây) ====
 Tùy chọn này kiểm soát thời gian kết thúc hiển thị các thông điệp trên màn hình nổi.
@@ -1164,7 +1169,7 @@ Vì vậy, nó chỉ hiển thị bạn đang đứng tại mục có focus.
 
 Để chuyển đổi giữa các chế độ trình bày ngữ cảnh, bạn có thể gán phím lệnh tùy chỉnh cho nó trong [hộp thoại quản lý thao tác #InputGestures].
 
- +++ Thiết Lập Bàn Phím (NVDA+control+k) +++
++++ Thiết Lập Bàn Phím (NVDA+control+k) +++
 Bạn có thể mở hộp thoại này từ thực đơn Tùy chọn của NVDA.
 Có các tùy chọn sau trong hộp thoại này:
 
@@ -2467,7 +2472,7 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | Không có | --install | Cài NVDA (cài một bản mới của NVDA) |
 | Không có | --install-silent | Cài đặt NVDA ở chế độ im lặng |
 
-++ Các Tham Số Hệ Thống ++[SystemWideParameters]
+++ Các Tham Số Mở Rộng Hệ Thống ++[SystemWideParameters]
 NVDA cho phép thiết lập một số giá trị trong registry hệ thống để thay thế cách hoạt động ở mức hệ thống của NVDA.
 Những khóa chứa các giá trị này trong registry bao gồm:
 - Hệ thống 32-bit: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
