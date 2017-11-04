@@ -229,7 +229,7 @@ class BoxSizerHelper(object):
 
 	def addItem(self, item, **keywordArgs):
 		""" Adds an item with space between it and the previous item.
-			Does not handle adding LabledControlHelper; use L{addlabelledControl} instead.
+			Does not handle adding LabledControlHelper; use L{addLabelledControl} instead.
 			@param item: the item to add to the sizer
 			@param **keywordArgs: the extra args to pass when adding the item to the wx.Sizer. This parameter is 
 				normally not necessary.
