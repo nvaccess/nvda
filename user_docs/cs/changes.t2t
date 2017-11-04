@@ -1,4 +1,4 @@
-﻿Co je nového v programu NVDA 
+Co je nového v programu NVDA 
 
 
 %!includeconf: ../changes.t2tconf
@@ -28,6 +28,7 @@
 - Aktualizace Espeak-NG (commit 01919cd48a566cdf34347784b2e74554b376e900) řeší některé problémy při vytváření verzí. (#7385)
 - Po třetí aktivaci příkazu pro oznámení stavového řádku se obsah stavového řádku zkopíruje do schránky. (#1785)
 - U braillského řádku Baum je možné omezit příkazy kláves při jejich přiřazení na model řádku, který se právě používá (např. VarioUltra nebo Pronto). (#7517)
+- Klávesová zkratka pro filtrování polí v seznamu prvků v režimu prohlížení změněna z alt+f na alt+e. (#7569)
 
 
 == Opravy ==
@@ -41,6 +42,7 @@
 - Při restartu NVDA, pokud je Mozilla Firefox v zaměření, režim prohlížení bude znovu dostupný, i když možná budete muset přejít sem a tam klávesami alt+tab. (#5758)
 - Matematický obsah je nyní přístupný v Google Chrome, aniž by musel být v systému nainstalovaný Mozilla Firefox. (#7308)
 - Operační systém a další aplikace by měly být stabilnější hned po instalaci NVDA před restartem ve srovnání s předchozími verzemi NVDA. (#7563)
+- Při rozpoznávání obsahu (např. NVDA+r) NVDA ohlásí chybu, pokud není objekt již dostupný. (#7567)
 
 
 = 2013.1 =
