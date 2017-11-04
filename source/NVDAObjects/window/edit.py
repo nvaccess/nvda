@@ -17,6 +17,7 @@ import globalVars
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
+import languageHandler
 import config
 import speech
 import winKernel
@@ -185,7 +186,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			point=textInfos.Point(p.x,p.y)
 		else:
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_POSFROMCHAR,offset,None)
-			point=textInfos.Point(winUser.LOWORD(res),winUser.HIWORD(res))
+			point=textInfos.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
 		(left,top,width,height)=self.obj.location
 		point.x=point.x+left
 		point.y=point.y+top
@@ -532,6 +533,14 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField['background-color']=_("Unknown color")
 			else:
 				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
+		if not fontObj: fontObj=range.font
+		try:
+			langId = fontObj.languageID
+			if langId:
+				formatField['language']=languageHandler.windowsLCIDToLocaleName(langId)
+		except:
+			log.debugWarning("language error",exc_info=True)
+			pass
 		return formatField
 
 	def _expandFormatRange(self,range,formatConfig):
@@ -814,7 +823,6 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 		if eventHandler.isPendingEvents('valueChange',self):
 			self.hasContentChangedSinceLastSelection=True
 		super(Edit,self).event_caret()
-		self.detectPossibleSelectionChange()
 
 	def event_valueChange(self):
 		self.event_textChange()

@@ -1,15 +1,23 @@
 [submodule "include/liblouis"]
 	path = include/liblouis
-	url = https://github.com/nvaccess/liblouis.git
+	url = https://github.com/liblouis/liblouis.git
 [submodule "include/minhook"]
 	path = include/minhook
 	url = https://github.com/RaMMicHaeL/minhook
 [submodule "miscDeps"]
 	path = miscDeps
-	url = https://bitbucket.org/nvaccess/nvda-misc-deps.git
+	url = https://github.com/nvaccess/nvda-misc-deps
 [submodule "include/espeak"]
 	path = include/espeak
 	url=https://github.com/espeak-ng/espeak-ng
 [submodule "include/sonic"]
 	path = include/sonic
 	url = https://github.com/waywardgeek/sonic.git
+	ignore = untracked
+[submodule "include/pyserial"]
+	path = include/pyserial
+	url = https://github.com/pyserial/pyserial.git
+	ignore = untracked
+[submodule "include/scons"]
+	path = include/scons
+	url = https://github.com/nvaccess/scons

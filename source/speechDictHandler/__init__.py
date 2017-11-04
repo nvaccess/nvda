@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #speechDictHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Aaron Cannon, Derek Riemer
+#Copyright (C) 2006-2017 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,10 +12,11 @@ import globalVars
 from logHandler import log
 import api
 import config
+from . import dictFormatUpgrade
+from .speechDictVars import speechDictsPath
 
 dictionaries = {}
 dictTypes = ("temp", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
-speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechDicts")
 
 # Types of speech dictionary entries:
 ENTRY_TYPE_ANYWHERE = 0 # String can match anywhere
@@ -73,7 +74,13 @@ class SpeechDict(list):
 			else:
 				temp=line.split("\t")
 				if len(temp) ==4:
-					self.append(SpeechDictEntry(temp[0].replace(r'\#','#'),temp[1].replace(r'\#','#'),comment,bool(int(temp[2])),int(temp[3])))
+					pattern = temp[0].replace(r'\#','#')
+					replace = temp[1].replace(r'\#','#')
+					try:
+						dictionaryEntry=SpeechDictEntry(pattern, replace, comment, caseSensitive=bool(int(temp[2])), type=int(temp[3]))
+						self.append(dictionaryEntry)
+					except Exception as e:
+						log.exception("Dictionary (\"%s\") entry invalid for \"%s\" error raised: \"%s\"" % (fileName, line, e))
 					comment=""
 				else:
 					log.warning("can't parse line '%s'" % line)
@@ -101,24 +108,14 @@ class SpeechDict(list):
 			text = entry.sub(text)
 		return text
 
-def processNumbers(numberSetting, text):
-	#0: processes default behavior. 1-3: splits on single-triple digits.
-	#Use two spaces instead of one, because some locales use space as thousands separator.
-	if numberSetting == 1:
-		text = RE_SINGLE_DIGITS.sub(r"  \1  ", text)
-	elif numberSetting == 2:
-		text = RE_DOUBLE_DIGITS.sub(r"  \1  ", text)
-	elif numberSetting == 3:
-		text = RE_TRIPLE_DIGITS.sub(r"  \1  ", text)
-	return text
-
-
 def processText(text):
 	if globalVars.speechDictionaryProcessing:
 		for type in dictTypes:
 			text=dictionaries[type].sub(text)
-	numberSetting = config.conf["speech"]["readNumbersAs"]
-	return processNumbers(numberSetting, text)
+	if config.conf["speech"]["readNumbersAsDigits"]:
+		#We substitute with two spaces, because some languages use a single space as thousands separator.
+		text = RE_SINGLE_DIGITS.sub(r"  \1  ", text)
+	return text
 
 def initialize():
 	for type in dictTypes:
@@ -130,9 +127,16 @@ def loadVoiceDict(synth):
 	"""Loads appropriate dictionary for the given synthesizer.
 It handles case when the synthesizer doesn't support voice setting.
 """
+	try:
+		dictFormatUpgrade.doAnyUpgrades(synth)
+	except:
+		log.error("error trying to upgrade dictionaries", exc_info=True)
+		pass
 	if synth.isSupported("voice"):
-		voiceName = synth.availableVoices[synth.voice].name
-		fileName=r"%s\%s-%s.dic"%(speechDictsPath,synth.name,api.filterFileName(voiceName))
+		voice = synth.availableVoices[synth.voice].name
+		baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
 	else:
-		fileName=r"%s\%s.dic"%(speechDictsPath,synth.name)
+		baseName=r"{synth}.dic".format(synth=synth.name)
+	voiceDictsPath = dictFormatUpgrade.voiceDictsPath
+	fileName= os.path.join(voiceDictsPath, synth.name, baseName)
 	dictionaries["voice"].load(fileName)

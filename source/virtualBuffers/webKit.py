@@ -1,6 +1,6 @@
 #virtualBuffers/webKit.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011 NV Access Inc
+#Copyright (C) 2011-2016 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -60,29 +60,16 @@ class WebKit(VirtualBuffer):
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		node=VBufRemote_nodeHandle_t()
-		NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.VBufHandle, docHandle, ID,ctypes.byref(node))
-		if not node:
-			return None
-		lresult = NVDAHelper.localLib.VBuf_getNativeHandleForNode(self.VBufHandle, node)
-		if not lresult:
-			return None
-		return NVDAObjects.IAccessible.IAccessible(
-			IAccessibleObject=oleacc.ObjectFromLresult(lresult, 0, oleacc.IAccessible),
-			IAccessibleChildID=0, windowHandle=self.rootDocHandle)
+		if ID > 0:
+			# WebKit returns a positive value for uniqueID,
+			# but we need to pass a negative value when retrieving objects.
+			ID = -ID
+		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
-	def getIdentifierFromNVDAObject(self,obj):
-		if obj == self.rootNVDAObject:
-			return obj.windowHandle, 0
-		if not self.isReady or not obj.event_childID:
-			# We can only retrieve the node for objects obtained from events.
-			raise LookupError
-		node=VBufRemote_nodeHandle_t()
-		NVDAHelper.localLib.VBuf_getNodeForNativeHandle(self.VBufHandle, obj.event_childID,ctypes.byref(node))
-		docHandle=ctypes.c_int()
-		ID=ctypes.c_int()
-		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.VBufHandle, node, ctypes.byref(docHandle), ctypes.byref(ID))
-		return docHandle.value, ID.value
+	def getIdentifierFromNVDAObject(self, obj):
+		docHandle = obj.windowHandle
+		ID = obj.IA2UniqueID
+		return docHandle, ID
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="formField":

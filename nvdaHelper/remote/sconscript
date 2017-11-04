@@ -75,6 +75,7 @@ ia2utilsObj=env.Object("./ia2utils","../common/ia2utils.cpp")
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=[
+		env['projectResFile'],
 		"injection.cpp",
 		"log.cpp",
 		"inProcess.cpp",
@@ -83,6 +84,7 @@ remoteLib=env.SharedLibrary(
 		"typedCharacter.cpp",
 		"ime.cpp",
 		"tsf.cpp",
+		"COMProxyRegistration.cpp",
 		"ia2Support.cpp",
 		"ia2LiveRegions.cpp",
 		ia2utilsObj,
@@ -95,6 +97,7 @@ remoteLib=env.SharedLibrary(
 		controllerInternalRPCClientSource,
 		"sysListView32.cpp",
 		"winword.cpp",
+		"WinWord/Fields.cpp",
 		"gdiHooks.cpp",
 		"displayModel.cpp",
 		"displayModelRemote.cpp",
