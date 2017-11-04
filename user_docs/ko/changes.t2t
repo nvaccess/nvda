@@ -14,8 +14,10 @@ NVDA 변경된 사항
 - Azardi 독서기 앱 지원 추가. (#5848)
 - 추가 기능 업데이트 시 추가 기능 버전이 표시되도록 함. (#5324)
 - NVDA 실행 명령 목록에 휴대용 버전 생성 관련 명령 추가. (#6329)
-- Windows Defender Application Guard/Microsoft Edge 지원 추가. (#7600)
+- 윈도우 10 Fall Creators Update/Windows Defender Application Guard/Microsoft Edge 지원 추가. (#7600)
 - 노트북 또는 테블릿에서 NVDA 실행 시 전원 연결 및 스크린 오리엔테이션 변경 정보가 출력되도록 함. (#4574, #4612)
+- 새 NVDA 언어: 마세도니아어 추가.
+- 점자 표기법: 크로아티아어 1종 점자 및 베트남어 1종 점자 추가. (#7518, #7565)
 
 
 == 변경된 기능들 ==
@@ -24,10 +26,15 @@ NVDA 변경된 사항
 - 웹 브라우저 사용 시 효율성을 높이기 위해 탭 또는 첫 글자 명령을 사용하여 사이트 탐색 시 컨테이너 요소(목록, 표 등)의 끝 메시지가 출력되지 않도록 함. (#2591)
 - 파이어폭스 및 크롬에서 브라우즈 모드 사용 시 탭 또는 첫 글자 명령을 사용하여 폼 필드로 옮길시 필드 그룹 이름이 출력되도록 함. (#3321)
 - 부라우즈 모드 사용 시 다음 및 이전 임베디드 객체(o/shift+o) 명령을 통해 오디오, 비디오 및 aria 앱 또는 대화상자로 표시된 요소로 이동할 수 있음. (#7239)
-- 이스피크 NG 음성 엔진 commit 01919cd4 사용. (#7385)
+- 이스피크 NG 음성 엔진 1.49.2 사용. (#7385)
 - 상태 표시줄 명령을 세번 눌러 표시줄 내용을 클립보드에 복사할 수 있음. (#1785)
 - Baum 디스플레이 사용 시 모델(예: VarioUltra 또는 Pronto)별로 단춧키를 설정할 수 있음. (#7517)
 - 브라우즈 모드 요소 목록 대화상자내 요소 이름 검색 핫키가 alt+f에서 alt+e로 변경됨. (#7569)
+- An unbound command has been added for browse mode to toggle the inclusion of layout tables on the fly. You can find this command in the Browse mode category of the Input Gestures dialog. (#7634)
+- 리브루이 점자 변환기 3.3.0 버전 사용. (#7565)
+- The hotkey for the regular expression radio button in the dictionary dialog has changed from alt+r to alt+e. (#6782)
+- Voice dictionary files are now versioned and have been moved to the 'speechDicts/voiceDicts.v1' directory. (#7592)
+- Versioned files (user configuration, voice dictionaries) modifications are no longer saved when NVDA is run from the launcher. (#7688)
 
 
 == 버그 수정 ==

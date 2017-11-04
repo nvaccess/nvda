@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION Kullanıcı Rehberi
+NVDA NVDA_VERSION Kullanıcı Rehberi
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -138,7 +138,7 @@ Ayrıca Çalıştır bölümüne NVDA yazıp girişe basarak da programı başla
 Ek olarak, NVDA'yı yeniden başlatmak için NVDA (-r), NVDA'yı kapatmak için (-q), eklentileri devre dışı bırakmak için (--disable-addons), gibi bazı [komut satırı seçeneklerini #CommandLineOptions] de kullanabilirsiniz.
 
 Kurulu kopyalar için, NVDA, varsayılan olarak  konfigürasyonu mevcut kullanıcının roaming application data klasörüne kaydeder (örneğin, "C:\Users\<user>\AppData\Roaming").
-Bunu, NVDA'nın konfigürasyonunu local application data klasörüne kaydedecek şekilde değiştirmek mümkündür .
+Bunu, NVDA'nın konfigürasyonunu local application data klasörüne kaydedecek şekilde değiştirmek mümkündür.
 Daha fazla detay için [system wide parametreleri #SystemWideParameters] hakkındaki bölüme bakın.
 
 Taşınabilir sürümü başlatmak için, NVDA'yı çıkarttığınız dizine gidin ve NVDA'.exe dosyası üzerinde girişe basın veya çift tıklatın.
@@ -1095,7 +1095,7 @@ Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
 
 ==== Girdi Tablosu ====[BrailleInputTable]
 Önceki seçeneği bütünleyen bir özellik olarak, bulacağınız sonraki ayar braille girdi tablosu seçim kutusudur.
-Seçilen tablo kabartma ekranınızın klavyesinden braille olarak metin girişi yapmanız için kullanılır .
+Seçilen tablo kabartma ekranınızın klavyesinden braille olarak metin girişi yapmanız için kullanılır.
 Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
 
 Bu işlev yalnızca, üzerinde klavye bulunan ve sürücüsü bu özelliği destekleyen braille ekranlar için geçerlidir.
@@ -1377,7 +1377,7 @@ Bu seçenek Korece ve Japonca girdi metodları için faydalı olabilir.
 Chinese New Phonetic ve New ChangJie gibi bazı girdi metodları (kimi zaman precomposition string olarak bilinen) ifade okumalarına sahiptir.
 Bu seçenekle, ifadelerin okunuşlarında yeni karakter girişlerinin seslendirilip seslendirilmeyeceğini ayarlayabilirsiniz.
 Bu seçenek varsayılan olarak açıktır.
-Chinese ChangJie gibi bazı eski girdi metodlarının ön kompozisyon ifade okumaları yerine doğrudan ifade kompozisyonlarını kullandığını not edin. Lütfen ifade kompozisyonunun seslendirilmesiyle ilgili ayar için sonraki seçeneğe bakın .
+Chinese ChangJie gibi bazı eski girdi metodlarının ön kompozisyon ifade okumaları yerine doğrudan ifade kompozisyonlarını kullandığını not edin. Lütfen ifade kompozisyonunun seslendirilmesiyle ilgili ayar için sonraki seçeneğe bakın.
 
 ==== İfade Kompozisyonundaki Değişiklikleri Bildir ===
 After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
@@ -1497,7 +1497,7 @@ Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 Bu iletişim kutusuna NVDA Tercihler menüsünden erişilebilir ve [Windows 10 OCR ayarlarını #Win10Ocr] yapılandırmanızı sağlar.
 
 ==== Tanıma dili ====
-Bu açılır kutu metin tanıma için kullanılacak dili seçmek için kullanılır.
+Bu seçim kutusu metin tanıma için kullanılacak dili seçmek içindir.
 
 +++ Konuşma Sözlükleri +++
 Tercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük veya öbeklerin NVDA tarafından nasıl söyleneceğini ayarlayabileceğiniz iletişim kutularını içermektedir.
@@ -1505,10 +1505,10 @@ Tercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük v
 bunlar:
 - varsayılan Bu sözlükteki kurallar tüm NVDA konuşmalarını etkiler.
 - Ses Bu sözlükteki kurallar o an kullanılan sentezleyici sesini etkiler.
-- Geçici Bu sözlükteki kurallar tüm NVDA konuşmalarını etkiler ancak sadece NVDA'nın açık olduğu o oturumda geçerlidir Bu kurallar geçicidir ve NVDA yeniden başlatıldığında kaybolacaktır.
+- Geçici Bu sözlükteki kurallar tüm NVDA konuşmalarını etkiler ancak sadece NVDA'nın açık olduğu o oturumda geçerlidir. Bu kurallar geçicidir ve NVDA yeniden başlatıldığında geçerli olmazlar.
 -
 
-Herhangi bir yerden bu sözlüklerle ilgili iletişim kutularını açabilmek için [Girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel kısayol tuşları atamanız gerekir..
+Herhangi bir yerden bu sözlüklerle ilgili iletişim kutularını açabilmek için [Girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel kısayol tuşları atamanız gerekir.
 
 Tüm sözlük iletişim kutularında konuşma işlemlerinde kullanılacak kuralların bir listesi bulunmaktadır.
 İletişim kutularında ayrıca, Kural Ekle, Düzenle ve Sil düğmeleri de mevcuttur.
@@ -1574,13 +1574,13 @@ Bir komutla ilişkili hareketler o komutun altında listelenir.
 
 Bir komuta girdi hareketi eklemek için, komutun üzerindeyken ekle düğmesine basın.
 Daha sonra, eklemek istediğiniz girdi hareketini yapın; örneğin klavyede tuş ya da tuş kombinasyonuna ya da braille ekranda düğmeye basın.
-Çoğu kez, bir hareket birden fazla şekilde değerlendirilebilir .
+Çoğu kez, bir hareket birden fazla şekilde değerlendirilebilir.
 Örneğin, klavyede bir tuşa bastıysanız, onun sadece mevcut klavye düzeni için geçerli olmasını isteyebilirsiniz (masaüstü ya da dizüstü düzenleri) ya da tüm düzenler için kaydedebilirsiniz.
 Bu durumda,, seçim yapmanız için bir menü belirir.
 
 Bir komutla ilgili hareketi silmek için, hareket seçiliyken kaldır tuşuna basın.
 
-Değişiklikleri yaptıktan sonra, kaydetmek için tamam, vazgeçmek için iptal tuşuna basın .
+Değişiklikleri yaptıktan sonra, kaydetmek için tamam, vazgeçmek için iptal tuşuna basın.
 
 ++ Konfigürasyonu Kaydetme ve Yeniden Yükleme ++
 Varsayılan olarak, NVDA kapatılırken, konfigürasyonda yaptığınız değişiklikler kalıcı olarak kaydedilir.
@@ -1734,7 +1734,7 @@ Bu yapılana kadar, eklenti durumu Kaldır olarak gösterilecektir.
 Bir eklentiyi devre dışı bırakmak için devre dışı bırak düğmesine basın.
 Daha önce devre dışı bırakılmış olan eklentiyi etkinleştirmek için  etkinleştir düğmesine basın.
 Eklenti durumu etkin olarak gösteriliyorsa devre dışı bırakabilir; devre dışı ise tekrar etkinleştirebilirsiniz.
-Etkinleştir / devre dışı bırak düğmesine her basıldığında, NVDA yeniden başladığında ne olacağını belirtmek için eklenti statüsü değişir .
+Etkinleştir / devre dışı bırak düğmesine her basıldığında, NVDA yeniden başladığında ne olacağını belirtmek için eklenti statüsü değişir.
 Aynı Eklenti kurduğunuzda ya da kaldırdığınızdaki gibi, değişikliklerin etkili olması için NVDA'yı yeniden başlatmanız gerekecektir.
 
 Yönetici, iletişim kutusunu kapatmak için kullanacağınız Kapat düğmesini de içerir.
