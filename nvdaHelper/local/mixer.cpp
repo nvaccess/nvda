@@ -124,7 +124,7 @@ bool applyActiveDeviceAudioFixes(const int deviceID) {
 	}
 	IMMDevicePtr pMMDevice=NULL;
 	if(deviceID == -1){
-		res = pMMDeviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pMMDevice);	
+		res = pMMDeviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pMMDevice);
 	}
 	else {
 		WCHAR *id = waveOutIDToEndpointID(deviceID);
