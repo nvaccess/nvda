@@ -178,6 +178,7 @@ modelMap = [(cls.deviceId,cls) for cls in (
 	SmartBeetle,
 	BrailleSense4S,
 	BrailleSense2S,
+	SyncBraille,
 )]
 
 USB_IDS_BULK={BrailleEdge.usbId,BrailleSense.usbId}
@@ -273,6 +274,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
 			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
 				continue
 
 			# Send a cell count request twice, since it seems that the first sent request doesn't come through
