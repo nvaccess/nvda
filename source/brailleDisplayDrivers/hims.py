@@ -18,21 +18,30 @@ from collections import OrderedDict
 import inputCore
 import brailleInput
 from baseObject import AutoPropertyObject
+import weakref
+
 
 TIMEOUT = 0.2
 BAUD_RATE = 115200
 PARITY = serial.PARITY_NONE
 
 class Model(AutoPropertyObject):
-	# Two bytes device identifier, used in the protocol to identify the device
-	deviceId = None
-	# user readable name for the device
+	"""Extend from this base class to define model specific behavior."""
+	#: Two bytes device identifier, used in the protocol to identify the device
+	#: @type: string
+	deviceId = ""
+	#: A generic name that identifies the model/series, used in gesture identifiers
+	#: @type: string
 	name = ""
+	#: Number of braille cells
+	#: @type: int
 	numCells = 0 #0 means undefined, needs to be requested for
+	#: The USB VID and PID for this model in the form VID_xxxx&PID_xxxx
+	#: @type: string
+	usbId = ""
+	#: The bluetooth prefix used by devices of this specific model
+	#: @type: string
 	bluetoothPrefix = ""
-
-	def __init__(self, display):
-		self._display = display
 
 	def _get_keys(self):
 		"""Basic keymap
@@ -286,8 +295,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debugWarning("", exc_info=True)
 				continue
 
-			# Send a cell count request twice, since it seems that the first sent request doesn't come through
 			self._sendCellCountRequest()
+			# Send a cell count request twice, since it seems that the first sent request sometimes doesn't come through
 			self._sendCellCountRequest()
 			for i in xrange(3):
 				# An expected response hasn't arrived yet, so wait for it.
@@ -299,14 +308,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._dev.close()
 				continue
 			if portType=="USB serial":
-				self._model = SyncBraille(self)
+				self._model = SyncBraille()
 			elif self.isBulk:
 				self._sendIdentificationRequests(usbId=identifier)
 			elif portType=="bluetooth" and identifier:
 				self._sendIdentificationRequests(bluetoothPrefix=identifier)
 			else:
 				self._sendIdentificationRequests()
-			self._dev.waitForRead(TIMEOUT)
 			if self._model:
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
@@ -344,7 +352,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# There is only one model matching the criteria, and we have the proper number of cells.
 				# There's no point in sending an identification request at all, just use this model
 				log.debug("Chose %s as model without sending an additional identification request"%modelCls.name)
-				self._model = modelCls(self)
+				self._model = modelCls()
 				self.numCells = numCells
 				return
 		self._model = None
@@ -366,10 +374,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			modelCls = models[0]
 			self.numCells=self.numCells or modelCls.numCells
 			log.debug("There is an exact match, %s found with %d cells"%(modelCls.name,self.numCells))
-		if not self.numCells:
-			self._sendCellCountRequest()
-			self._dev.waitForRead(TIMEOUT)
-		if self.numCells and len(models)>1:
+		elif len(models)>1:
 			log.debug("Multiple models match: %s"%", ".join(modelCls.name for modelCls in models))
 			try:
 				modelCls = next(cls for cls in models if cls.numCells==self.numCells)
@@ -381,7 +386,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				except StopIteration:
 					modelCls = Model
 		if modelCls:
-			self._model = modelCls(self)
+			self._model = modelCls()
 
 	def _handlePacket(self, packet):
 		mode=packet[1]
