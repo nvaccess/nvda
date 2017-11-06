@@ -206,6 +206,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except StopIteration:
 			pass
 		for portInfo in comPorts:
+			if not "bluetoothName" in portInfo:
+				continue
 			# Translators: Name of a serial communications port.
 			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
 		return ports
@@ -242,7 +244,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					usbID = hwID.split("&", 1)[1]
 				except IndexError:
 					continue
-				if usbID is not SyncBraille.usbId:
+				if usbID!=SyncBraille.usbId:
 					continue
 				yield portInfo['port'], portType, usbID
 			elif "bluetoothName" in portInfo:
@@ -264,7 +266,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
 		else:
-			tryPorts = ((port, "serial",None),)
+			try:
+				btName = next(portInfo.get("bluetoothName","") for portInfo in hwPortUtils.listComPorts() if portInfo.get("port")==port)
+				btPrefix = next(prefix for prefix in bluetoothPrefixes if btName.startswith(prefix))
+				tryPorts = ((port, "bluetooth", btPrefix),)
+			except StopIteration:
+				tryPorts = ()
+
 		for port, portType, identifier in tryPorts:
 			self.isBulk = portType=="USB bulk"
 			# Try talking to the display.
