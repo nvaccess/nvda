@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2007-2017 NV Access Limited, Mozilla Corporation
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <string>
 #include <map>
+#include "ia2utils.h"
 
 using namespace std;
 
@@ -45,4 +46,58 @@ void IA2AttribsToMap(const wstring &attribsString, map<wstring, wstring> &attrib
 	// If there was no trailing semi-colon, we need to handle the last attribute.
 	if (!key.empty())
 		attribsMap[key] = str;
+}
+
+IAccessibleHyperlinkPtr HyperlinkGetter::next() {
+	if (this->index >= this->count) {
+		return nullptr;
+	}
+	return this->get(this->index++);
+}
+
+HtHyperlinkGetter::HtHyperlinkGetter(IAccessibleHypertextPtr hypertext)
+	: hypertext(hypertext)
+{
+	if (FAILED(hypertext->get_nHyperlinks(&this->count))) {
+		this->count = 0;
+	}
+}
+
+IAccessibleHyperlinkPtr HtHyperlinkGetter::get(const unsigned long index) {
+	IAccessibleHyperlinkPtr link;
+	this->hypertext->get_hyperlink(index, &link);
+	return link;
+}
+
+Ht2HyperlinkGetter::Ht2HyperlinkGetter(IAccessibleHypertext2Ptr hypertext)
+	: hypertext(hypertext)
+{
+	if (FAILED(hypertext->get_hyperlinks(&this->rawLinks, &this->count))) {
+		this->count = 0;
+	}
+}
+
+IAccessibleHyperlinkPtr Ht2HyperlinkGetter::get(const unsigned long index) {
+	// Ensure we don't AddRef this pointer.
+	return IAccessibleHyperlinkPtr(this->rawLinks[index], false);
+}
+
+Ht2HyperlinkGetter::~Ht2HyperlinkGetter() {
+	CoTaskMemFree(this->rawLinks);
+}
+
+// We use a unique_ptr so we can have a polymorphic, optional return.
+unique_ptr<HyperlinkGetter> makeHyperlinkGetter(IAccessible2* acc) {
+	// Try IAccessibleHypertext2 first.
+	IAccessibleHypertext2Ptr ht2 = acc;
+	if (ht2) {
+		return make_unique<Ht2HyperlinkGetter>(move(ht2));
+	}
+	// Fall back to IAccessibleHypertext.
+	IAccessibleHypertextPtr ht = acc;
+	if (ht) {
+		return make_unique<HtHyperlinkGetter>(move(ht));
+	}
+	// Neither interface is supported.
+	return nullptr;
 }

@@ -12,13 +12,10 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#include <comdef.h>
-#include <comip.h>
 #include <windows.h>
 #include <set>
 #include <string>
 #include <sstream>
-#include <memory>
 #include <ia2.h>
 #include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
@@ -321,90 +318,6 @@ long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
 bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 	const auto IA2AttribsMapIt = IA2AttribsMap.find(L"hidden");
 	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
-}
-
-_COM_SMARTPTR_TYPEDEF(IAccessible2, IID_IAccessible2);
-_COM_SMARTPTR_TYPEDEF(IAccessibleHypertext, IID_IAccessibleHypertext);
-_COM_SMARTPTR_TYPEDEF(IAccessibleHypertext2, IID_IAccessibleHypertext2);
-_COM_SMARTPTR_TYPEDEF(IAccessibleHyperlink, IID_IAccessibleHyperlink);
-
-// Classes to support retrieving hyperlinks (embedded objects) from both
-// IAccessibleHypertext and IAccessibleHypertext2.
-class HyperlinkGetter {
-	public:
-	virtual ~HyperlinkGetter() {
-	}
-
-	// get the next hyperlink.
-	virtual IAccessibleHyperlinkPtr next() {
-		if (this->index >= this->count) {
-			return nullptr;
-		}
-		return this->get(this->index++);
-	}
-
-	protected:
-	long count;
-	long index = 0;
-	virtual IAccessibleHyperlinkPtr get(const unsigned long index) = 0;
-};
-
-// For IAccessibleHypertext.
-class HtHyperlinkGetter: public HyperlinkGetter {
-	public:
-	HtHyperlinkGetter(IAccessibleHypertextPtr hypertext): hypertext(hypertext) {
-		if (FAILED(hypertext->get_nHyperlinks(&this->count))) {
-			this->count = 0;
-		}
-	}
-
-	virtual IAccessibleHyperlinkPtr get(const unsigned long index) {
-		IAccessibleHyperlinkPtr link;
-		this->hypertext->get_hyperlink(index, &link);
-		return link;
-	}
-
-	private:
-	IAccessibleHypertextPtr hypertext;
-};
-
-// For IAccessibleHypertext2.
-class Ht2HyperlinkGetter: public HyperlinkGetter {
-	public:
-	Ht2HyperlinkGetter(IAccessibleHypertext2Ptr hypertext): hypertext(hypertext) {
-		if (FAILED(hypertext->get_hyperlinks(&this->rawLinks, &this->count))) {
-			this->count = 0;
-		}
-	}
-
-	virtual IAccessibleHyperlinkPtr get(const unsigned long index) {
-		// Ensure we don't AddRef this pointer.
-		return IAccessibleHyperlinkPtr(this->rawLinks[index], false);
-	}
-
-	virtual ~Ht2HyperlinkGetter() {
-		CoTaskMemFree(this->rawLinks);
-	}
-	
-	private:
-	IAccessibleHypertext2Ptr hypertext;
-	IAccessibleHyperlink** rawLinks = nullptr;
-};
-
-// We use a unique_ptr so we can have a polymorphic, optional return.
-unique_ptr<HyperlinkGetter> makeHyperlinkGetter(IAccessible2* acc) {
-	// Try IAccessibleHypertext2 first.
-	IAccessibleHypertext2Ptr ht2 = acc;
-	if (ht2) {
-		return make_unique<Ht2HyperlinkGetter>(move(ht2));
-	}
-	// Fall back to IAccessibleHypertext.
-	IAccessibleHypertextPtr ht = acc;
-	if (ht) {
-		return make_unique<HtHyperlinkGetter>(move(ht));
-	}
-	// Neither interface is supported.
-	return nullptr;
 }
 
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
