@@ -44,7 +44,6 @@ class myDialog(class wx.Dialog):
 """
 import wx
 from wx.lib import scrolledpanel
-import nvdaControls
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
