@@ -183,7 +183,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		else:
 			log.debugWarning("Could not set log level list to current log level")
 
-		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after logging into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
+		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NVDA will start automatically after logging into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("&Automatically start NVDA after logging on to Windows"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
