@@ -1861,6 +1861,9 @@ class _BgThread:
 		if _BgThread.exit:
 			# func will see this and exit.
 			return
+		if handler.display._awaitingAck:
+			# Do not write cells when we are awaiting an ACK
+			return
 		with _BgThread.queuedWriteLock:
 			data = _BgThread.queuedWrite
 			_BgThread.queuedWrite = None
