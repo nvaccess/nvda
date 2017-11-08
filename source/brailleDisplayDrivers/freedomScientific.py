@@ -232,8 +232,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			raise RuntimeError("No Freedom Scientific display found")
 
 		self._configureDisplay()
-		self.gestureMap.add("br(freedomScientific):topRouting1","globalCommands","GlobalCommands","braille_scrollBack")
-		self.gestureMap.add("br(freedomScientific):topRouting%d"%numCells,"globalCommands","GlobalCommands","braille_scrollForward")
+		self.gestureMap.add("br(freedomScientific):topRouting1", "globalCommands", "GlobalCommands", "braille_scrollBack")
+		self.gestureMap.add("br(freedomScientific):topRouting%d" % self.numCells,"globalCommands", "GlobalCommands", "braille_scrollForward")
 
 	def terminate(self):
 		try:
