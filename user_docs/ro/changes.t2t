@@ -4,6 +4,9 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 =
+Caracteristicile principale ale acestei versiuni includ multe reparări și îmbunătățiri la suportul pentru web, incluzând modul de navigare pentru dialogurile web în mod implicit, raportare mai bună a etichetelor grupurilor de câmpuri din modul de navigare, suport pentru noile tehnologii Windows 10, precum Windows Defender Application Guard și Windows 10 pe ARM64, dar și raportarea automată a orientării ecranului și a stării bateriei.  
+Vă rugăm să rețineți faptul că această versiune nu mai suportă Windows XP sau Windows Vista. Cerința minimă pentru NVDA este acum Windows 7 cu Service Pack 1.
+
 
 == Noi Funcționalități ==
 - În modul de navigare este acum posibil să treceți peste / până la începutul reperelor, utilizând comenzile pentru a trece la sfârșitul / începutul containerelor. (virgulă/shift+virgulă). (#5482)
@@ -16,6 +19,10 @@ Ce este nou în NVDA
 - A fost adăugat suportul pentru noii parametri ai liniei de comandă pentru a crea o copie portabilă a NVDA-ului. (#6329)
 - Suport pentru Microsoft Edge care rulează în Windows Defender Application Guard. (#7600)
 - Dacă rulează pe un leptop sau pe o tabletă, NVDA va anunța atunci când un încărcător este conectat sau deconectat și atunci când orientarea ecranului se modifică. (#4574, #4612)
+- Limbă nouă: macedoneană.
+- Noi tabele braille de traducere: croată grad 1, vietnameză grad 1. (#7518, #7565)
+- Suportul pentru afișajul  braille Actilino d eal Handy Tech a fost adăugat. (#7590)
+-  intrarea braille pentru afișajele Handy Tech este acum suportată. (#7590)
 
 
 == Modificări ==
@@ -24,10 +31,16 @@ Ce este nou în NVDA
 - În modul de navigare, tabularea și deplasarea cu comenzile de navigare rapidă nu mai anunță „salt în afara containerelor”, cum ar fi liste și tabele, ceea ce face navigarea mai eficientă. (#2591)
 - În modul de navigare pentru Firefox și Chrome, numele grupurilor de câmpuri formular sunt anunțate atunci când se deplasează la ele cu navigarea rapidă sau când se tabulează. (#3321)
 - În modul de navigare, comanda navigării rapide pentru obiectele încorporate )O și shift+o) include acum elementele audio și video, precum și elementele cu aplicația și dialogul rolurilor aria. (#7239)
-- A fost actualizat Espeak NG (la commit-ul 01919cd48a566cdf34347784b2e74554b376e900), aceasta rezolvă niște probleme cu producerea lansărilor de compilări. (#7385)
+- A fost actualizat Espeak NG la versiunea 1.49.2, rezolvând niște probleme cu producerea lansărilor de compilări. (#7385)
 - La a treia activare a comenzii de citire a barei de stare, conținutul va fi copiat pe planșetă. (#1785)
 - Când se atribuie gesturi la taste pentru un afișaj Baum, le puteți limita la modelul afișajului braille în uz (e.x. VarioUltra sau Pronto). (#7517)
 - Comanda pentru câmpul de filtrare din lista de elemente a modului de navigare a fost schimbată din alt+f în alt+e. (#7569)
+- A fost adăugată o comandă nelegată pentru modul de navigare pentru comutarea la includerea tabelelor de aspect. O puteți găsi în categoria modului de navigare a dialogului gesturilor de intrare. (#7634)
+- A fost actualizat traducătorul braille liblouis la 3.3.0. (#7565)
+- Comanda pentru butonul rotativ „expresie regulată” din dialogul dicționarului a fost schimbată din alt+r în alt+e. (#6782)
+- Fișierele dicționarului vocal sunt acum versionate și au fost mutate în dosarul 'speechDicts/voiceDicts.v1'. (#7592)
+- Fișierele versionate (configurația utilizatorului, dicționarele vocale) modificările nu mai sunt salvate atunci când NVDA este executat din lansator. (#7688)
+- Afișajele braille Braillino, Bookworm și Modular (cu vechiul firmware) de la Handy Tech nu mai sunt suportate. Instalați driver-ul universal Handy Tech și suplimentul NVDA pentru el pentru a utiliza aceste afișaje. (#7590)
 
 
 == Rezolvări Defecte ==
@@ -43,6 +56,7 @@ Ce este nou în NVDA
 - Ar trebui ca sistemele de operare și alte aplicații să fie mult mai stabile în mod direct imediat după instalarea NVDA-ului înainte de repornire, după cum au fost comparate cu instalările versiunilor anterioare ale NVDA-ului. (#7563)
 - În traducerea românească, a fost reparată o eroare care făcea ca instalarea NVDA-ului să eșueze. (#6326)
 - La folosirea unei comenzi a conținutului de recunoaștere (e.x. NVDA+r), NVDA raportează acum un mesaj de eroare în loc de nimic dacă obiectul navigator a dispărut. (#7567)
+- Funcționalitatea de derulare înapoi a fost reparată pentru afișajele Braille Freedom Scientific care conțin o bară de protecție la stânga. (#7713)
 
 
 == Modificări pentru dezvoltatori ==
