@@ -25,7 +25,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 50 dile çevrilmiş oluşu
+- 51 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
@@ -34,7 +34,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Yerel Dil Desteği ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 50 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 51 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Makedonca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -1412,6 +1412,8 @@ Devre dışı bırakıldığında, NVDA sadece sayfa düzeniyle ilgili olarak ol
 Ancak, tablodaki metin normal metin olarak gösterilir.
 Bu seçenek varsayılan olarak kapalıdır.
 
+Herhangi bir yerde düzen tablolarının dahil edilmesini açıp kapatmak için,    [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir komut belirleyebilirsiniz.
+
 ==== Başlık ve Bağlantı gibi alanların belirtilmesini ayarlama ====
 Başlıklar, bağlantılar, tablolar ve listeler gibi kontrollerin seslendirilmesiyle ilgili ayarlar için, lütfen [Belge Formatları İletişim Kutusu #DocumentFormattingSettings] içerisindeki seçeneklere bakın.
 
@@ -1713,7 +1715,7 @@ Her bir eklenti için, Paket adı, versiyon ve yazar bilgisi gösterilir, Eklent
 Seçili eklenti için yardım mevcutsa, buna yardım düğmesine basarak ulaşabilirsiniz.
 
 Mevcut eklentileri online olarak inceleyip indirmek için, Eklenti edin düğmesine basın.
-Bu düğme [NVDA Eklenti sayfasını http://addons.nvda-project.org/] açar.
+Bu düğme [NVDA Eklenti sayfasını https://addons.nvda-project.org/] açar.
 Eğer NVDA sisteminizde kuruluysa, NVDA'nın o anda çalışıyor olması şartıyla eklenti kurulum sürecini aşağıdaki tarife uyarak doğrudan tarayıcınızda başlatabilirsiniz.
 Aksi halde, eklenti paketini bilgisayarınıza kaydedip aşağıdaki yönergeyi takip edin.
 
@@ -1748,14 +1750,14 @@ Eklenti yöneticisine herhangi bir yerden ulaşmak için, lütfen [Girdi Hareket
 
 ++ Python Konsolu ++
 NVDA menüsündeki araçlar altında bulunan Pithon konsolu, ayıklama, NVDA iç yapısının saptanması ve bir uygulamanın erişilebilirlik hiyerarşisinin saptanması gibi noktalar için yararlı olan bir geliştirme aracıdır.
-Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın http://community.nvda-project.org/wiki/Development].
+Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Pluginleri Yeniden Yükle ++
 Bu öge etkinleştirildiğinde, uygulama modüllerini ve genel pluginleri NVDA'yı yeniden başlatmaya gerek duymadan yeniden yükler, ve bu, geliştiriciler için oldukça yararlıdır.
 
 + Desteklenen Konuşma Sentezleyicileri +[SupportedSpeechSynths]
 Bu bölümde NVDA tarafından desteklenen sentezleyici bilgileri yer almaktadır.
-NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın alabilmeniz ya da indirebilmeniz için çok daha geniş bir listeyi, bu sayfada bulabilirsiniz [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın alabilmeniz ya da indirebilmeniz için çok daha geniş bir listeyi, bu sayfada bulabilirsiniz [http://www.nvda-project.org/wiki/ExtraVoices https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
  [eSpeak NG https://github.com/espeak-ng/espeak-ng] sentezleyicisi Doğrudan NVDA içinde gömülüdür ve başka bir sürücü ya da bileşenin yüklenmesini gerektirmez.
@@ -1925,29 +1927,38 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen tüm ekranları desteklemektedir.
+NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen çoğu braille ekranı destekler.
 Bazı daha eski USB ekranlar için Handy Tech sürücülerini sisteminize yüklemeniz gerekecektir.
 
-Braille girişi henüz desteklenmemektedir.
-
-Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
+Aşağıdaki ekranlar için anında destek sunulmaz, ancak [Handy Tech evrensel sürücüsü https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] ve NVDA add-on aracılığıyla kullanılabilir:
+- Braillino
+- Bookworm
+- Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+-
+Aşağıda Handy Tech ekranlarla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
 || Ad | Kısayol tuşu |
-| Braille ekranı geri kaydırma | Sol, Yukarı |
-| Braille ekranı ileri kaydırma | Sağ, Aşağı |
+| Braille ekranı geri kaydırma | Sol, Yukarı, b3 |
+| Braille ekranı ileri kaydırma | Sağ, Aşağı, b6 |
 | Braille ekranı önceki satıra götürme | b4 |
 | Braille ekranı sonraki satıra götürme | b5 |
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | hücre üzerindeki braille iğnesi |
-| Şift+tab tuşu | eskeyp tuşu |
+| Şift+tab tuşu | eskeyp tuşu, left triple action key up+down |
 | alt tuşu | b2+b4+b5 |
 | eskeyp tuşu | b4+b6 |
-| tab tuşu | enter |
-| enter tuşu | eskeyp+enter |
-| Yukarı yön tuşu | solBoşluk |
-| Aşağı yön tuşu | sağBoşluk |
+| tab tuşu | enter, right triple action key up+down |
+| enter tuşu | eskeyp+enter, left+right triple action key up+down, joystickAction |
+| Yukarı yön tuşu | joystickUp |
+| Aşağı yön tuşu | joystickDown |
+| SolOk tuşu | joystickLeft |
+| SağOk tuşu | joystickRight |
 | NVDA Menüsü | b2+b4+b5+b6 |
 | Handy Tech ayarları | b4+b8 |
+| Toggle braille tethered to | b2 |
+| Toggle the braille cursor | b1 |
+| Toggle focus context presentation | b7 |
+| Toggle braille input | space+b1+b3+b4 (space+capital B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
