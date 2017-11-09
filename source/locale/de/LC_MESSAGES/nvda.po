@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-13 00:10+1000\n"
+"POT-Creation-Date: 2017-11-02 17:11+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"Last-Translator: David Parduhn <xkill85@gmx.net>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -803,6 +803,11 @@ msgstr "Kroatisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Kroatische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Ungarisches 8-Punkt-Computerbraille"
 
@@ -1023,6 +1028,11 @@ msgstr "Unicode-Braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Vietnamesischee Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Chinesisch (Hong-Kong, Cantonesisch)"
 
@@ -1031,9 +1041,12 @@ msgstr "Chinesisch (Hong-Kong, Cantonesisch)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chinesisch (Taiwan, Mandarin)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "Fokusmodus"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Lesemodus"
@@ -1565,8 +1578,8 @@ msgstr "Typ:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&Filter von:"
+msgid "Filt&er by:"
+msgstr "Filtern &nach:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1601,8 +1614,8 @@ msgstr "Keine ausführliche Beschreibung."
 msgid "Shows the long description at this position if one is found."
 msgstr "Zeigt die ausführliche Beschreibung, fals diese vorhanden ist."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "nicht in einem Container"
 
@@ -1650,6 +1663,18 @@ msgstr "springt zur nächsten Tabellenspalte"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "springt zur vorigen Tabellenspalte"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Layout-Tabellen nicht Ausgeben"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Layout-Tabellen ausgeben"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Schaltet die Ausgabe von Layout-Tabellen im Lesemodus ein oder aus."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -5721,14 +5746,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "Sound"
 
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"Erlaubt es NVDA  im Windows Anmeldebildschirm, der Benutzerkontensteuerung "
-"und anderen Sicherheitsbildschirmen zu funktionieren."
-
 msgid "Type help(object) to get help about object."
 msgstr ""
 "Geben Sie \"help(object)\" ein, um Hilfe über das entsprechende Objekt zu "
@@ -7126,12 +7143,21 @@ msgstr "Bildschirmweises Scrollen"
 msgid "line scroll"
 msgstr "Zeilenweises Scrollen"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech Braillezeilen"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Zeige das Handy Tech Treiber Einstellungsfenster."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Brailleeingabe an"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Brailleeingabe aus"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Schaltet Braille-Eingabe ein oder aus"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7324,8 +7350,8 @@ msgid "Change settings of document properties"
 msgstr "Einstellungen der Dokumenteigenschaften ändern"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "Windows 10 Texterkennung..."
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 Texterkennung..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8867,8 +8893,8 @@ msgid "Whole &word"
 msgstr "Ganze &Wörter"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "&Regulärer Ausdruck"
+msgid "Regular &expression"
+msgstr "R&egulärer Ausdruck"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -9076,7 +9102,7 @@ msgstr "Eingaben"
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
 msgid "&Filter by:"
-msgstr "&Filtern nach:"
+msgstr "Filt&ern nach:"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -10602,7 +10628,7 @@ msgstr "&Anmerkungen"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+msgid "&Errors"
 msgstr "&Fehler"
 
 #. Translators: The name of a series of braille displays.
@@ -10613,28 +10639,5 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "-----"
-#~ msgstr "-----"
-
-#~ msgid "(x)"
-#~ msgstr "[X]"
-
-#~ msgid "(-)"
-#~ msgstr "[-]"
-
-#~ msgid "( )"
-#~ msgstr "[ ]"
-
-#~ msgid "Farsi grade 1"
-#~ msgstr "Persische Vollschrift (Farsi)"
-
-#~ msgid "ITALIC"
-#~ msgstr "kursiv"
-
-#~ msgid "braille"
-#~ msgstr "Braille"
-
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr ""
-#~ "Möchten Sie wirklich dieses Profil löschen? Dieser Vorgang kann nicht "
-#~ "wieder rückgängig gemacht werden."
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Zeige das Handy Tech Treiber Einstellungsfenster."

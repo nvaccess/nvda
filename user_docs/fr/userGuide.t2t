@@ -25,7 +25,7 @@ Ses points forts sont :
 - La prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
 - La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
 - Un installateur parlant facile à utiliser ;
-- Une traduction dans 50 langues ;
+- Une traduction dans 51 langues ;
 - La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits ;
 - L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés ;
 - La prise en charge des interfaces d'accessibilité communes telles que, Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7) ;
@@ -34,7 +34,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-À ce jour, NVDA a été traduit en 50 langues : l'afrikaans, l'albanais, l'Amharique, l'allemand, l'arabe, l'aragonais, le Birman, le bulgare, le catalan, le chinois traditionnel et simplifié, le coréen, le croate, le danois, l'espagnol, l'espagnol colombien, l'éthiopien, le farsi, le finnois, le français, le galicien, le grec, le géorgien, l'hébreu, le hongrois, l'hindi, l'irlandais, l'islandais, l'italien, le japonais, le lithuanien, le néerlandais, le népalais, le norvégien, le polonais, le portugais, le portugais brésilien, le punjabi, le roumain, le russe, le serbe, le slovaque, le slovène, le suédois, le tamoul, le tchèque, le thaï, le turc, l'ukrainien et le vietnamien.
+À ce jour, NVDA a été traduit en 51 langues : l'afrikaans, l'albanais, l'Amharique, l'allemand, l'arabe, l'aragonais, le Birman, le bulgare, le catalan, le chinois traditionnel et simplifié, le coréen, le croate, le danois, l'espagnol, l'espagnol colombien, l'éthiopien, le farsi, le finnois, le français, le galicien, le grec, le géorgien, l'hébreu, le hongrois, l'hindi, l'irlandais, l'islandais, l'italien, le japonais, le lithuanien, le macédonien, le néerlandais, le népalais, le norvégien, le polonais, le portugais, le portugais brésilien, le punjabi, le roumain, le russe, le serbe, le slovaque, le slovène, le suédois, le tamoul, le tchèque, le thaï, le turc, l'ukrainien et le vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -278,7 +278,7 @@ Quelques touches de commandes utiles pour naviguer avec le focus :
 | Annonce du focus courant | NVDA+tab | NVDA+tab | Annonce l'objet en cours ou le contrôle qui a le focus système. Un double appui épelle l'information |
 | Annonce du titre | NVDA+t | NVDA+t | Annonce le titre de la fenêtre active. Un double appui épelle l'information, un triple appui la copie dans le presse-papiers |
 | Lecture de la fenêtre active | NVDA+b | NVDA+b | lit tous les contrôles de la fenêtre active (utile pour les dialogues) |
-| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état. Un double appui épelle l'information |
+| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état. Un double appui épelle l'information. Un triple appui la copie dans le presse-papiers |
 %kc:endInclude
 
 ++ Naviguer avec le curseur système ++[SystemCaret]
@@ -544,15 +544,18 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 | Aller au document contenant l'objet | NVDA+contrôle+espace | Retire le focus à l'objet embarqué en cours et le rend au document contenant l'objet |
 %kc:endInclude
 
-+ Lecture de Contenu Mathématique +
++ Lecture de Contenu Mathématique +[ReadingMath]
 En utilisant MathPlayer 4 de Design Science, NVDA peut lire et naviguer interactivement dans le contenu mathématique supporté.
 Cela nécessite que MathPlayer 4 soit installé sur l'ordinateur.
 MathPlayer est disponible en téléchargement gratuit sur : http://www.dessci.com/en/products/mathplayer/
 
 NVDA supporte les types de contenu mathématiques suivants :
 - MathML sous Mozilla Firefox, Microsoft Internet Explorer et Google Chrome.
-- Design Science MathType sous Microsoft Word et PowerPoint. MathType doit être installé pour que cela fonctionne. La version de démonstration est suffisante.
-- MathML sous Adobe Reader. Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
+- Design Science MathType sous Microsoft Word et PowerPoint. 
+MathType doit être installé pour que cela fonctionne. La version de démonstration est suffisante.
+- MathML sous Adobe Reader. 
+Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
+- Math sous Kindle for PC pour les livres avec du contenu mathématique accessible.
 -
 
 Durant la lecture d'un document, NVDA annoncera tout contenu mathématique supporté quand il se présente.
@@ -576,7 +579,7 @@ Par défaut, le curseur de revue suit le curseur système, vous pouvez donc gén
 
 Arrivé là, vous pouvez utiliser les commandes MathPlayer telles que les flèches pour explorer l'expression.
 Par exemple, vous pouvez vous déplacer dans l'expression avec les flèches gauche et droite puis zoomer sur une partie de l'expression telle qu'une fraction en utilisant la flèche basse.
-Veuillez consulter la documentation de MathPlayer pour plus d'information.
+Veuillez consulter [la documentation de MathPlayer sur les commandes de navigation https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] pour plus d'informations.
 
 Quand vous voulez retourner au document, pressez simplement la touche échap.
 
@@ -855,6 +858,9 @@ Vous pouvez aller manuellement à la page suivante en pressant la touche PageSui
 La navigation par simple lettre est supportée pour les liens et les graphiques, mais seulement dans la page en cours.
 La navigation par liens inclut également les notes de bas de page.
 
+NVDA fournit une ébauche de support pour la lecture et la navigation interactive de contenu mathématique pour les livres avec du contenu mathématique accessible.
+Veuillez consulter la section [Lecture de Contenu Mathématique #ReadingMath] pour plus d'informations.
+
 +++ Sélection de Texte +++
 Kindle vous permet d'exécuter diverses fonctions relatives au texte sélectionné, incluant l'obtention d'une définition du dictionnaire, l'ajout de notes et de surlignages, la copie du texte dans le presse-papiers et la recherche sur le web.
 Pour faire cela, sélectionnez d'abord le texte comme vous le feriez normalement en mode navigation; ex: en utilisant maj et les touches curseur.
@@ -876,6 +882,14 @@ Pour afficher, éditer ou effacer une note.
 + Accédez aux options de sélection comme décrit plus haut.
 + Choisissez Éditer la Note.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Quand vous êtes dans le tableau des livres ajoutés :
+|| Nom | Touche | Description |
+| Entrer | entrer | Ouvre le livre sélectionné. |
+| Menu contextuel | applications | Ouvre le menu contextuel pour le livre sélectionné. |
+%kc:endInclude
 
 + Configurer NVDA +
 
@@ -1391,12 +1405,14 @@ Cette option vous permet d'indiquer si vous voulez que les objets tels que les l
 Cette case à cocher active ou désactive la lecture automatique des pages après leur chargement en mode navigation.
 Cette option est activée par défaut.
 
-==== Annoncer les tables de visualisation ====
+==== Annoncer les tables de disposition ====
 Cette option définit ce que NVDA doit faire des tableaux qui ne servent qu'à la présentation.
-Lorsque désactivée, cette option fait que NVDA ne rapporte que les tableaux contenant des données tabulaires (quand il tombe sous le sens qu'il s'agit d'un tableau).
+Si désactivée, NVDA ne rapporte que les tableaux contenant des données tabulaires (quand il tombe sous le sens qu'il s'agit d'un tableau).
 Les autres tableaux sont affichés sous forme de texte normal.
-Si activée, cette option fera que NVDA annoncera vraiment tous les tableaux, y compris ceux servant uniquement à la présentation.
+Si activée, NVDA annonce vraiment tous les tableaux, y compris ceux servant uniquement à la présentation.
 Cette option est désactivée par défaut.
+
+Pour activer/désactiver l'inclusion des tables de disposition de n'importe où, veuillez assigner un geste personnalisé en utilisant [le dialogue Gestes de commandes #InputGestures].
 
 ==== Configurer l'annonce de champs tels que liens et titres ====
 Veuillez consulter les options dans le dialogue [Mise en forme des Documents #DocumentFormattingSettings] pour configurer les champs qui sont annoncés durant la navigation tels que les liens, les titres et les tableaux.
@@ -1699,7 +1715,7 @@ Un nom de paquet, la version et l'auteur sont affichés pour chaque module compl
 Si une aide est disponible pour le module sélectionné, vous pouvez y accéder en pressant le bouton "Aide du module complémentaire".
 
 Pour télécharger des modules complémentaires mis à disposition par la communauté, cliquez sur le bouton "Obtenir des modules complémentaires".
-Ce bouton ouvre la [page des modules complémentaires NVDA http://addons.nvda-project.org/].
+Ce bouton ouvre la [page des modules complémentaires NVDA https://addons.nvda-project.org/].
 Si NVDA est installé sur votre système et en cours d'exécution, vous pourrez ouvrir le module complémentaire directement depuis votre navigateur afin de démarrer le processus d'installation décrit plus loin.
 Autrement, enregistrez le fichier du module complémentaire et suivez les instructions ci-dessous.
 
@@ -1734,14 +1750,14 @@ Pour activer le gestionnaire de modules complémentaires de n'importe où, Veuil
 
 ++ Console Python ++
 La console Python NVDA, située dans "Outils" du menu NVDA, est un outil de développement utile pour dépanner, inspecter le code ou inspecter la hiérarchie d'accessibilité d'une application.
-Pour plus d'informations, veuillez consulter le "Guide du Développeur" disponible dans [la section développement du site Web de NVDA http://community.nvda-project.org/wiki/Development].
+Pour plus d'informations, veuillez consulter le "Guide du Développeur" disponible dans [la section développement du site Web de NVDA https://community.nvda-project.org/wiki/Development].
 
 ++ Rechargement des modules complémentaires ++
 Cet élément, quand on l'active, recharge les modules d'applications et les modules complémentaires généraux sans avoir à redémarrer NVDA, ce qui peut être utile pour les développeurs.
 
 + Synthétiseurs de parole pris en charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
-Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger pour utilisation avec NVDA, veuillez consulter la page [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger pour utilisation avec NVDA, veuillez consulter la page [http://www.nvda-project.org/wiki/ExtraVoices https://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 Le synthétiseur [eSpeak nG https://github.com/espeak-ng/espeak-ng] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
@@ -1911,29 +1927,37 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ Les terminaux Handy Tech ++
-NVDA prend en charge tous les terminaux de chez [Handy Tech http://www.handytech.de/] en USB ou Bluetooth.
+NVDA prend en charge la plupart des terminaux de chez [Handy Tech http://www.handytech.de/] en USB ou Bluetooth.
 Pour les terminaux USB les plus anciens, vous devrez installer le pilote USB Handy Tech sur votre système.
 
-La saisie du braille n'est pas encore supportée.
-
+Les terminaux suivants ne sont pas nativement supportés, mais peuvent être utilisé via [le pilote universel Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] and NVDA add-on:
+- Braillino
+- Bookworm
+- Les afficheurs modulaires avec le microprogramme version 1.13 ou inférieure. Veuillez noter que le microprogramme de ces afficheurs peut être mis à jour.
+-
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 %kc:beginInclude
 || Nom | Touche |
-| Défilement arrière de l'affichage braille | left, up |
-| Défilement avant de l'affichage braille | right, down |
+| Défilement arrière de l'affichage braille | left, up, b3 |
+| Défilement avant de l'affichage braille | right, down, b6 |
 | Amener l'affichage braille à la ligne précédente | b4 |
 | Amener l'affichage braille à la ligne suivante | b5 |
 | Aller à la cellule braille | routing |
-| Touche maj+tab | esc |
+| Touche maj+tab | esc, touche triple action gauche haut+bas |
 | Touche alt | b2+b4+b5 |
 | Touche échap | b4+b6 |
-| Touche tab | enter |
-| Touche entrée | esc+enter |
-| Flèche haut | espace gauche |
-| Flèche bas | espace droit |
+| Touche tab | enter, touche triple action droite haut+bas |
+| Touche entrée | esc+enter, touche triple action gauche+droite haut+bas, JoystickAction |
+| Flèche haut | joystick haut |
+| Flèche bas | joystick bas |
+| Flèche gauche | joystick gauche |
+| Flèche droite | joystick droit |
 | Menu NVDA | b2+b4+b5+b6 |
-| Configuration Handy Tech | b4+b8 |
+| Bascule braille suit | b2 |
+| Bascule du curseur braille | b1 |
+| Bascule de présentation du contexte du focus | b7 |
+| Bascule de la saisie braille | space+b1+b3+b4 (space+capital B) |
 %kc:endInclude
 
 ++ Le terminal MDV Lilli ++
@@ -2470,6 +2494,9 @@ Voici les options de ligne de commande de NVDA :
 | Aucune | --no-sr-flag | Ne change pas l'indicateur système global de revue d'écran |
 | Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
 | Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |
+| Aucune | --create-portable | Crée une copie portable de NVDA (puis démarre la copie nouvellement créée). --portable-path doit être spécifié |
+| Aucune | --create-portable-silent | Crée une copie portable de NVDA (sans démarrer la copie nouvellement créée). --portable-path doit être spécifié |
+| Aucune | --portable-path=PORTABLEPATH | L'emplacement où la copie portable sera créée |
 
 ++Paramètres Système++[SystemWideParameters]
 NVDA permet de définir certaines valeurs dans la base de registre du système ce qui modifie le comportement général de NVDA.

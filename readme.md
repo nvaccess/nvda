@@ -62,7 +62,7 @@ For reference, the following dependencies are included in Git submodules:
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
-* [liblouis](http://www.liblouis.org/), version 3.2.0
+* [liblouis](http://www.liblouis.org/), version 3.3.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
@@ -89,7 +89,6 @@ For reference, the following dependencies are included in Git submodules:
 ### Other Dependencies
 These dependencies are not included in Git submodules, but aren't needed by most people.
 
-* If you want to be able to use the Handy Tech braille display driver when running from source code, you will need to install the [Handy Tech universal driver](ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe)
 * To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.stack.nl/~dimitri/doxygen/download.html), version 1.7.3:
 
 ## Preparing the Source Tree

@@ -135,6 +135,36 @@ def copyUserConfig(destPath):
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
 
+def removeOldLibFiles(destPath,rebootOK=False):
+	"""
+	Removes library files from previous versions of NVDA.
+	@param destPath: The path where NVDA is installed.
+	@ type destPath: string
+	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
+	@type rebootOK: boolean
+	"""
+	for topDir in ('lib','lib64'):
+		currentLibPath=os.path.join(destPath,topDir,versionInfo.version)
+		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
+			if parent==currentLibPath:
+				# Lib dir for current installation. Don't touch this!
+				log.debug("Skipping current install lib path: %r"%parent)
+				continue
+			for d in subdirs:
+				path=os.path.join(parent,d)
+				log.debug("Removing old lib directory: %r"%path)
+				try:
+					os.rmdir(path)
+				except OSError:
+					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r"%path)
+			for f in files:
+				path=os.path.join(parent,f)
+				log.debug("Removing old lib file: %r"%path)
+				try:
+					tryRemoveFile(path,numRetries=2,rebootOK=rebootOK)
+				except RetriableFailure:
+					log.warning("A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"%path)
+
 def removeOldProgramFiles(destPath):
 	# #3181: Remove espeak-ng-data\voices except for variants.
 	# Otherwise, there will be duplicates if voices have been moved in this new eSpeak version.
@@ -153,14 +183,6 @@ def removeOldProgramFiles(destPath):
 				shutil.rmtree(fn)
 			else:
 				os.remove(fn)
-
-	# #7546: Remove old version-specific libs
-	for topDir in ('lib','lib64'):
-		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
-			for d in subdirs:
-				tryRemoveFile(os.path.join(parent,d),numRetries=1,rebootOK=True)
-			for f in files:
-				tryRemoveFile(os.path.join(parent,f),numRetries=1,rebootOK=True)
 
 	# #4235: mpr.dll is a Windows system dll accidentally included with
 	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
@@ -190,12 +212,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 		_winreg.SetValueEx(k,"startMenuFolder",None,_winreg.REG_SZ,startMenuFolder)
 		if configInLocalAppData:
 			_winreg.SetValueEx(k,config.CONFIG_IN_LOCAL_APPDATA_SUBKEY,None,_winreg.REG_DWORD,int(configInLocalAppData))
-	if easeOfAccess.isSupported:
-		registerEaseOfAccess(installDir)
-	else:
-		import nvda_service
-		nvda_service.installService(installDir)
-		nvda_service.startService()
+	registerEaseOfAccess(installDir)
 	if startOnLogonScreen is not None:
 		config._setStartOnLogonScreen(startOnLogonScreen)
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
@@ -229,22 +246,12 @@ def isDesktopShortcutInstalled():
 	return os.path.isfile(shortcutPath)
 
 def unregisterInstallation(keepDesktopShortcut=False):
-	import nvda_service
 	try:
-		nvda_service.stopService()
-	except:
+		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
+			_winreg.KEY_WOW64_64KEY)
+		easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, False)
+	except WindowsError:
 		pass
-	try:
-		nvda_service.removeService()
-	except:
-		pass
-	if easeOfAccess.isSupported:
-		try:
-			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
-				_winreg.KEY_WOW64_64KEY)
-			easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, False)
-		except WindowsError:
-			pass
 	wsh=_getWSH()
 	desktopPath=os.path.join(wsh.SpecialFolders("AllUsersDesktop"),"NVDA.lnk")
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
@@ -404,6 +411,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
 	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
+	removeOldLibFiles(installDir,rebootOK=True)
 
 def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")
@@ -432,6 +440,7 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	tryCopyFile(os.path.join(destPath,"nvda_noUIAccess.exe"),os.path.join(destPath,"nvda.exe"))
 	if shouldCopyUserConfig:
 		copyUserConfig(os.path.join(destPath,'userConfig'))
+	removeOldLibFiles(destPath,rebootOK=True)
 
 def registerEaseOfAccess(installDir):
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH, 0,
