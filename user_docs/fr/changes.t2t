@@ -4,7 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 =
-Points forts de cette version : beaucoup de corrections et d'améliorations dans le support du web incluant le mode navigation pour les dialogues web par défaut, Meilleure annonce des étiquettes de groupes de champs en mode navigation, support de nouvelles technologies Windows 10 telles que Windows Defender Application Guard et Windows 10 sur ARM64, et l'annonce automatique de l'orientation écran et de l'état de la batterie.  
+Points forts de cette version : beaucoup de corrections et d'améliorations dans le support du web incluant le mode navigation pour les dialogues web par défaut, Meilleure annonce des étiquettes de groupes de champs en mode navigation, support de nouvelles technologies Windows 10 telles que Windows Defender Application Guard et Windows 10 sur ARM64, et l'annonce automatique de l'orientation écran et de l'état de la batterie.
 Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows Vista. Le minimum requis pour NVDA est maintenant windows 7 avec Service Pack 1.
 
 
@@ -17,7 +17,7 @@ Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows 
 - Ajout du support du lecteur de livres électroniques Azardi. (#5848)
 - Lors de la mise à jour d'un module complémentaire, l'information de version est maintenant annoncée. (#5324)
 - Ajout de nouveaux paramètres de ligne de commande pour créer une copie portable de NVDA. (#6329)
-- Support de Microsoft Edge s'exécutant sous Windows Defender Application Guard (#7600)
+- Support de Microsoft Edge s'exécutant dans Windows Defender Application Guard sous Windows 10 Fall Creators Update. (#7600)
 - S'il s'exécute sur un PC portable ou une tablette, NVDA annonce maintenant si le chargeur est connecté ou déconnecté, et quand l'orientation de l'écran change. (#4574, #4612)
 - Nouvelle langue : Macédonien.
 - Nouvelles tables d'affichage braille : Croate intégral, Vietnamien intégral. (#7518, #7565)
@@ -34,7 +34,7 @@ Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows 
 - Espeak-ng a été mis à jour (à la version 1.49.2), Cela résout quelques problèmes dans la productions des builds. (#7385)
 - À la troisième activation de la commande de lecture de la barre d'état, le contenu de celle-ci est copié dans le presse-papiers. (#1785)
 - Sur un terminal Baum, l'assignation d'un geste de commande à une touche peut être limitée au modèle de terminal en cours d'utilisation (ex : VarioUltra ou Pronto). (#7517)
-- le raccourci clavier du champ de filtre de la liste d'éléments en mode navigation est passé de alt+f à alt+e. (#7569)
+- Le raccourci clavier du champ de filtre de la liste d'éléments en mode navigation est passé de alt+f à alt+e. (#7569)
 - Une commande non assignée a été ajoutée pour activer/désactiver l'inclusion des tables de disposition à la volée en mode navigation. Vous trouverez cette commande dans la catégorie Mode Navigation du dialogue Gestes de commandes. (#7634)
 - Mise à jour du traducteur braille Liblouis à la version 3.3.0. (#7565)
 - Les fichiers de dictionnaires vocaux sont maintenant versionnés et ont été déplacés vers le répertoire 'speechDicts/voiceDicts.v1'. (#7592)

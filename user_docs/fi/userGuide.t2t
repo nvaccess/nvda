@@ -1,4 +1,4 @@
-NVDA NVDA_VERSION - käyttöopas
+﻿NVDA NVDA_VERSION - käyttöopas
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -25,8 +25,8 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen pistenäytöissä, joissa on pistenäppäimistö
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset 50 kielelle
-- Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
+- Käännökset 51 kielelle
+- Tuki uusille Windows-käyttöjärjestelmille, sekä 32- että 64-bittiset versiot mukaan lukien
 - Mahdollisuus käyttää Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
 - Tuki Windowsin komentokehotteelle ja konsolisovelluksille
@@ -34,7 +34,7 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ++ Kansainvälisyys ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on käännetty englannin lisäksi seuraaville 50 kielelle: afrikaans, albania, amhara, arabia, aragonia, brasilianportugali, bulgaria, burma, espanja, farsi, galego, georgia, heprea, hindi, hollanti, iiri, islanti, italia, japani, kannada, katalaani, kolumbianespanja, korea, kreikka, kroatia, liettua, mandariinikiina, nepali, norja, perinteinen kiina, portugali, punjabi, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, sloveeni, suomi, tamili, tanska, thai, tšekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on käännetty englannin lisäksi seuraaville 51 kielelle: afrikaans, albania, amhara, arabia, aragonia, brasilianportugali, bulgaria, burma, espanja, farsi, galego, georgia, heprea, hindi, hollanti, iiri, islanti, italia, japani, kannada, katalaani, kolumbianespanja, korea, kreikka, kroatia, liettua, makedonia, mandariinikiina, nepali, norja, perinteinen kiina, portugali, punjabi, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, sloveeni, suomi, tamili, tanska, thai, tšekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -314,7 +314,7 @@ Tällaisissa tapauksissa voit käyttää objektinavigointia.
 
 Objektinavigoinnin avulla on mahdollista liikkua yksittäisten [objektien #Objects] välillä ja saada niistä tietoja.
 Kun siirryt objektiin, NVDA lukee sen samalla tavalla kuin järjestelmäkohdistuksen.
-Voit käyttää [ruututarkastelua #ScreenReview] tekstin tarkastelemiseen sellaisena kuin se näkyy ruudulla.
+Voit käyttää [ruuduntarkastelua #ScreenReview] tekstin tarkastelemiseen sellaisena kuin se näkyy ruudulla.
 
 Objektit on ryhmitelty hierarkkisesti sen sijaan, että niiden välillä liikuttaisiin edestakaisin.
 Tämä tarkoittaa, että jotkin objektit sisältävät muita objekteja, ja että on siirryttävä niiden sisään, jotta päästäisiin edelleen niiden sisältämiin objekteihin.
@@ -401,21 +401,21 @@ Seuraavat komennot vaihtavat tarkastelutilojen välillä:
 | Vaihda edelliseen tarkastelutilaan | NVDA+numeronäppäimistön 1 | NVDA+Page down | Pyyhkäisy alas kahdella sormella | Vaihtaa edelliseen käytettävissä olevaan tarkastelutilaan. |
 %kc:endInclude
  
-+++ Objektitarkastelu +++[ObjectReview]
++++ Objektintarkastelu +++[ObjectReview]
 Objektintarkastelutilassa on mahdollista tarkastella vain nykyisen [navigointiobjektin #ObjectNavigation] sisältöä.
 Tämä on yleensä tekstiä sellaisissa objekteissa kuin muokattavat tekstikentät tai muut perustekstisäätimet.
 Muissa objekteissa sisältöä voivat olla kyseisten objektien nimi ja/tai arvo.
 
-+++ Dokumenttitarkastelu +++[DocumentReview]
++++ Dokumentintarkastelu +++[DocumentReview]
 Dokumentintarkastelutilaan on mahdollista vaihtaa [Navigointiobjektin #ObjectNavigation] ollessa selaustiladokumentissa (esim. verkkosivulla) tai muussa monisisältöisessä dokumentissa (esim. Lotus Symphonyssa).
 Tässä tilassa voit tarkastella koko dokumentin sisältöä.
 
-Tarkastelukohdistin sijoitetaan dokumentissa navigointiobjektin kohdalle vaihdettaessa objektitarkastelusta dokumenttitarkasteluun.
+Tarkastelukohdistin sijoitetaan dokumentissa navigointiobjektin kohdalle vaihdettaessa objektintarkastelusta dokumentintarkasteluun.
 Kun dokumentissa liikutaan tarkastelukomennoilla, navigointiobjekti siirretään automaattisesti tarkastelukohdistimen nykyisessä kohdassa olevaan objektiin.
 
-Huomaa, että NVDA vaihtaa automaattisesti objektitarkastelusta dokumenttitarkasteluun selaustiladokumenteissa liikuttaessa.
+Huomaa, että NVDA vaihtaa automaattisesti objektintarkastelusta dokumentintarkasteluun selaustiladokumenteissa liikuttaessa.
 
-+++ Ruututarkastelu +++[ScreenReview]
++++ Ruuduntarkastelu +++[ScreenReview]
 Ruuduntarkastelutilan avulla voit tarkastella ruudulla olevaa tekstiä sellaisena kuin se näkyy visuaalisesti nykyisessä sovelluksessa.
 Tämä muistuttaa useiden muiden Windows-ruudunlukuohjelmien ruuduntarkastelu- tai hiirikohdistintoimintoa.
 
@@ -579,7 +579,7 @@ Tarkastelukohdistin seuraa oletusarvoisesti järjestelmäkohdistinta, joten voit
 
 Voit käyttää lausekkeen tutkimiseen MathPlayer-komentoja, kuten nuolinäppäimiä.
 Lausekkeessa voidaan esimerkiksi liikkua vasemmalla ja oikealla nuolinäppäimellä sekä zoomata johonkin tiettyyn osaan kuten murtolukuun Nuoli alas -näppäintä käyttäen.
-Katso MathPlayerin ohjeesta lisätietoja selauskomennoista: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
+Katso lisätietoja selauskomennoista [MathPlayerin ohjeesta. https://www.dessci.com/en/products/mathplayer/navigation_commands.htm]
 
 Paina Esc-näppäintä, kun haluat palata takaisin dokumenttiin.
 
@@ -960,7 +960,7 @@ Tästä yhdistelmäruudusta voidaan valita, mitä puhesyntetisaattoria NVDA käy
 Luettelo NVDA:n tukemista puhesyntetisaattoreista on [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleessa.
 
 Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
-Tästä voi olla hyötyä henkilölle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää Puheen tarkastelu -toimintoa.
+Tästä voi olla hyötyä henkilölle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää puheentarkastelutoimintoa.
  
 ==== Äänilaite ====
 Tästä voit valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
@@ -1236,7 +1236,7 @@ Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painetut näppäimet, jo
 
 ==== Ilmaise kirjoitusvirheet kirjoitettaessa toistamalla ääni ====
 Tämän asetuksen ollessa käytössä toistetaan lyhyt summeriääni, kun kirjoittamassasi sanassa on kirjoitusvirhe.
-Asetus on käytettävissä vain, jos kirjoitusvirheiden lukeminen on otettu käyttöön NVDA:n [Dokumenttien muotoiluasetukset #DocumentFormattingSettings] -valintaikkunasta.
+Asetus on käytettävissä vain, jos kirjoitusvirheiden ilmaiseminen on otettu käyttöön NVDA:n [Dokumenttien muotoiluasetukset #DocumentFormattingSettings] -valintaikkunasta.
 
 ==== Käsittele muiden sovellusten näppäinpainallukset ====
 Tällä asetuksella käyttäjä voi säätää, käsitteleekö NVDA sellaisten sovellusten kuin näyttönäppäimistöjen ja puheentunnistusohjelmistojen tuottamat näppäinpainallukset. 
@@ -1412,8 +1412,10 @@ Kun asetus on poistettu käytöstä, asettelutaulukoita ei lueta eikä löydetä
 Taulukoiden sisältö näytetään kuitenkin tavallisena tekstinä.
 Asetus on oletusarvoisesti poissa käytöstä.
 
-==== Elementtien lukemisen määrittäminen ====
-Katso [Dokumenttien muotoiluasetukset -valintaikkunassa #DocumentFormattingSettings] olevia asetuksia määrittääksesi luettavat elementit, kuten linkit, otsikot ja taulukot.
+Ota asettelutaulukoiden ilmaiseminen käyttöön tai poista se käytöstä mistä tahansa määrittämällä syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+
+==== Elementtien ilmaisemisen määrittäminen ====
+Katso [Dokumenttien muotoiluasetukset -valintaikkunassa #DocumentFormattingSettings] olevia asetuksia määrittääksesi ilmaistavat elementit, kuten linkit, otsikot ja taulukot.
   
 ==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====
 Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön, jos kohdistus muuttuu.
@@ -1494,7 +1496,7 @@ Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 -
 
 +++ Windows 10:n tekstintunnistusasetukset +++[Win10OcrSettings]
-Tästä valintaikkunasta, johon pääsee NVDA:n Asetukset-valikosta, voit määrittää [Windows 10:n tekstintunnistusasetukset. #Win10Ocr]
+Tästä valintaikkunasta, johon pääsee NVDA:n Asetukset-valikon kohdasta "Tekstintunnistus (Windows 10)", voit määrittää [Windows 10:n tekstintunnistusasetukset. #Win10Ocr]
 
 ==== Tunnistuksen kieli ====
 Tästä yhdistelmäruudusta voit valita tekstintunnistuksessa käytettävän kielen.
@@ -1683,26 +1685,26 @@ Muuttaaksesi sitä, miten NVDA on määritelty kirjautumisikkunassa ja käyttäj
 
 + Lisätyökalut +
 
-++ Lokin tarkastelu ++
-Lokin tarkastelulla, joka löytyy NVDA-valikon Työkalut-alavalikosta, voidaan tutkia kaikkia NVDA:n edellisen käynnistyksen jälkeen tulleita lokimerkintöjä.
+++ Lokintarkastelu ++
+Lokintarkastelulla, joka löytyy NVDA-valikon Työkalut-alavalikosta, voidaan tutkia kaikkia NVDA:n edellisen käynnistyksen jälkeen tulleita lokimerkintöjä.
 
 Loki voidaan myös tallentaa tiedostoon tai ikkunan sisältö päivittää, jotta uusimmat lokin avaamisen jälkeen tulleet merkinnät näytetään.
-Nämä toiminnot ovat käytettävissä Lokin tarkastelu -sovelluksen Tiedosto-valikossa.
+Nämä toiminnot ovat käytettävissä Lokintarkastelu -sovelluksen Tiedosto-valikossa.
 
-++ Puheen tarkastelu ++
+++ Puheentarkastelu ++
 Näkeville ohjelmistokehittäjille tai NVDA:ta näkevälle yleisölle esitteleville on käytettävissä kelluva ikkuna, jonka avulla voidaan näyttää kaikki NVDA:n puhuma teksti.
 
-Toiminto otetaan käyttöön valitsemalla Puheen tarkastelu -vaihtoehto NVDA-valikon Työkalut-alavalikosta.
+Toiminto otetaan käyttöön valitsemalla Puheentarkastelu-vaihtoehto NVDA-valikon Työkalut-alavalikosta.
 Toiminto poistetaan käytöstä poistamalla vaihtoehdon valinta.
 
-Puheentarkasteluikkunassa on  "Näytä Puheen tarkastelu käynnistettäessä" -valintaruutu.
-Mikäli se on valittuna, Puheen tarkastelu avataan, kun NVDA käynnistetään.
+Puheentarkasteluikkunassa on  "Näytä puheentarkastelu käynnistettäessä" -valintaruutu.
+Mikäli se on valittuna, puheentarkastelu avataan, kun NVDA käynnistetään.
 Ikkuna yrittää aina avautua uudelleen samoilla mitoilla ja samassa sijainnissa, mitkä sillä olivat sitä suljettaessa.
 
-Kun Puheen tarkastelu -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyttääkseen uusimman puhutun tekstin.
+Kun puheentarkastelutoiminto on käytössä, sen ikkuna päivittyy ajoittain näyttääkseen uusimman puhutun tekstin.
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
 
-Ota Puheen tarkastelu -toiminto käyttöön mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
+Ota puheentarkastelutoiminto käyttöön mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
 
 ++ Lisäosien hallinta ++
 Lisäosien hallinnalla, johon pääsee NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voi asentaa, poistaa, ottaa käyttöön sekä poistaa käytöstä NVDA:n lisäosapaketteja.
@@ -1713,7 +1715,7 @@ Jokaisesta lisäosasta näytetään nimi, tila, versio sekä tekijä, ja lisäti
 Jos valitulle lisäosalle on saatavana ohje, voit avata sen painamalla Ohje-painiketta.
 
 Verkossa saatavilla olevia lisäosia on mahdollista selata ja ladata painamalla Hae lisäosia -painiketta.
-Tämä painike avaa [NVDA:n lisäosasivun http://addons.nvda-project.org/].
+Tämä painike avaa [NVDA:n lisäosasivun. https://addons.nvda-project.org/]
 Jos NVDA on asennettu ja käynnissä, lisäosan asennus voidaan aloittaa avaamalla se suoraan selaimesta, kuten alla on kuvailtu.
 Muussa tapauksessa tallenna lisäosa ja seuraa alla olevia ohjeita.
 
@@ -1748,14 +1750,14 @@ Voit avata Lisäosien hallinnan mistä tahansa määrittämällä sille oman sy�
 
 ++ Python-konsoli ++
 NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alavalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
-Katso lisätietoja kehittäjän oppaasta [NVDA:n verkkosivuston Development-osiosta http://community.nvda-project.org/wiki/Development].
+Katso lisätietoja [NVDA-kehittäjän oppaasta. https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]
 
 ++ Lataa liitännäiset uudelleen ++
 Tällä voidaan ladata uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n uudelleenkäynnistystä, mistä voi olla hyötyä kehittäjille.
 
 + Tuetut puhesyntetisaattorit +[SupportedSpeechSynths]
 Tässä kappaleessa on tietoja NVDA:n tukemista puhesyntetisaattoreista.
-Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on mahdollista ostaa ja ladata NVDA:lla käytettäväksi, on osoitteessa [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on mahdollista ostaa ja ladata NVDA:lla käytettäväksi, on [lisä-äänien sivulla. https://github.com/nvaccess/nvda/wiki/ExtraVoices]
 
 ++ eSpeak NG ++
 [ESpeak NG https://github.com/espeak-ng/espeak-ng] -puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
@@ -1925,29 +1927,37 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ Handy Tech ++
-NVDA tukee kaikkia [Handy Techin http://www.handytech.de/] pistenäyttöjä sekä USB-liitännällä että bluetooth-yhteydellä.
+NVDA tukee useimpia [Handy Techin http://www.handytech.de/] pistenäyttöjä, joissa on USB/sarjaporttiliitäntä tai bluetooth-yhteys.
 Vanhempia USB-malleja varten tietokoneelle on asennettava Handy Techin USB-ajurit.
 
-Pistesyöttöä ei vielä tueta.
-
-Seuraavassa on lueteltu näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Seuraavia näyttöjä ei tueta oletusarvoisesti, mutta niitä voidaan käyttää [Handy Techin yleisajurin https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] ja NVDA-lisäosan avulla:
+- Braillino
+- Bookworm
+- Modular-mallit, joissa on laiteohjelmiston versio 1.13 tai vanhempi. Huomaa, että näiden näyttöjen laiteohjelmisto on mahdollista päivittää.
+-
+Seuraavassa on lueteltu Handy Tech -pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä taaksepäin | vasen, ylös |
-| Vieritä eteenpäin | oikea, alas |
+| Vieritä taaksepäin | vasen, ylös, b3 |
+| Vieritä eteenpäin | oikea, alas, b6 |
 | Siirrä edelliselle riville | b4 |
 | Siirrä seuraavalle riville | b5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
-| Shift+Sarkain-näppäinyhdistelmä | esc |
+| Shift+Sarkain-näppäinyhdistelmä | esc, vasen kolmitoimintonäppäin ylös+alas |
 | Alt-näppäin | b2+b4+b5 |
 | Esc-näppäin | b4+b6 |
-| Sarkain-näppäin | enter |
-| Enter-näppäin | esc+enter |
-| Nuoli ylös -näppäin | vasen väli |
-| Nuoli alas -näppäin | oikea välilyönti |
+| Sarkain-näppäin | enter, oikea kolmitoimintonäppäin ylös+alas |
+| Enter-näppäin | esc+enter, vasen+oikea kolmitoimintonäppäin ylös+alas, ohjaussauvatoiminto |
+| Nuoli ylös -näppäin | ohjaussauva ylös |
+| Nuoli alas -näppäin | ohjaussauva alas |
+| Nuoli vasemmalle -näppäin | ohjaussauva vasemmalle |
+| Nuoli oikealle -näppäin | ohjaussauva oikealle |
 | NVDA-valikko | b2+b4+b5+b6 |
-| Handy Techin asetusten määritys | b4+b8 |
+| Vaihda Piste näyttö seuraa -asetusta | b2 |
+| Vaihda pistekohdistinta | b1 |
+| Vaihda kohdistuskontekstin näyttämisen asetusta | b7 |
+| Ota pistekirjoituksen syöttö käyttöön tai poista se käytöstä | väli+b1+b3+b4 (väli+iso b) |
 %kc:endInclude
 
 ++ MDV Lilli ++

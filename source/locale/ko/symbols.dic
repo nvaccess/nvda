@@ -21,11 +21,11 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	마침표	all	always
-! sentence ending	느낌표	all	always
-? sentence ending	물음표	all	always
+. sentence ending	쩜	most	always
+! sentence ending	느낌표	most	always
+? sentence ending	물음표	most	always
 ; phrase ending	세미콜론	most	always
-: phrase ending	콜런	most	always
+: phrase ending	콜론	most	always
 decimal point		none	always
 in-word '	tick	all	norep
 negative number	마이너스	none	norep
@@ -40,43 +40,43 @@ negative number	마이너스	none	norep
  	space	char	# no-break space
 
 # Standard punctuation/symbols
-!	느낌표	all
-"	따옴표	most
+!	느낌표	most
+"	쿼테이션	most
 \#	샵	some
-$	달러	all	norep
+$	달러	some	norep
 ￡	전각파운드	all	norep
 €	euro	all	norep
 ￠	쎈트	all	norep
 ￥	전각엔화표	all	norep
 ₹	루피	some	norep
 %	percent	some
-&	and	some
-'	어퍼스트로피	all
-(	괄호열기	most	always
-)	괄호닫기	most	always
+&	앤퍼센드	all
+'	어퍼스트로피	most
+(	괄호 열고	some	always
+)	괄호 닫고	some	always
 *	star	some
 +	plus	some
-,	콤마	all	always
--	대시	most
-.	점	some
+,	콤마	most	always
+-	대시	some
+.	쩜	most
 /	슬래시	some
-:	콜런	most	norep
-;	세미콜런	most
-<	less	some
->	greater	some
-=	등호	some
-?	물음표	all
+:	콜론	most	norep
+;	세미콜론	most
+<	레스 댄	some
+>	그레이터 댄	some
+=	이퀄	some
+?	물음표	most
 @	골뱅이	some
-[	대괄호열기	most
-]	대괄호닫기	most
-\\	백슬레시	most
-^	케럿	most
-_	언더바	most
-`	graav	most
-{	중괄호열기	most
-}	중괄호닫기	most
-|	bar	most
-~	물결표	most
+[	대괄호 열고	all
+]	대괄호 닫고	all
+\\	백슬래시	most
+^	캐럿	some
+_	언더바	all
+`	그레이브	all
+{	중괄호 열고	all
+}	중괄호 닫고	all
+|	버티컬 바	all
+~	물결	all
 
 # Other characters
 •	bullet	some

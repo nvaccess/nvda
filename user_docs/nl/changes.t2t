@@ -4,9 +4,12 @@ Wat is Nieuw in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 =
+Hoogtepunten in deze versie zijn sterk verbeterde ondersteuning voor het web zoals standaard bladermodus voor dialoogvensters binnen websites, beter melden van labels van gegroepeerde velden in bladermodus, ondersteuning voor nieuwe Windows 10 technologieën zoals Windows Defender Application Guard en Windows 10 met ARM64, en automatisch melden van schermstand en batterijstatus.  
+Let op: deze versie van NVDA ondersteunt Windows XP en Windows Vista niet meer. De minimumvereiste voor NVDA is nu windows 7 met Service Pack 1.
+
 
 == Nieuwe Functies ==
-- In bladermodus is het nu mogelijk om  voorbij/naar het begin van een oriëntatiepunt te springen met behulp van de commando's ga voorbij/naar het begin van een containerelement (comma/shift+comma). (#5482)
+- In bladermodus is het nu mogelijk om  voorbij/naar het begin van een oriëntatiepunt te springen met behulp van de commando's ga voorbij/naar het begin van een containerelement (komma/shift+komma). (#5482)
 - In Firefox, Chrome en Internet Explorer omvat snelnavigatie naar invoer- en formuliervelden nu ook invoervelden met opmaakondersteuning (D.w.z. contentEditable). (#5534)
 - In web browsers kan de elementenlijst nu formuliervelden en knoppen weergeven. (#588)
 - Initiële ondersteuning voor Windows 10 op ARM64. (#7508)
@@ -16,6 +19,10 @@ Wat is Nieuw in NVDA
 - Ondersteuning toegevoegd voor nieuwe commandoregelopties om een draagbare versie van NVDA aan te maken. (#6329)
 - Ondersteuning voor Microsoft Edge toegevoegd wanneer dit draait binnen Windows Defender Application Guard (#7600)
 - Wanneer NVDA gebruikt wordt op een laptop of tablet wordt het vanaf nu gemeld als er een adapter wordt aangesloten/losgekoppeld en als de schermstand wijzigt. (#4574, #4612)
+- Nieuwe taal: Macedonisch.
+- Nieuwe brailletabellen: Croatisch graad 1, Viëtnamees graad 1. (#7518, #7565)
+- Ondersteuning toegevoegd voor de Handy Tech Actilino brailleleesregel. (#7590)
+- Braille-invoer is nu ondersteund voor leesregels van Handy Tech. (#7590)
 
 
 == Veranderingen ==
