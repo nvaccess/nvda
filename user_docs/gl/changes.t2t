@@ -1,9 +1,12 @@
-Que hai de Novo no NVDA
+﻿Que hai de Novo no NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 =
+O subliñable desta versión inclúe moitas correcións e melloras para o soporte web incluindo o modo exploración para diálogos web por defecto, mellor anunciado das etiquetas dos grupos de campos no modo exploración, o soporte para tecnoloxías novas de Windows 10 como a aplicación Windows Defender Guard e Windows 10 en ARM64, e o anunciado automático da orientación da pantalla e o estado da batería.  
+Por favor ten en conta que esta versión do NVDA xa non soporta o Windows XP ou o Windows Vista. Os requisitos mínimos para o NVDA agora son windows 7 co Service Pack 1.
+
 
 == Novas Características ==
 - No modo exploración, agora é posible saltar ao comezo dos pontos de referencia usando as ordes saltar ao final ou ao comezo do contedor (coma/shift+coma). (#5482)
@@ -16,6 +19,10 @@ Que hai de Novo no NVDA
 - Engadido o soporte para novos parámetros de liña de ordes para crear unha copia portable do NVDA. (#6329)
 - Soporte para o Microsoft Edge executándose dentro do Windows Defender Application Guard (#7600)
 - Se se executa nun portátil ou nunha tablet, o NVDA agora anunciará cando se conecte/desconecte un cargador e cando a orientación da pantalla cambie. (#4574, #4612)
+- Lingua nova: Macedonio.
+- Novas táboas de transcripción braille: Croata grao 1, Vietnamita grao 1. (#7518, #7565)
+- Engadiuse o soporte para a pantalla braille Actilino de Handy Tech. (#7590)
+- Agora sopórtase a entrada braille para as pantallas braille Handy Tech. (#7590)
 
 
 == Cambios ==
@@ -24,10 +31,15 @@ Que hai de Novo no NVDA
 - No modo exploración, ao se tabular ou se mover coas ordes de teclas de navegación rápida xa non anuncia saíndo de contedores coma listas e táboas, o que fai a navegación máis eficaz. (#2591)
 - En modo exploración para Firefox e Chrome, agora anúncianse os nomes de grupos de campos de formulario ao se mover dentro deles coa navegación rápida ou cando se tabula. (#3321)
 - No modo exploración, as ordes de navegación rápida para obxectos integrados (o e shift+o) agora inclúen elementos de audio e vídeo así coma elementos cos roles aria application e dialog. (#7239)
-- Actualizouse o Espeak-ng (a commit 01919cd48a566cdf34347784b2e74554b376e900), esto resolve algúns problemas coa produción de versións. (#7385)
+- Actualizouse o Espeak-ng 1.49.2),, esto resolve algúns problemas coa produción de versións. (#7385)
 - Na terceira activación da orde 'ler bara de estado', o seu contido cópiase ao portapapeis. (#1785)
 - Ao se asignar xestos a teclas nunha pantalla Baum, podes limitalas ao modelo da pantalla braille en uso (ex.: VarioUltra ou Pronto). (#7517)
 - A tecla rápida para o campo filtrar na listaxe de elementos en modo exploración cambiouse de alt+f a alt+e. (#7569)
+- Engadiuse unha orde para desvincular ao modo exploración para conmutar a inclusión de táboas de deseño ao vó. Podes atopar esta orde na categoría Modo exploración do diálogo Xestos de entrada. (#7634)
+- Actualizado o transcriptor braille a 3.3.0. (#7565)
+- A tecla rápida para o botón de opción Expresión regular no diálogo diccionario cambiouse de alt+r a alt+e. (#6782)
+- Os ficheiros dos diccionarios da fala agora versionáronse e movéronse cara o directorio 'speechDicts/voiceDicts.v1'. (#7592)
+- As modificacións dos ficheiros versionados (configuración do usuario, diccionarios da fala) xa non se gardan cando o NVDA se executa dende o lanzador. (#7688)
 
 
 == Corrección de Erros ==
@@ -42,6 +54,8 @@ Que hai de Novo no NVDA
 - Agora é posible aceder a contido matemático en Google Chrome nun sistema sen Mozilla Firefox instalado. (#7308)
 - O sistema operativo e outras aplicacións deberían seren máis estables directamente despois de instalar o NVDA antes de reiniciar, en comparación coas instalacións de versións anteriores do NVDA. (#7563)
 - Ao se usar unha orde de recoñecemento de contido (ex.: NVDA+r), agora o NVDA anuncia unha mensaxe de erro en lugar de non facer nada se o navegador de obxectos desapareceu. (#7567)
+- A funcionalidade desprazamento cara atrás arransouse para pantallas de freedom Scientific que conteñan un balancín esquerdo. (#7713)
+- As pantallas braille Braillino, Bookworm e Modular (co firmware vello) de Handy Tech xa non se soportan ao sacalas da caixa. Instala o controlador universal de Handy Tech e o complemento do NVDA para usar as pantallas. (#7590)
 
 
 == Cambios para Desenvolvedores ==
