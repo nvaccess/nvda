@@ -87,7 +87,7 @@ class Ht2HyperlinkGetter: public HyperlinkGetter {
 };
 
 /**
- * Create an appropriate HyperlinkGetterto retrieve hyperlinks
+ * Create an appropriate HyperlinkGetter to retrieve hyperlinks
  * (embedded objects) if they are supported.
  * IAccessibleHypertext2 will be used in preference to IAccessibleHypertext.
  * @param acc The accessible to use.
