@@ -998,43 +998,6 @@ class MSHTML(IAccessible):
 		except LookupError:
 			return None
 
-	def script_assignCustomLabel(self, gesture):
-		try:
-			obj=api.getFocusObject()
-			treeInterceptor=obj.treeInterceptor
-			if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
-				obj=treeInterceptor
-			try:
-				info=obj.makeTextInfo(textInfos.POSITION_CARET)
-			except (NotImplementedError, RuntimeError):
-				info=obj.makeTextInfo(textInfos.POSITION_FIRST)
-			browseObj=info.NVDAObjectAtStart
-		except:
-			browseObj=api.getFocusObject()
-			
-		linkUrl=""
-		imgSrc=""
-		id=""
-		name=""
-		customLabelKey=""
-		if (browseObj.HTMLNode.nodeName=="IMG"):
-			imgSrc=browseObj.HTMLAttributes['src']
-		elif (browseObj.HTMLNode.nodeName=="A"):
-			linkUrl=browseObj.HTMLAttributes['href']
-		else:
-			try:
-				name=browseObj.HTMLAttributes['name']
-				id=browseObj.HTMLAttributes['id']
-			except:
-				pass
-		customLabelKey=customLabels.generateCustomLabelKey(linkUrl,imgSrc,id,name)
-		filename=customLabels.getFilenameFromElementDomain(getattr(self.HTMLNode.document,'url',""))
-		customLabels.addLabel(filename,customLabelKey)
-		
-	__gestures = {
-		"kb:NVDA+control+tab": "assignCustomLabel",
-		}
-
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
 	"""

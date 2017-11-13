@@ -22,6 +22,9 @@ import aria
 import config
 import watchdog
 
+from customLabels import customLabels
+import treeInterceptorHandler
+
 FORMATSTATE_INSERTED=1
 FORMATSTATE_DELETED=2
 FORMATSTATE_MARKED=4
@@ -358,4 +361,44 @@ class MSHTML(VirtualBuffer):
 				return False
 		except COMError:
 			pass
-		return super(MSHTML, self).shouldPassThrough(obj, reason)	
+		return super(MSHTML, self).shouldPassThrough(obj, reason)
+	
+	def script_assignCustomLabel(self, gesture):
+	 	try:
+	 		obj=api.getFocusObject()
+	 		treeInterceptor=obj.treeInterceptor
+	 		if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
+	 			obj=treeInterceptor
+	 		try:
+	 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
+	 		except (NotImplementedError, RuntimeError):
+	 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
+	 		browseObj=info.NVDAObjectAtStart
+	 	except:
+	 		browseObj=api.getFocusObject()
+	 	docHandle,ID=self.getIdentifierFromNVDAObject(browseObj)
+	 	attrs=self.makeTextInfo(browseObj)._getControlFieldAttribs(docHandle,ID)
+	 	
+	 	linkUrl=""
+	 	imgSrc=""
+	 	id=""
+	 	name=""
+	 	customLabelKey=""
+	 	if (attrs['IHTMLDOMNode::nodeName']== "A" or attrs['role']== controlTypes.ROLE_LINK):
+	 		linkUrl=attrs['HTMLAttrib::href']
+	 	elif (attrs['IHTMLDOMNode::nodeName']== "IMG" or attrs['role']== controlTypes.ROLE_GRAPHIC):
+	 		imgSrc=attrs['HTMLAttrib::src']
+	 	elif (attrs['IHTMLDOMNode::nodeName']== "INPUT" or attrs['IHTMLDOMNode::nodeName']== "SELECT" or attrs['IHTMLDOMNode::nodeName']== "TEXTAREA" or attrs['role']== controlTypes.ROLE_CHECKBOX or attrs['role']== controlTypes.ROLE_RADIOBUTTON or attrs['role']== controlTypes.ROLE_EDITABLETEXT or attrs['role']== controlTypes.ROLE_BUTTON or attrs['role']== controlTypes.ROLE_COMBOBOX):
+	 		try:
+	 			id=attrs['HTMLAttrib::id']
+	 			name=attrs['HTMLAttrib::name']
+	 		except:
+	 			pass
+	 	customLabelKey=customLabels.generateCustomLabelKey(linkUrl,imgSrc,id,name)
+	 	filename=customLabels.getFilenameFromElementDomain(self._get_documentConstantIdentifier())
+  		customLabels.addLabel(filename,customLabelKey,self,browseObj)
+  	script_assignCustomLabel.ignoreTreeInterceptorPassThrough=True
+	 
+	__gestures = {
+	 	"kb:NVDA+control+tab": "assignCustomLabel",
+	 	}	

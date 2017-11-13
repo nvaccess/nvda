@@ -317,7 +317,7 @@ class Gecko_ia2(VirtualBuffer):
 				pass
 		customLabelKey=customLabels.generateCustomLabelKey(linkUrl,imgSrc,id,name)
 		filename=customLabels.getFilenameFromElementDomain(self._get_documentConstantIdentifier())
- 		customLabels.addLabel(filename,customLabelKey)
+ 		customLabels.addLabel(filename,customLabelKey,self,browseObj)
 	script_assignCustomLabel.ignoreTreeInterceptorPassThrough=True
 	
 	__gestures = {

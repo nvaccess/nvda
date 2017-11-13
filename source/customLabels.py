@@ -7,11 +7,14 @@ import treeInterceptorHandler
 import configobj
 import api
 from logHandler import log
+import virtualBuffers
+
+import eventHandler
 
 class customLabels():
         
     @classmethod
-    def addLabel(cls,filename,customLabelKey):
+    def addLabel(cls,filename,customLabelKey,vBuffer,currentObj):
         if not os.path.exists(os.path.join(globalVars.appArgs.configPath, "webLabels")):
             os.makedirs(os.path.join(globalVars.appArgs.configPath, "webLabels"))
         config = configobj.ConfigObj(os.path.join(globalVars.appArgs.configPath, "webLabels\%s" % filename))
@@ -30,6 +33,9 @@ class customLabels():
                 if result == wx.ID_OK:
                     config[customLabelKey] = unicode(d.Value)
                     config.write()
+                    vBuffer.unloadBuffer()
+                    vBuffer.loadBuffer()
+                    eventHandler.executeEvent('gainFocus',currentObj)
             gui.runScriptModalDialog(d, callback)
         
     @classmethod
