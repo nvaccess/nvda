@@ -155,12 +155,19 @@ env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspat
 
 #Compile all dictionaries
 missingDicts=['zhy', ] #'mt','tn','tt']
+#Excluded Emoji files for some languages.
+excludeEmojiFileFor=[
+	'ta', # #7740 the ள் symbol causes a problem in espeak if emoji for ta is used.
+	]
 dictSourcePath=espeakRepo.Dir('dictsource').abspath
 for f in env.Glob(os.path.join(dictSourcePath,'*_rules')):
 	lang=f.name.split('_')[0]
 	if lang in missingDicts: continue
 	dictFileName = lang+'_dict'
 	dictFile=env.Command(espeakRepo.Dir('espeak-ng-data').File(dictFileName),f,espeak_compileDict_buildAction)
+	emojiFileName = os.path.join(espeakRepo.abspath,'dictsource',lang+'_emoji')
+	if lang in excludeEmojiFileFor and os.path.exists(emojiFileName):
+		os.remove(emojiFileName)
 	dictDeps=env.Glob(os.path.join(espeakRepo.abspath,'dictsource',lang+'_*'))
 	dictDeps.remove(f)
 	env.Depends(dictFile,dictDeps)
