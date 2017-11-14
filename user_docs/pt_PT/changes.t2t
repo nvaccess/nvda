@@ -1,9 +1,77 @@
-Novidades do NVDA
+﻿Novidades do NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
-Tradução de Rui Fontes
+Traduzido pela Equipa portuguesa do NVDA
+
+= 2017.4 =
+Os destaques desta versão incluem:
+- Muitas correções e melhorias no suporte Web, incluindo modo de navegação, por padrão, , para os diálogos web e melhor anúncio das etiquetas de grupo de campos, no modo de navegação;
+- Suporte para as novas tecnologias do Windows 10, como o Windows Defender Application Guard e Windows 10 em ARM64;
+- Anúncio automático da orientação do ecrã e estado da bateria.
+- Atenção, esta versão do NVDA já não dá suporte ao Windows XP nem ao Windows Vista! O requisito mínimo para esta versão do NVDA é agora o Windows 7, Service Pack 1.
+
+
+== Novas Funcionalidades ==
+- Em modo de navegação, já é possível saltar para o início de uma região usando o comando (vírgula/shift+vírgula) para saltar para o início ou fim de um contentor. (#5482)
+- No Firefox, Chrome e Internet Explorer, a navegação por caractere para campos de formulário e de edição passa a incluir os campos editáveis de Rich Text (I.e. contentEditable). (#5534)
+- Nos navegadores web a Lista de Elementos já pode listar os campos de formulários e botões. (#588)
+- Suporte inicial para o Windows 10 em ARM64. (#7508)
+- Suporte inicial para leitura e navegação interactiva de conteúdo matemático nos livros Kindle com conteúdo matemático acessível. (#7536)
+- Adicionado suporte para o leitor de E-Books Azardi. (#5848)
+- Informação da versão dos Extras é agora anunciada ao actualizá-los. (#5324)
+- Adicionado novo parâmetro à linha de comandos para criar uma cópia portátil do NVDA. (#6329)
+- Suporte para o Microsoft Edge em execução através do Windows Defender Application Guard no Windows 10 Fall Creators Update. (#7600)
+- Quando executado num computador portátil ou tablet, o NVDA já anuncia quando o carregador é ligado ou desligado, incluindo o nível da bateria, e quando a orientação do ecrã muda. (#4574, #4612)
+- Novo idioma: Macedónio.
+- Novas tabelas Braille: Croata grau 1 e Vietnamês grau 1. (#7518, #7565)
+- Adicionado suporte para a linha Braille Actilino da  HelpTech, antiga HandyTech. (#7590)
+- Já é suportada a introdução de texto pelas linhas Braille da HelpTech, antiga HandyTech. (#7590)
+
+
+== Alterações ==
+- O sistema operativo mínimo suportado pelo NVDA passa a ser o Windows 7 Service Pack 1, ou Windows Server 2008 R2 Service Pack 1. (#7546)
+- Os diálogos Web no Firefox e Chrome usam automáticamente o Modo de navegação, excepto se dentro duma aplicação web. (#4493)
+- Em Modo de navegação, navegando com Tab ou por caracteres já não é anunciada a saída de listas ou tabelas, tornando assim a navegação mais fluída. (#2591)
+- Em Modo de navegação no Firefox e Chrome, o nome do grupo de campos de formulários já é anunciado quando são atingidos pela navegação por caracteres ou com Tab. (#3321)
+- Em Modo de navegação, usando a navegação por caracteres, o comando para objectos, (o e shift+o) passa a incluir os elementos de áudio e de vídeo e elementos com aria roles application e dialog. (#7239)
+- O Espeak-ng foi actualizado para a versão 1.49.2, resolvendo alguns problemas ao produzir novas versões. (#7385, #7583)
+- Pressionando três vezes o comando para ler a barra de estado, a informação é copiada para a área de transferência. (#1785)
+- Ao associar comandos a teclas duma linha Braille da Baum pode limitá-los ao modelo específico em uso, (p.e. VarioUltra ou Pronto). (#7517)
+- O atalho para a opção "Filtrar por:" na Lista de elementos no Modo de navegação mudou de alt+F para alt+P. (#7569)
+- Um comando, sem teclas associadas, foi adicionado ao Modo de navegação, para alternar rapidamente a inclusão das tabelas de formatação. Pode associar teclas a este comando no diálogo Definir comandos, grup Modo de navegação. (#7634)
+- Actualizado o liblouis braille translator to 3.3.0. (#7565)
+-  Os ficheiros dos Dicionários de voz passam a ser versionados e foram movidos para a pasta 'speechDicts/voiceDicts.v1'. (#7592)
+- As alterações aos ficheiros versionados (configurações do utilizador e  dicionários de voz), já não são guardadas se estiver a executar o NVDA a partir do executável. (#7688)
+- As linhas Braille Braillino, Bookworm e Modular, com firmware) antigo, da HelpTech (ex HandyTech) já não são suportadas automaticamente, sendo necessário instalar o Driver Braille Universal e o Extra do NVDA da HandyTech, para as usar. (#7590)
+
+
+== Correções ==
+- Os links passam a ser indicados em Braille em aplicações como o Microsoft Word. (#6780)
+- O NVDA já não se torna notoriamente lento quando muitos separadores estão abertos nos navegadores Firefox ou Chrome. (#3138)
+- Nas linhas Braille MDV Lilli os cursores de toque já não movem o cursor para a célula seguinte. (#7469)
+- No Internet Explorer e noutros documentos MSHTML, o atributo HTML5 necessário para indicar o estado de um campo de formulário passa a ser suportado. (#7321)
+- O Braille passa a ser actualizado quando se está a escrever caracteres árabes num documento do WordPad alinhado à esquerda. (#511)
+- As etiquetas acessíveis para controlos no Mozilla Firefox passam a ser anunciadas mais rapidamente em Modo de navegação quando a etiqueta não aparece como conteúdo. (#4773)
+- No Windows 10 Creators Update, o NVDA volta a poder aceder ao Firefox após ter sido reiniciado. (#7269)
+- Ao reiniciar o NVDA com o Mozilla Firefox em primeiro plano, o Modo de navegação volta a estar disponível, embora talvez necessite de fazer alt+tab e voltar ao Firefox. (#5758)
+- Já é possível aceder ao conteúdo matemático no Google Chrome num sistema sem o Mozilla Firefox instalado. (#7308)
+- O Sistema operativo e outras aplicações devem ficar mais estáveis, imediatamente após a instalação do NVDA e antes de reiniciar o sistema, em comparação com a instalação de versões anteriores do NVDA. (#7563)
+- Ao usar um comando de reconhecimento de conteúdo, como NVDA+r), o NVDA anunciará uma mensagem de erro, em vez de ficar em silêncio, se o objecto de navegação tiver desaparecido. (#7567)
+- A funcionalidade de deslocamento da lina para trás  foi corrigida para as linhas Braille da Freedom Scientific que possuem uma left bumper bar. (#7713)
+
+
+== Alterações para desenvolvedores ==
+- "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
+- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
+- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
+- Braille display gestures that emulate system keyboard key modifiers (such as control and alt) can now be combined with other emulated system keyboard keys without explicit definition. (#6213) 
+ - For example, if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
+- The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
+ - See the baum driver as an example for this new functionality.
+- NVDA is now compiled with Visual Studio 2017 and the Windows 10 SDK. (#7568)
+
 
 = 2017.3 =
 Os destaques desta versão são:
@@ -11,6 +79,7 @@ Os destaques desta versão são:
 - Suporte para as novas vozes Windows OneCore disponíveis no Windows 10;
 - Suporte nativo para o OCR do Windows 10;
 - Muitas melhorias significativas no que respeita ao Braille e à Web.
+-
 
 == Novas Funcionalidades ==
 - Adicionado  um parâmetro nas definições Braille para permitir mostrar as mensagens indefinidamente. (#6669)
@@ -159,7 +228,7 @@ Os destaques desta versão são:
  - `i18nName` for synth settings, `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
  - `config.save`. (#6846)
-- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- The list of completions in the autocomplete context menu of the Python Console no longer shows  any object path leading up to the final symbol being completed. (#7023)
 - There is now a unit testing framework for NVDA. (#7026)
  - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
  - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.

@@ -25,7 +25,7 @@ Belangrijke functies zijn:
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
 - Kan via usb-stick of ander draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
-- In 50 talen beschikbaar
+- In 51 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
 - Werken met beveiligde omgeving van Windows (inloggen e.d.) is mogelijk
 - Ondersteuning van gangbare toegankelijkheidsinterfaces zoals Microsoft Active Accessibility, Java Access Bridge, Iaccessible 2 en UI Automation (UI Automation alleen op Windows 7 of hoger)
@@ -34,7 +34,7 @@ Belangrijke functies zijn:
 
 ++ Internationalisering ++
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
-Behalve de Engelse versie van NVDA is het programma beschikbaar in 50 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Birmees, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Koreaans, Pharsi, Pools, Portugees, Punjabi, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, Viëtnamees, etc. 
+Behalve de Engelse versie van NVDA is het programma beschikbaar in nog 51 andere talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Birmees, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Koreaans, Macedonisch, Pharsi, Pools, Portugees, Punjabi, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, Viëtnamees, etc. 
 
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
@@ -1412,7 +1412,10 @@ Met deze optie kunt u bepalen hoe NVDA moet omgaan met tabellen die uitsluitend 
 Wanneer Layout-tabellen opnemen is ingeschakeld, zal NVDA zulke tabellen als normale tabellen beschouwen. Hoe ze gemeld worden is afhankelijk van de [opmaakinstellingen #DocumentFormattingSettings] en met sneltoetscommando's kan men er naar toe navigeren.
 Wanneer deze optie niet ingeschakeld is, worden de tabellen niet opgenomen en men kan  er niet naar toe navigeren.
 De inhoud wordt echter wel als normale tekst weergegeven.
+
 Deze optie staat standaard uit.
+
+Om het opnemen van layout tabellenin- en uit te kunnen schakelen vanuit elke willekeurige plaats maakt u met behulp  van het [dialoogvenster Invoerhandelingen #InputGestures] een daartoe aangepaste handeling aan.
 
 ==== Het melden van velden zoals links en koppen instellen====
 Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en tabellen.
@@ -1712,8 +1715,8 @@ In het dialoogvenster "Add-ons Beheren" vindt u een lijst met alle geïnstalleer
 Van elke Add-on wordt de pakketnaam, status, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL. Als er voor de geselecteerde Add-on hulpinformatie beschikbaar is, kunt u deze raadplegen door op de knop  "Add-on Help" te drukken.
 
 U kunt op Internet naar beschikbare Add-ons bladeren en deze desgewenst installeren door op de knop "Add-ons toevoegen" te klikken.
-U komt nu op de [NVDA Add-ons pagina http://addons.nvda-project.org/]. 
-Als NVDA op uw computer is geïnstalleerd,en gestart is, kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
+U komt dan op de [NVDA Add-ons pagina https://addons.nvda-project.org/]. 
+-Als NVDA op uw computer is geïnstalleerd,en gestart is, kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
 Werkt u met een draagbare kopie van NVDA, dan slaat u de Add-on op en volgt u onderstaande instructies.
 
 Om een eerder verkregen Add-on te installeren drukt u op de knop "Installeren".
@@ -1747,14 +1750,14 @@ Als u Add-Ons Beheren altijd en overal wilt kunnen oproepen, kunt u daarvoor aan
 
 ++ Python Console ++
 Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
-Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) http://community.nvda-project.org/wiki/Development].].
+Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]].].
 
 ++ Plugins herladen ++
 Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen zonder dat NVDA wordt herstart. Dit is handig voor ontwikkelaars.
 
 + Ondersteunde spraaksynthesizers +[SupportedSpeechSynths]
 In deze rubriek vindt u informatie over spraaksynthesizers die door NVDA worden ondersteund.
-Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder Extra Stemmen op [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 De [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
@@ -1926,29 +1929,37 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ Handy Tech Leesregels ++
-NVDA ondersteunt alle via usb-gekoppelde of blutooth-verbondenleesregels van [Handy Tech http://www.handytech.de/].
-Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd. Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+NVDA ondersteunt de meeste  via usb-gekoppelde of blutooth-verbonden dan wel op de sereële poort aangesloten leesregels van [Handy Tech http://www.handytech.de/].
+Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd. -Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
-Braille-invoer wordt nog niet ondersteund.
+De volgende leesregels worden niet zonder meer ondersteund, maar ze kunnen wel gebruikt worden met behulp van het [universele stuurprogramma van [Handy Tech dat te vinden is op https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] en een NVDA add-on:
+- Braillino
+- Bookworm
+- Modulaire leesregels met firmware-versie 1.13 of lager. Please note that the firmware of this displays can be updated.
 
-Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
-(Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
+Bij gebruik van de Handy Tech leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
+(U kunt in de documentatie bij deze leesregels nalezen waar deze toetsen zich precies bevinden.)
 %kc:beginInclude
 || Naam | Toets |
-| Brailleregel achteruit scrollen | Links, omhoog |
-| Brailleregel vooruit scrollen | Rechts, omlaag |
+| Brailleregel achteruit scrollen | Links, omhoog, b3 |
+| Brailleregel vooruit scrollen | Rechts, omlaag, b6 |
 | Een regel naar boven  | B4 |
 | Een regel naar beneden | B5 |
 |  Naar braillecel springen | Routing |
-| Shift+Tabtoets | ESC |
+| Shift+Tabtoets | esc, links triple actietoets omhoog+omlaag |
 | Alt-Toets | B2+B4+B5 |
 | Escape-Toets | B4+B6 |
-| Tabtoets | Enter |
-| Enter-toets | ESC+Enter |
-| Pijltoets omhoog | Linker spatietoets |
-| Pijltoets omlaag | Rechter spatietoets |
+| Tabtoets | Enter, rechter triple actietoets omhoog+omlaag |
+| Enter-toets | esc+enter, linker+rechter triple actietoets omhoog+omlaag, joystickAction |
+| Pijltoets omhoog | joystickUp |
+| Pijltoets omlaag | joystickDown |
+| Pijltoets links | joystickLeft |
+| Pijltoets rechts | joystickRight |
 | NVDA-Menü | B2+B4+B5+B6 |
-| HandyTech-configuratie | B4+B8 |
+| braille-volgmodus in- of uitschakelen | b2 |
+| braillecursor in- of uitschakelen | b1 |
+| focuscontextweergave in- of uitschakelen | b7 |
+| brailleinvoer in- of uitschakelen | spatie+b1+b3+b4 (spatie+hoofdletter B) |
 %kc:endInclude
 
 ++ MDV Lilli ++

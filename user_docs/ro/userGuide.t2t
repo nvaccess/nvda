@@ -25,7 +25,7 @@ Trăsăturile importante includ:
 - Suport pentru multe afișaje actualizabile Braille, incluzând introducerea de braille pentru calculator pentru afișajele braille care au tastatură braille
 - Capacitatea de a rula exclusiv de pe un stick USB sau alte suporturi media portabile fără nevoia instalării
 - Interfață de instalare vorbită, ușor de folosit
-- Tradus în 50 de limbi
+- Tradus în 51 de limbi
 - Suport pentru sistemele de operare Windows moderne, incluzând atât variantele pe 32 cât și pe 64 biți
 - Capacitatea de a rula pe ecranul de autentificare în Windows și alte ecrane de siguranță
 - Suport pentru interfețe de control cunoscute cum ar fi Microsoft Active Accessibility, Java Access Bridge, IAccessible2 și UI Automation (UI Automation disponibil doar pentru Windows 7 sau mai nou)
@@ -34,7 +34,7 @@ Trăsăturile importante includ:
 
 ++ Internaționalizare ++
 Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, să aibă același acces la tehnologie.
-În afară de engleză, NVDA a fost tradus în 50 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, birmană, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindusă, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, kanareză, lituaniană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
+În afară de engleză, NVDA a fost tradus în 51 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, birmană, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindusă, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, kanareză, lituaniană, macedoneană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
 
 ++ Suport pentru sintetizator de voce ++
 În afară de furnizarea mesajelor și interfeței în mai multe limbi, NVDA mai poate permite utilizatorilor să citească texte în orice limbă, atâta timp cât au un sintetizator de voce care poate vorbi acea limbă.
@@ -1402,13 +1402,15 @@ Această casetă de bifat activează citirea automată a întregii pagini după 
 Opțiunea este activată implicit.
 
 ==== Include tabelele de aspect ====
-Acesată opțiune influențează modul cum tratează NVDA tabelele folosite doar pentru prezentare.
+Această opțiune influențează modul cum tratează NVDA tabelele folosite doar pentru prezentare.
 Când e activată, NVDA le va trata ca pe niște tabele normale, anunțându-le în funcție de [setările formatării documentului #FormatareDocument] și le va localiza cu comenzi de navigare rapidă.
 Când este dezactivată, nu vor fi anunțate și nici descoperite cu navigarea rapidă.
 Cu toate acestea, conținutul tabelelor va fi inclus în continuare ca text normal.
 Opțiunea este dezactivată implicit.
-
-==== Configurarea anunțării câmpurilor de tipul legăturilor sau rubricilor ====
+ 
++Pentru a comuta la includerea tabelelor de aspect de oriunde, vă rugăm să atribuiți un gest personalizat folosind [dialogul gesturilor de intrare #GesturiIntrare].
++
+ ==== Configurarea anunțării câmpurilor de tipul legăturilor sau rubricilor ====
 Vă rugăm citiți opțiunea din [fereastra de dialog pentru setările formatării documentului #FormatareDocument] pentru a configura câmpurile anunțate în timpul navigării, precum legături, rubrici sau tabele.
 
 ==== Mod formular automat pentru schimbările de focalizare ====
@@ -1709,7 +1711,7 @@ Sunt afișate un nume pentru pachet, stare, versiune și autor pentru fiecare su
 Dacă pentru suplimentul selectat este disponibilă asistența, o puteți accesa apăsând butonul „Ajutorul suplimentului”.
 
 Pentru a alege și descărca suplimente disponibile online, apăsați butonul „Obținere suplimente...”.
-Butonul deschide [pagina NVDA cu suplimente http://addons.nvda-project.org/].
+Butonul deschide [pagina NVDA cu suplimente https://addons.nvda-project.org/].
 Dacă NVDA este instalat și rulează pe sistemul dumneavoastră, puteți deschide suplimentul direct din Navigator pentru a porni procesul de instalare descris mai jos.
 Altfel, salvați pachetul cu suplimentul și urmați instrucțiunile de mai jos.
 
@@ -1744,14 +1746,14 @@ Pentru a accesa Managerul de suplimente de oriunde, trebuie să-i atribuiți un 
 
 ++ Consola Python ++
 Consola Python NVDA, aflată în meniul „Instrumente”, este un instrument pentru dezvoltare folositor pentru depanare, inspecția generală a elementelor interne ale NVDA sau inspecția ierarhiei disponibilității unei aplicații.
-Pentru mai multe informații, vă rugăm citiți Ghidul Dezvoltatorului disponibil în [Secțiunea pentru dezvoltare din site-ul web al NVDA http://community.nvda-project.org/wiki/Development]
+Pentru mai multe informații, vă rugăm citiți [Ghidul Dezvoltatorului https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]
 
 ++ Reîncărcare extensii plugin ++
 Această opțiune, odată activată, reîncarcă module de aplicație și extensii plugin globale fără repornirea NVDA, acțiune utilă pentru dezvoltatori.
 
 + Sintetizatoarele de vorbire compatibile +[SintetizatoareSuportate]
 Această secțiune conține informații despre sintetizatoarele de vorbire compatibile cu NVDA.
-Pentru o listă extinsă cu sintetizatoare gratuite și comerciale care pot fi achiziționate și descărcate pentru a fi folosite cu NVDA, accesați pagina [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Pentru o listă extinsă cu sintetizatoare gratuite și comerciale care pot fi achiziționate și descărcate pentru a fi folosite cu NVDA, accesați [pagina extravocilor https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 Sintetizatorul [eSpeak NG https://github.com/espeak-ng/espeak-ng] este integrat direct în NVDA și nu necesită instalarea unor drivere sau componente speciale.
@@ -1921,29 +1923,37 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ Afișajele Handy Tech ++
-NVDA suportă toate afișajele de la [Handy Tech http://www.handytech.de/] când sunt conectate prin USB sau bluetooth.
+NVDA suportă majoritatea afișajelor de la [Handy Tech http://www.handytech.de/] când sunt conectate prin USB sau bluetooth.
 Pentru afișajele USB mai vechi, veți avea nevoie să instalați în sistemul dv. driverele USB de la Handy Tech.
 
-Intrările Braille nu sunt încă suportate.
-
+Următoarele afișaje nu sunt suportate, dar pot fi utilizate prin [driver-ul universal Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] și prin suplimentul NVDA pentru el:
+- Braillino
+- Bookworm
+- Afișajele Modular cu versiunea firmware 1.13 sau mai veche. Vă rugăm să rețineți faptul că firmware-ul acestor afișaje poate fi actualizat.
+-
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
 %kc:beginInclude
 || Nume | Tastă |
-| Derulează afișajul braille înapoi | stânga, sus |
-| Derulează afișajul braille înainte | dreapta, jos |
+| Derulează afișajul braille înapoi | stânga, sus, b3|
+| Derulează afișajul braille înainte | dreapta, jos, b6|
 | Mută afișajul braille la rândul anterior | b4 |
 | Mută afișajul braille la rândul următor | b5 |
 | Mută la celula braille | routing |
-| tasta shift+tab | esc |
+| tasta shift+tab | esc, tasta acțiunii triple la stânga sus+jos |
 | tasta alt | b2+b4+b5 |
 | tasta escape | b4+b6 |
-| tasta tab | enter |
-| tasta enter | esc+enter |
-| tasta săgeată sus | spațiu stânga |
-| tasta săgeată jos | spațiu dreapta |
+| tasta tab | enter, tasta acțiunii triple la dreapta sus+jos |
+| tasta enter | esc+enter, tasta acțiunii triple la dreapta sus+jos, joystickAction|
+| tasta săgeată sus | joystickUp |
+| tasta săgeată jos | joystickDown |
+| tasta săgeată stânga | joystickLeft |
+| tasta săgeată dreapta | joystickRight |
 | meniul NVDA | b2+b4+b5+b6 |
-| Configurare Handy Tech | b4+b8 |
+| Comută la Braille legat la | b2 |
+| Comută la cursorul braille | b1 |
+| Comută la prezentarea contextului focalizării | b7 |
+| Comută la intrarea braille | spațiu+b1+b3+b4 (spațiu+capital B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
