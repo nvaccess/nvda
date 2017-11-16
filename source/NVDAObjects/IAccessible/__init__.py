@@ -392,7 +392,7 @@ the NVDAObject for IAccessible
 			clsList.insert(0, FocusableUnfocusableContainer)
 
 		if hasattr(self, "IAccessibleTextObject"):
-			if role==oleacc.ROLE_SYSTEM_TEXT or self.IA2States&IAccessibleHandler.IA2_STATE_EDITABLE:
+			if role==oleacc.ROLE_SYSTEM_TEXT or controlTypes.STATE_EDITABLE in self.states:
 				clsList.append(EditableTextWithAutoSelectDetection)
 
 		# Use window class name and role to search for a class match in our static map.
@@ -816,6 +816,9 @@ the NVDAObject for IAccessible
 			return states
 		IAccessible2States=self.IA2States
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
+		# Readonly should override editable
+		if controlTypes.STATE_READONLY in states:
+			states.discard(controlTypes.STATE_EDITABLE)
 		try:
 			IA2Attribs=self.IA2Attributes
 		except COMError:
