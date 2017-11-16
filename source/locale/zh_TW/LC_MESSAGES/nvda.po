@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:55-0700\n"
+"POT-Creation-Date: 2017-11-03 00:10+1000\n"
+"PO-Revision-Date: 2017-11-07 09:49+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.13\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -807,6 +807,11 @@ msgstr "克羅埃西亞文八點（電腦）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "克羅埃西亞文一級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "匈牙利文八點（電腦）"
 
@@ -1024,6 +1029,11 @@ msgstr "土耳其文一級"
 #. braille settings dialog.
 msgid "Unicode braille"
 msgstr "Unicode"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "越南文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1651,6 +1661,18 @@ msgstr "移到表格的右一欄"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "移到表格的左一欄"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "排版表格關"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "排版表格開"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "切換在瀏覽模式下讀出所有排版表格的開關"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -6948,12 +6970,21 @@ msgstr "點顯器捲動"
 msgid "line scroll"
 msgstr "單行捲動"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy tech 點顯器"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "顯示Handy Tech驅動程式設定視窗"
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "點字輸入啟用"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "解除「點字輸入」"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "切換點字輸入"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7132,8 +7163,8 @@ msgid "Change settings of document properties"
 msgstr "修改文件報讀的設定"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "Windows 10 光學字元辨識..."
+msgid "&Windows 10 OCR..."
+msgstr "Windows 10 光學字元辨識 (&W)..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8613,8 +8644,8 @@ msgid "Whole &word"
 msgstr "完整的單字 (&W)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "正規表達式(&R)"
+msgid "Regular &expression"
+msgstr "正規表達 (&E)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10320,3 +10351,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "顯示Handy Tech驅動程式設定視窗"

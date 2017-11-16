@@ -218,6 +218,8 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	}
 	//Retreave the object states, and if its invisible or offscreen ignore the event.
 	VARIANT varState;
+	// #7709: Ensure The VARIANT is initialized, as accState may try to clear it before setting it.
+	VariantInit(&varState);
 	pacc->get_accState(varChild,&varState);
 	VariantClear(&varChild);
 	if(varState.vt==VT_I4&&(varState.lVal&STATE_SYSTEM_INVISIBLE)) {

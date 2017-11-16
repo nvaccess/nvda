@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-02 17:11+1000\n"
-"PO-Revision-Date: 2017-11-02 22:39+0900\n"
+"POT-Creation-Date: 2017-11-03 00:10+1000\n"
+"PO-Revision-Date: 2017-11-07 11:00+0900\n"
 "Last-Translator: Dong Hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -32,11 +32,11 @@ msgstr "영어"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 msgid "Full shaped mode"
-msgstr "전값 모드"
+msgstr "전각 모드"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
 msgid "Half shaped mode"
-msgstr "반값 모드"
+msgstr "반각 모드"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
@@ -139,12 +139,12 @@ msgstr "구역"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr "도킹 않함"
+msgstr "도킹 안 함"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "음성 및 소리 출력시 도킹"
+msgstr "음성 및 소리 출력 시 도킹"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -804,9 +804,8 @@ msgstr "크로아티아어 8점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Croatian grade 1"
-msgstr "라트비아어 1종"
+msgstr "크로아티아어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1030,9 +1029,8 @@ msgstr "Unicode 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Vietnamese grade 1"
-msgstr "아삼어 1종"
+msgstr "베트남어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1055,9 +1053,8 @@ msgid "Browse mode"
 msgstr "브라우즈 모드"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
-#, fuzzy
 msgid "Unlabeled"
-msgstr "레이블"
+msgstr "레이블 지정 안 됨"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1582,9 +1579,7 @@ msgstr "유형"
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "Filt&er by:"
-msgstr ""
-"요소 이름 검색 (&F):\n"
-"요소 이름 검색 (&F)"
+msgstr "요소 이름 검색 (&E):"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1667,19 +1662,16 @@ msgid "moves to the previous table column"
 msgstr "테이블 내에서 이전 열로 이동합니다"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables off"
-msgstr "표 알림 해제"
+msgstr "레이아웃 테이블 알림 해제"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables on"
-msgstr "표 알림"
+msgstr "레이아웃 테이블 알림"
 
 #. Translators: Input help mode message for include layout tables command.
-#, fuzzy
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "표 알림을 토글합니다"
+msgstr "브라우즈 모드에서 레이아웃 테이블을 포함할지 여부를 토글합니다"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2711,7 +2703,7 @@ msgstr ""
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
-msgstr "환경파일 오류"
+msgstr "환경 설정 파일 오류"
 
 msgid ""
 "Your gesture map file contains errors.\n"
@@ -2755,7 +2747,7 @@ msgstr "찾기"
 
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
-msgstr "찾고자 하는 내용을 입력하세요. "
+msgstr "찾고자 하는 내용을 입력하세요"
 
 #. Translators: An option in find dialog to perform case-sensitive search.
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
@@ -2902,7 +2894,7 @@ msgid ""
 "using character descriptions."
 msgstr ""
 "한 번 누르면 커서가 위치한 줄을 읽습니다. 두 번 누르면 현재 줄을 글자별로 읽"
-"습니다. 세 번 누르면 각각의 글자를 음소 단위로 풀어 읽습니다"
+"습니다. 세 번 누르면 각각의 글자를 음소 단위로 풀어 읽습니다."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -3223,11 +3215,11 @@ msgstr "테이블 행 및 열의 머리말 알림을 토글합니다"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "현재 테이블 셀의 위치 알림 해제"
+msgstr "테이블 셀 위치 알림 해제"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "현재 테이블 셀의 위치 알림"
+msgstr "테이블 셀 위치 알림"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3437,7 +3429,7 @@ msgid ""
 "position of the caret inside it, if possible."
 msgstr ""
 "탐색 객체를 현재 포커스로 이동하고, 가능하다면 리뷰 커서를 그 속에 있는 캐럿"
-"의 위치로 이동합니다"
+"의 위치로 이동합니다."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3498,7 +3490,7 @@ msgstr "하위 객체 없음"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "탐색 객체의 첫 하위객체로 이동합니다"
+msgstr "탐색 객체의 첫 하위 객체로 이동합니다"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 msgid "Activate"
@@ -3653,7 +3645,7 @@ msgid ""
 msgstr ""
 "브라우즈 모드와 포커스 모드 사이를 전환합니다. 포커스 모드에서 키는 곧바로 응"
 "용 프로그램으로 전달되어 컨트롤과 직접 상호 작용할 수 있습니다. 브라우즈 모드"
-"에서는 커서, 빠른 탐색 키 등으로 문서를 탐색할 수 있습니다"
+"에서는 커서, 빠른 탐색 키 등으로 문서를 탐색할 수 있습니다."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3773,7 +3765,7 @@ msgstr "경고음과 음성 출력으로 진행률 알림"
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
-msgstr "진행률을 음성, 경고음, 음성과 경고음으로 알릴지 여부를 토글합니다."
+msgstr "진행률을 음성, 경고음, 음성과 경고음으로 알릴지 여부를 토글합니다"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -3791,7 +3783,7 @@ msgstr "도스 콘솔 창에 새 텍스트와 같은 자동 변경 내용 알림
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "캐럿 이동 시 리뷰커서 이동 않함"
+msgstr "캐럿 이동 시 리뷰커서 이동 안 함"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
@@ -4169,7 +4161,7 @@ msgstr "손가락을 다른 위치에 옮긴 경우 새 위치에 있는 객체�
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "NVDA 설정 프로필을 보여줍니다"
+msgstr "NVDA 환경 설정 프로필 대화상자를 표시합니다"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4207,7 +4199,7 @@ msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
-msgstr "NVDA 웹사이트 (&N)"
+msgstr "NVDA 웹 사이트 (&N)"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 msgid "Uninstall NVDA"
@@ -5731,7 +5723,7 @@ msgstr "들여쓰기 없음"
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
-msgstr "글자수: %d"
+msgstr "글자 수: %d"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
@@ -5922,7 +5914,7 @@ msgstr "내용 변경: %s됨"
 #. Translators: Reported when text is not revised.
 #, python-format
 msgid "no revised %s"
-msgstr "내용 변경: %s 않됩"
+msgstr "내용 변경: %s 안 됨"
 
 #. Translators: Reported when text is marked
 msgid "marked"
@@ -6044,19 +6036,19 @@ msgstr "첫 줄 들여쓰기 해제"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
-msgstr "세로 정렬(상단)"
+msgstr "세로 정렬 상단"
 
 #. Translators: Reported when text is vertically middle aligned.
 msgid "vertical align middle"
-msgstr "세로 정렬(중간)"
+msgstr "세로 정렬 중간"
 
 #. Translators: Reported when text is vertically bottom-aligned.
 msgid "vertical align bottom"
-msgstr "세로 정렬(하단)"
+msgstr "세로 정렬 하단"
 
 #. Translators: Reported when text is vertically aligned on the baseline.
 msgid "vertical align baseline"
-msgstr "세로 정렬(기본글꼴)"
+msgstr "세로 정렬 기본글꼴"
 
 #. Translators: Reported when text is vertically justified.
 msgid "vertical align justified"
@@ -6068,7 +6060,7 @@ msgstr "세로 골고루 정렬"
 
 #. Translators: Reported when text has reverted to default vertical alignment.
 msgid "vertical align default"
-msgstr "세로 정렬(기본)"
+msgstr "세로 정렬 기본"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -6253,7 +6245,7 @@ msgstr "NVDA 메시지"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
-msgstr "업데이트 확인중"
+msgstr "업데이트 확인 중"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
@@ -6261,7 +6253,7 @@ msgstr "업데이트를 확인하고 있습니다"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
-msgstr "업데이트 확인에 실패하였습니다. "
+msgstr "업데이트를 확인하는 중 오류가 발생했습니다."
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
@@ -6277,12 +6269,12 @@ msgstr "NVDA 업데이트"
 #. {version} will be replaced with the version; e.g. 2011.3.
 #, python-brace-format
 msgid "NVDA version {version} is available."
-msgstr "NVDA {version} 버전이 준비되어 있습니다. "
+msgstr "NVDA {version} 버전이 준비되어 있습니다."
 
 # Literally means, "no new update is availible."
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
-msgstr "새 업데이트가 없습니다. "
+msgstr "새 업데이트가 없습니다."
 
 #. Translators: The label of a button to download and install an NVDA update.
 msgid "Download and &install update"
@@ -6304,19 +6296,19 @@ msgstr "닫기 (&C)"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
-msgstr "업데이트를 다운로드하고 있습니다. "
+msgstr "업데이트 다운로드 중"
 
 #. Translators: The progress message indicating that a connection is being established.
 msgid "Connecting"
-msgstr "연결중"
+msgstr "연결 중"
 
 #. Translators: The progress message indicating that a download is in progress.
 msgid "Downloading"
-msgstr "다운로드중"
+msgstr "다운로드 중"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
-msgstr "업데이트 다운로드가 실패하였습니다. "
+msgstr "업데이트를 다운로드하는 중 오류가 발생했습니다."
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
@@ -6339,11 +6331,11 @@ msgid ""
 msgstr ""
 "우리는 NVDA의 기능향상을 지속하기 위해 여러분의 도움이 필요합니다.\n"
 "이 프로젝트는 주로 후원과 보조금에 의존하고 있습니다. 여러분은 후원을 통해 전"
-"업개발자들을 돕게 됩니다.\n"
+"업 개발자들을 돕게 됩니다.\n"
 "다운로드 받을 때마다 10달러씩이라도 후원해 주신다면, 우리는 이 프로젝트를 유"
 "지해나가는데 필요한 모든 비용을 충당할 수 있게 됩니다.\n"
 "모든 후원은 NVDA를 개발하는 비영리 단체인 NV Access에 송금됩니다.\n"
-"여러분의 지원에 감사드립니다."
+"여러분의 지원에 감사드립니다. 후원해 주세요"
 
 #. Translators: The title of the dialog requesting donations from users.
 msgid "Please Donate"
@@ -6357,7 +6349,7 @@ msgstr "후원(&D)"
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
 msgid "&Not now"
-msgstr "지금은 아니요 (&N)"
+msgstr "나중에 (&N)"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
@@ -6432,9 +6424,8 @@ msgid ""
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"객체가 차지하는 위치: 화면 좌측에서 {left:.1f} 퍼센트, 화면 상단에서 "
-"{top:.1f} 퍼센트; 길이: 화면의 {width:.1f} 퍼센트; 높이: 화면의 {height:.1f} "
-"퍼센트"
+"객체 위치: 화면 왼쪽에서 {left:.1f} 퍼센트, 화면 위에서 {top:.1f} 퍼센트; 너"
+"비: 화면의 {width:.1f} 퍼센트; 높이: 화면의 {height:.1f} 퍼센트"
 
 #. Translators: a message announcing a candidate's character and description.
 #, fuzzy, python-brace-format
@@ -6448,19 +6439,19 @@ msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
-msgstr "화면 탐색 객체를 다음 열로 이동합니다. "
+msgstr "탐색 객체를 다음 열로 이동합니다"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the previous column"
-msgstr "화면 탐색 객체를 이전 열로 이동합니다. "
+msgstr "탐색 객체를 이전 열로 이동합니다"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the next row"
-msgstr "포커스와 화면 탐색 객체를 다음 행으로 이동합니다. "
+msgstr "탐색 객체와 포커스를 다음 행으로 이동합니다"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "포커스와 화면 탐색 객체를 이전 행으로 이동합니다. "
+msgstr "탐색 객체와 포커스를 이전 행으로 이동합니다"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
@@ -6473,7 +6464,7 @@ msgstr "입력 구성"
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
-msgstr "후보자"
+msgstr "후보"
 
 msgid "Display"
 msgstr "Display"
@@ -6488,11 +6479,11 @@ msgstr "재생되는 트랙 없음"
 
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "만약 트랙이 재생되는 경우 현재 트랙의 남은 시간을 알려줍니다. "
+msgstr "트랙이 재생될 때 현재 트랙의 남은 시간을 알려줍니다"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
-msgstr "선택된 텍스트 또는 커서 위치 관련 옵션을 보여줍니다"
+msgstr "선택된 텍스트 혹은 커서가 위치한 텍스트에 관한 옵션을 표시합니다"
 
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
@@ -6529,7 +6520,7 @@ msgstr "메시지 없음"
 
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
-msgstr "최근 메시지 중 하나를 보여줍니다. "
+msgstr "최근 메시지 중 하나를 표시합니다"
 
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
@@ -6656,7 +6647,7 @@ msgstr "sent: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
-msgstr "아우틀룩 여는중..."
+msgstr "Outlook 여는 중..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -6689,7 +6680,7 @@ msgstr "번역가 주석 윈도우 찾을 수 없음"
 # Literally: report changes to character entry string and characters
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "번역가 주석이 ㅣㅇㅆ을시 주석을 알려줍니다"
+msgstr "번역가 주석이 있을 경우 주석을 알려줍니다"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -6704,7 +6695,7 @@ msgstr "주석 없음"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
-msgstr "만약 주석이 있을 경우 이를 읽어줍니다. "
+msgstr "주석 창에 주석이 있을 경우 주석을 알려줍니다"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
@@ -6932,8 +6923,8 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"특정 슬라이드 내용과 스피커 노트 읽기를 토글합니다. 이 기능은 NVDA를 이용한 "
-"특정 내용 읽기를 조절하며 스크린에 표시된 슬라이드 내용은 변경하지 않습니다."
+"발표자 노트 또는 실제 슬라이드 내용 사이를 토글합니다. 화면에 실제로 보여지"
+"는 것을 바꾸는 것이 아니라 사용자가 NVDA를 활용하여 읽는 내용입니다"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
@@ -6959,7 +6950,7 @@ msgstr "슬라이드 없음"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
-msgstr "파워포인트 여는중..."
+msgstr "파워포인트 여는 중..."
 
 #. Translators: The name of the NVDA command category for Skype specific commands.
 msgid "Skype"
@@ -7157,12 +7148,11 @@ msgstr "환경 파일 저장 실패 - 읽기 전용 파일 시스템일 수 있�
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
-"NVDA 설정 대화상자가 이미 열려 있습니다. 먼저 이전 설정 대화상자를 닫아주십시"
-"오."
+"NVDA 설정 대화상자가 이미 열려 있습니다. 먼저 설정 대화상자를 닫아주십시오."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
-msgstr "기본 음성 발음 사전 (&D)"
+msgstr "기본 발음 사전 (&D)"
 
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 #, python-format
@@ -7171,7 +7161,7 @@ msgstr "(%s) 보이스 발음 사전"
 
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 msgid "Temporary dictionary"
-msgstr "임시 음성 발음 사전"
+msgstr "임시 발음 사전"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -7189,14 +7179,14 @@ msgid "&Synthesizer..."
 msgstr "음성 엔진 (&S)..."
 
 msgid "Change the synthesizer to be used"
-msgstr "사용하고자 하는 음성 엔진을 선택합니다. "
+msgstr "사용하고자 하는 음성 엔진을 선택합니다"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
 msgstr "보이스 설정 (&V)..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "사용하고자 하는 음성, 속도, 높이 및 크기를 설정할 수 있습니다. "
+msgstr "사용하고자 하는 음성, 속도, 높이 및 크기를 설정할 수 있습니다"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
@@ -7209,21 +7199,21 @@ msgstr "키보드 설정 (&K)..."
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
-msgstr "키보드 배열, 입력 글자, 단어, 기능키  읽기를 설정합니다."
+msgstr "키보드 배열, 입력 글자, 단어, 기능키 읽기를 설정합니다"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
 msgstr "마우스 설정 (&M)..."
 
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr "마우스 형태 읽기 및 마우스가 있는 객체 읽기를 설정합니다. "
+msgstr "마우스 형태 읽기 및 마우스가 있는 객체 읽기를 설정합니다"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
 msgstr "리뷰 커서 (&C)..."
 
 msgid "Configure how and when the review cursor moves"
-msgstr "리뷰 커서 이동 방식 및 이동 시점을 설정합니다."
+msgstr "리뷰 커서 이동 방식 및 이동 시점을 설정합니다"
 
 # Literally means: Input Composition Output Settings
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
@@ -7234,7 +7224,7 @@ msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
 msgstr ""
-"특정 언어 글자 입력시 NVDA가 후보자 목록 및 입력 구성 요소를 어떻게 알릴지 설"
+"특정 언어 글자 입력 시 NVDA가 후보 목록 및 입력 구성 요소를 어떻게 알릴지 설"
 "정합니다"
 
 # Object Presentation may mean a different thing in Korean. The above
@@ -7242,24 +7232,24 @@ msgstr ""
 # announcing various objects such as tool tips and such.
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
-msgstr "화면 객체 표시 설정 (&O)..."
+msgstr "객체 표시 설정 (&O)..."
 
 msgid "Change reporting of objects"
-msgstr "화면 객체 표시 출력을 설정합니다. "
+msgstr "객체 표시 알림을 설정합니다"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
 msgstr "브라우즈 모드 (&B)..."
 
 msgid "Change virtual buffers specific settings"
-msgstr "가상 버퍼 출력에 대한 세부사항을 설정합니다. "
+msgstr "가상 버퍼 출력에 대한 세부사항을 설정합니다"
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
 msgstr "문서 서식 알림 (&F)..."
 
 msgid "Change settings of document properties"
-msgstr "문서 속성 출력을 설정합니다. "
+msgstr "문서 속성 출력을 설정합니다"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
 #, fuzzy
@@ -7273,7 +7263,7 @@ msgstr "기본 발음 사전 (&D)..."
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr "이 대화상자를 이용하여 기본 발음 사전에 단어를 추가할 수 있습니다."
+msgstr "이 대화상자를 이용하여 기본 발음 사전에 단어를 추가할 수 있습니다"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
@@ -7282,7 +7272,7 @@ msgstr "보이스 발음 사전 (&V)..."
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
-msgstr "이 대화상자를 이용하여 보이스 발음 사전에 단어를 등록할 수 있습니다."
+msgstr "이 대화상자를 이용하여 보이스 발음 사전에 단어를 등록할 수 있습니다\\"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
@@ -7291,7 +7281,7 @@ msgstr "임시 발음 사전 (&T)..."
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
-msgstr "이 대화상자를 이용하여 임시 발음 사전에 단어를 등록할 수 있습니다."
+msgstr "이 대화상자를 이용하여 임시 발음 사전에 단어를 등록할 수 있습니다"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -7303,7 +7293,7 @@ msgstr "구두점/기호 발음 설정 (&P)..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "단축키 설정...(&N)"
+msgstr "제스처 설정... (&N)"
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -7319,7 +7309,7 @@ msgstr "음성 출력 뷰어 (&S)"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
-msgstr "Python console"
+msgstr "파이썬 콘솔"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
@@ -7335,7 +7325,7 @@ msgstr "NVDA 설치 (&I)..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "플러그인 재등록 (&R)"
+msgstr "플러그인 새로 고침"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
@@ -7351,10 +7341,10 @@ msgstr "NVDA 기능키 목록 (&Q)"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
-msgstr "변경된 사항 (&N)"
+msgstr "NVDA 변경 이력 (&N)"
 
 msgid "NVDA &web site"
-msgstr "NVDA 웹사이트 (&W)"
+msgstr "NVDA 웹 사이트 (&W)"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
@@ -7386,10 +7376,10 @@ msgstr "환경 설정 프로필 (&C)..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr "저장된 환경설정으로 환원 (&R)"
+msgstr "저장된 환경설정으로 되돌리기 (&R)"
 
 msgid "Reset all settings to saved state"
-msgstr "이전 저장된 설정으로 환원합니다. "
+msgstr "이전 저장된 설정으로 되돌립니다"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
@@ -7397,14 +7387,14 @@ msgid "&Reset configuration to factory defaults"
 msgstr "기본 환경설정으로 초기화 (&R)"
 
 msgid "Reset all settings to default state"
-msgstr "기본 환경설정으로 돌아갑니다. "
+msgstr "기본 환경설정으로 초기화됩니다"
 
 #. Translators: The label for the menu item to save current settings.
 msgid "&Save configuration"
 msgstr "환경설정 저장 (&S)"
 
 msgid "Write the current configuration to nvda.ini"
-msgstr "현재 환경설정을 nvda.ini에 저장합니다. "
+msgstr "현재 환경설정을 nvda.ini에 저장합니다"
 
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
@@ -7427,21 +7417,21 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions."
 msgstr ""
-"NVDA를 사용하려면 NVDA키와 다른 키를 같이 누르십시오.\n"
-"기본적으로 숫자 키패드 insert와 main insert가 NVDA키로 쓰일 수 있습니다.\n"
-"또한 Caps럭키를 NVDA키로 사용하도록 설정할 수도 있습니다.\n"
-"언제나 NVDA키와 n을 함께 누르면 NVDA 메뉴를 활성화 시킬 수 있습니다.\n"
-"이 메뉴를 통해서 NVDA 환경 설정, 도움말 호출 등 여러 기능들에 접근하실 수 있"
+"\"NVDA를 사용하려면 NVDA키와 다른 키를 같이 누르십시오.\n"
+"기본적으로 키패드 insert와 main insert가 NVDA키로 쓰일 수 있습니다.\n"
+"또한, Caps Lock 키를 NVDA키로 사용하도록 설정할 수도 있습니다.\n"
+"언제나 NVDA키를 누른 채 n을 누르면 NVDA 메뉴를 활성화할 수 있습니다.\n"
+"이 메뉴를 통해서 NVDA 환경 설정, 도움말 얻기 등 여러 기능들에 접근하실 수 있"
 "습니다."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
-msgstr "NVDA에 오신것을 환영합니다!"
+msgstr "NVDA에 오신 것을 환영합니다"
 
 #. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
 #. bold lettering
 msgid "Welcome to NVDA!"
-msgstr "NVDA에 오신것을 환영합니다!"
+msgstr "NVDA에 오신 것을 환영합니다!"
 
 msgid "Options"
 msgstr "옵션"
@@ -7454,16 +7444,16 @@ msgstr "키보드 레이아웃 (&K)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "Caps럭을 NVDA 기능키로 사용 (&U)"
+msgstr "CapsLock을 NVDA 기능키로 사용"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "윈도우 로그인 후 NVDA 자동 실행 (&A)"
+msgstr "Windows 로그인 후 NVDA 자동 실행 (&A)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
-msgstr "NVDA 실행때 이 창 띄우기 (&S)"
+msgstr "NVDA 시작 시 이 대화 상자 표시"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -7490,13 +7480,13 @@ msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
 msgstr ""
-"현재 추가 기능들이 일시적으로 정지되어 있습니다. 추가 기능을 사용하려면 재시"
-"작하거나 추가 기능 사용 안 함을 선택하여 추가 기능을 정지시킨채로 재시작하십"
-"시오."
+"현재 추가 기능이 일시적으로 정지되어 있습니다. 추가 기능을 사용하려면 재시작"
+"하거나 추가 기능 사용 안 함을 선택하여 추가 기능을 정지시킨 채로 재시작하십시"
+"오."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
-msgstr "원하는 옵션을 선택하십시오 (&D)"
+msgstr "종료 옵션 (&D)"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Exit"
@@ -7512,7 +7502,7 @@ msgstr "재시작 및 추가 기능 사용 안 함"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
-msgstr "재시작 및 디버그 정보 기록"
+msgstr "재시작 및 디버그 로깅 활성화"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7526,8 +7516,8 @@ msgstr "추가 기능 관리자"
 msgid ""
 "All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"현재 추가 기능들이 일시적으로 정지되어 있습니다. 추가 기능들을 사용하려면 "
-"NvDA를 재시작하십시오."
+"모든 추가 기능이 일시 정지되어 있습니다. 추가 기능을 사용하려면 NVDA를 재시작"
+"하십시오."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -7551,11 +7541,11 @@ msgstr "저자"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "추가 기능 정보 (&A)..."
+msgstr "정보 (&A)..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "도움말 읽기 (&H)"
+msgstr "도움말 (&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
@@ -7570,7 +7560,7 @@ msgstr "설치 (&I)..."
 #. Remove a speech dictionary entry.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
-msgstr "삭제 (&R)"
+msgstr "제거 (&R)"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
@@ -7578,7 +7568,7 @@ msgstr "추가 기능 탐색 (&G)..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
-msgstr "추가 기능 설치 파일 검색"
+msgstr "추가 기능 설치 파일 선택"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
@@ -7602,10 +7592,10 @@ msgid ""
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"NVDA 추가 기능을 설치하시겠습니까? 사용자가 신뢰하는 추가 기능 설치를 권장합"
-"니다.\n"
+"\"NVDA 추가 기능을 설치하시겠습니까? 신뢰받는 사이트의 추가 기능 설치를 권장"
+"합니다.\n"
 "추가 기능: {summary} {version}\n"
-"제공자: {author}"
+"저자: {author}\\"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
@@ -7640,7 +7630,7 @@ msgstr "추가 기능 설치 중"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
-msgstr "추가 기능을 설치하고 있습니다. 잠시만 기다려 주십시오. "
+msgstr "추가 기능을 설치하고 있습니다. 잠시만 기다려 주십시오."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
@@ -7649,11 +7639,11 @@ msgstr "%s 에서 추가 기능 설치 실패"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "NVDA 추가 기능을 삭제하시겠습니까? "
+msgstr "NVDA에서 선택된 추가 기능을 삭제하시겠습니까?"
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
-msgstr "추가 기능 삭제"
+msgstr "추가 기능 제거"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "install"
@@ -7661,7 +7651,7 @@ msgstr "설치"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
-msgstr "삭제"
+msgstr "제거"
 
 #. Translators: The status shown for an addon when its disabled.
 msgid "disable"
@@ -7688,8 +7678,8 @@ msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
 "take effect. Would you like to restart now?"
 msgstr ""
-"추가 기능들이 변경되었습니다. 변경된 사항을 적용하려면 NVDA를 다시 시작해야 "
-"합니다. NVDA를 다시 시작하시겠습니까?"
+"추가 기능이 변경되었습니다. 변경된 사항을 적용하려면 NVDA를 다시 시작해야 합"
+"니다. NVDA를 다시 시작하시겠습니까?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -7706,7 +7696,7 @@ msgstr ""
 "{summary} ({name})\n"
 "버전: {version}\n"
 "저자: {author}\n"
-"서령: {description}\n"
+"설명: {description}\n"
 
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
@@ -7723,7 +7713,7 @@ msgstr "환경 설정 프로필"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
-msgstr "새 프로필 (&N)"
+msgstr "프로필 만들기 (&N)"
 
 #. Translators: The label of a button to rename a configuration profile.
 msgid "&Rename"
@@ -7731,17 +7721,17 @@ msgstr "프로필 이름 변경 (&R)"
 
 #. Translators: The label of a button to delete a configuration profile.
 msgid "&Delete"
-msgstr "프로필 제거 (&D)"
+msgstr "프로필 삭제 (&D)"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "프로필 엑션 (&T)"
+msgstr "프로필 트리거 (&T)"
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "프로필 관련 엑션 임시 해제 (&I)"
+msgstr "프로필 관련 트리거 임시 해제 (&I)"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -7751,7 +7741,7 @@ msgstr "(사용자 기본 환경 설정)"
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
 msgid "editing"
-msgstr "편집중"
+msgstr "편집 중"
 
 #. Translators: Reported for a profile which has been manually activated
 #. in the Configuration Profiles dialog.
@@ -7761,7 +7751,7 @@ msgstr "수동 적용"
 #. Translators: Reported for a profile which is currently triggered
 #. in the Configuration Profiles dialog.
 msgid "triggered"
-msgstr "엑션 할당됨"
+msgstr "트리거 할당됨"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 msgid "Error activating profile."
@@ -7769,15 +7759,15 @@ msgstr "프로필 적용에 실패했습니다."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "This profile will be permanently deleted. This action cannot be undone."
-msgstr "본 프로필이 삭제됩니다. 이럴 경우 프로필을 복원할 수 없습니다."
+msgstr "이 프로필은 영구적으로 삭제됩니다. 이 작업은 취소 할 수 없습니다."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
-msgstr "프로필 제거"
+msgstr "삭제 확인"
 
 #. Translators: An error displayed when deleting a configuration profile fails.
 msgid "Error deleting profile."
-msgstr "프로필 제거가 실패하였습니다."
+msgstr "프로필 삭제 실패."
 
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
@@ -7804,36 +7794,36 @@ msgid "That profile already exists. Please choose a different name."
 msgstr "이미 존재하는 프로필입니다. 다른 이름을 입력하십시오."
 
 msgid "Error renaming profile."
-msgstr "프로필 이름 변경이 실패하였습니다."
+msgstr "프로필 이름 변경 실패."
 
 #. Translators: Displayed for the configuration profile trigger for the current application.
 #. %s is replaced by the application executable name.
 #, python-format
 msgid "Current application (%s)"
-msgstr "현 프로그램 (%s) 사용시 적용"
+msgstr "현재 프로그램 (%s) 사용 시 적용"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
-msgstr "모두 읽기시 적용"
+msgstr "모두 읽기 시 적용"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
-msgstr "프로필 엑션 저장 실패 - 읽기 전용 파일 시스템일 수 있습니다."
+msgstr "프로필 트리거 저장 실패 - 읽기 전용 파일 시스템일 수 있습니다."
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
-msgstr "프로필 엑션 설정"
+msgstr "프로필 트리거 설정"
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
 #, python-format
 msgid "%s application"
-msgstr "%s 프로그램 실행시 적용"
+msgstr "%s 프로그램 실행 시 적용"
 
 #. Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 msgid "Triggers"
-msgstr "프로필 엑션"
+msgstr "프로필 트리거"
 
 #. Translators: The label of the profile list in the Configuration Profile Triggers dialog.
 msgid "Profile"
@@ -7845,7 +7835,7 @@ msgstr "새 프로필"
 
 #. Translators: The label of a field to enter the name of a new configuration profile.
 msgid "Profile name:"
-msgstr "프로필 이름"
+msgstr "프로필 이름:"
 
 #. Translators: The label of a radio button to specify that a profile will be used for manual activation
 #. in the new configuration profile dialog.
@@ -7853,7 +7843,7 @@ msgid "Manual activation"
 msgstr "수동 적용"
 
 msgid "Use this profile for:"
-msgstr "프로필 적용시기"
+msgstr "프로필 적용시기:"
 
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
@@ -7862,9 +7852,8 @@ msgid ""
 "will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"본 엑션은 다른 프로필에 할당되어 있습니다. 계속할시 이 프로필로 엑션이 할당됩"
-"니다.\n"
-"계속하시겠습니까?"
+"이 트리거는 이미 다른 프로필과 연결되어 있습니다. 계속하면 해당 프로필에서 삭"
+"제되고 이 프로필과 연결됩니다. 계속 하시겠습니까?"
 
 #. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
@@ -7873,7 +7862,7 @@ msgstr "경고"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
-msgstr "프로필 생성 실패 - 읽기 전용 파일 시스템일 수 있음"
+msgstr "프로필 생성 실패 - 읽기 전용 파일 시스템일 수 있음."
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -7883,9 +7872,9 @@ msgid ""
 "usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
-"본 프로필을 편집하려면 수동으로 프로필을 적용하여야 합니다. 프로필 편집을 끝"
-"낸 후 수동으로 프로필 적용을 해제하면 편집된 프로필을 사용할 수 있습니다.\n"
-"지금 본 프로필을 수동 적용하시겠습니까?"
+"이 프로필을 편집하려면 수동으로 프로필을 적용하여야 합니다. 프로필 편집을 끝"
+"낸 후 수동으로 프로필 적용을 해제하면 편집된 프로필을 사용할 수 있습니다. 지"
+"금 프로필을 수동 적용하시겠습니까?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 msgid "Manual Activation"
@@ -7893,19 +7882,19 @@ msgstr "프로필 수동 적용"
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
-msgstr "NVDA 업데이트중"
+msgstr "NVDA 업데이트 중"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
 msgid "Installing NVDA"
-msgstr "NVDA 설치중"
+msgstr "NVDA 설치 중"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "NVDA를 업데이트하고 있습니다. 잠시만 기다려 주십시오. "
+msgstr "NVDA를 업데이트하고 있습니다. 잠시만 기다려 주십시오."
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
-msgstr "NVDA를 설치하고 있습니다. 잠시만 기다려 주십시오. "
+msgstr "NVDA를 설치하고 있습니다. 잠시만 기다려 주십시오"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
@@ -7913,34 +7902,33 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"NVDA 설치 프로그램이 파일을 삭제할 수 없거나 덮어씌울 수 없습니다. 다른 카피"
-"의 NVDA가 다른 사용자 계정에 의해 실행 중일 수 있습니다. 모든 설치된 NVDA가 "
-"종료되었는지 확인하시고 설치를 재시도하세요."
+"NVDA 설치 프로그램이 파일을 삭제하거나 덮어쓸 수 없습니다. 다른 복사본의 NVDA"
+"가 다른 사용자 계정에 의해 실행 중일 수 있습니다. 모든 설치된 NVDA가 종료되었"
+"는지 확인하고 다시 설치하십시오."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
 msgid "File in Use"
-msgstr "파일 사용중"
+msgstr "파일 사용 중"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 msgid ""
 "The installation of NVDA failed. Please check the Log Viewer for more "
 "information."
-msgstr ""
-"NVDA 설치 실패하였습니다. 자세한 정보를 보려면 로그 뷰어를 참조하십시요"
+msgstr "NVDA 설치에 실패했습니다. 자세한 내용은 로그 뷰어를 확인하십시오."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "NVDA 설치를 완료하였습니다. "
+msgstr "NVDA를 성공적으로 설치했습니다. "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "사용자의 NVDA 업데이트를 완료하였습니다. "
+msgstr "NVDA가 성공적으로 업데이트되었습니다. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "설치된 카피를 시작하려면 확인(OK) 버튼을 누르세요. "
+msgstr "확인 버튼을 눌러 설치본을 시작하십시오."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -7952,14 +7940,14 @@ msgstr "NVDA 설치"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "하드 드라이브에 NVDA를 설치하려면 계속 버튼을 눌러주십시요. "
+msgstr "하드 드라이브에 NVDA를 설치하려면, 계속 버튼을 누르십시오."
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"시스템에 NVDA 이전 버전이 설치되어 있습니다. 설치한 버전을 업데이트합니다. "
+"시스템에 NVDA 이전 버전이 설치되어 있습니다. 설치한 버전을 업데이트합니다."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #, python-brace-format
@@ -7967,11 +7955,11 @@ msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
 msgstr ""
-"NVDA 설치경로가 변경되었습니다. 새로운 경로 {path}에 NVDA를 설치합니다."
+"NVDA 설치 경로가 변경되었습니다. 새로운 경로 {path}에 NVDA를 설치합니다."
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "Windows 로그인 창에서 NVDA 실행 (&L)"
+msgstr "Windows 로그온 창에서 NVDA 실행 (&L)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -7981,11 +7969,11 @@ msgstr "이전 바탕화면 핫키 그대로 사용 (&K)"
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "바탕 화면에 바로가기 아이콘 및 CTRL+Alt+N 실행키 만들기 (&D)"
+msgstr "바탕 화면에 바로가기 아이콘 및 CTRL+Alt+N 바로가기 키 만들기 (&D)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
-msgstr "휴대용 버전 환경을 현재 사용자 개정에 복사 (&P)"
+msgstr "휴대용 버전 환경 설정을 현재 사용자 계정에 복사 (&P)"
 
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
@@ -7999,13 +7987,14 @@ msgid ""
 "should first cancel this installation and completely uninstall NVDA before "
 "installing the earlier version."
 msgstr ""
-"현재 설치된 버전보다 이전 버전을 설치하려고 합니다. 만약 이전 버전을 설치하려"
-"면 현재 설치된 버전을 제거하신 후 이전 버전을 설치하십시오."
+"현재 설치된 버전보다 이전 버전의 NVDA를 설치하려고 합니다. 정말로 이전 버전으"
+"로 되돌리려면 이 설치를 취소하고 이전 버전을 설치하기 전에 NVDA를 완전히 제거"
+"해야 합니다."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
 msgid "&Proceed with installation (not recommended)"
-msgstr "계속 설치 (권장 않함) (&P)"
+msgstr "계속 설치 (권장 안 함) (&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -8026,7 +8015,7 @@ msgstr "휴대용 버전 설치 폴더 (&D)"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
-msgstr "파일 탐색..."
+msgstr "찾아보기..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
@@ -8035,26 +8024,26 @@ msgstr "휴대용 버전 설치 폴더를 선택하십시오"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
-msgstr "현재 사용자 환경 복사 (&U)"
+msgstr "현재 사용자 환경 설정 복사 (&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "휴대용 버전 생성후 곧바로 실행 (&S)"
+msgstr "휴대용 버전 생성 후 곧바로 실행 (&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "휴대용 버전을 저장할 폴더 경로를 선택하십시오"
+msgstr "휴대용 버전을 저장할 폴더를 선택하십시오."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
 #, python-format
 msgid "Invalid drive %s"
-msgstr "%s 드라이브 사용 불가"
+msgstr "%s 잘못된 드라이브"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 msgid "Creating Portable Copy"
-msgstr "휴대용 버전 만드는중"
+msgstr "휴대용 버전 만드는 중"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
@@ -8062,19 +8051,19 @@ msgstr "NVDA 휴대용 버전을 생성하고 있습니다. 잠시만 기다려 
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
-msgstr "파일을 삭제하거나 덮어 싀울 수 없습니다"
+msgstr "파일을 제거하거나 덮어쓸 수 없습니다."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
 #, python-format
 msgid "Failed to create portable copy: %s"
-msgstr "휴대용 NVDA 버전 생성 실패: %s"
+msgstr "휴대용 버전 생성 실패: %s"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "%s 에 휴대용 NVDA 버전 복사를 완료하였습니다"
+msgstr "%s에 휴대용 NVDA 버전을 복사하였습니다"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -8082,7 +8071,7 @@ msgstr "NVDA 로그 뷰어"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
-msgstr "Refresh\tF5"
+msgstr "새로 고침\\T F5"
 
 #. Translators: The label for a menu item in NVDA log viewer to save log file.
 msgid "Save &as...\tCtrl+S"
@@ -8090,7 +8079,7 @@ msgstr "저장 ...\tCtrl+S (&A)"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
-msgstr "Log"
+msgstr "로그"
 
 #. Translators: Label of a menu item in NVDA Log Viewer.
 msgid "Save As"
@@ -8099,7 +8088,7 @@ msgstr "다른 이름으로 저장"
 #. Translators: Dialog text presented when NVDA cannot save a log file.
 #, python-format
 msgid "Error saving log: %s"
-msgstr "%s 로그 파일 저장 실패"
+msgstr "로그 파일 저장 오류 : %s"
 
 #. Translators: This is the label for the general settings dialog.
 msgid "General Settings"
@@ -8123,15 +8112,15 @@ msgstr "디버그"
 
 #. Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 msgid "&Language (requires restart to fully take effect):"
-msgstr "사용 언어 (언어 변경은 NVDA를 다시 실행하면 적용됩니다) (&L):"
+msgstr "사용 언어 (전체 적용하려면 다시 시작해야 함) (&L):"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
-msgstr "NVDA 종료시 환경설정 저장 (&S)"
+msgstr "종료 시 NVDA 환경설정 저장 (&S)"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
-msgstr "NVDA 종료전 종료 옵션 호출 (&W)"
+msgstr "종료 시 NVDA 종료 옵션 표시 (&W)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -8139,20 +8128,19 @@ msgstr "NVDA 시작 및 종료음 재생 (&P)"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
-msgstr "실행 로그 기록 레벨 (&O)"
+msgstr "로깅 레벨 (&O)"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "윈도우 로그인 창에서 NVDA 사용 (사용자가 시스템 관리자여야 합니다)"
+msgstr "Windows 로그인 창에서 NVDA 사용 (관리자 권한 필요)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"현재 NVDA 환경 설정을 윈도우 로그인 및 보안 윈도우에서도 사용 (사용자가 시스"
-"템 관리자여야 합니다)"
+"Windows 로그인 및 보안 화면에서 현재 저장된 설정 사용(관리자 권한 필요)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -8164,26 +8152,25 @@ msgid ""
 "system profile could be a security risk. Do you still wish to copy your "
 "settings?"
 msgstr ""
-"사용자 환경 폴더내에 추가 기능들이 설치되어 있습니다. 추가 기능들을 시스템 환"
-"경에 복사시 시스템 보안에 문제를 일으킬 수 있습니다. 정말로 시스템 환경으로 "
-"추가 기능들을 복사하시겠습니까? "
+"사용자 환경 폴더 내에 추가 기능이 설치되어 있습니다. 추가 기능을 시스템 환경"
+"에 복사 시 시스템 보안에 문제를 일으킬 수 있습니다. 정말로 시스템 환경으로 추"
+"가 기능을 복사하시겠습니까?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
-msgstr "설정 복사중"
+msgstr "설정 복사 중"
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
-msgstr ""
-"사용자 설정을 시스템 환경에 복사하고 있습니다. 잠시만 기다려 주십시요. "
+msgstr "사용자 설정을 시스템 환경에 복사하고 있습니다. 잠시만 기다려 주십시요."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 msgid ""
 "Unable to copy a file. Perhaps it is currently being used by another process "
 "or you have run out of disc space on the drive you are copying to."
 msgstr ""
-"파일을 복사할 수 없습니다. 다른 프로세스에서 파일을 사용중이거나 복사할 디스"
-"크 공간이 부족합니다. "
+"파일을 복사할 수 없습니다. 다른 프로세스에서 파일을 사용 중이거나 복사할 디스"
+"크 공간이 부족합니다."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 msgid "Error Copying"
@@ -8198,7 +8185,7 @@ msgid "Successfully copied NVDA user settings"
 msgstr "사용자 설정 복사 성공"
 
 msgid "This change requires administrator privileges."
-msgstr "이 설정 변경은 관리자 권한이 있어야 가능합니다. "
+msgstr "이 설정 변경은 관리자 권한이 필요합니다."
 
 msgid "Insufficient Privileges"
 msgstr "사용자 권한 부족"
@@ -8209,9 +8196,9 @@ msgid ""
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
 "manually save and exit at a later time."
 msgstr ""
-"새 언어를 적용하기 위해서는 현재 환경을 저장하고 NVDA를 다시 시작해야 합니"
-"다. 엔터를 눌러 환경을 저장하고 NVDA를 다시 시작하시거나 취소하고 수동으로 다"
-"시 시작해 주세요. "
+"새 언어를 적용하기 위해서는 현재 환경 설정을 저장하고 NVDA를 다시 시작해야 합"
+"니다. 엔터를 눌러 환경 설정을 저장하고 NVDA를 다시 시작하거나, 취소하고 수동"
+"으로 다시 시작하십시오."
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
@@ -8254,12 +8241,12 @@ msgstr "보이스 설정"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
-msgstr "음성 엔진 지원시 자동으로 언어 전환"
+msgstr "음성 엔진 지원 시 자동으로 언어 전환"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
-msgstr "음성 엔진 지원시 자동으로 종속어 전환"
+msgstr "음성 엔진 지원 시 자동으로 종속어 전환"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
@@ -8269,7 +8256,7 @@ msgstr "구두점/기호 출력 레벨 (&L)"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
-msgstr "기호 및 글자 출력시 선택된 음성 엔진 언어 사용"
+msgstr "기호 및 글자 출력 시 선택된 음성 엔진 언어 사용"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -8278,7 +8265,7 @@ msgstr "대문자 음높이 변경율"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Say &cap before capitals"
-msgstr "대문자 앞에 \"cap\" 붙여 읽기 (&C)"
+msgstr "대문자 앞에 Cap 붙여 읽기 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
@@ -8288,7 +8275,7 @@ msgstr "대문자 앞에 비프음 넣기 (&B)"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Use &spelling functionality if supported"
-msgstr "철자 발음 지원시 사용 (&S)"
+msgstr "철자 발음 지원 시 사용 (&S)"
 
 #. Translators: This is the label for the keyboard settings dialog.
 msgid "Keyboard Settings"
@@ -8297,17 +8284,17 @@ msgstr "키보드 설정"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Caps럭을 NVDA 기능키로 사용"
+msgstr "CapsLock을 NVDA 기능키로 사용"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "숫자 키패드 Insert를 NVDA 기능키로 사용"
+msgstr "키패드 Insert를 NVDA 키로 사용"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "확장 Insert를 NVDA 기능키로 사용"
+msgstr "확장 Insert를 NVDA 키로 사용"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8322,22 +8309,22 @@ msgstr "입력한 단어 알림 (&W)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for typed characters"
-msgstr "텍스트 입력시 음성 정지"
+msgstr "텍스트 입력 시 음성 정지"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for Enter key"
-msgstr "엔터키 입력시 음성 정지"
+msgstr "엔터키 입력 시 음성 정지"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "모두 읽기 사용시 건너뛰어 읽기 사용 (&R)"
+msgstr "모두 읽기 사용 시 건너뛰어 읽기 사용 (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "caps럭이 켜져 있을때 소문자 입력시 경고음 출력"
+msgstr "caps Lock이 켜져 있을 때 소문자 입력 시 경고음 출력"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8347,7 +8334,7 @@ msgstr "기능키 알림 (&K)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Play sound for &spelling errors while typing"
-msgstr "입력중 철자 오류 경고음 재생 (&S)"
+msgstr "입력 중 철자 오류 경고음 재생 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8356,7 +8343,7 @@ msgstr "다른 프로그램에서의 키보드 입력 처리 (&A)"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr "최소한 한개 이상의 NVDA 기능키가 설정되어야 합니다."
+msgstr "최소한 하나 이상의 NVDA 기능키가 설정되어야 합니다."
 
 #. Translators: This is the label for the mouse settings dialog.
 msgid "Mouse Settings"
@@ -8380,12 +8367,12 @@ msgstr "마우스 추적 시에 텍스트 단위 설정 (&U)"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report &role when mouse enters object"
-msgstr "마우스가 객체에 진입할 때 역할 알림 (&R)"
+msgstr "마우스로 객체 진입 시 역할 알림 (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "&Play audio coordinates when mouse moves"
-msgstr "마우스 이동시 경고음으로 좌표 알림 (&P)"
+msgstr "마우스 이동 시 경고음으로 좌표 알림 (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -8404,7 +8391,7 @@ msgstr "시스템 포커스 따라가기 (&F)"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow System &Caret"
-msgstr "시스템 케럿 따라가기 (&C)"
+msgstr "시스템 캐럿 따라가기 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -8423,17 +8410,17 @@ msgstr "입력 구성 알림 설정"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Automatically report all available &candidates"
-msgstr "후보자 목록 자동으로 알림 (&C)"
+msgstr "후보 목록 자동으로 알림 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Announce &selected candidate"
-msgstr "선택된 후보자 알림 (&S)"
+msgstr "선택된 후보 알림 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Always include short character &description when announcing candidates"
-msgstr "후보자 출력시 글자와 풀이도 알림 (&D)"
+msgstr "후보 출력 시 글자와 풀이도 알림 (&D)"
 
 # Literally: report changes to character entry string and characters
 #. Translators: This is the label for a checkbox in the
@@ -8445,11 +8432,11 @@ msgstr "읽기 문자열 변환값 알림 (&R)"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &composition string"
-msgstr "입력 글쇠 변환값 알림 (&C)"
+msgstr "입력 문자 변환값 알림 (&C)"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
-msgstr "화면 객체 표시 설정"
+msgstr "객체 표시 설정"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
@@ -8487,14 +8474,14 @@ msgstr "객체 핫키 알림 (&K)"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &position information"
-msgstr "화면 객체 위치정보 알림 (&P)"
+msgstr "객체 위치 정보 알림 (&P)"
 
 # The translation literally means "predict/guess the object position when
 # position is not known".
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "객체 위치 없을때 위치 추정하기 (&P)"
+msgstr "객체 위치 없을 때 위치 추정하기 (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -8504,12 +8491,12 @@ msgstr "객체 설명 알림 (&D)"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
 msgid "Progress &bar output:"
-msgstr "진행률 표시 (&B)"
+msgstr "진행률 출력 (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "배경에 있는 진행율 알림"
+msgstr "백그라운드 진행율 알림"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -8519,7 +8506,7 @@ msgstr "자동 변경된 컨텐츠 알림 (&C)"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
 msgid "Play a sound when &auto-suggestions appear"
-msgstr "검색 결과 나타날때 사운드로 알림 (&A)"
+msgstr "검색 결과 나타날 때 사운드로 알림 (&A)"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -8528,47 +8515,47 @@ msgstr "브라우즈 모드"
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 msgid "&Maximum number of characters on one line"
-msgstr "줄단 최대 글자수 (&M)"
+msgstr "줄단 최대 글자 수 (&M)"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 msgid "&Number of lines per page"
-msgstr "페이지당 최대 줄수 (&N)"
+msgstr "페이지당 최대 줄 수 (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Use &screen layout (when supported)"
-msgstr "화면 레이아웃 지원되면 사용 (&S)"
+msgstr "화면 레이아웃 사용 (지원되는 경우) (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic &Say All on page load"
-msgstr "페이지 열리면 자동으로 읽기 (&S)"
+msgstr "페이지 로딩 시 자동으로 읽기 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "레이아웃 테이블 인식 (&A)"
+msgstr "레이아웃 테이블 포함 (&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for focus changes"
-msgstr "포커스 이동에 따른 자동 포커스 모드 전환"
+msgstr "포커스 이동 시 자동 포커스 모드 전환"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for caret movement"
-msgstr "케럿 이동에 따른 자동 포커스 모드 전환"
+msgstr "캐럿 이동 시 자동 포커스 모드 전환"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
-msgstr "포커스와 브라우즈 모드 전환시 경고음 재생"
+msgstr "포커스와 브라우즈 모드 전환 시 경고음 재생"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "브라우즈 모드외 명령을 문서가 처리하지 않도록 함 (&T)"
+msgstr "정의되지 않은 제스처를 무시함 (&T)"
 
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
@@ -8578,7 +8565,7 @@ msgstr "문서 서식 알림"
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
-msgstr "본 대화상자내 설정을 통해 NVDA의 문서 서식 출력을 설정합니다."
+msgstr "본 대화상자 내 설정을 통해 NVDA의 문서 서식 출력을 설정합니다."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -8603,7 +8590,7 @@ msgstr "글꼴 속성 (&B)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "E&mphasis"
-msgstr "텍스트 강조 &M)"
+msgstr "강조 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -8638,17 +8625,17 @@ msgstr "철자 오류 (&R)"
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
 msgid "Pages and spacing"
-msgstr "쪽 및 줄 간격"
+msgstr "페이지 및 줄 간격"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "&Pages"
-msgstr "쪽 수 (&P)"
+msgstr "페이지 (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Line &numbers"
-msgstr "줄 수 (&N)"
+msgstr "줄 번호 (&N)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
@@ -8659,12 +8646,12 @@ msgstr "줄 들여쓰기 알림 (&I)"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
 msgid "Off"
-msgstr "출력 않함"
+msgstr "출력 안 함"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
 msgctxt "line indentation setting"
 msgid "Speech"
-msgstr "음성 출력"
+msgstr "음성 "
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
 msgid "Tones"
@@ -8687,12 +8674,12 @@ msgstr "줄 간격 (&L)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "&Alignment"
-msgstr "텍스트 배치 (&A)"
+msgstr "정렬 (&A)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
 msgid "Table information"
-msgstr "표 정보"
+msgstr "테이블 정보"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -8702,12 +8689,12 @@ msgstr "표 (&T)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Row/column h&eaders"
-msgstr "표 행 및 열 머리말 (&E)"
+msgstr "행 및 열 머리말 (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Cell c&oordinates"
-msgstr "표 셀 위치 (&O)"
+msgstr "셀 위치 (&O)"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
@@ -8722,7 +8709,7 @@ msgstr "색상 및 스타일"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
 msgid "Cell borders:"
-msgstr "셀 테두리"
+msgstr "셀 테두리:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -8747,12 +8734,12 @@ msgstr "프레임 (&M)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "&Clickable"
-msgstr "클릭가능 요소 (&C)"
+msgstr "클릭 가능 요소 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report formatting changes after the cursor (can cause a lag)"
-msgstr "커서 이동시 서식 변경 알림 (속도 저하 가능성 있음)"
+msgstr "커서 이동 시 서식 변경 알림 (속도 저하 가능성 있음)"
 
 #. Translators: The title of the Windows 10 OCR dialog.
 msgid "Windows 10 OCR"
@@ -8771,9 +8758,8 @@ msgid "Whole &word"
 msgstr "단어 전체 (&W)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "정규 표현 (&R)"
+msgstr "정규식 (&E)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -8806,7 +8792,7 @@ msgstr "발음 사전 항목 오류"
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
-msgstr "정규 표현 오류: \"%s\"."
+msgstr "정규식 오류: \"%s\"."
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -8869,7 +8855,7 @@ msgstr "점자 입력 표기법 (&I)"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "커서 위치의 점자 단어 풀이 (&X)"
+msgstr "커서 위치 단어 정자로 보기 (&X)"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
@@ -8877,11 +8863,11 @@ msgstr "점자 커서 출력 (&S)"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
 msgid "Blink cursor"
-msgstr "점자 커서 깜박이"
+msgstr "점자 커서 깜박임"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "커서 깜박이 시간 (ms) (&C)"
+msgstr "커서 깜박임 시간 (ms) (&C)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
@@ -8911,7 +8897,7 @@ msgstr "문단 단위로 읽기 (&P)"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "가능하면 단어 끊지않고 출력 (&W)"
+msgstr "가능하면 끊지 않고 단어 출력 (&W)"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
@@ -8969,7 +8955,7 @@ msgstr "기호 자체를 음성 엔진에서 처리 (&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
-msgstr "삭제 (&M)"
+msgstr "제거 (&M)"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
 #, python-format
@@ -8978,7 +8964,7 @@ msgstr "\"%s\" 기호가 이미 존재합니다."
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
-msgstr "단축키 설정"
+msgstr "제스처 설정"
 
 # Translation: "Find from elements list".
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
@@ -8995,20 +8981,20 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "단축키를 입력하십시오:"
+msgstr "제스처를 입력하십시오:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "사용자 단축키 설정 저장 실패 - 읽기 전용 파일 시스템일 수 있음"
+msgstr "사용자 제스처 설정 저장 실패 - 읽기 전용 파일 시스템일 수 있음."
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
-msgstr "수학 컨텐츠 탐색을 종료합니다"
+msgstr "수학 모드 종료"
 
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr "수학 컨텐츠 탐색 불가."
+msgstr "수학 모드 지원 안 됨"
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -9018,7 +9004,7 @@ msgstr "안 함"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "음성 속도 부스트 (&T)"
+msgstr "음성 속도 향상 (&T)"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -9047,7 +9033,7 @@ msgstr "새로 고침"
 
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
-msgstr "문서 여는중..."
+msgstr "문서 여는 중..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -9059,13 +9045,13 @@ msgstr "화면 레이아웃 사용"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "Use screen layout off"
-msgstr "화면 레이아웃 사용 않함"
+msgstr "화면 레이아웃 사용 안 함"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
-msgstr "문서를 표시할때 화면 레이아웃으로 보여줄 것인지를 토글합니다. "
+msgstr "문서 내용을 표시할 때 화면 레이아웃으로 보여줄 것인지를 토글합니다"
 
 msgid "Taskbar"
 msgstr "작업 표시줄"
@@ -9211,7 +9197,7 @@ msgstr "직각 그라데이션"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
-msgstr "Spreadsheet에 포함된 여러 요소를 보여줍니다"
+msgstr "Spreadsheet에 포함된 여러 요소를 표시합니다"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -9231,7 +9217,7 @@ msgstr "수식 (&R)"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Sheets"
-msgstr "Sheets (&S)"
+msgstr "시트 (&S)"
 
 #. Translators: Used to express an address range in excel.
 #, python-brace-format
@@ -9246,64 +9232,63 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"머릿말 설정 불가. NvDA 서식 알림 설정에서 테이블 머릿말 알림을 선택해 주세"
-"요. "
+"머리말 설정 불가. NvDA 서식 알림 설정에서 테이블 머리말 알림을 선택해 주세요"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of column headers"
-msgstr "{address}을 열 머릿말의 첫 셀로 지정"
+msgstr "{address}을 열 머리말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Already set {address} as start of column headers"
-msgstr "이미 {address}을 열 머릿말의 첫 셀로 지정함"
+msgstr "이미 {address}을 열 머리말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Removed {address}    from column headers"
-msgstr "{address}를 열 머릿말에서 제외"
+msgstr "{address}를 열 머리말에서 제외"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Cannot find {address}    in column headers"
-msgstr "{address}를 열 머릿말에서 찾을 수 없음"
+msgstr "{address}를 열 머리말에서 찾을 수 없음"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this region. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"한번 누르면 특정 셀을 본 구역내의 및 또는 우측 셀의 열 머릿말 셀로 지정합니"
-"다. 두번 누르면 이 설정을 해제합니다."
+"한 번 누르면 현재 셀을 현재부터 오른쪽 및 아래 지역의 열 머릿말 첫 셀로 지정"
+"합니다. 두 번 누르면 이 설정이 해제됩니다."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of row headers"
-msgstr "{address}을 행 머릿말의 첫 셀로 지정"
+msgstr "{address}을 행 머리말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Already set {address} as start of row headers"
-msgstr "이미 {address}을 행 머릿말의 첫 셀로 지정함"
+msgstr "이미 {address}을 행 머리말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Removed {address}    from row headers"
-msgstr "{address}를 행 머릿말에서 제외"
+msgstr "{address}를 행 머리말에서 제외"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Cannot find {address}    in row headers"
-msgstr "{address}를 행 머릿말에서 찾을 수 없음"
+msgstr "{address}를 행 머리말에서 찾을 수 없음"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"한번 누르면 특정 셀을 본 구역내의 및 또는 우측 셀의 행 머릿말 셀로 지정합니"
-"다. 두번 누르면 이 설정을 해제합니다."
+"한 번 누르면 현재 셀을 현재부터 오른쪽 및 아래 지역의 행 머릿말 첫 셀로 지정"
+"합니다. 두 번 누르면 이 설정이 해제됩니다."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #, python-brace-format
@@ -10173,12 +10158,12 @@ msgstr "내용 위치 변경"
 
 #. Translators: a Microsoft Word revision type (inserted table cell)
 msgid "cell insertion"
-msgstr "표 셀 삽입"
+msgstr "셀 삽입"
 
 # Literally means, "no contents selcted".
 #. Translators: a Microsoft Word revision type (deleted table cell)
 msgid "cell deletion"
-msgstr "표 셀 삭제"
+msgstr "셀 삭제"
 
 #. Translators: a Microsoft Word revision type (merged table cells)
 msgid "cell merge"
@@ -10273,84 +10258,84 @@ msgstr "표 설명"
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말의 첫 셀로 지정"
+msgstr "{rowNumber}행 {columnNumber}열을 열 머리말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "이미 {rowNumber}행 {columnNumber}열을 열 머릿말의 첫 셀로 지정함"
+msgstr "이미 {rowNumber}행 {columnNumber}열을 열 머리말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말에서 제외"
+msgstr "{rowNumber}행 {columnNumber}열을 열 머리말에서 제외"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말에서 찾을 수 없음"
+msgstr "{rowNumber}행 {columnNumber}열을 열 머리말에서 찾을 수 없음"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this table. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"한번 누르면 특정 셀을 본 표 내 및 또는 우측 셀의 열 머릿말 셀로 지정합니다. "
-"두번 누르면 이 설정을 해제합니다."
+"한 번 누르면 현재 셀을 표의 현재부터 오른쪽 및 아래 지역의 열 머릿말 첫 셀로 "
+"지정합니다. 두 번 누르면 이 설정이 해제됩니다."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말의 첫 셀로 지정"
+msgstr "{rowNumber}행 {columnNumber}열을 행 머리말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "이미 {rowNumber}행 {columnNumber}열을 행 머릿말의 첫 셀로 지정함"
+msgstr "이미 {rowNumber}행 {columnNumber}열을 행 머리말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말에서 제외"
+msgstr "{rowNumber}행 {columnNumber}열을 행 머리말에서 제외"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말에서 찾을 수 없음"
+msgstr "{rowNumber}행 {columnNumber}열을 행 머리말에서 찾을 수 없음"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
 "and to the right of it within this table. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"한번 누르면 특정 셀을 본 표 내 및 또는 우측 셀의 행 머릿말 셀로 지정합니다. "
-"두번 누르면 이 설정을 해제합니다."
+"한 번 누르면 현재 셀을 표의 현재부터 오른쪽 및 아래 지역의 행 머릿말 첫 셀로 "
+"지정합니다. 두 번 누르면 이 설정이 해제됩니다."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
-msgstr "굵기 시작"
+msgstr "진하게"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold off"
-msgstr "굵기 끝"
+msgstr "진하게 해제"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Italic on"
-msgstr "이탤릭 시작"
+msgstr "기울임꼴"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Italic off"
-msgstr "이탤릭 끝"
+msgstr "기울임꼴 해제"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Underline on"
-msgstr "밑줄 시작"
+msgstr "밑줄"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Underline off"
-msgstr "밑줄 끝"
+msgstr "밑줄 해제"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -10370,11 +10355,11 @@ msgstr "양쪽 맞춤"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Superscript"
-msgstr "Superscript"
+msgstr "위 첨자"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Subscript"
-msgstr "Subscript"
+msgstr "아래 첨자"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Baseline"
@@ -10445,19 +10430,19 @@ msgstr "메모 없음"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "시스템 케럿 위치에 주석이 존재할 경우 이를 알려줍니다."
+msgstr "시스템 캐럿 위치의 주석을 알려줍니다."
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
-msgstr "한줄 간격"
+msgstr "한 줄 간격"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
 msgid "Double line spacing"
-msgstr "두줄 간격"
+msgstr "두 줄 간격"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
-msgstr "1.5줄 간격"
+msgstr "1.5 줄 간격"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.

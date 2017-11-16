@@ -3,6 +3,82 @@ Novità in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+Le principali migliorie di questa versione riguardano un supporto molto più completo alle pagine web contenenti app o finestre di dialogo al proprio interno, una gestione migliore delle etichette dei campi raggruppati in modalità navigazione, supporto a nuove tecnologie presenti in Windows10 come Windows Defender Application Guard e Windows 10 con processori ARM64, lettura automatica del cambio di orientamento dello schermo e anche dello stato di carica della batteria.
+Si prega di fare attenzione al fatto che questa versione di NVDA non supporta più Windows XP o Windows Vista. Il requisito minimo per NVDA è ora windows 7 con Service Pack 1.
+
+
+== Novità ==
+- In modalità navigazione, è ora possibile saltare all'inizio o alla fine del contenuto presente nei punti di riferimento, servendosi dei comandi (virgola/shift+virgola). (#5482)
+- In Firefox, Chrome e Internet Explorer, la navigazione veloce verso campi editazione e form  ora comprende anche i contenuti di tipo rich text (ad esempio contentEditable). (#5534)
+- Nei browser web, l'elenco elementi può mostrare anche campi dei moduli e pulsanti. (#588)
+- Supporto iniziale per Windows 10 nei sistemi ARM64. (#7508)
+- Supporto di base alla lettura e alla navigazione interattiva nei contenuti di tipo matematico per i libri Kindle con matematica accessibile. (#7536)
+- Aggiunto supporto per Azardi e-book reader. (#5848)
+- Vengono ora annunciate le informazioni sulla versione durante l'aggiornamento dei componenti aggiuntivi. (#5324)
+- Aggiunto un nuovo parametro a riga di comando per creare una copia portable di NVDA. (#6329)
+- Supporto per Microsoft Edge quando eseguito all'interno di Windows Defender Application Guard in Windows 10 Fall Creators Update. (#7600)
+- Se si sta eseguendo NVDA in un portatile o in un tablet, lo screen reader adesso notifica l'utente in caso di cambio di orientamento dello schermo, e anche nel caso in cui viene connesso o disconnesso l'adattatore di corrente. (#4574, #4612)
+- Nuova lingua: Macedone.
+- Nuove tabelle di traduzione braille: Croato grado 1, Vietnamita grado 1. (#7518, #7565)
+- Aggiunto il supporto al display braille Actilino prodotto da Handy Tech. (#7590)
+- Viene ora supportata l'immissione tramite tastiera braille nei Display Handy Tech. (#7590)
+
+
+== Cambiamenti ==
+- NVDA abbandona il supporto a Windows Xp e Windows vista, prendendo come sistema operativo minimo Windows 7 Service Pack 1, o Windows Server 2008 R2 Service Pack 1. (#7546)
+- Le finestre di dialogo web nei browser Firefox e Chrome adesso attiveranno in automatico la modalità navigazione, a meno che non ci si trovi all'interno di un'applicazione web. (#4493)
+- In modalità navigazione, sono state rimosse o abbreviate alcune frasi che NVDA annunciava quando si usciva da un elenco o da una tabella per rendere la navigazione più rapida. (#2591)
+- In modalità navigazione per Firefox e Chrome, viene annunciato il nome dei raggruppamenti per i campi dei moduli quando si entra o si esce da essi con il tasto tab o con la navigazione veloce. (#3321)
+- In modalità navigazione, il comando per spostarsi tra gli oggetti incorporati (o e shift+o) ora comprende anche elementi audio e video, ed elementi con ruoli Aria applicazione e finestre di dialogo. (#7239)
+- Espeak-ng è stata aggiornata alla versione 1.49.2. #7583)
+- Una tripla pressione del comando "leggi barra di stato" farà in modo che il contenuto verrà copiato negli appunti. (#1785)
+- Durante l'assegnamento di gesti personalizzati ai tasti dei Display Baum, è ora possibile limitarli al modello specifico in uso, (ad esempio VarioUltra o Pronto). (#7517)
+- Nell'elenco elementi, è stato cambiato il tasto rapido per raggiungere la funzione "filtra per campi", ora assegnato a alt+e. (#7569)
+- è stato aggiunto un comando assegnabile dall'utente per quel che concerne la modalità navigazione per attivare o disattivare la rilevazione delle tabelle di layout. Questo comando si trova nella categoria navigazione della finestra gesti di immissione. (#7634)
+- Aggiornato liblouis braille translator alla versione 3.3.0. (#7565)
+- è stato modificato il tasto caldo per raggiungere il pulsante radio inerente le espressioni regolari nella finestra di dialogo dei dizionari, ora è alt+e. (#6782)
+- I file dei dizionari inerenti la voce ora hanno il loro numero di versione e sono stati spostati nella cartella 'speechDicts/voiceDicts.v1'. (#7592)
+- Quando NVDA viene eseguito direttamente dal file di installazione, non verranno più salvati i file dizionari o di configurazione utente. (#7688)
+- I display braille Braillino, Bookworm e Modular (con firmware vecchio) non sono più supportati nativamente da NVDA. Risulta comunque ancora possibile utilizzarli scaricando il driver universale USB di Handytech ed installando anche il relativo componente aggiuntivo. (#7590)
+
+
+== Bug Corretti ==
+- Vengono ora indicati in braille i link nelle applicazioni quali Microsoft Word. (#6780)
+- NVDA non diventa più molto lento in presenza di diverse schede aperte in Firefox o Chrome. (#3138)
+- Risolto un problema con i tasti cursor routing con il display braille Lilli che facevano spostare il cursore un carattere avanti rispetto alla posizione corretta. (#7469)
+- In Internet Explorer e altri documenti MSHTML, viene supportato l'attributo HTML5 "required", che sta ad indicare nei moduli un campo obbligatorio. (#7321)
+- Ora i display braille si aggiornano correttamente durante la digitazione di caratteri arabi in un documento allineato a sinistra in Wordpad. (#511)
+- in Mozilla Firefox le etichette accessibili relative ai controlli vengono riportate in maniera più leggibile in modalità navigazione. (#4773)
+- in windows 10 Creators Update, NVDA è in grado nuovamente di accedere a Firefox dopo un riavvio dello screen reader. (#7269)
+- Quando si riavvia NVDA con Mozilla Firefox focalizzato,, la modalità navigazione sarà nuovamente disponibile, anche se bisognerà premere alt tab una o due volte per ripristinarne il funzionamento. (#5758)
+- è ora possibile accedere ai contenuti matematici su Google Chrome anche in un sistema dove non è installato Mozilla Firefox. (#7308)
+- Dopo aver installato NVDA, il sistema e le relative applicazioni dovrebbero essere più stabili anche alla prima esecuzione dello screen reader, quando il pc non è ancora stato riavviato. (#7563)
+- Quando si utilizza un comando di riconoscimento testi come l'OCR (NVDA+r), NVDA segnalerà un errore nel caso in cui il navigatore ad oggetti  dovesse trovarsi in un'area invisibile. In precedenza non accadeva nulla. (#7567)
+- Sistemato un problema con lo scorrimento indietro per i display braille Freedom Scientific che dispongono di una bumper bar a sinistra. (#7713)
+
+
+== Cambiamenti per sviluppatori (in inglese) ==
+- "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
+- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
+- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
+- Braille display gestures that emulate system keyboard key modifiers (such as control and alt) can now be combined with other emulated system keyboard keys without explicit definition. (#6213) 
+ - For example, if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
+- The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
+ - See the baum driver as an example for this new functionality.
+- NVDA is now compiled with Visual Studio 2017 and the Windows 10 SDK. (#7568)
+
+
+
+
+
+
+
+
+
+
+
+
 = 2017.3 =
 Le migliorie di questa versione possono essere riassunte nel supporto alle voci incluse in Windows10 chiamate CoreVoices, al supporto per l'OCR incluso in Windows10 per il riconoscimento di testo in documenti e app non accessibili, all'immissione di testo con braille contratto (usato in Stati Uniti e Regno Unito), e moltissimi miglioramenti sulla navigazione web e sul braille.
 
