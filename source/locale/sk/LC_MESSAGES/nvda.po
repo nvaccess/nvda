@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:50-0700\n"
+"POT-Creation-Date: 2017-11-10 00:10+1000\n"
+"PO-Revision-Date: 2017-11-14 11:03+0100\n"
 "Last-Translator: Ondrej rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "Language: sk\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -800,6 +800,11 @@ msgstr "Chorvátsky počítačový 8 bodový brail"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Chorvátština plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Maďarský počítačový 8 bodový brail"
 
@@ -1020,6 +1025,11 @@ msgstr "Tabuľka unicode"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Vietnamčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Čínština (Hong Kong, Kantončina)"
 
@@ -1039,9 +1049,8 @@ msgid "Browse mode"
 msgstr "režim prehliadania"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
-#, fuzzy
 msgid "Unlabeled"
-msgstr "menovka"
+msgstr "Nepomenované"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1543,9 +1552,8 @@ msgstr "&Formuláre"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Buttons"
-msgstr "tlačidlo"
+msgstr "&tlačidlá"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1565,9 +1573,8 @@ msgstr "Typ:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "Filt&er by:"
-msgstr "&Filter:"
+msgstr "Filt&er:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1652,6 +1659,18 @@ msgstr "Prejde do nasledujúceho stĺpca tabuľky."
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "Prejde do predchádzajúceho stĺpca tabuľky."
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "neoznamovať tabuľky formujúce vzhľad"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Oznamovať tabuľky formujúce vzhľad"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Zapína alebo vypína oznamovanie tabuliek formujúcich vzhľad"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2698,23 +2717,22 @@ msgid "Loading NVDA. Please wait..."
 msgstr "Spúšťanie programu NVDA, prosím čakajte..."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
-#, fuzzy
 msgid "Landscape"
-msgstr "escape"
+msgstr "našírku"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr ""
+msgstr "navýšku"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
 msgid "Charging battery. %d percent"
-msgstr ""
+msgstr "Nabíja sa. %d percent"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
 msgid "Not charging battery. %d percent"
-msgstr ""
+msgstr "nenabíja sa. %d percent"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -3707,14 +3725,14 @@ msgid "No status line found"
 msgstr "Stavový riadok nebol nájdený."
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
 "Prečíta stavový riadok aktuálnej aplikácie a premiestni naň navigačný "
-"objekt. Stlačené dvakrát stavový riadok vyhláskuje"
+"objekt. Stlačené dvakrát stavový riadok vyhláskuje a stlačené trikrát "
+"skopíruje obsah do schránky"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -7071,12 +7089,21 @@ msgstr "posunúť displej"
 msgid "line scroll"
 msgstr "posunúť riadok"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Zobrazí konfiguráciu ovládača zariadení Handy Tech"
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Braillovský vstup zapnutý"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Braillovský vstup vypnutý"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Prepnúť braillovský vstup"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7263,8 +7290,8 @@ msgid "Change settings of document properties"
 msgstr "Zmení oznamovanie vlastností dokumentu."
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "rozpoznávanie textu OCR..."
+msgid "&Windows 10 OCR..."
+msgstr "rozpoznávanie textu &OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7621,18 +7648,22 @@ msgid "Add-on Installation"
 msgstr "Inštalácia doplnku"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
-msgstr "Tento doplnok je už nainštalovaný. Chcete ho aktualizovať?"
+msgstr ""
+"Chystáte sa nainštalovať verziu {newVersion} doplnku {summary}, ktorá je už "
+"nainštalovaná. Chcete pokračovať?"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
-msgstr "Tento doplnok je už nainštalovaný. Chcete ho aktualizovať?"
+msgstr ""
+"Tento doplnok je už nainštalovaný. Chcete aktualizovať {summary} verziu "
+"{curVersion} na verziu {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8050,7 +8081,7 @@ msgstr "Skopírovať akt&uálne používateľské nastavenia"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr ""
+msgstr "Po dokončení &Spustiť prenosnú verziu"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -8780,7 +8811,7 @@ msgid "Whole &word"
 msgstr "Iba celé &slová"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "R&egulárny výraz"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -10495,9 +10526,8 @@ msgstr "&Komentáre a zmeny"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Errors"
-msgstr "&chyby"
+msgstr "&Chyby"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10506,3 +10536,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Zobrazí konfiguráciu ovládača zariadení Handy Tech"
