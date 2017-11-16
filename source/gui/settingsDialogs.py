@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Thomas Stivers
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -61,6 +61,7 @@ class SettingsDialog(wx.Dialog):
 	_hasInstance=False
 
 	title = ""
+	helpIDs = {}
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
@@ -89,6 +90,8 @@ class SettingsDialog(wx.Dialog):
 
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onHelp, id=wx.ID_HELP)
+		self.Bind(wx.EVT_HELP, self.onHelp)
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
@@ -123,6 +126,20 @@ class SettingsDialog(wx.Dialog):
 		"""
 		self.Destroy()
 
+	def onHelp(self, evt):
+		import urllib
+		import webbrowser
+		helpFile = gui.getDocFilePath("userGuide.html")
+		helpURL = "file:" + urllib.pathname2url(helpFile)
+		windowID = evt.GetId()
+		# log.debug("windowid=%d helpids=%s" % (windowID, self.helpIDs))
+		if windowID in self.helpIDs.keys():
+			helpURL = "#".join((helpURL, self.helpIDs[windowID]))
+			log.debug("Getting help from %s" % helpURL)
+			webbrowser.open(helpURL)
+		else:
+			evt.Skip()
+
 class GeneralSettingsDialog(SettingsDialog):
 	# Translators: This is the label for the general settings dialog.
 	title = _("General Settings")
@@ -138,13 +155,15 @@ class GeneralSettingsDialog(SettingsDialog):
 	)
 
 	def makeSettings(self, settingsSizer):
+		self.helpIDs[self.GetId()] = "GeneralSettings"
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.languageNames = languageHandler.getAvailableLanguages()
 		languageChoices = [x[1] for x in self.languageNames]
 		# Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 		languageLabelText = _("&Language (requires restart to fully take effect):")
 		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
-		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
+		self.languageList.SetToolTip(languageToolTipText)
+		self.helpIDs[self.languageList.GetId()] = "GeneralSettings"
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
 			index=[x[0] for x in self.languageNames].index(self.oldLanguage)
