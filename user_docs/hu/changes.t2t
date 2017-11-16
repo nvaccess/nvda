@@ -3,6 +3,60 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+
+Ennek a kiadásnak a főbb újdonságai: sok hibajavítás és bővítés a webes technológiák támogatásában, beleértve a webes párbeszédpanelek böngésző módú használatát alapértelmezett beállításként, a mezők címkézésének megbízhatóbb bejelentését, új windows 10-es technológiák támogatását, mint a Windows Defender Application Guard, valamint az ARM-64-en futó windows 10 támogatását, ideértve a képernyő tájolásának automatikus meghatározását és az akkumulátor állapotának bejelentését. Vegyük figyelembe, hogy az NVDA jelen verziójától kezdve nem támogatja a Windows Xp-t vagy a Windows Vistát. Az NVDA használatához minimum Windows 7 service pack 1 szükséges.
+
+== Újdonságok ==
+- Böngészőmódban konténerparancsok használatakor a vessző és a shift vessző billentyűkkel lehetőség van a jelzőpontok átlépésére. (#5482)
+- A Firefoxban, a Chrome-ban és az Internet explorerben a szerkesztőmezőkre, űrlapmezőkre lépő gyors navigációs billentyűk használatával már elérhetők a richtext típusú (pl. content editable) szerkeszthető tartalmak is. (#5534)
+- A böngészőkben az elemlista már megjeleníti az űrlapmezőket és a gombokat is. (#588)
+- A Windows 10 ARM-64 rendszer Alapvető támogatása (#7508)
+- Kindle könyvekben a matematikai tartalom olvasása és interaktív navigáció kezdeti támogatása hozzáférhető matematikai képletekkel. (#7536)
+- Az Azardi e-book reader támogatása megvalósult. (#5848)
+- A program már megfelelően bejelenti a bővítmények verzióját, ha frissítik őket. (#5324)
+- Új parancssori paramétereket adtak hozzá a fejlesztők, hogy hordozható NVDA-változatot készítsünk. (#6329)
+- Megvalósult a Microsoft Edge támogatása abban az esetben, ha azt a Windows Defender elszigetelten, védett módban futtatja, feltéve, hogy Windows 10 Fall Creators Update van a gépen. (#7600)
+- Ha az NVDA-t laptopon vagy tableten futtatjuk, most már bemondja azt is, ha csatlakoztatjuk vagy leválasztjuk a töltőt, valamint, ha a képernyőtájolás megváltozik. (#4574, #4612)
+- Új nyelv: macedón.
+- Új braille fordítási táblák: horvát 1-es fokozat, Vietnami 1-es fokozat. (#7518, #7565)
+- Hozzáadták a Handy Tech Actilino braille kijelzőjének a támogatását. (#7590)
+- Most már támogatják a Handitech braille kijelzőkön a braille bevitelt. (#7590)
+
+
+== Változások ==
+- Az NVDA legrégebbiként  a Windows 7 Service Pack 1, vagy a Windows Server 2008 R2 Service Pack 1 operációs rendszereket támogatja. (#7546)
+- Az NVDA a webes párbeszédpaneleket most már Chrome-ban és Firefoxban automatikusan böngészőmódban jeleníti meg, kivéve a webes alkalmazásokat. (#4493)
+- Ha a tabbal vagy a gyorsnavigációval mozgunk, az NVDA már nem mondja be, hogy kilépett a különféle konténerekből, mint a listák, táblázatok, így a navigációt sokkal hatékonyabbá teszi. (#2591)
+- Firefoxban és Chrome-ban az NVDA már gyorsnavigáció vagy tab használata esetén is bemondja az űrlapmezők csoportjának nevét, ha rájuk lépünk. (#3321)
+- A beágyazott objektumok gyorsnavigációs billentyűparancsa böngészőmódban (o és shift+o) már tartalmazza az audió- és videó-elemeket is, illetve az olyan objektumokat, ahol az Aria role alkalmazás vagy párbeszédpanel. (#7239)
+- Az Espeak-ng frissült az  1.49.2 verzióra, ezzel sok olyan problémát oldottak meg, melyek a korábbi összeállítások készítésekor még megvoltak. (#7385, #7583)
+- Ha az eszköztár felolvasása parancsot harmadjára is alkalmazzuk, a program a tartalmat kimásolja a vágólapra. (#1785)
+- Ha egy Baum braille kijelzőn beviteli parancsokat adunk meg, azokat korlátozhatjuk az éppen használatban lévő modellre (pl. VarioUltra vagy Pronto). (#7517)
+- Böngészőmódban az elemlista mezőszűrő-parancsa alt+f helyett alt+e. (#7569)
+- Most már billentyűparanccsal is vezérelhető a rétegződő táblázatok jelzése opció. Alapértelmezés szerint nincs parancs hozzárendelve, de az opció megtalálható a beviteli parancsok párbeszédpanel böngészőmód kategóriájában. (#7634)
+- Frissült a liblouis braille fordító a 3.3.0 verzióra. (#7565)
+- A regex kifejezés rádiógombjának billentyűparancsa (angol nyelvű interfész használata esetén) a szótár párbeszédpanelen alt+e-ről alt+r-re változott. (#6782)
+- A hangkarakter kivételszótár fájljai el lettek látva verziószámmal és átkerültek a 'speechDicts/voiceDicts.v1' könyvtárba. (#7592)
+- A verziószámmal ellátott fájlokat (pl .konfigurációs fájlokat, hangkarakter kivételszótárakat) a program nem módosítja, ha az NVDA valamely verzióját telepítés nélkül futtatjuk.  (#7688)
+- A Braillino, Bookworm és Modular (régi firmware-rel rendelkező) Handy Tech braille kijelzőket az NVDA már közvetlenül beépítve nem támogatja, telepíteni kell a Handy Tech Universal Drivert és NVDA bővítményt a használatukhoz. (#7590)
+
+
+== Javítások ==
+- A linkek már braille-ben is megjelennek az alkalmazásokban, pl. a Microsoft Wordben. (#6780)
+- Az NVDA már nem lassul le érzékelhetően, ha a Firefoxban vagy a Chrome-ban több fület nyitunk meg. (#3138)
+- Az MD V Lilli Braille kijelzők kurzormozgatása immár helyesen történik. (#7469)
+- Az internet explorerben és más MSHTML dokumentumokban a program megfelelően kezeli a html5 "required" attribútumát, így egy űrlapmezőről megfelelően meg tudja állapítani, hogy kitöltése szükséges. (#7321)
+- A braille kijelzők megfelelően frissülnek, ha arab karaktereket írunk egy balra igazított wordpad dokumentumban. (#511)
+- A program most már sokkal megbízhatóbban jelenti be firefoxban a vezérlőelemek hozzáférhető címkéit, ha azok nem egymagukban állnak. (#4773)
+- A Windows 10 Creators update esetén az NVDA most már újra hozzá tud férni a firefoxhoz, ha az nvda-t újraindítjuk. (#7269)
+Ha a firefox van fókuszban és újraindítjuk az NVDA-t, a böngészőmód újra elérhető, de elképzelhető, hogy ehhez használni kell az alt+tabot, majd vissza kell térni a firefoxra. (#5758)
+- Most már hozzáférhetünk Google Chrome-ban a matematikai képletekhez anélkül, hogy a firefoxot telepíteni kellene. (#7308)
+- Ha ezt az NVDA-verziót összevetjük az előzőkkel, közvetlenül a telepítés után, a gép újraindítását megelőzően az NVDA sokkal stabilabb és megbízhatóbb lett. (#7563)
+- Ha egy tartalomfelismerő parancsot használunk (pl. NVDA +r) miközben a navigátor kurzor eleme bármi okból eltűnik, az NVDA hibaüzenettel válaszol, korábban ilyen esetben nem jelzett semmit. (#7567)
+- A baloldali ütközővel rendelkező Freedom Scientific Braille kijelzők visszafelé görgetése immár hibamentes. (#7713)
+
+
 = 2017.3 =
 
 Ebben a kiadásban: rövidírásos braille-bevitel, támogatás a Windows OneCore hangokhoz Windows 10 alatt, beépített támogatás a Windows 10 OCR használatához, és még sok fejlesztés a braille és a web kapcsán.
