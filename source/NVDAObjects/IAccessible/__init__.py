@@ -1060,9 +1060,13 @@ the NVDAObject for IAccessible
 		raise NotImplementedError
 
 	def _get_rowNumber(self):
-		index=self.IA2Attributes.get('rowindex')
+		index=self.IA2Attributes.get('rowtext')
+		if index is None:
+			index=self.IA2Attributes.get('rowindex')
 		if index is None and isinstance(self.parent,IAccessible):
-			index=self.parent.IA2Attributes.get('rowindex')
+			index=self.parent.IA2Attributes.get('rowtext')
+			if index is None:
+				index=self.parent.IA2Attributes.get('rowindex')
 		if index is None:
 			index=self.IA2PhysicalRowNumber
 		return index
@@ -1085,7 +1089,9 @@ the NVDAObject for IAccessible
 		raise NotImplementedError
 
 	def _get_columnNumber(self):
-		index=self.IA2Attributes.get('colindex')
+		index=self.IA2Attributes.get('coltext')
+		if index is None:
+			index=self.IA2Attributes.get('colindex')
 		if index is None:
 			index=self.IA2PhysicalColumnNumber
 		return index
