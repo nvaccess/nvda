@@ -53,7 +53,6 @@ class HyperlinkGetter {
 	virtual IAccessibleHyperlinkPtr next();
 
 	protected:
-	long count;
 	long index = 0;
 	virtual IAccessibleHyperlinkPtr get(const unsigned long index) = 0;
 };
@@ -84,6 +83,8 @@ class Ht2HyperlinkGetter: public HyperlinkGetter {
 	private:
 	IAccessibleHypertext2Ptr hypertext;
 	IAccessibleHyperlink** rawLinks = nullptr;
+	long count;
+	void maybeFetch();
 };
 
 /**

@@ -49,41 +49,61 @@ void IA2AttribsToMap(const wstring &attribsString, map<wstring, wstring> &attrib
 }
 
 IAccessibleHyperlinkPtr HyperlinkGetter::next() {
-	if (this->index >= this->count) {
-		return nullptr;
-	}
 	return this->get(this->index++);
 }
 
 HtHyperlinkGetter::HtHyperlinkGetter(IAccessibleHypertextPtr hypertext)
 	: hypertext(hypertext)
 {
-	if (FAILED(hypertext->get_nHyperlinks(&this->count))) {
-		this->count = 0;
-	}
 }
 
 IAccessibleHyperlinkPtr HtHyperlinkGetter::get(const unsigned long index) {
 	IAccessibleHyperlinkPtr link;
-	this->hypertext->get_hyperlink(index, &link);
+	// hyperlink will fail or return null if the index is too big. The caller
+	// is probably only calling us when it encounters an embedded object
+	// character anyway.
+	// Thus, we don't need to call nHyperlinks.
+	HRESULT res = this->hypertext->get_hyperlink(index, &link);
+	if (FAILED(res) || !link) {
+		return nullptr;
+	}
 	return link;
 }
 
 Ht2HyperlinkGetter::Ht2HyperlinkGetter(IAccessibleHypertext2Ptr hypertext)
-	: hypertext(hypertext)
+	: hypertext(hypertext), count(-1)
 {
+	// count -1 means hyperlinks haven't been fetched yet.
+	// See maybeFetch().
+}
+
+void Ht2HyperlinkGetter::maybeFetch() {
+	// We lazily fetch hyperlinks the first time get() is called.
+	// This avoids a pointless COM call in the case where there are no hyperlinks,
+	// since the caller probably only calls when it encounters an
+	// embedded object character.
+	if (this->count >= 0) {
+		// Already fetched.
+		return;
+	}
 	if (FAILED(hypertext->get_hyperlinks(&this->rawLinks, &this->count))) {
 		this->count = 0;
 	}
 }
 
 IAccessibleHyperlinkPtr Ht2HyperlinkGetter::get(const unsigned long index) {
+	this->maybeFetch();
+	if ((long)index >= this->count) {
+		return nullptr;
+	}
 	// Ensure we don't AddRef this pointer.
 	return IAccessibleHyperlinkPtr(this->rawLinks[index], false);
 }
 
 Ht2HyperlinkGetter::~Ht2HyperlinkGetter() {
-	CoTaskMemFree(this->rawLinks);
+	if (this->rawLinks) {
+		CoTaskMemFree(this->rawLinks);
+	}
 }
 
 // We use a unique_ptr so we can have a polymorphic, optional return.
