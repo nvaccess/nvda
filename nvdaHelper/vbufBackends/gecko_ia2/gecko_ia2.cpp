@@ -704,16 +704,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if(parentPresentationalRowNumber) 
 		parentNode->addAttribute(L"table-rownumber",parentPresentationalRowNumber);
 	const wchar_t* presentationalRowNumber=NULL;
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex")) != IA2AttribsMap.end()) {
+	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowtext")) != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-rownumber",IA2AttribsMapIt->second);
+		presentationalRowNumber=IA2AttribsMapIt->second.c_str();
+	} else if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex")) != IA2AttribsMap.end()) {
 		parentNode->addAttribute(L"table-rownumber",IA2AttribsMapIt->second);
 		presentationalRowNumber=IA2AttribsMapIt->second.c_str();
 	}
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colindex")) != IA2AttribsMap.end())
+	if((IA2AttribsMapIt = IA2AttribsMap.find(L"coltext")) != IA2AttribsMap.end()) {
 		parentNode->addAttribute(L"table-columnnumber",IA2AttribsMapIt->second);
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount")) != IA2AttribsMap.end())
+	} else if((IA2AttribsMapIt = IA2AttribsMap.find(L"colindex")) != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-columnnumber",IA2AttribsMapIt->second);
+	}
+	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount")) != IA2AttribsMap.end()) {
 		parentNode->addAttribute(L"table-rowcount",IA2AttribsMapIt->second);
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colcount")) != IA2AttribsMap.end())
+	}
+	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colcount")) != IA2AttribsMap.end()) {
 		parentNode->addAttribute(L"table-columncount",IA2AttribsMapIt->second);
+	}
 
 	BSTR value=NULL;
 	if(pacc->get_accValue(varChild,&value)==S_OK) {
