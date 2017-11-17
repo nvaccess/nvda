@@ -22,7 +22,6 @@ bool installIA2Support();
 bool uninstallIA2Support();
 
 //Private functions
-bool IA2Support_initialize();
 void IA2Support_inProcess_initialize();
 void IA2Support_inProcess_terminate();
 

@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 11:51+1000\n"
-"PO-Revision-Date: 2016-08-21 00:34+0100\n"
-"Last-Translator: OAron <info@o-soft.hu>\n"
+"POT-Creation-Date: 2017-11-10 00:10+1000\n"
+"PO-Revision-Date: 2017-11-10 11:50+0100\n"
+"Last-Translator: Oaron <oaron1@gmail.com>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Teszt megjegyzés
@@ -94,35 +94,42 @@ msgid "Error in appModule %s"
 msgstr "Hiba történt a(z) %s alkalmazás szkriptjében"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "Főcím"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "Kiegészítő"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
 msgstr "Tartalom lábléc"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "fő"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "navigáció"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "keresés"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "űrlap"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "Terület"
 
@@ -141,15 +148,431 @@ msgstr "Csak amikor az NVDA használja a hangkimenetet"
 msgid "Always duck"
 msgstr "Mindig"
 
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "ablk"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "pbp"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "jn"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "rgb"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "szm"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "gb"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "mnüs"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "mnüe"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mnü"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "klm"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lm"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "ábra"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "súgó"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "etip"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "hv"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "fn"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "fne"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "fül"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "foly"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "gs"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "ás"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "tbl"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "et"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "lngb"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "idéz"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "dok"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "alk"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "csop"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "beobj"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "végj"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "lábj"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "psor"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "szksz"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "tgb"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "ogb"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "mnügb"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "lgb"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "fngb"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "tlt"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "jlsz"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "kij"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "ol"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "amnü"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "köt"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "érvn"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "tbsor"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "kat"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "rendn"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "rendcs"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "hleir"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "képl"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "megj"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "nkij"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "főcím"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "kieg"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "tart"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "fő"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "nav"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "kers"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "űrlap"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "tlt"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "7. és 8. pont"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "8. pont"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Minden pont"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "Csak a változások"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "A lehető legtöbb információ"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "Csak visszagörgetéssel"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "c%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "mhv"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "nincs %s"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} per {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "%s szt"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "s%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "o%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "%s vége"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatikus"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "pont"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "szóköz ponttal"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "szóköz"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "Braille billentyűzet"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "Szóköz bármelyik ponttal"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "Bármelyik pont"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "Arab, rövidítési fokozat 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Perzsa, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -180,6 +603,11 @@ msgstr "Velszi, rövidítési fokozat 2"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "Cseh, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "Dán 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -223,6 +651,11 @@ msgstr "Német, rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "Görög, ((görögországi)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "Angol (Egyesült Királysági), nyolc pontos számítógépes braille"
 
@@ -235,6 +668,16 @@ msgstr "Angol (Egyesült Királyságbeli), rövidítési fokozat 1"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "Angol (Egyesült Királyságbeli), rövidítési fokozat 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "Egységes angol braille kód, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "Egységes angol braille kód, rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -275,6 +718,16 @@ msgstr "Észt, rövidítési fokozat 0"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "Etióp, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "Perzsa 8 pontos számítógépes braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "Perzsa, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -333,11 +786,6 @@ msgstr "Koiné Görög"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "Görög, rövidítési fokozat 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Hebrew 8 dot computer braille"
 msgstr "Héber 8 pontos számítógépes braille"
 
@@ -350,6 +798,11 @@ msgstr "Hindi, rövidítési fokozat 1"
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
 msgstr "Horvát 8 pontos számítógépes braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Horvát, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -408,6 +861,11 @@ msgstr "kasmíri, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Lithuanian"
+msgstr "Litván"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Latvian grade 1"
 msgstr "Lett, rövidítési fokozat 1"
 
@@ -433,13 +891,13 @@ msgstr "marathi, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) grade 1"
-msgstr "Holland (belgiumi), rövidítési fokozat 1"
+msgid "Dutch (Belgium)"
+msgstr "Holland (belgiumi)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Netherlands) grade 1"
-msgstr "Holland (hollandiai), rövidítési fokozat 1"
+msgid "Dutch (Netherlands)"
+msgstr "Holland (hollandiai)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -533,7 +991,12 @@ msgstr "Szlovák, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "Szlovén 8 pontos számítógépes braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
 msgstr "Szlovén, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -548,8 +1011,8 @@ msgstr "Tamil, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Telegu grade 1"
-msgstr "Telegu, rövidítési fokozat 1"
+msgid "Telugu grade 1"
+msgstr "Telugu, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -558,13 +1021,13 @@ msgstr "Török, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "Egységes angol braille kód, rövidítési fokozat 1"
+msgid "Unicode braille"
+msgstr "Unicode braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "Egységes angol braille kód, rövidítési fokozat 2"
+msgid "Vietnamese grade 1"
+msgstr "Vietnami, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -576,207 +1039,19 @@ msgstr "kínai (Hong Kong, kantoni)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Kínai (Taiwan, Mandarin)"
 
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "szm"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "lm"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "mnüs"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "mnü"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "gb"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "jn"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "rgb"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "klm"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "hv"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "pbp"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "fn"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tbl"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "ábra"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "kv"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "almenü"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "ol"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "kat"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "7. és 8. pont"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "8. pont"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "Minden pont"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "c%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "mhv"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "nincs %s"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} per {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "%s szt"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "s%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "o%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "%s vége"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatikus"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "braille"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "szóköz ponttal"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "pont"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "szóköz"
-
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "Fókuszmód"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Böngészőmód"
+
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "Címkézetlen"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -797,6 +1072,7 @@ msgstr ""
 "navigációs billentyűket is az aktív alkalmazás kezeli."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Ebben a dokumentumban nem támogatott."
 
@@ -1240,18 +1516,50 @@ msgstr "Az előző mellékszöveghez lép."
 msgid "no previous annotation"
 msgstr "Nincs előző mellékszöveg."
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "A következő hibához lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "Nincs következő hiba"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "Az előző hibához lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "Nincs előző hiba"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lin&ks"
 msgstr "&Hivatkozások"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Címsorok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Űrlapmezők"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Gombok"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Lan&dmarks"
 msgstr "&Jelzőpontok"
 
@@ -1266,7 +1574,7 @@ msgstr "Típus:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
+msgid "Filt&er by:"
 msgstr "&Szűrés:"
 
 #. Translators: The label of a button to activate an element
@@ -1279,12 +1587,17 @@ msgstr "&Aktiválás"
 msgid "&Move to"
 msgstr "&Ugrás"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
 msgstr "%s jelzőpont"
 
+#. Translators: This is brailled to indicate a landmark (example output: lmk main).
+#, python-format
+msgid "lmk %s"
+msgstr "%s jp"
+
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "%s Kijelölve"
@@ -1299,8 +1612,8 @@ msgstr "Megmutatja a bővebb leírást, ha létezik a jelenlegi pozíciónál."
 
 # a fordítás rossz volt, és szó szerinti fordítással itt semmire sem megyünk.
 # Értelemszerűen javítottam.
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Ez a parancs csak elemblokkban használható"
 
@@ -1318,6 +1631,45 @@ msgstr "Alja"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Egy elemblokk (pl. lista vagy táblázat) végére ugrik"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Csak táblázatban használható"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "a táblázat széle"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "A táblázat következő sorához lép."
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "A táblázat előző sorához lép."
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "A táblázat következő oszlopához lép."
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "A táblázat előző oszlopához lép."
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Rétegződő táblázatok jelzése kikapcsolva"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Rétegződő táblázatok jelzése bekapcsolva"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Rétegződő táblázatok jelzésének be és kikapcsolása"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1696,6 +2048,7 @@ msgid "row"
 msgstr "sor"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
+#. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
 msgstr "keret"
 
@@ -1722,6 +2075,10 @@ msgstr "óra"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "elválasztó"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "űrlap"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -1905,7 +2262,7 @@ msgstr "gördítősáv"
 
 #. Translators: Identifies a section of text.
 msgid "section"
-msgstr "bekezdés"
+msgstr "szakasz"
 
 #. Translators: Identifies a shape.
 msgid "shape"
@@ -1940,7 +2297,7 @@ msgstr "szegély"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
-msgstr "fölfelényíl"
+msgstr "rendszerkurzor"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
@@ -2023,10 +2380,6 @@ msgstr "ikon az asztalon"
 msgid "alert"
 msgstr "figyelmeztetés"
 
-#. Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
-msgid "IFrame"
-msgstr "dinamikus keret"
-
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
 msgstr "asztal"
@@ -2075,8 +2428,9 @@ msgid "bold"
 msgstr "félkövér"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
-msgstr "Dőlt"
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "dőlt"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2129,6 +2483,12 @@ msgstr "Lapvezérlő"
 
 msgid "calendar"
 msgstr "Naptár"
+
+msgid "video"
+msgstr "video"
+
+msgid "audio"
+msgstr "audio"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2296,9 +2656,37 @@ msgstr "Zárolt"
 msgid "not selected"
 msgstr "Nincs kijelölve"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "nincs lenyomva"
+
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
 msgstr "Nincs bejelölve"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "aktuális"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "aktuális oldal"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "aktuális lépés"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "aktuális hely"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "aktuális dátum"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "aktuális idő"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2326,6 +2714,24 @@ msgstr "NVDA parancsfájl hiba"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Az NVDA betöltése folyamatban, kérem, várjon..."
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Fekvő"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Álló"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Akkumulátortöltés %d százalék"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "A töltő leválasztva %d százalék"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -2477,8 +2883,12 @@ msgstr "Alvó mód be és kikapcsolása az aktív alkalmazásban"
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr "Felolvassa a kurzor alatti sort. Kétszer gyorsan megnyomva betűzi ezt."
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
+msgstr ""
+"Felolvassa a kurzor alatti sort. Kétszer gyorsan megnyomva betűzi azt. "
+"Háromszori megnyomás esetén a betűzés a karakterleírások használatával "
+"történik."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2735,17 +3145,25 @@ msgstr "Sorszámok bemondása bekapcsolva"
 msgid "Toggles on and off the reporting of line numbers"
 msgstr "Sorszámok bemondásának  be és kikapcsolása"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation off"
-msgstr "Behúzás bemondása kikapcsolva"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech"
+msgstr "Behúzás jelzése beszéddel"
 
-#. Translators: The message announced when toggling the report line indentation document formatting setting.
-msgid "report line indentation on"
-msgstr "Behúzás bemondása bekapcsolva"
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with tones"
+msgstr "Behúzás jelzése hangjelzéssel"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation with speech and tones"
+msgstr "Behúzás jelzése beszéddel és hangjelzéssel"
+
+#. Translators: A message reported when cycling through line indentation settings.
+msgid "Report line indentation off"
+msgstr "Behúzás jelzése kikapcsolva"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-msgid "Toggles on and off the reporting of line indentation"
-msgstr "Behúzás bemondásának be és kikapcsolása"
+msgid "Cycles through line indentation settings"
+msgstr "Váltás a behúzás jelzési módjai közt"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
@@ -2980,6 +3398,7 @@ msgid "No navigator object"
 msgstr "Nincs elem a navigátor kurzornál"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s. A vágólapra másolva."
@@ -3256,6 +3675,10 @@ msgstr ""
 msgid "Quits NVDA!"
 msgstr "kilép az NVDA programból"
 
+#. Translators: Input help mode message for restart NVDA command.
+msgid "Restarts NVDA!"
+msgstr "Az NVDA újraindítása"
+
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
 msgstr "Megnyitja az NVDA menüjét."
@@ -3302,10 +3725,12 @@ msgstr "Az állapotsor nem található."
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Bemondja az aktív alkalmazás állapotsorát és a navigátor kurzort is oda "
-"viszi. Kétszeri megnyomásra betűzi azt."
+"viszi. Kétszeri megnyomásra betűzi azt. Háromszori megnyomásra az állapotsor "
+"szövegét a vágólapra másolja."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3578,6 +4003,7 @@ msgid "review"
 msgstr "Áttekintő kurzor"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
+#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 msgid "focus"
 msgstr "aktív elem"
 
@@ -3591,6 +4017,17 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Váltás az áttekintő kurzor és a kurzor követése között egy braille kijelző "
 "használatakor"
+
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Információk az aktív elemről: %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "Beállítja az információk megjelenését az aktív elemről"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -3708,6 +4145,18 @@ msgstr "Braille pontokat visz be a braille billentyűzet segítségével"
 msgid "Moves the braille display to the current focus"
 msgstr "A braille kurzor áthelyezése az aktív elemhez."
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "Törli az utoljára bevitt braille cellát vagy karaktert."
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr "Braille bemenet lefordítása és az enter leütése"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "Braille bemenet lefordítása"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Bővítmények újratöltve."
@@ -3765,6 +4214,17 @@ msgstr "Nem matematikai tartalom"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Belép a matematikai áttekintőbe"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "A Windows 10 OCR nem elérhető"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr ""
+"A navigátor kurzornál található elem tartalmának felismerése Windows 10 OCR "
+"segítségével"
 
 # szerintem ezzel a szöveggel a felhasználó sosem találkozhat, ez csak egy
 # belső függvény dokumentációs szövege, talán nem is kéne lokalizálni
@@ -4189,13 +4649,1068 @@ msgstr "alapértelmezett nyelv"
 msgid "%s cursor"
 msgstr "%s kurzor"
 
-#. Translators: The description of the NVDA service.
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "10-point star"
+msgstr "Csillag: 10 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "12-point star"
+msgstr "Csillag: 12 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "16-point star"
+msgstr "Csillag: 16 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "24-point star"
+msgstr "Csillag: 24 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "32-point star"
+msgstr "Csillag: 32 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "4-point star"
+msgstr "Csillag: 4 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "5-point star"
+msgstr "Csillag: 5 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "6-point star"
+msgstr "Csillag: 6 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "7-point star"
+msgstr "Csillag: 7 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "8-point star"
+msgstr "Csillag: 8 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arc"
+msgstr "Ív"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Balloon"
+msgstr "Ballon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent arrow"
+msgstr "Nyíl: kanyarodó"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent Up Arrow"
+msgstr "Nyíl: felfelé kanyarodó"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bevel"
+msgstr "Téglalap: fazettás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Block arc"
+msgstr "Szalagív"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Can"
+msgstr "Henger"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Plus symbol"
+msgstr "Grafikon: pluszjel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Star Symbol"
+msgstr "Grafikon: csillag"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart X Symbol"
+msgstr "Grafikon: X"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chevron"
+msgstr "Nyíl: sávnyíl"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circle with line through center"
+msgstr "Körszelet"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circular Arrow"
+msgstr "Nyíl: körkörös"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud shape"
+msgstr "Felhő"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud callout"
+msgstr "Gondolatbuborék: felhő"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Corner"
+msgstr "L alak"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "four snipped corners"
+msgstr "Négy levágott sarok"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cross"
+msgstr "Kereszt"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cube"
+msgstr "Kocka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Down Arrow"
+msgstr "Nyíl: szalag, lefelé mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon banner"
+msgstr "Szalag: billentett"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Left Arrow"
+msgstr "Nyíl: szalag, balra mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Right Arrow"
+msgstr "Nyíl: szalag, jobbra mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Arrow"
+msgstr "Nyíl: szalag, felfelé mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Ribbon banner"
+msgstr "Szalag: íves és billentett"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decagon"
+msgstr "Tízszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diagonal stripe"
+msgstr "Ferde trapéz"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diamond"
+msgstr "Rombusz"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Dodecagon"
+msgstr "Tizenkétszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Donut"
+msgstr "Kör: üres"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double brace"
+msgstr "Kapcsos zárójel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double bracket"
+msgstr "Nagy zárójel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double wave"
+msgstr "Kettős hullám"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Down Arrow"
+msgstr "Nyíl: lefelé mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Down Arrow"
+msgstr "Felirat: lefelé mutató nyíllal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Explosion"
+msgstr "Robbanás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Alternate process flowchart symbol"
+msgstr "Folyamatábra: másik feldolgozás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Card flowchart symbol"
+msgstr "Folyamatábra: lyukkártya"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Collate flowchart symbol"
+msgstr "Folyamatábra: válogatás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Connector flowchart symbol"
+msgstr "Folyamatábra: bekötés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Data flowchart symbol"
+msgstr "Folyamatábra: adatok"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decision flowchart symbol"
+msgstr "Folyamatábra: döntés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Delay flowchart symbol"
+msgstr "Folyamatábra: késleltetés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Direct access storage flowchart symbol"
+msgstr "Folyamatábra: Közvetlen elérésű tárolás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Display flowchart symbol"
+msgstr "Folyamatábra: kijelzés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Document flowchart symbol"
+msgstr "Folyamatábra: dokumentum"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Extract flowchart symbol"
+msgstr "Folyamatábra: Kigyűjtés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Internal storage flowchart symbol"
+msgstr "Folyamatábra: belső tárolás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Magnetic disk flowchart symbol"
+msgstr "Folyamatábra: mágneslemez"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual input flowchart symbol"
+msgstr "Folyamatábra: kézi adatbevitel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual operation flowchart symbol"
+msgstr "Folyamatábra: kézi művelet"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Merge flowchart symbol"
+msgstr "Folyamatábra: egyesítés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Multi-document flowchart symbol"
+msgstr "Folyamatábra: dokumentáció"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Offline storage flowchart symbol"
+msgstr "Folyamatábra: offline tárolás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Off-page connector flowchart symbol"
+msgstr "Folyamatábra: külső bekötés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'Or' flowchart symbol"
+msgstr "Folyamatábra: vagy"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Predefined process flowchart symbol"
+msgstr "Folyamatábra: előírt feldolgozás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Preparation flowchart symbol"
+msgstr "Folyamatábra: előkészítés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Process flowchart symbol"
+msgstr "Folyamatábra: feldolgozás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Punched tape flowchart symbol"
+msgstr "Folyamatábra: lyukszalag"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sequential access storage flowchart symbol"
+msgstr "Folyamatábra: Soros elérésű tárolás"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sort flowchart symbol"
+msgstr "Folyamatábra: rendezés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Stored data flowchart symbol"
+msgstr "Folyamatábra: tárolt adatok"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Summing junction flowchart symbol"
+msgstr "Folyamatábra: összegzés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Terminator flowchart symbol"
+msgstr "Folyamatábra: befejezés"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Folded corner"
+msgstr "Téglalap: szamárfül"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular picture frame"
+msgstr "Keret"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Funnel"
+msgstr "Kúp"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with six teeth"
+msgstr "Fogaskerék, 6 fogú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with nine teeth"
+msgstr "Fogaskerék, 9 fogú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Half of rectangular picture frame"
+msgstr "Fél keret"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heart"
+msgstr "Szív"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heptagon"
+msgstr "Hétszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Hexagon"
+msgstr "Hatszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Horizontal scroll"
+msgstr "Tekercs: vízszintes"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Isosceles triangle"
+msgstr "Háromszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left Arrow"
+msgstr "Nyíl: balra mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Left Arrow"
+msgstr "Felirat: balra mutató nyíllal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left brace"
+msgstr "Bal oldali kapcsos zárójel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left bracket"
+msgstr "Bal oldali szögletes zárójel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Counter-clockwise Circular arrow"
+msgstr "Nyíl: körkörös, az óramutató járásával ellentétes"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended horizontal Arrow"
+msgstr "Nyíl: balra-jobbra mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Double-ended horizontal Arrow"
+msgstr "Felirat: balra-jobbra mutató nyíllal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Circular arrow"
+msgstr "Nyíl: körkörös, kétvégű"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon with left and right arrows"
+msgstr "Nyíl: szalag, balra és jobbra mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left right and up Arrows"
+msgstr "Nyíl: balra-jobbra-felfelé mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left and up Arrows"
+msgstr "Nyíl: balra-felfelé mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Lightning bolt"
+msgstr "Villám"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line Callout"
+msgstr "Felirat: vonal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal accent bar"
+msgstr "Felirat: vízszintes kiemelősávval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border and horizontal accent bar"
+msgstr "Felirat: kerettel és vízszintes kiemelősávval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal line"
+msgstr "Felirat: vízszintes vonal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal straight line"
+msgstr "Felirat: vonal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal callout line and accent bar"
+msgstr "Felirat: vonal kiemelősávval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, diagonal straight line and accent bar"
+msgstr "Felirat: vonal kerettel és kiemelősávval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and diagonal callout line"
+msgstr "Felirat: vonal keret nélkül"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled line"
+msgstr "Felirat: íves vonal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled callout line and accent bar"
+msgstr "Felirat: íves vonal kiemelősávval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, angled callout line, and accent bar"
+msgstr "Felirat: íves vonal kerettel és kiemelősávval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and angled callout line"
+msgstr "Felirat: íves vonal keret nélkül"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with callout line segments forming a U-shape"
+msgstr "Felirat: kettős íves vonal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with accent bar and callout line segments forming a U-shape"
+msgstr "Felirat: kettős íves vonal kiemelősávval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
 msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"Ezzel a lehetőséggel az NVDA futtatható a bejelentkező, UAC és egyéb  "
-"biztonsági képernyők használatakor."
+"Callout with border, accent bar, and callout line segments forming a U-shape"
+msgstr "Felirat: kettős íves vonal kerettel és kiemelősávval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and callout line segments forming a U-shape"
+msgstr "Felirat: kettős íves vonal keret nélkül"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line inverse"
+msgstr "Inverz vonal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Division symbol"
+msgstr "Osztás jele"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Equivalence symbol"
+msgstr "Egyenlőségjel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Subtraction symbol"
+msgstr "Kivonás jele"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Multiplication symbol"
+msgstr "Szorzás jele"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Non-equivalence symbol"
+msgstr "Nem egyenlő"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Addition symbol"
+msgstr "Összeadás jele"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Moon"
+msgstr "Hold"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid with asymmetrical non-parallel sides"
+msgstr "Aszimmetrikus trapéz"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'No' symbol"
+msgstr "Tilos tábla"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Notched RightArrow"
+msgstr "Nyíl: vágott, jobbra mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Octagon"
+msgstr "Nyolcszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval"
+msgstr "Elipszis"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval-shaped callout"
+msgstr "Beszédbuborék, elipszis"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Parallelogram"
+msgstr "Romboid"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Pentagon"
+msgstr "Ötszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Incomplete Pie with wedge missing"
+msgstr "Körcikk"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Quarter Pie Wedge"
+msgstr "Negyed körcikk"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque"
+msgstr "Névtábla"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque Tabs"
+msgstr "Névtáblák"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arrows pointing left right up and down"
+msgstr "Nyíl, 4 ágú"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Arrows pointing left right up and down"
+msgstr "Felirat: 4 ágú nyíllal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle"
+msgstr "Téglalap"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular callout"
+msgstr "Beszédbuborék, négyszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow"
+msgstr "Nyíl: jobbra mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Right Arrow"
+msgstr "Felirat: jobbra mutató nyíllal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right brace"
+msgstr "Jobb oldali kapcsos zárójel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right bracket"
+msgstr "Jobb oldali szögletes zárójel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right triangle"
+msgstr "Derékszögű háromszög"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one rounded corner"
+msgstr "Téglalap: egy sarkán lekerekítve"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two rounded corners diagonally-opposed"
+msgstr "Téglalap: átellenes sarkain lekerekítve"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two-rounded corners that share a side"
+msgstr "Téglalap: Felső két sarkán lekerekítve"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle"
+msgstr "Téglalap: lekerekített"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle-shaped callout"
+msgstr "Beszédbuborék: lekerekített sarkú téglalap"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Smiley face"
+msgstr "Mosolygó arc"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner"
+msgstr "Téglalap: egy sarkán levágva"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners diagonally-opposed"
+msgstr "Téglalap: átellenes sarkain levágva"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners that share a side"
+msgstr "Téglalap: felső két sarkán levágva"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner and one rounded corner"
+msgstr "Téglalap: fent egyik sarkán lekerekítve, a másik sarkán levágva"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Four small squares that define a rectangular shape"
+msgstr "Téglalap: négy kis sarok"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow with Stripes"
+msgstr "Nyíl: szaggatott, jobbra mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sun"
+msgstr "Nap"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved arrow"
+msgstr "Nyíl: kanyarodó"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Water droplet"
+msgstr "Könnycsepp"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid"
+msgstr "Trapéz"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Up Arrow"
+msgstr "Nyíl: felfelé mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with UpArrow"
+msgstr "Felirat: felfelé mutató nyíllal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Arrow pointing up and down"
+msgstr "Nyíl: felfelé-lefelé mutató"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with arrows that point up and down"
+msgstr "Felirat: felfelé-lefelé mutató nyíllal"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "U-shaped Arrow"
+msgstr "Nyíl: visszakanyarodó"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Vertical scroll"
+msgstr "Tekercs: függőleges"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Wave"
+msgstr "Hullám"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Back"
+msgstr "Akciógomb: Vissza vagy Előző"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Beginning"
+msgstr "Akciógomb: Elejére"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Document"
+msgstr "Akciógomb: Dokumentum"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "End"
+msgstr "Akciógomb: Végére"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Next"
+msgstr "Akciógomb: Tovább vagy Következő"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Help"
+msgstr "Akciógomb: Súgó"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Home"
+msgstr "Akciógomb: Kezdő dia"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Information"
+msgstr "Akciógomb: Információ"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Movie"
+msgstr "Akciógomb: Mozi"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Return"
+msgstr "Akciógomb: Visszatérés"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Sound"
+msgstr "Akciógomb: Hang"
 
 msgid "Type help(object) to get help about object."
 msgstr ""
@@ -4314,6 +5829,43 @@ msgstr "%s vége"
 msgid "page %s"
 msgstr "%s. oldal"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "%s. szakasz"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "hasáb {0} per {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s hasáb"
+
+msgid "continuous section break"
+msgstr "folyamatos szakasztörés"
+
+msgid "new column section break"
+msgstr "Hasábtörés"
+
+msgid "new page section break"
+msgstr "új oldal szakasztörés"
+
+msgid "even pages section break"
+msgstr "páros oldal szakasztörés"
+
+msgid "odd pages section break"
+msgstr "páratlan oldal szakasztörés"
+
+msgid "column break"
+msgstr "hasábtörés"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4330,6 +5882,10 @@ msgstr "%s stílus"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "alapértelmezett stílus"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "Nincs szegély"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -4421,10 +5977,6 @@ msgstr "Nincs kiemelve"
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
 msgstr "nem félkövér"
-
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "dőlt"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
@@ -4572,6 +6124,10 @@ msgstr "{columnCount} oszlopból és {rowCount} sorból álló táblázat"
 
 msgid "NVDA Speech Viewer"
 msgstr "NVDA beszédnéző"
+
+#. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+msgid "&Show Speech Viewer on Startup"
+msgstr "A beszédnéző mutatása a program &indulásakor"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -4927,11 +6483,6 @@ msgstr "{symbol} mint {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "a táblázat széle"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "A navigátor kurzort a következő oszlophoz helyezi"
@@ -4951,6 +6502,10 @@ msgid "Moves the navigator object and focus to the previous row"
 msgstr ""
 "A navigátor kurzort az előző sorra állítja, és ez lesz egyben az aktív elem "
 "is."
+
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Javaslatok"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -4975,6 +6530,39 @@ msgstr "Nincs lejátszás alatt lévő szám"
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Bemondja a lejátszás alatt lévő szám hátralévő idejét"
+
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr "Beállítások mutatása a kijelölt, vagy a kurzor alatti szövegnél "
+
+#. Translators: A position in a Kindle book
+#, no-python-format, python-brace-format
+msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr "{bookPercentage} százalék, hely: {curLocation} per {maxLocation}"
+
+#. Translators: a page in a Kindle book
+#, python-brace-format
+msgid "Page {pageNumber}"
+msgstr "{pageNumber} oldal"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "kiemelve"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "nincs kiemelve"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "Népszerű kiemelés (%s)"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "a népszerű kiemelésen kívül"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5049,6 +6637,36 @@ msgstr "Titkos másolat:"
 #. Translators: when an email is unread
 msgid "unread"
 msgstr "Olvasatlan"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "purple flag"
+msgstr "Lila jelző"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Orange flag"
+msgstr "Narancs jelző"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Green flag"
+msgstr "Zöld jelző"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Yellow flag"
+msgstr "Sárga jelző"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Blue flag"
+msgstr "Kék jelző"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Red flag"
+msgstr "Vörös jelző"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -5253,6 +6871,10 @@ msgstr "Fő miniatűrök"
 msgid "Slide {slideNumber}"
 msgstr "Fólia {slideNumber}"
 
+#. Translators:   an unlabelled item in Powerpoint another shape is overlapping
+msgid "other item"
+msgstr "Másik elem"
+
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5440,13 +7062,14 @@ msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 sorozat"
 
 #. Translators: Names of braille displays.
-msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH braille kijelzők"
+msgid "Baum/HumanWare/APH/Orbit braille displays"
+msgstr "Baum/HumanWare/APH/Orbit braille kijelzők"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Soros: {portName}"
@@ -5475,12 +7098,21 @@ msgstr "Kijelző görgetés"
 msgid "line scroll"
 msgstr "Sorgörgetés"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech braille kijelzők"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "A Handy Tech driver beállításablak megjelenítése"
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Braille bemenet engedélyezve"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Braille bemenet letiltva"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Braille bemenet engedélyezése és letiltása"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -5505,6 +7137,39 @@ msgstr "Papenmeier BRAILLEX régebbi típusok"
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "Seika braille kijelzők"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "A felismerés eredménye"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "Aktiválja a kurzornál lévő szöveget, ha lehetséges"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "Bezárja a felismerés eredményét"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "Ön a felismerés eredményén van, itt nem végezhet felismerést."
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "A tartalom nem látható"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "Felismerés"
+
+msgid "Recognition failed"
+msgstr "A felismerés nem sikerült"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -5575,7 +7240,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "B&raille kijelző..."
+msgstr "B&raille..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
@@ -5634,6 +7299,10 @@ msgstr "&Dokumentumformázás..."
 
 msgid "Change settings of document properties"
 msgstr "a dokumentumok formázási tulajdonságainak beállítása"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -5787,17 +7456,15 @@ msgid "Exit NVDA"
 msgstr "kilépés az NVDA-ból"
 
 msgid ""
-"Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
+"By default, the numpad Insert and main Insert keys may both be used as the "
 "NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"functions."
 msgstr ""
-"Üdvözli az NVDA!\n"
 "A legtöbb NVDA parancs használatához tartsa lenyomva az NVDA gombot, üsse le "
 "hozzá a billentyűparancsot, majd engedje fel mind a kettőt.\n"
 "Alap esetben a numerikus, valamint a normál  insert billentyűk használhatóak "
@@ -5805,28 +7472,38 @@ msgstr ""
 "Az NVDA gomb a CapsLock billentyűre is beállítható.\n"
 "Nyomja meg az NVDA+n billentyűparancsot az NVDA menüjének aktiválásához.\n"
 "Itt megváltoztathatja a beállításokat, megtekintheti a súgót és további "
-"lehetőségeket érhet el.\n"
+"lehetőségeket érhet el."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
 msgstr "Üdvözli az NVDA"
 
+#. Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
+#. bold lettering
+msgid "Welcome to NVDA!"
+msgstr "Üdvözli az NVDA"
+
 msgid "Options"
 msgstr "Beállítások"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: The label of a combobox in the Welcome dialog.
+#. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "A CapsLock billentyű használata NVDA gombként"
+msgid "&Keyboard layout:"
+msgstr "&Billentyűzetkiosztás:"
 
-#. Translators: The label of a check box in the Welcome dialog.
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "A &CapsLock billentyű használata NVDA gombként"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Az NVDA automatikus elindítása a Windows bejelentkezése után"
 
-#. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
-msgid "Show this dialog when NVDA starts"
-msgstr "Jelenjen meg ez a párbeszédpanel az NVDA minden indításakor"
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "&Jelenjen meg ez a párbeszédpanel az NVDA minden indításakor"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -5872,6 +7549,10 @@ msgstr "Újraindítás"
 msgid "Restart with add-ons disabled"
 msgstr "Újraindítás letiltott bővítményekkel"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Újraindítás nyomkövetés naplózási szinttel"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Kérem, várjon"
@@ -5915,7 +7596,7 @@ msgid "Add-on &help"
 msgstr "A bővítmény &súgója"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Disable add-on"
+msgid "&Disable add-on"
 msgstr "Bővítmény &letiltása"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
@@ -5927,7 +7608,7 @@ msgstr "&Hozzáadás"
 #. Remove a speech dictionary entry.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
-msgstr "&eltávolítás"
+msgstr "El&távolítás"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
@@ -5969,10 +7650,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Bővítménytelepítő"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
-msgstr "Ez a kiegészítő már telepítve van. Biztosan szeretné frissíteni?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"Arra készül, hogy telepítse {summary} kiegészítő {newVersion} verzióját. Ez "
+"a bővítmény már telepítve van. Biztosan folytatja?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"A kiegészítő már telepítve van. Biztosan frissíti {summary} kiegészítő "
+"jelenlegi ({curVersion}) verzióját {newVersion} verzióra?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -6006,11 +7700,11 @@ msgstr "eltávolítás"
 
 #. Translators: The status shown for an addon when its disabled.
 msgid "disable"
-msgstr "Letilt"
+msgstr "Letiltva"
 
 #. Translators: The status shown for an addon when its enabled.
 msgid "enable"
-msgstr "Engedélyez"
+msgstr "Engedélyezve"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
@@ -6021,7 +7715,7 @@ msgid "running"
 msgstr "fut"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "Enable add-on"
+msgid "&Enable add-on"
 msgstr "Bővítmény &engedélyezése"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
@@ -6061,10 +7755,6 @@ msgstr "Bővítményinformáció"
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "Profilok testreszabása"
-
-#. Translators: The label of the profile list in the Configuration Profiles dialog.
-msgid "&Profile"
-msgstr "&Profil"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -6113,8 +7803,8 @@ msgid "Error activating profile."
 msgstr "Hiba a profil aktiválásakor."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Biztosan törölni szeretné ezt a profilt? A művelet nem vonható vissza."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Ez a profil véglegesen törlésre kerül. A folyamat nem vonható vissza."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6379,14 +8069,18 @@ msgstr "Hordozható verzió &könyvtára"
 msgid "Browse..."
 msgstr "Tallózás..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-msgid "Copy current &user configuration"
-msgstr "A jelenlegi felhasználói beállítások másolása"
-
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
 msgstr "Válassza ki a Hordozható verzió könyvtárát"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "Copy current &user configuration"
+msgstr "A jelenlegi felhasználói beállítások másolása"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Hordozható változat indítása a telepítést követően"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -6472,10 +8166,6 @@ msgstr "nyomkövetés"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Nyelv (az NVDA újraindítása szükséges a megváltoztatáshoz):"
 
-#. Translators: The list of languages for NVDA.
-msgid "Language"
-msgstr "Nyelv"
-
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
 msgstr "A beállítások automatikus el&mentése kilépéskor"
@@ -6491,10 +8181,6 @@ msgstr "&Hangjelzés lejátszása az NVDA indításakor és kilépéskor"
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Na&plózási szint"
-
-#. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
-msgid "Log level"
-msgstr "Naplózási szint"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
@@ -6552,13 +8238,6 @@ msgstr "Hiba történt a felhasználói beállítások másolása közben"
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
 msgstr "Az NVDA beállítások sikeresen másolva"
-
-#, python-format
-msgid "Error in %s language file"
-msgstr "Hiba a(z) %s nyelvi fájlban"
-
-msgid "Language Error"
-msgstr "A nyelvi fájl hibás"
 
 msgid "This change requires administrator privileges."
 msgstr "Ehhez a változtatáshoz rendszergazdai jog szükséges."
@@ -6659,14 +8338,10 @@ msgstr "&Betűzés használata, ha támogatott"
 msgid "Keyboard Settings"
 msgstr "Billentyűzet beállítások"
 
-#. Translators: This is the label for a combobox in the
+#. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-msgid "&Keyboard layout:"
-msgstr "&Billentyűzetkiosztás:"
-
-#. Translators: This is the name of a combobox in the keyboard settings dialog.
-msgid "Keyboard layout"
-msgstr "Billentyűzetkiosztás"
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "A CapsLock billentyű használata NVDA gombként"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6745,10 +8420,6 @@ msgstr "Az egér &követése"
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
 msgstr "Szövegfeldolgozási &egység:"
-
-#. Translators: This is the name of a combobox in the mouse settings dialog.
-msgid "text reporting unit"
-msgstr "Szövegbemondási egység"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -6875,11 +8546,6 @@ msgstr "Az elem &leírásának bemondása"
 msgid "Progress &bar output:"
 msgstr "&Folyamatjelző:"
 
-#. Translators: This is the name of a combobox in the
-#. object presentation settings dialog.
-msgid "Progress bar output"
-msgstr "Folyamatjelző"
-
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
@@ -6889,6 +8555,11 @@ msgstr "A háttérben lévő folyamatjelzők változásának jelzése"
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
 msgstr "Frissülő &tartalom felolvasása"
+
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "Hangjelzés &automatikus javaslatok megjelenésekor"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -6943,144 +8614,197 @@ msgstr "A nem NVDA-parancsnak minősülő &egyéb parancsok blokkolása"
 msgid "Document Formatting"
 msgstr "Dokumentumformázás"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr ""
-"A kurzor pozíciójánál lévő formázások &változásának jelzése (a beszéd "
-"késését okozhatja)"
+#. Translators: This is a label appearing on the document formatting settings dialog.
+msgid ""
+"The following options control the types of document formatting reported by "
+"NVDA."
+msgstr "Az alábbi opciókkal a formázási információk jelzését szabályozhatja"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Font"
+msgstr "Betűtípus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &font name"
-msgstr "A betűtípus &nevének bemondása"
+msgid "&Font name"
+msgstr "Betűtípus &neve"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font &size"
-msgstr "Betű &méret bemondása"
+msgid "Font &size"
+msgstr "Betű&méret"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report font attri&butes"
-msgstr "Betűtípus &paraméterek bemondása"
+msgid "Font attri&butes"
+msgstr "Betűtípus &paraméterek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &alignment"
-msgstr "&Igazítás bemondása"
+msgid "E&mphasis"
+msgstr "Kiemel&és"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &colors"
-msgstr "&Színek bemondása"
+msgid "St&yle"
+msgstr "St&ílus"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report co&mments"
-msgstr "Megjegyzések jelzése"
+msgid "&Colors"
+msgstr "&Színek"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Document information"
+msgstr "Dokumentum"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Co&mments"
+msgstr "Me&gjegyzések"
 
 # itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
 # címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &editor revisions"
-msgstr "Szerkeszt&ői változások jelzése"
+msgid "&Editor revisions"
+msgstr "Szerkeszt&ői változások"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report e&mphasis"
-msgstr "Kiemelés jelzése"
+msgid "Spelling e&rrors"
+msgstr "Helyesírási hi&bák"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Pages and spacing"
+msgstr "Oldalak és sorköz"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report st&yle"
-msgstr "st&ílus bemondása"
+msgid "&Pages"
+msgstr "&Oldalszámok"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling e&rrors"
-msgstr "Helyesírási hi&bák jelzése"
+msgid "Line &numbers"
+msgstr "So&rszámok"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox controlling the reporting of line indentation in the
+#. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
+msgid "Line &indentation reporting:"
+msgstr "&Behúzások jelzése"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-msgid "Report &pages"
-msgstr "&Oldalszámok bemondása"
+msgid "Off"
+msgstr "kikapcsolva"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report line &numbers"
-msgstr "So&rszámok bemondása"
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Beszéd"
 
-#. Translators: This message is presented in the document formatting settings dialogue
-#. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
-msgid "Report l&ine indentation"
-msgstr "&Behúzás bemondása"
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
+msgid "Tones"
+msgstr "Hangjelzés"
+
+#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
+msgid "Both  Speech and Tones"
+msgstr "Beszéd és hangjelzés"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-msgid "Report &paragraph indentation"
-msgstr "Bekezdés igazítás bemondása"
+msgid "&Paragraph indentation"
+msgstr "Beke&zdés-igazítás"
 
-# itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
-# címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report line spacing if available.
-msgid "Report &line spacing"
-msgstr "Sorköz jelzése"
+msgid "&Line spacing"
+msgstr "Sork&öz"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report &tables"
-msgstr "T&áblázatok jelzése"
+msgid "&Alignment"
+msgstr "&Igazítás"
+
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Table information"
+msgstr "Táblázat"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table row/column h&eaders"
-msgstr "A táblázat &fejléceinek bemondása"
+msgid "&Tables"
+msgstr "&Táblázatok"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report table cell c&oordinates"
-msgstr "A táblázatcella &koordinátáinak bemondása"
+msgid "Row/column h&eaders"
+msgstr "Sor/oszlop &fejlécek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report lin&ks"
-msgstr "&Hivatkozások jelzése"
+msgid "Cell c&oordinates"
+msgstr "&Cellakoordináták"
 
-# itt viszont inkább megáll a jelzés szó a report fordításaként, mert a
-# címsorokat elég megkülönböztetni környezetüktől a szintjük bemondásával
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-msgid "Report &headings"
-msgstr "&Címsorok jelzése"
+msgid "Styles"
+msgstr "Stílus"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-msgid "Report &lists"
-msgstr "&Listák jelzése"
+msgid "Both Colors and Styles"
+msgstr "Szín és stílus"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings dialog.
-msgid "Report block &quotes"
-msgstr "&Idézetblokkok jelzése"
+msgid "Cell borders:"
+msgstr "Cellaszegélyek"
 
-#. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
-msgid "Report lan&dmarks"
-msgstr "&Jelzőpontok jelzése"
+#. Translators: This is the label for a group of document formatting options in the
+#. document formatting settings dialog
+msgid "Elements"
+msgstr "Elemek"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report fra&mes"
-msgstr "K&eretek jelzése"
+msgid "&Lists"
+msgstr "&Listák"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report if &clickable"
-msgstr "Jelzés, ha k&attintható"
+msgid "Block &quotes"
+msgstr "I&dézetblokkok"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Fra&mes"
+msgstr "&Keretek"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "&Clickable"
+msgstr "K&attintható"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report formatting changes after the cursor (can cause a lag)"
+msgstr ""
+"A kurzor pozíciójánál lévő formázások &változásának jelzése (a visszajelzés "
+"késését okozhatja)"
+
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "Windows 10 OCR"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "Felismerési &nyelv"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7091,7 +8815,7 @@ msgid "Whole &word"
 msgstr "Teljes &szó"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "Reg&ex kifejezés"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -7103,6 +8827,7 @@ msgid "&Pattern"
 msgstr "&Tényleges kifejezés"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
 msgstr "&Behelyettesített kifejezés"
 
@@ -7114,13 +8839,17 @@ msgstr "&Megjegyzés"
 msgid "&Type"
 msgstr "&Típus"
 
+#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Hiányzik a tényleges kifejezés."
+
+msgid "Dictionary Entry Error"
+msgstr "Hibás szótárbejegyzés"
+
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
 msgstr "Hibás regex kifejezés: \"%s\"."
-
-msgid "Dictionary Entry Error"
-msgstr "Hibás szótárbejegyzés"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -7189,20 +8918,32 @@ msgstr "A kurzornál lévő szó átalakítása &számítógépes braille jelekk
 msgid "&Show cursor"
 msgstr "Kurzor &mutatása"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "Villogó kurzor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "A kurzor &villogási sebessége (ms)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "A kurzor &alakja"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "A rendszerkurzor &alakja"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "Az áttekintőkurzor &alakja"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-msgid "Message timeout (sec)"
+msgid "Message &timeout (sec)"
 msgstr "&Üzenet megjelenésének időtartama(másodperc)"
 
+#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+msgid "Show &messages indefinitely"
+msgstr "Üzenetek megjelenítése idő&korlát nélkül"
+
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "Braille tethered to:"
+msgid "B&raille tethered to:"
 msgstr "A b&raille követi:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
@@ -7212,6 +8953,10 @@ msgstr "B&ekezdésenkénti olvasás"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "&Ne válassza el a szavakat, ha lehet"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "Információk az aktív elemről"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -7251,8 +8996,8 @@ msgstr "Szint"
 msgid "Preserve"
 msgstr "Megtartva"
 
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
-msgid "Change symbol"
+#. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
+msgid "Change selected symbol"
 msgstr "Írásjel megváltoztatása"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
@@ -7318,6 +9063,10 @@ msgid "Rate boos&t"
 msgstr "Sebesség&fokozás"
 
 #. Translators: Description for a speech synthesizer.
+msgid "Windows OneCore voices"
+msgstr "Windows OneCore hangok"
+
+#. Translators: Description for a speech synthesizer.
 msgid "No speech"
 msgstr "Csendes üzemmód"
 
@@ -7361,28 +9110,6 @@ msgid ""
 msgstr ""
 "Képernyő-elrendezés megtartása be és kikapcsolása. Böngészőmódban "
 "megtekintett dokumentumok esetén."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Csak táblázatban használható"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "A táblázat következő sorához lép."
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "A táblázat előző sorához lép."
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "A táblázat következő oszlopához lép."
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "A táblázat előző oszlopához lép."
 
 msgid "Taskbar"
 msgstr "tálca"
@@ -7547,11 +9274,6 @@ msgstr "&Képletek"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "&Űrlapmezők"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "&Munkalapok"
 
@@ -7629,6 +9351,11 @@ msgstr ""
 "sorfejként, a többi tőle jobbra és lefelé értendő. Kétszer gyorsan megnyomva "
 "törli a beállítást."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "{0} munkalap, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "A beviteli üzenet a(z)  {title}: {message}"
@@ -7654,6 +9381,129 @@ msgstr "Megjegyzés írása a(z) {address} cellához"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} től {lastAddress} {lastContent} ig"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "fent"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "lent"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "balra"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "jobbra"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "átlósan fel"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "átlósan le"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "Vízszintes szegélyek belül"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "Függőleges szegélyek belül"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "folyamatos"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "Szaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "PontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "PontPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "Pontozott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "Dupla"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "DöntöttPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "Hajszál"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "Vékony"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "Közepes"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "Vastag"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "KözepesPontPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "KözepesPontSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "KözepesSzaggatott"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} Körül"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} Fent és lent"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} Balra és jobbra"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} átlósan fel és átlósan le"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8413,13 +10263,25 @@ msgstr "elsődleges fejléc"
 msgid "Text frame"
 msgstr "szövegkeret"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "megjegyzés: {text}, {author} által, {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} {author} által {date}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Hibás szó: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -8669,6 +10531,11 @@ msgstr "csak táblázatban használható"
 msgid "&Annotations"
 msgstr "&Mellékszövegek"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "&Hibák"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle sorozat"
@@ -8677,884 +10544,5 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle sorozat"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "This cell is non-editable"
-#~ msgstr "Ez a cella nem szerkeszthető"
-
-#~ msgid "checker"
-#~ msgstr "Átló Keresztmintás"
-
-#~ msgid "crisscross"
-#~ msgstr "Vékony Átló Keresztmintás"
-
-#~ msgid "down"
-#~ msgstr "Elfordított átló Vonalas"
-
-#~ msgid "gray16"
-#~ msgstr "12,5 százalékos szürke"
-
-#~ msgid "gray25"
-#~ msgstr "25 százalékos szürke"
-
-#~ msgid "gray50"
-#~ msgstr "50 százalékos szürke"
-
-#~ msgid "gray75"
-#~ msgstr "75 százalékos szürke"
-
-#~ msgid "grid"
-#~ msgstr "Vékony Vízszintes Keresztmintás"
-
-#~ msgid "light down"
-#~ msgstr "vékony Elfordított átló Vonalas"
-
-#~ msgid "light up"
-#~ msgstr "vékony átló Vonalas"
-
-#~ msgid "light vertical"
-#~ msgstr "vékony függőlegesen vonalas"
-
-#~ msgid "semi gray75"
-#~ msgstr "Vastag átló Keresztmintás"
-
-#~ msgid "up"
-#~ msgstr "átló Vonalas"
-
-#~ msgid "unknown color"
-#~ msgstr "ismeretlen szín"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Alíz kék"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Antik fehér"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Vízkék"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Akvamarinkék"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "Azúr"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "Bézs"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "krémleves"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "Hámozott mandula"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "Kék"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "Ibolyakék"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Nyersfa"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "Kadét kék"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "Karthauzi likőr"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "Csokoládé"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "Korall"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "Búzavirágkék"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "Kukoricahaj"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Karmazsinvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Cián"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "Sötétkék"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Sötétcián"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "Sötétaranyvessző"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "Sötétzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "Sötét keki"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "Sötét magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "Sötét olivazöld"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "Sötétnarancs"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "Sötétorchidea"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "Sötétvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "Sötét lazacvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "Sötét tengerzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "Sötét palakék"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "Sötét palaszürke"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "Sötéttürkiz"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "Sötét ibolya"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "Mélyrózsaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "Mély égszínkék"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Halványszürke"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Ponyvakék"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Téglavörös"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "Sziromfehér"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "Erdőzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fukszia"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Finom fehér"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "Halványfehér"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "Arany"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "Aranyvessző"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "Szürke"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "Zöldessárga"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "Mézharmat"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "Élénkrózsaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "Indiai vörös"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Indigó"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "Elefántcsont"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Keki"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "Levendula"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "Levendulapír"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "Fűzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "Selymes citrom"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "Világoskék"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "Világos korall"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "Világos cián"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Világos aranyvessző sárga"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "Világoszöld"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "Világos rózsaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "Világos lazacvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "Világos tengerzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "Világos égszínkék"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "Világos palaszürke"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "Világos acélkék"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "Világossárga"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "Citrom"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "Citromzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "Vászonfehér"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "Gesztenyebarna"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "Közép akvamarinkék"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "Középkék"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "Középorchidea"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "Közép bíborvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "Közép tengerzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "Közép palakék"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "Közép tavaszzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "Középtürkiz"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "Közép ibolyavörös"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "Éjkék"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Mentakrém"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Mályva"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Mokaszin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "Navaho fehér"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "Mattrózkék"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "Tört fehér"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "Oliva"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "Olivazöld"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "Narancsvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "Orchidea"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Fakó aranvessző"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "Fakózöld"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "Fakótürkiz"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "Fakó ibolyavörös"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "Papayahab"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "Halványbarack"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "Rózsaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "Szilva"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Púderkék"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "Vörös"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "Rózsásbarna"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "Királykék"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Nyeregbarna"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Lazacvörös"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Homokbarna"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "Tengerzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "Tengeri kagyló"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "Sziena"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "Ezüst"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "Égszínkék"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "Palakék"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "Palaszürke"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "Hófehér"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "Tavaszzöld"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "Acélkék"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "Rozsdabarna"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "Teaszín"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "Bogáncs"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "Paradicsom"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "Türkiz"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "Ibolya"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "Búza"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "Füstös fehér"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "A kijelölési kezdőpont nem lehet másik elemben"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Nyelvhelyességi hibák jelzése kikapcsolva"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "Nyelvhelyességi hibák jelzése bekapcsolva"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Ki- vagy bekapcsolja a Nyelvhelyességi hibák jelzését"
-
-#~ msgid "grammar error"
-#~ msgstr "Hibás rész"
-
-#~ msgid "out of grammar error"
-#~ msgstr "Hibás részen kívül"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "&Nyelvhelyességi hibák jelzése"
-
-#~ msgid "browse mode"
-#~ msgstr "böngésző mód"
-
-#~ msgid "activate"
-#~ msgstr "aktiválás"
-
-#~ msgid "no next"
-#~ msgstr "Nincs következő elem."
-
-#~ msgid "no previous"
-#~ msgstr "Nincs előző elem."
-
-#~ msgid "edge of table"
-#~ msgstr "a táblázat széle"
-
-#~ msgid "%g characters"
-#~ msgstr "%g karakter"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "Nincs megjegyzés."
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Megjeleníti a diagramok, a megjegyzéssel ellátott cellák, és a képletet "
-#~ "tartalmazó cellák listáját."
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "alapértelmezett Szín"
-
-#~ msgid "unselecting %s"
-#~ msgstr "%s. Nincs kijelölve"
-
-#~ msgid "unrevised"
-#~ msgstr "változatlanÁttekintő kurzor"
-
-#~ msgid "unknown author"
-#~ msgstr "ismeretlen szerző"
-
-#~ msgid "unknown date"
-#~ msgstr "ismeretlen dátum"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType}, {revisionAuthor} által, ekkor: {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "Bemondja az aktív elem nevét."
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} Adatsor {} per {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "Érték {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} per {}"
-
-#~ msgid " trendline {} "
-#~ msgstr " trendvonal {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr "Diagram terület magasság: {}, szélesség: {}, fent: {}, balra: {}"
-
-#~ msgid "Slovak"
-#~ msgstr "Szlovák"
-
-#~ msgid "equation"
-#~ msgstr "egyenlet"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Megjeleníti a címsorok, jelzőpontok vagy hivatkozások listáját"
-
-#~ msgid "navy blue"
-#~ msgstr "Tengerkék"
-
-#~ msgid "teal"
-#~ msgstr "pávakék"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "A könnyebb és logikusabb használhatóság érdekében az NVDA 2013.1 "
-#~ "verziójában a laptop billentyűzet kiosztás teljesen újra lett tervezve.\n"
-#~ "Ha ön a laptop billentyűzet kiosztást használja, bővebb információért "
-#~ "kérjük tekintse meg az Újdonságok dokumentumot a súgó menüben."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Új laptop billentyűzet kiosztás"
-
-#~ msgid "Read What's New"
-#~ msgstr "Ú&jdonságok"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Gyorsítás"
-
-#~ msgid "male 1"
-#~ msgstr "Férfi hang 1"
-
-#~ msgid "female 1"
-#~ msgstr "Női hang  1"
-
-#~ msgid "male 2"
-#~ msgstr "Férfi hang 2"
-
-#~ msgid "female 2"
-#~ msgstr "Női hang  2"
-
-#~ msgid "lime"
-#~ msgstr "élénkzöld"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Biztosan ki szeretne lépni az NVDA programból?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Figyelmeztető üzenet megjelenítése kilépés előtt"
-
-#~ msgid "Regexp"
-#~ msgstr "Regex kifejezés"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "nem lehet a navigátor kurzornál lévő elem helyét meghatározni"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Nem lehet meghatározni a képernyő felbontását."
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr ""
-#~ "Bemondja a navigátor kurzornál lévő elem magasságát, szélességét és "
-#~ "pozícíóját"
-
-#~ msgid "Set column header row"
-#~ msgstr "oszlopfejléc sor beállítva"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "oszlopfejléc sora törölve"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Egyszeri megnyomásra beállítja a sort az oszlop fejlécek bemondásához. "
-#~ "Kétszeri megnyomásra törli a beállítást."
-
-#~ msgid "Set row header column"
-#~ msgstr "sorfejléc oszlop beállítva"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Egyszeri megnyomásra beállítja az oszlopot a sor fejlécek bemondásához. "
-#~ "Kétszeri megnyomásra törli a beállítást."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s - %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "Kézi aktiválás/szerkesztés"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "A beállításfájl hibákat tartalmaz.\n"
-#~ " Nyomja meg az 'OK' gombot a javításhoz, vagy a 'Mégse'-t a fájl későbbi "
-#~ "kézi szerkesztéséhez. A hibákról részletes információ található a "
-#~ "naplófájlban.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Nincs automatikus megjegyzés."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Nem található az automatikus megjegyzés ablak."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Felolvassa az automatikus megjegyzés ablak tartalmát."
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automatikus megjegyzések"
-
-#~ msgid "Translation:"
-#~ msgstr "Fordítás"
-
-#~ msgid "Comments:"
-#~ msgstr "Megjegyzések"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nincs sík áttekintési mód ehhez az objektumhoz"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "nem lehet a szövegnél lévő elemre ugrani"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Sík áttekintő módban a navigátor kurzort az áttekintő kurzornál lévő "
-#~ "vezérlőelemhez helyezi."
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Kérem először zárja be a megnyitott NVDA beállításablakot."
-
-#~ msgid "Translation &table:"
-#~ msgstr "Fordítási &tábla:"
-
-#~ msgid "beeps"
-#~ msgstr "hangjelzés"
-
-#~ msgid "talk"
-#~ msgstr "beszéd"
-
-#~ msgid "default action failed"
-#~ msgstr "Az alapértelmezett művelet nem sikerült"
-
-#~ msgid "layout %s"
-#~ msgstr "%s kiosztás"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, az alapértelmezett %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "hibás beállításfájl"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Hiba történt a(z) %s beállításfájl beolvasásakor"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Hiba a konfigurációs fájlban '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s per %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Ez a bővítmény már telepítve van. Távolítsa el, és próbálja meg újból a "
-#~ "telepítést."
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "Betölti az elmentett beállításokat, a jelenlegibeállítások felülírásával."
-
-#~ msgid "Welcome to NVDA!\n"
-#~ msgstr "Üdvözli az NVDA"
-
-#~ msgid "Your gesture map file contains errors.\n"
-#~ msgstr "NVDA parancsfájl hiba"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "a &billentyűzet követése"
-
-#~ msgid "Create an &Autorun file"
-#~ msgstr "&Autorun fájl létrehozása"
-
-#~ msgid "&Add..."
-#~ msgstr "&Hozzáadás"
-
-#~ msgid "Key Command quick reference"
-#~ msgstr "billentyűparancsok listája"
-
-#~ msgid "User guide"
-#~ msgstr "Felhasználói útmutató"
-
-#~ msgid "Web site"
-#~ msgstr "Honlap"
-
-#~ msgid "Portable options"
-#~ msgstr "Hordozható beállítások"
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "A Handy Tech driver beállításablak megjelenítése"

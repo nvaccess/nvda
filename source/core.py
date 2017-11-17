@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V.
+#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -53,6 +54,8 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		gui.WelcomeDialog.run()
+	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
+		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
@@ -60,7 +63,7 @@ def doStartupDialogs():
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
 
-def restart(disableAddons=False):
+def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
 	if globalVars.appArgs.launcher:
 		import wx
@@ -77,8 +80,14 @@ def restart(disableAddons=False):
 		sys.argv.remove('--disable-addons')
 	except ValueError:
 		pass
+	try:
+		sys.argv.remove('--debug-logging')
+	except ValueError:
+		pass
 	if disableAddons:
 		options.append('--disable-addons')
+	if debugLogging:
+		options.append('--debug-logging')
 	try:
 		sys.argv.remove("--ease-of-access")
 	except ValueError:
@@ -95,11 +104,14 @@ def resetConfiguration(factoryDefaults=False):
 	"""
 	import config
 	import braille
+	import brailleInput
 	import speech
 	import languageHandler
 	import inputCore
 	log.debug("Terminating braille")
 	braille.terminate()
+	log.debug("Terminating brailleInput")
+	brailleInput.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
 	log.debug("terminating addonHandler")
@@ -117,6 +129,8 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("initializing speech")
 	speech.initialize()
 	#braille
+	log.debug("Initializing brailleInput")
+	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
 	log.debug("Reloading user and locale input gesture maps")
@@ -225,19 +239,18 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				pass
 		log.info("Windows session ending")
 	app.Bind(wx.EVT_END_SESSION, onEndSession)
-	import braille
-	log.debug("Initializing braille")
-	braille.initialize()
 	log.debug("Initializing braille input")
 	import brailleInput
 	brailleInput.initialize()
+	import braille
+	log.debug("Initializing braille")
+	braille.initialize()
 	import displayModel
 	log.debug("Initializing displayModel")
 	displayModel.initialize()
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
-
 	import audioDucking
 	if audioDucking.isAudioDuckingSupported():
 		# the GUI mainloop must be running for this to work so delay it
@@ -250,6 +263,77 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
+		#Just define these constants here, so we don't have to import win32con
+		WM_POWERBROADCAST = 0x218
+		WM_DISPLAYCHANGE = 0x7e
+		PBT_APMPOWERSTATUSCHANGE = 0xA
+		UNKNOWN_BATTERY_STATUS = 0xFF
+		AC_ONLINE = 0X1
+		NO_SYSTEM_BATTERY = 0X80
+		#States for screen orientation
+		ORIENTATION_NOT_INITIALIZED = 0
+		ORIENTATION_PORTRAIT = 1
+		ORIENTATION_LANDSCAPE = 2
+
+		def __init__(self, windowName=None):
+			super(MessageWindow, self).__init__(windowName)
+			self.oldBatteryStatus = None
+			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
+			self.orientationCoordsCache = (0,0)
+			self.handlePowerStatusChange()
+
+		def windowProc(self, hwnd, msg, wParam, lParam):
+			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
+				self.handlePowerStatusChange()
+			elif msg == self.WM_DISPLAYCHANGE:
+				self.handleScreenOrientationChange(lParam)
+
+		def handleScreenOrientationChange(self, lParam):
+			import ui
+			import winUser
+			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
+			#The low word is the width and hiword is height.
+			width = winUser.LOWORD(lParam)
+			height = winUser.HIWORD(lParam)
+			self.orientationCoordsCache = (width,height)
+			if width > height:
+				# If the height and width are the same, it's actually a screen flip, and we do want to alert of those!
+				if self.orientationStateCache == self.ORIENTATION_LANDSCAPE and self.orientationCoordsCache != (width,height):
+					return
+				#Translators: The screen is oriented so that it is wider than it is tall.
+				ui.message(_("Landscape" ))
+				self.orientationStateCache = self.ORIENTATION_LANDSCAPE
+			else:
+				if self.orientationStateCache == self.ORIENTATION_PORTRAIT and self.orientationCoordsCache != (width,height):
+					return
+				#Translators: The screen is oriented in such a way that the height is taller than it is wide.
+				ui.message(_("Portrait"))
+				self.orientationStateCache = self.ORIENTATION_PORTRAIT
+
+		def handlePowerStatusChange(self):
+			#Mostly taken from script_say_battery_status, but modified.
+			import ui
+			import winKernel
+			sps = winKernel.SYSTEM_POWER_STATUS()
+			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is self.UNKNOWN_BATTERY_STATUS:
+				return
+			if sps.BatteryFlag & self.NO_SYSTEM_BATTERY:
+				return
+			if self.oldBatteryStatus is None:
+				#Just initializing the cache, do not report anything.
+				self.oldBatteryStatus = sps.ACLineStatus
+				return
+			if sps.ACLineStatus == self.oldBatteryStatus:
+				#Sometimes, this double fires. This also fires when the battery level decreases by 3%.
+				return
+			self.oldBatteryStatus = sps.ACLineStatus
+			if sps.ACLineStatus & self.AC_ONLINE:
+				#Translators: Reported when the battery is plugged in, and now is charging.
+				ui.message(_("Charging battery. %d percent") % sps.BatteryLifePercent)
+			else:
+				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
+				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
+
 	messageWindow = MessageWindow(unicode(versionInfo.name))
 
 	# initialize wxpython localization support
@@ -320,6 +404,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
+	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
+		import wx
+		import gui.installerGui
+		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
+			silent=globalVars.appArgs.createPortableSilent,startAfterCreate=not globalVars.appArgs.createPortableSilent)
 	elif not globalVars.appArgs.minimal:
 		try:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
@@ -459,9 +548,8 @@ def requestPump():
 
 def callLater(delay, callable, *args, **kwargs):
 	"""Call a callable once after the specified number of milliseconds.
-	This is currently a thin wrapper around C{wx.CallLater},
-	but this should be used instead for calls which aren't just for UI,
-	as it notifies watchdog appropriately.
+	As the call is executed within NVDA's core queue, it is possible that execution will take place slightly after the requested time.
+	This function should never be used to execute code that brings up a modal UI as it will cause NVDA's core to block.
 	This function can be safely called from any thread.
 	"""
 	import wx
@@ -471,9 +559,5 @@ def callLater(delay, callable, *args, **kwargs):
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
 
 def _callLaterExec(callable, args, kwargs):
-	import watchdog
-	watchdog.alive()
-	try:
-		return callable(*args, **kwargs)
-	finally:
-		watchdog.asleep()
+	import queueHandler
+	queueHandler.queueFunction(queueHandler.eventQueue,callable,*args, **kwargs)

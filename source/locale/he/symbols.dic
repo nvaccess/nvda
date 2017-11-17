@@ -1,8 +1,8 @@
-﻿#locale/en/symbols.dic
+﻿#locale/he/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
-
+# provided by Shmuel Naaman.
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
@@ -21,97 +21,162 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	dot	all	always
-! sentence ending	bang	all	always
-? sentence ending	question	all	always
-; phrase ending	semi	most	always
-: phrase ending	colon	most	always
-decimal point		none	always
-in-word '	tick	all	norep
-negative number	minus	none	norep
+. sentence ending	נקודה	all	always
+! sentence ending	סימן קריאה	all	always
+? sentence ending	סימן שאלה	all	always
+; phrase ending	פסיק נקודה	most	always
+: phrase ending	נקודתיים	most	always
+decimal point	נקודה	none	always
+in-word '	גרש	all	norep
+negative number	שלילי	none	norep
 
 # Whitespace
-\0	blank	char	# null
-\t	tab
-\n	line feed	char
-\f	page break	none
+\0	ריק	char	# null
+\t	טאב
+\n	שורה חדשה	char
+\f	מעבר עמוד	none
 \r	carriage return	char
- 	space	char
- 	space	char	# no-break space
+ 	רווח	char
+ 	רווח קשיח	char	# רווח קשיח
 
 # Standard punctuation/symbols
-!	bang	all
-"	quote	most
-\#	number	most
-$	dollar	all	norep
+!	סימן קריאה	all
+"	גרשיים	most
+\#	סולמית	some
+$	סימן דולר	all	norep
 £	pound	all	norep
-€	euro	all	norep
+€	יורו	all	norep
 ¢	Cents	all	norep
 ¥	Yen	all	norep
-%	percent	some
-&	and	some
-'	tick	all
-(	left paren	most
-)	right paren	most
-*	star	some
-+	plus	some
-,	comma	all	always
--	dash	most
-.	dot	some
-/	slash	some
-:	colon	most	norep
-;	semi	most
-<	less	most
->	greater	most
-=	equals	some
-?	question	all
-@	at	some
-[	left bracket	most
-]	right bracket	most
-\\	backslash	most
-^	caret	most
-_	line	most
-`	graav	most
-{	left brace	most
-}	right brace	most
-|	bar	most
-~	tilda	most
+₹	Rupee	some	norep
+%	אחוז	some
+&	וגם	some
+'	גרש	all
+(	סוגר שמאלי	most	always
+)	סוגר ימני	most	always
+*	כוכבית	some
++	פלוס	some
+,	פסיק	all	always
+-	מקף	most
+.	נקודה	some
+/	קו נטוי	some
+:	נקודתיים	most	norep
+;	נקודה פסיק	most
+<	פחות מ...	some
+>	גדול מ...	some
+=	שווה	some
+?	סימן שאלה	all
+@	שטרודל	some
+[	סוגר מרובע שמאלי	most
+]	סוגר ימני מרובע	most
+\\	לוכסן אחורי	most
+^	גג	mosto\
+_	קו תחתון	most
+`	פסיק עליון ימני	most
+{	סוגר מסולסל שמאלי	most
+}	סוגר מסולסל ימני	most
+|	קו אנחי	most
+~	טילדה	most
 
 # Other characters
-•	bullet	some
-…	dot dot dot	all	always
-...	dot dot dot	all	always
-	bullet	some
-“	left quote	most
-”	right quote	most
-‘	left tick	most
-’	right tick	most
-–	en dash	most
-—	em dash	most
-●	circle	most
+•	נקודה מודגשת	some
+…	שלוש נקודות	all	always
+...	שלוש נקודות	all	always
+	נקודה מודגשת	some
+“	מרחאות שמאלי	most
+”	מרחאות ימני	most
+‘	גרש שמאלי	most
+’	גרש ימני	most
+–	מקף	most	always
+—	קו מפריד	most
+●	עיגול	most
 ¨	diaeresis	most
-‎	left to right mark	char
-‏	right to left mark	char
-■	black square	some
-▪	black square	some
-◾	black square	some
-◦	white bullet	some
-➔	right arrow	some
+‎	סימון שמאל לימין	char
+‏	סימון ימין לשמאל 	char
+■	ריבוע שחור	some
+▪	ריבוע שחור	some
+◾	ריבוע שחור	some
+◦	נקודה מודגשת לבנה	some
+➔	חץ ימין	some
 §	section	all
 °	degrees	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
+«	סוגריים משולשים שמאליים כפולים
+»	סוגרים משולשים כפולים ימניים
 µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
-®	registered	some
+¹	סימון 1 מעל הקו	some
+²	סימון 2 מעל הקו	some
+³	סימון 3 מעל הקו	some
+®	סימן משכרי רשום	some
 ™	Trademark	some
-©	Copyright	some
-±	Plus or Minus	most
-×	times	most
-÷	divide by	most
-←	left arrow	some
-→	right arrow	some
-✓	check	some
-✔	check	some
+©	זכויות יוצרים	some
+±	פלוס או מינוס	some
+×	times	some
+÷	חלוקה	some
+←	חץ שמאלה	some
+↑	חצ מעלה	some
+→	חץ ימינה	some
+↓	חץ מתה	some
+✓	סימן וי	some
+✔	סימן וי	some
+
+#Mathematical Operators U+2200 to U+220F
+∀	for all	none
+∁	complement	none
+∂	partial derivative	none
+∃	there exists	none
+∄	there does not exist	none
+∅	empty set	none
+∆	increment	none
+∇	nabla	none
+∈	element of	none
+∉	not an element of	none
+∊	small element of	none
+∋	contains as member	none
+∌	does not contain as member	none
+∍	small contains as member	none
+∎	מה שהיה להוכיח	none
+∏	n-ary product	none
+
+# Miscellaneous Mathematical Operators
+∑	n-ary summation	none
+√	שורש ריבועי	none
+∛	שורש משולש	none
+∜	fourth root	none
+∝	proportional to	none
+∞	אין סוף	none
+∟	right angle	none
+∠	זווית	none
+∥	parallel to	none
+∦	not parallel to	none
+∧	logical and	none
+∨	logical or	none
+∩	intersection	none
+∪	איחוד	none
+∫	integral	none
+∴	לפיכך	none
+∵	מפני ש...	none
+∶	ratio	none
+∷	proportion	none
+≤	קתן מ או שווה ל...none
+≥	גדול מ או שווה ל...	none
+⊂	subset of	none
+⊃	superset of	none
+⊆	subset of or equal to	none
+⊇	superset of or equal to	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	שביעית	none
+⅑	תשיעית	none
+⅒	עשיריתnone
+⅓	שליש	none
+⅔	שני שלישים	none
+⅕	חמישית	none
+⅖	שתי חמישיות	none
+⅗	שלוש חמישיות	none
+⅘	ארבע חמישיות	none
+⅙	שישית	none
+⅚	חמש שישיות	none
+⅛	שמינית	none
+⅜	שלוש שמיניות	none
+⅝	חמש שמיניות	none
+⅞	שבע שמיניות	none

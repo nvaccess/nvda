@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Manish Agrawal, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -191,6 +191,10 @@ wdThemeColorMainLight2=3
 wdThemeColorText1=13
 wdThemeColorText2=15
 
+# Word Field types
+FIELD_TYPE_REF = 3 # cross reference field
+FIELD_TYPE_HYPERLINK = 88 # hyperlink field
+
 # Mapping from http://www.wordarticles.com/Articles/Colours/2007.php#UIConsiderations
 WdThemeColorIndexToMsoThemeColorSchemeIndex={
 	wdThemeColorMainDark1:msoThemeDark1,
@@ -299,26 +303,26 @@ NVDAUnitsToWordUnits={
 }
 
 formatConfigFlagsMap={
-	"reportFontName":1,
-	"reportFontSize":2,
-	"reportFontAttributes":4,
-	"reportColor":8,
-	"reportAlignment":16,
-	"reportStyle":32,
-	"reportSpellingErrors":64,
-	"reportPage":128,
-	"reportLineNumber":256,
-	"reportTables":512,
-	"reportLists":1024,
-	"reportLinks":2048,
-	"reportComments":4096,
-	"reportHeadings":8192,
-	"autoLanguageSwitching":16384,	
-	"reportRevisions":32768,
-	"reportParagraphIndentation":65536,
-	"reportLineSpacing":262144,
+	"reportFontName":0x1,
+	"reportFontSize":0x2,
+	"reportFontAttributes":0x4,
+	"reportColor":0x8,
+	"reportAlignment":0x10,
+	"reportStyle":0x20,
+	"reportSpellingErrors":0x40,
+	"reportPage":0x80,
+	"reportLineNumber":0x100,
+	"reportTables":0x200,
+	"reportLists":0x400,
+	"reportLinks":0x800,
+	"reportComments":0x1000,
+	"reportHeadings":0x2000,
+	"autoLanguageSwitching":0x4000,
+	"reportRevisions":0x8000,
+	"reportParagraphIndentation":0x10000,
+	"reportLineSpacing":0x40000,
 }
-formatConfigFlag_includeLayoutTables=131072
+formatConfigFlag_includeLayoutTables=0x20000
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -359,10 +363,16 @@ class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
 		author=self.collectionItem.author
 		date=self.collectionItem.date
 		text=self.collectionItem.range.text
+		# Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+		# {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 		return _(u"comment: {text} by {author} on {date}").format(author=author,text=text,date=date)
 
 	def rangeFromCollectionItem(self,item):
 		return item.scope
+
+class WordDocumentFieldQuickNavItem(WordDocumentCollectionQuickNavItem):
+	def rangeFromCollectionItem(self,item):
+		return item.result
 
 class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 	@property
@@ -372,7 +382,23 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		date=self.collectionItem.date
 		description=self.collectionItem.formatDescription or ""
 		text=(self.collectionItem.range.text or "")[:100]
+		# Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+		# {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+		# {description} will be replaced with a description of the formatting changes, if any.
+		# {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
+
+class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
+
+	def rangeFromCollectionItem(self,item):
+		return item
+
+	@property
+	def label(self):
+		text=self.collectionItem.text
+		# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+		# {text} will be replaced with the text of the spelling error.
+		return _(u"spelling: {text}").format(text=text)
 
 class WinWordCollectionQuicknavIterator(object):
 	"""
@@ -426,7 +452,15 @@ class WinWordCollectionQuicknavIterator(object):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
-			item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			try:
+				item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			except COMError:
+				message = ("Error iterating over item with "
+					"type: {type}, iteration direction: {dir}, total item count: {count}, item at index: {index}"
+					"\nThis could be caused by an issue with some element within or a corruption of the word document."
+					).format(type=self.itemType, dir=self.direction, count=itemCount, index=index)
+				log.debugWarning(message ,exc_info=True)
+				continue
 			itemRange=item.rangeObj
 			# Skip over the item we're already on.
 			if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
@@ -437,8 +471,18 @@ class WinWordCollectionQuicknavIterator(object):
 			isFirst=False
 
 class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentFieldQuickNavItem
 	def collectionFromRange(self,rangeObj):
-		return rangeObj.hyperlinks
+		return rangeObj.fields
+
+	def filter(self, item):
+		t = item.type
+		if t == FIELD_TYPE_REF:
+			fieldText = item.code.text.strip().split(' ')
+			# ensure that the text has a \\h in it
+			return any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) )
+		return t == FIELD_TYPE_HYPERLINK
+
 
 class CommentWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	quickNavItemClass=WordDocumentCommentQuickNavItem
@@ -449,6 +493,11 @@ class RevisionWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterato
 	quickNavItemClass=WordDocumentRevisionQuickNavItem
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.revisions
+
+class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentSpellingErrorQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.spellingErrors
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
@@ -499,6 +548,37 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if links.count>0:
 			links[1].follow()
 			return
+		tempRange.expand(wdParagraph)
+		fields=tempRange.fields
+		for field in (fields.item(i) for i in xrange(1, fields.count+1)):
+			if field.type != FIELD_TYPE_REF:
+				continue
+			fResult = field.result
+			fResult.moveStart(wdCharacter,-1) # move back one visible character (passed the hidden text eg the code for the reference).
+			fResStart = fResult.start +1 # don't include the character before the hidden text.
+			fResEnd = fResult.end
+			rObjStart = self._rangeObj.start
+			rObjEnd = self._rangeObj.end
+			# check to see if the _rangeObj is inside the fResult range
+			if not (fResStart <= rObjStart and fResEnd >= rObjEnd):
+				continue
+			# text will be something like ' REF _Ref457210120 \\h '
+			fieldText = field.code.text.strip().split(' ')
+			# the \\h field indicates that the field is a link
+			if not any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) ):
+				log.debugWarning("no \\h for field xref: %s" % field.code.text)
+				continue
+			bookmarkKey = fieldText[1] # we want the _Ref12345 part
+			# get book mark start, we need to look at the whole document to find the bookmark.
+			tempRange.Expand(wdStory)
+			bMark = tempRange.bookmarks(bookmarkKey)
+			self._rangeObj.setRange(bMark.start, bMark.start)
+			self.updateCaret()
+			tiCopy = self.copy()
+			tiCopy.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(tiCopy,reason=controlTypes.REASON_FOCUS)
+			braille.handler.handleCaretMove(self)
+			return
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
@@ -538,6 +618,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif isinstance(position,textInfos.offsets.Offsets):
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 			self._rangeObj.SetRange(position.startOffset,position.endOffset)
+		elif isinstance(position,WordDocumentTextInfo):
+			# copying from one textInfo to another
+			self._rangeObj=position._rangeObj.duplicate
 		else:
 			raise NotImplementedError("position: %s"%position)
 
@@ -557,6 +640,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		if self.obj.ignoreEditorRevisions:
 			formatConfigFlags&=~formatConfigFlagsMap['reportRevisions']
+		if self.obj.ignorePageNumbers:
+			formatConfigFlags&=~formatConfigFlagsMap['reportPage']
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -701,7 +786,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
-				field['language']=self._getLanguageFromLcid(languageId)
+				field['language']=languageHandler.windowsLCIDToLocaleName(languageId)
 		except:
 			log.debugWarning("language error",exc_info=True)
 			pass
@@ -715,14 +800,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
 		return field
-
-	def _getLanguageFromLcid(self, lcid):
-		"""
-		gets a normalized locale from a lcid
-		"""
-		lang = locale.windows_locale[lcid]
-		if lang:
-			return languageHandler.normalizeLanguage(lang)
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE: 
@@ -779,7 +856,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if end:
 			oldEndOffset=self._rangeObj.end
 		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
-		if end and self._rangeObj.end<oldEndOffset:
+		newEndOffset = self._rangeObj.end
+		# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
+		# a case where you called move end then collapse until the size of the range is no longer being reduced.
+		# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+		if end and newEndOffset < oldEndOffset :
 			raise RuntimeError
 
 	def copy(self):
@@ -808,7 +889,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
 		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
 		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
-		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (_rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
+		if (direction>0 and endPoint!="end"
+			and unit not in (wdCharacter,wdWord) # moving by units of line or more
+			and (_rangeObj.start+1) == self.obj.WinwordDocumentObject.range().end # character after the range start is the end of the document range
+			):
 			return 0
 		return res
 
@@ -872,19 +956,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		except:
 			raise LookupError("Couldn't get MathML from MathType")
 
-class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
-
-	def _get_shouldIncludeLayoutTables(self):
-		return config.conf['documentFormatting']['includeLayoutTables']
-
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
 			position=textInfos.POSITION_CARET
 		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position,_rangeObj=_rangeObj)
-
-	InnerTextInfoClass=WordDocumentTextInfoForTreeInterceptor
 
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.obj.rootNVDAObject
@@ -940,9 +1017,11 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			revisions=RevisionWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		elif nodeType in ("table","container"):
-			 return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType=="error":
+			return SpellingErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="graphic":
-			 return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
@@ -1025,6 +1104,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ignore=False
 		self.ignoreEditorRevisions=ignore
 		return ignore
+
+	#: True if page numbers (as well as section numbers and column numbers) should be ignored. Such as in outlook.
+	ignorePageNumbers = False
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
@@ -1528,7 +1610,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
-		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET)
+		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_PARAGRAPH)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True
@@ -1639,4 +1721,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("error", _("&Errors")),
 	)

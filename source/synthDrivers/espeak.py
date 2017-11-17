@@ -37,7 +37,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		_espeak.initialize()
-		log.info("Using eSpeak version %s" % _espeak.info())
+		log.info("Using eSpeak NG version %s" % _espeak.info())
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
 		self._language=lang
@@ -193,9 +193,11 @@ class SynthDriver(SynthDriver):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
 			l=v.languages[1:]
+			# #7167: Some languages names contain unicode characters EG: Norwegian Bokmål
+			name=v.name.decode("UTF-8")
 			# #5783: For backwards compatibility, voice identifies should always be lowercase
 			identifier=os.path.basename(v.identifier).lower()
-			voices[identifier]=VoiceInfo(identifier,v.name,l)
+			voices[identifier]=VoiceInfo(identifier,name,l)
 		return voices
 
 	def _get_voice(self):

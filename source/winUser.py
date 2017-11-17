@@ -1,6 +1,6 @@
 #winUser.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -265,7 +265,7 @@ EVENT_OBJECT_PARENTCHANGE=0x800f
 EVENT_OBJECT_HELPCHANGE=0x8010
 EVENT_OBJECT_DEFACTIONCHANGE=0x8011
 EVENT_OBJECT_ACCELERATORCHANGE=0x8012
-
+EVENT_OBJECT_LIVEREGIONCHANGED=0x8019
 EVENT_SYSTEM_DESKTOPSWITCH=0x20
 EVENT_OBJECT_INVOKED=0x8013
 EVENT_OBJECT_TEXTSELECTIONCHANGED=0x8014
@@ -322,9 +322,15 @@ def MAKEWORD(lo,hi):
 
 def LOWORD(long):
 	return long&0xFFFF
- 
+
 def HIWORD(long):
 	return long>>16
+
+def GET_X_LPARAM(lp):
+	return c_short(LOWORD(lp)).value
+
+def GET_Y_LPARAM(lp):
+	return c_short(HIWORD(lp)).value
 
 def MAKELONG(lo,hi):
 	return (hi<<16)+lo
