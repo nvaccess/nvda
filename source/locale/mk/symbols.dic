@@ -1,0 +1,182 @@
+﻿#locale/en/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2017 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	точка	all	always
+! sentence ending	извичник	all	always
+? sentence ending	прашалник	all	always
+; phrase ending	точка запирка	most	always
+: phrase ending	дветочки	most	always
+. точка		none	always
+in-word '	апостроф	all	norep
+negative number	минус	none	norep
+
+# Whitespace
+\0	празнина	char	# null
+\t	таб
+\n	нов ред	char
+\f	крај на страница	none
+\r	нов ред	char
+ 	спејс	char
+ 	спејс	char	# no-break space
+
+# Standard punctuation/symbols
+!	извичник	all
+"	наводници	most
+#	тараба	some
+$$	долар	all	norep
+£	фунта	all	norep
+€	евро	all	norep
+¢	цент	all	norep
+¥	јен	all	norep
+₹	Рупија	some	norep
+%	отсто	some
+&	и	some
+'	апостроф	all
+(	отворена заграда	most	always
+)	затворена заграда	most	always
+*	ѕвездичка	some
++	плус	some
+,	запирка	all	always
+-	цртичка	most
+.	точка	some
+/	коса црта	some
+:	дветочки	most	norep
+;	точка запирка	most
+<	помало	some
+>	поголемо	some
+=	еднакво	some
+?	прашалник	all
+@	мајмунче	some
+[	отворена голема заграда	most
+]	затворена голема заграда	most
+\\	обратна коса црта	most
+^	karet	most
+_	долна црта	most
+`	акцент	most
+{	отворена средна заграда	most
+}	затворена средна заграда	most
+|	права црта	most
+~	тилда	most
+
+# Other characters
+•	булет	some
+…	триточки	all	always
+...	триточки	all	always
+	булет	some
+“	отворени наводници	most
+”	затворени наводници	most
+‘	лев апостров	most
+’	десен апостров	most
+–	тире	most	always
+—	цртичка	most
+●	црно крукче	most
+¨	умлаут	most
+‎	ознака од лево кон десно	char
+‏	ознака од десно кон лево	char
+■	црно квадратче	some
+▪	црно мало квадратче	some
+◾	црно средномало квадратче	some
+◦	бел булет	some
+➔	десна стрелка	some
+§	секција	all
+°	степен	some
+«	двојна аглеста заграда насочена кон лево	some
+»	двојна аглеста заграда насочена кон десно	some
+µ	микро	some
+¹	суперскрипт 1	some
+²	суперскрипт 2	some
+³	суперскрипт 3	some
+®	регистрирано	some
+™	трговска марка	some
+©	авторски права	some
+±	плус или минус	some
+×	помножено со 	some
+÷	поделено со 	some
+←	стрелка налево	some
+↑	стрелка нагоре	some
+→	стрелка надесно	some
+↓	стрелка надолу	some
+✓	ознака	some
+✔	голема ознака	some
+
+#Mathematical Operators U+2200 to U+220F
+∀	за секој	none
+∁	complement	none
+∂	парцијален диференцијал	none
+∃	постои некој	none
+∄	не постои некој	none
+∅	празно множество	none
+∆	нараснување	none
+∇	набла	none
+∈	елемент на	none
+∉	не е елемент на	none
+∊	мал елемент на	none
+∋	го содржи елементот	none
+∌	не го содржи елементот	none
+∍	го содржи малиот елемент на	none
+∎	крај на доказ	none
+∏	n-ти производ	none
+
+# Miscellaneous Mathematical Operators
+∑	n-та сума	none
+√	квадратен корен	none
+∛	трети корен	none
+∜	четврти корен	none
+∝	пропорционално со	none
+∞	бесконечност	none
+∟	прав агол	none
+∠	агол	none
+∥	паралелно со	none
+∦	не е паралелно со	none
+∧	логичко и	none
+∨	логичко или	none
+∩	пресек	none
+∪	унија	none
+∫	интеграл	none
+∴	затоа	none
+∵	поради	none
+∶	стапка	none
+∷	пропорција	none
+≤	помало или еднакво на	none
+≥	поголемо или еднакво на	none
+⊂	вистинско подмножество на	none
+⊃	вистинско надмножество	none
+⊆	подмножество	none
+⊇	надмножество	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	една седмина	none
+⅑	една деветина	none
+⅒	една десетина	none
+⅓	една третина	none
+⅔	две третини	none
+⅕	една петина	none
+⅖	две петини	none
+⅗	три петини	none
+⅘	четири петини	none
+⅙	една шестина	none
+⅚	пет шестини	none
+⅛	една осмина	none
+⅜	три осмини	none
+⅝	пет осмини	none
+⅞	седум осмини	none
