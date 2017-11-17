@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-10 00:10+1000\n"
-"PO-Revision-Date: 2017-11-14 23:27+0200\n"
+"POT-Creation-Date: 2017-11-17 00:10+1000\n"
+"PO-Revision-Date: 2017-11-16 22:25+0200\n"
 "Last-Translator: shmuel naaman <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir\n"
@@ -1028,7 +1028,6 @@ msgstr "ברייל יוניקוד"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Vietnamese grade 1"
 msgstr "ויאטנמית שיטת ברייל 1"
 
@@ -1576,7 +1575,6 @@ msgstr "סוג:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "Filt&er by:"
 msgstr "&סינון לפי:"
 
@@ -1661,17 +1659,14 @@ msgid "moves to the previous table column"
 msgstr "מעבר לעמודת הטבלה הקודמת"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables off"
 msgstr "ללא הקראת מידע על טבלאות"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables on"
 msgstr "הקראת מידע על טבלאות"
 
 #. Translators: Input help mode message for include layout tables command.
-#, fuzzy
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
 msgstr "מיתוג הקראת מידע על טבלאות"
 
@@ -2731,12 +2726,12 @@ msgstr "אנכי"
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
 msgid "Charging battery. %d percent"
-msgstr "טוען סוללה %d % "
+msgstr "טוען סוללה %d אחוזים"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
 msgid "Not charging battery. %d percent"
-msgstr "סלולה לא ניטענת %d % "
+msgstr "סוללה לא נטענת . %d אחוזים"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -3663,14 +3658,13 @@ msgid "No status line found"
 msgstr "לא נמצאה שורת מצב"
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
-"הקראת שורת המצב הנוכחית והעברת הפוקוס אליה. לחיצה פעמיים גורמת לאיות המילים "
-"בשורה"
+"הקראת שורת המצב הנוכחית והעברת הפוקוס אליה. לחיצה פעמיים גורמת לאיות "
+"המיליםבשורה"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -6999,12 +6993,10 @@ msgid "Braille input enabled"
 msgstr "מצב קלט ברייל מאופשר "
 
 #. Translators: message when braille input is disabled
-#, fuzzy
 msgid "Braille input disabled"
 msgstr "&צג ברייל:"
 
 #. Translators: description of the script to toggle braille input
-#, fuzzy
 msgid "Toggle braille input"
 msgstr "מתרגם כל קלט ברייל"
 
@@ -7186,7 +7178,6 @@ msgid "Change settings of document properties"
 msgstr "מאפשר שינוי הגדרות מאפייני מסמך"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-#, fuzzy
 msgid "&Windows 10 OCR..."
 msgstr "Windows 10 OCR..."
 
@@ -7534,18 +7525,22 @@ msgid "Add-on Installation"
 msgstr "התקנת תוספים"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
-msgstr "קיימת כבר גרסה אחרת של תוסף זה. האם ברצונך לעדכן את התוסף ?"
+msgstr ""
+"אתה עומד להתקין גירסה  {newVersion}  של  {summary}, למרות שהוא מותקן על מחשב "
+"זה.. האם עדיין תרצה להמשיך בעדכון ??"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
-msgstr "קיימת כבר גרסה אחרת של תוסף זה. האם ברצונך לעדכן את התוסף ?"
+msgstr ""
+"התוסף כבר מותקן על מחשב זה. האם ברצונךלעדכן  {summary} גירסה{curVersion} "
+"לגירסה {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8673,9 +8668,8 @@ msgid "Whole &word"
 msgstr "מילה &שלמה"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "ביטוי &רגיל"
+msgstr "ביטוי  רגולטורי"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10371,7 +10365,6 @@ msgstr "&הערות הסבר"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Errors"
 msgstr "שגיאות"
 

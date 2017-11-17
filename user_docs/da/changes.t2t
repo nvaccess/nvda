@@ -4,6 +4,9 @@ Nyheder i NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 = 
+Af væsentlige ændringer i denne version kan nævnes mange rettelser og forbedringer til understøttelse af web, herunder gennemsynstilstand i webdialoger som standard, bedre rapportering af feltgruppenavne i gennemsynstilstand, støtte for nye teknologier i Windows 10 som Windows Defender Application Guard o Windows 10 på ARM64, og automatisk rapportering af skærmretning og batteristatus.
+Bemærk venligst at denne version af NVDA ikke længere understøtter Windows XP eller Vista. NVDA kræver nu som et minimum Windows 7 Service Pack 1.
+
 
 == Nye Funktioner ==
 - Det er nu muligt at springe til starten og forbi landmærker ved brug af kommandoerne til at springe til starten og slutningen af indholdselementer (komma og skift+komma). (#5482)
@@ -16,6 +19,10 @@ Nyheder i NVDA
 - Tilføjede nye kommandolinjeparametre til brug af oprettelse af flytbare kopier af NVDA. (#6329)
 - Understøtter nu Microsoft Edge, når applikationen køres fra Windows Defender Application Guard. (#7600)
 - Hvis NVDA afvikles på en bærbar PC eller en tablet, vil NVDA oplyse når en strømforsyning tilsluttes eller frakobles, samt når skærmretningen ændres. (#4574, #4612)
+- Nyt sprog: Makedonsk
+- Nye punkttabeller: Kroatisk Niveau 1, Vietnamesisk Niveau 1. (#7518, #7565)
+- Understøttelse for det nye Actilino punktdisplay fra Handy Tech. (#7590)
+- Punktindtastning fra Handy Tech punktdisplays er nu understøttet. (#7590)
 
 
 == Ændringer ==
@@ -27,6 +34,12 @@ Nyheder i NVDA
 - Ved et tredje tryk af kommandoen til læsning af statuslinjen, vil dens indhold blive kopieret til udklipsholderen. (#1785)
 - Når der tildeles taster til et Baum-display, kan man nu begrænse tasterne til den aktuelle model af punktdisplay der benyttes (.f.eks. VarioUltra og Pronto). (#7517)
 - Genvejstasten til filtreringsfeltet i elementlisten er ændret fra ALT+F til ALT+E. (#7569)
+- En utilknyttet kommando er blevet tilføjet så du kan ændre inkluderingen af layouttabeller i gennemsynstilstand hvor som helst. Du kan finde denne kommando under kategorien Gennemsynstilstand i dialogen inputbevægelser. (#7634)
+- Opgraderede LibLouis punktoversætter til 3.3.0. (#7565)
+- Genvejstasten for feltet til indtastning af et regulært udtryk i ordbøgerne er nu ændret fra alt+r til alt+e. (#6782)
+- Stemmeordbøger er nu versionerede og er blevet flyttet til mappen 'speechDicts/voiceDicts.v1'. (#7592)
+- Ændringer til versionerede filer (brugerkonfiguration og stemmeordbøger) gemmes ikke længere, hvis NVDA køres fra en installationsfil. (#7688)
+- Braillino, Bookworm og Modular (med gammelt firmware) punktdisplays er ikke længere understøttede så snart NVDA kører, men kræver Handy Techs universale driver. Installer denne driver og benyt den pågældende tilføjelsespakke for at bruge disse displays. (#7590)
 
 
 == Fejlrettelser ==
@@ -41,6 +54,7 @@ Nyheder i NVDA
 - Det er nu muligt at få adgang til matematisk indhold i Google Chrome på et system, hvor Mozilla Firefox ikke er installeret. (#7308)
 - Operativsystemet samt andre programmer bør være mere stabile efter en installation af NVDA og før genstart i forhold til tidligere versioner. (#7563)
 - Når en kommando til tekstgenkendelse benyttes (f.eks. NVDA+R), vil NVDA nu rapportere en fejlmeddelelse hvis navigatorobjektet er forsvundet. (#7567)
+- Funktionalitet til at rulle op med Freedom Scientific punktdisplays er nu rettet, når der benyttes venstre vippebjælke. (#7713)
 
 
 == Ændringer for udviklere ==
