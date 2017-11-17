@@ -25,7 +25,7 @@ Af væsentlige funktioner kan nævnes:
 - Understøttelse af mange punktdisplays, herunder indtastning af computer-braille på punktdisplays med et punkttastatur
 - Kan køre fra et USB-stik eller andet bærbart medie uden installation
 - Talende installation der er let at bruge
-- Oversat til 50 sprog
+- Oversat til 51 sprog
 - Understøttelse af moderne Windows operativsystemer herunder 32 og 64 bit varianter
 - Kan køre på Windows logon skærmen og andre beskyttede skærme
 - understøttelse af almindelige tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation kun understøttet i Windows 7 og senere)
@@ -34,7 +34,7 @@ Af væsentlige funktioner kan nævnes:
 
 ++ Internationalisering ++
 Det er vigtigt, at folk overalt i verden, uanset hvilket sprog de taler, får lige adgang til teknologi.
-Udover Engelsk er NVDA blevet oversat til 50 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, burmesisk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, kannada, koreansk, litauisk, nepalesisk, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
+Udover Engelsk er NVDA blevet oversat til 51 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, burmesisk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, kannada, koreansk, litauisk, makedonsk, nepalesisk, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
 
 ++ Understøttelse af talesynteser ++
 Udover at programmets meddelelser og brugerflade findes på flere sprog, kan NVDA også sætte brugeren i stand til at læse tekster på alle sprog, så længe de har en talesyntese, der kan tale det pågældende sprog.
@@ -48,7 +48,7 @@ Brugere, som har et punktdisplay, kan med NVDA få tekst ud på punktskrift.
 Indtastning på uforkortet og uforkortet punkt er også understøttet ved hjælp af et punkttastatur.
 Se venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
 
-NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer punkt koder.
+NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer braille.
 
 ++ Licens og Ophavsret ++
 NVDA er ophavsret NVDA_COPYRIGHT_YEARS NVDA bidragydere.
@@ -349,7 +349,7 @@ For at navigere imellem objekter, skal du benytte følgende kommandoer:
 Bemærk: For at det numeriske tastatur skal fungere korrekt, skal Num Lock-tasten være slået fra.
 
 ++ Gennemsyn af tekst ++[ReviewingText]
-NVDA giver dig mulighed for at læse indholdet af [skærmen #ScreenReview], det aktuelle [dokument #DocumentReview] eller det aktuelle [object #ObjectReview] ved enten at flytte imellem tegn, ord eller linjer.
+NVDA giver dig mulighed for at læse indholdet af [skærmen #ScreenReview], det aktuelle [dokument #DocumentReview] eller det aktuelle [objekt #ObjectReview] ved enten at flytte imellem tegn, ord eller linjer.
 Dette er mest nyttigt i Windows kommando konsol vinduer og andre steder, hvor der er en begrænset eller ikke-eksisterende system markør.
 For eksempel kan du bruge denne markør til at gennemse en lang besked i en dialog.
 
@@ -579,7 +579,7 @@ Som udgangspunkt følger læsemarkøren systemmarkøren, så som regel kan du ba
 
 På dette tidspunkt kan du bruge MathPlayer-kommandoer, såsom piletasterne, til at udforske udtrykket.
 For eksempel kan du flytte gennem udtrykket med Venstre- og Højre-pil og zoome ind på en del af udtrykket, f.eks. en brøk, med Pil-ned.
-Læs venligst dokumentationen om navigationskommandoer til MathPlayer for flere oplysninger: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
+Læs venligst [dokumentationen om navigationskommandoer til MathPlayer https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] for flere oplysninger.
 
 Når du vil tilbage til dokumentet, skal du simpelthen trykke på Escape-tasten.
 
@@ -980,7 +980,7 @@ Det er ikke muligt at understøtte lyddæmpning for midlertidige og flytbare kop
 
 +++ Stemmeindstillinger (NVDA+Ctrl+v) +++[VoiceSettings]
 Dialogen Stemmeindstillinger, som findes i menuen Indstillinger, rumer valgmuligheder til ændring af, hvordan talen lyder.
-Du kan finde en alternativ, hurtigere måde til styring af taleparametre fra et hvilket som helst sted i afsnittet [Ringen af talesyntese-indstillinger #SynthSettingsRing].
+Du kan finde en alternativ, hurtigere måde til styring af taleparametre fra et hvilket som helst sted i afsnittet [Ringen af talesynteseindstillinger #SynthSettingsRing].
 
 Dialogboksen Stemmeindstillinger indeholder følgende valgmuligheder:
 
@@ -1053,7 +1053,7 @@ Denne indstilling bør generelt være slået til.
 Nogle Microsoft Speech API synteser anvender dog ikke denne funktion korrekt og opfører sig mærkeligt når indstillingen er slået til.
 Hvis du har problemer med udtalen af diverse bogstaver kan du prøve at deaktivere denne indstilling.
 
-+++ Ringen af Talesyntese-indstillinger +++[SynthSettingsRing]
++++ Ringen af talesynteseindstillinger +++[SynthSettingsRing]
 Hvis du ønsker hurtigt at ændre taleindstillingerne uden først at skulle åbne dialogboksen med stemmeindstillinger, findes der en række NVDA-kommandoer, der giver mulighed for at flytte mellem de mest almindelige indstillinger for talesyntesen fra et hvilket som helst sted, hvis blot NVDA kører:
 %kc:beginInclude
 || Navn | Desktop tast | Laptop tast | Beskrivelse |
@@ -1412,6 +1412,8 @@ Når indstillingern er slået fra, vil layouttabeller ikke blive indikeret og ik
 Tabellernes indhold vil imidlertid stadig blive læst op som normal tekst.
 Denne indstilling er slået fra som standard.
 
+For at skifte denne indstilling fra hvor som helst, kan du tildele en tastaturkommando ved brug af [dialogen Inputbevægelser #InputGestures]
+
 ==== Konfigurer annoncering af felter som links og overskrifter ====
 Se venligst indstillingerne i dialogen for [Dokumentformatering #DocumentFormattingSettings] for at konfigurere rapportéring for felter så som links, overskrifter og tabeller.
 
@@ -1687,7 +1689,7 @@ Hvis du vil ændre indstillingerne, som NVDA benytter på logon-skærmen eller s
 Log visning, der findes under Værktøjer i NVDA-menuen, giver mulighed for at gennemse al output, der indtil nu og fra NVDA blev startet er blevet gemt i loggen.
 
 Udover muligheden for at gennemse indholdet, er det også muligt at gemme en kopi af logfilen eller genopfriske viseren, så det seneste output fra logvisningen blev startet er den, der vises.
-Disse funktioner kan findes under viserens Log menu.
+Disse funktioner kan findes under viserens Log-menu.
 
 ++ Talevisning ++
 Af hensyn til seende software-udviklere og personer, der ønsker at demonstrere NVDA for seende indeholder NVDA et flydende vindue, der giver mulighed for at se al den tekst, som NVDA i øjeblikket læser op.
@@ -1702,7 +1704,7 @@ Dette vindue vil altid forsøge at åbne med samme dimensioner og samme placerin
 Så længe talevisning er slået til, opdateres den konstant med den tekst, der netop nu læses op.
 Hvis du klikker i viseren, eller hvis den får fokus, stoppes opdateringen dog midlertidigt, så det er muligt at markere eller kopiere det aktuelle indhold.
 
-Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en speciel inputbevægelse med [dialogen inputbevægelser [InputGestures].
+Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en speciel inputbevægelse med [dialogen inputbevægelser #InputGestures].
 
 ++ Styring af tilføjelsesprogrammer++
 Du kan administrere dine tilføjelsesprogrammer til NVDA ved at gå til "Administrer tilføjelsesprogrammer" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installer tilføjelser til skærmlæseren, samt afinstallere, aktivére eller deaktivére tilføjelserne.
@@ -1713,7 +1715,7 @@ Navnen på pakken, versionen og forfatter er vist for hvert tilføjelsesprogram,
 Hvis der er en tilgængelig hjælpetekst til et tilføjelsesprogram, kan du se den ved at trykke på knappen "Hjælp til tilføjelsesprogram".
 
 For at se efter og hente tilføjelsesprogrammer, som er tilgængelige online, skal du trykke på knappen Hent tilføjelsesprogrammer.
-Denne knap åbner [siden for NVDA tilføjelsesprogrammer http://addons.nvda-project.org/].
+Denne knap åbner [siden for NVDA tilføjelsesprogrammer https://addons.nvda-project.org/].
 Hvis NVDA er installeret og kører på dit system, kan du åbne tilføjelsesprogrammet direkte fra din browser og starte installationsprocessen som beskrevet nedenfor.
 Ellers skal du gemme tilføjelsespakken og følg instruktionerne nedenfor.
 
@@ -1748,14 +1750,14 @@ Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra h
 
 ++ Python konsollen ++
 NVDAs Python-konsol, der ligger under Værktøjer i NVDA-menuen, er et udviklerværktøj. Det er især velegnet til brug ved debugging, generel inspektion af interne processer i NVDA eller inspektion af tilgængelighedshierarkiet i en applikation.
-For yderligere oplysninger henvises til[artiklen om Python-konsollen på NVDAs netsted NVDA_URLwiki/PythonConsole].
+For yderligere oplysninger henvises til [udviklingsguiden til NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Genindlæs pluginstilføjelsesprogrammer++
 Denne indstilling vil genindlæse alle app moduler og globale tilføjelsesprogrammer uden at genstarte NVDA. Dette kan være nyttigt for udviklere.
 
 + Understøttede talesynteser +[SupportedSpeechSynth]	
 Dette afsnit indeholder informationer om de talesynteser, som NVDA understøtter.
-For en endnu mere omfattende list over gratis og kommercielt tilgængelige synteser, som du kan bruge med NVDA, besøg venligst denne side [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+For en endnu mere omfattende list over gratis og kommercielt tilgængelige synteser, som du kan bruge med NVDA, besøg venligst [siden om yderligere stemmer der kan bruges med NVDA https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 Talesyntesen [eSpeak NG https://github.com/espeak-ng/espeak-ng] er bygget direkte ind i NVDA og kræver ingen installation af særskilte drivere eller komponenter for at fungere.
@@ -1772,12 +1774,12 @@ SAPI 4 er en ældre standard fra Microsoft for software-talesynteser.
 NVDA understøtter denne talesyntese for brugere, som allerede har SAPI 4 synteser installeret.
 Microsoft understøtter derimod ikke længere talesyntesen og nødvendige komponenter er ikke længere tilgængelige fra Microsoft.
 
-Når denne talesyntese vælges i NVDA, indeholder listen (som nås med [dialogboksen Stemmeindstillinger #VoiceSettings] eller via den cirkulære menu Talesyntese-indstillinger #SynthSettingsRing]) en oversigt over de tilgængelige stemmer fra samtlige SAPI 4 talesynteser, der er installeret på dit system.
+Når denne talesyntese vælges i NVDA, indeholder listen (som nås med [dialogboksen Stemmeindstillinger #VoiceSettings] eller via [ringen af talesynteseindstillinger #SynthSettingsRing]) en oversigt over de tilgængelige stemmer fra samtlige SAPI 4 talesynteser, der er installeret på dit system.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 er en standard fra Microsoft for software-talesynteser.
 En lang række af de talesynteser, der overholder denne standard, kan enten købes eller hentes gratis fra forskellige firmaer og netsteder. Din computer har sandsynligvis allerede én SAPI 5 talesyntese præinstalleret.
-Når denne talesyntese vælges i NVDA, indeholder listen (som nås med [dialogboksen Stemmeindstillinger #VoiceSettings] eller via den cirkulære menu Talesyntese-indstillinger #SynthSettingsRing]) en oversigt over de tilgængelige stemmer fra samtlige SAPI 5 talesynteser, der er installeret på dit system.
+Når denne talesyntese vælges i NVDA, indeholder listen (som nås med [dialogboksen Stemmeindstillinger #VoiceSettings] eller via [ringen af talesynteseindstillinger #SynthSettingsRing]) en oversigt over de tilgængelige stemmer fra samtlige SAPI 5 talesynteser, der er installeret på dit system.
 
 ++ Microsoft Speech Platform ++
 Microsoft Speech Platform giver stemmer til mange sprog. Disse stemmer bliver normalt brugt i udvikling af serverbaserede applikationer.
@@ -1798,7 +1800,7 @@ Der er stemmer tilgængelige på mange sprog, og disse stemmer er hurtigere til 
 
 For at installere stemmer til brug på yderligere sprog, samt hvordan disse installeres, se artiklen fra Microsoft: https://support.office.com/en-us/article/How-to-download-Text-to-Speech-languages-for-Windows-4c83a8d8-7486-42f7-8e46-2b0fdf753130
 
-Bemærk venligst, at de hurtigere talehastigheder tilgængelige når disse stemmer benyttes med Narrator ikke er tilgængelige med den aktuelle version af NVDA.
+Bemærk venligst, at de hurtigere talehastigheder tilgængelige når disse stemmer benyttes af Oplæser ikke er tilgængelige med den aktuelle version af NVDA.
 Bemærk også, at den valgte hastighed du vælger i Windows-indstillingerne også påvirker stemmerne når disse bruges med NVDA.
 Disse er problemer som vi ikke kan løse uden ændringer i Windows.
 VI håber, at disse problemer bliver løst i en Windows opdatering.
@@ -1925,29 +1927,39 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA understøtter alle displays fra [Handy Tech http://www.handytech.de/] når displayet er forbundet via USB eller Bluetooth.
+NVDA understøtter alle displays fra [Handy Tech http://www.handytech.de/] når displayet er forbundet via USB, serielport eller eller Bluetooth.
 Ældre punktdisplays kræver, at du installerer USB-driveren fra handy Tech på computeren.
 
-Punkt input er endnu ikke understøttet.
+Punktinput er endnu ikke understøttet.
 
++Følgende displays kan ikke benyttes så snart NVDA kører, men kan bruges med [Handy Techs universale driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] og NVDA-tilføjelsespakken:
+- Braillino
+- Bookworm
+- Modular displays med firmware version 1.13 eller ældre. Bemærk venligst at firmware på disse displays kan opdateres.
+-
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
-| Rul punktdisplay tilbage | venstre, op |
-| Rul punktdisplay fremad | højre, ned |
+| Rul punktdisplay tilbage | venstre, op, b3 |
+| Rul punktdisplay fremad | højre, ned, b6 |
 | Flyt punktdisplay to forrige linje | b4 |
 | Flyt punktdisplay til næste linje | b5 |
 | Flyt til punktcelle | markørsammenføringsknapper |
-| shift+tab Tast | esc |
+| shift+tab Tast | esc, venstre triple action-tast op+ned |
 | alt Tast | b2+b4+b5 |
 | escape Tast | b4+b6 |
-| tab Tast | enter |
-| enter Tast | esc+enter |
-| Pil-op | venstreMellemrum |
-| Pil-ned | højreMellemrum |
+| tab Tast | enter, højre triple actiontast op+ned|
+| enter Tast | esc+enter, left+højre triple actiontast op+ned, joystickAction |
+| Pil-op | joystickOp |
+| Pil-ned | joystickNed |
+| venstre pil | joystickVenstre |
+| højre pil | joystickHøjre |
 | NVDA-menu | b2+b4+b5+b6 |
-| Handy Tech konfiguration | b4+b8 |
+| Ændre indstillingen punkt tøjret til | b2 |
+| Ændre indstilling for punktmarkøren | b1 |
+| Ændre indstilling for fokuskontekstpræsentation | b7 |
+| Skift indstilling for punktindtastning | space+b1+b3+b4 (space+capital B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
