@@ -1989,7 +1989,10 @@ class InputGesturesDialog(SettingsDialog):
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
 
-		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
+		gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
+		if not inputCore.SCRCAT_KBEMU in gestures:
+			gestures[inputCore.SCRCAT_KBEMU] = {}
+		self.gestures = gestures
 		self.populateTree()
 
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
@@ -2033,10 +2036,11 @@ class InputGesturesDialog(SettingsDialog):
 				for gesture in commandInfo.gestures:
 					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
 					self.tree.SetItemPyData(treeGes, gesture)
-			if not self.tree.ItemHasChildren(treeCat):
-				self.tree.Delete(treeCat)
-			elif filter:
-				self.tree.Expand(treeCat)
+			if filter:
+				if not self.tree.ItemHasChildren(treeCat):
+					self.tree.Delete(treeCat)
+				else:
+					self.tree.Expand(treeCat)
 
 	def onFilterChange(self, evt):
 		filter=evt.GetEventObject().GetValue()
