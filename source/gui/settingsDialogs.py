@@ -61,7 +61,7 @@ class SettingsDialog(wx.Dialog):
 	_hasInstance=False
 
 	title = ""
-	helpIDs = {}
+	helpIds = {}
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
@@ -83,7 +83,7 @@ class SettingsDialog(wx.Dialog):
 
 		mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL|wx.HELP), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
 
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
@@ -91,7 +91,7 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onHelp, id=wx.ID_HELP)
-		self.Bind(wx.EVT_HELP, self.onHelp)
+		self.Bind(wx.EVT_HELP, self.onHelp, id=wx.ID_ANY)
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
@@ -131,13 +131,21 @@ class SettingsDialog(wx.Dialog):
 		import webbrowser
 		helpFile = gui.getDocFilePath("userGuide.html")
 		helpURL = "file:" + urllib.pathname2url(helpFile)
-		windowID = evt.GetId()
-		# log.debug("windowid=%d helpids=%s" % (windowID, self.helpIDs))
-		if windowID in self.helpIDs.keys():
-			helpURL = "#".join((helpURL, self.helpIDs[windowID]))
+		windowId = evt.GetId()
+		if windowId == wx.ID_HELP:
+			windowId = self.GetId()
+		log.debug("windowid=%d helpids=%s" % (windowId, self.helpIds))
+		if windowId in self.helpIds.keys():
+			helpURL = "#".join((helpURL, self.helpIds[windowId]))
+			log.debug("Getting help from %s" % helpURL)
+			webbrowser.open(helpURL)
+		elif self.GetId() in self.helpIds.keys():
+			windowId = self.GetId()
+			helpURL = "#".join((helpURL, self.helpIds[windowId]))
 			log.debug("Getting help from %s" % helpURL)
 			webbrowser.open(helpURL)
 		else:
+			log.debug("Help for windows id %d not found." % (windowId))
 			evt.Skip()
 
 class GeneralSettingsDialog(SettingsDialog):
@@ -155,15 +163,15 @@ class GeneralSettingsDialog(SettingsDialog):
 	)
 
 	def makeSettings(self, settingsSizer):
-		self.helpIDs[self.GetId()] = "GeneralSettings"
+		self.helpIds[self.GetId()] = "GeneralSettings"
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.languageNames = languageHandler.getAvailableLanguages()
 		languageChoices = [x[1] for x in self.languageNames]
 		# Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 		languageLabelText = _("&Language (requires restart to fully take effect):")
 		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
-		self.languageList.SetToolTip(languageToolTipText)
-		self.helpIDs[self.languageList.GetId()] = "GeneralSettings"
+		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
+		self.helpIds[self.languageList.GetId()] = "GeneralSettings"
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
 			index=[x[0] for x in self.languageNames].index(self.oldLanguage)
@@ -313,6 +321,7 @@ class SynthesizerDialog(SettingsDialog):
 	title = _("Synthesizer")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "SynthesizerSelection"
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the select
 		# synthesizer combobox in the synthesizer dialog.
@@ -493,6 +502,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		return checkbox
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "VoiceSettings"
 		self.sizerDict={}
 		self.lastControl=None
 		#Create controls for Synth Settings
@@ -628,6 +638,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 	title = _("Keyboard Settings")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "KeyboardSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a combobox in the
 		# keyboard settings dialog.
@@ -750,6 +761,7 @@ class MouseSettingsDialog(SettingsDialog):
 	title = _("Mouse Settings")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "MouseSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is the label for a checkbox in the
@@ -813,6 +825,7 @@ class ReviewCursorDialog(SettingsDialog):
 	title = _("Review Cursor Settings")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "ReviewCursorSettings"
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings dialog.
 		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow system &focus"))
@@ -849,6 +862,7 @@ class InputCompositionDialog(SettingsDialog):
 	title = _("Input Composition Settings")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "InputCompositionSettings"
 		# Translators: This is the label for a checkbox in the
 		# Input composition settings dialog.
 		self.autoReportAllCandidatesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Automatically report all available &candidates"))
@@ -909,6 +923,7 @@ class ObjectPresentationDialog(SettingsDialog):
 	)
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "ObjectPresentationSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
@@ -997,6 +1012,7 @@ class BrowseModeDialog(SettingsDialog):
 	title = _("Browse Mode")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "BrowseModeSettings"
 		# Translators: This is the label for a textfield in the
 		# browse mode settings dialog.
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
@@ -1069,6 +1085,7 @@ class DocumentFormattingDialog(SettingsDialog):
 	title = _("Document Formatting")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "DocumentFormattingSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is a label appearing on the document formatting settings dialog.
@@ -1340,6 +1357,7 @@ class UwpOcrDialog(SettingsDialog):
 	title = _("Windows 10 OCR")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "Win10OcrSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Lazily import this.
 		from contentRecog import uwpOcr
@@ -1447,6 +1465,7 @@ class DictionaryDialog(SettingsDialog):
 		super(DictionaryDialog, self).__init__(parent)
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "SpeechDictionaries"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 		entriesLabelText=_("&Dictionary entries")
@@ -1560,6 +1579,7 @@ class BrailleSettingsDialog(SettingsDialog):
 	title = _("Braille Settings")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "BrailleSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: The label for a setting in braille settings to choose a braille display.
@@ -1805,6 +1825,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		super(SpeechSymbolsDialog, self).__init__(parent)
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "SymbolPronunciation"
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
 		self.pendingRemovals = {}
 
@@ -1991,6 +2012,7 @@ class InputGesturesDialog(SettingsDialog):
 	title = _("Input Gestures")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "InputGestures"
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 		filterLabel = wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:"))
