@@ -61,7 +61,7 @@ BLUETOOTH_NAMES = {
 	"Active Braille AB",
 	"Active Star AS",
 	"Basic Braille BB",
-	"Braille Star BS",
+	"Braille Star 40 BS",
 	"Braille Wave BW",
 	"Easy Braille EBR",
 }
