@@ -849,7 +849,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, model, keys, isBrailleInput=False):
 		super(InputGesture, self).__init__()
-		self.model = model.genericName
+		self.model = model.genericName.replace(" ","")
 		self.keys = set(keys)
 
 		self.keyNames = names = []
