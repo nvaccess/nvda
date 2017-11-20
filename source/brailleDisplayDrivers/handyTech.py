@@ -789,7 +789,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		'br(handytech):rightSpace+b1+b3+b4': 'toggleBrailleInput',
 		'br(handytech.easybraille):left+b1+b3+b4': 'toggleBrailleInput',
 		'br(handytech.easybraille):right+b1+b3+b4': 'toggleBrailleInput',
-		'bk:space+dot1+dot2+dot7': 'toggleBrailleInput',
+		'br(handytech):space+dot1+dot2+dot7': 'toggleBrailleInput',
 	}
 
 	gestureMap = inputCore.GlobalGestureMap({
@@ -858,6 +858,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.dots = self._calculateDots()
 				if key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille)):
 					self.space = True
+					names.append("space")
+				elif key in KEY_DOTS:
+					names.append("dot%d"%KEY_DOTS[key])
 			if KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
 				self.routingIndex = key - KEY_ROUTING
 				names.append("routing")
