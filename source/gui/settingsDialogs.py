@@ -2067,10 +2067,8 @@ class InputGesturesDialog(SettingsDialog):
 		isKbEmuCategory = item == self._kbEmuCategory
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
 		isGesture = isinstance(data, basestring)
-		isObsoleteAddedKbEmuScriptInfo = (isCommand
-			and not data in self.gestures.get(inputCore.SCRCAT_KBEMU,{}).itervalues()
-			and not self.tree.ItemHasChildren(item)
-		)
+		isObsoleteAddedKbEmuScriptInfo = (isCommand and data in self.addedKbEmuScriptInfos
+			and not self.tree.ItemHasChildren(item))
 		self.addButton.Enabled = isKbEmuCategory or isCommand or isGesture
 		self.removeButton.Enabled = isGesture or isObsoleteAddedKbEmuScriptInfo
 
