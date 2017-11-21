@@ -853,18 +853,20 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.keys = set(keys)
 
 		self.keyNames = names = []
+		if isBrailleInput:
+			self.dots = self._calculateDots()
 		for key in keys:
-			if isBrailleInput:
-				self.dots = self._calculateDots()
-				if key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille)):
-					self.space = True
-					names.append("space")
-				elif key in KEY_DOTS:
-					names.append("dot%d"%KEY_DOTS[key])
-			if KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
+			if isBrailleInput and (
+				key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille))
+			):
+				self.space = True
+				names.append("space")
+			elif isBrailleInput and key in KEY_DOTS:
+				names.append("dot%d"%KEY_DOTS[key])
+			elif KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
 				self.routingIndex = key - KEY_ROUTING
 				names.append("routing")
-			elif not isBrailleInput:
+			else:
 				try:
 					names.append(model.keys[key])
 				except KeyError:
