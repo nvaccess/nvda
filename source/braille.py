@@ -1879,7 +1879,7 @@ class _BgThread:
 				handler.display._awaitingAck = True
 				winKernel.setWaitableTimer(
 					_BgThread.ackTimerHandle,
-					int(handler.display.timeout*1000),
+					int(handler.display.timeout*2000),
 					0,
 					_BgThread.ackTimeoutResetter
 				)
