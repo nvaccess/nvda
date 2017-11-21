@@ -2176,6 +2176,8 @@ class InputGesturesDialog(SettingsDialog):
 				self.pendingRemoves.add(entry)
 			scriptInfo.gestures.remove(data)
 		self.tree.Delete(treeSel)
+		# Explicitly trigger a selection here as the buttons don't get updated otherwise
+		self.onTreeSelect(None)
 		self.tree.SetFocus()
 
 	def onOk(self, evt):
