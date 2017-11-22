@@ -18,6 +18,7 @@ import speech
 import keyboardHandler
 import api
 from baseObject import AutoPropertyObject
+import keyLabels
 
 """Framework for handling braille input from the user.
 All braille input is represented by a {BrailleInputGesture}.
@@ -90,6 +91,8 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.untranslatedCursorPos = 0
 		#: The time at which uncontracted characters were sent to the system.
 		self._uncontSentTime = None
+		#: The modifiers currently being held virtually to be part of the next braille input gesture.
+		self.currentModifiers = set()
 		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
 
 	def _get_table(self):
@@ -248,6 +251,24 @@ class BrailleInputHandler(AutoPropertyObject):
 				self._reportUntranslated(pos)
 		else:
 			self._reportUntranslated(pos)
+
+	def toggleModifier(self, modifier):
+		# Check modifier validity
+		isModifier = keyboardHandler.KeyboardInputGesture.fromName(modifier).isModifier
+		if not isModifier:
+			raise ValueError("%r is not a valid modifier"%modifier)
+		if modifier in self.currentModifiers:
+			self.currentModifiers.discard(modifier)
+			# Translators: Reported when a braille input modifier is released.
+			speech.speakMessage(_("{modifier} released").format(
+				modifier=keyLabels.localizedKeyLabels.get(modifier, modifier)
+			))
+		else: # modifier not in self.currentModifiers
+			self.currentModifiers.add(modifier)
+			# Translators: Reported when a braille input modifier is pressed.
+			speech.speakMessage(_("{modifier} pressed").format(
+				modifier=keyLabels.localizedKeyLabels.get(modifier, modifier)
+			))
 
 	def enter(self):
 		"""Translates any braille input and presses the enter key.
