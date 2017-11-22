@@ -248,6 +248,10 @@ class BrailleInputHandler(AutoPropertyObject):
 			if self._translate(endWord):
 				if not endWord:
 					self.cellsWithText.add(pos)
+			elif self.bufferText and not self.useContractedForCurrentFocus:
+				# translators: reported when translation didn't succeed due to unsupported input.
+				speech.speakMessage(_("Unsupported input"))
+				self.flushBuffer()
 			else:
 				# This cell didn't produce any text; e.g. number sign.
 				self._reportUntranslated(pos)
