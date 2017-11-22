@@ -40,6 +40,7 @@ except RuntimeError:
 	updateCheck = None
 import inputCore
 import nvdaControls
+import ui
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -127,25 +128,35 @@ class SettingsDialog(wx.Dialog):
 		self.Destroy()
 
 	def onHelp(self, evt):
-		import urllib
-		import webbrowser
 		helpFile = gui.getDocFilePath("userGuide.html")
-		helpURL = "file:" + urllib.pathname2url(helpFile)
+		helpMessage = _("No context sensitive help is available here at this time.")
+		tag = None
 		windowId = evt.GetId()
 		if windowId == wx.ID_HELP:
 			windowId = self.GetId()
 		log.debug("windowid=%d helpids=%s" % (windowId, self.helpIds))
 		if windowId in self.helpIds.keys():
-			helpURL = "#".join((helpURL, self.helpIds[windowId]))
-			log.debug("Getting help from %s" % helpURL)
-			webbrowser.open(helpURL)
-		elif self.GetId() in self.helpIds.keys():
-			windowId = self.GetId()
-			helpURL = "#".join((helpURL, self.helpIds[windowId]))
-			log.debug("Getting help from %s" % helpURL)
-			webbrowser.open(helpURL)
+			with open(helpFile) as help:
+				lines = help.readlines()
+				log.debug(lines[2093])
+			iLines = iter(lines)
+			while iLines:
+				try:
+					line = next(iLines)
+					if line.startswith("<A NAME=\"%s\"></A>" % (self.helpIds[windowId])):
+						helpMessage = next(iLines)
+						tag = helpMessage[:4]
+						helpMessage += next(iLines)
+					elif tag != None and not line.startswith(tag):
+						helpMessage += line
+					elif tag != None and line.startswith(tag):
+						break
+				except(StopIteration):
+					break
+			helpTitle = _("NVDA Help")
+			ui.browseableMessage(helpMessage, helpTitle, True)
 		else:
-			log.debug("Help for windows id %d not found." % (windowId))
+			log.debug("Help for window id %d not found." % (windowId))
 			evt.Skip()
 
 class GeneralSettingsDialog(SettingsDialog):
@@ -170,8 +181,8 @@ class GeneralSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 		languageLabelText = _("&Language (requires restart to fully take effect):")
 		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
+		self.helpIds[self.languageList.GetId()] = "GeneralSettingsLanguage"
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
-		self.helpIds[self.languageList.GetId()] = "GeneralSettings"
 		try:
 			self.oldLanguage=config.conf["general"]["language"]
 			index=[x[0] for x in self.languageNames].index(self.oldLanguage)
@@ -183,6 +194,7 @@ class GeneralSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 		self.saveOnExitCheckBox=wx.CheckBox(self,label=_("&Save configuration on exit"))
+		self.helpIds[self.saveOnExitCheckBox.GetId()] = "GeneralSettingsSaveConfig"
 		self.saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
 		if globalVars.appArgs.secure:
 			self.saveOnExitCheckBox.Disable()
@@ -190,11 +202,13 @@ class GeneralSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 		self.askToExitCheckBox=wx.CheckBox(self,label=_("Sho&w exit options when exiting NVDA"))
+		self.helpIds[self.askToExitCheckBox.GetId()] = "GeneralSettingsShowExitOptions"
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
 		settingsSizerHelper.addItem(self.askToExitCheckBox)
 
 		# Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 		self.playStartAndExitSoundsCheckBox=wx.CheckBox(self,label=_("&Play sounds when starting or exiting NVDA"))
+		self.helpIds[self.playStartAndExitSoundsCheckBox.GetId()] = "GeneralSettingsPlaySounds"
 		self.playStartAndExitSoundsCheckBox.SetValue(config.conf["general"]["playStartAndExitSounds"])
 		settingsSizerHelper.addItem(self.playStartAndExitSoundsCheckBox)
 
@@ -202,6 +216,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		logLevelLabelText=_("L&ogging level:")
 		logLevelChoices = [name for level, name in self.LOG_LEVELS]
 		self.logLevelList = settingsSizerHelper.addLabeledControl(logLevelLabelText, wx.Choice, choices=logLevelChoices)
+		self.helpIds[self.logLevelList.GetId()] = "GeneralSettingsLogLevel"
 		curLevel = log.getEffectiveLevel()
 		for index, (level, name) in enumerate(self.LOG_LEVELS):
 			if level == curLevel:
@@ -212,6 +227,7 @@ class GeneralSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("&Automatically start NVDA after I log on to Windows"))
+		self.helpIds[self.startAfterLogonCheckBox.GetId()] = "GeneralSettingsStartAfterLogOn"
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
@@ -219,6 +235,7 @@ class GeneralSettingsDialog(SettingsDialog):
 
 		# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 		self.startOnLogonScreenCheckBox = wx.CheckBox(self, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
+		self.helpIds[self.startOnLogonScreenCheckBox.GetId()] = "GeneralSettingsStartOnLogOnScreen"
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
 		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.startOnLogonScreenCheckBox.Disable()
