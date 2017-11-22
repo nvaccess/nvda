@@ -5,6 +5,12 @@
 
 import os
 
+"""
+This module contains non-localizable version information for NVDA such as the version string and major and minor numbers etc.
+Any localizable version information should be placed in the versionInfo module, not this one.
+This module exists separately so that it can be imported for version checks before localization is initialized.
+"""
+
 def _updateVersionFromVCS():
 	"""Update the version from version control system metadata if possible.
 	"""
