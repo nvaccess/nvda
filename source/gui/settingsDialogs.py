@@ -1763,7 +1763,7 @@ class AddSymbolDialog(wx.Dialog):
 		# Translators: This is the label for the edit field in the add symbol dialog.
 		symbolText = _("Symbol:")
 		self.identifierTextCtrl = sHelper.addLabeledControl(symbolText, wx.TextCtrl)
-		
+
 		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)

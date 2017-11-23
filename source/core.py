@@ -2,7 +2,6 @@
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V.
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
