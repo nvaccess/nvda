@@ -16,7 +16,6 @@ import sys
 # Note that checkPot will fail with an unexpected success
 # if a translator comment is found for one of these messages.
 EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
-	'Focus mode',
 	'%s landmark',
 	'border',
 	'filler',

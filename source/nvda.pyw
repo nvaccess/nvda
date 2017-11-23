@@ -1,6 +1,6 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -24,6 +24,14 @@ import pythonMonkeyPatches
 import ctypes
 import locale
 import gettext
+
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+try:
+	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+except:
+	gettext.install('nvda',unicode=True)
+
 import time
 import argparse
 import win32con
@@ -51,13 +59,6 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 
 globalVars.startTime=time.time()
 
-#Localization settings
-locale.setlocale(locale.LC_ALL,'')
-try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
-except:
-	gettext.install('nvda',unicode=True)
-
 # Check OS version requirements
 import winVersion
 if not winVersion.isSupportedOS():
@@ -65,8 +66,8 @@ if not winVersion.isSupportedOS():
 	sys.exit(1)
 
 def decodeMbcs(string):
-  """Decode a multi-byte character set string"""
-  return string.decode("mbcs")
+	"""Decode a multi-byte character set string"""
+	return string.decode("mbcs")
 
 #Process option arguments
 parser=NoConsoleOptionParser()
@@ -187,11 +188,8 @@ log.debug("Debug level logging enabled")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
 #Accept wm_quit from other processes, even if running with higher privilages
-try:
-	if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
-		raise WinError()
-except AttributeError:
-	pass
+if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
+	raise WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
 if not isSecureDesktop:

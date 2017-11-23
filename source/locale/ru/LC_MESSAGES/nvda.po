@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 00:10+1000\n"
-"PO-Revision-Date: 2017-10-06 07:41+0800\n"
+"POT-Creation-Date: 2017-11-03 00:10+1000\n"
+"PO-Revision-Date: 2017-11-04 21:19+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -801,6 +801,11 @@ msgstr "Хорватский восьмиточечный"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Хорватский (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Венгерский восьмиточечный"
 
@@ -1021,6 +1026,11 @@ msgstr "Брайлевский Unicode"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Вьетнамский (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Китайский (Гонконг, Кантонский)"
 
@@ -1029,9 +1039,12 @@ msgstr "Китайский (Гонконг, Кантонский)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Китайский (Тайвань, Мандарин)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "Режим редактирования"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Режим обзора"
@@ -1537,7 +1550,7 @@ msgstr "&Заголовки"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Form fields"
-msgstr "&Поля форм"
+msgstr "Поля &форм"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1562,8 +1575,8 @@ msgstr "Тип:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&Фильтр по:"
+msgid "Filt&er by:"
+msgstr "Филь&тр по:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1599,8 +1612,8 @@ msgid "Shows the long description at this position if one is found."
 msgstr ""
 "Показывает полное описание на этой позиции, если таковое будет найдено."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Не в контейнере"
 
@@ -1645,6 +1658,20 @@ msgstr "Переходит на следующий столбец таблицы
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "Переходит на предыдущий столбец таблицы"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "чтение таблиц используемых для разметки выключено"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "чтение таблиц используемых для разметки включено"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Включает и выключает объявление таблиц используемых для разметки в режиме "
+"обзора"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2403,47 +2430,47 @@ msgstr "размер шрифта"
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
 msgid "bold"
-msgstr "Полужирный"
+msgstr "полужирный"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is italicized.
 msgid "italic"
-msgstr "Курсив"
+msgstr "курсив"
 
 #. Translators: Describes text formatting.
 msgid "underline"
-msgstr "Подчёркнутый"
+msgstr "подчёркнутый"
 
 #. Translators: Describes text formatting.
 msgid "foreground color"
-msgstr "Цвет шрифта"
+msgstr "цвет шрифта"
 
 #. Translators: Describes text formatting.
 msgid "background color"
-msgstr "Цвет фона"
+msgstr "цвет фона"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
 msgid "superscript"
-msgstr "Надстрочный"
+msgstr "надстрочный"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
 msgid "subscript"
-msgstr "Подстрочный"
+msgstr "подстрочный"
 
 #. Translators: Describes style of text.
 #. Translators: a Microsoft Word revision type (style change)
 msgid "style"
-msgstr "Стиль"
+msgstr "стиль"
 
 #. Translators: Describes text formatting.
 msgid "indent"
-msgstr "Отступ"
+msgstr "отступ"
 
 #. Translators: Describes text formatting.
 msgid "alignment"
-msgstr "Выравнивание"
+msgstr "выравнивание"
 
 #. Translators: Identifies a data grid control (a grid which displays data).
 msgid "data grid"
@@ -2693,6 +2720,24 @@ msgstr "Ошибка файла привязки жестов"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Загрузка NVDA. Пожалуйста, подождите..."
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Альбомная ориентация"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Книжная ориентация"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Питание подключено. %d процент"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Питание отключено. %d процент"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -5689,14 +5734,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "Звук"
 
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"Позволяет NVDA работать на экране входа в Windows, на экране контроля "
-"учётных записей и других защищённых экранах."
-
 msgid "Type help(object) to get help about object."
 msgstr "Наберите help(object) для получения справки по объекту object."
 
@@ -7077,12 +7114,21 @@ msgstr "прокрутка экрана"
 msgid "line scroll"
 msgstr "прокрутка строк"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Показать окно настроек Handy Tech."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Брайлевский ввод включён"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Брайлевский ввод выключен"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Включает и выключает брайлевский ввод"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7267,8 +7313,8 @@ msgid "Change settings of document properties"
 msgstr "Изменение чтения форматирования документов"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "Windows 10 OCR..."
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8797,8 +8843,8 @@ msgid "Whole &word"
 msgstr "Целое &слово"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "Регулярное &выражение"
+msgid "Regular &expression"
+msgstr "Ре&гулярное выражение"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10524,12 +10570,12 @@ msgstr "Вне таблицы"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "&Примечания"
+msgstr "Пр&имечания"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "&ошибки"
+msgid "&Errors"
+msgstr "&Ошибки"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10539,28 +10585,5 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "-----"
-#~ msgstr "-----"
-
-#~ msgid "(x)"
-#~ msgstr "(x)"
-
-#~ msgid "(-)"
-#~ msgstr "(-)"
-
-#~ msgid "( )"
-#~ msgstr "( )"
-
-#~ msgid "Farsi grade 1"
-#~ msgstr "Фарси (первая ступень)"
-
-#~ msgid "ITALIC"
-#~ msgstr "Курсив"
-
-#~ msgid "braille"
-#~ msgstr "по брайлю"
-
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr ""
-#~ "Вы уверены, что хотите удалить этот профиль? Его не возможно будет "
-#~ "восстановить."
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Показать окно настроек Handy Tech."
