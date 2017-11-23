@@ -99,7 +99,11 @@ class _EventExecuter(object):
 		try:
 			return func(*args, **self.kwargs)
 		except TypeError:
-			log.warning("Could not execute event  handler due to unsupported kwargs: %r"%self.kwargs, exc_info=True)
+			log.warning("Could not execute function {func} defined in {module} module due to unsupported kwargs: {kwargs}".format(
+				func=func.__name__,
+				module=func.__module__ or "unknown",
+				kwargs=self.kwargs
+			), exc_info=True)
 			return extensionPoints.callWithSupportedKwargs(func, *args, **self.kwargs)
 
 	def gen(self, eventName, obj):
