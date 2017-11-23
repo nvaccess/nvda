@@ -66,7 +66,7 @@ Bitte beachten Sie, dass diese Version von NVDA unter Windows XP und Windows Vis
  - Wenn Sie z. B. eine Taste auf Ihrer Braillezeile an die Alt-Taste gebunden haben und eine andere BraillezeilenTaste an die Taste Pfeil ab, führt das Kombinieren dieser Tasten zur Emulation von alt+Pfeil ab.
 - die Klasse BrailleDisplayGesture hat jetzt eine zusätzliche Eigenschaft Namens model. Wenn vorhanden, wird durch Drücken einer Taste ein zusätzlicher, modellspezifischer Gesten-Identifikator erzeugt. Damit kann der Benutzer Gesten binden, die auf ein bestimmtes Braillezeilenmodell beschränkt sind. 
  - Sehen Sie sich den Treiber für Baum-Braillezeilen als Beispiel für diese neue Funktionalität an.
-- NVDA wird nun mit Visual Studio 2017 und the Windows 10 SDK compiliert. (#7568)
+- NVDA wird nun mit Visual Studio 2017 und Windows 10 SDK compiliert. (#7568)
 
 
 = 2017.3 =
@@ -205,10 +205,10 @@ Schwerpunkte dieser Version sind u. a. eine volle Unterstützung von Audio-Ducki
  - `config.validateConfig`. (#6846, #667)
  - `config.save`: Verwenden Sie stattdessen `config.conf.save`. (#6846, #667)
 - Die Liste mit Vorschlägen zur Autovervollständigung im Kontextmenü der Python-Konsole zeigt keine führenden Objektpfade mehr vor den Symbolnamen an. (#7023)
-- There is now a unit testing framework for NVDA. (#7026)
- - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
- - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
- - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
+- Es gibt jetzt ein Unit Test Framework für NVDA. (#7026)
+ - Unit-Tests und Infrastruktur befinden sich im Verzeichnis tests/unit. Sehen Sie sich den Docstring in der Datei tests\unit\__init__.py für weitere Informationen an.
+ - Sie können Tests mit "scons tests" durchführen. Weitere Informationen finden Sie im Abschnitt "Ausführen von Tests" in der Datei readme.md.
+ - Wenn Sie einen Pull-Request für NVDA einreichen, sollten Sie zunächst die Tests durchführen und sicherstellen, dass diese bestanden werden.
 
 
 = 2017.1 =
@@ -475,11 +475,11 @@ Schwerpunkte dieser Version sind u. a. eine Option zum Reduzieren der Lautstärk
 - Der Konstruktor von nvwave.WavePlayer besitzt nun ein Argument namens wantDucking, mit dessen Hilfe Sie angeben können, ob während der Wiedergabe die Lautstärke anderer Audioquellen reduziert werden soll. (#3830)
  - Wenn die Funktion aktiviert (ist Standard), sollte zu gegebener Zeit WavePlayer.idle aufgerufen werden.
 - Die Brailleausgabe wurde verbessert: (#5609)
- - (en) Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
- - (en) Data is written to thread-safe braille display drivers in the background, thus improving performance.
- - (en) hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
- - (en) hwIo.Hid provides support for braille displays communicating via USB HID.
- - (en) hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+ - Threadsichere Braillezeilen-Treiber können sich über das Attribut BrailleDisplayDriver.isThreadSafe als solche deklarieren. Ein Treiber muss threadsicher sein, um von den folgenden Leistungsmerkmalen zu profitieren.
+ - Die Leistung des Treibers wird verbessert, weil Daten im hintergrund geschrieben werden
+ - HwIo.Serial erweitert pyserial, um eine Callable beim Empfang von Daten aufzurufen, anstatt dass Treiber Polling durchführen müssen.
+ - hwIo.Hid unterstützt Braillezeilen, die über USB HID kommunizieren.
+ - hwPortUtils und hwIo können optional ein detailliertes Debug-Logging anbieten, einschließlich der gefundenen Geräte und aller gesendeten und empfangenen Daten.
 - Neue Eigenschaften für Touchscreen-Gesten: (#5652)
  - Das Objekt MultitouchTracker enthält nun eine Eigenschaft namens childTrackers. Hier werden die einzelnen Teile einer Mehrfachgeste gespeichert. Ein doppeltes Tippen mit zwei Fingern enthält z. B. zwei Zweifinger-Tippgesten. Die Zweifinger-Tippgesten enthalten ihrerseits zwei Tippgesten.
  - MultiTouchTracker-Objekte enthalten außerdem eine Eigenschaft rawSingleTouchTracker, falls der Tracker das Ergebnis einer Geste ist, die mit einem Finger ausgeführt wird. Der Tracker gestattet Ihnen den Zugriff auf die vom Betriebssystem zurückgegebene ID des Fingers. Er erlaub Ihnen außerdem festzustellen, ob der Finger momentan (noch) den Bildschirm berührt.
@@ -501,7 +501,7 @@ Schwerpunkte dieser Version sind u. a. Leistungsverbesserungen in Windows 10; Un
 - Wenn Sie sich mit Hilfe der Elementliste Dokumentänderungen anzeigen lassen, werden jetzt mehr Informationen angezeigt. (#4920)
 - Sie können in Microsoft Excel nun die Elementliste (NVDA+F7) verwenden, um Tabellenblätter aufzulisten oder umzubenennen. (#4630, #4414)
 - Sie können im Dialog für die Aussprache von Symbolen und Sonderzeichen festlegen, ob Symbole unbehandelt an die Sprachausgabe gesendet werden sollen (um beispielsweise eine Sprechpause oder eine andere Betonung zu erhalten). (#5234)
-- (en) In Microsoft Excel, NVDA now reports any input messages set by the sheet author on cells. (#5051)
+- In Microsoft Excel meldet NVDA nun alle vom Blattautor gesetzten Eingabemeldungen auf Zellen. (#5051)
 - Unterstützung für Baum Pronto! V4 und VarioUltra Braillezeilen bei Bluetooth-Verbindungen. (#3717)
 - Unterstützung für erweiterte Eingabefelder in Mozilla-Anwendungen wie z. B. Google Docs bei Verwendung einer Braillezeile in Mozilla Firefox und HTML-Mail in Mozilla Thunderbird. (#1668)
 - Unterstützung für erweiterte Eingabefelder in Google Chrome und Chrome-basierten Browsern wie z. B. Google Docs unter Verwendung einer Braillezeile. (#2634)
