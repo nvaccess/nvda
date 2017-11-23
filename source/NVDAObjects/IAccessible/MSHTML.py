@@ -633,7 +633,7 @@ class MSHTML(IAccessible):
 		return presType
 
 
-	def old_get_shouldAllowIAccessibleFocusEvent(self):
+	def _get_shouldAllowIAccessibleFocusEvent(self):
 		ariaRole=self.HTMLAttributes['aria-role']
 		if ariaRole=="gridcell":
 			return True
