@@ -151,7 +151,7 @@ def readTextHelper_generator(cursor):
 					if cursor==CURSOR_CARET:
 						updater.updateCaret()
 					if cursor!=CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
-						api.setReviewPosition(updater, isCaret=True)
+						api.setReviewPosition(updater, isCaret=cursor==CURSOR_CARET)
 			elif not keepReading and lastReceivedIndex==lastSentIndex:
 				# All text has been sent to the synth.
 				# Turn the page and start again if the object supports it.

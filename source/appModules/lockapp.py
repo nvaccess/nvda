@@ -94,6 +94,6 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_appModule_loseFocus(self):
 		if not config.conf["reviewCursor"]["followFocus"]:
-			api.setReviewPosition(self._oldReviewPos, isCaret=False)
+			api.setReviewPosition(self._oldReviewPos)
 			del self._oldReviewPos, self._oldReviewObj
 		inputCore.manager._captureFunc = None
