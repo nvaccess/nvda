@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2016 NV Access Limited, Rui Batista
+#Copyright (C) 2012-2017 NV Access Limited, Rui Batista, Babbage B.V.
 
 import os.path
 import time
@@ -110,7 +110,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		return focusObj._hasNavigableText and (not focusObj.treeInterceptor or focusObj.treeInterceptor.passThrough)
 
 	def _get_useContractedForCurrentFocus(self):
-		return self._table.contracted and self.currentFocusIsTextObj
+		return self._table.contracted and self.currentFocusIsTextObj and not self.currentModifiers
 
 	def _translate(self, endWord):
 		"""Translate buffered braille up to the cursor.
@@ -129,7 +129,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		pos = self.untranslatedStart + self.untranslatedCursorPos
 		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
-		if not self.currentFocusIsTextObj and self._table.contracted:
+		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
 			mode |=  louis.partialTrans
 		self.bufferText = louis.backTranslate(
 			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
@@ -157,7 +157,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			else:
 				self.sendChars(newText)
 
-		if endWord or (newText and not self.useContractedForCurrentFocus):
+		if endWord or (newText and (not self.currentFocusIsTextObj or self.currentModifiers)):
 			# We only need to buffer one word.
 			# Clear the previous word (anything before the cursor) from the buffer.
 			del self.bufferBraille[:pos]
@@ -249,7 +249,7 @@ class BrailleInputHandler(AutoPropertyObject):
 				if not endWord:
 					self.cellsWithText.add(pos)
 			elif self.bufferText and not self.useContractedForCurrentFocus:
-				# translators: reported when translation didn't succeed due to unsupported input.
+				# Translators: Reported when translation didn't succeed due to unsupported input.
 				speech.speakMessage(_("Unsupported input"))
 				self.flushBuffer()
 			else:
@@ -364,7 +364,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def emulateKey(self, key, withModifiers=True):
 		if withModifiers:
-			keys = self.currentModifiers.copy()
+			keys = self.currentModifiers
 			gesture = "+".join(keys)+"+"+key
 		else:
 			gesture = key
