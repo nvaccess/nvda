@@ -61,7 +61,7 @@ BLUETOOTH_NAMES = {
 	"Active Braille AB",
 	"Active Star AS",
 	"Basic Braille BB",
-	"Braille Star BS",
+	"Braille Star 40 BS",
 	"Braille Wave BW",
 	"Easy Braille EBR",
 }
@@ -789,7 +789,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		'br(handytech):rightSpace+b1+b3+b4': 'toggleBrailleInput',
 		'br(handytech.easybraille):left+b1+b3+b4': 'toggleBrailleInput',
 		'br(handytech.easybraille):right+b1+b3+b4': 'toggleBrailleInput',
-		'bk:space+dot1+dot2+dot7': 'toggleBrailleInput',
+		'br(handytech):space+dot1+dot2+dot7': 'toggleBrailleInput',
 	}
 
 	gestureMap = inputCore.GlobalGestureMap({
@@ -853,15 +853,20 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.keys = set(keys)
 
 		self.keyNames = names = []
+		if isBrailleInput:
+			self.dots = self._calculateDots()
 		for key in keys:
-			if isBrailleInput:
-				self.dots = self._calculateDots()
-				if key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille)):
-					self.space = True
-			if KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
+			if isBrailleInput and (
+				key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille))
+			):
+				self.space = True
+				names.append("space")
+			elif isBrailleInput and key in KEY_DOTS:
+				names.append("dot%d"%KEY_DOTS[key])
+			elif KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
 				self.routingIndex = key - KEY_ROUTING
 				names.append("routing")
-			elif not isBrailleInput:
+			else:
 				try:
 					names.append(model.keys[key])
 				except KeyError:

@@ -862,12 +862,12 @@ NVDA bietet frühe Unterstützung beim Lesen und interaktiver Navigation von mat
 Für weitere Informationen lesen Sie den Abschnitt [Mathematische Inhalte lesen #ReadingMath]
 
 +++ Markieren von Text +++
-(noch nicht übersetzt) Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
-To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
+Mit Kindle können Sie verschiedene Funktionen für den ausgewählten Text ausführen, z. B. eine Wörterbuchdefinition erhalten, Notizen und Hervorhebungen hinzufügen, den Text in die Zwischenablage kopieren und das Web durchsuchen.
+Markieren sie dazu zuerst den Text mit dem im Lesemodus üblichen tasten(Kombinationen) (z. B. umschalt+Richtungstasten).
 %kc:beginInclude
-Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
+Nachdem Sie Text markiert haben, drücken Sie die Anwendungstaste oder Umschalt+F10, um die verfügbaren Optionen anzuzeigen.
 %kc:endInclude
-If you do this with no text selected, options will be shown for the word at the cursor.
+Wenn Sie keinen Text markiert haben, beziehen sich die angezeigten Optionen auf das Wort am Cursor.
 
 +++ Notizen +++
 Sie können eine Notiz zu einem Wort oder einer ganzen Passage hinzufügen.
@@ -1373,13 +1373,13 @@ Mit dieser Option, die standardmäßig aktiviert ist, können Sie festlegen, ob 
 In manchen Sprachräumen - wie etwa im chinesischen, hat diese Option jedoch keinen Einfluss auf die Ausgabe von Beschreibungen für Kandidaten.
 Diese Option ist lediglich für japanische und koreanische Eingabemethoden sinnvoll.
 
-==== Änderungen der Zeichenketten beim Vorlesen ansagen====
+==== Änderungen zu den Leseketten ansagen ====
 Einige Eingabemethoden wie zum Beispiel Chinese New Phonetic und New ChangJie besitzen einen "reading string (auch als "precomposition string" bezeichnet).
 Mit dieser Option teilen Sie NVDA mit, ob neue Zeichen, die in diese Zeichenketten eingegeben werden, zurückgemeldet werden sollen.
 Diese Option ist standardmäßig aktiviert.
 Bedenken Sie, dass bei einigen älteren eingabemethoden wie Chinese ChangJie der "composition string" benutzt wird, um diese Informationen bereitzustellen. Lesen Sie den folgenden Abschnitt für weitere Informationen zum "composition string".
 
-==== Report changes to the composition string ====
+==== Änderungen zu den Zusammenfassungsketten ansagen ====
 Nachdem die Präcompositionsdaten zu einem gültigen piktografischen Zeichen zusammengeführt wurden, wird dieses zusammen mit weiteren Symbolen in einem composition string gespeichert, bevor dieser in das Dokument geschrieben wird.
 Mit dieser Option legen Sie fest, ob NVDA Änderungen an den Symbolen im composition string wiedergeben soll.
 Diese Option ist standardmäßig aktiviert.
@@ -1927,15 +1927,15 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:endInclude
 
 ++ HandyTech-Braillezeilen ++
-Die meisten Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via USB und BlueTooth unterstützt.
+Die meisten Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via seriellem Port, USB und Bluetooth unterstützt.
 bei älteren Usb-Braillezeilen werden Sie den Universaltreiber von handy Tech installieren müssen.
 
-die folgenden Braillezeilenmodelle werden nich ohne weiteres unterstützt; sie können sie jedoch unter Zuhilfenahme des [universaltreibers https://handytech.de/de/service/kundenservice/service-software/universeller-braillezeilentreiber] und der NVDA-Erweiterung verwenden:
+die folgenden Braillezeilenmodelle werden nicht ohne weiteres unterstützt; sie können sie jedoch unter Zuhilfenahme des [universaltreibers https://handytech.de/de/service/kundenservice/service-software/universeller-braillezeilentreiber] und der NVDA-Erweiterung verwenden:
 - Braillino
-- Bookworm
-- Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
-
-Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
+- Buchwurm
+- Modular-Zeilen mit firmware-version 1.13 oder niedriger. Bitte beachten Sie, dass die Firmware dieser Braillezeilen aktualisiert werden kann.
+-
+Folgende Tastenkombinationen bei diesen Braillezeilen sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:beginInclude
 || Name | Taste |
@@ -1943,15 +1943,15 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Braillezeile weiter scrollen | Rechts, nach unten, b6 |
 | Eine Zeile nach oben springen | B4 |
 | Eine Zeile nach unten springen | B5 |
-| Zum Brailemodul springen | Routing |
-| Umschalt+Tabulatortaste | ESC, left triple action key up+down  |
+| Zum Braillemodul springen | Routing |
+| Umschalt+Tabulatortaste | ESC, linke triple-aktionstaste auf+ab |
 | Alt-Taste | B2+B4+B5 |
 | Escape-Taste | B4+B6 |
-| Tabulatortaste | Eingabe, right triple action key up+down |
-| Eingabetaste | ESC+Eingabe, left+right triple action key up+down, joystickAction |
+| Tabulatortaste | Eingabe, rechte triple-Aktionstaste auf+ab |
+| Eingabetaste | ESC+Eingabe, linke+rechte triple-Aktionstaste auf+ab, joystick-Aktion |
 | Pfeiltaste nach oben | joystick auf |
 | Pfeiltaste nach unten | Joystick ab |
-| Pfeiltasta nach links | joystick nach links |
+| Pfeiltaste nach links | joystick nach links |
 | Pfeiltaste nach rechts | Joystick nach rechts |
 | NVDA-Menü | B2+B4+B5+B6 |
 | Kopplung der Braillezeile ändern | b2 |

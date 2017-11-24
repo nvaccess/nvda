@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
+"POT-Creation-Date: 2017-11-17 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
@@ -829,6 +829,11 @@ msgstr "Braille d'ordinador croat de 8 punts "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Croat grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Braille d'ordinador hongarès de 8 punts"
 
@@ -1049,6 +1054,11 @@ msgstr "Braille Unicode"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Vietnamita grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Xinès (Hong Kong, Cantonès)"
 
@@ -1068,9 +1078,8 @@ msgid "Browse mode"
 msgstr "Mode de navegació"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
-#, fuzzy
 msgid "Unlabeled"
-msgstr "etiqueta"
+msgstr "Sense etiqueta"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1573,9 +1582,8 @@ msgstr "Camps del &formulari"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Buttons"
-msgstr "botó"
+msgstr "&Botons"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1679,6 +1687,21 @@ msgstr "salta a la columna posterior de la taula"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "salta a la columna anterior de la taula"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+#, fuzzy
+msgid "layout tables off"
+msgstr "Desactiva l'informe de les taules"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+#, fuzzy
+msgid "layout tables on"
+msgstr "Activa l'informe de les taules"
+
+#. Translators: Input help mode message for include layout tables command.
+#, fuzzy
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Activa i desactiva la verbalització de les taules"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2726,9 +2749,8 @@ msgid "Loading NVDA. Please wait..."
 msgstr "Inici de NVDA en curs..."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
-#, fuzzy
 msgid "Landscape"
-msgstr "Escape"
+msgstr "Horitzontal"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
@@ -4796,19 +4818,19 @@ msgstr "Cilindre"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chart Plus symbol"
-msgstr ""
+msgstr "Signe més"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chart Star Symbol"
-msgstr ""
+msgstr "Estrella"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chart X Symbol"
-msgstr ""
+msgstr "Signe de multiplicació"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5490,13 +5512,13 @@ msgstr "Quart de cercle"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque"
-msgstr ""
+msgstr "Placa"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque Tabs"
-msgstr ""
+msgstr "Placa amb pestanyes"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5750,7 +5772,7 @@ msgstr "Vídeo"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Return"
-msgstr ""
+msgstr "Fletxa en U"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7133,12 +7155,21 @@ msgstr "desplaça línia horitzontal"
 msgid "line scroll"
 msgstr "desplaça línia vertical"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Línies braille Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Mostra la finestra de configuració del controlador per a Handy Tech"
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Entrada Braille activada"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Entrada Braille desactivada"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Activa i desativa l'entrada braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7323,8 +7354,8 @@ msgid "Change settings of document properties"
 msgstr "Canvia els paràmetres de les propietats del document"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "OCR del Windows 10..."
+msgid "&Windows 10 OCR..."
+msgstr "OCR del &Windows 10..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8858,8 +8889,8 @@ msgid "Whole &word"
 msgstr "La &paraula sencera"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "Expressió &regular"
+msgid "Regular &expression"
+msgstr " &Expressió regular"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10589,9 +10620,8 @@ msgstr "&Anotacions"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Errors"
-msgstr "&errors"
+msgstr "&Errors"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10600,3 +10630,6 @@ msgstr "Sèries HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Mostra la finestra de configuració del controlador per a Handy Tech"

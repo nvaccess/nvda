@@ -25,9 +25,9 @@ Os destaques desta versão incluem:
 - Suporte para o Microsoft Edge em execução através do Windows Defender Application Guard no Windows 10 Fall Creators Update. (#7600)
 - Quando executado num computador portátil ou tablet, o NVDA já anuncia quando o carregador é ligado ou desligado, incluindo o nível da bateria, e quando a orientação do ecrã muda. (#4574, #4612)
 - Novo idioma: Macedónio.
-- Novas tabelas Braille: Croata grau 1 e Vietnamês grau 1. (#7518, #7565)
-- Adicionado suporte para a linha Braille Actilino da  HelpTech, antiga HandyTech. (#7590)
-- Já é suportada a introdução de texto pelas linhas Braille da HelpTech, antiga HandyTech. (#7590)
+- Novas tabelas Braille: Croata grau 1 e Vietnamita grau 1. (#7518, #7565)
+- Adicionado suporte para a linha Braille Actilino da HandyTech. (#7590)
+- Já é suportada a introdução de texto pelas linhas Braille da HandyTech. (#7590)
 
 
 == Alterações ==
@@ -40,11 +40,11 @@ Os destaques desta versão incluem:
 - Pressionando três vezes o comando para ler a barra de estado, a informação é copiada para a área de transferência. (#1785)
 - Ao associar comandos a teclas duma linha Braille da Baum pode limitá-los ao modelo específico em uso, (p.e. VarioUltra ou Pronto). (#7517)
 - O atalho para a opção "Filtrar por:" na Lista de elementos no Modo de navegação mudou de alt+F para alt+P. (#7569)
-- Um comando, sem teclas associadas, foi adicionado ao Modo de navegação, para alternar rapidamente a inclusão das tabelas de formatação. Pode associar teclas a este comando no diálogo Definir comandos, grup Modo de navegação. (#7634)
+- Um comando, sem teclas associadas, foi adicionado ao Modo de navegação, para alternar rapidamente a inclusão das tabelas de apresentação. Pode associar teclas a este comando no diálogo Definir comandos, grup Modo de navegação. (#7634)
 - Actualizado o liblouis braille translator to 3.3.0. (#7565)
 -  Os ficheiros dos Dicionários de voz passam a ser versionados e foram movidos para a pasta 'speechDicts/voiceDicts.v1'. (#7592)
 - As alterações aos ficheiros versionados (configurações do utilizador e  dicionários de voz), já não são guardadas se estiver a executar o NVDA a partir do executável. (#7688)
-- As linhas Braille Braillino, Bookworm e Modular, com firmware) antigo, da HelpTech (ex HandyTech) já não são suportadas automaticamente, sendo necessário instalar o Driver Braille Universal e o Extra do NVDA da HandyTech, para as usar. (#7590)
+- As linhas Braille Braillino, Bookworm e Modular, com firmware) antigo, da HandyTech) já não são suportadas automaticamente, sendo necessário instalar o Driver Braille Universal e o Extra do NVDA da HandyTech, para as usar. (#7590)
 
 
 == Correções ==
@@ -59,7 +59,7 @@ Os destaques desta versão incluem:
 - Já é possível aceder ao conteúdo matemático no Google Chrome num sistema sem o Mozilla Firefox instalado. (#7308)
 - O Sistema operativo e outras aplicações devem ficar mais estáveis, imediatamente após a instalação do NVDA e antes de reiniciar o sistema, em comparação com a instalação de versões anteriores do NVDA. (#7563)
 - Ao usar um comando de reconhecimento de conteúdo, como NVDA+r), o NVDA anunciará uma mensagem de erro, em vez de ficar em silêncio, se o objecto de navegação tiver desaparecido. (#7567)
-- A funcionalidade de deslocamento da lina para trás  foi corrigida para as linhas Braille da Freedom Scientific que possuem uma left bumper bar. (#7713)
+- A funcionalidade de deslocamento da linha para trás  foi corrigida para as linhas Braille da Freedom Scientific que possuem uma left bumper bar. (#7713)
 
 
 == Alterações para desenvolvedores ==
