@@ -1697,18 +1697,29 @@ class GlobalCommands(ScriptableObject):
 	script_toggleSpeechViewer.category=SCRCAT_TOOLS
 
 	def script_braille_toggleTether(self, gesture):
-		if config.conf["braille"]["tetherTo"] == braille.handler.TETHER_FOCUS:
-			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=False)
-			braille.handler.handleReviewMove(shouldAutoTether=False)
-			# Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-			tetherMsg = _("review")
+		values = [x[0] for x in braille.handler.tetherValues]
+		labels = [x[1] for x in braille.handler.tetherValues]
+		try:
+			index = values.index(
+				braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
+			)
+		except:
+			index=0
+		newIndex = (index+1) % len(values)
+		newTetherChoice = values[newIndex]
+		if newTetherChoice==braille.handler.TETHER_AUTO:
+			config.conf["braille"]["autoTether"] = True
+			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
 		else:
-			braille.handler.setTether(braille.handler.TETHER_FOCUS, auto=False)
-			braille.handler.handleGainFocus(api.getFocusObject(),shouldAutoTether=False)
-			# Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-			tetherMsg = _("focus")
-		# Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
-		ui.message(_("Braille tethered to %s") % tetherMsg)
+			config.conf["braille"]["autoTether"] = False
+			braille.handler.setTether(newTetherChoice, auto=False)
+			if newTetherChoice==braille.handler.TETHER_REVIEW:
+				braille.handler.handleReviewMove(shouldAutoTether=False)
+			else:
+				braille.handler.handleGainFocus(api.getFocusObject(),shouldAutoTether=False)
+		# Translators: Reports which position braille is tethered to
+		# (braille can be tethered automatically or to either focus or review position).
+		ui.message(_("Braille tethered %s") % labels[newIndex])
 	# Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
 	script_braille_toggleTether.category=SCRCAT_BRAILLE

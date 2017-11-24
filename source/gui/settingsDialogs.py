@@ -1654,22 +1654,16 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.messageTimeoutEdit.Disable()
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-		tetherListText = _("B&raille tethered to:")
+		tetherListText = _("Tether B&raille:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
-		tetherChoices = [x[1] for x in self.tetherValues]
+		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
-		tetherConfig=config.conf["braille"]["tetherTo"]
-		selection = (x for x,y in enumerate(self.tetherValues) if y[0]==tetherConfig).next()  
+		tetherChoice=braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
+		selection = (x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice).next()
 		try:
 			self.tetherList.SetSelection(selection)
 		except:
 			pass
-
-		# Translators: The label for a setting in braille settings to switch between focus or review tethering automatically.
-		autoTetherText = _("&Automatically tether to focus or review")
-		self.autoTetherCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoTetherText))
-		self.autoTetherCheckBox.Value = config.conf["braille"]["autoTether"]
 
 		# Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 		readByParagraphText = _("Read by &paragraph")
@@ -1714,8 +1708,13 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["cursorShapeReview"] = self.cursorShapes[self.cursorShapeReviewList.GetSelection()]
 		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		braille.handler.setTether(self.tetherValues[self.tetherList.GetSelection()][0], auto=False)
-		config.conf["braille"]["autoTether"] = self.autoTetherCheckBox.Value
+		tetherChoice = braille.handler.tetherValues[self.tetherList.GetSelection()][0]
+		if tetherChoice==braille.handler.TETHER_AUTO:
+			config.conf["braille"]["autoTether"] = True
+			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
+		else:
+			config.conf["braille"]["autoTether"] = False
+			braille.handler.setTether(tetherChoice, auto=False)
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]

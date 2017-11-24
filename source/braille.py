@@ -1473,8 +1473,18 @@ def formatCellsForLog(cells):
 		for cell in cells])
 
 class BrailleHandler(baseObject.AutoPropertyObject):
+	TETHER_AUTO = "auto"
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
+	tetherValues=[
+		# Translators: The label for a braille setting indicating that braille should be
+		# tethered to focus or review cursor automatically.
+		(TETHER_AUTO,_("automatically")),
+		# Translators: The label for a braille setting indicating that braille should be tethered to focus.
+		(TETHER_FOCUS,_("to focus")),
+		# Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+		(TETHER_REVIEW,_("to review"))
+	]
 
 	def __init__(self):
 		self.display = None
@@ -1527,9 +1537,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _set_tether(self, tether):
 		"""@deprecated: Use L{setTether instead."""
 		self.setTether(tether, auto=False)
-
-	def _get_isAutoTethered(self):
-		return self._tether is not config.conf["braille"]["tetherTo"]
 
 	def _get_shouldAutoTether(self):
 		return self.enabled and config.conf["braille"]["autoTether"]
