@@ -680,7 +680,7 @@ Finally, the following abbreviations for landmarks are defined:
 
 ++ Braille Input ++[BrailleInput]
 NVDA supports entry of both uncontracted and contracted braille via a braille keyboard.
-You can select the translation table used to translate braille into text using the [Input table #BrailleInputTable] setting in the Braille Settings dialog.
+You can select the translation table used to translate braille into text using the [Input table #BrailleSettingsInputTable] setting in the Braille Settings dialog.
 
 When uncontracted braille is being used, text is inserted as soon as it is entered.
 When using contracted braille, text is inserted when you press space or enter at the end of a word.
@@ -940,12 +940,12 @@ This option is only available for installed copies of NVDA.
 If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the logon screen when Windows starts.
 This option is only available for installed copies of NVDA.
 
-==== Use currently saved settings on the logon and other secure screens (requires administrator privileges) ====
+==== Use currently saved settings on the logon and other secure screens (requires administrator privileges) ====[GeneralSettingsCopySettings]
 Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure Windows screens.
 To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
 This option is only available for installed copies of NVDA.
 
-==== Automatically check for updates to NVDA ====
+==== Automatically check for updates to NVDA ====[GeneralSettingsCheckForUpdates]
 If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
 You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
 
@@ -954,7 +954,7 @@ The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences
 Once you have selected your synthesizer of choice, you can press Ok and NVDA will load the selected Synthesizer.
 If there is an error loading the synthesizer, NVDA will notify you with a message, and continue using the previous synthesizer.
 
-==== Synthesizer ====
+==== Synthesizer ====[SynthesizerSelectionSynthesizer]
 This option allows you to choose the synthesizer you wish NVDA to use for speech output.
 
 For a list of the Synthesizers that NVDA supports, please see the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
@@ -962,11 +962,11 @@ For a list of the Synthesizers that NVDA supports, please see the [Supported Spe
 One special item that will always appear in this list is "No speech", which allows you to use NVDA with no speech output whatsoever.
 This may be useful for someone who wishes to only use NVDA with braille, or perhaps to sighted developers who only wish to use the Speech Viewer.
 
-==== Output device ====
+==== Output device ====[SynthesizerSelectionOutputDevice]
 This option allows you to choose the sound card that NVDA should instruct the selected synthesizer to speak through.
 
 %kc:setting
-==== Audio Ducking Mode ====
+==== Audio Ducking Mode ====[SynthesizerSelectionDuckingMode]
 Key: NVDA+shift+d
 
 On Windows 8 and above, this option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
@@ -984,66 +984,66 @@ For a quicker alternative way of controlling speech parameters from anywhere, pl
 
 The Voice Settings dialog box contains the following options:
 
-==== Voice ====
+==== Voice ====[VoiceSettingsVoice]
 The first option that you land on in this dialog is a combo box listing all the voices of the current synthesizer that you have installed.
 You can use the arrow keys to listen to all the various choices.
 Left and Up arrow take you up in the list, while right and down arrow move you down in the list.
 
-==== Variant ====
+==== Variant ====[VoiceSettingsVariant]
 If you are using the Espeak NG synthesizer that is packaged with NVDA, this is a combo box that lets you select the Variant the synthesizer should speak with.
 ESpeak NG's Variants are rather like voices, as they provide slightly different attributes to the eSpeak NG voice.
 Some variants will sound like a male, some like a female, and some even like a frog.
 
-==== Rate ====
+==== Rate ====[VoiceSettingsRate]
 This option allows you to change the rate of your voice.
 This is a slider that goes from 0 to 100, (0 being the slowest, 100 being the fastest).
 
-==== Pitch ====
+==== Pitch ====[VoiceSettingsPitch]
 This option allows you to change the pitch of the current voice.
 It is a slider which goes from 0 to 100, (0 being the lowest pitch and 100 being the highest).
 
-==== Volume ====
+==== Volume ====[VoiceSettingsVolume]
 This option is a slider which goes from 0 to 100, (0 being the lowest volume and 100 being the highest).
 
-==== Inflection ====
+==== Inflection ====[VoiceSettingsInflection]
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak NG).
 
-==== Automatic Language switching ====
+==== Automatic Language switching ====[VoiceSettingsLanguageSwitching]
 This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
 This option is enabled by default.
 Currently only the eSpeak NG synthesizer supports automatic language switching.
 
-==== Automatic Dialect switching ====
+==== Automatic Dialect switching ====[VoiceSettingsDialectSwitching]
 This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes.
 For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
 This option is disabled by default.
 
 %kc:setting
-==== Punctuation/Symbol Level ====
+==== Punctuation/Symbol Level ====[VoiceSettingsSymbolLevel]
 Key: NVDA+p
 
 This allows you to choose the amount of punctuation and other symbols that should be spoken as words.
 For example, when set to all, all symbols will be spoken as words.
 This option applies to all synthesizers, not just the currently active synthesizer.
 
-==== Trust voice's language for processing symbols and characters ====
+==== Trust voice's language for processing symbols and characters ====[VoiceSettingsTrust]
 On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
 
-==== Capital pitch change percentage ====
+==== Capital pitch change percentage ====[VoiceSettingsCapPitchChange]
 This edit field allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
 This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
 For no pitch change you would use 0.
 
-==== Say "cap" before capitals ====
+==== Say "cap" before capitals ====[VoiceSettingsSayCapBefore]
 This setting is a checkbox that, when checked, tells NVDA to say the word "cap" before any capital letter when spoken as an individual character such as when spelling.
 Usually, NVDA raises the pitch slightly for any capital letter, but some synthesizers may not support this well, so perhaps this option may be of use.
 
-==== Beep for capitals ====
+==== Beep for capitals ====[VoiceSettingsBeepForCaps]
 If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by itself.
 Like the "say cap for capitals" checkbox, this is useful for Synthesizers that can't change their pitch for capital letters.
 
-==== Use spelling functionality if supported ====[VoiceSpellingFunctionality]
+==== Use spelling functionality if supported ====[VoiceSettingsUseSpelling]
 Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
 For example, in English, "a" is both a letter and a word and is pronounced differently in each case.
 This option allows the synthesizer to differentiate between these two cases if the synthesizer supports this.
@@ -1066,7 +1066,7 @@ If you wish to quickly change speech settings without going to the Voice setting
 +++ Braille Settings +++[BrailleSettings]
 The braille settings dialog box can be invoked by going to the preferences menu and then to the braille settings option.
 
-==== Braille Display ====
+==== Braille Display ====[BrailleSettingsDisplay]
 The first option you will come upon in the braille settings dialog is a combo box that says "braille display".
 You will be presented with several options depending on what braille display drivers are available on your system.
 Move between these options with the arrow keys.
@@ -1075,7 +1075,7 @@ No braille means that you are not using braille.
 
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for more information about supported braille displays.
 
-==== Port ====
+==== Port ====[BrailleSettingsPort]
 This option, if available, allows you to choose what port or type of connection will be used to communicate with the braille display you have selected.
 It is a combo box containing the possible choices for your braille display.
 
@@ -1087,13 +1087,13 @@ This option won't be available if your braille display only supports automatic p
 
 You may consult the documentation for your braille display in the section [Supported Braille Displays #SupportedBrailleDisplays] to check for more details on the supported types of communication and available ports.
 
-==== Output Table ====
+==== Output Table ====[BrailleSettingsOutputTable]
 The next option you will come to in this dialog is the braille output table combo box.
 In this combo box, you will find braille tables for different languages, braille standards and grades.
 The chosen table will be used to translate text into braille to be presented on your braille display.
 You can move from braille table to braille table in the list by using the arrow keys.
 
-==== Input Table ====[BrailleInputTable]
+==== Input Table ====[BrailleSettingsInputTable]
 Complementary to the previous option, the next setting you will find is the braille input table combo box.
 The chosen table will be used to translate braille entered on your braille display's Perkins-style keyboard into text.
 You can move from braille table to braille table in the list by using the arrow keys.
@@ -1101,34 +1101,34 @@ You can move from braille table to braille table in the list by using the arrow 
 Note that this option is only useful if your braille display has a Perkins-style keyboard and this feature is supported by the braille display driver.
 If input is not supported on a display which does have a braille keyboard, this will be noted in the [Supported Braille Displays #SupportedBrailleDisplays] section.
 
-==== Expand to computer braille for the word at the cursor ====
+==== Expand to computer braille for the word at the cursor ====[BrailleSettingsExpandToComputerBraille]
 This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
 
-==== Show Cursor ====
+==== Show Cursor ====[BrailleSettingsShowCursor]
 This option allows the braille cursor to be turned on and off.
 It applies to the system caret and review cursor, but not to the selection indicator.
 
-==== Blink Cursor ====
+==== Blink Cursor ====[BrailleSettingsBlinkCursor]
 This option allows the braille cursor to blink.
 If blinking is turned off, the braille cursor will constantly be in the "up" position.
 The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
-==== Cursor Blink Rate (ms) ====
+==== Cursor Blink Rate (ms) ====[BrailleSettingsBlinkRate]
 This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
 
-==== Cursor Shape for Focus ====
+==== Cursor Shape for Focus ====[BrailleSettingsCursorShapeForFocus]
 This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to focus.
 The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
-==== Cursor Shape for Review ====
+==== Cursor Shape for Review ====[BrailleSettingsCursorShapeForReview]
 This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
 The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
-==== Message Timeout (sec) ====
+==== Message Timeout (sec) ====[BrailleSettingsMessageTimeout]
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
 Specifying 0 disables displaying of these messages completely.
 
-==== Show Messages Indefinitely ====
+==== Show Messages Indefinitely ====[BrailleSettingsNoMessageTimeout]
 This option allows NVDA messages to be displayed on the braille display indefinitely.
 
 %kc:setting
@@ -1137,14 +1137,14 @@ Key: NVDA+control+t
 
 This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
 
-==== Read by Paragraph ====
+==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.
 Also, the next and previous line commands will move by paragraph accordingly.
 This means that you do not have to scroll the display at the end of each line even where more text would fit on the display.
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
-==== Avoid splitting words when possible ====
+==== Avoid splitting words when possible ====[BrailleSettingsWordWrap]
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
 Instead, there will be some blank space at the end of the display.
 When you scroll the display, you will be able to read the entire word.
@@ -1156,7 +1156,7 @@ When you scroll the display, you will then be able to read the rest of the word.
 
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
 
-==== Focus context presentation ====
+==== Focus context presentation ====[BrailleSettingsFocusContextPresentation]
 This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
 Context information refers to the hierarchy of objects containing the focus.
 For example, when you focus a list item, this list item is part of a list.
@@ -1186,16 +1186,16 @@ To toggle focus context presentation from anywhere, please assign a custom gestu
 This dialog box is found in the Preferences menu, under "Keyboard settings...".
 It contains the following options:
 
-==== Keyboard layout ====
+==== Keyboard layout ====[KeyboardSettingsLayout]
 This combo box lets you choose what type of keyboard layout NVDA should use. Currently the two that come with NVDA are Desktop and Laptop.
 
-==== Use capslock as an NVDA modifier key ====
+==== Use capslock as an NVDA modifier key ====[KeyboardSettingsCapsModifier]
 If this checkbox is checked, capslock can be used as an NVDA modifier key.
 
-==== Use extended insert as an NVDA modifier key ====
+==== Use extended insert as an NVDA modifier key ====[KeyboardSettingsExtendedInsert]
 If this checkbox is checked, the extended insert key (usually found above the arrow keys, near home and end) can be used as an NVDA modifier key.
 
-==== Use numpad insert as an NVDA modifier key ====
+==== Use numpad insert as an NVDA modifier key ====[KeyboardSettingsNumpadInsert]
 If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
 
 If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
@@ -1203,42 +1203,42 @@ Therefore, The Keyboard Settings dialog will display an error message if all key
 After dismissing the error message, you must select at least one before being able to press Ok to dismiss the dialog properly.
 
 %kc:setting
-==== Speak Typed Characters ====
+==== Speak Typed Characters ====[KeyboardSettingsSpeakTypedCharacters]
 Key: NVDA+2
 
 When enabled, NVDA will announce all characters you type on the keyboard.
 
 %kc:setting
-==== Speak Typed Words ====
+==== Speak Typed Words ====[KeyboardSettingsSpeakTypedWords]
 Key: NVDA+3
 
 When enabled, NVDA will announce all words you type on the keyboard.
 
-==== Speech interrupt for typed characters ====
+==== Speech interrupt for typed characters ====[KeyboardSettingsSpeechInteruptForCharacters]
 If on, this option will cause speech to be interrupted each time a character is typed. This is on by default.
 
-==== Speech interrupt for Enter key ====
+==== Speech interrupt for Enter key ====[KeyboardSettingsSpeechInteruptForEnter]
 If on, this option will cause speech to be interrupted each time the Enter key is pressed. This is on by default.
 
-==== Allow skim reading in Say All ====
+==== Allow skim reading in Say All ====[KeyboardSettingsSkimReading]
 If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
 
-==== Beep if Typing Lowercase Letters when Caps Lock is On ====
+==== Beep if Typing Lowercase Letters when Caps Lock is On ====[VoiceSettingsBeepLowercase]
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
 Generally, typing shifted letters with caps lock is unintentional and is usually due to not realizing that caps lock is enabled.
 Therefore, it can be quite helpful to be warned about this.
 
 %kc:setting
-==== Speak Command Keys ====
+==== Speak Command Keys ====[VoiceSettingsSpeakCommandKeys]
 Key: NVDA+4
 
 When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
 
-==== Play sound for spelling errors while typing ====
+==== Play sound for spelling errors while typing ====[KeyboardSettingsAlertForSpellingErrors]
 When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
 This option is only available if reporting of spelling errors is enabled in NVDA's [Document Formatting Settings #DocumentFormattingSettings] dialog.
 
-==== Handle keys from other applications ====
+==== Handle keys from other applications ====[KeyboardSettingsHandleKeys]
 This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA. 
 This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the Unikey typing software as it will  cause incorrect character input.
 
@@ -1246,29 +1246,29 @@ This option is on by default, though certain users may wish to turn this off, su
 The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...".
 It contains the following options:
 
-==== Report Mouse Shape Changes ====
+==== Report Mouse Shape Changes ====[MouseSettingsShape]
 A checkbox, that when checked means that NVDA will announce the shape of the mouse pointer each time it changes.
 The mouse pointer in Windows changes shape to convey certain information such as when something is editable, or when something is loading etc.
 
 %kc:setting
-==== Enable mouse tracking ====
+==== Enable mouse tracking ====[MouseSettingsTracking]
 Key: NVDA+m
 
 When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
 
-==== Text unit resolution ====
+==== Text unit resolution ====[MouseSettingsTextUnit]
 If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken.
 The options are character, word, line and paragraph.
 
-==== Report role when mouse enters object ====
+==== Report role when mouse enters object ====[MouseSettingsRole]
 If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves inside it.
 
-==== Play audio coordinates when mouse moves ====
+==== Play audio coordinates when mouse moves ====[MouseSettingsAudio]
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
 The higher the mouse is on the screen, the higher the pitch of the beeps.
 The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
 
-==== Brightness controls audio coordinates volume ====
+==== Brightness controls audio coordinates volume ====[MouseSettingsBrightness]
 If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controlled by how bright the screen is under the mouse.
 This setting is unchecked by default.
 
@@ -1277,21 +1277,21 @@ Found in the Preferences menu under "Review Cursor...".
 This dialog contains the following options:
 
 %kc:setting
-==== Follow System Focus ====
+==== Follow System Focus ====[ReviewCursorFollowFocus]
 Key: NVDA+7
 
 When enabled, The review cursor will always be placed in the same object as the current system focus whenever the focus changes.
 
 %kc:setting
-==== Follow System Caret ====
+==== Follow System Caret ====[ReviewCursorFollowCaret]
 Key: NVDA+6
 
 When enabled, the review cursor will automatically be moved to the position of the System caret each time it moves.
 
-==== Follow mouse cursor ====
+==== Follow mouse cursor ====[ReviewCursorFollowMouse]
 When enabled, the review cursor will follow the mouse as it moves.
 
-==== Simple Review mode ====
+==== Simple Review mode ====[ReviewCursorSimple]
 When enabled, NVDA will filter the hierarchy of objects that can be navigated to exclude objects that aren't of interest to the user; e.g. invisible objects and objects used only for layout purposes.
 
 To toggle simple review mode from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
@@ -1300,31 +1300,31 @@ To toggle simple review mode from anywhere, please assign a custom gesture using
 Found in the Preferences menu under "Object Presentation...".
 This dialog box contains the following options:
 
-==== Report Tool Tips ====
+==== Report Tool Tips ====[ObjectPresentationReportToolTips]
 A checkbox that when checked tells NVDA to report tool tips as they appear.
 Many Windows and controls show a small message (or tool tip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
 
-==== Report Help Balloons ====
+==== Report Help Balloons ====[ObjectPresentationReportBalloons]
 This checkbox when checked tells NVDA to report help balloons as they appear.
 Help Balloons are like tool tips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
 
-==== Report Object Shortcut Keys ====
+==== Report Object Shortcut Keys ====[ObjectPresentationShortcutKeys]
 When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
 For example the File menu on a menu bar may have a shortcut key of alt+f.
 
-==== Report object position information ====
+==== Report object position information ====[ObjectPresentationPositionInfo]
 This option lets you choose whether you wish to have an object's position (e.g. 1 of 4) reported when moving to the object with the focus or object navigation.
 
-==== Guess Object Position Information when unavailable ====
+==== Guess Object Position Information when unavailable ====[ObjectPresentationGuessPositionInfo]
 If reporting of object position information is turned on, this option allows NVDA to guess object position information when it is otherwise unavailable for a particular control.
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
-==== Report Object descriptions ====
+==== Report Object descriptions ====ObjectPresentationReportDescriptions]
 Uncheck this checkbox if you don't wish to have the description reported along with objects.
 
 %kc:setting
-==== Progress bar output ====
+==== Progress bar output ====[ObjectPresentationProgressBarOutput]
 Key: NVDA+u
 
 This option controls how NVDA reports progress bar updates to you.
@@ -1336,17 +1336,17 @@ It has the following options:
 - Beep and speak: This option tells NVDA to both beep and speak when a progress bar updates.
 -
 
-==== Report background progress bars ====
+==== Report background progress bars ====[ObjectPresentationReportBackgroundProgressBars]
 This is an option that, when checked, tells NVDA to keep reporting a progress bar, even if it is not physically in the foreground.
 If you minimize or switch away from a window that contains a progress bar, NVDA will keep track of it, allowing you to do other things while NVDA tracks the progress bar.
 
 %kc:setting
-==== Report dynamic content changes ====
+==== Report dynamic content changes ====[ObjectPresentationReportDynamicContent]
 Key: NVDA+5
 
 Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
 
-==== Play a sound when auto-suggestions appear ====
+==== Play a sound when auto-suggestions appear ====[ObjectPresentationSuggestionSounds]
 Toggles announcement of appearance of auto-suggestions, and if enabled, NVDA will play a sound to indicate this.
 Auto-suggestions are lists of suggested entries based on text entered into certain edit fields and documents.
 For example, when you enter text into the search box in Start menu in Windows Vista and later, Windows displays a list of suggestions based on what you typed.
@@ -1358,28 +1358,28 @@ The Input Composition Settings dialog can be found under the Preferences menu.
 This dialog allows you to control how NVDA reports the input of Asian characters, such as with IME or Text Service input methods.
 Note that due to the fact that input methods vary greatly by available features and by how they convey information, it will most likely be necessary to configure these options differently for each input method to get the most efficient typing experience.
 
-==== Automatically report all available candidates ====
+==== Automatically report all available candidates ====[InputCompositionReportAllCandidates]
 This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
 Having this option on for pictographic input methods such as Chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
 However, for phonetic input methods such as Chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
 
-==== Announce Selected Candidate ====
+==== Announce Selected Candidate ====[InputCompositionAnnounceSelectedCandidate]
 This option, which is on by default, allows you to choose whether NVDA should announce the selected candidate when a candidate list appears or when the selection is changed.
 For input methods where the selection can be changed with the arrow keys  (such as Chinese New Phonetic) this is necessary, but for some input methods it may be more efficient typing with this option turned off.
 Note that even with this option off, the review cursor will still be placed on the selected candidate allowing you to use object navigation / review to manually read this or other candidates.
 
-==== Always include short character descriptions for candidates ====
+==== Always include short character descriptions for candidates ====[InputCompositionCandidateIncludesShortCharacterDescription]
 This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when it's selected or when it's automatically read when the candidate list appears.
 Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
 This option may be useful for Korean and Japanese input methods.
 
-==== Report changes to the reading string ====
+==== Report changes to the reading string ====[InputCompositionReadingStringChanges]
 Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
 You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
 This option is on by default.
 Note some older input methods such as Chinese ChangJie may not use the reading string to hold precomposition characters, but instead use the composition string directly. Please see the next option for configuring reporting of the composition string.
 
-==== Report changes to the composition string ====
+==== Report changes to the composition string ====[InputCompositionCompositionStringChanges]
 After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
 This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
 This option is on by default.
@@ -1389,23 +1389,23 @@ The Browse Mode settings dialog can be found in the Preferences menu, under "Bro
 
 The dialog contains the following options:
 
-==== Maximum Number of Characters on One Line ====
+==== Maximum Number of Characters on One Line ====[BrowseModeSettingsMaxLength]
 This field sets the maximum length of a line in browse mode (in characters).
 
-==== Maximum Lines Per Page ====
+==== Maximum Lines Per Page ====[BrowseModeSettingsPageLines]
 This field sets the amount of lines you will move by when pressing page up or page down while in browse mode.
 
 %kc:setting
-==== Use screen layout ====
+==== Use screen layout ====[BrowseModeSettingsScreenLayout]
 Key: NVDA+v
 
 This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
 
-==== Automatic Say All on page load ====
+==== Automatic Say All on page load ====[BrowseModeSettingsAutoSayAll]
 This checkbox toggles the automatic reading of a page after it loads in browse mode.
 This option is enabled by default.
 
-==== Include layout tables ====
+==== Include layout tables ====[BrowseModeSettingsIncludeLayoutTables]
 This option affects how NVDA handles tables used purely for layout purposes.
 When on, NVDA will treat these as normal tables, reporting them based on [Document Formatting Settings #DocumentFormattingSettings] and locating them with quick navigation commands.
 When off, they will not be reported nor found with quick navigation.
@@ -1417,18 +1417,18 @@ To toggle inclusion of layout tables from anywhere, please assign a custom gestu
 ==== Configuring reporting of fields such as links and headings ====
 Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are reported when navigating, such as links, headings and tables.
 
-==== Automatic focus mode for focus changes ====
+==== Automatic focus mode for focus changes ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 This option allows focus mode to be invoked if focus changes.
 For example, when on a web page, if you press tab and you land on a form, if this option is checked, focus mode will automatically be invoked.
 
-==== Automatic focus mode for caret movement ====
+==== Automatic focus mode for caret movement ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 This option, when checked, allows NVDA to enter and leave focus mode when using arrow keys.
 For example, if arrowing down a web page and you land on an edit box, NVDA will automatically bring you into focus mode. If you arrow out of the edit box, NVDA will put you back in browse mode.
 
-==== Audio indication of Focus and Browse modes ====
+==== Audio indication of Focus and Browse modes ====[BrowseModeSettingsPassThroughAudioIndication]
 If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode, rather than speaking the change.
 
-==== Trap non-command gestures from reaching the document ====
+==== Trap non-command gestures from reaching the document ====[BrowseModeSettingsTrapNonCommandGestures]
 Enabled by default, this option allows you to choose if gestures (such as key presses) that  do not result in an NVDA command and are not considered to be a command key in general, should be trapped from going through to the document you are currently focused on. 
 As an example, if enabled, if the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 
@@ -1477,14 +1477,14 @@ You can configure reporting of:
 
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
 
-==== Report formatting changes after the cursor ====
+==== Report formatting changes after the cursor ====[DocumentFormattingDetectFormatAfterCursor]
 If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it reports it, even if doing this may slow down NVDA's performance.
 
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
 Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
-==== Line indentation reporting ====[lineIndentationOptions]
+==== Line indentation reporting ====[DocumentFormattingSettingsLineIndentation]
 This option allows you to configure how indentation at the beginning of lines is reported.
 The Report line indentation with combo box has four options.
 
@@ -1498,7 +1498,7 @@ The tone will increase in pitch every space, and for a tab, it will increase in 
 +++ Windows 10 OCR Settings +++[Win10OcrSettings]
 This dialog can be accessed from the NVDA Preferences menu and allows you to configure [Windows 10 OCR #Win10Ocr].
 
-==== Recognition language ====
+==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
 This combo box allows you to choose the language to be used for text recognition.
 
 +++ Speech dictionaries +++[SpeechDictionaries]
@@ -1810,7 +1810,7 @@ This is a commercial speech synthesizer specifically for the Italian language.
 You must have the synthesizer installed on your system in order for it to be used with NVDA.
 For more information, please visit the Audiologic website at www.audiologic.it.
 
-This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
+This synthesizer does not support [spelling functionality #VoiceSettingsUseSpelling].
 
 ++ Nuance Vocalizer for NVDA ++[Vocalizer]
 Nuance Vocalizer is a commercial, high quality voice synthesizer developed by Nuance Communications, Inc. and packaged specifically for NVDA by Tiflotecnia, Lda.
