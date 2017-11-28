@@ -14,7 +14,7 @@
 
 def txt2tags_actionFunc(target,source,env):
 	import txt2tags
-	txt2tags.exec_command_line([str(source[0])])
+	txt2tags.exec_command_line(["--outfile", str(source[0])[:-3] + "html", str(source[0])])
 
 def exists(env):
 	try:

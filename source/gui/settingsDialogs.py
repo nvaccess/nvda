@@ -40,7 +40,7 @@ except RuntimeError:
 	updateCheck = None
 import inputCore
 import nvdaControls
-import ui
+import contextHelp
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -128,39 +128,7 @@ class SettingsDialog(wx.Dialog):
 		self.Destroy()
 
 	def onHelp(self, evt):
-		helpFile = gui.getDocFilePath("userGuide.html")
-		# Translators: Message indicating no context sensitive help is available.
-		helpMessage = _("No context sensitive help is available here at this time.")
-		tag = None
-		windowId = evt.GetId()
-		# if the Help button is pressed or we have no help for a particular control then get help for the entire dialog.
-		if windowId == wx.ID_HELP or not windowId in self.helpIds.keys():
-			windowId = self.GetId()
-		if windowId in self.helpIds.keys():
-			try:
-				with open(helpFile) as help:
-					lines = help.readlines()
-			except:
-				evt.Skip()
-			iLines = iter(lines)
-			while iLines:
-				try:
-					line = next(iLines)
-					if line.startswith("<A NAME=\"%s\"></A>" % (self.helpIds[windowId])):
-						helpMessage = next(iLines)
-						tag = helpMessage[:4]
-						helpMessage += next(iLines)
-					elif tag != None and not line.startswith(tag):
-						helpMessage += line
-					elif tag != None and (line.startswith(tag) or line.startswith("<H4>")):
-						break
-				except(StopIteration):
-					break
-			helpTitle = _("NVDA Help")
-			ui.browseableMessage(helpMessage, helpTitle, True)
-		else:
-			log.debug("Help for window id %d not found." % (windowId))
-			evt.Skip()
+		contextHelp.showHelp(self.helpIds, evt)
 
 class GeneralSettingsDialog(SettingsDialog):
 	# Translators: This is the label for the general settings dialog.
