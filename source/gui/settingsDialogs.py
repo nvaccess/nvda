@@ -1861,11 +1861,13 @@ class BrailleSettingsDialog(SettingsDialog):
 
 class AddSymbolDialog(wx.Dialog):
 
+	self.helpIds = {}
 	def __init__(self, parent):
 		# Translators: This is the label for the add symbol dialog.
 		super(AddSymbolDialog,self).__init__(parent, title=_("Add Symbol"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		self.helpIds[self.GetId()] = "SymbolPronunciation"
 
 		# Translators: This is the label for the edit field in the add symbol dialog.
 		symbolText = _("Symbol:")
