@@ -172,20 +172,10 @@ def setStartAfterLogon(enable):
 		except WindowsError:
 			pass
 
-SERVICE_FILENAME = u"nvda_service.exe"
-
-def isServiceInstalled():
-	if not os.path.isfile(SERVICE_FILENAME):
-		return False
-	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SYSTEM\CurrentControlSet\Services\nvda")
-		val = _winreg.QueryValueEx(k, u"ImagePath")[0].replace(u'"', u'')
-		return os.stat(val) == os.stat(SERVICE_FILENAME)
-	except (WindowsError, OSError):
-		return False
-
 def canStartOnSecureScreens():
-	return isInstalledCopy() and (easeOfAccess.isSupported or isServiceInstalled())
+	# No more need to check for the NVDA service nor presence of Ease of Access, as only Windows 7 SP1 and higher is supported.
+	# This function will be transformed into a flag in a future release.
+	return isInstalledCopy()
 
 def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess
@@ -336,6 +326,11 @@ class ConfigManager(object):
 		self._shouldHandleProfileSwitch = True
 		self._pendingHandleProfileSwitch = False
 		self._suspendedTriggers = None
+		# Never save the config if running securely or if running from the launcher.
+		# When running from the launcher we don't save settings because the user may decide not to
+		# install this version, and these settings may not be compatible with the already
+		# installed version. See #7688
+		self._shouldWriteProfile = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		self._initBaseConf()
 		#: Maps triggers to profiles.
 		self.triggersToProfiles = None
@@ -391,7 +386,8 @@ class ConfigManager(object):
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
 		try:
-			profileUpgrader.upgrade(profile, self.validator)
+			writeProfileFunc = self._writeProfileToFile if self._shouldWriteProfile else None
+			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
 			log.info(u"Config before schema update:\n%s" % profileCopy, exc_info=False)
@@ -482,19 +478,21 @@ class ConfigManager(object):
 			return
 		self._dirtyProfiles.add(self.profiles[-1].name)
 
+	def _writeProfileToFile(self, filename, profile):
+		with FaultTolerantFile(filename) as f:
+			profile.write(f)
+
 	def save(self):
 		"""Save all modified profiles and the base configuration to disk.
 		"""
-		if globalVars.appArgs.secure:
-			# Never save the config if running securely.
+		if not self._shouldWriteProfile:
+			log.info("Not writing profile, either --secure or --launcher args present")
 			return
 		try:
-			with FaultTolerantFile(self.profiles[0].filename) as f:
-				self.profiles[0].write(f)
+			self._writeProfileToFile(self.profiles[0].filename, self.profiles[0])
 			log.info("Base configuration saved")
 			for name in self._dirtyProfiles:
-				with FaultTolerantFile(self._profileCache[name].filename) as f:
-					self._profileCache[name].write(f)
+				self._writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except Exception as e:

@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION korisničko uputstvo
+NVDA NVDA_VERSION korisničko uputstvo
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -25,7 +25,7 @@ Glavne karakteristike uključuju:
 - Podrška za puno brajevih redova, uključujući unos teksta za brajeve redove koji imaju tastaturu
 - Sposobnost da se u potpunosti pokrene sa USB memorije bez potrebe za instalacijom
 - Govorna instalacija koja je laka za korišćenje
-- Preveden na 50 jezika
+- Preveden na 51 jezika
 - Podrška za moderne Windows operativne sisteme uključujući 32 bitne i 64 bitne verzije
 - Sposobnost da se pokrene na Windows ekranu za prijavljivanje i drugim bezbednim ekranima
 - Podrška za standardne interfejse pristupačnosti kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation (UI Automation podržan samo na Windowsu 7 i novijim)
@@ -34,7 +34,7 @@ Glavne karakteristike uključuju:
 
 ++ Internacionalizacija ++
 Važno je da ljudi gde god da se nalaze na svetu, bez obzira koji jezik govore, dobiju jednak pristup tehnologiji.
-Pored Engleskog, NVDA je preveden na 50 jezika uključujući: Afrikanski, Albanski, Amharski, Arapski, Aragoneski, Brazilsko Portugalski, Bugarski, Burmese, Katalonski, Kolumbijsko Španski, Hrvatski, Češki, Danski, Holandski, Farsi, Finski, Francuski, Galski, Gruzijski, Nemački, Grčki, Hebrejski, Indijski, Mađarski, Islandski, Irski, Italijanski, Japanski, Kannada, Korejski, Litvanski, Nepali, Norveški, Poljski, Portugalski, Pundžabi, Rumunski, Ruski, Srpski, Slovački, Slovenski, Španski, Švetski, Tamil, Tajvanski, Tradicionalan i pojednostavljen Kineski, Turski, Ukrajinski i Vijetnamski.
+Pored Engleskog, NVDA je preveden na 51 jezika uključujući: Afrikanski, Albanski, Amharski, Arapski, Aragoneski, Brazilsko Portugalski, Bugarski, Burmese, Katalonski, Kolumbijsko Španski, Hrvatski, Češki, Danski, Holandski, Farsi, Finski, Francuski, Galski, Gruzijski, Nemački, Grčki, Hebrejski, Indijski, Mađarski, Islandski, Irski, Italijanski, Japanski, Kannada, Korejski, Litvanski, Makedonski, Nepali, Norveški, Poljski, Portugalski, Pundžabi, Rumunski, Ruski, Srpski, Slovački, Slovenski, Španski, Švetski, Tamil, Tajvanski, Tradicionalan i pojednostavljen Kineski, Turski, Ukrajinski i Vijetnamski.
 
 ++ Podrška za sintetizatore govora ++
 Pored pružanja svojih poruka i interfejsa na jednom od podržanih jezika, NVDA takođe dozvoljava korisniku da čita tekst na bilo kom jeziku, dokle god imaju sintetizator koji podržava taj jezik.
@@ -59,16 +59,14 @@ Ovo važi za originalne i različite verzije ovog programa, plus bilo koji drugi
 Za više detalja, možete[videti celu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Sistemski zahtevi +
-- Operativni sistemi: sve 32-bitne i 64-bitne verzije Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 i Windows 10 (uključujući server operativne sisteme)
- - za  Windows XP 32-bit, NVDA zahteva Service Pack 2 ili noviji.
- - Za Windows Server 2003, NVDA zahteva Service Pack 1 ili noviji.
- - Za Windows Vista, NVDA zahteva Service Pack 2 i[KB2763674 https://support.microsoft.com/en-us/kb/2763674] ažuriranje.
- Oba trebaju biti instalirana ako su primenjena sva ažuriranja koristeći Windows Update.
+ - Operativni sistemi: sve 32-bitne i 64-bitne verzije operativnih  sistema Windows 7, Windows 8, Windows 8.1, Windows 10, i sve server verzije Windows operativnog sistema počevši od  Windows Server 2008 R2.
+ - za Windows 7, NVDA zahteva Service Pack 1 ili noviji.
+ - za Windows Server 2008 R2, NVDA zahteva Service Pack 1 ili noviji.
+Oba trebaju biti instalirani ako su primenjena sva ažuriranja koristeći Windows Update.
 - Memorija: 256 mb ili više RAM memorije
 - Brzina procesora: 1.0 ghz ili više
 - Oko 90 MB prostora.
 -
-
 + Dobijanje i podešavanje programa NVDA +
 Ako još uvek niste preuzeli NVDA, možete ga preuzeti sa stranice [www.nvaccess.org NVDA_URL].
 
@@ -280,7 +278,7 @@ Postoje određene komande koje mogu biti korisne u navigaciji sa sistemskim foku
 | Prijavi trenutni fokus| NVDA+tab | NVDA+tab | Izgovara trenutni objekat ili kontrolu koja ima sistemski fokus. Ako se pritisne dva puta informacija se sriče|
 | Prijavi naslov| NVDA+t | NVDA+t | Prijavi naslov trenutno aktivnog prozora. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta informacija se kopira u privremenu memoriju|
 | Čitaj aktivan prozor| NVDA+b | NVDA+b | Čita sve kontrole u trenutnom prozoru(korisno za dijaloge) |
-| Prijavi statusnu traku| NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče|
+| Prijavi statusnu traku| NVDA+end | NVDA+Šift+end | Prijavljuje statusnu traku ako je NVDA pronađe. Takođe pomera navigacioni objekat. Ako se pritisne dva puta informacija se sriče. Ako se pritisne tri puta  kopira se u privremenu memoriju|
 %kc:endInclude
 
 ++ Navigacija sa sistemskim kursorom++[SystemCaret]
@@ -506,7 +504,7 @@ Sledeći tasteri skaču na sledeći dostupan element, dok dodavanje šift taster
 - m: Okvir
 - g: Slika
 - d: Region
-- o: Umetnuti objekat
+- o: Umetnuti objekat (audio i  video playeri, aplikacije, dijalozi, etc.)
 - 1 do 6: Naslovi nivoa 1 do 6
 - a: Napomena (komentar, revizija autora, i tako dalje.)
 - w: Greška u pravopisu
@@ -535,9 +533,10 @@ Nakon što izaberete stavku, možete koristiti dva dugmeta u dijalogu da dođete
 %kc:endInclude
 
 ++ Umetnuti objekti ++
-Stranice mogu uključiti obogaćene elemente koristeći tehnologije kao što su Adobe Flash i Sun Java, kao i aplikacije i dijaloge.
+Stranice mogu uključiti obogaćene elemente koristeći tehnologije kao što su Adobe Flash,  Oracle Java i  HTML5, kao i aplikacije i dijaloge.
 Kada naiđete na njih u dokumentu režima pretraživanja, NVDA će izgovoriti"Umetnuti objekat", "Aplikacija" ili"Dijalog".
-Možete pritisnuti enter na ovakve objekte da ih aktivirate.
+Možete se brzo kretati između njih koristeći o i  šift+o tastere za brzu navigaciju kroz umetnute objekte.
+Za interakciju sa ovim objektima, možete pritisnuti enter na njih.
 Ako je pristupačan, možete koristiti taster tab za interakciju kao i u drugim aplikacijama.
 Postoji komanda za vraćanje na stranicu koja sadrži ovakav objekat:
 %kc:beginInclude
@@ -545,15 +544,18 @@ Postoji komanda za vraćanje na stranicu koja sadrži ovakav objekat:
 | Premesti se na sadržan dokument režima pretraživanja| NVDA+control+razmak | Prebacuje fokus van umetnutog objekta i vraća ga na dokument koji ga sadrži|
 %kc:endInclude
 
-+ Čitanje matematičkog sadržaja+
++ Čitanje matematičkog sadržaja +[ReadingMath]
 Koristeći program MathPlayer 4 kompanije Design Science, NVDA može čitati matematički sadržaj.
 Ovo zahteva da program MathPlayer 4 bude instaliran na računaru.
 MathPlayer je dostupan za besplatno preuzimanje sa: http://www.dessci.com/en/products/mathplayer/
 
 NVDA podržava sledeće vrste matematičkog sadržaja:
 - MathML u programima Mozilla Firefox, Microsoft Internet Explorer i  Google Chrome.
-- Design Science vrsta matematike u programu Microsoft Word i PowerPoint. Ova vrsta mora prvo da bude instalirana da bi ovo radilo. Probna verzija je dovoljna.
-- MathML u programu Adobe Reader. Napomena da ovo još uvek nije zvaničan standard, tako da trenutno nema javno dostupnog programa koji može praviti ovakav sadržaj.
+- Design Science vrsta matematike u programu Microsoft Word i PowerPoint. 
+Ova vrsta mora prvo da bude instalirana da bi ovo radilo. Probna verzija je dovoljna.
+- MathML u programu Adobe Reader.
+Napomena da ovo još uvek nije zvaničan standard, tako da trenutno nema javno dostupnog programa koji može praviti ovakav sadržaj.
+- Matematika u programu  Kindle za računar za knjige sa pristupačnom matematikom.
 -
 
 Kada čitate dokument, NVDA će izgovoriti sav podržan matematički sadržaj na mestima na kojima se pojavi.
@@ -577,7 +579,7 @@ Podrazumevano, pregledni kursor prati sistemski kursor, tako da obično možete 
 
 Nakon toga, možete koristiti komande programa MathPlayer kao što su strelice da istražujete sadržaj.
 Na primer, možete se pomerati kroz izraz koristeći strelice levo i desno kao i uveličati deo izraza strelicom dole.
-Molimo pročitajte dokumentaciju programa MathPlayer za više informacija.
+Molimo pročitajte [ MathPlayer dokumentaciju o komandama za navigaciju za dodatne informacije https://www.dessci.com/en/products/mathplayer/navigation_commands.htm]
 
 Kada želite da se vratite u dokument, jednostavno pritisnite taster escape.
 
@@ -856,6 +858,9 @@ Možete ručno preći na prethodnu stranicu tasterom page up ili na sledeću tas
 Navigacija jednim slovom je podržana za slike i linkove, ali samo na trenutnoj stranici.
 Navigacija linkovima takođe uključuje fusnote.
 
+NVDA pruža ranu podršku za čitanje i interakciju sa matematičkim sadržajem u knjigama sa pristupačnom matematikom.
+Molimo pogledajte deo [čitanje matematičkog sadržaja #ReadingMath] za dodatne informacije.
+
 +++ Izbor teksta +++
 Kindle vam dozvoljava više različitih funkcija sa izabranim tekstom, uključujući pretragu definicije iz rečnika, dodavanje napomena i obeležavanje, kopiranje teksta u privremenu memoriju i pretraga Weba.
 Da to uradite, izaberite tekst kao i obično u režimu pretraživanja korišćenjem tastera šift i tastera za pomeranje kursora.
@@ -877,6 +882,14 @@ Da prikažete, uredite ili obrišete napomenu:
 + Pristupite opcijama izbora koje su opisane iznad.
 + Izaberite uredi napomenu.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Kada ste u prikazu tabele dodatih knjiga:
+|| Ime | Komanda | Opis |
+| Enter | enter | Otvara izabranu knjigu. |
+| Kontekstni meni | Aplikacioni taster| Otvara kontekstni meni za izabranu knjigu. |
+%kc:endInclude
 
 + Podešavanje programa NVDA +
 
@@ -1399,6 +1412,8 @@ Kada je isključena, neće biti izgovorene niti je ih moguće naći brzom naviga
 Ali, sadržaj tabela će biti uključen kao normalan tekst.
 Ova opcija je isključena po podrazumevanim podešavanjima.
 
+Da uključite i isključite tabele za izgled bilo gde da se nalazite, molimo podesite komandu koristeći [dijalog za ulazne komande#InputGestures].
+
 ==== Podešavanje prijavljivanja polja kao što su linkovi i naslovi====
 Molimo pročitajte opcije u[dijalogu podešavanja formatiranja dokumenta#DocumentFormattingSettings] da podesite polja koja se prijavljuju u toku navigacije, kao što su linkovi, naslovi i tabele.
 
@@ -1700,7 +1715,7 @@ Ime dodatka, status, autor i verzija su prikazani za svaki dodatak, ali se dodat
 Ako postoji pomoć za odabran dodatak, možete dobiti pomoć aktiviranjem dugmeta pomoć za dodatak.
 
 Da pretražujete i preuzmete dodatke sa Interneta, aktivirajte dugme nabavi dodatke.
-Ovo dugme otvara[NVDA stranicu dodataka http://addons.nvda-project.org/].
+Ovo dugme otvara[NVDA stranicu dodataka https://addons.nvda-project.org/].
 Ako je NVDA instaliran i pokrenut na sistemu, možete otvoriti dodatak direktno iz pretraživača da započnete instalaciju.
 U suprotnom, sačuvajte dodatak i pratite uputstva u nastavku.
 
@@ -1735,14 +1750,14 @@ Da pristupite upravljaču dodataka bilo gde, dodajte prilagođenu komandu korist
 
 ++ Python konzola ++
 NVDA python konzola, koja se nalazi u alatima u NVDA meniju, je alat za programere koji je koristan za otklanjanje grešaka, opšti pristup programu NVDA ili pristup elementima pristupačnosti neke aplikacije.
-Za više informacija, pročitajte uputstvo za programere dostupno u[delu za programere NVDA Web stranice http://community.nvda-project.org/wiki/Development].
+Za više informacija, pročitajte uputstvo za programere dostupno u[delu za programere NVDA Web stranice https://community.nvda-project.org/wiki/Development].
 
 ++ Ponovo učitaj dodatke ++
 Ova stavka, kada se aktivira, ponovo učitava dodatke za aplikacije i dodatke bez ponovnog pokretanja programa NVDA, što može biti korisno za programere.
 
 + Podržani sintetizatori govora+[SupportedSpeechSynths]
 Ovaj deo sadrži informacije o govornim sintetizatorima koje NVDA podržava.
-Za opširniju listu besplatnih i komercionalnih sintetizatora koje možete preuzeti i kupiti za korišćenje sa programom NVDA, pročitajte stranicu[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Za opširniju listu besplatnih i komercionalnih sintetizatora koje možete preuzeti i kupiti za korišćenje sa programom NVDA, pročitajte stranicu[https://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] je ugrađen u NVDA i ne zahteva posebne komponente ili drajvere.
@@ -1912,30 +1927,38 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i r
 %kc:endInclude
 
 ++ Handy Tech brajevi redovi ++
-NVDA podržava sve brajeve redove firme [Handy Tech http://www.handytech.de/] kada su povezani putem USB ili Bluetooth veze.
+NVDA podržava većinu  brajevih redova  firme [Handy Tech http://www.handytech.de/] kada su povezani putem USB, bluetooth veze ili putem serijskog porta.
 Za starije brajeve redove, koji se povezuju USB vezom, morate instalirati Usb drajvere na vaš sistem.
 
-Unos brajevih znakova još nije podržan.
-
-Ovo su tasterske prečice za korišćenje ovog brajevog reda uz pomoć NVDA.
+Sledeći redovi nisu podržani, ali se mogu koristiti putem[Handy Techovih univerzalnih drivera https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] i NVDA dodatka:
+- Braillino
+- Bookworm
+- Modularni redovi sa verzijom softvera 1.13 ili nižom. Molimo imajte na umu da se softver ovih redova može ažurirati.
+-
+Slede komande za Handy Tech redove sa programom NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reda da biste znali gde se određeni tasteri nalaze.
 %kc:beginInclude
 || Ime | Komanda |
-| Pomeri brajev red za red unazad | levo, gore |
-| Pomeri brajev red za red  napred | desno, dole |
+| Pomeri brajev red za red unazad | levo, gore, B3 |
+| Pomeri brajev red za red  napred | desno, dole, B6 |
 | Premesti brajev red na prethodni red | b4 |
 | Premesti brajev red na sledeći red | b5 |
 | Prebaci se na brajevu ćeliju | routing |
-| shift+tab | esc |
+| shift+tab | esc, levi trostruki akcijski taster gore+dole |
 | alt | b2+b4+b5 |
 | escape | b4+b6 |
-| tab | enter |
-| enter | esc+enter |
-| strelicaGore | leviRazmak |
-| strelicaDole | desniRazmak |
+| tab | enter, desni trostruki akcijski taster gore+dole |
+| enter | esc+enter, Levi+desni trostruki akcijski taster gore+dole, AkcijaDžojstika|
+| strelicaGore | Džojstik gore |
+| strelicaDole | Džojstik dole |
+| StrelicaLevo | Džojstik levo |
+| StrelicaDesno  | Džojstik desno |
 | NVDA meni | b2+b4+b5+b6 |
-| Handy Tech podešavanja | b4+b8 |
+| Menjanje vezivanja brajevog reda| b2 |
+| Menjanje predstavljanja sadržaja fokusa| b7 |
+| Uključivanje i isključivanje brajevog unosa| Razmak+b1+b3+b4 (Razmak +veliko B) |
 %kc:endInclude
+
 
 ++ MDV Lilli ++
 Brajev red, kojeg prodaje Italijanska firma [MDV http://www.mdvbologna.it/] je podržan.
@@ -2471,6 +2494,9 @@ Slede opcije komandne linije za NVDA:
 | Nema| --no-sr-flag  | Ne menjaj globalnu oznaku čitača ekrana na sistemu|
 | Nema | --install | Instalira NVDA(i pokreće novo instaliranu kopiju) |
 | Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
+| Nema | --create-portable | Pravi prenosnu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --create-portable-silent | Pravi prenosnu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --portable-path=AdresaKopije | Adresa na kojoj će portabilna kopija biti napravljena|
 
 ++ Sistemski parametri++[SystemWideParameters]
 NVDA dozvoljava promenu određenih vrednosti u sistemskoj registry bazi koje menjaju ponašanje programa NVDA.

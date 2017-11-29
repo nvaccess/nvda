@@ -25,7 +25,7 @@ Lo más reseñable incluye:
 - Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a 50 idiomas
+- Traducido a 51 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
@@ -34,7 +34,7 @@ Lo más reseñable incluye:
 
 ++ Internacionalización ++
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a 50 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
+Actualmente NVDA ha sido traducido a 51 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -59,11 +59,9 @@ Esto se aplica al original y a las copias modificadas del programa, más cualqui
 Para más detalles, puedes [ver la licencia completa.  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requerimientos del Sistema +
-- Sistemas Operativos: todas las versiones de 32 y 64 bits de Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 y Windows 10 (incluyendo sistemas operativos servidor).
-- Para Windows XP 32 bits, NVDA requiere el Service Pack 2 o superior.
- - Para Windows Server 2003, NVDA requiere el Service Pack 1 o superior.
- - Para Windows Vista, NVDA requiere del Service Pack 2 y la actualización [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
- Ambos deberían instalarse si todas las actualizaciones disponibles se aplicaron a través de Windows Update.
+- Sistemas operativos: todas las ediciones de 32 y 64 bits de Windows 7, Windows 8, Windows 8.1, Windows 10 y todos los sistemas operativos servidor comenzando desde Windows Server 2008 R2..
+ - Para Windows 7, NVDA requiere del Service Pack 1 o superior.
+ - Para Windows Server 2008 R2, NVDA requiere del Service Pack 1 o superior.
 - Memoria: 256 mb o más de RAM
 - Velocidad de Procesador: 1.0 ghz o superior
 - Aproximadamente 90 MB de espacio de almacenamiento.
@@ -280,7 +278,7 @@ Hay algunas órdenes de teclado útiles cuando nos movamos con el foco:
 | Anunciar foco actual | NVDA+tab | NVDA+tab | anuncia el objeto actual o control que tenga el foco del sistema. Pulsando dos veces deletreará la información  |
 | Anunciar título | NVDA+t | NVDA+t | Anuncia el título de la ventana activa actualmente. Pulsando dos veces deletreará la información. Pulsándolo tres veces la copiará al portapapeles |
 | Leer la ventana activa | NVDA+b | NVDA+b | lee todos los controles en la ventana actualmente activa (útil para diálogos) |
-| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia la barra de estado si NVDA encuentra una. También mueve el navegador de objetos a esta localización. Pulsándola dos veces deletreará la información |
+| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia la barra de estado si NVDA encuentra una. También mueve el navegador de objetos a esta localización. Pulsándola dos veces deletreará la información. Pulsándola tres veces la copiará al portapapeles |
 %kc:endInclude
 
 ++ Navegando con el Cursor del Sistema ++[SystemCaret]
@@ -506,7 +504,7 @@ Las siguientes teclas por sí mismas saltan al siguiente campo, con la tecla shi
 - m: marco
 - g: gráfico
 - d: punto de referencia
-- o: objeto integrado
+- o: objeto integrado (reproductor de audio y vídeo, aplicación, diálogo, etc.)
 - 1 a 6: encabezados de 1 a 6 respectivamente
 - a: anotación (comentario, revisión del editor, etc.)
 - w: error de ortografía
@@ -535,9 +533,10 @@ Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en
 %kc:endInclude
 
 ++ Objetos Integrados ++
-Las páginas pueden incluir contenido enriquecido utilizando tecnologías tales como Adobe Flash y Sun Java, así como aplicaciones y diálogos. 
+Las páginas pueden incluir contenido enriquecido utilizando tecnologías tales como Adobe Flash, Oracle Java y HTML5, así como aplicaciones y diálogos. 
 Donde estas se encuentren en un modo de Navegación, NVDA anunciará "objeto integrado", "aplicación" o "diálogo", respectivamente.
-puedes pulsar intro sobre esos objetos para interactuar con ellos. 
+Puedes moverte rápidamente a ellos utilizando las teclas de navegación de una sola tecla de objetos integrados o y shift+o.
+Para interactuar con estos objetos, puedes pulsar intro sobre ellos.
 Si es accesible, entonces puedes tabular por ellos e interactuar como con cualquier otra aplicación. 
 Se proporciona una orden de teclado para regresar a la página original que contiene al objeto integrado.
 %kc:beginInclude
@@ -545,15 +544,18 @@ Se proporciona una orden de teclado para regresar a la página original que cont
 | Mover al contenido del modo de Navegación | NVDA+control+espacio | Mueve el foco fuera del actual objeto integrado y lo pone dentro del documento que lo contiene |
 %kc:endInclude
  
-+ Leyendo Contenido Matemático +
++ Leyendo Contenido Matemático +[ReadingMath]
 Utilizando MathPlayer 4 from Design Science, NVDA puede leer y navegar interactivamente por el contenido matemático soportado.
 Esto requiere que MathPlayer 4 esté instalado en el ordenador.
 MathPlayer está disponible como una descarga gratuita desde: http://www.dessci.com/en/products/mathplayer/
 
 NVDA soporta los siguientes tipos de contenidos matemáticos:
 - MathML en Mozilla Firefox Microsoft Internet Explorer y Google Chrome..
-- Design Science MathType en Microsoft Word y PowerPoint. MathType necesita estar instalado para que esto funcione. La versión trial es suficiente.
-- MathML en Adobe Reader. Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
+- Design Science MathType en Microsoft Word y PowerPoint.
+MathType tiene que estar instalado para que esto funcione. La versión trial es suficiente.
+- MathML en Adobe Reader.
+Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
+- Matemáticas en Kindle para PC para libros con matemáticas accesibles.
 -
 
 Al leer un documento, NVDA verbalizará cualquier contenido matemático soportado donde aparezca.
@@ -577,7 +579,7 @@ Por omisión, el cursor de revisión sigue al cursor del sistema, así puedes ut
 
 En este punto, puedes utilizar órdenes de MathPlayer tales como las teclas de cursor para explorar la  expresión.
 Por ejemplo, puedes moverte a través de la expresión con las teclas de flecha  izquierda o derecha y acercarte a una porción de la expresión tal como una fracción utilizando la tecla de flecha abajo.
-Por favor consulta la documentación de MathPlayer para información adicional.
+Por favor consulta la [documentación de MathPlayer acerca de órdenes de navegación https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] para información adicional.
 
 Cuando desees volver al documento, simplemente pulsa la tecla escape.
 
@@ -856,6 +858,9 @@ Puedes pasar a la siguiente página manualmente con la tecla avPág y retroceder
 Se soporta la navegación con una sola tecla para enlaces y gráficos, pero sólo dentro de la página actual.
 La navegación por enlaces también incluye notas al pie.
 
+NVDA proporciona soporte preliminar para la lectura y la navegación interactiva de contenido matemático para libros con matemáticas accesibles.
+Por favor consulta la sección [Leyendo Contenido Matemático #ReadingMath] para información adicional.
+
 +++ Selección de Texto +++
 Kindle te permite realizar varias funciones en el texto seleccionado, incluyendo obtener una definición de diccionario, añadir notas y hacer resaltados, copiar el texto al portapapeles y buscar en la web.
 Para hacer esto, primero selecciona texto como lo harías normalmente en modo exploración; ej.: utilizando shift y las teclas de cursor.
@@ -877,6 +882,14 @@ Para ver, editar o eliminar una nota:
 + Accede a las opciones para la selección según se describió arriba.
 + Elige Editar Nota.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Cuando se esté en la tabla de vista de libros añadidos:
+|| Nombre | Tecla | Descripción |
+| Entrar | intro | Abre el libro seleccionado. |
+| Menú de Contexto | aplicaciones | Abre el menú de contexto para el libro seleccionado. |
+%kc:endInclude
 
 + Configurando NVDA +
 
@@ -1399,6 +1412,8 @@ Cuando está desactivada, no se anuncian ni se encuentran con la navegación rá
 Sin embargo, el contenido de las tablas todavía se incluirá como texto normal.
 Esta opción está desactivada de forma predeterminada.
 
+Para conmutar la inclusión de tablas de diseño desde cualquier lugar, por favor asigna un gesto personalizado utilizando el diálogo `[Gestos de entrada #InputGestures].
+
 ==== Configurando el anunciado de campos tales como enlaces y encabezados ====
 Por favor encuentra las nuevas opciones en el [diálogo Opciones de Formato de documento #DocumentFormattingSettings]. 
 
@@ -1700,7 +1715,7 @@ Se muestra el nombre de paquete, el estado, la versión y el autor para cada com
 Si hay ayuda disponible para el complemento seleccionado, puedes acceder a ella pulsando su botón de Ayuda.
 
 Para examinar y descargar los complementos disponibles online, pulsa el botón Obtener Complementos.
-Este botón abre la [página de complementos de NVDA http://addons.nvda-project.org/].
+Este botón abre la [página de complementos de NVDA https://addons.nvda-project.org/].
 Si NVDA está instalado y ejecutándose en tu sistema, puedes abrir directamente el complemento desde el explorador para comenzar el proceso de instalación como se describe a continuación.
 De lo contrario, guarda el paquete de complemento y sigue las instrucciones más abajo.
 
@@ -1735,14 +1750,14 @@ Para acceder al Administrador de Complementos desde cualquier lugar, por favor a
 
 ++ Consola de Python ++
 La consola de Python de NVDA, encontrada bajo Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
-Para más información, por favor consulta la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA http://community.nvda-project.org/wiki/Development].
+Para más información, por favor consulta la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA https://community.nvda-project.org/wiki/Development].
 
 ++ Recargar plugins ++
 Este elemento, una vez activado, recarga app modules y plugins globales sin reiniciar a NVDA, lo cual es útil para desarrolladores.
 
 + Sintetizadores de Voz Soportados +[SupportedSpeechSynths]
 Esta sección contiene información acerca de los sintetizadores de voz soportados por NVDA.
-Para una lista más extensa de los sintetizadores libres y comerciales que puedes descargar y comprar para utilizar con NVDA, por favor consulta la página en [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Para una lista más extensa de los sintetizadores libres y comerciales que puedes descargar y comprar para utilizar con NVDA, por favor consulta la página en [https://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 El sintetizador [Espeak NG https://github.com/espeak-ng/espeak-ng] se compila directamente en NVDA y no requiere ningún otro controlador o componentes especiales para instalarse.
@@ -1912,29 +1927,37 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 %kc:endInclude
 
 ++ Pantallas Handy Tech ++
-NVDA soporta todas las pantallas de [Handy Tech http://www.handytech.de/].
+NVDA soporta la mayoría de las pantallas de [Handy Tech http://www.handytech.de/] cuando se conecten por USB, puerto serie o bluetooth.
 Para algunas pantallas antiguas USB, necesitarás instalar los controladores USB de Handy Tech en tu sistema.
 
-La entrada Braille  todavía no está soportada.
-
+Las siguientes pantallas no se soportan al sacarlas de la caja, pero pueden utilizarse a través del [controlador universal de Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] y el complemento de NVDA:
+- Braillino
+- Bookworm
+- Pantallas modulares con la versión del firmware 1.13 o inferior. Por favor ten en cuenta que el firmware de estas pantallas puede actualizarse.
+-
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor conhsulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar la pantalla braille hacia atrás | izquierda, arriba |
-| Desplazar la pantalla braille hacia adelante | Derecha, abajo |
+| Desplazar la pantalla braille hacia atrás | izquierda, arriba, b3 |
+| Desplazar la pantalla braille hacia adelante | Derecha, abajo, b6 |
 | Mover la pantalla braille a la línea anterior | b4 |
 | Mover la pantalla braille a la línea siguiente | b5 |
 | Guiar a la celda braille | sensor |
-| tecla shift+tab | esc |
+| tecla shift+tab | esc, triple acción  de la tecla izquierda arriba+abajo |
 | tecla alt | b2+b4+b5 |
 | tecla escape | b4+b6 |
-| tecla tab | enter |
-| tecla intro | esc+enter |
-| tecla flecha arriba | leftSpace |
-| tecla flecha abajo | rightSpace |
+| tecla tab | enter, triple acción  de la tecla derech arriba+abajo |
+| tecla intro | esc+enter, triple acción  de la tecla derecha arriba+abajo, acción joystick |
+| tecla flecha arriba | joystick arriba |
+| tecla flecha abajo | joystick abajo |
+| tecla flecha izquierda | joystick izquierda |
+| tecla flecha derecha| joystick derecha |
 | menú NVDA | b2+b4+b5+b6 |
-| configuración de Handy Tech | b4+b8 |
+| Conmutar seguimiento de braille | b2 |
+| Conmutar el cursor braille  | b1 |
+| Conmutar la presentación de contexto de foco | b7 |
+| Conmutar entrada braille | espacio+b1+b3+b4 (espacio+B mayúscula) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2471,6 +2494,9 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 | None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
 | None | --install | Se instala NVDA iniciando la nueva copia instalada |
 | None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
+| None | --create-portable | Crea una copia portable de NVDA (iniciando la copia recientemente creada). Requiere especificarse --portable-path |
+| None | --create-portable-silent | Crea una copia portable de NVDA (no inicia la copia recientemente instalada). Requiere expecificarse --portable-path |
+| None | --portable-path=PORTABLEPATH | La ruta donde se creará una copia portable |
 
 ++ Parámetros del Sistema ++[SystemWideParameters]
 NVDA permite configurar algunos valores en el registro del sistema que alteran el comportamiento de todo el sistema de NVDA.

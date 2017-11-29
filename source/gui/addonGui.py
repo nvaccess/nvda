@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2016 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V.
+#Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V.
 
 import os
 import wx
@@ -130,12 +130,26 @@ class AddonsDialog(wx.Dialog):
 					prevAddon=addon
 					break
 			if prevAddon:
-				# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-				if gui.messageBox(_("A version of this add-on is already installed. Would you like to update it?"),
-				# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
-				_("Add-on Installation"),
-				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
-					return
+				summary=bundle.manifest["summary"]
+				curVersion=prevAddon.manifest["version"]
+				newVersion=bundle.manifest["version"]
+				if gui.messageBox(
+					# Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+					_("You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?").format(
+						summary=summary,
+						newVersion=newVersion
+					)
+					if curVersion==newVersion else 
+					# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+					_("A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?").format(
+						summary=summary,
+						curVersion=curVersion,
+						newVersion=newVersion
+					),
+					# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
+					_("Add-on Installation"),
+					wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
+						return
 				prevAddon.requestRemove()
 			progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 			# Translators: The title of the dialog presented while an Addon is being installed.

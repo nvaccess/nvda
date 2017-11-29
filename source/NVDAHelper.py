@@ -2,6 +2,7 @@ import os
 import sys
 import _winreg
 import msvcrt
+import versionInfo
 import winKernel
 import config
 
@@ -16,6 +17,13 @@ import globalVars
 from logHandler import log
 import time
 import globalVars
+
+versionedLibPath='lib'
+versionedLib64Path='lib64'
+if getattr(sys,'frozen',None):
+	# Not running from source. Libraries are in a version-specific directory
+	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
+	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)
 
 _remoteLib=None
 _remoteLoader64=None
@@ -393,7 +401,7 @@ class RemoteLoader64(object):
 		# Therefore, explicitly specify our own process token, which causes them to be inherited.
 		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 		try:
-			winKernel.CreateProcessAsUser(token, None, u"lib64/nvdaHelperRemoteLoader.exe", None, None, True, None, None, None, si, pi)
+			winKernel.CreateProcessAsUser(token, None, os.path.join(versionedLib64Path,u"nvdaHelperRemoteLoader.exe"), None, None, True, None, None, None, si, pi)
 			# We don't need the thread handle.
 			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess
@@ -417,7 +425,7 @@ class RemoteLoader64(object):
 
 def initialize():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep,VBuf_getTextInRange
-	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
+	localLib=cdll.LoadLibrary(os.path.join(versionedLibPath,'nvdaHelperLocal.dll'))
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
@@ -453,7 +461,7 @@ def initialize():
 		log.info("Remote injection disabled due to running as a  Windows Store Application")
 		return
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h=windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
+	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,u"nvdaHelperRemote.dll")),0,0x8)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
@@ -483,7 +491,7 @@ def terminate():
 	localLib.nvdaHelperLocal_terminate()
 	localLib=None
 
-LOCAL_WIN10_DLL_PATH = ur"lib\nvdaHelperLocalWin10.dll"
+LOCAL_WIN10_DLL_PATH = os.path.join(versionedLibPath,"nvdaHelperLocalWin10.dll")
 def getHelperLocalWin10Dll():
 	"""Get a ctypes WinDLL instance for the nvdaHelperLocalWin10 dll.
 	This is a C++/CX dll used to provide access to certain UWP functionality.

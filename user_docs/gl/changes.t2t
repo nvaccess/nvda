@@ -1,29 +1,72 @@
-Que hai de Novo no NVDA
+﻿Que hai de Novo no NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 =
+O subliñable desta versión inclúe moitas correcións e melloras para o soporte web incluindo o modo exploración para diálogos web por defecto, mellor anunciado das etiquetas dos grupos de campos no modo exploración, o soporte para tecnoloxías novas de Windows 10 como a aplicación Windows Defender Guard e Windows 10 en ARM64, e o anunciado automático da orientación da pantalla e o estado da batería.  
+Por favor ten en conta que esta versión do NVDA xa non soporta o Windows XP ou o Windows Vista. Os requisitos mínimos para o NVDA agora son windows 7 co Service Pack 1.
+
 
 == Novas Características ==
 - No modo exploración, agora é posible saltar ao comezo dos pontos de referencia usando as ordes saltar ao final ou ao comezo do contedor (coma/shift+coma). (#5482)
 - En Firefox, Chrome e Internet Explorer, a navegación rápida por campos de edición e campos de formulario agora inclúe contido de texto enriquecido editable (ex.: contentEditable). (#5534)
 - En navegadores web, a Lista de Elementos agora pode listar campos de formulario e botóns. (#588)
+- Soporte inicial para o Windows 10 en ARM64. (#7508)
+- Soporte preliminar para a lectura e a navegación interactiva de contido matemático para libros Kindle coas matemáticas acessibles. (#7536)
+- Engadido o soporte para o lector de libros dixitais Azardi. (#5848)
+- A información de versión para complementos agora anúnciase cando se estean actualizando. (#5324)
+- Engadido o soporte para novos parámetros de liña de ordes para crear unha copia portable do NVDA. (#6329)
+- Soporte para o Microsoft Edge executándose dentro do Windows Defender Application Guard (#7600)
+- Se se executa nun portátil ou nunha tablet, o NVDA agora anunciará cando se conecte/desconecte un cargador e cando a orientación da pantalla cambie. (#4574, #4612)
+- Lingua nova: Macedonio.
+- Novas táboas de transcripción braille: Croata grao 1, Vietnamita grao 1. (#7518, #7565)
+- Engadiuse o soporte para a pantalla braille Actilino de Handy Tech. (#7590)
+- Agora sopórtase a entrada braille para as pantallas braille Handy Tech. (#7590)
 
 
 == Cambios ==
+- O menor Sistema Operativo soportado polo NVDA agora é o Windows 7 co Service Pack 1, ou o Windows Server 2008 R2 co Service Pack 1. (#7546)
 - Os diálogos web nos navegadores Firefox e Chrome agora usan o modo exploración automáticamente, a non ser que se estea nunha aplicación web. (#4493)
 - No modo exploración, ao se tabular ou se mover coas ordes de teclas de navegación rápida xa non anuncia saíndo de contedores coma listas e táboas, o que fai a navegación máis eficaz. (#2591)
 - En modo exploración para Firefox e Chrome, agora anúncianse os nomes de grupos de campos de formulario ao se mover dentro deles coa navegación rápida ou cando se tabula. (#3321)
+- No modo exploración, as ordes de navegación rápida para obxectos integrados (o e shift+o) agora inclúen elementos de audio e vídeo así coma elementos cos roles aria application e dialog. (#7239)
+- Actualizouse o Espeak-ng 1.49.2),, esto resolve algúns problemas coa produción de versións. (#7385)
+- Na terceira activación da orde 'ler bara de estado', o seu contido cópiase ao portapapeis. (#1785)
+- Ao se asignar xestos a teclas nunha pantalla Baum, podes limitalas ao modelo da pantalla braille en uso (ex.: VarioUltra ou Pronto). (#7517)
+- A tecla rápida para o campo filtrar na listaxe de elementos en modo exploración cambiouse de alt+f a alt+e. (#7569)
+- Engadiuse unha orde para desvincular ao modo exploración para conmutar a inclusión de táboas de deseño ao vó. Podes atopar esta orde na categoría Modo exploración do diálogo Xestos de entrada. (#7634)
+- Actualizado o transcriptor braille a 3.3.0. (#7565)
+- A tecla rápida para o botón de opción Expresión regular no diálogo diccionario cambiouse de alt+r a alt+e. (#6782)
+- Os ficheiros dos diccionarios da fala agora versionáronse e movéronse cara o directorio 'speechDicts/voiceDicts.v1'. (#7592)
+- As modificacións dos ficheiros versionados (configuración do usuario, diccionarios da fala) xa non se gardan cando o NVDA se executa dende o lanzador. (#7688)
 
 
 == Corrección de Erros ==
 - As ligas agora indícanse en braille en aplicacións coma no Microsoft Word. (#6780)
 - O NVDA xa non se volta notablemente máis lento cando estean abertas moitas pestanas nos navegadores web Firefox ou Chrome. (#3138)
+- O enrutamento do cursor para as pantallas MDV Lilli Braille xa non move incorrectamente unha celda braille antes de onde debería estar. (#7469)
+- No Internet Explorer e outros documentos MSHTML, o atributo HTML5 requerido agora sopórtase para indicar o estado requerido dun campo de formulario. (#7321)
+- As pantallas braille agora actualízanse ao se escrebir caracteres arábigos nun documento WordPad aliñado á esquerda (#511).
+- As etiquetas acesibles para controis en Mozilla Firefox agora anúncianse máis sinxelamente no modo exploración cando a etiqueta non aparezca coma contido por si mesma. (#4773)
+- Na actualización windows 10 Creators, o NVDA pode aceder de novo ao Firefox despois dun reinicio do NVDA. (#7269)
+- Cando se reinicie o NVDA co Mozilla Firefox enfocado, o modo exploración estará dispoñible novamente, aíndaque é posible que teñas que premer alt+tab e voltar a premelo de novo. (#5758)
+- Agora é posible aceder a contido matemático en Google Chrome nun sistema sen Mozilla Firefox instalado. (#7308)
+- O sistema operativo e outras aplicacións deberían seren máis estables directamente despois de instalar o NVDA antes de reiniciar, en comparación coas instalacións de versións anteriores do NVDA. (#7563)
+- Ao se usar unha orde de recoñecemento de contido (ex.: NVDA+r), agora o NVDA anuncia unha mensaxe de erro en lugar de non facer nada se o navegador de obxectos desapareceu. (#7567)
+- A funcionalidade desprazamento cara atrás arransouse para pantallas de freedom Scientific que conteñan un balancín esquerdo. (#7713)
+- As pantallas braille Braillino, Bookworm e Modular (co firmware vello) de Handy Tech xa non se soportan ao sacalas da caixa. Instala o controlador universal de Handy Tech e o complemento do NVDA para usar as pantallas. (#7590)
 
 
 == Cambios para Desenvolvedores ==
 - "scons tests" agora procura que as cadeas traducibles teñan comentarios para os traductores. Tamén podes executar esto só con "scons checkPot". (#7492)
+- Agora hai un novo módulo extensionPoints que proporciona un framework xenérico para permitir a extensibilidade de código en pontos específicos no código. Esto permite que as partes interesadas se rexistren para seren notificadas cando ocurra algunha acción (extensionPoints.Action), para modificar un tipo específico de dato (extensionPoints.Filter) ou para participar na decisión de se se fará algo (extensionPoints.Decider). (#3393)
+- Agora podes rexistrarte para seren notificado acerca dos cambios de perfiles de configuración a través da acción config.configProfileSwitched. (#3393)
+- Os xestos de pantalla braille que emulan teclas modificadoras do teclado do sistema (coma control e alt) agora poden conbinarse con outras teclas emuladas do teclado do sistema sen definición explícita. (#6213) 
+ - Por exemplo: se tes unha tecla da pantalla vinculada á tecla alt e outra tecla da pantalla a frecha abaixo, ao se combinar estas teclas resultará na emulación de alt+frecha abaixo.
+- A clase braille.BrailleDisplayGesture agora ten unha propiedade de modelo extra. Se se proporciona, premendo unha tecla xerará unha adicional, texto específico de identificador de modelo, esto permite a un usuario vencellar xestos limitados a un modelo de pantalla braille específico. 
+ - Consulta o controlador de baum coma un exemlo para esta funcionalidade nova.
+- O NVDA agora compílase co Visual Studio 2017 e o SDK Windows 10. (#7568)
 
 
 = 2017.3 =

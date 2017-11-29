@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -162,11 +162,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 """
 	log.debug("Core starting")
 
-	try:
-		# Windows >= Vista
-		ctypes.windll.user32.SetProcessDPIAware()
-	except AttributeError:
-		pass
+	ctypes.windll.user32.SetProcessDPIAware()
 
 	import config
 	if not globalVars.appArgs.configPath:
@@ -267,6 +263,77 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
+		#Just define these constants here, so we don't have to import win32con
+		WM_POWERBROADCAST = 0x218
+		WM_DISPLAYCHANGE = 0x7e
+		PBT_APMPOWERSTATUSCHANGE = 0xA
+		UNKNOWN_BATTERY_STATUS = 0xFF
+		AC_ONLINE = 0X1
+		NO_SYSTEM_BATTERY = 0X80
+		#States for screen orientation
+		ORIENTATION_NOT_INITIALIZED = 0
+		ORIENTATION_PORTRAIT = 1
+		ORIENTATION_LANDSCAPE = 2
+
+		def __init__(self, windowName=None):
+			super(MessageWindow, self).__init__(windowName)
+			self.oldBatteryStatus = None
+			self.orientationStateCache = self.ORIENTATION_NOT_INITIALIZED
+			self.orientationCoordsCache = (0,0)
+			self.handlePowerStatusChange()
+
+		def windowProc(self, hwnd, msg, wParam, lParam):
+			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
+				self.handlePowerStatusChange()
+			elif msg == self.WM_DISPLAYCHANGE:
+				self.handleScreenOrientationChange(lParam)
+
+		def handleScreenOrientationChange(self, lParam):
+			import ui
+			import winUser
+			# Resolution detection comes from an article found at https://msdn.microsoft.com/en-us/library/ms812142.aspx.
+			#The low word is the width and hiword is height.
+			width = winUser.LOWORD(lParam)
+			height = winUser.HIWORD(lParam)
+			self.orientationCoordsCache = (width,height)
+			if width > height:
+				# If the height and width are the same, it's actually a screen flip, and we do want to alert of those!
+				if self.orientationStateCache == self.ORIENTATION_LANDSCAPE and self.orientationCoordsCache != (width,height):
+					return
+				#Translators: The screen is oriented so that it is wider than it is tall.
+				ui.message(_("Landscape" ))
+				self.orientationStateCache = self.ORIENTATION_LANDSCAPE
+			else:
+				if self.orientationStateCache == self.ORIENTATION_PORTRAIT and self.orientationCoordsCache != (width,height):
+					return
+				#Translators: The screen is oriented in such a way that the height is taller than it is wide.
+				ui.message(_("Portrait"))
+				self.orientationStateCache = self.ORIENTATION_PORTRAIT
+
+		def handlePowerStatusChange(self):
+			#Mostly taken from script_say_battery_status, but modified.
+			import ui
+			import winKernel
+			sps = winKernel.SYSTEM_POWER_STATUS()
+			if not winKernel.GetSystemPowerStatus(sps) or sps.BatteryFlag is self.UNKNOWN_BATTERY_STATUS:
+				return
+			if sps.BatteryFlag & self.NO_SYSTEM_BATTERY:
+				return
+			if self.oldBatteryStatus is None:
+				#Just initializing the cache, do not report anything.
+				self.oldBatteryStatus = sps.ACLineStatus
+				return
+			if sps.ACLineStatus == self.oldBatteryStatus:
+				#Sometimes, this double fires. This also fires when the battery level decreases by 3%.
+				return
+			self.oldBatteryStatus = sps.ACLineStatus
+			if sps.ACLineStatus & self.AC_ONLINE:
+				#Translators: Reported when the battery is plugged in, and now is charging.
+				ui.message(_("Charging battery. %d percent") % sps.BatteryLifePercent)
+			else:
+				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
+				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
+
 	messageWindow = MessageWindow(unicode(versionInfo.name))
 
 	# initialize wxpython localization support
@@ -337,6 +404,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
+	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
+		import wx
+		import gui.installerGui
+		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
+			silent=globalVars.appArgs.createPortableSilent,startAfterCreate=not globalVars.appArgs.createPortableSilent)
 	elif not globalVars.appArgs.minimal:
 		try:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.

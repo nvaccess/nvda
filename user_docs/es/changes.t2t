@@ -1,29 +1,72 @@
-Qué hay de Nuevo en NVDA
+﻿Qué hay de Nuevo en NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2017.4 =
+Lo reseñable de esta versión incluye muchas correcciones y mejoras para el soporte web incluyendo el modo exploración para diálogos web por defecto, mejor anunciado de las etiquetas de los grupos de campos en modo exploración, el soporte para tecnologías nuevas de Windows 10 tales como la aplicación Windows Defender Guard y Windows 10 en ARM64, y el anunciado automático de la orientación de la pantalla y estado de batería.  
+Por favor ten en cuenta que esta versión de NVDA ya no soporta Windows XP o Windows Vista. Los requisitos mínimos para NVDA ahora son windows 7 con el Service Pack 1.
+
 
 == Nuevas Características ==
 - En modo exploración, ahora es posible saltar al inicio de los puntos de referencia utilizando las órdenes saltar al final o al principio del contenedor (coma/shift+coma). (#5482)
 - En Firefox, Chrome e Internet Explorer, la navegación rápida por campos de edición y campos de formulario ahora incluye contenido de texto enriquecido editable (ej.: contentEditable). (#5534)
 - En navegadores web, la Lista de Elementos ahora puede listar campos de formulario y botones. (#588)
+- Soporte inicial para Windows 10 en ARM64. (#7508)
+- Soporte preliminar para la lectura y la navegación interactiva de contenido matemático para libros Kindle con matemáticas accessibles. (#7536)
+- Añadido soporte para el lector de libros digitales Azardi. (#5848)
+- La información de versión para complementos ahora se anuncia cuando se estén actualizando. (#5324)
+- Añadido el soporte para nuevos parámetros de línea de órdenes para crear una copia portable de NVDA. (#6329)
+- Soporte para Microsoft Edge ejecutándose dentro de Windows Defender Application Guard (#7600)
+- Si se ejecuta en un portátil o en una tablet, NVDA ahora anunciará cuando se conecte/desconecte un cargador y cuando la orientación de la pantalla cambie. (#4574, #4612)
+- Idioma nuevo: Macedonio.
+- Nuevas tablas de transcripción braille: Croata grado 1, Vietnamita grado 1. (#7518, #7565)
+- Se ha añadido el soporte para la pantalla braille Actilino de Handy Tech. (#7590)
+- Ahora se soporta la entrada braille para las pantallas braille Handy Tech. (#7590)
 
 
 == Cambios ==
+- El menor Sistema Operativo soportado por NVDA ahora es Windows 7 con el Service Pack 1, o Windows Server 2008 R2 con el Service Pack 1. (#7546)
 - Los diálogos web en los navegadores Firefox y Chrome ahora utilizan el modo exploración automáticamente, al menos que se esté en una aplicación web. (#4493)
 - En modo exploración, al tabular o moverse con las órdenes de teclas de navegación rápida ya no anuncia saliendo de contenedores tales como listas y tablas, Lo cual hace la navegación más eficaz. (#2591)
 - En modo exploración para Firefox y Chrome, ahora se anuncian los nombres de grupos de campos de formulario al moverse dentro de ellos con la navegación rápida o cuando se tabula. (#3321)
+- En modo exploración, las órdenes de navegación rápida para objetos integrados (o y shift+o) ahora incluyen elementos de audio y vídeo así como elementos con los roles aria application y dialog. (#7239)
+- Se ha actualizado Espeak-ng 1.49.2),, esto resuelve algunos problemas con la producción de versiones. (#7385)
+- En la tercera activación de la orden 'leer bara de estado', su contenido se copia al portapapeles. (#1785)
+- Al asignar gestos a teclas en una pantalla Baum, puedes limitarlas al modelo de la pantalla braille en uso (ej.: VarioUltra o Pronto). (#7517)
+- La tecla rápida para el campo filtrar en la lista de elementos en modo exploración se cambió de alt+f a alt+e. (#7569)
+- Se ha añadido una orden para desvincular al modo exploración para conmutar la inclusión de tablas de diseño al vuelo. Puedes encontrar esta orden en la categoría Modo exploración del diálogo Gestos de entrada. (#7634)
+- Actualizado el transcriptor braille a 3.3.0. (#7565)
+- La tecla rápida para el botón de opción Expresión regular en el diálogo diccionario se cambió de alt+r a alt+e. (#6782)
+- Los ficheros de los diccionarios del habla ahora se versionaron y se han movido al directorio 'speechDicts/voiceDicts.v1'. (#7592)
+- Las modificaciones de los ficheros versionados (configuración del usuario, diccionarios del habla) ya no se guardan cuando NVDA se ejecuta desde el lanzador. (#7688)
 
 
 == Corrección de Errores ==
 - Los enlaces ahora se indican en braille en aplicaciones tales como Microsoft Word. (#6780)
 - NVDA ya no se vuelve notablemente más lento cuando estén abiertas muchas pestañas en los navegadores web Firefox o Chrome. (#3138)
+- El enrutamiento de cursor para las pantallas MDV Lilli Braille ya no mueve incorrectamente una celda braille antes de donde debería estar. (#7469)
+- En Internet Explorer y otros documentos MSHTML, el atributo HTML5 requerido ahora se soporta para indicar el estado requerido de un campo de formulario. (#7321)
+- Las pantallas braille ahora se actualizan al escribir caracteres arábigos en un documento WordPad alineado a la izquierda (#511).
+- Las etiquetas accesibles para controles en Mozilla Firefox ahora se anuncian más fácilmente en modo exploración cuando la etiqueta no aparezca como contenido por sí misma. (#4773)
+- En la actualización windows 10 Creators, NVDA puede acceder de nuevo a Firefox después de un reinicio de NVDA. (#7269)
+- Cuando se reinicie NVDA con Mozilla Firefox enfocado, el modo exploración estará disponible nuevamente, aunque es posible que tengas que pulsar alt+tab y volver a pulsarlo de nuevo. (#5758)
+- Ahora es posible acceder a contenido matemático en Google Chrome en un sistema sin Mozilla Firefox instalado. (#7308)
+- El sistema operativo y otras aplicaciones deberían ser más estables directamente después de instalar NVDA antes de reiniciar, en comparación con las instalaciones  de versiones anteriores de NVDA. (#7563)
+- Al utilizar una orden de reconocimiento de contenido (ej.: NVDA+r), ahora NVDA anuncia un mensaje de error en lugar de no hacer nada si el navegador de objetos ha desaparecido. (#7567)
+- La funcionalidad desplazamiento hacia atrás se ha corregido para pantallas de freedom Scientific que contengan un balancín izquierdo. (#7713)
+- Las pantallas braille Braillino, Bookworm y Modular (con firmware antiguo) de Handy Tech ya no se soportan al sacarlas de la caja. Instala el controlador universal de Handy Tech y el complemento de NVDA para utilizar las pantallas. (#7590)
 
 
 == Cambios para Desarrolladores ==
 - "scons tests" ahora busca que las cadenas traducibles tengan comentarios para los traductores. También puedes ejecutar esto sólo con "scons checkPot". (#7492)
+- Ahora hay un nuevo módulo extensionPoints que proporciona un framework genérico para permitir la extensibilidad de código en puntos específicos en el código. Esto permite que las partes interesadas se registren para ser notificadas cuando ocurra alguna acción (extensionPoints.Action), para modificar un tipo específico de dato (extensionPoints.Filter) o para participar en la decisión de si se hará algo (extensionPoints.Decider). (#3393)
+- Ahora puedes registrarte para ser notificado acerca de los cambios de perfiles de configuración a través de la acción config.configProfileSwitched. (#3393)
+- Los gestos de pantalla braille que emulan teclas modificadoras del teclado del sistema (tales como control y alt) ahora pueden conbinarse con otras teclas emuladas del teclado del sistema sin definición explícita. (#6213) 
+ - Por ejemplo: si tienes una tecla de la pantalla vinculada a la tecla alt y otra tecla de la pantalla a flecha abajo, al combinar estas teclas resultará la emulación de alt+flecha abajo.
+- La clase braille.BrailleDisplayGesture ahora tiene una propiedad de modelo extra. Si se proporciona, pulsando una tecla generará una adicional, texto específico de identificador de modelo, esto permite a un usuario vincular gestos limitados a un modelo de pantalla braille específico. 
+ - Consulta el controlador de baum como un ejemlo para esta funcionalidad nueva.
+- NVDA ahora se compila con Visual Studio 2017 y el SDK Windows 10. (#7568)
 
 
 = 2017.3 =

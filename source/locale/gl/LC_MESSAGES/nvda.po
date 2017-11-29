@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-08-31 16:42+0100\n"
+"POT-Creation-Date: 2017-11-03 00:10+1000\n"
+"PO-Revision-Date: 2017-11-02 17:25+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: Equipo de tradución ao Galego <oprisniki@gmail.com>\n"
 "Language: gl_ES\n"
@@ -800,6 +800,11 @@ msgstr "Braille de ordenador de 8 pontos Croata"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Croata grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Braille de ordenador de 8 pontos Húngaro"
 
@@ -1020,6 +1025,11 @@ msgstr "Braille unicode"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Vietamita grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Chinés (Hong Kong, Cantonés)"
 
@@ -1028,9 +1038,12 @@ msgstr "Chinés (Hong Kong, Cantonés)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chinés (Taiwan, Mandarín)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "Modo foco"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Modo navegación"
@@ -1561,7 +1574,7 @@ msgstr "Tipo:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
+msgid "Filt&er by:"
 msgstr "&Filtrar por:"
 
 #. Translators: The label of a button to activate an element
@@ -1597,8 +1610,8 @@ msgstr "Non hai descripción longa"
 msgid "Shows the long description at this position if one is found."
 msgstr "Amosa a descripción longa nesta posición se se atopa unha."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Non estás nun contedor"
 
@@ -1644,6 +1657,18 @@ msgstr "móvese á seguinte columna da táboa"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "móvese á anterior columna da táboa"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Táboas de deseño desactivado"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Táboas de deseño activado"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Activa e desactiva a inclusión de táboas de deseño en modo exploración"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2690,6 +2715,24 @@ msgstr "Erro no ficheiro de mapa de xestos"
 msgid "Loading NVDA. Please wait..."
 msgstr "Cargando NVDA. Agarda por favor..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Horizontal"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Vertical"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Cargando batería. %d porcento"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Sen cargar batería. %d porcento"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA activado"
@@ -3354,6 +3397,7 @@ msgid "No navigator object"
 msgstr "Non hai navegador de obxectos"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s copiado ao portapapeis"
@@ -3684,10 +3728,12 @@ msgstr "Liña de estado non atopada"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Le a barra de estado da aplicación actual e move o cursor de navegación cara "
-"ela. Se se preme dúas veces, deletrea a información"
+"ela. Se se preme dúas veces, deletrea a información. Se se preme tres veces, "
+"copia a barra de estado ao portapapeis"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -5678,14 +5724,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "Son"
 
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"Permite ao NVDA funcionar na pantalla de inicio de sesión de Windows, na "
-"pantalla UAC e noutras pantallas seguras."
-
 msgid "Type help(object) to get help about object."
 msgstr "Teclea help(obxecto) para obter axuda acerca do obxecto."
 
@@ -7060,12 +7098,21 @@ msgstr "desprazar liña braille"
 msgid "line scroll"
 msgstr "desprazar liña"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Liñas braille Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Amosar ventá de configuración do controlador da Handy Tech."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Entrada braille habilitada"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Entrada braille deshabilitada"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Conmutar entrada braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7250,8 +7297,8 @@ msgid "Change settings of document properties"
 msgstr "Cambiar opcións das propiedades do documento"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "OCR do Windows 10..."
+msgid "&Windows 10 OCR..."
+msgstr "OCR do &Windows 10..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7606,11 +7653,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Instalación de Complemento"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Xa hai unha versión deste complemento instalada. ¿Gostaríache actualizala?"
+"Estás a piques de instalar a versión {newVersion} de {summary}, a que parece "
+"estaren xa instalada. ¿Aínda che gostaría actualizala?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Xa está instalada unha versión deste complemento. ¿Gostaríache actualizar "
+"{summary} á versión {curVersion} a versión {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8025,6 +8084,10 @@ msgstr "Seleccionar directorio do portable"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Copiar configuración do &usuario actual"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Comezar a copia portable nova despois da creación"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -8760,7 +8823,7 @@ msgid "Whole &word"
 msgstr "&palabra completa"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "&Expresión regular"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -10479,8 +10542,8 @@ msgstr "&Anotacións"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "Erros"
+msgid "&Errors"
+msgstr "&Erros"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10490,27 +10553,5 @@ msgstr "Series das HIMS Braille Sense/Braille EDGE/Smart Beetle"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "-----"
-#~ msgstr "-----"
-
-#~ msgid "(x)"
-#~ msgstr "(x)"
-
-#~ msgid "(-)"
-#~ msgstr "(-)"
-
-#~ msgid "( )"
-#~ msgstr "( )"
-
-#~ msgid "Farsi grade 1"
-#~ msgstr "Persa grao 1"
-
-#~ msgid "ITALIC"
-#~ msgstr "cursiva"
-
-#~ msgid "braille"
-#~ msgstr "braille"
-
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr ""
-#~ "¿Estás seguro de que queres borrar este perfil? Esto non se pode desfacer."
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Amosar ventá de configuración do controlador da Handy Tech."

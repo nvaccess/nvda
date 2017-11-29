@@ -23,9 +23,59 @@ Import(
 	'clientInstallDir',
 )
 
-# We only support compiling with MSVC 14 (2015)
-if not env.get('MSVC_VERSION','').startswith('14.'):
-	raise RuntimeError("Microsoft Visual C++ 14 not found")
+# some utilities for COM proxies
+def clsidStringToCLSIDDefine(clsidString):
+	"""
+	Converts a CLSID string of the form "{abcdef12-abcd-abcd-abcd-abcdef123456}"
+	Into a c-style struct initializer for initializing a GUID (I.e. "{0xabcdef12,0xabcd,0xabcd,{0xab,0xcd,0xab,0xcd,0xef,0x12,0x34,0x56}}") 
+	"""
+	d=clsidString[1:-1].replace('-','')
+	return "{%s,%s,%s,%s}"%(
+		"0x"+d[0:8],
+		"0x"+d[8:12],
+		"0x"+d[12:16],
+		"{%s}"%(",".join("0x"+d[x:x+2] for x in xrange(16,32,2)))
+	)
+
+def COMProxyDllBuilder(env,target,source,proxyClsid):
+	"""
+	Builds a COM proxy dll from iid, proxy and dlldata c files generated from an IDL file with MIDL.
+	It provides the needed linker flags, and also embeds a manifest in the dll registering the given proxy CLSID for this dll's class object.
+	"""
+	proxyName=str(target)
+	manifestFile=env.Substfile(
+		target=proxyName+'.manifest',
+		source='COMProxy.manifest.subst', 
+		SUBST_DICT={
+			'%proxyClsid%':proxyClsid,
+			'%proxyName%':proxyName,
+		}
+	)
+	proxyDll=env.SharedLibrary(
+		target=target,
+		source=source,
+		LIBS=['rpcrt4','oleaut32','ole32'],
+		CPPDEFINES=[
+			env['CPPDEFINES'],
+			'WIN32',
+			('PROXY_CLSID_IS',clsidStringToCLSIDDefine(proxyClsid)),
+		],
+		LINKFLAGS=[
+			env['LINKFLAGS'],
+			'/export:DllGetClassObject,private',
+			'/export:DllCanUnloadNow,private',
+			'/export:GetProxyDllInfo,private',
+			'/manifest:embed',
+			'/manifestinput:'+manifestFile[0].path,
+		],
+	)
+	env.Depends(proxyDll,manifestFile)
+	return proxyDll
+env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
+
+# We only support compiling with MSVC 14.1 (2017)
+if not env.get('MSVC_VERSION')=='14.1':
+	raise RuntimeError("Visual C++ 14.1 (Visual Studio 2017) not found")
 
 
 TARGET_ARCH=env['TARGET_ARCH']
@@ -58,7 +108,7 @@ env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
 env.Append(
 	LINKFLAGS=[
 		'/incremental:no',
-		'/WX'
+		'/WX',
 		'/subsystem:windows,6.01',
 	]
 )
@@ -72,10 +122,7 @@ else:
 	env.Append(CCFLAGS='/GL')
 	env.Append(LINKFLAGS=['/LTCG'])
 
-if 'debugCRT' in debug:
-	env.Append(CCFLAGS=['/MTd'])
-else:
-	env.Append(CCFLAGS=['/MT'])
+if 'debugCRT' not in debug:
 	env.Append(CPPDEFINES=['NDEBUG'])
 
 if 'RTC' in debug:
@@ -85,6 +132,15 @@ if 'RTC' in debug:
 #We always want debug symbols
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+
+win10env=env.Clone()
+win10env.Append(CXXFLAGS='/ZW')
+Export('win10env')
+
+if 'debugCRT' in debug:
+	env.Append(CCFLAGS=['/MTd'])
+else:
+	env.Append(CCFLAGS=['/MT'])
 
 Export('env')
 
@@ -102,8 +158,11 @@ if TARGET_ARCH=='x86':
 	env.Install(sourceTypelibDir,ia2RPCStubs[1]) #typelib
 
 iSimpleDomRPCStubs=env.SConscript('ISimpleDOM_sconscript')
+if signExec:
+	env.AddPostAction(iSimpleDomRPCStubs[0],[signExec])
+env.Install(libInstallDir,iSimpleDomRPCStubs[0]) #proxy dll
 if TARGET_ARCH=='x86':
-	env.Install(sourceTypelibDir,iSimpleDomRPCStubs[0]) #typelib
+	env.Install(sourceTypelibDir,iSimpleDomRPCStubs[1]) #typelib
 
 mathPlayerRPCStubs=env.SConscript('mathPlayer_sconscript')
 if TARGET_ARCH=='x86':
@@ -115,6 +174,10 @@ if TARGET_ARCH=='x86':
 	if signExec:
 		env.AddPostAction(localLib[0],[signExec])
 	env.Install(libInstallDir,localLib)
+	win10localLib=env.SConscript('localWin10/sconscript',)
+	if signExec:
+		env.AddPostAction(win10localLib[0],[signExec])
+	env.Install(libInstallDir,win10localLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
