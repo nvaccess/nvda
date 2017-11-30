@@ -3,8 +3,21 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+
+== Fehlerkorrekturen ==
+- Sollte der Pfad des Ordners, in dem NVDA installiert ist, nicht-ASCII-Zeichen enthalten, schlägt die Anzeige der Formatierungsinformationen im lesemodus nicht mehr fehl, wenn Sie NVDA+F zweimal drücken. (#7474)
+- Der Fokus wird nun korrekt gesetzt, wenn Sie von einer anderen Anwendung zu Spotify zurückkehren. (#7689)
+- Wenn unter Windows 10 Fall Creators Update der ordnerschutz aktiviert ist, schlägt die Aktualisierung von NVDA nicht mehr fehl. (#7696)
+
+
+== Änderungen für Entwickler ==
+- Neue versteckte boolsche Einstellung im Abschnitt Braille in der NVDA-Konfiguration: "outputPass1Only". (#7301, #7693, #7702)
+ - Wird diese Einstellung auf False gesetzt, werden auch Liblouis-Regeln verarbeitet, die mehrere Durchläufe erfordern. Standardmäßig ist true voreingestellt.  
+
+
 = 2017.4 =
-Schwerpunkt dieser Version sind zahlreiche Verbesserungen und Fehlerkorrekturen am lesemodus. Hierzu zählen die standardmäßige Verwendung des lesemodus in Webdialogen, eine verbesserte Anzeige von Beschriftungen von Gruppenfeldern im lesemodus, die Unterstützung neuer Windows-10-Technologien wie Windows Defender Application Guard und Windows 10 auf ARM64, sowie die automatische ausgabe der ausrichtung (hoch- oder Querformat) des Akkustatus.
+Schwerpunkt dieser Version sind zahlreiche Verbesserungen und Fehlerkorrekturen am lesemodus. Hierzu zählen die standardmäßige Verwendung des lesemodus in Webdialogen, eine verbesserte Anzeige von Beschriftungen von Gruppenfeldern im lesemodus, die Unterstützung neuer Windows-10-Technologien wie Windows Defender Application Guard und Windows 10 auf ARM64, sowie die automatische ausgabe der ausrichtung (hoch- oder Querformat) des Bildschirmes sowie des Akku-Statuses.
 Bitte beachten Sie, dass diese Version von NVDA unter Windows XP und Windows Vista nicht mehr ausgeführt werden kann. Sie benötigen mindestens Windows 7 Service pack 1.
 
 
@@ -17,9 +30,9 @@ Bitte beachten Sie, dass diese Version von NVDA unter Windows XP und Windows Vis
 - Unterstützung für den Azardi eBook Reader. (#5848)
 - Beim Aktualisieren von NVDA-Erweiterungen werden Versionsinformationen angegeben. (#5324)
 - Neue Kommandozeilenparameter zum Erstellen einer portablen Version von NVDA wurden hinzugefügt. (#6329)
-- Microsoft Edge wird unterstützt, wenn es innerhalb von Windows Defender Application Guard ausgeführt wird. (#7600)
+- Microsoft Edge wird unterstützt, wenn es innerhalb von Windows Defender Application Guard ausgeführt wird. Dies gillt ab dem Windows 10 Fall Creators Update. (#7600)
 - Wenn NVDA auf einem Laptop oder einem Tablet ausgeführt wird, werden Sie benachrichtigt, wenn Sie ein Netzteil anschließen, abziehen oder wenn sich die Bildschirmausrichtung ändert. (#4574, #4612)
-- neue Sprache: Mazedonisch.
+- neue Sprache: Mazedonisch.	
 - Neue Braille-Übersetzungstabellen: kroatische Vollschrift, vietnamesische Vollschrift. (#7518, #7565)
 - Das Braillezeilenmodell Actilino von handy Tech wird unterstützt. (#7590)
 - die Brailleeingabe auf handytech-Braillezeilen wird unterstützt. (#7590)
@@ -31,7 +44,7 @@ Bitte beachten Sie, dass diese Version von NVDA unter Windows XP und Windows Vis
 - Beim Navigieren im Lesemodus mittels Tab oder Schnellnavigationstasten wird das Verlassen von Containern wie Listen und Tabellen nicht mehr ausdrücklich angezeigt. (#2591)
 - In Firefox und Google Chrome werden die Namen von Formulargruppen angezeigt, wenn Sie zu einem Formularfeld springen. (#3321)
 - Die Schnellnavigationstasten für eingebettete Objekte (O und Umschalt+O) berücksichtigen Audio- und Video-Elemente ebenso wie Web-Anwendungen und Web-Dialoge. (#7239)
-- eSpeak-NG wurde auf Version 1.49.2 aktualisiert, Dadurch werden einige Probleme in der Aussprache behoben. (#7385)
+- eSpeak-NG wurde auf Version 1.49.2 aktualisiert, Dadurch werden einige Probleme bei der Produktion von neuen Versionen behoben. (#7385, #7583)
 - Bei dreimaligem Drücken der Tastenkombination zum Lesen der statuszeile wird diese in die Zwischenablage kopiert. (#1785)
 - Beim Zuweisen von NVDA-Befehlen an Baum-Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (zum Beispiel Baum Vario Ultra, Baum Pronto). (#7517)
 - Die Tastenkombination zum direkten Anspringen des Suchfeldes in der Elementliste wurde von alt+f in alt+e geändert. (#7569)
@@ -55,7 +68,7 @@ Bitte beachten Sie, dass diese Version von NVDA unter Windows XP und Windows Vis
 - Unterstützung mathematischer Inhalte in Google Chrome auf Systemen, auf denen Firefox nicht installiert ist. (#7308)
 - Das Betriebssystem und die Anwendungen sollten nun nach der Installation von NVDA stabiler laufen (verglichen mit vorherigen Versionen von NVDA). (#7563)
 - Wenn das Navigatorobjekt beim Aufruf der Inhaltserkennung (z. B. mit nvda+r) verschwunden sein sollte, zeigt NVDA eine Warnmeldung an. (#7567)
-- Das Zurückscrollen bei Freedom Scientific-Braillezeilen funktioniert nun ordnungsgemäß. (#7713)
+- Das Zurückscrollen bei Freedom Scientific-Braillezeilen mit einer linken Wipptaste funktioniert nun ordnungsgemäß. (#7713)
 
 
 == Änderungen für Entwickler ==
@@ -85,6 +98,7 @@ Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift üb
 - In dem "An"- und "CC"-Feld in der Windows 10 Mail-App und im Suchfeld für die Windows-Einstellungen wird der aktuell hervorgehobene Vorschlag angezeigt. (#6241)
 - Sobald die Vorschlagsliste für ein Suchfeld in Windows 10 erscheint, wird ein Klang abgespielt. (#6241)
 - In Skype für Unternehmen werden Benachrichtigungen, wie ankommende Nachrichten automatisch angezeigt. (#7281)
+- In Skype für Unternehmen werden ankommende Chatnachrichten automatisch vorgelesen, während man sich in einer Unterhaltung befindet. (#7286))
 - In Microsoft Edge werden Benachrichtigungen (zum Beispiel über abgeschlossene Downloads) automatisch angezeigt. (#7281)
 - Sie können nun Kurz-, Voll- und Basisschrift über die Brailletastatur einer Braillezeile eingeben. Für weitere Informationen lesen Sie den Abschnitt über Braille-Eingabe in Benutzerhandbuch. (#2439)
 - Mit Hilfe der Brailletabelle Unicode können Sie nun Unicode-Zeichen über die Brailletastatur einer Braillezeile eingeben. (#6449)
