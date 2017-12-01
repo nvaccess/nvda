@@ -3,6 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+
+== Korjatut ohjelmavirheet ==
+- Selattavat ilmoitukset, kuten nykyisten muotoilutietojen näyttäminen painettaessa kaksi kertaa nopeasti NVDA+F, eivät enää epäonnistu, kun NVDA on asennettu hakemistopolkuun, jonka nimessä on muita kuin ASCII-merkkejä. (#7474)
+- Kohdistus palautetaan taas asianmukaisesti palattaessa Spotifyhin toisesta sovelluksesta. (#7689)
+- NVDA:n päivittäminen ei enää epäonnistu järjestelmissä, joissa hallittu kansion käyttö on käytössä (käytettävissä Windows 10 Fall Creators -päivityksessä). (#7696)
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2017.4 =
 Tämän version merkittävimpiä ominaisuuksia ovat mm. useat verkkoselauksen tuen korjaukset ja parannukset, mukaan lukien oletusarvoinen selaustila verkkopohjaisille valintaikkunoille ja parempi lomakekenttäryhmien nimien ilmaiseminen selaustilassa, tuki uusille Windows 10:n teknologioille, kuten Windows Defenderin sovellussuojalle ja ARM64-alustalle, sekä automaattinen ruudun suunnan ja akun tilan ilmoittaminen.  
 Huomaa, että tämä versio ei enää tue Windows XP:tä tai Vistaa. Vähimmäisvaatimus on nyt Windows 7 Service Pack 1-päivityksellä.

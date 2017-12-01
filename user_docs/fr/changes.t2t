@@ -3,6 +3,19 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+
+== Corrections de Bogues ==
+- Les messages navigables tels que ceux affichant le formatage en cours, lors de l'appui sur NVDA+f deux fois rapidement, ne dysfonctionnent plus si NVDA est installé sur un chemin comprenant des caractères non-ASCII. (#7474)
+- Le focus est maintenant restauré correctement lors du retour à Spotify à partir d'une autre application. (#7689)
+- NVDA n'arrête plus sa mise à jour sur les systèmes où l'accès contrôlé aux dossiers est activé (disponible dans la mise à jour de Windows 10 Fall Creators). (#7696)
+
+
+== Changements pour les Développeurs ==
+- Ajout d'un indicateur booléen caché à la section braille dans la configuration : "outputPass1Only". (#7301, #7693, #7702) 
+ - Cet indicateur est sur true par défaut. S'il est sur false, les règles de passage multiple de Liblouis seront utilisées pour la sortie braille.
+
+
 = 2017.4 =
 Points forts de cette version : beaucoup de corrections et d'améliorations dans le support du web incluant le mode navigation pour les dialogues web par défaut, Meilleure annonce des étiquettes de groupes de champs en mode navigation, support de nouvelles technologies Windows 10 telles que Windows Defender Application Guard et Windows 10 sur ARM64, et l'annonce automatique de l'orientation écran et de l'état de la batterie.
 Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows Vista. Le minimum requis pour NVDA est maintenant windows 7 avec Service Pack 1.
@@ -13,9 +26,9 @@ Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows 
 - Sous Firefox, Chrome et Internet Explorer, la navigation rapide vers les zones de saisie et les champs de formulaire inclut maintenant les champs texte riche (ex : contentEditable). (#5534)
 - Dans les navigateurs web, La Liste d'Éléments peut maintenant lister les champs de formulaire et les boutons. (#588)
 - Support initial de Windows 10 sur ARM64. (#7508)
-- Support initial pour la lecture et la navigation dans du contenu mathématique pour les livres Kindle avec mathématique accessible. (#7536)
+- Support initial de la lecture et de la navigation interactive dans du contenu mathématique pour les livres Kindle avec mathématique accessible. (#7536)
 - Ajout du support du lecteur de livres électroniques Azardi. (#5848)
-- Lors de la mise à jour d'un module complémentaire, l'information de version est maintenant annoncée. (#5324)
+- L'information de version des modules complémentaires est maintenant annoncée quand ceux-ci sont mis à jour. (#5324)
 - Ajout de nouveaux paramètres de ligne de commande pour créer une copie portable de NVDA. (#6329)
 - Support de Microsoft Edge s'exécutant dans Windows Defender Application Guard sous Windows 10 Fall Creators Update. (#7600)
 - S'il s'exécute sur un PC portable ou une tablette, NVDA annonce maintenant si le chargeur est connecté ou déconnecté, et quand l'orientation de l'écran change. (#4574, #4612)

@@ -3,7 +3,20 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.4 =
+ 2018.1 =
+
+== Corrección de Fallos ==
+- As mensaxes explorables como amosar o formato actual ao se premer NVDA+f dúas veces rápidamente, xa non fallan cando o NVDA se instala nunha ruta con caracteres non ASCII. (#7474)
+- O foco agora restáurase unha vez máis correctamente cando se volta ao Spotify dende outra aplicación. (#7689)
+- O NVDA xa non falla ao se actualizar en sistemas co Control de Aceso de Cartafols habilitado (dispoñible na actualización Windows 10 Fall Creators). (#7696)
+
+
+== Cambios para Desenvolvedores ==
+- Engadida unha bandeira booleana oculta á seción braille na configuración: "outputPass1Only". (#7301, #7693, #7702) 
+ - Esta bandeira está predeterminada a true. Se é false, usaranse as regras liblouis multi pass para a saída braille.
+
+
+== 2017.4 =
 O subliñable desta versión inclúe moitas correcións e melloras para o soporte web incluindo o modo exploración para diálogos web por defecto, mellor anunciado das etiquetas dos grupos de campos no modo exploración, o soporte para tecnoloxías novas de Windows 10 como a aplicación Windows Defender Guard e Windows 10 en ARM64, e o anunciado automático da orientación da pantalla e o estado da batería.  
 Por favor ten en conta que esta versión do NVDA xa non soporta o Windows XP ou o Windows Vista. Os requisitos mínimos para o NVDA agora son windows 7 co Service Pack 1.
 
