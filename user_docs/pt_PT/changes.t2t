@@ -5,6 +5,19 @@
 
 Traduzido pela Equipa portuguesa do NVDA
 
+= 2018.1 =
+
+== Correções ==
+- As mensagens navegáveis, como a informação de formatação, quando se pressiona NVDA+f duas vezes, já não falha quando o NVDA está instalado numa pasta com caracteres não ASCII. (#7474)
+- O foco é novamente restaurado correctamente quando se volta ao Spotify de outra aplicação. (#7689)
+- O NVDA já pode ser actualizado num sistema com o Acesso controlado a Pastas activado (disponível no Windows 10 Fall Creators update). (#7696)
+
+
+== Alterações para Desenvolvedores ==
+- Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
+ - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
+
+
 = 2017.4 =
 Os destaques desta versão incluem:
 - Muitas correções e melhorias no suporte Web, incluindo modo de navegação, por padrão, , para os diálogos web e melhor anúncio das etiquetas de grupo de campos, no modo de navegação;

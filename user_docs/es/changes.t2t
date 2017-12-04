@@ -3,6 +3,19 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+
+== Corrección de Fallos ==
+- Los mensajes explorables tales como mostrar el formato actual al pulsar NVDA+f dos veces rápidamente, ya no fallan cuando NVDA se instala en una ruta con caracteres no ASCII. (#7474)
+- El foco ahora se restaura una vez más correctamente cuando se regresa a Spotify desde otra aplicación. (#7689)
+- NVDA ya no falla al actualizar en sistemas con el Control de Acceso de Carpetas habilitado (disponible en la actualización Windows 10 Fall Creators). (#7696)
+
+
+== Cambios para Desarrolladores ==
+- Añadida una bandera booleana oculta a la sección braille en la configuración: "outputPass1Only". (#7301, #7693, #7702) 
+ - Esta bandera está predeterminada a true. Si es false, se utilizarán las reglas liblouis multi pass para la salida braille.
+
+
 = 2017.4 =
 Lo reseñable de esta versión incluye muchas correcciones y mejoras para el soporte web incluyendo el modo exploración para diálogos web por defecto, mejor anunciado de las etiquetas de los grupos de campos en modo exploración, el soporte para tecnologías nuevas de Windows 10 tales como la aplicación Windows Defender Guard y Windows 10 en ARM64, y el anunciado automático de la orientación de la pantalla y estado de batería.  
 Por favor ten en cuenta que esta versión de NVDA ya no soporta Windows XP o Windows Vista. Los requisitos mínimos para NVDA ahora son windows 7 con el Service Pack 1.
@@ -42,7 +55,7 @@ Por favor ten en cuenta que esta versión de NVDA ya no soporta Windows XP o Win
 - Las modificaciones de los ficheros versionados (configuración del usuario, diccionarios del habla) ya no se guardan cuando NVDA se ejecuta desde el lanzador. (#7688)
 
 
-== Corrección de Errores ==
+== Corrección de Fallos ==
 - Los enlaces ahora se indican en braille en aplicaciones tales como Microsoft Word. (#6780)
 - NVDA ya no se vuelve notablemente más lento cuando estén abiertas muchas pestañas en los navegadores web Firefox o Chrome. (#3138)
 - El enrutamiento de cursor para las pantallas MDV Lilli Braille ya no mueve incorrectamente una celda braille antes de donde debería estar. (#7469)
@@ -117,7 +130,7 @@ Lo subrayable de esta versión incluye la entrada de braille contraído, el sopo
 - El logo de NVDA se ha actualizado. El logo actualizado de NVDA es una mezcla estilizada de las letras NVDA en blanco, sobre un fondo sólido púrpura. Esto se asegura de que será visible en cualquier color de fondo, y utilizará el color púrpura del logo de NV Access. (#7446)
 
 
-== Corrección de Errores ==
+== Corrección de Fallos ==
 - Los elementos div editables en Chrome ya no tienen su etiqueta anunciada como su valor mientras se esté en modo exploración. (#7153)
 - Pulsar fin mientras se esté en modo exploración de un documento vacío de Microsoft Word ya no provoca un error en tiempo de ejecución. (#7009)
 - El modo exploración ahora se soporta correctamente en Microsoft Edge cuando a un documento se le haya dado un rol ARIA específico de documento. (#6998)
@@ -560,7 +573,7 @@ Lo reseñable en esta versión incluye el apoyo inicial para Windows 10; la capa
 - Al intentar instalar una versión más antigua de NVDA de la que está instalada actualmente, ahora se te avisará de que esto no está recomendado y de que NVDA debería desinstalarse completamente antes de proceder. (#5037)
 
 
-== Corrección de Errores ==
+== Corrección de Fallos ==
 - En modo exploración para  Internet Explorer y otros controles MSHTML, la navegación rápida por campos ya no incluye incorrectamente elementos de listas presentacionales. (#4204)
 - En Firefox, NVDA ya no anuncia inapropiadamente el contenido de un ARIA tab panel cuando el foco se mueva dentro de él. (#4638)
 - En Internet Explorer y otros controles MSHTML, al tabular dentro de secciones, artículos o diálogos  ya no anuncia inapropiadamente todo el contenido en el contenedor. (#5021, #5025)
@@ -655,7 +668,7 @@ Lo reseñable en esta versión  incluye el modo exploración para documentos en 
 - Se ha actualizado eSpeak a la versión 1.48.04 (#4325)
 
 
-== Corrección de Errores ==
+== Corrección de Fallos ==
 - En Microsoft Excel, se maneja el caso cuando las celdas de encabezado de fila y columna se fusionan. Ej.: si A1 y B1 se fusionan, entonces B2 ahora tendrá A1 y B1 anunciado como su encabezado de columna, en lugar de nada en absoluto. (#4617)
 - Al editar el contenido  de un cuadro de texto en Microsoft PowerPoint 2003, NVDA anunciará correctamente el contenido de cada línea. Anteriormente las líneas  se indicarían mal,   un cqarácter por cada nuevo párrafo. (#4619)
 - Todos los diálogos de NVDA ahora se centran en la pantalla, mejorando la presentación visual y la usabilidad. (#3148)
@@ -1043,7 +1056,7 @@ Lo reseñable en esta versión  incluye el modo exploración para documentos en 
 = 2013.1.1 =
 Esta versión corrige el problema donde NVDA se colgaba al iniciarse si se configuraba para utilizar el idioma irlandés, así como incluye actualizaciones para traducciones y algunas otras correcciones de errores.
 
-== Corrección de Errores ==
+== Corrección de Fallos ==
 - Se producen caracteres correctos cuando se teclean en la propia interfaz de NVDA mientras se utiliza  un método de entrada Coreano o Japonés mientras sea el método predeterminado. (#2909)
 - En Internet Explorer y otros controles MSHTML, los campos marcados como conteniendo una entrada inválida ahora se manejan correctamente. (#3256)
 - NVDA ya no se cuelga cuando se inició si se configuró para utilizar el idioma irlandés.
