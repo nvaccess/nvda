@@ -10,6 +10,7 @@ from ctypes import byref
 from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 from comtypes.automation import VARIANT
+import time
 import weakref
 import sys
 import numbers
@@ -816,8 +817,6 @@ class UIA(Window):
 
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
-		if UIACachedWindowHandle:
-			windowHandle=UIACachedWindowHandle
 		if not windowHandle:
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
@@ -843,6 +842,19 @@ class UIA(Window):
 			return bool(self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId))
 		except COMError:
 			return True
+
+	_lastLiveRegionChangeInfo=(None,None) #: Keeps track of the last live region change (text, time)
+	def _get__shouldAllowUIALiveRegionChangeEvent(self):
+		"""
+		This property decides whether  a live region change event should be allowed. It compaires live region event with the last one received, only allowing the event if the text (name) is different, or if the time since the last one is at least 0.5 seconds. 
+		"""
+		oldText,oldTime=self._lastLiveRegionChangeInfo
+		newText=self.name
+		newTime=time.time()
+		self.__class__._lastLiveRegionChangeInfo=(newText,newTime)
+		if newText==oldText and oldTime is not None and (newTime-oldTime)<0.5:
+			return False
+		return True
 
 	def _getUIAPattern(self,ID,interface,cache=False):
 		punk=self.UIAElement.GetCachedPattern(ID) if cache else self.UIAElement.GetCurrentPattern(ID) 
@@ -1122,7 +1134,7 @@ class UIA(Window):
 			return children
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
-			windowHandle=e.cachedNativeWindowHandle or self.windowHandle
+			windowHandle=self.windowHandle
 			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
 		return children
 

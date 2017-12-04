@@ -36,12 +36,6 @@ def recursive_install(env, path ):
         ( os.path.join(path, '*')
         , strings=False
         )
-    nodes.extend \
-            ( env.Glob \
-                ( os.path.join(path, '*.*')
-                , strings=False
-                )
-            )
     out = []
     for n in nodes:
         if n.isdir():

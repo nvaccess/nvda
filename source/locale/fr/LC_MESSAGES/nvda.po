@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 00:10+1000\n"
-"PO-Revision-Date: 2017-07-01 11:03+0200\n"
+"POT-Creation-Date: 2017-11-17 00:10+1000\n"
+"PO-Revision-Date: 2017-11-02 08:47+0100\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -149,15 +149,431 @@ msgstr "Atténuer les autres sources quand NVDA parle"
 msgid "Always duck"
 msgstr "Toujours atténuer"
 
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "fen"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "càc"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "btnr"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "éd"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "btn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "bmnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "élmnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "lstd"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "gra"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "aid"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "sug"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "ln"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "arb"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "élarb"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "ong"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "bpr"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "bdéf"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "bét"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "tb"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "bo"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "btnd"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "ctn"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "doc"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "app"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "grp"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "oemb"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "notef"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "noteb"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "term"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "sect"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "bsc"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "btnp"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "btnmnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "btnrot"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "btnarb"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "pn"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "édmdp"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "sél"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "ls"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "smnu"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "oblg"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "invl"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "mléd"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "clq"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "Tcro"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "tdéc"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "ldesc"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "frml"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "cmnt"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "nsél"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "bnr"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "cmp"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "cinf"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "prc"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "nav"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "rch"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "form"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Points 7 et 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Point 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Tous les points"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "Seulement lors d'un changement de contexte"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "Toujours"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "Seulement lors d'un défilement arrière"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "t%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "lnv"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "non %s"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} sur {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "nv %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "l%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "c%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "fin de %s"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatique"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "point"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "espace avec point"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "espace"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "clavier braille"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "espace avec n'importe quels points"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "n'importe quels points"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "Arabe intégral"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Persan intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -188,6 +604,11 @@ msgstr "Galois abrégé"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "Tchèque intégral"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "Danois Braille informatique 8 points"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -231,6 +652,11 @@ msgstr "Allemand grade 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "Grec (Grèce)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "Anglais (Royaume-Uni) Braille informatique 8 points"
 
@@ -243,6 +669,16 @@ msgstr "Anglais (Royaume-Uni) Intégral"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "Anglais (Royaume-Uni) abrégé"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "Braille anglais unifié intégral"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "Braille anglais unifié abrégé"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -283,6 +719,16 @@ msgstr "Estonien grade 0"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "Éthiopien intégral"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "Perse Braille informatique 8 points"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "Perse intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -341,11 +787,6 @@ msgstr "Grec Alexandrin"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "Grec (Grèce) intégral"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Hebrew 8 dot computer braille"
 msgstr "Hébreu Braille informatique 8 points"
 
@@ -358,6 +799,11 @@ msgstr "Hindou intégral"
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
 msgstr "Croate Braille informatique 8 points"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Croate intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -413,6 +859,11 @@ msgstr "Coréen abrégé"
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
 msgstr "Kashmiri intégral"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian"
+msgstr "Lithuanien"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -541,7 +992,12 @@ msgstr "Slovaque intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "Slovène Braille informatique 8 points"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
 msgstr "Slovène intégral"
 
 #. Translators: The name of a braille table displayed in the
@@ -566,13 +1022,13 @@ msgstr "Turc intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "Braille anglais unifié intégral"
+msgid "Unicode braille"
+msgstr "Braille Unicode"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "Braille anglais unifié abrégé"
+msgid "Vietnamese grade 1"
+msgstr "Vietnamien intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -584,247 +1040,19 @@ msgstr "Chinois (Hong Kong, Cantonais)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chinois (Taiwan, Mandarin)"
 
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "éd"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "lst"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "bmnu"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "mnu"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "btn"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "càc"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "btnr"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "lstm"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "ln"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "dlg"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "arb"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tb"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "gra"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "sél"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "smnu"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "ls"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "clq"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "bnnr"
-msgstr "bnr"
-
-#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "cmpl"
-msgstr "cmp"
-
-#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "cinf"
-msgstr "cinf"
-
-#. Translators: Displayed in braille for the main landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "main"
-msgstr "prc"
-
-#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "navi"
-msgstr "nav"
-
-#. Translators: Displayed in braille for the search landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "srch"
-msgstr "rch"
-
-#. Translators: Displayed in braille for the form landmark, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "form"
-msgstr "form"
-
-#. Translators: Displayed in braille for a significant region, normally found on web pages.
-msgctxt "braille landmark abbreviation"
-msgid "rgn"
-msgstr "rgn"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "Points 7 et 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "Point 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "Tous les points"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "t%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "lnv"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "non %s"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} sur {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "nv %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "l%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "fin de %s"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatique"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "braille"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "espace avec point"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "point"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "espace"
-
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "Mode formulaire"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Mode navigation"
+
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "Non étiqueté"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1323,6 +1551,16 @@ msgstr "&Titres"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "&Champs de formulaire"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Boutons"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Lan&dmarks"
@@ -1339,8 +1577,8 @@ msgstr "Type :"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&Filtrer par :"
+msgid "Filt&er by:"
+msgstr "Filtr&er par :"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1359,7 +1597,7 @@ msgstr "région %s"
 #. Translators: This is brailled to indicate a landmark (example output: lmk main).
 #, python-format
 msgid "lmk %s"
-msgstr "rep %s"
+msgstr "rgn %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #. Translators: Announces selected text. %s is replaced with the text.
@@ -1375,8 +1613,8 @@ msgstr "Pas de description longue"
 msgid "Shows the long description at this position if one is found."
 msgstr "Afficher la description longue à cette position s'il y en a une"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Pas dans un conteneur"
 
@@ -1423,6 +1661,18 @@ msgstr "Aller à la colonne suivante du tableau"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "Aller à la colonne précédente du tableau"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Tables de disposition désactivées"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "tables de disposition activées"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Activer ou désactiver l'inclusion des tables de disposition"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1819,7 +2069,7 @@ msgstr "en-tête de ligne"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "bouton de liste déroulante"
+msgstr "bouton déroulant"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -1917,7 +2167,7 @@ msgstr "légende"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
-msgstr "élément de menu a cocher"
+msgstr "élément de menu à cocher"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
@@ -2181,8 +2431,9 @@ msgid "bold"
 msgstr "gras"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
-msgstr "ITALIQUE"
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "italique"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2408,13 +2659,13 @@ msgstr "déverrouillé"
 msgid "not selected"
 msgstr "non sélectionné"
 
-#. Translators: This is presented when a checkbox is not checked.
-msgid "not checked"
-msgstr "non coché"
-
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
 msgstr "non enfoncé"
+
+#. Translators: This is presented when a checkbox is not checked.
+msgid "not checked"
+msgstr "non coché"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -2447,7 +2698,7 @@ msgid ""
 "More details about the errors can be found in the log file."
 msgstr ""
 "Votre fichier de configuration contient des erreurs. Votre configuration a "
-"été réinitialisée aux paramètres par défaut.\n"
+"été réinitialisée aux valeurs par défaut.\n"
 "Vous trouverez plus de détails sur les erreurs dans le fichier log."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
@@ -2467,6 +2718,24 @@ msgstr "Erreur dans le fichier de définition de gestes"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "Chargement de NVDA. Veuillez patienter..."
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Paysage"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Portrait"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Batterie en charge. %d pourcent"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Batterie hors charge. %d pourcent"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -3133,6 +3402,7 @@ msgid "No navigator object"
 msgstr "Pas d'objet navigateur"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s copié dans le presse-papiers"
@@ -3459,10 +3729,12 @@ msgstr "Ligne d'état non trouvée"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Lire la barre d'état de l'application courante et y amener l'objet "
-"navigateur. Deux appuis: épeler l'information"
+"navigateur. Deux appuis: épeler l'information. Trois appuis: copier la barre "
+"d'état dans le presse-papiers"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3628,7 +3900,7 @@ msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr ""
-"Annoncer le nom de fichier de l'application en cours ainsi que le module "
+"Annoncer le nom de fichier de l'application en cours ainsi que le nom de fichier du module "
 "complémentaire chargé"
 
 #. Translators: Input help mode message for go to general settings dialog command.
@@ -3641,19 +3913,19 @@ msgstr "Afficher le dialogue synthétiseurs de NVDA"
 
 #. Translators: Input help mode message for go to voice settings dialog command.
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Afficher le dialogue paramètres vocaux de NVDA"
+msgstr "Afficher le dialogue voix de NVDA"
 
 #. Translators: Input help mode message for go to braille settings dialog command.
 msgid "Shows the NVDA braille settings dialog"
-msgstr "Afficher le dialogue  Paramètres braille de NVDA"
+msgstr "Afficher le dialogue Braille de NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Afficher le dialogue Paramètres du clavier de NVDA"
+msgstr "Afficher le dialogue Clavier de NVDA"
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "Afficher le dialogue paramètres de la souris de NVDA"
+msgstr "Afficher le dialogue Souris de NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings dialog command.
 msgid "Shows the NVDA review cursor settings dialog"
@@ -3661,7 +3933,7 @@ msgstr "Afficher le dialogue paramètres du curseur de NVDA"
 
 #. Translators: Input help mode message for go to input composition dialog.
 msgid "Shows the NVDA input composition settings dialog"
-msgstr "Afficher le dialogue paramètres de saisie de NVDA"
+msgstr "Afficher le dialogue Saisie de NVDA"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
@@ -3755,6 +4027,19 @@ msgstr "Braille suit %s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Basculer le suivi braille entre focus et curseur de revue"
+
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Afficher le contexte du focus : %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr ""
+"Faire défiler les modes de présentation des informations contextuelles en "
+"braille"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -3872,6 +4157,18 @@ msgstr "Saisir les points braille au moyen du clavier braille"
 msgid "Moves the braille display to the current focus"
 msgstr "Amener l'afficheur braille au focus courant"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "Effacer la dernière cellule ou le dernier caractère braille entré"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr "Convertir toute saisie braille et presser entrer"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "Convertir toute saisie braille"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Modules complémentaires rechargés"
@@ -3933,6 +4230,17 @@ msgstr "Non mathématique"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Commencer l'interaction avec le contenu mathématique"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "Reconnaissance optique de caractères de Windows 10 indisponible"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr ""
+"Reconnaître le contenu de l'objet navigateur courant par la reconnaissance "
+"optique de caractères de Windows 10"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -5418,14 +5726,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "Son"
 
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"Permettre à NVDA de s'exécuter sur l'écran de connexion à Windows, l'écran "
-"de contrôle d'accès utilisateur et les autres écrans sécurisés "
-
 msgid "Type help(object) to get help about object."
 msgstr "Tapez help(object) pour obtenir de l'aide sur l'objet"
 
@@ -5688,10 +5988,6 @@ msgstr "sans emphase"
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
 msgstr "non gras"
-
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "italique"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
@@ -6775,6 +7071,7 @@ msgstr "Terminaux braille Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Série : {portName}"
@@ -6803,12 +7100,21 @@ msgstr "défilement par plage"
 msgid "line scroll"
 msgstr "défilement par ligne"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Terminaux braille Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Afficher la fenêtre de configuration du pilote Handy Tech."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Saisie braille activée"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Saisie braille désactivée"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Activer ou désactiver la saisie braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -6834,13 +7140,46 @@ msgstr "Papenmeier BRAILLEX modèles anciens"
 msgid "Seika braille displays"
 msgstr "Terminaux braille Seika"
 
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "Résultat"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "Activer le texte sous le curseur si possible"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "Quitter et effacer le résultat de reconnaissance"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "Déjà dans un résultat de reconnaissance de contenu"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "Le contenu n'est pas visible"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "Reconnaissance en cours"
+
+msgid "Recognition failed"
+msgstr "La reconnaissance a échoué"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "Configuration appliquée"
 
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
-msgstr "Configuration rétablie aux paramètres par défaut"
+msgstr "Configuration réinitialisée aux valeurs par défaut"
 
 #. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 msgid "Cannot save configuration - NVDA in secure mode"
@@ -6895,18 +7234,18 @@ msgstr "Changer de synthétiseur"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "Paramètres &vocaux..."
+msgstr "&Voix..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "Choisir la voix, le débit, la hauteur et le volume à utiliser"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "Paramètres &Braille..."
+msgstr "&Braille..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "Paramètres du &clavier..."
+msgstr "&Clavier..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
@@ -6917,7 +7256,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
-msgstr "Para&mètres de la souris..."
+msgstr "&Souris..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Modifier l'annonce de la forme de la souris, de l'objet sous la souris"
@@ -6931,7 +7270,7 @@ msgstr "Configurer quand et comment le curseur de revue se déplace"
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
-msgstr "Paramètres de &saisie..."
+msgstr "&Saisie..."
 
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
@@ -6960,6 +7299,10 @@ msgstr "Mise en &forme des documents..."
 
 msgid "Change settings of document properties"
 msgstr "Modifier l'annonce des propriétés d'un document"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "&Windows 10 OCR..."
+msgstr "Reconnaissance optique de caractères de &Windows 10..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7095,7 +7438,7 @@ msgstr "Remettre tous les paramètres à l'état sauvegardé"
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "Réinitialiser la configuration aux paramètres par défaut"
+msgstr "Réinitialiser la configuration aux valeurs par défaut"
 
 msgid "Reset all settings to default state"
 msgstr "Remettre tous les paramètres à leur valeur par défaut"
@@ -7316,12 +7659,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Installation du module complémentaire"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Une version de ce module complémentaire est déjà installée. Voulez-vous la "
-"mettre à jour ?"
+"Vous êtes sur le point d'installer la version {newVersion} de {summary}, qui "
+"semble être déjà installée. Voulez-vous quand-même mettre à jour ?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Une version de ce module est déjà installée. Voulez-vous mettre à jour "
+"{summary} de la version {curVersion} à la version {newVersion} ?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7741,6 +8095,10 @@ msgstr "Choisir le répertoire portable"
 msgid "Copy current &user configuration"
 msgstr "Copier la configuration &utilisateur courante"
 
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Démarrer la nouvelle copie portable après création"
+
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
@@ -7953,7 +8311,7 @@ msgstr "Erreur de synthétiseur"
 
 #. Translators: This is the label for the voice settings dialog.
 msgid "Voice Settings"
-msgstr "Paramètres Vocaux"
+msgstr "Voix"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
@@ -7998,7 +8356,7 @@ msgstr "Utiliser la fonction d'&épellation si elle est supportée"
 
 #. Translators: This is the label for the keyboard settings dialog.
 msgid "Keyboard Settings"
-msgstr "Paramètres du Clavier"
+msgstr "Clavier"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -8068,7 +8426,7 @@ msgstr "Au moins une touche doit être définie comme touche NVDA."
 
 #. Translators: This is the label for the mouse settings dialog.
 msgid "Mouse Settings"
-msgstr "Paramètres de la Souris"
+msgstr "Souris"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -8126,7 +8484,7 @@ msgstr "&Mode de revue simple"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 msgid "Input Composition Settings"
-msgstr "Paramètres de Saisie"
+msgstr "Saisie"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -8467,6 +8825,14 @@ msgstr ""
 "Signaler les changements de mise en forme après le curseur (peut dégrader "
 "les performances)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "Reconnaissance optique de caractères de Windows 10"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "&Langue de reconnaissance"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "N'&importe où"
@@ -8476,8 +8842,8 @@ msgid "Whole &word"
 msgstr "Mot &entier"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "Expression &régulière"
+msgid "Regular &expression"
+msgstr "expression &régulière"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -8553,7 +8919,7 @@ msgstr "Ajouter une entrée au dictionnaire"
 
 #. Translators: This is the label for the braille settings dialog.
 msgid "Braille Settings"
-msgstr "Paramètres Braille"
+msgstr "Braille"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -8587,13 +8953,17 @@ msgstr "Curseur clignotant"
 msgid "Cursor blink rate (ms)"
 msgstr "&Vitesse de clignotement du curseur (ms)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "Forme du &curseur :"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "Forme du curseur pour le mode &focus :"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "Forme du curseur pour le mode &revue :"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
-msgstr "&Durée (sec)"
+msgstr "&Durée d'affichage des messages (sec)"
 
 #. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
 msgid "Show &messages indefinitely"
@@ -8610,6 +8980,10 @@ msgstr "Lire par p&aragraphe"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "Ne pas couper les &mots quand c'est possible"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "Afficher le contexte du focus"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -8925,11 +9299,6 @@ msgstr "C&ommentaires"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "&Formules"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "&Champs de formulaire"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -9925,14 +10294,22 @@ msgstr "En-tête primaire"
 msgid "Text frame"
 msgstr "Cadre de texte"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "commentaire : {text} par {author} le {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description} : {text} par {author} le {date}"
 
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "orthographe : {text}"
@@ -10190,8 +10567,8 @@ msgstr "&Annotations"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "&erreurs"
+msgid "&Errors"
+msgstr "&Erreurs"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10201,5 +10578,5 @@ msgstr "HIMS Braille séries Sense/Braille EDGE/Smart Beetle"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr "Êtes-vous sûr de vouloir effacer ce profil ? Ceci est irréversible."
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Afficher la fenêtre de configuration du pilote Handy Tech."

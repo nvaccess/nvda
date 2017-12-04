@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <wrl.h>
 #include <robuffer.h>
 #include <common/log.h>
+#include "utils.h"
 #include "oneCoreSpeech.h"
 
 using namespace std;
@@ -29,21 +30,6 @@ using namespace Windows::Storage::Streams;
 using namespace Microsoft::WRL;
 using namespace Windows::Media;
 using namespace Windows::Foundation::Collections;
-
-byte* getBytes(IBuffer^ buffer) {
-	// We want direct access to the buffer rather than copying it.
-	// To do this, we need to get to the IBufferByteAccess interface.
-	// See http://cm-bloggers.blogspot.com/2012/09/accessing-image-pixel-data-in-ccx.html
-	ComPtr<IInspectable> insp = reinterpret_cast<IInspectable*>(buffer);
-	ComPtr<IBufferByteAccess> bufferByteAccess;
-	if (FAILED(insp.As(&bufferByteAccess))) {
-		LOG_ERROR(L"Couldn't get IBufferByteAccess from IBuffer");
-		return nullptr;
-	}
-	byte* bytes = nullptr;
-	bufferByteAccess->Buffer(&bytes);
-	return bytes;
-}
 
 OcSpeech* __stdcall ocSpeech_initialize() {
 	auto instance = new OcSpeech;

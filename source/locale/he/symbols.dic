@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
-
+# provided by Shmuel Naaman.
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
@@ -26,7 +26,7 @@ symbols:
 ? sentence ending	סימן שאלה	all	always
 ; phrase ending	פסיק נקודה	most	always
 : phrase ending	נקודתיים	most	always
-decimal point	נקודה עשרונית	none	always
+decimal point	נקודה	none	always
 in-word '	גרש	all	norep
 negative number	שלילי	none	norep
 
@@ -52,9 +52,9 @@ $	סימן דולר	all	norep
 %	אחוז	some
 &	וגם	some
 '	גרש	all
-(	סוגר שמאליmost	always
+(	סוגר שמאלי	most	always
 )	סוגר ימני	most	always
-*	קוחבית	some
+*	כוכבית	some
 +	פלוס	some
 ,	פסיק	all	always
 -	מקף	most
@@ -62,20 +62,20 @@ $	סימן דולר	all	norep
 /	קו נטוי	some
 :	נקודתיים	most	norep
 ;	נקודה פסיק	most
-<	פחות מ...s	some
+<	פחות מ...	some
 >	גדול מ...	some
 =	שווה	some
 ?	סימן שאלה	all
-@	שטרודלsome
+@	שטרודל	some
 [	סוגר מרובע שמאלי	most
 ]	סוגר ימני מרובע	most
-\\	לוכסן אחוריmost
-^	גג	most
+\\	לוכסן אחורי	most
+^	גג	mosto\
 _	קו תחתון	most
 `	פסיק עליון ימני	most
 {	סוגר מסולסל שמאלי	most
 }	סוגר מסולסל ימני	most
-|	קו אנחיmost
+|	קו אנחי	most
 ~	טילדה	most
 
 # Other characters
@@ -83,7 +83,7 @@ _	קו תחתון	most
 …	שלוש נקודות	all	always
 ...	שלוש נקודות	all	always
 	נקודה מודגשת	some
-“	מרחאות שמלי	most
+“	מרחאות שמאלי	most
 ”	מרחאות ימני	most
 ‘	גרש שמאלי	most
 ’	גרש ימני	most
@@ -93,15 +93,15 @@ _	קו תחתון	most
 ¨	diaeresis	most
 ‎	סימון שמאל לימין	char
 ‏	סימון ימין לשמאל 	char
-■	ריבוע שחורe	some
+■	ריבוע שחור	some
 ▪	ריבוע שחור	some
 ◾	ריבוע שחור	some
-◦	נקודה מודגשת לבנהsome
+◦	נקודה מודגשת לבנה	some
 ➔	חץ ימין	some
 §	section	all
 °	degrees	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
+«	סוגריים משולשים שמאליים כפולים
+»	סוגרים משולשים כפולים ימניים
 µ	micro	some
 ¹	סימון 1 מעל הקו	some
 ²	סימון 2 מעל הקו	some

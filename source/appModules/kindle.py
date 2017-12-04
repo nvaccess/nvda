@@ -25,6 +25,7 @@ import IAccessibleHandler
 import winUser
 from logHandler import log
 import ui
+import config
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 	ELEMENT_TYPES = (
@@ -220,11 +221,17 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		return text
 
 	def getTextWithFields(self, formatConfig=None):
+		if not formatConfig:
+			formatConfig = config.conf["documentFormatting"]
 		items = super(BookPageViewTextInfo, self).getTextWithFields(formatConfig=formatConfig)
 		for item in items:
 			if isinstance(item, textInfos.FieldCommand) and item.command == "formatChange":
 				if formatConfig['reportPage']:
 					item.field['page-number'] = self.obj.pageNumber
+			elif (isinstance(item, textInfos.FieldCommand) and item.command == "controlStart"
+					and item.field.get("mathMl")):
+				# We have MathML, so don't report alt text (if any) as content.
+				item.field.pop("content", None)
 		return items
 
 	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=speech.CHUNK_SEPARATOR):
@@ -271,6 +278,21 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		log.debug("Setting selection to (%d, %d)" % (sel._startOffset, sel._endOffset))
 		sel.updateSelection()
 
+	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+		if field and field["role"] == controlTypes.ROLE_MATH:
+			try:
+				field["mathMl"] = obj.mathMl
+			except LookupError:
+				pass
+		return field
+
+	def getMathMl(self, field):
+		mathMl = field.get("mathMl")
+		if not mathMl:
+			raise LookupError("No mathml attribute")
+		return mathMl
+
 class BookPageView(DocumentWithPageTurns,IAccessible):
 	"""Allows navigating page text content with the arrow keys."""
 
@@ -308,6 +330,14 @@ class PageTurnFocusIgnorer(IAccessible):
 			return False
 		return super(PageTurnFocusIgnorer,self).shouldAllowIAccessibleFocusEvent
 
+class Math(IAccessible):
+
+	def _get_mathMl(self):
+		mathMl = self.IA2Attributes.get("mathml")
+		if not mathMl:
+			raise LookupError
+		return mathMl
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
@@ -318,6 +348,8 @@ class AppModule(appModuleHandler.AppModule):
 				or (hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View")
 			):
 				clsList.insert(0,BookPageView)
+			elif obj.role == controlTypes.ROLE_MATH:
+				clsList.insert(0, Math)
 		return clsList
 
 	def event_NVDAObject_init(self, obj):
