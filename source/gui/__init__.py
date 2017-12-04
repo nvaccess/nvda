@@ -350,7 +350,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
 		if touchHandler.handler:
 			# Translators: The label for the menu item to open Touch Interaction dialog.
-			item = menu_preferences.Append(wx.ID_ANY, _("&Touch interaction..."),_("Change how NVDA interacts with the touchscreen"))
+			item = menu_preferences.Append(wx.ID_ANY, _("&Touch interaction..."),
+				# Translators: tooltip for touch interaction settings item.
+				_("Change how NVDA interacts with the touchscreen"))
 			self.Bind(wx.EVT_MENU, frame.onTouchInteractionCommand, item)
 		# Translators: The label for the menu item to open Review Cursor dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
