@@ -253,7 +253,10 @@ addTable("ko-g2.ctb", _("Korean grade 2"), contracted=True)
 addTable("ks-in-g1.utb", _("Kashmiri grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("lt.ctb", _("Lithuanian"))
+addTable("lt.ctb", _("Lithuanian 8 dot"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("lt-6dot.utb", _("Lithuanian 6 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("Lv-Lv-g1.utb", _("Latvian grade 1"))
