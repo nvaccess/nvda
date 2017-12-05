@@ -348,7 +348,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to open Mouse Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
-		if touchHandler.handler:
+		# Touch handler might not be ready, so check if touch interaction is even supported.
+		if touchHandler.touchSupported():
 			# Translators: The label for the menu item to open Touch Interaction dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Touch interaction..."),
 				# Translators: tooltip for touch interaction settings item.
