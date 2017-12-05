@@ -70,7 +70,10 @@ LVCF_SUBITEM=8
 LVCF_IMAGE=16
 LVCF_ORDER=32
 
-CBEMAXSTRLEN=260
+# The size of a buffer to hold a listview column's text.
+# #7828: Windows headers define this as 260 characters. However this is not long enough for modern Twitter clients that need at least 280 characters.
+# Therefore, round it up to the nearest power of 2
+CBEMAXSTRLEN=512
 
 # listview header window messages
 HDM_FIRST=0x1200
