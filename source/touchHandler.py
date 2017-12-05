@@ -4,6 +4,11 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012-2017 NV Access Limited, Joseph Lee, Babbage B.V.
 
+"""handles touchscreen interaction (Windows 8 and later).
+Used to provide input gestures for touchscreens, touch modes and other support facilities.
+In order to use touch features, NVDA must be installed on a touchscreen computer running Windows 8 and later.
+"""
+
 import wx
 import threading
 from ctypes import *
