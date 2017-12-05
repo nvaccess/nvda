@@ -1741,14 +1741,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def handleCaretMove(self, obj, shouldAutoTether=True):
 		if not self.enabled:
 			return
+		prevTether = self._tether
 		if shouldAutoTether:
 			self.setTether(self.TETHER_FOCUS, auto=True)
-		elif self._tether != self.TETHER_FOCUS:
+		elif prevTether != self.TETHER_FOCUS:
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj==obj:
 			region.pendingCaretUpdate=True
-		else:
+		elif prevTether == self.TETHER_REVIEW:
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
