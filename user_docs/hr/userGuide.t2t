@@ -25,7 +25,7 @@ Glavne značajke uključuju:
 - podršku za mnoge brajične retke, uključujući unos kompjutorske brajice za brajične retke koji posjeduju brajičnu tipkovnicu
 - mogućnost pokretanja sa USB memorijskih stickova u cjelosti ili drugih prijenosnih medija bez potrebe instalacije samog čitača zaslona
 - govorni instalacijski program koji je jednostavan za korištenje
-- preveden na 48 jezika
+- preveden na 51 jezika
 - podršku za moderne Windows operativne sustave u 32 i 64 bitnim inačicama
 - mogućnost pokretanja na Windows zaslonu za prijavu i ostalim sigurnosnim zaslonima
 - podršku za uobičajena sučelja za pristupačnost kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2 i UI Automation (UI Automation je podržan samo u windows 7 i novijim inačicama)
@@ -34,7 +34,7 @@ Glavne značajke uključuju:
 
 ++ Internacionalizacija ++
 Vrlo je važno da ljudi bilo gdje u svijetu, bez obzira na jezik kojim govore, imaju jednak pristup tehnologijama.
-Osim engleskog, NVDA je preveden na 47 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, korejski, litavski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
+Osim engleskog, NVDA je preveden na 51 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, korejski, litavski, Makedonski, burmanski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
 
 ++ Podrška Za Sintetizatore Govora ++
 Osim podrške za mnoge jezike, NVDA može omogućiti korisniku čitanje sadržaja na bilo kojem jeziku, sve dok korisnik ima sintetizator govora za taj određeni jezik.
@@ -278,7 +278,7 @@ Postoji nekoliko tipkovničkih prečaca koji su korisni za kretanje po objektima
 | Izvijesti o trenutnom fokusu | NVDA+tab | NVDA+tab | Obavještava o objektuk oji je trenutno u fokusu. Kad pritisnete dvaput, slovkat će izgovoreno |
 | Izvijesti o naslovu | NVDA+t | NVDA+t | Izvještava o naslovu trenutnog prozora. Kad pritisnete dvaput, NVDA će slovkati izgovoreno. Kad pritisnete triput kopirat ćete naslov u međuspremnik. |
 | Pročitaj trenutni prozor | NVDA+b | NVDA+b | čita sve kontrole u trenutno aktivnom prozoru (korisno za dijaloške okvire) |
-| čitaj statusnu traku | NVDA+end | NVDA+shift+end | ČIta traku stanja ako ju NVDA pronađe. također premješta objekt navigacije na tu lokaciju. Kada se pritisne dvaput, informacija na statusnoj traci bit će slovkana |
+| čitaj statusnu traku | NVDA+end | NVDA+shift+end | Čita traku stanja ako ju NVDA pronađe. također premješta objekt navigacije na tu lokaciju. Kada se pritisne dvaput, informacija na statusnoj traci bit će slovkana, a ako se pritisne tri puta, bit će kopirana u međuspremnik. |
 %kc:endInclude
 
 ++ Kretanje pomoću kursora sustava ++[SystemCaret]
@@ -1412,6 +1412,8 @@ Kad je ova opcija isključena, o takvim tablicama NVDA neće izvještavati i ih 
 Međutim, tada se sadržaj tablice prikazuje kao običan tekst.
 Ova je opcija isključena po zadanim postavkama.
 
+Kako biste mogli globalno uključivati tablice izgleda koristeći prečace, molimo pridjelite prilagođeni prečac koristeći [postavke ulaznih gesti #InputGestures].
+
 ==== Podešavanje izgovaranja polja kao što su linkovi i naslovi ====
 Molimo pogledajte opcije u [Dijaloškom okviru Postavki oblikovanja dokumenta #DocumentFormattingSettings] da biste podesili izgovaranje polja pri navigaciji, kao što su linkovi naslovi i tablice.
 
@@ -1748,14 +1750,14 @@ Kako biste pristupili upravitelju dodataka sa bilo kojeg mjesta, molimo pridjeli
 
 ++ Python Konzola ++
 NVDA PYTHON konzola, koja se može pronaći u podizborniku alati u NVDA izborniku, je alat za razvojne programere koji je koristan za otkrivanje grešaka, opću provjeru NVDA unutarnjih funkcija ili provjeru hijerarhije pristupačnosti neke aplikacije.
-Za više informacija, molimo pogledajte vodič za razvojne programere dostupan u [odjeljku za razvojne programere na NVDA web stranici http://community.nvda-project.org/wiki/Development].
+Za više informacija, molimo pogledajte [vodič za razvojne programere https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Ponovno učitaj dodatke ++
 Jednom kad se ova stavka aktivira, ponovno će se učitati NVDA dodaci bez potrebe za ponovnim pokretanjem NVDA, što može biti korisno za razvojne programere.
 
 + Podržane govorne jedinice +[SupportedSpeechSynths]
 Ovo poglavlje sadrži informacije o govornim jedinicama koje NVDA podržava.
-Za detaljniji i iscrpniji popis besplatnih i komercijalnih govornih jedinica koje možete kupiti i koristiti uz pomoć čitača ekrana NVDA, molimo pogledajte web stranicu na adresi  [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Za detaljniji i iscrpniji popis besplatnih i komercijalnih govornih jedinica koje možete kupiti i koristiti uz pomoć čitača ekrana NVDA, molimo pogledajte  [stranicu sa dodatnim glasovima https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak ng ++
 [ESpeak ng https://github.com/espeak-ng/espeak-ng] je izravno ugrađena govorna jedinica u NVDA koja ne zahtjeva dodatne komponente ili instalirane specijalne upravljačke programe.
@@ -1799,7 +1801,7 @@ Glasovi su dostupni za puno jezika, i brži su od Microsoft glasova koji koriste
 Za informacije o instalaciji i popis glasova, molimo pogledajte ovaj članak: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
 Imajte na umu,da brzine koje su podržane u Narratoru nisu trenutno dostupne u NVDA.
-Također, brzina u windowsovoj upravljačkoj ploći utjeće na brzinu, koja je odabrana u NVDA.
+Također, brzina u windowsovoj upravljačkoj ploći utječe na brzinu, koja je odabrana u NVDA.
 To su greške, koje ne možemo ispraviti bez promjena u Windows operacijskom sustavu.
 Nadamo se, da će ti problemi biti rješeni u sljedećoj nadogradnji sustava Windows.
 
@@ -1925,29 +1927,37 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis 
 %kc:endInclude
 
 ++ Handy Tech brajični retci ++
-NVDA podržava sve brajične retke tvrtke [Handy Tech http://www.handytech.de/] kad su spojeni putem USB ili Bluetooth veze.
+NVDA podržava većinu brajičnih redaka tvrtke [Handy Tech http://www.handytech.de/] kad su spojeni putem USB ili Bluetooth veze.
 Za starije brajične retke, koji se povezuju USB vezom, trebat ćete instalirati Usb upravljačke programe na vaš sustav.
 
-Unos brajičnih znakova još nije podržan.
-
-Ovo su tipkovnički prečaci za korištenje ovog brajičnog retka uz pomoć NVDA.
+Ovi brajični retci nisu podržani izravno iz NVDA, no mogu se koristiti pomoću [Handy Techovog univerzalnog upravljačkog programa https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] and NVDA add-on:
+- Braillino
+- Bookworm
+- Modular brajični retci sa inačicom pogonskog softvera 1.13 ili niže. Imajte na umu, da se pogonsi softver na ovim brajičnim retcima može nadograditi.
+-
+Slijede prečaci za Handytech brajične retke.
 Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste znali gdje se određene tipke nalaze.
 %kc:beginInclude
 || Naziv | Prečac |
-| Pomakni brajični redak za redak u natrag | lijeva, gore |
-| Pomakni brajični redak za redak u naprijed | desna, dolje |
+| prebaci brajični redak za dio retka u nazad | left, up, b3 |
+| prebaci brajični redak za dio retka u naprijed | right, down, b6 |
 | Premjesti brajični redak na prethodni redak | b4 |
 | Premjesti brajični redak na idući redak | b5 |
 | Prebaci se na brajičnu ćeliju | routing |
-| shift+tab | esc |
+| tipka shift+tab | esc, left triple action key up+down |
 | alt | b2+b4+b5 |
 | escape | b4+b6 |
-| tab | enter |
-| enter | esc+enter |
-| strelicaGore | lijeviRazmak |
-| strelicaDolje | desniRazmak |
+| tipka tab | enter, right triple action key up+down |
+| tipka enter | esc+enter, left+right triple action key up+down, joystickAction |
+| strelicaGore | joystickUp |
+| StrelicaDolje | joystickDown |
+| strelicaLijevo | joystickLeft |
+| StrelicaDesno | joystickRight |
 | NVDA Izbornik | b2+b4+b5+b6 |
-| Handy Tech postavke | b4+b8 |
+| prebacuj brajicu povezanu na | b2 |
+| uključi/isključi brajični pokazivač | b1 |
+| Prebacuj prezentaciju konteksta fokusa | b7 |
+| uključuj/isključuj brajičnu tipkovnicu | space+b1+b3+b4 (space+Veliko b) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2484,6 +2494,9 @@ Sljede opcije naredbenog retka za NVDA:
 | Nema | --no-sr-flag  | Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu |
 | Nema | --install | Instalira NVDA, pritom pokrečući novoinstaliranu kopiju |
 | Nema | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
+| Nema | --create-portable | Stvara prijenosnu inačicu NVDA (pri tome ponovno pokrečući novostvorenu kopiju). Zahtjeva određenu funkciju --portable-path |
+| Nema | --create-portable-silent | Stvara prijenosnu inačicu NVDA (ne pokreće novostvorenu kopiju). zahtjeva određen parametar --portable-path |
+| Nema | --portable-path=PORTABLEPATH | putanja u koju prijenosna inačica treba biti stvorena |
 
 ++ Cijelosustavni parametri++[SystemWideParameters]
 NVDA omogućava izmjenu nekih postavki u registru, koje mijenjaju cijelosistemsko ponašanje NVDA.

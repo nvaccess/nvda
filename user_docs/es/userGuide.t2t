@@ -25,7 +25,7 @@ Lo más reseñable incluye:
 - Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a 50 idiomas
+- Traducido a 51 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
@@ -34,7 +34,7 @@ Lo más reseñable incluye:
 
 ++ Internacionalización ++
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a 50 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
+Actualmente NVDA ha sido traducido a 51 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -579,7 +579,7 @@ Por omisión, el cursor de revisión sigue al cursor del sistema, así puedes ut
 
 En este punto, puedes utilizar órdenes de MathPlayer tales como las teclas de cursor para explorar la  expresión.
 Por ejemplo, puedes moverte a través de la expresión con las teclas de flecha  izquierda o derecha y acercarte a una porción de la expresión tal como una fracción utilizando la tecla de flecha abajo.
-Por favor consulta la documentación de MathPlayer para información adicional: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm.
+Por favor consulta la [documentación de MathPlayer acerca de órdenes de navegación https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] para información adicional.
 
 Cuando desees volver al documento, simplemente pulsa la tecla escape.
 
@@ -1412,6 +1412,8 @@ Cuando está desactivada, no se anuncian ni se encuentran con la navegación rá
 Sin embargo, el contenido de las tablas todavía se incluirá como texto normal.
 Esta opción está desactivada de forma predeterminada.
 
+Para conmutar la inclusión de tablas de diseño desde cualquier lugar, por favor asigna un gesto personalizado utilizando el diálogo `[Gestos de entrada #InputGestures].
+
 ==== Configurando el anunciado de campos tales como enlaces y encabezados ====
 Por favor encuentra las nuevas opciones en el [diálogo Opciones de Formato de documento #DocumentFormattingSettings]. 
 
@@ -1713,7 +1715,7 @@ Se muestra el nombre de paquete, el estado, la versión y el autor para cada com
 Si hay ayuda disponible para el complemento seleccionado, puedes acceder a ella pulsando su botón de Ayuda.
 
 Para examinar y descargar los complementos disponibles online, pulsa el botón Obtener Complementos.
-Este botón abre la [página de complementos de NVDA http://addons.nvda-project.org/].
+Este botón abre la [página de complementos de NVDA https://addons.nvda-project.org/].
 Si NVDA está instalado y ejecutándose en tu sistema, puedes abrir directamente el complemento desde el explorador para comenzar el proceso de instalación como se describe a continuación.
 De lo contrario, guarda el paquete de complemento y sigue las instrucciones más abajo.
 
@@ -1748,14 +1750,14 @@ Para acceder al Administrador de Complementos desde cualquier lugar, por favor a
 
 ++ Consola de Python ++
 La consola de Python de NVDA, encontrada bajo Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
-Para más información, por favor consulta la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA http://community.nvda-project.org/wiki/Development].
+Para más información, por favor consulta la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA https://community.nvda-project.org/wiki/Development].
 
 ++ Recargar plugins ++
 Este elemento, una vez activado, recarga app modules y plugins globales sin reiniciar a NVDA, lo cual es útil para desarrolladores.
 
 + Sintetizadores de Voz Soportados +[SupportedSpeechSynths]
 Esta sección contiene información acerca de los sintetizadores de voz soportados por NVDA.
-Para una lista más extensa de los sintetizadores libres y comerciales que puedes descargar y comprar para utilizar con NVDA, por favor consulta la página en [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Para una lista más extensa de los sintetizadores libres y comerciales que puedes descargar y comprar para utilizar con NVDA, por favor consulta la página en [https://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 El sintetizador [Espeak NG https://github.com/espeak-ng/espeak-ng] se compila directamente en NVDA y no requiere ningún otro controlador o componentes especiales para instalarse.
@@ -1925,29 +1927,37 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 %kc:endInclude
 
 ++ Pantallas Handy Tech ++
-NVDA soporta todas las pantallas de [Handy Tech http://www.handytech.de/].
+NVDA soporta la mayoría de las pantallas de [Handy Tech http://www.handytech.de/] cuando se conecten por USB, puerto serie o bluetooth.
 Para algunas pantallas antiguas USB, necesitarás instalar los controladores USB de Handy Tech en tu sistema.
 
-La entrada Braille  todavía no está soportada.
-
+Las siguientes pantallas no se soportan al sacarlas de la caja, pero pueden utilizarse a través del [controlador universal de Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] y el complemento de NVDA:
+- Braillino
+- Bookworm
+- Pantallas modulares con la versión del firmware 1.13 o inferior. Por favor ten en cuenta que el firmware de estas pantallas puede actualizarse.
+-
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor conhsulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar la pantalla braille hacia atrás | izquierda, arriba |
-| Desplazar la pantalla braille hacia adelante | Derecha, abajo |
+| Desplazar la pantalla braille hacia atrás | izquierda, arriba, b3 |
+| Desplazar la pantalla braille hacia adelante | Derecha, abajo, b6 |
 | Mover la pantalla braille a la línea anterior | b4 |
 | Mover la pantalla braille a la línea siguiente | b5 |
 | Guiar a la celda braille | sensor |
-| tecla shift+tab | esc |
+| tecla shift+tab | esc, triple acción  de la tecla izquierda arriba+abajo |
 | tecla alt | b2+b4+b5 |
 | tecla escape | b4+b6 |
-| tecla tab | enter |
-| tecla intro | esc+enter |
-| tecla flecha arriba | leftSpace |
-| tecla flecha abajo | rightSpace |
+| tecla tab | enter, triple acción  de la tecla derech arriba+abajo |
+| tecla intro | esc+enter, triple acción  de la tecla derecha arriba+abajo, acción joystick |
+| tecla flecha arriba | joystick arriba |
+| tecla flecha abajo | joystick abajo |
+| tecla flecha izquierda | joystick izquierda |
+| tecla flecha derecha| joystick derecha |
 | menú NVDA | b2+b4+b5+b6 |
-| configuración de Handy Tech | b4+b8 |
+| Conmutar seguimiento de braille | b2 |
+| Conmutar el cursor braille  | b1 |
+| Conmutar la presentación de contexto de foco | b7 |
+| Conmutar entrada braille | espacio+b1+b3+b4 (espacio+B mayúscula) |
 %kc:endInclude
 
 ++ MDV Lilli ++

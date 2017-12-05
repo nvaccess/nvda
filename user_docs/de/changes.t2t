@@ -1,55 +1,85 @@
-﻿Was ist Neu in NVDA
+Was ist neu in NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+
+== Fehlerkorrekturen ==
+- Sollte der Pfad des Ordners, in dem NVDA installiert ist, nicht-ASCII-Zeichen enthalten, schlägt die Anzeige der Formatierungsinformationen im lesemodus nicht mehr fehl, wenn Sie NVDA+F zweimal drücken. (#7474)
+- Der Fokus wird nun korrekt gesetzt, wenn Sie von einer anderen Anwendung zu Spotify zurückkehren. (#7689)
+- Wenn unter Windows 10 Fall Creators Update der ordnerschutz aktiviert ist, schlägt die Aktualisierung von NVDA nicht mehr fehl. (#7696)
+
+
+== Änderungen für Entwickler ==
+- Neue versteckte boolsche Einstellung im Abschnitt Braille in der NVDA-Konfiguration: "outputPass1Only". (#7301, #7693, #7702)
+ - Wird diese Einstellung auf False gesetzt, werden auch Liblouis-Regeln verarbeitet, die mehrere Durchläufe erfordern. Standardmäßig ist true voreingestellt.  
+
+
 = 2017.4 =
+Schwerpunkt dieser Version sind zahlreiche Verbesserungen und Fehlerkorrekturen am lesemodus. Hierzu zählen die standardmäßige Verwendung des lesemodus in Webdialogen, eine verbesserte Anzeige von Beschriftungen von Gruppenfeldern im lesemodus, die Unterstützung neuer Windows-10-Technologien wie Windows Defender Application Guard und Windows 10 auf ARM64, sowie die automatische ausgabe der ausrichtung (hoch- oder Querformat) des Bildschirmes sowie des Akku-Statuses.
+Bitte beachten Sie, dass diese Version von NVDA unter Windows XP und Windows Vista nicht mehr ausgeführt werden kann. Sie benötigen mindestens Windows 7 Service pack 1.
+
 
 == Neue Funktionen ==
 - Im Lesemodus können die Tasten Komma und Umschalt+Komma verwendet werden, um vor oder hinter Sprungmarken zu navigieren. (#5482)
 - Im Lesemodus können Sie mit den Schnellnavigationstasten für Eingabefelder und Formularfelder nun auch zu Rich-Text-Eingabefeldern navigieren. (#5534)
 - In Web-Browsern enthält die Elementliste nun auch Formularfelder und Schalter. (#588)
 - Grundlegende Unterstützung für Windows 10 auf ARM64. (#7508)
-- Grundlegende Unterstützung beim Lesen von und Navigieren in mathematischen Inhalten in Kindle-Büchern. (#7536)
+- Grundlegende Unterstützung beim Lesen von und Navigieren in mathematischen Inhalten in Kindle-Büchern, welche barrierefreie Mathematik berücksichtigen. (#7536)
 - Unterstützung für den Azardi eBook Reader. (#5848)
 - Beim Aktualisieren von NVDA-Erweiterungen werden Versionsinformationen angegeben. (#5324)
 - Neue Kommandozeilenparameter zum Erstellen einer portablen Version von NVDA wurden hinzugefügt. (#6329)
-- Microsoft Edge wird unterstützt, wenn es innerhalb von Windows Defender Application Guard ausgeführt wird. (#7600)
+- Microsoft Edge wird unterstützt, wenn es innerhalb von Windows Defender Application Guard ausgeführt wird. Dies gillt ab dem Windows 10 Fall Creators Update. (#7600)
 - Wenn NVDA auf einem Laptop oder einem Tablet ausgeführt wird, werden Sie benachrichtigt, wenn Sie ein Netzteil anschließen, abziehen oder wenn sich die Bildschirmausrichtung ändert. (#4574, #4612)
+- neue Sprache: Mazedonisch.	
+- Neue Braille-Übersetzungstabellen: kroatische Vollschrift, vietnamesische Vollschrift. (#7518, #7565)
+- Das Braillezeilenmodell Actilino von handy Tech wird unterstützt. (#7590)
+- die Brailleeingabe auf handytech-Braillezeilen wird unterstützt. (#7590)
 
 
 == Änderungen ==
 - NVDA benötigt mindestens Windows 7 Service Pack 1 oder Windows Server 2008 R2 Service Pack 1. (#7546)
 - In Firefox und Google Chrome wird in Web-Dialogen der Lesemodus verwendet, es sei denn, die Webdialoge befinden sich in Webanwendungen. (#4493)
-- Beim Navigieren im Lesemodus wird das Verlassen von Containern nicht mehr ausdrücklich angezeigt. (#2591)
+- Beim Navigieren im Lesemodus mittels Tab oder Schnellnavigationstasten wird das Verlassen von Containern wie Listen und Tabellen nicht mehr ausdrücklich angezeigt. (#2591)
 - In Firefox und Google Chrome werden die Namen von Formulargruppen angezeigt, wenn Sie zu einem Formularfeld springen. (#3321)
 - Die Schnellnavigationstasten für eingebettete Objekte (O und Umschalt+O) berücksichtigen Audio- und Video-Elemente ebenso wie Web-Anwendungen und Web-Dialoge. (#7239)
-- eSpeak-NG wurde auf Revision 01919cd48a566cdf34347784b2e74554b376e900 aktualisiert, Dadurch werden einige Probleme in der Aussprache behoben. (#7385)
+- eSpeak-NG wurde auf Version 1.49.2 aktualisiert, Dadurch werden einige Probleme bei der Produktion von neuen Versionen behoben. (#7385, #7583)
 - Bei dreimaligem Drücken der Tastenkombination zum Lesen der statuszeile wird diese in die Zwischenablage kopiert. (#1785)
-- Beim Zuweisen von NVDA-Befehlen an Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (zum Beispiel Baum Vario Ultra, Baum Pronto). (#7517)
+- Beim Zuweisen von NVDA-Befehlen an Baum-Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (zum Beispiel Baum Vario Ultra, Baum Pronto). (#7517)
+- Die Tastenkombination zum direkten Anspringen des Suchfeldes in der Elementliste wurde von alt+f in alt+e geändert. (#7569)
+- Im Dialog Einstellungen / Eingaben gibt es in der Kategorie Lesemodus einen neuen (noch nicht zugewiesenen) Befehl. Mit diesem Befehl können Sie Layout-Tabellen ein- oder ausblenden. (#7634)
+- Liblouis wurde auf Version 3.3.0 aktualisiert. (#7565)
+- Die Tastenkombination zum Aktivieren von regulären Ausdrücken als Ersetzungskriterium im Wörterbuchdialog wurde von alt+r auf alt+e geändert. (#6782)
+- Die Aussprachewörterbücher werden nun versioniert und wurden in den Ordner 'speechDicts/voiceDicts.v1' verschoben. (#7592)
+- Versionierte Dateien (Benutzerkonfiguration, Aussprachewörterbücher) werden nicht gespeichert, wenn NVDA von Launcher aus ausgeführt wird. (#7688)
+- Die Braillezeilenmodelle Braillino, Buchwurm und Modular (mit der alten Firmware) werden nicht mehr ohne weiteres unterstützt. Um diese Braillezeilenmodelle zu verwenden, müssen Sie den Handytech-Universaltreiber und die NVDA-Erweiterung installieren. (#7590)
 
 
 == Fehlerkorrekturen ==
 - In Anwendungen, wie Microsoft Word, werden Links nun in Braille angezeigt. (#6780)
 - Wenn in Firefox oder Google Chrome viele Registerkarten geöffnet sind, reagiert NVDA nun schneller. (#3138)
-- Die Cursor-Routingtasten von MDV Lilli-Braillezeilen funktionieren nun korrekt. (#7469)
-- Im Internet Explorer und anderen MSHTML-Dokumenten wird das Attribut Required korrekt unterstützt. (#7321)
+- Die Cursor-Routingtasten von MDV Lilli-Braillezeilen platzieren den Cursor nicht mehr eine Position hinter die gedrückte Position. (#7469)
+- Im Internet Explorer und anderen MSHTML-Dokumenten wird das Attribut Required korrekt unterstützt, sodass NVDA angiebt, dass ein Formularfeld zwingend ausgefüllt werden muss. (#7321)
 - Die Anzeige in Braille wird beim Eingeben arabischer Zeichen aktualisiert. (#511).
 - In Firefox wird die Beschriftung von Formularelementen auch dann angezeigt, wenn die Beschriftung nicht auf den Formularelementen selbst zu finden ist. (#4773)
 - Unter Windows 10 Creators Update funktioniert die NVDA-Unterstützung von Firefox auch dann noch, wenn Sie NVDA neu starten. (#7269)
 - Wenn Sie NVDA neu starten, während Firefox im Vordergrund ist, steht der Lesemodus wieder zur Verfügung, auch wenn Sie den Fokus mit alt+tab aus Firefox hinaus und wieder hineinbewegen müssen. (#5758)
-- Unterstützung mathematischer Inhalte in Google Chrome sowie auf Systemen, auf denen Firefox nicht installiert ist. (#7308)
+- Unterstützung mathematischer Inhalte in Google Chrome auf Systemen, auf denen Firefox nicht installiert ist. (#7308)
 - Das Betriebssystem und die Anwendungen sollten nun nach der Installation von NVDA stabiler laufen (verglichen mit vorherigen Versionen von NVDA). (#7563)
+- Wenn das Navigatorobjekt beim Aufruf der Inhaltserkennung (z. B. mit nvda+r) verschwunden sein sollte, zeigt NVDA eine Warnmeldung an. (#7567)
+- Das Zurückscrollen bei Freedom Scientific-Braillezeilen mit einer linken Wipptaste funktioniert nun ordnungsgemäß. (#7713)
 
 
 == Änderungen für Entwickler ==
 - Beim Ausführen von "scons tests" wird geprüft, ob sämtliche übersetzbaren Zeichenketten Kommentare besitzen. Dieser Test kann auch separat ausgeführt werden. Benutzen Sie dafür den Befehl "scons checkPot". (#7492)
-- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
-- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
-- Braille display gestures that emulate system keyboard key modifiers (such as control and alt) can now be combined with other emulated system keyboard keys without explicit definition. (#6213) 
- - For example: if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
-- The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
- - See the baum driver as an example for this new functionality.
+- Es gibt jetzt ein neues Modul extensionPoints, das ein generisches Framework zur Verfügung stellt, um die Erweiterbarkeit des Codes an bestimmten Stellen im Code zu ermöglichen. Dies ermöglicht es Interessenten, sich zu registrieren, um bei einem bestimmten Ereignis benachrichtigt zu werden (ExtensionPoints.Action), um eine bestimmte Art von Daten zu ändern (ExtensionPoints.Filter) oder um an der Entscheidung teilzunehmen, ob etwas getan wird (ExtensionPoints.Decider). (#3393)
+- Sie können sich jetzt registrieren, um über Konfigurationsprofilwechsel benachrichtigt zu werden, indem Sie die Aktion config.configProfileSwitched aufrufen. (#3393)
+- Braille-Gesten, die Umschaltttasten emulieren (z. B. Strg und Alt), können nun ohne explizite Definition mit anderen emulierten Systemtasten kombiniert werden. (#6213) 
+ - Wenn Sie z. B. eine Taste auf Ihrer Braillezeile an die Alt-Taste gebunden haben und eine andere BraillezeilenTaste an die Taste Pfeil ab, führt das Kombinieren dieser Tasten zur Emulation von alt+Pfeil ab.
+- die Klasse BrailleDisplayGesture hat jetzt eine zusätzliche Eigenschaft Namens model. Wenn vorhanden, wird durch Drücken einer Taste ein zusätzlicher, modellspezifischer Gesten-Identifikator erzeugt. Damit kann der Benutzer Gesten binden, die auf ein bestimmtes Braillezeilenmodell beschränkt sind. 
+ - Sehen Sie sich den Treiber für Baum-Braillezeilen als Beispiel für diese neue Funktionalität an.
+- NVDA wird nun mit Visual Studio 2017 und Windows 10 SDK compiliert. (#7568)
 
 
 = 2017.3 =
@@ -68,6 +98,7 @@ Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift üb
 - In dem "An"- und "CC"-Feld in der Windows 10 Mail-App und im Suchfeld für die Windows-Einstellungen wird der aktuell hervorgehobene Vorschlag angezeigt. (#6241)
 - Sobald die Vorschlagsliste für ein Suchfeld in Windows 10 erscheint, wird ein Klang abgespielt. (#6241)
 - In Skype für Unternehmen werden Benachrichtigungen, wie ankommende Nachrichten automatisch angezeigt. (#7281)
+- In Skype für Unternehmen werden ankommende Chatnachrichten automatisch vorgelesen, während man sich in einer Unterhaltung befindet. (#7286))
 - In Microsoft Edge werden Benachrichtigungen (zum Beispiel über abgeschlossene Downloads) automatisch angezeigt. (#7281)
 - Sie können nun Kurz-, Voll- und Basisschrift über die Brailletastatur einer Braillezeile eingeben. Für weitere Informationen lesen Sie den Abschnitt über Braille-Eingabe in Benutzerhandbuch. (#2439)
 - Mit Hilfe der Brailletabelle Unicode können Sie nun Unicode-Zeichen über die Brailletastatur einer Braillezeile eingeben. (#6449)
@@ -95,7 +126,7 @@ Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift üb
 - Standardmäßig zeigt NVDA nur noch dann den Kontext eines Objektes an, wenn ein neues Objekt den Fokus erhält. (#217)
  - Zuvor wurde der Kontext auch dann angezeigt, wenn er sich nicht geändert hat.
  - Sie können das alte Verhalten erzwingen, indem Sie in den Braille-Einstellungen von NVDA die Option "Kontext anzeigen" auf "immer" umstellen.
-- In den Braille-Einstellungen können - je nach Kopplung der Braillezeile - unterschiedliche Cursofformen eingestellt werden. (#7112)
+- In den Braille-Einstellungen können - je nach Kopplung der Braillezeile - unterschiedliche Cursofformen eingestellt werden. (#7122)
 - Das Logo von NVDA wurde geändert. Es zeigt nun die Buchstaben NVDA in weißer Schrift auf rotem Hintergrund. (#7446)
 
 
@@ -188,10 +219,10 @@ Schwerpunkte dieser Version sind u. a. eine volle Unterstützung von Audio-Ducki
  - `config.validateConfig`. (#6846, #667)
  - `config.save`: Verwenden Sie stattdessen `config.conf.save`. (#6846, #667)
 - Die Liste mit Vorschlägen zur Autovervollständigung im Kontextmenü der Python-Konsole zeigt keine führenden Objektpfade mehr vor den Symbolnamen an. (#7023)
-- There is now a unit testing framework for NVDA. (#7026)
- - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
- - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
- - If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
+- Es gibt jetzt ein Unit Test Framework für NVDA. (#7026)
+ - Unit-Tests und Infrastruktur befinden sich im Verzeichnis tests/unit. Sehen Sie sich den Docstring in der Datei tests\unit\__init__.py für weitere Informationen an.
+ - Sie können Tests mit "scons tests" durchführen. Weitere Informationen finden Sie im Abschnitt "Ausführen von Tests" in der Datei readme.md.
+ - Wenn Sie einen Pull-Request für NVDA einreichen, sollten Sie zunächst die Tests durchführen und sicherstellen, dass diese bestanden werden.
 
 
 = 2017.1 =
@@ -458,11 +489,11 @@ Schwerpunkte dieser Version sind u. a. eine Option zum Reduzieren der Lautstärk
 - Der Konstruktor von nvwave.WavePlayer besitzt nun ein Argument namens wantDucking, mit dessen Hilfe Sie angeben können, ob während der Wiedergabe die Lautstärke anderer Audioquellen reduziert werden soll. (#3830)
  - Wenn die Funktion aktiviert (ist Standard), sollte zu gegebener Zeit WavePlayer.idle aufgerufen werden.
 - Die Brailleausgabe wurde verbessert: (#5609)
- - (en) Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
- - (en) Data is written to thread-safe braille display drivers in the background, thus improving performance.
- - (en) hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
- - (en) hwIo.Hid provides support for braille displays communicating via USB HID.
- - (en) hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+ - Threadsichere Braillezeilen-Treiber können sich über das Attribut BrailleDisplayDriver.isThreadSafe als solche deklarieren. Ein Treiber muss threadsicher sein, um von den folgenden Leistungsmerkmalen zu profitieren.
+ - Die Leistung des Treibers wird verbessert, weil Daten im hintergrund geschrieben werden
+ - HwIo.Serial erweitert pyserial, um eine Callable beim Empfang von Daten aufzurufen, anstatt dass Treiber Polling durchführen müssen.
+ - hwIo.Hid unterstützt Braillezeilen, die über USB HID kommunizieren.
+ - hwPortUtils und hwIo können optional ein detailliertes Debug-Logging anbieten, einschließlich der gefundenen Geräte und aller gesendeten und empfangenen Daten.
 - Neue Eigenschaften für Touchscreen-Gesten: (#5652)
  - Das Objekt MultitouchTracker enthält nun eine Eigenschaft namens childTrackers. Hier werden die einzelnen Teile einer Mehrfachgeste gespeichert. Ein doppeltes Tippen mit zwei Fingern enthält z. B. zwei Zweifinger-Tippgesten. Die Zweifinger-Tippgesten enthalten ihrerseits zwei Tippgesten.
  - MultiTouchTracker-Objekte enthalten außerdem eine Eigenschaft rawSingleTouchTracker, falls der Tracker das Ergebnis einer Geste ist, die mit einem Finger ausgeführt wird. Der Tracker gestattet Ihnen den Zugriff auf die vom Betriebssystem zurückgegebene ID des Fingers. Er erlaub Ihnen außerdem festzustellen, ob der Finger momentan (noch) den Bildschirm berührt.
@@ -484,7 +515,7 @@ Schwerpunkte dieser Version sind u. a. Leistungsverbesserungen in Windows 10; Un
 - Wenn Sie sich mit Hilfe der Elementliste Dokumentänderungen anzeigen lassen, werden jetzt mehr Informationen angezeigt. (#4920)
 - Sie können in Microsoft Excel nun die Elementliste (NVDA+F7) verwenden, um Tabellenblätter aufzulisten oder umzubenennen. (#4630, #4414)
 - Sie können im Dialog für die Aussprache von Symbolen und Sonderzeichen festlegen, ob Symbole unbehandelt an die Sprachausgabe gesendet werden sollen (um beispielsweise eine Sprechpause oder eine andere Betonung zu erhalten). (#5234)
-- (en) In Microsoft Excel, NVDA now reports any input messages set by the sheet author on cells. (#5051)
+- In Microsoft Excel meldet NVDA nun alle vom Blattautor gesetzten Eingabemeldungen auf Zellen. (#5051)
 - Unterstützung für Baum Pronto! V4 und VarioUltra Braillezeilen bei Bluetooth-Verbindungen. (#3717)
 - Unterstützung für erweiterte Eingabefelder in Mozilla-Anwendungen wie z. B. Google Docs bei Verwendung einer Braillezeile in Mozilla Firefox und HTML-Mail in Mozilla Thunderbird. (#1668)
 - Unterstützung für erweiterte Eingabefelder in Google Chrome und Chrome-basierten Browsern wie z. B. Google Docs unter Verwendung einer Braillezeile. (#2634)
