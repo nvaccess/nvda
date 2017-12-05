@@ -35,6 +35,7 @@ touchModeLabels={
 	"object":_("object mode"),
 }
 
+SM_MAXIMUMTOUCHES=95
 HWND_MESSAGE=-3
 
 WM_QUIT=18
@@ -304,7 +305,7 @@ def touchSupported():
 	if (winVersion.winVersion.major*10+winVersion.winVersion.minor)<62:
 		log.debugWarning("Touch only supported on Windows 8 and higher")
 		return False
-	maxTouches=windll.user32.GetSystemMetrics(95)
+	maxTouches=windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
 	if maxTouches<=0:
 		log.debugWarning("No touch devices found")
 		return False
@@ -315,7 +316,7 @@ def initialize():
 	if not touchSupported():
 		raise NotImplementedError
 	handler=TouchHandler()
-	log.debug("Touch support initialized. maximum touch inputs: %d"%windll.user32.GetSystemMetrics(95))
+	log.debug("Touch support initialized. maximum touch inputs: %d"%windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES))
 
 def terminate():
 	global handler
