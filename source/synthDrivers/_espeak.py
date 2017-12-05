@@ -190,6 +190,11 @@ def _execWhenDone(func, *args, **kwargs):
 def _speak(text):
 	global isSpeaking, _numBytesPushed
 	uniqueID=c_int()
+	# if eSpeak was interupted while speaking ssml that changed parameters such as pitch,
+	# It may not reset those runtime values back to the user-configured values.
+	# Therefore forcefully cause eSpeak to reset its parameters each time beginning to speak again after not speaking. 
+	if not isSpeaking:
+		espeakDLL.espeak_ng_Cancel()
 	isSpeaking = True
 	flags = espeakCHARS_WCHAR | espeakSSML | espeakPHONEMES
 	_numBytesPushed = 0
