@@ -1924,7 +1924,8 @@ class GlobalCommands(ScriptableObject):
 	script_braille_dots.category=SCRCAT_BRAILLE
 
 	def script_braille_toFocus(self, gesture):
-		if not braille.handler.shouldAutoTether and braille.handler.getTether() == braille.handler.TETHER_REVIEW:
+		braille.handler.setTether(braille.handler.TETHER_FOCUS, auto=True)
+		if braille.handler.getTether() == braille.handler.TETHER_REVIEW:
 			self.script_navigatorObject_toFocus(gesture)
 		else:
 			obj = api.getFocusObject()
@@ -1938,9 +1939,11 @@ class GlobalCommands(ScriptableObject):
 				braille.handler.mainBuffer.updateDisplay()
 			else:
 				# We just tethered to focus from review,
-				# and the navigator object is not equal to the focused object.
 				# Handle this case as we just focused the object
-				braille.handler.handleGainFocus(obj)
+				braille.handler._doNewObject(itertools.chain(
+					braille.getFocusContextRegions(obj),
+					braille.getFocusRegions(obj)
+				))
 	# Translators: Input help mode message for a braille command.
 	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
 	script_braille_toFocus.category=SCRCAT_BRAILLE
