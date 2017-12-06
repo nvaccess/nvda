@@ -91,8 +91,8 @@ class SettingsDialog(wx.Dialog):
 
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
-		self.Bind(wx.EVT_BUTTON, self.onHelp, id=wx.ID_HELP)
-		self.Bind(wx.EVT_HELP, self.onHelp, id=wx.ID_ANY)
+		self.Bind(wx.EVT_BUTTON, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_HELP)
+		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
@@ -126,9 +126,6 @@ class SettingsDialog(wx.Dialog):
 		This base method should always be called to clean up the dialog.
 		"""
 		self.Destroy()
-
-	def onHelp(self, evt):
-		contextHelp.showHelp(self.helpIds, evt)
 
 class GeneralSettingsDialog(SettingsDialog):
 	# Translators: This is the label for the general settings dialog.
