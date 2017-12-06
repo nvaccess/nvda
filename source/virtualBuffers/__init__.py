@@ -422,7 +422,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone, success=False)
 			return
 		if log.isEnabledFor(log.DEBUG):
-			log.debug("Buffer load took %s sec, %d chars" % (
+			log.debug("Buffer load took %.3f sec, %d chars" % (
 				time.time() - startTime,
 				NVDAHelper.localLib.VBuf_getTextLength(self.VBufHandle)))
 		queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone)
