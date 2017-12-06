@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:05-0700\n"
+"POT-Creation-Date: 2017-11-17 00:10+1000\n"
+"PO-Revision-Date: 2017-11-16 22:25+0200\n"
 "Last-Translator: shmuel naaman <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -803,6 +803,11 @@ msgstr "קרואטית ברייל ממוחשב 8 נקודות"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "לטווית שיטת ברייל 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "הונגרית  ברייל ממוחשב 8 נקודות"
 
@@ -1023,6 +1028,11 @@ msgstr "ברייל יוניקוד"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "ויאטנמית שיטת ברייל 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "סינית (הונג קונג, קנטון)"
 
@@ -1042,9 +1052,8 @@ msgid "Browse mode"
 msgstr "מצב דפדוף"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
-#, fuzzy
 msgid "Unlabeled"
-msgstr "תווית"
+msgstr "ללא תוית"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1545,9 +1554,8 @@ msgstr "&שדות טופס"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Buttons"
-msgstr "כפתור"
+msgstr "%כפתור"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1567,7 +1575,6 @@ msgstr "סוג:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "Filt&er by:"
 msgstr "&סינון לפי:"
 
@@ -1650,6 +1657,18 @@ msgstr "מעבר לעמודת הטבלה הבאה"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "מעבר לעמודת הטבלה הקודמת"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "ללא הקראת מידע על טבלאות"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "הקראת מידע על טבלאות"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "מיתוג הקראת מידע על טבלאות"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2697,23 +2716,22 @@ msgid "Loading NVDA. Please wait..."
 msgstr "טוען את NVDA. אנא המתן."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
-#, fuzzy
 msgid "Landscape"
-msgstr "escape"
+msgstr "אופקיescape"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr ""
+msgstr "אנכי"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
 msgid "Charging battery. %d percent"
-msgstr ""
+msgstr "טוען סוללה %d אחוזים"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
 msgid "Not charging battery. %d percent"
-msgstr ""
+msgstr "סוללה לא נטענת . %d אחוזים"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -3640,14 +3658,13 @@ msgid "No status line found"
 msgstr "לא נמצאה שורת מצב"
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
-"הקראת שורת המצב הנוכחית והעברת הפוקוס אליה. לחיצה פעמיים גורמת לאיות המילים "
-"בשורה"
+"הקראת שורת המצב הנוכחית והעברת הפוקוס אליה. לחיצה פעמיים גורמת לאיות "
+"המיליםבשורה"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -6967,12 +6984,21 @@ msgstr "גלילת סרגל הברייל"
 msgid "line scroll"
 msgstr "גלילת שורה"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "צגי ברייל של Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "הצג את חלון ההגדרות של מנהל ההתקן של Handy Tech."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "מצב קלט ברייל מאופשר "
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "&צג ברייל:"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "מתרגם כל קלט ברייל"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7152,7 +7178,7 @@ msgid "Change settings of document properties"
 msgstr "מאפשר שינוי הגדרות מאפייני מסמך"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
+msgid "&Windows 10 OCR..."
 msgstr "Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
@@ -7499,18 +7525,22 @@ msgid "Add-on Installation"
 msgstr "התקנת תוספים"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
-msgstr "קיימת כבר גרסה אחרת של תוסף זה. האם ברצונך לעדכן את התוסף ?"
+msgstr ""
+"אתה עומד להתקין גירסה  {newVersion}  של  {summary}, למרות שהוא מותקן על מחשב "
+"זה.. האם עדיין תרצה להמשיך בעדכון ??"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
-msgstr "קיימת כבר גרסה אחרת של תוסף זה. האם ברצונך לעדכן את התוסף ?"
+msgstr ""
+"התוסף כבר מותקן על מחשב זה. האם ברצונךלעדכן  {summary} גירסה{curVersion} "
+"לגירסה {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7912,7 +7942,7 @@ msgstr "העתקת הגדרות המשתמש הנוכחיות"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr ""
+msgstr "הפעל את העותק הנייד לאחר התקנה"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -8638,8 +8668,8 @@ msgid "Whole &word"
 msgstr "מילה &שלמה"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "ביטוי &רגיל"
+msgid "Regular &expression"
+msgstr "ביטוי  רגולטורי"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10335,7 +10365,6 @@ msgstr "&הערות הסבר"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Errors"
 msgstr "שגיאות"
 
@@ -10346,3 +10375,6 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "הצג את חלון ההגדרות של מנהל ההתקן של Handy Tech."

@@ -377,7 +377,9 @@ class Region(object):
 		L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are similarly updated based on L{cursorPos}, L{selectionStart} and L{selectionEnd}, respectively.
 		@postcondition: L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are updated and ready for rendering.
 		"""
-		mode = louis.dotsIO | louis.pass1Only
+		mode = louis.dotsIO
+		if config.conf["braille"]["outputPass1Only"]:
+			mode |= louis.pass1Only
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')

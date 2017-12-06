@@ -3,6 +3,72 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+Lo resinyable d'ista versión inclui muitas correccions y milloras pa lo suporte web incluindo lo modo de navegación pa dialogos web por defecto, millor anunciau d'as etiquetas d'os grupos de campos en o modo de navegación, lo suporte pa tecnolochías nuevas de Windows 10 tals como l'aplicación Windows Defender Guard y Windows 10 en ARM64, y l'anunciau automatico d'a orientación d'a pantalla y o estau d'a batería.  
+Por favor tiene en cuenta que ista versión d'o NVDA ya no suporta o Windows XP u lo Windows Vista. O requisito minimo pa o NVDA agora ye o windows 7 con o Service Pack 1.
+
+
+== Nuevas Caracteristicas ==
+- En o modo de navegación agora ye posible blincar ta l'inicio d'os puntos de referencia fendo servir as ordens blincar t'a fin u t'o prencipio d'o contenedor (coma u mayus+coma). (#5482)
+- En o Firefox, o Chrome y l'Internet Explorer, a navegación rapeda por campos d'edición y campos de formulario agora inclui conteniu de texto enriquiu editable (p. eix.: contentEditable). (#5534)
+- En os navegadors web a Lista d'Elementos agora puet listar campos de formulario y botons. (#588)
+- Suporte inicial pa o Windows 10 en ARM64. (#7508)
+- Suporte preliminar pa la lectura y la navegación interactiva de conteniu matematico pa os libros Kindle con matematicas accesibles. (#7536)
+- S'ha adhibiu suporte pa o lector de libros dichitals Azardi. (#5848)
+- A información de versión pa complementos agora s'anuncia quan se sigan actualizando. (#5324)
+- S'ha adhibiu lo suporte pa nuevos parametros de linia de comandos pa creyar una copia portable d'o NVDA. (#6329)
+- Suporte pa o Microsoft Edge executando-se dentro de Windows Defender Application Guard (#7600)
+- Si s'executa en un portatil u en una tableta o NVDA agora anunciará quan se connecte/desconnecte un cargador y quan la orientación d'a pantalla cambeye. (#4574, #4612)
+- Idioma nuevo: Macedonio.
+- Nuevas tablas de transcripción braille: Crovata grau 1, Vietnamita grau 1. (#7518, #7565)
+- S'ha adhibiu lo suporte pa la pantalla braille Actilino de Handy Tech. (#7590)
+- Agora se suporta la dentrada braille pa las pantallas braille Handy Tech. (#7590)
+
+
+== Cambios ==
+- O menor Sistema Operativo suportau por o NVDA agora ye o Windows 7 con o Service Pack 1, u lo Windows Server 2008 R2 con o Service Pack 1. (#7546)
+- Os dialogos web en os navegadors Firefox y Chrome agora emplegan o modo de navegación automaticament, fueras que se siga en una aplicación web. (#4493)
+- En o modo de navegación en tabular u mover-se-ne con as ordens de teclas de navegación rapida ya no anuncia salindo de contenedors tals como listas y tablas, Lo qual fa la navegación mas eficaz. (#2591)
+- En o modo de navegación pa o Firefox y o Chrome agora s'anuncia os nombres de grupos de campos de formulario en mover-se-ne adentro d'ells con a navegación rapeda u quan se tabula. (#3321)
+- En o modo de navegación as ordens de navegación rapeda pa os obchectos integraus (u y mayus+u) agora incluyen elementos d'audio y vidio asinas como elementos con os papers aria application y dialog. (#7239)
+- S'ha esviellau o Espeak-ng ta 1.49.2),, ixo resuelve qualques problemas con a producción de versions. (#7385)
+- En a tercer activación d'o comando de leyer a barra d'estau lo suyo conteniu se copia en o portafuellas. (#1785)
+- En asignar cenyos a teclas en una pantalla Baum, puetz limitar-las a lo modelo d'a pantalla braille en uso (p. eix.: VarioUltra u Pronto). (#7517)
+- A tecla rapeda pa lo campo tresminar en a lista d'elementos en o modo de navegación s'ha cambiau de alt+f t'alt+y. (#7569)
+- S'ha adhibiu un comando pa desvincular a lo modo de navegación pa commutar a inclusión de tablas de disenyo a lo vuelo. Puetz trobar ixe comando en a categoría de modo de navegación  d'o dialogo de cenyos de dentrada. (#7634)
+- S'ha esviellau lo transcriptor braille ta 3.3.0. (#7565)
+- A tecla rapeda pa lo botón d'opción Expresión regular en o dialogo diccionario s'ha cambiau de alt+r a alt+y. (#6782)
+- Los fichers d'os diccionarios d'a fabla agora s'han versionaus y se'n son movius t'o directorio 'speechDicts/voiceDicts.v1'. (#7592)
+- As modificacions d'os fichers versionaus (configuración de l'usuario, diccionarios d'a fabla) ya no s'alzan quan o NVDA s'executa dende o lanzador. (#7688)
+
+
+== Corrección d'Errors ==
+- Os vinclos agora s'indican en braille en aplicacions tals como lo Microsoft Word. (#6780)
+- O NVDA ya no se torna notablement mas lento quan siga ubiertas muitas pestanyas en os navegadors web Firefox u Chrome. (#3138)
+- O enrutamiento de cursor pa las pantallas MDV Lilli Braille ya no mueve incorrectament una celda braille antis de do habría d'estar. (#7469)
+- En l'Internet Explorer y atros documentos MSHTML, l'atributo HTML5 requeriu agora se suporta pa indicar lo estau requeriu d'un campo de formulario. (#7321)
+- As linias braille agora s'actualizan en escribir caracters arábigos en un documento de WordPad aliniau t'a cucha. (#511).
+- As etiquetas accesibles pa controls en o Mozilla Firefox agora s'anuncian mas facilment en o modo de navegación quan a etiqueta no amaneixca como conteniu por si mesma. (#4773)
+- En l'actualización Creators d'o windows 10 lo NVDA puet accedir de nuevas ta Firefox dimpués d'un renchegue d'o NVDA. (#7269)
+- Quan se renchegue o NVDA con o Mozilla Firefox enfocau, o modo de navegación será disponible nuevament, encara que ye posible que haigas de pretar alt+tab y tornar a pretar-lo de nuevas. (#5758)
+- Agora ye posible accedir ta conteniu matematico en o Google Chrome en un sistema sin o Mozilla Firefox instalau. (#7308)
+- O sistema operativo y atras aplicacions habrían d'estar mas estables dreitament dimpués d'instalar o NVDA antis de no renchegar en contimparanza con as instalacions  de versions anteriors d'o NVDA. (#7563)
+- En emplegar una orden de reconoixencia de conteniu (eix.: NVDA+r), agora o NVDA anuncia un mensache d'error en cuenta de no fer cosa si o navegador d'obchectos ye desapareixiu. (#7567)
+- A funcionalidat de desplazamiento enta zaga s'ha correchiu pa linias de freedom Scientific que contiengan una garnela cucha. (#7713)
+- As linias braille Braillino, Bookworm y Modular (con firmware antigo) de Handy Tech ya no se suportan en quitar-las d'a caixa. Instala o controlador universal de Handy Tech y o complemento d'o NVDA pa emplegar las linias. (#7590)
+
+
+== Cambios pa os Desembolicadors ==
+- "scons tests" agora mira que as cadenas traducibles tiengan comentarios pa os traductors. Tamién puetz executar ixo nomás con "scons checkPot". (#7492)
+- Agora bi ha un nuevo modulo extensionPoints que furne un framework chenerico pa permitir a extensibilidad de codigo en puntos especificos en o codigo. Ixo permite que as partis intresadas se rechistren pa estar notificadas quan ocurra bella acción (extensionPoints.Action), pa modificar un tipo especifico de dato (extensionPoints.Filter) u pa participar en a decisión de si se ferá bella cosa (extensionPoints.Decider). (#3393)
+- Agora puetz rechistrar-te pa estar notificau sobre los cambeos de perfils de configuración a traviés de l'acción config.configProfileSwitched. (#3393)
+- Os cenyos de linia braille que emulan teclas modificaderas d'o teclau d'o sistema (tals como control y alt) agora pueden conbinar-sen con atras teclas emuladas d'o teclau d'o sistema sin definición explicita. (#6213) 
+ - Por eixemplo: si tiens una tecla d'a pantalla vinculada a la tecla alt y unatra tecla d'a pantalla a flecha abaixo, en combinar estas teclas resultará la emulación de alt+flecha abaixo.
+- A clase braille.BrailleDisplayGesture agora tiene una propiedat de modelo extra. Si se furne, pretando una tecla chenerará un texto especifico d'identificador de modelo adicional, ixo permite a un usuario vincular cenyos limitaus a un modelo de linia braille especifico. 
+ - Mira-te o controlador de baum como un eixemplo pa ixa funcionalidat nueva.
+- O NVDA agora se compila con o Visual Studio 2017 y o SDK d'o Windows 10. (#7568)
+
+
 = 2017.3 =
 Lo resinyable d'ista versión inclui a dentrada d'o braille contraito, o suporte pa las nuevas voces Windows OneCore disponibles en o Windows 10, o suporte pa l'OCR integrau en o Windows 10 y muitas milloras significativas referents a o Braille y a la web.
 
