@@ -1477,6 +1477,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
+		self.viewerTool = None
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1534,10 +1535,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			kwargs["port"] = port
 		try:
 			newDisplay = _getDisplayDriver(name)
-			if newDisplay == self.display.__class__:
+			oldDisplay = self.display
+			if newDisplay == oldDisplay.__class__:
 				# This is the same driver as was already set, so just re-initialise it.
-				self.display.terminate()
-				newDisplay = self.display
+				oldDisplay.terminate()
+				newDisplay = oldDisplay
 				newDisplay.__init__(**kwargs)
 			else:
 				if newDisplay.isThreadSafe:
@@ -1560,6 +1562,36 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			log.error("Error initializing display driver", exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
+	
+	def _onBrailleViewerClosed(self):
+		self.brailleViewer = None
+		import gui
+		gui.mainFrame.onBrailleViewerEnabled(False)
+
+	def showBrailleViewer(self, shouldShowBrailleViewer):
+		# config.conf["braille"]["viewerTool"]
+		numCells = None if not self.display else self.display.numCells
+		if self.viewerTool:
+			try:
+				self.viewerTool.terminate()
+			except:
+				log.error("Error terminating braille viewer tool", exc_info=True)
+		if not shouldShowBrailleViewer:
+			self.viewerTool = None
+			self.displaySize = 0 if not numCells else numCells
+			self.enabled = bool(self.displaySize)
+		else:
+			log.info("reef: create new viewer tool")
+			if not self.viewerTool:
+				log.info("reef: create new instance")
+				import brailleViewer
+				self.viewerTool = brailleViewer.BrailleViewer(self._onBrailleViewerClosed, numCells)
+			else:
+				self.viewerTool.__init__(self._onBrailleViewerClosed, numCells)
+			import gui
+			gui.mainFrame.onBrailleViewerEnabled(True)
+			self.displaySize = self.viewerTool.numCells
+			self.enabled = bool(self.displaySize)
 
 	def _updateDisplay(self):
 		if self._cursorBlinkTimer:
@@ -1576,6 +1608,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer.Start(blinkRate)
 
 	def _writeCells(self, cells):
+		if self.viewerTool:
+			self.viewerTool.rawText = self._rawText
+			self.viewerTool.display(cells)
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)
@@ -1611,6 +1646,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def update(self):
 		cells = self.buffer.windowBrailleCells
+		self._rawText = self.buffer.windowRawText
 		if log.isEnabledFor(log.IO):
 			log.io("Braille window dots: %s" % formatCellsForLog(cells))
 		# cells might not be the full length of the display.

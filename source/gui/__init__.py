@@ -272,6 +272,16 @@ class MainFrame(wx.Frame):
 		else:
 			speechViewer.deactivate()
 
+	def onBrailleViewerEnabled(self, isEnabled):
+		# its possible for this to be called after the sysTrayIcon is destroyed if we are exiting NVDA
+		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleBrailleViewer:
+			self.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(isEnabled)
+
+	def onToggleBrailleViewerCommand(self, evt):
+		import braille
+		shouldShow = braille.handler.viewerTool is None
+		braille.handler.showBrailleViewer(shouldShow)
+
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -394,6 +404,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to toggle Speech Viewer.
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
+		# Translators: The label for the menu item to toggle Braille Viewer.
+		item=self.menu_tools_toggleBrailleViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Braille viewer"))
+		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
