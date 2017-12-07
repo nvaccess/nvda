@@ -338,7 +338,7 @@ def unregisterAddonFileAssociation():
 		_deleteKeyAndSubkeys(_winreg.HKEY_LOCAL_MACHINE, "Software\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID)
 	except WindowsError:
 		# This is probably the first install, so just ignore the error.
-		log.debugWarning(Error removing add-on association from registry, probably never set.",exc_info=True)
+		log.debugWarning("Error removing add-on association from registry, probably never set.",exc_info=True)
 		return
 	# Notify the shell that a file association has changed:
 	log.debug("Notifying the shell of association change")
