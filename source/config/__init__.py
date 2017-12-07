@@ -172,13 +172,11 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 		params = subprocess.list2cmdline(params)
 	log.debug("execElevated: path %r, params %r"%(path,params))
 	sei = shellapi.SHELLEXECUTEINFO(lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
-	#IsUserAnAdmin is apparently deprecated so may not work above Windows 8
-	if not handleAlreadyElevated or not ctypes.windll.shell32.IsUserAnAdmin():
-		sei.lpVerb=u"runas"
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
 	if not shellapi.ShellExecuteEx(sei):
-		ctypes.WinError()
+		log.warning("Elevation was blocked")
+		return
 	if wait:
 		try:
 			h=ctypes.wintypes.HANDLE(sei.hProcess)
@@ -192,6 +190,7 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 			winKernel.closeHandle(sei.hProcess)
 
 SLAVE_FILENAME = u"nvda_slave.exe"
+SLAVE_ELEVATED_FILENAME = u"nvda_slave_elevated.exe"
 
 #: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
 #: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
@@ -220,7 +219,7 @@ def setSystemConfigToCurrentConfig():
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
-		res=execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)
+		res=execElevated(SLAVE_ELEVATED_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)
 		if res==2:
 			raise installer.RetriableFailure
 		elif res!=0:
@@ -251,7 +250,7 @@ def setStartOnLogonScreen(enable):
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
-		if execElevated(SLAVE_FILENAME, (u"config_setStartOnLogonScreen", u"%d" % enable), wait=True) != 0:
+		if execElevated(SLAVE_ELEVATED_FILENAME, (u"config_setStartOnLogonScreen", u"%d" % enable), wait=True) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
 def getConfigDirs(subpath=None):

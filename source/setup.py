@@ -188,6 +188,17 @@ setup(
 			"company_name": publisher,
 		},
 		{
+			"script": "nvda_slave.pyw",
+			"dest_base":"nvda_slave_elevated",
+			"uac_info": ("requiresAdministrator", False),
+			"icon_resources": [(1,"images/nvda.ico")],
+			"version":"%s.%s.%s.%s"%(version_year,version_major,version_minor,version_build),
+			"description": name,
+			"product_version": version,
+			"copyright": copyright,
+			"company_name": publisher,
+		},
+		{
 			"script": "nvda_eoaProxy.pyw",
 			# uiAccess will be enabled at runtime if appropriate.
 			"uac_info": ("asInvoker", False),
