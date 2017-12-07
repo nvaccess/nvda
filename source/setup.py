@@ -190,7 +190,7 @@ setup(
 		{
 			"script": "nvda_slave.pyw",
 			"dest_base":"nvda_slave_elevated",
-			"uac_info": ("requiresAdministrator", False),
+			"uac_info": ("requireAdministrator", False),
 			"icon_resources": [(1,"images/nvda.ico")],
 			"version":"%s.%s.%s.%s"%(version_year,version_major,version_minor,version_build),
 			"description": name,
