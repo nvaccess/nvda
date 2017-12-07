@@ -31,10 +31,13 @@ if hasattr(sys, "frozen"):
 
 def main():
 	import installer
+	log.debug("Started NVDA slave")
 	try:
 		action = sys.argv[1]
 	except IndexError:
+		log.debug("No action provided")
 		sys.exit("No action")
+	log.debug("Slave command: %s"%action)
 	args = sys.argv[2:]
 
 	try:
