@@ -22,3 +22,10 @@ class TestFBrailleTables(unittest.TestCase):
 				os.path.isfile(os.path.join(brailleTables.TABLES_DIR, table.fileName)),
 				msg="{table} table not found".format(table=table.displayName)
 			)
+
+	def test_renamedTableExistence(self):
+		"""Tests whether all renamed tables are defined as table."""
+		"""Tests whether all defined renamed tables are part of the actual list of tables."""
+		tableNames = [table.fileName for table in brailleTables.listTables()]
+		for name in brailleTables.RENAMED_TABLES.itervalues():
+			self.assertIn(name, tableNames)
