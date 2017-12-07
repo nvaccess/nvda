@@ -115,6 +115,7 @@ def getDocFilePath(fileName,installDir):
 				return tryPath
 
 def copyProgramFiles(destPath):
+	log.debug("Copying program files")
 	sourcePath=os.getcwdu()
 	detectUserConfig=True
 	detectNVDAExe=True
@@ -132,8 +133,10 @@ def copyProgramFiles(destPath):
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
+	log.debug("Done copying program files")
 
 def copyUserConfig(destPath):
+	log.debug("Copying user config")
 	sourcePath=os.path.abspath(globalVars.appArgs.configPath)
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
 		curDestDir=os.path.join(destPath,os.path.relpath(curSourceDir,sourcePath))
@@ -143,6 +146,7 @@ def copyUserConfig(destPath):
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
+	log.debug("Done copying user config")
 
 def removeOldLibFiles(destPath,rebootOK=False):
 	"""
@@ -152,6 +156,7 @@ def removeOldLibFiles(destPath,rebootOK=False):
 	@param rebootOK: If true then files can be removed on next reboot if trying to do so now fails.
 	@type rebootOK: boolean
 	"""
+	log.debug("Removing old lib files")
 	for topDir in ('lib','lib64'):
 		currentLibPath=os.path.join(destPath,topDir,versionInfo.version)
 		for parent,subdirs,files in os.walk(os.path.join(destPath,topDir),topdown=False):
@@ -173,8 +178,10 @@ def removeOldLibFiles(destPath,rebootOK=False):
 					tryRemoveFile(path,numRetries=2,rebootOK=rebootOK)
 				except RetriableFailure:
 					log.warning("A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"%path)
+	log.debug("Done removing old lib files")
 
 def removeOldProgramFiles(destPath):
+	log.debug("Removing old program files")
 	# #3181: Remove espeak-ng-data\voices except for variants.
 	# Otherwise, there will be duplicates if voices have been moved in this new eSpeak version.
 	root = os.path.join(destPath, "synthDrivers", "espeak-ng-data", "voices")
@@ -189,8 +196,10 @@ def removeOldProgramFiles(destPath):
 			fn = os.path.join(root, fn)
 			# No need to use tryRemoveFile here because these files should never be locked.
 			if os.path.isdir(fn):
+				log.debug("Removing %r"%fn)
 				shutil.rmtree(fn)
 			else:
+				log.debug("Removing %r"%fn)
 				os.remove(fn)
 
 	# #4235: mpr.dll is a Windows system dll accidentally included with
@@ -211,6 +220,7 @@ uninstallerRegInfo={
 }
 
 def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
+	log.debug("Registering installation")
 	import _winreg
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,_winreg.KEY_WRITE) as k:
 		for name,value in uninstallerRegInfo.iteritems(): 
@@ -247,6 +257,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	# Translators: A label for a shortcut in start menu to open NVDA user guide.
 	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
 	registerAddonFileAssociation(slaveExe)
+	log.debug("Done registering installation")
 
 def isDesktopShortcutInstalled():
 	wsh=_getWSH()
@@ -255,40 +266,47 @@ def isDesktopShortcutInstalled():
 	return os.path.isfile(shortcutPath)
 
 def unregisterInstallation(keepDesktopShortcut=False):
+	log.debug("Unregistering  installation")
 	try:
 		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
 			_winreg.KEY_WOW64_64KEY)
 		easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, False)
 	except WindowsError:
-		pass
+		log.debugWarning("error removing ease of access info. Probably never set.",exc_info=True)
 	wsh=_getWSH()
 	desktopPath=os.path.join(wsh.SpecialFolders("AllUsersDesktop"),"NVDA.lnk")
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
 		try:
+			log.debug("Removing %r"%path)
 			os.remove(desktopPath)
 		except WindowsError:
-			pass
+			log.debugWarning("Error removing desktop shortcut",exc_info=True)
 	startMenuFolder=getStartMenuFolder()
 	if startMenuFolder:
 		programsPath=wsh.SpecialFolders("AllUsersPrograms")
 		startMenuPath=os.path.join(programsPath,startMenuFolder)
 		if os.path.isdir(startMenuPath):
+			log.debug("Removing %r"%startMenuPath)
 			shutil.rmtree(startMenuPath,ignore_errors=True)
+	log.debug("Removing uninstall info from registry") 
 	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda")
 	except WindowsError:
-		pass
+		log.debugWarning("Error removing uninstall info from registry, probably never set.",exc_info=True)
+	log.debug("Removing NVDA appPath from registry")
 	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe")
 	except WindowsError:
-		pass
+		log.debugWarning("Error removing NVDA appPath from registry, probably never set.",exc_info=True)
+	log.debug("Removing NVDA config key from registry")
 	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY)
 	except WindowsError:
-		pass
+		log.debugWarning("Error removing NVDA config key from registry, probably never set.",exc_info=True)
 	unregisterAddonFileAssociation()
 
 def registerAddonFileAssociation(slaveExe):
+	log.debug("Registering add-on association")
 	try:
 		# Create progID for NVDA ad-ons
 		with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID, 0, _winreg.KEY_WRITE) as k:
@@ -307,19 +325,25 @@ def registerAddonFileAssociation(slaveExe):
 			k2 = _winreg.CreateKeyEx(k, "OpenWithProgids\\%s" % addonHandler.NVDA_ADDON_PROG_ID, 0, _winreg.KEY_WRITE)
 			_winreg.CloseKey(k2)
 		# Notify the shell that a file association has changed:
+		log.debug("Notifying the shell of association change")
 		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 	except WindowsError:
 		log.error("Can not create addon file association.", exc_info=True)
+	log.debug("Done registering add-on association")
 
 def unregisterAddonFileAssociation():
+	log.debug("Unregistering add-on association")
 	try:
 		# As per MSDN recomendation, we only need to remove the prog ID.
 		_deleteKeyAndSubkeys(_winreg.HKEY_LOCAL_MACHINE, "Software\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID)
 	except WindowsError:
 		# This is probably the first install, so just ignore the error.
+		log.debugWarning(Error removing add-on association from registry, probably never set.",exc_info=True)
 		return
 	# Notify the shell that a file association has changed:
+	log.debug("Notifying the shell of association change")
 	shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
+	log.debug("Done unregistering add-on association change")
 
 # Windows API call regDeleteTree is only available on vist and above so rule our own.
 def _deleteKeyAndSubkeys(key, subkey):
@@ -340,6 +364,7 @@ class RetriableFailure(Exception):
 	pass
 
 def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
+	log.debug("Trying to remove file %r"%path)
 	dirPath=os.path.dirname(path)
 	tempPath=tempfile.mktemp(dir=dirPath)
 	try:
@@ -368,6 +393,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 	raise RetriableFailure("File %s could not be removed"%path)
 
 def tryCopyFile(sourceFilePath,destFilePath):
+	log.debug("Trying to copy %r to %r"%(sourceFilePath,destFilePath))
 	if not sourceFilePath.startswith('\\\\'):
 		sourceFilePath=u"\\\\?\\"+sourceFilePath
 	if not destFilePath.startswith('\\\\'):
@@ -389,12 +415,15 @@ def tryCopyFile(sourceFilePath,destFilePath):
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
+	log.debug("install starting")
 	prevInstallPath=getInstallPath(noDefault=True)
+	log.debug("prevInstallPath: %r"%prevInstallPath)
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, config.NVDA_REGKEY)
 		configInLocalAppData = bool(_winreg.QueryValueEx(k, config.CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
 		configInLocalAppData = False
+	log.debug("configInLocalAppData: %s"%configInLocalAppData)
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
@@ -421,11 +450,13 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 		raise RuntimeError("No available executable to use as nvda.exe")
 	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
 	removeOldLibFiles(installDir,rebootOK=True)
+	log.debug("Install done")
 
 def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")
 	lines=[]
 	if os.path.isfile(datPath):
+		log.debug("Removing old logged files from %r"%datPath)
 		with open(datPath,"r") as datFile:
 			datFile.readline()
 			lines=datFile.readlines()

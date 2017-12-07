@@ -170,13 +170,15 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import winUser
 	if params is not None:
 		params = subprocess.list2cmdline(params)
+	log.debug(L"execElevated: path %r, params %r"%(path,parents))
 	sei = shellapi.SHELLEXECUTEINFO(lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
 	#IsUserAnAdmin is apparently deprecated so may not work above Windows 8
 	if not handleAlreadyElevated or not ctypes.windll.shell32.IsUserAnAdmin():
 		sei.lpVerb=u"runas"
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
-	shellapi.ShellExecuteEx(sei)
+	if not shellapi.ShellExecuteEx(sei):
+		ctypes.WinError()
 	if wait:
 		try:
 			h=ctypes.wintypes.HANDLE(sei.hProcess)
