@@ -188,10 +188,13 @@ class AutoUpdateChecker(UpdateChecker):
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
 class UpdateResultDialog(wx.Dialog):
+	helpIds = {}
 
 	def __init__(self, parent, updateInfo, auto):
 		# Translators: The title of the dialog informing the user about an NVDA update.
 		super(UpdateResultDialog, self).__init__(parent, title=_("NVDA Update"))
+		self.helpIds[self.GetId()] = "GeneralSettingsCheckForUpdates"
+		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
 		self.updateInfo = updateInfo
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)

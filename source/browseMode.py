@@ -1,6 +1,6 @@
 #browseMode.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2007-2018NV Access Limited, Babbage B.V. Thomas Stivers
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -32,6 +32,7 @@ import inputCore
 import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
+import contextHelp
 
 REASON_QUICKNAV = "quickNav"
 
@@ -750,6 +751,7 @@ qn("error", key="w",
 del qn
 
 class ElementsListDialog(wx.Dialog):
+	helpIds = {}
 	ELEMENT_TYPES = (
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
@@ -776,6 +778,8 @@ class ElementsListDialog(wx.Dialog):
 		self.document = document
 		# Translators: The title of the browse mode Elements List dialog.
 		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
+		self.helpIds[self.GetId()] = "ElementsList"
+		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = wx.BoxSizer(wx.VERTICAL)
 

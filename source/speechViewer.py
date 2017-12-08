@@ -1,6 +1,6 @@
 #speechViewer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2018 NV Access Limited, Thomas Stivers
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -8,8 +8,10 @@ import wx
 import gui
 import config
 from logHandler import log
+import contextHelp
 
 class SpeechViewerFrame(wx.Dialog):
+	helpIds = {}
 
 	def __init__(self, onDestroyCallBack):
 		dialogSize=wx.Size(w=500, h=500)
@@ -20,6 +22,8 @@ class SpeechViewerFrame(wx.Dialog):
 			dialogSize = wx.Size(w=speechViewSection["width"], h=speechViewSection["height"])
 			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
 		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
+		self.helpIds[self.GetId()] = "SpeechViewer"
+		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
 		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
