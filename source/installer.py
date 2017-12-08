@@ -166,14 +166,12 @@ def removeOldLibFiles(destPath,rebootOK=False):
 				continue
 			for d in subdirs:
 				path=os.path.join(parent,d)
-				log.debug("Removing old lib directory: %r"%path)
 				try:
 					os.rmdir(path)
 				except OSError:
 					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r"%path)
 			for f in files:
 				path=os.path.join(parent,f)
-				log.debug("Removing old lib file: %r"%path)
 				try:
 					tryRemoveFile(path,numRetries=2,rebootOK=rebootOK)
 				except RetriableFailure:
@@ -196,10 +194,8 @@ def removeOldProgramFiles(destPath):
 			fn = os.path.join(root, fn)
 			# No need to use tryRemoveFile here because these files should never be locked.
 			if os.path.isdir(fn):
-				log.debug("Removing %r"%fn)
 				shutil.rmtree(fn)
 			else:
-				log.debug("Removing %r"%fn)
 				os.remove(fn)
 
 	# #4235: mpr.dll is a Windows system dll accidentally included with
@@ -277,7 +273,6 @@ def unregisterInstallation(keepDesktopShortcut=False):
 	desktopPath=os.path.join(wsh.SpecialFolders("AllUsersDesktop"),"NVDA.lnk")
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
 		try:
-			log.debug("Removing %r"%path)
 			os.remove(desktopPath)
 		except WindowsError:
 			log.debugWarning("Error removing desktop shortcut",exc_info=True)
@@ -286,19 +281,15 @@ def unregisterInstallation(keepDesktopShortcut=False):
 		programsPath=wsh.SpecialFolders("AllUsersPrograms")
 		startMenuPath=os.path.join(programsPath,startMenuFolder)
 		if os.path.isdir(startMenuPath):
-			log.debug("Removing %r"%startMenuPath)
 			shutil.rmtree(startMenuPath,ignore_errors=True)
-	log.debug("Removing uninstall info from registry") 
 	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda")
 	except WindowsError:
 		log.debugWarning("Error removing uninstall info from registry, probably never set.",exc_info=True)
-	log.debug("Removing NVDA appPath from registry")
 	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe")
 	except WindowsError:
 		log.debugWarning("Error removing NVDA appPath from registry, probably never set.",exc_info=True)
-	log.debug("Removing NVDA config key from registry")
 	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY)
 	except WindowsError:
@@ -325,7 +316,6 @@ def registerAddonFileAssociation(slaveExe):
 			k2 = _winreg.CreateKeyEx(k, "OpenWithProgids\\%s" % addonHandler.NVDA_ADDON_PROG_ID, 0, _winreg.KEY_WRITE)
 			_winreg.CloseKey(k2)
 		# Notify the shell that a file association has changed:
-		log.debug("Notifying the shell of association change")
 		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 	except WindowsError:
 		log.error("Can not create addon file association.", exc_info=True)
@@ -341,7 +331,6 @@ def unregisterAddonFileAssociation():
 		log.debugWarning("Error removing add-on association from registry, probably never set.",exc_info=True)
 		return
 	# Notify the shell that a file association has changed:
-	log.debug("Notifying the shell of association change")
 	shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 	log.debug("Done unregistering add-on association change")
 
@@ -364,7 +353,6 @@ class RetriableFailure(Exception):
 	pass
 
 def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
-	log.debug("Trying to remove file %r"%path)
 	dirPath=os.path.dirname(path)
 	tempPath=tempfile.mktemp(dir=dirPath)
 	try:
@@ -382,7 +370,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 			pass
 		time.sleep(retryInterval)
 	if rebootOK:
-		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
+		log.debugWarning("marking file for delete on reboot: %r"%tempPath)
 		MoveFileEx=windll.kernel32.MoveFileExW if isinstance(tempPath,unicode) else windll.kernel32.MoveFileExA
 		MoveFileEx("\\\\?\\"+tempPath,None,4)
 		return
@@ -393,14 +381,12 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 	raise RetriableFailure("File %s could not be removed"%path)
 
 def tryCopyFile(sourceFilePath,destFilePath):
-	log.debug("Trying to copy %r to %r"%(sourceFilePath,destFilePath))
 	if not sourceFilePath.startswith('\\\\'):
 		sourceFilePath=u"\\\\?\\"+sourceFilePath
 	if not destFilePath.startswith('\\\\'):
 		destFilePath=u"\\\\?\\"+destFilePath
 	if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 		errorCode=GetLastError()
-		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
 			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
 		tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
@@ -409,6 +395,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		except (WindowsError,OSError):
 			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
+		log.debugWarning("Marking file for delete on reboot: %r"%tempPath)
 		windll.kernel32.MoveFileExW(tempPath,None,4)
 		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 			errorCode=GetLastError()
@@ -417,13 +404,11 @@ def tryCopyFile(sourceFilePath,destFilePath):
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	log.debug("install starting")
 	prevInstallPath=getInstallPath(noDefault=True)
-	log.debug("prevInstallPath: %r"%prevInstallPath)
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, config.NVDA_REGKEY)
 		configInLocalAppData = bool(_winreg.QueryValueEx(k, config.CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
 		configInLocalAppData = False
-	log.debug("configInLocalAppData: %s"%configInLocalAppData)
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
@@ -456,7 +441,6 @@ def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")
 	lines=[]
 	if os.path.isfile(datPath):
-		log.debug("Removing old logged files from %r"%datPath)
 		with open(datPath,"r") as datFile:
 			datFile.readline()
 			lines=datFile.readlines()
@@ -469,6 +453,7 @@ def removeOldLoggedFiles(installPath):
 			tryRemoveFile(filePath,rebootOK=True)
 
 def createPortableCopy(destPath,shouldCopyUserConfig=True):
+	log.debug("Creating portable copy")
 	destPath=os.path.abspath(destPath)
 	#Remove all the main executables always
 	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
@@ -481,8 +466,10 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	if shouldCopyUserConfig:
 		copyUserConfig(os.path.join(destPath,'userConfig'))
 	removeOldLibFiles(destPath,rebootOK=True)
+	log.debug("Done creating portable copy")
 
 def registerEaseOfAccess(installDir):
+	log.debug("Registering with Ease of Access")
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH, 0,
 			_winreg.KEY_ALL_ACCESS | _winreg.KEY_WOW64_64KEY) as appKey:
 		_winreg.SetValueEx(appKey, "ApplicationName", None, _winreg.REG_SZ,
@@ -511,3 +498,4 @@ def registerEaseOfAccess(installDir):
 				"nvda_eoaProxy.exe")
 			_winreg.SetValueEx(appKey, "StartExe", None, _winreg.REG_SZ,
 				os.path.join(installDir, u"nvda_eoaProxy.exe"))
+	log.debug("Done registering with Ease of Access")

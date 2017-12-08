@@ -174,9 +174,7 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	sei = shellapi.SHELLEXECUTEINFO(lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
-	if not shellapi.ShellExecuteEx(sei):
-		log.warning("Elevation was blocked")
-		return
+	shellapi.ShellExecuteEx(sei)
 	if wait:
 		try:
 			h=ctypes.wintypes.HANDLE(sei.hProcess)
