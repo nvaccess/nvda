@@ -15,13 +15,12 @@ What's New in NVDA
 - Focus is now once again restored correctly when returning to Spotify from another application. (#7689)
 - NVDA no longer fails to update on systems with Controlled Folder Access enabled (available in the Windows 10 Fall Creaters update). (#7696)
 - Detection of scroll keys on Hims Smart Beetle displays is no longer unreliable. (#6086)
+- A slight performance improvement when rendering large amounts of content in Mozilla Firefox 58 and later. (#7719)
 
 
 == Changes for developers ==
 - Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
  - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
-
-== Changes for developers ==
 - A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
 
 
