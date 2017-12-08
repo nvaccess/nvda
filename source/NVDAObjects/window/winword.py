@@ -1173,7 +1173,13 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	_curHeaderCellTracker=None
 	def getHeaderCellTrackerForTable(self,table):
 		tableRange=table.range
-		if not self._curHeaderCellTrackerTable or not tableRange.isEqual(self._curHeaderCellTrackerTable.range):
+		# Sometimes there is a valid reference in _curHeaderCellTrackerTable,
+		# but we get a COMError when accessing the range (#6827)
+		try:
+			tableRangesEqual=tableRange.isEqual(self._curHeaderCellTrackerTable.range)
+		except (COMError, AttributeError):
+			tableRangesEqual=False
+		if not tableRangesEqual:
 			self._curHeaderCellTracker=HeaderCellTracker()
 			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
 			self.populateHeaderCellTrackerFromHeaderRows(self._curHeaderCellTracker,table)
