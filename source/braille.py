@@ -1876,6 +1876,11 @@ class _BgThread:
 			if cls.exit:
 				break
 
+#: Maps old braille display driver names to new drivers that supersede old drivers.
+RENAMED_DRIVERS = {
+	"syncBraille":"hims"
+}
+
 def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
@@ -1886,6 +1891,12 @@ def initialize():
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
+	# #7459: the syncBraille has been dropped in favor of the native hims driver.
+	# Migrate to renamed drivers as smoothly as possible.
+	oldDriverName = config.conf["braille"]["display"]
+	newDriverName = RENAMED_DRIVERS.get(oldDriverName)
+	if newDriverName:
+		config.conf["braille"]["display"] = newDriverName
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
 	# Update the display to the current focus/review position.
