@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V.
+#Copyright (C) 2012-2018 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V. Thomas Stivers
 
 import os
 import wx
@@ -12,9 +12,11 @@ import gui
 from logHandler import log
 import addonHandler
 import globalVars
+import contextHelp
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
+	helpIds = {}
 	def __new__(cls, *args, **kwargs):
 		if AddonsDialog._instance is None:
 			return super(AddonsDialog, cls).__new__(cls, *args, **kwargs)
@@ -26,6 +28,8 @@ class AddonsDialog(wx.Dialog):
 		AddonsDialog._instance = self
 		# Translators: The title of the Addons Dialog
 		super(AddonsDialog,self).__init__(parent,title=_("Add-ons Manager"))
+		self.helpIds[self.GetId()] = "AddonsManager"
+		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
