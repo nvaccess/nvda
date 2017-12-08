@@ -31,11 +31,13 @@ class IoBase(object):
 	This watches for data of a specified size and calls a callback when it is received.
 	"""
 
-	def __init__(self, fileHandle, onReceive, onReceiveSize=1, writeSize=None):
-		"""Constructr.
-		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
+	def __init__(self, fileHandle, onReceive, writeFileHandle=None, onReceiveSize=1, writeSize=None):
+		"""Constructor.
+		@param readFileHandle: A handle to an open I/O device opened for overlapped I/O.
+			If L{writeFileHandle} is specified, this is only for input
 		@param onReceive: A callable taking the received data as its only argument.
 		@type onReceive: callable(str)
+		@param writeFileHandle: A handle to an open output device opened for overlapped I/O.
 		@param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
 		@type onReceiveSize: int
 		@param writeSize: The size of the buffer for writes,
@@ -43,6 +45,7 @@ class IoBase(object):
 		@param writeSize: int or None
 		"""
 		self._file = fileHandle
+		self._writeFile = writeFileHandle if writeFileHandle is not None else fileHandle
 		self._onReceive = onReceive
 		self._readSize = onReceiveSize
 		self._writeSize = writeSize
@@ -82,22 +85,29 @@ class IoBase(object):
 		size = self._writeSize or len(data)
 		buf = ctypes.create_string_buffer(size)
 		buf.raw = data
-		if not ctypes.windll.kernel32.WriteFile(self._file, data, size, None, byref(self._writeOl)):
+		if not ctypes.windll.kernel32.WriteFile(self._writeFile, data, size, None, byref(self._writeOl)):
 			if ctypes.GetLastError() != ERROR_IO_PENDING:
 				if _isDebug():
 					log.debug("Write failed: %s" % ctypes.WinError())
 				raise ctypes.WinError()
 			bytes = DWORD()
-			ctypes.windll.kernel32.GetOverlappedResult(self._file, byref(self._writeOl), byref(bytes), True)
+			ctypes.windll.kernel32.GetOverlappedResult(self._writeFile, byref(self._writeOl), byref(bytes), True)
 
 	def close(self):
 		if _isDebug():
 			log.debug("Closing")
 		self._onReceive = None
-		ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
+		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
+			ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
+		if hasattr(self, "_writeFile") and self._writeFile not in (self._file, INVALID_HANDLE_VALUE):
+			ctypes.windll.kernel32.CancelIoEx(self._writeFile, byref(self._readOl))
 
 	def __del__(self):
-		self.close()
+		try:
+			self.close()
+		except AttributeError:
+			if _isDebug():
+				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
 
 	def _asyncRead(self):
 		# Wait for _readSize bytes of data.
@@ -299,3 +309,46 @@ class Hid(IoBase):
 		super(Hid, self).close()
 		winKernel.closeHandle(self._file)
 		self._file = None
+
+class Bulk(IoBase):
+	"""Raw I/O for bulk USB devices.
+	This implementation assumes that the used Bulk device has two separate end points for input and output.
+	"""
+
+	def __init__(self, path, epIn, epOut, onReceive, onReceiveSize=1, writeSize=None):
+		"""Constructor.
+		@param path: The device path.
+		@type path: unicode
+		@param epIn: The endpoint to read data from.
+		@type epIn: int
+		@param epOut: The endpoint to write data to.
+		@type epOut: int
+		@param onReceive: A callable taking a received input report as its only argument.
+		@type onReceive: callable(str)
+		"""
+		if _isDebug():
+			log.debug("Opening device %s" % path)
+		readPath="{path}\\{endpoint}".format(path=path,endpoint=epIn)
+		writePath="{path}\\{endpoint}".format(path=path,endpoint=epOut)
+		readHandle = CreateFile(readPath, winKernel.GENERIC_READ,
+			0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+		if readHandle == INVALID_HANDLE_VALUE:
+			if _isDebug():
+				log.debug("Open read handle failed: %s" % ctypes.WinError())
+			raise ctypes.WinError()
+		writeHandle = CreateFile(writePath, winKernel.GENERIC_WRITE,
+			0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+		if writeHandle == INVALID_HANDLE_VALUE:
+			if _isDebug():
+				log.debug("Open write handle failed: %s" % ctypes.WinError())
+			raise ctypes.WinError()
+		super(Bulk, self).__init__(readHandle, onReceive,
+			writeFileHandle=writeHandle, onReceiveSize=onReceiveSize,
+			writeSize=writeSize)
+
+	def close(self):
+		super(Bulk, self).close()
+		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
+			winKernel.closeHandle(self._file)
+		if hasattr(self, "_writeFile") and self._writeFile is not INVALID_HANDLE_VALUE:
+			winKernel.closeHandle(self._writeFile)
