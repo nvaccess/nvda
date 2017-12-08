@@ -2004,9 +2004,11 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	gestureMap = None
 
 	@classmethod
-	def _getModifierGestures(cls):
+	def _getModifierGestures(cls, model=None):
 		"""Retrieves modifier gestures from this display driver's L{gestureMap}
 		that are bound to modifier only keyboard emulate scripts.
+		@param model: the optional braille display model for which modifier gestures should also be included.
+		@type model: str; C{None} if model specific gestures should not be included
 		@return: the ids of the display keys and the associated generalised modifier names
 		@rtype: generator of (set, set)
 		"""
@@ -2015,9 +2017,14 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		globalMaps = [inputCore.manager.userGestureMap]
 		if cls.gestureMap:
 			globalMaps.append(cls.gestureMap)
+		prefixes=["br({source})".format(source=cls.name),]
+		if model:
+			prefixes.insert(0,"br({source}.{model})".format(source=cls.name, model=model))
 		for globalMap in globalMaps:
 			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
-				if gesture.startswith("br({source})".format(source=cls.name)) and scriptCls is globalCommands.GlobalCommands and scriptName.startswith("kb"):
+				if (any(gesture.startswith(prefix.lower()) for prefix in prefixes)
+					and scriptCls is globalCommands.GlobalCommands
+					and scriptName.startswith("kb")):
 					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
 					if emuGesture.isModifier:
 						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)
@@ -2066,7 +2073,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
 		if self.model:
 			# Model based ids should take priority.
-			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id))
+			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.id))
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -2099,7 +2106,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		# Combining modifiers with braille input (#7306) is not yet supported.
 		gestureKeys = set(self.keyNames)
 		gestureModifiers = set()
-		for keys, modifiers in handler.display._getModifierGestures():
+		for keys, modifiers in handler.display._getModifierGestures(self.model):
 			if keys<gestureKeys:
 				gestureModifiers |= modifiers
 				gestureKeys -= keys
@@ -2107,11 +2114,15 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			# No modifier assignments found in this gesture.
 			return None
 		# Find a script for L{gestureKeys}.
-		fakeGestureId = u"br({source}):{id}".format(source=self.source, id="+".join(gestureKeys))
+		id = "+".join(gestureKeys)
+		fakeGestureIds = [u"br({source}):{id}".format(source=self.source, id=id),]
+		if self.model:
+			fakeGestureIds.insert(0,u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
 		scriptNames = []
 		globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
 		for globalMap in globalMaps:
-			scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId) if scriptName.startswith("kb"))
+			for fakeGestureId in fakeGestureIds:
+				scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId.lower()) if scriptName.startswith("kb"))
 		if not scriptNames:
 			# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
 			return None
