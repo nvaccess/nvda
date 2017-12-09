@@ -121,7 +121,6 @@ class BrailleInputHandler(AutoPropertyObject):
 		@rtype: bool
 		"""
 		assert not self.useContractedForCurrentFocus or endWord, "Must only translate contracted at end of word"
-
 		if self.useContractedForCurrentFocus:
 			# self.bufferText has been used by _reportContractedCell, so clear it.
 			self.bufferText = u""
@@ -363,8 +362,16 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.untranslatedCursorPos = 0
 
 	def emulateKey(self, key, withModifiers=True):
+		"""Emulates a key using the keyboard emulation system.
+		If emulation fails (e.g. because of an unknown key), a debug warning is logged
+		and the system falls back to sending unicode characters.
+		@param withModifiers: Whether this key emulation should include the modifiers that are held virtually.
+			Note that this method does not take care of clearing L{self.currentModifiers}.
+		@type withModifiers: bool
+		"""
 		if withModifiers:
 			keys = self.currentModifiers
+			# The emulated key should be the last item in the identifier string.
 			gesture = "+".join(keys)+"+"+key
 		else:
 			gesture = key
@@ -375,6 +382,10 @@ class BrailleInputHandler(AutoPropertyObject):
 			self.sendChars(key)
 
 	def sendChars(self, chars):
+		"""Sends the provided unicode characters to the system.
+		@param chars: The characters to send to the system.
+		@type chars: unicode
+		"""
 		inputs = []
 		for ch in chars:
 			for direction in (0,winUser.KEYEVENTF_KEYUP): 
