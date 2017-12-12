@@ -43,6 +43,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
 	announceNewLineText=True
+	#: When announcing new line text: should the entire line be announced, or just text after the caret?
+	announceEntireNewLine=False
 
 	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
 
@@ -158,7 +160,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		except (RuntimeError,NotImplementedError):
 			return
 		lineInfo.expand(textInfos.UNIT_LINE)
-		lineInfo.setEndPoint(newInfo,"endToStart")
+		if not self.announceEntireNewLine: 
+			lineInfo.setEndPoint(newInfo,"endToStart")
 		if lineInfo.isCollapsed:
 			lineInfo.expand(textInfos.UNIT_CHARACTER)
 			onlyInitial=True

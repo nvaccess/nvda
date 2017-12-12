@@ -163,6 +163,7 @@ class WordDocumentNode(UIA):
 class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentBase):
 	treeInterceptorClass=WordBrowseModeDocument
 	shouldCreateTreeInterceptor=False
+	announceEntireNewLine=True
 
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
