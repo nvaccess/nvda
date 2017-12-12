@@ -523,6 +523,7 @@ class OfficeChart(OfficeChartElementList):
 	def __init__(self,windowHandle, officeApplicationObject, officeChartObject, initialDocument , keyIndex=0):
 		super(OfficeChart,self).__init__(windowHandle=windowHandle  , officeChartObject = officeChartObject )
 		self.initialDocument = initialDocument 
+		self.parent=initialDocument
 		self.officeApplicationObject=officeApplicationObject
 		try:
 			seriesCount=self.officeChartObject.SeriesCollection().Count
