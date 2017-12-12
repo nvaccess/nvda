@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
-#config\__init__.py
+#config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -25,59 +25,25 @@ from logging import DEBUG
 import shlobj
 import baseObject
 import easeOfAccess
+from fileUtils import FaultTolerantFile
 import winKernel
+import extensionPoints
 import profileUpgrader
 from .configSpec import confspec
-
-def validateConfig(configObj,validator,validationResult=None,keyList=None):
-	"""
-	@deprecated: Add-ons which need this should provide their own implementation.
-	"""
-	import warnings
-	warnings.warn("config.validateConfig deprecated. Callers should provide their own implementation.",
-		DeprecationWarning, 2)
-	if validationResult is None:
-		validationResult=configObj.validate(validator,preserve_errors=True)
-	if validationResult is True:
-		return None #No errors
-	if validationResult is False:
-		return "Badly formed configuration file"
-	errorStrings=[]
-	for k,v in validationResult.iteritems():
-		if v is True:
-			continue
-		newKeyList=list(keyList) if keyList is not None else []
-		newKeyList.append(k)
-		if isinstance(v,dict):
-			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
-		else:
-			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
-			defaultValue=validator.get_default_value(configObj.configspec[k])
-			configObj[k]=defaultValue
-			if k not in configObj.defaults:
-				configObj.defaults.append(k)
-			errorStrings.append("%s: %s, defaulting to %s"%(k,v,defaultValue))
-	return errorStrings
-
-#: @deprecated: Use C{conf.validator} instead.
-val = Validator()
 
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
 
+#: Notifies when the configuration profile is switched.
+#: This allows components to apply changes required by the new configuration.
+#: For example, braille switches braille displays if necessary.
+#: Handlers are called with no arguments.
+configProfileSwitched = extensionPoints.Action()
+
 def initialize():
 	global conf
 	conf = ConfigManager()
-
-def save():
-	"""
-	@deprecated: Use C{conf.save} instead.
-	"""
-	import warnings
-	warnings.warn("config.save deprecated. Use config.conf.save instead.",
-		DeprecationWarning, 2)
-	conf.save()
 
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
@@ -104,9 +70,24 @@ def isInstalledCopy():
 		return False
 
 
+#: #6864: The name of the subkey stored under NVDA_REGKEY where the value is stored
+#: which will make an installed NVDA load the user configuration either from the local or from the roaming application data profile.
+#: The registry value is unset by default.
+#: When setting it manually, a DWORD value is prefered.
+#: A value of 0 will evaluate to loading the configuration from the roaming application data (default).
+#: A value of 1 means loading the configuration from the local application data folder.
+#: @type: unicode
+CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
+
 def getInstalledUserConfigPath():
 	try:
-		return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		configInLocalAppData = bool(_winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
+	except WindowsError:
+		configInLocalAppData=False
+	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
+	try:
+		return os.path.join(configParent, "nvda")
 	except WindowsError:
 		return None
 
@@ -178,20 +159,10 @@ def setStartAfterLogon(enable):
 		except WindowsError:
 			pass
 
-SERVICE_FILENAME = u"nvda_service.exe"
-
-def isServiceInstalled():
-	if not os.path.isfile(SERVICE_FILENAME):
-		return False
-	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SYSTEM\CurrentControlSet\Services\nvda")
-		val = _winreg.QueryValueEx(k, u"ImagePath")[0].replace(u'"', u'')
-		return os.stat(val) == os.stat(SERVICE_FILENAME)
-	except (WindowsError, OSError):
-		return False
-
 def canStartOnSecureScreens():
-	return isInstalledCopy() and (easeOfAccess.isSupported or isServiceInstalled())
+	# No more need to check for the NVDA service nor presence of Ease of Access, as only Windows 7 SP1 and higher is supported.
+	# This function will be transformed into a flag in a future release.
+	return isInstalledCopy()
 
 def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess
@@ -220,6 +191,8 @@ def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 
 SLAVE_FILENAME = u"nvda_slave.exe"
 
+#: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
+#: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
@@ -335,11 +308,16 @@ class ConfigManager(object):
 		#: Whether profile triggers are enabled (read-only).
 		#: @type: bool
 		self.profileTriggersEnabled = True
-		self.validator = val
+		self.validator = Validator()
 		self.rootSection = None
 		self._shouldHandleProfileSwitch = True
 		self._pendingHandleProfileSwitch = False
 		self._suspendedTriggers = None
+		# Never save the config if running securely or if running from the launcher.
+		# When running from the launcher we don't save settings because the user may decide not to
+		# install this version, and these settings may not be compatible with the already
+		# installed version. See #7688
+		self._shouldWriteProfile = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		self._initBaseConf()
 		#: Maps triggers to profiles.
 		self.triggersToProfiles = None
@@ -357,12 +335,7 @@ class ConfigManager(object):
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		import synthDriverHandler
-		synthDriverHandler.handleConfigProfileSwitch()
-		import braille
-		braille.handler.handleConfigProfileSwitch()
-		import audioDucking
-		audioDucking.handleConfigProfileSwitch()
+		configProfileSwitched.notify()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -400,7 +373,8 @@ class ConfigManager(object):
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
 		try:
-			profileUpgrader.upgrade(profile, self.validator)
+			writeProfileFunc = self._writeProfileToFile if self._shouldWriteProfile else None
+			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
 			log.info(u"Config before schema update:\n%s" % profileCopy, exc_info=False)
@@ -491,17 +465,21 @@ class ConfigManager(object):
 			return
 		self._dirtyProfiles.add(self.profiles[-1].name)
 
+	def _writeProfileToFile(self, filename, profile):
+		with FaultTolerantFile(filename) as f:
+			profile.write(f)
+
 	def save(self):
 		"""Save all modified profiles and the base configuration to disk.
 		"""
-		if globalVars.appArgs.secure:
-			# Never save the config if running securely.
+		if not self._shouldWriteProfile:
+			log.info("Not writing profile, either --secure or --launcher args present")
 			return
 		try:
-			self.profiles[0].write()
+			self._writeProfileToFile(self.profiles[0].filename, self.profiles[0])
 			log.info("Base configuration saved")
 			for name in self._dirtyProfiles:
-				self._profileCache[name].write()
+				self._writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except Exception as e:

@@ -21,13 +21,13 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	마침표	all	always
-! sentence ending	느낌표	all	always
-? sentence ending	물음표	all	always
+. sentence ending	쩜	most	always
+! sentence ending	느낌표	most	always
+? sentence ending	물음표	most	always
 ; phrase ending	세미콜론	most	always
-: phrase ending	콜런	most	always
+: phrase ending	콜론	most	always
 decimal point		none	always
-in-word '	tick	all	norep
+in-word '	어퍼스트로피	most	norep
 negative number	마이너스	none	norep
 
 # Whitespace
@@ -40,43 +40,43 @@ negative number	마이너스	none	norep
  	space	char	# no-break space
 
 # Standard punctuation/symbols
-!	느낌표	all
-"	따옴표	most
+!	느낌표	most
+"	쿼테이션	most
 \#	샵	some
-$	달러	all	norep
+$	달러	some	norep
 ￡	전각파운드	all	norep
 €	euro	all	norep
 ￠	쎈트	all	norep
 ￥	전각엔화표	all	norep
 ₹	루피	some	norep
 %	percent	some
-&	and	some
-'	어퍼스트로피	all
-(	괄호열기	most	always
-)	괄호닫기	most	always
+&	앤퍼센드	all
+'	어퍼스트로피	most
+(	괄호 열고	some	always
+)	괄호 닫고	some	always
 *	star	some
 +	plus	some
-,	콤마	all	always
--	대시	most
-.	점	some
+,	콤마	most	always
+-	대시	some
+.	쩜	most
 /	슬래시	some
-:	콜런	most	norep
-;	세미콜런	most
-<	less	some
->	greater	some
-=	등호	some
-?	물음표	all
+:	콜론	most	norep
+;	세미콜론	most
+<	레스 댄	some
+>	그레이터 댄	some
+=	이퀄	some
+?	물음표	most
 @	골뱅이	some
-[	대괄호열기	most
-]	대괄호닫기	most
-\\	백슬레시	most
-^	케럿	most
-_	언더바	most
-`	graav	most
-{	중괄호열기	most
-}	중괄호닫기	most
-|	bar	most
-~	물결표	most
+[	대괄호 열고	all
+]	대괄호 닫고	all
+\\	백슬래시	most
+^	캐럿	some
+_	언더바	all
+`	그레이브	all
+{	중괄호 열고	all
+}	중괄호 닫고	all
+|	버티컬 바	all
+~	물결	all
 
 # Other characters
 •	bullet	some
@@ -95,7 +95,6 @@ _	언더바	most
 ◦	흰 작은 동그라미	some
 ‎	좌에서 우로 기호	char
 ‏	우에서 좌로 기호	char
-←	왼쪽 화살표	some
 ➔	오른쪽 화살표	some
 §	절표 기호	all
 °	도 기호	some
@@ -162,6 +161,26 @@ _	언더바	most
 ⊃	포함한다 기호	none
 ⊆	포함된다 또는 이퀄 기호	none
 ⊇	포함한다 또는 이퀄 기호	none
+
+# Vulgur Fractions U+2150 to U+215E
+½	2분의 1	none
+¼	4분의 1	none
+¾	4분의 3	none
+⅐	7분의 1	none
+⅑	9분의 1	none
+⅒	10분의 1	none
+⅓	3분의 1	none
+⅔	3분의 2	none
+⅕	5분의 1	none
+⅖	5분의 2	none
+⅗	5분의 3	none
+⅘	5분의 4	none
+⅙	6분의 1	none
+⅚	6분의 5	none
+⅛	8분의 1	none
+⅜	8분의 3	none
+⅝	8분의 5	none
+⅞	8분의 7	none
 
 #Char names:
 ㄱ	기역	none
@@ -28002,7 +28021,6 @@ _	언더바	most
 ￥	엔	most
 ♂	남성 표시	most
 ♀	여성 표시	most
-∠	각	most
 ⊥	위쪽 압정 표시	most
 ⌒	호	most
 ≒	근사값	most
@@ -28016,10 +28034,9 @@ _	언더바	most
 ▲	검정 삼각형	most
 ▽	역 흰 삼각형	most
 ▼	역 검정 삼각형	most
-↑	위쪽 화살표	most
-↓	아래쪽 화살표	most
+↑	위쪽 화살표	some
+↓	아래쪽 화살표	some
 ↔	양쪽 화살표	most
-∃	어떤	most
 ´	윗빗점	most
 ～	윗물결점	most
 ˇ	아래 화살촉	most
@@ -28457,12 +28474,3 @@ _	언더바	most
 ⑬	동그라미 13	most
 ⑭	동그라미 14	most
 ⑮	동그라미 15	most
-½	2분의 1	most
-⅓	3분의 1	most
-⅔	3분의 2	most
-¼	4분의 1	most
-¾	4분의 3	most
-⅛	8분의 1	most
-⅜	8분의 3	most
-⅝	8분의 5	most
-⅞	8분의 7	most

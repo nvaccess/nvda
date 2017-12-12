@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-17 00:10+1000\n"
-"PO-Revision-Date: 2017-03-17 14:51+0200\n"
+"POT-Creation-Date: 2017-11-03 00:10+1000\n"
+"PO-Revision-Date: 2017-11-07 09:22+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -94,62 +94,485 @@ msgid "Error in appModule %s"
 msgstr "Virhe sovellusmoduulissa %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
-msgstr "Mainospalkki"
+msgstr "mainospalkki"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
-msgstr "Täydentävä"
+msgstr "täydentävä"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
-msgstr "Sisältötiedot"
+msgstr "sisältötiedot"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
-msgstr "Pääsisältö"
+msgstr "pääsisältö"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
-msgstr "Navigaatio"
+msgstr "navigaatio"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
-msgstr "Haku"
+msgstr "haku"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
-msgstr "Lomake"
+msgstr "lomake"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
-msgstr "Alue"
+msgstr "alue"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "No ducking"
-msgstr "Ei hiljennystä"
+msgstr "Ei käytössä"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Hiljennä puhuttaessa ja ääntä toistettaessa"
+msgstr "Puhuttaessa ja ääntä toistettaessa"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Always duck"
-msgstr "Hiljennä aina"
+msgstr "Aina"
+
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "ikk"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "vli"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "vlr"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "vpnk"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "muo"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "pnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "vkorvi"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "vkokhde"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "vlk"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "yhd"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "gra"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "ohj"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "tkvhj"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "lnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "pn"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "pnkhde"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "vlsdn"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "edplk"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "vrtsplk"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "tlrvi"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "tlk"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "tkplk"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "avpnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "skp"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "dok"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "sov"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "rhm"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "upotettu"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "lpvte"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "alvte"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "pte"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "osa"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "vtpnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "jtupnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "vkopnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "askpnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "pnpnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "pnl"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "slsmuo"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "val"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "vl"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "alavko"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "pak"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "virhe"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "mnr"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "nps"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "laj nou"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "laj lask"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "ptkvs"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "kaav"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "kmnt"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "eval"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "mplk"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "täyd"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "stie"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "pää"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "nav"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "hku"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "lom"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "alu"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "pisteet 7 ja 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "piste 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "kaikki pisteet"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "täytä näyttö kontekstin muuttuessa"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "täytä näyttö aina"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "vain taaksepäin vieritettäessä"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "o%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "alnk"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "ei %s"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} / {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "ts %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "r%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "s%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "%s lop"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automaattinen"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "piste"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "välilyönti japiste"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "väli"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "pistekirjoitusnäppäimistö"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "välilyönti ja mitkä tahansa pisteet"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "mitkä tahansa pisteet"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "arabia, taso 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "farsi, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -180,6 +603,11 @@ msgstr "wales, taso 2"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "tshekki, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "tanska, 8 pisteen tietokonemerkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -223,6 +651,11 @@ msgstr "saksa, taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "kreikka (Kreikka)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "englanti (Iso-Britannia), 8 pisteen tietokonemerkistö"
 
@@ -235,6 +668,16 @@ msgstr "englanti (Iso-Britannia), taso 1"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "englanti (Iso-Britannia), taso 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "englanti (yhdenmukaistettu), taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "englanti (yhdenmukaistettu), taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -275,6 +718,16 @@ msgstr "viro, taso 0"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "etiopia, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "persia, 8 pisteen tietokonemerkistö"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "persia, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -333,11 +786,6 @@ msgstr "Koinee-kreikka"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "kreikka, taso 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Hebrew 8 dot computer braille"
 msgstr "heprea, 8 pisteen tietokonemerkistö"
 
@@ -350,6 +798,11 @@ msgstr "hindi, taso 1"
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
 msgstr "kroatia, 8 pisteen tietokonemerkistö"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "kroatia, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -405,6 +858,11 @@ msgstr "korea, taso 2"
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
 msgstr "kashmiri, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian"
+msgstr "liettua"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -533,7 +991,12 @@ msgstr "slovakki, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "sloveeni, 8 pisteen tietokonemerkistö"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
 msgstr "sloveeni, taso 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -558,13 +1021,13 @@ msgstr "turkki, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "englanti (yhdenmukaistettu), taso 1"
+msgid "Unicode braille"
+msgstr "Unicode-pistekirjoitus"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "englanti (yhdenmukaistettu), taso 2"
+msgid "Vietnamese grade 1"
+msgstr "vietnam, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -576,215 +1039,27 @@ msgstr "kantoninkiina (Hong Kong)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "mandariinikiina (Taiwan)"
 
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "muo"
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "ltl"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "vkorvi"
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "vlk"
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "pnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "vlr"
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "vpnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "yhd"
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "lnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "vli"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "pn"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tl"
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "gra"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "val"
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "alavko"
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "vl"
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "nps"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "pisteet 7 ja 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "piste 8"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "kaikki pisteet"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "o%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "alnk"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "ei %s"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} / {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "ts %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "s%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "%s lop"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automaattinen"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "pistesyöte"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "välilyönti japiste"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "piste"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "väli"
-
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "Vuorovaikutustila"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Selaustila"
 
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "Ei nimeä"
+
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Pikanavigointi pois"
+msgstr "Pikaselaus pois"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Pikanavigointi käytössä"
+msgstr "Pikaselaus käytössä"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -792,10 +1067,10 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Ottaa käyttöön pikanavigointinäppäimet tai poistaa ne käytöstä. Kun "
-"näppäimet ovat käytössä, määrättyjen kirjainten painaminen selaustilassa "
-"siirtää sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole "
-"käytössä, niiden painallukset välitetään suoraan sovellukselle."
+"Ottaa käyttöön pikaselausnäppäimet tai poistaa ne käytöstä. Kun näppäimet "
+"ovat käytössä, määrättyjen kirjainten painaminen selaustilassa siirtää "
+"sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole käytössä, "
+"niiden painallukset välitetään suoraan sovellukselle."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -1242,6 +1517,22 @@ msgstr "Siirtää edelliseen selitteeseen."
 msgid "no previous annotation"
 msgstr "Ei edellisiä selitteitä"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "Siirtää seuraavan virheen kohdalle."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "Ei enempää virheitä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "Siirtää edellisen virheen kohdalle."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "Ei edellisiä virheitä"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1258,6 +1549,16 @@ msgstr "&Otsikot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Lom&akekentät"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Painikkeet"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Lan&dmarks"
@@ -1265,7 +1566,7 @@ msgstr "Kii&ntopisteet"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
-msgstr "Elementtiluettelo"
+msgstr "Elementtilista"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1274,7 +1575,7 @@ msgstr "Tyyppi:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
+msgid "Filt&er by:"
 msgstr "Suo&data:"
 
 #. Translators: The label of a button to activate an element
@@ -1287,10 +1588,14 @@ msgstr "&Avaa"
 msgid "&Move to"
 msgstr "&Siirry"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
 msgstr "%s kiintopiste"
+
+#. Translators: This is brailled to indicate a landmark (example output: lmk main).
+#, python-format
+msgid "lmk %s"
+msgstr "kp %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #. Translators: Announces selected text. %s is replaced with the text.
@@ -1307,8 +1612,8 @@ msgid "Shows the long description at this position if one is found."
 msgstr ""
 "Näyttää nykyisestä kohdasta pitkän kuvauksen, mikäli sellainen on saatavilla."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Ei säilöelementissä"
 
@@ -1340,19 +1645,33 @@ msgstr "Taulukon reuna"
 
 #. Translators: the description for the next table row script on browseMode documents.
 msgid "moves to the next table row"
-msgstr "siirtää seuraavalle taulukon riville"
+msgstr "Siirtää seuraavalle taulukon riville"
 
 #. Translators: the description for the previous table row script on browseMode documents.
 msgid "moves to the previous table row"
-msgstr "siirtää edelliselle taulukon riville"
+msgstr "Siirtää edelliselle taulukon riville"
 
 #. Translators: the description for the next table column script on browseMode documents.
 msgid "moves to the next table column"
-msgstr "siirtää seuraavaan taulukon sarakkeeseen"
+msgstr "Siirtää seuraavaan taulukon sarakkeeseen"
 
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
-msgstr "siirtää edelliseen taulukon sarakkeeseen"
+msgstr "Siirtää edelliseen taulukon sarakkeeseen"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Asettelutaulukot pois"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Asettelutaulukot käytössä"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Ottaa käyttöön tai poistaa käytöstä asettelutaulukoiden ilmaisemisen "
+"selaustilassa."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1440,7 +1759,7 @@ msgstr "punainen"
 #. Translators: The color between  red and orange (HSV hue 15 degrees)
 msgctxt "color hue"
 msgid "red-orange"
-msgstr "puna-oranssi"
+msgstr "punaoranssi"
 
 #. Translators: The color orange (HSV hue 30 degrees)
 msgctxt "color hue"
@@ -1450,7 +1769,7 @@ msgstr "oranssi"
 #. Translators: The color between  orange and yellow (HSV hue 45 degrees)
 msgctxt "color hue"
 msgid "orange-yellow"
-msgstr "kelta-oranssi"
+msgstr "keltaoranssi"
 
 #. Translators: The color yellow (HSV hue 60 degrees)
 msgctxt "color hue"
@@ -1460,7 +1779,7 @@ msgstr "keltainen"
 #. Translators: The color between  yellow and green (HSV hue 90 degrees)
 msgctxt "color hue"
 msgid "yellow-green"
-msgstr "kelta-vihreä"
+msgstr "keltavihreä"
 
 #. Translators: The color green (HSV hue 120 degrees)
 msgctxt "color hue"
@@ -1490,7 +1809,7 @@ msgstr "sininen"
 #. Translators: The color between  blue and purple (HSV hue 270 degrees)
 msgctxt "color hue"
 msgid "blue-purple"
-msgstr "sini-violetti"
+msgstr "sinivioletti"
 
 #. Translators: The color purple (HSV hue 300 degrees)
 msgctxt "color hue"
@@ -1552,7 +1871,7 @@ msgstr "haalean{color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "tummanhaalean{color}"
+msgstr "tummanhaalea {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
 #, python-brace-format
@@ -1587,7 +1906,7 @@ msgstr "hyvin tumman{color} harmaa"
 #. Translators: The color between  red and brown (HSV hue 15 degrees, below 50% brightness)
 msgctxt "color hue"
 msgid "red-brown"
-msgstr "puna-ruskea"
+msgstr "punaruskea"
 
 #. Translators: The color brown (HSV hue 30 degrees, below 50% brightness)
 msgctxt "color hue"
@@ -1597,7 +1916,7 @@ msgstr "ruskea"
 #. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
 msgctxt "color hue"
 msgid "brown-yellow"
-msgstr "kelta-ruskea"
+msgstr "keltaruskea"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -1671,7 +1990,7 @@ msgstr "grafiikka"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "kuplailmoitus"
+msgstr "ohjeselite"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
@@ -1696,7 +2015,7 @@ msgstr "välilehti"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "välilehti"
+msgstr "välilehtisäädin"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
@@ -1758,6 +2077,10 @@ msgstr "kello"
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
 msgstr "erotin"
+
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "Lomake"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -1847,7 +2170,7 @@ msgstr "valittava valikkokohde"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
-msgstr "päiväyksen syöttökenttä"
+msgstr "päivämäärän syöttökenttä"
 
 #. Translators: Identifies an icon.
 msgid "icon"
@@ -1892,7 +2215,7 @@ msgstr "syöttöikkuna"
 
 #. Translators: Identifies a label.
 msgid "label"
-msgstr "nimi"
+msgstr "selite"
 
 #. Translators: Identifies a note field.
 msgid "note"
@@ -1921,7 +2244,7 @@ msgstr "juuripaneeli"
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
 msgid "edit bar"
-msgstr "muokkausrivi"
+msgstr "muokkauspalkki"
 
 #. Translators: Identifies a terminal window such as command prompt.
 msgid "terminal"
@@ -1949,7 +2272,7 @@ msgstr "muoto"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
-msgstr "jaettu paneeli"
+msgstr "jaettu ruutu"
 
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
@@ -2004,7 +2327,7 @@ msgstr "avattava luettelo"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
-msgstr "jakopainike"
+msgstr "jaettu painike"
 
 #. Translators: Identifies a menu button (a button which opens a menu of items).
 msgid "menu button"
@@ -2032,7 +2355,7 @@ msgstr "ilmaisin"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
-msgstr "kiertopainike"
+msgstr "askelluspainike"
 
 #. Translators: Identifies a sound clip on websites.
 msgid "sound"
@@ -2084,7 +2407,7 @@ msgstr "paneeli"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 msgid "password edit"
-msgstr "salasanan syöttökenttä"
+msgstr "salasanan muokkauskenttä"
 
 #. Translators: Identifies a font chooser.
 msgid "font chooser"
@@ -2107,7 +2430,8 @@ msgid "bold"
 msgstr "lihavoitu"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
+#. Translators: Reported when text is italicized.
+msgid "italic"
 msgstr "kursivoitu"
 
 #. Translators: Describes text formatting.
@@ -2161,6 +2485,12 @@ msgstr "asetussäädin"
 
 msgid "calendar"
 msgstr "kalenteri"
+
+msgid "video"
+msgstr "video"
+
+msgid "audio"
+msgstr "ääni"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2233,7 +2563,7 @@ msgstr "puuttuu"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
-msgstr "virheellinen syöte"
+msgstr "virheellinen arvo"
 
 msgid "modal"
 msgstr "valintaikkuna"
@@ -2266,13 +2596,13 @@ msgid "clickable"
 msgstr "napsautettava"
 
 msgid "editable"
-msgstr "muokattava"
+msgstr "muokattavissa"
 
 msgid "checkable"
-msgstr "valittava"
+msgstr "valittavissa"
 
 msgid "draggable"
-msgstr "vedettävä"
+msgstr "vedettävissä"
 
 msgid "dragging"
 msgstr "vedetään"
@@ -2328,6 +2658,10 @@ msgstr "lukitsematon"
 msgid "not selected"
 msgstr "ei valittu"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "ei painettu"
+
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
 msgstr "ei valittu"
@@ -2350,11 +2684,11 @@ msgstr "nykyinen sijainti"
 
 #. Translators: Presented when a date item is marked as current in a collection of date items
 msgid "current date"
-msgstr "nykyinen päiväys"
+msgstr "nykyinen päivämäärä"
 
 #. Translators: Presented when a time item is marked as current in a collection of time items
 msgid "current time"
-msgstr "nykyinen aika"
+msgstr "nykyinen kellonaika"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2367,21 +2701,39 @@ msgstr ""
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
-msgstr "Asetustiedostovirhe"
+msgstr "Virhe asetustiedostossa"
 
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Syöte-eletiedostossa on virheitä.\n"
+"Syötekomentotiedostossa on virheitä.\n"
 "Lisätietoja löytyy lokitiedostosta."
 
 msgid "gesture map File Error"
-msgstr "Virhe syöte-eletiedostossa"
+msgstr "Virhe syötekomentotiedostossa"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA käynnistetään, odota..."
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Vaaka"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Pysty"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Akkua ladataan. %d prosenttia"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Akkua ei ladata. %d prosenttia"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -2534,10 +2886,11 @@ msgstr ""
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
-"Lukee sovelluskohdistimen alla olevan rivin. Tämän komennon kahdesti "
-"painaminen tavaa sen."
+"Lukee sovelluskohdistimen alla olevan rivin. Kahdesti painettaessa rivi "
+"tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2650,27 +3003,27 @@ msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen sanojen puhumise
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "Komentonäppäinten puhuminen pois"
+msgstr "Komentonäppäimien puhuminen pois"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "Komentonäppäinten puhuminen käytössä"
+msgstr "Komentonäppäimien puhuminen käytössä"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
-"Ottaa käyttöön ja poistaa käytöstä sellaisten näppäinten puhumisen, jotka "
+"Ottaa käyttöön ja poistaa käytöstä sellaisten näppäimien puhumisen, jotka "
 "eivät ole kirjaimia, numeroita eivätkä muita merkkejä."
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "Fontin nimen lukeminen pois"
+msgstr "Fontin ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "Fontin nimen lukeminen käytössä"
+msgstr "Fontin ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -2678,28 +3031,28 @@ msgstr "Ottaa käyttöön fonttimuutosten ilmoittamisen tai poistaa sen käytös
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "Fonttikoon lukeminen pois"
+msgstr "Fonttikoon ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "Fonttikoon lukeminen käytössä"
+msgstr "Fonttikoon ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
 msgstr ""
-"Ottaa käyttöön fonttikoon muutosten ilmoittamisen tai poistaa sen käytöstä."
+"Ottaa käyttöön fonttikoon muutosten ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "Fonttimääreiden lukeminen pois"
+msgstr "Fonttimääreiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "Fonttimääreiden lukeminen käytössä"
+msgstr "Fonttimääreiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "Ottaa käyttöön fonttimääreiden ilmoittamisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön fonttimääreiden ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
@@ -2715,15 +3068,15 @@ msgstr "Ottaa käyttöön muokkausten lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
-msgstr "Korostuksen ilmoittaminen pois"
+msgstr "Korostuksen ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "Korostuksen ilmoittaminen käytössä"
+msgstr "Korostuksen ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Ottaa käyttöön korostuksen ilmoittamisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön korostuksen ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -2739,16 +3092,16 @@ msgstr "Ottaa käyttöön värien lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "Tasauksen lukeminen pois"
+msgstr "Tasauksen ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "Tasauksen lukeminen käytössä"
+msgstr "Tasauksen ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
 msgstr ""
-"Ottaa käyttöön tekstin tasauksen ilmoittamisen tai poistaa sen käytöstä."
+"Ottaa käyttöön tekstin tasauksen ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -2760,76 +3113,77 @@ msgstr "Tyylin lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
-msgstr "Ottaa käyttöön tyylimuutosten ilmoittamisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön tyylimuutosten lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "Kirjoitusvirheiden lukeminen pois"
+msgstr "Kirjoitusvirheiden ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "Kirjoitusvirheiden lukeminen käytössä"
+msgstr "Kirjoitusvirheiden ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr "Ottaa käyttöön kirjoitusvirheiden lukemisen tai poistaa sen käytöstä."
+msgstr ""
+"Ottaa käyttöön kirjoitusvirheiden ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "Sivunumeroiden lukeminen pois"
+msgstr "Sivunumeroiden ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "Sivunumeroiden lukeminen käytössä"
+msgstr "Sivunumeroiden ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
-msgstr "Ottaa käyttöön sivunumeroiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön sivunumeroiden ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "Rivinumeroiden lukeminen pois"
+msgstr "Rivinumeroiden ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "Rivinumeroiden lukeminen käytössä"
+msgstr "Rivinumeroiden ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
-msgstr "Ottaa käyttöön rivinumeroiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön rivinumeroiden ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
-msgstr "Ilmoita rivien sisennykset puheella"
+msgstr "Ilmaise rivien sisennykset puheella"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with tones"
-msgstr "Ilmoita rivien sisennykset äänimerkeillä"
+msgstr "Ilmaise rivien sisennykset äänimerkeillä"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech and tones"
-msgstr "Ilmoita rivien sisennykset puheella ja äänimerkeillä"
+msgstr "Ilmaise rivien sisennykset puheella ja äänimerkeillä"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation off"
-msgstr "Rivien sisennysten ilmoittaminen pois"
+msgstr "Rivien sisennysten ilmaiseminen pois"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Cycles through line indentation settings"
-msgstr "Vaihtaa rivien sisennysten ilmoittamisen asetusta."
+msgstr "Vaihtaa rivien sisennysten ilmaisemisen asetusta."
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "Kappalesisennysten lukeminen pois"
+msgstr "Kappalesisennysten ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "Kappalesisennysten lukeminen käytössä"
+msgstr "Kappalesisennysten ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr ""
-"Ottaa käyttöön kappalesisennysten ilmoittamisen tai poistaa sen käytöstä."
+"Ottaa käyttöön kappalesisennysten ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -2845,141 +3199,142 @@ msgstr "Ottaa käyttöön rivivälien ilmoittamisen tai poistaa sen käytöstä.
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "Taulukoiden lukeminen pois"
+msgstr "Taulukoiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "Taulukoiden lukeminen käytössä"
+msgstr "Taulukoiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
-msgstr "Ottaa käyttöön taulukoiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön taulukoiden ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "Taulukon rivi- ja sarakeotsikoiden lukeminen pois"
+msgstr "Taulukon rivi- ja sarakeotsikoiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "Taulukon rivi- ja sarakeotsikoiden lukeminen käytössä"
+msgstr "Taulukon rivi- ja sarakeotsikoiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
 msgstr ""
-"Ottaa käyttöön taulukon rivi- ja sarakeotsikoiden lukemisen tai poistaa sen "
-"käytöstä."
+"Ottaa käyttöön taulukon rivi- ja sarakeotsikoiden ilmaisemisen tai poistaa "
+"sen käytöstä."
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "Taulukon solujen koordinaattien lukeminen pois"
+msgstr "Taulukon solujen koordinaattien ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "Taulukon solujen koordinaattien lukeminen käytössä"
+msgstr "Taulukon solujen koordinaattien ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
 msgstr ""
-"Ottaa käyttöön taulukon solujen koordinaattien lukemisen tai poistaa sen "
+"Ottaa käyttöön taulukon solujen koordinaattien ilmaisemisen tai poistaa sen "
 "käytöstä."
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "Linkkien lukeminen pois"
+msgstr "Linkkien ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "Linkkien lukeminen käytössä"
+msgstr "Linkkien ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
-msgstr "Ottaa käyttöön linkkien lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön linkkien ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "Kommenttien lukeminen pois"
+msgstr "Kommenttien ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "Kommenttien lukeminen käytössä"
+msgstr "Kommenttien ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
-msgstr "Ottaa käyttöön kommenttien lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön kommenttien ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "Luetteloiden lukeminen pois"
+msgstr "Luetteloiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "Luetteloiden lukeminen käytössä"
+msgstr "Luetteloiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
-msgstr "Ottaa käyttöön luetteloiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön luetteloiden ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "Otsikoiden lukeminen pois"
+msgstr "Otsikoiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "Otsikoiden lukeminen käytössä"
+msgstr "Otsikoiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
-msgstr "Ottaa käyttöön otsikoiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön otsikoiden ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "Sisennettyjen lainausten lukeminen pois"
+msgstr "Sisennettyjen lainausten ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "Sisennettyjen lainausten lukeminen käytössä"
+msgstr "Sisennettyjen lainausten ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
 msgstr ""
-"Ottaa käyttöön sisennettyjen lainausten lukemisen tai poistaa sen käytöstä."
+"Ottaa käyttöön sisennettyjen lainausten ilmaisemisen tai poistaa sen "
+"käytöstä."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "Kiintopisteiden lukeminen pois"
+msgstr "Kiintopisteiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "Kiintopisteiden lukeminen käytössä"
+msgstr "Kiintopisteiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
-msgstr "Ottaa käyttöön kiintopisteiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön kiintopisteiden ilmaiseminen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "Kehysten lukeminen pois"
+msgstr "Kehysten ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "Kehysten lukeminen käytössä"
+msgstr "Kehysten ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
-msgstr "Ottaa käyttöön kehysten lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön kehysten ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "Napsautettavien kohteiden ilmoittaminen pois"
+msgstr "Napsautettavien kohteiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "Napsautettavien kohteiden ilmoittaminen käytössä"
+msgstr "Napsautettavien kohteiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
 msgstr ""
-"Ottaa käyttöön napsautettavien kohteiden ilmoittamisen tai poistaa sen "
+"Ottaa käyttöön napsautettavien kohteiden ilmaisemisen tai poistaa sen "
 "käytöstä."
 
 #. Translators: Reported when the user cycles through speech symbol levels
@@ -3054,6 +3409,7 @@ msgid "No navigator object"
 msgstr "Ei navigointiobjektia"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s kopioitu leikepöydälle"
@@ -3324,12 +3680,15 @@ msgstr ""
 "Vaihtaa selaus- ja vuorovaikutustilojen välillä. Vuorovaikutustilassa "
 "näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä "
 "mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa "
-"ollessasi voit liikkua dokumentissa kohdistimella, pikanavigointinäppäimillä "
-"jne."
+"ollessasi voit liikkua dokumentissa kohdistimella, pikaselausnäppäimillä jne."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
 msgstr "Sulkee NVDA:n."
+
+#. Translators: Input help mode message for restart NVDA command.
+msgid "Restarts NVDA!"
+msgstr "Käynnistää NVDA:n uudelleen."
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3340,7 +3699,7 @@ msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta lähtien "
+"Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta alkaen "
 "siirtäen samalla sitä."
 
 #. Translators: Input help mode message for say all with system caret command.
@@ -3378,10 +3737,12 @@ msgstr "Tilariviä ei löydy"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Lukee nykyisen sovelluksen tilarivin ja siirtää navigointiobjektin sen "
-"kohdalle. Kahdesti painettaessa tiedot tavataan."
+"kohdalle. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa ne "
+"kopioidaan leikepöydälle."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3612,7 +3973,7 @@ msgstr "Avaa symbolien puhumisen asetusten valintaikkunan."
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Avaa syöte-eleiden valintaikkunan."
+msgstr "Avaa Syötekomennot-valintaikkunan."
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3640,18 +4001,18 @@ msgstr ""
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "puheen tarkastelu pois"
+msgstr "Puheentarkastelu pois"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "puheen tarkastelu käytössä"
+msgstr "Puheentarkastelu käytössä"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Ottaa käyttöön tai poistaa käytöstä Puheen tarkastelun, kelluvan ikkunan, "
+"Ottaa käyttöön tai poistaa käytöstä puheentarkastelun, kelluvan ikkunan, "
 "jonka avulla voit tarkastella NVDA:n tällä hetkellä puhumaa tekstiä."
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
@@ -3673,6 +4034,17 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Muuttaa asetusta, joka saa pistenäytön seuraamaan joko kohdistusta tai "
 "tarkastelukohdistinta."
+
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Pistenäytön kohdistuskontekstin näyttäminen: %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "Vaihda tapaa, jolla kontekstitiedot näytetään pistenäytöllä."
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -3790,6 +4162,19 @@ msgstr "Syöttää pistekirjoitusta pistenäppäimistön avulla."
 msgid "Moves the braille display to the current focus"
 msgstr "Siirtää pistenäytön nykyiseen kohdistukseen."
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "Poistaa viimeksi syötetyn pistesolun tai -merkin."
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr ""
+"Kääntää minkä tahansa pistekirjoitussyötteen ja painaa Enter-näppäintä."
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "Kääntää minkä tahansa pistekirjoitussyötteen."
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Liitännäiset ladattu uudelleen"
@@ -3849,6 +4234,17 @@ msgstr "Ei matemaattista sisältöä"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Aloittaa vuorovaikutuksen matemaattisen sisällön kanssa."
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "Windows 10:n tekstintunnistus ei ole käytettävissä"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr ""
+"Tunnistaa nykyisen navigointiobjektin sisällön Windows 10:n "
+"tekstintunnistuksella."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4271,13 +4667,1068 @@ msgstr "Käyttäjän oletus"
 msgid "%s cursor"
 msgstr "Kohdistin: %s"
 
-#. Translators: The description of the NVDA service.
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "10-point star"
+msgstr "10-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "12-point star"
+msgstr "12-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "16-point star"
+msgstr "16-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "24-point star"
+msgstr "24-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "32-point star"
+msgstr "32-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "4-point star"
+msgstr "4-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "5-point star"
+msgstr "5-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "6-point star"
+msgstr "6-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "7-point star"
+msgstr "7-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "8-point star"
+msgstr "8-sakarainen tähti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arc"
+msgstr "Kaari"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Balloon"
+msgstr "Ilmapallo"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent arrow"
+msgstr "Kaareutuva nuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent Up Arrow"
+msgstr "Ylös kääntyvä nuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bevel"
+msgstr "Viisto"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Block arc"
+msgstr "Leveä kaari"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Can"
+msgstr "Lieriö"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Plus symbol"
+msgstr "Kaavion plus-symboli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Star Symbol"
+msgstr "Kaavion tähti-symboli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart X Symbol"
+msgstr "Kaavion x-symboli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chevron"
+msgstr "Lovettu nuolenkärki"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circle with line through center"
+msgstr "Viivan keskeltä halkaisema ympyrä"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circular Arrow"
+msgstr "Kehänuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud shape"
+msgstr "Pilvi"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud callout"
+msgstr "Kuvaselitepilvi"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Corner"
+msgstr "Kulma"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "four snipped corners"
+msgstr "Neljä leikattua kulmaa"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cross"
+msgstr "Risti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cube"
+msgstr "Kuutio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Down Arrow"
+msgstr "Kaarinuoli alas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon banner"
+msgstr "Nauha"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Left Arrow"
+msgstr "Kaarinuoli vasemmalle"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Right Arrow"
+msgstr "Kaarinuoli oikealle"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Arrow"
+msgstr "Kaarinuoli ylös"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Ribbon banner"
+msgstr "Kaareva nauha (näkymä alapuolelta)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decagon"
+msgstr "Kymmenkulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diagonal stripe"
+msgstr "Vinoraita"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diamond"
+msgstr "Timantti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Dodecagon"
+msgstr "Kaksitoistakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Donut"
+msgstr "Rengas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double brace"
+msgstr "Aaltosuljepari"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double bracket"
+msgstr "Hakasuljepari"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double wave"
+msgstr "Kaksoisaalto"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Down Arrow"
+msgstr "Nuoli alas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Down Arrow"
+msgstr "Kuvatekstinuoli alas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Explosion"
+msgstr "Räjähdys"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Alternate process flowchart symbol"
+msgstr "Vuokaaviosymboli: Vaihtoehtoinen käsittely"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Card flowchart symbol"
+msgstr "Vuokaaviosymboli: Kortti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Collate flowchart symbol"
+msgstr "Vuokaaviosymboli: Lomittaminen"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Connector flowchart symbol"
+msgstr "Vuokaaviosymboli: Liitin"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Data flowchart symbol"
+msgstr "Vuokaaviosymboli: Tiedot"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decision flowchart symbol"
+msgstr "Vuokaaviosymboli: Valinta"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Delay flowchart symbol"
+msgstr "Vuokaaviosymboli: Viive"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Direct access storage flowchart symbol"
+msgstr "Vuokaaviosymboli: Suorasaantimuisti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Display flowchart symbol"
+msgstr "Vuokaaviosymboli: Näyttö"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Document flowchart symbol"
+msgstr "Vuokaaviosymboli: Tiedosto"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Extract flowchart symbol"
+msgstr "Vuokaaviosymboli: Erottaminen"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Internal storage flowchart symbol"
+msgstr "Vuokaaviosymboli: Keskusmuisti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Magnetic disk flowchart symbol"
+msgstr "Vuokaaviosymboli: Magneettilevy"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual input flowchart symbol"
+msgstr "Vuokaaviosymboli: Käsinsyöttö"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual operation flowchart symbol"
+msgstr "Vuokaaviosymboli: Manuaalinen käsittely"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Merge flowchart symbol"
+msgstr "Vuokaaviosymboli: Yhdistäminen"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Multi-document flowchart symbol"
+msgstr "Vuokaaviosymboli: Useita tiedostoja"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Offline storage flowchart symbol"
+msgstr "Vuokaaviosymboli: Offline-säilö"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Off-page connector flowchart symbol"
+msgstr "Vuokaaviosymboli: Sivujen välinen yhdysviiva"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'Or' flowchart symbol"
+msgstr "Vuokaaviosymboli: Tai"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Predefined process flowchart symbol"
+msgstr "Vuokaaviosymboli: Ennalta määrätty käsittely"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Preparation flowchart symbol"
+msgstr "Vuokaaviosymboli: Asettelu"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Process flowchart symbol"
+msgstr "Vuokaaviosymboli: Käsittely"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Punched tape flowchart symbol"
+msgstr "Vuokaaviosymboli: Reikänauha"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sequential access storage flowchart symbol"
+msgstr "Vuokaaviosymboli: Peräkkäissaantimuisti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sort flowchart symbol"
+msgstr "Vuokaaviosymboli: Lajittelu"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Stored data flowchart symbol"
+msgstr "Vuokaaviosymboli: Tallennettu tieto"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Summing junction flowchart symbol"
+msgstr "Vuokaaviosymboli: summaava liitoskohta"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Terminator flowchart symbol"
+msgstr "Vuokaaviosymboli: Rajoitin"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Folded corner"
+msgstr "Taitettu kulma"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular picture frame"
+msgstr "Kuvakehyssuorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Funnel"
+msgstr "Suppilo"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with six teeth"
+msgstr "6-hampainen vaihteisto"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with nine teeth"
+msgstr "9-hampainen vaihteisto"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Half of rectangular picture frame"
+msgstr "Puolikas kuvakehyssuorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heart"
+msgstr "Sydän"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heptagon"
+msgstr "Seitsenkulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Hexagon"
+msgstr "Kuusikulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Horizontal scroll"
+msgstr "Vaakasuora käärö"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Isosceles triangle"
+msgstr "Tasakylkinen kolmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left Arrow"
+msgstr "Nuoli vasemmalle"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Left Arrow"
+msgstr "Kuvatekstinuoli vasemmalle"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left brace"
+msgstr "Vasen aaltosulje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left bracket"
+msgstr "Vasen hakasulje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Counter-clockwise Circular arrow"
+msgstr "Vastapäiväinen kehänuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended horizontal Arrow"
+msgstr "Kaksipäinen vaakasuuntainen nuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Double-ended horizontal Arrow"
+msgstr "Kaksipäinen vaakasuuntainen kuvatekstinuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Circular arrow"
+msgstr "Kaksipäinen kehänuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon with left and right arrows"
+msgstr "Nauha, jonka molemmissa päissä nuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left right and up Arrows"
+msgstr "Nuoli vasemmalle, oikealle ja ylös"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left and up Arrows"
+msgstr "Nuoli vasemmalle ja ylös"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Lightning bolt"
+msgstr "Salama"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line Callout"
+msgstr "Kuvaseliteviiva 1"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal accent bar"
+msgstr "Kuvaseliteviiva 1 (korostusviiva)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border and horizontal accent bar"
+msgstr "Kuvaseliteviiva 1 (reuna ja korostusviiva)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal line"
+msgstr "Vaakasuora kuvatekstiviiva"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal straight line"
+msgstr "Vino kuvatekstiviiva"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal callout line and accent bar"
+msgstr "Kuvaseliteviiva 2 (korostusviiva)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, diagonal straight line and accent bar"
+msgstr "Kuvaseliteviiva 2 (reuna ja korostusviiva)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and diagonal callout line"
+msgstr "Kuvaseliteviiva 1 (ei reunaa)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled line"
+msgstr "Kuvaseliteviiva 2"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled callout line and accent bar"
+msgstr "Kuvaseliteviiva 3 (korostusviiva)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, angled callout line, and accent bar"
+msgstr "Kuvaseliteviiva 3 (reuna ja korostusviiva)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and angled callout line"
+msgstr "Kuvaseliteviiva 2 (ei reunaa)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with callout line segments forming a U-shape"
+msgstr "Kuvatekstiviiva (U)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with accent bar and callout line segments forming a U-shape"
+msgstr "Kuvatekstiviiva (korostusviiva ja U)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
 msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"Mahdollistaa NVDA:n käyttämisen Windowsin kirjautumisikkunassa sekä "
-"käyttäjätilien valvonnan kehotteissa ja muissa suojatuissa ruuduissa."
+"Callout with border, accent bar, and callout line segments forming a U-shape"
+msgstr "Kuvatekstiviiva (reuna, korostusviiva ja U)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and callout line segments forming a U-shape"
+msgstr "Kuvatekstiviiva (ei reunaa, U)"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line inverse"
+msgstr "Käänteinen rivi"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Division symbol"
+msgstr "Jaettuna"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Equivalence symbol"
+msgstr "Yhtä suuri kuin"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Subtraction symbol"
+msgstr "Miinus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Multiplication symbol"
+msgstr "Kertaa"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Non-equivalence symbol"
+msgstr "Eri suuri kuin"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Addition symbol"
+msgstr "Plus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Moon"
+msgstr "Kuu"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid with asymmetrical non-parallel sides"
+msgstr "Puolisuunnikas epäsymmetrisin ei-rinnakkaisin sivuin"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'No' symbol"
+msgstr "\"Ei\"-symboli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Notched RightArrow"
+msgstr "Lovettu nuoli oikealle"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Octagon"
+msgstr "Kahdeksankulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval"
+msgstr "Ovaali"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval-shaped callout"
+msgstr "Kuvatekstisoikio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Parallelogram"
+msgstr "Suunnikas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Pentagon"
+msgstr "Viisikulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Incomplete Pie with wedge missing"
+msgstr "Puoliympyrä"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Quarter Pie Wedge"
+msgstr "Sektori"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque"
+msgstr "Kyltti"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque Tabs"
+msgstr "Suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arrows pointing left right up and down"
+msgstr "Nuoli vasemmalle, oikealle, ylös ja alas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Arrows pointing left right up and down"
+msgstr "Kuvatekstinuoli vasemmalle, oikealle, ylös ja alas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle"
+msgstr "Suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular callout"
+msgstr "Kuvatekstisuorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow"
+msgstr "Nuoli oikealle"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Right Arrow"
+msgstr "Kuvatekstinuoli oikealle"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right brace"
+msgstr "Oikea aaltosulje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right bracket"
+msgstr "Oikea hakasulje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right triangle"
+msgstr "Suorakulmainen kolmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one rounded corner"
+msgstr "Yhdestä kulmasta pyöristetty suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two rounded corners diagonally-opposed"
+msgstr "Vastakkaisista kulmista pyöristetty suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two-rounded corners that share a side"
+msgstr "Saman puolen kulmista pyöristetty suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle"
+msgstr "Pyöristetty suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle-shaped callout"
+msgstr "Pyöristetty kuvatekstisuorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Smiley face"
+msgstr "Iloiset kasvot"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner"
+msgstr "Yhdestä kulmasta leikattu suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners diagonally-opposed"
+msgstr "Vastakkaisista kulmista leikattu suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners that share a side"
+msgstr "Saman puolen kulmista leikattu suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner and one rounded corner"
+msgstr "Yhdestä kulmasta leikattu ja pyöristetty suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Four small squares that define a rectangular shape"
+msgstr "Neljästä pienestä neliöstä koostuva suorakulmio"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow with Stripes"
+msgstr "Raidoitettu nuoli oikealle"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sun"
+msgstr "Aurinko"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved arrow"
+msgstr "Kaareva nuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Water droplet"
+msgstr "Vesipisara"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid"
+msgstr "Puolisuunnikas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Up Arrow"
+msgstr "Nuoli ylös"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with UpArrow"
+msgstr "Kuvatekstinuoli ylös"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Arrow pointing up and down"
+msgstr "Kaksipäinen nuoli ylös ja alas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with arrows that point up and down"
+msgstr "Kuvatekstinuoli ylös ja alas"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "U-shaped Arrow"
+msgstr "U-käännösnuoli"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Vertical scroll"
+msgstr "Pystysuora käärö"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Wave"
+msgstr "Aalto"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Back"
+msgstr "Edellinen"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Beginning"
+msgstr "Alkuun"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Document"
+msgstr "Asiakirja"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "End"
+msgstr "Loppuun"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Next"
+msgstr "Seuraava"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Help"
+msgstr "Ohje"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Home"
+msgstr "Koti"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Information"
+msgstr "Tietoja"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Movie"
+msgstr "Filmi"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Return"
+msgstr "Paluu"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Sound"
+msgstr "Ääni"
 
 msgid "Type help(object) to get help about object."
 msgstr "Kirjoita help(objekti) saadaksesi objektin ohjeet."
@@ -4290,19 +5741,19 @@ msgstr "NVDA:n Python-konsoli"
 
 #. Translators: One of the review modes.
 msgid "Object review"
-msgstr "Objektitarkastelu"
+msgstr "Objektintarkastelu"
 
 #. Translators: One of the review modes.
 msgid "Document review"
-msgstr "Dokumenttitarkastelu"
+msgstr "Dokumentintarkastelu"
 
 #. Translators: One of the review modes.
 msgid "Screen review"
-msgstr "Ruututarkastelu"
+msgstr "Ruuduntarkastelu"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "Jäljittelee %s-näppäimen painamista näppäimistöltä"
+msgstr "Jäljittelee näppäimistön %s-näppäimen painamista."
 
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
@@ -4385,7 +5836,7 @@ msgstr "jossa %s kohdetta"
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
 msgid "out of %s"
-msgstr "%s loppui"
+msgstr "%s loppu"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
@@ -4542,10 +5993,6 @@ msgstr "ei korostusta"
 msgid "no bold"
 msgstr "ei lihavointia"
 
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "kursivoitu"
-
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "ei kursivointia"
@@ -4691,11 +6138,11 @@ msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "taulukko jossa {columnCount} saraketta ja {rowCount} riviä"
 
 msgid "NVDA Speech Viewer"
-msgstr "Puheen tarkastelu"
+msgstr "Puheentarkastelu"
 
 #. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "&Näytä Puheen tarkastelu käynnistettäessä"
+msgstr "&Näytä puheentarkastelu käynnistettäessä"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -4708,7 +6155,7 @@ msgstr "Kieli"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
-msgstr "&Puheääni:"
+msgstr "&Puheääni"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4717,7 +6164,7 @@ msgstr "Puheääni"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
-msgstr "&Muunnelma:"
+msgstr "&Muunnelma"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4726,7 +6173,7 @@ msgstr "Muunnelma"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
-msgstr "&Nopeus:"
+msgstr "&Nopeus"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4735,7 +6182,7 @@ msgstr "Nopeus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
-msgstr "&Voimakkuus:"
+msgstr "&Voimakkuus"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4744,7 +6191,7 @@ msgstr "Voimakkuus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
-msgstr "&Korkeus:"
+msgstr "&Korkeus"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4753,7 +6200,7 @@ msgstr "Korkeus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
-msgstr "&Sävy:"
+msgstr "&Sävy"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4997,16 +6444,15 @@ msgstr ""
 "URL-osoite: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} on suojattu GNU General Public License (versio 2) -lisenssillä. Voit "
-"vapaasti levittää tai muuttaa tätä ohjelmistoa miten tahansa, kunhan "
-"toimitat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä "
-"koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita, kuten myös "
-"kaikkia johdannaisia.\n"
+"{name} on suojattu GNU GPL 2.0 -lisenssillä. Voit vapaasti jakaa tai muuttaa "
+"tätä ohjelmistoa, kunhan toimitat lisenssin sen mukana ja pidät lähdekoodin "
+"kaikkien saatavilla. Tämä koskee sekä alkuperäisiä että muokattuja "
+"ohjelmistokopioita ja kaikkia johdannaisia.\n"
 "Voit tarkastella lisenssiä Ohje-valikosta saadaksesi lisätietoja.\n"
 "Lisenssi on luettavissa myös verkossa osoitteessa http://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name}:ta kehittää NV Access, voittoa tavoittelematon järjestö, joka on "
+"{name}:ta kehittää NV Access, voittoa tavoittelematon organisaatio, joka on "
 "sitoutunut auttamaan ja edistämään vapaan ja avoimen lähdekoodin ratkaisuja "
 "sokeille ja heikkonäköisille henkilöille.\n"
 "Jos pidät NVDA:ta hyödyllisenä ja haluat sen kehityksen jatkuvan, harkitse "
@@ -5059,6 +6505,10 @@ msgstr "Siirtää navigointiobjektin ja kohdistuksen seuraavaan riviin"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Siirtää navigointiobjektin ja kohdistuksen edelliseen riviin"
+
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Ehdotukset"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -5134,7 +6584,7 @@ msgstr "sisältää liitteen"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
-msgstr "merkitty"
+msgstr "liputettu"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -5192,6 +6642,36 @@ msgstr "Piilokopio:"
 #. Translators: when an email is unread
 msgid "unread"
 msgstr "lukematon"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "purple flag"
+msgstr "Liila lippu"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Orange flag"
+msgstr "Oranssi lippu"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Green flag"
+msgstr "Vihreä lippu"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Yellow flag"
+msgstr "Keltainen lippu"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Blue flag"
+msgstr "Sininen lippu"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Red flag"
+msgstr "Punainen lippu"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -5396,6 +6876,10 @@ msgstr "Perustyylin pikkukuvat"
 msgid "Slide {slideNumber}"
 msgstr "Dia {slideNumber}"
 
+#. Translators:   an unlabelled item in Powerpoint another shape is overlapping
+msgid "other item"
+msgstr "muu kohde"
+
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5595,6 +7079,7 @@ msgstr "Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Sarja: {portName}"
@@ -5623,12 +7108,21 @@ msgstr "näytön vieritys"
 msgid "line scroll"
 msgstr "rivin vieritys"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Näyttää Handy Techin ajurin asetustenmääritysikkunan."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Pistekirjoituksen syöttö käytössä"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Pistekirjoituksen syöttö poistettu käytöstä"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Ottaa käyttöön pistekirjoituksen syötön tai poistaa sen käytöstä."
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -5653,6 +7147,39 @@ msgstr "Papenmeier BRAILLEX (vanhat mallit)"
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "Seika"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "Tulokset"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "Aktivoi kohdistimen kohdalla olevan tekstin, mikäli mahdollista."
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "Hylkää tunnistuksen tulokset."
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "Olet jo sisältötunnistuksen tuloksissa"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "Sisältö ei ole näkyvissä"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "Tunnistetaan"
+
+msgid "Recognition failed"
+msgstr "Tunnistus epäonnistui"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -5781,6 +7308,10 @@ msgstr "&Dokumenttien muotoilu..."
 msgid "Change settings of document properties"
 msgstr "Muuta dokumenttien muotoiluasetuksia."
 
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "&Windows 10 OCR..."
+msgstr "Tekstintunnistus (&Windows 10)..."
+
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
 msgstr "&Oletus..."
@@ -5821,7 +7352,7 @@ msgstr "&Välimerkkien ja symboleiden puhuminen..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "Syöte-e&leet..."
+msgstr "Syöte&komennot..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -5833,7 +7364,7 @@ msgstr "Näytä l&oki"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Pu&heen tarkastelu"
+msgstr "Pu&heentarkastelu"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -5938,21 +7469,21 @@ msgstr "Sulje NVDA"
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
+"By default, the numpad Insert and main Insert keys may both be used as the "
 "NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"functions."
 msgstr ""
-"Suurin osa NVDA:n hallintaan tarkoitetuista komennoista edellyttävät NVDA-"
+"Suurin osa NVDA:n hallintaan tarkoitetuista komennoista edellyttää NVDA-"
 "näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
-"Oletusarvoisesti sekä normaalia että numeronäppäimistön Insertiä voidaan "
+"Oletusarvoisesti sekä tavallista että numeronäppäimistön Insertiä voidaan "
 "käyttää NVDA-näppäimenä.\n"
 "Voit määrittää NVDA:n käyttämään myös Capslockia NVDA-näppäimenä.\n"
-"Paina milloin tahansa NVDA+N avataksesi NVDA-valikon.\n"
+"Paina NVDA+N milloin tahansa avataksesi NVDA-valikon.\n"
 "Tästä valikosta voit määrittää NVDA:n asetuksia, lukea ohjeita ja käyttää "
-"muita toimintoja.\n"
+"muita toimintoja."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -5966,19 +7497,24 @@ msgstr "Tervetuloa käyttämään NVDA:ta!"
 msgid "Options"
 msgstr "Asetukset"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: The label of a combobox in the Welcome dialog.
+#. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
+msgid "&Keyboard layout:"
+msgstr "&Näppäimistöasettelu:"
 
-#. Translators: The label of a check box in the Welcome dialog.
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "Käytä &Caps Lockia  NVDA-näppäimenä"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "Käynnistä &automaattisesti sisäänkirjautumisen jälkeen"
 
-#. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
-msgid "Show this dialog when NVDA starts"
-msgstr "Näytä tämä valintaikkuna NVDA:n käynnistyessä"
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "&Näytä tämä valintaikkuna NVDA:n käynnistyessä"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -6126,11 +7662,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Lisäosan asennus"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"Tästä lisäosasta on jo asennettu toinen versio. Haluatko päivittää sen?"
+"Olet asentamassa versiota {newVersion} lisäosasta {summary}, joka on jo "
+"asennettu. Haluatko silti päivittää?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Tämä lisäosa on jo asennettu. Haluatko päivittää {summary}-version "
+"{curVersion} versioon {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -6308,11 +7856,11 @@ msgstr "Virhe uudelleennimettäessä profiilia."
 #. %s is replaced by the application executable name.
 #, python-format
 msgid "Current application (%s)"
-msgstr "Nykyinen sovellus (%s)"
+msgstr "Nykyisessä sovelluksessa (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
-msgstr "Lue kaikki"
+msgstr "Jatkuvassa luvussa"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
 msgid ""
@@ -6353,7 +7901,7 @@ msgid "Manual activation"
 msgstr "Ota käyttöön manuaalisesti"
 
 msgid "Use this profile for:"
-msgstr "Käytä tätä profiilia kohteessa:"
+msgstr "Käytä tätä profiilia:"
 
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
@@ -6538,6 +8086,10 @@ msgstr "Valitse massamuistiversion hakemisto"
 msgid "Copy current &user configuration"
 msgstr "Kopioi &käyttäjän nykyiset asetukset"
 
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Käynnistä uusi massamuistiversio luonnin jälkeen"
+
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
@@ -6575,7 +8127,7 @@ msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon %s."
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
-msgstr "Lokin tarkastelu"
+msgstr "Lokintarkastelu"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
@@ -6792,10 +8344,10 @@ msgstr "Käytä tava&ustoimintoa (jos mahdollista)"
 msgid "Keyboard Settings"
 msgstr "Näppäimistöasetukset"
 
-#. Translators: This is the label for a combobox in the
+#. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-msgid "&Keyboard layout:"
-msgstr "&Näppäimistöasettelu:"
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6830,7 +8382,7 @@ msgstr "Keskeytä puhe Enter-näppäintä painettaessa"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "Käytä pika&lukua Lue kaikki -toiminnossa"
+msgstr "Käytä pika&lukua jatkuvassa luvussa"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7011,6 +8563,11 @@ msgstr "Ilmaise taustalla olevat edistymispalkit"
 msgid "Report dynamic &content changes"
 msgstr "Lue d&ynaamisen sisällön muutokset"
 
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "Toista ääni &automaattisten ehdotusten tullessa näkyviin"
+
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
 msgstr "Selaustilan asetukset"
@@ -7018,12 +8575,12 @@ msgstr "Selaustilan asetukset"
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 msgid "&Maximum number of characters on one line"
-msgstr "&Merkkien enimmäismäärä rivillä:"
+msgstr "&Merkkien enimmäismäärä rivillä"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 msgid "&Number of lines per page"
-msgstr "R&ivien enimmäismäärä sivulla:"
+msgstr "R&ivien enimmäismäärä sivulla"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7048,7 +8605,7 @@ msgstr "Automaattinen vuorovaikutustila kohdistuksen muuttuessa"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic focus mode for caret movement"
-msgstr "Automaattinen vuorovaikutustila kohdistinta liikutettaessa"
+msgstr "Automaattinen vuorovaikutustila kohdistinta siirrettäessä"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7058,7 +8615,7 @@ msgstr "Ilmaise vuorovaikutus- ja selaustilat äänimerkillä"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "Estä mui&den kuin komentoeleiden pääsy dokumenttiin"
+msgstr "Estä mui&den kuin syötekomentojen pääsy dokumenttiin"
 
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
@@ -7070,7 +8627,7 @@ msgid ""
 "NVDA."
 msgstr ""
 "Seuraavat asetukset määrittävät, minkä tyyppisiä dokumenttien muotoiluja "
-"NVDA ilmoittaa."
+"NVDA ilmaisee."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -7145,7 +8702,7 @@ msgstr "Rivi&numerot"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "Rivien &sisennysten ilmoittaminen:"
+msgstr "Rivien &sisennysten ilmaiseminen:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
@@ -7247,6 +8804,14 @@ msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "Tekstintunnistus (Windows 10)"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "Tunnistuksen &kieli:"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "Täsmää ka&ikkialla"
@@ -7256,7 +8821,7 @@ msgid "Whole &word"
 msgstr "Koko &sana"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "Sääntö&lauseke"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -7365,19 +8930,27 @@ msgstr "Vilkkuva kohdistin"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "&Kohdistimen vilkkumisnopeus (ms):"
+msgstr "&Kohdistimen vilkkumisnopeus (ms)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "Kohdistimen m&uoto:"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "Kohdistimen muoto &kohdistukselle:"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "Kohdistimen muoto tarkaste&lukohdistimelle:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-msgid "Message timeout (sec)"
-msgstr "&Ilmoitusten aikakatkaisu (sek):"
+msgid "Message &timeout (sec)"
+msgstr "Ilmoitusten aikakatkaisu (sek)"
+
+#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+msgid "Show &messages indefinitely"
+msgstr "Näytä il&moitukset pysyvästi"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "Braille tethered to:"
-msgstr "Pistenäyttö seuraa:"
+msgid "B&raille tethered to:"
+msgstr "Pist&enäyttö seuraa:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -7386,6 +8959,10 @@ msgstr "Lue &kappaleittain"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "Vältä &sanojen katkaisua"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "Kohdistuskontekstin näyttäminen:"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -7448,7 +9025,7 @@ msgstr "Symboli \"%s\" on jo olemassa."
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
-msgstr "Syöte-eleet"
+msgstr "Syötekomennot"
 
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
@@ -7464,13 +9041,13 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "Anna syöte-ele:"
+msgstr "Anna syötekomento:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Virhe tallennettaessa käyttäjän määrittämiä eleitä - tiedostojärjestelmä "
-"luultavasti vain luku -tyyppiä."
+"Virhe tallennettaessa käyttäjän määrittämiä syötekomentoja - "
+"tiedostojärjestelmä on luultavasti vain luku -tyyppiä."
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -7490,6 +9067,10 @@ msgstr "ei mitään"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "Nopeuden l&isäys"
+
+#. Translators: Description for a speech synthesizer.
+msgid "Windows OneCore voices"
+msgstr "Windows OneCore"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -7696,11 +9277,6 @@ msgstr "K&ommentit"
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
 msgstr "K&aavat"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "Lom&akekentät"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8691,14 +10267,26 @@ msgstr "Ensisijainen ylätunniste"
 msgid "Text frame"
 msgstr "Tekstikehys"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "kommentti: {text}, muokkaaja: {author}, päiväys: {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Kirjoitusvirhe: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -8945,6 +10533,11 @@ msgstr "Ei taulukossa"
 msgid "&Annotations"
 msgstr "&Selitteet"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "V&irheet"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
@@ -8953,5 +10546,5 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr "Haluatko varmasti poistaa tämän profiilin? Poistoa ei voi perua."
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Näyttää Handy Techin ajurin asetustenmääritysikkunan."

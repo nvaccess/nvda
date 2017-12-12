@@ -28,7 +28,20 @@ def upgradeConfigFrom_0_to_1(profile):
 		pass
 	else:
 		newMinBlinkRate = 200
-		if blinkRate < newMinBlinkRate :
+		if blinkRate < newMinBlinkRate:
 			profile["braille"]["cursorBlinkRate"] = newMinBlinkRate
-			if blinkRate < 1 :
+			if blinkRate < 1:
 				profile["braille"]["cursorBlink"] = False
+
+def upgradeConfigFrom_1_to_2(profile):
+	# Schema has been modified to split cursor shape into focus and review shapes
+	# Previously, the same cursor shape was used for focus and review
+	try:
+		cursorShape = int(profile["braille"]["cursorShape"])
+	except KeyError as e:
+		# Setting does not exist, no need for upgrade of this setting
+		log.debug("No cursorShape, no action taken.")
+		pass
+	else:
+		del profile["braille"]["cursorShape"]
+		profile["braille"]["cursorShapeFocus"] = cursorShape

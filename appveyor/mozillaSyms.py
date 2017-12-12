@@ -18,7 +18,7 @@ SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 DUMP_SYMS = os.path.join(SCRIPT_DIR, "dump_syms.exe")
 NVDA_SOURCE = os.path.join(os.path.dirname(SCRIPT_DIR), "source")
 NVDA_LIB = os.path.join(NVDA_SOURCE, "lib")
-NVDA_LIB64 = NVDA_LIB + "64"
+NVDA_LIB64 = os.path.join(NVDA_SOURCE, "lib64")
 ZIP_FILE = os.path.join(SCRIPT_DIR, "mozillaSyms.zip")
 URL = 'https://crash-stats.mozilla.com/symbols/upload'
 
@@ -26,6 +26,7 @@ URL = 'https://crash-stats.mozilla.com/symbols/upload'
 # This only needs to include dlls injected into Mozilla products.
 DLL_NAMES = [
 	"IAccessible2Proxy.dll",
+	"ISimpleDOM.dll",
 	"minHook.dll",
 	"nvdaHelperRemote.dll",
 	"VBufBackend_adobeFlash.dll",
@@ -51,6 +52,7 @@ def check_output(command):
 	return stdout
 
 def processFile(path):
+	print("dump_syms %s"%path)
 	try:
 		stdout = check_output([DUMP_SYMS, path])
 	except ProcError as e:
