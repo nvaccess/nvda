@@ -1189,6 +1189,8 @@ class UIA(Window):
 		textList=[]
 		for i in xrange(val.length):
 			e=val.getElement(i)
+			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
+				continue
 			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
 			if not obj: continue
 			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
@@ -1215,6 +1217,8 @@ class UIA(Window):
 		textList=[]
 		for i in xrange(val.length):
 			e=val.getElement(i)
+			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
+				continue
 			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
 			if not obj: continue
 			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
