@@ -319,6 +319,9 @@ addTable("Pt-Pt-g2.ctb", _("Portuguese grade 2"), contracted=True)
 addTable("pu-in-g1.utb", _("Punjabi grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("ro.ctb", _("Romanian"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("ru-compbrl.ctb", _("Russian braille for computer code"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
