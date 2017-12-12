@@ -398,7 +398,7 @@ class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
 			text=self.collectionItem.Chart.ChartTitle.Text
 		else:
 			text=self.collectionItem.Chart.Name
-		return _(u"{text}").format(text=text)
+		return u"{text}".format(text=text)
 
 	def moveTo(self):
 		chartNVDAObj = _msOfficeChart.OfficeChart(windowHandle= self.document.rootNVDAObject.windowHandle, officeApplicationObject=self.rangeObj.Document.Application, officeChartObject=self.collectionItem.Chart , initialDocument  = self.document.rootNVDAObject )
@@ -1772,5 +1772,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("chart", _("&Charts")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("error", _("&Errors")),
 	)

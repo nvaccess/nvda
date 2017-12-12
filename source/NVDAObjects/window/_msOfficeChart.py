@@ -801,6 +801,7 @@ class OfficeChartElementAxisTitle( OfficeChartElementAxis ):
 		# Translators: Indicates a chart axis title in Microsoft Office.
 		axisTitle = super(OfficeChartElementAxisTitle , self)._getChartElementText(ElementID , arg1 , arg2 )
 		if self.officeChartObject.HasAxis( arg2 , arg1 ) and self.officeChartObject.Axes( arg2 , arg1 ).HasTitle:
+			# Translators: the title of a chart axis 
 			axisTitle += _(" title: {axisTitle}").format( axisTitle = self.officeChartObject.Axes(self.axisType, self.axisGroup).AxisTitle.Text)
 		return  axisTitle 
 
@@ -926,6 +927,7 @@ class OfficeChartElementLegendEntry( OfficeChartElementBase):
 		if self.eventDriven:
 			return _( "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count ) 
 		else:
+			# Translators: the legend entry for a chart in Microsoft Office
 			return _( "Legend entry {legendEntryIndex} of {legendEntryCount}").format( legendEntryIndex = arg1 , legendEntryCount = arg2 ) 
 
 	def select(self):
