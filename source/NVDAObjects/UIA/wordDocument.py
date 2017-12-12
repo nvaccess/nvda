@@ -3,16 +3,26 @@
 #See the file COPYING for more details.
 #Copyright (C) 2016 NV Access Limited
 
-import controlTypes
+from comtypes import COMError
+from collections import defaultdict
 import textInfos
 import eventHandler
+import UIAHandler
 import controlTypes
+import ui
 import speech
 import api
 from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation
 from . import UIA, UIATextInfo
+from NVDAObjects.window.winword import WordDocument as WordDocumentBase
 
 class WordDocumentTextInfo(UIATextInfo):
+
+	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+		if UIAFormatUnits is None and self.UIAFormatUnits:
+			# Word documents must always split by a unit the first time, as an entire text chunk can give valid annotation types 
+			UIAFormatUnits=self.UIAFormatUnits
+		return super(WordDocumentTextInfo,self)._getTextWithFields_text(textRange,formatConfig,UIAFormatUnits=UIAFormatUnits)
 
 	def _get_controlFieldNVDAObjectClass(self):
 		return WordDocumentNode
@@ -25,9 +35,16 @@ class WordDocumentTextInfo(UIATextInfo):
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		automationID=obj.UIAElement.cachedAutomationID
-		if obj.role==controlTypes.ROLE_EDITABLETEXT and (automationID=='Body' or automationID.startswith('UIA_AutomationId_Word_Content')):
-			return None
 		field=super(WordDocumentTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		if automationID.startswith('UIA_AutomationId_Word_Page_'):
+			field['page-number']=automationID.rsplit('_',1)[-1]
+		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
+			# Include foot note and endnote identifiers
+			field['content']=obj.name
+			#field['alwaysReportName']=True
+			field['role']=controlTypes.ROLE_LINK
+		if obj.role==controlTypes.ROLE_LIST or obj.role==controlTypes.ROLE_EDITABLETEXT:
+			field['states'].add(controlTypes.STATE_READONLY)
 		if obj.role==controlTypes.ROLE_GRAPHIC:
 			# Label graphics with a description before name as name seems to be auto-generated (E.g. "rectangle")
 			field['value']=field.pop('description',None) or obj.description or field.pop('name',None) or obj.name
@@ -71,6 +88,15 @@ class WordDocumentTextInfo(UIATextInfo):
 
 	def getTextWithFields(self,formatConfig=None):
 		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
+		# Fill in page number attributes where NVDA expects
+		try:
+			page=fields[0].field['page-number']
+		except KeyError:
+			page=None
+		if page is not None:
+			for field in fields:
+				if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
+					field.field['page-number']=page
 		# MS Word can sometimes return a higher ancestor in its textRange's children.
 		# E.g. a table inside a table header.
 		# This does not cause a loop, but does cause information to be doubled
@@ -97,6 +123,9 @@ class WordDocumentTextInfo(UIATextInfo):
 		return fields
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
+
+	def _get_isAlive(self):
+		return True
 
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
@@ -131,6 +160,36 @@ class WordDocumentNode(UIA):
 			role=controlTypes.ROLE_EDITABLETEXT
 		return role
 
-class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode):
+class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentBase):
 	treeInterceptorClass=WordBrowseModeDocument
 	shouldCreateTreeInterceptor=False
+
+	def script_reportCurrentComment(self,gesture):
+		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		caretInfo.expand(textInfos.UNIT_CHARACTER)
+		val=caretInfo._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
+		if not val:
+			return
+		try:
+			UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
+		except COMError:
+			print "not an array"
+			return
+		for index in xrange(UIAElementArray.length):
+			UIAElement=UIAElementArray.getElement(index)
+			UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			obj=UIA(UIAElement=UIAElement)
+			if not obj.parent or obj.parent.name!='Comment':
+				continue
+			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			dateObj=obj.previous
+			date=dateObj.name
+			authorObj=dateObj.previous
+			author=authorObj.name
+			# Translators: The message reported for a comment in Microsoft Word
+			ui.message(_("{comment} by {author} on {date}").format(comment=comment,date=date,author=author))
+			return
+
+	__gestures={
+		"kb:NVDA+alt+c":"reportCurrentComment",
+	}

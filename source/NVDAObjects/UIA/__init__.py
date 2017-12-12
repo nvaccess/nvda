@@ -724,7 +724,7 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
-		elif EditableTextWithoutAutoSelectDetection in clsList and (UIAClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+		elif EditableTextWithoutAutoSelectDetection in clsList and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
 				clsList.append(WordDocument)
