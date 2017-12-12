@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION Benutzerhandbuch
+NVDA NVDA_VERSION Benutzerhandbuch
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -25,7 +25,7 @@ Zu den wichtigsten Funktionen gehören:
 - Unterstützung für zahlreiche Braillezeilen (auch mit Eingabe via Braille-Tastatur).
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung durch Sprachausgaben.
-- Übersetzt in rund 50 Sprachen.
+- Übersetzt in rund 51 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -34,7 +34,7 @@ Zu den wichtigsten Funktionen gehören:
 
 ++ Internationalisierung ++
 Egal, welche Sprache die Menschen auf der Welt sprechen, dass alle den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 50 Sprachen übersetzt, darunter sind neben Englisch: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Argonesisch, Portugiesisch (Brasilien), Bulgarisch, Birmanisch, Katalanisch, Spanisch (Kolumbien), Kroatisch, Tschechisch, Dänisch, Niederländisch, Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Deutsch, Hebräisch, Hindi (Nordindien), Ungarisch, Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Koreanisch, Litauisch, Nepalesisch, Norwegisch, Polnisch, Portugiesisch, Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch, Schwedisch, Tamilisch, Thai, Chinesisch (traditionell und vereinfacht), Türkisch, Ukrainisch sowie Vietnamesisch.
+NVDA wurde bislang in 51 Sprachen übersetzt, darunter sind neben Englisch: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Argonesisch, Portugiesisch (Brasilien), Bulgarisch, Birmanisch, Katalanisch, Spanisch (Kolumbien), Kroatisch, Tschechisch, Dänisch, Niederländisch, Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Deutsch, Hebräisch, Hindi (Nordindien), Ungarisch, Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Koreanisch, Litauisch, mazedonisch, Nepalesisch, Norwegisch, Polnisch, Portugiesisch, Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch, Schwedisch, Tamilisch, Thai, Chinesisch (traditionell und vereinfacht), Türkisch, Ukrainisch sowie Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
@@ -59,11 +59,9 @@ Dies bezieht sich sowohl auf das Original sowie auch auf modifizierte Kopieen di
 Für weitere Informationen können Sie entweder die [englischsprachige http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.
 
 + Systemvoraussetzungen +
-- Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7,Windows 8, Windows 8.1 und Windows 10 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
- - Für Windows XP wird mindestens Service Pack 2 benötigt.
- - Für Windows Server 2003 wird mindestens Service Pack 1 benötigt.
- - Für Windows Vista benötigt NVDA das Service Pack 2 und das Update [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
- Beides sollte bereits installiert sein, sofern Sie alle Aktualisierungen mittels Windows Update installiert haben.
+- Betriebssystem: Microsoft Windows 7, Windows 8, Windows 8.1 und Windows 10 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
+ - Für Windows 7 wird mindestens Service Pack 1 benötigt.
+ - Für Windows Server 2008 R2 wird mindestens Service Pack 1 benötigt.
 - Speicher: Mindestens 256 Megabyte RAM oder mehr.
 - Prozessorgeschwindigkeit: 1,0 Gigahertz oder schneller.
 - Mindestens 90 Megabyte Festplattenspeicher.
@@ -280,7 +278,7 @@ Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 | Aktuellen Fokus ansagen | NVDA+Tabulatortaste | NVDA+Tabulatortaste | Spricht das aktuell fokussierte Objekt. Bei zweimal Drücken werden die Informationen buchstabiert. |
 | Titelleiste ansagen | NVDA+T | NVDA+T | Liest die Titelleiste der aktuellen Anwendung vor. Bei zweimal Drücken, werden die Informationen buchstabiert. Bei drei Mal wird der Text in die Zwischenablage kopiert. Diese Information wird auch in Braille angezeigt. |
 | Aktives Fenster vorlesen | NVDA+B | NVDA+B | Liest alle Steuerelemente im aktiven Fenster vor (hilfreich für Dialogfelder). |
-| Statuszeile ausgeben | NVDA+ende | NVDA+umschalt+Ende | gibt die Statuszeile aus, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Wenn Sie diese Tastenkombination zweimal drücken, wird die Statuszeile buchstabiert. |
+| Statuszeile ausgeben | NVDA+ende | NVDA+umschalt+Ende | gibt die Statuszeile aus, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Wenn Sie diese Tastenkombination zweimal drücken, wird die Statuszeile buchstabiert. Wenn Sie die Tastenkombination dreimal drücken, wird die Statuszeile in die Zwischenablage kopiert. |
 %kc:endInclude
 
 ++ Mit dem System-Cursor navigieren ++[SystemCaret]
@@ -506,7 +504,7 @@ Folgende Befehle springen ohne Umschalttaste gedrückt zum nächsten Element; zu
 - M: Rahmen
 - G: Grafik
 - D: Sprungmarke
-- O: Eingebettetes Objekt
+- O: Eingebettetes Objekt (Anwendung, Dialog, Audio- und Videoplayer)
 - 1 bis 6: Überschrift erster bis sechster Ordnung
 - A: Anmerkung: Kommentar, Dokumentänderung, etc.
 - w: Rechtschreibfehler
@@ -525,7 +523,7 @@ Drücken Sie NVDA+Umschalt+Leertaste, um die Schnellnavigation im aktuellen Doku
 
 ++ Die Liste der Elemente ++
 Mit Hilfe der Elementliste können Sie - abhängig von der aktiven Anwendung - auf verschiedene Elemente im aktuellen Dokument zugreifen.
-In Webbrowsern können Sie hierbei auf links, Überschriften oder Sprungmarken zugreifen.
+In Webbrowsern können Sie hierbei auf links, Überschriften, Formularfelder, Schalter oder Sprungmarken zugreifen.
 Mit dem Auswahlschalter können Sie zwischen den unterschiedlichen Elementtypen umschalten.
 Mit dem Eingabefeld können Sie auch die Einträge filtern, um sich die Suche auf der seite zu erleichtern.
 Wenn Sie einmal einen Eintrag ausgewählt haben, können Sie mit den Schaltflächen im Dialog Entweder den Eintrag aktivieren oder zu diesem gelangen.
@@ -535,9 +533,10 @@ Wenn Sie einmal einen Eintrag ausgewählt haben, können Sie mit den Schaltfläc
 %kc:endInclude
 
 ++ Eingebettete Objekte ++
-Es gibt zunehmend Internetseiten, die mit Technologien für mediale Inhalte wie Adobe Flash, Sun Java oder mit Anwendungen und Dialogen ausgestattet sind.
+Es gibt zunehmend Internetseiten, die mit Technologien für mediale Inhalte wie Adobe Flash, Oracle Java oder html5 mit Anwendungen und Dialogen ausgestattet sind.
 Wenn Sie im Lese-Modus auf einen dieser Inhalte stoßen, meldet NVDA dem entsprechend "eingebettetes Objekt", "Anwendung" oder "Dialog".
-Um mit diesen Objekten zu navigieren, betätigen Sie die Eingabetaste.
+Um zu einem eingebetteten Objekt zu navigieren, betätigen Sie die Schnellnavigationstaste O Bzw. Umschalt+o. 
+Betätigen Sie anschließend die Eingabetaste, um mit einem Objekt zu interagieren.
 Sofern das Objekt barierefrei gestaltet wurde, können Sie innerhalb dieses Objekts norrmal mit der Tabulatortaste navigieren und damit wie in einer gewöhnlichen Anwendung arbeiten.
 Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukehren:
 %kc:beginInclude
@@ -545,15 +544,18 @@ Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukeh
 | Zum Inhalt des Lesemodus zurückkehren | NVDA+Steuerung+Leertaste | Verlässt den Fokus des eingebetteten Objekts und kehrt in den Lesemodus zurück. |
 %kc:endInclude
 
-+ Mathematische Inhalte lesen +
++ Mathematische Inhalte lesen +[ReadingMath]
 Sie können Mathplayer 4 von Design Science verwenden, um mit NVDA in mathematischen Inhalten zu navigieren.
 Hierfür ist die Installation von Mathplayer 4 notwendig.
 Mathplayer kann hier heruntergeladen werden: http://www.dessci.com/en/products/mathplayer/
 
 NVDA unterstützt die folgende mathematischen Inhalte:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer und Google Chrome.
-- Design Science MathType in Microsoft Word und PowerPoint. Mathtype muss installiert sein. Die Testversion ist hierfür ausreichend.
-- MathML in Adobe Reader. Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
+- Design Science MathType in Microsoft Word und PowerPoint.
+Mathtype muss installiert sein. Die Testversion ist hierfür ausreichend.
+- MathML in Adobe Reader.
+Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
+- Mathematik in Kindle für PC für Bücher mit barrierefreier Mathematik.
 -
 
 Wenn Sie ein Dokument lesen, das mathematischen Inhalt enthält, liest NVDA diesen vor, sofern dieser von NVDA unterstützt wird.
@@ -577,7 +579,7 @@ Standardmäßig ist der NVDA-Cursor an den Systemcursor gekoppelt. Sie können A
 
 Jetzt können Sie die Tastenkombinationen von Mathplayer (zum Beispiel Pfeiltasten) verwenden, um innerhalb des Ausdrucks zu navigieren.
 Verwenden Sie beispielsweise die Pfeiltasten links und rechts, um zwischen den Teilen eines Ausdrucks zu navigieren. Um in einen Teilausdruck abzusteigen, verwenden Sie die Pfeiltaste nach unten.
-Weiter Informationen hierzu finden Sie in der Dokumentation zu mathplayer.
+Weitere Informationen hierzu finden Sie in der [MathPlayer-Dokumentation zu Navigationsbefehlen https://www.dessci.com/en/products/mathplayer/navigation_commands.htm].
 
 Um die Navigation im Ausdruck zu beenden, drücken Sie die Escape-Taste.
 
@@ -586,7 +588,7 @@ Wenn Sie eine Braillezeile besitzen, kann NVDA diese verwenden, um Informationen
 Falls Ihre Braillezeile eine Tastatur besitzt, können Sie außerdem Kurz-, Voll- oder Basisschrift eingeben.
 
 Bitte sehen Sie im Abschnitt [unterstützte Braillezeilen #SupportedBrailleDisplays] nach, um zu erfahren, ob Ihre Braillezeile unterstützt wird.
-Verwenden Sie den [Dialog "Brailleeinstellungen" #BrailleSettings], um NVDA an Ihre Braillezeile anzupassen.
+Verwenden Sie den [Dialog "Braille-Einstellungen" #BrailleSettings], um NVDA an Ihre Braillezeile anzupassen.
 
 ++ Abkürzungen für Steuerelementtypen, Statusanzeigen und Sprungmarken ++
 Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende Abkürzungen für Steuerelementtypen, Statusanzeigen und Sprungmarken festgelegt.
@@ -676,9 +678,9 @@ Die folgenden Abkürzungen werden für Sprungmarken verwendet:
 | srch | Suche |
 | rgn | region |
 
-++ Brailleeingabe ++
+++ Braille-Eingabe ++
 NVDA unterstützt die Eingabe von Kurz-, Voll- und Basisschrift über eine Brailletastatur.
-Verwenden sie die Einstellung ["Brailleeingabetabelle" #BrailleInputTable] in den Brailleeinstellungen, um zu bestimmen, welche Übersetzungstabelle Sie verwenden wollen.
+Verwenden Sie die Einstellung ["Braille-Eingabetabelle" #BrailleInputTable] in den Braille-Einstellungen, um zu bestimmen, welche Übersetzungstabelle Sie verwenden wollen.
 
 Wenn Sie Basisschrift eingeben, wird der eingegebene Text unmittelbar nach der Eingabe über die Brailletastatur in das aktuelle Programm eingefügt.
 Wenn Sie Kurz- oder Vollschrift eingeben, wird der Text erst in die aktuelle Anwendung eingefügt, wenn Sie ein Wort mit der Leertaste beenden.
@@ -705,15 +707,15 @@ Wenn die Erkennung abgeschlossen ist, wird das Erkennungsergebnis in einem Dokum
 Drücken Sie die Leertaste oder die eingabetaste, um den Text (üblicherweise durch Klicken) zu aktivieren.
 Drücken Sie Escape, um das Erkennungsergebnis zu schließen.
 
-++ Windows 10 OCR ++[Win10Ocr]
+++ Windows 10-Texterkennung ++[Win10Ocr]
 windows 10 enthält eine optische Zeichenerkennung für viele Sprachen.
 Sie können diese zeichenerkennung verwenden, um Text aus Grafiken oder unzugänglichen Anwendungen auszulesen.
 
-Sie können die Erkennungssprache einstellen, indem Sie den Dialog [Windows 10 OCR #Win10OcrSettings] in den NVDA-Einstellungen aufrufen.
+Sie können die Erkennungssprache einstellen, indem Sie den Dialog [Windows 10-Texterkennung #Win10OcrSettings] in den NVDA-Einstellungen aufrufen.
 Zusätzliche Sprachen können Sie in den Einstellungen von Windows unter Zeit und Sprache -> Region und Sprache -> Sprache hinzufügen installieren.
 
 %kc:beginInclude
-Drücken Sie NVDA+r, um den Text im aktuellen Navigatorobjekt mit Hilfe der Windows 10 OCR zu erkennen.
+Drücken Sie NVDA+r, um den Text im aktuellen Navigatorobjekt mit Hilfe der Windows 10-Texterkennung zu erkennen.
 %kc:endInclude
 
 + Anwendungsspezifische Funktionen +
@@ -745,7 +747,7 @@ Weitere Informationen zum Lesemodus und zur Schnellnavigation finden Sie im [Abs
 %kc:beginInclude
 Wenn Sie sich in Microsoft Word im Lesemodus befinden, können Sie mit der Tastenkombination NVDA+F7 auf die Elementliste zugreifen.
 %kc:endInclude
-Die Elementliste enthält Überschriften, Links, Anmerkungen (einschließlich nachverfolgbarer Änderungen), Formularfelder, Schalter und Fehler (derzeit auf Rechtschreibfehler limmitiert).
+Die Elementliste enthält Überschriften, Links, Anmerkungen (einschließlich nachverfolgbarer Änderungen), und Fehler (derzeit auf Rechtschreibfehler limmitiert).
 
 +++ Ausgeben von Kommentaren +++
 %kc:beginInclude
@@ -856,13 +858,16 @@ Sie können auch manuell zwischen den Seiten blättern. Verwenden Sie hierfür d
 Die Schnellnavigation für Links und Grafiken funktioniert auf der aktuellen Seite.
 Die Linknavigation beinhaltet auch Fußnoten.
 
+NVDA bietet frühe Unterstützung beim Lesen und interaktiver Navigation von mathematischen Inhalten für Bücher mit barrierefreier Mathematik.
+Für weitere Informationen lesen Sie den Abschnitt [Mathematische Inhalte lesen #ReadingMath]
+
 +++ Markieren von Text +++
-(noch nicht übersetzt) Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
-To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
+Mit Kindle können Sie verschiedene Funktionen für den ausgewählten Text ausführen, z. B. eine Wörterbuchdefinition erhalten, Notizen und Hervorhebungen hinzufügen, den Text in die Zwischenablage kopieren und das Web durchsuchen.
+Markieren sie dazu zuerst den Text mit dem im Lesemodus üblichen tasten(Kombinationen) (z. B. umschalt+Richtungstasten).
 %kc:beginInclude
-Once you have selected text, press the applications key or shift+f10 to show the available options for working with the selection.
+Nachdem Sie Text markiert haben, drücken Sie die Anwendungstaste oder Umschalt+F10, um die verfügbaren Optionen anzuzeigen.
 %kc:endInclude
-If you do this with no text selected, options will be shown for the word at the cursor.
+Wenn Sie keinen Text markiert haben, beziehen sich die angezeigten Optionen auf das Wort am Cursor.
 
 +++ Notizen +++
 Sie können eine Notiz zu einem Wort oder einer ganzen Passage hinzufügen.
@@ -877,6 +882,14 @@ Eine Notiz lesen, bearbeiten oder löschen:
 + Rufen Sie die Markierungsoptionen wie oben beschrieben auf..
 + Wählen Sie Notiz bearbeiten.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Wenn sie sich in der Tabellenansicht der hinzugefügten Bücher befinden:
+|| Name | Taste | Beschreibung |
+| Eingabe | Eingabe | Öffnet das ausgewählte buch. |
+| Kontextmenü | Anwendungen | Öffnet das Kontextmenü für das ausgewählte Buch. |
+%kc:endInclude
 
 + NVDA konfigurieren +
 
@@ -1360,13 +1373,13 @@ Mit dieser Option, die standardmäßig aktiviert ist, können Sie festlegen, ob 
 In manchen Sprachräumen - wie etwa im chinesischen, hat diese Option jedoch keinen Einfluss auf die Ausgabe von Beschreibungen für Kandidaten.
 Diese Option ist lediglich für japanische und koreanische Eingabemethoden sinnvoll.
 
-==== Änderungen der Zeichenketten beim Vorlesen ansagen====
+==== Änderungen zu den Leseketten ansagen ====
 Einige Eingabemethoden wie zum Beispiel Chinese New Phonetic und New ChangJie besitzen einen "reading string (auch als "precomposition string" bezeichnet).
 Mit dieser Option teilen Sie NVDA mit, ob neue Zeichen, die in diese Zeichenketten eingegeben werden, zurückgemeldet werden sollen.
 Diese Option ist standardmäßig aktiviert.
 Bedenken Sie, dass bei einigen älteren eingabemethoden wie Chinese ChangJie der "composition string" benutzt wird, um diese Informationen bereitzustellen. Lesen Sie den folgenden Abschnitt für weitere Informationen zum "composition string".
 
-==== Report changes to the composition string ====
+==== Änderungen zu den Zusammenfassungsketten ansagen ====
 Nachdem die Präcompositionsdaten zu einem gültigen piktografischen Zeichen zusammengeführt wurden, wird dieses zusammen mit weiteren Symbolen in einem composition string gespeichert, bevor dieser in das Dokument geschrieben wird.
 Mit dieser Option legen Sie fest, ob NVDA Änderungen an den Symbolen im composition string wiedergeben soll.
 Diese Option ist standardmäßig aktiviert.
@@ -1398,6 +1411,8 @@ Wenn die Option aktiviert ist, wird NVDA solche Tabellen auf der Grundlage der [
 Anderenfalls werden Layout-Tabellen weder angezeigt noch über die Schnellnavigationstasten zugänglich gemacht.
 Der Inhalt der Tabellen wird aber dennoch normal angezeigt.
 Die Option ist standardmäßig deaktiviert.
+
+Um die Ausgabe von Layout-Tabellen zur Laufzeit ein- oder auszuschalten, müssen Sie den Dialog "[Eingaben #InputGestures]" verwenden, um eine Tastenkombination zuzuweisen.
 
 ==== Ansagen für Elemente konfigurieren ====
 Bitte beachten Sie die Optionen im Dialog[Einstellungen für die Dokumentformatierungen #DocumentFormattingSettings], um festzulegen, welche Elemente wie Links, Überschriften und Tabellen beim Navigieren angesagt werden sollen.
@@ -1480,7 +1495,7 @@ Die Einrückung um einen Tabulator entspricht hierbei der Einrückung um vier Le
 - beides: dies ist eine Kombination der beiden obigen Optionen.
 -
 
-+++ Einstellungen für die Texterkennung in Windows 10 +++[Win10OcrSettings]
++++ Einstellungen für die Windows 10-Texterkennung +++[Win10OcrSettings]
 Diesen Dialog finden Sie in den NVDA-Einstellungen. Er erlaubt die Konfiguration der [Optischen Zeichenerkennung für Windows 10 #Win10Ocr].
 
 ==== Erkennungssprache ====
@@ -1700,7 +1715,7 @@ Für jede Erweiterung wird Ihnen der Name, der Status,die Versionsnummer und der
 Falls für diese Erweiterung eine Hilfedatei verfügbar ist, können Sie diese mit dem Schalter "Hilfe für diese Erweiterung" aufrufen.
 
 Um weitere Erweiterungen herunterzuladen und zu installieren, klicken Sie auf den Schalter "Erweiterungen herunterladen...".
-Hiermit wird die Webseite für NVDA-Erweiterungen http://addons.nvda-project.org geöffnet.
+Hiermit wird die Webseite für NVDA-Erweiterungen https://addons.nvda-project.org geöffnet.
 Falls NVDA installiert ist und gerade verwendet wird, können Sie Erweiterungen direkt vom Browser aus installieren.
 Andernfalls müssen Sie die Erweiterung speichern und wie unten beschrieben vorgehen, um eine Erweiterung zu installieren.
 
@@ -1735,14 +1750,14 @@ Um denDialog Erweiterungen verwalten per Tastenkombination aufrufen zu können, 
 
 ++ Python-Konsole ++
 Die in NVDA integrierte Python-Konsole ist im NVDA-Menü unter "Extras" zu finden. Sie ist ein nützliches Entwicklungswerkzeug zum beheben von Fehlern, zum allgemeinen Überprüfen der internen Komponente in NVDA sowie zur Überprüfung der Hierarchie der Zugänglichkeit einer Anwendung.
-Für weitere Informationen sehen Sie sich bitte den [Teilbereich "Entwicklung" auf der englischen Website http://community.nvda-project.org/wiki/Development] an.
+Für weitere Informationen sehen Sie sich bitte das [NVDA-Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html] an.
 
 ++ Plugins erneut laden ++
 Dieser Eintrag, einmal aktiviert, lädt alle Anwendungsmodule sowie globale Plugins neu ohne, dass NVDA extra neu gestartet wird.
 
 + Unterstützte Sprachausgaben +[SupportedSpeechSynths]
 Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Sprachausgaben.
-eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 Die in NVDA fest integrierte [eSpeak NG https://github.com/espeak-ng/espeak-ng],]-Sprachausgabe erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
@@ -1781,18 +1796,18 @@ Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten instal
 
 ++ Windows OneCore-Stimmen ++
 Windows 10 enthält neue Stimmen, die als "Mobile" oder "OneCore"-Stimmen bekannt sind.
-Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft Sapi 5-Stimmen in früheren Windows-versionen.
+Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel reaktionsfreudiger als die Microsoft SAPI 5-Stimmen in früheren Windows-versionen.
 
-Informationen darüber, wie Sie Stimmen in zusätzlichen Sprachen installieren, finden Sie im folgenden Artikel: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
+Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/help/22797/windows-10-narrator-tts-voices] finden Sie eine Beschreibung, wie Sie zusätzliche Stimmen und Sprachen installieren können.
 
-Bitte bedenken Sie auch, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
+Bitte bedenken Sie dabei, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
 Eine Änderung der Sprechgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprechgeschwindigkeit in NVDA.
-Dieses Problem kann nur durch Änderungen an Windows behoben werden.
+Dieses Problem kann nur durch Änderungen in Windows behoben werden.
 Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
 
 ++ AudioLogic TTS 3 ++
 Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
-Um sie in NVDA nutzen zu können, müssen sie die Sprachausgabe auf Ihrem System installiert haben.
+Um sie in NVDA nutzen zu können, müssen Sie die Sprachausgabe auf Ihrem System installiert haben.
 Für weitere Informationenbesuchen Sie bitte die AudioLogic-Website unter http://www.audiologic.it/.
 
 Diese Sprachausgabe unterstützt die [Buchstabierfunktionalität #VoiceSpellingFunctionality] nicht.
@@ -1808,12 +1823,12 @@ Ein Teil des Erlöses aus dem Verkauf von Vocalizer fließt als Spende an NV Acc
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
 
-++ Die Focus/PAC-Mate-Serien von FreedomScientific ++
-Die Braillezeilen Focus 40 Blue und alle PAC-Mate-Zeilen von der amerikanischen Firma [FreedomScientific http://www.freedomscientific.com/] werden unterstützt.
+++ Die Focus- und PacMate-Serien von FreedomScientific ++
+Die Braillezeilen Focus 40 Blue und alle PacMate-Zeilen von der amerikanischen Firma [FreedomScientific http://www.freedomscientific.com/] werden unterstützt.
 Die Treiber für die Braillezeilen von FreedomScientific müssen auf Ihrem System vorab installiert sein.
 Falls Sie sie noch nicht installiert haben, können Sie die Treiber von der Website [hier http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] herunterladen.
 Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, werden die Treiber für alle Braillezeilen gleichermaßen von FreedomScientific unterstützt.
-Wenn Sie eine 64-Bit-Version von windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von diesem Link installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
+Wenn Sie eine 64-Bit-Version von windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von dieser Adresse installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
 
 Für gewöhnlich kann NVDA den verwendeten Anschluss automatisch erkennen, gleichgültig ob die Braillezeile per USB oder per Bluetooth verbunden ist.
 Beim Konfigurieren der Braillezeile können Sie jedoch die Verbindungsart ausdrücklich festlegen, indem Sie als anschluss entweder USB oder Bluetooth auswählen.
@@ -1912,29 +1927,37 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:endInclude
 
 ++ HandyTech-Braillezeilen ++
-Alle Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via USB und BlueTooth unterstützt.
-Für einige USB-Zeilen werden die Treiber auf Ihrem System für den USB-Port von HandyTech benötigt.
+Die meisten Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via seriellem Port, USB und Bluetooth unterstützt.
+bei älteren Usb-Braillezeilen werden Sie den Universaltreiber von handy Tech installieren müssen.
 
-Die Eingabe von Braille-Zeichen wird noch nicht unterstützt.
-
-Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
+die folgenden Braillezeilenmodelle werden nicht ohne weiteres unterstützt; sie können sie jedoch unter Zuhilfenahme des [universaltreibers https://handytech.de/de/service/kundenservice/service-software/universeller-braillezeilentreiber] und der NVDA-Erweiterung verwenden:
+- Braillino
+- Buchwurm
+- Modular-Zeilen mit firmware-version 1.13 oder niedriger. Bitte beachten Sie, dass die Firmware dieser Braillezeilen aktualisiert werden kann.
+-
+Folgende Tastenkombinationen bei diesen Braillezeilen sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:beginInclude
 || Name | Taste |
-| Braillezeile zurück scrollen | Links, nach oben |
-| Braillezeile weiter scrollen | Rechts, nach unten |
+| Braillezeile zurück scrollen | Links, nach oben, b3 |
+| Braillezeile weiter scrollen | Rechts, nach unten, b6 |
 | Eine Zeile nach oben springen | B4 |
 | Eine Zeile nach unten springen | B5 |
-| Zum Brailemodul springen | Routing |
-| Umschalt+Tabulatortaste | ESC |
+| Zum Braillemodul springen | Routing |
+| Umschalt+Tabulatortaste | ESC, linke triple-aktionstaste auf+ab |
 | Alt-Taste | B2+B4+B5 |
 | Escape-Taste | B4+B6 |
-| Tabulatortaste | Eingabe |
-| Eingabetaste | ESC+Eingabe |
-| Pfeiltaste nach oben | Linke Leertaste |
-| Pfeiltaste nach unten | Rechte Leertaste |
+| Tabulatortaste | Eingabe, rechte triple-Aktionstaste auf+ab |
+| Eingabetaste | ESC+Eingabe, linke+rechte triple-Aktionstaste auf+ab, joystick-Aktion |
+| Pfeiltaste nach oben | joystick auf |
+| Pfeiltaste nach unten | Joystick ab |
+| Pfeiltaste nach links | joystick nach links |
+| Pfeiltaste nach rechts | Joystick nach rechts |
 | NVDA-Menü | B2+B4+B5+B6 |
-| HandyTech-Konfiguration | B4+B8 |
+| Kopplung der Braillezeile ändern | b2 |
+| Braille-Cursor ein-/ausblenden | b1 |
+| Braille-Kontextanzeige umschalten | b7 |
+| Braille-Eingabe ein-/ausschalten | Leertaste+b1+b3+b4 (Leertaste+Großbuchstabe B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2045,12 +2068,13 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Taste Pfeil nach oben | Leertaste+Punkt1 |
 | Taste Pfeil nach unten | Leertaste+Punkt4 |
 | Taste Pfeil nach links | Leertaste+Punkt3 |
-| Taste Pfeil nach links | Leertaste+Punkt6 |
+| Taste Pfeil nach rechts | Leertaste+Punkt6 |
 | NVDA-Menü | C1+C3+C4+C5 (Befehl N) |
 | Umschalt+Tabulator-Taste | Leertaste+Punkt1+Punkt3 |
 | Tabulator-Taste | Leertaste+Punkt4+Punkt6 |
 | Alt-Taste | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+m) |
 | Escape-Taste | Leertaste+Punkt1+Punkt5 (Leertaste+e) |
+| Eingabetaste | Punkt8 |
 | Windows-Taste+D (Alle Anwendungen minimieren) | C1+C4+C5 (Befehl D) |
 | Windows-Taste | Leertaste+Punkt3+Punkt4 |
 | Alt+Tabulatortaste | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T) |
@@ -2160,7 +2184,7 @@ Folgende Braillezeilen werden unterstützt:
 -
 
 Falls BrxCom installiert ist, wird es benutzt.
-BrxCom ist ein Programm, welches Brailleeingabe unabhängig von Screenreadern ermöglicht. 
+BrxCom ist ein Programm, welche Braille-Eingabe unabhängig von Screenreadern ermöglicht. 
 Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
 Die Braille-Eingabe ist bei den Modellen Trio und Braillex Live verfügbar.
 
@@ -2470,6 +2494,9 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
+| keine | --create-portable | Erstellt und startet eine neue portable Version von NVDA. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
+| keine | --create-portable-silent | Erstellt eine neue portable Kopie von NVDA, ohne diese zu starten. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
+| keine | --portable-path=Ordner | Gibt den Ordner an, in dem die portable Version erstellt werden soll. |
 
 ++ Systemparameter ++[SystemWideParameters]
 Sie können einige Werte in der Registrierdatenbank von Windows verwenden, um das Verhalten von NVDA zu beeinflussen.

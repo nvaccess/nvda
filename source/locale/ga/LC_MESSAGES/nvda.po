@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2017.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-14 08:17+1000\n"
-"PO-Revision-Date: 2017-08-13 20:41+0100\n"
+"POT-Creation-Date: 2017-10-30 20:16+1000\n"
+"PO-Revision-Date: 2017-10-31 20:01-0700\n"
 "Last-Translator: Ronan McGuirk\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -1041,12 +1041,20 @@ msgstr "Sínis (Hong Cong, Cantainis)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Sínis (An Téaváin, Mandairínis)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "mód fócasaithe"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "mód brabhsála"
+
+#. Translators: Reported label in the elements list for an element which which has no name and value
+#, fuzzy
+msgid "Unlabeled"
+msgstr "lipéad"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1540,6 +1548,17 @@ msgstr "&Ceannteidil"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "réimsí foirme"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Buttons"
+msgstr "cnaipe"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Lan&dmarks"
@@ -1556,7 +1575,8 @@ msgstr "Cineál:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
+#, fuzzy
+msgid "Filt&er by:"
 msgstr "&Scag de réir:"
 
 #. Translators: The label of a button to activate an element
@@ -1592,8 +1612,8 @@ msgstr "Gan cur síos fada"
 msgid "Shows the long description at this position if one is found."
 msgstr "Taispeáin an cur síos fada ag an ionad seo, má tá a leithéid ann."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Níl sé i gcoimeádán"
 
@@ -2684,6 +2704,25 @@ msgstr "Earráid sa mhapa gothaí"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA á luchtú. Fan nóiméad..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+#, fuzzy
+msgid "Landscape"
+msgstr "éalúchán"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr ""
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr ""
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr ""
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "Tosaíodh NVDA"
@@ -3344,6 +3383,7 @@ msgid "No navigator object"
 msgstr "gan réad nascleantóra"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "Cóipeáladh %s go dtí an ghearrthaisce"
@@ -3674,9 +3714,11 @@ msgid "No status line found"
 msgstr "Líne stádais gan aimsiú"
 
 #. Translators: Input help mode message for report status line text command.
+#, fuzzy
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "léigh barra stádais an fheidhmchláir reatha agus bog an nascleantóir ann. Má "
 "bhrútar  faoi dhó, litrítear an fhaisnéis."
@@ -5684,14 +5726,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "fuaim"
 
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"Úsáid NVDA ar an scáileán logála isteach Windows agus ar scáileáin shláinte "
-"eile."
-
 msgid "Type help(object) to get help about object."
 msgstr "Úsáid help(X) chun tuilleadh eolais faoi X a fháil."
 
@@ -7620,9 +7654,20 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Suiteáil Bhreiseáin"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, fuzzy, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"Tá leagan den bhreiseán seo suiteáilte cheana.  An bhfuil fonn ort é a "
+"nuashonrú?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, fuzzy, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
 msgstr ""
 "Tá leagan den bhreiseán seo suiteáilte cheana.  An bhfuil fonn ort é a "
 "nuashonrú?"
@@ -8038,6 +8083,10 @@ msgstr "Roghnaigh comhadlann inaistrithe"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Cóipeáil an &chumraíocht úsáideora atá ann"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr ""
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -9237,11 +9286,6 @@ msgstr "foirmlí"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "réimsí foirme"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "bileoga"
 
@@ -10227,15 +10271,22 @@ msgstr "Príomh-cheanntásc"
 msgid "Text frame"
 msgstr "Fráma téacs"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "nóta tráchta: {text} le {author} ar {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {description}:  {text} le {author} ar {date}"
 
-#. Translators: the label for a speling error shown in NVDA's Elements List dialog for Microsoft Word
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "spelling: {text}"
 msgstr "litriú {text}"
@@ -10488,7 +10539,8 @@ msgstr "&Anótáil"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+#, fuzzy
+msgid "&Errors"
 msgstr "&earráidí"
 
 #. Translators: The name of a series of braille displays.
@@ -10498,29 +10550,3 @@ msgstr "Sraith HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "-----"
-#~ msgstr "-----"
-
-#~ msgid "(x)"
-#~ msgstr "(x)"
-
-#~ msgid "(-)"
-#~ msgstr "(-)"
-
-#~ msgid "( )"
-#~ msgstr "( )"
-
-#~ msgid "Farsi grade 1"
-#~ msgstr "Fairsis, grád 1"
-
-#~ msgid "ITALIC"
-#~ msgstr "IODÁLACH"
-
-#~ msgid "braille"
-#~ msgstr "braille"
-
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr ""
-#~ "An bhfuil tú cinnte gur mian leat an phróifíl seo a scriosadh? Ní féidir "
-#~ "í a fháil ar ais arís."

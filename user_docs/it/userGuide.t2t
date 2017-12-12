@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION Manuale utente
+NVDA NVDA_VERSION Manuale utente
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -26,7 +26,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille, compresa la possibilità di immettere testo usando la tastiera della barra braille se presente
-- Tradotto in 50 lingue
+- Tradotto in 51 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -34,7 +34,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-Oltre all'inglese, NVDA è stato tradotto in 50 lingue ossia Afrikaans, Albanese, Amharico, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, Birmano, Catalano, croato, Ceco, Coreano, Danese, Olandese, persiano, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Kannada, Lituano, Nepalese, Norvegese, Polacco, portoghese, Punjabi, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Spagnolo-colombiano, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+Oltre all'inglese, NVDA è stato tradotto in 51 lingue ossia Afrikaans, Albanese, Amharico, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, Birmano, Catalano, croato, Ceco, Coreano, Danese, Olandese, persiano, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Kannada, Lituano, Macedone, Nepalese, Norvegese, Polacco, portoghese, Punjabi, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Spagnolo-colombiano, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -59,11 +59,9 @@ Questo si applica a copie originali e modificate del software ed a qualsiasi pro
 Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisiti di sistema +
-- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows XP, Windows Vista,  Windows 7, Windows8, Windows8.1 e Windows10 (Incluse le edizioni Server).
- - Per Windows XP 32-bit, NVDA richiede Service Pack 2 o superiore.
- - Per Windows Server 2003, NVDA richiede Service Pack 1 o superiore.
- - Per Windows Vista, NVDA richiede il Service Pack 2 e [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
- Generalmente questi due componenti sono già installati se sono stati eseguiti tutti gli aggiornamenti di Windows Vista tramite Windows Update.
+- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows 7, Windows8, Windows8.1, Windows10 e tutte le edizioni Server a partire da Windows Server 2008 r2.
+ - Per Windows 7, NVDA richiede Service Pack 1 o successivo.
+ - Per Windows Server 2008 R2, NVDA richiede Service Pack 1 o successivo.
 - Memoria: 256 mb di Ram o superiore
 - Velocità processore: 1.0 ghz o superiore.
 - Circa 90 Megabytes di spazio disco.
@@ -280,7 +278,7 @@ Esistono alcuni comandi da tastiera utili per seguire il focus:
 | Legge il focus | NVDA+tab | NVDA+tab | Annuncia l'oggetto o il controllo attualmente focalizzato. Premendo la combinazione due volte ne verrà fatto lo spelling  |
 | Legge il Titolo | NVDA+t | NVDA+t | Legge il titolo della finestra attiva in quel momento. Premendo la combinazione due volte ne verrà fatto lo spelling. Premendo per tre volte il contenuto verrà copiato negli appunti. |
 | Legge la Finestra Attiva | NVDA+b | NVDA+b | Legge il contenuto della finestra in primo piano (utile nelle finestre di dialogo). |
-| Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato sempre che NVDA sia in grado di individuarne una. Inoltre sposta in quella posizione il navigatore ad oggetti. Una doppia pressione provocherà lo spelling delle informazioni |
+| Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato sempre che NVDA sia in grado di individuarne una. Inoltre sposta in quella posizione il navigatore ad oggetti. Una doppia pressione provocherà lo spelling delle informazioni. Una tripla pressione copierà il contenuto della barra di stato negli appunti |
 %kc:endInclude
 
 ++ Esplorare con il cursore di sistema ++[SystemCaret]
@@ -505,8 +503,8 @@ I seguenti tasti premuti da soli portano al campo successivo, tenendo premuto Sh
 - s: separatore
 - m: frame
 - g: grafico
-- d: Sezione
-- o: oggetto incorporato
+- d: Punto di riferimento
+- o: oggetto incorporato (audio e video player, applicazione, finestra di dialogo, etc.)
 - numeri da 1 a 6: intestazioni da 1 a 6
 - a: annotazioni (commenti, revisioni degli autori, etc.)
 - w: errori di ortografia
@@ -525,7 +523,7 @@ Per attivare o disattivare la navigazione a lettere singole per il documento cor
 
 ++ Lista degli elementi ++
 La lista degli elementi consente l'accesso ad un elenco di vari tipi di elementi presenti sul documento, a seconda dell'applicazione in uso.
-Per esempio, in una pagina web potremmo trovare un elenco dei link, delle intestazioni o delle sezioni presenti nel documento.
+Per esempio, in una pagina web potremmo trovare un elenco dei link, delle intestazioni, campi editazione, pulsanti o punti di riferimento presenti nel documento.
 I pulsanti radio permettono di ciclare tra questi tipi di informazioni.
 è presente anche un campo editazione, utile a filtrare tale lista per permettere una ricerca più rapida.
 Una volta selezionato l'elemento, si possono utilizzare i bottoni che si trovano nella finestra di dialogo, per spostarvisi o attivarlo.
@@ -535,8 +533,9 @@ Una volta selezionato l'elemento, si possono utilizzare i bottoni che si trovano
 %kc:endInclude
 
 ++ Oggetti incorporati ++
-Le pagine web possono essere strutturate con diverse tecnologie al proprio interno, ad esempio contenuti di tipo Adobe Flash, Sun Java, applicazioni o finestre di dialogo. 
+Le pagine web possono essere strutturate con diverse tecnologie al proprio interno, ad esempio contenuti di tipo Adobe Flash, Sun Java e html5, applicazioni o finestre di dialogo. 
 Quando NVDA incontra tali elementi in modalità navigazione, lo screen reader li annuncerà rispettivamente come oggetti, applicazioni o finestre di dialogo.
+è possibile spostarsi rapidamente tra gli oggetti premendo i comandi di navigazione veloce o oppure Shift-o.
 Sarà possibile interagire con tali elementi premendo il tasto Invio
 Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno di esso come se si trattasse di una normale applicazione. 
 è stato previsto un tasto caldo per tornare alla pagina originale che contiene l'oggetto:
@@ -545,15 +544,18 @@ Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno 
 | Ritornare alla modalità navigazione | NVDA+control+spazio | Sposta il focus dall'oggetto incorporato alla modalità navigazione |
 %kc:endInclude
 
-+ Lettura della matematica +
++ Lettura della matematica +[ReadingMath]
 NVDA è in grado di leggere ed interagire con la matematica nei contenuti che fanno uso del software MathPlayer4, prodotto da Design Science.
 Ciò richiede che MathPlayer4 sia installato sul computer.
 MathPlayer può essere scaricato gratuitamente dal seguente sito web: http://www.dessci.com/en/products/mathplayer/
 
 NVDA supporta la matematica nei seguenti formati:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
-- MathType Design Science  in Microsoft Word e PowerPoint. Si noti che MathType dev'essere installato affinché il supporto funzioni correttamente, è sufficiente anche la versione di prova.
-- MathML in Adobe Reader. (Si noti che questo non è ancora uno standard ufficiale, per cui attualmente non esiste per il pubblico un software disponibile che possa produrre questo contenuto).
+- MathType Design Science in Microsoft Word e PowerPoint.
+Si noti che MathType dev'essere installato affinché il supporto funzioni correttamente, è sufficiente anche la versione di prova.
+- MathML in Adobe Reader.
+Si noti che questo non è ancora uno standard ufficiale, per cui attualmente non esiste per il pubblico un software disponibile che possa produrre questo contenuto.
+- Math in Kindle per PC per libri con matematica accessibile.
 -
 
 Durante la lettura di un documento, NVDA sarà in grado di leggere qualsiasi contenuto di tipo matematico supportato.
@@ -577,7 +579,7 @@ Da impostazioni predefinite, il cursore di controllo segue il cursore di sistema
 
 A questo punto, è possibile utilizzare i comandi MathPlayer come i tasti freccia per esplorare l'espressione.
 Ad esempio, ci si potrà spostare attraverso l'espressione con i tasti freccia sinistra e destra, per poi evidenziare una parte dell'espressione, come una frazione utilizzando il tasto freccia verso il basso.
-Si prega di consultare la documentazione di MathPlayer per ulteriori informazioni.
+Si prega di consultare la [documentazione di MathPlayer sui comandi di navigazione https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] per ulteriori informazioni.
 
 Quando si desidera tornare al documento, è sufficiente premere il tasto Esc.
 
@@ -592,38 +594,77 @@ Si prega di fare riferimento alla sezione [display braille supportati #Supported
 Per far stare più informazioni possibili su di un display braille, sono state definite le seguenti abbreviazioni per indicare il tipo di controllo e di stato, come pure i punti di riferimento.
 
 || Abbreviazione | tipo di controllo |
+| app | applicazione |
+| bqt | blocco tra virgolette |
 | btn | bottone |
+| drbtn | Pulsante a discesa |
+| spnbtn | Pulsante spin |
+| splbtn | Pulsante dividi |
+| intbtn | Interruttore |
 | cbo | casella combinata |
 | chk | casella di controllo |
 | dlg | finestra di dialogo |
+| doc | documento |
 | edt | campo editazione |
+| pwdedt | edit password |
+| ogg | oggetto |
+| enote | Fine nota |
+| fnote | nota a piè di pagina |
 | gra | grafico |
+| grp | raggruppamento |
 | cN | numero colonna n di una tabella, ad esempio  c1, c2. |
 | rN | numero riga n di una tabella, ad esempio  r1, r2. |
 | hN | intestazione di livello n, ad esempio h1, h2. |
+| hlp | fumetto d'aiuto |
 | lnk | link |
 | vlnk | link visitato |
 | lst | elenco |
 | prf | punto di riferimento |
 | mnu | menu |
 | mnubar | barra dei menu |
+| mnubtn | Pulsante menu |
+| mnuitem | Elemento menu |
+| Riq | Riquadro |
+| prgbar | Barra di avanzamento |
 | rbtn | pulsante radio |
+| scrlbar | barra di scorrimento |
+| sect | sezione |
+| stbar | barra di stato |
+| tabctl | Scheda |
 | tb | tabella |
+| term | terminale |
+| tlbar | barra degli strumenti |
+| tltip | suggerimento |
 | tv | visualizzazione ad albero |
+| tvbtn | pulsante visualizzazione ad albero |
+| tvitem | elemento visualizzazione ad albero |
 | lv N | un elemento in visualizzazione ad albero con livello di gerarchia N|
+| wnd | finestra |
 | ``-----`` | separatore |
 
 Sono altresì definiti i seguenti indicatori di stato:
 || Abbreviazione | indicatore di stato |
 | ... | visualizzato quando un oggetto supporta l'autocompletamento |
-| ( ) | visualizzato quando un oggetto (ad esempio una casella di controllo) non è selezionato |
-| (x) | visualizzato quando un oggetto (ad esempio una casella di controllo) è selezionato |
-| (-) | visualizzato quando un oggetto (come una casella di controllo) risulta parzialmente attivato |
+| ⢎⣿⡱ | visualizzato quando un oggetto (ad esempio un interruttore) è premuto |
+| ⢎⣀⡱ | visualizzato quando un oggetto (ad esempio un interruttore) non è premuto |
+| ⣏⣀⣹ | visualizzato quando un oggetto (ad esempio una casella di controllo) non è selezionato |
+| ⣏⣿⣹ | visualizzato quando un oggetto (ad esempio una casella di controllo) è selezionato |
+| ⣏⣸⣹ | visualizzato quando un oggetto (come una casella di controllo) risulta parzialmente attivato |
 | - | visualizzato quando un oggetto (ad esempio un elemento di una visualizzazione ad albero) è riducibile |
 | + | visualizzato quando un oggetto (ad esempio un elemento di una visualizzazione ad albero) è espandibile |
+| *** | visualizzato quando si incontra un controllo o un campo di testo protetto |
 | clk | visualizzato quando un oggetto è cliccabile |
+| cmnt | visualizzato in presenza di un commento per una cella di un foglio di calcolo o un pezzo di testo in un documento |
+| frml | visualizzato in presenza di una formula in una cella di un foglio di calcolo |
+| invalid | visualizzato quando è stato inserito un valore non valido |
+| ldesc | visualizzato quando un oggetto (in genere un grafico) contiene una descrizione |
+| mln | visualizzato quando un campo editazione consente l'inserimento di più righe di testo come i campi dei commenti nei siti web |
+| req | visualizzato quando un valore è richiesto in un form |
 | ro | visualizzato quando un oggetto (ad esempio un campo editazione) è di sola lettura |
 | sel | visualizzato quando un oggetto è selezionato |
+| nsel | visualizzato quando un oggetto non è selezionato |
+| sorted asc | visualizzato quando un oggetto è ordinato in modo ascendente |
+| sorted desc | visualizzato quando un oggetto è ordinato in modo discendente |
 | submnu | visualizzato quando un oggetto contiene un popup (in genere un sottomenu) |
 
 Infine, sono state definite le seguenti abbreviazioni per i punti di riferimento:
@@ -817,6 +858,9 @@ Sempre automaticamente verranno girate le pagine sia con lo spostamento del curs
 La navigazione veloce con le lettere è supportata per link e grafici, ma soltanto per la pagina corrente.
  La navigazione per link comprende anche le note a piè di pagina.
  
+NVDA fornisce un supporto iniziale per la lettura e la navigazione interattiva di contenuti matematici per i libri accessibili per la matematica.
+Si prega di consultare la sezione [lettura della matematica #ReadingMath] per ulteriori informazioni.
+
 +++ Selezionare il testo +++
 Kindle consente di eseguire varie operazioni sul testo selezionato, come l'ottenimento di una definizione dal dizionario, l'aggiunta di note ed evidenziazioni, copiare il testo negli appunti e la ricerca sul web.
 Per fare questo, per prima cosa selezionare il testo come sempre in modalità navigazione (ad esempio tenendo premuto shift e spostandosi con i tasti freccia).
@@ -838,6 +882,14 @@ Per visualizzare, modificare o eliminare una nota:
 + Accedere alle opzioni inerenti la selezione come descritto sopra.
 + Scegliere Modifica Nota.
 +
+
+++ Azardi ++
+%kc:beginInclude
+Quando ci si trova nella visualizzazione della tabella dei libri aggiunti:
+|| Nome | Tasto | Descrizione |
+| Invio | invio |Apre il libro selezionato. |
+| Menu di contesto | applicazioni | Apre il menu di contesto per il libro selezionato. |
+%kc:endInclude
 
 + Configurare NVDA +
 
@@ -1059,12 +1111,17 @@ Si applica al cursore di sistema e al cursore di controllo, ma non agli indicato
 ==== Cursore lampeggiante ====
 Questa opzione consente al cursore braille di lampeggiare.
 Se il lampeggìo viene disattivato, il cursore braille sarà sempre visibile, senza che i puntini corrispondenti si alzino e abbassino ritmicamente.
+L'indicatore della selezione non viene influenzato da questa opzione, per cui i puntini 7 e 8 rimarranno sempre stabili, senza alcun lampeggìo.
 
 ==== Velocità lampeggio cursore (ms) ====
 Si tratta di un campo numerico che permette di modificare la velocità di lampeggio del cursore in millisecondi.
 
-==== Forma cursore ====
-Questa opzione permette di selezionare la forma, in punti braille, del cursore braille.
+==== Forma del cursore focus ====
+Questa opzione permette di selezionare la forma, in punti braille, del cursore braille quando il braille segue il focus.
+L'indicatore della selezione non è affetto da questa funzione.
+
+==== Forma del cursore di controllo ====
+Questa opzione permette di selezionare la forma, in punti braille, del cursore braille quando il braille segue il cursore di controllo.
 L'indicatore della selezione non è affetto da questa funzione.
 
 ==== Timeout dei messaggi(sec) ====
@@ -1080,7 +1137,7 @@ Tasto: NVDA+control+t
 
 Questa impostazione permette di decidere se il display braille seguirà il focus di sistema oppure il navigatore ad oggetti (cursore di controllo).
 
-====Lettura per paragrafi====
+==== Lettura per paragrafi ====
 Se attivata, il braille verrà visualizzato per paragrafi invece che per righe.
 Inoltre, i comandi per spostarsi alla riga precedente/successiva andranno al paragrafo precedente/successivo.
 Questo significa che non sarà necessario utilizzare lo scrolling ogni volta che ci si trova alla fine di una riga.
@@ -1354,6 +1411,8 @@ Quando la casella di controllo è attiva, NVDA le tratterà come tabelle normali
 Quando è disattiva, non verranno annunciate né individuate con la navigazione veloce.
 In ogni caso, il contenuto delle tabelle sarà comunque annunciato come testo normale.
 Questa opzione è disattivata di default.
+
+Per poter cambiare al volo la lettura delle tabelle di layout da qualsiasi parte ci si trovi,  si prega di assegnare un gesto personalizzato utilizzando la [finestra gesti personalizzati #InputGestures].
   
 ==== Configurare l'annuncio di campi come links e intestazioni ====
 Si vedano le opzioni della sezione [Impostazioni formato documento #DocumentFormattingSettings] per configurare i campi che verranno annunciati quando si naviga, come link, intestazioni e tabelle
@@ -1656,7 +1715,7 @@ Per ciascun componente, vengono mostrati il nome del pacchetto, lo stato, la ver
 Se per il componente selezionato è disponibile aiuto specifico, è possibile accedervi tramite il pulsante Aiuto componente aggiuntivo.
 
 Per cercare e scaricare altri componenti aggiuntivi,  premere il pulsante Scarica Componenti aggiuntivi.
-Questo bottone aprirà la [Pagina componenti aggiuntivi di NVDA http://addons.nvda-project.org/].
+Questo bottone aprirà la [Pagina componenti aggiuntivi di NVDA https://addons.nvda-project.org/].
 Se NVDA è installato sul sistema, è possibile aprire il componente aggiuntivo  direttamente dal browser per avviare il processo di installazione come descritto di seguito.
 Altrimenti, salvare il componente aggiuntivo e seguire le istruzioni fornite qui di seguito.
 
@@ -1691,14 +1750,14 @@ Per accedere al gestore componenti aggiuntivi da qualsiasi punto ci si trovi, se
 
 ++ Console Python ++
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
-Per ulteriori informazioni, si veda [l'articolo relativo alla Console di Python, in lingua inglese, nel sito web di NVDA http://community.nvda-project.org/wiki/Development].
+Per ulteriori informazioni, si veda la [guida agli sviluppatori per NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html], in lingua inglese.
 
 ++ Ricarica componenti aggiuntivi ++
 Questa voce, una volta attivata, ricarica tutti i plugin e i moduli specifici per le applicazioni senza riavviare NVDA. Risulta utile per gli sviluppatori.
 
 + Sintesi vocali supportate +[SupportedSpeechSynths]
 Questa sezione contiene informazioni sui sintetizzatori vocali supportati da NVDA.
-Per una panoramica esaustiva dei sintetizzatori compatibili, sia gratuiti che a pagamento, si veda la pagina in inglese all'indirizzo [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Per una panoramica esaustiva dei sintetizzatori compatibili, sia gratuiti che a pagamento, si veda la [pagina sulle voci aggiuntive in inglese https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ Espeak NG ++
 La sintesi vocale [eSpeak NG https://github.com/espeak-ng/espeak-ng] è incorporata direttamente in NVDA, per cui non è necessario alcun driver o componente per farla funzionare. 
@@ -1758,7 +1817,7 @@ Nuance Vocalizer è una sintesi vocale commerciale di alta qualità sviluppata d
 Contiene più di 50 voci diverse, tutte facilmente installabili, arrivando a parlare in oltre 30 lingue. 
 Tutte le voci e i file che costituiscono l'intero programma vengono distribuiti sotto forma di componenti aggiuntivi, di modo da renderne possibile l'utilizzo anche su copie portable.
 
-Per ottenere maggiori informazioni ed eventualmente acquistare le sintesi vocali, è possibile consultare la pagina dedicata per l'Italia all'indirizzo http://www.nvda.it/promozione-il-pacchetto-vocalizer oppure a livello internazionale questo link [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Per ottenere maggiori informazioni ed eventualmente acquistare le sintesi vocali, è possibile consultare la pagina dedicata per l'Italia all'indirizzo http://www.sintesivocale.it oppure a livello internazionale questo link [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
 Una percentuale delle vendite di questo prodotto è devoluto a NV Access, per finanziare un ulteriore sviluppo dello screen reader NVDA.
 
 + Display braille supportati +[SupportedBrailleDisplays]
@@ -1791,8 +1850,6 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Move back using right wiz wheel action | rightWizWheelUp |
 | Move forward using right wiz wheel action | rightWizWheelDown |
 | Route to braille cell | routing |
-| Tasto backspace| punto7 |
-| tasto Invio | punto8 |
 | tasti shift+tab | spazio+punto1+punto2 |
 | tasto tab | spazio+punto4+punto5 |
 | freccia su |spazio+punto1 |
@@ -1870,29 +1927,37 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 %kc:endInclude
 
 ++ Modelli Handy Tech ++
-NVDA supporta tutte le barre braille prodotte dalla [Handy Tech http://www.handytech.de/], sia USB che Bluetooth. 
+NVDA supporta gran parte dei modelli di barre braille prodotte dalla [Handy Tech http://www.handytech.de/], siaUSB, seriali che Bluetooth. 
 Per alcuni modelli vecchi USB bisogna installare i driver USB fatti dalla Handy Tech.
 
-L'immissione tramite tastiera braille non è ancora supportata.
-
+I seguenti display braille non sono supportati in maniera nativa, ma possono essere comunque usati installando il [driver universale Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] e il componente aggiuntivo:
+- Braillino
+- Bookworm
+- display modulari con versione firmware 1.13 o inferiore. Si noti che il firmware di queste barre braille può essere aggiornato.
+-
 Seguono i tasti che sono stati assegnati con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
 %kc:beginInclude
 || Name | Key |
-| Scorre Display Braille indietro | left, up |
-| Scorre Display Braille avanti | right, down |
+| Scorre Display Braille indietro | left, up, b3 |
+| Scorre Display Braille avanti | right, down, b6 |
 | Sposta il display braille alla riga precedente  | b4 |
 | Sposta il display braille alla riga successiva | b5 |
 | Route to braille cell | routing |
-| Tasto shift+tab  | esc |
+| Tasto shift+tab | esc, left triple action key up+down |
 | Tasto alt  | b2+b4+b5 |
 | Tasto esc  | b4+b6 |
-| Tasto tab  | enter |
-| Tasto Invio | esc+enter |
-| FrecciaSu | leftspazio |
-| FrecciaGiù | rightspazio |
+| tasto tab | enter, right triple action key up+down |
+| tasto invio | esc+enter, left+right triple action key up+down, joystickAction |
+| tasto freccia su | joystickUp |
+| tasto freccia giù | joystickDown |
+| tasto freccia sinistra  | joystickLeft |
+| tasto freccia destra | joystickRight |
 | Menu NVDA  | b2+b4+b5+b6 |
-| Configurazione Handy Tech  | b4+b8 |
+| Commuta inseguimento cursore braille | b2 |
+| Commuta cursore braille | b1 |
+| Commuta presentazione del focus in base al contesto | b7 |
+| Commuta immissione braille | spazio+b1+b3+b4 (spazio+B maiuscola) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2355,7 +2420,7 @@ Si prega di consultare la [documentazione EcoBraille ftp://ftp.once.es/pub/utt/b
 | Spostare il cursore di sistema alla posizione corrente del cursore di controllo | F9 |
 | Leggi la posizione del cursore di controllo | F0 |
 | Commuta inseguimento braille | A |
-+%kc:endInclude
+%kc:endInclude
 
 ++ SuperBraille ++
 Il dispositivo SuperBraille, conosciuto soprattutto in Taiwan, può essere connesso o tramite USB o porta seriale.
@@ -2369,9 +2434,9 @@ A causa di ciò, e per mantenere una buona compatibilità con altri screen reade
 
 ++ BRLTTY ++
 [BRLTTY http://www.brltty.com] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 
-Per poterlo utilizzare, è necessario installare [BRLTTY per Windows http://www.brltty.com/download.thm].
+Per poterlo utilizzare, è necessario installare [BRLTTY per Windows http://www.brltty.com/download.htm].
 Si deve scaricare ed installare l'ultimo pacchetto Installer, che è chiamato, ad esempio, brltty-win-4.2-2.exe. 
-Quando si configura la Barra Braille e la porta da utilizzare, si prega di fare attenzione alle istruzioni presentate a schermo, specialmente in caso si possieda un modello USB e sono già installati nel sistema i Drivers prodotti dalla casa madre.
+Quando si configura la Barra Braille e la porta da utilizzare, si prega di fare attenzione alle istruzioni presentate a schermo, specialmente in caso si possieda un modello USB e sono già installati nel sistema i Driver prodotti dalla casa madre.
 
 Per i display che possiedono già una tastiera braille, Brltty gestisce autonomamente la procedura di immissione e traduzione del testo dal braille.
 Pertanto, le impostazioni tabella braille di immissione non sono rilevanti.
@@ -2386,55 +2451,6 @@ Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyBindings
 | Sposta il Display Braille alla riga successiva | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
-
-+ Tipi di controlli braille, punti di riferimento e abbreviazioni di stato +
-Per fare in modo di fornire il maggior numero di informazioni in un display braille, sono state definite le seguenti abbreviazioni per illustrare i tipi di controllo, lo stato degli elementi e per i punti di riferimento.
-
-|| Abbreviazione | Tipo controllo |
-| btn | bottone |
-| cbo | casella combinata |
-| chk | casella di controllo |
-| dlg | dialogo |
-| edt | campo di testo editabile |
-| gra | grafico |
-| cN | numero colonna tabella n, ad esempio c1, c2. |
-| rN | numero riga tabella n, ad esempio r1, r2. |
-| hN | intestazione di livello n, ad esempio h1, h2. |
-| lnk | link |
-| lst | elenco |
-| prf | punto di riferimento |
-| vlnk | link visitato |
-| mnu | menu |
-| mnubar | barra dei menu |
-| rbtn | pulsante radio |
-| tb | tabella |
-| tv | visualizzazione ad albero |
-| lv N | un elemento della visualizzazione ad albero possiede un livello gerarchico pari a N|
-| ``-----`` | separatore |
-
-Sono inoltre definiti i seguenti indicatori di stato:
-|| Abbreviazione | indicatore di stato |
-| ... | visualizzato quando un oggetto supporta l'autocompletamento |
-| ( ) | visualizzato quando un oggetto, come una casella di controllo, non è marcato |
-| (x) | visualizzato quando un oggetto, come una casella di controllo, è marcato |
-| (-) | visualizzato quando un oggetto, come una casella di controllo, è parzialmente attivato |
-| - | visualizzato quando un oggetto, come l'elemento di una visualizzazione ad albero, risulta non espandibile |
-| + | visualizzato quando un oggetto, come l'elemento di una visualizzazione ad albero, risulta espandibile |
-| clk | visualizzato quando un oggetto risulta cliccabile |
-| ro | visualizzato quando un oggetto, come un campo di testo editabile, risulta di sola lettura |
-| sel | visualizzato quando un oggetto risulta selezionato |
-| submnu | visualizzato quando un oggetto contiene un popup, in genere un sottomenu |
-
-Inoltre, sono presenti alcune abbreviazioni per gestire i punti di riferimento:
-|| Abbreviazione | Punto di riferimento |
-| bnnr | banner |
-| cinf | content info |
-| cmpl | complementare |
-| form | form |
-| main | principale |
-| navi | navigazione |
-| srch | ricerca |
-| rgn | regione |
 
 + Argomenti avanzati +
 
@@ -2478,6 +2494,9 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 | None | --no-sr-flag  | Non modifica il flag Screen Reader per il sistema |
 | None | --install | Installa NVDA (avviando la copia appena installata) |
 | None | --install | Silent Installa NVDA (non avviando la copia appena installata) |
+| None | --create-portable | Crea una copia portable di NVDA (avviando la copia appena creata). Richiede --portable-path da specificare |
+| None | --create-portable-silent | Crea una copia portable di NVDA (non avvia la nuova copia appena creata). Richiede --portable-path da specificare |
+| None | --portable-path=PORTABLEPATH | Il percorso in cui verrà creata la copia portable di NVDA |
 
 ++ Parametri di sistema++[SystemWideParameters] 
 NVDA consente di impostare alcuni valori nel registro di sistema che andranno ad influenzare il comportamento dello screen reader.

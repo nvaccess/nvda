@@ -25,7 +25,7 @@ Najvýznamnejšie prednosti programu:
 - Podpora množstva braillovských zobrazovačov vrátane písania na riadkoch, ktoré podporujú vstup pomocou 8-bodového počítačového kódu
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
-- Preložený do 50 jazykov
+- Preložený do 51 jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
 - Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
@@ -34,7 +34,7 @@ Najvýznamnejšie prednosti programu:
 
 ++ Medzinárodná podpora ++
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 50 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Barmčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Kannada, Katalánčina, Kolumbijská španielčina, Kórejčina, Litovčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 51 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Barmčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Kannada, Katalánčina, Kolumbijská španielčina, Kórejčina, Litovčina, Macedónčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
 
 ++ Podpora hlasového výstupu ++
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
@@ -59,11 +59,9 @@ Týka sa to oboch pôvodných, aj upravených kópií daného software.
 Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
 
 + Systémové požiadavky +
-- NVDA spustíte v 32 aj 64 bitových verziách systémov Windows XP, Vista, 7, 8, 8.1, 10 a tiež v serverových edíciách Windows.
-- V 32-bitových  verziách Windows XP musí byť nainštalovaný Service Pack 2 alebo novší.
- - V systémoch Windows Server 2003 musí byť nainštalovaný Service Pack 1 alebo novší.
- - V systéme Windows  Vista musí byť nainštalovaný Service Pack 2 a   [Aktualizácia KB2763674 https://support.microsoft.com/en-us/kb/2763674].
- Aktualizácie a Service pack odporúčame nainštalovať po nainštalovaní všetkých dostupných aktualizácií.
+- NVDA spustíte v 32 aj 64 bitových verziách systémov Windows 7, 8, 8.1, 10 a tiež v serverových edíciách Windows od verzie 2008 R2..
+- Vo Windows 7 musí byť nainštalovaný Service Pack 2 alebo novší.
+ - V systémoch Windows Server 2008 R2 	musí byť nainštalovaný Service Pack 1 alebo novší.
  - Mali by ste mať najmenej 256 MB operačnej pamäte
 - Výkonnosť procesora sa odhaduje na 1 GHZ alebo rýchlejší. Spustíte ho i na pomalších počítačoch, ale štart programu bude pomalý, prejaví sa to najmä na načítaní internetových stránok.
 - Mali by ste mať aspoň 90 MB voľného miesta na disku
@@ -280,7 +278,7 @@ Pri zameraní fokusu možno použiť niekoľko užitočných skratiek:
 | Fokus | NVDA+tab | NVDA+tab | Oznámi alebo vyhláskuje meno objektu, ktorý má systémový fokus |
 | názov okna | NVDA+t | NVDA+t | Oznámi titulok aktuálneho aplikačného okna alebo okna v popredí. Stlačené 2 krát rýchlo za sebou vyhláskuje názov okna a stlačené 3 krát rýchlo za sebou skopíruje názov aktuálneho okna do schránky. |
 | obsah okna v popredí | NVDA+b | NVDA+b | Oznámi všetky prvky aktuálneho okna v popredí (užitočné pre dialógy) |
-| Stavový riadok | NVDA+end  | NVDA+shift+end | Oznámi obsah stavového riadku ak ho NVDA dokáže nájsť. Tiež   premiestni navigačný objekt na stavový riadok. Stlačené dvakrát stavový riadok vyhláskuje|
+| Stavový riadok | NVDA+end  | NVDA+shift+end | Oznámi obsah stavového riadku ak ho NVDA dokáže nájsť. Tiež   premiestni navigačný objekt na stavový riadok. Stlačené dvakrát stavový riadok vyhláskuje. Stlačené trikrát skopíruje obsah stavového riadka do schránky|
 %kc:endInclude
 
 ++ Pohyb pomocou textového kurzora ++[SystemCaret]
@@ -506,7 +504,7 @@ Za pomoci nasledujúcich klávesov sa môžete posúvať na nasledujúci prvok v
 - m: rámik
 - g: grafika
 - d: oblasť stránky
-- o: vnorený objekt
+- o: vnorený objekt (audio a video prehrávač, aplikácia, dialóg...)
 - 1-6: nadpis príslušnej úrovne
 - a: anotácie (komentár, zmena alebo úprava)
 - w:  chyba
@@ -525,7 +523,7 @@ Na zapnutie a vypnutie rýchlej navigácie v režime prehliadania, použite skra
 
 ++ Zoznam prvkov ++
 Dialóg zoznam prvkov zobrazuje zoznam rôznych  typov prvkov v závislosti od toho, v akej aplikácii tento dialóg otvoríte.
-napríklad v internetových prehliadačoch zobrazuje  zoznam odkazov, nadpisov alebo zoznam oblastí dokumentu.
+napríklad v internetových prehliadačoch zobrazuje  zoznam odkazov, nadpisov, formulárových prvkov, tlačidiel alebo zoznam oblastí dokumentu.
 Pomocou výberového políčka je možné sa prepínať medzi jednotlivými typmi obsahu.
 Dialóg obsahuje editačné pole, v ktorom môžete filtrovať obsah práve zobrazeného zoznamu.
 Tlačidlami prejsť na alebo aktivovať vykonávame akcie pre prvky vybraté v zozname.
@@ -535,8 +533,9 @@ Tlačidlami prejsť na alebo aktivovať vykonávame akcie pre prvky vybraté v z
 %kc:endInclude
 
 ++ Vnorené objekty ++
-Moderné webové stránky môžu byť obohatené o prvky Adobe Flash, Oracle Java, ale aj o dialógy či aplikácie.
+Moderné webové stránky môžu byť obohatené o prvky Adobe Flash, Oracle Java a HTML5, ale aj o dialógy či aplikácie.
 Ak sa tieto nachádzajú v dokumente, NVDA oznámi "vnorený objekt", "aplikácia", alebo "dialóg".
+medzi týmito prvkami sa môžete pohybovať skratkami rýchlej  navigácie O a shift+O.
 Stlačením klávesu enter môžete premiestniť fokus do takéhoto vnoreného objektu.
 Ak je objekt prístupný, môžete sa v objekte pohybovať stláčaním klávesov tab alebo shift+tab.
 Je možné použiť klávesovú skratku na prechod späť do dokumentu v ktorom je objekt vnorený.
@@ -545,16 +544,19 @@ Je možné použiť klávesovú skratku na prechod späť do dokumentu v ktorom 
 | Prejsť do nadradeného dokumentu | NVDA+ctrl+medzera | Premiestni fokus z aktuálneho vnoreného objektu do nadradeného dokumentu ktorý tento objekt obsahuje |
 %kc:endInclude
 
-+ Čítanie matematického obsahu+
++ Čítanie matematického obsahu +[ReadingMath]
 NVDA môže čítať matematický obsah sprostredkovaný cez aplikáciu MathPlayer 4 od spoločnosti Design Science.
 Musíte však mať vo vašom počítači nainštalovanú aplikáciu  MathPlayer 4.
 MathPlayer si môžete zdarma stiahnuť z tejto adresy: http://www.dessci.com/en/products/mathplayer/
 
 NVDA podporuje tieto typy matematického obsahu:
 - MathML v prehliadačoch Mozilla Firefox, Microsoft Internet Explorer a google Chrome.
-- Matematický obsah od Design Science integrovaný v Microsoft Word a Microsoft Powerpoint. Musíte však nainštalovať MathType, skúšobná verzia je postačujúca.
-- MathML v dokumentoch programu Adobe Reader. Toto však zatiaľ nie je oficiálny štandard, preto neexistuje software, ktorý by vedel takéto dokumenty vyrobiť.
--
+- Matematický obsah od Design Science integrovaný v Microsoft Word a Microsoft Powerpoint.
+Musíte však nainštalovať MathType, skúšobná verzia je postačujúca.
+- MathML v dokumentoch programu Adobe Reader.
+Toto však zatiaľ nie je oficiálny štandard, preto neexistuje software, ktorý by vedel takéto dokumenty vyrobiť.
+- Matematický obsah v aplikácii Kindle
+- 
 
 NVDA automaticky prečíta matematický  obsah počas čítania dokumentu.
 Ak používate braillovský riadok, matematický obsah sa zobrazí aj na braillovskom riadku.
@@ -577,7 +579,7 @@ Predvolene prehliadací kurzor sleduje systémový kurzor, takže môžete na po
 
 od tohto momentu môžete používať skratky programu MathPlayer, ako napríklad šípky na prezeranie obsahu.
 Napríklad ľavou a pravou šípkou sa pohybujete po matematickom výraze a šípkou dole rozbalíte konkrétnu časť výrazu, napríklad zlomok.
-Zoznam klávesových skratiek nájdete v návode k programu MathPlayer.
+Zoznam klávesových skratiek nájdete v [návode k programu MathPlayer https://www.dessci.com/en/products/mathplayer/navigation_commands.htm].
 
 Ak príklad dočítate a chcete sa vrátiť, stlačte Escape.
 
@@ -856,6 +858,9 @@ ručne môžete prejsť na nasledujúcu stranu klávesom page up. Na predchádza
 na prechod medzi odkazmi a obrázkami môžete použiť skratky rýchlej navigácie. Tieto však fungujú len v rámci aktuálnej strany.
 Skratka na prechod medzi odkazmi prechádza aj medzi poznámkami pod čiarou.
 
+NVDA poskytuje základnú podporu pre čítanie matematiky a navigáciu v matematickom obsahu.
+Podrobnosti nájdete v časti [Čítanie matematického obsahu #ReadingMath].
+
 +++ výber textu +++
 Kindle umožňuje vykonávať rôzne operácie s práve vybratým textom. Môžete si vyhľadať definíciu v slovníku, pridať poznámku alebo zvýraznenie, skopírovať text do schránky alebo ho vyhľadať na internete.
 najprv vyberte text pomocou shiftu v kombinácii so šípkami.
@@ -877,6 +882,14 @@ Poznámku upravíte alebo zmažete nasledujúcim spôsobom:
 + Otvorte kontextové menu.
 + Vyberte položku upraviť poznámku.
 +
+
+++ Azardi ++
+%kc:beginInclude
+V tabuľke s knihami:
+|| Názov | Klávesová skratka | Popis |
+| otvoriť | enter | otvorí vybratú knihu. |
+| kontextová ponuka | kláves aplikácie (kontextové menu) | Otvorí kontextové menu pre vybratú knihu. |
+%kc:endInclude
 
 + Konfigurácia NVDA +
 
@@ -1397,7 +1410,9 @@ Táto voľba rozhoduje o tom, ako NVDA spracuje tabuľky určené výhradne na f
 Ak voľbu začiarknete, NVDA tieto tabuľky spracuje štandardne podľa [nastavení čítania textu #DocumentFormattingSettings] a budete ich môcť nájsť pomocou rýchlej navigácie.
 Ak voľbu odčiarknete, NVDA ich nebude hlásiť ako tabuľky a nebudú sa dať nájsť pomocou rýchlej navigácie.
 obsah týchto tabuliek však bude NVDA zobrazovať ako čistý text.
-Táto možnosť je v predvolenom nastavení odčiarknutá.
+Táto možnosť je v predvolenom nastavení vypnutá.
+
+Ak chcete toto nastavenie meniť odkiaľkoľvek, môžete si nastaviť samostatnú skratku v dialógu [Klávesové skratky  #InputGestures].
 
 ==== Ohlásenie podrobných nastavení prvkov ====
 Môžete rozhodnúť, či bude NVDA oznamovať odkazy, nadpisy, tabuľky a podobne. Pozrite si časť [Nastavenia čítania textu #DocumentFormattingSettings].
@@ -1700,7 +1715,7 @@ Okrem názvu sa zobrazí  verzia,  autor a stav doplnku. Popis a URL adresu mô�
 Ak doplnok obsahuje pomocníka, môžete si ho pozrieť po aktivovaní tlačidla Návod.
 
 Ak si chcete pozrieť dostupné doplnky, aktivujte tlačidlo otvoriť stránku s doplnkami.
-Otvorí sa stránka s [doplnkami pre NVDA http://addons.NVDA-project.org/].
+Otvorí sa stránka s [doplnkami pre NVDA https://addons.NVDA-project.org/].
 Ak máte NVDA nainštalované v systéme a je práve spustené, môžete doplnok otvoriť priamo z webového prehliadača a postupovať podľa pokynov nižšie.
 Ak NVDA nemáte nainštalovaný, uložte súbor s doplnkom do počítača a pokračujte nasledovne.
 
@@ -1735,14 +1750,14 @@ Ak chcete okno  Správcu doplnkov aktivovať z hociktorého miesta, môžete mu 
 
 ++ Python konzola ++
 Python konzola programu NVDA, dostupná z podmenu nástroje, je nástroj pre vývojárov, ktorý umožňuje kontrolovať správnosť behu NVDA, zisťovať stav vnútorných premenných NVDA a tiež skúmať hierarchiu prístupnosti aplikácií.
-Viac informácií je dostupných v príručke pre vývojárov, ktorú nájdete na stránke NVDA v časti [vývoj (anglicky) http://community.NVDA-project.org/wiki/Development].
+Viac informácií je dostupných v príručke pre vývojárov, ktorú nájdete na stránke NVDA v časti [vývoj (anglicky) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Načítať pluginy ++
 Po aktivovaní tejto položky NVDA znovu načíta pluginy a aplikačné moduly bez nutnosti reštartu. Môže byť užitočné pre vývojárov.
 
 + Podporované hlasové výstupy +[SupportedSpeechSynths]
 Táto časť obsahuje informácie o hlasových výstupoch, ktoré môžete používať s NVDA.
-Zoznam niektorých konkrétnych hlasových výstupov, ktoré je možné používať s NVDA je na stránke [http://www.NVDA-project.org/wiki/ExtraVoices http://www.NVDA-project.org/wiki/ExtraVoices] (anglicky).
+Zoznam niektorých konkrétnych hlasových výstupov, ktoré je možné používať s NVDA nájdete v časti [Hlasové výstupy (anglicky)  https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG++
 Hlasový výstup [eSpeak NG https://github.com/espeak-ng/espeak-ng] je priamo zabudovaný do NVDA a nie je závislý na iných špeciálnych ovládačoch alebo iných komponentoch, ktoré by bolo potrebné doinštalovať.
@@ -1912,29 +1927,37 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 %kc:endInclude
 
 ++ Zobrazovače od spoločnosti Handy Tech ++
-NVDA podporuje všetky zobrazovače od spoločnosti [Handy Tech http://www.handytech.de/], ak sú pripojené k počítaču cez USB alebo bluetooth.
+NVDA podporuje väčšinu  zobrazovačov od spoločnosti [Handy Tech http://www.handytech.de/], ak sú pripojené k počítaču cez USB, sériový port alebob  bluetooth.
 Pre niektoré staršie USB riadky je potrebné do systému nainštalovať USB ovládače Handy Tech.
 
-Písanie na braillovskej klávesnici nie je v súčasnosti podporované.
-
-Nasleduje zoznam klávesových príkazov pre tento typ riadku.
+Nasledujúce braillovské riadky nie sú podporované priamo, môžete ich však používať po inštalácií [Univerzálneho ovládača Handy Techhttps://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] a doplnku pre NVDA.
+- Braillino
+- Bookworm
+- Modulárne riadky s firmwérom vo verzii 1.13 alebo nižšej. tieto riadky však môžete aktualizovať.
+-
+Nasleduje zoznam klávesových príkazov pre riadky Handy Tech.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
 %kc:beginInclude
 || Názov | Klávesová skratka |
-| posunúť riadok späť | ľavá šípka, šípka hore |
-| posunúť riadok vpred | pravá šípka, šípka dolu |
+| posunúť riadok späť | ľavá šípka, šípka hore, B3 |
+| posunúť riadok vpred | pravá šípka, šípka dolu, B6|
 | predchádzajúci riadok | b4 |
 | nasledujúci riadok | b5 |
 | Prejsť na znak v brailly | smerové tlačidlá |
-| shift+tab | esc |
+| shift+tab | esc, trojité stlačenie kláves left+up+down |
 | emulácia alt | b2+b4+b5 |
 | emulácia klávesu escape | b4+b6 |
-| tab | enter |
-| enter | esc+enter |
-| šípka hore | ľavá medzera |
-| šípka dolu | pravá medzera |
+| tab | enter, trojité stlačenie kláves right+up+down|
+| enter | esc+enter, trojité stlačenie kláves up+down+left+right alebo joysticku|
+| šípka hore | Joistick hore |
+| šípka dolu | joistick dole |
+| šípka vľavo | jostick vľavo |
+| šípka vpravo | joistick vpravo |
 | Ponuka NVDA | b2+b4+b5+b6 |
-| Správca konfigurácii Handy Tech | b4+b8 |
+| Prepnúť braillovský kurzor zviazaný s | b2 |
+| Prepnúť braillovský kurzor| b1 |
+| Prepnúť prezentáciu kontextu | b7 |
+| Prepnúť braillovský vstup | medzera+b1+b3+b4 (medzera a veľké písmeno B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2471,6 +2494,9 @@ NVDA v súčasnosti podporuje tieto parametre:
 | nie je | --no-sr-flag  | Nezmení predvolené označenie čítača obrazovky v systéme |
 | Nie je | --install | Nainštaluje NVDA a spustí nainštalovanú kópiu |
 | nie je | --install-silent | Nainštaluje NVDA s predvolenými parametrami bez používateľského rozhrania, ale nespustí nainštalovanú kópiu|
+| Nie je | --create-portable | Vytvorí prenosnú verziu NVDA a spustí ju. Je potrebné určiť cestu cez argument --portable-path |
+| Nie je | --create-portable-silent | Vytvorí prenosnú verziu NVDA, ale nespustí ju. Je potrebné určiť cestu cez argument --portable-path |
+| Nie je  | --portable-path=cesta | určuje, kam sa uloží prenosná verzia NVDA|
 
 ++ Systémové parametre ++[SystemWideParameters]
 Niektoré Nastavenia NVDA je možné zmeniť v editore registrov.

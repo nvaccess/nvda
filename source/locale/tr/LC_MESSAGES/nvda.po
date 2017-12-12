@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-04 15:10+0300\n"
+"POT-Creation-Date: 2017-11-03 00:10+1000\n"
+"PO-Revision-Date: 2017-11-02 21:40+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,967,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
@@ -800,6 +800,11 @@ msgstr "Hırvatça 8 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Hırvatça derece 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Macarca 8 noktalı bilgisayar braille"
 
@@ -1020,6 +1025,11 @@ msgstr "Unicode braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Vietnam derece 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Çince (Hong Kong, Cantonese)"
 
@@ -1028,9 +1038,12 @@ msgstr "Çince (Hong Kong, Cantonese)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Çince (Taiwan, Mandarin)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "Odak kipi"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Tarama kipi"
@@ -1560,8 +1573,8 @@ msgstr "Tür"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&Filtreleme kriteri"
+msgid "Filt&er by:"
+msgstr "Filtr&eleme kriteri"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1596,8 +1609,8 @@ msgstr "Uzun tarif mevcut değil"
 msgid "Shows the long description at this position if one is found."
 msgstr "Varsa, bulunulan konumdaki ögeyle ilgili uzun tarifi görüntüler."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "bir öge bloğunun içinde değilsiniz"
 
@@ -1642,6 +1655,20 @@ msgstr "Bir sonraki tablo sütununa gider"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "Bir önceki tablo sütununa gider"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Düzen tabloları kapalı"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Düzen tabloları açık"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Tarama kipinde düzen tablolarının dahil edilip edilmemesiyle ilgili ayarı "
+"açıp kapatır"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2688,6 +2715,24 @@ msgstr "gesture map dosyasında hata"
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA açılıyor, lütfen bekleyin..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Yatay"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Dikey"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Pil şarj oluyor. yüzde %d"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Pil şarj edilmiyor. yüzde %d"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA başlatıldı"
@@ -3336,6 +3381,7 @@ msgid "No navigator object"
 msgstr "Nesne sunucusu yok"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s panoya Kopyalandı"
@@ -3648,10 +3694,12 @@ msgstr "Durum satırı bulunamadı"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "Aktif pencerenin durum çubuğunu okur ve nesne sunucusunu da durum çubuğuna "
-"taşır. İki kez basıldığında bilgi kodlanarak seslendirilir."
+"taşır. İki kez basıldığında bilgi kodlanarak seslendirilir. Üç kez basılırsa "
+"bilgi panoya kopyalanır."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4725,10 +4773,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Corner"
-msgstr "Köşeler"
+msgstr "Köşe"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4750,10 +4797,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Down Arrow"
-msgstr "Aşağı ok"
+msgstr "kavisli Aşağı ok"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4769,17 +4815,15 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Right Arrow"
-msgstr "Sağ ok"
+msgstr "kavisli Sağ ok"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Up Arrow"
-msgstr "Yukarı ok"
+msgstr "Kavisli Yukarı ok"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4837,7 +4881,6 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Down Arrow"
 msgstr "Aşağı ok"
@@ -5099,7 +5142,6 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left Arrow"
 msgstr "Sol ok"
@@ -5112,10 +5154,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left brace"
-msgstr "Sola hizalı"
+msgstr "aç küme parantez"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5155,17 +5196,15 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left right and up Arrows"
-msgstr "Sağ ok"
+msgstr "Sağ Sol ve Yukarı Ok"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left and up Arrows"
-msgstr "Sol ok"
+msgstr "Sol ve yukarı Ok"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5309,10 +5348,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Math Addition symbol"
-msgstr "İşaret Ekle"
+msgstr "Matematik toplam sembolü"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5418,7 +5456,6 @@ msgstr "Dikdörtgen belirtme çizgisi "
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right Arrow"
 msgstr "Sağ ok"
@@ -5431,10 +5468,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right brace"
-msgstr "Sağa hizalı"
+msgstr "kapa küme parantez"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5444,10 +5480,9 @@ msgstr "sağ dirsek"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right triangle"
-msgstr "Sağa hizalı"
+msgstr "Sağa üçgen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5483,7 +5518,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Smiley face"
-msgstr ""
+msgstr "Gülen yüz "
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5529,10 +5564,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved arrow"
-msgstr "Yukarı ok"
+msgstr "Kavisli ok "
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5548,7 +5582,6 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Up Arrow"
 msgstr "Yukarı ok"
@@ -5654,14 +5687,6 @@ msgstr ""
 msgctxt "action"
 msgid "Sound"
 msgstr "ses"
-
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"NVDA'nın Windows oturum açma ekranı, UAC ekranı ve diğer güvenli ekranlarda "
-"çalışmasını sağlar."
 
 msgid "Type help(object) to get help about object."
 msgstr "Nesne hakkında yardım almak için help object yazın"
@@ -7039,12 +7064,21 @@ msgstr "ekran kaydırma"
 msgid "line scroll"
 msgstr "satır kaydırma"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech Braille Ekranları"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Handy Tech sürücüsü konfigürasyon penceresini göster."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Braille girişi etkin "
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Braille girişi devre dışı "
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Braille girişini aç/kapa"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7230,8 +7264,8 @@ msgid "Change settings of document properties"
 msgstr "Belge özellikleriyle ilgili  ayarları değiştir"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "Windows 10 OCR..."
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7585,10 +7619,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Eklenti Kurulumu"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
-msgstr "Bu eklentinin bir versiyonu zaten kurulu. Güncellemek ister misiniz?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"Sisteminizde kurulu gözüken {summary} eklentisinin {newVersion} versiyonunu "
+"kurmak üzeresiniz, . Güncellemek istediğinizden emin misiniz?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Bu eklentinin bir versiyonu zaten kurulu. {summary} eklentisinin "
+"{curVersion} versiyonunu {newVersion} versiyonuna yükseltmek ister misiniz?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8000,6 +8047,10 @@ msgstr "Taşınabilir kopya için dizin seçin"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "Mevcut k&ullanıcı konfigürasyonunu kopyala"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "Oluşturulduktan sonra ta&şınabilir kopyayı çalıştır"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -8736,7 +8787,7 @@ msgid "Whole &word"
 msgstr "İfadenin &tamamı"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "Düzenli &ifade"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -10448,8 +10499,8 @@ msgstr "&Açıklamalar"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "&hatalar"
+msgid "&Errors"
+msgstr "&Hatalar"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10459,26 +10510,5 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serisi"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "-----"
-#~ msgstr "-----"
-
-#~ msgid "(x)"
-#~ msgstr "[X]"
-
-#~ msgid "(-)"
-#~ msgstr "(-)"
-
-#~ msgid "( )"
-#~ msgstr "( )"
-
-#~ msgid "Farsi grade 1"
-#~ msgstr "Farsça Derece 1"
-
-#~ msgid "ITALIC"
-#~ msgstr "italik"
-
-#~ msgid "braille"
-#~ msgstr "braille"
-
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr "Bu profili silmek istediğinizden emin misiniz? Bu geri alınamaz."
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Handy Tech sürücüsü konfigürasyon penceresini göster."

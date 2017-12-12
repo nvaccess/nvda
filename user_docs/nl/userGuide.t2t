@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION Gebruikershandleiding
+NVDA NVDA_VERSION Gebruikershandleiding
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -25,7 +25,7 @@ Belangrijke functies zijn:
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
 - Kan via usb-stick of ander draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
-- In 50 talen beschikbaar
+- In 51 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
 - Werken met beveiligde omgeving van Windows (inloggen e.d.) is mogelijk
 - Ondersteuning van gangbare toegankelijkheidsinterfaces zoals Microsoft Active Accessibility, Java Access Bridge, Iaccessible 2 en UI Automation (UI Automation alleen op Windows 7 of hoger)
@@ -34,7 +34,7 @@ Belangrijke functies zijn:
 
 ++ Internationalisering ++
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
-Behalve de Engelse versie van NVDA is het programma beschikbaar in 50 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Birmees, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Koreaans, Pharsi, Pools, Portugees, Punjabi, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, Viëtnamees, etc. 
+Behalve de Engelse versie van NVDA is het programma beschikbaar in nog 51 andere talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Birmees, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Koreaans, Macedonisch, Pharsi, Pools, Portugees, Punjabi, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, Viëtnamees, etc. 
 
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
@@ -59,12 +59,10 @@ Dit is van toepassing voor zowel originele als aangepaste kopieën van de softwa
 Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systeemvereisten +
-- Besturingssysteem: alle 32-bit en 64-bit edities van Windows XP, Windows Vista, Windows 7, Windows 8 en Windows 10 (inclusief Server besturingssystemen). 
-- Voor Windows XP 32-bit heeft NVDA Service Pack 2 of hoger nodig.
-- Voor Windows Server 2003 heeft NVDA Service Pack 1 of hoger nodig.
-- Voor Windows Vista heeft NVDA service pack 2 nodig alsmede update [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
-- Deze moeten allebei worden geïnstalleerd als alle beschikbare updates zijn toegepast via Windows Update.
-- Geheugen: 256 MB RAM of meer.
+- Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
+- Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
+- Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
+- - Geheugen: 256 MB RAM of meer.
 - Processorsnelheid: 1.0 ghz of hoger.
 - Opslagcapaciteit: ongeveer 90 MB vrije ruimte.
 -
@@ -284,8 +282,8 @@ Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfoc
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
 | Huidige focus melden | NVDA+tab | NVDA+tab | laat horen welk object of besturingselement momenteel is gefocusseerd. Bij tweemaal indrukken wordt informatie gespeld |
 | Titel/naam melden | NVDA+t | NVDA+t | Laat horen hoe het momenteel actieve venster heet. Bij tweemaal indrukken wordt de informatie gespeld. Bij driemaal indrukken wordt deze naar het klembord gekopieerd. |
-| Actieve venster voorlezen | NVDA+b | NVDA+b | Leest de inhoud (knoppen, uitklapnenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
-| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. Bij tweemaal indrukken wordt de informatie gespeld. |
+| Actieve venster voorlezen | NVDA+b | NVDA+b | Leest de inhoud (knoppen, vervolgkeuzenenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
+| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. Bij tweemaal indrukken wordt de informatie gespeld. Driemaal drukken zorgt ervoor dat deze naar het klembord wordt gekopieerd. |
 %kc:endInclude
 
 ++ Navigeren met de systeemcursor ++[SystemCaret]
@@ -510,7 +508,7 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 - m: frame (kader)
 - g: graphic (afbeelding)
 - d: ARIA oriëntatiepunt in een Internetomgeving
-- o: embedded object (ingebed object)
+- o: embedded object (ingebed object), (audio- en videospeler, toepassing, dialoogvenster, etc.)
 - 1 tot en met 6: respectievelijk, kop op niveau 1, 2, 3, 4, 5 en 6.
 - a: annotatie (invoeroptie voor notities, opmerkingen e.d.).
  - w: spelfout
@@ -529,7 +527,7 @@ Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen druk
 
 ++ De lijst met elementen ++
 Via de lijst met elementen krijgt u toegang tot de verschillende, bij de toepassing behorende, elementtypes in het document.
-Als u zich bij voorbeeld in een webbrowser bevindt, kan de lijst met elementen koppen, koppelingen (links) of oriëntatiepunten bevatten. 
+Als u zich bij voorbeeld in een webbrowser bevindt, kan de lijst met elementen koppen, koppelingen (links), formuliervelden, knoppen of oriëntatiepunten bevatten. 
 Met behulp van keuzerondjes kunt u wisselen tussen de verschillende elementtypes.
 In het dialoogvenster treft u ook een invoerveld aan waarmee u de lijst kunt filteren zodat u gerichter naar iets kunt zoeken op de pagina.
 Als u uw keuze eenmaal gemaakt hebt, kunt u met de aanwezige knoppen in het dialoogvenster naar dat onderdeel springen of het activeren.
@@ -539,8 +537,9 @@ Als u uw keuze eenmaal gemaakt hebt, kunt u met de aanwezige knoppen in het dial
 %kc:endInclude
 
 ++ Ingebedde objecten ++
-De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Adobe Flash of Sun Java, maar ook met applicaties en dialoogvensters.
+De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Adobe Flash, Oracle Java en HTML5, maar ook met applicaties en dialoogvensters.
 Wanneer u iets dergelijks tegenkomt in bladermodus zal NVDA dit respectievelijk melden als “Ingebed (Embedded) Object”, “applicatie”, of “dialoogvenster.
+Met de letternavigatietoetsen o en Shift + o kunt u hier snel naar toe navigeren.
 Door op Enter te drukken wordt interactie met zulke objecten mogelijk.
 Als het object toegankelijk is, kunt u het met de TAB-toets verkennen en bewerkingen uitvoeren zoals u dat ook in andere toepassingen gewend bent.
 Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkelijke pagina waarop zich het object bevindt. 
@@ -549,16 +548,18 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 | Terug naar inhoud van document | NVDA+control+spatiebalk | Verplaatst de focus van het huidige ingevoegde object naar “het document waarin het zich bevindt |
 %kc:endInclude
 
-+ Inhoud van wiskundige aard lezen +
++ Inhoud van wiskundige aard lezen +[ReadingMath]
 Met MathPlayer 4 van Design Science, kan NVDA ondersteunde wiskundige inhoud lezen en u er interactief in laten navigeren.
 Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
 MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
-- Design Science MathType in Microsoft Word and PowerPoint. MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
-- MathML in Adobe Reader. NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
--
+- Design Science MathType in Microsoft Word and PowerPoint. 
+MathType moet worden geïnstalleerd anders werkt dit niet. De proefversie ishiervoor voldoende.
+- MathML in Adobe Reader. 
+NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
+- Wiskunde in Kindle voor pc voor boeken met toegankelijke wiskundige inhoud.
 
 Bij het lezen van een document zal NVDA alle ondersteunde wiskundige inhoud voorlezen wanneer deze voorkomt.
 Als u een brailleleesregel gebruikt, wordt deze ook in braille weergegeven.
@@ -581,7 +582,7 @@ Standaard volgt de leescursor de systeemcursor, dus kunt u deze gewoonlijk gebru
 
 Nu kunt u MathPlayer-commando’s zoals de pijltjestoetsen gebruiken om de stelling te verkennen.
 U kunt bij voorbeeld  horizontaal door de stelling gaan met de linker en rechter pijltoets en inzoemen op een onderdeel van de stelling zoals een breuk  met behulp van  pijl omlaag.
-Raadpleeg de documentatie bij MathPlayer  voor nadere informatie.
+Raadpleeg de documentatie van MathPlayer  over navigatiecommando's voor nadere informatie: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Als u naar het document wilt teruggaan drukt u op Escape.
 
@@ -859,6 +860,9 @@ U kunt ook handmatig naar de volgende pagina gaan  met de Pagina Omlaag-toets,en
 Navigeren met een enkele lettertoets wordt ondersteund voor koppelingen en afbeeldingen maar alleen binnen de huidige pagina.
 Bij het navigeren tussen koppelingen (links) worden ook voetnoten meegenomen.
 
+NVDA biedt ondersteuning (nog in een pril stadium)  bij  het lezen  van en het interactief navigeren door wiskundige inhoud voor  boeken met toegankelijke wiskunde.
+Raadpleeg hierover het onderdeel  [Inhoud van Wiskundige Aard Lezen #ReadingMath] voor meer informatie.
+
 +++ Tekstselectie +++
 Met Kindle kunt u verschillende handelingen met betrekking tot geselecteerde tekst, uitvoeren, waaronder het verkrijgen van een definitie uit een woordenboek, het toevoegen van aantekeningen en tekstmarkeringen, het kopiëren van tekst naar het klembord en het doorzoeken van een webpagina. 
 Daartoe dient u eerst tekst op de gebruikelijke manier te selecteren in de bladermodus, bijv. met shift en de cursortoetsen.
@@ -880,6 +884,14 @@ Om een aantekening te bekijken, bewerken of verwijderen:
 + roept u het Windows contextmenu op met de opties voor de selectie,
 + kiest u "Aantekening bewerken".
 +
+
+++ Azardi ++
+%kc:beginInclude
+Wanneer u in de tabelweergave  van toegevoegde boeken bent:
+|| Naam | Toets | Beschrijving |
+| Enter | enter | Opent het geselecteerde boek. |
+| Contextmenu | Toepassingen | Opent het contextmenu voor het geselecteerde boek. |
+%kc:endInclude
 
 + NVDA configureren +
 
@@ -1400,7 +1412,10 @@ Met deze optie kunt u bepalen hoe NVDA moet omgaan met tabellen die uitsluitend 
 Wanneer Layout-tabellen opnemen is ingeschakeld, zal NVDA zulke tabellen als normale tabellen beschouwen. Hoe ze gemeld worden is afhankelijk van de [opmaakinstellingen #DocumentFormattingSettings] en met sneltoetscommando's kan men er naar toe navigeren.
 Wanneer deze optie niet ingeschakeld is, worden de tabellen niet opgenomen en men kan  er niet naar toe navigeren.
 De inhoud wordt echter wel als normale tekst weergegeven.
+
 Deze optie staat standaard uit.
+
+Om het opnemen van layout tabellenin- en uit te kunnen schakelen vanuit elke willekeurige plaats maakt u met behulp  van het [dialoogvenster Invoerhandelingen #InputGestures] een daartoe aangepaste handeling aan.
 
 ==== Het melden van velden zoals links en koppen instellen====
 Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en tabellen.
@@ -1700,8 +1715,8 @@ In het dialoogvenster "Add-ons Beheren" vindt u een lijst met alle geïnstalleer
 Van elke Add-on wordt de pakketnaam, status, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL. Als er voor de geselecteerde Add-on hulpinformatie beschikbaar is, kunt u deze raadplegen door op de knop  "Add-on Help" te drukken.
 
 U kunt op Internet naar beschikbare Add-ons bladeren en deze desgewenst installeren door op de knop "Add-ons toevoegen" te klikken.
-U komt nu op de [NVDA Add-ons pagina http://addons.nvda-project.org/]. 
-Als NVDA op uw computer is geïnstalleerd,en gestart is, kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
+U komt dan op de [NVDA Add-ons pagina https://addons.nvda-project.org/]. 
+-Als NVDA op uw computer is geïnstalleerd,en gestart is, kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
 Werkt u met een draagbare kopie van NVDA, dan slaat u de Add-on op en volgt u onderstaande instructies.
 
 Om een eerder verkregen Add-on te installeren drukt u op de knop "Installeren".
@@ -1735,14 +1750,14 @@ Als u Add-Ons Beheren altijd en overal wilt kunnen oproepen, kunt u daarvoor aan
 
 ++ Python Console ++
 Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
-Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) http://community.nvda-project.org/wiki/Development].].
+Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]].].
 
 ++ Plugins herladen ++
 Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen zonder dat NVDA wordt herstart. Dit is handig voor ontwikkelaars.
 
 + Ondersteunde spraaksynthesizers +[SupportedSpeechSynths]
 In deze rubriek vindt u informatie over spraaksynthesizers die door NVDA worden ondersteund.
-Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder Extra Stemmen op [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 De [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
@@ -1914,29 +1929,37 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ Handy Tech Leesregels ++
-NVDA ondersteunt alle via usb-gekoppelde of blutooth-verbondenleesregels van [Handy Tech http://www.handytech.de/].
-Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd. Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+NVDA ondersteunt de meeste  via usb-gekoppelde of blutooth-verbonden dan wel op de sereële poort aangesloten leesregels van [Handy Tech http://www.handytech.de/].
+Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd. -Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
-Braille-invoer wordt nog niet ondersteund.
+De volgende leesregels worden niet zonder meer ondersteund, maar ze kunnen wel gebruikt worden met behulp van het [universele stuurprogramma van [Handy Tech dat te vinden is op https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] en een NVDA add-on:
+- Braillino
+- Bookworm
+- Modulaire leesregels met firmware-versie 1.13 of lager. Please note that the firmware of this displays can be updated.
 
-Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
-(Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
+Bij gebruik van de Handy Tech leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
+(U kunt in de documentatie bij deze leesregels nalezen waar deze toetsen zich precies bevinden.)
 %kc:beginInclude
 || Naam | Toets |
-| Brailleregel achteruit scrollen | Links, omhoog |
-| Brailleregel vooruit scrollen | Rechts, omlaag |
+| Brailleregel achteruit scrollen | Links, omhoog, b3 |
+| Brailleregel vooruit scrollen | Rechts, omlaag, b6 |
 | Een regel naar boven  | B4 |
 | Een regel naar beneden | B5 |
 |  Naar braillecel springen | Routing |
-| Shift+Tabtoets | ESC |
+| Shift+Tabtoets | esc, links triple actietoets omhoog+omlaag |
 | Alt-Toets | B2+B4+B5 |
 | Escape-Toets | B4+B6 |
-| Tabtoets | Enter |
-| Enter-toets | ESC+Enter |
-| Pijltoets omhoog | Linker spatietoets |
-| Pijltoets omlaag | Rechter spatietoets |
+| Tabtoets | Enter, rechter triple actietoets omhoog+omlaag |
+| Enter-toets | esc+enter, linker+rechter triple actietoets omhoog+omlaag, joystickAction |
+| Pijltoets omhoog | joystickUp |
+| Pijltoets omlaag | joystickDown |
+| Pijltoets links | joystickLeft |
+| Pijltoets rechts | joystickRight |
 | NVDA-Menü | B2+B4+B5+B6 |
-| HandyTech-configuratie | B4+B8 |
+| braille-volgmodus in- of uitschakelen | b2 |
+| braillecursor in- of uitschakelen | b1 |
+| focuscontextweergave in- of uitschakelen | b7 |
+| brailleinvoer in- of uitschakelen | spatie+b1+b3+b4 (spatie+hoofdletter B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2511,7 +2534,9 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | Geen | --no-sr-flag  | Verander de systeem-brede vlag voor de schermlezer niet. |
 | Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
 | Geen | --install-silent | Silently stille installatie van  NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
-
+| Geen | --Create-portable | Draagbare kopie van NVDA wordt aangemaakt  (waarbij de aangemaakte kopie vervolgens opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
+| Geen | --Create-portable-silent | Draagbare kopie van NVDA wordt aangemaakt (waarbij aangemaakte kopie vervolgens niet opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
+| Geen | --portable-path=PORTABLEPATH | Het pad waar een draagbare kopie wordt aangemaakt. |
 ++ Systeem-brede Parameters ++[SystemWideParameters]
 U kunt voor NVDA enkele waarden in het systeemregister instellen die systeem-breed het gedrag van NVDA beïnvloeden.
 Deze waarden worden in het register onder een van de volgende sleutels opgeslagen:

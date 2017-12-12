@@ -36,3 +36,4 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 		numChars = len(str(self.GetValue()))
 		self.SetSelection(0, numChars)
 		evt.Skip()
+
