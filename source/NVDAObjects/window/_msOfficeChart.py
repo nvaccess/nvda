@@ -926,6 +926,7 @@ class OfficeChartElementLegendEntry( OfficeChartElementBase):
 		# Translators: Details about a legend entry for a series in a Microsoft Office chart.
 		# For example, this might report "Legend entry for series Temperature 1 of 2"
 		if self.eventDriven:
+			# Translators: a message for the legend entry of a chart in MS Office
 			return _( "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count ) 
 		else:
 			# Translators: the legend entry for a chart in Microsoft Office
