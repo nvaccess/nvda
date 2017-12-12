@@ -1265,7 +1265,7 @@ class WordDocument(Window):
 		inTable=selectionObj.tables.count>0 if selectionObj else False
 		isCollapsed=info.isCollapsed
 		if inTable and isCollapsed:
-			info.expand(textInfos.UNIT_CELL)
+			info.expand(textInfos.UNIT_PARAGRAPH)
 			isCollapsed=False
 		if not isCollapsed:
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
