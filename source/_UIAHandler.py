@@ -318,7 +318,7 @@ class UIAHandler(COMObject):
 			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
 				# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
 				return False
-		return res
+		return bool(res)
 
 	def isUIAWindow(self,hwnd):
 		now=time.time()
