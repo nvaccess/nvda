@@ -717,14 +717,11 @@ class UIA(Window):
 			elementCache[ID]=cacheElement
 
 	def findOverlayClasses(self,clsList):
-		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithoutAutoSelectDetection)
-
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
-		elif EditableTextWithoutAutoSelectDetection in clsList and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
 				clsList.append(WordDocument)
@@ -793,6 +790,10 @@ class UIA(Window):
 				pass
 		except ValueError:
 			pass
+
+		# Add editableText support if UIA supports a text pattern
+		if self.TextInfo==UIATextInfo:
+			clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		clsList.append(UIA)
 
