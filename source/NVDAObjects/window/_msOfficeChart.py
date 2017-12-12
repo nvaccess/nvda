@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/window/_msOfficeChartConstants.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2014-2017 James Teh, Michael Curren, NV Access Limited, NVDA India
+#Copyright (C) 2014-2017 NV Access Limited, NVDA India
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
