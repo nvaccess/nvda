@@ -45,6 +45,12 @@ class WordDocumentTextInfo(UIATextInfo):
 			field['role']=controlTypes.ROLE_LINK
 		if obj.role==controlTypes.ROLE_LIST or obj.role==controlTypes.ROLE_EDITABLETEXT:
 			field['states'].add(controlTypes.STATE_READONLY)
+			if obj.role==controlTypes.ROLE_LIST:
+				# To stay compatible with the older MS Word implementation, don't expose lists in word documents as actual lists. This suppresses announcement of entering and exiting them.
+				# Note that bullets and numbering are still announced of course.
+				# Eventually we'll want to stop suppressing this, but for now this is more confusing than good (as in many cases announcing of new bullets when pressing enter causes exit and then enter to be spoken).
+				field['role']=controlTypes.ROLE_EDITABLETEXT
+		
 		if obj.role==controlTypes.ROLE_GRAPHIC:
 			# Label graphics with a description before name as name seems to be auto-generated (E.g. "rectangle")
 			field['value']=field.pop('description',None) or obj.description or field.pop('name',None) or obj.name
