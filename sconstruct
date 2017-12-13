@@ -124,6 +124,7 @@ Export('outputDir')
 devDocsOutputDir=outputDir.Dir('devDocs')
 
 # An action to sign an executable with certFile.
+# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
 signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
 if certPassword:
 	signExecCmd.extend(("/p", certPassword))
