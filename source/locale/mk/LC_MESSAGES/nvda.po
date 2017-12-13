@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-57432f4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:49-0700\n"
+"POT-Creation-Date: 2017-11-24 00:10+1000\n"
+"PO-Revision-Date: 2017-11-25 16:24+0100\n"
 "Last-Translator: Kristijan Lazarev <kristijan.lazarev@gmail.com>\n"
 "Language-Team: мк <LL@li.org>\n"
 "Language: mk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -801,6 +801,11 @@ msgstr "хрватско 8точковно компјутерско брајов
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Хрватски прв степен"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "унгарско 8точковно компјутерско брајово писмо"
 
@@ -1018,6 +1023,11 @@ msgstr "турски I степен"
 #. braille settings dialog.
 msgid "Unicode braille"
 msgstr "унифицирано брајово писмо"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Виетнамски прв степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1651,6 +1661,18 @@ msgstr "те носи на следната колона од табелата"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "те носи на предходната колона од табелата"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "табели на изглед се исклучени"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "табелите на изглед се вклучени"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "вклучени и исклучени табели на изглед"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -6065,6 +6087,34 @@ msgstr "порамнето е од обете страни"
 msgid "align default"
 msgstr "стандардно порамнување"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "порамнето е вертикално горе"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "порамнето е вертикално во средина"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "порамнето е вертикално долу"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "порамнето е вертикално на основната линија"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "порамнето е вертикално од обете страни"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "порамнето е од обете страни"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "стандардно порамнување од обете страни"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "лева алинеја"
@@ -6096,34 +6146,6 @@ msgstr "прва линија од алинејата"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "нема прва линија во алинејата"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "порамнето е вертикално горе"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "порамнето е вертикално во средина"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "порамнето е вертикално долу"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "порамнето е вертикално на основната линија"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "порамнето е вертикално од обете страни"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "порамнето е од обете страни"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "стандардно порамнување од обете страни"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -7120,12 +7142,21 @@ msgstr "лизгач за дисплејот"
 msgid "line scroll"
 msgstr "лизгач за редот"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "брајови дисплеи Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "го прикажува прозорецот од ханди тек драјверот за конфигурација"
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Брајов внес е вклучен"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "брајов внес е вклучен"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "го вклучува и исклучува брајов влез"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7316,8 +7347,8 @@ msgid "Change settings of document properties"
 msgstr "промени ги нагодувањата во својствата на документот"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "&Виндовс 10 OCR..."
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8859,8 +8890,8 @@ msgid "Whole &word"
 msgstr "Цел &збор"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "&Регуларен израз"
+msgid "Regular &expression"
+msgstr "Р&егуларен израз"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10598,3 +10629,6 @@ msgstr "сериите HIMS Braille Sense/Braille EDGE/Smart Beetle"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "го прикажува прозорецот од ханди тек драјверот за конфигурација"

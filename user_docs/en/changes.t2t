@@ -5,15 +5,25 @@ What's New in NVDA
 
 = 2018.1 =
 
+== Changes ==
+- The HIMS Braille Sense/Braille EDGE/Smart Beetle and Hims Sync Braille display drivers have been replaced by one driver. The new driver will automatically be activated for former syncBraille driver users. (#7459) 
+ - Some keys , notably scroll keys, have been reassigned to follow the conventions used by Hims products. Consult the user guide for more details.
+
+
 == Bug Fixes ==
 - Browseable messages such as showing  current formatting when pressing NVDA+f twice quickly, no longer fails when NVDA is installed on a path with non-ASCII characters. (#7474)
 - Focus is now once again restored correctly when returning to Spotify from another application. (#7689)
 - NVDA no longer fails to update on systems with Controlled Folder Access enabled (available in the Windows 10 Fall Creaters update). (#7696)
+- Detection of scroll keys on Hims Smart Beetle displays is no longer unreliable. (#6086)
+- A slight performance improvement when rendering large amounts of content in Mozilla Firefox 58 and later. (#7719)
+- Prevent errors while reading emails containing tables in Microsoft Outlook (#6827)
+- Braille display gestures that emulate system keyboard key modifiers can now also be combined with other emulated system keyboard keys if one or more of the involved gestures are model specific. (#7783)
 
 
 == Changes for developers ==
 - Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
  - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
+- A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
 
 
 = 2017.4 =
