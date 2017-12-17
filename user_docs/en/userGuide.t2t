@@ -25,7 +25,7 @@ Major highlights include:
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
 - Ability to run entirely from a USB stick or other portable media without the need for installation
 - Easy to use talking installer
-- Translated into 50 languages
+- Translated into 51 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
@@ -34,7 +34,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 50 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Burmese, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Lithuanian, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 51 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Burmese, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Lithuanian, Macedonian, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -579,7 +579,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the MathPlayer documentation about navigation commands for further information: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
+Please see the [MathPlayer documentation about navigation commands https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] for further information.
 
 When you wish to return to the document, simply press the escape key.
 
@@ -1715,7 +1715,7 @@ Package name, status, version and author are shown for each add-on, though furth
 If there is help available for the selected add-on, you can access it by pressing the Add-on help button.
 
 To browse and download available add-ons online, press the Get add-ons button.
-This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].
+This button opens the [NVDA Add-ons page https://addons.nvda-project.org/].
 If NVDA is installed and running on your system, you can open the add-on directly from the browser to begin the installation process as described below.
 Otherwise, save the add-on package and follow the instructions below.
 
@@ -1750,14 +1750,14 @@ To access the Add-ons Manager from anywhere, please assign a custom gesture usin
 
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the Developer Guide available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
+For more information, please see the [NVDA Developer Guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Reload plugins ++
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
 
 + Supported Speech Synthesizers +[SupportedSpeechSynths]
 This section contains information about the speech synthesizers supported by NVDA.
-For an even more extensive list of  free and commercial synthesizers that you can purchase and download for use with NVDA, please see the page at [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+For an even more extensive list of  free and commercial synthesizers that you can purchase and download for use with NVDA, please see [extra voices page https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
@@ -1927,29 +1927,37 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
+NVDA supports most displays from [Handy Tech http://www.handytech.de/] when connected via USB, serial port or bluetooth.
 For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
 
-Braille input is not yet supported.
-
-Following are the key assignments for this display with NVDA.
+The following displays are not supported out of the box, but can be used via [Handy Tech's universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] and NVDA add-on:
+- Braillino
+- Bookworm
+- Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+-
+Following are the key assignments for Handy Tech displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | left, up |
-| Scroll braille display forward | right, down |
+| Scroll braille display back | left, up, b3 |
+| Scroll braille display forward | right, down, b6 |
 | Move braille display to previous line | b4 |
 | Move braille display to next line | b5 |
 | Route to braille cell | routing |
-| shift+tab key | esc |
+| shift+tab key | esc, left triple action key up+down |
 | alt key | b2+b4+b5 |
 | escape key | b4+b6 |
-| tab key | enter |
-| enter key | esc+enter |
-| upArrow key | leftSpace |
-| downArrow key | rightSpace |
+| tab key | enter, right triple action key up+down |
+| enter key | esc+enter, left+right triple action key up+down, joystickAction |
+| upArrow key | joystickUp |
+| downArrow key | joystickDown |
+| leftArrow key | joystickLeft |
+| rightArrow key | joystickRight |
 | NVDA Menu | b2+b4+b5+b6 |
-| Handy Tech configuration | b4+b8 |
+| Toggle braille tethered to | b2 |
+| Toggle the braille cursor | b1 |
+| Toggle focus context presentation | b7 |
+| Toggle braille input | space+b1+b3+b4 (space+capital B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2073,76 +2081,76 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
-NVDA supports Braille Sense, Braille EDGE and Smart Beetle displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++
+NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from this page: http://www.himsintl.com/?c=2/13&uid=2319
+You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | left side scroll down |
-| Scroll braille display forward | right side scroll down |
-| Move braille display to previous line | left side scroll up |
-| Move braille display to next line | right side scroll up |
 | Route to braille cell | routing |
+| Scroll braille display back | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Scroll braille display forward | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Move braille display to previous line | leftSideScrollUp+rightSideScrollUp |
+| Move braille display to next line | leftSideScrollDown+rightSideScrollDown |
+| Move to previous line in review | rightSideUpArrow |
+| Move to next line in review | rightSideDownArrow |
+| Move to previous character in review | rightSideLeftArrow |
+| Move to next character in review | rightSideRightArrow |
+| Move to current focus | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| control key | smartbeetle:f1, brailleedge:f3 |
+| windows key | f7, smartbeetle:f2 |
+| alt key | dot1+dot3+dot4+space, f2, smartbeetle:f3, brailleedge:f4 |
+| shift key | f5 |
+| insert key | dot2+dot4+space, f6 |
+| applications key | dot1+dot2+dot3+dot4+space, f8 |
+| capsLock key | dot1+dot3+dot6+space |
+| tab key | dot4+dot5+space, f3, brailleedge:f2 |
+| shift+alt+tab key | f2+f3+f1 |
+| alt+tab key | f2+f3 |
 | shift+tab key | dot1+dot2+space |
-| alt key | dot1+dot3+dot4+Space |
-| escape key | dot1+dot5+Space |
-| tab key | dot4+dot5+Space |
-| upArrow key | dot1+Space |
-| downArrow key | dot4+Space |
-| capsLock | dot1+dot3+dot6+space |
-| shift+alt+tab key | advance2+advance3+advance1 |
-| alt+tab key | advance2+advance3 |
 | end key | dot4+dot6+space |
-| Control+end key | dot4+dot5+dot6+space |
-| home key | dot1+dot3+space |
+| control+end key | dot4+dot5+dot6+space |
+| home key | dot1+dot3+space, smartbeetle:f4 |
 | control+home key | dot1+dot2+dot3+space |
-| leftArrow key | dot3+space |
-| control+shift+leftArrow key | dot2+dot8+space+advance1 |
+| alt+f4 key | dot1+dot3+dot5+dot6+space |
+| leftArrow key | dot3+space, leftSideLeftArrow |
+| control+shift+leftArrow key | dot2+dot8+space+f1 |
 | control+leftArrow key | dot2+space |
-| shift+alt+leftArrow key | dot2+dot7+advance1 |
+| shift+alt+leftArrow key | dot2+dot7+f1 |
 | alt+leftArrow key | dot2+dot7 |
-| rightArrow key | dot6+space |
-| control+shift+rightArrow key | dot5+dot8+space+advance1 |
+| rightArrow key | dot6+space, leftSideRightArrow |
+| control+shift+rightArrow key | dot5+dot8+space+f1 |
 | control+rightArrow key | dot5+space |
-| shift+alt+rightArrow key | dot5+dot7+advance1 |
+| shift+alt+rightArrow key | dot5+dot7+f1 |
 | alt+rightArrow key | dot5+dot7 |
 | pageUp key | dot1+dot2+dot6+space |
 | control+pageUp key | dot1+dot2+dot6+dot8+space |
-| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
+| upArrow key | dot1+space, leftSideUpArrow |
+| control+shift+upArrow key | dot2+dot3+dot8+space+f1 |
 | control+upArrow key | dot2+dot3+space |
-| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
+| shift+alt+upArrow key | dot2+dot3+dot7+f1 |
 | alt+upArrow key | dot2+dot3+dot7 |
-| shift+upArrow key | left side scroll down + space |
+| shift+upArrow key | leftSideScrollDown+space |
 | pageDown key | dot3+dot4+dot5+space |
-| control+pagedown key | dot3+dot4+dot5+dot8+space |
-| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
+| control+pageDown key | dot3+dot4+dot5+dot8+space |
+| downArrow key | dot4+space, leftSideDownArrow |
+| control+shift+downArrow key | dot5+dot6+dot8+space+f1 |
 | control+downArrow key | dot5+dot6+space |
-| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
+| shift+alt+downArrow key | dot5+dot6+dot7+f1 |
 | alt+downArrow key | dot5+dot6+dot7 |
-| shift+downArrow key | right side scroll down + space |
-| delete key | dot1+dot3+dot5+space |
+| shift+downArrow key | space+rightSideScrollDown |
+| escape key | dot1+dot5+space, f4, brailleedge:f1 |
+| delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
 | f3 key | dot1+dot2+dot4+dot8 |
-| f4 key | dot7+advance3 |
-| windows+b key | dot1+dot2+advance1 |
-| windows+d key | dot1+dot4+dot5+advance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA supports the SyncBraille Display from [HIMS http://www.hims-inc.com/].
-You will need to install the USB drivers from HIMS on your system.
-
-Following are the key assignments for this display with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
-%kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | left side scroll down |
-| Scroll braille display forward | right side scroll down |
-| Route to braille cell | routing |
+| f4 key | dot7+f3 |
+| windows+b key | dot1+dot2+f1 |
+| windows+d key | dot1+dot4+dot5+f1 |
+| control+insert key | smartbeetle:f1+rightSideScroll |
+| alt+insert key | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
 ++ Seika Braille Displays ++

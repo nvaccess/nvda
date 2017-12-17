@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION Kullanıcı Rehberi
+NVDA NVDA_VERSION Kullanıcı Rehberi
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -25,7 +25,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 50 dile çevrilmiş oluşu
+- 51 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
@@ -34,7 +34,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Yerel Dil Desteği ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 50 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 51 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Makedonca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -138,7 +138,7 @@ Ayrıca Çalıştır bölümüne NVDA yazıp girişe basarak da programı başla
 Ek olarak, NVDA'yı yeniden başlatmak için NVDA (-r), NVDA'yı kapatmak için (-q), eklentileri devre dışı bırakmak için (--disable-addons), gibi bazı [komut satırı seçeneklerini #CommandLineOptions] de kullanabilirsiniz.
 
 Kurulu kopyalar için, NVDA, varsayılan olarak  konfigürasyonu mevcut kullanıcının roaming application data klasörüne kaydeder (örneğin, "C:\Users\<user>\AppData\Roaming").
-Bunu, NVDA'nın konfigürasyonunu local application data klasörüne kaydedecek şekilde değiştirmek mümkündür .
+Bunu, NVDA'nın konfigürasyonunu local application data klasörüne kaydedecek şekilde değiştirmek mümkündür.
 Daha fazla detay için [system wide parametreleri #SystemWideParameters] hakkındaki bölüme bakın.
 
 Taşınabilir sürümü başlatmak için, NVDA'yı çıkarttığınız dizine gidin ve NVDA'.exe dosyası üzerinde girişe basın veya çift tıklatın.
@@ -1095,7 +1095,7 @@ Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
 
 ==== Girdi Tablosu ====[BrailleInputTable]
 Önceki seçeneği bütünleyen bir özellik olarak, bulacağınız sonraki ayar braille girdi tablosu seçim kutusudur.
-Seçilen tablo kabartma ekranınızın klavyesinden braille olarak metin girişi yapmanız için kullanılır .
+Seçilen tablo kabartma ekranınızın klavyesinden braille olarak metin girişi yapmanız için kullanılır.
 Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
 
 Bu işlev yalnızca, üzerinde klavye bulunan ve sürücüsü bu özelliği destekleyen braille ekranlar için geçerlidir.
@@ -1377,7 +1377,7 @@ Bu seçenek Korece ve Japonca girdi metodları için faydalı olabilir.
 Chinese New Phonetic ve New ChangJie gibi bazı girdi metodları (kimi zaman precomposition string olarak bilinen) ifade okumalarına sahiptir.
 Bu seçenekle, ifadelerin okunuşlarında yeni karakter girişlerinin seslendirilip seslendirilmeyeceğini ayarlayabilirsiniz.
 Bu seçenek varsayılan olarak açıktır.
-Chinese ChangJie gibi bazı eski girdi metodlarının ön kompozisyon ifade okumaları yerine doğrudan ifade kompozisyonlarını kullandığını not edin. Lütfen ifade kompozisyonunun seslendirilmesiyle ilgili ayar için sonraki seçeneğe bakın .
+Chinese ChangJie gibi bazı eski girdi metodlarının ön kompozisyon ifade okumaları yerine doğrudan ifade kompozisyonlarını kullandığını not edin. Lütfen ifade kompozisyonunun seslendirilmesiyle ilgili ayar için sonraki seçeneğe bakın.
 
 ==== İfade Kompozisyonundaki Değişiklikleri Bildir ===
 After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
@@ -1411,6 +1411,8 @@ Açıksa, NVDA bu tablolarla karşılaştığında normal tablolara davrandığ�
 Devre dışı bırakıldığında, NVDA sadece sayfa düzeniyle ilgili olarak oluşturulmuş tabloları bildirmez ve tek tuş dolaşımıyla da bu tablolara ulaşılmaz.
 Ancak, tablodaki metin normal metin olarak gösterilir.
 Bu seçenek varsayılan olarak kapalıdır.
+
+Herhangi bir yerde düzen tablolarının dahil edilmesini açıp kapatmak için,    [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir komut belirleyebilirsiniz.
 
 ==== Başlık ve Bağlantı gibi alanların belirtilmesini ayarlama ====
 Başlıklar, bağlantılar, tablolar ve listeler gibi kontrollerin seslendirilmesiyle ilgili ayarlar için, lütfen [Belge Formatları İletişim Kutusu #DocumentFormattingSettings] içerisindeki seçeneklere bakın.
@@ -1453,10 +1455,10 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 - Sayfa numaraları
 - Satır Numaraları
 - Satır girintilerinin bildirimi [(Kapalı, Konuşma, Ses çalarak, Konuşarak ve Ses çalarak) #lineIndentationOptions]
- - Paragraf girintisi (Örn, asılı girinti, ilk satır girintisi)
- - Satır aralığı (tek, çift vs)
- --- Hizzalama
- Tablo bilgileri
+- Paragraf girintisi (Örn, asılı girinti, ilk satır girintisi)
+- Satır aralığı (tek, çift vs)
+- Hizzalama
+- Tablo bilgileri
 - Tablolar
 - Satır/sütun başlıkları
 - Hücre koordinatları
@@ -1497,7 +1499,7 @@ Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 Bu iletişim kutusuna NVDA Tercihler menüsünden erişilebilir ve [Windows 10 OCR ayarlarını #Win10Ocr] yapılandırmanızı sağlar.
 
 ==== Tanıma dili ====
-Bu açılır kutu metin tanıma için kullanılacak dili seçmek için kullanılır.
+Bu seçim kutusu metin tanıma için kullanılacak dili seçmek içindir.
 
 +++ Konuşma Sözlükleri +++
 Tercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük veya öbeklerin NVDA tarafından nasıl söyleneceğini ayarlayabileceğiniz iletişim kutularını içermektedir.
@@ -1505,10 +1507,10 @@ Tercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük v
 bunlar:
 - varsayılan Bu sözlükteki kurallar tüm NVDA konuşmalarını etkiler.
 - Ses Bu sözlükteki kurallar o an kullanılan sentezleyici sesini etkiler.
-- Geçici Bu sözlükteki kurallar tüm NVDA konuşmalarını etkiler ancak sadece NVDA'nın açık olduğu o oturumda geçerlidir Bu kurallar geçicidir ve NVDA yeniden başlatıldığında kaybolacaktır.
+- Geçici Bu sözlükteki kurallar tüm NVDA konuşmalarını etkiler ancak sadece NVDA'nın açık olduğu o oturumda geçerlidir. Bu kurallar geçicidir ve NVDA yeniden başlatıldığında geçerli olmazlar.
 -
 
-Herhangi bir yerden bu sözlüklerle ilgili iletişim kutularını açabilmek için [Girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel kısayol tuşları atamanız gerekir..
+Herhangi bir yerden bu sözlüklerle ilgili iletişim kutularını açabilmek için [Girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel kısayol tuşları atamanız gerekir.
 
 Tüm sözlük iletişim kutularında konuşma işlemlerinde kullanılacak kuralların bir listesi bulunmaktadır.
 İletişim kutularında ayrıca, Kural Ekle, Düzenle ve Sil düğmeleri de mevcuttur.
@@ -1574,13 +1576,13 @@ Bir komutla ilişkili hareketler o komutun altında listelenir.
 
 Bir komuta girdi hareketi eklemek için, komutun üzerindeyken ekle düğmesine basın.
 Daha sonra, eklemek istediğiniz girdi hareketini yapın; örneğin klavyede tuş ya da tuş kombinasyonuna ya da braille ekranda düğmeye basın.
-Çoğu kez, bir hareket birden fazla şekilde değerlendirilebilir .
+Çoğu kez, bir hareket birden fazla şekilde değerlendirilebilir.
 Örneğin, klavyede bir tuşa bastıysanız, onun sadece mevcut klavye düzeni için geçerli olmasını isteyebilirsiniz (masaüstü ya da dizüstü düzenleri) ya da tüm düzenler için kaydedebilirsiniz.
 Bu durumda,, seçim yapmanız için bir menü belirir.
 
 Bir komutla ilgili hareketi silmek için, hareket seçiliyken kaldır tuşuna basın.
 
-Değişiklikleri yaptıktan sonra, kaydetmek için tamam, vazgeçmek için iptal tuşuna basın .
+Değişiklikleri yaptıktan sonra, kaydetmek için tamam, vazgeçmek için iptal tuşuna basın.
 
 ++ Konfigürasyonu Kaydetme ve Yeniden Yükleme ++
 Varsayılan olarak, NVDA kapatılırken, konfigürasyonda yaptığınız değişiklikler kalıcı olarak kaydedilir.
@@ -1713,7 +1715,7 @@ Her bir eklenti için, Paket adı, versiyon ve yazar bilgisi gösterilir, Eklent
 Seçili eklenti için yardım mevcutsa, buna yardım düğmesine basarak ulaşabilirsiniz.
 
 Mevcut eklentileri online olarak inceleyip indirmek için, Eklenti edin düğmesine basın.
-Bu düğme [NVDA Eklenti sayfasını http://addons.nvda-project.org/] açar.
+Bu düğme [NVDA Eklenti sayfasını https://addons.nvda-project.org/] açar.
 Eğer NVDA sisteminizde kuruluysa, NVDA'nın o anda çalışıyor olması şartıyla eklenti kurulum sürecini aşağıdaki tarife uyarak doğrudan tarayıcınızda başlatabilirsiniz.
 Aksi halde, eklenti paketini bilgisayarınıza kaydedip aşağıdaki yönergeyi takip edin.
 
@@ -1734,7 +1736,7 @@ Bu yapılana kadar, eklenti durumu Kaldır olarak gösterilecektir.
 Bir eklentiyi devre dışı bırakmak için devre dışı bırak düğmesine basın.
 Daha önce devre dışı bırakılmış olan eklentiyi etkinleştirmek için  etkinleştir düğmesine basın.
 Eklenti durumu etkin olarak gösteriliyorsa devre dışı bırakabilir; devre dışı ise tekrar etkinleştirebilirsiniz.
-Etkinleştir / devre dışı bırak düğmesine her basıldığında, NVDA yeniden başladığında ne olacağını belirtmek için eklenti statüsü değişir .
+Etkinleştir / devre dışı bırak düğmesine her basıldığında, NVDA yeniden başladığında ne olacağını belirtmek için eklenti statüsü değişir.
 Aynı Eklenti kurduğunuzda ya da kaldırdığınızdaki gibi, değişikliklerin etkili olması için NVDA'yı yeniden başlatmanız gerekecektir.
 
 Yönetici, iletişim kutusunu kapatmak için kullanacağınız Kapat düğmesini de içerir.
@@ -1748,14 +1750,14 @@ Eklenti yöneticisine herhangi bir yerden ulaşmak için, lütfen [Girdi Hareket
 
 ++ Python Konsolu ++
 NVDA menüsündeki araçlar altında bulunan Pithon konsolu, ayıklama, NVDA iç yapısının saptanması ve bir uygulamanın erişilebilirlik hiyerarşisinin saptanması gibi noktalar için yararlı olan bir geliştirme aracıdır.
-Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın http://community.nvda-project.org/wiki/Development].
+Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Pluginleri Yeniden Yükle ++
 Bu öge etkinleştirildiğinde, uygulama modüllerini ve genel pluginleri NVDA'yı yeniden başlatmaya gerek duymadan yeniden yükler, ve bu, geliştiriciler için oldukça yararlıdır.
 
 + Desteklenen Konuşma Sentezleyicileri +[SupportedSpeechSynths]
 Bu bölümde NVDA tarafından desteklenen sentezleyici bilgileri yer almaktadır.
-NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın alabilmeniz ya da indirebilmeniz için çok daha geniş bir listeyi, bu sayfada bulabilirsiniz [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın alabilmeniz ya da indirebilmeniz için çok daha geniş bir listeyi, bu sayfada bulabilirsiniz [http://www.nvda-project.org/wiki/ExtraVoices https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
  [eSpeak NG https://github.com/espeak-ng/espeak-ng] sentezleyicisi Doğrudan NVDA içinde gömülüdür ve başka bir sürücü ya da bileşenin yüklenmesini gerektirmez.
@@ -1925,29 +1927,38 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen tüm ekranları desteklemektedir.
+NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen çoğu braille ekranı destekler.
 Bazı daha eski USB ekranlar için Handy Tech sürücülerini sisteminize yüklemeniz gerekecektir.
 
-Braille girişi henüz desteklenmemektedir.
-
-Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
+Aşağıdaki ekranlar için anında destek sunulmaz, ancak [Handy Tech evrensel sürücüsü https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] ve NVDA add-on aracılığıyla kullanılabilir:
+- Braillino
+- Bookworm
+- Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+-
+Aşağıda Handy Tech ekranlarla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
 || Ad | Kısayol tuşu |
-| Braille ekranı geri kaydırma | Sol, Yukarı |
-| Braille ekranı ileri kaydırma | Sağ, Aşağı |
+| Braille ekranı geri kaydırma | Sol, Yukarı, b3 |
+| Braille ekranı ileri kaydırma | Sağ, Aşağı, b6 |
 | Braille ekranı önceki satıra götürme | b4 |
 | Braille ekranı sonraki satıra götürme | b5 |
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | hücre üzerindeki braille iğnesi |
-| Şift+tab tuşu | eskeyp tuşu |
+| Şift+tab tuşu | eskeyp tuşu, left triple action key up+down |
 | alt tuşu | b2+b4+b5 |
 | eskeyp tuşu | b4+b6 |
-| tab tuşu | enter |
-| enter tuşu | eskeyp+enter |
-| Yukarı yön tuşu | solBoşluk |
-| Aşağı yön tuşu | sağBoşluk |
+| tab tuşu | enter, right triple action key up+down |
+| enter tuşu | eskeyp+enter, left+right triple action key up+down, joystickAction |
+| Yukarı yön tuşu | joystickUp |
+| Aşağı yön tuşu | joystickDown |
+| SolOk tuşu | joystickLeft |
+| SağOk tuşu | joystickRight |
 | NVDA Menüsü | b2+b4+b5+b6 |
 | Handy Tech ayarları | b4+b8 |
+| Toggle braille tethered to | b2 |
+| Toggle the braille cursor | b1 |
+| Toggle focus context presentation | b7 |
+| Toggle braille input | space+b1+b3+b4 (space+capital B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
