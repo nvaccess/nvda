@@ -362,10 +362,10 @@ devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
 	"--output", "${TARGET.abspath}",
 	"--quiet", "--html", "--include-log", "--no-frames",
-	"--name", "NVDA", "--url", "http://www.nvaccess.org/",
+	"--name", "NVDA", "--url", "https://www.nvaccess.org/",
 	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
 	"config", "contentRecog", "globalPlugins", "gui", "mathPres", "NVDAObjects",
-	"synthDrivers", "textInfos", "virtualBuffers",
+	"speechDictHandler", "synthDrivers", "textInfos", "virtualBuffers",
 ]])
 
 env.Alias('devDocs', [devGuide, devDocs_nvda])
