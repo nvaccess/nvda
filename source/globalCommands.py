@@ -2062,6 +2062,13 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
+	def script_recognizeWithCaptionBot(self, gesture):
+		from contentRecog import cloudRecog, recogUi
+		recog = cloudRecog.CaptionBot()
+		recogUi.recognizeNavigatorObject(recog)
+	# Translators: Describes a command.
+	script_recognizeWithCaptionBot.__doc__ = _("Describes the image at the current navigator object with CaptionBot")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -2245,6 +2252,7 @@ class GlobalCommands(ScriptableObject):
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 		"kb:NVDA+alt+m": "interactWithMath",
 		"kb:NVDA+r": "recognizeWithUwpOcr",
+		"kb:NVDA+alt+d": "recognizeWithCaptionBot",
 	}
 
 #: The single global commands instance.
