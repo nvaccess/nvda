@@ -147,6 +147,9 @@ ROLE_DATAITEM=140
 ROLE_HEADERITEM=141
 ROLE_THUMB=142
 ROLE_CALENDAR=143
+ROLE_VIDEO=144
+ROLE_AUDIO=145
+
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -453,7 +456,7 @@ roleLabels={
 	# Translators: Describes text formatting.
 	ROLE_BOLD:_("bold"),
 	# Translators: Describes text formatting.
-	ROLE_ITALIC:_("ITALIC"),
+	ROLE_ITALIC:_("italic"),
 	# Translators: Describes text formatting.
 	ROLE_UNDERLINE:_("underline"),
 	# Translators: Describes text formatting.
@@ -479,6 +482,8 @@ roleLabels={
 	# Translators: Identifies a thumb control (a button-like control for changing options).
 	ROLE_THUMB:_("thumb control"),
 	ROLE_CALENDAR:_("calendar"),
+	ROLE_VIDEO:_("video"),
+	ROLE_AUDIO:_("audio"),
 }
 
 stateLabels={
@@ -564,10 +569,10 @@ stateLabels={
 negativeStateLabels={
 	# Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 	STATE_SELECTED:_("not selected"),
-	# Translators: This is presented when a checkbox is not checked.
-	STATE_CHECKED:_("not checked"),
 	# Translators: This is presented when a button is not pressed.
 	STATE_PRESSED:_("not pressed"),
+	# Translators: This is presented when a checkbox is not checked.
+	STATE_CHECKED:_("not checked"),
 }
 
 silentRolesOnFocus={

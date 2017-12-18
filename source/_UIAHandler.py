@@ -1,3 +1,9 @@
+#_UIAHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
@@ -15,6 +21,7 @@ import winKernel
 import winUser
 import eventHandler
 from logHandler import log
+import UIAUtils
 
 from comtypes.gen.UIAutomationClient import *
 
@@ -39,7 +46,10 @@ HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
-  
+
+# The name of the WDAG (Windows Defender Application Guard) process
+WDAG_PROCESS_NAME=u'hvsirdpclient'
+
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
@@ -54,9 +64,11 @@ badUIAWindowClassNames=[
 	"RICHEDIT50W",
 	"SysListView32",
 	"_WwG",
-	'_WwN',
 	"EXCEL7",
 	"Button",
+	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
+	# It does not implement caret/selection, and probably has no new text events.
+	"ConsoleWindowClass",
 ]
 
 NVDAUnitsToUIAUnits={
@@ -117,9 +129,11 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_IsEnabledPropertyId:"stateChange",
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
+	UIA_ControllerForPropertyId:"UIA_controllerFor",
 }
 
 UIAEventIdsToNVDAEventNames={
+	UIA_LiveRegionChangedEventId:"liveRegionChange",
 	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
@@ -131,6 +145,7 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
+	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
 class UIAHandler(COMObject):
@@ -216,7 +231,11 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
+		if (
+			not obj
+			or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent)
+			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
+		):
 			return
 		focus=api.getFocusObject()
 		if obj==focus:
@@ -276,6 +295,9 @@ class UIAHandler(COMObject):
 			return False
 		import NVDAObjects.window
 		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
+		# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
+		if windowClass=='RAIL_WINDOW':
+			return True
 		# There are certain window classes that just had bad UIA implementations
 		if windowClass in badUIAWindowClassNames:
 			return False
@@ -305,19 +327,26 @@ class UIAHandler(COMObject):
 			# Called previously. Use cached result.
 			return UIAElement._nearestWindowHandle
 		try:
-			window=UIAElement.cachedNativeWindowHandle
+			processID=UIAElement.cachedProcessID
+		except COMError:
+			return None
+		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
+		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
+		if appModule.appName==WDAG_PROCESS_NAME:
+			condition=UIAUtils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:[u'ApplicationFrameWindow',u'CabinetWClass']})
+			walker=self.clientObject.createTreeWalker(condition)
+		else:
+			# Not WDAG, just walk up to the nearest valid windowHandle
+			walker=self.windowTreeWalker
+		try:
+			new=walker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
+		except COMError:
+			return None
+		try:
+			window=new.cachedNativeWindowHandle
 		except COMError:
 			window=None
-		if not window:
-			# This element reports no window handle, so use the nearest ancestor window handle.
-			try:
-				new=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
-			except COMError:
-				return None
-			try:
-				window=new.cachedNativeWindowHandle
-			except COMError:
-				window=None
 		# Cache for future use to improve performance.
 		UIAElement._nearestWindowHandle=window
 		return window

@@ -17,6 +17,12 @@ Methods in test classes should have a C{test_} prefix.
 import os
 import sys
 
+import locale
+import gettext
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+gettext.install('nvda',unicode=True)
+
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
 # The path to the top of the repo.
@@ -37,6 +43,7 @@ class AppArgs:
 	configPath = UNIT_DIR.decode("mbcs")
 	secure = False
 	disableAddons = True
+	launcher = False
 globalVars.appArgs = AppArgs()
 
 # We depend on the current directory to load some files;
@@ -66,14 +73,17 @@ appModuleHandler.initialize()
 # Anything which notifies of cursor updates requires braille to be initialized.
 import braille
 braille.initialize()
+# For braille unit tests, we need to construct a fake braille display as well as enable the braille handler
+# Give the display 40 cells
+braille.handler.displaySize=40
+braille.handler.enabled = True
 # The focus and navigator objects need to be initialized to something.
-from NVDAObjects import NVDAObject
-class PlaceholderNVDAObject(NVDAObject):
-	processID = None # Must be implemented to instantiate.
+from objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()
 import api
 api.setFocusObject(phObj)
 api.setNavigatorObject(phObj)
+api.setDesktopObject(phObj)
 
 # Stub speech functions to make them no-ops.
 # Eventually, these should keep track of calls so we can make assertions.
