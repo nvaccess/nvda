@@ -296,7 +296,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				continue
 			for i in xrange(3):
 				self._sendCellCountRequest()
-				-				# Wait for an expected response.
+				# Wait for an expected response.
 				if self.isBulk:
 					# Hims Bulk devices sometimes present themselves to the system while not yet ready.
 					# For example, when switching the connection mode toggle on the Braille EDGE from Bluetooth to USB,
