@@ -21,7 +21,6 @@ from baseObject import AutoPropertyObject
 import weakref
 import time
 
-TIMEOUT = 0.2
 BAUD_RATE = 115200
 PARITY = serial.PARITY_NONE
 
@@ -200,6 +199,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series")
 	isThreadSafe = True
+	timeout = 0.2
 
 	@classmethod
 	def check(cls):
@@ -290,17 +290,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					# onReceiveSize based on max packet size according to USB endpoint information.
 					self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, writeSize=0, onReceiveSize=64)
 				else:
-					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
+					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
-
-			self._sendCellCountRequest()
-			# Send a cell count request twice, since it seems that the first sent request sometimes doesn't come through
-			self._sendCellCountRequest()
 			for i in xrange(3):
-				# An expected response hasn't arrived yet, so wait for it.
-				self._dev.waitForRead(TIMEOUT)
+				self._sendCellCountRequest()
+				-				# Wait for an expected response.
+				if self.isBulk:
+					# Hims Bulk devices sometimes present themselves to the system while not yet ready.
+					# For example, when switching the connection mode toggle on the Braille EDGE from Bluetooth to USB,
+					# the USB device is connected but not yet ready.
+					# Wait ten times the timeout, which is ugly, but effective.
+					self._dev.waitForRead(self.timeout*10)
+				else:
+					self._dev.waitForRead(self.timeout)
 				if self.numCells:
 					break
 			if not self.numCells:
@@ -359,7 +363,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for id, cls in map:
 			log.debug("Sending request for id %r"%id)
 			self._dev.write("\x1c{id}\x1f".format(id=id))
-			self._dev.waitForRead(TIMEOUT)
+			self._dev.waitForRead(self.timeout)
 			if self._model:
 				log.debug("%s model has been set"%self._model.name)
 				break
@@ -491,7 +495,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
 			# We must sleep before closing the port as not doing this can leave the display in a bad state where it can not be re-initialized.
-			time.sleep(TIMEOUT)
+			time.sleep(self.timeout)
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
