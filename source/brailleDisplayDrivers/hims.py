@@ -19,7 +19,7 @@ import inputCore
 import brailleInput
 from baseObject import AutoPropertyObject
 import weakref
-
+import time
 
 TIMEOUT = 0.2
 BAUD_RATE = 115200
@@ -490,6 +490,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		try:
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
+			# We must sleep before closing the port as not doing this can leave the display in a bad state where it can not be re-initialized.
+			time.sleep(TIMEOUT)
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
