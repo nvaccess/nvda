@@ -141,6 +141,13 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		if not winUser.isWindow(root.windowHandle):
 			return False
+		if not root.isInForeground:
+			# #7818: Subsequent checks make COM calls.
+			# The chances of a buffer dying while the window is in the background are
+			# low, so don't make COM calls in this case; just treat it as alive.
+			# This prevents freezes on every focus change if the browser process
+			# stops responding; e.g. it froze, crashed or is being debugged.
+			return True
 		try:
 			isDefunct=bool(root.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_DEFUNCT)
 		except COMError:
