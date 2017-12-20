@@ -340,7 +340,7 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		# objects that do not report as having navigableText should not report their text content either
 		not obj._hasNavigableText
 	)
-	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
+	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True,"rowSpan":True,"columnSpan":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -373,6 +373,8 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		# We definitely aren't reporting any table info at all.
 		allowProperties["rowNumber"]=False
 		allowProperties["columnNumber"]=False
+		allowProperties["rowSpan"]=False
+		allowProperties["columnSpan"]=False
 	if shouldReportTextContent:
 		allowProperties['value']=False
 
@@ -1036,6 +1038,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		# Don't update the oldTableID if no tableID was given.
 		if tableID and not sameTable:
 			oldTableID = tableID
+		rowSpan = propertyValues.get("rowSpan")
+		columnSpan = propertyValues.get("columnSpan")
 		if rowNumber and (not sameTable or rowNumber != oldRowNumber):
 			rowHeaderText = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
@@ -1043,6 +1047,9 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			if includeTableCellCoords and not cellCoordsText: 
 				# Translators: Speaks current row number (example output: row 3).
 				textList.append(_("row %s")%rowNumber)
+				if rowSpan>1 and columnSpan<=1:
+					# Translators: Speaks the row span added to the current row number (example output: through 5).
+					textList.append(_("through %s")%(rowNumber+rowSpan-1))
 			oldRowNumber = rowNumber
 		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
 			columnHeaderText = propertyValues.get("columnHeaderText")
@@ -1051,7 +1058,17 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			if includeTableCellCoords and not cellCoordsText:
 				# Translators: Speaks current column number (example output: column 3).
 				textList.append(_("column %s")%columnNumber)
+				if columnSpan>1 and rowSpan<=1:
+					# Translators: Speaks the column span added to the current column number (example output: through 5).
+					textList.append(_("through %s")%(columnNumber+columnSpan-1))
 			oldColumnNumber = columnNumber
+		if includeTableCellCoords and not cellCoordsText and rowSpan>1 and columnSpan>1:
+			# Translators: Speaks the row and column span added to the current row and column numbers
+			#			(example output: through row 5 column 3).
+			textList.append(_("through row {row} column {column}").format(
+				row=rowNumber+rowSpan-1,
+				column=columnNumber+columnSpan-1
+			))
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
