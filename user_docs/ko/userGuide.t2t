@@ -2081,76 +2081,74 @@ NVDA에서는  [hedo Reha-Technik http://www.hedo.de/] 에서 출시한 hedo Mob
 %kc:endInclude
 
 
-++ HIMS 한소네/브레일 엣지/스마트 비틀 ++
-[Hims http://www.hims-inc.com/]에서 출시한 한소네, 브레일 엣지 및 스마트 비틀을 USB나 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.
+++ HIMS 한소네/브레일 엣지/스마트 비틀/싱크브레일 ++
+[Hims http://www.hims-inc.com/]에서 출시한 한소네, 브레일 엣지, 스마트 비틀 및 싱크브레일을 USB나 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.
 만약 USB로 연결하려면 힘스에서 보급한 USB 드라이버를 설치하고 사용하십시요.
-http://www.himsintl.com/?c=2/13&uid=2319에 접속하여 본 드라이버를 다운받으십시오.
+http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip에 접속하여 본 드라이버를 다운받으십시오.
 
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
 %kc:beginInclude
 || 이름 | 키 |
-| 점자 디스플레이 뒤로 스크롤 | 좌측 스크롤 아래로 |
-| 점자 디스플레이 앞으로 스크롤 | 우측 스크롤 아래로 |
+| 점자 셀로 이동 | routing |
+| 점자 디스플레이 뒤로 스크롤 | 좌측 스크롤 위로, 우측 스크롤 위로, 좌측 스크롤 |
+| 점자 디스플레이 앞으로 스크롤 | 좌측 스크롤 아래로, 우측 스크롤 아래로, 우측 스크롤 |
 | 점자 디스플레이를 이전 줄로 이동 | 좌측 스크롤 위로 |
 | 점자 디스플레이를 다음 줄로 이동 | 우측 스크롤 위로 |
-| 점자 셀로 이동 | routing |
-| shift+tab 키 | 1점+2점+스페이스 |
-| alt 키 | 1점+3점+4점+스페이스 |
-| escape 키 | 1점+5점+스페이스 |
-| tab key | 4점+5점+스페이스 |
-| 상 방향키 | 1점+스페이스 |
-| 하 방향키 | 4점+스페이스 |
+| 리뷰 커서에서 점자 디스플레이를 이전 줄로 이동 | 좌측 스크롤 위로 |
+| 리뷰 커서에서 점자 디스플레이를 다음 줄로 이동 | 우측 스크롤 위로 |
+| 포커스된 객체로 이동 | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| control 키 | smartbeetle:f1, brailleedge:f3 |
+| windows 키 | f7, smartbeetle:f2 |
+| alt 키 | 1점+3점+4점+스페이스, f2, f3(스마트 비틀), f4(브레일 엣지) |
+| shift 키 | f5 |
+| insert key | dot2+dot4+space, f6 |
+| applications key | dot1+dot2+dot3+dot4+space, f8 |
 | capsLock | 1점+3점+6점+스페이스 |
-| shift+alt+tab key | advance2+advance3+advance1 |
-| alt+tab key | advance2+advance3 |
+| tab key | 4점+5점+스페이스, f3, f2(브레일 엣지) |
+| shift+alt+tab 키 | f2+f3+f1 |
+| alt+tab 키 | f2+f3 |
+| shift+tab 키 | 1점+2점+스페이스 |
 | end key | 4점+6점+스페이스 |
 | Control+end key | 4점+5점+6점+스페이스 |
 | home key | 1점+3점+스페이스 |
 | control+home key | 1점+2점+3점+스페이스 |
-| 좌 방향키 | 3점+스페이스 |
-| control+shift+좌 방향키 | 2점+8점+스페이스 |
-| control+좌 방향키 | 2점+스페이스 |
-| shift+alt+좌 방향키 | 2점+7점+advance1 |
-| alt+좌 방향키 | 2점+7점 |
-| 우 방향키 | 6점+스페이스 |
-| control+shift+우 방향키 | 5점+8점+스페이스+advance1 |
-| control+우 방향키 | 5점+스페이스 |
-| shift+alt+우 방향키 | 5점+7점+advance1 |
-| alt+우 방향키 | 5점+7점 |
+| alt+f4 키 | 1점+3점+5점+6점+스페이스 |
+| 왼쪽 방향키 | 3점+스페이스 |
+| control+shift+왼쪽 방향키 | 2점+8점+스페이스 |
+| control+왼쪽 방향키 | 2점+스페이스 |
+| shift+alt+왼쪽 방향키 | 2점+7점+advance1 |
+| alt+왼쪽 방향키 | 2점+7점 |
+| 오른쪽 방향키 | 6점+스페이스 |
+| control+shift+오른쪽 방향키 | 5점+8점+스페이스+advance1 |
+| control+오른쪽 방향키 | 5점+스페이스 |
+| shift+alt+오른쪽 방향키 | 5점+7점+advance1 |
+| alt+오른쪽 방향키 | 5점+7점 |
 | pageUp key | 1점+2점+6점+스페이스 |
 | control+pageUp key | 1점+2점+6점+8점+스페이스 |
-| control+shift+상 방향키 | 2점+3점+8점+스페이스+advance1 |
-| control+상 방향키 | 2점+3점+스페이스 |
-| shift+alt+상 방향키 | 2점+3점+7점+advance1 |
-| alt+상 방향키 | 2점+3점+7점 |
-| shift+상 방향키 | 좌측 스크롤 아래로+스페이스 |
+| 위쪽  방향키 | 1점+스페이스 |
+| control+shift+위쪽 방향키 | 2점+3점+8점+스페이스+advance1 |
+| control+위쪽 방향키 | 2점+3점+스페이스 |
+| shift+alt+위쪽 방향키 | 2점+3점+7점+advance1 |
+| alt+위쪽 방향키 | 2점+3점+7점 |
+| shift+위쪽 방향키 | 좌측 스크롤 아래로+스페이스 |
 | pageDown key | 3점+4점+5점+스페이스 |
 | control+pagedown key | 3점+4점+5점+8점+스페이스 |
-| control+shift+하 방향키 | 5점+6점+8점+스페이스+advance1 |
-| control+하 방향키 | 5점+6점+스페이스 |
-| shift+alt+하 방향키 | 5점+6점+7점+advance1 |
-| alt+하 방향키 | 5점+6점+7점 |
-| shift+하 방향키 | 우측 스크롤 아래로+스페이스 |
-| delete key | 1점+3점+5점+스페이스 |
+| 아래쪽 방향키 | 4점+스페이스 |
+| control+shift+아래쪽 방향키 | 5점+6점+8점+스페이스+advance1 |
+| control+아래쪽 방향키 | 5점+6점+스페이스 |
+| shift+alt+아래쪽 방향키 | 5점+6점+7점+advance1 |
+| alt+아래쪽 방향키 | 5점+6점+7점 |
+| shift+아래쪽 방향키 | 우측 스크롤 아래로+스페이스 |
+| escape 키 | 1점+5점+스페이스, f4, f1(브레일 엣지) |
+| delete key | 1점+3점+5점+스페이스, 1점+4점+5점+스페이스 |
 | f1 key | 1점+2점+5점+스페이스 |
 | f3 key | 1점+2점+4점+8점 |
-| f4 key | 7점+advance3 |
-| windows+b key | 1점+2점+advance1 |
-| windows+d key | 1점+4점+5점+advance1 |
-%kc:endInclude
-
-++ HIMS 싱크브레일 ++
-NVDA에서는 [HIMS http://www.hims-inc.com/]에서 출시한 싱크브레일 디스플레이를 지원합니다.
-힘스에서 보급한 USB 드라이버를 설치하고 사용하십시요.
-
-다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
-각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
-%kc:beginInclude
-|| 이름 | 키 |
-| 점자 디스플레이 뒤로 스크롤 | 좌측 스크롤 아래로 |
-| 점자 디스플레이 앞으로 스크롤 | 우측 스크롤 아래로 |
-| 점자 셀로 이동 | routing |
+| f4 key | 7점+f3 |
+| windows+b key | 1점+2점+f1 |
+| windows+d key | 1점+4점+5점+f1 |
+| control+insert 키 | f1+rightSideScroll(스마트 비틀) |
+| alt+insert 키 | f3+rightSideScroll(스마트 비틀) |
 %kc:endInclude
 
 ++ Seika ++

@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Ethan Holliger
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Ethan Holliger
 
 import time
 import itertools
@@ -2020,10 +2020,12 @@ class GlobalCommands(ScriptableObject):
 
 	def script_touch_hoverUp(self,gesture):
 		#Specifically for touch typing with onscreen keyboard keys
-		obj=api.getNavigatorObject()
-		import NVDAObjects.UIA
-		if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
-			obj.doAction()
+		# #7309: by default, one mustdouble tap the touch key. To restore old behavior, go to Touch Interaction dialog and change touch typing option.
+		if config.conf["touch"]["touchTyping"]:
+			obj=api.getNavigatorObject()
+			import NVDAObjects.UIA
+			if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
+				obj.doAction()
 	script_touch_hoverUp.category=SCRCAT_TOUCH
 
 	def script_activateConfigProfilesDialog(self, gesture):

@@ -3,6 +3,14 @@ NVDA 변경 이력
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+
+== 버그 수정 ==
+- NVDA 설치 경로에 ASCII 이외 글자가 있는 경우 브라우즈 모드를 사용하는 메시지(예: NVDA+f를 두번 눌러 서식 정보를 출력시)가 열리지 않던 문제 수정. (#7474)
+- 다른 앱에서 Spotify로 전환시 포커스가 제대로 복원되도록 함. (#7689)
+- 윈도우 10 Fall Creators Update 사용시 폴더 접근 제어(Controlled Folder Access) 사용시 NVDA가 끝까지 설치되지 않던 문제 수정. (#7696)
+
+
 = 2017.4 =
 이번 버전의 주 기능들: 웹 브라우저 지원 향상(특히 웹 대화상자 탐색 지원 향상); 필드 그룹 읽기 향상; Windows Defender Application Guard와 ARM64와 같은 최신 Windows 10 기술 지원; 베터리 및 화면 방향 변경 알림 등입니다.
 참고로 이번 버전부터는 Windows XP와 비스타 지원이 중단됩니다. NVDA를 사용하려면 Windows 7 서비스팩 1 이상을 사용하여야 합니다.
