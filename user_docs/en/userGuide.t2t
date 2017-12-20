@@ -90,7 +90,7 @@ Using the temporary copy of NVDA is also an option (e.g. for demonstration purpo
 Apart from the  inability to automatically start during and/or after log-on, the portable and temporary copies of NVDA also have the following restrictions:
 - The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
 - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
-- Windows 8 and later: the inability to support input from a touch screen.
+- Windows 8 and later: the inability to support input from a touchscreen.
 - Windows 8 and later: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
 - Windows 8 and later: audio ducking is not supported.
 -
@@ -178,7 +178,7 @@ Although most laptops do not have a physical numpad, some laptops can emulate on
 If your laptop cannot do this or does not allow you to turn numlock off, you may want to switch to the Laptop layout instead.
 
 ++ NVDA Touch Gestures ++
-If you are running NVDA on a device with a touch screen and running Windows 8 or higher, you can also control NVDA directly via the touch screen.
+If you are running NVDA on a device with a touchscreen and running Windows 8 or higher, you can also control NVDA directly via touch commands.
 While NVDA is running, all touch input will go directly to NVDA. 
 Therefore, actions that can be performed normally without NVDA will not work.
 
@@ -188,7 +188,7 @@ To do this, place one finger anywhere on the screen.
 You can also keep your finger on the screen and move it around to read other controls and text that your finger moves over.
 
 +++ Touch Gestures +++
-When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touch screen.
+When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touchscreen.
 Following are some instructions on how to perform the various touch gestures.
 
 ==== Taps ====
@@ -220,6 +220,15 @@ If the command does not have a mode listed, it will work in any mode.
 %kc:beginInclude
 To toggle touch modes, perform a 3-finger tap.
 %kc:endInclude
+
++++ Touch keyboard +++
+The touch keyboard is used to enter text and commands from a touchscreen.
+When focused on an edit field, you can bring up the touch keyboard by double-tapping the touch keyboard icon on the bottom of the screen.
+For tablets such as Microsoft Surface Pro, the touch keyboard is always available when the keyboard is undocked.
+To dismiss the touch keyboard, double-tap the touch keyboard icon or move away from the edit field.
+
+While the touch keyboard is active, to locate keys on the touch keyboard, move your finger to where the touch keyboard is located (typically at the bottom of the screen), then move around the keyboard with one finger.
+When you find the key you wish to press, double-tap the key or lift your finger, depending on options chosen from [Touch Interaction Settings dialog #TouchInteraction].
 
 ++ Input Help Mode ++
 Many NVDA commands are mentioned throughout the rest of this user guide, but an easy way to explore all the different commands is to turn on input help.
@@ -1271,6 +1280,14 @@ The further left or right the mouse is located on the screen, the further left o
 ==== Brightness controls audio coordinates volume ====
 If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controlled by how bright the screen is under the mouse.
 This setting is unchecked by default.
+
++++ Touch Interaction Settings +++[TouchInteraction]
+This dialog, only available on computers running Windows 8 and later with touch capabilities, allows you to configure how NVDA interacts with touchscreens.
+
+==== Touch typing mode ====
+This checkbox allows you to specify the method you wish to use when entering text using the touch keyboard.
+If this checkbox is checked, when you locate a key on the touch keyboard, you can lift your finger and the selected key will be pressed.
+If this is unchecked, you need to double-tap on the touch keyboard key to press the key.
 
 +++ Review Cursor Settings +++
 Found in the Preferences menu under "Review Cursor...".
