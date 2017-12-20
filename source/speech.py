@@ -49,7 +49,9 @@ CHUNK_SEPARATOR = "  "
 oldTreeLevel=None
 oldTableID=None
 oldRowNumber=None
+oldRowSpan=None
 oldColumnNumber=None
+oldColumnSpan=None
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -979,7 +981,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 			speak(speechSequence)
 
 def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues):
-	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
+	global oldTreeLevel, oldTableID, oldRowNumber, oldRowSpan, oldColumnNumber, oldColumnSpan
 	textList=[]
 	name=propertyValues.get('name')
 	if name:
@@ -1040,7 +1042,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			oldTableID = tableID
 		rowSpan = propertyValues.get("rowSpan")
 		columnSpan = propertyValues.get("columnSpan")
-		if rowNumber and (not sameTable or rowNumber != oldRowNumber):
+		if rowNumber and (not sameTable or rowNumber != oldRowNumber or rowSpan != oldRowSpan):
 			rowHeaderText = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
@@ -1051,7 +1053,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 					# Translators: Speaks the row span added to the current row number (example output: through 5).
 					textList.append(_("through %s")%(rowNumber+rowSpan-1))
 			oldRowNumber = rowNumber
-		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
+			oldRowSpan = rowSpan
+		if columnNumber and (not sameTable or columnNumber != oldColumnNumber or columnSpan != oldColumnSpan):
 			columnHeaderText = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
 				textList.append(columnHeaderText)
@@ -1062,6 +1065,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 					# Translators: Speaks the column span added to the current column number (example output: through 5).
 					textList.append(_("through %s")%(columnNumber+columnSpan-1))
 			oldColumnNumber = columnNumber
+			oldColumnSpan = columnSpan
 		if includeTableCellCoords and not cellCoordsText and rowSpan>1 and columnSpan>1:
 			# Translators: Speaks the row and column span added to the current row and column numbers
 			#			(example output: through row 5 column 3).
