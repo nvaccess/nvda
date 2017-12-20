@@ -1194,6 +1194,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		getProps = {
 			'rowNumber': attrs.get("table-rownumber"),
 			'columnNumber': attrs.get("table-columnnumber"),
+			'rowSpan': attrs.get("table-rowsspanned"),
+			'columnSpan': attrs.get("table-columnsspanned"),
 			'includeTableCellCoords': reportTableCellCoords
 		}
 		if reportTableHeaders:
