@@ -4,7 +4,7 @@ import versionInfo
 Import([
 	'env',
 	'outFilePrefix',
-	'isStoreSubmition',
+	'isStoreSubmission',
 ])
 
 def getCertPublisher(env):
@@ -26,14 +26,14 @@ def getCertPublisher(env):
 
 packageName="NVAccessLimited.NVDANonVisualDesktopAccess"
 packageVersion="%s.%s.%s.%s"%(versionInfo.version_year,versionInfo.version_major,env['version_build'],0)
-if isStoreSubmition:
-	packageFileName=outFilePrefix+"_storeSubmition.appx"
+if isStoreSubmission:
+	packageFileName=outFilePrefix+"_storeSubmission.appx"
 	# NV Access Limited's Windows Store publisher ID
 	# It is okay to be here as the only way to submit, validate and sign the package is via the NV Access store account.
 	packagePublisher="CN=83B1DA31-9B66-442C-88AB-77B4B815E1DE"
 	packagePublisherDisplayName="NV Access Limited"
 	productName="NVDA Screen Reader (Windows Store Edition)" 
-else: # not for submition, just side-loadable
+else: # not for submission, just side-loadable
 	packageFileName=outFilePrefix+"_sideLoadable.appx"
 	packagePublisher=getCertPublisher(env)
 	packagePublisherDisplayName=env['publisher']
@@ -90,7 +90,7 @@ appxContent=env.Command(
 env.AlwaysBuild(appxContent)
 # Package the appx
 appx=env.Command(packageFileName,appxContent,"makeappx pack /p $TARGET /d $SOURCE")
-if signExec and not isStoreSubmition:
+if signExec and not isStoreSubmission:
 	env.AddPostAction(appx,signExec)
 
 Return(['appx'])
