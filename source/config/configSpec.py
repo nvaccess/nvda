@@ -137,6 +137,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
 
+[touch]
+	touchTyping = boolean(default=False)
+
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
 	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
