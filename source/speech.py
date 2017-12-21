@@ -122,10 +122,13 @@ def speakMessage(text,index=None):
 	speakText(text,index=index,reason=controlTypes.REASON_MESSAGE)
 
 def getCurrentLanguage():
-	try:
-		language=getSynth().language if config.conf['speech']['trustVoiceLanguage'] else None
-	except NotImplementedError:
-		language=None
+	synth=getSynth()
+	language=None
+	if  synth:
+		try:
+			language=synth.language if config.conf['speech']['trustVoiceLanguage'] else None
+		except NotImplementedError:
+			pass
 	if language:
 		language=languageHandler.normalizeLanguage(language)
 	if not language:
@@ -596,7 +599,7 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				tempInfo=oldInfo.copy()
 				tempInfo.setEndPoint(newInfo,"startToEnd")
 				unselectedTextList.append(tempInfo.text)
-	locale=languageHandler.getLanguage()
+	locale=getCurrentLanguage()
 	if speakSelected:
 		if not generalize:
 			for text in selectedTextList:
