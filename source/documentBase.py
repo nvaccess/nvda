@@ -12,6 +12,10 @@ import ui
 import controlTypes
 
 class TextContainerObject(AutoPropertyObject):
+	"""
+	An object that contains text which can be accessed via a call to a makeTextInfo method.
+	E.g. NVDAObjects, BrowseModeDocument TreeInterceptors.
+	"""
 
 	def _get_TextInfo(self):
 		raise NotImplementedError
@@ -26,7 +30,10 @@ class TextContainerObject(AutoPropertyObject):
 		info.updateSelection()
 
 class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
-
+	"""
+	A document that supports standard table navigiation comments (E.g. control+alt+arrows to move between table cells).
+	The document could be an NVDAObject, or a BrowseModeDocument treeIntercepter for example.
+	"""
 	#: The controlField attribute name that should be used as the row number when navigating in a table. By default this is the same as the presentational attribute name
 	navigationalTableRowNumberAttributeName="table-rownumber"
 	#: The controlField attribute name that should be used as the column number when navigating in a table. By default this is the same as the presentational attribute name

@@ -315,8 +315,8 @@ class UIAHandler(COMObject):
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
 			# the window does support UIA natively, but
+			# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
 			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
-				# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
 				return False
 		return bool(res)
 

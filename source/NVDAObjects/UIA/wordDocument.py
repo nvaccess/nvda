@@ -17,7 +17,16 @@ from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation,
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase, ElementsListDialog
 
+"""Support for Microsoft Word via UI Automation."""
+
 def getCommentInfoFromPosition(position):
+	"""
+	Fetches information about the comment located at the given position in a word document.
+	@param position: a TextInfo representing the span of the comment in the word document.
+	@type L{TextInfo}
+	@return: A dictionary containing keys of comment, author and date
+	@rtype: dict
+	"""
 	val=position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
 	if not val:
 		return
@@ -71,7 +80,6 @@ class WordDocumentTextInfo(UIATextInfo):
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
 			# Include foot note and endnote identifiers
 			field['content']=obj.name
-			#field['alwaysReportName']=True
 			field['role']=controlTypes.ROLE_LINK
 		if obj.role==controlTypes.ROLE_LIST or obj.role==controlTypes.ROLE_EDITABLETEXT:
 			field['states'].add(controlTypes.STATE_READONLY)
@@ -217,7 +225,6 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		try:
 			UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		except COMError:
-			print "not an array"
 			return
 		for index in xrange(UIAElementArray.length):
 			UIAElement=UIAElementArray.getElement(index)
