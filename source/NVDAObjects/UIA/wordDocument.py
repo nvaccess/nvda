@@ -12,9 +12,9 @@ import controlTypes
 import ui
 import speech
 import api
-from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation
+from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator
 from . import UIA, UIATextInfo
-from NVDAObjects.window.winword import WordDocument as WordDocumentBase
+from NVDAObjects.window.winword import WordDocument as WordDocumentBase, ElementsListDialog
 
 class WordDocumentTextInfo(UIATextInfo):
 
@@ -154,6 +154,14 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		if not info.isCollapsed:
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
 	script_shiftTab=script_tab
+
+	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		if nodeType=="annotation":
+			return ()
+		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
+
+	# Use the Elements list dialog from the original Winword implementation
+	ElementsListDialog=ElementsListDialog
 
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo

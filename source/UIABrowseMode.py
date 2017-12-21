@@ -75,6 +75,40 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def label(self):
 		return self._getLabelForProperties(lambda prop: getattr(self.obj, prop, None))
 
+class SpellingErrorUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
+
+	@property
+	def label(self):
+		text=self.textInfo.text
+		# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+		# {text} will be replaced with the text of the spelling error.
+		return _(u"spelling: {text}").format(text=text)
+
+def UIATextAttributeQuicknavIterator(ItemClass,attribID,attribValue,itemType,document,position,direction="next"):
+	reverse=(direction=="previous")
+	entireDocument=document.makeTextInfo(textInfos.POSITION_ALL)
+	if not position:
+		searchArea=entireDocument
+	else:
+		searchArea=position.copy()
+		if reverse:
+			searchArea.setEndPoint(entireDocument,"startToStart")
+		else:
+			searchArea.setEndPoint(entireDocument,"endToEnd")
+	firstLoop=True
+	for subrange in iterUIARangeByUnit(searchArea._rangeObj,UIAHandler.TextUnit_Format,reverse=reverse):
+		if firstLoop:
+			firstLoop=False
+			if position and not reverse:
+				# We are starting to search forward from a specific position
+				# Skip the first subrange as it is the one we started on.
+				continue
+		curAttribValue=subrange.getAttributeValue(attribID)
+		curAttribValues=curAttribValue if isinstance(curAttribValue,tuple) else (curAttribValue,)
+		if attribValue in curAttribValues:
+			tempInfo=document.makeTextInfo(subrange)
+			yield ItemClass(itemType,document,tempInfo)
+
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(self,itemType,document,position,level=0):
@@ -283,6 +317,8 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType.startswith("heading"):
 			return UIAHeadingQuicknavIterator(nodeType,self,pos,direction=direction)
+		elif nodeType=="error":
+			return UIATextAttributeQuicknavIterator(SpellingErrorUIATextInfoQuickNavItem,UIAHandler.UIA_AnnotationTypesAttributeId,UIAHandler.AnnotationType_SpellingError,nodeType,self,pos,direction=direction)
 		elif nodeType=="link":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_HyperlinkControlTypeId)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
