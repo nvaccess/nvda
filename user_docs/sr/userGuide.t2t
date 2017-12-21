@@ -2081,79 +2081,79 @@ Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali o
 | Izgovori sve | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE  smart beetle Serije ++
-NVDA podržava Braille Sense,  Braille EDGE i SMART BEETLE brajeve redove firme [Hims http://www.hims-inc.com/] kada su povezani preko USB ili Bluetooth veze. 
+++ HIMS Braille Sense/Braille EDGE  / smart beetle /Sync BrailleSerije ++
+NVDA podržava Braille Sense,  Braille EDGE, SMART BEETLE i Sync Braille brajeve redove firme [Hims http://www.hims-inc.com/] kada su povezani preko USB ili Bluetooth veze. 
 Ako brajev red povezujete putem USB, morate instalirati USB Hims drajvere na vaš sistem.
-Možete ih preuzeti sa ove stranice: http://www.himsintl.com/?c=2/13&uid=2319
+Možete ih preuzeti ovde: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Slede dodeljene prečice za ove brajeve redove za NVDA.
 Molimo pogledajte uputstva za upotrebu brajevih redova kako biste saznali raspored i opis tastera na brajevom redu.
 %kc:beginInclude
 || Ime | Komanda |
-| Pomeri brajev red unazad | left side scroll down |
-| Pomeri brajev red napred | right side scroll down |
-| Pomeri brajev red na prethodni red | left side scroll up |
-| Pomeri brajev red na sledeći red | right side scroll up |
 | Premesti se na brajevu ćeliju | routing |
+| Pomeri brajev red nazad| leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Pomeri brajev red napred| leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Pomeri brajev red na prethodni red| leftSideScrollUp+rightSideScrollUp |
+| Pomeri brajev red na sledeći red| leftSideScrollDown+rightSideScrollDown |
+| Premesti se na sledeći red u pregledu| rightSideUpArrow |
+| Premesti se na sledeći red u pregledu| rightSideDownArrow |
+| Premesti se na prethodni znak u pregledu| rightSideLeftArrow |
+| Premesti se na sledeći znak u pregledu| rightSideRightArrow |
+| Premesti se na trenutni fokus| leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| Kontrol taster| smartbeetle:f1, brailleedge:f3 |
+| windows taster | f7, smartbeetle:f2 |
+| alt taster | Tačka1+Tačka3+Tačka4+razmak, f2, smartbeetle:f3, brailleedge:f4 |
+| Šift taster | f5 |
+| insert taster | Tačka2+Tačka4+Razmak, f6 |
+| Aplikacijski Taster | Tačka1+Tačka2+Tačka3+Tačka4+razmak, f8 |
+| Taster velika slova| Tačka1+tačka3+tačka6+razmak |
+| tab taster | tačka4+tačka5+razmak, f3, brailleedge:f2 |
+| šift+alt+tab taster | f2+f3+f1 |
+| alt+tab taster | f2+f3 |
 | Šift+tab | Tačka1+tačka2+razmak |
-| alt | Tačka1+tačka3+tačka4+Razmak |
-| escape | Tačka1+tačka5+Razmak |
-| tab | tačka4+tačka5+Razmak |
-| strelicaGore | Tačka1+razmak |
-| strelicaDole | Tačka4+Razmak |
-| capsLock | Tačka1+tačka3+tačka6+razmak |
-| Šift+alt+tab | napred2+napred3+napred1 |
-| alt+tab | napred2+napred3 |
-| end | Tačka4+Tačka6+razmak |
-| Kontrol+end | Tačka4+Tačka5+Tačka6+razmak |
-| home | Tačka1+tačka3+razmak |
+ | end key | dot4+dot6+space |
+| kontrol+end taster | tačka4+tačka5+tačka6+razmak |
+| home taster | tačka1+tačka3+razmak, smartbeetle:f4 |
 | kontrol+home | Tačka1+tačka2+tačka3+razmak |
-| strelicaLevo | Tačka3+razmak |
-| kontrol+šift+strelicaLevo | Tačka2+tačka8+razmak+napred1 |
+| alt+f4 taster | tačka1+tačka3+tačka5+tačka6+razmak |
+| StrelicaLevo taster | tačka3+razmak, leftSideLeftArrow |
+| kontrol+šift+StrelicaLevo taster | tačka2+tačka8+razmak+f1 |
 | kontrol+strelicaLevo | Tačka2+razmak |
-| Šift+alt+strelicaLevo | Tačka2+tačka7+napred1 |
+| šift+alt+StrelicaLevo taster | tačka2+tačka7+f1 |
 | alt+strelicaLevo | Tačka2+tačka7 |
-| strelicaDesno | Tačka6+razmak |
-| kontrol+šift+strelicaDesno | Tačka5+tačka8+razmak+napred1 |
+| StrelicaDesno taster | tačka6+razmak, leftSideRightArrow |
+| Kontrol+šift+StrelicaDesno taster | tačka5+tačka8+razmak+f1 |
 | kontrol+strelicaDesno | Tačka5+razmak |
-| Šift+alt+strelicaDesno | Tačka5+tačka7+napred1 |
+| šift+alt+StrelicaDesno taster | tačka5+tačka7+f1 |
 | alt+strelicaDesno | Tačka5+tačka7 |
 | pageUp | Tačka1+tačka2+tačka6+razmak |
 | kontrol+pageUp | Tačka1+tačka2+tačka6+tačka8+razmak |
-| kontrol+šift+strelicaGore | Tačka2+tačka3+tačka8+razmak+napred1 |
+| StrelicaGore taster | tačka1+razmak, leftSideUpArrow |
+| kontrol+šift+StrelicaGore taster | tačka2+tačka3+tačka8+razmak+f1 |
 | kontrol+strelicaGore | Tačka2+tačka3+razmak |
-| Šift+alt+strelicaGore | tačka2+tačka3+tačka7+napred1 |
+| šift+alt+StrelicaGore taster | tačka2+tačka3+tačka7+f1 |
 | alt+strelicaGore | Tačka2+tačka3+tačka7 |
-| Šift+strelicaGore | left side scroll down + razmak |
+| šift+StrelicaGore taster | leftSideScrollDown+razmak |
 | pageDown | Tačka3+tačka4+tačka5+razmak |
-| kontrol+pagedown | Tačka3+tačka4+tačka5+tačka8+razmak |
-| kontrol+šift+strelicaDole | Tačka5+tačka6+tačka8+razmak+napred1 |
+| kontrol+pageDown taster | tačka3+tačka4+tačka5+tačka8+razmak |
+| StrelicaDole taster | tačka4+razmak, leftSideDownArrow |
+| kontrol+šift+StrelicaDole taster | tačka5+tačka6+tačka8+razmak+f1 |
 | kontrol+strelicaDole | Tačka5+tačka6+razmak |
-| Šift+alt+strelicaDole | Tačka5+tačka6+tačka7+napred1 |
+| šift+alt+StrelicaDole taster | tačka5+tačka6+tačka7+f1 |
 | alt+strelicaDole | Tačka5+tačka6+tačka7 |
-| Šift+strelicaDole | right side scroll down + razmak |
-| delete | Tačka1+tačka3+tačka5+razmak |
+| šift+strelicaDole taster | razmak+rightSideScrollDown |
+| escape taster | tačka1+tačka5+razmak, f4, brailleedge:f1 |
+| Taster za brisanje | tačka1+tačka3+tačka5+razmak, tačka1+tačka4+tačka5+razmak |
 | f1 | Tačka1+tačka2+tačka5+razmak |
 | f3 | Tačka1+tačka2+tačka4+tačka8 |
-| f4 | Tačka7+napred3 |
-| windows+b | Tačka1+tačka2+napred1 |
-| windows+d | Tačka1+tačka4+tačka5+tačka1 |
+| f4 taster | tačka7+f3 |
+| windows+b taster | tačka1+tačka2+f1 |
+| windows+d taster | tačka1+tačka4+tačka5+f1 |
+| kontrol+insert taster | smartbeetle:f1+rightSideScroll |
+| alt+insert taster | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
-++ HIMS SyncBraille ++
-NVDA podržava SyncBraille brajev red firme [HIMS http://www.hims-inc.com/].
-Morate instalirati USB drajvere firme Hims na vaš računar.
-
-Ovo su prečice za brajev red za korišćenje uz pomoć NVDA.
-Molimo pogledajte uputstvo za upotrebu brajevog reda da biste saznali raspored i opis tastera na brajevom redu.
-%kc:beginInclude
-|| Ime | komanda |
-| Pomeri brajev red nazad | left side scroll down |
-| Pomeri brajev red napred | right side scroll down |
-| Pomeri se na brajevu ćeliju | routing |
-%kc:endInclude
-
-++ Seika brajični retci ++
+++ Seika brajevi redovi ++
 Seika verzije 3, 4 i 5 (40 ćelija) i Seika80 (80 ćelija)brajevi redovi koje je proizvela firma [Nippon Telesoft http://www.nippontelesoft.com/] su podržani.
 Za više informacija o ovim brajevim redovima posetite http://www.seika-braille.com/.
 Prvo morate instalirati USB drajvere koje je proizveo proizvođač.
