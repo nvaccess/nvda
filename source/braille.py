@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import sys
 import itertools
@@ -1901,7 +1901,8 @@ class _BgThread:
 
 #: Maps old braille display driver names to new drivers that supersede old drivers.
 RENAMED_DRIVERS = {
-	"syncBraille":"hims"
+	"syncBraille":"hims",
+	"alvaBc6":"alva"
 }
 
 def initialize():

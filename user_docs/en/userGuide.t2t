@@ -1900,15 +1900,17 @@ For Focus 80 only:
 | Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
 Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
+Alternatively, you can connect an older Optelec display, such as a Braille Voyager, using a protocol converter supplied by Optelec.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
-While these displays do have a braille keyboard, they handle translation from braille to text themselves.
-Therefore, NVDA's braille input table setting is not relevant.
+While some of these displays do have a braille keyboard, they usually handle translation from braille to text themselves.
+Therefore, in the default situation, NVDA's braille input table setting is not relevant.
+For Alva displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
 
-Following are the key assignments for this display with NVDA.
+Following are key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
@@ -1931,17 +1933,20 @@ Please see the display's documentation for descriptions of where these keys can 
 | downArrow key | spDown |
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
-| enter key | spEnter |
+| enter key | spEnter, enter|
 | Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
 | windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3 |
+| windows key | sp2+sp3, windows |
 | alt+tab key | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
+| alt key | alt |
+| control key | control |
+| Toggle HID keyboard simulation | t1+spEnter |
 %kc:endInclude
 
 ++ Handy Tech Displays ++[HandyTech]
