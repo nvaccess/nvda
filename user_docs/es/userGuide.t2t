@@ -2081,76 +2081,76 @@ Por favor conhsulta la documentación de la pantalla para descripciones de dónd
 | Leer todo | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Series de la HIMS Braille Sense/Braille EDGE/Smart Beetle ++
-NVDA soporta las pantallas Braille Sense, Braille EDGE y Smart Beetle de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
+++ Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
+NVDA soporta las pantallas Braille Sense, Braille EDGE, Smart Beetle y Sync Braille de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
-Puedes descargarlos desde esta página: http://www.himsintl.com/?c=2/13&uid=2319
+Puedes descargarlos de aquí: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
 Por favor consulta la documentación de las pantallas para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar atrás pantalla braille | desplazador izquierdo abajo |
-| Desplazar adelante pantalla braille | desplazador derecho abajo |
-| Mover pantalla braille a la línea anterior | desplazador izquierdo arriba |
-| Mover pantalla braille a la línea siguiente | desplazador derecho arriba|
 | Ir a la celda braille | sensores |
-| tecla shift+tab | punto1+punto2+Espacio |
-| tecla alt | punto1+punto3+punto4+Espacio |
-| tecla escape | punto1+punto5+Espacio |
-| tecla tab | punto4+punto5+Espacio |
-| tecla flecha arriba | punto1+Espacio |
-| Tecla flecha abajo | punto4+Espacio |
-| bloq mayúsculas | punto1+punto3+punto6+Espacio |
-| tecla shift+alt+tab | avance2+avance3+avance1 |
-| tecla alt+tab | avance2+avance3 |
-| tecla fin | punto4+punto6+Espacio |
-| tecla Control+fin | punto4+punto5+punto6+Espacio |
-| tecla inicio | punto1+punto3+Espacio |
-| tecla control+inicio | punto1+punto2+punto+Espacio |
-| tecla flecha izquierda | punto3+Espacio |
-| tecla control+shift+flecha izquierda | punto2+punto8+espacio+avance1 |
-| tecla control+flecha izquierda | punto2+Espacio |
-| tecla shift+alt+flecha izquierda | punto2+punto7+avance1 |
-| tecla alt+flecha izquierda | punto2+punto7 |
-| tecla flecha derecha | punto6+Espacio |
-| tecla control+shift+flecha derecha | punto5+punto+Espacio+avance1 |
-| tecla control+flecha derecha | punto5+espacio |
-| tecla shift+alt+flecha derecha | punto5+punto7+avance1 |
-| tecla alt+flecha derecha | punto5+punto7 |
-| tecla RePág | punto1+punto2+punto6+espacio |
-| tecla control+rePág | punto1+punto2+punto6+punto8+espacio |
-| tecla control+shift+flecha arriba | punto2+punto3+punto8+espacio+avance1 |
-| tecla control+flecha arriba | punto2+punto3+espacio |
-| tecla shift+alt+flecha arriba | punto2+punto3+punto7+avance1 |
-| tecla alt+flecha arriba | punto2+punto3+punto7 |
-| tecla shift+flecha arriba | desplazador izquierdo abajo + espacio |
+| Desplazar pantalla braille atrás | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Desplazar pantalla braille adelante | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Mover pantalla braille a línea anterior | leftSideScrollUp+rightSideScrollUp |
+| Mover pantalla braille a línea siguiente | leftSideScrollDown+rightSideScrollDown |
+| Mover a línea anterior en revisión | rightSideUpArrow |
+| Mover a línea siguiente en revisión | rightSideDownArrow |
+| Mover a carácter  anterior en revisión | rightSideLeftArrow |
+| Mover a carácter siguiente en revisión | rightSideRightArrow |
+| Mover a foco actual | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| Tecla control | smartbeetle:f1, brailleedge:f3 |
+| Tecla windows | f7, smartbeetle:f2 |
+| tecla alt | punto1+punto3+punto4+espacio, f2, smartbeetle:f3, brailleedge:f4 |
+| tecla shift | f5 |
+| tecla insert | punto2+punto4+espacio, f6 |
+| tecla aplicaciones | punto1+punto2+punto3+punto4+espacio, f8 |
+| tecla bloqueo de mayúsculas | punto1+punto3+punto6+espacio |
+| tecla tab | punto4+punto5+espacio, f3, brailleedge:f2 |
+| teclas shift+alt+tab | f2+f3+f1 |
+| teclas alt+tab | f2+f3 |
+| teclas shift+tab | punto1+punto2+espacio |
+| tecla fin | punto4+punto6+espacio |
+| teclas control+fin | punto4+punto5+punto6+espacio |
+| tecla inicio | punto1+punto3+espacio, smartbeetle:f4 |
+| teclas control+inicio | punto1+punto2+punto3+espacio |
+| teclas alt+f4 | punto1+punto3+punto5+punto6+espacio |
+| tecla flecha izquierda | punto3+espacio, leftSideLeftArrow |
+| teclas control+shift+flecha izquierda | punto2+punto8+espacio+f1 |
+| teclas control+flecha izquierda | punto2+espacio |
+| teclas shift+flecha izquierda | punto2+punto7+f1 |
+| teclas alt+flecha izquierda | punto2+punto7 |
+| tecla flecha derecha | punto6+espacio, leftSideRightArrow |
+| teclas control+shift+flecha derecha | punto5+punto8+espacio+f1 |
+| teclas control+flecha derecha | punto5+espacio |
+| teclas shift+alt+flecha derecha | punto5+punto7+f1 |
+| teclas alt+flecha derecha | punto5+punto7 |
+| tecla rePág | punto1+punto2+punto6+espacio |
+| teclas control+rePág | punto1+punto2+punto6+punto8+espacio |
+| tecla flecha arriba | punto1+espacio, leftSideUpArrow |
+| teclas control+shift+flecha arriba | punto2+punto3+punto8+espacio+f1 |
+| teclas control+flecha arriba | punto2+punto3+espacio |
+| teclas shift+alt+flecha arriba | punto2+punto3+punto7+f1 |
+| teclas alt+flecha arriba | punto2+punto3+punto7 |
+| teclas shift+flecha arriba | leftSideScrollDown+espacio |
 | tecla avPág | punto3+punto4+punto5+espacio |
-| tecla control+avPág | punto3+punto4+punto5+punto8+espacio |
-| tecla control+shift+flecha abajo | punto5+punto6+punto8+espacio+avance1 |
-| tecla control+flecha abajo | punto5+punto6+espacio |
-| tecla shift+alt+flecha abajo | punto5+punto6+punto7+avance1 |
-| tecla alt+flecha abajo | punto5+punto6+punto7 |
-| tecla shift+flecha abajo | desplazador derecho abajo + espacio |
-| tecla suprimir | punto1+punto3+punto5+espacio |
+| teclas control+avPág | punto3+punto4+punto5+punto8+espacio |
+| tecla flecha abajo | punto4+espacio, leftSideDownArrow |
+| teclas control+shift+flecha abajo | punto5+punto6+punto8+espacio+f1 |
+| teclas control+flecha abajo | punto5+punto6+espacio |
+| teclas shift+alt+flecha abajo | punto5+punto6+punto7+f1 |
+| teclas alt+flecha abajo | punto5+punto6+punto7 |
+| teclas shift+flecha abajo | espacio+rightSideScrollDown |
+| tecla escape | punto1+punto5+espacio, f4, brailleedge:f1 |
+| tecla suprimir | punto1+punto3+punto5+espacio, punto1+punto4+punto5+espacio |
 | tecla f1 | punto1+punto2+punto5+espacio |
 | tecla f3 | punto1+punto2+punto4+punto8 |
-| tecla f4 | punto7+avance3 |
-| tecla windows+b | punto1+punto2+avance1 |
-| tecla windows+d | punto1+punto4+punto5+avance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA soporta la pantalla SyncBraille de [HIMS http://www.hims-inc.com/].
-Necesitarás instalar los controladores USB de HIMS en el sistema.
-
-Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
-Por favor consulta la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
-%kc:beginInclude
-|| Nombre | Tecla |
-| Desplazar pantalla braille hacia atrás | desplazador abajo de la izquierda |
-| Desplazar pantalla braille hacia adelante | desplazador abajo de la derecha |
-| Ir a la celda braille | sensores |
+| tecla f4 | punto7+f3 |
+| teclas windows+b | punto1+punto2+f1 |
+| teclas windows+d | punto1+punto4+punto5+f1 |
+| teclas control+insert | smartbeetle:f1+rightSideScroll |
+| teclas alt+insert | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
 ++ Pantallas Braille Seika ++

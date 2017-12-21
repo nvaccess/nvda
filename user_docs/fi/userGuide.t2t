@@ -2081,76 +2081,76 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Jatkuva luku | c1, c2, c3, c4, c5 ja c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle ++
-NVDA tukee [HIMSin http://www.hims-inc.com/] Braille Sense-, Braille EDGE- ja Smart Beetle -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
+NVDA tukee [HIMSin http://www.hims-inc.com/] Braille Sense-, Braille EDGE-, Smart Beetle- ja Sync Braille -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
 USB-liitäntää käytettäessä tietokoneelle on asennettava HIMSin ajurit.
-Voit ladata ne täältä: http://www.himsintl.com/?c=2/13&uid=2319
+Voit ladata ne tältä sivulta: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä taaksepäin | vasemmanpuoleinen vieritä alas |
-| Vieritä eteenpäin | oikeanpuoleinen vieritä alas |
-| Siirrä edelliselle riville | vasemmanpuoleinen vieritä ylös |
-| Siirrä seuraavalle riville | oikeanpuoleinen vieritä ylös |
-| Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Siirrä pistesoluun | kosketuskohdistin |
+| Vieritä taaksepäin | vasemmanpuoleinen vieritä ylös, oikeanpuoleinen vieritä ylös, vasemmanpuoleinen vieritä |
+| Vieritä eteenpäin | vasemmanpuoleinen vieritä alas, oikeanpuoleinen vieritä alas, oikeanpuoleinen vieritä |
+| Siirrä edelliselle riville | vasemmanpuoleinen vieritä ylös+oikeanpuoleinen vieritä ylös |
+| Siirrä seuraavalle riville | vasemmanpuoleinen vieritä alas+oikeanpuoleinen vieritä alas |
+| Siirrä edelliselle riville tarkastelutilassa | oikeanpuoleinen nuoli ylös |
+| Siirrä seuraavalle riville tarkastelutilassa | oikeanpuoleinen nuoli alas |
+| Siirrä edelliseen merkkiin tarkastelutilassa | oikeanpuoleinen nuoli vasemmalle |
+| Siirrä seuraavaan merkkiin tarkastelutilassa | oikeanpuoleinen nuoli oikealle |
+| Siirrä kohdistukseen | vasemman puoleinen vieritä ylös+vasemmanpuoleinen vieritä alas, oikeanpuoleinen vieritä ylös+oikeanpuoleinen vieritä alas, vasemmanpuoleinen vieritä+oikeanpuoleinen vieritä |
+| Ctrl-näppäin | smartbeetle: f1, Braille EDGE: f3 |
+| Windows-näppäin | f7, Smart Beetle: f2 |
+| Alt-näppäin | pisteet 1, 3 ja 4+väli, f2, Smart Beetle: f3, Braille EDGE: f4 |
+| Shift-näppäin | f5 |
+| Insert-näppäin | pisteet 2 ja 4+väli, f6 |
+| Sovellusnäppäin | pisteet 1, 2, 3 ja 4+väli, f8 |
+| Caps Lock -näppäin | pisteet 1, 3 ja 6+väli |
+| Sarkain-näppäin | pisteet 4 ja 5+väli, f3, Braille EDGE: f2 |
+| Shift+Alt+Sarkain-näppäinyhdistelmä | f2+f3+f1 |
+| Alt+Sarkain-näppäinyhdistelmä | f2+f3 |
 | Shift+Sarkain-näppäinyhdistelmä | pisteet 1 ja 2+välilyönti |
-| Alt-näppäin | pisteet 1, 3 ja 4+välilyönti |
-| Esc-näppäin | pisteet 1 ja 5+välilyönti |
-| Sarkain-näppäin | pisteet 4 ja 5+välilyönti |
-| Nuoli ylös -näppäin | piste 1+välilyönti |
-| Nuoli alas -näppäin | piste 4+välilyönti |
-| Capslock-näppäin | pisteet 1, 3 ja 6+välilyönti |
-| Shift+Alt+Sarkain-näppäinyhdistelmä | advance2+advance3+advance1 |
-| Alt+Sarkain-näppäinyhdistelmä | advance2+advance3 |
 | End-näppäin | pisteet 4 ja 6+välilyönti |
-| Ctrl+End-näppäinyhdistelmä | pisteet 4, 5 ja 6+välilyönti |
-| Home-näppäin | pisteet 1 ja 3+välilyönti |
+| Ctrl+End-näppäinyhdistelmä | pisteet 4, 5 ja 6+väli |
+| Home-näppäin | pisteet 1 ja 3+väli, Smart Beetle: f4 |
 | Ctrl+Home-näppäinyhdistelmä | pisteet 1, 2 ja 3+välilyönti |
-| Nuoli vasemmalle -näppäin | piste 3+välilyönti |
-| Ctrl+Shift+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 8+välilyönti+advance1 |
+| Alt+F4-näppäinyhdistelmä | pisteet 1, 3, 5 ja 6+väli |
+| Nuoli vasemmalle -näppäin | piste 3+väli, vasemmanpuoleinen nuoli vasemmalle |
+| Ctrl+Shift+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 8+väli+f1 |
 | Ctrl+Nuoli vasemmalle -näppäinyhdistelmä | piste 2+välilyönti |
-| Shift+Alt+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 7+advance1 |
+| Shift+Alt+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 7+f1 |
 | Alt+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 7 |
-| Nuoli oikealle -näppäin | piste 6+välilyönti |
-| Ctrl+Shift+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 8+välilyönti+advance1 |
+| Nuoli oikealle -näppäin | piste 6+väli, vasemmanpuoleinen nuoli oikealle |
+| Ctrl+Shift+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 8+väli+f1 |
 | Ctrl+Nuoli oikealle -näppäinyhdistelmä | piste 5+välilyönti |
-| Shift+Alt+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 7+advance1 |
+| Shift+Alt+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 7+f1 |
 | Alt+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 7 |
 | Page up -näppäin | pisteet 1, 2 ja 6+välilyönti |
 | Ctrl+Page up -näppäinyhdistelmä | pisteet 1, 2, 6 ja 8+välilyönti |
-| Ctrl+Shift+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 8+välilyönti+advance1 |
+| Nuoli ylös -näppäin | piste 1+väli, vasemmanpuoleinen nuoli ylös |
+| Ctrl+Shift+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 8+väli+f1 |
 | Ctrl+Nuoli ylös -näppäinyhdistelmä | pisteet 2 ja 3+välilyönti |
-| Shift+Alt+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 7+advance1 |
+| Shift+Alt+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 7+f1 |
 | Alt+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 7 |
-| Shift+Nuoli ylös -näppäinyhdistelmä | vasen vieritä alas + välilyönti |
+| Shift+Nuoli ylös -näppäinyhdistelmä | vasemmanpuoleinen vieritä alas+väli |
 | Page down -näppäin | pisteet 3, 4 ja 5+välilyönti |
-| Ctrl+Page down -näppäinyhdistelmä | pisteet 3, 4, 5 ja 8+välilyönti |
-| Ctrl+Shift+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 8+välilyönti+advance1 |
+| Ctrl+Page down -näppäinyhdistelmä | pisteet 3, 4, 5 ja 8+väli |
+| Nuoli alas -näppäin | piste 4+väli, vasemmanpuoleinen nuoli alas |
+| Ctrl+Shift+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 8+väli+f1 |
 | Ctrl+Nuoli alas -näppäinyhdistelmä | pisteet 5 ja 6+välilyönti |
-| Shift+Alt+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 7+advance1 |
+| Shift+Alt+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 7+f1 |
 | Alt+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 7 |
-| Shift+Nuoli alas -näppäinyhdistelmä | oikea vieritä alas + välilyönti |
-| Delete-näppäin | pisteet 1, 3 ja 5+välilyönti |
+| Shift+Nuoli alas -näppäinyhdistelmä | väli+oikeanpuoleinen vieritä alas |
+| Esc-näppäin | pisteet 1 ja 5+väli, f4, Braille EDGE: f1 |
+| Delete-näppäin | pisteet 1, 3 ja 5+väli, pisteet 1, 4 ja 5+väli |
 | F1-näppäin | pisteet 1, 2 ja 5+välilyönti |
 | F3-näppäin | pisteet 1, 2, 4 ja 8 |
-| F4-näppäin | piste 7+advance3 |
-| Windows+B-näppäinyhdistelmä | pisteet 1 ja 2+advance1 |
-| Windows+D-näppäinyhdistelmä | pisteet 1, 4 ja 5+advance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA tukee [HIMS:in http://www.hims-inc.com/] SyncBraille -pistenäyttöä.
-Tietokoneelle on asennettava HIMS:in usb-AJURIT.
-
-Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
-%kc:beginInclude
-|| Nimi | Näppäinkomento |
-| Vieritä taaksepäin | vasemmanpuoleinen vieritä alas |
-| Vieritä eteenpäin | oikeanpuoleinen vieritä alas |
-| Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| F4-näppäin | piste 7+f3 |
+| Windows+B-näppäinyhdistelmä | pisteet 1 ja 2+f1 |
+| Windows+D-näppäinyhdistelmä | pisteet 1, 4 ja 5+f1 |
+| Ctrl+Insert-näppäimet | Smart Beetle: f1+oikeanpuoleinen vieritä |
+| Alt+Insert-näppäimet | Smart Beetle: f3+oikeanpuoleinen vieritä |
 %kc:endInclude
 
 ++ Seika ++
