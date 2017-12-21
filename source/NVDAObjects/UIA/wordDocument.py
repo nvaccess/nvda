@@ -12,9 +12,39 @@ import controlTypes
 import ui
 import speech
 import api
+import browseMode
 from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase, ElementsListDialog
+
+def getCommentInfoFromPosition(position):
+	val=position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
+	if not val:
+		return
+	try:
+		UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
+	except COMError:
+		return
+	for index in xrange(UIAElementArray.length):
+		UIAElement=UIAElementArray.getElement(index)
+		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		obj=UIA(UIAElement=UIAElement)
+		if not obj.parent or obj.parent.name!='Comment':
+			continue
+		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
+		dateObj=obj.previous
+		date=dateObj.name
+		authorObj=dateObj.previous
+		author=authorObj.name
+		return dict(comment=comment,author=author,date=date)
+
+class CommentUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
+
+	@property
+	def label(self):
+		commentInfo=getCommentInfoFromPosition(self.textInfo)
+		# Translators: The message reported for a comment in Microsoft Word
+		return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
 
 class WordDocumentTextInfo(UIATextInfo):
 
@@ -157,7 +187,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType=="annotation":
-			return ()
+			return UIATextAttributeQuicknavIterator(CommentUIATextInfoQuickNavItem,UIAHandler.UIA_AnnotationTypesAttributeId,UIAHandler.AnnotationType_Comment,nodeType,self,pos,direction=direction)
 		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
 
 	# Use the Elements list dialog from the original Winword implementation
