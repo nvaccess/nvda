@@ -428,12 +428,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		blockSize = self._dev._writeSize-1
 		# When the packet length exceeds C{blockSize}, the packet is split up into several block packets.
 		# These blocks are of size C{blockSize}.
-		bytesRemaining = packet
-		while bytesRemaining:
-			bytesToWrite = bytesRemaining[:blockSize]
+		for offset in xrange(0, len(packet), blockSize):
+			bytesToWrite = packet[offset:(offset+blockSize)]
 			hidPacket = b"\x00"+bytesToWrite+b"\x55"*(blockSize-len(bytesToWrite))
 			self._dev.write(hidPacket)
-			bytesRemaining = bytesRemaining[blockSize:]
 
 	def display(self, cells):
 		# cells will already be padded up to numCells.
