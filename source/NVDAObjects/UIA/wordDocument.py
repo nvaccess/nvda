@@ -13,11 +13,28 @@ import ui
 import speech
 import api
 import browseMode
-from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator
+from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator, TextAttribUIATextInfoQuickNavItem
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase, ElementsListDialog
 
 """Support for Microsoft Word via UI Automation."""
+
+class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
+	wantedAttribValues={UIAHandler.AnnotationType_InsertionChange,UIAHandler.AnnotationType_DeletionChange,UIAHandler.AnnotationType_TrackChanges}
+
+	@property
+	def label(self):
+		text=self.textInfo.text
+		if UIAHandler.AnnotationType_InsertionChange in self.attribValues:
+			# Translators: The label shown for an insertion change 
+			return _(u"insertion: {text}").format(text=text)
+		elif UIAHandler.AnnotationType_DeletionChange in self.attribValues:
+			# Translators: The label shown for a deletion change 
+			return _(u"deletion: {text}").format(text=text)
+		else:
+			# Translators: The general label shown for track changes 
+			return _(u"track change: {text}").format(text=text)
 
 def getCommentInfoFromPosition(position):
 	"""
@@ -47,7 +64,9 @@ def getCommentInfoFromPosition(position):
 		author=authorObj.name
 		return dict(comment=comment,author=author,date=date)
 
-class CommentUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
+class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
+	wantedAttribValues={UIAHandler.AnnotationType_Comment,}
 
 	@property
 	def label(self):
@@ -195,7 +214,9 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType=="annotation":
-			return UIATextAttributeQuicknavIterator(CommentUIATextInfoQuickNavItem,UIAHandler.UIA_AnnotationTypesAttributeId,UIAHandler.AnnotationType_Comment,nodeType,self,pos,direction=direction)
+			comments=UIATextAttributeQuicknavIterator(CommentUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
+			revisions=UIATextAttributeQuicknavIterator(RevisionUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
+			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
 
 	# Use the Elements list dialog from the original Winword implementation
