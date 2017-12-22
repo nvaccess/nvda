@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-11 00:10+1000\n"
-"PO-Revision-Date: 2016-11-16 14:05+0100\n"
-"Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
+"POT-Creation-Date: 2017-12-08 11:18+1000\n"
+"PO-Revision-Date: 2017-12-07 20:27+0100\n"
+"Last-Translator: zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
 "Language: hr_HR\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "Osigurano računalo"
+msgstr "Sigurni zaslon"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -44,7 +44,7 @@ msgstr "polovični alfanumerički"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "polovični katakana"
+msgstr "polovična katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
@@ -68,7 +68,7 @@ msgstr "hiragana rimski"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
 msgid "katakana roman"
-msgstr "katakana rimski"
+msgstr "katakana roman"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
@@ -94,38 +94,45 @@ msgstr "{language} - {layout}"
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Greška u aplikacijskom modulu %s"
+msgstr "Greška u modulu aplikacije %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
+msgctxt "aria"
 msgid "banner"
 msgstr "baner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
+msgctxt "aria"
 msgid "complementary"
 msgstr "komplementarno"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
+msgctxt "aria"
 msgid "content info"
-msgstr "info o sadržaju"
+msgstr "info sadržaja"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
+msgctxt "aria"
 msgid "main"
 msgstr "glavni"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
+msgctxt "aria"
 msgid "navigation"
 msgstr "navigacija"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
+msgctxt "aria"
 msgid "search"
 msgstr "traži"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgctxt "aria"
 msgid "form"
 msgstr "obrazac"
 
 #. Translators: Reported for a significant region, normally found on web pages.
+msgctxt "aria"
 msgid "region"
 msgstr "regija"
 
@@ -144,15 +151,431 @@ msgstr "Utišaj prilikom izgovora ili reprodukcije NVDA zvukova"
 msgid "Always duck"
 msgstr "uvijek utišaj"
 
+#. Translators: Displayed in braille for an object which is a
+#. window.
+msgid "wnd"
+msgstr "wnd"
+
+#. Translators: Displayed in braille for an object which is a
+#. dialog.
+msgid "dlg"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is a
+#. check box.
+msgid "chk"
+msgstr "chk"
+
+#. Translators: Displayed in braille for an object which is a
+#. radio button.
+msgid "rbtn"
+msgstr "rbtn"
+
+#. Translators: Displayed in braille for an object which is an
+#. editable text field.
+msgid "edt"
+msgstr "edt"
+
+#. Translators: Displayed in braille for an object which is a
+#. button.
+msgid "btn"
+msgstr "btn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu bar.
+msgid "mnubar"
+msgstr "mnubar"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu item.
+msgid "mnuitem"
+msgstr "mnuitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu.
+msgid "mnu"
+msgstr "mnu"
+
+#. Translators: Displayed in braille for an object which is a
+#. combo box.
+msgid "cbo"
+msgstr "cbo"
+
+#. Translators: Displayed in braille for an object which is a
+#. list.
+msgid "lst"
+msgstr "lst"
+
+#. Translators: Displayed in braille for an object which is a
+#. graphic.
+msgid "gra"
+msgstr "gra"
+
+#. Translators: Displayed in braille for an object which is a
+#. help balloon.
+msgid "hlp"
+msgstr "hlp"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool tip.
+msgid "tltip"
+msgstr "tltip"
+
+#. Translators: Displayed in braille for an object which is a
+#. link.
+msgid "lnk"
+msgstr "lnk"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view.
+msgid "tv"
+msgstr "tv"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view item.
+msgid "tvitem"
+msgstr "tvitem"
+
+#. Translators: Displayed in braille for an object which is a
+#. tab control.
+msgid "tabctl"
+msgstr "tabctl"
+
+#. Translators: Displayed in braille for an object which is a
+#. progress bar.
+msgid "prgbar"
+msgstr "prgbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. scroll bar.
+msgid "scrlbar"
+msgstr "scrlbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. status bar.
+msgid "stbar"
+msgstr "stbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. table.
+msgid "tbl"
+msgstr "tbl"
+
+#. Translators: Displayed in braille for an object which is a
+#. tool bar.
+msgid "tlbar"
+msgstr "tlbar"
+
+#. Translators: Displayed in braille for an object which is a
+#. drop down button.
+msgid "drbtn"
+msgstr "drbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. block quote.
+msgid "bqt"
+msgstr "bqt"
+
+#. Translators: Displayed in braille for an object which is a
+#. document.
+msgid "doc"
+msgstr "doc"
+
+#. Translators: Displayed in braille for an object which is a
+#. application.
+msgid "app"
+msgstr "app"
+
+#. Translators: Displayed in braille for an object which is a
+#. grouping.
+msgid "grp"
+msgstr "grp"
+
+#. Translators: Displayed in braille for an object which is a
+#. embedded object.
+msgid "embedded"
+msgstr "embedded"
+
+#. Translators: Displayed in braille for an object which is a
+#. end note.
+msgid "enote"
+msgstr "enote"
+
+#. Translators: Displayed in braille for an object which is a
+#. foot note.
+msgid "fnote"
+msgstr "fnote"
+
+#. Translators: Displayed in braille for an object which is a
+#. terminal.
+msgid "term"
+msgstr "term"
+
+#. Translators: Displayed in braille for an object which is a
+#. section.
+msgid "sect"
+msgstr "sect"
+
+#. Translators: Displayed in braille for an object which is a
+#. toggle button.
+msgid "tgbtn"
+msgstr "tgbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. split button.
+msgid "splbtn"
+msgstr "splbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. menu button.
+msgid "mnubtn"
+msgstr "mnubtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. spin button.
+msgid "spnbtn"
+msgstr "spnbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. tree view button.
+msgid "tvbtn"
+msgstr "tvbtn"
+
+#. Translators: Displayed in braille for an object which is a
+#. panel.
+msgid "pnl"
+msgstr "pnl"
+
+#. Translators: Displayed in braille for an object which is a
+#. password edit.
+msgid "pwdedt"
+msgstr "pwdedt"
+
+#. Translators: Displayed in braille when an object is selected.
+msgid "sel"
+msgstr "sel"
+
+#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+msgid "ro"
+msgstr "ro"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+msgid "-"
+msgstr "-"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+msgid "+"
+msgstr "+"
+
+#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
+msgid "submnu"
+msgstr "submnu"
+
+#. Translators: Displayed in braille when a protected control or a document is encountered.
+msgid "***"
+msgstr "***"
+
+#. Translators: Displayed in braille when a required form field is encountered.
+msgid "req"
+msgstr "req"
+
+#. Translators: Displayed in braille when an invalid entry has been made.
+msgid "invalid"
+msgstr "invalid"
+
+#. Translators: Displayed in braille when an object supports autocompletion.
+msgid "..."
+msgstr "..."
+
+#. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
+msgid "mln"
+msgstr "mln"
+
+#. Translators: Displayed in braille when an object is clickable.
+msgid "clk"
+msgstr "clk"
+
+#. Translators: Displayed in braille when an object is sorted ascending.
+msgid "sorted asc"
+msgstr "sorted asc"
+
+#. Translators: Displayed in braille when an object is sorted descending.
+msgid "sorted desc"
+msgstr "sorted desc"
+
+#. Translators: Displayed in braille when an object (usually a graphic) has a long description.
+msgid "ldesc"
+msgstr "ldesc"
+
+#. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
+msgid "frml"
+msgstr "frml"
+
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+msgid "cmnt"
+msgstr "cmnt"
+
+#. Translators: Displayed in braille when an object is not selected.
+msgid "nsel"
+msgstr "nsel"
+
+#. Translators: Displayed in braille for the banner landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "bnnr"
+msgstr "bnnr"
+
+#. Translators: Displayed in braille for the complementary landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cmpl"
+msgstr "cmpl"
+
+#. Translators: Displayed in braille for the contentinfo landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "cinf"
+msgstr "cinf"
+
+#. Translators: Displayed in braille for the main landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "main"
+msgstr "main"
+
+#. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "navi"
+msgstr "navi"
+
+#. Translators: Displayed in braille for the search landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "srch"
+msgstr "srch"
+
+#. Translators: Displayed in braille for the form landmark, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "form"
+msgstr "form"
+
+#. Translators: Displayed in braille for a significant region, normally found on web pages.
+msgctxt "braille landmark abbreviation"
+msgid "rgn"
+msgstr "rgn"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "sedma i osma točkica"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "osma točkica"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "svih osam točkica"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. only shows as much as possible focus context information when the context has changed.
+msgid "Fill display for context changes"
+msgstr "Popuni brajični redak samo izmjenama konteksta"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
+#. This was the pre NVDA 2017.3 default.
+msgid "Always fill display"
+msgstr "Uvijek popunjavaj brajični redak"
+
+#. Translators: The label for a braille focus context presentation setting that
+#. always shows the object with focus at the very left of the braille display
+#. (i.e. you will have to scroll back for focus context information).
+msgid "Only when scrolling back"
+msgstr "Samo prilikom prebacivanja brajičnog redka u nazad"
+
+#. Translators: Displayed in braille for a heading with a level.
+#. %s is replaced with the level.
+#, python-format
+msgid "h%s"
+msgstr "h%s"
+
+#. Translators: Displayed in braille for a link which has been visited.
+msgid "vlnk"
+msgstr "vlnk"
+
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#, python-format
+msgid "not %s"
+msgstr "nije %s"
+
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#, python-brace-format
+msgid "{number} of {total}"
+msgstr "{number} od {total}"
+
+#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+#. %s is replaced with the level.
+#, python-format
+msgid "lv %s"
+msgstr "lv %s"
+
+#. Translators: Displayed in braille for a table cell row number.
+#. %s is replaced with the row number.
+#, python-format
+msgid "r%s"
+msgstr "r%s"
+
+#. Translators: Displayed in braille for a table cell column number.
+#. %s is replaced with the column number.
+#, python-format
+msgid "c%s"
+msgstr "c%s"
+
+#. Translators: Displayed in braille at the end of a control field such as a list or table.
+#. %s is replaced with the control's role.
+#, python-format
+msgid "%s end"
+msgstr "%s kraj"
+
+#. Translators: String representing the automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatski"
+
+#. Translators: Used when reporting braille dots to the user.
+#. Translators: Reported when braille dots are pressed in input help mode.
+msgid "dot"
+msgstr "točkica"
+
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+msgid "space with dot"
+msgstr "razmak s točkicom"
+
+#. Translators: Reported when braille space is pressed in input help mode.
+#. Translators: This is the name of a key on the keyboard.
+msgid "space"
+msgstr "razmak"
+
+#. Translators: Used when describing keys on a braille keyboard.
+msgid "braille keyboard"
+msgstr "brajična tipkovnica"
+
+#. Translators: Used to describe the press of space
+#. along with any dots on a braille keyboard.
+msgid "space with any dots"
+msgstr "razmak sa bilo kojom od točkica"
+
+#. Translators: Used to describe the press of any dots
+#. on a braille keyboard.
+msgid "any dots"
+msgstr "bilo koje točkice"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "Arapski puno pismo"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Farsi grade 1"
-msgstr "Perzijski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -183,6 +606,11 @@ msgstr "Velški kratkopis"
 #. braille settings dialog.
 msgid "Czech grade 1"
 msgstr "Češki puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot computer braille"
+msgstr "Danska osmotočkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -226,6 +654,11 @@ msgstr "Njemački kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Greek (Greece)"
+msgstr "Grčki (Grčka)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
 msgstr "Britanski engleski 8 točkasta kompjutorska brajica"
 
@@ -238,6 +671,16 @@ msgstr "Engleski (Velika Britanija) puno pismo"
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
 msgstr "Engleski (Velika Britanija) kratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 1"
+msgstr "Jedinstveni Engleski brajični kod puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Unified English Braille Code grade 2"
+msgstr "Jedinstveni Engleski brajični kod kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -278,6 +721,16 @@ msgstr "Estonski osnovno pismo"
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
 msgstr "Etiopski puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian 8 dot computer braille"
+msgstr "Farsi osmotočkasta kompjutorska brajica"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Persian grade 1"
+msgstr "Perzijski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -336,11 +789,6 @@ msgstr "starogrčki"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Greek (Greece) grade 1"
-msgstr "Grčki (Grčka) puno pismo"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "Hebrew 8 dot computer braille"
 msgstr "Hebrejski 8-točkasta kompjutorska brajica"
 
@@ -353,6 +801,11 @@ msgstr "Hindi puno pismo"
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
 msgstr "Hrvatski 8-točkasta kompjutorska brajica"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Hrvatski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -408,6 +861,11 @@ msgstr "Korejski kratkopis"
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
 msgstr "Kašmirski puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian"
+msgstr "Litavski"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -536,7 +994,12 @@ msgstr "Slovački puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovene grade 1"
+msgid "Slovenian 8 dot computer braille"
+msgstr "Slovenska osmotočkasta kompjutorska brajica"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Slovenian grade 1"
 msgstr "Slovenski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
@@ -561,13 +1024,13 @@ msgstr "Turski 8 točkasta brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 1"
-msgstr "Jedinstveni Engleski brajični kod puno pismo"
+msgid "Unicode braille"
+msgstr "Unicode brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Unified English Braille Code grade 2"
-msgstr "Jedinstveni Engleski brajični kod kratkopis"
+msgid "Vietnamese grade 1"
+msgstr "Vijetnamski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -579,207 +1042,19 @@ msgstr "Kineski (Hong Kong, Kantonski)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Kineski (Taiwan, Mandarinski)"
 
-#. Translators: Displayed in braille for an object which is an
-#. editable text field.
-msgid "edt"
-msgstr "ur."
-
-#. Translators: Displayed in braille for an object which is a
-#. list.
-msgid "lst"
-msgstr "pop."
-
-#. Translators: Displayed in braille for an object which is a
-#. menu bar.
-msgid "mnubar"
-msgstr "t.iz."
-
-#. Translators: Displayed in braille for an object which is a
-#. menu.
-msgid "mnu"
-msgstr "iz."
-
-#. Translators: Displayed in braille for an object which is a
-#. button.
-msgid "btn"
-msgstr "gb."
-
-#. Translators: Displayed in braille for an object which is a
-#. check box.
-msgid "chk"
-msgstr "p.o."
-
-#. Translators: Displayed in braille for an object which is a
-#. radio button.
-msgid "rbtn"
-msgstr "iz.gb."
-
-#. Translators: Displayed in braille for an object which is a
-#. combo box.
-msgid "cbo"
-msgstr "od.okv."
-
-#. Translators: Displayed in braille for an object which is a
-#. link.
-msgid "lnk"
-msgstr "lnk"
-
-#. Translators: Displayed in braille for an object which is a
-#. dialog.
-msgid "dlg"
-msgstr "di.okv"
-
-#. Translators: Displayed in braille for an object which is a
-#. tree view.
-msgid "tv"
-msgstr "pst"
-
-#. Translators: Displayed in braille for an object which is a
-#. table.
-msgid "tb"
-msgstr "tabl."
-
-#. Translators: Displayed in braille for an object which is a
-#. separator.
-msgid "-----"
-msgstr "-----"
-
-#. Translators: Displayed in braille for an object which is a
-#. graphic.
-msgid "gra"
-msgstr "sli."
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-msgid "(x)"
-msgstr "(x)"
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-msgid "(-)"
-msgstr "(-)"
-
-#. Translators: Displayed in braille when an object is selected.
-msgid "sel"
-msgstr "od."
-
-#. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-msgid "submnu"
-msgstr "podizb."
-
-#. Translators: Displayed in braille when an object supports autocompletion.
-msgid "..."
-msgstr "..."
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-msgid "-"
-msgstr "-"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-msgid "+"
-msgstr "+"
-
-#. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-msgid "ro"
-msgstr "sč."
-
-#. Translators: Displayed in braille when an object is clickable.
-msgid "clk"
-msgstr "klik."
-
-#. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-msgid "( )"
-msgstr "( )"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dots 7 and 8"
-msgstr "sedma i osma točkica"
-
-#. Translators: The description of a braille cursor shape.
-msgid "Dot 8"
-msgstr "osma točkica"
-
-#. Translators: The description of a braille cursor shape.
-msgid "All dots"
-msgstr "svih osam točkica"
-
-#. Translators: Displayed in braille for a heading with a level.
-#. %s is replaced with the level.
-#, python-format
-msgid "h%s"
-msgstr "nasl.%s"
-
-#. Translators: Displayed in braille for a link which has been visited.
-msgid "vlnk"
-msgstr "plnk"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "nije %s"
-
-#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
-#. {number} is replaced with the number of the item in the group.
-#. {total} is replaced with the total number of items in the group.
-#, python-brace-format
-msgid "{number} of {total}"
-msgstr "{number} od {total}"
-
-#. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
-#. %s is replaced with the level.
-#, python-format
-msgid "lv %s"
-msgstr "lv %s"
-
-#. Translators: Displayed in braille for a table cell row number.
-#. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
-
-#. Translators: Displayed in braille for a table cell column number.
-#. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "s%s"
-
-#. Translators: Displayed in braille at the end of a control field such as a list or table.
-#. %s is replaced with the control's role.
-#, python-format
-msgid "%s end"
-msgstr "%s kraj"
-
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatski"
-
-#. Translators: Reported before braille input in input help mode.
-msgid "braille"
-msgstr "brajica"
-
-#. Translators: Reported when braille space is pressed with dots in input help mode.
-msgid "space with dot"
-msgstr "razmak s točkicom"
-
-#. Translators: Reported when braille dots are pressed in input help mode.
-msgid "dot"
-msgstr "točkica"
-
-#. Translators: Reported when braille space is pressed in input help mode.
-#. Translators: This is the name of a key on the keyboard.
-msgid "space"
-msgstr "razmak"
-
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "mod fokusa"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Mod pregleda"
+
+#. Translators: Reported label in the elements list for an element which which has no name and value
+msgid "Unlabeled"
+msgstr "neobilježeno"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -800,6 +1075,7 @@ msgstr ""
 "je isključeno, ove su tipke proslijeđene aplikaciji"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
+#. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
 msgstr "Nije podržano u ovom dokumentu"
 
@@ -1243,6 +1519,22 @@ msgstr "premješta se na prethodnu zabilješku"
 msgid "no previous annotation"
 msgstr "nema prethodne zabilješke"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next error"
+msgstr "Premiješta na sljedeću pogrešku"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next error"
+msgstr "Nema sljedeće pogreške"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous error"
+msgstr "premiješta na prethodnu pogrešku"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous error"
+msgstr "Nema prethodne pogreške"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -1256,6 +1548,16 @@ msgstr "link&ovi"
 #. document formatting settings dialog.
 msgid "&Headings"
 msgstr "&Naslovi"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Form fields"
+msgstr "Polja obrazca"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Buttons"
+msgstr "&Gumbi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1275,7 +1577,7 @@ msgstr "Vrsta:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
+msgid "Filt&er by:"
 msgstr "&Izdvoji:"
 
 #. Translators: The label of a button to activate an element
@@ -1288,12 +1590,17 @@ msgstr "&Aktivirati"
 msgid "&Move to"
 msgstr "&Pomak na"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
 msgstr "%s orijentir"
 
+#. Translators: This is brailled to indicate a landmark (example output: lmk main).
+#, python-format
+msgid "lmk %s"
+msgstr "lmk %s"
+
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
 msgstr "odabrano %s"
@@ -1306,8 +1613,8 @@ msgstr "Nema dugog opisa"
 msgid "Shows the long description at this position if one is found."
 msgstr "Pokazuje dugi opis na ovom položaju ako se pronađe."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "Nije u sadržanom mjestu"
 
@@ -1325,6 +1632,45 @@ msgstr "dno"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Premiješta iza kraja sadržanog elementa, kao što je lista ili tablica"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "nije u ćeliji tablice"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "rub tablice"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "premiješta na sljedeći redak u tablici"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "premiješta na prethodni redak u tablici"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "premiješta na sljedeći stupac u tablici"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "premiješta na prethodni stupac u tablici"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Izvijesti o tablicama izgleda isključeno"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Izvijesti o tablicama izgleda uključeno"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Uključuje i isključuje izgovor tablica izgleda"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1731,6 +2077,10 @@ msgstr "sat"
 msgid "separator"
 msgstr "rastavljač"
 
+#. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
+msgid "form"
+msgstr "obrazac"
+
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
 msgstr "naslov"
@@ -2079,8 +2429,9 @@ msgid "bold"
 msgstr "podebljavanje"
 
 #. Translators: Describes text formatting.
-msgid "ITALIC"
-msgstr "KURZIV"
+#. Translators: Reported when text is italicized.
+msgid "italic"
+msgstr "kurziv"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -2133,6 +2484,12 @@ msgstr "thumb kontrola"
 
 msgid "calendar"
 msgstr "kalendar"
+
+msgid "video"
+msgstr "video"
+
+msgid "audio"
+msgstr "audio"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2300,9 +2657,37 @@ msgstr "otključano"
 msgid "not selected"
 msgstr "nije odabrano"
 
+#. Translators: This is presented when a button is not pressed.
+msgid "not pressed"
+msgstr "nije pritisnuto"
+
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
 msgstr "nije odabrano"
+
+#. Translators: Presented when an item is marked as current in a collection of items
+msgid "current"
+msgstr "trenutno"
+
+#. Translators: Presented when a page item is marked as current in a collection of page items
+msgid "current page"
+msgstr "trenutna stranica"
+
+#. Translators: Presented when a step item is marked as current in a collection of step items
+msgid "current step"
+msgstr "trenutni korak"
+
+#. Translators: Presented when a location item is marked as current in a collection of location items
+msgid "current location"
+msgstr "Trenutna pozicija"
+
+#. Translators: Presented when a date item is marked as current in a collection of date items
+msgid "current date"
+msgstr "trenutan datum"
+
+#. Translators: Presented when a time item is marked as current in a collection of time items
+msgid "current time"
+msgstr "Trenutno vrijeme"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2331,6 +2716,24 @@ msgstr "Greška u datoteci s kartom geste"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA se učitava. Molim pričekajte..."
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Vodoravno"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Okomito"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "Punjenje baterije. %d posto"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "Punjenje baterije zaustavljeno. %d posto"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -2483,10 +2886,12 @@ msgstr ""
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
+"twice will spell the current line. Pressing three times will spell the line "
+"using character descriptions."
 msgstr ""
 "Izvještava o tekućem redku ispod aplikacijskog kursora. Ukoliko se ova tipka "
-"pritisne dvaput, tekući redak se slovka."
+"pritisne dvaput, slovkati će trenutni redak, ako se pritisne triput, redak "
+"će biti srican fonetski."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2996,6 +3401,7 @@ msgid "No navigator object"
 msgstr "nema objekta navigatora"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s kopirano u međuspremnik"
@@ -3274,6 +3680,10 @@ msgstr ""
 msgid "Quits NVDA!"
 msgstr "Izlazi iz  NVDA!"
 
+#. Translators: Input help mode message for restart NVDA command.
+msgid "Restarts NVDA!"
+msgstr "Ponovno pokreće NVDA!"
+
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
 msgstr "Prikazuje NVDA izbornik"
@@ -3323,10 +3733,12 @@ msgstr "Statusna linija nije pronađena"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "čita trenutnu traku stanja aplikacije i premiješta kursor za navigaciju na "
-"istu. Ako je pritisnuto dva puta, slovka informaciju."
+"istu. Ako je pritisnuto dva puta, slovka informaciju, ako je pritisnuto tri "
+"putta, kopira ju u međuspremnik."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3619,6 +4031,17 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Naizmjence uključi povezivanje brajice između položaja fokusa i pregleda"
 
+#. Translators: Reports the new state of braille focus context presentation.
+#. %s will be replaced with the context presentation setting.
+#. For example, the full message might be "Braille focus context presentation: fill display for context changes"
+#, python-format
+msgid "Braille focus context presentation: %s"
+msgstr "Prezentacija brajičnog fokusa u kontekstu: %s"
+
+#. Translators: Input help mode message for toggle braille focus context presentation command.
+msgid "Toggle the way context information is presented in braille"
+msgstr "Prebacuje način na koji se prikazuju informacije na brajici"
+
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
 msgstr "isključen brajični pokazivač"
@@ -3734,6 +4157,18 @@ msgstr "Dopušta unos Brailleovih točkica pomoću brajične tipkovnice"
 msgid "Moves the braille display to the current focus"
 msgstr "Premiješta brajični prikaz na trenutni fokus"
 
+#. Translators: Input help mode message for a braille command.
+msgid "Erases the last entered braille cell or character"
+msgstr "Briše zadnu brajičnu ćeliju ili znak"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input and presses the enter key"
+msgstr "Prevodi bilo koji brajični unos i pritišće enter"
+
+#. Translators: Input help mode message for a braille command.
+msgid "Translates any braille input"
+msgstr "Prevodi brajični unos"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Dodaci su iznova učitani"
@@ -3795,6 +4230,15 @@ msgstr "Nije matematika"
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
 msgstr "Počinje interakciju sa matematičkim sadržajem"
+
+#. Translators: Reported when Windows 10 OCR is not available.
+msgid "Windows 10 OCR not available"
+msgstr "Windows 10 OCR nije dostupan"
+
+#. Translators: Describes a command.
+msgid ""
+"Recognizes the content of the current navigator object with Windows 10 OCR"
+msgstr "Prepoznaje sadržaj objekta nawigatora sa Windows 10 ocr"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -3914,11 +4358,11 @@ msgstr "proizvoljna aplikacija 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "bekspejs"
+msgstr "backspace"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "velika slova"
+msgstr "caps lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
@@ -4217,13 +4661,1068 @@ msgstr "Korisnički zadan"
 msgid "%s cursor"
 msgstr "%s kursor"
 
-#. Translators: The description of the NVDA service.
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "10-point star"
+msgstr "zvijezda 10 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "12-point star"
+msgstr "zvijezda 12 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "16-point star"
+msgstr "zvijezda 16 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "24-point star"
+msgstr "zvijezda 24 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "32-point star"
+msgstr "zvijezda 32 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "4-point star"
+msgstr "zvijezda 4 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "5-point star"
+msgstr "zvijezda 5 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "6-point star"
+msgstr "zvijezda 6 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "7-point star"
+msgstr "zvijezda 7 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "8-point star"
+msgstr "zvijezda 8 točaka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arc"
+msgstr "Arc"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Balloon"
+msgstr "balončić"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent arrow"
+msgstr "spuštena strelica"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bent Up Arrow"
+msgstr "Bent strelica gore"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Bevel"
+msgstr "bevel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Block arc"
+msgstr "Blok arc"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Can"
+msgstr "Štap"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Plus symbol"
+msgstr "Graf plus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart Star Symbol"
+msgstr "Graf plus"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chart X Symbol"
+msgstr "Graf X"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Chevron"
+msgstr "Ševron"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circle with line through center"
+msgstr "Kružić s linijom u sredini"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Circular Arrow"
+msgstr "Kružna strelica"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud shape"
+msgstr "Oblak"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cloud callout"
+msgstr "Oblačni poziv"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Corner"
+msgstr "Kut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "four snipped corners"
+msgstr "četiri spojeni kutevi"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cross"
+msgstr "Krož"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Cube"
+msgstr "Kvadrat"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Down Arrow"
+msgstr "Zakrivljena strelica dolje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon banner"
+msgstr "ribon baner"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Left Arrow"
+msgstr "Zakrivljena strelica u lijevo"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Right Arrow"
+msgstr "zakrivljena strelica desno"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Arrow"
+msgstr "zakrivljena strelica gore"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved Up Ribbon banner"
+msgstr "baner mreža prema gore"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decagon"
+msgstr "Dekagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diagonal stripe"
+msgstr "dijagonalna pruga"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Diamond"
+msgstr "Diamant"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Dodecagon"
+msgstr "Dodekagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Donut"
+msgstr "Donut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double brace"
+msgstr "dupla vitica"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double bracket"
+msgstr "dvostruka zagrada"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double wave"
+msgstr "dupli val"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Down Arrow"
+msgstr "strelica dolje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Down Arrow"
+msgstr "poziv sa desnom strelicom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Explosion"
+msgstr "eksplozija"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Alternate process flowchart symbol"
+msgstr "plutajući graf alternativnog procesa"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Card flowchart symbol"
+msgstr "karta"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Collate flowchart symbol"
+msgstr "spoji"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Connector flowchart symbol"
+msgstr "simbol grafa konektora"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Data flowchart symbol"
+msgstr "simbol podatkovnog grafa"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Decision flowchart symbol"
+msgstr "odluka"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Delay flowchart symbol"
+msgstr "čekanje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Direct access storage flowchart symbol"
+msgstr "izravni pristup"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Display flowchart symbol"
+msgstr "prikaz"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Document flowchart symbol"
+msgstr "dokument"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Extract flowchart symbol"
+msgstr "raspakiravanje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Internal storage flowchart symbol"
+msgstr "unutarnja memorija"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Magnetic disk flowchart symbol"
+msgstr "magnetski disk"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual input flowchart symbol"
+msgstr "ručni unos"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Manual operation flowchart symbol"
+msgstr "ručna operacija"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Merge flowchart symbol"
+msgstr "spajanje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Multi-document flowchart symbol"
+msgstr "višedokument"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Offline storage flowchart symbol"
+msgstr "izvanmrežno"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Off-page connector flowchart symbol"
+msgstr "izvan stranice"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'Or' flowchart symbol"
+msgstr "ili"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Predefined process flowchart symbol"
+msgstr "redefinirani proces"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Preparation flowchart symbol"
+msgstr "priprema"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Process flowchart symbol"
+msgstr "proces"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Punched tape flowchart symbol"
+msgstr "punched kazeta"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sequential access storage flowchart symbol"
+msgstr "pristup sekvencijskoj pohrani"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sort flowchart symbol"
+msgstr "sortiranje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Stored data flowchart symbol"
+msgstr "pohranjeni podaci"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Summing junction flowchart symbol"
+msgstr "sumirani produkt"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Terminator flowchart symbol"
+msgstr "terminator"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Folded corner"
+msgstr "presavinuti kut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular picture frame"
+msgstr "trokutni okvir"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Funnel"
+msgstr "funnel"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with six teeth"
+msgstr "gear sa 6 zuba"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Gear with nine teeth"
+msgstr "gear sa 9 zuba"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Half of rectangular picture frame"
+msgstr "polovica stranice sli,a"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heart"
+msgstr "srce"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Heptagon"
+msgstr "heptagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Hexagon"
+msgstr "heksagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Horizontal scroll"
+msgstr "vodoravna skrol"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Isosceles triangle"
+msgstr "isosceles trokut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left Arrow"
+msgstr "strelica lijevo"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Left Arrow"
+msgstr "poziv sa lijevom strelicom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left brace"
+msgstr "lijeva zagrada"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left bracket"
+msgstr "lijeva zagrada"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Counter-clockwise Circular arrow"
+msgstr "u smjeru kazaljke na satu"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended horizontal Arrow"
+msgstr "dvostruki kraj"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Double-ended horizontal Arrow"
+msgstr "poziv sa dvostrukom završetkom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Circular arrow"
+msgstr "dvostruki krajnji krug"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Ribbon with left and right arrows"
+msgstr "ribon sa ljevom i desnom strelicom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left right and up Arrows"
+msgstr "strelice"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Left and up Arrows"
+msgstr "strelice gore i dolje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Lightning bolt"
+msgstr "munja"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line Callout"
+msgstr "pozivnik linije"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal accent bar"
+msgstr "pozivnik sa naglašenom crtom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border and horizontal accent bar"
+msgstr "pozivnik sa horizontalnom akcentnom crtom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with horizontal line"
+msgstr "poziv sa horizontalnom linijom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal straight line"
+msgstr "poziv s dijagonalnom ravnom linijom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with diagonal callout line and accent bar"
+msgstr "pozivnik sa linijom pozivnika i akcentnom crtom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, diagonal straight line and accent bar"
+msgstr "granični pozivnik"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and diagonal callout line"
+msgstr "pozivnik bez granica"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled line"
+msgstr "pozivnik sa kutnom liniom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with angled callout line and accent bar"
+msgstr "pozivnik s akcentnom linijom i kutom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with border, angled callout line, and accent bar"
+msgstr "pozivnik s granicom i akcentnom linijom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and angled callout line"
+msgstr "pozivnik s linijom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with callout line segments forming a U-shape"
+msgstr "pozivnik sa u oblikom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with accent bar and callout line segments forming a U-shape"
+msgstr "u oblik"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
 msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"Omogućuje pokretanje NVDA programa na Windows Logon ekranu, UAC ekranu te "
-"drugim osiguranim ekranima."
+"Callout with border, accent bar, and callout line segments forming a U-shape"
+msgstr "u oblik"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with no border and callout line segments forming a U-shape"
+msgstr "u oblik"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Line inverse"
+msgstr "preokrenuta linija"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Division symbol"
+msgstr "dijeljenje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Equivalence symbol"
+msgstr "ekvivalent"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Subtraction symbol"
+msgstr "oduzimanje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Multiplication symbol"
+msgstr "množenje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Non-equivalence symbol"
+msgstr "neekvivalentnost"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Math Addition symbol"
+msgstr "množenje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Moon"
+msgstr "mjesec"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid with asymmetrical non-parallel sides"
+msgstr "trapezoid s asimetričnim neparalelnim stranicama"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "'No' symbol"
+msgstr "nema simbola"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Notched RightArrow"
+msgstr "odrezana desna strelica"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Octagon"
+msgstr "oktagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval"
+msgstr "oval"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Oval-shaped callout"
+msgstr "ovalni pozivnik"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Parallelogram"
+msgstr "paralelogram"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Pentagon"
+msgstr "pentagon"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Incomplete Pie with wedge missing"
+msgstr "nekompletna pita"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Quarter Pie Wedge"
+msgstr "polovina pite"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque"
+msgstr "plaketa"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Plaque Tabs"
+msgstr "plaketa tabovi"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Arrows pointing left right up and down"
+msgstr "strelice pokazujuće u svim smjerovima"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Arrows pointing left right up and down"
+msgstr "pozivnik pokazivajući na sve strane"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle"
+msgstr "trokut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangular callout"
+msgstr "trokutni pozivnik"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow"
+msgstr "strelica desno"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with Right Arrow"
+msgstr "pozivnik s desnom strelicom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right brace"
+msgstr "desna zagrada"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right bracket"
+msgstr "desne zagrade"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right triangle"
+msgstr "desni trokut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one rounded corner"
+msgstr "kut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two rounded corners diagonally-opposed"
+msgstr "dva kružna pravca kut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two-rounded corners that share a side"
+msgstr "kut sa dva podjeljena kruga"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle"
+msgstr "zaokruženi kut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rounded rectangle-shaped callout"
+msgstr "zaokruženi pozivni kut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Smiley face"
+msgstr "smješko"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner"
+msgstr "podijeljeni kut"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners diagonally-opposed"
+msgstr "dva snipana kuta u kutu"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with two snipped corners that share a side"
+msgstr "linija"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Rectangle with one snipped corner and one rounded corner"
+msgstr "jedan zaokruženi kut i jedan nezaokruženi"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Four small squares that define a rectangular shape"
+msgstr "četiri malih kvadratića koji definiraju liniju"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Right Arrow with Stripes"
+msgstr "desna strelica"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Sun"
+msgstr "sunce"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Curved arrow"
+msgstr "zakrivljena strelica"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Water droplet"
+msgstr "voda"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Trapezoid"
+msgstr "trapezoid"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Up Arrow"
+msgstr "strelica gore"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with UpArrow"
+msgstr "pozivnik s desnom strelicom"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Double-ended Arrow pointing up and down"
+msgstr "dve završne strelice"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Callout with arrows that point up and down"
+msgstr "pozivnik sa strelicama koje pokazuju gore i dolje"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "U-shaped Arrow"
+msgstr "oblikovana strelica"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Vertical scroll"
+msgstr "vertikalni klizač"
+
+#. Translators: a shape name from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Wave"
+msgstr "val"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Back"
+msgstr "nazad"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Beginning"
+msgstr "počinje"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Document"
+msgstr "dokument"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "End"
+msgstr "kraj"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Next"
+msgstr "dalje"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Help"
+msgstr "Pomoć"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Home"
+msgstr "početak"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Information"
+msgstr "informacija"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Movie"
+msgstr "film"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "shape"
+msgid "Return"
+msgstr "nazad"
+
+#. Translators: an action button label from Microsoft Office.
+#. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
+msgctxt "action"
+msgid "Sound"
+msgstr "zvuk"
 
 msgid "Type help(object) to get help about object."
 msgstr "Upišite help(object) da biste dobili pomoć o objektu."
@@ -4339,6 +5838,43 @@ msgstr "izvan %s"
 msgid "page %s"
 msgstr "stranica %s"
 
+#. Translators: Indicates the section number in a document.
+#. %s will be replaced with the section number.
+#, python-format
+msgid "section %s"
+msgstr "Prijelom %s"
+
+#. Translators: Indicates the text column number in a document.
+#. {0} will be replaced with the text column number.
+#. {1} will be replaced with the number of text columns.
+#, python-brace-format
+msgid "column {0} of {1}"
+msgstr "stupac {0} od {1}"
+
+#. Translators: Indicates the text column number in a document.
+#. %s will be replaced with the number of text columns.
+#, python-format
+msgid "%s columns"
+msgstr "%s stupaca"
+
+msgid "continuous section break"
+msgstr "kontinuirani odjeljak"
+
+msgid "new column section break"
+msgstr "Novi odjeljak"
+
+msgid "new page section break"
+msgstr "Novi prijelom stranice"
+
+msgid "even pages section break"
+msgstr "prijelom neparne stranice"
+
+msgid "odd pages section break"
+msgstr "prijelom parne stranice"
+
+msgid "column break"
+msgstr "Prijelom stupca"
+
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
@@ -4355,6 +5891,10 @@ msgstr "stil %s"
 #. A style is a collection of formatting settings and depends on the application.
 msgid "default style"
 msgstr "početni stil"
+
+#. Translators: Indicates that cell does not have border lines.
+msgid "no border lines"
+msgstr "Nema graničnih linija"
 
 #. Translators: Reported when there are two background colors.
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
@@ -4447,10 +5987,6 @@ msgstr "Nije istaknuto"
 msgid "no bold"
 msgstr "nije podebljano"
 
-#. Translators: Reported when text is italicized.
-msgid "italic"
-msgstr "kurziv"
-
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
 msgstr "nije kurziv"
@@ -4509,6 +6045,34 @@ msgstr "distribuirano poravnanje"
 msgid "align default"
 msgstr "početno poravnanje"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "okomito poravnato po vrhu"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "okomito poravnato po sredini"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "okomito poravnato po dnu"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "okomito poravnato po osnovici"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "okomito poravnato obostrano"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "okomito poravnato distribuirano"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "okomito početno poravnanje"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "lijeva uvlaka"
@@ -4540,34 +6104,6 @@ msgstr "uvlaka prvog retka"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "nema uvlake prvog retka"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "okomito poravnato po vrhu"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "okomito poravnato po sredini"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "okomito poravnato po dnu"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "okomito poravnato po osnovici"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "okomito poravnato obostrano"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "okomito poravnato distribuirano"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "okomito početno poravnanje"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -4948,11 +6484,6 @@ msgstr "{symbol} kao u {description}"
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "rub tablice"
-
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
 msgstr "Premiješta objekt navigatora na sljedeći stupac"
@@ -4968,6 +6499,10 @@ msgstr "Premiješta objekt navigatora i fokus na sljedeći redak"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Premiješta objekt navigatora i fokus na prethodni redak"
+
+#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Prijedlozi"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -4995,6 +6530,11 @@ msgstr ""
 "Izvještava o preostalom vremenu trake koja se trenutno reproducira, ukoliko "
 "postoji"
 
+#. Translators: Describes a command.
+msgid "Shows options related to selected text or text at the cursor"
+msgstr ""
+"Prikazuje opcije koje se odnose na označeni tekst ili na tekst pod kursorom"
+
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
@@ -5004,6 +6544,25 @@ msgstr "{bookPercentage}%, pozicija {curLocation} od {maxLocation}"
 #, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Stranica {pageNumber}"
+
+#. Translators: Reported when text is highlighted.
+msgid "highlight"
+msgstr "oznaka"
+
+#. Translators: Reported when text is not highlighted.
+msgid "no highlight"
+msgstr "Nema oznake"
+
+#. Translators: Reported in Kindle when text has been identified as a popular highlight;
+#. i.e. it has been highlighted by several people.
+#. %s is replaced with the number of people who have highlighted this text.
+#, python-format
+msgid "%s highlighted"
+msgstr "%s označeno"
+
+#. Translators: Reported when moving out of a popular highlight.
+msgid "out of popular highlight"
+msgstr "izvan popularnih oznaka"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5078,6 +6637,36 @@ msgstr "Skriveni Primatelj:"
 #. Translators: when an email is unread
 msgid "unread"
 msgstr "nepročitano"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "purple flag"
+msgstr "ljubičasta zastava"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Orange flag"
+msgstr "narančasta zastava"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Green flag"
+msgstr "zelena zastava"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Yellow flag"
+msgstr "žuta zastava"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Blue flag"
+msgstr "plava zastava"
+
+#. Translators: a flag for a Microsoft Outlook message
+#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+msgid "Red flag"
+msgstr "žuta zastava"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -5282,6 +6871,10 @@ msgstr "Sličice u slajdu matrice"
 msgid "Slide {slideNumber}"
 msgstr "Slajd {slideNumber}"
 
+#. Translators:   an unlabelled item in Powerpoint another shape is overlapping
+msgid "other item"
+msgstr "Druga stavka"
+
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5477,6 +7070,7 @@ msgstr "Baum/HumanWare/APH/Orbit brajični redci"
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Serijski priključak: {portName}"
@@ -5505,12 +7099,21 @@ msgstr "klizanje prikaza"
 msgid "line scroll"
 msgstr "klizanje redka"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech brajični redci"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Pokaži prozor za konfiguraciju Handy Tech driver-a."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Brajični ulaz je uključen"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "brajični ulaz je uključen"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "uključuje i isključuje brajični unos"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -5535,6 +7138,39 @@ msgstr "Papenmeier BRAILLEX stariji modeli"
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
 msgstr "Seika brajični reci"
+
+#. Translators: Names of braille displays.
+msgid "SuperBraille"
+msgstr "SuperBraille"
+
+#. Translators: The title of the document used to present the result of content recognition.
+msgid "Result"
+msgstr "Rezultat"
+
+#. Translators: Describes a command.
+msgid "Activates the text at the cursor if possible"
+msgstr "Aktivira tekst pod pokazivačem, ako je to moguće"
+
+#. Translators: Describes a command.
+msgid "Dismiss the recognition result"
+msgstr "Odbacuje rezultat prepoznavanja"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the user is already reading a content recognition result.
+msgid "Already in a content recognition result"
+msgstr "Već se nalazite u rezultatu prepoznavanja teksta"
+
+#. Translators: Reported when content recognition (e.g. OCR) is attempted,
+#. but the content is not visible.
+msgid "Content is not visible"
+msgstr "Sadržaj nije vidljiv"
+
+#. Translators: Reporting when content recognition (e.g. OCR) begins.
+msgid "Recognizing"
+msgstr "Prepoznajem"
+
+msgid "Recognition failed"
+msgstr "Prepoznavanje nije uspjelo"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -5660,6 +7296,10 @@ msgstr "Oblikovanje &dokumenta..."
 
 msgid "Change settings of document properties"
 msgstr "Promjena postavki svojstva dokumenta"
+
+#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -5821,12 +7461,12 @@ msgstr "Izaći iz programa NVDA"
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
+"By default, the numpad Insert and main Insert keys may both be used as the "
 "NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"functions."
 msgstr ""
 "Dobrodošli u NVDA!\n"
 "Većina naredbi za upravljanje NVDA programom zahtjeva držanje pritisnute "
@@ -5838,7 +7478,7 @@ msgstr ""
 "Pritisnite NVDA+n u bilo kojem trenutku kako biste aktivirali NVDA "
 "izbornik.\n"
 "U tom izborniku moći ćete konfigurirati NVDA, zatražiti pomoć te pristupiti "
-"ostalim NVDA funkcijama.\n"
+"ostalim NVDA funkcijama."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -5852,19 +7492,24 @@ msgstr "Dobrodošli u NVDA!"
 msgid "Options"
 msgstr "Izbor"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: The label of a combobox in the Welcome dialog.
+#. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Koristi Caps Lock kao NVDA modifikacijsku tipku"
+msgid "&Keyboard layout:"
+msgstr "&Profil tipkovnice"
 
-#. Translators: The label of a check box in the Welcome dialog.
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Use CapsLock as an NVDA modifier key"
+msgstr "&Koristi Caps Lock kao NVDA modifikacijsku tipku"
+
+#. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Automatski pokreni NVDA nakon što se prijavim u Windows sustav"
 
-#. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
-msgid "Show this dialog when NVDA starts"
-msgstr "Pokaži ovaj dijaloški okvir prilikom uključenja NVDA programa"
+#. Translators: The label of a checkbox in the Welcome dialog.
+msgid "&Show this dialog when NVDA starts"
+msgstr "&Pokaži ovaj dijaloški okvir prilikom uključenja NVDA programa"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -5909,6 +7554,10 @@ msgstr "Ponovno pokreni"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
 msgstr "Ponovno pokreni sa isključenim dodacima"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Ponovno pokreni sa načinom zapisa debug"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -6008,10 +7657,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "Instalacija dodatka"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
-msgstr "Inačica ovog dodatka je već instalirana. Želite li ažurirati dodatak?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
+msgstr ""
+"Instalirat ćete inačicu {newVersion} dodatka {summary}, koja je već "
+"instalirana. Želite li još uvijek nadograditi?"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"Inačica ovog dodatka je već instalirana. Želite li nadograditi {summary} "
+"inačicu {curVersion} na inačicu {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -6147,10 +7809,8 @@ msgid "Error activating profile."
 msgstr "Greška pri aktivaciji profila."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr ""
-"Jeste li sigurni da želite izbrisati ovaj profil? Ova akcija se ne može "
-"poništiti."
+msgid "This profile will be permanently deleted. This action cannot be undone."
+msgstr "Ovaj profil će biti izbrisan. OVa akcija je nepovratna."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -6429,6 +8089,10 @@ msgstr "Odaberite direktorij za prijenosnu kopiju"
 msgid "Copy current &user configuration"
 msgstr "Kopiraj trenutnu &korisničku konfiguraciju"
 
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&Pokreni novu prijenosnu kopiuj poslije stvaranja"
+
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
@@ -6686,10 +8350,10 @@ msgstr "Rabi funkcionalnost &slovkanja ukoliko je podržano"
 msgid "Keyboard Settings"
 msgstr "Postavke Tipkovnice"
 
-#. Translators: This is the label for a combobox in the
+#. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-msgid "&Keyboard layout:"
-msgstr "&Profil tipkovnice"
+msgid "Use CapsLock as an NVDA modifier key"
+msgstr "Koristi Caps Lock kao NVDA modifikacijsku tipku"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6904,6 +8568,11 @@ msgstr "Izvijesti o trakama napredovanja u pozadini"
 msgid "Report dynamic &content changes"
 msgstr "Izvijesti o dinamičkim promjenama &sadržaja"
 
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+msgid "Play a sound when &auto-suggestions appear"
+msgstr "Reproduciraj zvuk kada se pojave &automatske sugestije"
+
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
 msgstr "Mod pregleda"
@@ -7041,6 +8710,8 @@ msgid "Line &indentation reporting:"
 msgstr "Izvještavanje o porav&nanju retka:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
 msgid "Off"
 msgstr "isključeno"
 
@@ -7092,6 +8763,21 @@ msgstr "&zaglavlja redaka i stupaca"
 msgid "Cell c&oordinates"
 msgstr "&koordinate ćelije"
 
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Styles"
+msgstr "Stilovi"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Both Colors and Styles"
+msgstr "boje i stilovi"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings dialog.
+msgid "Cell borders:"
+msgstr "Granice ćelija:"
+
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
 msgid "Elements"
@@ -7124,6 +8810,14 @@ msgstr ""
 "Izvijesti o promjenama oblikovanja nakon kursora (može prouzročiti usporen "
 "rad)"
 
+#. Translators: The title of the Windows 10 OCR dialog.
+msgid "Windows 10 OCR"
+msgstr "Windows 10 OCR"
+
+#. Translators: Label for an option in the Windows 10 OCR dialog.
+msgid "Recognition &language:"
+msgstr "&Jezik prepoznavanja:"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "Bilo &gdje"
@@ -7133,7 +8827,7 @@ msgid "Whole &word"
 msgstr "Cijela &riječ"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "&Pravilni izraz"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -7236,21 +8930,33 @@ msgstr "Pr&oširi na kompjutorsku brajicu za riječ na položaju kursora"
 msgid "&Show cursor"
 msgstr "po&kaži pokazivač"
 
+#. Translators: The label for a setting in braille settings to enable cursor blinking.
+msgid "Blink cursor"
+msgstr "titranje kursora"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Brzina titraja kursora (u milisekundama)"
 
-#. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor &shape:"
-msgstr "&izgled pokazivača:"
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
+msgid "Cursor shape for &focus:"
+msgstr "Oblik pokazivača za &fokus:"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
+msgid "Cursor shape for &review:"
+msgstr "Izgled pokazivača za &pregled:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-msgid "Message timeout (sec)"
-msgstr "Stanka za poruku (u sekundama)"
+msgid "Message &timeout (sec)"
+msgstr "S&tanka za poruku (u sekundama)"
+
+#. Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
+msgid "Show &messages indefinitely"
+msgstr "Pokazuj poruku &vječno"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "Braille tethered to:"
-msgstr "Brajica povezana na:"
+msgid "B&raille tethered to:"
+msgstr "B&rajica povezana na:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -7259,6 +8965,10 @@ msgstr "Čitaj po &odlomku"
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
 msgstr "Spriječi rastavljanje riječi kad je to moguće"
+
+#. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
+msgid "Focus context presentation:"
+msgstr "Prezentacija konteksta fokusa:"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -7365,6 +9075,10 @@ msgid "Rate boos&t"
 msgstr "Po&jačanje brzine"
 
 #. Translators: Description for a speech synthesizer.
+msgid "Windows OneCore voices"
+msgstr "glasovi Windows OneCore"
+
+#. Translators: Description for a speech synthesizer.
 msgid "No speech"
 msgstr "bez govora"
 
@@ -7408,28 +9122,6 @@ msgid ""
 msgstr ""
 "Naizmjence uključuje da li je raspored ekrana očuvan prilikom renderiranja "
 "sadržaja dokumenta"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "nije u ćeliji tablice"
-
-#. Translators: the description for the next table row script on virtualBuffers.
-msgid "moves to the next table row"
-msgstr "premiješta na sljedeći redak u tablici"
-
-#. Translators: the description for the previous table row script on virtualBuffers.
-msgid "moves to the previous table row"
-msgstr "premiješta na prethodni redak u tablici"
-
-#. Translators: the description for the next table column script on virtualBuffers.
-msgid "moves to the next table column"
-msgstr "premiješta na sljedeći stupac u tablici"
-
-#. Translators: the description for the previous table column script on virtualBuffers.
-msgid "moves to the previous table column"
-msgstr "premiješta na prethodni stupac u tablici"
 
 msgid "Taskbar"
 msgstr "Traka zadataka"
@@ -7594,11 +9286,6 @@ msgstr "&formule"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Form fields"
-msgstr "Polja obrazca"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 msgid "&Sheets"
 msgstr "&radni listovi"
 
@@ -7676,6 +9363,11 @@ msgstr ""
 "redaka za svaku ćeliju niže i desno od nje unutar ove regije. Kada se "
 "pritisne dvaput, zaboravit će se trenutno zaglavlje redaka za ovu ćeliju."
 
+#. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
+msgid "Sheet {0}, {1}"
+msgstr "radni list {0}, {1}"
+
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "ulazna poruka je {title}: {message}"
@@ -7701,6 +9393,129 @@ msgstr "Uređivanje komentara za ćeliju {address}"
 #, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "od {firstAddress} {firstContent} do {lastAddress} {lastContent}"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "top edge"
+msgstr "početni vrh"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "bottom edge"
+msgstr "donji rub"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "left edge"
+msgstr "lijevi rub"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "right edge"
+msgstr "desni rub"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "up-right diagonal line"
+msgstr "Gornje desne dijagonale liniej"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "down-right diagonal line"
+msgstr "desna donja dijagonalna crta"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "horizontal borders except outside"
+msgstr "Horizontalne granice osim vanjskih"
+
+#. Translators: border positions in Microsoft Excel.
+msgid "vertical borders except outside"
+msgstr "vertikalne granice osim vanjskih"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "continuous"
+msgstr "neogranićena"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dashed"
+msgstr "crtao"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot"
+msgstr "crta s točkama"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dash dot dot"
+msgstr "crta s točkama"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "dotted"
+msgstr "točkano"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "double"
+msgstr "duplirano"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "slanted dash dot"
+msgstr "slantovani točkocrt"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "hair"
+msgstr "kosa"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thin"
+msgstr "tanki"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium"
+msgstr "srednje"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "thick"
+msgstr "Tanki"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot dot"
+msgstr "srednje crtano s točkicama"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dash dot"
+msgstr "srednje točkovano s crtama"
+
+#. Translators: border styles in Microsoft Excel.
+msgid "medium dashed"
+msgstr "Srednje crtano"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{weight} {style}"
+msgstr "{weight} {style}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{color} {desc}"
+msgstr "{color} {desc}"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} surrounding border"
+msgstr "{desc} okružujuće granice"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} top and bottom edges"
+msgstr "{desc} gornji i donji rubovi"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} left and right edges"
+msgstr "{desc} lijevi i desni rubovi"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} up-right and down-right diagonal lines"
+msgstr "{desc} gore lijevo i dole desno dijagonalne linije"
+
+#. Translators: border styles in Microsoft Excel.
+#, python-brace-format
+msgid "{desc} {position}"
+msgstr "{desc} {position}"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8456,13 +10271,25 @@ msgstr "Primarno zaglavlje"
 msgid "Text frame"
 msgstr "Tekstualni okvir"
 
+#. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 #, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentar: {text} od strane {author} datuma {date}"
 
+#. Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+#. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+#. {description} will be replaced with a description of the formatting changes, if any.
+#. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} datuma {date}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "pravopis: {text}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -8709,6 +10536,11 @@ msgstr "Nije u tablici"
 msgid "&Annotations"
 msgstr "&zabilješke"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "&Greške"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
@@ -8717,925 +10549,5 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "IFrame"
-#~ msgstr "okvir"
-
-#~ msgid "Error in %s language file"
-#~ msgstr "Greška u jezičnoj datoteci %s"
-
-#~ msgid "Language Error"
-#~ msgstr "Jezična Greška"
-
-#~ msgid "&Profile"
-#~ msgstr "&Profil"
-
-#~ msgid "Language"
-#~ msgstr "Jezik"
-
-#~ msgid "Log level"
-#~ msgstr "razina loga"
-
-#~ msgid "Keyboard layout"
-#~ msgstr "Profil tipkovnice"
-
-#~ msgid "text reporting unit"
-#~ msgstr "jedinica tekstualnog izvještavanja"
-
-#~ msgid "Progress bar output"
-#~ msgstr "Odziv trake napredovanja"
-
-#~ msgid "Report &font name"
-#~ msgstr "Izvijesti o nazivu &fonta"
-
-#~ msgid "Report font &size"
-#~ msgstr "Izvijesti o veličini fon&ta"
-
-#~ msgid "Report &alignment"
-#~ msgstr "Izvijesti o poravnan&ju"
-
-#~ msgid "Report &colors"
-#~ msgstr "Izvijesti o &bojama"
-
-#~ msgid "Report co&mments"
-#~ msgstr "Izgovaraj kom&entare"
-
-#~ msgid "Report e&mphasis"
-#~ msgstr "Izvijesti o is&ticanju"
-
-#~ msgid "Report st&yle"
-#~ msgstr "Izvijesti o stil&u"
-
-#~ msgid "Report spelling e&rrors"
-#~ msgstr "Izvijesti o pravopisnim &pogreškama"
-
-#~ msgid "Report &pages"
-#~ msgstr "Izvijesti o &stranicama"
-
-#~ msgid "Report &line spacing"
-#~ msgstr "Izvijesti o &proredima"
-
-#~ msgid "Report &tables"
-#~ msgstr "Izvijesti o &tablicama"
-
-#~ msgid "Report table row/column h&eaders"
-#~ msgstr "Izvijesti o &zaglavljima redova/stupaca tabele"
-
-#~ msgid "Report lin&ks"
-#~ msgstr "Izvijesti o &linkovima"
-
-#~ msgid "Report &headings"
-#~ msgstr "Izvijesti o &naslovima"
-
-#~ msgid "Report &lists"
-#~ msgstr "Izvijesti o po&pisima"
-
-#~ msgid "Report block &quotes"
-#~ msgstr "Izvijesti o &citatima"
-
-#~ msgid "Report lan&dmarks"
-#~ msgstr "Izvijesti o &orijentirima"
-
-#~ msgid "Report fra&mes"
-#~ msgstr "Izvijesti o ok&virima"
-
-#~ msgid "Report if &clickable"
-#~ msgstr "Izvijesti ukoliko se radi o &klikajućem objektu"
-
-#~ msgid "Toggles on and off the reporting of line indentation"
-#~ msgstr "Uključuje i isključuje izgovor uvlačenja redaka"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Ova se ćelija ne može urediti"
-
-#~ msgid "checker"
-#~ msgstr "provjera"
-
-#~ msgid "crisscross"
-#~ msgstr "cik-cak"
-
-#~ msgid "down"
-#~ msgstr "dolje"
-
-#~ msgid "gray16"
-#~ msgstr "sivo"
-
-#~ msgid "gray25"
-#~ msgstr "sivo"
-
-#~ msgid "gray50"
-#~ msgstr "sivo"
-
-#~ msgid "gray75"
-#~ msgstr "sivo"
-
-#~ msgid "grid"
-#~ msgstr "podatkovna mreža"
-
-#~ msgid "light down"
-#~ msgstr "kratko klizanje prema dolje"
-
-#~ msgid "light up"
-#~ msgstr "svijetlo gore"
-
-#~ msgid "light vertical"
-#~ msgstr "svjetlo vertikalna"
-
-#~ msgid "semi gray75"
-#~ msgstr "poluseva"
-
-#~ msgid "up"
-#~ msgstr "gore"
-
-#~ msgid "unknown color"
-#~ msgstr "nepoznata boja"
-
-#~ msgctxt "color name"
-#~ msgid "Alice Blue"
-#~ msgstr "Alice Plava"
-
-#~ msgctxt "color name"
-#~ msgid "Antique White"
-#~ msgstr "Antički bijela"
-
-#~ msgctxt "color name"
-#~ msgid "Aqua"
-#~ msgstr "Aqua"
-
-#~ msgctxt "color name"
-#~ msgid "Aquamarine"
-#~ msgstr "Aquamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Azure"
-#~ msgstr "plavetna"
-
-#~ msgctxt "color name"
-#~ msgid "Beige"
-#~ msgstr "bež"
-
-#~ msgctxt "color name"
-#~ msgid "Bisque"
-#~ msgstr "boja neocakljenog porculana"
-
-#~ msgctxt "color name"
-#~ msgid "Blanched Almond"
-#~ msgstr "blijedi badem"
-
-#~ msgctxt "color name"
-#~ msgid "Blue"
-#~ msgstr "plava"
-
-#~ msgctxt "color name"
-#~ msgid "Blue Violet"
-#~ msgstr "plavo ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Burly Wood"
-#~ msgstr "Burly Wood"
-
-#~ msgctxt "color name"
-#~ msgid "Cadet Blue"
-#~ msgstr "kadet plava"
-
-#~ msgctxt "color name"
-#~ msgid "Chartreuse"
-#~ msgstr "šartrez"
-
-#~ msgctxt "color name"
-#~ msgid "Chocolate"
-#~ msgstr "čokoladna"
-
-#~ msgctxt "color name"
-#~ msgid "Coral"
-#~ msgstr "koraljna"
-
-#~ msgctxt "color name"
-#~ msgid "Cornflower Blue"
-#~ msgstr "kukuruzni cvijet"
-
-#~ msgctxt "color name"
-#~ msgid "Cornsilk"
-#~ msgstr "žitna boja"
-
-#~ msgctxt "color name"
-#~ msgid "Crimson"
-#~ msgstr "Crimson"
-
-#~ msgctxt "color name"
-#~ msgid "Cyan"
-#~ msgstr "Cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Blue"
-#~ msgstr "tamno plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Cyan"
-#~ msgstr "Tamni Cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Goldenrod"
-#~ msgstr "tamni Goldenrod"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Green"
-#~ msgstr "tamno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Khaki"
-#~ msgstr "tamann Khaki"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Magenta"
-#~ msgstr "tamna magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Olive Green"
-#~ msgstr "tamno maslinasto zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orange"
-#~ msgstr "tamno narančasta"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Orchid"
-#~ msgstr "tamno orhidejna"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Red"
-#~ msgstr "tamno crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Salmon"
-#~ msgstr "tamni salmon"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Sea Green"
-#~ msgstr "tamno morsko zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Blue"
-#~ msgstr "tamna tablično plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Slate Gray"
-#~ msgstr "tamna tablično siva"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Turquoise"
-#~ msgstr "tamno tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Dark Violet"
-#~ msgstr "tamno ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Pink"
-#~ msgstr "dubokoroza"
-
-#~ msgctxt "color name"
-#~ msgid "Deep Sky Blue"
-#~ msgstr "nebesko duboka plava"
-
-#~ msgctxt "color name"
-#~ msgid "Dim Gray"
-#~ msgstr "Dim siva"
-
-#~ msgctxt "color name"
-#~ msgid "Dodger Blue"
-#~ msgstr "Dodger Plava"
-
-#~ msgctxt "color name"
-#~ msgid "Fire Brick"
-#~ msgstr "Fire Brick"
-
-#~ msgctxt "color name"
-#~ msgid "Floral White"
-#~ msgstr "cvijetno bijela"
-
-#~ msgctxt "color name"
-#~ msgid "Forest Green"
-#~ msgstr "zelena šuma"
-
-#~ msgctxt "color name"
-#~ msgid "Fuchsia"
-#~ msgstr "fuksija"
-
-#~ msgctxt "color name"
-#~ msgid "Gainsboro"
-#~ msgstr "Gainsboro"
-
-#~ msgctxt "color name"
-#~ msgid "Ghost White"
-#~ msgstr "bijeloduhna"
-
-#~ msgctxt "color name"
-#~ msgid "Gold"
-#~ msgstr "zlatna"
-
-#~ msgctxt "color name"
-#~ msgid "Goldenrod"
-#~ msgstr "goldenrot"
-
-#~ msgctxt "color name"
-#~ msgid "Gray"
-#~ msgstr "siva"
-
-#~ msgctxt "color name"
-#~ msgid "Green Yellow"
-#~ msgstr "zeleno žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Honeydew"
-#~ msgstr "medljika"
-
-#~ msgctxt "color name"
-#~ msgid "Hot Pink"
-#~ msgstr "vruće roza"
-
-#~ msgctxt "color name"
-#~ msgid "Indian Red"
-#~ msgstr "indijska crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Indigo"
-#~ msgstr "Indigo"
-
-#~ msgctxt "color name"
-#~ msgid "Ivory"
-#~ msgstr "bjelokosna"
-
-#~ msgctxt "color name"
-#~ msgid "Khaki"
-#~ msgstr "Khaki"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender"
-#~ msgstr "lavanda"
-
-#~ msgctxt "color name"
-#~ msgid "Lavender Blush"
-#~ msgstr "lavanda blush"
-
-#~ msgctxt "color name"
-#~ msgid "Lawn Green"
-#~ msgstr "travnato zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Lemon Chiffon"
-#~ msgstr "limun šifon"
-
-#~ msgctxt "color name"
-#~ msgid "Light Blue"
-#~ msgstr "svijetlo plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Coral"
-#~ msgstr "svjetlo koraljna"
-
-#~ msgctxt "color name"
-#~ msgid "Light Cyan"
-#~ msgstr "svijetli cyan"
-
-#~ msgctxt "color name"
-#~ msgid "Light Goldenrod Yellow"
-#~ msgstr "Light Goldenrod žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Light Green"
-#~ msgstr "svijetlo zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Light Pink"
-#~ msgstr "svijetlo roza"
-
-#~ msgctxt "color name"
-#~ msgid "Light Salmon"
-#~ msgstr "svjetla salmon"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sea Green"
-#~ msgstr "svjetlo morsko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Sky Blue"
-#~ msgstr "svjetlo nebesko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Light Slate Gray"
-#~ msgstr "svjetlo tablična siva"
-
-#~ msgctxt "color name"
-#~ msgid "Light Steel Blue"
-#~ msgstr "svjetlo plavi steel"
-
-#~ msgctxt "color name"
-#~ msgid "Light Yellow"
-#~ msgstr "svijetlo žuta"
-
-#~ msgctxt "color name"
-#~ msgid "Lime"
-#~ msgstr "boja lima"
-
-#~ msgctxt "color name"
-#~ msgid "Lime Green"
-#~ msgstr "limena zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Linen"
-#~ msgstr "lanena"
-
-#~ msgctxt "color name"
-#~ msgid "Magenta"
-#~ msgstr "Magenta"
-
-#~ msgctxt "color name"
-#~ msgid "Maroon"
-#~ msgstr "kestenjasta"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Aquamarine"
-#~ msgstr "srednje akvamarin"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Blue"
-#~ msgstr "srednje plava"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Orchid"
-#~ msgstr "srednje orhidejna"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Purple"
-#~ msgstr "srednje ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Sea Green"
-#~ msgstr "srednje morsko zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Slate Blue"
-#~ msgstr "srednje tablična plava"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Spring Green"
-#~ msgstr "srednje proljetno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Turquoise"
-#~ msgstr "srednje tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Medium Violet Red"
-#~ msgstr "srednje žuto ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Midnight Blue"
-#~ msgstr "plava sumrak"
-
-#~ msgctxt "color name"
-#~ msgid "Mint Cream"
-#~ msgstr "Mint Cream"
-
-#~ msgctxt "color name"
-#~ msgid "Misty Rose"
-#~ msgstr "Misty Rose"
-
-#~ msgctxt "color name"
-#~ msgid "Moccasin"
-#~ msgstr "Moccasin"
-
-#~ msgctxt "color name"
-#~ msgid "Navajo White"
-#~ msgstr "navaho bijela"
-
-#~ msgctxt "color name"
-#~ msgid "Navy"
-#~ msgstr "mornarička"
-
-#~ msgctxt "color name"
-#~ msgid "Old Lace"
-#~ msgstr "stara čipka"
-
-#~ msgctxt "color name"
-#~ msgid "Olive"
-#~ msgstr "maslinasta"
-
-#~ msgctxt "color name"
-#~ msgid "Olive Drab"
-#~ msgstr "boja maslinasto siva"
-
-#~ msgctxt "color name"
-#~ msgid "Orange Red"
-#~ msgstr "narančastocrvena"
-
-#~ msgctxt "color name"
-#~ msgid "Orchid"
-#~ msgstr "orhideja"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Goldenrod"
-#~ msgstr "Pale Goldenrod"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Green"
-#~ msgstr "tamno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Turquoise"
-#~ msgstr "tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Pale Violet Red"
-#~ msgstr "ljubičasto crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Papaya Whip"
-#~ msgstr "boja papaja whip"
-
-#~ msgctxt "color name"
-#~ msgid "Peach Puff"
-#~ msgstr "boja peach puff"
-
-#~ msgctxt "color name"
-#~ msgid "Peru"
-#~ msgstr "Peru"
-
-#~ msgctxt "color name"
-#~ msgid "Pink"
-#~ msgstr "roza"
-
-#~ msgctxt "color name"
-#~ msgid "Plum"
-#~ msgstr "boja šljive"
-
-#~ msgctxt "color name"
-#~ msgid "Powder Blue"
-#~ msgstr "Powder Plava"
-
-#~ msgctxt "color name"
-#~ msgid "Red"
-#~ msgstr "crvena"
-
-#~ msgctxt "color name"
-#~ msgid "Rosy Brown"
-#~ msgstr "rosy smeđa"
-
-#~ msgctxt "color name"
-#~ msgid "Royal Blue"
-#~ msgstr "kraljevsko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Saddle Brown"
-#~ msgstr "Saddle smeđa"
-
-#~ msgctxt "color name"
-#~ msgid "Salmon"
-#~ msgstr "Salmon"
-
-#~ msgctxt "color name"
-#~ msgid "Sandy Brown"
-#~ msgstr "Sandy Brown"
-
-#~ msgctxt "color name"
-#~ msgid "Sea Green"
-#~ msgstr "morsko zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Seashell"
-#~ msgstr "boja školjke"
-
-#~ msgctxt "color name"
-#~ msgid "Sienna"
-#~ msgstr "siena"
-
-#~ msgctxt "color name"
-#~ msgid "Silver"
-#~ msgstr "srebrna"
-
-#~ msgctxt "color name"
-#~ msgid "Sky Blue"
-#~ msgstr "nebesko plava"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Blue"
-#~ msgstr "tablično plava"
-
-#~ msgctxt "color name"
-#~ msgid "Slate Gray"
-#~ msgstr "tablično siva"
-
-#~ msgctxt "color name"
-#~ msgid "Snow"
-#~ msgstr "boja snijega"
-
-#~ msgctxt "color name"
-#~ msgid "Spring Green"
-#~ msgstr "proljetno zelena"
-
-#~ msgctxt "color name"
-#~ msgid "Steel Blue"
-#~ msgstr "čelično plava"
-
-#~ msgctxt "color name"
-#~ msgid "Tan"
-#~ msgstr "žutomrka boja"
-
-#~ msgctxt "color name"
-#~ msgid "Teal"
-#~ msgstr "boja grogotovca"
-
-#~ msgctxt "color name"
-#~ msgid "Thistle"
-#~ msgstr "boja čkalja"
-
-#~ msgctxt "color name"
-#~ msgid "Tomato"
-#~ msgstr "boja rajčice"
-
-#~ msgctxt "color name"
-#~ msgid "Turquoise"
-#~ msgstr "tirkizna"
-
-#~ msgctxt "color name"
-#~ msgid "Violet"
-#~ msgstr "ljubičasta"
-
-#~ msgctxt "color name"
-#~ msgid "Wheat"
-#~ msgstr "boja pšenice"
-
-#~ msgctxt "color name"
-#~ msgid "White Smoke"
-#~ msgstr "boja bijelog dima"
-
-#~ msgid "The start marker must reside within the same object"
-#~ msgstr "Početna oznaka mora biti smještena unutar istog objekta"
-
-#~ msgid "report grammar errors off"
-#~ msgstr "Izvijesti o gramatičkim pogreškama isključeno"
-
-#~ msgid "report grammar errors on"
-#~ msgstr "izvjesti o gramatičkim pogreškama uključeno"
-
-#~ msgid "Toggles on and off the reporting of grammar errors"
-#~ msgstr "Uključuje i isključuje izgovor gramatičkih pogrešaka"
-
-#~ msgid "grammar error"
-#~ msgstr "Gramatička greška"
-
-#~ msgid "out of grammar error"
-#~ msgstr "izvan gramatičke greške"
-
-#~ msgid "Report &grammar errors"
-#~ msgstr "Izvijesti o &gramatičkim pogreškama"
-
-#~ msgid "browse mode"
-#~ msgstr "mod pretraživanja"
-
-#~ msgid "activate"
-#~ msgstr "aktivirati"
-
-#~ msgid "no next"
-#~ msgstr "nema sljedećeg"
-
-#~ msgid "no previous"
-#~ msgstr "Nema prethodnog"
-
-#~ msgid "edge of table"
-#~ msgstr "rub tablice"
-
-#~ msgid "%g characters"
-#~ msgstr "%g znakova"
-
-#~ msgid "%g pt"
-#~ msgstr "%g pt"
-
-#~ msgid "no comments"
-#~ msgstr "nema komentara"
-
-#~ msgid ""
-#~ "Presents a list of charts, cells with comments and cells with formulas"
-#~ msgstr ""
-#~ "Prikazuje popis grafova, ćelija sa komentarima i ćelija sa formulama"
-
-#, fuzzy
-#~ msgid "Default color"
-#~ msgstr "početna boja"
-
-#~ msgid "unselecting %s"
-#~ msgstr "nema odabira %s"
-
-#~ msgid "unrevised"
-#~ msgstr "nerevidirano"
-
-#~ msgid "unknown author"
-#~ msgstr "nepoznat autor"
-
-#~ msgid "unknown date"
-#~ msgstr "nepoznat datum"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} autora {revisionAuthor} na datum {revisionDate}"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "izvještava o objektu s fokusom"
-
-#, fuzzy
-#~ msgid "%s"
-#~ msgstr "nasl.%s"
-
-#~ msgid "equation"
-#~ msgstr "jednadžba"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Prikazuje popis linkova, naslova ili orijentira"
-
-#~ msgid "Slovak"
-#~ msgstr "Slovački puno pismo"
-
-#~ msgid "navy blue"
-#~ msgstr "tamno plava"
-
-#~ msgid "teal"
-#~ msgstr "tirkizna"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "U NVDA inačici 2013.1, raspored tipkovnice za prijenosna računala je u "
-#~ "potpunosti redizajniran kako bi smo ga učinili intuitivnijim i "
-#~ "dosljednijim.\n"
-#~ "Ukoliko se služite rasporedom tipkovnice za prijenosna računala, molimo "
-#~ "pročitajte dokument \"što je novo\" (What's New) za više informacija."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Novi raspored tipkovnice za prijenosna računala"
-
-#~ msgid "Read What's New"
-#~ msgstr "Pročitaj što je novo"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Akceleracija"
-
-#~ msgid "male 1"
-#~ msgstr "muški 1"
-
-#~ msgid "female 1"
-#~ msgstr "ženski 1"
-
-#~ msgid "male 2"
-#~ msgstr "muški 2"
-
-#~ msgid "female 2"
-#~ msgstr "ženski 2"
-
-#~ msgid "lime"
-#~ msgstr "lime"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Jeste li sigurni da želite izaći iz programa NvDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Upozorenje prije izlaza iz programa NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "prav.izr."
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Nema informacije olokaciji za navigator objekta"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Nema informacije o lokaciji za prevođenje ekrana"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Izvještava o visini, širini i položaju trenutnog objekta navigatora"
-
-#~ msgid "Set column header row"
-#~ msgstr "Postavi red zaglavlja stupca"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Obrisan red zaglavlja stupca"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Ukoliko se pritisne jednom, postavit će trenutni red kao red gdje treba "
-#~ "pronaći zaglavlja stupca. Ukoliko se pritisne dvaput, obrisat će postavku."
-
-#~ msgid "Set row header column"
-#~ msgstr "Postavi stupac zaglavlja reda"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Ukoliko se pritisne jednom, postavit će trenutni stupac kao stupac gdje "
-#~ "treba pronaći zaglavlja retka. Ukoliko se pritisne dvaput, obrisat će "
-#~ "postavku."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "od %s %s do %s %s"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Vaša konfiguracijska datoteka sadrži pogreške. \n"
-#~ "Pritisnite 'U redu' da biste ispravili te pogreške, ili odaberite "
-#~ "'Odustani' ukoliko želite kasnije ručno urediti vašu konfiguracijsku "
-#~ "datoteku za izvršavanje ispravaka. Više detalja o pogreškama možete "
-#~ "pronaći u datoteci loga.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Nema automatskih komentara."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Ne mogu pronaći prozor automatskih komentara."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr ""
-#~ "Izvještava o automatskim komentarima u prozoru automatskih komentara"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Automatski komentari:"
-
-#~ msgid "Translation:"
-#~ msgstr "Prijevod:"
-
-#~ msgid "Comments:"
-#~ msgstr "Komentari:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nema fiksnog pregleda za ovaj objekt"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Nema objekta na položaju fiksnog pregleda"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Premiješta objekt navigatora na objekt predstavljen od strane teksta na "
-#~ "položaju kursora unutar flat prikaza"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Molimo prvo zatvorite drugi dijalog sa NVDA postavkama"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&Tablica za prevođenje"
-
-#~ msgid "beeps"
-#~ msgstr "zvučni signali"
-
-#~ msgid "talk"
-#~ msgstr "izgovor"
-
-#~ msgid "layout %s"
-#~ msgstr "raspored %s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s od %s"
-
-#~ msgid "default action failed"
-#~ msgstr "Početna akcija nije uspjela"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "Učitava spremljenu NVDA konfiguraciju prepravljajući trenutne promjene"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Loše formirana konfiguracijska datoteka"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, postavljanje zadanih vrijednosti na %s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Greška prilikom raščlanjivanja konfiguracijske datoteke: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Greške u konfiguracijskoj datoteci '%s':\n"
-#~ "%s"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Slijedi fokus &tipkovnice"
-
-#~ msgid "No parents"
-#~ msgstr "nema roditelja"
-
-#~ msgid "No children"
-#~ msgstr "Nema djece"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "Povisi intonaciju na velikim slovima"
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Pokaži prozor za konfiguraciju Handy Tech driver-a."

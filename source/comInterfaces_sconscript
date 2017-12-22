@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
+#Copyright 2013-2017 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -36,7 +36,6 @@ import sys
 sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
 
 COM_INTERFACES = {
-	"UIAutomationClient.py": ('{944de083-8fb8-45cf-bcb7-c477acb2f897}',1,0),
 	"IAccessible2Lib.py": "typelibs/ia2.tlb",
 	"ISimpleDOM.py": "typelibs/ISimpleDOMNode.tlb",
 	"mathPlayer.py": "typelibs/mathPlayerDLL.tlb",
@@ -48,12 +47,14 @@ COM_INTERFACES = {
 }
 
 for k,v in COM_INTERFACES.iteritems():
-	target=Dir('comInterfaces').File(k)
+	targets=[Dir('comInterfaces').File(k),
+		# This buillds a .pyc file as well.
+		Dir('comInterfaces').File(k + "c")]
 	source=clsid=majorVersion=None
 	if isinstance(v,basestring):
-		env.comtypesInterface(target,v)
+		env.comtypesInterface(targets,v)
 	else:
-		env.comtypesInterface(target,Dir('comInterfaces').File('__init__.py'),clsid=v[0],majorVersion=v[1],minorVersion=v[2])
+		env.comtypesInterface(targets,Dir('comInterfaces').File('__init__.py'),clsid=v[0],majorVersion=v[1],minorVersion=v[2])
 
 #When cleaning comInterfaces get rid of everything except for things starting with __ (e.g. __init__.py)
 env.Clean(Dir('comInterfaces'),Glob('comInterfaces/[!_]*')+Glob('comInterfaces/_[!_]*'))

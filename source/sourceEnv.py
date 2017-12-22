@@ -1,6 +1,6 @@
 #sourceEnv.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2013 NV Access Limited
+#Copyright (C) 2013-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -10,5 +10,21 @@
 import sys
 import os
 
-sys.path.insert(1, os.path.abspath(
-	os.path.join(__file__, "..", "..", "miscDeps", "python")))
+# Get the path to the top of the repo; i.e. where include and miscDeps are.
+TOP_DIR = os.path.dirname(os.path.dirname(__file__))
+# Directories containing Python modules included in git submodules.
+PYTHON_DIRS = (
+	os.path.join(TOP_DIR, "include", "scons", "src", "engine"),
+	os.path.join(TOP_DIR, "include", "pyserial"),
+	os.path.join(TOP_DIR, "include", "comtypes"),
+	os.path.join(TOP_DIR, "miscDeps", "python"),
+)
+
+#Check for existance of each Python dir
+for path in PYTHON_DIRS:
+	if not os.path.exists(path):
+		raise OSError("Path %s does not exist. Perhaps try running git submodule update --init"%path)
+
+# sys.path[0] will always be the current dir, which should take precedence.
+# Insert our include paths after that.
+sys.path[1:1] = PYTHON_DIRS

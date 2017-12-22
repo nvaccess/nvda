@@ -1,3 +1,4 @@
+os: Visual Studio 2017
 version: "{branch}-{build}"
 
 branches:
@@ -13,6 +14,8 @@ environment:
  PY_PYTHON: 2.7-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
+ mozillaSymsAuthToken:
+  secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
 
 init:
@@ -54,9 +57,11 @@ install:
 
 build_script:
  - ps: |
-     $sconsArgs = "launcher version=$env:version"
+     $sconsOutTargets = "launcher"
+     $sconsArgs = "version=$env:version"
      if ($env:release) {
-      $sconsArgs += " changes userGuide developerGuide release=1"
+      $sconsOutTargets += " changes userGuide developerGuide"
+      $sconsArgs += " release=1"
      }
      if ($env:versionType) {
       $sconsArgs += " updateVersionType=$env:versionType"
@@ -66,9 +71,16 @@ build_script:
      $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
      # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
      # It's possible to work around this, but the workarounds have annoying side effects.
+     Set-AppveyorBuildVariable "sconsOutTargets" $sconsOutTargets
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
- - py scons.py %sconsArgs%
+ - py scons.py source %sconsArgs%
+ # We don't need launcher to run tests, so run the tests before launcher.
+ - py scons.py tests %sconsArgs%
+ # The pot gets built by tests, but we don't actually need it as a build artifact.
+ - del output\*.pot
+ - 'echo scons output targets: %sconsOutTargets%'
+ - py scons.py %sconsOutTargets% %sconsArgs%
  # Build symbol store.
  - ps: |
      foreach ($syms in
@@ -93,6 +105,7 @@ deploy_script:
  - ps: |
      if ($env:versionType) {
       # Not a try build.
+      # Notify our server.
       $exe = Get-ChildItem -Name output\*.exe
       $hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
       $data = @{
@@ -105,4 +118,8 @@ deploy_script:
        artifacts=$artifacts
       }
       ConvertTo-Json -InputObject $data -Compress | ssh nvaccess@exbi.nvaccess.org nvdaAppveyorHook
+      # Upload symbols to Mozilla.
+      Start-FileDownload https://github.com/mozilla/gecko-dev/raw/master/toolkit/crashreporter/tools/win32/dump_syms_vc1800.exe -FileName appveyor\dump_syms.exe
+      py -m pip install requests
+      py appveyor\mozillaSyms.py
      }

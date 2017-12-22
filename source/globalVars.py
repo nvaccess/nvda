@@ -34,6 +34,7 @@ reviewPosition=None
 reviewPositionObj=None
 lastProgressValue=0
 appArgs=None
+appArgsExtra=None
 settingsRing = None
 speechDictionaryProcessing=True
 exitCode=0

@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Manish Agrawal, Derek Riemer
+#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -363,6 +363,8 @@ class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
 		author=self.collectionItem.author
 		date=self.collectionItem.date
 		text=self.collectionItem.range.text
+		# Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+		# {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 		return _(u"comment: {text} by {author} on {date}").format(author=author,text=text,date=date)
 
 	def rangeFromCollectionItem(self,item):
@@ -380,7 +382,23 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		date=self.collectionItem.date
 		description=self.collectionItem.formatDescription or ""
 		text=(self.collectionItem.range.text or "")[:100]
+		# Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+		# {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+		# {description} will be replaced with a description of the formatting changes, if any.
+		# {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
+
+class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
+
+	def rangeFromCollectionItem(self,item):
+		return item
+
+	@property
+	def label(self):
+		text=self.collectionItem.text
+		# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+		# {text} will be replaced with the text of the spelling error.
+		return _(u"spelling: {text}").format(text=text)
 
 class WinWordCollectionQuicknavIterator(object):
 	"""
@@ -475,6 +493,11 @@ class RevisionWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterato
 	quickNavItemClass=WordDocumentRevisionQuickNavItem
 	def collectionFromRange(self,rangeObj):
 		return rangeObj.revisions
+
+class SpellingErrorWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentSpellingErrorQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.spellingErrors
 
 class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def collectionFromRange(self,rangeObj):
@@ -617,6 +640,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		if self.obj.ignoreEditorRevisions:
 			formatConfigFlags&=~formatConfigFlagsMap['reportRevisions']
+		if self.obj.ignorePageNumbers:
+			formatConfigFlags&=~formatConfigFlagsMap['reportPage']
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -761,7 +786,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
-				field['language']=self._getLanguageFromLcid(languageId)
+				field['language']=languageHandler.windowsLCIDToLocaleName(languageId)
 		except:
 			log.debugWarning("language error",exc_info=True)
 			pass
@@ -775,14 +800,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
 		return field
-
-	def _getLanguageFromLcid(self, lcid):
-		"""
-		gets a normalized locale from a lcid
-		"""
-		lang = locale.windows_locale[lcid]
-		if lang:
-			return languageHandler.normalizeLanguage(lang)
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE: 
@@ -839,7 +856,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if end:
 			oldEndOffset=self._rangeObj.end
 		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
-		if end and self._rangeObj.end<oldEndOffset:
+		newEndOffset = self._rangeObj.end
+		# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
+		# a case where you called move end then collapse until the size of the range is no longer being reduced.
+		# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+		if end and newEndOffset < oldEndOffset :
 			raise RuntimeError
 
 	def copy(self):
@@ -868,7 +889,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
 		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
 		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
-		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (_rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
+		if (direction>0 and endPoint!="end"
+			and unit not in (wdCharacter,wdWord) # moving by units of line or more
+			and (_rangeObj.start+1) == self.obj.WinwordDocumentObject.range().end # character after the range start is the end of the document range
+			):
 			return 0
 		return res
 
@@ -932,19 +956,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		except:
 			raise LookupError("Couldn't get MathML from MathType")
 
-class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
-
-	def _get_shouldIncludeLayoutTables(self):
-		return config.conf['documentFormatting']['includeLayoutTables']
-
 class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
 			position=textInfos.POSITION_CARET
 		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position,_rangeObj=_rangeObj)
-
-	InnerTextInfoClass=WordDocumentTextInfoForTreeInterceptor
 
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.obj.rootNVDAObject
@@ -1000,9 +1017,11 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			revisions=RevisionWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		elif nodeType in ("table","container"):
-			 return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType=="error":
+			return SpellingErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="graphic":
-			 return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
@@ -1086,6 +1105,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		self.ignoreEditorRevisions=ignore
 		return ignore
 
+	#: True if page numbers (as well as section numbers and column numbers) should be ignored. Such as in outlook.
+	ignorePageNumbers = False
+
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
 
@@ -1151,7 +1173,13 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	_curHeaderCellTracker=None
 	def getHeaderCellTrackerForTable(self,table):
 		tableRange=table.range
-		if not self._curHeaderCellTrackerTable or not tableRange.isEqual(self._curHeaderCellTrackerTable.range):
+		# Sometimes there is a valid reference in _curHeaderCellTrackerTable,
+		# but we get a COMError when accessing the range (#6827)
+		try:
+			tableRangesEqual=tableRange.isEqual(self._curHeaderCellTrackerTable.range)
+		except (COMError, AttributeError):
+			tableRangesEqual=False
+		if not tableRangesEqual:
 			self._curHeaderCellTracker=HeaderCellTracker()
 			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
 			self.populateHeaderCellTrackerFromHeaderRows(self._curHeaderCellTracker,table)
@@ -1699,4 +1727,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("error", _("&Errors")),
 	)
