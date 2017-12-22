@@ -247,6 +247,8 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportSpellingErrors"]:
 				if UIAHandler.AnnotationType_SpellingError in annotationTypes:
 					formatField["invalid-spelling"]=True
+				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
+					formatField["invalid-grammar"]=True
 			if formatConfig["reportComments"]:
 				if UIAHandler.AnnotationType_Comment in annotationTypes:
 					formatField["comment"]=True
