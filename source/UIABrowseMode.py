@@ -77,7 +77,7 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 class TextAttribUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 	attribID=None #: a UIA text attribute to search for
-	wantedAttribValues=None #: The value of the text attribute to search for
+	wantedAttribValues=set() #: A set of attribute values acceptable to match the search.
 
 	def __init__(self,attribValues,itemType,document,textInfo):
 		self.attribValues=attribValues
