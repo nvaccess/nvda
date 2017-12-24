@@ -1858,7 +1858,8 @@ class BrailleSettingsDialog(SettingsDialog):
 
 class AddSymbolDialog(wx.Dialog):
 
-	self.helpIds = {}
+	helpIds = {}
+	
 	def __init__(self, parent):
 		# Translators: This is the label for the add symbol dialog.
 		super(AddSymbolDialog,self).__init__(parent, title=_("Add Symbol"))

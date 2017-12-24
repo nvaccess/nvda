@@ -373,7 +373,7 @@ class TriggersDialog(wx.Dialog):
 		self.Destroy()
 
 class NewProfileDialog(wx.Dialog):
-helpIds = {}
+	helpIds = {}
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog to create a new configuration profile.
