@@ -2081,45 +2081,54 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Alles ansagen | C1+C2+C3+C4+C5+C6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle Serie ++
-NVDA unterstützt die Braillezeilenmodelle Braile Sense, Braille Edge und Smart Beetle von [Hims http://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Syncbraille Serie ++
+NVDA unterstützt die Braillezeilenmodelle Braile Sense, Edge, Syncbraille und Smart Beetle von [Hims http://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
 Wenn Sie die Braillezeile per USB anschließen, müssen Sie noch den USB-Treiber von HIMS auf Ihrem System installieren.
-Sie können diese von folgender Seite herunterladen: http://www.himsintl.com/?c=2/13&uid=2319
+Sie können diese von folgender Seite herunterladen: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Folgende Tastenkombinationen sind im NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
 %kc:beginInclude
 || Name | Taste |
-| Braillezeile zurückscrollen | Scroll unten auf der linken Seite |
-| Braillezeile vorwärtsscrollen | Scroll unten auf der rechten Seite |
-| Zur vorherigen Zeile bewegen | scroll oben auf der linken Seite |
-| Zur nächsten Zeile bewegen | scroll oben auf der rechten Seite |
 | Cursor zum Braille-Modul ziehen | Routingtaste |
-| Tastenkombination Umschalt+Tab | Punkt1+Punkt2+Leertaste |
-| Alt-Taste | Punkt1+Punkt3+Punkt4+Leertaste |
-| Escape-Taste | Punkt1+Punkt5+Leertaste |
-| Tab-Taste | Punkt4+Punkt5+Leertaste |
-| Pfeil Auf | Punkt1+Leertaste |
-| Pfeil Ab | Punkt4+Leertaste |
+| Braillezeile zurückscrollen | scroll oben auf der linken Seite, scroll oben auf der rechten Seite, scrollen auf der linken Seite |
+| Braillezeile vorwärtsscrollen | scroll unten auf der linken Seite, scroll unten auf der rechten Seite, scrollen auf der rechten Seite |
+| Zur vorherigen Zeile bewegen | scroll oben auf der linken Seite+scroll oben auf der rechten Seite |
+| Zur nächsten Zeile bewegen | scroll unten auf der linken Seite+scroll unten auf der rechten Seite |
+| NVDA-Cursor zur vorigen Zeile bewegen | Pfeil nach oben auf der rechten Seite |
+| NVDA-Cursor zur nächsten zeile bewegen | Pfeil nach unten auf der rechten Seite |
+| NVDA-Cursor zum vorigen Zeichen bewegen | Pfeil nach links auf der rechten Seite |
+| NVDA-crsor zum nächsten Zeichen bewegen | Pfeil nach rechts auf der rechten Seite |
+| zum Fokus bewegen | scroll oben auf der linken Seite+scroll unten auf der linken Seite, scroll oben auf der rechten Seite+scroll unten auf der rechten Seite, scrollen auf der linken Seite+scrollen auf der rechten Seite |
+| strg-Taste | smartbeetle:f1, brailleedge:f3 |
+| Windows-Taste | f7, smartbeetle:f2 |
+| alt-Taste | Punkt1+Punkt3+Punkt4+leertaste, f2, smartbeetle:f3, brailleedge:f4 |
+| Umschalttaste | f5 |
+| Einfügetaste | Punkt2+Punkt4+Leertaste, f6 |
+| Kontextmenütaste | Punkt1+Punkt2+Punkt3+Punkt4+Leertaste, f8 |
 | Dauergroßschreibtaste | Punkt1+Punkt3+Punkt6+Leertaste |
-| Umschalt+Alt+Tab | F2+F3+F1 |
-| Alt+Tab | F2+F3 |
+| tab | Punkt4+Punkt5+Leertastee, f3, brailleedge:f2 |
+| shift+alt+tab | f2+f3+f1 |
+| alt+tab | f2+f3 |
+| Tastenkombination Umschalt+Tab | Punkt1+Punkt2+Leertaste |
 | Ende | Punkt4+Punkt6+Leertaste |
 | Steuerung+Ende | Punkt4+Punkt5+Punkt6+Leertaste |
-| Pos1 | Punkt1+Punkt3+Leertaste |
+| Pos1 | Punkt1+Punkt3+Leertaste, smartbeetle:f4 |
 | Steuerung+Pos1 | Punkt1+Punkt2+Punkt3+Leertaste |
-| Pfeil Links | Punkt3+Leertaste |
+| alt+f4 | Punkt1+Punkt3+Punkt5+Punkt6+Leertaste |
+| Pfeil Links | Punkt3+Leertaste, Pfeil nach links auf der linken Seite |
 | Steuerung+Umschalt+Pfeil Links | Punkt2+Punkt8+Leertaste+F1 |
 | Steuerung+Pfeil Links | Punkt2+Leertaste |
 | Umschalt+Alt+Pfeil Links | Punkt2+Punkt7+F1 |
 | Alt+Pfeil Links | Punkt2+Punkt7 |
-| Pfeil Rechts | Punkt6+Leertaste |
+| Pfeil Rechts | Punkt6+Leertaste, Pfeil rechts auf der linken Seite  |
 | Steuerung+Umschalt+Pfeil Rechts | Punkt5+Punkt8+Leertaste+F1 |
 | Steuerung+Pfeil Rechts | Punkt5+Leertaste |
 | Umschalt+Alt+Pfeil Rechts | Punkt5+punkt7+F1 |
 | Alt+Pfeil Rechts | Punkt5+punkt7 |
 | Seite Auf | Punkt1+Punkt2+Punkt6+Leertaste |
 | Steuerung+Seite Auf | Punkt1+Punkt2+Punkt6+Punkt8+Leertaste |
+| Pfeil auf | Punkt1+Leertaste, Pfeil auf auf der linken Seite |
 | Steuerung+Umschalt+Pfeil Auf | Punkt2+Punkt3+Punkt8+Leertaste+F1 |
 | Steuerung+Pfeil Auf | Punkt2+Punkt3+Leertaste |
 | Umschalt+Alt+Pfeil Auf | Punkt2+Punkt3+punkt7+F1 |
@@ -2127,30 +2136,21 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Umschalt+Pfeil Auf | Scroll unten auf der linken Seite + Leertaste |
 | Seite Ab | Punkt3+Punkt4+Punkt5+Leertaste |
 | Steuerung+Seite Ab | Punkt3+Punkt4+Punkt5+Punkt8+Leertaste |
+| Pfeil ab | Punkt44+Leertaste, Pfeil ab auf der linken Seite |
 | Steuerung+Umschalt+Pfeil Ab | Punkt5+Punkt6+Punkt8+Leertaste+F1 |
 | Steuerung+Pfeil Ab | Punkt5+Punkt6+Leertaste |
 | Umschalt+Alt+Pfeil Ab | Punkt5+Punkt6+Punkt7+F1 |
 | Alt+Pfeil Ab | Punkt5+Punkt6+Punkt7 |
 | Umschalt+Pfeil Ab | Scroll unten auf der rechten Seite + Leertaste |
-| Entf | Punkt1+Punkt3+Punkt5+Leertaste |
+| escape | Punkt1+Punkt5+Leertaste, f4, brailleedge:f1 |
+| Entf | Punkt1+Punkt3+Punkt5+Leertaste, Punkt1+Punkt4+Punkt5+Leertaste |
 | F1 | Punkt1+Punkt2+Punkt5+Leertaste |
 | F3 | Punkt1+Punkt2+Punkt4+Punkt8 |
 | F4 | Punkt7+F3 |
 | Windows+B | Punkt1+Punkt2+F1 |
 | Windows+D | Punkt1+Punkt4+Punkt5+F1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA unterstützt das Braillezeilenmodell Braillesync von [HIMS http://www.hims-inc.com/].
-Sie müssen den USB-treiber von HIMS installieren, damit diese Braillezeile funktioniert.
-
-Folgende Tastenkombinationen sind im NVDA verfügbar.
-Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
-%kc:beginInclude
-|| Name | Taste |
-| Braillezeile zurückscrollen | Scroll unten auf der linken Seite |
-| Braillezeile vorwärtsscrollen | Scroll unten auf der rechten Seite |
-| Cursor zum Braillemodul ziehen | Routingtaste |
+| strg+einfg | smartbeetle:f1+scrollen auf der rechten Seite |
+| alt+einfg | smartbeetle:f3+scrollen auf der rechten Seite |
 %kc:endInclude
 
 ++ Seika-Braillezeilen ++
