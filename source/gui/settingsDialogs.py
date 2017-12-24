@@ -2274,9 +2274,11 @@ class TouchInteractionDialog(SettingsDialog):
 	title = _("Touch Interaction")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[self.GetId()] = "TouchInteraction"
 		# Translators: This is the label for a checkbox in the
 		# touch interaction settings dialog.
 		self.touchTypingCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Touch typing mode"))
+		self.helpIds[self.touchTypingCheckBox.GetId()] = "TouchTypingMode"
 		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
 		settingsSizer.Add(self.touchTypingCheckBox,border=10,flag=wx.BOTTOM)
 
