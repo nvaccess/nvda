@@ -16,6 +16,7 @@ TOP_DIR = os.path.dirname(os.path.dirname(__file__))
 PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "scons", "src", "engine"),
 	os.path.join(TOP_DIR, "include", "pyserial"),
+	os.path.join(TOP_DIR, "include", "comtypes"),
 	os.path.join(TOP_DIR, "miscDeps", "python"),
 )
 
