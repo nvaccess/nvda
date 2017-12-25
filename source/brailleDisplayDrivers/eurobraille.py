@@ -439,7 +439,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _setHidKeyboardInput(self, state):
 		def announceUnavailableMessage():
-			# Translators: Message when Eurobraille HID keyboard simulation is unavailable.
+			# Translators: Message when HID keyboard simulation is unavailable.
 			ui.message(_("HID keyboard input simulation is unavailable."))
 
 		if not self.isHid:
@@ -447,10 +447,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			return
 		if state is 		self._hidKeyboardInput:
 			if state:
-				# Translators: Message when Eurobraille HID keyboard simulation is already enabled.
+				# Translators: Message when HID keyboard simulation is already enabled.
 				ui.message(_('HID keyboard simulation already enabled'))
 			else:
-				# Translators: Message when Eurobraille HID keyboard simulation is already disabled.
+				# Translators: Message when HID keyboard simulation is already disabled.
 				ui.message(_('HID keyboard simulation already disabled'))
 			return
 		self._sendPacket(EB_KEY, EB_KEY_USB_HID_MODE, str(int(state)))
@@ -462,22 +462,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			announceUnavailableMessage()
 			return
 		if state:
-			# Translators: Message when Eurobraille HID keyboard simulation is enabled.
+			# Translators: Message when HID keyboard simulation is enabled.
 			ui.message(_('HID keyboard simulation enabled'))
 		else:
-			# Translators: Message when Eurobraille HID keyboard simulation is disabled.
+			# Translators: Message when HID keyboard simulation is disabled.
 			ui.message(_('HID keyboard simulation disabled'))
 
 	scriptCategory = SCRCAT_BRAILLE
 	def script_enableHidKeyboardInput(self, gesture):
 		self._setHidKeyboardInput(True)
-	# Translators: Description of the script for Eurobraille displays that enables HID keyboard simulation.
-	script_enableHidKeyboardInput.__doc__ = _("Enable eurobraille HID keyboard simulation")
+	# Translators: Description of the script that enables HID keyboard simulation.
+	script_enableHidKeyboardInput.__doc__ = _("Enable HID keyboard simulation")
 
 	def script_disableHidKeyboardInput(self, gesture):
 		self._setHidKeyboardInput(False)
-	# Translators: Description of the script for Eurobraille displays that disables HID keyboard simulation.
-	script_disableHidKeyboardInput.__doc__ = _("Disable eurobraille HID keyboard simulation")
+	# Translators: Description of the script that disables HID keyboard simulation.
+	script_disableHidKeyboardInput.__doc__ = _("Disable HID keyboard simulation")
 
 	__gestures = {
 		"br(eurobraille.esytime):l1+joystick1Down": "enableHidKeyboardInput",
