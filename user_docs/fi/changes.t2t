@@ -5,10 +5,19 @@
 
 = 2018.1 =
 
+== Muutokset ==
+- HIMS Braille Sense/Braille EDGE/Smart Beetle- ja Sync Braille -pistenäyttöjen ajurit on korvattu yhdellä ajurilla. Uusi ajuri otetaan automaattisesti käyttöön aiemman Sync Braille -ajurin käyttäjillä. (#7459)
+ - Jotkin näppäimet, erityisesti vieritykseen käytettävät, on uudelleenmääritelty seuraamaan HIMS-tuotteiden käytäntöjä. Katso lisätietoja käyttöoppaasta.
+
+
 == Korjatut ohjelmavirheet ==
 - Selattavat ilmoitukset, kuten nykyisten muotoilutietojen näyttäminen painettaessa kaksi kertaa nopeasti NVDA+F, eivät enää epäonnistu, kun NVDA on asennettu hakemistopolkuun, jonka nimessä on muita kuin ASCII-merkkejä. (#7474)
 - Kohdistus palautetaan taas asianmukaisesti palattaessa Spotifyhin toisesta sovelluksesta. (#7689)
 - NVDA:n päivittäminen ei enää epäonnistu järjestelmissä, joissa hallittu kansion käyttö on käytössä (käytettävissä Windows 10 Fall Creators -päivityksessä). (#7696)
+- Hims Smart Beetle -pistenäyttöjen vieritysnäppäinten havaitseminen ei enää ole epäluotettavaa. (#6086)
+- Pieni suorituskyvyn parannus ladattaessa suurta määrää sisältöä Mozilla Firefox 58:ssa ja uudemmissa. (#7719)
+- Estetty virheitä luettaessa taulukoita sisältäviä sähköposteja Microsoft Outlookissa. (#6827)
+- Pistenäyttöjen näppäinkomentoja, jotka emuloivat näppäimistön Alt-, Ctrl-, Shift- ja Windows-näppäimiä, voi nyt käyttää myös yhdessä muiden emuloitujen näppäimistön näppäinten kanssa, mikäli yksi tai useampi käytetyistä näytön näppäinkomennoista on mallikohtaisia. (#7783)
 
 
 == Muutokset kehittäjille ==

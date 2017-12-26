@@ -2081,76 +2081,76 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 | Leitura contínua | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS: Séries Braille Sense, Braille EDGE e Smart Beetle ++
-O NVDA suporta as linhas Braille Sense, Braille EDGE e Smart Beetle da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
+++ HIMS: Séries Braille Sense, Braille EDGE, Smart Beetle e Sync Braille ++
+O NVDA suporta as linhas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
 Se ligar a linha via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
-Pode fazer o download dos drivers nesta página: http://www.himsintl.com/?c=2/13&uid=2319
+Pode fazer o download dos drivers de http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
  
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
 || Nome | Tecla de atalho |
-| Deslocar a linha braille para trás | left side scroll down |
-| deslocar a linha braille para a frente | right side scroll down |
-| Move a linha braille para a linha anterior | left side scroll up |
-| Move a linha braille para a linha seguinte | right side scroll up |
 | Encaminhar para a célula braille | routing |
-| Teclas shift+tab | ponto 1+ponto 2+space |
-| Tecla alt | ponto 1+ponto 3+ponto 4+Space |
-| Tecla escape | ponto 1+ponto 5+Space |
-| Tecla tab | ponto 4+ponto 5+Space |
-| Tecla seta cima | ponto 1+Space |
-| Tecla seta baixo | ponto 4+Space |
-| capsLock | ponto 1+ponto 3+ponto 6+space |
-| Teclas shift+alt+tab | advance2+advance3+advance1 |
-| Teclas alt+tab | advance2+advance3 |
-| Tecla end | ponto 4+ponto 6+space |
-| Teclas Control+end  | ponto 4+ponto 5+ponto 6+space |
-| Tecla home  | ponto 1+ponto 3+space |
-| Teclas control+home | ponto 1+ponto 2+ponto 3+space |
-| Tecla seta esquerda | ponto 3+space |
-| Teclas control+shift+seta esquerda | ponto 2+ponto 8+espaço+advance1 |
-| Teclas control+Seta esquerda | ponto 2+space |
-| Teclas shift+alt+seta esquerda | ponto 2+ponto 7+advance1 |
-| Teclas alt+Seta esquerda | ponto 2+ponto 7 |
-| Tecla seta direita | ponto 6+space |
-| Teclas control+shift+seta direita | ponto 5+ponto 8+espaço+advance1 |
-| Teclas control+seta direita | ponto 5+space |
-| Teclas shift+alt+Seta direita | ponto 5+ponto 7+advance1 |
-| Teclas alt+seta direita | ponto 5+ponto 7 |
-| Tecla pageUp | ponto 1+ponto 2+ponto 6+space |
-| Teclas control+pageUp | ponto 1+ponto 2+ponto 6+ponto 8+space |
-| Teclas control+shift+Seta cima | ponto 2+ponto 3+ponto 8+espaço+advance1 |
-| Teclas control+Seta cima | ponto 2+ponto 3+space |
-| Teclas shift+alt+seta cima | ponto 2+ponto 3+ponto 7+advance1 |
-| Teclas alt+seta cima | ponto 2+ponto 3+ponto 7 |
-| Teclas shift+seta cima | left side scroll down + space |
-| Tecla pageDown | ponto 3+ponto 4+ponto 5+space |
-| Teclas control+pagedown | ponto 3+ponto 4+ponto 5+ponto 8+space |
-| Teclas control+shift+seta cima | ponto 5+ponto 6+ponto 8+espaço+advance1 |
-| Teclas control+seta baixo | ponto 5+ponto 6+space |
-| Teclas shift+alt+seta baixo | ponto 5+ponto 6+ponto 7+advance1 |
-| Teclas alt+seta baixo | ponto 5+ponto 6+ponto 7 |
-| Teclas shift+seta baixo | right side scroll down + space |
-| Tecla delete | ponto 1+ponto 3+ponto 5+space |
-| Tecla f1 | ponto 1+ponto 2+ponto 5+space |
-| Tecla f3 | ponto 1+ponto 2+ponto 4+ponto 8 |
-| Tecla f4 | ponto 7+advance3 |
-| Teclas windows+b | ponto 1+ponto 2+advance1 |
-| Teclas windows+d | ponto 1+ponto 4+ponto 5+advance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-O NVDA suporta a linha SyncBraille da [HIMS http://www.hims-inc.com/].
-Necessitará de instalar os drivers USB do fabricante no seu sistema.
-
-Seguem-se as associações de teclas para esta linha braille com o NVDA.
-Por favor consulte a documentação da linha braille para obter a descrição de onde estas teclas podem ser encontradas.
-%kc:beginInclude
-|| Nome | Tecla de atalho |
-| Deslocar a linha braille para trás | left side scroll down |
-| Deslocar a linha braille para a frente | right side scroll down |
-| Reencaminhar para a célula braille | routing |
+| Deslocar a linha Braille para trás | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| deslocar a linha braille para a frente | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Move a linha braille para a linha anterior | leftSideScrollUp+rightSideScrollUp |
+| Move a linha braille para a linha seguinte | leftSideScrollDown+rightSideScrollDown |
+| Move a linha Braille para a linha anterior em revisão | rightSideUpArrow |
+| Move a linha Braille para a linha seguinte em revisão | rightSideDownArrow |
+| Move para o caracter anterior em revisão | rightSideLeftArrow |
+| Move para o caracter seguinte em revisão | rightSideRightArrow |
+| Move para o foco actual | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| Tecla control | smartbeetle: f1, brailleedge: f3 |
+| Tecla Windows | f7, smartbeetle: f2 |
+| Tecla Alt | Ponto1+ponto3+ponto4+Espaço, f2, smartbeetle: f3, brailleedge: f4 |
+| Tecla Shift | f5 |
+| Tecla Insert | Ponto2+ponto4+Espaço, f6 |
+| Tecla Aplicações | Ponto1+ponto2+ponto3+ponto4+Espaço, f8 |
+| Tecla CapsLock | Ponto1+ponto3+ponto6+Espaço |
+| Tecla Tab | Ponto4+ponto5+Espaço, f3, brailleedge: f2 |
+| Teclas Shift+Alt+Tab | f2+f3+f1 |
+| Teclas Alt+Tab | f2+f3 |
+| Teclas shift+tab | Ponto1+ponto2+espaço |
+| Tecla End | Ponto4+ponto6+Espaço|
+| Teclas Control+End | Ponto4+ponto5+ponto6+Espaço |
+| Tecla Home | Ponto1+ponto3+Espaço, smartbeetle: f4 |
+| Teclas Control+Home | ponto1+ponto2+ponto3+Espaço |
+| Teclas Alt+F4 | Ponto1+ponto3+ponto5+ponto6+Espaço |
+| Tecla Seta à esquerda | Ponto3+Espaço, leftSideLeftArrow |
+| Teclas Control+Shift+Seta à esquerda | Ponto2+ponto8+Espaço+F1 |
+| Teclas control+Seta à esquerda | Ponto2+Espaço |
+| Teclas Shift+Alt+Seta à esquerda | Ponto2+ponto7+F1 |
+| Teclas Alt+Seta à esquerda | Ponto2+ponto7 |
+| Tecla Seta à direita | Ponto6+Espaço, leftSideRightArrow |
+| Teclas Control+Shift+Seta à direita | Ponto5+ponto8+Espaço+F1 |
+| Teclas Control+Seta à direita | Ponto5+Espaço |
+| Teclas Shift+Alt+Seta à direita| Ponto5+ponto7+F1 |
+| Teclas Alt+Seta à direita | Ponto5+ponto7 |
+| Tecla pageUp | Ponto1+ponto2+ponto6+Espaço |
+| Teclas Control+PageUp | Ponto1+ponto2+ponto6+ponto8+Espaço |
+| Tecla Seta acima | Ponto1+Espaço, leftSideUpArrow |
+| Teclas Control+Shift+Seta acima | Ponto2+ponto3+ponto8+Espaço+F1 |
+| Teclas Control+Seta acima | Ponto2+ponto3+Espaço |
+| Teclas Shift+Alt+Seta acima | Ponto2+ponto3+ponto7+F1 |
+| Teclas Alt+Seta acima | Ponto2+ponto3+ponto7 |
+| Teclas Shift+Seta acima | leftSideScrollDown+Espaço |
+| Tecla pageDown | Ponto3+ponto4+ponto5+Espaço |
+| Teclas Control+pageDown | Ponto3+ponto4+ponto5+ponto8+Espaço |
+| Tecla Seta abaixo | Ponto4+Espaço, leftSideDownArrow |
+| Teclas Control+Shift+Seta abaixo | Ponto5+ponto6+ponto8+Espaço+F1 |
+| Teclas Control+Seta abaixo | Ponto5+ponto6+Espaço |
+| Teclas Shift+Alt+Seta abaixo | ponto5+ponto6+ponto7+F1 |
+| Teclas Alt+Seta abaixo | Ponto5+ponto6+ponto7 |
+| Teclas Shift+Seta abaixo | Espaço+rightSideScrollDown |
+| Tecla Escape | Ponto1+ponto5+Espaço, F4, brailleedge: F1 |
+| Tecla Delete | Ponto1+ponto3+ponto5+Espaço, Ponto1+ponto4+ponto5+Espaço |
+| Tecla F1 | Ponto1+ponto2+ponto5+Espaço |
+| Tecla F3 | Ponto1+ponto2+ponto4+ponto8 |
+| Tecla F4 | Ponto7+F3 |
+| Teclas Windows+B | Ponto1+ponto2+F1 |
+| Teclas Windows+D | Ponto1+Ponto4+ponto5+F1 |
+| Teclas Control+Insert | smartbeetle: F1+rightSideScroll |
+| Teclas Alt+Insert | smartbeetle: F3+rightSideScroll |
 %kc:endInclude
 
 ++ Seika ++
