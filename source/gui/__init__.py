@@ -32,7 +32,6 @@ import speechViewer
 import winUser
 import api
 import guiHelper
-import touchHandler
 import winVersion
 
 try:

@@ -40,6 +40,7 @@ except RuntimeError:
 	updateCheck = None
 import inputCore
 import nvdaControls
+import touchHandler
 import winVersion
 
 class SettingsDialog(wx.Dialog):
@@ -1522,6 +1523,21 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
+class TouchInteractionPanel(SettingsPanel):
+	# Translators: This is the label for the touch interaction settings panel.
+	title = _("Touch Interaction")
+
+	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a checkbox in the
+		# touch interaction settings panel.
+		self.touchTypingCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Touch typing mode"))
+		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
+		settingsSizer.Add(self.touchTypingCheckBox,border=10,flag=wx.BOTTOM)
+
+	def onSave(self):
+		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
+		super(TouchInteractionPanel, self).onSave()
+
 class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows 10 OCR panel.
 	title = _("Windows 10 OCR")
@@ -1976,6 +1992,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 	]
+	if touchHandler.touchSupported():
+		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
 		categoryClasses.append(UwpOcrPanel)
 
@@ -2396,21 +2414,3 @@ class InputGesturesDialog(SettingsDialog):
 					_("Error"), wx.OK | wx.ICON_ERROR)
 
 		super(InputGesturesDialog, self).onOk(evt)
-
-class TouchInteractionDialog(SettingsDialog):
-	# Translators: This is the label for the touch interaction settings dialog.
-	title = _("Touch Interaction")
-
-	def makeSettings(self, settingsSizer):
-		# Translators: This is the label for a checkbox in the
-		# touch interaction settings dialog.
-		self.touchTypingCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Touch typing mode"))
-		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
-		settingsSizer.Add(self.touchTypingCheckBox,border=10,flag=wx.BOTTOM)
-
-	def postInit(self):
-		self.touchTypingCheckBox.SetFocus()
-
-	def onOk(self,evt):
-		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
-		super(TouchInteractionDialog, self).onOk(evt)
