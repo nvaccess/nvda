@@ -122,10 +122,13 @@ def speakMessage(text,index=None):
 	speakText(text,index=index,reason=controlTypes.REASON_MESSAGE)
 
 def getCurrentLanguage():
-	try:
-		language=getSynth().language if config.conf['speech']['trustVoiceLanguage'] else None
-	except NotImplementedError:
-		language=None
+	synth=getSynth()
+	language=None
+	if  synth:
+		try:
+			language=synth.language if config.conf['speech']['trustVoiceLanguage'] else None
+		except NotImplementedError:
+			pass
 	if language:
 		language=languageHandler.normalizeLanguage(language)
 	if not language:
@@ -596,7 +599,7 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				tempInfo=oldInfo.copy()
 				tempInfo.setEndPoint(newInfo,"startToEnd")
 				unselectedTextList.append(tempInfo.text)
-	locale=languageHandler.getLanguage()
+	locale=getCurrentLanguage()
 	if speakSelected:
 		if not generalize:
 			for text in selectedTextList:
@@ -1510,6 +1513,32 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
 			textList.append(text)
+		verticalAlign=attrs.get("vertical-align")
+		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
+		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
+			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
+			if verticalAlign=="top":
+				# Translators: Reported when text is vertically top-aligned.
+				text=_("vertical align top")
+			elif verticalAlign in("center","middle"):
+				# Translators: Reported when text is vertically middle aligned.
+				text=_("vertical align middle")
+			elif verticalAlign=="bottom":
+				# Translators: Reported when text is vertically bottom-aligned.
+				text=_("vertical align bottom")
+			elif verticalAlign=="baseline":
+				# Translators: Reported when text is vertically aligned on the baseline. 
+				text=_("vertical align baseline")
+			elif verticalAlign=="justify":
+				# Translators: Reported when text is vertically justified.
+				text=_("vertical align justified")
+			elif verticalAlign=="distributed":
+				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
+				text=_("vertical align distributed") 
+			else:
+				# Translators: Reported when text has reverted to default vertical alignment.
+				text=_("vertical align default")
+			textList.append(text)
 	if formatConfig["reportParagraphIndentation"]:
 		indentLabels={
 			'left-indent':(
@@ -1545,32 +1574,6 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 					textList.append(u"%s %s"%(label,newVal))
 				else:
 					textList.append(noVal)
-		verticalAlign=attrs.get("vertical-align")
-		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
-		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
-			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
-			if verticalAlign=="top":
-				# Translators: Reported when text is vertically top-aligned.
-				text=_("vertical align top")
-			elif verticalAlign in("center","middle"):
-				# Translators: Reported when text is vertically middle aligned.
-				text=_("vertical align middle")
-			elif verticalAlign=="bottom":
-				# Translators: Reported when text is vertically bottom-aligned.
-				text=_("vertical align bottom")
-			elif verticalAlign=="baseline":
-				# Translators: Reported when text is vertically aligned on the baseline. 
-				text=_("vertical align baseline")
-			elif verticalAlign=="justify":
-				# Translators: Reported when text is vertically justified.
-				text=_("vertical align justified")
-			elif verticalAlign=="distributed":
-				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
-				text=_("vertical align distributed") 
-			else:
-				# Translators: Reported when text has reverted to default vertical alignment.
-				text=_("vertical align default")
-			textList.append(text)
 	if formatConfig["reportLineSpacing"]:
 		lineSpacing=attrs.get("line-spacing")
 		oldLineSpacing=attrsCache.get("line-spacing") if attrsCache is not None else None

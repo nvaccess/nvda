@@ -62,7 +62,6 @@ class SpeechViewerFrame(wx.Dialog):
 		displays = ( wx.Display(i).GetGeometry().GetSize() for i in xrange(wx.Display.GetCount()) )
 		return [repr( (i.width, i.height) ) for i in displays]
 
-
 	def savePositionInformation(self):
 		position = self.GetPosition()
 		config.conf["speechViewer"]["x"] = position.x

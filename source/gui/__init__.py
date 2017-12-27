@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -32,6 +32,7 @@ import speechViewer
 import winUser
 import api
 import guiHelper
+import touchHandler
 import winVersion
 
 try:
@@ -227,6 +228,9 @@ class MainFrame(wx.Frame):
 	def onMouseSettingsCommand(self,evt):
 		self._popupSettingsDialog(MouseSettingsDialog)
 
+	def onTouchInteractionCommand(self,evt):
+		self._popupSettingsDialog(TouchInteractionDialog)
+
 	def onReviewCursorCommand(self,evt):
 		self._popupSettingsDialog(ReviewCursorDialog)
 
@@ -344,6 +348,13 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to open Mouse Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
+		# Touch handler might not be ready, so check if touch interaction is even supported.
+		if touchHandler.touchSupported():
+			# Translators: The label for the menu item to open Touch Interaction dialog.
+			item = menu_preferences.Append(wx.ID_ANY, _("&Touch interaction..."),
+				# Translators: tooltip for touch interaction settings item.
+				_("Change how NVDA interacts with the touchscreen"))
+			self.Bind(wx.EVT_MENU, frame.onTouchInteractionCommand, item)
 		# Translators: The label for the menu item to open Review Cursor dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
@@ -361,7 +372,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
 		if winVersion.isUwpOcrAvailable():
 			# Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-			item = menu_preferences.Append(wx.ID_ANY, _("Windows 10 OCR..."))
+			item = menu_preferences.Append(wx.ID_ANY, _("&Windows 10 OCR..."))
 			self.Bind(wx.EVT_MENU, frame.onUwpOcrCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
@@ -587,7 +598,7 @@ class WelcomeDialog(wx.Dialog):
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
 		# bold lettering 
 		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
-		welcomeTextHeader.SetFont(wx.Font(18, wx.NORMAL, wx.NORMAL, wx.BOLD))
+		welcomeTextHeader.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
 		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		mainSizer.Add(welcomeTextHeader,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)

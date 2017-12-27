@@ -48,8 +48,11 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 			nvwave.playWaveFile(sound)
 		else:
 			if treeInterceptor.passThrough:
+				# Translators: The mode to interact with controls in documents
 				ui.message(_("Focus mode"))
 			else:
+				# Translators: The mode that presents text in a flat representation
+				# that can be navigated with the cursor keys like in a text document
 				ui.message(_("Browse mode"))
 		reportPassThrough.last = treeInterceptor.passThrough
 reportPassThrough.last = False
@@ -195,6 +198,51 @@ class TextInfoQuickNavItem(QuickNavItem):
 	def isAfterSelection(self):
 		caret=self.document.makeTextInfo(textInfos.POSITION_CARET)
 		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
+
+	def _getLabelForProperties(self, labelPropertyGetter):
+		"""
+		Fetches required properties for this L{TextInfoQuickNavItem} and constructs a label to be shown in an elements list.
+		This can be used by subclasses to implement the L{label} property.
+		@Param labelPropertyGetter: A callable taking 1 argument, specifying the property to fetch.
+			For example, if L{itemType} is landmark, the callable must return the landmark type when "landmark" is passed as the property argument.
+			Alternative property names might be name or value.
+			The callable must return None if the property doesn't exist.
+			An expected callable might be get method on a L{Dict},
+			or "lambda property: getattr(self.obj, property, None)" for an L{NVDAObject}.
+		"""
+		content = self.textInfo.text.strip()
+		if self.itemType is "heading":
+			# Output: displayed text of the heading.
+			return content
+		labelParts = None
+		name = labelPropertyGetter("name")
+		if self.itemType is "landmark":
+			landmark = aria.landmarkRoles.get(labelPropertyGetter("landmark"))
+			# Example output: main menu; navigation
+			labelParts = (name, landmark)
+		else: 
+			role = labelPropertyGetter("role")
+			roleText = controlTypes.roleLabels[role]
+			# Translators: Reported label in the elements list for an element which which has no name and value
+			unlabeled = _("Unlabeled")
+			realStates = labelPropertyGetter("states")
+			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
+			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
+			if self.itemType is "formField":
+				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
+					# Example output: Mute; toggle button; pressed
+					labelParts = (content or name or unlabeled, roleText, positiveStates, negativeStates)
+				else:
+					# Example output: Find a repository...; edit; has auto complete; NVDA
+					labelParts = (name or unlabeled, roleText, positiveStates, negativeStates, content)
+			elif self.itemType in ("link", "button"):
+				# Example output: You have unread notifications; visited
+				labelParts = (content or name or unlabeled, positiveStates, negativeStates)
+		if labelParts:
+			label = "; ".join(lp for lp in labelParts if lp)
+		else:
+			label = content
+		return label
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
@@ -389,7 +437,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param obj: The object to activate.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		obj.doAction()
+		try:
+			obj.doAction()
+		except NotImplementedError:
+			log.debugWarning("doAction not implemented")
 
 	def _activatePosition(self,obj=None):
 		if not obj:
@@ -708,6 +759,12 @@ class ElementsListDialog(wx.Dialog):
 		("heading", _("&Headings")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
+		("formField", _("&Form fields")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("button", _("&Buttons")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("landmark", _("Lan&dmarks")),
 	)
 
@@ -741,7 +798,7 @@ class ElementsListDialog(wx.Dialog):
 
 		# Translators: The label of an editable text field to filter the elements
 		# in the browse mode Elements List dialog.
-		filterText = _("&Filter by:")
+		filterText = _("Filt&er by:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
 		self.filterEdit = labeledCtrl.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
@@ -778,8 +835,8 @@ class ElementsListDialog(wx.Dialog):
 		self.lastSelectedElementType=elementType
 
 	def initElementType(self, elType):
-		if elType == "link":
-			# Links can be activated.
+		if elType in ("link","button"):
+			# Links and buttons can be activated.
 			self.activateButton.Enable()
 			self.SetAffirmativeId(self.activateButton.GetId())
 		else:
@@ -1514,8 +1571,8 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		info.expand(textInfos.UNIT_CHARACTER)
 		container=self.getEnclosingContainerRange(info)
 		if not container:
-			# Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.) 
-			# But there is no container. 
+			# Translators: Reported when the user attempts to move to the start or end of a container
+			# (list, table, etc.) but there is no container. 
 			ui.message(_("Not in a container"))
 			return
 		container.collapse()
@@ -1532,6 +1589,8 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		info.expand(textInfos.UNIT_CHARACTER)
 		container=self.getEnclosingContainerRange(info)
 		if not container:
+			# Translators: Reported when the user attempts to move to the start or end of a container
+			# (list, table, etc.) but there is no container. 
 			ui.message(_("Not in a container"))
 			return
 		container.collapse(end=True)
@@ -1705,6 +1764,19 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		self._tableMovementScriptHelper(axis="column", movement="previous")
 	# Translators: the description for the previous table column script on browseMode documents.
 	script_previousColumn.__doc__ = _("moves to the previous table column")
+
+	def script_toggleIncludeLayoutTables(self,gesture):
+		if config.conf["documentFormatting"]["includeLayoutTables"]:
+			# Translators: The message announced when toggling the include layout tables browse mode setting.
+			state = _("layout tables off")
+			config.conf["documentFormatting"]["includeLayoutTables"]=False
+		else:
+			# Translators: The message announced when toggling the include layout tables browse mode setting.
+			state = _("layout tables on")
+			config.conf["documentFormatting"]["includeLayoutTables"]=True
+		ui.message(state)
+	# Translators: Input help mode message for include layout tables command.
+	script_toggleIncludeLayoutTables.__doc__=_("Toggles on and off the inclusion of layout tables in browse mode")
 
 	NOT_LINK_BLOCK_MIN_LEN = 30
 	def _isSuitableNotLinkBlock(self,range):

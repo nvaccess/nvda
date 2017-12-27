@@ -1,79 +1,60 @@
-﻿Nyheder i NVDA
+Nyheder i NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.3 = 
-Af væsentlige forbedringer i denne version kan nævnes indtastning ved brug af forkortet punktskrift, støtte for de nye Windows OneCore stemmer i Windows 10, indbygget understøttelse for Windows 10 OCR (tekstgenkendelse), samt mange andre forbedringer til punkt og web.
+= 2017.4 = 
+Af væsentlige ændringer i denne version kan nævnes mange rettelser og forbedringer til understøttelse af web, herunder gennemsynstilstand i webdialoger som standard, bedre rapportering af feltgruppenavne i gennemsynstilstand, støtte for nye teknologier i Windows 10 som Windows Defender Application Guard o Windows 10 på ARM64, og automatisk rapportering af skærmretning og batteristatus.
+Bemærk venligst at denne version af NVDA ikke længere understøtter Windows XP eller Vista. NVDA kræver nu som et minimum Windows 7 Service Pack 1.
+
 
 == Nye Funktioner ==
-- En indstilling er blevet tilføjet til dialogen punktindstillinger. Den er "Vis meddelelser på ubestemt tid". (#6669)
-- Beskeder i Microsoft Outlooks meddelelsesliste vil nu blive rapporteret med flag, hvis dette er passende. (#6374)
-- Den præcise type af en form i Microsoft Powerpoint vil nu blive rapporteret når et dias redigeres, såsom trekant, cirkel, video eller pil, i stedet for "shape". (#7111)
-- Matematisk indhold (angivet i MathML) er nu understøttet i Google Chrome. (#7184)
-- NVDA kan nu benytte de nye Windows OneCore stemmer (også kendt som Windows Mobile Stemmer). Disse er inkluderet i Windows 10. Du kan få adgang til dem ved at tilgå NVDAs dialog "Talesyntese". (#6159)
-- NVDAs brugerkonfigurationsfiler kan nu opbevares i brugerens lokale application data mappe. Dette kan aktiveres ved at ændre indstillingen ved brug af registreringsdatabasen. Se afsnittet "systemspecifikke parametre" i brugervejledningen for yderligere oplysninger. (#6812)
-- NVDA kan nu rapportere pladsholderværdier for felter i webbrowsere (specifikt, aria-placeholder er nu understøttet). (#7004)
-- Det er nu muligt at flytte imellem stavefejl i Microsoft Word når gennemsynstilstand er slået til ved brug af hurtignavigation (W og skift+W). (#6942)
-- Kontrollen datovælger, der er at finde i aftaledialogen i Microsoft Outlook, er nu understøttet. (#7217)
-- Det aktuelt valgte forslag rapporteres nu i Windows 10 Mail Til/CC felter, samt I Windows 10 søgefeltet. (#6241)
-- En lyd er nu afspillet, når forslag vises i bestemte felter i Windows 10 (f.eks. startskærmen, søg i indstillinger, Windows 10 mail til/CC felter). (#6241)
-- Automatisk rapportering af meddelelser i Skype for Business, såsom når en person starter en samtale med dig. (#7281)
-- Automatisk rapportering af meddelelser i Microsoft Edge, såsom når en overførsel er påbegyndt.  (#7281)
-- Du kan nu indtaste i både forkortet og uforkortet punktskrift på et punktdisplay med et punkttastatur. Se afsnittet "Indtastning med punkt" for flere informationer. (#2439)
-- Du kan nu indtaste Unicode punkttegn fra punkttastaturet på et punktdisplay ved at vælge Unicode-punkt  som indtastningstabel i dialogen "Punktindstillinger". (#6449)
-- Understøtter nu punktdisplayet SuperBraille der bruges i Taiwan. (#7352)
-- Ny punktoversættelsestabeller: Dansk  8-punkt computerpunkt, litauisk, persisk 8-punkt computerpunkt, persisk uforkortet, slovensk 8-punkt computerpunkt. (#6188, #6550, #6773, #7367)
-- Forbedrede punkttabellen for engelsk (U.S) 8-punkt computerpunkt, således at tabellen understøtter punkttegn, eurotegnet såvel som accenterede bogstaver. (#6836)
-- NVDA kan nu benytte tekstgenkendelsesfunktionaliteten indbygget i Windows 10 til genkendelse af tekst i billeder eller utilgængelige applikationer. (#7361)
- - Sproget til tekstgenkendelse kan indstilles i dialogen Windows 10 OCR i NVDAs indstillinger.
- - For at udføre tekstgenkendelse på det aktuelle navigatorobjekt, tryk NVDA+R.
-  - Se sektionen om tekstgenkendelse i brugervejledningen for yderligere oplysninger.
-- Du kan nu vælge hvordan sammenhængende informationer vises på et punktdisplay når et objekt har fokus ved brug af indstillingen "Præsentation af fokus sammenhæng" i NVDAs punktindstillinger. (#217)
- - F.eks. muligheden "fyld display med sammenhængsændringer" og "kun når der rulles" kan gøre arbejde med lister meget nemmere, da punkterne ikke vil ændre deres position hele tiden.
-  - Se afsnittet "Præsentation af fokus sammenhæng" for yderligere informationer og eksempler.
-- NVDA understøtter nu komplekse dynamiske net såsom regneark, hvor kun noget af indholdet er indlæst og vist (specifikt aria-rowcount, aria-colcount, aria-rowindex og aria-colindex attributter introduceret i ARIA 1.1). (#7410)
+- Det er nu muligt at springe til starten og forbi landmærker ved brug af kommandoerne til at springe til starten og slutningen af indholdselementer (komma og skift+komma). (#5482)
+- Bogstavnavigation til editfelter og formularfelter inkluderer nu redigerbart RTF-indhold (f.eks. contentEditable). (#5534)
+- Elementlisten er nu i stand til at vise formularfelter og knapper i webbrowsere. (#588)
+- Første version af NVDA der understøtter Windows 10 på ARM64-processorarkitekturen. (#7508)
+- Støtte for interaktiv navigation og læsning af matematisk indhold i Kindle-bøger, der benytter Accessible Math. (#7536)
+- Understøtter nu Azardi til læsning af e-bøger. (#5848)
+- Information om versionen bliver nu rapporteret når en tilføjelsespakke opdateres. (#5324)
+- Tilføjede nye kommandolinjeparametre til brug af oprettelse af flytbare kopier af NVDA. (#6329)
+- Understøtter nu Microsoft Edge, når applikationen køres fra Windows Defender Application Guard. (#7600)
+- Hvis NVDA afvikles på en bærbar PC eller en tablet, vil NVDA oplyse når en strømforsyning tilsluttes eller frakobles, samt når skærmretningen ændres. (#4574, #4612)
+- Nyt sprog: Makedonsk
+- Nye punkttabeller: Kroatisk Niveau 1, Vietnamesisk Niveau 1. (#7518, #7565)
+- Understøttelse for det nye Actilino punktdisplay fra Handy Tech. (#7590)
+- Punktindtastning fra Handy Tech punktdisplays er nu understøttet. (#7590)
 
 
 == Ændringer ==
-- En ubunden bevægelse (script_restart) er nu blevet tilføjet således NVDA hurtigt kan genstartes. (#6396)
-- Tastaturlayoutet kan nu indstilles fra NVDAs velkomstdialog. (#6863)
-- Mange flere kontroltyper og tilstande har nu tilknyttede forkortelser i punktskrift. Disse kan findes under afsnittet "Punktforkortelser for felttyper, felttilstande og landmærker" i brugervejledningen. (#7188, #3975)
-- Opdaterede eSpeak NG til 1.49.1. (#7280)
-- Listerne over indtastning- og oversættelsestabeller sorteres nu alfabetisk. (#6113)
-- Opdaterede Liblouis Braille Translator til 3.2.0. (#6935)
-- Den punkttabel der benytte som standard er nu Unified English Braille Code grade 1. (#6952)
-- Som standard vil NVDA nu kun vise sammenhængende information på et punktdisplay når de ændres, og når et objekt har fokus. (#217)
- - Tidligere blev der vist så meget information som muligt, uanset om du havde set informationen før.
- - Du kan vende tilbage til den tidligere adfærd ved at ændre indstillingen "Præsentation af fokus sammenhæng" i NVDAs punktindstillinger.
- - Når punkt benyttes kan markøren konfigures til at tage en anden form, når den tøjres til fokus eller læsning. (#7112)
-- NVDA-logoet er blevet opdateret. Det opdaterede NVDA-logo er en stiliseret blanding af bogstaverne NVDA i hvid, på en solid lilla baggrund. Dette sikrer, at det vil være synligt på enhver farvet baggrund, og bruger lilla fra NV Access logo. (# 7446) 
+- Webdialoger bruger nu automatisk gennemsynstilstand i Chrome og Firefox, med mindre du befinder dig indeni en webapplikation. (#4493)
+- Ved brug af tab og bogstavnavigation i gennemsynstilstand, vil NVDA ikke længere annoncere hvert indholdselement, du navigere ud af, såsom tabeller og lister. Dette gør navigation hurtigere. (#2591)
+- NVDA vil nu oplæse grupper af formularfelter når disse får fokus ved brug af bogstavnavigation og tab-tasten i Chrome og Firefox. (#3321)
+- Bogstavnavigationstasterne for indlejrede objekter (O og skift+O) vil nu også hoppe til lyd- og videoafspillere, samt elementer med ARIA-rollerne dialog og applikation. (#7239)
+- Espeak-ng er blevet opdateret (til commit 01919cd48a566cdf34347784b2e74554b376e900). . Dette retter nogle problemer med hensyn til produktion af release builds. (#7385)
+- Ved et tredje tryk af kommandoen til læsning af statuslinjen, vil dens indhold blive kopieret til udklipsholderen. (#1785)
+- Når der tildeles taster til et Baum-display, kan man nu begrænse tasterne til den aktuelle model af punktdisplay der benyttes (.f.eks. VarioUltra og Pronto). (#7517)
+- Genvejstasten til filtreringsfeltet i elementlisten er ændret fra ALT+F til ALT+E. (#7569)
+- En utilknyttet kommando er blevet tilføjet så du kan ændre inkluderingen af layouttabeller i gennemsynstilstand hvor som helst. Du kan finde denne kommando under kategorien Gennemsynstilstand i dialogen inputbevægelser. (#7634)
+- Opgraderede LibLouis punktoversætter til 3.3.0. (#7565)
+- Genvejstasten for feltet til indtastning af et regulært udtryk i ordbøgerne er nu ændret fra alt+r til alt+e. (#6782)
+- Stemmeordbøger er nu versionerede og er blevet flyttet til mappen 'speechDicts/voiceDicts.v1'. (#7592)
+- Ændringer til versionerede filer (brugerkonfiguration og stemmeordbøger) gemmes ikke længere, hvis NVDA køres fra en installationsfil. (#7688)
+- Braillino, Bookworm og Modular (med gammelt firmware) punktdisplays er ikke længere understøttede så snart NVDA kører, men kræver Handy Techs universale driver. Installer denne driver og benyt den pågældende tilføjelsespakke for at bruge disse displays. (#7590)
 
- 
- == Fejlrettelser ==
-- Redigerbare div-elementer i Chrome har ikke længere deres label rapporteret som deres værdi når gennemsynstilstand benyttes. (#7153)
-- Et tryk på end-tasten i et tomt dokument når gennemsynstilstand er aktiv i Microsoft Word vil ikke længere udløse en Runtime-fejl. (#7009)
-- Gennemsynstilstand er nu korrekt understøttet når et dokument er givet den specifikke ARIA-rolle "document" i Microsoft Edge. (#6998)
-- Du kan nu vælge eller fravælge til slutningen af linjen ved brug af Skift+end i Microsoft Word, selv når markøren befinder sig på det sidste tegn på linjen. (#7157)
-- Hvis en dialog indeholder en behandlingslinje, vil denne nu blive opdateret i punkt. Dette betyder f.eks. at den resterende tid i NVDAs "Henter opdatering" dialog nu kan læses på punkt. (#6862)
-- NVDA vil nu annoncére ændringer af valg for bestemte combobokse i Windows 10, såsom automatisk afspilning i indstillinger. (#6337).
-- Unødvendigt information bliver ikke længere annoncéret i dialoger til oprettelse af møder/aftaler i Microsoft Outlook. (#7216)
-- Bip for ubestemte behandlingslinjer, såsom når der søges efter opdatering, vil kun forekomme når output af behandlingslinjer sættes til bip. (#6759)
-- Celler vil nu igen blive rapporteret når der piles rundt i et regneark i Microsoft Excel 2003 og 2007. (#8243)
-- i Windows 10 Creators Update og nyere vil gennemsynstilstand er nu igen blive slået til automatisk, når der læses email i Windows 10 Mail. (#7289)
-- På de fleste punktdisplays med punkttastaturer vil punkt 7 nu slette sidst indtastede punktcelle eller tegn, og punkt 8 trykker på enter-tasten. (#6054)
-- Når markøren bevæges i redigerbart tekst (f.eks. med markørtasterne eller backspace), vil NVDAs udtalte feedback nu være mere præcist i mange tilfæld, særligt i Chrome og terminalapplikationer. (#6424)
-- Indholdet i signaturredigering i Microsoft Outlook 2016 kan nu læses. (#7253)
-- NVDA vil ikke længere være grunden til at nogle Java Swing applikationer bryder ned, når der navigeres i tabeller. (#6992)
-- NVDA vil ikke længere annoncere toastbeskeder i Windows 10 Creators Update flere gange end nødvendigt. (#7128)
-- Efter en søgning vil et tryk på Enter-tasten for at lukke startmenuen ikke længere annoncere søgetekst i Windows 10. (#7370)
-- Udførelse af bogstavnavigation mellem overskrifter er nu markant hurtigere i Microsoft Edge. (#7343)
-- Navigation i gennemsynstilstand i Microsoft Edge springer ikke længere over store dele af hjemmesider (f.eks. temaet Wordpress 2015 på hjemmesider skabt af Wordpress). (#7143)
-- Landmærker er nu rigtigt lokaliserede i andre sprog end engelsk, når Microsoft Edge benyttes som browser. (#7328)
-- Punkt følger nu korrekt markeringen af tekst, når der markeres mere tekst end der er bredde på displayet. F.eks. vælger du flere linjer med skift+pil ned, vil den sidst valgte linje vises. (#5770)
-- I Firefox rapporterer NVDA ikke længere "sektion" flere gange, når der åbnes detaljer for en tweet på twitter.com. (# 5741)
-- Navigering af layouttabeller ved brug af tastaturkomandoer i gennemsynstilstand er ikke længere muligt, med mindre at rapportering af layouttabeller er slået til. (#7382)
-- NVDA vil nu springe over skjulte tabelceller i Chrome og Firefox, når tabelkommandoer benyttes i gennemsynstilstand. (#6652, #5655)
+
+== Fejlrettelser ==
+- Links bliver nu oplyst på punkt i Microsoft Word. (#6780)
+- NVDA vil ikke længere blive mærkbart langsom, når der er flere faner åbnede i Chrome eller Firefox webbrowsere. (#3138)
+- Markørflytning på punktdisplayet MDV Lilli vil ikke længere fejlagtigt flytte markøren en punktcelle foran dens position, hvortil markøren oprindeligt skulle flyttes. (#7469)
+- Attributten HTML5 required er nu understøttet i Internet Explorer og andre MSHTML-dokumenter, hvor et felt indikeres som "påkrævet". (#7321)
+- Punktdisplays opdateres nu når der skrives arabiske bogstaver i et venstrejusteret Wordpad-dokument. (#511)
+- Der er nu større sandsynlighed for at tilgængelige navne på elementer i Mozilla Firefox rapporteres i gennemsynstilstand, selv hvis det  pågældende navn ikke selv vises som indhold. (#4773)
+- NVDA kan nu igen pålideligt benytte Firefox efter NVDA er blevet genstartet i Windows 10 Creaters Update. (#7269)
+- Hvis NVDA bliver genstartet når Mozilla Firefox har fokus, kan NVDA nu igen benytte gennemsynstilstand. Det er sandsynligt, at du skal benytte ALT+Tab for at flytte væk fra applikationen og tilbage til den igen. (#5758)
+- Det er nu muligt at få adgang til matematisk indhold i Google Chrome på et system, hvor Mozilla Firefox ikke er installeret. (#7308)
+- Operativsystemet samt andre programmer bør være mere stabile efter en installation af NVDA og før genstart i forhold til tidligere versioner. (#7563)
+- Når en kommando til tekstgenkendelse benyttes (f.eks. NVDA+R), vil NVDA nu rapportere en fejlmeddelelse hvis navigatorobjektet er forsvundet. (#7567)
+- Funktionalitet til at rulle op med Freedom Scientific punktdisplays er nu rettet, når der benyttes venstre vippebjælke. (#7713)
 
 
 == Ændringer for udviklere ==

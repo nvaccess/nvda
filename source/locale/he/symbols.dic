@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
-
+# provided by Shmuel Naaman.
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
@@ -26,7 +26,7 @@ symbols:
 ? sentence ending	סימן שאלה	all	always
 ; phrase ending	פסיק נקודה	most	always
 : phrase ending	נקודתיים	most	always
-decimal point	נקודה עשרונית	none	always
+decimal point	נקודה	none	always
 in-word '	גרש	all	norep
 negative number	שלילי	none	norep
 
@@ -54,7 +54,7 @@ $	סימן דולר	all	norep
 '	גרש	all
 (	סוגר שמאלי	most	always
 )	סוגר ימני	most	always
-*	קוחבית	some
+*	כוכבית	some
 +	פלוס	some
 ,	פסיק	all	always
 -	מקף	most
@@ -83,7 +83,7 @@ _	קו תחתון	most
 …	שלוש נקודות	all	always
 ...	שלוש נקודות	all	always
 	נקודה מודגשת	some
-“	מרחאות שמלי	most
+“	מרחאות שמאלי	most
 ”	מרחאות ימני	most
 ‘	גרש שמאלי	most
 ’	גרש ימני	most
@@ -100,8 +100,8 @@ _	קו תחתון	most
 ➔	חץ ימין	some
 §	section	all
 °	degrees	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
+«	סוגריים משולשים שמאליים כפולים
+»	סוגרים משולשים כפולים ימניים
 µ	micro	some
 ¹	סימון 1 מעל הקו	some
 ²	סימון 2 מעל הקו	some
