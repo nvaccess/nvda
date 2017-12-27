@@ -25,7 +25,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 50 dile çevrilmiş oluşu
+- 51 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
@@ -34,7 +34,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Yerel Dil Desteği ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 50 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 51 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Makedonca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -1412,6 +1412,8 @@ Devre dışı bırakıldığında, NVDA sadece sayfa düzeniyle ilgili olarak ol
 Ancak, tablodaki metin normal metin olarak gösterilir.
 Bu seçenek varsayılan olarak kapalıdır.
 
+Herhangi bir yerde düzen tablolarının dahil edilmesini açıp kapatmak için,    [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir komut belirleyebilirsiniz.
+
 ==== Başlık ve Bağlantı gibi alanların belirtilmesini ayarlama ====
 Başlıklar, bağlantılar, tablolar ve listeler gibi kontrollerin seslendirilmesiyle ilgili ayarlar için, lütfen [Belge Formatları İletişim Kutusu #DocumentFormattingSettings] içerisindeki seçeneklere bakın.
 
@@ -1453,10 +1455,10 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 - Sayfa numaraları
 - Satır Numaraları
 - Satır girintilerinin bildirimi [(Kapalı, Konuşma, Ses çalarak, Konuşarak ve Ses çalarak) #lineIndentationOptions]
- - Paragraf girintisi (Örn, asılı girinti, ilk satır girintisi)
- - Satır aralığı (tek, çift vs)
- --- Hizzalama
- Tablo bilgileri
+- Paragraf girintisi (Örn, asılı girinti, ilk satır girintisi)
+- Satır aralığı (tek, çift vs)
+- Hizzalama
+- Tablo bilgileri
 - Tablolar
 - Satır/sütun başlıkları
 - Hücre koordinatları
@@ -1713,7 +1715,7 @@ Her bir eklenti için, Paket adı, versiyon ve yazar bilgisi gösterilir, Eklent
 Seçili eklenti için yardım mevcutsa, buna yardım düğmesine basarak ulaşabilirsiniz.
 
 Mevcut eklentileri online olarak inceleyip indirmek için, Eklenti edin düğmesine basın.
-Bu düğme [NVDA Eklenti sayfasını http://addons.nvda-project.org/] açar.
+Bu düğme [NVDA Eklenti sayfasını https://addons.nvda-project.org/] açar.
 Eğer NVDA sisteminizde kuruluysa, NVDA'nın o anda çalışıyor olması şartıyla eklenti kurulum sürecini aşağıdaki tarife uyarak doğrudan tarayıcınızda başlatabilirsiniz.
 Aksi halde, eklenti paketini bilgisayarınıza kaydedip aşağıdaki yönergeyi takip edin.
 
@@ -1748,14 +1750,14 @@ Eklenti yöneticisine herhangi bir yerden ulaşmak için, lütfen [Girdi Hareket
 
 ++ Python Konsolu ++
 NVDA menüsündeki araçlar altında bulunan Pithon konsolu, ayıklama, NVDA iç yapısının saptanması ve bir uygulamanın erişilebilirlik hiyerarşisinin saptanması gibi noktalar için yararlı olan bir geliştirme aracıdır.
-Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın http://community.nvda-project.org/wiki/Development].
+Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Pluginleri Yeniden Yükle ++
 Bu öge etkinleştirildiğinde, uygulama modüllerini ve genel pluginleri NVDA'yı yeniden başlatmaya gerek duymadan yeniden yükler, ve bu, geliştiriciler için oldukça yararlıdır.
 
 + Desteklenen Konuşma Sentezleyicileri +[SupportedSpeechSynths]
 Bu bölümde NVDA tarafından desteklenen sentezleyici bilgileri yer almaktadır.
-NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın alabilmeniz ya da indirebilmeniz için çok daha geniş bir listeyi, bu sayfada bulabilirsiniz [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın alabilmeniz ya da indirebilmeniz için çok daha geniş bir listeyi, bu sayfada bulabilirsiniz [http://www.nvda-project.org/wiki/ExtraVoices https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
  [eSpeak NG https://github.com/espeak-ng/espeak-ng] sentezleyicisi Doğrudan NVDA içinde gömülüdür ve başka bir sürücü ya da bileşenin yüklenmesini gerektirmez.
@@ -1925,29 +1927,38 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen tüm ekranları desteklemektedir.
+NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen çoğu braille ekranı destekler.
 Bazı daha eski USB ekranlar için Handy Tech sürücülerini sisteminize yüklemeniz gerekecektir.
 
-Braille girişi henüz desteklenmemektedir.
-
-Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
+Aşağıdaki ekranlar için anında destek sunulmaz, ancak [Handy Tech evrensel sürücüsü https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] ve NVDA add-on aracılığıyla kullanılabilir:
+- Braillino
+- Bookworm
+- Modular displays with firmware version 1.13 or lower. Please note that the firmware of this displays can be updated.
+-
+Aşağıda Handy Tech ekranlarla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
 || Ad | Kısayol tuşu |
-| Braille ekranı geri kaydırma | Sol, Yukarı |
-| Braille ekranı ileri kaydırma | Sağ, Aşağı |
+| Braille ekranı geri kaydırma | Sol, Yukarı, b3 |
+| Braille ekranı ileri kaydırma | Sağ, Aşağı, b6 |
 | Braille ekranı önceki satıra götürme | b4 |
 | Braille ekranı sonraki satıra götürme | b5 |
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | hücre üzerindeki braille iğnesi |
-| Şift+tab tuşu | eskeyp tuşu |
+| Şift+tab tuşu | eskeyp tuşu, left triple action key up+down |
 | alt tuşu | b2+b4+b5 |
 | eskeyp tuşu | b4+b6 |
-| tab tuşu | enter |
-| enter tuşu | eskeyp+enter |
-| Yukarı yön tuşu | solBoşluk |
-| Aşağı yön tuşu | sağBoşluk |
+| tab tuşu | enter, right triple action key up+down |
+| enter tuşu | eskeyp+enter, left+right triple action key up+down, joystickAction |
+| Yukarı yön tuşu | joystickUp |
+| Aşağı yön tuşu | joystickDown |
+| SolOk tuşu | joystickLeft |
+| SağOk tuşu | joystickRight |
 | NVDA Menüsü | b2+b4+b5+b6 |
 | Handy Tech ayarları | b4+b8 |
+| Toggle braille tethered to | b2 |
+| Toggle the braille cursor | b1 |
+| Toggle focus context presentation | b7 |
+| Toggle braille input | space+b1+b3+b4 (space+capital B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2071,10 +2082,10 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Hepsini oku | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle Serileri ++
-USB ya da bluetooth üzerinden bağlandıklarında, NVDA [Hims http://www.hims-inc.com/] tarafından üretilen Braille Sense, Braille EDGE ve Smart Beetle kabartma ekranları  destekler. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serileri ++
+USB ya da bluetooth üzerinden bağlandıklarında, NVDA [Hims http://www.hims-inc.com/] tarafından üretilen Braille Sense, Braille EDGE, Smart Beetle ve Sync Braille kabartma ekranları  destekler. 
 USB üzerinden bağlıyorsanız, sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
-Bu sayfadan indirebilirsiniz: http://www.himsintl.com/?c=2/13&uid=2319
+Bu sayfadan indirebilirsiniz: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
  
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
@@ -2085,62 +2096,65 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Move braille display to previous line | left side scroll up |
 | Move braille display to next line | right side scroll up |
 | Route to braille cell | routing |
+| Scroll braille display back | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Scroll braille display forward | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Move braille display to previous line | leftSideScrollUp+rightSideScrollUp |
+| Move braille display to next line | leftSideScrollDown+rightSideScrollDown |
+| Move to previous line in review | rightSideUpArrow |
+| Move to next line in review | rightSideDownArrow |
+| Move to previous character in review | rightSideLeftArrow |
+| Move to next character in review | rightSideRightArrow |
+| Move to current focus | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| control key | smartbeetle:f1, brailleedge:f3 |
+| windows key | f7, smartbeetle:f2 |
+| alt key | dot1+dot3+dot4+space, f2, smartbeetle:f3, brailleedge:f4 |
+| shift key | f5 |
+| insert key | dot2+dot4+space, f6 |
+| applications key | dot1+dot2+dot3+dot4+space, f8 |
+| capsLock key | dot1+dot3+dot6+space |
+| tab key | dot4+dot5+space, f3, brailleedge:f2 |
+| shift+alt+tab key | f2+f3+f1 |
+| alt+tab key | f2+f3 |
 | shift+tab key | dot1+dot2+space |
-| alt key | dot1+dot3+dot4+Space |
-| escape key | dot1+dot5+Space |
-| tab key | dot4+dot5+Space |
-| upArrow key | dot1+Space |
-| downArrow key | dot4+Space |
-| capsLock | dot1+dot3+dot6+space |
-| shift+alt+tab key | advance2+advance3+advance1 |
-| alt+tab key | advance2+advance3 |
 | end key | dot4+dot6+space |
-| Control+end key | dot4+dot5+dot6+space |
-| home key | dot1+dot3+space |
+| control+end key | dot4+dot5+dot6+space |
+| home key | dot1+dot3+space, smartbeetle:f4 |
 | control+home key | dot1+dot2+dot3+space |
-| leftArrow key | dot3+space |
-| control+shift+leftArrow key | dot2+dot8+space+advance1 |
+| alt+f4 key | dot1+dot3+dot5+dot6+space |
+| leftArrow key | dot3+space, leftSideLeftArrow |
+| control+shift+leftArrow key | dot2+dot8+space+f1 |
 | control+leftArrow key | dot2+space |
-| shift+alt+leftArrow key | dot2+dot7+advance1 |
+| shift+alt+leftArrow key | dot2+dot7+f1 |
 | alt+leftArrow key | dot2+dot7 |
-| rightArrow key | dot6+space |
-| control+shift+rightArrow key | dot5+dot8+space+advance1 |
+| rightArrow key | dot6+space, leftSideRightArrow |
+| control+shift+rightArrow key | dot5+dot8+space+f1 |
 | control+rightArrow key | dot5+space |
-| shift+alt+rightArrow key | dot5+dot7+advance1 |
+| shift+alt+rightArrow key | dot5+dot7+f1 |
 | alt+rightArrow key | dot5+dot7 |
 | pageUp key | dot1+dot2+dot6+space |
 | control+pageUp key | dot1+dot2+dot6+dot8+space |
-| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
+| upArrow key | dot1+space, leftSideUpArrow |
 | control+upArrow key | dot2+dot3+space |
-| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
+| shift+alt+upArrow key | dot2+dot3+dot7+f1 |
 | alt+upArrow key | dot2+dot3+dot7 |
-| shift+upArrow key | left side scroll down + space |
+| shift+upArrow key | leftSideScrollDown+space |
 | pageDown key | dot3+dot4+dot5+space |
-| control+pagedown key | dot3+dot4+dot5+dot8+space |
-| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
+| control+pageDown key | dot3+dot4+dot5+dot8+space |
+| downArrow key | dot4+space, leftSideDownArrow |
+| control+shift+downArrow key | dot5+dot6+dot8+space+f1 |
 | control+downArrow key | dot5+dot6+space |
-| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
+| shift+alt+downArrow key | dot5+dot6+dot7+f1 |
 | alt+downArrow key | dot5+dot6+dot7 |
-| shift+downArrow key | right side scroll down + space |
-| delete key | dot1+dot3+dot5+space |
+| shift+downArrow key | space+rightSideScrollDown |
+| escape key | dot1+dot5+space, f4, brailleedge:f1 |
+| delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
 | f3 key | dot1+dot2+dot4+dot8 |
-| f4 key | dot7+advance3 |
-| windows+b key | dot1+dot2+advance1 |
-| windows+d key | dot1+dot4+dot5+advance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA [Hims http://www.hims-inc.com/] tarafından üretilen SyncBraille ekranını destekler.
-Sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
-
-Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
-Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
-%kc:beginInclude
-|| Ad | Kısayol tuşu |
-| Scroll braille display back | left side scroll down |
-| Scroll braille display forward | right side scroll down |
-| Route to braille cell | routing |
+| f4 key | dot7+f3 |
+| windows+b key | dot1+dot2+f1 |
+| windows+d key | dot1+dot4+dot5+f1 |
+| control+insert key | smartbeetle:f1+rightSideScroll |
+| alt+insert key | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
 ++ Seika Braille Displays ++

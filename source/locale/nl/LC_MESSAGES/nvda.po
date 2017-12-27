@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
+"POT-Creation-Date: 2017-11-17 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Leonard de Ruijter <leonard@babbage.com>\n"
+"Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.13\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,1472,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -803,6 +803,11 @@ msgstr "Croatisch 8 punt computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Croatisch graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Hongaars 8 punt computerbraille"
 
@@ -1020,6 +1025,11 @@ msgstr "Turks graad 1"
 #. braille settings dialog.
 msgid "Unicode braille"
 msgstr "Unicode braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Viëtnamees graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1652,6 +1662,18 @@ msgstr "gaat naar de volgende kolom van de tabel"
 msgid "moves to the previous table column"
 msgstr "gaat naar de vorige kolom van de tabel"
 
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Opmaaktabellen melden uit"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Opmaaktabellen melden aan"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Schakelt in bladermodus het uitspreken van opmaaktabellen in en uit"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -1912,7 +1934,7 @@ msgstr "titelbalk"
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
-msgstr "venster"
+msgstr "deelvenster"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
@@ -2239,7 +2261,7 @@ msgstr "liniaal"
 
 #. Translators: Identifies a scroll pane.
 msgid "scroll pane"
-msgstr "schuifbalk"
+msgstr "schuifvenster"
 
 #. Translators: Identifies a section of text.
 msgid "section"
@@ -3767,7 +3789,7 @@ msgstr "Uitspreken van updates van voortgansbalken"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "Beep for progress bar updates"
-msgstr "pieptoon wanneer voortgansbalk update"
+msgstr "pieptoon voor voortgansbalk update"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "Beep and speak progress bar updates"
@@ -3785,11 +3807,11 @@ msgstr ""
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr "veranderingen van dynamische inhoud niet weergeven"
+msgstr "veranderingen van dynamische inhoud weergeven uit"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr "veranderingen van dynamische inhoud weergeven"
+msgstr "veranderingen van dynamische inhoud weergeven aan"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
@@ -3801,11 +3823,11 @@ msgstr ""
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "systeemcursor verplaatst leescursor niet"
+msgstr "systeemcursor verplaatst leescursor uit"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "systeemcursor verplaatst leescursor"
+msgstr "systeemcursor verplaatst leescursor aan"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
@@ -4033,7 +4055,7 @@ msgstr "Braillecursor aan"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
-msgstr "Schakel de braillecursor aan en uit"
+msgstr "Schakel de braillecursor in en uit"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
@@ -4111,11 +4133,11 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
-msgstr "Schuift de brailleleesregel achteruit"
+msgstr "Scrollt de brailleleesregel achteruit"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display forward"
-msgstr "Schuift de brailleleesregel voorwaards"
+msgstr "Scrollt de brailleleesregel vooruit"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
@@ -7075,18 +7097,27 @@ msgstr "Freedom Scientific Focus/PAC Mate serie"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 msgid "display scroll"
-msgstr "leesregel scrollen"
+msgstr "leesregelbreedte scrollen"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line.
 msgid "line scroll"
-msgstr "regel verschuiven"
+msgstr "regel scrollen"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech brailleleesregels"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Toon het configuratievenster voor de Handy Tech driver."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Braille-invoer ingeschakeld"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Braille-invoer uitgeschakeld"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Schakel braille-invoer in en uit"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7273,7 +7304,7 @@ msgid "Change settings of document properties"
 msgstr "Wijzig de instellingen van de documenteigenschappen"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
+msgid "&Windows 10 OCR..."
 msgstr "&Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
@@ -8806,7 +8837,7 @@ msgid "Whole &word"
 msgstr "Heel &woord"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "&Reguliere expressie"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -10527,3 +10558,6 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Toon het configuratievenster voor de Handy Tech driver."

@@ -44,7 +44,9 @@ class AutoPropertyType(type):
 		except KeyError:
 			cacheByDefault=any(getattr(base, "cachePropertiesByDefault", False) for base in bases)
 
-		props=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
+		# given _get_myVal, _set_myVal, and _del_myVal: "myVal" would be output 3 times
+		# use a set comprehension to ensure unique values, "myVal" only needs to occur once.
+		props={x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_')}
 		for x in props:
 			g=dict.get('_get_%s'%x,None)
 			s=dict.get('_set_%s'%x,None)
@@ -95,11 +97,14 @@ class AutoPropertyObject(object):
 	#: @type: bool
 	cachePropertiesByDefault = False
 
-	def __init__(self):
+
+	def __new__(cls, *args, **kwargs):
+		self = super(AutoPropertyObject, cls).__new__(cls)
 		#: Maps properties to cached values.
 		#: @type: dict
 		self._propertyCache={}
 		self.__instances[self]=None
+		return self
 
 	def _getPropertyViaCache(self,getterMethod=None):
 		if not getterMethod:

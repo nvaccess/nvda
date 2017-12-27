@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:50-0700\n"
+"POT-Creation-Date: 2017-12-15 00:10+1000\n"
+"PO-Revision-Date: 2017-12-14 21:28+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -782,7 +782,7 @@ msgstr "Gujarati grad 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Koine Greek"
-msgstr "Koine Greek"
+msgstr "Greacă comună"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -792,12 +792,17 @@ msgstr "Ebraică, braille în 8 puncte pentru calculator"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hindi grade 1"
-msgstr "Hindusă grad 1"
+msgstr "Hindi grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
 msgstr "Croată, braille în 8 puncte pentru calculator"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Croată grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1018,6 +1023,11 @@ msgstr "Turcă grad 1"
 #. braille settings dialog.
 msgid "Unicode braille"
 msgstr "Braille unicode"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Vietnameză grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1647,6 +1657,20 @@ msgstr "mută la coloana următoare din tabel"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "mută la coloana anterioară din tabel"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Tabele de aspect dezactivate"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Tabele de aspect activate"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Activează sau dezactivează includerea tabelelor de aspect din modul de "
+"navigare"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -6041,6 +6065,34 @@ msgstr "aliniere distribuită"
 msgid "align default"
 msgstr "aliniere implicită"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "aliniere verticală sus"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "aliniere verticală mijloc"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "aliniere verticală jos"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "aliniere verticală la linia de bază"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "aliniere verticală la ambele margini"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "aliniere verticală distribuită"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "aliniere verticală implicită"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "indentație stânga"
@@ -6072,34 +6124,6 @@ msgstr "indentație pentru primul rând"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "fără indentație pentru primul rând"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "aliniere verticală sus"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "aliniere verticală mijloc"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "aliniere verticală jos"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "aliniere verticală la linia de bază"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "aliniere verticală la ambele margini"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "aliniere verticală distribuită"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "aliniere verticală implicită"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -6405,7 +6429,7 @@ msgstr ""
 
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
-msgstr "Copyright (C)  {years} NVDA Contributors"
+msgstr "Copyright (C)  {years} Colaboratori NVDA"
 
 #, python-brace-format
 msgid ""
@@ -7095,12 +7119,25 @@ msgstr "derulează afișaj"
 msgid "line scroll"
 msgstr "derulează rânduri"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Afișaje Braille Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Arată fereastra de configurare a driverului Handy Tech"
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Intrare braille activată"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Intrare braille dezactivată"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Comută la intrarea braille"
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "Seriile braille HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync "
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7288,8 +7325,8 @@ msgid "Change settings of document properties"
 msgstr "Schimbă opțiunile proprietăților de document"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "Windows 10 OCR..."
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 OCR..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8822,8 +8859,8 @@ msgid "Whole &word"
 msgstr "&Cuvânt complet"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "Expresie &regulată"
+msgid "Regular &expression"
+msgstr "&Expresie regulată"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -10428,7 +10465,7 @@ msgstr "subliniere dezactivat"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
-msgstr "Aliniat stânga"
+msgstr "Aliniat la stânga"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "centered"
@@ -10436,7 +10473,7 @@ msgstr "ceentrat"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Right aligned"
-msgstr "Aliniat dreapta"
+msgstr "Aliniat la dreapta"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Justified"
@@ -10549,10 +10586,8 @@ msgstr "&Adnotări"
 msgid "&Errors"
 msgstr "&Erori"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart gama Beetle"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Arată fereastra de configurare a driverului Handy Tech"

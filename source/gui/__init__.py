@@ -32,6 +32,7 @@ import speechViewer
 import winUser
 import api
 import guiHelper
+import touchHandler
 import winVersion
 
 try:
@@ -229,6 +230,9 @@ class MainFrame(wx.Frame):
 
 	def onMouseSettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
+
+	def onTouchInteractionCommand(self,evt):
+		self._popupSettingsDialog(TouchInteractionDialog)
 
 	def onReviewCursorCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)

@@ -25,7 +25,7 @@ Belangrijke functies zijn:
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
 - Kan via usb-stick of ander draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
-- In 50 talen beschikbaar
+- In 51 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
 - Werken met beveiligde omgeving van Windows (inloggen e.d.) is mogelijk
 - Ondersteuning van gangbare toegankelijkheidsinterfaces zoals Microsoft Active Accessibility, Java Access Bridge, Iaccessible 2 en UI Automation (UI Automation alleen op Windows 7 of hoger)
@@ -34,7 +34,7 @@ Belangrijke functies zijn:
 
 ++ Internationalisering ++
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
-Behalve de Engelse versie van NVDA is het programma beschikbaar in 50 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Birmees, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Koreaans, Pharsi, Pools, Portugees, Punjabi, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, Viëtnamees, etc. 
+Behalve de Engelse versie van NVDA is het programma beschikbaar in nog 51 andere talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Birmees, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Koreaans, Macedonisch, Pharsi, Pools, Portugees, Punjabi, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, Viëtnamees, etc. 
 
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
@@ -1412,7 +1412,10 @@ Met deze optie kunt u bepalen hoe NVDA moet omgaan met tabellen die uitsluitend 
 Wanneer Layout-tabellen opnemen is ingeschakeld, zal NVDA zulke tabellen als normale tabellen beschouwen. Hoe ze gemeld worden is afhankelijk van de [opmaakinstellingen #DocumentFormattingSettings] en met sneltoetscommando's kan men er naar toe navigeren.
 Wanneer deze optie niet ingeschakeld is, worden de tabellen niet opgenomen en men kan  er niet naar toe navigeren.
 De inhoud wordt echter wel als normale tekst weergegeven.
+
 Deze optie staat standaard uit.
+
+Om het opnemen van layout tabellenin- en uit te kunnen schakelen vanuit elke willekeurige plaats maakt u met behulp  van het [dialoogvenster Invoerhandelingen #InputGestures] een daartoe aangepaste handeling aan.
 
 ==== Het melden van velden zoals links en koppen instellen====
 Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en tabellen.
@@ -1712,8 +1715,8 @@ In het dialoogvenster "Add-ons Beheren" vindt u een lijst met alle geïnstalleer
 Van elke Add-on wordt de pakketnaam, status, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL. Als er voor de geselecteerde Add-on hulpinformatie beschikbaar is, kunt u deze raadplegen door op de knop  "Add-on Help" te drukken.
 
 U kunt op Internet naar beschikbare Add-ons bladeren en deze desgewenst installeren door op de knop "Add-ons toevoegen" te klikken.
-U komt nu op de [NVDA Add-ons pagina http://addons.nvda-project.org/]. 
-Als NVDA op uw computer is geïnstalleerd,en gestart is, kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
+U komt dan op de [NVDA Add-ons pagina https://addons.nvda-project.org/]. 
+-Als NVDA op uw computer is geïnstalleerd,en gestart is, kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
 Werkt u met een draagbare kopie van NVDA, dan slaat u de Add-on op en volgt u onderstaande instructies.
 
 Om een eerder verkregen Add-on te installeren drukt u op de knop "Installeren".
@@ -1747,14 +1750,14 @@ Als u Add-Ons Beheren altijd en overal wilt kunnen oproepen, kunt u daarvoor aan
 
 ++ Python Console ++
 Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
-Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) http://community.nvda-project.org/wiki/Development].].
+Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]].].
 
 ++ Plugins herladen ++
 Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen zonder dat NVDA wordt herstart. Dit is handig voor ontwikkelaars.
 
 + Ondersteunde spraaksynthesizers +[SupportedSpeechSynths]
 In deze rubriek vindt u informatie over spraaksynthesizers die door NVDA worden ondersteund.
-Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder Extra Stemmen op [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 De [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
@@ -1926,29 +1929,37 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ Handy Tech Leesregels ++
-NVDA ondersteunt alle via usb-gekoppelde of blutooth-verbondenleesregels van [Handy Tech http://www.handytech.de/].
-Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd. Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+NVDA ondersteunt de meeste  via usb-gekoppelde of blutooth-verbonden dan wel op de sereële poort aangesloten leesregels van [Handy Tech http://www.handytech.de/].
+Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd. -Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
-Braille-invoer wordt nog niet ondersteund.
+De volgende leesregels worden niet zonder meer ondersteund, maar ze kunnen wel gebruikt worden met behulp van het [universele stuurprogramma van [Handy Tech dat te vinden is op https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] en een NVDA add-on:
+- Braillino
+- Bookworm
+- Modulaire leesregels met firmware-versie 1.13 of lager. Please note that the firmware of this displays can be updated.
 
-Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
-(Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
+Bij gebruik van de Handy Tech leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
+(U kunt in de documentatie bij deze leesregels nalezen waar deze toetsen zich precies bevinden.)
 %kc:beginInclude
 || Naam | Toets |
-| Brailleregel achteruit scrollen | Links, omhoog |
-| Brailleregel vooruit scrollen | Rechts, omlaag |
+| Brailleregel achteruit scrollen | Links, omhoog, b3 |
+| Brailleregel vooruit scrollen | Rechts, omlaag, b6 |
 | Een regel naar boven  | B4 |
 | Een regel naar beneden | B5 |
 |  Naar braillecel springen | Routing |
-| Shift+Tabtoets | ESC |
+| Shift+Tabtoets | esc, links triple actietoets omhoog+omlaag |
 | Alt-Toets | B2+B4+B5 |
 | Escape-Toets | B4+B6 |
-| Tabtoets | Enter |
-| Enter-toets | ESC+Enter |
-| Pijltoets omhoog | Linker spatietoets |
-| Pijltoets omlaag | Rechter spatietoets |
+| Tabtoets | Enter, rechter triple actietoets omhoog+omlaag |
+| Enter-toets | esc+enter, linker+rechter triple actietoets omhoog+omlaag, joystickAction |
+| Pijltoets omhoog | joystickUp |
+| Pijltoets omlaag | joystickDown |
+| Pijltoets links | joystickLeft |
+| Pijltoets rechts | joystickRight |
 | NVDA-Menü | B2+B4+B5+B6 |
-| HandyTech-configuratie | B4+B8 |
+| braille-volgmodus in- of uitschakelen | b2 |
+| braillecursor in- of uitschakelen | b1 |
+| focuscontextweergave in- of uitschakelen | b7 |
+| brailleinvoer in- of uitschakelen | spatie+b1+b3+b4 (spatie+hoofdletter B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2072,78 +2083,76 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | Alles lezen | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle Serie ++
-NVDA ondersteunt de leesregelmodellen Braille Sense, Braille EDGE en Smart Beetle van [Hims http://www.hims-inc.com/] die via USB of bluetooth kunnen worden aangesloten. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serie ++
+NVDA ondersteunt de leesregelmodellen Braille Sense, Braille EDGE, Smart Beetle en Sync Braille van [Hims http://www.hims-inc.com/] die via USB of bluetooth kunnen worden aangesloten. 
 Als u voor de USB-aansluiting kiest, moet u wel eerst de USB-drivers van HIMS op uw Systeem installeren. 
-U kunt deze downloaden van : http://www.himsintl.com/?c=2/13&uid=2319.
+U kunt deze downloaden van: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
 %kc:beginInclude
 || Naam | Toets |
-| Brailleregel terugscrollen | Omlaag scrollen aan  linkerkant |
-| Brailleregel vooruit scrollen | Omlaag Scrollen aan rechterkant |
-| Naar vorige regel verplaatsen | Omhoog scrollen aan linkerkant |
-| Naar volgende regel verplaatsen | Omhoog scrollen aan rechterkant |
 | Cursor naar braillecel brengen | routing |
-| Toetscombinatie Shift+Tab | Punt 1+Punt 2+Spatiebalk |
-| Alttoets | Punt 1+Punt 3+Punt 4+Spatiebalk |
-| Esc-toets | Punt 1+Punt 5+Spatiebalk |
-| Tabtoets | Punt 4+Punt 5+Spatiebalk |
-| Enter-toets | Punt8 |
-| BackSpace | Punt7 |
-| Pijl Omhoog | Punt1+Spatiebalk |
-| Pijl Omlaag | Punt 4+Spatiebalk |
-| CapsLock-toets | punt1+Punt3+Punt6+Spatiebalk |
-| Shiftt+alt+tab | Advance2+Advance3+Advance1 |
-| Alt+tab | Advance2+Advance3 |
-| End | Punt4+Punt6+Spatiebalk |
-| Ctrl+End | Punt4+Punt5+Punt6+Spatiebalk |
-| Home-toets | Punt1+Punt3+Spatiebalk |
-| Ctrl+Home | Punt1+Punt2+Punt3+Spatiebalk |
-| Pijl links | Punt3+Spatiebalk |
-| Ctrl+Shift+Pijl links | Punt2+Punt8+Spatiebalk+Advance1 |
-| Ctrl+Pijl links | Punt2+Spatiebalk |
-| Shift+alt+Pijl links | Punt2+Punt7+Advance1 |
-| Alt+Pijl links | Punt2+Punt7 |
-| Pijl rechts | Punt6+Spatiebalk |
-| Ctrl+Shift+Pijl rechts | punt5+punt8+Spatiebalk+Advance1 |
-| Ctrl+Pijl rechts | punt5+Spatiebalk |
-| Shift+Alt+Pijl rechts | punt5+punt7+Advance1 |
-| Alt+Pijl rechts | punt5+punt7 |
-| PageUp | punt1+punt2+punt6+Spatiebalk |
-| Ctrl+PageUp | punt1+punt2+punt6+punt8+Spatiebalk |
-| Ctrl+Shift+Pijl omhoog | punt2+punt3+punt8+Spatiebalk+Advance1 |
-| Ctrl+Pijl omhoog | punt2+punt3+Spatiebalk |
-| Shift+Alt+Pijl omhoog | punt2+punt3+punt7+Advance1 |
-| Alt+Pijl omhoog | punt2+punt3+punt7 |
-| Shift+Pijl omhoog | Omlaag scrollen aan linker kant +Spatiebalk |
-| PageDown | punt3+punt4+punt5+Spatiebalk |
-| Ctrl+PageDown | punt3+punt4+punt5+punt8+Spatiebalk |
-| Ctrl+Shift+Pijl omlaag | punt5+punt6+punt8+Spatiebalk+Advance1 |
-| Ctrl+Pijl omlaag | punt5+punt6+Spatiebalk |
-| Shift+Alt+Pijl omlaag | punt5+punt6+punt7+Advance1 |
-| Alt+Pijl omlaag | punt5+punt6+punt7 |
-| Shift+Pijl omlaag | Omlaag scrollen aan rechterkant+Spatiebalk |
-| Del | punt1+punt3+punt5+Spatiebalk |
-| F1  | punt1+punt2+punt5+Spatiebalk |
-| F3  | punt1+punt2+punt4+punt8 |
-| F4 | punt7+Advance3 |
-| windows+b | punt1+punt2+Advance1 |
-| windows+d | punt1+punt4+punt5+Advance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA ondersteunt model Braillesync van  [HIMS http://www.hims-inc.com/].
-U dient de usb-drivers van de fabrikant op uw computer te installeren voordat u de leesregel aansluit.
-
-Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
-(Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
-%kc:beginInclude
-|| Naam | Toets |
-| Brailleregel terugscrollen | Omlaag scrollen aan de linkerkant |
-| Brailleregel vooruit scrollen | Omlaag scrollen aan de rechterkant |
-| Cursornaar Braillecel verplaatsen | routing |
+| Brailleregel terugscrollen | LinkerzijdeOmhoogScrollen, Rechterzijde OmhoogScrollen, LinkerScroll |
+| Brailleregel vooruit scrollen | LinkerzijdeOmlaagScrollen, RechterzijdeOmlaagScrollen, RechterScroll |
+| Naar vorige regel verplaatsen | LinkerzijdeOmhoogScrollen+RechterzijdeOmhoogScrollen |
+| Naar volgende regel verplaatsen | LinkerzijdeOmlaagScrollen+RechterzijdeOmlaagScrollen |
+| Naar vorige regel verplaatsen in reviewmodus | RechterPijlOmhoog |
+| Naar volgene regel verplaatsen in reviewmodus | RechterPijlOmlaag |
+| Naar vorig teken verplaatsen in reviewmodus | RechterPijlLinks |
+| Naar volgend teken verplaatsen in reviewmodus | RechterPijlRechts |
+| Naar huidige focus verplaatsen | LinkerzijdeOmhoogScrollen+LinkerzijdeOmlaagScrollen, RechterzijdeOmhoogScrollen+RechterzijdeOmlaagScrollen, LinkerScroll+RechterScroll |
+| control-toets | smartbeetle: F1, brailleedge:F3 |
+| windows-toets | F7, smartbeetle:f2 |
+| alt-toets | punt1+punt3+punt4+spatie, F2, smartbeetle:F3, brailleedge:f4 |
+| shift-toets | f5 |
+| insert-toets | punt2+punt4+spatie, F6 |
+|Contextmenutoets | punt1+punt2+punt3+punt4+spatie, F8 |
+| CapsLocktoets | punt1+punt3+punt6+spatie |
+| tab-toets | punt4+punt5+spatie, F3, brailleedge:F2 |
+| shift+alt+tab-toetscombinatie | f2+f3+f1 |
+| alt+tab-toetscombinatie | f2+f3 |
+| shift+tab-toetscombinatie | punt1+punt2+spatie |
+| end-toets | punt4+punt6+spatie |
+| control+end-toetscombinatie | punt4+punt5+punt6+spatie |
+| home-toets | punt1+punt3+spatie, smartbeetle:f4 |
+| control+home-toetscombinatie | punt1+punt2+punt3+spatie |
+| alt+f4-toetscombinatie | punt1+punt3+punt5+punt6+spatie |
+| linker Pijltoets | punt3+spatie, Linker PijlLinks |
+| control+shift+PijlLinks-toetscombinatie | punt2+punt8+spatie+f1 |
+| control+PijlLinks-toetscombinatie | punt2+spatie |
+| shift+alt+PijlLinks-toetscombinatie | punt2+punt7+f1 |
+| alt+PijlLinks-toetscombinatie | punt2+punt7 |
+| PijlRechts-toets | punt6+spatie, Linker PijlRechts |
+| control+shift+PijlRechts-toetscombinatie | punt5+punt8+spatie+f1 |
+| control+PijlRechts-toetscombinatie | punt5+spatie |
+| shift+alt+PijlRechts-toetscombinatie | punt5+punt7+f1 |
+| alt+PijlRechts-toetscombinatie | punft5+punt7 |
+| pageUp-toets | punt1+punt2+punt6+spatie |
+| control+pageUp-toetscombinatie | punt1+punt2+punt6+punt8+spatie |
+| PijlOmhoog-toets | punt1+spatie, linker pijl omhoog |
+| control+shift+PijlOmhoog-toetscombinatie | punt2+punt3+punt8+spatie+F1 |
+| control+PijlOmhoog-toets | punt2+punt3+spatie |
+| shift+alt+PijlOmhoog-toetscombinatie | punt2+punt3+punt7+F1 |
+| alt+PijlOmhoog-toetscombinatie | punt2+punt3+punt7 |
+| shift+PijlOmhoog-toetscombinatie | Linker ScrollOmlaag+spatie |
+| pageDown-toets | punt3+punt4+punt5+spatie |
+| control+pageDown-toetscombinatie | punt3+punt4+punt5+punt8+spatie |
+| PijlOmlaag-toets | punt4+spatie, Linker PijlOmlaag |
+| control+shift+PijlOmlaag-toetscombinatie | punt5+punt6+punt8+spatie+F1 |
+| control+PijlOmlaag-toetscombinatie | punt5+punt6+spatie |
+| shift+alt+PijlOmlaag-toetscombinatie | punt5+punt6+punt7+F1 |
+| alt+PijlOmlaag-toetscombinatie | punt5+punt6+punt7 |
+| shift+PijlOmlaag-toetscombinatie | spatie+Rechter ScrollOmlaag |
+| escape-toets | punt1+punt5+spatie, f4, brailleedge:f1 |
+| del-toets | punt1+punt3+punt5+spatie, punt1+punt4+punt5+spatie |
+| f1-toets | punt1+punt2+punt5+spatie |
+| f3-toets | punt1+plus2+punt4+punt8 |
+| f4toets | punt7+f3 |
+| windows+b-toetscombinatie | punt1+punt2+f1 |
+| windows+d-toetscombinatie | punt1+punt4+punt5+f1 |
+| control+inserttoetscominatie | smartbeetle: f1+Rechter Scroll |
+| alt+insert-toetscombinatie | smartbeetle: f3+Rechter Scroll |
 %kc:endInclude
 
 ++ Seika Brailleleesregels ++

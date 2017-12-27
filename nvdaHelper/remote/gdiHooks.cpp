@@ -359,9 +359,8 @@ GlyphTranslatorCache glyphTranslatorCache;
  * @param cbCount the length of the string in characters.
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
  * @param direction >0 for left to right, <0 for right to left, 0 for neutral or unknown. Text must still be passed in in visual order.
- * @param prevColor the color of the pixel at the origin before the text was drawn, or CLR_INVALID if unknown
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction, COLORREF prevColor) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction) {
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
@@ -499,11 +498,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.italic=logFont.lfItalic?true:false;
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
-		if (prevColor != CLR_INVALID) {
-			formatInfo.backgroundColor=prevColor;
-		} else {
-			formatInfo.backgroundColor=GetBkColor(hdc);
-		}
+		formatInfo.backgroundColor=GetBkColor(hdc);
 		model->insertChunk(textRect,baselinePoint.y,newText,characterExtents,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		TextInsertionTracker::reportTextInsertion();
 		HWND hwnd=WindowFromDC(hdc);
@@ -517,7 +512,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
  * @param lpString the string of ansi text you wish to record.
  * @param codePage the code page used for the string which will be converted to unicode
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction, COLORREF prevColor) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction) {
 	int newCount=0;
 	wchar_t* newString=NULL;
 	if(lpString&&cbCount) {
@@ -527,7 +522,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 			MultiByteToWideChar(codePage,0,lpString,cbCount,newString,newCount);
 		}
 	}
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,lpdx,newCount,resultTextSize,direction,prevColor);
+	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,lpdx,newCount,resultTextSize,direction);
 	if(newString) free(newString);
 }
 
@@ -546,10 +541,6 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-	COLORREF prevColor = CLR_INVALID;
-	if (GetBkMode(hdc) == TRANSPARENT) {
-		prevColor = GetPixel(hdc, x, y);
-	}
 	//Call the real function
 	BOOL res;
 	{
@@ -563,7 +554,7 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	//If we can't get a display model then stop here.
 	if(!model) return res;
 	//Calculate the size of the text
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,CP_THREAD_ACP,NULL,cbCount,NULL,false,prevColor);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,CP_THREAD_ACP,NULL,cbCount,NULL,false);
 	model->release();
 	return res;
 }
@@ -609,7 +600,7 @@ template<typename WA_POLYTEXT> BOOL WINAPI hookClass_PolyTextOut<WA_POLYTEXT>::f
 			curPos.y=curPptxt->y;
 		}
 		//record the text
-		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,CP_THREAD_ACP,curPptxt->pdx,curPptxt->n,&curTextSize,false,CLR_INVALID);
+		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,CP_THREAD_ACP,curPptxt->pdx,curPptxt->n,&curTextSize,false);
 		//If the DC's current position should be used,  move our idea of it by the size of the text just recorded
 		if(textAlign&TA_UPDATECP) {
 			curPos.x+=curTextSize.cx;
@@ -733,10 +724,6 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-	COLORREF prevColor = CLR_INVALID;
-	if (GetBkMode(hdc) == TRANSPARENT) {
-		prevColor = GetPixel(hdc, x, y);
-	}
 	//Call the real function
 	BOOL res;
 	{
@@ -757,7 +744,7 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	if(psa) {
 		direction=(psa->fRTL)?-1:1;
 	}
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,CP_THREAD_ACP,lpDx,cbCount,NULL,direction,prevColor);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,CP_THREAD_ACP,lpDx,cbCount,NULL,direction);
 	//Release the displayModel and return
 	model->release();
 	return res;
@@ -1041,10 +1028,10 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 	//The next two extTextOutHelper calls must keep their direction argument as 1. 
 	//This is because ScriptStringAnalyze gave us a string in logical order and therefore we need to make sure that NVDA does not try to detect and possibly reverse.
 	if(i->second.iCharset==-1) { //Unicode
-		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL,1,CLR_INVALID);
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL,1);
 	} else { // character set
 		int codePage=charSetToCodePage(i->second.iCharset);
-		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(char*)(i->second.pString),codePage,NULL,i->second.cString,NULL,1,CLR_INVALID);
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(char*)(i->second.pString),codePage,NULL,i->second.cString,NULL,1);
 	}
 	model->release();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);

@@ -3,8 +3,32 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+
+== Changements ==
+- Les pilotes pour les terminaux HIMS Braille Sense/Braille EDGE/Smart Beetle et Hims Sync Braille ont été remplacés par un pilote unique. Le nouveau pilote sera automatiquement activé pour les utilisateurs des anciens pilotes. (#7459) 
+ - Certaines touches, en particulier les touches de défilement, ont été réassignées pour respecter les conventions utilisées par les produits Hims. Veuillez consulter le guide de l'utilisateur pour plus de détails.
+ 
+ 
+== Corrections de Bogues ==
+- Les messages navigables tels que ceux affichant le formatage en cours, lors de l'appui sur NVDA+f deux fois rapidement, ne dysfonctionnent plus si NVDA est installé sur un chemin comprenant des caractères non-ASCII. (#7474)
+- Le focus est maintenant restauré correctement lors du retour à Spotify à partir d'une autre application. (#7689)
+- NVDA n'interrompt plus sa mise à jour sur les systèmes où l'accès contrôlé aux dossiers est activé (disponible dans la mise à jour de Windows 10 Fall Creators). (#7696)
+- La détection des touches de défilement de l'afficheur Hims Smart Beetle n'est plus aléatoire. (#6086)
+- Une légère amélioration de performances à l'affichage d'un contenu important sous Mozilla Firefox 58 et au-delà. (#7719)
+- Suppression d'erreurs à la lecture de courriels contenant des tableaux sous Microsoft Outlook (#6827)
+- Les gestes de commandes de terminaux braille qui émulent les modificateurs de touches système peuvent maintenant être combinés avec d'autres touches émulées si un ou plusieurs des gestes émulés sont spécifique au modèle de terminal. (#7783)
+
+
+== Changements pour les Développeurs ==
+- Ajout d'un indicateur booléen caché à la section braille dans la configuration : "outputPass1Only". (#7301, #7693, #7702) 
+ - Cet indicateur est sur true par défaut. S'il est sur false, les règles de passage multiple de Liblouis seront utilisées pour la sortie braille.
+- un nouveau dictionnaire (braille.RENAMED_DRIVERS) a été ajouté pour permettre une transition douce aux utilisateurs utilisant des pilotes remplacés par d'autres. (#7459)
+
+
+
 = 2017.4 =
-Points forts de cette version : beaucoup de corrections et d'améliorations dans le support du web incluant le mode navigation pour les dialogues web par défaut, Meilleure annonce des étiquettes de groupes de champs en mode navigation, support de nouvelles technologies Windows 10 telles que Windows Defender Application Guard et Windows 10 sur ARM64, et l'annonce automatique de l'orientation écran et de l'état de la batterie.  
+Points forts de cette version : beaucoup de corrections et d'améliorations dans le support du web incluant le mode navigation pour les dialogues web par défaut, Meilleure annonce des étiquettes de groupes de champs en mode navigation, support de nouvelles technologies Windows 10 telles que Windows Defender Application Guard et Windows 10 sur ARM64, et l'annonce automatique de l'orientation écran et de l'état de la batterie.
 Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows Vista. Le minimum requis pour NVDA est maintenant windows 7 avec Service Pack 1.
 
 
@@ -13,11 +37,11 @@ Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows 
 - Sous Firefox, Chrome et Internet Explorer, la navigation rapide vers les zones de saisie et les champs de formulaire inclut maintenant les champs texte riche (ex : contentEditable). (#5534)
 - Dans les navigateurs web, La Liste d'Éléments peut maintenant lister les champs de formulaire et les boutons. (#588)
 - Support initial de Windows 10 sur ARM64. (#7508)
-- Support initial pour la lecture et la navigation dans du contenu mathématique pour les livres Kindle avec mathématique accessible. (#7536)
+- Support initial de la lecture et de la navigation interactive dans du contenu mathématique pour les livres Kindle avec mathématique accessible. (#7536)
 - Ajout du support du lecteur de livres électroniques Azardi. (#5848)
-- Lors de la mise à jour d'un module complémentaire, l'information de version est maintenant annoncée. (#5324)
+- L'information de version des modules complémentaires est maintenant annoncée quand ceux-ci sont mis à jour. (#5324)
 - Ajout de nouveaux paramètres de ligne de commande pour créer une copie portable de NVDA. (#6329)
-- Support de Microsoft Edge s'exécutant sous Windows Defender Application Guard (#7600)
+- Support de Microsoft Edge s'exécutant dans Windows Defender Application Guard sous Windows 10 Fall Creators Update. (#7600)
 - S'il s'exécute sur un PC portable ou une tablette, NVDA annonce maintenant si le chargeur est connecté ou déconnecté, et quand l'orientation de l'écran change. (#4574, #4612)
 - Nouvelle langue : Macédonien.
 - Nouvelles tables d'affichage braille : Croate intégral, Vietnamien intégral. (#7518, #7565)
@@ -34,7 +58,7 @@ Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows 
 - Espeak-ng a été mis à jour (à la version 1.49.2), Cela résout quelques problèmes dans la productions des builds. (#7385)
 - À la troisième activation de la commande de lecture de la barre d'état, le contenu de celle-ci est copié dans le presse-papiers. (#1785)
 - Sur un terminal Baum, l'assignation d'un geste de commande à une touche peut être limitée au modèle de terminal en cours d'utilisation (ex : VarioUltra ou Pronto). (#7517)
-- le raccourci clavier du champ de filtre de la liste d'éléments en mode navigation est passé de alt+f à alt+e. (#7569)
+- Le raccourci clavier du champ de filtre de la liste d'éléments en mode navigation est passé de alt+f à alt+e. (#7569)
 - Une commande non assignée a été ajoutée pour activer/désactiver l'inclusion des tables de disposition à la volée en mode navigation. Vous trouverez cette commande dans la catégorie Mode Navigation du dialogue Gestes de commandes. (#7634)
 - Mise à jour du traducteur braille Liblouis à la version 3.3.0. (#7565)
 - Les fichiers de dictionnaires vocaux sont maintenant versionnés et ont été déplacés vers le répertoire 'speechDicts/voiceDicts.v1'. (#7592)

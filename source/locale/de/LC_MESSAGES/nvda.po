@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-02 17:11+1000\n"
+"POT-Creation-Date: 2017-12-15 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: David Parduhn <xkill85@gmx.net>\n"
+"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "Sicherer Desktop"
+msgstr "Geschützter Desktop"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -6069,6 +6069,34 @@ msgstr "Ausrichtung Sperrdruck"
 msgid "align default"
 msgstr "Standardausrichtung"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "vertikal nach oben ausgerichtet"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "Vertikal zentriert"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "Vertikal nach unten ausgerichtet"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "Vertikal an Grundlinie ausgerichtet"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "Vertikale Ausrichtung Blocksatz"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "Vertikale Ausrichtung Sperrdruck"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "Vertikale Standardausrichtung"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "linksbündig; eingerückt"
@@ -6102,34 +6130,6 @@ msgstr "Einzug für erste Zeile"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "kein Einzug für erste Zeile"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "vertikal nach oben ausgerichtet"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "Vertikal zentriert"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "Vertikal nach unten ausgerichtet"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "Vertikal an Grundlinie ausgerichtet"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "Vertikale Ausrichtung Blocksatz"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "Vertikale Ausrichtung Sperrdruck"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "Vertikale Standardausrichtung"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -6314,15 +6314,15 @@ msgstr "NVDA-Meldung"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
-msgstr "Nach Aktualisierungen wird gesucht"
+msgstr "Aktualisierungen werden gesucht"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
-msgstr "Nach Aktualisierungen wird gesucht"
+msgstr "Aktualisierungen werden gesucht"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
-msgstr "Fehler beim Suchen nach Aktualisierungen"
+msgstr "Fehler bei der Suche nach Aktualisierungen"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
@@ -7159,6 +7159,11 @@ msgstr "Brailleeingabe aus"
 msgid "Toggle braille input"
 msgstr "Schaltet Braille-Eingabe ein oder aus"
 
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr ""
+"HIMS-Braille-Sense- / Braille-EDGE- / Smart-Beetle- / Sync-Braille-Serien"
+
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
@@ -7285,8 +7290,7 @@ msgstr "Stimmene&instellungen..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr ""
-"Wählen Sie Stimme, Geschwindigkeit, Tonhöhe und Lautstärke, die verwendet "
-"werden sollen."
+"Wählen Sie die gewünschte Stimme, Geschwindigkeit, Tonhöhe und Lautstärke."
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
@@ -7451,7 +7455,7 @@ msgstr "&Internetseite von NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
-msgstr "Lizenz&vertrag"
+msgstr "Lizenz&bestimmungen"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
@@ -7651,7 +7655,7 @@ msgstr "&Über diese Erweiterung..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "Hilfe über diese &Erweiterung"
+msgstr "Hilfe zu dieser &Erweiterung"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
@@ -7857,7 +7861,7 @@ msgstr "ausgelößt"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 msgid "Error activating profile."
-msgstr "Fehler beim Aktivieren des Profils"
+msgstr "Fehler bei der Aktivierung des Profils"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "This profile will be permanently deleted. This action cannot be undone."
@@ -8391,17 +8395,17 @@ msgstr ""
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
-msgstr "Stimme bei Großbuchstaben &anheben (in %)"
+msgstr "Stimme bei Großbuchstaben &anheben (in Prozent)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Say &cap before capitals"
-msgstr "Vor Großbuchstaben \"&Groß\" sagen"
+msgstr "Bei Großbuchstaben \"&Groß\" ansagen"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "&Beep for capitals"
-msgstr "Signal&töne vor Großbuchstaben"
+msgstr "Signal&ton bei Großbuchstaben"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
@@ -10631,13 +10635,8 @@ msgstr "&Anmerkungen"
 msgid "&Errors"
 msgstr "&Fehler"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Zeige das Handy Tech Treiber Einstellungsfenster."

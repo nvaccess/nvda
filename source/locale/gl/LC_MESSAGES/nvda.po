@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:03-0700\n"
+"POT-Creation-Date: 2017-12-15 00:10+1000\n"
+"PO-Revision-Date: 2017-12-15 19:35+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: Equipo de tradución ao Galego <oprisniki@gmail.com>\n"
 "Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.6.11\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -800,6 +800,11 @@ msgstr "Braille de ordenador de 8 pontos Croata"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "Croata grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "Braille de ordenador de 8 pontos Húngaro"
 
@@ -1017,6 +1022,11 @@ msgstr "Turco grao 1"
 #. braille settings dialog.
 msgid "Unicode braille"
 msgstr "Braille unicode"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "Vietamita grao 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1647,6 +1657,18 @@ msgstr "móvese á seguinte columna da táboa"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "móvese á anterior columna da táboa"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Táboas de deseño desactivado"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Táboas de deseño activado"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Activa e desactiva a inclusión de táboas de deseño en modo exploración"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -6023,6 +6045,34 @@ msgstr "aliñamento distribuido"
 msgid "align default"
 msgstr "aliñamento predeterminado"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "aliñación vertical superior"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "aliñación vertical media"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "aliñación vertical inferior"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "aliñación vertical base"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "aliñamento vertical xustificado"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "aliñación vertical distribuida"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "aliñamento vertical predeterminado"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "sangría á esquerda"
@@ -6054,34 +6104,6 @@ msgstr "Sangría da primeira liña"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "sen sangría da primeira liña"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "aliñación vertical superior"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "aliñación vertical media"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "aliñación vertical inferior"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "aliñación vertical base"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "aliñamento vertical xustificado"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "aliñación vertical distribuida"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "aliñamento vertical predeterminado"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -7076,12 +7098,25 @@ msgstr "desprazar liña braille"
 msgid "line scroll"
 msgstr "desprazar liña"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Liñas braille Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Amosar ventá de configuración do controlador da Handy Tech."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Entrada braille habilitada"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Entrada braille deshabilitada"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Conmutar entrada braille"
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "Series das HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7266,8 +7301,8 @@ msgid "Change settings of document properties"
 msgstr "Cambiar opcións das propiedades do documento"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "OCR do Windows 10..."
+msgid "&Windows 10 OCR..."
+msgstr "OCR do &Windows 10..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8792,7 +8827,7 @@ msgid "Whole &word"
 msgstr "&palabra completa"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "&Expresión regular"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -10514,10 +10549,8 @@ msgstr "&Anotacións"
 msgid "&Errors"
 msgstr "&Erros"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "Series das HIMS Braille Sense/Braille EDGE/Smart Beetle"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Amosar ventá de configuración do controlador da Handy Tech."

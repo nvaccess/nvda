@@ -55,7 +55,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following dependencies are included in Git submodules:
 
-* [comtypes](http://sourceforge.net/projects/comtypes/), version 0.6.2
+* [comtypes](https://github.com/enthought/comtypes), version 1.1.3
 * [wxPython](http://www.wxpython.org/), version 3.0.2.0
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 37121600
@@ -69,15 +69,13 @@ For reference, the following dependencies are included in Git submodules:
 * Adobe FlashAccessibility interface typelib
 * [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* [SCons](http://www.scons.org/), version 2.4.1
+* [SCons](http://www.scons.org/), version 3.0.0, commit 6a72c4de
 * brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
 * [Handy Tech Braille SDK, version 1.4.2.0](ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip)
 * Updated Handy Tech sbsupport.dll and dealers.dat received on 2014-09-09
 * [pyserial](http://pypi.python.org/pypi/pyserial), version 2.7
-* HanSoneConnect.dll, version 2.0.0.1
-* SyncBraille.dll, version 1.0.0.1
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9
 * [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.51

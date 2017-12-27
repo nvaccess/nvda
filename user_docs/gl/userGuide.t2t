@@ -1,4 +1,4 @@
-Guía do Usuario do NVDA NVDA_VERSION
+﻿Guía do Usuario do NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -25,7 +25,7 @@ O máis subliñable inclue:
 - Soporte para moitas pantallas de braille efímero incluíndo a entrada de braille computerizado para pantallas braille que tenñan un teclado braille
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 50 linguas
+- Traducido a 51 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -34,7 +34,7 @@ O máis subliñable inclue:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 48 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Kannada, Lituano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 51 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Kannada, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ao usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -579,7 +579,7 @@ Por omisión, o cursor de revisión segue ao cursor do sistema, así podes utili
 
 Neste ponto, podes utilizar ordes de MathPlayer como as teclas de cursor para explorar a  expresión.
 Por exemplo, podes moverte a través da expresión cas teclas de frecha  esquerda ou dereita e achegarte a unha porción da expresión como unha fracción utilizando a tecla de frecha abaixo.
-Por favor consulta a documentación do MathPlayer para información adicional: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm.
+Por favor consulta a [documentación de MathPlayer acerca de ordes de navegación https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] para información adicional.
 
 Cando desexes voltar ao documento, simplemente preme a tecla escape.
 
@@ -1412,6 +1412,8 @@ Cando está desactivada, non se anuncian nin se atopan coa navegación rápida.
 Sen embargo, o contido das táboas aínda se incluirá como texto normal.
 Esta opción está desactivada de xeito predeterminado.
 
+Para conmutar a inclusión de táboas de deseño dende calquera lugar, por favor asigna un xesto personalizado usando o diálogo [Xestos de entrada #InputGestures].
+
 ==== Configurando o anunciado de campos como ligas e cabeceiras ====
 Por favor atopa as novas opcións no [diálogo Opcións de Formato de documento #DocumentFormattingSettings]. 
 
@@ -1713,7 +1715,7 @@ Amósase o nome de paquete, o estado, a versión e o autor para cada complemento
 Se hai axuda dispoñible para o complemento seleccionado, podes acceder a ela premendo o seu botón de Axuda.
 
 Para examinar e descargar os complementos dispoñibles online, preme o botón Obter Complementos.
-Este botón abre a [páxina de complementos do NVDA http://addons.nvda-project.org/].
+Este botón abre a [páxina de complementos do NVDA https://addons.nvda-project.org/].
 Se NVDA está instalado e executándose no teu sistema, podes abrir directamente o complemento dende o explorador para comenzar o proceso de instalación como se describe a continuación.
 Pola contra, garda o paquete de complemento e segue as instruccións máis abaixo.
 
@@ -1748,14 +1750,14 @@ Para aceder ao Administrador de Complementos dende calquera lugar, por favor asi
 
 ++ Consola de Python ++
 A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenvolvemento que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
-Para máis información, por favor olla a Guía do desenvolvedor dispoñible na [sección de desenvolvemento da páxina web do NVDA http://community.nvda-project.org/wiki/Development].
+Para máis información, por favor olla a Guía do desenvolvedor dispoñible na [sección de desenvolvemento da páxina web do NVDA https://community.nvda-project.org/wiki/Development].
 
 ++ Recargar plugins ++
 Este elemento, unha vez activado, recarga app modules e plugins globais sen reiniciar ao NVDA, o cal é útil para desenvolvedores.
 
 + Sintetizadores de Voz Soportados +[SupportedSpeechSynths]
 Esta sección contén información acerca dos sintetizadores de voz soportados polo NVDA.
-Para unha lista máis extensa dos sintetizadores libres e comerciais que podes descargar e comprar para utilizar co NVDA, por favor mira a páxina en [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Para unha lista máis extensa dos sintetizadores libres e comerciais que podes descargar e comprar para utilizar co NVDA, por favor mira a páxina en [https://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++
 O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng] compílase directamente no NVDA e non require ningún outro controlador ou componente especial para instalarse.
@@ -1925,29 +1927,37 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 %kc:endInclude
 
 ++ Pantallas Handy Tech ++
-O NVDA soporta todas as pantallas de [Handy Tech http://www.handytech.de/].
+O NVDA soporta a maioría das pantallas de [Handy Tech http://www.handytech.de/] cando se conecten por USB, porto serie ou bluetooth.
 Para algunhas pantallas antigas USB, necesitarás instalar os controladores USB de Handy Tech no teu sistema.
 
-A entrada Braille  aínda non está soportada.
-
+As seguintes pantallas non se soportan ao se sacarlas da caixa, pero poden usarse a través do [controlador universal de Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] e o complemento do NVDA:
+- Braillino
+- Bookworm
+- Pantallas modulares coa versión do firmware 1.13 ou inferior. Por favor ten en conta que o firmware destas pantallas pode actualizarse.
+-
 Seguidamente van as asignacións de teclas para esta pantalla co NVDA.
 Por favor consulta a documentación da pantalla para descripcións de onde poden atoparse estas teclas.
 %kc:beginInclude
 || Nome | Tecla |
-| Desprazar a pantalla braille cara atrás | esquerda, arriba |
-| Desprazar a pantalla braille cara adiante | Dereita, abaixo |
+| Desprazar a pantalla braille cara atrás | esquerda, arriba, b3 |
+| Desprazar a pantalla braille cara adiante | Dereita, abaixo, b6 |
 | Mover a pantalla braille á liña anterior | b4 |
 | Mover a pantalla braille á liña seguinte | b5 |
 | Guiar á celda braille | sensor |
-| tecla shift+tab | esc |
+| tecla shift+tab | esc, triple ación  da tecla esquerda arriba+abaixo |
 | tecla alt | b2+b4+b5 |
 | tecla escape | b4+b6 |
-| tecla tab | enter |
-| tecla intro | esc+enter |
-| tecla frecha arriba | leftSpace |
-| tecla frecha abaixo | rightSpace |
+| tecla tab | enter, triple ación  da tecla dereita arriba+abaixo |
+| tecla intro | esc+enter, triple ación  da tecla dereita arriba+abaixo, ación joystick |
+| tecla frecha arriba | joystick arriba |
+| tecla frecha abaixo | joystick abaixo |
+| tecla frecha esquerda | joystick esquerda |
+| tecla frecha dereita | joystick dereita |
 | menú NVDA | b2+b4+b5+b6 |
-| configuración de Handy Tech | b4+b8 |
+| Conmutar seguemento do braille | b2 |
+| Conmutar o cursor braille  | b1 |
+| Conmutar a presentación de contexto do foco | b7 |
+| Conmutar entrada braille | espazo+b1+b3+b4 (espazo+B maiúscula) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2071,76 +2081,76 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Ler todo | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Series da HIMS Braille Sense/Braille EDGE/Smart Beetle ++
-O NVDA soporta as pantallas Braille Sense, Braille EDGE e Smart Beetle de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
+++ Series das HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
+O NVDA soporta as pantallas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
 Se se conectan a través do USB, necesitarás instalar os controladores USB de HIMS no sistema.
-Podes descargalos dende esta páxina: http://www.himsintl.com/?c=2/13&uid=2319
+Podes descargalos de aquí: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seguidamente van as asignacións de teclas para estas pantallas co NVDA.
 Por favor consulta a documentación das pantallas para descripcións de onde poden atoparse estas teclas.
 %kc:beginInclude
 || Nome | Tecla |
-| Desprazar atrás pantalla braille | desplazador esquerdo abaixo |
-| Desprazar adiante pantalla braille | desprazador dereito abaixo |
-| Mover pantalla braille á liña anterior | desprazador esquerdo arriba |
-| Mover pantalla braille á liña seguinte | desprazador dereito arriba|
 | Ir á celda braille | sensores |
-| tecla shift+tab | ponto1+ponto2+Espazo |
-| tecla alt | ponto1+ponto3+ponto4+Espazo |
-| tecla escape | ponto1+ponto5+Espazo |
-| tecla tab | ponto4+ponto5+Espazo |
-| tecla frecha arriba | ponto1+Espazo |
-| Tecla frecha abaixo | ponto4+Espazo |
-| bloq maiúsculas | ponto1+ponto3+ponto6+Espazo |
-| tecla shift+alt+tab | avance2+avance3+avance1 |
-| tecla alt+tab | avance2+avance3 |
-| tecla fin | ponto4+ponto6+Espazo |
-| tecla Control+fin | ponto4+ponto5+ponto6+Espazo |
-| tecla inicio | ponto1+ponto3+Espazo |
-| tecla control+inicio | ponto1+ponto2+ponto+Espazo |
-| tecla frecha esquerda | ponto3+Espazo |
-| tecla control+shift+frecha esquerda | ponto2+ponto8+espazo+avance1 |
-| tecla control+frecha esquerda | ponto2+Espazo |
-| tecla shift+alt+frecha esquerda | ponto2+ponto7+avance1 |
-| tecla alt+frecha esquerda | ponto2+ponto7 |
-| tecla frecha dereita | ponto6+Espazo |
-| tecla control+shift+frecha dereita | ponto5+ponto6+Espazo+avance1 |
-| tecla control+frecha dereita | ponto5+espazo |
-| tecla shift+alt+frecha dereita | ponto5+ponto7+avance1 |
-| tecla alt+frecha dereita | ponto5+ponto7 |
-| tecla RePáx | ponto1+ponto2+ponto6+espazo |
-| tecla control+rePáx | ponto1+ponto2+ponto6+ponto8+espazo |
-| tecla control+shift+frecha arriba | ponto2+ponto3+ponto8+espazo+avance1 |
-| tecla control+frecha arriba | ponto2+ponto3+espazo |
-| tecla shift+alt+frecha arriba | ponto2+ponto3+ponto7+avance1 |
-| tecla alt+frecha arriba | ponto2+ponto3+ponto7 |
-| tecla shift+frecha arriba | desprazador esquerdo abaixo + espazo |
+| Desprazar pantalla braille atrás | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Desprazar pantalla braille adiante | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Mover pantalla braille á liña anterior | leftSideScrollUp+rightSideScrollUp |
+| Mover pantalla braille á liña seguinte | leftSideScrollDown+rightSideScrollDown |
+| Mover á liña anterior en revisión | rightSideUpArrow |
+| Mover á liña seguinte en revisión | rightSideDownArrow |
+| Mover ao carácter  anterior en revisión | rightSideLeftArrow |
+| Mover ao carácter seguinte en revisión | rightSideRightArrow |
+| Mover ao foco actual | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| Tecla control | smartbeetle:f1, brailleedge:f3 |
+| Tecla windows | f7, smartbeetle:f2 |
+| tecla alt | ponto1+ponto3+ponto4+espazo, f2, smartbeetle:f3, brailleedge:f4 |
+| tecla shift | f5 |
+| tecla insert | ponto2+ponto4+espazo, f6 |
+| tecla aplicacións | ponto1+ponto2+ponto3+ponto4+espazo, f8 |
+| tecla bloqueo de maiúsculas | ponto1+ponto3+ponto6+espazo |
+| tecla tab | ponto4+ponto5+espazo, f3, brailleedge:f2 |
+| teclas shift+alt+tab | f2+f3+f1 |
+| teclas alt+tab | f2+f3 |
+| teclas shift+tab | ponto1+ponto2+espazo |
+| tecla fin | ponto4+ponto6+espazo |
+| teclas control+fin | ponto4+ponto5+ponto6+espazo |
+| tecla inicio | ponto1+ponto3+espazo, smartbeetle:f4 |
+| teclas control+inicio | ponto1+ponto2+ponto3+espazo |
+| teclas alt+f4 | ponto1+ponto3+ponto5+ponto6+espazo |
+| tecla frecha esquerda | ponto3+espazo, leftSideLeftArrow |
+| teclas control+shift+frecha esquerda | ponto2+ponto8+espazo+f1 |
+| teclas control+frecha esquerda | ponto2+espazo |
+| teclas shift+frecha esquerda | ponto2+ponto7+f1 |
+| teclas alt+frecha esquerda | ponto2+ponto7 |
+| tecla frecha dereita | ponto6+espazo, leftSideRightArrow |
+| teclas control+shift+frecha dereita | ponto5+ponto8+espazo+f1 |
+| teclas control+frecha dereita | ponto5+espazo |
+| teclas shift+alt+frecha dereita | ponto5+ponto7+f1 |
+| teclas alt+frecha dereita | ponto5+ponto7 |
+| tecla rePáx | ponto1+ponto2+ponto6+espazo |
+| teclas control+rePáx | ponto1+ponto2+ponto6+ponto8+espazo |
+| tecla frecha arriba | ponto1+espazo, leftSideUpArrow |
+| teclas control+shift+frecha arriba | ponto2+ponto3+ponto8+espazo+f1 |
+| teclas control+frecha arriba | ponto2+ponto3+espazo |
+| teclas shift+alt+frecha arriba | ponto2+ponto3+ponto7+f1 |
+| teclas alt+frecha arriba | ponto2+ponto3+ponto7 |
+| teclas shift+frecha arriba | leftSideScrollDown+espazo |
 | tecla avPáx | ponto3+ponto4+ponto5+espazo |
-| tecla control+avPáx | ponto3+ponto4+ponto5+ponto8+espazo |
-| tecla control+shift+frecha abaixo | ponto5+ponto6+ponto8+espazo+avance1 |
-| tecla control+frecha abaixo | ponto5+ponto6+espazo |
-| tecla shift+alt+frecha abaixo | ponto5+ponto6+ponto7+avance1 |
-| tecla alt+frecha abaixo | ponto5+ponto6+ponto7 |
-| tecla shift+frecha abaixo | desprazador dereito abaixo + espazo |
-| tecla suprimir | ponto1+ponto3+ponto5+espazo |
+| teclas control+avPáx | ponto3+ponto4+ponto5+ponto8+espazo |
+| tecla frecha abaixo | ponto4+espazo, leftSideDownArrow |
+| teclas control+shift+frecha abaixo | ponto5+ponto6+ponto8+espazo+f1 |
+| teclas control+frecha abaixo | ponto5+ponto6+espazo |
+| teclas shift+alt+frecha abaixo | ponto5+ponto6+ponto7+f1 |
+| teclas alt+frecha abaixo | ponto5+ponto6+ponto7 |
+| teclas shift+frecha abaixo | espacio+rightSideScrollDown |
+| tecla escape | ponto1+ponto5+espazo, f4, brailleedge:f1 |
+| tecla borrar | ponto1+ponto3+ponto5+espazo, ponto1+ponto4+ponto5+espazo |
 | tecla f1 | ponto1+ponto2+ponto5+espazo |
 | tecla f3 | ponto1+ponto2+ponto4+ponto8 |
-| tecla f4 | ponto7+avance3 |
-| tecla windows+b | ponto1+ponto2+avance1 |
-| tecla windows+d | ponto1+ponto4+ponto5+avance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-O NVDA soporta a pantalla SyncBraille de [HIMS http://www.hims-inc.com/].
-Necesitarás instalar os controladores USB de HIMS no sistema.
-
-Seguidamente van as asignacións de teclas para esta pantalla co NVDA.
-Por favor consulta a documentación da pantalla para descripcións de onde se poden atopar estas teclas.
-%kc:beginInclude
-|| Nome | Tecla |
-| Desprazar pantalla braille cara atrás | desprazador abaixo da esquerda |
-| Desprazar pantalla braille cara adiante | desprazador abaixo da dereita |
-| Ir á celda braille | sensores |
+| tecla f4 | ponto7+f3 |
+| teclas windows+b | ponto1+ponto2+f1 |
+| teclas windows+d | ponto1+ponto4+ponto5+f1 |
+| teclas control+insert | smartbeetle:f1+rightSideScroll |
+| teclas alt+insert | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
 ++ Pantallas Braille Seika ++
