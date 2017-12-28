@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 00:10+1000\n"
-"PO-Revision-Date: 2017-12-21 11:09+0800\n"
+"POT-Creation-Date: 2017-12-22 00:10+1000\n"
+"PO-Revision-Date: 2017-12-28 09:11+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -7116,7 +7116,7 @@ msgid "&Synthesizer..."
 msgstr "語音合成 (&S)..."
 
 msgid "Change the synthesizer to be used"
-msgstr "變更了語音合成軟體"
+msgstr "變更了語音合成器"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
@@ -7144,6 +7144,14 @@ msgstr "鼠標設定 (&M)..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "切換讀出鼠標所指物件之鼠標圖案改變的開關"
+
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "觸控互動 (&V)..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "更改 NVDA 與觸控螢幕的互動"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -8116,12 +8124,12 @@ msgstr "修改語言設定"
 
 #. Translators: This is the label for the synthesizer dialog.
 msgid "Synthesizer"
-msgstr "語音合成軟體"
+msgstr "語音合成器"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
 msgid "&Synthesizer:"
-msgstr "語音合成軟體(&S):"
+msgstr "語音合成器(&S):"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
@@ -8139,10 +8147,10 @@ msgstr "自動音量調整模式(&D)"
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "無法載入%s語音合成軟體"
+msgstr "無法載入%s語音合成器"
 
 msgid "Synthesizer Error"
-msgstr "語音合成軟體錯誤"
+msgstr "語音合成器錯誤"
 
 #. Translators: This is the label for the voice settings dialog.
 msgid "Voice Settings"
@@ -8889,6 +8897,15 @@ msgstr "鍵入輸入手勢："
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "無法儲存使用者定義的手勢，可能是NVDA程式位於唯讀的檔案系統所造成。"
+
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "觸控互動"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "觸控打字模式 (&T)"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
