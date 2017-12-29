@@ -437,7 +437,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# cells will already be padded up to numCells.
 		self._sendPacket(EB_BRAILLE_DISPLAY, EB_BRAILLE_DISPLAY_STATIC, b"".join(chr(cell) for cell in cells))	
 
-	def _setHidKeyboardInput(self, state):
+	def _get_hidKeyboardInput(self):
+		return self._hidKeyboardInput
+
+	def _set_hidKeyboardInput(self, state):
+		self._sendPacket(EB_KEY, EB_KEY_USB_HID_MODE, str(int(state)))
+		for i in xrange(3):
+			self._dev.waitForRead(self.timeout)
+			if state is self._hidKeyboardInput:
+				break
+
+	def _hidKeyboardInputScriptHelper(self, state):
 		def announceUnavailableMessage():
 			# Translators: Message when HID keyboard simulation is unavailable.
 			ui.message(_("HID keyboard input simulation is unavailable."))
@@ -453,15 +463,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Translators: Message when HID keyboard simulation is already disabled.
 				ui.message(_('HID keyboard simulation already disabled'))
 			return
-		self._sendPacket(EB_KEY, EB_KEY_USB_HID_MODE, str(int(state)))
-		for i in xrange(3):
-			self._dev.waitForRead(self.timeout)
-			if state is self._hidKeyboardInput:
-				break
+
+		self.hidKeyboardInput = True
+
 		if state is not self._hidKeyboardInput:
 			announceUnavailableMessage()
-			return
-		if state:
+		elif state:
 			# Translators: Message when HID keyboard simulation is enabled.
 			ui.message(_('HID keyboard simulation enabled'))
 		else:
@@ -470,12 +477,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	scriptCategory = SCRCAT_BRAILLE
 	def script_enableHidKeyboardInput(self, gesture):
-		self._setHidKeyboardInput(True)
+		self._hidKeyboardInputScriptHelper(True)
 	# Translators: Description of the script that enables HID keyboard simulation.
 	script_enableHidKeyboardInput.__doc__ = _("Enable HID keyboard simulation")
 
 	def script_disableHidKeyboardInput(self, gesture):
-		self._setHidKeyboardInput(False)
+		self._hidKeyboardInputScriptHelper(False)
 	# Translators: Description of the script that disables HID keyboard simulation.
 	script_disableHidKeyboardInput.__doc__ = _("Disable HID keyboard simulation")
 
