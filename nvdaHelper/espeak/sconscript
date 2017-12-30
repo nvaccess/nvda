@@ -142,6 +142,7 @@ espeakLib=env.SharedLibrary(
 		# com\ttsengine.cpp
 		# We do not use the ASYNC compile option in espeak.
 		speechPlayerCpp,
+		File('#include/speechPlayer/src/speechPlayer.def'),
 	],
 	LIBS=[
 		'advapi32',
