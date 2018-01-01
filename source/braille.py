@@ -1591,7 +1591,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		# we just replace the data.
 		# This means that if multiple writes occur while an earlier write is still in progress,
 		# we skip all but the last.
-		if not alreadyQueued:
+		if not alreadyQueued and not self.display._awaitingAck:
 			# Queue a call to the background thread.
 			_BgThread.queueApc(_BgThread.executor)
 
@@ -1834,6 +1834,7 @@ class _BgThread:
 		thread.daemon = True
 		thread.start()
 		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
+		cls.ackTimerHandle = winKernel.createWaitableTimer()
 
 	@classmethod
 	def queueApc(cls, func):
@@ -1844,6 +1845,10 @@ class _BgThread:
 		if not cls.thread:
 			return
 		cls.exit = True
+		if not ctypes.windll.kernel32.CancelWaitableTimer(cls.ackTimerHandle):
+			raise ctypes.WinError()
+		winKernel.closeHandle(cls.ackTimerHandle)
+		cls.ackTimerHandle = None
 		# Wake up the thread. It will exit when it sees exit is True.
 		cls.queueApc(cls.executor)
 		cls.thread.join()
@@ -1857,6 +1862,9 @@ class _BgThread:
 		if _BgThread.exit:
 			# func will see this and exit.
 			return
+		if handler.display._awaitingAck:
+			# Do not write cells when we are awaiting an ACK
+			return
 		with _BgThread.queuedWriteLock:
 			data = _BgThread.queuedWrite
 			_BgThread.queuedWrite = None
@@ -1867,6 +1875,22 @@ class _BgThread:
 		except:
 			log.error("Error displaying cells. Disabling display", exc_info=True)
 			handler.setDisplayByName("noBraille", isFallback=True)
+		else:
+			if handler.display.receivesAckPackets:
+				handler.display._awaitingAck = True
+				winKernel.setWaitableTimer(
+					_BgThread.ackTimerHandle,
+					int(handler.display.timeout*2000),
+					0,
+					_BgThread.ackTimeoutResetter
+				)
+
+	@winKernel.PAPCFUNC
+	def ackTimeoutResetter(param):
+		if handler.display.receivesAckPackets and handler.display._awaitingAck:
+			log.debugWarning("Waiting for %s ACK packet timed out"%handler.display.name)
+			handler.display._awaitingAck = False
+			_BgThread.queueApc(_BgThread.executor)
 
 	@classmethod
 	def func(cls):
@@ -1944,6 +1968,22 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	#: This is also required to use the L{hwIo} module.
 	#: @type: bool
 	isThreadSafe = False
+	#: Whether displays for this driver return acknowledgements for sent packets.
+	#: L{_handleAck} should be called when an ACK is received.
+	#: Note that thread safety is required for the generic implementation to function properly.
+	#: If a display is not thread safe, a driver should manually implement ACK processing.
+	#: @type: bool
+	receivesAckPackets = False
+	#: Whether this driver is awaiting an Ack for a connected display.
+	#: This is set to C{True} after displaying cells when L{receivesAckPackets} is True,
+	#: and set to C{False} by L{_handleAck} or when C{timeout} has elapsed.
+	#: This is for internal use by NVDA core code only and shouldn't be touched by a driver itself.
+	_awaitingAck = False
+	#: Maximum timeout to use for communication with a device (in seconds).
+	#: This can be used for serial connections.
+	#: Furthermore, it is used by L{_BgThread} to stop waiting for missed acknowledgement packets.
+	#: @type: float
+	timeout = 0.2
 
 	@classmethod
 	def check(cls):
@@ -2027,6 +2067,15 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
 					if emuGesture.isModifier:
 						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)
+
+	def _handleAck(self):
+		"""Base implementation to handle acknowledgement packets."""
+		if not self.receivesAckPackets:
+			raise NotImplementedError("This display driver does not support ACK packet handling")
+		if not ctypes.windll.kernel32.CancelWaitableTimer(_BgThread.ackTimerHandle):
+			raise ctypes.WinError()
+		self._awaitingAck = False
+		_BgThread.queueApc(_BgThread.executor)
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
