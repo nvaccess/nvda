@@ -226,18 +226,17 @@ class TextInfoQuickNavItem(QuickNavItem):
 			# Translators: Reported label in the elements list for an element which which has no name and value
 			unlabeled = _("Unlabeled")
 			realStates = labelPropertyGetter("states")
-			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
-			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
+			labeledStates = " ".join(controlTypes.processAndLabelStates(role, realStates, controlTypes.REASON_FOCUS))
 			if self.itemType is "formField":
 				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
 					# Example output: Mute; toggle button; pressed
-					labelParts = (content or name or unlabeled, roleText, positiveStates, negativeStates)
+					labelParts = (content or name or unlabeled, roleText, labeledStates)
 				else:
 					# Example output: Find a repository...; edit; has auto complete; NVDA
-					labelParts = (name or unlabeled, roleText, positiveStates, negativeStates, content)
+					labelParts = (name or unlabeled, roleText, labeledStates, content)
 			elif self.itemType in ("link", "button"):
 				# Example output: You have unread notifications; visited
-				labelParts = (content or name or unlabeled, positiveStates, negativeStates)
+				labelParts = (content or name or unlabeled, labeledStates)
 		if labelParts:
 			label = "; ".join(lp for lp in labelParts if lp)
 		else:
