@@ -3,8 +3,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Bram Duvigneau, Leonard de Ruijter (Babbage B.V.), Felix Grützmacher (Handy Tech Elektronik GmbH)
-"Braille display driver for Handy Tech braille displays"
+#Copyright (C) 2008-2018 NV Access Limited, Bram Duvigneau, Leonard de Ruijter (Babbage B.V.), Felix Grützmacher (Handy Tech Elektronik GmbH)
+
+"""
+Braille display driver for Handy Tech braille displays.
+"""
+
 from collections import OrderedDict
 from cStringIO import StringIO
 import serial # pylint: disable=E0401
@@ -18,7 +22,8 @@ import ui
 from baseObject import ScriptableObject, AutoPropertyObject
 from globalCommands import SCRCAT_BRAILLE
 from logHandler import log
-
+import time
+import datetime
 
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
@@ -219,11 +224,50 @@ class Model(AutoPropertyObject):
 
 
 class AtcMixin(object):
+	"""Support for displays with Active Tactile Control (ATC)"""
 
 	def postInit(self):
 		super(AtcMixin, self).postInit()
 		log.debug("Enabling ATC")
 		self._display.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, True)		
+
+
+class TimeSyncMixin(object):
+	"""Functionality for displays that support time synchronization."""
+
+	def postInit(self):
+		super(TimeSyncMixin, self).postInit()
+		log.debug("Request current display time")
+		self._display.sendExtendedPacket(HT_EXTPKT_GET_RTC)
+
+	def handleTime(self, timeStr):
+		ords = map(ord, timeStr)
+		displayDateTime = datetime.datetime(
+			year=ords[0] << 8 | ords[1],
+			month=ords[2],
+			day=ords[3],
+			hour=ords[4],
+			minute=ords[5],
+			second=ords[6]
+		)
+		localDateTime = datetime.datetime.today()
+		if abs((displayDateTime - localDateTime).total_seconds()) >= 5:
+			log.debugWarning("Display time out of sync: %s"%displayDateTime.isoformat())
+			self.syncTime(localDateTime)
+		else:
+			log.debug("Time in sync. Display time %s"%displayDateTime.isoformat())
+
+	def syncTime(self, dt):
+		log.debug("Synchronizing braille display date and time...")
+		# Setting the time uses a swapped byte order for the year.
+		timeList = [
+			dt.year & 0xFF, dt.year >> 8,
+			dt.month, dt.day,
+			dt.hour, dt.minute, dt.second
+		]
+		timeStr = "".join(map(chr, timeList))
+		self._display.sendExtendedPacket(HT_EXTPKT_SET_RTC, timeStr)
+
 
 class TripleActionKeysMixin(AutoPropertyObject):
 	"""Triple action keys
@@ -322,26 +366,27 @@ class EasyBraille(Model):
 	numCells = 40
 	genericName = name = "Easy Braille"
 
-class ActiveBraille(AtcMixin, TripleActionKeysMixin, Model):
+
+class ActiveBraille(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'
 
 
-class ConnectBraille40(TripleActionKeysMixin, Model):
+class ConnectBraille40(TimeSyncMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_CONNECT_BRAILLE_40
 	numCells = 40
 	genericName = "Connect Braille"
 	name = "Connect Braille 40"
 
 
-class Actilino(AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
+class Actilino(TimeSyncMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTILINO
 	numCells = 16
 	genericName = name = "Actilino"
 
 
-class ActiveStar40(AtcMixin, TripleActionKeysMixin, Model):
+class ActiveStar40(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_STAR_40
 	numCells = 40
 	name = "Active Star 40"
@@ -595,6 +640,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
+			if not self.isHid:
+				# We must sleep after closing the COM port, as it takes some time for the device to disconnect.
+				time.sleep(self.timeout)
 
 	def sendPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
@@ -619,15 +667,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		assert self.isHid
 		maxBlockSize = self._dev._writeSize-3
 		# When the packet length exceeds C{writeSize}, the packet is split up into several packets.
-		# These packets are of size C{blockSize}.
 		# They contain C{HT_HID_RPT_InData}, the length of the data block,
 		# the data block itself and a terminating null character.
-		bytesRemaining = packet
-		while bytesRemaining:
-			blockSize = min(maxBlockSize, len(bytesRemaining))
-			hidPacket = HT_HID_RPT_InData + chr(blockSize) + bytesRemaining[:blockSize] + "\x00"
+		for offset in xrange(0, len(packet), maxBlockSize):
+			block = packet[offset:offset+maxBlockSize]
+			hidPacket = HT_HID_RPT_InData + chr(len(block)) + block + "\x00"
 			self._dev.write(hidPacket)
-			bytesRemaining = bytesRemaining[blockSize:]
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -743,6 +788,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				pass
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				pass
+			elif extPacketType == HT_EXTPKT_GET_RTC and isinstance(self._model, TimeSyncMixin):
+				self._model.handleTime(packet[1:])
 			else:
 				# Unknown extended packet, log it
 				log.debugWarning("Unhandled extended packet of type %r: %r" %
