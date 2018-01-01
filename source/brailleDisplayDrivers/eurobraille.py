@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited, Babbage B.V., Eurobraille
+#Copyright (C) 2017-2018 NV Access Limited, Babbage B.V., Eurobraille
 
 from collections import OrderedDict, defaultdict
 from cStringIO import StringIO
@@ -447,7 +447,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if state is self._hidKeyboardInput:
 				break
 
-	def _hidKeyboardInputScriptHelper(self, state):
+	scriptCategory = SCRCAT_BRAILLE
+	def script_toggleHidKeyboardInput(self, gesture):
 		def announceUnavailableMessage():
 			# Translators: Message when HID keyboard simulation is unavailable.
 			ui.message(_("HID keyboard input simulation is unavailable."))
@@ -455,16 +456,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if not self.isHid:
 			announceUnavailableMessage()
 			return
-		if state is 		self._hidKeyboardInput:
-			if state:
-				# Translators: Message when HID keyboard simulation is already enabled.
-				ui.message(_('HID keyboard simulation already enabled'))
-			else:
-				# Translators: Message when HID keyboard simulation is already disabled.
-				ui.message(_('HID keyboard simulation already disabled'))
-			return
 
-		self.hidKeyboardInput = True
+		state = not self.hidKeyboardInput
+		self.hidKeyboardInput = state
 
 		if state is not self._hidKeyboardInput:
 			announceUnavailableMessage()
@@ -475,22 +469,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# Translators: Message when HID keyboard simulation is disabled.
 			ui.message(_('HID keyboard simulation disabled'))
 
-	scriptCategory = SCRCAT_BRAILLE
-	def script_enableHidKeyboardInput(self, gesture):
-		self._hidKeyboardInputScriptHelper(True)
-	# Translators: Description of the script that enables HID keyboard simulation.
-	script_enableHidKeyboardInput.__doc__ = _("Enable HID keyboard simulation")
-
-	def script_disableHidKeyboardInput(self, gesture):
-		self._hidKeyboardInputScriptHelper(False)
-	# Translators: Description of the script that disables HID keyboard simulation.
-	script_disableHidKeyboardInput.__doc__ = _("Disable HID keyboard simulation")
+	# Translators: Description of the script that toggles HID keyboard simulation.
+	script_toggleHidKeyboardInput.__doc__ = _("Toggle HID keyboard simulation")
 
 	__gestures = {
-		"br(eurobraille.esytime):l1+joystick1Down": "enableHidKeyboardInput",
-		"br(eurobraille):switch1Left+joystick1Down": "enableHidKeyboardInput",
-		"br(eurobraille.esytime):l8+joystick1Down": "disableHidKeyboardInput",
-		"br(eurobraille):switch1Right+joystick1Down": "disableHidKeyboardInput",
+		"br(eurobraille.esytime):l1+joystick1Down": "toggleHidKeyboardInput",
+		"br(eurobraille):switch1Left+joystick1Down": "toggleHidKeyboardInput",
+		"br(eurobraille.esytime):l8+joystick1Down": "toggleHidKeyboardInput",
+		"br(eurobraille):switch1Right+joystick1Down": "toggleHidKeyboardInput",
 	}
 
 	gestureMap = inputCore.GlobalGestureMap({
