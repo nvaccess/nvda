@@ -229,7 +229,7 @@ class AtcMixin(object):
 	def postInit(self):
 		super(AtcMixin, self).postInit()
 		log.debug("Enabling ATC")
-		self._display.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, True)		
+		self._display.atc = True
 
 
 class TimeSyncMixin(object):
@@ -588,8 +588,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._model = None
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
-		self._brailleInput = False
+		self.brailleInput = False
 		self._hidSerialBuffer = ""
+		self._atc = False
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
@@ -644,6 +645,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# We must sleep after closing the COM port, as it takes some time for the device to disconnect.
 				time.sleep(self.timeout)
 
+	def _get_atc(self):
+		return self._atc
+
+	def _set_atc(self, state):
+		if self._atc is state:
+			return
+		if isinstance(self._model,AtcMixin):
+			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, state)
+		else:
+			log.debugWarning("Changing ATC setting for unsupported device %s"%self._model.name)
+		# Regardless whether this setting is supported or not, we want to safe its state.
+		self._atc = state
+
 	def sendPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
@@ -680,7 +694,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# The first key released executes the key combination.
 		try:
 			inputCore.manager.executeGesture(
-				InputGesture(self._model, self._keysDown, self._brailleInput))
+				InputGesture(self._model, self._keysDown, self.brailleInput))
 		except inputCore.NoInputGestureAction:
 			pass
 		# Any further releases are just the rest of the keys in the combination
@@ -806,8 +820,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	scriptCategory = SCRCAT_BRAILLE
 
 	def script_toggleBrailleInput(self, _gesture):
-		self._brailleInput = not self._brailleInput
-		if self._brailleInput:
+		self.brailleInput = not self._brailleInput
+		if self.brailleInput:
 			# Translators: message when braille input is enabled
 			ui.message(_('Braille input enabled'))
 		else:
