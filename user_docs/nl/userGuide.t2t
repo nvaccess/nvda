@@ -2083,78 +2083,76 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | Alles lezen | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle Serie ++
-NVDA ondersteunt de leesregelmodellen Braille Sense, Braille EDGE en Smart Beetle van [Hims http://www.hims-inc.com/] die via USB of bluetooth kunnen worden aangesloten. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serie ++
+NVDA ondersteunt de leesregelmodellen Braille Sense, Braille EDGE, Smart Beetle en Sync Braille van [Hims http://www.hims-inc.com/] die via USB of bluetooth kunnen worden aangesloten. 
 Als u voor de USB-aansluiting kiest, moet u wel eerst de USB-drivers van HIMS op uw Systeem installeren. 
-U kunt deze downloaden van : http://www.himsintl.com/?c=2/13&uid=2319.
+U kunt deze downloaden van: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
 %kc:beginInclude
 || Naam | Toets |
-| Brailleregel terugscrollen | Omlaag scrollen aan  linkerkant |
-| Brailleregel vooruit scrollen | Omlaag Scrollen aan rechterkant |
-| Naar vorige regel verplaatsen | Omhoog scrollen aan linkerkant |
-| Naar volgende regel verplaatsen | Omhoog scrollen aan rechterkant |
 | Cursor naar braillecel brengen | routing |
-| Toetscombinatie Shift+Tab | Punt 1+Punt 2+Spatiebalk |
-| Alttoets | Punt 1+Punt 3+Punt 4+Spatiebalk |
-| Esc-toets | Punt 1+Punt 5+Spatiebalk |
-| Tabtoets | Punt 4+Punt 5+Spatiebalk |
-| Enter-toets | Punt8 |
-| BackSpace | Punt7 |
-| Pijl Omhoog | Punt1+Spatiebalk |
-| Pijl Omlaag | Punt 4+Spatiebalk |
-| CapsLock-toets | punt1+Punt3+Punt6+Spatiebalk |
-| Shiftt+alt+tab | Advance2+Advance3+Advance1 |
-| Alt+tab | Advance2+Advance3 |
-| End | Punt4+Punt6+Spatiebalk |
-| Ctrl+End | Punt4+Punt5+Punt6+Spatiebalk |
-| Home-toets | Punt1+Punt3+Spatiebalk |
-| Ctrl+Home | Punt1+Punt2+Punt3+Spatiebalk |
-| Pijl links | Punt3+Spatiebalk |
-| Ctrl+Shift+Pijl links | Punt2+Punt8+Spatiebalk+Advance1 |
-| Ctrl+Pijl links | Punt2+Spatiebalk |
-| Shift+alt+Pijl links | Punt2+Punt7+Advance1 |
-| Alt+Pijl links | Punt2+Punt7 |
-| Pijl rechts | Punt6+Spatiebalk |
-| Ctrl+Shift+Pijl rechts | punt5+punt8+Spatiebalk+Advance1 |
-| Ctrl+Pijl rechts | punt5+Spatiebalk |
-| Shift+Alt+Pijl rechts | punt5+punt7+Advance1 |
-| Alt+Pijl rechts | punt5+punt7 |
-| PageUp | punt1+punt2+punt6+Spatiebalk |
-| Ctrl+PageUp | punt1+punt2+punt6+punt8+Spatiebalk |
-| Ctrl+Shift+Pijl omhoog | punt2+punt3+punt8+Spatiebalk+Advance1 |
-| Ctrl+Pijl omhoog | punt2+punt3+Spatiebalk |
-| Shift+Alt+Pijl omhoog | punt2+punt3+punt7+Advance1 |
-| Alt+Pijl omhoog | punt2+punt3+punt7 |
-| Shift+Pijl omhoog | Omlaag scrollen aan linker kant +Spatiebalk |
-| PageDown | punt3+punt4+punt5+Spatiebalk |
-| Ctrl+PageDown | punt3+punt4+punt5+punt8+Spatiebalk |
-| Ctrl+Shift+Pijl omlaag | punt5+punt6+punt8+Spatiebalk+Advance1 |
-| Ctrl+Pijl omlaag | punt5+punt6+Spatiebalk |
-| Shift+Alt+Pijl omlaag | punt5+punt6+punt7+Advance1 |
-| Alt+Pijl omlaag | punt5+punt6+punt7 |
-| Shift+Pijl omlaag | Omlaag scrollen aan rechterkant+Spatiebalk |
-| Del | punt1+punt3+punt5+Spatiebalk |
-| F1  | punt1+punt2+punt5+Spatiebalk |
-| F3  | punt1+punt2+punt4+punt8 |
-| F4 | punt7+Advance3 |
-| windows+b | punt1+punt2+Advance1 |
-| windows+d | punt1+punt4+punt5+Advance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA ondersteunt model Braillesync van  [HIMS http://www.hims-inc.com/].
-U dient de usb-drivers van de fabrikant op uw computer te installeren voordat u de leesregel aansluit.
-
-Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
-(Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
-%kc:beginInclude
-|| Naam | Toets |
-| Brailleregel terugscrollen | Omlaag scrollen aan de linkerkant |
-| Brailleregel vooruit scrollen | Omlaag scrollen aan de rechterkant |
-| Cursornaar Braillecel verplaatsen | routing |
+| Brailleregel terugscrollen | LinkerzijdeOmhoogScrollen, Rechterzijde OmhoogScrollen, LinkerScroll |
+| Brailleregel vooruit scrollen | LinkerzijdeOmlaagScrollen, RechterzijdeOmlaagScrollen, RechterScroll |
+| Naar vorige regel verplaatsen | LinkerzijdeOmhoogScrollen+RechterzijdeOmhoogScrollen |
+| Naar volgende regel verplaatsen | LinkerzijdeOmlaagScrollen+RechterzijdeOmlaagScrollen |
+| Naar vorige regel verplaatsen in reviewmodus | RechterPijlOmhoog |
+| Naar volgene regel verplaatsen in reviewmodus | RechterPijlOmlaag |
+| Naar vorig teken verplaatsen in reviewmodus | RechterPijlLinks |
+| Naar volgend teken verplaatsen in reviewmodus | RechterPijlRechts |
+| Naar huidige focus verplaatsen | LinkerzijdeOmhoogScrollen+LinkerzijdeOmlaagScrollen, RechterzijdeOmhoogScrollen+RechterzijdeOmlaagScrollen, LinkerScroll+RechterScroll |
+| control-toets | smartbeetle: F1, brailleedge:F3 |
+| windows-toets | F7, smartbeetle:f2 |
+| alt-toets | punt1+punt3+punt4+spatie, F2, smartbeetle:F3, brailleedge:f4 |
+| shift-toets | f5 |
+| insert-toets | punt2+punt4+spatie, F6 |
+|Contextmenutoets | punt1+punt2+punt3+punt4+spatie, F8 |
+| CapsLocktoets | punt1+punt3+punt6+spatie |
+| tab-toets | punt4+punt5+spatie, F3, brailleedge:F2 |
+| shift+alt+tab-toetscombinatie | f2+f3+f1 |
+| alt+tab-toetscombinatie | f2+f3 |
+| shift+tab-toetscombinatie | punt1+punt2+spatie |
+| end-toets | punt4+punt6+spatie |
+| control+end-toetscombinatie | punt4+punt5+punt6+spatie |
+| home-toets | punt1+punt3+spatie, smartbeetle:f4 |
+| control+home-toetscombinatie | punt1+punt2+punt3+spatie |
+| alt+f4-toetscombinatie | punt1+punt3+punt5+punt6+spatie |
+| linker Pijltoets | punt3+spatie, Linker PijlLinks |
+| control+shift+PijlLinks-toetscombinatie | punt2+punt8+spatie+f1 |
+| control+PijlLinks-toetscombinatie | punt2+spatie |
+| shift+alt+PijlLinks-toetscombinatie | punt2+punt7+f1 |
+| alt+PijlLinks-toetscombinatie | punt2+punt7 |
+| PijlRechts-toets | punt6+spatie, Linker PijlRechts |
+| control+shift+PijlRechts-toetscombinatie | punt5+punt8+spatie+f1 |
+| control+PijlRechts-toetscombinatie | punt5+spatie |
+| shift+alt+PijlRechts-toetscombinatie | punt5+punt7+f1 |
+| alt+PijlRechts-toetscombinatie | punft5+punt7 |
+| pageUp-toets | punt1+punt2+punt6+spatie |
+| control+pageUp-toetscombinatie | punt1+punt2+punt6+punt8+spatie |
+| PijlOmhoog-toets | punt1+spatie, linker pijl omhoog |
+| control+shift+PijlOmhoog-toetscombinatie | punt2+punt3+punt8+spatie+F1 |
+| control+PijlOmhoog-toets | punt2+punt3+spatie |
+| shift+alt+PijlOmhoog-toetscombinatie | punt2+punt3+punt7+F1 |
+| alt+PijlOmhoog-toetscombinatie | punt2+punt3+punt7 |
+| shift+PijlOmhoog-toetscombinatie | Linker ScrollOmlaag+spatie |
+| pageDown-toets | punt3+punt4+punt5+spatie |
+| control+pageDown-toetscombinatie | punt3+punt4+punt5+punt8+spatie |
+| PijlOmlaag-toets | punt4+spatie, Linker PijlOmlaag |
+| control+shift+PijlOmlaag-toetscombinatie | punt5+punt6+punt8+spatie+F1 |
+| control+PijlOmlaag-toetscombinatie | punt5+punt6+spatie |
+| shift+alt+PijlOmlaag-toetscombinatie | punt5+punt6+punt7+F1 |
+| alt+PijlOmlaag-toetscombinatie | punt5+punt6+punt7 |
+| shift+PijlOmlaag-toetscombinatie | spatie+Rechter ScrollOmlaag |
+| escape-toets | punt1+punt5+spatie, f4, brailleedge:f1 |
+| del-toets | punt1+punt3+punt5+spatie, punt1+punt4+punt5+spatie |
+| f1-toets | punt1+punt2+punt5+spatie |
+| f3-toets | punt1+plus2+punt4+punt8 |
+| f4toets | punt7+f3 |
+| windows+b-toetscombinatie | punt1+punt2+f1 |
+| windows+d-toetscombinatie | punt1+punt4+punt5+f1 |
+| control+inserttoetscominatie | smartbeetle: f1+Rechter Scroll |
+| alt+insert-toetscombinatie | smartbeetle: f3+Rechter Scroll |
 %kc:endInclude
 
 ++ Seika Brailleleesregels ++

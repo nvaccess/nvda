@@ -5,15 +5,32 @@ Ce este nou în NVDA
 
 = 2018.1 =
 
+== Modificări ==
+- Driverele afișajelor braille HIMS Braille Sense/Braille EDGE/Smart Beetle și Hims Sync Braille au fost înlocuite de un driver nou. Noul driver va fi activat automat pentru foștii utilizatori ai driver-ului syncBraille. (#7459)
+ - Niște taste, mai exact cele de deplasare, au fost reatribuite pentru a urmări convențiile folosite de produsele Hims. Consultați ghidul utilizatorului pentru mai multe detalii.
+- La scrierea cu tastatura de pe ecran prin interacțiunea tactilă, în mod implicit, trebuie să atingeți dublu fiecare tastă, în același mod în care ați activa un oricare alt control.
+ - Pentru a folosi existenta „scriere tactilă”, pur și simplu ridicându-vă degetele de pe tastă, este suficient s-o activați. Pentru a face asta, activați această opțiune din noul dialog de setări al interacțiunii tactile din meniul Preferințe. (#7309)
+ 
+
 == Rezolvări Defecte ==
 - Mesajele care pot fi redirecționate, cum ar fi afișarea formatării curente la apăsarea NVDA+f de două ori rapid, nu mai eșuează atunci când NVDA este instalat într-o cale cu caractere non-asci. (#7474)
 - Focalizarea este din nou restaurată corect la întoarcerea la Spotify din altă aplicație. (#7689)
 - NVDA nu mai eșuază să se actualizeze pe sisteme pe care e activată caracteristica de acces a dosarului controlat (disponibilă în Windows 10 Fall Creaters update). (#7696)
+- Detectarea tastelor de deplasare pe afișajele Hims Smart Beetle nu mai este fiabilă. (#6086)
+O ușoară îmbunătățire a performanței la afișarea cantităților mari de conținut în Mozilla Firefox 58 și mai nou. (#7719)
+- Se previn erori în timpul citirii mesajelor de poștă electronică din Microsoft Outlook. (#6827)
+- Gesturile afișajelor braille care simulează modificatoare de taste ale tastaturii sistemului pot, de asemenea, să fie combinate cu alte modificatoare de taste ale tastaturii sistemului dacă unul sau mai multe dintre gesturile implicate sunt specifice modelului. (#7783)
+- În Mozilla Firefox, modul de navigare funcționează corect în pop-up-urile create de extensii precum LastPass și bitwarden. (#7809)
+- NVDA nu se mai blochează uneori la fiecare schimbare a focalizării în cazul în care Firefox sau Chrome au încetat să răspundă, de exemplu, din cauza unei blocări sau a unui crash. (#7818)
+- În clienții de Twitter precum Chicken Nugget, NVDA nu mai ignoră ultimele 20 din 280 de caractere ale postărilor la citirea lor. (#7828)
+- Acum, NVDA utilizează limba corectă la anunțarea simbolurilor atunci când textul este selectat. (#7687)
 
 
 == Modificări pentru Dezvoltatori ==
 - s-a adăugat un steag boolean ascuns la secțiunea braille din configurație: "outputPass1Only". (#7301, #7693, #7702)
  - Acest steag tinde să se îndrepte spre adevăr. Dacă e fals, regulile liblouis multi pass vor fi utilizate la ieșirea braille.
+- A fost adăugat unn nou dicționar numit braille.RENAMED_DRIVERS pentru a permite o tranziție lină utilizatorilor ce folosesc drivere care au fost înlocuite de altele. (#7459)
+- S-a actualizat pachetul comtypes la 1.1.3. (#7831)
 
 
 = 2017.4 =

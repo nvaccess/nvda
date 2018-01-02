@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-10 00:10+1000\n"
-"PO-Revision-Date: 2017-11-11 13:05+0530\n"
+"POT-Creation-Date: 2017-12-15 00:10+1000\n"
+"PO-Revision-Date: 2017-12-26 12:08+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -6013,6 +6013,34 @@ msgstr "பகிரப்பட்ட ஒழுங்கு"
 msgid "align default"
 msgstr "இயல்பொழுங்கு"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "செங்குத்து மேலொழுங்கு"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "செங்குத்து நடுவொழுங்கு"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "செங்குத்து கீழொழுங்கு"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "செங்குத்து அடித்தளக்கோடொழுங்கு"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "செங்குத்து இருபுற ஒழுங்கு"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "செங்குத்து பகிர்மான ஒழுங்கு"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "செங்குத்து இயல்பொழுங்கு"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "இடதோரச் சீர்மை"
@@ -6044,34 +6072,6 @@ msgstr "முதல் வரியோரச் சீர்மை"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "முதல் வரியோரச் சீர்மையில்லை"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "செங்குத்து மேலொழுங்கு"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "செங்குத்து நடுவொழுங்கு"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "செங்குத்து கீழொழுங்கு"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "செங்குத்து அடித்தளக்கோடொழுங்கு"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "செங்குத்து இருபுற ஒழுங்கு"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "செங்குத்து பகிர்மான ஒழுங்கு"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "செங்குத்து இயல்பொழுங்கு"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -7054,6 +7054,10 @@ msgstr "பிரெயில் உள்ளீடு முடக்கப்�
 #. Translators: description of the script to toggle braille input
 msgid "Toggle braille input"
 msgstr "பிரெயில் உள்ளீட்டினை மாற்றியமைக்கவும்"
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிரெயில் எட்ஜ்/ஸ்மார்ட் பீட்டில்/சிங் பிரெயில் தொடர்"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -8365,7 +8369,7 @@ msgstr "உரைத் தொகுதியின் துல்லியம�
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report &role when mouse enters object"
-msgstr "சொடுக்கி ஒரு பொருளின் ஊடாக நுழையும்பொழுது அப்பொருளின் வகையை அறிவிக்கவும் (&R)"
+msgstr "ஒரு பொருளின் ஊடாக சொடுக்கி நுழையும்பொழுது அப்பொருளின் வகையை அறிவிக்கவும் (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -10419,13 +10423,8 @@ msgstr "விளக்கவுரைகள் (&A)"
 msgid "&Errors"
 msgstr "பிழைகள் (&E)"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிரெயில் எட்ஜ்/ஸ்மார்ட் பீட்டில் தொடர்"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Handy Tech இயக்கி அமைவடிவ சாளரத்தைக் காட்டுக"

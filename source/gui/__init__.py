@@ -32,6 +32,7 @@ import speechViewer
 import winUser
 import api
 import guiHelper
+import touchHandler
 import winVersion
 
 try:
@@ -227,6 +228,9 @@ class MainFrame(wx.Frame):
 	def onMouseSettingsCommand(self,evt):
 		self._popupSettingsDialog(MouseSettingsDialog)
 
+	def onTouchInteractionCommand(self,evt):
+		self._popupSettingsDialog(TouchInteractionDialog)
+
 	def onReviewCursorCommand(self,evt):
 		self._popupSettingsDialog(ReviewCursorDialog)
 
@@ -344,6 +348,13 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to open Mouse Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
+		# Touch handler might not be ready, so check if touch interaction is even supported.
+		if touchHandler.touchSupported():
+			# Translators: The label for the menu item to open Touch Interaction dialog.
+			item = menu_preferences.Append(wx.ID_ANY, _("&Touch interaction..."),
+				# Translators: tooltip for touch interaction settings item.
+				_("Change how NVDA interacts with the touchscreen"))
+			self.Bind(wx.EVT_MENU, frame.onTouchInteractionCommand, item)
 		# Translators: The label for the menu item to open Review Cursor dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)

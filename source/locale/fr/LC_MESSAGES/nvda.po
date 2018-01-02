@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-17 00:10+1000\n"
-"PO-Revision-Date: 2017-11-02 08:47+0100\n"
+"POT-Creation-Date: 2017-12-22 00:10+1000\n"
+"PO-Revision-Date: 2017-12-21 17:46+0100\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.5\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -3900,8 +3900,8 @@ msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr ""
-"Annoncer le nom de fichier de l'application en cours ainsi que le nom de fichier du module "
-"complémentaire chargé"
+"Annoncer le nom de fichier de l'application en cours ainsi que le nom de "
+"fichier du module complémentaire chargé"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
@@ -6047,6 +6047,34 @@ msgstr "alignement distribué"
 msgid "align default"
 msgstr "alignement par défaut"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "alignement vertical du haut"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "alignement vertical du milieu"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "alignement vertical du bas"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "alignement vertical de base"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "alignement vertical justifié"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "alignement vertical distribué"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "alignement vertical par défaut"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "retrait gauche"
@@ -6078,34 +6106,6 @@ msgstr "retrait de première ligne"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "pas de retrait de première ligne"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "alignement vertical du haut"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "alignement vertical du milieu"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "alignement vertical du bas"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "alignement vertical de base"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "alignement vertical justifié"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "alignement vertical distribué"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "alignement vertical par défaut"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -7116,6 +7116,10 @@ msgstr "Saisie braille désactivée"
 msgid "Toggle braille input"
 msgstr "Activer ou désactiver la saisie braille"
 
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille séries Sense/Braille EDGE/Smart Beetle/Suhc Braille"
+
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
@@ -7260,6 +7264,14 @@ msgstr "&Souris..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Modifier l'annonce de la forme de la souris, de l'objet sous la souris"
+
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "Interaction &tactile..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "Changer la manière dont NVDA interagit avec l'écran tactile"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -8316,12 +8328,12 @@ msgstr "Voix"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
-msgstr "Changement automatique de langue (si supporté par le synthétiseur)"
+msgstr "Changement automatique de &langue (si supporté par le synthétiseur)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
-msgstr "Changement automatique de dialecte (si supporté par le synthétiseur)"
+msgstr "Changement automatique de &dialecte (si supporté par le synthétiseur)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
@@ -8332,12 +8344,12 @@ msgstr "Niveau de &ponctuations et symboles :"
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr ""
-"Se baser sur la langue de la voix pour le traitement des caractères et "
+"Se baser sur la langue de la voix pour le &traitement des caractères et "
 "symboles"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
-msgstr "Pourcentage de changement de la hauteur pour indiquer les majuscules"
+msgstr "Pourcentage de changement de la hauteur pour indiquer les &majuscules"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
@@ -9069,6 +9081,15 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
 "Impossible de sauvegarder les gestes définis par l'utilisateur : le système "
 "de fichiers est probablement protégé en écriture"
+
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "Interaction tactile"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "Mode de frappe &tactile"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10570,13 +10591,8 @@ msgstr "&Annotations"
 msgid "&Errors"
 msgstr "&Erreurs"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille séries Sense/Braille EDGE/Smart Beetle"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Afficher la fenêtre de configuration du pilote Handy Tech."

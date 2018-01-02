@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-03 00:10+1000\n"
-"PO-Revision-Date: 2017-11-07 22:21+0900\n"
+"POT-Creation-Date: 2017-12-22 00:10+1000\n"
+"PO-Revision-Date: 2017-12-27 15:38+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -5968,6 +5968,34 @@ msgstr "両端揃え"
 msgid "align default"
 msgstr "既定の揃え"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "縦方向 上揃え"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "縦方向 中央揃え"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "縦方向 下揃え"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "縦方向 ベースライン揃え"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "縦方向 既定の揃え"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "左インデント"
@@ -5999,34 +6027,6 @@ msgstr "字下げ"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "字下げなし"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "縦方向 上揃え"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "縦方向 中央揃え"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "縦方向 下揃え"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "縦方向 ベースライン揃え"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "縦方向 両端揃え"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "縦方向 両端揃え"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "縦方向 既定の揃え"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -7032,6 +7032,10 @@ msgstr "点字を入力しない"
 msgid "Toggle braille input"
 msgstr "点字入力の切り替え"
 
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ"
+
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
@@ -7173,6 +7177,14 @@ msgstr "マウス設定(&M)..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "マウスカーソル形状の変更やマウスカーソル位置のオブジェクトの報告"
+
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "タッチ操作(&T)..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "タッチ画面のNVDAによる操作の切替"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -8942,6 +8954,15 @@ msgstr ""
 "ユーザー定義ジェスチャーを保存できませんでした - 読み取り専用ファイルシステム"
 "が使用されている可能性があります"
 
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "タッチ操作"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "タッチ文字入力モード(&T)"
+
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "数式の操作を終了"
@@ -10416,13 +10437,8 @@ msgstr "コメント(&A)"
 msgid "&Errors"
 msgstr "スペルミス(&E)"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle シリーズ"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS社製 SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS社製 SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Handy Techドライバーの設定ウインドウを表示"

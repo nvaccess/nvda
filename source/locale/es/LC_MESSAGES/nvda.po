@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-03 00:10+1000\n"
-"PO-Revision-Date: 2017-11-02 17:28+0100\n"
+"POT-Creation-Date: 2017-12-22 00:10+1000\n"
+"PO-Revision-Date: 2017-12-22 15:01+0100\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -6064,6 +6064,34 @@ msgstr "alineación distribuida"
 msgid "align default"
 msgstr "alineación predeterminada"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "alineación vertical superior"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "alineación vertical central"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "alineación vertical inferior"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "alineación vertical línea base"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "Alineación vertical justificada"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "alineación vertical distribuida"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "alineación vertical predeterminada"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "sangría izquierda"
@@ -6095,34 +6123,6 @@ msgstr "sangría de primera línea"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "sin sangría de primera línea"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "alineación vertical superior"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "alineación vertical central"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "alineación vertical inferior"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "alineación vertical línea base"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "Alineación vertical justificada"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "alineación vertical distribuida"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "alineación vertical predeterminada"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -7134,6 +7134,10 @@ msgstr "Entrada braille deshabilitada"
 msgid "Toggle braille input"
 msgstr "Conmutar entrada braille"
 
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "Series de la HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
+
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
@@ -7277,6 +7281,14 @@ msgstr "Opciones de &Ratón..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Cambiar el anunciado de la forma del ratón y del objeto bajo él"
+
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "Interacción &Táctil..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "Cambiar cómo interactúa NVDA con la pantalla táctil"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -9082,6 +9094,15 @@ msgstr ""
 "Error guardando gestos definidos por el usuario - probablemente estás en un "
 "sistema de ficheros de sólo lectura."
 
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "Interacción Táctil"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "Modo escritura &Táctil"
+
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "Sale de la interactuación matemática"
@@ -10585,13 +10606,8 @@ msgstr "&Anotaciones"
 msgid "&Errors"
 msgstr "&Errores"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Mostrar ventana de configuración del driver para Handy Tech."

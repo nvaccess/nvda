@@ -5,15 +5,33 @@ Quoi de Neuf dans NVDA
 
 = 2018.1 =
 
+== Changements ==
+- Les pilotes pour les terminaux HIMS Braille Sense/Braille EDGE/Smart Beetle et Hims Sync Braille ont été remplacés par un pilote unique. Le nouveau pilote sera automatiquement activé pour les utilisateurs des anciens pilotes. (#7459) 
+ - Certaines touches, en particulier les touches de défilement, ont été réassignées pour respecter les conventions utilisées par les produits Hims. Veuillez consulter le guide de l'utilisateur pour plus de détails.
+- Quand vous tapez sur le clavier à l'écran via l'interaction tactile, par défaut vous devez maintenant taper deux fois chaque touche comme vous le feriez pour activer tout autre contrôle.
+ - pour utiliser le mode "frappe au toucher" où simplement lever son doigt de la touche suffit pour l'activer, activer cette option dans le nouveau dialogue Interaction Tactile du menu Préférences. (#7309)
+ 
+ 
 == Corrections de Bogues ==
 - Les messages navigables tels que ceux affichant le formatage en cours, lors de l'appui sur NVDA+f deux fois rapidement, ne dysfonctionnent plus si NVDA est installé sur un chemin comprenant des caractères non-ASCII. (#7474)
 - Le focus est maintenant restauré correctement lors du retour à Spotify à partir d'une autre application. (#7689)
-- NVDA n'arrête plus sa mise à jour sur les systèmes où l'accès contrôlé aux dossiers est activé (disponible dans la mise à jour de Windows 10 Fall Creators). (#7696)
+- NVDA n'interrompt plus sa mise à jour sur les systèmes où l'accès contrôlé aux dossiers est activé (disponible dans la mise à jour de Windows 10 Fall Creators). (#7696)
+- La détection des touches de défilement de l'afficheur Hims Smart Beetle n'est plus aléatoire. (#6086)
+- Une légère amélioration de performances à l'affichage d'un contenu important sous Mozilla Firefox 58 et au-delà. (#7719)
+- Suppression d'erreurs à la lecture de courriels contenant des tableaux sous Microsoft Outlook (#6827)
+- Les gestes de commandes de terminaux braille qui émulent les modificateurs de touches système peuvent maintenant être combinés avec d'autres touches émulées si un ou plusieurs des gestes émulés sont spécifique au modèle de terminal. (#7783)
+- Sous Mozilla Firefox, le mode navigation fonctionne maintenant correctement dans les fenêtres contextuelles Créées par des extensions telles que LastPass et bitwarden. (#7809)
+- NVDA ne se bloque plus de temps en temps à chaque changement de focus si Firefox ou Chrome ne répondent plus en raison d'un bloquage ou d'un plantage. (#7818)
+- Dans les clients Twitter tels que Chicken Nugget, NVDA n'ignorera plus les 20 derniers caractères des tweets de 280 caractères lors de la lecture. (#7828)
+- NVDA utilise maintenant la langue appropriée pour l'annonce des symboles quand du texte est sélectionné. (#7687)
 
 
 == Changements pour les Développeurs ==
 - Ajout d'un indicateur booléen caché à la section braille dans la configuration : "outputPass1Only". (#7301, #7693, #7702) 
  - Cet indicateur est sur true par défaut. S'il est sur false, les règles de passage multiple de Liblouis seront utilisées pour la sortie braille.
+- un nouveau dictionnaire (braille.RENAMED_DRIVERS) a été ajouté pour permettre une transition douce aux utilisateurs utilisant des pilotes remplacés par d'autres. (#7459)
+- Le package comtypes a été mis à jour à la version 1.1.3. (#7831)
+
 
 
 = 2017.4 =
