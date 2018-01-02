@@ -39,7 +39,8 @@ from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
- 
+from . import _msOfficeChart
+
 #Word constants
 
 #wdLineSpacing rules
@@ -137,6 +138,7 @@ wdContentControlBuildingBlockGallery=5
 wdContentControlDate=6
 wdContentControlGroup=7
 wdContentControlCheckBox=8
+wdInlineShapeChart=12
 
 wdNoRevision=0
 wdRevisionInsert=1
@@ -388,6 +390,20 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		# {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
 
+class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
+	@property
+	def label(self):
+		text=""
+		if self.collectionItem.Chart.HasTitle:
+			text=self.collectionItem.Chart.ChartTitle.Text
+		else:
+			text=self.collectionItem.Chart.Name
+		return u"{text}".format(text=text)
+
+	def moveTo(self):
+		chartNVDAObj = _msOfficeChart.OfficeChart(windowHandle= self.document.rootNVDAObject.windowHandle, officeApplicationObject=self.rangeObj.Document.Application, officeChartObject=self.collectionItem.Chart , initialDocument  = self.document.rootNVDAObject )
+		eventHandler.queueEvent("gainFocus",chartNVDAObj)
+
 class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 
 	def rangeFromCollectionItem(self,item):
@@ -511,6 +527,15 @@ class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 	def filter(self,item):
 		return item.borders.enable
 
+class ChartWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentChartQuickNavItem
+
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.inlineShapes
+
+	def filter(self,item):
+		return item.type==wdInlineShapeChart
+
 class WordDocumentTextInfo(textInfos.TextInfo):
 
 	# #4852: temporary fix.
@@ -540,6 +565,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		mathMl=mathPres.getMathMlFromTextInfo(self)
 		if mathMl:
 			return mathPres.interactWithMathMl(mathMl)
+		newRng=self._rangeObj.Duplicate
+		newRng.End=newRng.End+1
+		if newRng.InlineShapes.Count >= 1:
+			if newRng.InlineShapes[1].Type==wdInlineShapeChart:
+				return eventHandler.queueEvent('gainFocus',_msOfficeChart.OfficeChart(windowHandle= self.obj.windowHandle, officeApplicationObject=self.obj.WinwordDocumentObject.Application, officeChartObject=newRng.InlineShapes[1].Chart , initialDocument = self.obj ))
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -682,6 +712,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			role=controlTypes.ROLE_ENDNOTE
 		elif role=="graphic":
 			role=controlTypes.ROLE_GRAPHIC
+		elif role=="chart":
+			role=controlTypes.ROLE_CHART
 		elif role=="object":
 			progid=field.get("progid")
 			if progid and progid.startswith("Equation.DSMT"):
@@ -1021,7 +1053,9 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		elif nodeType=="error":
 			return SpellingErrorWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="graphic":
-			return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			 return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType=="chart":
+			return ChartWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
@@ -1649,6 +1683,14 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
+	def focusOnActiveDocument(self, officeChartObject):
+		rangeStart=officeChartObject.Parent.Range.Start
+		self.WinwordApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
+		import api
+		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+
+
+
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",
 		"kb:control+]":"increaseDecreaseFontSize",
@@ -1727,6 +1769,9 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("chart", _("&Charts")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("error", _("&Errors")),
