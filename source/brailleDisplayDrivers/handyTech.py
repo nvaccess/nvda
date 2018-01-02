@@ -223,16 +223,16 @@ class Model(AutoPropertyObject):
 		self._display.sendExtendedPacket(HT_EXTPKT_BRAILLE,
 			"".join(chr(cell) for cell in cells))
 
-
 class OldProtocolMixin(object):
 	"Mixin for displays using an older protocol to send braille cells and handle input"
+
 	def display(self, cells):
 		"""Write cells to the display according to the old protocol
 
 		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
 		followed by the cells. No model ID or lenghth are included.
 		"""
-		return self._display.sendPacket(HT_PKT_BRAILLE, [chr(cell) for cell in cells])
+		self._display.sendPacket(HT_PKT_BRAILLE, "".join(chr(cell) for cell in cells))
 
 
 class AtcMixin(object):
@@ -405,6 +405,12 @@ class ActiveStar40(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
 	genericName = "Active Star"
 
 
+class Braillino(TripleActionKeysMixin, OldProtocolMixin, Model):
+	deviceId = MODEL_BRAILLINO
+	numCells = 20
+	genericName = name = 'Braillino'
+
+
 class BrailleWave(Model):
 	deviceId = MODEL_BRAILLE_WAVE
 	numCells = 40
@@ -460,7 +466,7 @@ class BrailleStar80(BrailleStar):
 	numCells = 80
 
 
-class Modular(StatusCellMixin, TripleActionKeysMixin, Model):
+class Modular(StatusCellMixin, TripleActionKeysMixin, OldProtocolMixin, Model):
 	genericName = "Modular"
 
 	def _get_name(self):
@@ -713,6 +719,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# being released, so they should be ignored.
 		self._ignoreKeyReleases = True
 
+
 	# pylint: disable=R0912
 	# Pylint complains about many branches, might be worth refactoring
 	def _onReceive(self, data):
@@ -798,17 +805,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				elif packet[1] == HT_PKT_NAK:
 					log.debugWarning("NAK received!")
 			elif extPacketType == HT_EXTPKT_KEY:
-				key = ord(packet[1])
-				release = (key & KEY_RELEASE) != 0
-				if release:
-					key = key ^ KEY_RELEASE
-					self._handleKeyRelease()
-					self._keysDown.discard(key)
-				else:
-					# Press.
-					# This begins a new key combination.
-					self._ignoreKeyReleases = False
-					self._keysDown.add(key)
+				self._handleInput(ord(packet[1]))
 			elif extPacketType == HT_EXTPKT_ATC_INFO:
 				# Ignore ATC packets for now
 				pass
@@ -823,6 +820,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		else:
 			# Unknown packet type, log it
 			log.debugWarning("Unhandled packet of type %r" % serPacketType)
+
+
+	def _handleInput(self, key):
+		release = (key & KEY_RELEASE) != 0
+		if release:
+			key ^= KEY_RELEASE
+			self._handleKeyRelease()
+			self._keysDown.discard(key)
+		else:
+			# Press.
+			# This begins a new key combination.
+			self._ignoreKeyReleases = False
+			self._keysDown.add(key)
 
 
 	def display(self, cells):
