@@ -218,11 +218,21 @@ class Model(AutoPropertyObject):
 		"""Display cells on the braille display
 
 		This is the modern protocol, which uses an extended packet to send braille
-		cells. Some very old displays use an older, simpler protocol
-		which is currently not implemented in this driver.
+		cells. Some displays use an older, simpler protocol. See OldProtocolMixin.
 		"""
 		self._display.sendExtendedPacket(HT_EXTPKT_BRAILLE,
 			"".join(chr(cell) for cell in cells))
+
+
+class OldProtocolMixin(object):
+	"Mixin for displays using an older protocol to send braille cells and handle input"
+	def display(self, cells):
+		"""Write cells to the display according to the old protocol
+
+		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
+		followed by the cells. No model ID or lenghth are included.
+		"""
+		return self._display.sendPacket(HT_PKT_BRAILLE, [chr(cell) for cell in cells])
 
 
 class AtcMixin(object):
