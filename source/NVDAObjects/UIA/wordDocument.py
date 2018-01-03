@@ -85,11 +85,6 @@ class WordDocumentTextInfo(UIATextInfo):
 	def _get_controlFieldNVDAObjectClass(self):
 		return WordDocumentNode
 
-	# UIA text range comparison for bookmarks works okay in this MS Word implementation
-	# Thus __ne__ is useful
-	def __ne__(self,other):
-		return not self==other
-
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		automationID=obj.UIAElement.cachedAutomationID
