@@ -111,7 +111,7 @@ KEY_RIGHT = 0x08
 KEY_LEFT_SPACE = 0x10
 KEY_RIGHT_SPACE = 0x18
 KEY_ROUTING = 0x20
-KEY_RELEASE = 0x80
+KEY_RELEASE_MASK = 0x80
 
 # Braille dot mapping
 KEY_DOTS = {
@@ -357,6 +357,7 @@ class ModularConnect88(TripleActionKeysMixin, Model):
 
 # pylint: disable=C0111
 class ModularEvolution(AtcMixin, TripleActionKeysMixin, Model):
+#class ModularEvolution(TripleActionKeysMixin, OldProtocolMixin, Model):
 	genericName = "Modular Evolution"
 
 	def _get_name(self):
@@ -679,8 +680,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def sendPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
-		if self._model:
-			data = self._model.deviceId + data
 		if self.isHid:
 			self._sendHidPacket(packetType+data)
 		else:
@@ -693,6 +692,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			extType=packetType, data=data,
 			length=chr(len(data) + len(packetType))
 		)
+		if self._model:
+			packet = self._model.deviceId + packet
 		self.sendPacket(HT_PKT_EXTENDED, packet)
 
 	def _sendHidPacket(self, packet):
@@ -728,22 +729,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			hidLength = ord(data[1])
 			self._hidSerialBuffer+=data[2:(2+hidLength)]
 			currentBufferLength=len(self._hidSerialBuffer)
-			# We only support the extended packet based protocol
-			# Thus, the only non-extended packet we expect is the device identification, which is of type HT_PKT_OK and two bytes in size
 			serPacketType = self._hidSerialBuffer[0]
 			if serPacketType!=HT_PKT_EXTENDED:
-				if currentBufferLength>2:
-					stream = StringIO(self._hidSerialBuffer[:2])
-					self._hidSerialBuffer = self._hidSerialBuffer[2:]
-				elif currentBufferLength==2:
+				packetLength = 2 if serPacketType==HT_PKT_OK else 1
+				if currentBufferLength>packetLength:
+					stream = StringIO(self._hidSerialBuffer[:packetLength])
+					self._hidSerialBuffer = self._hidSerialBuffer[packetLength:]
+				elif currentBufferLength==packetLength:
 					stream = StringIO(self._hidSerialBuffer)
 					self._hidSerialBuffer = ""
 				else:
 					# The packet is not yet complete
 					return
-			# Extended packets are at least 5 bytes in size.
 			elif serPacketType==HT_PKT_EXTENDED and currentBufferLength>=5:
 				# Check whether our packet is complete
+				# Extended packets are at least 5 bytes in size.
 				# The second byte is the model, the third byte is the data length, excluding the terminator
 				packet_length = ord(self._hidSerialBuffer[2])+4
 				if len(self._hidSerialBuffer)<packet_length:
@@ -772,18 +772,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# data only contained the packet type. Read the rest from the device.
 			stream = self._dev
 
-		modelId = stream.read(1)
-		if not self._model:
-			if not modelId in MODELS:
-				log.debugWarning("Unknown model: %r" % modelId)
-				raise RuntimeError(
-					"The model with ID %r is not supported by this driver" % modelId)
-			self._model = MODELS.get(modelId)(self)
-			self.numCells = self._model.numCells
-		elif self._model.deviceId != modelId:
-			# Somehow the model ID of this display changed, probably another display 
-			# plugged in the same (already open) serial port.
-			self.terminate()
+		if serPacketType in (HT_PKT_OK, HT_PKT_EXTENDED):
+			modelId = stream.read(1)
+			if not self._model:
+				if not modelId in MODELS:
+					log.debugWarning("Unknown model: %r" % modelId)
+					raise RuntimeError(
+						"The model with ID %r is not supported by this driver" % modelId)
+				self._model = MODELS.get(modelId)(self)
+				self.numCells = self._model.numCells
+			elif self._model.deviceId != modelId:
+				# Somehow the model ID of this display changed, probably another display 
+				# plugged in the same (already open) serial port.
+				self.terminate()
 
 		if serPacketType==HT_PKT_OK:
 			pass
@@ -818,14 +819,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				log.debugWarning("Unhandled extended packet of type %r: %r" %
 					(extPacketType, packet))
 		else:
-			# Unknown packet type, log it
-			log.debugWarning("Unhandled packet of type %r" % serPacketType)
+			serPacketOrd = ord(serPacketType)
+			if isinstance(self._model, OldProtocolMixin) and serPacketOrd&~KEY_RELEASE_MASK < HT_PKT_EXTENDED:
+				self._handleInput(serPacketOrd)
+			else:
+				# Unknown packet type, log it
+				log.debugWarning("Unhandled packet of type %r" % serPacketType)
 
 
 	def _handleInput(self, key):
-		release = (key & KEY_RELEASE) != 0
+		release = (key & KEY_RELEASE_MASK) != 0
 		if release:
-			key ^= KEY_RELEASE
+			key ^= KEY_RELEASE_MASK
 			self._handleKeyRelease()
 			self._keysDown.discard(key)
 		else:
