@@ -357,7 +357,6 @@ class ModularConnect88(TripleActionKeysMixin, Model):
 
 # pylint: disable=C0111
 class ModularEvolution(AtcMixin, TripleActionKeysMixin, Model):
-#class ModularEvolution(TripleActionKeysMixin, OldProtocolMixin, Model):
 	genericName = "Modular Evolution"
 
 	def _get_name(self):
