@@ -1142,7 +1142,9 @@ class WordDocument(Window):
 
 	def script_toggleBold(self,gesture):
 		if not self.WinwordSelectionObject:
-			# No Object model, so just let the gesture through
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.bold)
 		if val:
@@ -1154,7 +1156,9 @@ class WordDocument(Window):
 
 	def script_toggleItalic(self,gesture):
 		if not self.WinwordSelectionObject:
-			# No Object model, so just let the gesture through
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.italic)
 		if val:
@@ -1166,7 +1170,9 @@ class WordDocument(Window):
 
 	def script_toggleUnderline(self,gesture):
 		if not self.WinwordSelectionObject:
-			# No Object model, so just let the gesture through
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.underline)
 		if val:
@@ -1178,7 +1184,9 @@ class WordDocument(Window):
 
 	def script_toggleAlignment(self,gesture):
 		if not self.WinwordSelectionObject:
-			# No Object model, so just let the gesture through
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.alignment)
 		alignmentMessages={
@@ -1197,7 +1205,9 @@ class WordDocument(Window):
 
 	def script_toggleSuperscriptSubscript(self,gesture):
 		if not self.WinwordSelectionObject:
-			# No Object model, so just let the gesture through
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: (self.WinwordSelectionObject.font.superscript,self.WinwordSelectionObject.font.subscript))
 		if val[0]:
@@ -1243,7 +1253,9 @@ class WordDocument(Window):
 
 	def script_increaseDecreaseOutlineLevel(self,gesture):
 		if not self.WinwordSelectionObject:
-			# No Object model, so just let the gesture through
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
 		style=self.WinwordSelectionObject.style.nameLocal
@@ -1252,21 +1264,28 @@ class WordDocument(Window):
 
 	def script_increaseDecreaseFontSize(self,gesture):
 		if not self.WinwordSelectionObject:
-			# No Object model, so just let the gesture through
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.size)
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
 	def script_tab(self,gesture):
+		"""
+		A script for the tab key which:
+		* if in a table, announces the newly selected cell or new cell where the caret is, or 
+		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
+		"""
 		gesture.send()
 		selectionObj=self.WinwordSelectionObject
-		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		inTable=selectionObj.tables.count>0 if selectionObj else False
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		isCollapsed=info.isCollapsed
 		if inTable and isCollapsed:
 			info.expand(textInfos.UNIT_PARAGRAPH)
-			isCollapsed=False
+			isCollapsed=info.isCollapsed
 		if not isCollapsed:
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
 		braille.handler.handleCaretMove(self)
@@ -1310,7 +1329,9 @@ class WordDocument(Window):
 
 	def script_changeLineSpacing(self,gesture):
 		if not self.WinwordSelectionObject:
-			# No Object model, so just let the gesture through
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
 			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda:self.WinwordSelectionObject.ParagraphFormat.LineSpacingRule)
 		if val == wdLineSpaceSingle:
