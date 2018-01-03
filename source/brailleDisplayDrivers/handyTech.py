@@ -73,29 +73,29 @@ BLUETOOTH_NAMES = {
 
 # Model identifiers
 # pylint: disable=C0103
-MODEL_BRAILLE_WAVE = "\x05"
-MODEL_MODULAR_EVOLUTION_64 = "\x36"
-MODEL_MODULAR_EVOLUTION_88 = "\x38"
-MODEL_MODULAR_CONNECT_88 = "\x3A"
-MODEL_EASY_BRAILLE = "\x44"
-MODEL_ACTIVE_BRAILLE = "\x54"
-MODEL_CONNECT_BRAILLE_40 = "\x55"
-MODEL_ACTILINO = "\x61"
-MODEL_ACTIVE_STAR_40 = "\x64"
-MODEL_BASIC_BRAILLE_16 = "\x81"
-MODEL_BASIC_BRAILLE_20 = "\x82"
-MODEL_BASIC_BRAILLE_32 = "\x83"
-MODEL_BASIC_BRAILLE_40 = "\x84"
-MODEL_BASIC_BRAILLE_48 = "\x8A"
-MODEL_BASIC_BRAILLE_64 = "\x86"
-MODEL_BASIC_BRAILLE_80 = "\x87"
-MODEL_BASIC_BRAILLE_160 = "\x8B"
-MODEL_BRAILLINO = "\x72"
-MODEL_BRAILLE_STAR_40 = "\x74"
-MODEL_BRAILLE_STAR_80 = "\x78"
-MODEL_MODULAR_20 = "\x80"
-MODEL_MODULAR_80 = "\x88"
-MODEL_MODULAR_40 = "\x89"
+MODEL_BRAILLE_WAVE = b"\x05"
+MODEL_MODULAR_EVOLUTION_64 = b"\x36"
+MODEL_MODULAR_EVOLUTION_88 = b"\x38"
+MODEL_MODULAR_CONNECT_88 = b"\x3A"
+MODEL_EASY_BRAILLE = b"\x44"
+MODEL_ACTIVE_BRAILLE = b"\x54"
+MODEL_CONNECT_BRAILLE_40 = b"\x55"
+MODEL_ACTILINO = b"\x61"
+MODEL_ACTIVE_STAR_40 = b"\x64"
+MODEL_BASIC_BRAILLE_16 = b"\x81"
+MODEL_BASIC_BRAILLE_20 = b"\x82"
+MODEL_BASIC_BRAILLE_32 = b"\x83"
+MODEL_BASIC_BRAILLE_40 = b"\x84"
+MODEL_BASIC_BRAILLE_48 = b"\x8A"
+MODEL_BASIC_BRAILLE_64 = b"\x86"
+MODEL_BASIC_BRAILLE_80 = b"\x87"
+MODEL_BASIC_BRAILLE_160 = b"\x8B"
+MODEL_BRAILLINO = b"\x72"
+MODEL_BRAILLE_STAR_40 = b"\x74"
+MODEL_BRAILLE_STAR_80 = b"\x78"
+MODEL_MODULAR_20 = b"\x80"
+MODEL_MODULAR_80 = b"\x88"
+MODEL_MODULAR_40 = b"\x89"
 
 # Key constants
 KEY_B1 = 0x03
@@ -232,7 +232,7 @@ class OldProtocolMixin(object):
 		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
 		followed by the cells. No model ID or lenghth are included.
 		"""
-		self._display.sendPacket(HT_PKT_BRAILLE, "".join(chr(cell) for cell in cells))
+		self._display.sendPacket(HT_PKT_BRAILLE, b"".join(chr(cell) for cell in cells))
 
 
 class AtcMixin(object):
@@ -277,7 +277,7 @@ class TimeSyncMixin(object):
 			dt.month, dt.day,
 			dt.hour, dt.minute, dt.second
 		]
-		timeStr = "".join(map(chr, timeList))
+		timeStr = b"".join(map(chr, timeList))
 		self._display.sendExtendedPacket(HT_EXTPKT_SET_RTC, timeStr)
 
 
@@ -507,40 +507,40 @@ MODELS = {
 
 
 # Packet types
-HT_PKT_BRAILLE = "\x01"
-HT_PKT_EXTENDED = "\x79"
-HT_PKT_NAK = "\x7D"
-HT_PKT_ACK = "\x7E"
-HT_PKT_OK = "\xFE"
-HT_PKT_RESET = "\xFF"
+HT_PKT_BRAILLE = b"\x01"
+HT_PKT_EXTENDED = b"\x79"
+HT_PKT_NAK = b"\x7D"
+HT_PKT_ACK = b"\x7E"
+HT_PKT_OK = b"\xFE"
+HT_PKT_RESET = b"\xFF"
 HT_EXTPKT_BRAILLE = HT_PKT_BRAILLE
-HT_EXTPKT_KEY = "\x04"
-HT_EXTPKT_CONFIRMATION = "\x07"
-HT_EXTPKT_SCANCODE = "\x09"
-HT_EXTPKT_PING = "\x19"
-HT_EXTPKT_SERIAL_NUMBER = "\x41"
-HT_EXTPKT_SET_RTC = "\x44"
-HT_EXTPKT_GET_RTC = "\x45"
-HT_EXTPKT_BLUETOOTH_PIN = "\x47"
-HT_EXTPKT_SET_ATC_MODE = "\x50"
-HT_EXTPKT_SET_ATC_SENSITIVITY = "\x51"
-HT_EXTPKT_ATC_INFO = "\x52"
-HT_EXTPKT_SET_ATC_SENSITIVITY_2 = "\x53"
-HT_EXTPKT_GET_ATC_SENSITIVITY_2 = "\x54"
-HT_EXTPKT_READING_POSITION = "\x55"
-HT_EXTPKT_SET_FIRMNESS = "\x60"
-HT_EXTPKT_GET_FIRMNESS = "\x61"
-HT_EXTPKT_GET_PROTOCOL_PROPERTIES = "\xC1"
-HT_EXTPKT_GET_FIRMWARE_VERSION = "\xC2"
+HT_EXTPKT_KEY = b"\x04"
+HT_EXTPKT_CONFIRMATION = b"\x07"
+HT_EXTPKT_SCANCODE = b"\x09"
+HT_EXTPKT_PING = b"\x19"
+HT_EXTPKT_SERIAL_NUMBER = b"\x41"
+HT_EXTPKT_SET_RTC = b"\x44"
+HT_EXTPKT_GET_RTC = b"\x45"
+HT_EXTPKT_BLUETOOTH_PIN = b"\x47"
+HT_EXTPKT_SET_ATC_MODE = b"\x50"
+HT_EXTPKT_SET_ATC_SENSITIVITY = b"\x51"
+HT_EXTPKT_ATC_INFO = b"\x52"
+HT_EXTPKT_SET_ATC_SENSITIVITY_2 = b"\x53"
+HT_EXTPKT_GET_ATC_SENSITIVITY_2 = b"\x54"
+HT_EXTPKT_READING_POSITION = b"\x55"
+HT_EXTPKT_SET_FIRMNESS = b"\x60"
+HT_EXTPKT_GET_FIRMNESS = b"\x61"
+HT_EXTPKT_GET_PROTOCOL_PROPERTIES = b"\xC1"
+HT_EXTPKT_GET_FIRMWARE_VERSION = b"\xC2"
 
 # HID specific constants
-HT_HID_RPT_OutData = "\x01" # receive data from device
-HT_HID_RPT_InData = "\x02" # send data to device
-HT_HID_RPT_InCommand = "\xFB" # run USB-HID firmware command
-HT_HID_RPT_OutVersion = "\xFC" # get version of USB-HID firmware
-HT_HID_RPT_OutBaud = "\xFD" # get baud rate of serial connection
-HT_HID_RPT_InBaud = "\xFE" # set baud rate of serial connection
-HT_HID_CMD_FlushBuffers = "\x01" # flush input and output buffers
+HT_HID_RPT_OutData = b"\x01" # receive data from device
+HT_HID_RPT_InData = b"\x02" # send data to device
+HT_HID_RPT_InCommand = b"\xFB" # run USB-HID firmware command
+HT_HID_RPT_OutVersion = b"\xFC" # get version of USB-HID firmware
+HT_HID_RPT_OutBaud = b"\xFD" # get baud rate of serial connection
+HT_HID_RPT_InBaud = b"\xFE" # set baud rate of serial connection
+HT_HID_CMD_FlushBuffers = b"\x01" # flush input and output buffers
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	name = "handyTech"
@@ -607,7 +607,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
 		self.brailleInput = False
-		self._hidSerialBuffer = ""
+		self._hidSerialBuffer = b""
 		self._atc = False
 
 		if port == "auto":
@@ -687,7 +687,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def sendExtendedPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
-		packet = "{length}{extType}{data}\x16".format(
+		packet = b"{length}{extType}{data}\x16".format(
 			extType=packetType, data=data,
 			length=chr(len(data) + len(packetType))
 		)
@@ -703,7 +703,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# the data block itself and a terminating null character.
 		for offset in xrange(0, len(packet), maxBlockSize):
 			block = packet[offset:offset+maxBlockSize]
-			hidPacket = HT_HID_RPT_InData + chr(len(block)) + block + "\x00"
+			hidPacket = HT_HID_RPT_InData + chr(len(block)) + block + b"\x00"
 			self._dev.write(hidPacket)
 
 	def _handleKeyRelease(self):
@@ -736,7 +736,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					self._hidSerialBuffer = self._hidSerialBuffer[packetLength:]
 				elif currentBufferLength==packetLength:
 					stream = StringIO(self._hidSerialBuffer)
-					self._hidSerialBuffer = ""
+					self._hidSerialBuffer = b""
 				else:
 					# The packet is not yet complete
 					return
@@ -755,7 +755,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				else:
 					assert self._hidSerialBuffer.endswith("\x16")	# Extended packets are terminated with \x16
 					stream = StringIO(self._hidSerialBuffer)
-					self._hidSerialBuffer = ""
+					self._hidSerialBuffer = b""
 			else:
 				# The packet is not yet complete
 				return
@@ -796,7 +796,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
 			terminator = stream.read(1)
-			assert terminator == "\x16"	# Extended packets are terminated with \x16
+			assert terminator == b"\x16"	# Extended packets are terminated with \x16
 			extPacketType = packet[0]
 			if extPacketType == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command.
