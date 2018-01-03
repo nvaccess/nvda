@@ -2,6 +2,33 @@
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2018.1 =
+
+== izmjene ==
+- The HIMS Braille Sense/Braille EDGE/Smart Beetle and Hims Sync Braille display drivers have been replaced by one driver. The new driver will automatically be activated for former syncBraille driver users. (#7459) 
+ - Some keys , notably scroll keys, have been reassigned to follow the conventions used by Hims products. Consult the user guide for more details.
+- When typing with the on-screen keyboard via touch interaction, by default  you now need to double tap each key the same way you would activate any other control.
+ - To use the existing "touch typing" mode where simply lifting your finger off the key is enough to activate it, Enable this option in the new Touch Interaction settings dialog found in the Preferences menu. (#7309)
+
+
+== Bug Fixes ==
+- Browseable messages such as showing  current formatting when pressing NVDA+f twice quickly, no longer fails when NVDA is installed on a path with non-ASCII characters. (#7474)
+- Focus is now once again restored correctly when returning to Spotify from another application. (#7689)
+- NVDA no longer fails to update on systems with Controlled Folder Access enabled (available in the Windows 10 Fall Creaters update). (#7696)
+- Detection of scroll keys on Hims Smart Beetle displays is no longer unreliable. (#6086)
+- A slight performance improvement when rendering large amounts of content in Mozilla Firefox 58 and later. (#7719)
+- Prevent errors while reading emails containing tables in Microsoft Outlook (#6827)
+- Braille display gestures that emulate system keyboard key modifiers can now also be combined with other emulated system keyboard keys if one or more of the involved gestures are model specific. (#7783)
+- In Mozilla Firefox, browse mode now works correctly in pop-ups created by extensions such as LastPass and bitwarden. (#7809)
+- NVDA no longer sometimes freezes on every focus change if Firefox or Chrome have stopped responding such as due to a freeze or crash. (#7818)
+- In twitter clients such as Chicken Nugget, NVDA will no longer ignore the last 20 characters of 280 character tweets when reading them. (#7828)
+- NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
+
+
+== Changes for developers ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
  
 = 2017.4 =
 Novosti u ovoj inačici uključuju poboljšanja u web podršci, ukljupujući podrazumijevani način pregleda za web dijaloge bolje izgovaranje grupa polja u načinu pregleda, Podrška za nove Windows 10 tehnologije Windows 10 zaštitnik aplikacija i windows 10 za ARM64, te automatsko čitanje statusa baterije i orijentacije ekrana.  

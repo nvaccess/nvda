@@ -372,6 +372,12 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
+	def focusOnActiveDocument(self, officeChartObject):
+		rangeStart=officeChartObject.Parent.Range.Start
+		self.WinwordApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
+		import api
+		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+
 	__gestures={
 		"kb:NVDA+shift+c":"setColumnHeader",
 		"kb:NVDA+shift+r":"setRowHeader",

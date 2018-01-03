@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: 2017-12-22 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk NVDA\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: da\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -95,49 +95,41 @@ msgid "Error in appModule %s"
 msgstr "Fejl i appModule %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "banner"
 msgstr "banner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "complementary"
 msgstr "komplementært"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "content info"
 msgstr "information om indhold"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "main"
 msgstr "hovedindhold"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "navigation"
 msgstr "navigation"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "search"
 msgstr "søg"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "form"
 msgstr "formular"
 
 #. Translators: Reported for a significant region, normally found on web pages.
-#, fuzzy
 msgctxt "aria"
 msgid "region"
 msgstr "område"
@@ -264,7 +256,6 @@ msgstr "stln"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
-#, fuzzy
 msgid "tbl"
 msgstr "tbl"
 
@@ -576,9 +567,8 @@ msgstr "mellemrum med alle punkter"
 
 #. Translators: Used to describe the press of any dots
 #. on a braille keyboard.
-#, fuzzy
 msgid "any dots"
-msgstr "Alle punkter"
+msgstr "Et hvilket som helst punkt"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -812,9 +802,8 @@ msgstr "Kroatisk 8 punkt computer braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Croatian grade 1"
-msgstr "Lettisk Niveau 1"
+msgstr "Kroatisk Niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1008,9 +997,8 @@ msgstr "Slovensk 8-punkt computer braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Slovenian grade 1"
-msgstr "Slovensk Niveau 1"
+msgstr "Slovensk niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1039,9 +1027,8 @@ msgstr "Unicode-punkt"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Vietnamese grade 1"
-msgstr "Assamesisk niveau 1"
+msgstr "Vietnamesisk niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1625,11 +1612,11 @@ msgstr "Viser den lange beskrivelse på det pågældende sted, hvis en lang besk
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
-msgstr "ikke i et indholdselement"
+msgstr "ikke i en objektbeholder"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
-msgstr "Flytter til start på indholdselement, eksempelvis en liste eller tabel"
+msgstr "Flytter til start på objektbeholder, eksempelvis en liste eller tabel"
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -1640,7 +1627,7 @@ msgstr "Bund"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Flytter forbi slutningen af indholdselementet, eksempelvis en liste  eller tabel"
+msgstr "Flytter forbi slutningen af objektbeholderen, eksempelvis en liste  eller tabel"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -1670,19 +1657,16 @@ msgid "moves to the previous table column"
 msgstr "flytter til forrige kolonne i tabel"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables off"
-msgstr "Rapportér tabeller fra"
+msgstr "Layout-tabeller fra"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables on"
-msgstr "Rapportér tabeller til"
+msgstr "Layout-tabeller til"
 
 #. Translators: Input help mode message for include layout tables command.
-#, fuzzy
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "Slår rapportering af tabeller til og fra"
+msgstr "Slår rapportering af layout-tabeller til og fra"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1730,7 +1714,7 @@ msgstr "kun under symbolets niveau"
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
 msgid "white"
-msgstr "Hvid"
+msgstr "hvid"
 
 #. Translators: the color very light grey (HSV saturation 0%, value 84%)
 msgctxt "color hue"
@@ -2026,7 +2010,7 @@ msgstr "fane"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "Fanekontrolelement"
+msgstr "Fanekontrol"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
@@ -2165,7 +2149,7 @@ msgstr "gruppering"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
-msgstr "Egenskabsside"
+msgstr "egenskabsside"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 msgid "canvas"
@@ -2295,7 +2279,7 @@ msgstr "view port"
 #. but which can be undocked from or torn off the menu system
 #. to exist as a separate window.
 msgid "tear off menu"
-msgstr "tear off menu"
+msgstr "afrivelig menu"
 
 #. Translators: Identifies a text frame (a frame window which contains text).
 msgid "text frame"
@@ -2447,7 +2431,7 @@ msgstr "kursiv"
 
 #. Translators: Describes text formatting.
 msgid "underline"
-msgstr "understreget"
+msgstr "understregning"
 
 #. Translators: Describes text formatting.
 msgid "foreground color"
@@ -2687,7 +2671,7 @@ msgstr "aktuelle side"
 
 #. Translators: Presented when a step item is marked as current in a collection of step items
 msgid "current step"
-msgstr "nuværende trin:"
+msgstr "aktuelle trin:"
 
 #. Translators: Presented when a location item is marked as current in a collection of location items
 msgid "current location"
@@ -2721,7 +2705,7 @@ msgstr ""
 "Yderligere oplysninger om fejlene findes i logfilen."
 
 msgid "gesture map File Error"
-msgstr "Fejl i gesture-fil"
+msgstr "fejl i fil med inputbevægelser"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
@@ -2743,7 +2727,7 @@ msgstr "Oplader batteri. %d procent"
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
 msgid "Not charging battery. %d percent"
-msgstr "Aflader batteri. %d procent."
+msgstr "Oplader ikke batteri. %d procent."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -3033,11 +3017,11 @@ msgstr "Slår rapportering af skriftattributter til og fra"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "Rapportér redaktørændringer fra"
+msgstr "Rapportér ændringer fra"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "Rapportér redaktørændringer til"
+msgstr "Rapportér ændringer til"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -3293,11 +3277,11 @@ msgstr "Slår rapportering af rammer til og fra"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "Rapportér klikbare elementer fra"
+msgstr "Rapportér hvis klikbar fra"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "Rapportér klikbare elementer til"
+msgstr "Rapportér hvis klikbar til"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -3464,7 +3448,7 @@ msgstr "Ingen standardhandling"
 
 #. Translators: Input help mode message for activate current object command.
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Udfører standardhandlingen for det aktuelle navigatorobjekt (eksempel: tastetryk hvis det er en knap)."
+msgstr "Udfører standardhandlingen for det aktuelle navigatorobjekt (eksempel: trykker hvis det er en knap)."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
@@ -3486,7 +3470,7 @@ msgstr "Oplyser linjen i navigatorobjektet, hvor læsemarkøren er placeret. Try
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "Flytter læsemarkøren til næste linje i det aktuelle navigatorobjekt og læser den op."
+msgstr "Flytter læsemarkøren til næste linje i det aktuelle navigatorobjekt og læser den op.\v"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
@@ -3500,7 +3484,9 @@ msgstr "Flytter læsemarkøren til forrige ord i det aktuelle navigatorobjekt og
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing "
 "three times spells the word using character descriptions"
-msgstr "Oplæser det ord i det aktuelle navigatorobjekt, hvor læsemarkøren er placeret. Tryk 2 gangefor at stave ordet."
+msgstr ""
+"Oplæser det ord i det aktuelle navigatorobjekt, hvor læsemarkøren er placeret. Tryk 2 gangefor at stave ordet. Tryk tre gange "
+"for at få ordet stavet fonetisk."
 
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
@@ -3607,7 +3593,7 @@ msgid ""
 "Reports formatting info for the current review cursor position within a document. If pressed twice, presents the information in "
 "browse mode"
 msgstr ""
-"Oplyser formateringsinformation på læsemarkørens aktuelle position i et dokument. ved et dobbelttryk vil denne information "
+"Oplyser formateringsinformation for læsemarkørens aktuelle position i et dokument. Ved et dobbelttryk vil denne information "
 "blive vist i gennemsynstilstand."
 
 #. Translators: Input help mode message for report current focus command.
@@ -3624,7 +3610,7 @@ msgid ""
 "three times, copies the status bar to the clipboard"
 msgstr ""
 "Oplæser statuslinjen i den aktuelle applikation og flytter navigatoren dertil. Tryk to gange for at få stavet informationen. "
-"Tryk to gange for at kopiere informationen til udklipsholderen."
+"Tryk tre gange for at kopiere informationen til udklipsholderen."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3647,12 +3633,12 @@ msgid ""
 "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, "
 "copies the title to the clipboard"
 msgstr ""
-"Oplæser titel på aktuel applikation eller forreste vindue. Tryk 2 gange for at stave titlen. Tryk 3 gange for at kopiere titlen "
-"til udklipsholderen."
+"Oplæser titel på aktuel applikation eller forreste vindue. Tryk to gange for at stave titlen. Tryk tre gange for at kopiere "
+"titlen til udklipsholderen."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Speaks the current foreground object"
-msgstr "Oplæser det forreste objekt."
+msgstr "Oplæser det aktuelle forgrundsobjekt."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3668,11 +3654,11 @@ msgstr "Ingen opdatering af behandlingslinje."
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "Speak progress bar updates"
-msgstr "Oplæs ændringer i behandlingslinje."
+msgstr "Oplæs opdateringer på behandlingslinje."
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "Beep for progress bar updates"
-msgstr "Bip for at indikere ændringer i behandlingslinje."
+msgstr "Bip ved opdatering af behandlingslinje"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "Beep and speak progress bar updates"
@@ -3768,67 +3754,67 @@ msgstr "Oplæser filnavnet på den aktuelle applikation og navnet på det aktuel
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
-msgstr "Ãbner dialogboksen med generelle indstillinger for NVDA"
+msgstr "Viser dialogen generelle indstillinger for NVDA"
 
 #. Translators: Input help mode message for go to synthesizer dialog command.
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "Ãbner dialogboksen med NVDA'ss talesyntese indstillinger "
+msgstr "Viser dialogen med NVDA'ss talesyntese indstillinger "
 
 #. Translators: Input help mode message for go to voice settings dialog command.
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Ãbner dialogboksen med NVDA'ss stemmeindstillinger"
+msgstr "Viser dialogen NVDA'ss stemmeindstillinger"
 
 #. Translators: Input help mode message for go to braille settings dialog command.
 msgid "Shows the NVDA braille settings dialog"
-msgstr "Ãbner dialogboksen med Braill-indstillinger for NVDA"
+msgstr "Viser dialogen Braill-indstillinger "
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Ãbner dialogboksen med NVDA'ss tastaturindstillinger"
+msgstr "Viser dialogen NVDA'ss tastaturindstillinger"
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "Ãbner dialogboksen med NVDAs museindstillinger"
+msgstr "Viser dialogen NVDAs museindstillinger"
 
 #. Translators: Input help mode message for go to review cursor settings dialog command.
 msgid "Shows the NVDA review cursor settings dialog"
-msgstr "Ãbner dialogboksen med indstillinger for læsemarkør"
+msgstr "Viser dialogen indstillinger for læsemarkør"
 
 #. Translators: Input help mode message for go to input composition dialog.
 msgid "Shows the NVDA input composition settings dialog"
-msgstr "Ãbner dialogboksen med indstillinger for input-komposition"
+msgstr "Viser dialogen indstillinger for input-komposition"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Ãbner dialogboksen med NVDAs objektpræsentations-indstillinger"
+msgstr "Viser dialogen NVDAs objektpræsentations-indstillinger"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Ãbner dialogboksen med NVDAs indstillinger for gennemsynstilstand"
+msgstr "Viser dialogen NVDAs indstillinger for gennemsynstilstand"
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Ãbner dialogboksen med NVDAs indstillinger for dokumentformatering"
+msgstr "Viser dialogen NVDAs indstillinger for dokumentformatering"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "Ãbner dialogboksen for NVDA's standardordbog"
+msgstr "Viser dialogen for NVDA's standardordbog"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "Ãbner dialogboksen for NVDA's stemmespecifikke ordbog"
+msgstr "Viser dialogen for NVDA's stemmespecifikke ordbog"
 
 #. Translators: Input help mode message for opening temporary dictionary.
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "Ãbner dialogboksen for NVDA's midlertidige ordbog"
+msgstr "Viser dialogen for NVDA's midlertidige ordbog"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr "Ãbner dialogboksen for udtale af symboler"
+msgstr "Viser dialogen for udtale af symboler"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Ãbner dialogboksen for inputbevægelser"
+msgstr "Viser dialogen for inputbevægelser"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3843,7 +3829,7 @@ msgstr ""
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Aktiverer NVDAs PYTHON konsol, som primært bruges til udviklingsformål."
+msgstr "Aktiverer NVDAs PYTHON konsol. Bruges primært til udviklingsformål."
 
 #. Translators: Input help mode message for activate manage add-ons command.
 msgid "Activates the NVDA Add-ons Manager to install and uninstall add-on packages for NVDA"
@@ -4015,7 +4001,7 @@ msgstr "Plugins genindlæst"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
-msgstr "Genindlæser app moduler og globale plugins uden at genstarte NVDA, hvilket kan være nyttigt for udviklere."
+msgstr "Genindlæser app moduler og globale plugins uden at genstarte NVDA. Kan være nyttigt for udviklere."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Moves to the next object in a flattened view of the object navigation hierarchy"
@@ -4546,10 +4532,9 @@ msgstr "8-takket stjerne"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Arc"
-msgstr "Arabisk"
+msgstr "Bue"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4573,13 +4558,13 @@ msgstr "Bøjet pil, der peger opad"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Bevel"
-msgstr ""
+msgstr "Facetkant"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Block arc"
-msgstr "fyld bue"
+msgstr "blokbue"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4589,30 +4574,27 @@ msgstr "Dåse"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart Plus symbol"
-msgstr "Ãndre valgte symbol"
+msgstr "Plus-tegn i diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart Star Symbol"
-msgstr "Diagramområde"
+msgstr "Stjernesymbol i diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart X Symbol"
-msgstr "Symbol"
+msgstr "Diagram x-symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Chevron"
-msgstr ""
+msgstr "Dobbeltvinkel"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4628,16 +4610,15 @@ msgstr "Cirkulær pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Cloud shape"
-msgstr "Markør&form:"
+msgstr "Skyform"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Cloud callout"
-msgstr ""
+msgstr "Skyboble"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4649,7 +4630,7 @@ msgstr "Hjørne"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "four snipped corners"
-msgstr "Fire klippede hjørner"
+msgstr "Fire afklippede hjørner"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4703,14 +4684,13 @@ msgstr "Båndbanner med kurv opad"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Decagon"
-msgstr ""
+msgstr "Tikant"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Diagonal stripe"
-msgstr "diagonal stribe"
+msgstr "Diagonal stribe"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4722,19 +4702,19 @@ msgstr "Diamant"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Dodecagon"
-msgstr ""
+msgstr "Tolvkant"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Donut"
-msgstr ""
+msgstr "Donut"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double brace"
-msgstr ""
+msgstr "Dobbelt klamme"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4750,16 +4730,15 @@ msgstr "Dobbel bølge"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Down Arrow"
-msgstr "pil ned"
+msgstr "Pil ned"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr ""
+msgstr "Boble med pil ned"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4771,177 +4750,175 @@ msgstr "Eksplosion"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Alternate process flowchart symbol"
-msgstr ""
+msgstr "Tegn for alternativ proces"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Card flowchart symbol"
-msgstr "Ãndre valgte symbol"
+msgstr "Tegn for kort i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Collate flowchart symbol"
-msgstr "Ãndre valgte symbol"
+msgstr "Flettedelesymbol i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Connector flowchart symbol"
-msgstr ""
+msgstr "Forbindelse i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Data flowchart symbol"
-msgstr ""
+msgstr "Datasymbol i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Decision flowchart symbol"
-msgstr ""
+msgstr "Beslutningssymbol i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Delay flowchart symbol"
-msgstr ""
+msgstr "forsinkelsessymbol i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Direct access storage flowchart symbol"
-msgstr ""
+msgstr "Tegn for magnettromlelager"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Display flowchart symbol"
-msgstr ""
+msgstr "Skærmsymbol i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Document flowchart symbol"
-msgstr ""
+msgstr "Dokumentsymbol i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Extract flowchart symbol"
-msgstr ""
+msgstr "Dele/skilletegn i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Internal storage flowchart symbol"
-msgstr ""
+msgstr "Tegn for internt lager i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Magnetic disk flowchart symbol"
-msgstr ""
+msgstr "Ten for magnetisk disk i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual input flowchart symbol"
-msgstr ""
+msgstr "Tegn for manuelt input i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual operation flowchart symbol"
-msgstr ""
+msgstr "Tegn for manuel operation i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Merge flowchart symbol"
-msgstr ""
+msgstr "Flettetegn i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Multi-document flowchart symbol"
-msgstr ""
+msgstr "Multi-dokumenttegn i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Offline storage flowchart symbol"
-msgstr ""
+msgstr "Tegn for offline lager i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Off-page connector flowchart symbol"
-msgstr ""
+msgstr "Tegn for forbindelse til anden side i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'Or' flowchart symbol"
-msgstr ""
+msgstr "'Eller'-tegn i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Predefined process flowchart symbol"
-msgstr ""
+msgstr "Tegn for prædefineret proces i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Preparation flowchart symbol"
-msgstr ""
+msgstr "Tegn for forberedelse i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Process flowchart symbol"
-msgstr ""
+msgstr "Procestegn i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr ""
+msgstr "Tegn for hulstrimmel i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr ""
+msgstr "Tegn for magnetbånd i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sort flowchart symbol"
-msgstr ""
+msgstr "Sorteringstegn i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Stored data flowchart symbol"
-msgstr ""
+msgstr "Tegn for lagret data i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Summing junction flowchart symbol"
-msgstr ""
+msgstr "Tegn for opsummeringspunkt i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Terminator flowchart symbol"
-msgstr ""
+msgstr "Terminatortegn i flow-diagram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4959,19 +4936,19 @@ msgstr "rektangulær billedramme"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Funnel"
-msgstr ""
+msgstr "Tragt"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with six teeth"
-msgstr ""
+msgstr "Seks-tandet gear"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Gear with nine teeth"
-msgstr ""
+msgstr "Ni-tandet gear"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4989,7 +4966,7 @@ msgstr "Hjerte"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Heptagon"
-msgstr ""
+msgstr "Syvkant"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -4999,10 +4976,9 @@ msgstr "Sekskant"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Horizontal scroll"
-msgstr "vandret stribe"
+msgstr "vandret rul"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5012,16 +4988,15 @@ msgstr "Isosceles trekant"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left Arrow"
-msgstr "venstre pil "
+msgstr "Venstre pil "
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Left Arrow"
-msgstr ""
+msgstr "Boble med venstre-pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5045,19 +5020,19 @@ msgstr "Cirkulær pil imod uret"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Vandret dobbelt cylinderpil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Boble med vandret dobbeltspids pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Circular arrow"
-msgstr ""
+msgstr "Cirkulær pil med dobbeltspids"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5067,165 +5042,161 @@ msgstr "Bånd med venstre og højre pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left right and up Arrows"
-msgstr "højre pil"
+msgstr "Pile mod venstre, højre og op"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Left and up Arrows"
-msgstr "venstre pil "
+msgstr ""
+"Pile mod venstre og op\n"
+"venstre pil "
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Lightning bolt"
-msgstr "højre alt"
+msgstr "Lyn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line Callout"
-msgstr ""
+msgstr "Boble med linje"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with horizontal accent bar"
-msgstr ""
+msgstr "Boble med vandret fremhævningsstreg"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border and horizontal accent bar"
-msgstr ""
+msgstr "Boble med kant og vandret fremhævningsstreg"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr "tynd vandret streg"
+msgstr "Boble med vandret streg"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Callout with diagonal straight line"
-msgstr "tynd diagonal stribe"
+msgstr "Boble med diagonal ret linje"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with diagonal callout line and accent bar"
-msgstr ""
+msgstr "Boble med diagonal boblelinje og fremhævningsstreg"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr ""
+msgstr "Boble med kant, diagonal ret linje og fremhævningsstreg"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and diagonal callout line"
-msgstr ""
+msgstr "Boble uden kant og med diagonal boblelinje"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled line"
-msgstr ""
+msgstr "Boble med vinkellinje"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled callout line and accent bar"
-msgstr ""
+msgstr "Boble med vinklet boblelinje og fremhævningsstreg"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, angled callout line, and accent bar"
-msgstr ""
+msgstr "Boble med kant, vinklet boblelinje og fremhævningsstreg"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and angled callout line"
-msgstr ""
+msgstr "Boble uden kant og med vinklet boblelinje"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with callout line segments forming a U-shape"
-msgstr ""
+msgstr "Boble med boblelinjesegmenter i U-form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with accent bar and callout line segments forming a U-shape"
-msgstr ""
+msgstr "Boble med fremhævningsstreg og boblelinjesegmenter i U-form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, accent bar, and callout line segments forming a U-shape"
-msgstr ""
+msgstr "Boble med kant, fremhævningsstreg og boblelinjesegmenter i U-form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and callout line segments forming a U-shape"
-msgstr ""
+msgstr "Boble uden kant og med boblelinjesegmenter i U-form"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Line inverse"
-msgstr "Linjer og numre"
+msgstr "Inverteret linje"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Division symbol"
-msgstr "Matematisk symbol for division"
+msgstr "Matematisk divisionstegn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Equivalence symbol"
-msgstr "Matematisk symbol for lig med"
+msgstr "Matematisk lighedstegn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Subtraction symbol"
-msgstr "Matematisk symbol for minus"
+msgstr "Matematisk minustegn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Multiplication symbol"
-msgstr "Matematisk symbol for gange"
+msgstr "Matematisk gangetegn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Non-equivalence symbol"
-msgstr "Matematisk symbol for ikke lig med"
+msgstr "Matematisk ikke lig med"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Addition symbol"
-msgstr "Matematisk symbol for addition"
+msgstr "Matematisk additionstegn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5237,7 +5208,7 @@ msgstr "Måne"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid with asymmetrical non-parallel sides"
-msgstr ""
+msgstr "Trapez med asymmetriske ikke-parallelle sider"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5267,13 +5238,13 @@ msgstr "Oval"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr ""
+msgstr "Oval boble"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Parallelogram"
-msgstr ""
+msgstr "Parallelogram"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5303,7 +5274,7 @@ msgstr "Plak"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Plaque Tabs"
-msgstr ""
+msgstr "Plakettefaner"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5315,7 +5286,7 @@ msgstr "Pile, der peger til venstre, op og ned"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Arrows pointing left right up and down"
-msgstr ""
+msgstr "Boble med pile, der peger venstre, højre op og ned"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5325,14 +5296,12 @@ msgstr "Rektangel"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Rectangular callout"
-msgstr "rektangulær graduering"
+msgstr "Rektangulær boble"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Right Arrow"
 msgstr "højre pil"
@@ -5341,7 +5310,7 @@ msgstr "højre pil"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr ""
+msgstr "Boble med højre-pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5389,7 +5358,7 @@ msgstr "Rundet rektangel"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rounded rectangle-shaped callout"
-msgstr ""
+msgstr "Boble formet som afrundet rektangel"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5431,7 +5400,7 @@ msgstr "Fire små firkanter der definere en rektangulær form"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Right Arrow with Stripes"
-msgstr ""
+msgstr "Højre-pil med striber"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5455,32 +5424,31 @@ msgstr "Vanddråbe"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Trapezoid"
-msgstr ""
+msgstr "Trapez"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Up Arrow"
-msgstr "pil op"
+msgstr "Pil op"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with UpArrow"
-msgstr ""
+msgstr "Boble med pil op"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr ""
+msgstr "Pil med dobbeltspids, der peger op og ned"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr ""
+msgstr "Boble med pile, der peger op og ned"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5490,10 +5458,9 @@ msgstr "U-formet pil"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Vertical scroll"
-msgstr "Lodret stribe"
+msgstr "Lodret rul"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5515,10 +5482,9 @@ msgstr "Begynder"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Document"
-msgstr "dokument"
+msgstr "Dokument"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5564,10 +5530,9 @@ msgstr "Retur"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Sound"
-msgstr "lyd"
+msgstr "Lyd"
 
 msgid "Type help(object) to get help about object."
 msgstr "Skriv help(objekt) for at få hjælp til et objekt."
@@ -5802,7 +5767,7 @@ msgstr "revised %s"
 #. Translators: Reported when text is not revised.
 #, python-format
 msgid "no revised %s"
-msgstr "Ingen revidering %s"
+msgstr "Ingen revidering af %s"
 
 #. Translators: Reported when text is marked
 msgid "marked"
@@ -5890,6 +5855,34 @@ msgstr "fordelt"
 msgid "align default"
 msgstr "standardjustering"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "lodret justering top"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "lodret justering centreret"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "lodret justering bund"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "lodret justering grundlinje"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "lodret justering lige margener"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "lodret justering fordelt"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "lodret justering standard"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "indrykning fra venstre"
@@ -5921,34 +5914,6 @@ msgstr "indrykning af første linje"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "ingen indrykning af første linje"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "lodret justering top"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "lodret justering centreret"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "lodret justering bund"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "lodret justering grundlinje"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "lodret justering lige margener"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "lodret justering fordelt"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "lodret justering standard"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -6120,12 +6085,12 @@ msgstr "start træk"
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr "træk"
+msgstr "peg"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr "træk og slip"
+msgstr "afslut træk"
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
@@ -6147,7 +6112,7 @@ msgstr "Fejl under søgning efter opdatering."
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
-msgstr "fejl"
+msgstr "Fejl"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
 msgid "NVDA Update"
@@ -6494,7 +6459,7 @@ msgstr "Rødt flag"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr "Høj prioritet"
+msgstr "høj prioritet"
 
 #. Translators: For a low importance email
 msgid "low importance"
@@ -6503,7 +6468,7 @@ msgstr "lav prioritet"
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
 msgid "subject: %s"
-msgstr "Emne: %s"
+msgstr "emne: %s"
 
 #. Translators: This is presented in outlook or live mail, email received time
 #, python-format
@@ -6757,7 +6722,7 @@ msgstr "{distance:.3g} punkter fra venstre side af dias"
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 #, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr "uden for venstre kant af dias me {distance:.3g} punkter"
+msgstr "uden for venstre kant af dias med {distance:.3g} punkter"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 #, python-brace-format
@@ -6777,7 +6742,7 @@ msgstr "{distance:.3g} punkter fra højrekant af dias"
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 #, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr "uden for højre kant af dias me {distance:.3g} punkter"
+msgstr "uden for højre kant af dias med {distance:.3g} punkter"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 #, python-brace-format
@@ -6787,7 +6752,7 @@ msgstr "{distance:.3g} punkter fra nederste kant af dias"
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 #, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr "uden for nederste kant af dias me {distance:.3g} punkter"
+msgstr "uden for nederste kant af dias med {distance:.3g} punkter"
 
 #. Translators: The description for a script
 msgid ""
@@ -6858,7 +6823,7 @@ msgid "left"
 msgstr "Venstre"
 
 msgid "right"
-msgstr "Højre"
+msgstr "højre"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
@@ -6937,6 +6902,10 @@ msgstr "Punktindtastning slået fra"
 msgid "Toggle braille input"
 msgstr "Slår punktindtastning til og fra"
 
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille serie"
+
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
@@ -7004,7 +6973,7 @@ msgstr "Konfiguration gendannet til fabriksindstillinger"
 
 #. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "ÐÐµÐ¼Ð¾Ð¶Ð»Ð¸Ð²Ð¾ Ð·Ð±ÐµÑÐµÐ³ÑÐ¸ Ð½Ð°Ð»Ð°ÑÑÑÐ²Ð°Ð½Ð½Ñ - NVDA Ð·Ð°Ð¿ÑÑÐµÐ½Ð¾ Ð² Ð·Ð°ÑÐ¸ÑÐµÐ½Ð¾Ð¼Ñ ÑÐµÐ¶Ð¸Ð¼Ð¸"
+msgstr "Kan ikke gemme indstillinger - NVDA er i fejlsikker tilstand"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -7012,7 +6981,7 @@ msgstr "konfiguration gemt"
 
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
-msgstr "Kunne ikke gemme konfiguration - skyldes formodentlig, at filsystemet er skrivebeskyttet."
+msgstr "Kunne ikke gemme konfiguration - filsystemet sandsynligvis skrivebeskyttet."
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
@@ -7074,6 +7043,14 @@ msgstr "&Museindstillinger..."
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Skift oplæsning af musens form samt objektet under musen."
 
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "&Touch interaktion..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "Vælg, hvordan NVDA skal interagere med touch-skærmen"
+
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
 msgstr "&Læsemarkør..."
@@ -7100,7 +7077,7 @@ msgid "&Browse mode..."
 msgstr "&Gennemsynstilstand..."
 
 msgid "Change virtual buffers specific settings"
-msgstr "Skift indstillinger, der har med virtuelle buffere at gøre."
+msgstr "Skift indstillinger for virtuelle buffere"
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
@@ -7132,7 +7109,7 @@ msgid "&Temporary dictionary..."
 msgstr "&Midlertidig ordbog..."
 
 msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "Dialogboks, hvor der kan angives en midlertidig ordbog ved at tilføje ord til edit-boksen."
+msgstr "Dialog, hvor der kan angives en midlertidig ordbog ved at tilføje ord til edit-boksen."
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -7296,7 +7273,7 @@ msgstr "&Brug Caps Lock som NVDA-tast"
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "&Automatisk start af NVDA, når jeg er logget på Windows "
+msgstr "&Start NVDA &automatisk, når jeg har logget på Windows"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -7484,11 +7461,11 @@ msgstr "fjern"
 
 #. Translators: The status shown for an addon when its disabled.
 msgid "disable"
-msgstr "Deaktivér"
+msgstr "deaktivér"
 
 #. Translators: The status shown for an addon when its enabled.
 msgid "enable"
-msgstr "Aktivér"
+msgstr "aktivér"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
@@ -7505,7 +7482,7 @@ msgstr "&Aktivér tilføjelsesprogrammer"
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid "Changes were made to add-ons. You must restart NVDA for these changes to take effect. Would you like to restart now?"
 msgstr ""
-"Tilføjelsesprogrammer er blevet ændret. Du skal genstarte NVDA, før ændringerne træder i kraft. Ãnsker du at genstarte nu?"
+"Tilføjelsesprogrammer er blevet ændret. Du skal genstarte NVDA, før ændringerne træder i kraft. Ønsker du at genstarte nu?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -7699,7 +7676,7 @@ msgid ""
 msgstr ""
 "For at redigere denne profil skal du aktivere den manuelt. Når du er færdig med at redigere, skal du deaktivere profilen "
 "manuelt for at genoptage normal brug.\n"
-"Ãnsker du at aktivere profilen nu?"
+"Ønsker du at aktivere profilen nu?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 msgid "Manual Activation"
@@ -7774,7 +7751,7 @@ msgstr "Stien til NVDA-installationen er blevet ændret. Programmet bliver nu in
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "Brug NVDA på Windows logon-skærmen."
+msgstr "Brug NVDA på Windows &logon-skærmen."
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -7959,7 +7936,7 @@ msgid ""
 "still wish to copy your settings?"
 msgstr ""
 "Tilføjelsesprogrammer fundet i mappen med brugerindstillinger. Kopiering af disse til systemprofilen kan meføre en "
-"sikkerhedsrisiko. Ãnsker du fortsat at kopiere dine indstillinger?"
+"sikkerhedsrisiko. Ønsker du fortsat at kopiere dine indstillinger?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -7983,7 +7960,7 @@ msgstr "Fejl under kopiering"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
 msgid "Error copying NVDA user settings"
-msgstr "ÐÐ¾Ð¼Ð¸Ð»ÐºÐ° Ð¿ÑÐ¸ ÐºÐ¾Ð¿ÑÑÐ²Ð°Ð½Ð½Ñ ÐºÐ¾ÑÐ¸ÑÑÑÐ²Ð°ÑÑÐºÐ¸Ñ Ð½Ð°Ð»Ð°ÑÑÑÐ²Ð°Ð½Ñ NVDA"
+msgstr "Fejl ved kopiering af NVDA brugerindstillinger"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
@@ -8025,7 +8002,7 @@ msgstr "Output &enhed:"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
 msgid "Audio &ducking mode:"
-msgstr "&Lyddæmpningstilstand"
+msgstr "Lyd&dæmpningstilstand"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -8334,7 +8311,7 @@ msgstr "Automatisk Sig Alt efter &indlæsning af side "
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "inkluder layout&tabeller"
+msgstr "inkluder l&ayout&tabeller"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -8555,9 +8532,8 @@ msgid "Whole &word"
 msgstr "Helt &ord"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "&Regulært udtryk"
+msgstr "&Regulært &udtryk"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -8739,7 +8715,7 @@ msgstr "Bevar"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change selected symbol"
-msgstr "Ãndre valgte symbol"
+msgstr "Ændre valgte symbol"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -8781,6 +8757,15 @@ msgstr "Indtast inputbevægelse:"
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "Kunne ikke gemme brugerdefinerede bevægelser - skyldes formodentligt, at filsystemet er skrivebeskyttet."
+
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "Berøringsinteraktion"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "Berøringsindtastning"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -8878,7 +8863,7 @@ msgstr "Ukendt farve"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Excel controls the pattern.
 msgid "automatic"
-msgstr "Automatisk"
+msgstr "automatisk"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
@@ -8888,7 +8873,7 @@ msgstr "diagonal skravering"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Criss-cross lines
 msgid "thin diagonal crosshatch"
-msgstr "tynd diagonal skravering"
+msgstr "tynd diagonal krydsskravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the upper left to the lower right
@@ -8928,7 +8913,7 @@ msgstr "6.25% grå"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
 msgid "thin horizontal crosshatch"
-msgstr "tynd vandret skravering"
+msgstr "tynd vandret krydsskravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark horizontal lines
@@ -8943,7 +8928,7 @@ msgstr "tynd omvendt diagonal stribe"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light horizontal lines
 msgid "thin horizontal stripe"
-msgstr "tynd vandret streg"
+msgstr "tynd vandret stribe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Light diagonal lines running from the lower left to the upper right
@@ -8963,7 +8948,7 @@ msgstr "ingen"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% dark moire
 msgid "thick diagonal crosshatch"
-msgstr "tyk diagonal skravering"
+msgstr "tyk diagonal krydsskravering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Solid color
@@ -8982,7 +8967,7 @@ msgstr "Lodret stribe"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "linear gradient"
-msgstr "Lineær graduering"
+msgstr "lineær graduering"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 msgid "rectangular gradient"
@@ -9111,7 +9096,7 @@ msgstr "{firstAddress} {firstContent} til og med {lastAddress} {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "top edge"
-msgstr "toppen af kanten"
+msgstr "øverste kant"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "bottom edge"
@@ -9195,7 +9180,7 @@ msgstr "streg-prik, mellem"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "medium dashed"
-msgstr "streg, mellem"
+msgstr "stiplet, mellem"
 
 #. Translators: border styles in Microsoft Excel.
 #, python-brace-format
@@ -9525,7 +9510,7 @@ msgstr "Høj-lav-slut"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
-msgstr "Ãben-høj-lav-slut"
+msgstr "Åben-høj-lav-slut"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -9656,7 +9641,7 @@ msgstr "Seriefarve: {colorName} "
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
-msgstr "navn på visningsenhed"
+msgstr "Navn på visningsenhed"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
@@ -9752,7 +9737,7 @@ msgstr "Ingen ændring fra punkt {previousIndex}, "
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "Ãget med {incrementValue} fra punkt {previousIndex}, "
+msgstr "Øget med {incrementValue} fra punkt {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -9844,7 +9829,7 @@ msgstr "Diagram, højde: {chartAreaHeight}, bredde: {chartAreaWidth}, top: {char
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
-msgstr "Diagramområde"
+msgstr "Diagramområde "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
 #, python-brace-format
@@ -9907,7 +9892,7 @@ msgstr "afstemme"
 
 #. Translators: a Microsoft Word revision type (conflicting revision)
 msgid "conflict"
-msgstr "Konflikt"
+msgstr "konflikt"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 msgid "replace"
@@ -10099,11 +10084,11 @@ msgstr "Fed fra"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Italic on"
-msgstr "kursiv til"
+msgstr "Kursiv til"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Italic off"
-msgstr "kursiv fra"
+msgstr "Kursiv fra"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Underline on"
@@ -10127,7 +10112,7 @@ msgstr "Højrejusteret"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Justified"
-msgstr "lige margener"
+msgstr "Lige margener"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Superscript"
@@ -10214,7 +10199,7 @@ msgstr "Enkel linjeafstand"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
 msgid "Double line spacing"
-msgstr "dobbel linjeafstand"
+msgstr "dobbelt linjeafstand"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
@@ -10232,17 +10217,11 @@ msgstr "&annotationer"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "&Errors"
-msgstr "&fejl"
+msgstr "&Fejl"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Vis Handy Tech driver konfigurationsvinduet."

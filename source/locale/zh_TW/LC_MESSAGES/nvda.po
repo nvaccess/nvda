@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-01 00:10+1000\n"
-"PO-Revision-Date: 2017-12-06 20:42+0800\n"
+"POT-Creation-Date: 2017-12-22 00:10+1000\n"
+"PO-Revision-Date: 2017-12-28 09:11+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -2882,7 +2882,9 @@ msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line. Pressing three times will spell the line "
 "using character descriptions."
-msgstr "讀出系統焦點所在的一行，連按兩下拼讀這一行，連按三下讀出字詞解釋。"
+msgstr ""
+"報讀系統游標所在的一行的內容，連按兩下拼讀這一行，連按三下讀出整行的字詞解"
+"釋。"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -3324,17 +3326,17 @@ msgstr "找不到物件的所在位置"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "鼠標移到目前的導航器物件"
+msgstr "將鼠標移到目前的導航器物件"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
-msgstr "移動導航器物件至鼠標"
+msgstr "將導航器物件移到鼠標"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
-msgstr "導航器物件移到鼠標所指的物件並讀出"
+msgstr "將導航器物件移到鼠標所指的物件並讀出"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
@@ -3386,7 +3388,7 @@ msgid ""
 "Reports the current navigator object. Pressing twice spells this "
 "information, and pressing three times Copies name and value of this  object "
 "to the clipboard"
-msgstr "讀出目前導航器物件，連按兩下拼讀物件名稱，連按三下複製物件名稱到剪貼簿"
+msgstr "報讀目前導航器物件，連按兩下拼讀物件名稱，連按三下複製物件名稱到剪貼簿"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3406,7 +3408,7 @@ msgstr "移到系統焦點"
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
-msgstr "將導航器物件移到目前系統焦點或編輯游標所在位置"
+msgstr "將導航器物件移到目前系統焦點，並將檢閱游標移到其內的編輯游標。"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3426,7 +3428,7 @@ msgstr "無法編輯"
 msgid ""
 "Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
-msgstr "按一下將系統焦點移至導航器物件，按兩下將編輯游標移至瀏檢閱游標"
+msgstr "按一下將系統焦點移至導航器物件，按兩下將編輯游標移至檢閱游標"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3434,7 +3436,7 @@ msgstr "沒有母物件"
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
-msgstr "將導航器物件移到其母物件"
+msgstr "將導航器移到其母物件"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
@@ -3443,7 +3445,7 @@ msgstr "沒有後一個物件了"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr "移到後一個導航器物件"
+msgstr "將導航器移到後一個物件"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
@@ -3452,15 +3454,15 @@ msgstr "沒有前一個物件了"
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
-msgstr "移到前一個導航器物件"
+msgstr "將導航器移到前一個物件"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
-msgstr "裡面沒有物件"
+msgstr "裡面沒有物件了"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "移至第一個子導航器物件"
+msgstr "將導航器移至第一個子物件"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 msgid "Activate"
@@ -3474,18 +3476,18 @@ msgstr "沒有動作"
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
-msgstr "執行目前導航器物件的預設動作，例如若是一個按鈕的物件，就按下。"
+msgstr "執行目前導航器物件的預設動作，例如若是一個按鈕，就直接按下。"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
-msgstr "到了頂端"
+msgstr "已到頂端"
 
 # 因在同一物件內移動，省去「導航器物件」的翻譯。
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
-msgstr "檢閱游標移到第一行，並讀出。"
+msgstr "將檢閱游標移到第一行，並讀出。"
 
 # 因在同一物件內移動，省去「導航器物件」的翻譯。
 #. Translators: Input help mode message for move review cursor to previous line command.
@@ -3500,28 +3502,28 @@ msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
-msgstr "讀出所在的一行文字，連按兩下拼讀這一行，連按三下讀出字詞解釋。"
+msgstr "讀出導航器物件所在行的文字，連按兩下拼讀這一行，連按三下讀出字詞解釋。"
 
 # 因在同一物件內移動，省去「導航器物件」的翻譯。
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
-msgstr "檢閱游標移到下一行，並讀出"
+msgstr "檢閱游標移到導航物件的下一行，並讀出"
 
 # 因在同一物件內移動，省去「導航器物件」的翻譯。
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
-msgstr "檢閱游標移到最後一行，並讀出。"
+msgstr "檢閱游標移到導航器物件的最後一行，並讀出。"
 
 # 因在同一物件內移動，省去「導航器物件」的翻譯。
 #. Translators: Input help mode message for move review cursor to previous word command.
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
-msgstr "檢閱游標移到前一個字詞，並讀出。"
+msgstr "檢閱游標移到導航物件的前一個字詞，並讀出。"
 
 # 因在同一物件內移動，省去「導航器物件」的翻譯。
 #. Translators: Input help mode message for report current word under review cursor command.
@@ -3529,14 +3531,14 @@ msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
-msgstr "讀出所在的字詞，連按兩下拼讀字詞，連按三下讀出字詞解釋。"
+msgstr "讀出檢閱游標所在字元的字詞，連按兩下拼讀字詞，連按三下讀出字詞解釋。"
 
 # 因在同一物件內移動，省去「導航器物件」的翻譯。
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
-msgstr "檢閱游標移到後一個字詞，並讀出。"
+msgstr "檢閱游標移到導航物件的後一個字詞，並讀出。"
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
@@ -3564,8 +3566,8 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"讀出所在的字元，連按兩下讀出字詞解釋，連按三下讀出字元的十進位值和十六進位"
-"值。"
+"讀出檢閱游標所在導航物件的字元，連按兩下讀出字詞解釋，連按三下讀出字元的十進"
+"位值和十六進位值。"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
 msgid "Right"
@@ -3576,7 +3578,7 @@ msgstr "到了右端"
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
-msgstr "檢閱游標移到後一個字元，並讀出。"
+msgstr "檢閱游標移到導航器物件的後一個字元，並讀出。"
 
 # 因在同一物件內移動，省去「導航器物件」的翻譯。
 #. Translators: Input help mode message for move review cursor to end of current line command.
@@ -3606,7 +3608,7 @@ msgstr "切換語音模式，依序是關、嗶嗶聲、開"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "把焦點移到後一個最接近的文件"
+msgstr "將焦點移到後一個最接近的文件"
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
@@ -3620,7 +3622,7 @@ msgstr ""
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
-msgstr "關閉NVDA!"
+msgstr "結束NVDA!"
 
 #. Translators: Input help mode message for restart NVDA command.
 msgid "Restarts NVDA!"
@@ -3634,7 +3636,7 @@ msgstr "開啟NVDA功能表"
 msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
-msgstr "從目前檢閱游標所在的文字往後報讀直到結尾，檢閱游標會跟隨移動。"
+msgstr "從目前檢閱游標所在的文字往後朗讀直到結尾，檢閱游標會跟隨移動。"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
@@ -3655,11 +3657,11 @@ msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document. If pressed twice, presents the information in browse mode"
 msgstr ""
-"讀出文件中目前檢閱游標所在字元的格式資訊，連按兩次，在瀏覽模式顯示資訊。"
+"報讀文件中目前檢閱游標所在字元的格式資訊，連按兩次，在瀏覽模式顯示資訊。"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
-msgstr "讀出目前焦點所在的物件，連按兩次，則拼讀其資訊。"
+msgstr "讀出焦點所在的物件，連按兩次，拼讀其資訊。"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3671,20 +3673,20 @@ msgid ""
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
-"讀出目前應用程式的狀態列，並將導航器移到此處，連按兩下拼讀資訊，連按三下將狀"
+"報讀目前應用程式的狀態列，並將導航器移到此處，連按兩下拼讀資訊，連按三下將狀"
 "態列複製到剪貼簿"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
-msgstr "讀出鼠標所指文字或物件關閉"
+msgstr "跟隨鼠標朗讀關閉"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking on"
-msgstr "讀出鼠標所指文字或物件開啟"
+msgstr "跟隨鼠標朗讀開啟"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "切換鼠標移動時，讀出指向的物件或字詞的開關"
+msgstr "切換移動鼠標所報讀的資訊範圍"
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
@@ -4135,7 +4137,7 @@ msgstr "無法使用Windows 10光學字元辨識 "
 #. Translators: Describes a command.
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "使用Windows 10 OCR識別當前導航器物件的內容"
+msgstr "使用Windows 10 OCR辨識當前導航器物件的內容"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -7000,6 +7002,10 @@ msgstr "解除「點字輸入」"
 msgid "Toggle braille input"
 msgstr "切換點字輸入"
 
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series 系列"
+
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
@@ -7110,7 +7116,7 @@ msgid "&Synthesizer..."
 msgstr "語音合成 (&S)..."
 
 msgid "Change the synthesizer to be used"
-msgstr "變更了語音合成軟體"
+msgstr "變更了語音合成器"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
@@ -7138,6 +7144,14 @@ msgstr "鼠標設定 (&M)..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "切換讀出鼠標所指物件之鼠標圖案改變的開關"
+
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "觸控互動 (&V)..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "更改 NVDA 與觸控螢幕的互動"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -8110,12 +8124,12 @@ msgstr "修改語言設定"
 
 #. Translators: This is the label for the synthesizer dialog.
 msgid "Synthesizer"
-msgstr "語音合成軟體"
+msgstr "語音合成器"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
 msgid "&Synthesizer:"
-msgstr "語音合成軟體(&S):"
+msgstr "語音合成器(&S):"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
@@ -8133,10 +8147,10 @@ msgstr "自動音量調整模式(&D)"
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "無法載入%s語音合成軟體"
+msgstr "無法載入%s語音合成器"
 
 msgid "Synthesizer Error"
-msgstr "語音合成軟體錯誤"
+msgstr "語音合成器錯誤"
 
 #. Translators: This is the label for the voice settings dialog.
 msgid "Voice Settings"
@@ -8883,6 +8897,15 @@ msgstr "鍵入輸入手勢："
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "無法儲存使用者定義的手勢，可能是NVDA程式位於唯讀的檔案系統所造成。"
+
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "觸控互動"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "觸控打字模式 (&T)"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10358,13 +10381,8 @@ msgstr "標記 (&A)"
 msgid "&Errors"
 msgstr "錯誤 (&E)"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "顯示Handy Tech驅動程式設定視窗"
