@@ -15,9 +15,20 @@ import api
 import browseMode
 from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator, TextAttribUIATextInfoQuickNavItem
 from . import UIA, UIATextInfo
-from NVDAObjects.window.winword import WordDocument as WordDocumentBase, ElementsListDialog
+from NVDAObjects.window.winword import WordDocument as WordDocumentBase
 
 """Support for Microsoft Word via UI Automation."""
+
+class ElementsListDialog(browseMode.ElementsListDialog):
+
+	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("error", _("&Errors")),
+	)
 
 class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
@@ -214,7 +225,6 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
 
-	# Use the Elements list dialog from the original Winword implementation
 	ElementsListDialog=ElementsListDialog
 
 class WordDocumentNode(UIA):
