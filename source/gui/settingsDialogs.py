@@ -657,7 +657,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		except:
 			pass
 
-	def _acceptAudioChanges(self):
+	def onOk(self, evt):
 		if not self.synthNames:
 			# The list of synths has not been populated yet, so we didn't change anything in this panel
 			return
@@ -676,8 +676,6 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			config.conf['audio']['audioDuckingMode']=index
 			audioDucking.setAudioDuckingMode(index)
 
-	def onOk(self, evt):
-		self._acceptAudioChanges()
 		if self.IsModal():
 			# Hack: we need to update the synth in our parent window before closing.
 			# Otherwise, NVDA will report the old synth even though the new synth is reflected visually.
@@ -1933,7 +1931,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			pass
 		self.updatePossiblePorts()
 
-	def _acceptDisplayChanges(self):
+	def onOk(self, evt):
 		if not self.displayNames:
 			# The list of displays has not been populated yet, so we didn't change anything in this panel
 			return
@@ -1947,8 +1945,6 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
 
-	def onOk(self, evt):
-		self._acceptDisplayChanges()
 		if self.IsModal():
 			# Hack: we need to update the display in our parent window before closing.
 			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
