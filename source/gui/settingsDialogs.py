@@ -11,7 +11,6 @@ import copy
 import re
 import wx
 from wx.lib import scrolledpanel
-from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
 import winUser
 import logHandler
@@ -564,11 +563,6 @@ class SpeechSettingsPanel(SettingsPanel):
 		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=synthLabel), wx.HORIZONTAL))
 		settingsSizerHelper.addItem(synthGroup)
 		
-		# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
-		# standard readonly TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
-		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
-		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
-		# display here.
 		synthDesc = getSynth().description
 		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
 		# Translators: This is the label for the button used to change synthesizer, it appears in the context of a synthesizer group on the speech settings panel.
@@ -594,9 +588,11 @@ class SpeechSettingsPanel(SettingsPanel):
 			self._sendLayoutUpdatedEvent()
 			self.Thaw()
 
-	def onPanelActivated(self):
+	def updateCurrentSynth(self):
 		synthDesc = getSynth().description
 		self.synthNameCtrl.SetValue(synthDesc)
+
+	def onPanelActivated(self):
 		self.voicePanel.onPanelActivated()
 		super(SpeechSettingsPanel,self).onPanelActivated()
 
@@ -682,6 +678,10 @@ class SynthesizerSelectionDialog(SettingsDialog):
 
 	def onOk(self, evt):
 		self._acceptAudioChanges()
+		if self.IsModal():
+			# Hack: we need to update the synth in our parent window before closing.
+			# Otherwise, NVDA will report the old synth even though the new synth is reflected visually.
+			self.Parent.updateCurrentSynth()
 		super(SynthesizerSelectionDialog, self).onOk(evt)
 
 class SynthSettingChanger(object):
@@ -1878,9 +1878,11 @@ class BrailleSettingsPanel(SettingsPanel):
 			self._sendLayoutUpdatedEvent()
 			self.Thaw()
 
-	def onPanelActivated(self):
+	def updateCurrentDisplay(self):
 		displayDesc = braille.handler.display.description
 		self.displayNameCtrl.SetValue(displayDesc)
+
+	def onPanelActivated(self):
 		self.brailleIoPanel.onPanelActivated()
 		super(BrailleSettingsPanel,self).onPanelActivated()
 
@@ -1947,6 +1949,10 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	def onOk(self, evt):
 		self._acceptDisplayChanges()
+		if self.IsModal():
+			# Hack: we need to update the display in our parent window before closing.
+			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
+			self.Parent.updateCurrentDisplay()
 		super(BrailleDisplaySelectionDialog, self).onOk(evt)
 
 	def onDisplayNameChanged(self, evt):
