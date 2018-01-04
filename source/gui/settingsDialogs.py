@@ -317,9 +317,10 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def onCharHook(self,evt):
 		"""Listens for keyboard input and switches panels for control+tab"""
-		if evt.ControlDown() and evt.GetKeyCode()==wx.WXK_TAB:
+		key = evt.GetKeyCode()
+		treeHadFocus = self.categoryTree.HasFocus()
+		if evt.ControlDown() and key==wx.WXK_TAB:
 			# Focus the tree view. If we don't, the panel won't hide correctly
-			treeHadFocus = self.categoryTree.HasFocus()
 			if not treeHadFocus:
 				self.categoryTree.SetFocus()
 			currentItem = self.categoryTree.Selection
@@ -330,6 +331,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			newPanel=self.categoryTree.GetItemPyData(newItem)
 			if not treeHadFocus:
 				newPanel.SetFocus()
+		elif treeHadFocus and key == wx.WXK_RETURN:
+			# The tree control captures the return key, but we want it to save the settings.
+			self.onOk(evt)
 		else:
 			evt.Skip()
 
