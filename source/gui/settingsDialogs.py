@@ -564,7 +564,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(synthGroup)
 		
 		synthDesc = getSynth().description
-		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
+		self.synthNameCtrl = wx.StaticText(self, label=synthDesc)
 		# Translators: This is the label for the button used to change synthesizer, it appears in the context of a synthesizer group on the speech settings panel.
 		changeSynthBtn = wx.Button(self, label=_("Change..."))
 		synthGroup.addItem(
@@ -590,7 +590,7 @@ class SpeechSettingsPanel(SettingsPanel):
 
 	def updateCurrentSynth(self):
 		synthDesc = getSynth().description
-		self.synthNameCtrl.SetValue(synthDesc)
+		self.synthNameCtrl.SetLabel(synthDesc)
 
 	def onPanelActivated(self):
 		self.voicePanel.onPanelActivated()
@@ -602,7 +602,7 @@ class SpeechSettingsPanel(SettingsPanel):
 
 	def onDiscard(self):
 		self.voicePanel.onDiscard()
-	
+
 	def onSave(self):
 		self.voicePanel.onSave()
 
@@ -1853,7 +1853,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(displayGroup)
 		
 		displayDesc = braille.handler.display.description
-		self.displayNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=displayDesc, style=wx.TE_READONLY)
+		self.displayNameCtrl = wx.StaticText(self, label=displayDesc)
 		# Translators: This is the label for the button used to change braille display,
 		# it appears in the context of a braille display group on the braille settings panel.
 		changeDisplayBtn = wx.Button(self, label=_("Change..."))
@@ -1880,7 +1880,7 @@ class BrailleSettingsPanel(SettingsPanel):
 
 	def updateCurrentDisplay(self):
 		displayDesc = braille.handler.display.description
-		self.displayNameCtrl.SetValue(displayDesc)
+		self.displayNameCtrl.SetLabel(displayDesc)
 
 	def onPanelActivated(self):
 		self.brailleIoPanel.onPanelActivated()
