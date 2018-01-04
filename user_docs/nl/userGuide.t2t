@@ -179,7 +179,7 @@ Hoewel de meeste laptops geen apart numeriek toetsenbord hebben, kan dit soms we
 Als dit niet mogelijk is op uw laptop of als u NumLock niet kunt uitschakelen, kunt u beter kiezen voor de laptop toetsenbordindeling. 
 
 ++ NVDA Aanraakgebaren ++
-Als u met NVDA werkt op een apparaat met een aanraakscherm dat draait onder Windows 8 of hoger dan kunt u NVDA ook rechtstreeks via het aanraakscherm bedienen.
+Als u met NVDA werkt op een met een aanraakscherm uitgerust apparaat  dat draait onder Windows 8 of hoger dan kunt u NVDA ook rechtstreeks met aanraakcommando's bedienen.
 Terwijl NVDA actief is, gaat alle door aanraking gegenereerde invoer rechtstreeks naar NVDA.
 Daarom zullen taken die normaal zonder NVDA kunnen worden uitgevoerd niet werken.
 
@@ -221,6 +221,15 @@ Als er bij een bepaald commando geen modus wordt aangegeven wordt dit altijd uit
 %kc:beginInclude
 Wisselen tussen aanraakmodi doet u door eenmaal tikken met drie vingers.
 %kc:endInclude
+
++++ Schermtoetsenbord +++
+Bij gebruik van een aanraakscherm dient het schermtoetsenbord voor het invoeren van tekst en commando's.
+Wanneer een tekstinvoerveld de focus heeft, kunt u het schermtoetsenbord activeren door te dubbeltikken op het ikoontje van het schermtoetsenbord onderaan het scherm.
+Bij tablets zoals de Surface Pro van Microsoft , is het schermtoetsenbord altijd beschikbaar zodra het toetsenbord uit het dock is gehaald.
+Om het schermtoetsenbord te laten verdwijnen dubbeltikt u op het schermtoetsenbordikoon of gaat u uit het tekstinvoerveld.
+
+De letters en tekens op het schermtoetsenbord vindt u door met een vinger naar het toetsenbord te gaan, gewoonlijk te vinden onderaan het scherm, waar u vervolgens met uw vinger de toets zoekt van uw keuze. Hiervoor moet het toetsenbord wel actief zijn.
+Zodra u de toets die u wilt gebruiken hebt gevonden, dubbeltikt u op de toets of u haalt uw vinger van de toets al naar gelang de gekozen opties in de [Aanraakinteractie-instellingen #TouchInteraction].
 
 ++ Invoerhulpmodus ++
 Er worden veel NVDA-commando’s genoemd in deze handleiding, maar om op een gemakkelijke manier de verschillende commando’s te leren kennen kunt u het beste Invoerhulp inschakelen. 
@@ -1273,6 +1282,14 @@ Bij gebruik van stereoluidsprekers of een koptelefoon zal het geluidssignaal ste
 ==== Schermhelderheid bepaalt Volume audio-coördinatie ====
 Als dit selectievakje “geluidscoördinatie gebruiken bij verplaatsen muis” is ingeschakeld, dan zal het inschakelen van dit selectievakje ervoor zorgen dat het volume van de pieptonen wordt bepaald door de schermhelderheid onder de muis.
 Deze functies staan standaard uit.
+
++++ Instellingen Aanraakinteractie +++[TouchInteraction]
+Via dit dialoogvenster, dat u alleen aantreft op computers die draaien onder  Windows 8 en later welke beschikken over mogelijkheden voor bediening d.m.v. aanraking, kunt u configureren hoe NVDA omgaat met aanraakschermen.
+
+==== typen met het schermtoetsenbord ====
+Het al dan niet aanvinken van dit selectievakje bepaalt hoe u tekst invoert als u typt met het schermtoetsenbord.
+Als het selectievakje is aangevinkt dan wordt de door u gewenste letter ingevoerd zodra u uw vinger van die letter afhaalt d.w.z. (een klein stukje optilt).
+Als u geen vinkje zet, moet u dubbeltikken op de letter van uw keuze om deze in te voeren.
 
 +++ Instellingen review cursor (leescursor)+++
 Om instellingen aan te passen gaat u in het NVDA-menu onder Opties naar Leescursor.
