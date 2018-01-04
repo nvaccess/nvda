@@ -11,6 +11,7 @@ import copy
 import re
 import wx
 from wx.lib import scrolledpanel
+import wx.lib.newevent
 import winUser
 import logHandler
 import installer
@@ -69,13 +70,14 @@ class SettingsDialog(wx.Dialog):
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
-		if SettingsDialog._hasInstance:
+		if SettingsDialog._hasInstance and not kwargs['multiInstanceAllowed']:
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
+			pass
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
 		SettingsDialog._hasInstance=True
 		return obj
 
-	def __init__(self, parent):
+	def __init__(self, parent, multiInstanceAllowed=False):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
@@ -121,6 +123,7 @@ class SettingsDialog(wx.Dialog):
 		"""
 		self.DestroyChildren()
 		self.Destroy()
+		self.SetReturnCode(wx.ID_OK)
 
 	def onCancel(self, evt):
 		"""Take action in response to the Cancel button being pressed.
@@ -129,6 +132,7 @@ class SettingsDialog(wx.Dialog):
 		"""
 		self.DestroyChildren()
 		self.Destroy()
+		self.SetReturnCode(wx.ID_CANCEL)
 
 	def onApply(self, evt):
 		"""Take action in response to the Apply button being pressed.
@@ -136,6 +140,11 @@ class SettingsDialog(wx.Dialog):
 		This base method should be called to run the postInit method.
 		"""
 		self.postInit()
+		self.SetReturnCode(wx.ID_APPLY)
+
+# An event and event binder that will notify the containers that they should
+# redo the layout in whatever way makes sense for their particular content.
+_RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
 class SettingsPanel(wx.Panel):
 	"""A settings panel, to be used in a multi category settings dialog.
@@ -179,8 +188,6 @@ class SettingsPanel(wx.Panel):
 		For example, this might be used for resource intensive tasks.
 		Sub-classes should extendthis method.
 		"""
-		# The transition of showing the panel seems smoother if the layout is called before show.
-		self.Parent.Layout()
 		self.Show()
 
 	def onPanelDeactivated(self):
@@ -201,12 +208,16 @@ class SettingsPanel(wx.Panel):
 		Sub-classes should override this method.
 		MultiCategorySettingsDialog is responsible for cleaning up the panel when Cancel is pressed.
 		"""
-
-	def refresh(self):
-		"""Performs optional refreshing of the panel contents.
-		This will be executed after saving when the parent's dialog apply button is pressed.
-		Sub-classes should extendthis method.
+	
+	def _sendLayoutUpdatedEvent(self):
+		"""Notify any wx parents that may be listening that they should redo their layout in whatever way
+		makes sense for them. It is expected that sub-classes call this method in response to changes in
+		the number of GUI items in their panel.
 		"""
+		event = _RWLayoutNeededEvent(self.GetId())
+		event.SetEventObject(self)
+		self.GetEventHandler().ProcessEvent(event)
+
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
@@ -290,6 +301,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 		self.container.Layout()
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
+		self.Bind(EVT_RW_LAYOUT_NEEDED, self._onPanelLayoutChanged)
 
 	def postInit(self):
 		if self.initialCategory:
@@ -317,20 +329,35 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			if panel:
 				yield panel
 
+	def _onPanelLayoutChanged(self,evt):
+		# call setupScrolling so that the controls apear in their expected locations.
+		self.container.SetupScrolling()
+		# when child elements get smaller the scrolledPanel does not
+		# erase the old contents and must be redrawn
+		self.container.Refresh()
+
+	def _doCategoryChange(self, oldCat, newCat):
+		# Freeze and Thaw are called to stop visual artefacts while the GUI
+		# is being rebuilt. Without this, the controls can sometimes be seen being
+		# added.
+		self.container.Freeze()
+		if oldCat:
+			oldCat.onPanelDeactivated()
+		self.currentCategory = newCat
+		newCat.onPanelActivated()
+		# call setupScrolling so that the controls apear in their expected locations.
+		self.container.SetupScrolling()
+		self.container.Thaw()
+
 	def onCategoryChange(self,evt):
 		# During dialog deconstruction, tree items are removed one by one
 		# This triggers EVT_TREE_SEL_CHANGED, which should really be ignored in these cases
 		if self.categoryTree.Count<len(self.categoryTreeItems):
 			evt.Skip()
 			return
-		self.container.Freeze()
-		if self.currentCategory:
-			self.currentCategory.onPanelDeactivated()
-		self.currentCategory=self.categoryTree.GetItemPyData(evt.Item)
-		self.currentCategory.onPanelActivated()
-		# call setupScrolling so that the controls apear in their expected locations.
-		self.container.SetupScrolling()
-		self.container.Thaw()
+		oldCat = self.currentCategory
+		newCat = self.categoryTree.GetItemPyData(evt.Item)
+		self._doCategoryChange(oldCat, newCat)
 
 	def onOk(self,evt):
 		for panel in self.getCategoryInstances():
@@ -347,9 +374,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def onApply(self,evt):
 		for panel in self.getCategoryInstances():
 			panel.onSave()
-			panel.refresh()
-		# call setupScrolling so that the controls apear in their expected locations.
-		self.container.SetupScrolling()
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 class GeneralSettingsPanel(SettingsPanel):
@@ -514,17 +538,80 @@ class GeneralSettingsPanel(SettingsPanel):
 				config.conf.save()
 				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 
-class SynthesizerPanel(SettingsPanel):
-	# Translators: This is the label for the synthesizer panel.
-	title = _("Synthesizer")
+class SpeechSettingsPanel(SettingsPanel):
+	# Translators: This is the label for the speech panel
+	title = _("Speech")
+	def makeSettings(self, settingsSizer):
+		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: This is a label for the select
+		# synthesizer combobox in the synthesizer panel.
+		synthLabel = _("&Synthesizer:")
+		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=synthLabel), wx.HORIZONTAL))
+		settingsSizerHelper.addItem(synthGroup)
+		
+		# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
+		# standard readonly TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
+		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
+		# display here.
+		from wx.lib.expando import ExpandoTextCtrl
+		synthDesc = getSynth().description
+		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
+		# Translators: This is the label for the button used to change synthesiser, it appears in the context of a synthesiser group on the speech settings panel.
+		changeSynthBtn = wx.Button(self, label=_("Change..."))
+		synthGroup.addItem(
+				guiHelper.associateElements(
+					self.synthNameCtrl,
+					changeSynthBtn
+					)
+				)
+		changeSynthBtn.Bind(wx.EVT_BUTTON,self.onChangeSynth)
+
+		self.voicePanel = VoiceSettingsPanel(self)
+		settingsSizerHelper.addItem(self.voicePanel)
+	
+	def onChangeSynth(self, evt):
+		changeSynth = SynthesizerSelection(self)
+		ret = changeSynth.ShowModal()
+		if ret == wx.ID_OK:
+			self.Freeze()
+			# trigger a refresh of the settings
+			self.onPanelActivated()
+			self._sendLayoutUpdatedEvent()
+			self.Thaw()
+
+	def onPanelActivated(self):
+		super(SpeechSettingsPanel,self).onPanelActivated()
+		synthDesc = getSynth().description
+		self.synthNameCtrl.SetValue(synthDesc)
+		self.voicePanel.onPanelActivated()
+	
+	def onPanelDeactivated(self):
+		super(SpeechSettingsPanel,self).onPanelDeactivated()
+		self.voicePanel.onPanelDeactivated()
+
+	def onDiscard(self):
+		self.voicePanel.onDiscard()
+	
+	def onSave(self):
+		self.voicePanel.onSave()
+
+class SynthesizerSelection(SettingsDialog):
+	# Translators: This is the label for the synthesizer selection dialog
+	title = _("Select Synthesizer")
 	synthNames = []
 
+	def __new__(cls, *args, **kwargs):
+		kwargs['multiInstanceAllowed'] = True
+		return super(SynthesizerSelection, cls).__new__(cls, *args, **kwargs)
+	
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the select
 		# synthesizer combobox in the synthesizer panel.
 		synthListLabelText=_("&Synthesizer:")
 		self.synthList = settingsSizerHelper.addLabeledControl(synthListLabelText, wx.Choice, choices=[])
+		self.updateSynthesizerList()
 
 		# Translators: This is the label for the select output
 		# device combo in the synthesizer panel. Examples of
@@ -547,7 +634,10 @@ class SynthesizerPanel(SettingsPanel):
 		self.duckingList.SetSelection(index)
 		if not audioDucking.isAudioDuckingSupported():
 			self.duckingList.Disable()
-		self.updateSynthesizerList()
+
+	def postInit(self):
+		# Finally, ensure that focus is on the synthlist
+		self.synthList.SetFocus()
 
 	def updateSynthesizerList(self):
 		driverList=getSynthList()
@@ -561,26 +651,11 @@ class SynthesizerPanel(SettingsPanel):
 		except:
 			pass
 
-	def onPanelDeactivated(self):
-		newSynth=self.synthNames[self.synthList.GetSelection()]
-		if getSynth().name is not newSynth:
-			# Try to initialize the driver
-			try:
-				tempDriver = getSynthInstance(newSynth)
-			except:
-				# Translators: This message is presented when
-				# leaving the synthesizer settings panel and NVDA is
-				# unable to load the selected synthesizer.
-				gui.messageBox(_("Could not load the %s synthesizer. You will not be able to save your settings until you select another synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
-			else:
-				# Terminate the just initialized synth.
-				tempDriver.terminate()
-		super(SynthesizerPanel,self).onPanelDeactivated()
-
-	def onSave(self):
+	def _acceptAudioChanges(self):
 		if not self.synthNames:
 			# The list of synths has not been populated yet, so we didn't change anything in this panel
 			return
+
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if getSynth().name is not newSynth and not setSynth(newSynth):
@@ -588,11 +663,16 @@ class SynthesizerPanel(SettingsPanel):
 			# NVDA is unable to load the selected
 			# synthesizer.
 			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
-			return 
+			return
+
 		if audioDucking.isAudioDuckingSupported():
 			index=self.duckingList.GetSelection()
 			config.conf['audio']['audioDuckingMode']=index
 			audioDucking.setAudioDuckingMode(index)
+
+	def onOk(self, evt):
+		self._acceptAudioChanges()
+		super(SynthesizerSelection, self).onOk(evt)
 
 class SynthSettingChanger(object):
 	"""Functor which acts as calback for GUI events."""
@@ -720,7 +800,10 @@ class VoiceSettingsPanel(SettingsPanel):
 
 	def onPanelActivated(self):
 		if getSynth().name is not self._synth.name:
-			self.refresh()
+			log.debug("refreshing voice panel")
+			self.sizerDict.clear()
+			self.settingsSizer.Clear(deleteWindows=True)
+			self.makeSettings(self.settingsSizer)
 		super(VoiceSettingsPanel,self).onPanelActivated()
 
 	def makeSettings(self, settingsSizer):
@@ -845,12 +928,6 @@ class VoiceSettingsPanel(SettingsPanel):
 		config.conf["speech"][synth.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][synth.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][synth.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
-
-	def refresh(self):
-		self.sizerDict.clear()
-		self.settingsSizer.Clear(deleteWindows=True)
-		self.makeSettings(self.settingsSizer)
-		super(VoiceSettingsPanel,self).refresh()
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
@@ -1981,8 +2058,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	title = _("NVDA")
 	categoryClasses=[
 		GeneralSettingsPanel,
-		SynthesizerPanel,
-		VoiceSettingsPanel,
+		SpeechSettingsPanel,
 		BrailleSettingsPanel,
 		KeyboardSettingsPanel,
 		MouseSettingsPanel,
