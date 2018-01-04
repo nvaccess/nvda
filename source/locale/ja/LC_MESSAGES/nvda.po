@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-06 00:10+1000\n"
-"PO-Revision-Date: 2017-10-06 14:34+0900\n"
+"POT-Creation-Date: 2017-12-22 00:10+1000\n"
+"PO-Revision-Date: 2017-12-27 15:38+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -802,6 +802,11 @@ msgstr "クロアチア語8点コンピューター点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "クロアチア語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "ハンガリー語8点コンピューター点字"
 
@@ -1022,6 +1027,11 @@ msgstr "Unicode 点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "ベトナム語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "中国語点字(香港、広東語)"
 
@@ -1030,9 +1040,12 @@ msgstr "中国語点字(香港、広東語)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "中国語点字(台湾、標準中国語)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "フォーカスモード"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "ブラウズモード"
@@ -1561,8 +1574,8 @@ msgstr "種別"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "フィルター(&F)"
+msgid "Filt&er by:"
+msgstr "フィルター(&E)"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1597,8 +1610,8 @@ msgstr "詳細説明なし"
 msgid "Shows the long description at this position if one is found."
 msgstr "詳細説明がある場合に表示"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "コンテナ内ではありません"
 
@@ -1643,6 +1656,18 @@ msgstr "次のテーブル列へ移動"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "前のテーブル列へ移動"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "レイアウトテーブルを報告しない"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "レイアウトテーブルを報告する"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "レイアウトテーブルの報告の切り替え"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2113,7 +2138,7 @@ msgstr "アニメーション"
 
 #. Translators: Identifies an application in webpages.
 msgid "application"
-msgstr "アプリケーション"
+msgstr "アプリ"
 
 #. Translators: Identifies a box element.
 msgid "box"
@@ -2687,6 +2712,24 @@ msgstr "ジェスチャーマップファイルエラー"
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDAを読み込み中です。お待ちください..."
+
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "横長の向き"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "縦長の向き"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "バッテリー %d パーセント 充電中"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "バッテリー %d パーセント 充電していません"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -5604,12 +5647,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "サウンド"
 
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr "Windowsログオン、UAC、その他のセキュア画面でNVDAを使用する"
-
 msgid "Type help(object) to get help about object."
 msgstr "help(object)と入力すると、オブジェクトに関するヘルプが得られます"
 
@@ -5764,7 +5801,7 @@ msgstr "段区切り"
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
-msgstr "次の見出し%dがありません"
+msgstr "見出しレベル %d"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
@@ -5931,6 +5968,34 @@ msgstr "両端揃え"
 msgid "align default"
 msgstr "既定の揃え"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "縦方向 上揃え"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "縦方向 中央揃え"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "縦方向 下揃え"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "縦方向 ベースライン揃え"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "縦方向 既定の揃え"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "左インデント"
@@ -5962,34 +6027,6 @@ msgstr "字下げ"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "字下げなし"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "縦方向 上揃え"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "縦方向 中央揃え"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "縦方向 下揃え"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "縦方向 ベースライン揃え"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "縦方向 両端揃え"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "縦方向 両端揃え"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "縦方向 既定の揃え"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -6979,12 +7016,25 @@ msgstr "ディスプレイのスクロール"
 msgid "line scroll"
 msgstr "行スクロール"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech社製点字ディスプレイ"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Handy Techドライバーの設定ウインドウを表示"
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "点字を入力する"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "点字を入力しない"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "点字入力の切り替え"
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7128,6 +7178,14 @@ msgstr "マウス設定(&M)..."
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "マウスカーソル形状の変更やマウスカーソル位置のオブジェクトの報告"
 
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "タッチ操作(&T)..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "タッチ画面のNVDAによる操作の切替"
+
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
 msgstr "レビューカーソル(&C)..."
@@ -7166,8 +7224,8 @@ msgid "Change settings of document properties"
 msgstr "ドキュメントの書式情報の変更に関する設定"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "Windows 10 文字認識..."
+msgid "&Windows 10 OCR..."
+msgstr "&Windows 10 文字認識..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8668,8 +8726,8 @@ msgid "Whole &word"
 msgstr "単語全体(&W)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
-msgstr "正規表現(&R)"
+msgid "Regular &expression"
+msgstr "正規表現(&E)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -8895,6 +8953,15 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
 "ユーザー定義ジェスチャーを保存できませんでした - 読み取り専用ファイルシステム"
 "が使用されている可能性があります"
+
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "タッチ操作"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "タッチ文字入力モード(&T)"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10367,37 +10434,11 @@ msgstr "コメント(&A)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
+msgid "&Errors"
 msgstr "スペルミス(&E)"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle シリーズ"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS社製 SyncBraille"
 
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS社製 SyncBraille"
-
-#~ msgid "-----"
-#~ msgstr "区切り"
-
-#~ msgid "(x)"
-#~ msgstr "チェック"
-
-#~ msgid "(-)"
-#~ msgstr "一部チェック"
-
-#~ msgid "( )"
-#~ msgstr "チェックなし"
-
-#~ msgid "Farsi grade 1"
-#~ msgstr "ペルシャ語1級点字"
-
-#~ msgid "ITALIC"
-#~ msgstr "斜体"
-
-#~ msgid "braille"
-#~ msgstr "点字"
-
-#~ msgid "Are you sure you want to delete this profile? This cannot be undone."
-#~ msgstr "プロファイルを削除しますか？取り消しはできません。"
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Handy Techドライバーの設定ウインドウを表示"

@@ -2,7 +2,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2012-2017 NV Access Limited, Joseph Lee, Babbage B.V.
+
+"""handles touchscreen interaction (Windows 8 and later).
+Used to provide input gestures for touchscreens, touch modes and other support facilities.
+In order to use touch features, NVDA must be installed on a touchscreen computer running Windows 8 and later.
+"""
 
 import wx
 import threading
@@ -30,6 +35,7 @@ touchModeLabels={
 	"object":_("object mode"),
 }
 
+SM_MAXIMUMTOUCHES=95
 HWND_MESSAGE=-3
 
 WM_QUIT=18
@@ -290,20 +296,27 @@ class TouchHandler(threading.Thread):
 
 handler=None
 
-def initialize():
-	global handler
+def touchSupported():
+	"""Returns if the system and current NVDA session supports touchscreen interaction.
+	"""
 	if not config.isInstalledCopy():
 		log.debugWarning("Touch only supported on installed copies")
-		raise NotImplementedError
+		return False
 	if (winVersion.winVersion.major*10+winVersion.winVersion.minor)<62:
 		log.debugWarning("Touch only supported on Windows 8 and higher")
-		raise NotImplementedError
-	maxTouches=windll.user32.GetSystemMetrics(95) #maximum touches
+		return False
+	maxTouches=windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
 	if maxTouches<=0:
 		log.debugWarning("No touch devices found")
+		return False
+	return True
+
+def initialize():
+	global handler
+	if not touchSupported():
 		raise NotImplementedError
 	handler=TouchHandler()
-	log.debug("Touch support initialized. maximum touch inputs: %d"%maxTouches) 
+	log.debug("Touch support initialized. maximum touch inputs: %d"%windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES))
 
 def terminate():
 	global handler

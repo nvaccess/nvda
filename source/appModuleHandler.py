@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -331,10 +331,7 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		if winVersion.winVersion.major > 5:
-			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
-		else:
-			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
+		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
 
@@ -344,16 +341,10 @@ class AppModule(baseObject.ScriptableObject):
 		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
-		# Choose the right function to use to get the executable file name
-		if winVersion.winVersion.major > 5:
-			# For Windows Vista and higher, use QueryFullProcessImageName function
-			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
-		else:
-			GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
 		# Create the buffer to get the executable name
 		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
-		if not GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.byref(length)):
+		if not ctypes.windll.Kernel32.QueryFullProcessImageNameW(self.processHandle, 0, exeFileName, ctypes.byref(length)):
 			raise ctypes.WinError()
 		fileName = exeFileName.value
 		# Get size needed for buffer (0 if no info)

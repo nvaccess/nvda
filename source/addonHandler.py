@@ -162,7 +162,10 @@ def _showAddonUpdateUI():
 		wx.CallAfter(AddonUpdatesDialog, gui.mainFrame, info)
 
 def initialize():
-	""" Initializes the add-ons subsystem."""
+	""" Initializes the add-ons subsystem. """
+	if config.isAppX:
+		log.info("Add-ons not supported when running as a Windows Store application")
+		return
 	loadState()
 	removeFailedDeletions()
 	completePendingAddonRemoves()

@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2016 NV Access Limited
+Copyright 2007-2017 NV Access Limited, Mozilla Corporation
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -28,6 +28,7 @@ using namespace std;
 
 #define NAVRELATION_LABELLED_BY 0x1003
 #define NAVRELATION_NODE_CHILD_OF 0x1005
+const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
 
 HWND findRealMozillaWindow(HWND hwnd) {
 	if(hwnd==0||!IsWindow(hwnd))
@@ -562,11 +563,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	}
 
 	IAccessibleText* paccText=NULL;
-	IAccessibleHypertext* paccHypertext=NULL;
 	//get IAccessibleText interface
 	pacc->QueryInterface(IID_IAccessibleText,(void**)&paccText);
-	//Get IAccessibleHypertext interface
-	pacc->QueryInterface(IID_IAccessibleHypertext,(void**)&paccHypertext);
 	//Get the text from the IAccessibleText interface
 	BSTR IA2Text=NULL;
 	int IA2TextLength=0;
@@ -746,8 +744,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			long attribsStart = 0;
 			long attribsEnd = 0;
 			map<wstring,wstring> textAttribs;
+			auto linkGetter = makeHyperlinkGetter(pacc);
 			for(int i=0;;++i) {
-				if(i!=chunkStart&&(i==IA2TextLength||i==attribsEnd||IA2Text[i]==0xfffc)) {
+				if(i!=chunkStart&&(i==IA2TextLength||i==attribsEnd||IA2Text[i]==EMBEDDED_OBJ_CHAR)) {
 					// We've reached the end of the current chunk of text.
 					// (A chunk ends at the end of the text, at the end of an attributes run
 					// or at an embedded object char.)
@@ -780,28 +779,22 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 						attribsEnd=IA2TextLength;
 					}
 				}
-				if(paccHypertext&&IA2Text[i]==0xfffc) {
+				if (IA2Text[i] == EMBEDDED_OBJ_CHAR && linkGetter) {
 					// Embedded object char.
 					// The next chunk of text shouldn't include this char.
 					chunkStart=i+1;
-					long hyperlinkIndex;
-					if(paccHypertext->get_hyperlinkIndex(i,&hyperlinkIndex)!=S_OK)
-						continue;
-					IAccessibleHyperlink* paccHyperlink=NULL;
-					if(paccHypertext->get_hyperlink(hyperlinkIndex,&paccHyperlink)!=S_OK)
-						continue;
-					IAccessible2* childPacc=NULL;
-					if(paccHyperlink->QueryInterface(IID_IAccessible2,(void**)&childPacc)!=S_OK) {
-						paccHyperlink->Release();
+					// In Gecko, hyperlinks correspond to embedded object chars,
+					// so there's no need to call IAHyperlink::hyperlinkIndex.
+					IAccessibleHyperlinkPtr link = move(linkGetter->next());
+					IAccessible2Ptr childPacc = link;
+					if(!childPacc) {
 						continue;
 					}
-					paccHyperlink->Release();
 					if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, presentationalRowNumber, ignoreInteractiveUnlabelledGraphics)) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in fillVBuf");
 					}
-					childPacc->Release();
 				}
 			}
 
@@ -900,8 +893,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		SysFreeString(IA2Text);
 	if(paccText)
 		paccText->Release();
-	if(paccHypertext)
-		paccHypertext->Release();
 	if (releaseTable) {
 		if(paccTable2)
 			paccTable2->Release();

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -199,25 +199,15 @@ setup(
 			"company_name": publisher,
 		},
 	],
-	service=[{
-		"modules": ["nvda_service"],
-		"icon_resources": [(1, "images/nvda.ico")],
-		"version":"%s.%s.%s.%s"%(version_year,version_major,version_minor,version_build),
-		"description": "NVDA service",
-		"product_version": version,
-		"copyright": copyright,
-		"company_name": publisher,
-		"uac_info": ("requireAdministrator", False),
-		"cmdline_style": "pywin32",
-	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
 		"excludes": ["Tkinter",
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
 		# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
-		# Explicitly include it so we don't break some add-ons.
-		"includes": ["nvdaBuiltin", "bisect"],
+		# Also, the service executable used win32api, which some add-ons use for various purposes.
+		# Explicitly include them so we don't break some add-ons.
+		"includes": ["nvdaBuiltin", "bisect", "win32api"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),

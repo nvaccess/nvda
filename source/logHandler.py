@@ -18,6 +18,7 @@ import winsound
 import traceback
 from types import MethodType, FunctionType
 import globalVars
+import buildVersion
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
@@ -29,6 +30,7 @@ CO_E_OBJNOTCONNECTED = -2147220995
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
 RPC_E_DISCONNECTED = -2147417848
+LOAD_WITH_ALTERED_SEARCH_PATH=0x8
 
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
@@ -188,17 +190,19 @@ class RemoteHandler(logging.Handler):
 
 	def __init__(self):
 		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
-		self._remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h) if h else None
+		path=os.path.abspath(os.path.join(u"lib",buildVersion.version,u"nvdaHelperRemote.dll"))
+		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
+		if not h:
+			raise OSError("Could not load %s"%path) 
+		self._remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
 		logging.Handler.__init__(self)
 
 	def emit(self, record):
 		msg = self.format(record)
-		if self._remoteLib:
-			try:
-				self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
-			except WindowsError:
-				pass
+		try:
+			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
+		except WindowsError:
+			pass
 
 class FileHandler(logging.StreamHandler):
 
@@ -214,11 +218,8 @@ class FileHandler(logging.StreamHandler):
 		logging.StreamHandler.close(self)
 
 	def handle(self,record):
-		# versionInfo must be imported after the language is set. Otherwise, strings won't be in the correct language.
-		# Therefore, don't import versionInfo if it hasn't already been imported.
-		versionInfo = sys.modules.get("versionInfo")
 		# Only play the error sound if this is a test version.
-		shouldPlayErrorSound = versionInfo and versionInfo.isTestVersion
+		shouldPlayErrorSound =  buildVersion.isTestVersion
 		if record.levelno>=logging.CRITICAL:
 			try:
 				winsound.PlaySound("SystemHand",winsound.SND_ALIAS)

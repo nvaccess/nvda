@@ -9,8 +9,11 @@
 """
 
 import globalVars
+import config
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
+elif config.isAppX:
+	raise RuntimeError("updates managed by Windows Store") 
 import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")

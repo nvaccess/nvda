@@ -226,18 +226,17 @@ class TextInfoQuickNavItem(QuickNavItem):
 			# Translators: Reported label in the elements list for an element which which has no name and value
 			unlabeled = _("Unlabeled")
 			realStates = labelPropertyGetter("states")
-			positiveStates = " ".join(controlTypes.stateLabels[st] for st in controlTypes.processPositiveStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
-			negativeStates = " ".join(controlTypes.negativeStateLabels[st] for st in controlTypes.processNegativeStates(role, realStates, controlTypes.REASON_FOCUS, realStates))
+			labeledStates = " ".join(controlTypes.processAndLabelStates(role, realStates, controlTypes.REASON_FOCUS))
 			if self.itemType is "formField":
 				if role in (controlTypes.ROLE_BUTTON,controlTypes.ROLE_DROPDOWNBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_SPLITBUTTON,controlTypes.ROLE_MENUBUTTON,controlTypes.ROLE_DROPDOWNBUTTONGRID,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_TREEVIEWBUTTON):
 					# Example output: Mute; toggle button; pressed
-					labelParts = (content or name or unlabeled, roleText, positiveStates, negativeStates)
+					labelParts = (content or name or unlabeled, roleText, labeledStates)
 				else:
 					# Example output: Find a repository...; edit; has auto complete; NVDA
-					labelParts = (name or unlabeled, roleText, positiveStates, negativeStates, content)
+					labelParts = (name or unlabeled, roleText, labeledStates, content)
 			elif self.itemType in ("link", "button"):
 				# Example output: You have unread notifications; visited
-				labelParts = (content or name or unlabeled, positiveStates, negativeStates)
+				labelParts = (content or name or unlabeled, labeledStates)
 		if labelParts:
 			label = "; ".join(lp for lp in labelParts if lp)
 		else:
@@ -1764,6 +1763,19 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		self._tableMovementScriptHelper(axis="column", movement="previous")
 	# Translators: the description for the previous table column script on browseMode documents.
 	script_previousColumn.__doc__ = _("moves to the previous table column")
+
+	def script_toggleIncludeLayoutTables(self,gesture):
+		if config.conf["documentFormatting"]["includeLayoutTables"]:
+			# Translators: The message announced when toggling the include layout tables browse mode setting.
+			state = _("layout tables off")
+			config.conf["documentFormatting"]["includeLayoutTables"]=False
+		else:
+			# Translators: The message announced when toggling the include layout tables browse mode setting.
+			state = _("layout tables on")
+			config.conf["documentFormatting"]["includeLayoutTables"]=True
+		ui.message(state)
+	# Translators: Input help mode message for include layout tables command.
+	script_toggleIncludeLayoutTables.__doc__=_("Toggles on and off the inclusion of layout tables in browse mode")
 
 	NOT_LINK_BLOCK_MIN_LEN = 30
 	def _isSuitableNotLinkBlock(self,range):
