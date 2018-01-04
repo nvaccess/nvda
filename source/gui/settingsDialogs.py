@@ -84,6 +84,9 @@ class SettingsDialog(wx.Dialog):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
+		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
+			Note that still, only one instance of a particular SettingsDialog subclass may exist at one time.
+		@type multiInstanceAllowed: bool
 		"""
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
@@ -604,7 +607,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	def __new__(cls, *args, **kwargs):
 		kwargs['multiInstanceAllowed'] = True
 		return super(SynthesizerSelectionDialog, cls).__new__(cls, *args, **kwargs)
-	
+
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the select
