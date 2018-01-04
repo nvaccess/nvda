@@ -72,7 +72,7 @@ class SettingsDialog(wx.Dialog):
 
 	def __new__(cls, *args, **kwargs):
 		if next((dlg for dlg in SettingsDialog._instances if isinstance(dlg,cls)),None) or (
-			SettingsDialog._instances and not kwargs.pop('multiInstanceAllowed',False)
+			SettingsDialog._instances and not kwargs.get('multiInstanceAllowed',False)
 		):
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
 			pass
@@ -85,7 +85,7 @@ class SettingsDialog(wx.Dialog):
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
 		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
-			Note that still, only one instance of a particular SettingsDialog subclass may exist at one time.
+			Note that still only one instance of a particular SettingsDialog subclass may exist at one time.
 		@type multiInstanceAllowed: bool
 		"""
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
@@ -574,7 +574,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(self.voicePanel)
 	
 	def onChangeSynth(self, evt):
-		changeSynth = SynthesizerSelectionDialog(self)
+		changeSynth = SynthesizerSelectionDialog(self, multiInstanceAllowed=True)
 		ret = changeSynth.ShowModal()
 		if ret == wx.ID_OK:
 			self.Freeze()
@@ -603,10 +603,6 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
 	synthNames = []
-
-	def __new__(cls, *args, **kwargs):
-		kwargs['multiInstanceAllowed'] = True
-		return super(SynthesizerSelectionDialog, cls).__new__(cls, *args, **kwargs)
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
