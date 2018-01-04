@@ -1863,8 +1863,8 @@ class BrailleSettingsPanel(SettingsPanel):
 		)
 		changeDisplayBtn.Bind(wx.EVT_BUTTON,self.onChangeDisplay)
 
-		self.brailleIoPanel = BrailleIoSettingsPanel(self)
-		settingsSizerHelper.addItem(self.brailleIoPanel)
+		self.brailleSubPanel = BrailleSettingsSubPanel(self)
+		settingsSizerHelper.addItem(self.brailleSubPanel)
 
 	def onChangeDisplay(self, evt):
 		changeDisplay = BrailleDisplaySelectionDialog(self, multiInstanceAllowed=True)
@@ -1881,18 +1881,18 @@ class BrailleSettingsPanel(SettingsPanel):
 		self.displayNameCtrl.SetLabel(displayDesc)
 
 	def onPanelActivated(self):
-		self.brailleIoPanel.onPanelActivated()
+		self.brailleSubPanel.onPanelActivated()
 		super(BrailleSettingsPanel,self).onPanelActivated()
 
 	def onPanelDeactivated(self):
-		self.brailleIoPanel.onPanelDeactivated()
+		self.brailleSubPanel.onPanelDeactivated()
 		super(BrailleSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
-		self.brailleIoPanel.onDiscard()
+		self.brailleSubPanel.onDiscard()
 
 	def onSave(self):
-		self.brailleIoPanel.onSave()
+		self.brailleSubPanel.onSave()
 
 class BrailleDisplaySelectionDialog(SettingsDialog):
 	# Translators: This is the label for the braille display selection dialog.
@@ -1976,7 +1976,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
 
-class BrailleIoSettingsPanel(SettingsPanel):
+class BrailleSettingsSubPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
