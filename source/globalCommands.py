@@ -1555,7 +1555,7 @@ class GlobalCommands(ScriptableObject):
 	script_activateSynthesizerDialog.category=SCRCAT_CONFIG
 
 	def script_activateVoiceDialog(self, gesture):
-		wx.CallAfter(gui.mainFrame.onVoiceCommand, None)
+		wx.CallAfter(gui.mainFrame.onSpeechCommand, None)
 	# Translators: Input help mode message for go to voice settings command.
 	script_activateVoiceDialog.__doc__ = _("Shows NVDA's voice settings")
 	script_activateVoiceDialog.category=SCRCAT_CONFIG
