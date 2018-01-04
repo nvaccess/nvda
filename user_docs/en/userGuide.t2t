@@ -22,12 +22,13 @@ Major highlights include:
 - Built-in speech synthesizer supporting over 80 languages
 - Reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
-- Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
-- Ability to run entirely from a USB stick or other portable media without the need for installation
+- Support for many refreshable braille displays, including braille input on braille displays with a braille keyboard
+- Ability to run entirely from a USB flash drive or other portable media without the need for installation
 - Easy to use talking installer
 - Translated into 51 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
+- Announcing controls and text while using touch gestures
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
 - Support for Windows Command Prompt and console applications
 -
@@ -125,7 +126,7 @@ If you have already closed this dialog or you are running an installed copy of N
 The Dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
 There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
- This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
+This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successful.
 Press OK to dismiss this dialog.
@@ -488,7 +489,6 @@ In addition, you can manually force focus mode, after which it will remain in ef
 | Open long description | NVDA+d | Opens a new window containing a long description for the element you are on if it has one. | 
 %kc:endInclude
 
-
 ++ Single Letter Navigation ++[SingleLetterNavigation]
 While in browse mode, for quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
 Note that not all of these commands are supported in every type of document.
@@ -523,8 +523,8 @@ To move to the beginning or end of containing elements such as lists and tables:
 || Name | Key | Description |
 | Move to start of container | shift+comma | Moves to the start of the container (list, table, etc.) where the caret is positioned |
 | Move past end of container | comma | Moves past the end of the container (list, table, etc.) where the caret is positioned |
-
 %kc:endInclude
+
 Some web applications such as Gmail, Twitter and Facebook use single letters as shortcut keys.
 If you want to use these while still being able to use your cursor keys to read in browse mode, you can temporarily disable NVDA's single letter navigation keys.
 %kc:beginInclude
@@ -1402,7 +1402,7 @@ After reading or precomposition data has been combined into a valid pictographic
 This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
 This option is on by default.
 
-+++ Browse Mode Settings (NVDA+control+b) +++BrowseModeSettings]
++++ Browse Mode Settings (NVDA+control+b) +++[BrowseModeSettings]
 The Browse Mode settings dialog can be found in the Preferences menu, under "Browse mode...".
 
 The dialog contains the following options:
