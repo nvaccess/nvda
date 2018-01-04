@@ -212,7 +212,7 @@ class SettingsPanel(wx.Panel):
 		Sub-classes should override this method.
 		MultiCategorySettingsDialog is responsible for cleaning up the panel when Cancel is pressed.
 		"""
-	
+
 	def _sendLayoutUpdatedEvent(self):
 		"""Notify any wx parents that may be listening that they should redo their layout in whatever way
 		makes sense for them. It is expected that sub-classes call this method in response to changes in
@@ -221,7 +221,6 @@ class SettingsPanel(wx.Panel):
 		event = _RWLayoutNeededEvent(self.GetId())
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
-
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
@@ -545,7 +544,7 @@ class GeneralSettingsPanel(SettingsPanel):
 class SpeechSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the speech panel
 	title = _("Speech")
-	
+
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the select
@@ -559,7 +558,6 @@ class SpeechSettingsPanel(SettingsPanel):
 		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
 		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
 		# display here.
-		from wx.lib.expando import ExpandoTextCtrl
 		synthDesc = getSynth().description
 		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
 		# Translators: This is the label for the button used to change synthesizer, it appears in the context of a synthesizer group on the speech settings panel.
@@ -574,7 +572,7 @@ class SpeechSettingsPanel(SettingsPanel):
 
 		self.voicePanel = VoiceSettingsPanel(self)
 		settingsSizerHelper.addItem(self.voicePanel)
-	
+
 	def onChangeSynth(self, evt):
 		changeSynth = SynthesizerSelectionDialog(self, multiInstanceAllowed=True)
 		ret = changeSynth.ShowModal()
@@ -586,14 +584,14 @@ class SpeechSettingsPanel(SettingsPanel):
 			self.Thaw()
 
 	def onPanelActivated(self):
-		super(SpeechSettingsPanel,self).onPanelActivated()
 		synthDesc = getSynth().description
 		self.synthNameCtrl.SetValue(synthDesc)
 		self.voicePanel.onPanelActivated()
-	
+		super(SpeechSettingsPanel,self).onPanelActivated()
+
 	def onPanelDeactivated(self):
-		super(SpeechSettingsPanel,self).onPanelDeactivated()
 		self.voicePanel.onPanelDeactivated()
+		super(SpeechSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
 		self.voicePanel.onDiscard()
@@ -1870,14 +1868,14 @@ class BrailleSettingsPanel(SettingsPanel):
 			self.Thaw()
 
 	def onPanelActivated(self):
-		super(BrailleSettingsPanel,self).onPanelActivated()
 		displayDesc = braille.handler.display.description
 		self.displayNameCtrl.SetValue(displayDesc)
 		self.brailleIoPanel.onPanelActivated()
+		super(BrailleSettingsPanel,self).onPanelActivated()
 
 	def onPanelDeactivated(self):
-		super(BrailleSettingsPanel,self).onPanelDeactivated()
 		self.brailleIoPanel.onPanelDeactivated()
+		super(BrailleSettingsPanel,self).onPanelDeactivated()
 
 	def onDiscard(self):
 		self.brailleIoPanel.onDiscard()
