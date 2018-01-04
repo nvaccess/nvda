@@ -43,6 +43,7 @@ import inputCore
 import nvdaControls
 import touchHandler
 import winVersion
+import weakref
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -63,18 +64,20 @@ class SettingsDialog(wx.Dialog):
 
 	class MultiInstanceError(RuntimeError): pass
 
-	_hasInstance=False
+	_instances=weakref.WeakSet()
 	title = ""
 	settingsSizerOrientation=wx.VERTICAL
 	hasApplyButton = False
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
-		if SettingsDialog._hasInstance and not kwargs['multiInstanceAllowed']:
+		if next((dlg for dlg in SettingsDialog._instances if isinstance(dlg,cls)),None) or (
+			SettingsDialog._instances and not kwargs.pop('multiInstanceAllowed',False)
+		):
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
 			pass
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
-		SettingsDialog._hasInstance=True
+		SettingsDialog._instances.add(obj)
 		return obj
 
 	def __init__(self, parent, multiInstanceAllowed=False):
@@ -98,9 +101,6 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onApply,id=wx.ID_APPLY)
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
-
-	def __del__(self):
-		SettingsDialog._hasInstance=False
 
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
