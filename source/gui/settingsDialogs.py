@@ -166,13 +166,15 @@ class SettingsPanel(wx.Panel):
 	@type title: str
 	"""
 
+	title=""
+
 	def __init__(self, parent):
 		"""
 		@param parent: The parent for this panel; C{None} for no parent.
 		@type parent: wx.Window
 		"""
 		super(SettingsPanel, self).__init__(parent, wx.ID_ANY)
-		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
+		self.mainSizer=wx.StaticBoxSizer(wx.StaticBox(self, label=self.title), wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
 		self.mainSizer.Add(self.settingsSizer, flag=wx.ALL)
@@ -1969,8 +1971,6 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		self.portsList.Enable(enable)
 
 class BrailleIoSettingsPanel(SettingsPanel):
-	# Translators: This is the label for the braille i/o settings panel.
-	title = _("Braille")
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
