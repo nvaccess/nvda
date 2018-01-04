@@ -216,10 +216,10 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
 
 	def onSynthesizerCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, SynthesizerPanel)
+		self._popupSettingsDialog(SynthesizerSelection)
 
 	def onVoiceCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, VoiceSettingsPanel)
+		self._popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
 
 	def onBrailleCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
