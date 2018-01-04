@@ -122,10 +122,13 @@ def speakMessage(text,index=None):
 	speakText(text,index=index,reason=controlTypes.REASON_MESSAGE)
 
 def getCurrentLanguage():
-	try:
-		language=getSynth().language if config.conf['speech']['trustVoiceLanguage'] else None
-	except NotImplementedError:
-		language=None
+	synth=getSynth()
+	language=None
+	if  synth:
+		try:
+			language=synth.language if config.conf['speech']['trustVoiceLanguage'] else None
+		except NotImplementedError:
+			pass
 	if language:
 		language=languageHandler.normalizeLanguage(language)
 	if not language:
@@ -596,7 +599,7 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				tempInfo=oldInfo.copy()
 				tempInfo.setEndPoint(newInfo,"startToEnd")
 				unselectedTextList.append(tempInfo.text)
-	locale=languageHandler.getLanguage()
+	locale=getCurrentLanguage()
 	if speakSelected:
 		if not generalize:
 			for text in selectedTextList:
@@ -726,6 +729,7 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 		return
 
 def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
+	onlyCache=reason==controlTypes.REASON_ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -800,16 +804,18 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		else:
 			break
 
-	#Get speech text for any fields in the old controlFieldStack that are not in the new controlFieldStack 
-	endingBlock=False
-	for count in reversed(xrange(commonFieldCount,len(controlFieldStackCache))):
-		text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
-		if text:
-			speechSequence.append(text)
-		if not endingBlock and reason==controlTypes.REASON_SAYALL:
-			endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
-	if endingBlock:
-		speechSequence.append(SpeakWithoutPausesBreakCommand())
+	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
+	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
+	if reason!=controlTypes.REASON_FOCUS:
+		endingBlock=False
+		for count in reversed(xrange(commonFieldCount,len(controlFieldStackCache))):
+			text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
+			if text:
+				speechSequence.append(text)
+			if not endingBlock and reason==controlTypes.REASON_SAYALL:
+				endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
+		if endingBlock:
+			speechSequence.append(SpeakWithoutPausesBreakCommand())
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
 	isTextBlank=True
 
@@ -851,10 +857,11 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		lastLanguage=language
 
 	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
-		if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
-			speak(speechSequence)
-		if not onlyInitialFields: 
-			speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
+		if not onlyCache:
+			if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
+				speak(speechSequence)
+			if not onlyInitialFields: 
+				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
@@ -963,7 +970,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if not isinstance(useCache,SpeakTextInfoState):
 			speakTextInfoState.updateObj()
 
-	if speechSequence:
+	if not onlyCache and speechSequence:
 		if reason==controlTypes.REASON_SAYALL:
 			speakWithoutPauses(speechSequence)
 		else:
@@ -1160,6 +1167,9 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
 		return " ".join((nameText,roleText,stateText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
+	elif nameText and reason==controlTypes.REASON_FOCUS and fieldType == "start_addedToControlFieldStack" and role==controlTypes.ROLE_GROUPING:
+		# #3321: Report the name of groupings (such as fieldsets) for quicknav and focus jumps
+		return " ".join((nameText,roleText))
 	elif fieldType in ("start_addedToControlFieldStack","start_relative") and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
@@ -1503,6 +1513,32 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
 			textList.append(text)
+		verticalAlign=attrs.get("vertical-align")
+		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
+		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
+			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
+			if verticalAlign=="top":
+				# Translators: Reported when text is vertically top-aligned.
+				text=_("vertical align top")
+			elif verticalAlign in("center","middle"):
+				# Translators: Reported when text is vertically middle aligned.
+				text=_("vertical align middle")
+			elif verticalAlign=="bottom":
+				# Translators: Reported when text is vertically bottom-aligned.
+				text=_("vertical align bottom")
+			elif verticalAlign=="baseline":
+				# Translators: Reported when text is vertically aligned on the baseline. 
+				text=_("vertical align baseline")
+			elif verticalAlign=="justify":
+				# Translators: Reported when text is vertically justified.
+				text=_("vertical align justified")
+			elif verticalAlign=="distributed":
+				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
+				text=_("vertical align distributed") 
+			else:
+				# Translators: Reported when text has reverted to default vertical alignment.
+				text=_("vertical align default")
+			textList.append(text)
 	if formatConfig["reportParagraphIndentation"]:
 		indentLabels={
 			'left-indent':(
@@ -1538,32 +1574,6 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 					textList.append(u"%s %s"%(label,newVal))
 				else:
 					textList.append(noVal)
-		verticalAlign=attrs.get("vertical-align")
-		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
-		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
-			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
-			if verticalAlign=="top":
-				# Translators: Reported when text is vertically top-aligned.
-				text=_("vertical align top")
-			elif verticalAlign in("center","middle"):
-				# Translators: Reported when text is vertically middle aligned.
-				text=_("vertical align middle")
-			elif verticalAlign=="bottom":
-				# Translators: Reported when text is vertically bottom-aligned.
-				text=_("vertical align bottom")
-			elif verticalAlign=="baseline":
-				# Translators: Reported when text is vertically aligned on the baseline. 
-				text=_("vertical align baseline")
-			elif verticalAlign=="justify":
-				# Translators: Reported when text is vertically justified.
-				text=_("vertical align justified")
-			elif verticalAlign=="distributed":
-				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
-				text=_("vertical align distributed") 
-			else:
-				# Translators: Reported when text has reverted to default vertical alignment.
-				text=_("vertical align default")
-			textList.append(text)
 	if formatConfig["reportLineSpacing"]:
 		lineSpacing=attrs.get("line-spacing")
 		oldLineSpacing=attrsCache.get("line-spacing") if attrsCache is not None else None

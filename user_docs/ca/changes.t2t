@@ -10,6 +10,7 @@ Què hi ha de nou al NVDA
 - NVDA apareix ara en el Centre d'accessibilitat del Windows 8 i versions posteriors. (#308)
 - Al moure't al voltant de les cel·les a l'Excel, s'informa automàticament dels canvis de format si s'ha activat l'opció corresponent en el diàleg de configuració de formatació de documents del NVDA. (#4878)
 
+
 == Correccions d'errors ==
 - Millores de rendiment en la navegació a la llista de missatges d'Outlook 2010/2013. (#5268)
 - Ara, en els gràfics del Microsoft Excel, la navegació amb certes tecles (com canviar els fulls amb  Ctrl+RePag i Ctrl+AvPag) funciona correctament. (#5336)
@@ -17,6 +18,7 @@ Què hi ha de nou al NVDA
 - Al Windows 8 o versions posteriors, NVDA ara comença molt abans si es configura per començar després de l'inici del Windows. (#308)
  - Si vas activar aquesta funció en una versió anterior del NVDA, hauràs de desactivar-la i activar-la de nou en el diàleg de Configuració general per a què el canvi sigui efectiu.
 - Millores de rendiment per UI Automation, que inclouen l'explorador de fitxers i el visor de tasques. (#5293)
+
 
 = 2015.3 =
 Aquesta versió destaca per incloure suport inicial al Windows 10; la possibilitat de desactivar navegació per lletra en mode de navegació (útil per algunes aplicacions web); millores al Internet Explorer; i correccions per text il·legible en algunes aplicacions, quan el braille està activat.
@@ -32,9 +34,11 @@ Aquesta versió destaca per incloure suport inicial al Windows 10; la possibilit
 - Suport experimental per al navegador Microsoft Edge i per al motor de navegació del Windows 10. (#5212)
 - Nou idioma: Canadenc.
 
+
 == Canvis ==
 - Traductor liblouis braille actualitzat a la versió 2.6.3. (#5137)
 - Quan proves d'instal·lar una versió anterior del programa de la que ja està instal·lada, ara NVDA t'avisarà que no és recomanable fer-ho i que cal desinstal·lar completament NVDA abans de res. (#5037)
+
 
 == Correccions d'errors ==
 - En el mode de navegació a l'Internet Explorer i a d'altres controls MSHTML, la navegació ràpida per formulari ja no inclou els elements de llista de presentació. (#4204)
@@ -54,12 +58,14 @@ Aquesta versió destaca per incloure suport inicial al Windows 10; la possibilit
 - Al Windows 7 i versions posteriors, el text ja no resulta intel·ligible quan s'escriu des d'aplicacions com el Wordpad o l'Skype amb un terminal braille. (#4291)
 - A la pantalla de bloqueig del Windows 10, no es permet llegir el porta-retalls, accedir a les aplicacions en execució amb el cursor de revisió o canviar la configuració NVDA. (#5269)
 
+
 == Canvis per desenvolupadors ==
 - Ara pots introduir dades en brut des d'un teclat de sistema que Windows no gestiona de forma nadiua (per exemple, un teclat QWERTY en un terminal braille) amb la nova funció keyboardHandler.injectRawKeyboardInput. (#4576)
 - s'ha afegit eventHandler.requestEvents per demanar alguns esdeveniments que per defecte estan bloquejats; per exemple mostra esdeveniments d'un control en particular o alguns esdeveniments que s'executen en segon pla (#3831)
 - En comptes d'un únic atribut i18nName, ara synthDriverHandler.SynthSetting té dos atributs separats, displayNameWithAccelerator i displayName per evitar informar de l'accelerador en el menú de configuració del sintetitzador en alguns idiomes.
  - Per motius de compatibilitat cap enrere, en el constructor, el displayName és opcional i, en cas que no s'indiqui, es dedueix de displayNameWithAccelerator. De totes maneres, si vols disposar d'un accelerador per a una configuració, hauries d'indicar-los ambdós.
  - L'atribut i18nName està desfasat, i es podria eliminar en properes versions.
+
 
 = 2015.2 =
 Aquesta versió destaca per la capacitat de llegir gràfics al Microsoft Excel i per ser compatible amb la lectura i la navegació ineractiva del contingut matemàtic.
@@ -73,11 +79,13 @@ Aquesta versió destaca per la capacitat de llegir gràfics al Microsoft Excel i
 - Amb MathPlayer 4 de Design Science, NVDA ara pot llegir i navegar interactivament pel contingut matemàtic en els navegadors web, al Microsoft Word i a PowerPoint. Per a més informació, consulta la secció "Lectura de contingut matemàtic" a la Guia d'usuari. (#4673)
 - Ara és possible assignar gestos d'entrada (ordres de teclat, Gestos tàctils, etc.) a tots els diàlegs de preferències de NVDA i a les opcions de format de documents amb el diàleg de gestos d'entrada. (#4898)
 
+
 == Canvis ==
 - En el diàleg NVDA de formatació del document, les dreceres de teclat per informar sobre llistes, informar sobre els enllaços, informar sobre el número de línia i informar del tipus de lletra han canviat. (#4650)
 - Al diàleg NVDA de configuració del ratolí, s'han afegit dreceres de teclat per emetre les coordenades per àudio quan el ratolí es mou i la brillantor controla el volum de l'àudio. (#4916)
 - Millora important de la informació dels noms de color. (#4984)
 - Traductor Liblouis braille actualitzat a la versió 2.6.2. (#4777)
+
 
 == Correccions d'errors ==
 - La descripció de caràcters per lligadures d'alguns idiomes d'Índia ara es gestionen correctament. (#4582)
@@ -90,12 +98,14 @@ Aquesta versió destaca per la capacitat de llegir gràfics al Microsoft Excel i
 - S'han resolt els problemes que apareixien quan s'introduïen alguns símbols o puntuació, com parèntesis, en el camp de filtre del diàleg de gestos d'entrada. (#5060)
 - a l'Internet Explorer i altres controls MSHTML, la navegació per gràfics amb g o Maj+g ara inclou elements marcats com a imatges per raons d'accessibilitat (per exemple rol img d'ARIA). (#5062)
 
+
 == Canvis per desenvolupadors ==
 - brailleInput.handler.sendChars(mychar) no obviarà un caràcter pel fet de ser el mateix que l'anterior i garantirà que la tecla de tramesa s'ha deixat anar correctament. (#4139)
 - Els scripts per canviar els modes tàctils ara tindran en compte les noves etiquetes afegides a touchHandler.touchModeLabels. (#4699)
 - Les extensions podran oferir la seva pròpia implementació de presentació del contingut matemàtic. Per a més informació, vegeu el paquet mathPres. (#4509)
 - S'han creat ordres de veu per insertar una pausa entre paraules, per canviar el to, el volum o la velocitat. Vegeu BreakCommand, PitchCommand, VolumeCommand i RateCommand en el mòdul de parla. (#4674)
  - També s'ha creat l'ordre speech.PhonemeCommand per introduir una pronúncia específica, però la implementació actual inclou un número molt límitat de fonemes.
+
 
 = 2015.1 =
 Aquesta versió destaca per incloure el mode de navegació per a documents en el Microsoft Word i l'Outlook; millores importants de compatibilitat amb l'Skype per ordinadors de sobretaula; i correccions imporants d'errors en el Microsoft Internet Explorer.
@@ -115,6 +125,7 @@ Aquesta versió destaca per incloure el mode de navegació per a documents en el
 - NVDA es pot instal·lar sense veu amb la línia de comandes sense engegar la còpia instal·lada després de la instal·lació. Per fer-ho, utilitzeu l'opció --instal·lació-silenciosa. (#4206)
 - NVDA és compatible amb els terminals Braille Papenmeier BRAILLEX Live 20, BRAILLEX Live i BRAILLEX Live plus. (#4614)
 
+
 == Canvis ==
 - L'opció d'informar dels errors ortogràfics, al diàleg NVDA de configuració de format del document ara té una drecera associada  (Alt+r). (#793)
 - NVDA usarà ara l'idioma del sintetitzador/de la veu per lletrejar els caràcter i símbols (inclosos la puntuació/i els noms de símbols),  sense tenir en compte si s'ha activat la commutació d'idioma automàtica. Per desactivar aquest funcionament, i fer que NVDA  torni a usar l'idioma de la interfície, desactiveu la nova opció a la  Configuració de veu anomenada Confia en l'idioma de veu per processar caràcters i símbols. (#4210)
@@ -122,6 +133,7 @@ Aquesta versió destaca per incloure el mode de navegació per a documents en el
 - Cal la versió 7 o superior de l'Skype per ordinadors de sobretaula per treballar amb NVDA; NVDA no és compatible amb versions anteriors. (#4218)
 - La descàrrega de les actualitzacions de NVDA ara és més segura (específicament, la informació d'actualització es recupera per https i el codi hash del fitxer es verifica després de la descarrega). (#4716)
 - S'ha actualitzat eSpeak a la versió 1.48.04. (#4325)
+
 
 == Correccions d'errors ==
 - Al Microsoft Excel, els encapçalaments de files i columnes combinades ara es gestionen correctament. Per exemple, si A1 i B1 es combinen, llavors B2 indicarà que les seves capçaleres són A1 i B1, en comptes de cap capçalera. (#4617)
@@ -149,10 +161,12 @@ Aquesta versió destaca per incloure el mode de navegació per a documents en el
 - A Internet Explorer i altres controls MSHTML, l'atribut del títol en els controls de formulari ja no té preferència sobre altres etiquetes associades. (#4491)
 - A Internet Explorer i altres controls MSHTML, NVDA ja no ignora el focus d'elements gràcies a l'atribut aria-activedescendant. (#4667)
 
+
 == Canvis per desenvolupadors ==
 - wxPython s'ha actualitzat a la versió 3.0.2.0. (#3763)
 - Python s'ha actualitzat a la versió 2.7.9. (#4715)
 - NVDA ja no peta quan es reinicia després d'haver esborrat o actualitzat una extensió que importa el speechDictHandler en el seu mòdul installTasks. (#4496)
+
 
 = 2014.4 =
 
@@ -162,12 +176,14 @@ Aquesta versió destaca per incloure el mode de navegació per a documents en el
 - NVDA també es pot iniciar amb les extensions desactivades amb l'opció de línia de comandes --disable-addons.
 - En els diccionaris de veu, ara és possible especificar que un patró només s'apliqui si és una paraula sencera; és a dir, el patró no és part d'una paraula més llarga. (#1704)
 
+
 == Canvis ==
 - Si un objecte al que t'has mogut amb la navegació d'objectes es troba dins un document en mode de navegació, però l'objecte d'on venies no, s'activa el mode de revisió de manera automàtica en el document. prèviament, això només passava si l'objecte de navegació es movia a causa d'un canvi de focus. (#4369)
 - la llista de terminals braille i de sintetitzadors en els respectius diàlegs de configuració apareixen ordenats alfabèticament excepte per les opcions Sense braille/Sense veu, que apareixen al final. (#2724)
 - Traductor liblouis braille actualitzat a la versió 2.6.0. (#4434, #3835)
 - en mode de navegació, la navegació als camps d'edició amb e i Maj+e ara inclou els quadres combinats. Això inclou la caixa de cerca a la darrera versió de Cerca Google. (#4436)
 - Si cliques la icona NVDA a l'àrea de notificació amb el botó esquerre del ratolí, s'obre el menú NVDA en comptes de no fer res. (#4459)
+
 
 == Correccions d'errors ==
 - Quan desplaces el focus enrere a un document en mode de navegació (per exemple Alt+Tab a una pàgina web ja oberta), el cursor de revisió es posiciona correctament al cursor del sistema virtual, en comptes de en el control que rep el focus (per exemple enllaç). (#4369)
@@ -187,6 +203,7 @@ Aquesta versió destaca per incloure el mode de navegació per a documents en el
 - El control del ratolí i l'exploració tàctil al Internet Explorer i a d'altres controls MSHTML (incloses diverses aplicacions per al Windows 8) són més precises en pantalles amb alta resolució o quan el zoom del document canvia. (#3494) 
 - Ara, el control del ratolí i l'exploració tàctil al Internet Explorer i a d'altres controls MSHTML anuncien l'etiqueta de més butons. (#4173)
 - Ara, en utilitzar el terminal braille Papenmeier BRAILLEX amb BrxCom, les tecles de la pantalla funcionen correctament. (#4614)
+
 
 == Canvis per desenvolupadors ==
 - Per als executables que contenen diferents aplicacions (per exemple, javaw.exe), ara, el codi es pot proporcionar per carregar mòduls específics de l'aplicació per a cada aplicació, en comptes de carregar el mateix mòdul per a totes les aplicacions que conté l'executable. (#4360)
@@ -240,8 +257,10 @@ Aquesta versió destaca per incloure el mode de navegació per a documents en el
 - Polsant dues vegades aquesta ordre es produeix el comportament anterior resultat d'informar de la localització de tot el control.
 - Nou idioma: Català.
 
+
 == Canvis ==
 - Traductor liblouis braille actualitzat a la versió 2.5.4. (#4103)
+
 
 == Correccions d'errors ==
 - Al Google Chrome i a la resta de navegadors basats en aquest navegador, alguns fragments del text (per exemple, el representat amb èmfasi) ja no es repeteixen quan s'informa del text d'una alerta o diàleg. (# 4066)
@@ -271,12 +290,15 @@ L'ordre Verbalitza-ho tot ara funciona correctament, en comptes d'aturar-se desp
 - Al verbalitzar les paraules escrites i en altres casos, aquestes ja no es tallen de manera incorrecta en marques com ara els signes vocàlics o els virama dels idiomes indoàries. (#4254)
 - Els camps editables de text numèrics al GoldWave ja es gestionen correctament. (#670)
 - Microsoft Word: En moure't pels paràgrafs amb control + fletxa avall / control + fletxa amunt, ja no és necessari polsar dues vegades al passar per llistes numerades o de pics. (#3290)
+
+
 == Canvis per desenvolupadors ==
 - NVDA ha unificat la documentació relativa als complements. Vegeu la secció dels complements a la Guia per desenvolupadors per saber-ne més. (#2694)
 - En proporcionar gesture bindings en el objecte ScriptableObject via __gestures, ara és possible proporcionar la tecla Cap com a l'script. Això s'uneix al gest en qualsevol de les classes base. (#4240)
 - Ja es possible canviar la tecla de drecera utilitzada per iniciar NVDA en equips en els que la drecera per defecte dóna problemes. (#2209)
 - Realitzat amb el gettext.
 - Tingueu present que el text de l'opció per crear una drecera a l'escriptori dins del diàleg d'instal·lació del NVDA, així com la tecla de drecera en la Guia d'usuari, també s'han d'actualitzar.
+
 
 = 2014.2 =
 
@@ -286,8 +308,10 @@ L'ordre Verbalitza-ho tot ara funciona correctament, en comptes d'aturar-se desp
 - En mode de navegació, es reporten les etiquetes dels punts de referencia. Aquests s'inclouen també en el diàleg Llista d'Elements. (#1195)
 - En mode de navegació les regions etiquetades apareixen tractades ara com a punts de referencia. (#3741)- En documents i aplicacions d'Internet Explorer, se suporten ara les Live Regions (part de la normativa ARIA del W3C) permetent  que els autors dels web marquin determinats continguts per a ser automàticament parlats si són modificats. (#1846)
 
+
 == Canvis == 
 Quan se surt d'un diàleg o d'una aplicació dins d'un document en mode de navegació, ja no s'anuncia el nom i tipus del document en mode de navegació  (#4069)
+
 
 == Corecció d'errors ==
 - El menú estàndard de sistema de Windows ja no es silencia de forma accidental en les aplicacions Java. (#3882)
@@ -302,6 +326,7 @@ Quan se surt d'un diàleg o d'una aplicació dins d'un document en mode de naveg
 - En el mode de navegació en aplicacions Mozilla, l'accés de comandaments ràpids de navegació per a moure's d'un botó a l'anterior o a un camp de formulari inclou ara els botons de commutació que caldria esperar. (#4098)- El contingut de les alertes a les aplicacions ja no es reporta dues vegades. (#3481)
 - En el mode de navegació, els contenidors i punts de referència ja no es repeteixen de forma inapropiada mentre es navega entre ells al mateix temps que s'està canviant el contingut de la pàgina (per exemple, navegant per llocs com Facebook o Twitter) (#2199)- NVDA es recupera en més casos quan es canvia des d'aplicacions que han deixat de respondre. (#3825)- El símbol d'intercalació  (punt d'inserció) s'actualitza correctament quan es fa un comandament Verbalitza-ho tot mentre es porta un text a edició un text directament de la pantalla.  (#4125)
 
+
 = 2014.1 =
 
 == Noves característiques ==
@@ -313,11 +338,13 @@ Quan se surt d'un diàleg o d'una aplicació dins d'un document en mode de naveg
 - En aplicacions ARIA o en diàlegs del web, ara és possible forçar NVDA a canviar a mode de navegació amb NVDA+espai. Això permet navegar per l'estil del document de l'aplicació o del diàleg.  (#1594)
 - Quan es navega per taules en aplicacions accessibles Java, ara s'informa de les coordenades de fila i columna, tot incloent capçaleres de fila i columna, si existeixen. (#3756)
 
+
 == Canvis ==
 - Per línies braille Papenmeier, s'ha eliminat el comandament que canviava a revisió plana/focus. Els usuaris poden assignar les seves pròpies tecles usant el quadre de diàleg Gestos d'entrada.  (#3652)
 - NVDA ara es basa en la versió 11 del Microsoft VC runtime, la qual cosa suposa que ja no funcionarà en sistemes operatius anteriors a Windows XP Service Pack 2 o Windows Server 2003 Service Pack 1.
 - Nivell de puntuació. En alguns casos ara es pronunciaran l'estrella(*) i els caràcter mes (+)  
 - S'ha actualitzat eSpeak a la versió 1.48.04, que inclou diverses correccions d'idioma i corregeix diversos bloquejos. . (#3842, #3739, #3860)
+
 
 == Correccions d'errors ==
 - Quan es moguin o seleccionin cel·les en el Microsoft Excel, NVDA ja no anunciarà de forma inapropiada la cel·la antiga abans que la cel·la nova, quan el Microsoft Excel desplaci amb lentitud la selecció. (#3558)
@@ -365,6 +392,7 @@ Quan se surt d'un diàleg o d'una aplicació dins d'un document en mode de naveg
 - AppModules ara conté les propietats productName i productVersion. Aquesta informació s'inclou dins de la guia del desenvolupador. (NVDA+f1). (#1625)
 - A la consola Phyton, ara pots prémer la tecla tabulador per a completar l'identificador actiu.. (#433)
 - Si hi ha múltiples possibilitats, ara pots prémer tab una segona vegada per triar d'una llista.   
+
 
 = 2013.3 =
 

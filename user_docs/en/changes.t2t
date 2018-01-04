@@ -1,26 +1,122 @@
-﻿What's New in NVDA
+What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2018.1 =
+
+== Changes ==
+- The HIMS Braille Sense/Braille EDGE/Smart Beetle and Hims Sync Braille display drivers have been replaced by one driver. The new driver will automatically be activated for former syncBraille driver users. (#7459) 
+ - Some keys , notably scroll keys, have been reassigned to follow the conventions used by Hims products. Consult the user guide for more details.
+- When typing with the on-screen keyboard via touch interaction, by default  you now need to double tap each key the same way you would activate any other control.
+ - To use the existing "touch typing" mode where simply lifting your finger off the key is enough to activate it, Enable this option in the new Touch Interaction settings dialog found in the Preferences menu. (#7309)
+
+
+== Bug Fixes ==
+- Browseable messages such as showing  current formatting when pressing NVDA+f twice quickly, no longer fails when NVDA is installed on a path with non-ASCII characters. (#7474)
+- Focus is now once again restored correctly when returning to Spotify from another application. (#7689)
+- NVDA no longer fails to update on systems with Controlled Folder Access enabled (available in the Windows 10 Fall Creaters update). (#7696)
+- Detection of scroll keys on Hims Smart Beetle displays is no longer unreliable. (#6086)
+- A slight performance improvement when rendering large amounts of content in Mozilla Firefox 58 and later. (#7719)
+- Prevent errors while reading emails containing tables in Microsoft Outlook (#6827)
+- Braille display gestures that emulate system keyboard key modifiers can now also be combined with other emulated system keyboard keys if one or more of the involved gestures are model specific. (#7783)
+- In Mozilla Firefox, browse mode now works correctly in pop-ups created by extensions such as LastPass and bitwarden. (#7809)
+- NVDA no longer sometimes freezes on every focus change if Firefox or Chrome have stopped responding such as due to a freeze or crash. (#7818)
+- In twitter clients such as Chicken Nugget, NVDA will no longer ignore the last 20 characters of 280 character tweets when reading them. (#7828)
+- NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
+
+
+== Changes for developers ==
+- Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
+ - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
+- A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
+- Updated comtypes package to 1.1.3. (#7831)
+
+
+= 2017.4 =
+Highlights of this release include many  fixes and enhancements to web support including browse mode for web dialogs by default, better reporting of field group labels in browse mode, support for new Windows 10 technologies such as Windows Defender Application Guard and Windows 10 on ARM64, and automatic reporting of screen orientation and battery status.  
+Please note that this version of NVDA no longer supports Windows XP or Windows Vista. The minimum requirement for NVDA is now windows 7 with Service Pack 1.
+
+
+== New Features ==
+- In browse mode, it is now possible to skip past/to the start of landmarks using the skip to end/beginning of container commands (comma/shift+comma). (#5482)
+- In Firefox, Chrome and Internet Explorer, quick navigation to edit fields and form fields now includes editable rich text content (I.e. contentEditable). (#5534)
+- In web browsers, the Elements List can now list form fields and buttons. (#588)
+- Initial support for Windows 10 on ARM64. (#7508)
+- Early support for reading and interactive navigation of mathematical content for Kindle books with accessible math. (#7536)
+- Added support for Azardi e-book reader. (#5848)
+- Version information for add-ons is now reported when being updated. (#5324)
+- Added new command line parameters to create a portable copy of NVDA. (#6329)
+- Support for Microsoft Edge running within Windows Defender Application Guard in Windows 10 Fall Creators Update. (#7600)
+- If running on a laptop or tablet, NVDA will now report when a charger is connected/disconnected, and when the screen orientation changes. (#4574, #4612)
+- New language: Macedonian.
+- New braille translation tables: Croatian grade 1, Vietnamese grade 1. (#7518, #7565)
+- Support for the Actilino braille display from Handy Tech has been added. (#7590)
+- Braille input for Handy Tech braille displays is now supported. (#7590)
+
+
+== Changes ==
+- The minimum supported Operating System for NVDA is now Windows 7 Service Pack 1, or Windows Server 2008 R2 Service Pack 1. (#7546)
+- Web dialogs in Firefox and Chrome web browsers now automatically use browse Mode, unless inside of a web application. (#4493)
+- In browse mode, tabbing and moving with quick navigation commands no longer announces jumping out of containers such as lists and tables, which makes navigating more efficient. (#2591)
+- In Browse mode for Firefox and Chrome, the name of form field groups are now announced when moving into them with quick navigation or when tabbing. (#3321)
+- In browse mode, the quick navigation command for embedded objects (o and shift+o) now includes audio and video elements as well as elements with the aria roles application and dialog. (#7239)
+- Espeak-ng has been updated to 1.49.2, resolving some issues with producing release builds. (#7385, #7583)
+- On the third activation of the 'read status bar' command, its contents is copied to the clipboard. (#1785)
+- When assigning gestures to keys on a Baum display, you can limit them to the model of the braille display in use (e.g. VarioUltra or Pronto). (#7517)
+- The hotkey for the filter field in the elements list in browse mode has changed from alt+f to alt+e. (#7569)
+- An unbound command has been added for browse mode to toggle the inclusion of layout tables on the fly. You can find this command in the Browse mode category of the Input Gestures dialog. (#7634)
+- Upgraded liblouis braille translator to 3.3.0. (#7565)
+- The hotkey for the regular expression radio button in the dictionary dialog has changed from alt+r to alt+e. (#6782)
+- Voice dictionary files are now versioned and have been moved to the 'speechDicts/voiceDicts.v1' directory. (#7592)
+- Versioned files (user configuration, voice dictionaries) modifications are no longer saved when NVDA is run from the launcher. (#7688)
+- The Braillino, Bookworm and Modular (with old firmware) braille displays from Handy Tech are no longer supported out of the box. Install the Handy Tech Universal Driver and NVDA add-on to use these displays. (#7590)
+
+
+== Bug Fixes ==
+- Links are now indicated in braille in applications such as Microsoft Word. (#6780)
+- NVDA no longer becomes noticeably slower when many tabs are open in either Firefox or Chrome web browsers. (#3138)
+- Cursor routing for the MDV Lilli Braille display no longer incorrectly moves one braille cell ahead of where it should be. (#7469)
+- In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
+- Braille displays are now updated when typing Arabic characters in a left-aligned WordPad document. (#511)
+- Accessible labels for controls in Mozilla Firefox are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- On windows 10 Creaters Update, NVDA can again access Firefox after a restart of NVDA. (#7269)
+- When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
+- It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
+- The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
+- When using a content recognition command (e.g. NVDA+r), NVDA now reports an error message instead of nothing if the navigator object has disappeared. (#7567)
+- Backward scrolling functionality has been fixed for Freedom Scientific braille displays containing a left bumper bar. (#7713)
+
+
+== Changes for Developers ==
+- "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
+- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
+- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
+- Braille display gestures that emulate system keyboard key modifiers (such as control and alt) can now be combined with other emulated system keyboard keys without explicit definition. (#6213) 
+ - For example, if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
+- The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
+ - See the baum driver as an example for this new functionality.
+- NVDA is now compiled with Visual Studio 2017 and the Windows 10 SDK. (#7568)
+
 
 = 2017.3 =
 Highlights of this release include input of contracted braille, support for new Windows OneCore voices available on Windows 10, in-built support for Windows 10 OCR, and many significant improvements regarding Braille and the web.
 
 == New Features ==
 - A Braille setting has been added to "show messages indefinitely". (#6669)
-- In Microsoft Outlook message lists, report if a message is flagged. (#6374)
-- In Microsoft PowerPoint, the exact type of a shape is now reported when editing a slide (such as triangle, circle, video or arrow), rather than just 'shape'. (#7111)
+- In Microsoft Outlook message lists, NVDA now reports if a message is flagged. (#6374)
+- In Microsoft PowerPoint, the exact type of a shape is now reported when editing a slide (such as triangle, circle, video or arrow), rather than just "shape". (#7111)
 - Mathematical content (provided as MathML) is now supported in Google Chrome. (#7184)
 - NVDA can now speak using the new Windows OneCore voices (also known as Microsoft Mobile voices) included in Windows 10. You access these by selecting Windows OneCore voices in NVDA's Synthesizer dialog. (#6159)
-- NVDA user configuration files can now be stored in the user's local application data folder. This is enabled via a setting in the registry. See 'System wide parameters' in the user guide for more details. (#6812)
+- NVDA user configuration files can now be stored in the user's local application data folder. This is enabled via a setting in the registry. See "System Wide Parameters" in the User Guide for more details. (#6812)
 - In web browsers, NVDA now reports placeholder values for fields (specifically, aria-placeholder is now supported). (#7004)
-- In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w) (#6942)
+- In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w). (#6942)
 - Added support for the Date picker control found in Microsoft Outlook Appointment dialogs. (#7217)
 - The currently selected suggestion is now reported in Windows 10 Mail to/cc fields and the Windows 10 Settings search field. (#6241)
 - A sound is now playd to indicate the  appearance of suggestions in certain search fields in Windows 10 (E.g. start screen, settings search, Windows 10 mail to/cc fields). (#6241)
-- Automatically report notifications in Skype for Business Desktop, such as when someone starts a conversation with you.  (#7281)
-- Automatically report incoming chat messages while in a Skype for Business conversation. (#7286)
-- Automatically report notifications in Microsoft Edge, such as when a download starts.  (#7281)
+- NVDA now automatically reports notifications in Skype for Business Desktop, such as when someone starts a conversation with you. (#7281)
+- NVDA now automatically reports incoming chat messages while in a Skype for Business conversation. (#7286)
+- NVDA now automatically reports notifications in Microsoft Edge, such as when a download starts. (#7281)
 - You can now type in both contracted and uncontracted braille on a braille display with a braille keyboard. See the Braille Input section of the User Guide for details. (#2439)
 - You can now enter Unicode braille characters from the braille keyboard on a braille display by selecting Unicode braille as the input table in Braille Settings. (#6449)
 - Added support for the SuperBraille braille display used in Taiwan. (#7352)
@@ -33,24 +129,13 @@ Highlights of this release include input of contracted braille, support for new 
 - You can now choose what context information is shown on a braille display when an object gets focus using the new "Focus context presentation" setting in the Braille Settings dialog. (#217)
  - For example, the "Fill display for context changes" and "Only when scrolling back" options can make working with lists and menus more efficient, since the items won't continually change their position on the display.
  - See the section on the "Focus context presentation" setting in the User Guide for further details and examples.
-- Many more control types and states have been abbreviated for braille. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188)
 - In Firefox and Chrome, NVDA now supports complex dynamic grids such as spreadsheets where only some of the content might be loaded or displayed (specifically, the aria-rowcount, aria-colcount, aria-rowindex and aria-colindex attributes introduced in ARIA 1.1). (#7410)
 
 
 == Changes ==
-- An unbound gesture (script_restart) has been added to allow NVDA to be restarted quickly. (#6396)
+- An unbound command has been added to restart NVDA on demand. You can find it in the Miscelaneous category of the Input Gestures dialog. (#6396)
 - The keyboard layout can now be set from the NVDA Welcome dialog. (#6863)
-- The names of landmarks are abbreviated in Braille as follows: (#3975)
- - "landmark": "lmk"
- - "banner": "bnnr"
- - "complementary": "comp"
- - "contentinfo": "cinf"
- - "main": "main"
- - "navigation": "nav"
- - "search": "srch"
- - "form": "frm"
- - "region": "rgn"
- - Example: "navigation landmark" becomes "lmk nav"
+- Many more control types and states have been abbreviated for braille. Landmarks have also been abbreviated. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188, #3975)
 - Updated eSpeak NG to 1.49.1. (#7280)
 - The output and input table lists in the Braille Settings dialog are now sorted alphabetically. (#6113)
 - Updated liblouis braille translator to 3.2.0. (#6935)
@@ -58,19 +143,20 @@ Highlights of this release include input of contracted braille, support for new 
 - By default, NVDA now only shows the parts of the context information that have changed on a braille display when an object gets focus. (#217)
  - Previously, it always showed as much context information as possible, regardless of whether you have seen the same context information before.
  - You can revert to the old behaviour by changing the new "Focus context presentation" setting in the Braille Settings dialog to "Always fill display".
-- When using Braille, the cursor can be configured to be a different shape when tethered to focus or review. (#7112)
+- When using Braille, the cursor can be configured to be a different shape when tethered to focus or review. (#7122)
+- The NVDA logo has been updated. The updated NVDA logo is a stylised blend of the letters NVDA in white, on a solid purple background. This ensures it will be visible on any colour background, and uses the purple from the NV Access logo. (#7446)
 
 
 == Bug Fixes ==
 - Editable div elements in Chrome no longer have their label reported as their value while in browse mode. (#7153)
-- Pressing end while in browse mode of an empty Microsoft Word document no longer causes a runtime error. (#7009)
+- Pressing end while in browse mode for an empty Microsoft Word document no longer causes a runtime error. (#7009)
 - Browse mode is now correctly   supported in Microsoft Edge where a document has been given a specific ARIA role of document. (#6998)
 - In browse mode, you can now select or unselect to the end of the line using shift+end even when the caret is on the last character of the line. (#7157)
 - If a dialog contains a progress bar, the dialog text is now updated in braille when the progress bar changes. This means, for example, that the remaining time can now be read in NVDA's "Downloading Update" dialog. (#6862)
 - NVDA will now announce selection changes for certain Windows 10 combo boxes such as AutoPlay in Settings. (#6337).
 - Pointless information is no longer announced when entering Meeting / Appointment creation dialogs in Microsoft Outlook. (#7216)
 - Beeps for indeterminate progress bar dialogs such as the update checker only when progress bar output is configured to include beeps. (#6759)
-- In Microsoft Excel 2003 and 2007, cells are again reported when arrowing around a worksheet. (#8243)
+- In Microsoft Excel 2003 and 2007, cells are again reported when arrowing around a worksheet. (#7243)
 - In Windows 10 Creators Update and later, browse mode is again automatically enabled when reading emails in Windows 10 Mail. (#7289)
 - On most braille displays with a braille keyboard, dot 7 now erases the last entered braille cell or character, and dot 8 presses the enter key. (#6054)
 - In editable text, when moving the caret (e.g. with the cursor keys or backspace), NVDA's spoken feedback is now more accurate in many cases, particularly in Chrome and terminal applications. (#6424)
@@ -148,7 +234,7 @@ Highlights of this release include full support for audio ducking in the Windows
  - `i18nName` for synth settings: `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
  - `config.validateConfig`. (#6846, #667)
  - `config.save`: `config.conf.save` should be used instead. (#6846, #667)
-- The list of completions in the autocomplete context menu of the PythonConsole no longer shows  any objec path leading up to the final symbol being completed. (#7023)
+- The list of completions in the autocomplete context menu of the Python Console no longer shows  any object path leading up to the final symbol being completed. (#7023)
 - There is now a unit testing framework for NVDA. (#7026)
  - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.
  - You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.

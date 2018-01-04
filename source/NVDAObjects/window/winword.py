@@ -363,6 +363,8 @@ class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
 		author=self.collectionItem.author
 		date=self.collectionItem.date
 		text=self.collectionItem.range.text
+		# Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
+		# {text}, {author} and {date} will be replaced by the corresponding details about the comment.
 		return _(u"comment: {text} by {author} on {date}").format(author=author,text=text,date=date)
 
 	def rangeFromCollectionItem(self,item):
@@ -380,6 +382,10 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		date=self.collectionItem.date
 		description=self.collectionItem.formatDescription or ""
 		text=(self.collectionItem.range.text or "")[:100]
+		# Translators: The label shown for an editor revision (tracked change)  in the NVDA Elements List dialog in Microsoft Word.
+		# {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
+		# {description} will be replaced with a description of the formatting changes, if any.
+		# {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
 
 class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
@@ -390,6 +396,8 @@ class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
 	@property
 	def label(self):
 		text=self.collectionItem.text
+		# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+		# {text} will be replaced with the text of the spelling error.
 		return _(u"spelling: {text}").format(text=text)
 
 class WinWordCollectionQuicknavIterator(object):
@@ -1165,7 +1173,13 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	_curHeaderCellTracker=None
 	def getHeaderCellTrackerForTable(self,table):
 		tableRange=table.range
-		if not self._curHeaderCellTrackerTable or not tableRange.isEqual(self._curHeaderCellTrackerTable.range):
+		# Sometimes there is a valid reference in _curHeaderCellTrackerTable,
+		# but we get a COMError when accessing the range (#6827)
+		try:
+			tableRangesEqual=tableRange.isEqual(self._curHeaderCellTrackerTable.range)
+		except (COMError, AttributeError):
+			tableRangesEqual=False
+		if not tableRangesEqual:
 			self._curHeaderCellTracker=HeaderCellTracker()
 			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
 			self.populateHeaderCellTrackerFromHeaderRows(self._curHeaderCellTracker,table)
@@ -1715,5 +1729,5 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("annotation", _("&Annotations")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("error", _("&errors")),
+		("error", _("&Errors")),
 	)

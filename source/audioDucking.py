@@ -117,6 +117,7 @@ def initialize():
 		return
 	_setDuckingState(False)
 	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
+	config.configProfileSwitched.register(handleConfigProfileSwitch)
 
 _isAudioDuckingSupported=None
 def isAudioDuckingSupported():
@@ -126,8 +127,7 @@ def isAudioDuckingSupported():
 	return _isAudioDuckingSupported
 
 def handleConfigProfileSwitch():
-	if isAudioDuckingSupported():
-		setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
+	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
 
 class AudioDucker(object):
 	""" Create one of these objects to manage ducking of background audio. 

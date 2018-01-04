@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -41,6 +41,7 @@ except RuntimeError:
 	updateCheck = None
 import inputCore
 import nvdaControls
+import touchHandler
 import winVersion
 
 class SettingsDialog(wx.Dialog):
@@ -1599,6 +1600,21 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
+class TouchInteractionPanel(SettingsPanel):
+	# Translators: This is the label for the touch interaction settings panel.
+	title = _("Touch Interaction")
+
+	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a checkbox in the
+		# touch interaction settings panel.
+		self.touchTypingCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Touch typing mode"))
+		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
+		settingsSizer.Add(self.touchTypingCheckBox,border=10,flag=wx.BOTTOM)
+
+	def onSave(self):
+		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
+		super(TouchInteractionPanel, self).onSave()
+
 class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows 10 OCR panel.
 	title = _("Windows 10 OCR")
@@ -1631,7 +1647,7 @@ class DictionaryEntryDialog(wx.Dialog):
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_REGEXP: _("&Regular expression")
+		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression")
 	}
 	TYPE_LABELS_ORDERING = (speechDictHandler.ENTRY_TYPE_ANYWHERE, speechDictHandler.ENTRY_TYPE_WORD, speechDictHandler.ENTRY_TYPE_REGEXP)
 
@@ -2052,6 +2068,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 	]
+	if touchHandler.touchSupported():
+		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
 		categoryClasses.append(UwpOcrPanel)
 
@@ -2076,7 +2094,7 @@ class AddSymbolDialog(wx.Dialog):
 		# Translators: This is the label for the edit field in the add symbol dialog.
 		symbolText = _("Symbol:")
 		self.identifierTextCtrl = sHelper.addLabeledControl(symbolText, wx.TextCtrl)
-		
+
 		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
