@@ -557,7 +557,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		from wx.lib.expando import ExpandoTextCtrl
 		synthDesc = getSynth().description
 		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
-		# Translators: This is the label for the button used to change synthesiser, it appears in the context of a synthesiser group on the speech settings panel.
+		# Translators: This is the label for the button used to change synthesizer, it appears in the context of a synthesizer group on the speech settings panel.
 		changeSynthBtn = wx.Button(self, label=_("Change..."))
 		synthGroup.addItem(
 				guiHelper.associateElements(
@@ -571,7 +571,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(self.voicePanel)
 	
 	def onChangeSynth(self, evt):
-		changeSynth = SynthesizerSelection(self)
+		changeSynth = SynthesizerSelectionDialog(self)
 		ret = changeSynth.ShowModal()
 		if ret == wx.ID_OK:
 			self.Freeze()
@@ -596,14 +596,14 @@ class SpeechSettingsPanel(SettingsPanel):
 	def onSave(self):
 		self.voicePanel.onSave()
 
-class SynthesizerSelection(SettingsDialog):
+class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
 	synthNames = []
 
 	def __new__(cls, *args, **kwargs):
 		kwargs['multiInstanceAllowed'] = True
-		return super(SynthesizerSelection, cls).__new__(cls, *args, **kwargs)
+		return super(SynthesizerSelectionDialog, cls).__new__(cls, *args, **kwargs)
 	
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -672,7 +672,7 @@ class SynthesizerSelection(SettingsDialog):
 
 	def onOk(self, evt):
 		self._acceptAudioChanges()
-		super(SynthesizerSelection, self).onOk(evt)
+		super(SynthesizerSelectionDialog, self).onOk(evt)
 
 class SynthSettingChanger(object):
 	"""Functor which acts as calback for GUI events."""

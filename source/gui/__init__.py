@@ -216,7 +216,7 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
 
 	def onSynthesizerCommand(self,evt):
-		self._popupSettingsDialog(SynthesizerSelection)
+		self._popupSettingsDialog(SynthesizerSelectionDialog)
 
 	def onVoiceCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
