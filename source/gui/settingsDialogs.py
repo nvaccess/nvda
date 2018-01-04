@@ -317,12 +317,17 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		"""Listens for keyboard input and switches panels for control+tab"""
 		if evt.ControlDown() and evt.GetKeyCode()==wx.WXK_TAB:
 			# Focus the tree view. If we don't, the panel won't hide correctly
-			self.categoryTree.SetFocus()
+			treeHadFocus = self.categoryTree.HasFocus()
+			if not treeHadFocus:
+				self.categoryTree.SetFocus()
 			currentItem = self.categoryTree.Selection
 			index = self.categoryTreeItems.index(currentItem)
 			newIndex=index-1 if evt.ShiftDown() else index+1
 			newItem=self.categoryTreeItems[newIndex % len(self.categoryTreeItems)]
 			self.categoryTree.SelectItem(newItem)
+			newPanel=self.categoryTree.GetItemPyData(newItem)
+			if not treeHadFocus:
+				newPanel.SetFocus()
 		else:
 			evt.Skip()
 
