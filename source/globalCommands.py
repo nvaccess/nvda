@@ -1655,7 +1655,7 @@ class GlobalCommands(ScriptableObject):
 	script_revertConfiguration.category=SCRCAT_CONFIG
 
 	def script_activatePythonConsole(self,gesture):
-		if globalVars.appArgs.secure:
+		if globalVars.appArgs.secure or config.isAppX:
 			return
 		import pythonConsole
 		if not pythonConsole.consoleUI:

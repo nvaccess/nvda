@@ -405,14 +405,14 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to toggle Speech Viewer.
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
-		if not globalVars.appArgs.secure:
+		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 			# Translators: The label of a menu item to open the Add-ons Manager.
 			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
-		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
+		if not globalVars.appArgs.secure and not config.isAppX and getattr(sys,'frozen',None):
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
@@ -420,9 +420,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 				# Translators: The label for the menu item to install NVDA on the computer.
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
-		# Translators: The label for the menu item to reload plugins.
-		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
-		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
+		if not config.isAppX:
+			# Translators: The label for the menu item to reload plugins.
+			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
@@ -625,7 +626,7 @@ class WelcomeDialog(wx.Dialog):
 		startAfterLogonText = _("&Automatically start NVDA after I log on to Windows")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
-		if globalVars.appArgs.secure or not config.isInstalledCopy():
+		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		# Translators: The label of a checkbox in the Welcome dialog.
 		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
