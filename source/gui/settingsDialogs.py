@@ -343,7 +343,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				yield panel
 
 	def _onPanelLayoutChanged(self,evt):
-		# call setupScrolling so that the controls apear in their expected locations.
+		# call layout and SetupScrolling on the container so that the controls apear in their expected locations.
+		self.container.Layout()
 		self.container.SetupScrolling()
 		# when child elements get smaller the scrolledPanel does not
 		# erase the old contents and must be redrawn
@@ -358,7 +359,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			oldCat.onPanelDeactivated()
 		self.currentCategory = newCat
 		newCat.onPanelActivated()
-		# call setupScrolling so that the controls apear in their expected locations.
+		# call Layout and SetupScrolling on the container to make sure that the controls apear in their expected locations.
+		self.container.Layout()
 		self.container.SetupScrolling()
 		self.container.Thaw()
 
@@ -557,22 +559,22 @@ class SpeechSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: This is a label for the select
-		# synthesizer combobox in the synthesizer panel.
+		# Translators: A label for the synthesizer on the speech panel.
 		synthLabel = _("&Synthesizer:")
 		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=synthLabel), wx.HORIZONTAL))
 		settingsSizerHelper.addItem(synthGroup)
 		
 		synthDesc = getSynth().description
 		self.synthNameCtrl = wx.StaticText(self, label=synthDesc)
-		# Translators: This is the label for the button used to change synthesizer, it appears in the context of a synthesizer group on the speech settings panel.
+		# Translators: This is the label for the button used to change synthesizer,
+		# it appears in the context of a synthesizer group on the speech settings panel.
 		changeSynthBtn = wx.Button(self, label=_("Change..."))
 		synthGroup.addItem(
-				guiHelper.associateElements(
-					self.synthNameCtrl,
-					changeSynthBtn
-					)
-				)
+			guiHelper.associateElements(
+				self.synthNameCtrl,
+				changeSynthBtn
+			)
+		)
 		changeSynthBtn.Bind(wx.EVT_BUTTON,self.onChangeSynth)
 
 		self.voicePanel = VoiceSettingsPanel(self)
@@ -1845,7 +1847,7 @@ class BrailleSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: A label for the braille display read-only edit box in the braille panel.
+		# Translators: A label for the braille display on the braille panel.
 		displayLabel = _("&Braille display:")
 		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=displayLabel), wx.HORIZONTAL))
 		settingsSizerHelper.addItem(displayGroup)
