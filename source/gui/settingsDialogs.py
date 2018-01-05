@@ -317,7 +317,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def onCharHook(self,evt):
 		"""Listens for keyboard input and switches panels for control+tab"""
 		key = evt.GetKeyCode()
-		treeHadFocus = self.categoryTree.HasFocus()
+		treeHadFocus = self.categoryTree and self.categoryTree.HasFocus()
 		if evt.ControlDown() and key==wx.WXK_TAB:
 			# Focus the tree view. If we don't, the panel won't hide correctly
 			if not treeHadFocus:
@@ -568,7 +568,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		self.synthNameCtrl = wx.StaticText(self, label=synthDesc)
 		# Translators: This is the label for the button used to change synthesizer,
 		# it appears in the context of a synthesizer group on the speech settings panel.
-		changeSynthBtn = wx.Button(self, label=_("Change..."))
+		changeSynthBtn = wx.Button(self, label=_("Change&..."))
 		synthGroup.addItem(
 			guiHelper.associateElements(
 				self.synthNameCtrl,
@@ -1848,7 +1848,7 @@ class BrailleSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the braille display on the braille panel.
-		displayLabel = _("&Braille display:")
+		displayLabel = _("Braille &display:")
 		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=displayLabel), wx.HORIZONTAL))
 		settingsSizerHelper.addItem(displayGroup)
 		
@@ -1856,7 +1856,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		self.displayNameCtrl = wx.StaticText(self, label=displayDesc)
 		# Translators: This is the label for the button used to change braille display,
 		# it appears in the context of a braille display group on the braille settings panel.
-		changeDisplayBtn = wx.Button(self, label=_("Change..."))
+		changeDisplayBtn = wx.Button(self, label=_("Change&..."))
 		displayGroup.addItem(
 			guiHelper.associateElements(
 				self.displayNameCtrl,
