@@ -458,7 +458,7 @@ class EdgeNode(UIA):
 	# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
 	# character and before the ';' character.
 	# This could be one of: True, "page", "step", "location", "date", "time"
-	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(\w+);")
+	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
 
 	def _get_isCurrent(self):
 		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
