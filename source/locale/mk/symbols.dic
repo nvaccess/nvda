@@ -23,10 +23,10 @@ symbols:
 # Complex symbols
 . sentence ending	точка	all	always
 ! sentence ending	извичник	all	always
-? sentence ending	впрашалник	all	always
+? sentence ending	прашалник	all	always
 ; phrase ending	точка запирка	most	always
 : phrase ending	дветочки	most	always
-точка		none	always
+. точка		none	always
 in-word '	апостроф	all	norep
 negative number	минус	none	norep
 
@@ -42,16 +42,16 @@ negative number	минус	none	norep
 # Standard punctuation/symbols
 !	извичник	all
 "	наводници	most
-\#	број	some
-$$	dollar	all	norep
+#	тараба	some
+$$	долар	all	norep
 £	фунта	all	norep
 €	евро	all	norep
 ¢	цент	all	norep
 ¥	јен	all	norep
 ₹	Рупија	some	norep
-%	процент	some
-&	амперсант	some
-'	тицк	all
+%	отсто	some
+&	и	some
+'	апостроф	all
 (	отворена заграда	most	always
 )	затворена заграда	most	always
 *	ѕвездичка	some
@@ -66,117 +66,117 @@ $$	dollar	all	norep
 >	поголемо	some
 =	еднакво	some
 ?	прашалник	all
-@	ет	some
-[	left bracket	most
-]	right bracket	most
-\\	obrna crta	most
+@	мајмунче	some
+[	отворена голема заграда	most
+]	затворена голема заграда	most
+\\	обратна коса црта	most
 ^	karet	most
-_	podvlečeno	most
-`	akcent	most
-{	left brace	most
-}	right brace	most
-|	okomita crtička	most
-~	tilda	most
+_	долна црта	most
+`	акцент	most
+{	отворена средна заграда	most
+}	затворена средна заграда	most
+|	права црта	most
+~	тилда	most
 
 # Other characters
-•	bullet	some
-…	dot dot dot	all	always
-...	dot dot dot	all	always
-	bullet	some
-“	left quote	most
-”	right quote	most
-‘	left tick	most
-’	right tick	most
-–	en dash	most	always
-—	em dash	most
-●	circle	most
-¨	diaeresis	most
-‎	left to right mark	char
-‏	right to left mark	char
-■	black square	some
-▪	black square	some
-◾	black square	some
-◦	white bullet	some
-➔	right arrow	some
-§	section	all
-°	degrees	some
-«	double left pointing angle bracket
-»	double right pointing angle bracket
-µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
-®	registered	some
-™	Trademark	some
-©	Copyright	some
-±	Plus or Minus	some
-×	times	some
-÷	divide by	some
-←	left arrow	some
-↑	up arrow	some
-→	right arrow	some
-↓	down arrow	some
-✓	check	some
-✔	check	some
+•	булет	some
+…	триточки	all	always
+...	триточки	all	always
+	булет	some
+“	отворени наводници	most
+”	затворени наводници	most
+‘	лев апостров	most
+’	десен апостров	most
+–	тире	most	always
+—	цртичка	most
+●	црно крукче	most
+¨	умлаут	most
+‎	ознака од лево кон десно	char
+‏	ознака од десно кон лево	char
+■	црно квадратче	some
+▪	црно мало квадратче	some
+◾	црно средномало квадратче	some
+◦	бел булет	some
+➔	десна стрелка	some
+§	секција	all
+°	степен	some
+«	двојна аглеста заграда насочена кон лево	some
+»	двојна аглеста заграда насочена кон десно	some
+µ	микро	some
+¹	суперскрипт 1	some
+²	суперскрипт 2	some
+³	суперскрипт 3	some
+®	регистрирано	some
+™	трговска марка	some
+©	авторски права	some
+±	плус или минус	some
+×	помножено со 	some
+÷	поделено со 	some
+←	стрелка налево	some
+↑	стрелка нагоре	some
+→	стрелка надесно	some
+↓	стрелка надолу	some
+✓	ознака	some
+✔	голема ознака	some
 
 #Mathematical Operators U+2200 to U+220F
-∀	for all	none
+∀	за секој	none
 ∁	complement	none
-∂	partial derivative	none
-∃	there exists	none
-∄	there does not exist	none
-∅	empty set	none
-∆	increment	none
-∇	nabla	none
-∈	element of	none
-∉	not an element of	none
-∊	small element of	none
-∋	contains as member	none
-∌	does not contain as member	none
-∍	small contains as member	none
-∎	end of proof	none
-∏	n-ary product	none
+∂	парцијален диференцијал	none
+∃	постои некој	none
+∄	не постои некој	none
+∅	празно множество	none
+∆	нараснување	none
+∇	набла	none
+∈	елемент на	none
+∉	не е елемент на	none
+∊	мал елемент на	none
+∋	го содржи елементот	none
+∌	не го содржи елементот	none
+∍	го содржи малиот елемент на	none
+∎	крај на доказ	none
+∏	n-ти производ	none
 
 # Miscellaneous Mathematical Operators
-∑	n-ary summation	none
-√	square root	none
-∛	cube root	none
-∜	fourth root	none
-∝	proportional to	none
-∞	infinity	none
-∟	right angle	none
-∠	angle	none
-∥	parallel to	none
-∦	not parallel to	none
-∧	logical and	none
-∨	logical or	none
-∩	intersection	none
-∪	union	none
-∫	integral	none
-∴	therefore	none
-∵	because	none
-∶	ratio	none
-∷	proportion	none
-≤	less- than or equal to	none
-≥	greater-than or equal to	none
-⊂	subset of	none
-⊃	superset of	none
-⊆	subset of or equal to	none
-⊇	superset of or equal to	none
+∑	n-та сума	none
+√	квадратен корен	none
+∛	трети корен	none
+∜	четврти корен	none
+∝	пропорционално со	none
+∞	бесконечност	none
+∟	прав агол	none
+∠	агол	none
+∥	паралелно со	none
+∦	не е паралелно со	none
+∧	логичко и	none
+∨	логичко или	none
+∩	пресек	none
+∪	унија	none
+∫	интеграл	none
+∴	затоа	none
+∵	поради	none
+∶	стапка	none
+∷	пропорција	none
+≤	помало или еднакво на	none
+≥	поголемо или еднакво на	none
+⊂	вистинско подмножество на	none
+⊃	вистинско надмножество	none
+⊆	подмножество	none
+⊇	надмножество	none
 
 # Vulgur Fractions U+2150 to U+215E
-⅐	one seventh	none
-⅑	one ninth	none
-⅒	one tenth	none
-⅓	one third	none
-⅔	two thirds	none
-⅕	one fifth	none
-⅖	two fifths	none
-⅗	three fifths	none
-⅘	four fifths	none
-⅙	one sixth	none
-⅚	five sixths	none
-⅛	one eighth	none
-⅜	three eights	none
-⅝	five eighths	none
-⅞	seven eighths	none
+⅐	една седмина	none
+⅑	една деветина	none
+⅒	една десетина	none
+⅓	една третина	none
+⅔	две третини	none
+⅕	една петина	none
+⅖	две петини	none
+⅗	три петини	none
+⅘	четири петини	none
+⅙	една шестина	none
+⅚	пет шестини	none
+⅛	една осмина	none
+⅜	три осмини	none
+⅝	пет осмини	none
+⅞	седум осмини	none

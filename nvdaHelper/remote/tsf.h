@@ -20,6 +20,5 @@ void TSF_inProcess_terminate();
 void TSF_thread_detached();
 bool isTSFThread(bool checkProfile);
 extern CLSID curTSFClsID;
-extern bool isUIElementMgrSafe;
 
 #endif

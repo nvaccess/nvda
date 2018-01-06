@@ -18,8 +18,12 @@ from logHandler import log
 import time
 import globalVars
 
-versionedLibPath=os.path.join('lib',versionInfo.version)
-versionedLib64Path=os.path.join('lib64',versionInfo.version)
+versionedLibPath='lib'
+versionedLib64Path='lib64'
+if getattr(sys,'frozen',None):
+	# Not running from source. Libraries are in a version-specific directory
+	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
+	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)
 
 _remoteLib=None
 _remoteLoader64=None
@@ -448,10 +452,14 @@ def initialize():
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
 	generateBeep.restype=c_int
+	# The rest of this function (to do with injection only applies if NVDA is not running as a Windows store application)
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
+	if config.isAppX:
+		log.info("Remote injection disabled due to running as a  Windows Store Application")
+		return
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,u"nvdaHelperRemote.dll")),0,0x8)
 	if not h:
@@ -469,14 +477,15 @@ def initialize():
 
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
-	if not _remoteLib.uninstallIA2Support():
-		log.debugWarning("Error uninstalling IA2 support")
-	if _remoteLib.injection_terminate() == 0:
-		raise RuntimeError("Error terminating NVDAHelperRemote")
-	_remoteLib=None
-	if _remoteLoader64:
-		_remoteLoader64.terminate()
-		_remoteLoader64=None
+	if not config.isAppX:
+		if not _remoteLib.uninstallIA2Support():
+			log.debugWarning("Error uninstalling IA2 support")
+		if _remoteLib.injection_terminate() == 0:
+			raise RuntimeError("Error terminating NVDAHelperRemote")
+		_remoteLib=None
+		if _remoteLoader64:
+			_remoteLoader64.terminate()
+			_remoteLoader64=None
 	generateBeep=None
 	VBuf_getTextInRange=None
 	localLib.nvdaHelperLocal_terminate()
