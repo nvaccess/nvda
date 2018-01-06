@@ -19,7 +19,7 @@ from textInfos.offsets import OffsetsTextInfo
 import watchdog
 from logHandler import log
 import windowUtils
-from locationHelper import Rect
+from locationHelper import RectLTRB
 
 def wcharToInt(c):
 	i=ord(c)
@@ -179,7 +179,7 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	characterLocations = []
 	cpBufIt = iter(cpBuf)
 	for cp in cpBufIt:
-		characterLocations.append(Rect(wcharToInt(cp), wcharToInt(next(cpBufIt)), wcharToInt(next(cpBufIt)), wcharToInt(next(cpBufIt))))
+		characterLocations.append(RectLTRB(wcharToInt(cp), wcharToInt(next(cpBufIt)), wcharToInt(next(cpBufIt)), wcharToInt(next(cpBufIt))))
 	return text, characterLocations
 
 def getFocusRect(obj):

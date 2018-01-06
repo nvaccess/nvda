@@ -27,7 +27,7 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
-from locationHelper import Rect
+from locationHelper import RectLTRB
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -587,7 +587,7 @@ class MSHTML(IAccessible):
 			top=int(r.top*yFactor)
 			right=int(r.right*xFactor)
 			bottom=int(r.bottom*yFactor)
-			return Rect(left,top,right,bottom).toScreen(self.windowHandle).toLocation()
+			return RectLTRB(left,top,right,bottom).toScreen(self.windowHandle).toLTWH()
 		return None
 
 	def _get_TextInfo(self):

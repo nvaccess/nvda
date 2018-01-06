@@ -31,7 +31,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
-from locationHelper import Location
+from locationHelper import RectLTWH
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -891,7 +891,7 @@ the NVDAObject for IAccessible
 
 	def _get_location(self):
 		try:
-			return Location(*self.IAccessibleObject.accLocation(self.IAccessibleChildID))
+			return RectLTWH(*self.IAccessibleObject.accLocation(self.IAccessibleChildID))
 		except COMError:
 			return None
 

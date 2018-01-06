@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2017-2018 NV Access Limited, Babbage B.V.
 
 """Classes and helper functions for working with rectangles and coordinates."""
 
@@ -122,7 +122,7 @@ class Point(namedtuple("Point",("x","y"))):
 		return Point(*winUser.ClientToScreen(hwnd, *self))
 
 class _RectMixin:
-	"""Mix-in class for properties shared between Location and Rect classes"""
+	"""Mix-in class for properties shared between RectLTRB and RectLTWH classes"""
 
 	def toRECT(self):
 		"""Converts self to a L{ctypes.wintypes.RECT}"""
@@ -131,28 +131,28 @@ class _RectMixin:
 	def toLogical(self, hwnd):
 		left,top=self.topLeft.toLogical(hwnd)
 		right,bottom=self.bottomRight.toLogical(hwnd)
-		if isinstance(self, Location):
-			return Location(left,top,right-left,bottom-top)
-		return Rect(left,top,right,bottom)
+		if isinstance(self, RectLTWH):
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
 
 	def toPhysical(self, hwnd):
 		left,top=self.topLeft.toPhysical(hwnd)
 		right,bottom=self.bottomRight.toPhysical(hwnd)
-		if isinstance(self, Location):
-			return Location(left,top,right-left,bottom-top)
-		return Rect(left,top,right,bottom)
+		if isinstance(self, RectLTWH):
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
 
 	def toClient(self, hwnd):
 		left, top =self.topLeft.toClient(hwnd)
-		if isinstance(self, Location):
-			return Location(left, top, self.width, self.height)
-		return Rect(left, top, left+self.width, top+self.height)
+		if isinstance(self, RectLTWH):
+			return RectLTWH(left, top, self.width, self.height)
+		return RectLTRB(left, top, left+self.width, top+self.height)
 
 	def toScreen(self, hwnd):
 		left,top=self.topLeft.toScreen(hwnd)
-		if isinstance(self, Location):
-			return Location(left, top, self.width, self.height)
-		return Rect(left, top, left+self.width, top+self.height)
+		if isinstance(self, RectLTWH):
+			return RectLTWH(left, top, self.width, self.height)
+		return RectLTRB(left, top, left+self.width, top+self.height)
 
 	@property
 	def topLeft(self):
@@ -173,7 +173,7 @@ class _RectMixin:
 		if isinstance(other,RECT_CLASSES):
 			return self>other
 		try:
-			other=toRect(other)
+			other=toRectLTRB(other)
 		except:
 			return False
 		return self>other
@@ -182,7 +182,7 @@ class _RectMixin:
 		"""Returns whether this rectangle is a subset of other (i.e. whether all points in this rectangle are contained by other)."""
 		if not isinstance(other,RECT_CLASSES):
 			try:
-				other=toRect(other)
+				other=toRectLTRB(other)
 			except ValueError:
 				return False
 		return self<=other and self!=other
@@ -191,7 +191,7 @@ class _RectMixin:
 		"""Returns whether this rectangle is a subset of or equal to other."""
 		if not isinstance(other,RECT_CLASSES):
 			try:
-				other=toRect(other)
+				other=toRectLTRB(other)
 			except ValueError:
 				return False
 		return self.left >= other.left and self.top >= other.top and self.right <= other.right and self.bottom <= other.bottom
@@ -200,7 +200,7 @@ class _RectMixin:
 		"""Returns whether this rectangle is a superset of other (i.e. whether all points of other are contained by this rectangle)."""
 		if not isinstance(other,RECT_CLASSES):
 			try:
-				other=toRect(other)
+				other=toRectLTRB(other)
 			except ValueError:
 				return False
 		return self>=other and self!=other
@@ -209,7 +209,7 @@ class _RectMixin:
 		"""Returns whether self is a superset of or equal to other."""
 		if not isinstance(other,RECT_CLASSES):
 			try:
-				other=toRect(other)
+				other=toRectLTRB(other)
 			except ValueError:
 				return False
 		return other.left >= self.left and other.top >= self.top and other.right <= self.right and other.bottom <= self.bottom
@@ -217,7 +217,7 @@ class _RectMixin:
 	def __eq__(self,other):
 		if not isinstance(other,RECT_CLASSES):
 			try:
-				other=toRect(other)
+				other=toRectLTRB(other)
 			except ValueError:
 				return False
 		return other.left == self.left and other.top == self.top and other.right == self.right and other.bottom == self.bottom
@@ -229,9 +229,9 @@ class _RectMixin:
 		if not isinstance(other,RECT_CLASSES):
 			return NotImplemented
 		left,top,right,bottom=self.left-other.left,self.top-other.top,self.right-other.right,self.bottom-other.bottom
-		if isinstance(self, Location):
-			return Location(left,top,right-left,bottom-top)
-		return Rect(left,top,right,bottom)
+		if isinstance(self, RectLTWH):
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
 
 	def __rsub__(self,other):
 		return self.__sub__(other)
@@ -244,7 +244,7 @@ class _RectMixin:
 		"""
 		if not isinstance(other,RECT_CLASSES):
 			try:
-				other=toRect(other)
+				other=toRectLTRB(other)
 			except ValueError:
 				return NotImplemented
 		left=max(self.left,other.left)
@@ -253,17 +253,17 @@ class _RectMixin:
 		bottom=min(self.bottom,other.bottom)
 		if left>right or top>bottom:
 			left=top=right=bottom=0
-		if isinstance(self, Location):
-			return Location(left,top,right-left,bottom-top)
-		return Rect(left,top,right,bottom)
+		if isinstance(self, RectLTWH):
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
 
 	def __rand__(self,other):
 		return self.__and__(other)
 
-class Location(_RectMixin, namedtuple("Location",("left","top","width","height"))):
+class RectLTWH(_RectMixin, namedtuple("RectLTWH",("left","top","width","height"))):
 	"""
 	Represents a rectangle on the screen, based on left and top coordinates, width and height.
-	To represent a rectangle using left, top, right and bottom coordinates, use L{Rect}.
+	To represent a rectangle using left, top, right and bottom coordinates, use L{RectLTRB}.
 	"""
 
 	@property
@@ -274,13 +274,13 @@ class Location(_RectMixin, namedtuple("Location",("left","top","width","height")
 	def bottom(self):
 		return self.top+self.height
 
-	def toRect(self):
-		return Rect(self.left,self.top,self.right,self.bottom)
+	def toLTRB(self):
+		return RectLTRB(self.left,self.top,self.right,self.bottom)
 
-class Rect(_RectMixin, namedtuple("Rect",("left","top","right","bottom"))):
+class RectLTRB(_RectMixin, namedtuple("RectLTRB",("left","top","right","bottom"))):
 	"""Represents a rectangle on the screen.
 	By convention, the right and bottom edges of the rectangle are normally considered exclusive.
-	To represent a rectangle based on width and height instead, use L{Location}.
+	To represent a rectangle based on width and height instead, use L{RectLTWH}.
 	"""
 
 	@property
@@ -291,42 +291,42 @@ class Rect(_RectMixin, namedtuple("Rect",("left","top","right","bottom"))):
 	def height(self):
 		return self.bottom-self.top
 
-	def toLocation(self):
-		return Location(self.left,self.top,self.width,self.height)
+	def toLTWH(self):
+		return RectLTWH(self.left,self.top,self.width,self.height)
 
-def toRect(*params):
+def toRectLTRB(*params):
 	"""
-	Converts the given input to L{Rect}.
+	Converts the given input to L{RectLTRB}.
 	Input should be one of the following types:
 		* One of l{RECT_CLASSES}.
 		* One of L{POINT_CLASSES}: converted to L{Rect} square of one pixel.
-		* List or tuple of integers: 4 treated as L{Rect}, 2 treated as L{Point}.
-		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{Rect} containing all input.
+		* List or tuple of integers: 4 treated as L{RectLTRB}, 2 treated as L{Point}.
+		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{RectLTRB} containing all input.
 	"""
 	if len(params)==0:
 		raise TypeError("This function takes at least 1 argument (0 given)")
 	if len(params)==1:
 		param=params[0]
-		if isinstance(param,Rect):
+		if isinstance(param,RectLTRB):
 			return param
 		if isinstance(param,RECT_CLASSES):
-			return Rect(param.left,param.top,param.right,param.bottom)
+			return RectLTRB(param.left,param.top,param.right,param.bottom)
 		if isinstance(param,POINT_CLASSES):
 			# Right and bottom edges of the resulting rectangle are considered exclusive
 			x,y=point.x,point.y
-			return Rect(x,y,x+1,y+1)
+			return RectLTRB(x,y,x+1,y+1)
 		if isinstance(param,(tuple,list)):
 			# One indexable in another indexable doesn't make sence, so treat the inner indexable as outer indexable
 			params=param
 	if all(isinstance(param,(int,long)) for param in params):
 		if len(params)==4:
-			# Assume that we are converting from a tuple rectangle.
-			# To convert from a tuple location, use L{toLocation} instead.
-			# To convert from a tuple rectangle to L{Location}, use this function and execute L{toLocation} on the resulting object.
-			return Rect(*params)
+			# Assume that we are converting from a tuple rectangle (RectLTRB).
+			# To convert from a tuple location (RectLTWH), use L{toRectLTWH} instead.
+			# To convert from a tuple rectangle to L{RectLTWH}, use this function and execute L{toLTWH} on the resulting object.
+			return RectLTRB(*params)
 		elif len(params)==2:
 			x,y=params
-			return Rect(x,y,x+1,y+1)
+			return RectLTRB(x,y,x+1,y+1)
 		elif len(params) in (1,3) or len(params)>4:
 			raise ValueError("When providing integers, this function requires either 2 or 4 arguments (%d given)"%len(params))
 	xs=[]
@@ -344,32 +344,32 @@ def toRect(*params):
 	top=min(ys)
 	right=max(xs)
 	bottom=max(ys)
-	return Rect(left,top,right,bottom)
+	return RectLTRB(left,top,right,bottom)
 
-def toLocation(*params):
+def toRectLTWH(*params):
 	"""
-	Converts the given input to L{Location}.
+	Converts the given input to L{RectLTWH}.
 	Input should be one of the following types:
 		* One of l{RECT_CLASSES}.
-		* One of L{POINT_CLASSES}: converted to L{Location} square of one pixel.
-		* List or tuple of integers: 4 treated as L{Rect}, 2 treated as L{Point}.
-		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{Location} containing all input.
+		* One of L{POINT_CLASSES}: converted to L{RectLTWH} square of one pixel.
+		* List or tuple of integers: 4 treated as L{RectLTWH}, 2 treated as L{Point}.
+		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{RectLTWH} containing all input.
 	"""
 	if len(params)==0:
 		raise TypeError("This function takes at least 1 argument (0 given)")
 	if len(params)==1:
 		param=params[0]
-		if isinstance(param,Location):
+		if isinstance(param,RectLTWH):
 			return param
 		if not isinstance(param,RECT_CLASSES+POINT_CLASSES) and isinstance(param,(tuple,list)):
 			# One indexable in another indexable doesn't make sence, so treat the inner indexable as outer indexable
 			params=param
 	if len(params)==4 and all(isinstance(param,(int,long)) for param in params):
-		# Assume that we are converting from a tuple location.
-		# To convert from a tuple rectangle, use L{toRectangle} instead.
-		# To convert from a tuple location to L{Rect}, use this function and execute L{toRect} on the resulting location.
-		return Location(*params)
-	return toRect(*params).toLocation()
+		# Assume that we are converting from a tuple location (RectLTWH).
+		# To convert from a tuple rectangle (RectLTRB), use L{toRectLTRB} instead.
+		# To convert from a tuple location to L{RectLTRB}, use this function and execute L{toLTRB} on the resulting object.
+		return RectLTWH(*params)
+	return toRectLTRB(*params).toLTWH()
 
 def toPoint(*params):
 	"""
@@ -393,6 +393,6 @@ def toPoint(*params):
 #: Classes which support conversion to locationHelper Points using their x and y properties.
 #: type: tuple
 POINT_CLASSES=(Point, POINT, textInfos.Point, wx.Point)
-#: Classes which support conversion to locationHelper Rects and Locations using their left, top, right and bottom properties.
+#: Classes which support conversion to locationHelper RectLTRB/LTWH using their left, top, right and bottom properties.
 #: type: tuple
-RECT_CLASSES=(Rect, Location, RECT, SMALL_RECT, textInfos.Rect, wx.Rect)
+RECT_CLASSES=(RectLTRB, RectLTWH, RECT, SMALL_RECT, textInfos.Rect, wx.Rect)
