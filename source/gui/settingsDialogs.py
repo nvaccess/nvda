@@ -595,8 +595,8 @@ class SpeechSettingsPanel(SettingsPanel):
 		self.synthNameCtrl.SetLabel(synthDesc)
 
 	def onPanelActivated(self):
-		self.voicePanel.onPanelActivated()
 		super(SpeechSettingsPanel,self).onPanelActivated()
+		self.voicePanel.onPanelActivated()
 
 	def onPanelDeactivated(self):
 		self.voicePanel.onPanelDeactivated()
