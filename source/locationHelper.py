@@ -36,12 +36,11 @@ class Point(namedtuple("Point",("x","y"))):
 	def __rsub__(self,other):
 		return self.__sub__(other)
 
-	def __lt__(self,other):
+	def yWiseLessThan(self,other):
 		"""
-		Returns whether self is less than other.
-		This first compares y, then x coordinates.
+		Returns whether self is less than other, first comparing y, then x coordinates.
 		For example: (x=4,y=3) < (x=3,y=4) because self.y is less than other.y.
-		To compare in opposite order (i.e. compare x, then y), use tuple(self) < tuple(other)
+		To compare in opposite order (i.e. compare x, then y), use L{xWiseLessThan}
 		"""
 		if not isinstance(other,POINT_CLASSES):
 			try:
@@ -50,12 +49,24 @@ class Point(namedtuple("Point",("x","y"))):
 				return False
 		return (self.y, self.x) < (other.y, other.x)
 
-	def __le__(self,other):
+	def xWiseLessThan(self,other):
 		"""
-		Returns whether self is less than or equal to other.
-		This first compares y, then x coordinates.
-		For example: (x=4,y=3) < (x=3,y=4) because self.y is less than other.y.
-		To compare in opposite order (i.e. compare x, then y), use tuple(self) <= tuple(other)
+		Returns whether self is less than other, first comparing x, then y coordinates.
+		For example: (x=3,y=4) < (x=4,y=3) because self.x is less than other.x.
+		To compare in opposite order (i.e. compare y, then x), use L{yWiseLessThan}
+		"""
+		if not isinstance(other,POINT_CLASSES):
+			try:
+				other=toPoint(other)
+			except ValueError:
+				return False
+		return (self.x, self.y) < (other.x, other.y)
+
+	def yWiseLessOrEq(self,other):
+		"""
+		Returns whether self is less than or equal to other, first comparing y, then x coordinates.
+		For example: (x=4,y=3) <= (x=3,y=4) because self.y is less than or equal to other.y.
+		To compare in opposite order (i.e. compare x, then y), use L{xWiseLessOrEq}
 		"""
 		if not isinstance(other,POINT_CLASSES):
 			try:
@@ -64,12 +75,24 @@ class Point(namedtuple("Point",("x","y"))):
 				return False
 		return (self.y, self.x) <= (other.y, other.x)
 
-	def __gt__(self,other):
+	def xWiseLessOrEq(self,other):
 		"""
-		Returns whether self is greater than other.
-		This first compares y, then x coordinates.
+		Returns whether self is less than or equal to other, first comparing x, then y coordinates.
+		For example: (x=3,y=4) <= (x=4,y=3) because self.x is less than or equal to other.x.
+		To compare in opposite order (i.e. compare y, then x), use L{yWiseLessOrEq}
+		"""
+		if not isinstance(other,POINT_CLASSES):
+			try:
+				other=toPoint(other)
+			except ValueError:
+				return False
+		return (self.x, self.y) <= (other.x, other.y)
+
+	def yWiseGreaterThan(self,other):
+		"""
+		Returns whether self is greater than other, first comparing y, then x coordinates.
 		For example: (x=3,y=4) > (x=4,y=3) because self.y is greater than other.y.
-		To compare in opposite order (i.e. compare x, then y), use tuple(self) > tuple(other)
+		To compare in opposite order (i.e. compare x, then y), use L{xWiseGreaterThan}
 		"""
 		if not isinstance(other,POINT_CLASSES):
 			try:
@@ -78,12 +101,24 @@ class Point(namedtuple("Point",("x","y"))):
 				return False
 		return (self.y, self.x) > (other.y, other.x)
 
-	def __ge__(self,other):
+	def xWiseGreaterThan(self,other):
 		"""
-		Returns whether self is greater than or equal to other.
-		This first compares y, then x coordinates.
-		For example: (x=3,y=4) > (x=4,y=3) because self.y is greater than other.y.
-		To compare in opposite order (i.e. compare x, then y), use tuple(self) >= tuple(other)
+		Returns whether self is greater than other, first comparing x, then y coordinates.
+		For example: (x=4,y=3) > (x=3,y=4) because self.x is greater than other.x.
+		To compare in opposite order (i.e. compare y, then x), use L{yWiseGreaterThan}
+		"""
+		if not isinstance(other,POINT_CLASSES):
+			try:
+				other=toPoint(other)
+			except ValueError:
+				return False
+		return (self.x, self.y) > (other.x, other.y)
+
+	def yWiseGreaterOrEq(self,other):
+		"""
+		Returns whether self is greater than or equal to other, first comparing y, then x coordinates.
+		For example: (x=3,y=4) >= (x=4,y=3) because self.y is greater than or equal to other.y.
+		To compare in opposite order (i.e. compare x, then y), use L{xWiseGreaterOrEq}
 		"""
 		if not isinstance(other,POINT_CLASSES):
 			try:
@@ -91,6 +126,19 @@ class Point(namedtuple("Point",("x","y"))):
 			except ValueError:
 				return False
 		return (self.y, self.x) >= (other.y, other.x)
+
+	def xWiseGreaterOrEq(self,other):
+		"""
+		Returns whether self is greater than or equal to other, first comparing x, then y coordinates.
+		For example: (x=4,y=3) >= (x=3,y=4) because self.x is greater than or equal to other.x.
+		To compare in opposite order (i.e. compare y, then x), use L{yWiseGreaterOrEq}
+		"""
+		if not isinstance(other,POINT_CLASSES):
+			try:
+				other=toPoint(other)
+			except ValueError:
+				return False
+		return (self.x, self.y) >= (other.x, other.y)
 
 	def __eq__(self,other):
 		if not isinstance(other,POINT_CLASSES):

@@ -79,10 +79,16 @@ class TestPointOperators(unittest.TestCase):
 	def test_sub(self):
 		self.assertEqual(Point(x=2,y=4)-Point(x=4,y=8),Point(x=-2,y=-4))
 
-	def test_gt(self):
-		self.assertGreater(Point(x=3,y=4), Point(x=4,y=3))
+	def test_greaterThan(self):
+		self.assertTrue(Point(x=3,y=4).yWiseGreaterThan(Point(x=4,y=3)))
+		self.assertTrue(Point(x=4,y=3).xWiseGreaterThan(Point(x=3,y=4)))
+		self.assertTrue(Point(x=3,y=4).yWiseGreaterOrEq(Point(x=4,y=3)))
+		self.assertTrue(Point(x=4,y=3).xWiseGreaterOrEq(Point(x=3,y=4)))
 
-	def test_lt(self):
-		self.assertLess(Point(x=4,y=3), Point(x=3,y=4))
+	def test_lessThan(self):
+		self.assertTrue(Point(x=4,y=3).yWiseLessThan(Point(x=3,y=4)))
+		self.assertTrue(Point(x=3,y=4).xWiseLessThan(Point(x=4,y=3)))
+		self.assertTrue(Point(x=4,y=3).yWiseLessOrEq(Point(x=3,y=4)))
+		self.assertTrue(Point(x=3,y=4).xWiseLessOrEq(Point(x=4,y=3)))
 
 
