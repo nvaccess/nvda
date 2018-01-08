@@ -12,25 +12,19 @@ from locationHelper import *
 
 class TestRectOperators(unittest.TestCase):
 
-	def test_and(self):
-		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4) & RectLTRB(left=3,top=3,right=5,bottom=5),RectLTRB(left=3,top=3,right=4,bottom=4))
-		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4) & RectLTRB(left=5,top=5,right=7,bottom=7),RectLTRB(left=0,top=0,right=0,bottom=0))
+	def test_intersection(self):
+		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4).intersection(RectLTRB(left=3,top=3,right=5,bottom=5)), RectLTRB(left=3,top=3,right=4,bottom=4))
+		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4).intersection(RectLTRB(left=5,top=5,right=7,bottom=7)), RectLTRB(left=0,top=0,right=0,bottom=0))
 
-	def test_gt(self):
-		self.assertGreater(RectLTRB(left=2,top=2,right=6,bottom=6),RectLTRB(left=2,top=2,right=4,bottom=4))
-		self.assertGreaterEqual(RectLTRB(left=2,top=2,right=6,bottom=6),RectLTRB(left=2,top=2,right=4,bottom=4))
+	def test_superset(self):
+		self.assertTrue(RectLTRB(left=2,top=2,right=6,bottom=6).isSuperset(RectLTRB(left=2,top=2,right=4,bottom=4)))
 
-	def test_lt(self):
-		self.assertLess(RectLTRB(left=2,top=2,right=4,bottom=4),RectLTRB(left=2,top=2,right=6,bottom=6))
-		self.assertLessEqual(RectLTRB(left=2,top=2,right=4,bottom=4),RectLTRB(left=2,top=2,right=6,bottom=6))
+	def test_subset(self):
+		self.assertTrue(RectLTRB(left=2,top=2,right=4,bottom=4).isSubset(RectLTRB(left=2,top=2,right=6,bottom=6)))
 
 	def test_in(self):
 		self.assertIn(RectLTRB(left=2,top=2,right=4,bottom=4),RectLTRB(left=2,top=2,right=6,bottom=6))
 		self.assertIn(Point(x=2,y=6),RectLTRB(left=2,top=2,right=6,bottom=6))
-
-	def test_sub(self):
-		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4) - RectLTRB(left=3,top=3,right=5,bottom=5),RectLTRB(left=-1,top=-1,right=-1,bottom=-1))
-		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4) - RectLTRB(left=5,top=5,right=8,bottom=8),RectLTRB(left=-3,top=-3,right=-4,bottom=0-4))
 
 class TestRectUtilities(unittest.TestCase):
 

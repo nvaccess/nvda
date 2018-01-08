@@ -172,25 +172,15 @@ class _RectMixin:
 		"""Returns whether other is a part of this rectangle."""
 		if isinstance(other,POINT_CLASSES):
 			return other.x >= self.left < self.right and other.y >= self.top < self.bottom
-		if isinstance(other,RECT_CLASSES):
-			return self>other
-		try:
-			other=toRectLTRB(other)
-		except:
-			return False
-		return self>other
-
-	def __lt__(self,other):
-		"""Returns whether this rectangle is a subset of other (i.e. whether all points in this rectangle are contained by other)."""
 		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRectLTRB(other)
-			except ValueError:
+			except:
 				return False
-		return self<=other and self!=other
+		return self.isSuperset(other) and self!=other
 
-	def __le__(self,other):
-		"""Returns whether this rectangle is a subset of or equal to other."""
+	def isSubset(self,other):
+		"""Returns whether this rectangle is a subset of other (i.e. whether all points in this rectangle are contained by other)."""
 		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRectLTRB(other)
@@ -198,17 +188,8 @@ class _RectMixin:
 				return False
 		return self.left >= other.left and self.top >= other.top and self.right <= other.right and self.bottom <= other.bottom
 
-	def __gt__(self,other):
+	def isSuperset(self,other):
 		"""Returns whether this rectangle is a superset of other (i.e. whether all points of other are contained by this rectangle)."""
-		if not isinstance(other,RECT_CLASSES):
-			try:
-				other=toRectLTRB(other)
-			except ValueError:
-				return False
-		return self>=other and self!=other
-
-	def __ge__(self,other):
-		"""Returns whether self is a superset of or equal to other."""
 		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRectLTRB(other)
@@ -227,18 +208,7 @@ class _RectMixin:
 	def __neq__(self,other):
 		return not (self==other)
 
-	def __sub__(self,other):
-		if not isinstance(other,RECT_CLASSES):
-			return NotImplemented
-		left,top,right,bottom=self.left-other.left,self.top-other.top,self.right-other.right,self.bottom-other.bottom
-		if isinstance(self, RectLTWH):
-			return RectLTWH(left,top,right-left,bottom-top)
-		return RectLTRB(left,top,right,bottom)
-
-	def __rsub__(self,other):
-		return self.__sub__(other)
-
-	def __and__(self,other):
+	def intersection(self,other):
 		"""Returns the intersection of self and other.
 		For example, if self = Rect(left=10,top=10,right=25,bottom=25) and other = Rect(left=20,top=20,right=35,bottom=35),
 		this results in Rect(left=20,top=20,right=25,bottom=25).
@@ -258,9 +228,6 @@ class _RectMixin:
 		if isinstance(self, RectLTWH):
 			return RectLTWH(left,top,right-left,bottom-top)
 		return RectLTRB(left,top,right,bottom)
-
-	def __rand__(self,other):
-		return self.__and__(other)
 
 class RectLTWH(_RectMixin, namedtuple("RectLTWH",("left","top","width","height"))):
 	"""
