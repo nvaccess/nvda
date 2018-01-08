@@ -7,14 +7,14 @@ NVDA NVDA_VERSION brugervejledning
 = Indholdsfortegnelse =[toc]
 %%toc
 
-+ Introduktion +
++ Introduktion +[Introduction]
 Velkommen til NVDA!
 
 NonVisual Desktop Access (NVDA) er en gratis og open source skærmlæser for Microsoft Windows.
 Skærmlæseren gør brug af syntetisk tale og punkt. Programmet giver blinde og svagtseende brugere adgang til computere med Windows for en pris, der ikke er højere end den, en seende bruger betaler.
 NVDA er udviklet af [NV Access https://www.nvaccess.org/], med bidrag fra fællesskabet.
 
-++ Generelle funktioner ++
+++ Generelle funktioner ++[GeneralFeatures]
 NVDA giver blinde og svagsynede mulighed for at få adgang til og interagere med Windows-operativsystemet og mange tredjeparts-programmer.
 
 Af væsentlige funktioner kan nævnes:
@@ -32,25 +32,25 @@ Af væsentlige funktioner kan nævnes:
 - Understøtter Windows kommandoprompt og konsolapplikationer
 -
 
-++ Internationalisering ++
+++ Internationalisering ++[Internationalization]
 Det er vigtigt, at folk overalt i verden, uanset hvilket sprog de taler, får lige adgang til teknologi.
 Udover Engelsk er NVDA blevet oversat til 51 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, burmesisk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, kannada, koreansk, litauisk, makedonsk, nepalesisk, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
 
-++ Understøttelse af talesynteser ++
+++ Understøttelse af talesynteser ++[SpeechSynthesizerSupport]
 Udover at programmets meddelelser og brugerflade findes på flere sprog, kan NVDA også sætte brugeren i stand til at læse tekster på alle sprog, så længe de har en talesyntese, der kan tale det pågældende sprog.
 
 NVDA leveres med [eSpeak NG https://github.com/espeak-ng/espeak-ng], en gratis, open-source, flersproget talesyntese.
 
 Oplysninger om andre talesynteser som NVDA understøtter kan findes i afsnittet [Understøttede Talesynteser #SupportedSpeechSynths].
 
-++ Understøttelse af punktskrift ++
+++ Understøttelse af punktskrift ++[BrailleSupport]
 Brugere, som har et punktdisplay, kan med NVDA få tekst ud på punktskrift.
 Indtastning på uforkortet og uforkortet punkt er også understøttet ved hjælp af et punkttastatur.
 Se venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
 
 NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer braille.
 
-++ Licens og Ophavsret ++
+++ Licens og Ophavsret ++[LicenseAndCopyright]
 NVDA er ophavsret NVDA_COPYRIGHT_YEARS NVDA bidragydere.
 
 NVDA er dækket under GNU General Public License (version 2).
@@ -58,7 +58,7 @@ Du kan frit dele eller ændre denne software så længe du distribuerer licensen
 Dette gælder både originale og modificerede kopier af softwaren, plus software der anvender kode taget fra denne software.
 For yderligere oplysninger, kan du [læse den fulde licens. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
-+ Systemkrav +
++ Systemkrav +[SystemRequirements]
 - Operativsystemer: alle 32-bit og 64-bit versioner af Windows 7, Windows 8, Windows 8.1 og Windows 10, samt alle serverstyresystemer fra Server 2008 R2.
  - For Windows 7 kræver NVDA Service Pack 1 eller højere.
  - For Windows Server 2008  R2 kræver NVDA Service Pack 1 eller højere.
@@ -67,7 +67,7 @@ For yderligere oplysninger, kan du [læse den fulde licens. http://www.gnu.org/l
 - Omkring 90 MB lagerplads.
 -
 
-+ Hente og opsætte NVDA +
++ Hente og opsætte NVDA +[GettingAndSettingUpNVDA]
 Hvis du endnu ikke har fået en kopi af NVDA, kan du hente den fra [Www.nvaccess.org NVDA_URL].
 
 Gå til download sektionen, hvor du finder et link til at downloade den nyeste version af NVDA.
@@ -86,7 +86,7 @@ Kørsel af den flytbare version fra skrivebeskyttede medier er på nuværende ti
 
 Brug af den midlertidige kopi af NVDA er også en mulighed fx. hvis du har til hensigt at demonstrere NVDA, men opstart af NVDA på denne måde kan være meget tidskrævende.
 
-++ Begrænsninger for flytbare og midlertidige kopier af NVDA ++
+++ Begrænsninger for flytbare og midlertidige kopier af NVDA ++[PortableAndTemporaryCopyRestrictions]
 Udover den manglende evne til at starte på og efter logon-skærmen, har en flytbar eller midlertidig kopi af NVDA følgende begrænsninger:
 - manglende evne til at interagere med programmer der kører med administratorrettigheder, med mindre NVDA ligeledes kører med administratorrettigheder (anbefales ikke).
 - Manglende evne til at læse Kontrol af Brugerkonti (UAC) skærme når du forsøger at starte et program med administratorrettigheder.
@@ -95,7 +95,7 @@ Udover den manglende evne til at starte på og efter logon-skærmen, har en flyt
 - Windows 8 og senere: Lyddæmpning er ikke understøttet.
 -
 
-++ Installation af NVDA ++
+++ Installation af NVDA ++[InstallingNVDA]
 Hvis du installerer NVDA direkte fra den hentede fil, skal du trykke på knappen Installer NVDA.
 Hvis du allerede har lukket denne dialog, eller hvis du ønsker at installere fra en flytbar kopi, skal du vælge menupunktet Installer NVDA under Værktøjer i NVDA-menuen.
 
@@ -105,20 +105,20 @@ Der er desuden nogle få indstillinger i denne dialog der vil blive forklaret ne
 Når installationen er færdig vil du få en besked om, at installationen er lykkedes.
 Når du trykker OK på dette tidspunkt, vil din nyinstallerede kopi af NVDA starte op.
 
-+++ Start ved Windows Logon +++
++++ Start ved Windows Logon +++[StartAtWindowsLogon]
 Med denne indstilling bestemmer du, om du vil starte NVDA på Windows logon-skærmen, før du har indtastet din adgangskode.
 Dette omfanger også UAC kontrol af brugerkonti og andre sikre skærme.
 
-+++ Opret Genvej på Skrivebordet (ctrl+alt+n) +++
++++ Opret Genvej på Skrivebordet (ctrl+alt+n) +++[CreateDesktopShortcut]
 Denne indstilling, hvis valgt, vil oprette en genvej til NVDA på skrivebordet. 
 Hvis du vælger, at oprette denne genvej på dit skrivebord, vil genvejen også blive tilknyttet genvejstasten Ctrl+Alt+n. Denne genvejstast gør det muligt at starte NVDA når som helst når du trykker genvejstasten.
 
-+++ Kopier flytbar konfiguration til nuværende brugerkonto +++
++++ Kopier flytbar konfiguration til nuværende brugerkonto +++[CopyPortableConfigurationToCurrentUserAccount]
 Denne indstilling lader dig vælge, om du vil kopiere brugerkonfigurationen fra den kørende kopi af NVDA til konfigurationen for den bruger, som er logget på. Indstillingen gælder brugerens installerede kopi. 
 Dette vil ikke kopiere konfigurationen for andre brugere på dette system, og vil heller ikke kopiere til systemkonfigurationen til brug af Windows sikkert logon og andre sikre skærme.
 Denne indstilling er kun tilgængelig når du installerer fra den flytbare kopi, og ikke den hentede fil.
 
-++ Opret en flytbar kopi ++
+++ Opret en flytbar kopi ++[CreatingAPortableCopy]
 Hvis du ønsker, at oprette en flytbar kopi af NVDA direkte fra den hentede fil, skal du bare trykke på knappen Opret Flytbar Kopi.
 Hvis du allerede har lukket denne dialog, eller hvis du kører en installeret kopi af NVDA, skal du vælge menupunktet Opret Flytbar Kopi under Værktøjer i NVDA-menuen.
 
@@ -130,9 +130,9 @@ Trykker du Fortsæt vil den flytbare kopi blive oprettet.
 Når installationen er færdig vil du få en besked om, at installationen er fuldført.
 Tryk Ok for at lukke denne dialog.
 
-+ Kom i gang med at bruge NVDA +
++ Kom i gang med at bruge NVDA +[GettingStartedWithNVDA]
 
-++ Start NVDA ++
+++ Start NVDA ++[LaunchingNVDA]
 Hvis du har installeret NVDA med installationsprogrammet, kan du blot starte NVDA ved enten at trykke Ctrl+Alt+n eller vælge NVDA fra NVDA-menuen under Programmer i menuen Start.
 Derudover kan du skrive NVDA i dialogboksen Kør og trykke på Enter.
 Du kan også skrive nogle [kommandolinjeparametre #CommandLineOptions], som du kan bruge til følgende: Genstarte NVDA (-r), afslut (-q) slå tilføjelsesprogrammer fra (--disable-addons) osv.
@@ -150,6 +150,7 @@ Hvis det tager ekstra lang tid, bør NVDA sige "Indlæser NVDA. Vent venligst ..
 Hvis du ikke hører noget af dette, eller du hører Windows lyden der indikere en fejl eller en faldende række af toner, så betyder det, at NVDA har en fejl, og du bliver nødt til eventuelt at rapportere en fejl til udviklerne.
 Venligst tjek på NVDA hjemmesiden for hvordan du gør dette.
 
++++ Velkommen dialog +++[WelcomeDialog]
 Når NVDA starter for første gang, vil du blive mødt af en dialogboks som giver dig nogle grundlæggende oplysninger om NVDA tasten og NVDA-menuen.
 (Se de følgende afsnit om disse emner).
 Dialogboksen indeholder også en comboboks og tre checkbokse.
@@ -158,9 +159,9 @@ Med den første checkboks kan du bestemme, om NVDA skal bruge capslock som en NV
 Den anden bestemmer, om NVDA skal starte automatisk, efter du har logget på Windows. Det er kun tilgængeligt i installerede kopier af NVDA.
 Den tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NVDA starter.
 
-++ Om NVDA tastaturkommandoer ++
+++ Om NVDA tastaturkommandoer ++[AboutNVDAKeyboardCommands]
 
-+++ NVDA-tasten +++
++++ NVDA-tasten +++[TheNVDAModifierKey]
 De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tast kaldet NVDA tasten, samtidig med en eller flere andre taster.
 Bemærkelsesværdige undtagelser herfra er tekstlæsekommandoerne i desktop-tastaturlayoutet, som kun består af tasterne i det numeriske tastatur alene, men der er også andre undtagelser.
 
@@ -169,25 +170,25 @@ Som standard er både Numerisk Insert og udvidet Insert tasterne indstillet som 
 
 Hvis du ønsker at få en af NVDA-tasterne til at brue dens oprindelige funktion (for eksempel, hvis du ønsker at tænde Caps Lock, når du har valgt Caps Lock til at være en NVDA tast) kan du trykke på tasten to gange i hurtig rækkefølge.
 
-+++ Tastatur-Layouts +++
-NVDA har i øjeblikket to sæt tastaturkommandoer eller tastatur-layouts: Desktop-layoutet og laptop-layoutet.
-Som standard er NVDA sat til at bruge Desktop-layout, men du kan skifte til det bærbare layout i Tastaturindstillinger, under Indstillinger i NVDA-menuen.
++++ Tastaturlayouts +++[KeyboardLayouts]
+NVDA har i øjeblikket to sæt tastaturkommandoer eller tastaturlayouts: Desktop-layoutet og laptop-layoutet.
+Som standard er NVDA sat til at bruge Desktop-layout, men du kan skifte til det bærbare/laptop layout i Tastaturindstillinger, under Indstillinger i NVDA-menuen.
 
-Desktop layout bruger i høj grad det numeriske tastatur (med Num Lock slået fra).
+Desktop-layout bruger i høj grad det numeriske tastatur (med Num Lock slået fra).
 Selvom de fleste bærbare computere ikke har et fysisk numerisk tastatur, kan nogle bærbare computere efterligne et ved at holde Fn-tasten nede og trykke på bogstaver og tal på højre side af tastaturet (7 8 9 u i o j k l osv)..
 Hvis din bærbare computer ikke kan gøre brug af dette, eller ikke tillader dig at slå Num Lock fra, kan du skifte til det bærbare layout i stedet.
 
-++ NVDA Touch-bevægelser ++
+++ NVDA Touch-bevægelser ++[NVDATouchGestures]
 Hvis du kører NVDA på en enhed med touchskærm og Windows 8 eller nyere, kan du kontrollere NVDA direkte ved hjælp af den berøringsfølsomme skærm.
 Når NVDA er i gang, vil alle bevægelser registreret af skærmen blive indfanget af NVDA. 
 Dette betyder, at handlinger der kan udføres normalt uden NVDA ikke vil virke.
 
-+++ Udforsk skærmen +++
++++ Udforsk skærmen +++[ExploringTheScreen]
 Den mest grundlæggende handling du kan udføre er at få annonceret et element eller noget tekst på skærmen uanset hvor det befinder sig.
 For at gøre dette, skal du placere en finger et sted på skærmen.
 Du kan også beholde din finger på skærmen, og derefter bevæge den rundt på skærmen for at få oplæst tekst og elementer, som du bevæger dig hen over.
 
-+++ Touch-bevægelser +++
++++ Touch-bevægelser +++[TouchGestures]
 Når NVDA-kommandoer er beskrevet senere i denne brugermanual, kan de indeholde information om hvordan man benytter touchskærmen til at udføre den tilsvarende kommando.
 Følgende information beskriver hvordan du kan udføre diverse touch-bevægelser.
 
@@ -210,7 +211,7 @@ Der er fire mulige svirpebevægelser du kan benytte, afhængige af retningen: Sv
 Ligesom tryk kan du benytte flere fingre for at udføre deforskellige bevægelser.
 Derfor er bevægelser som svirp op med to fingre og svirp til venstre med fire fingre mulige bevægelser.
 
-+++ Touch-tilstande +++
++++ Touch-tilstande +++[TouchModes]
 Eftersom der er mange flere NVDA-kommandoer tilgængelige end der er mulige bevægelser, har NVDA implementeret forskellige tilstande der gør det muligt for dig, at benytte dig af forskellige undergrupper af kommandoer.
 De to tilstande er teksttilstand og objekttilstand 
 Visse NVDA kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter touch-bevægelsen.
@@ -221,7 +222,16 @@ Hvis kommandoen ikke har en tilstand knyttet til den, virker den uafhængigt af 
 For at skifte touch-tilstand, udfør et tryk med tre fingre.
 %kc:endInclude
 
-++ Tastaturhjælp ++
++++ Touch-tastatur +++[TouchKeyboard]
+Touch-tastaturet benyttes til at indtaste tekst og udføre kommandoer ved brug af en touchskærm.
+Når fokus befinder sig på et editfelt, kan du dobbelttrykke ikonet for touch-tastaturet i bunden af skærmen for at vise tastaturet.
+For tablets som Microsoft Surface Pro vil tastaturet altid være tilgængeligt, når disse tablets ikke er forbundet til en dock.
+For at afvise touch-tastaturet, kan du dobbelttrykke ikonet for touch-tastaturet igen eller bevæge dig væk fra editfeltet.
+
+Når touch-tastaturet vises på skærmen, kan du flytte en finger henover tasterne på tastaturet. Tastaturet befinder sig typisk i bunden af skærmen. Bevæg dig dernæst mellem tasterne med en finger. 
+Når du finder den ønskede tast, skal du dobbelttrykke med en finger eller løfte din finger, afhængigt af dine indstillinger i [dialogen touch-interaktion #TouchInteraction].
+
+++ Tastaturhjælp ++[InputHelpMode]
 Mange vigtige kommandoer er nævnt i resten af denne brugervejledning, men en nem måde at udforske alle de forskellige tastekommandoer er ved at starte tastaturhjælpen.
 
 For At slå tastaturhjælp til, skal du trykke på NVDA+1.
@@ -229,7 +239,7 @@ For at slå tastaturhjælp fra igen, tryk på NVDA+1.
 Når tastaturhjælp er slået til, vil enhver udført kommando, såsom et tastetryk eller en udført touch-bevægelse annoncere, hvilken handling den er knyttet til.
 Selve kommandoerne vil ikke blive udført, mens tastaturhjælp er slåët til.
 
-++ NVDA-menuen ++
+++ NVDA-menuen ++[TheNVDAMenu]
 I NVDA-menuen kan du styre NVDA indstillingerne, få adgang til hjælp, gemme/gendanne din konfiguration, Ændre tale ordbøger, få adgang til yderligere værktøjer og afslutte NVDA.
 
 For at komme til NVDA-menuen fra et hvilket som helst sted i Windows, mens NVDA kører, skal du Trykke NVDA+n på tastaturet eller udføre et dobbelttryk med to fingre.
@@ -237,7 +247,7 @@ Du kan også komme til NVDA-menuen via windows systembakken.
 Du kan enten højreklikke på NVDA-ikonet i systembakken, eller få adgang til systembakken ved at trykke på Windows-tasten + B, pil ned til NVDA ikonet og tryk på applikationstasten, som er placeret ved siden af højre kontroltast på de fleste tastaturer.
 Når menuen kommer op, kan du bruge piletasterne til at navigere rundt i menuen, og tryk på Enter-tasten for at aktivere et element.
 
-++ Grundlæggende NVDA-kommandoer ++
+++ Grundlæggende NVDA-kommandoer ++[BasicNVDACommands]
 %kc:beginInclude
 || Navn | Desktop tast | Laptop tast | Bevægelse | Beskrivelse |
 | Stop tale | Kontrol | Kontrol | enkelt tryk med to fingre | stopper talen med det samme |
@@ -250,7 +260,7 @@ Når menuen kommer op, kan du bruge piletasterne til at navigere rundt i menuen,
 | Slå dvaletilstand til og fra | NVDA+Shift+s | NVDA+Shift+z | Ingen | Dvaletilstand deaktivere alle NVDA-kommandoer og tale/punkt output i det aktive program. Dette er mest brugbart når du benytter et program der gør brug af egne skærmlæsefunktioner. Tryk kommandoen en gang til for at deaktivere dvaletilstand. |
 %kc:endInclude
 
-++ Rapportering af Systemoplysninger ++
+++ Rapportering af Systemoplysninger ++[ReportingSystemInformation]
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
 | Sig dato/tid | NVDA+f12 | Tryk en gang for klokkeslæt, to gange for dato |
@@ -258,7 +268,7 @@ Når menuen kommer op, kan du bruge piletasterne til at navigere rundt i menuen,
 | Sig tekst i udklipsholderen | NVDA+c | Rapporterer tekst i udklipsholderen hvis der er nogen. |
 %kc:endInclude
 
-+ Navigering med NVDA +
++ Navigering med NVDA +[NavigatingWithNVDA]
 Med NVDA kan du udforske og navigerer i systemet på flere forskellige måder, både med normal brug og med gennemlæsning af skærmen.
 
 ++ Objekter ++[Objects]
@@ -340,9 +350,9 @@ For at navigere imellem objekter, skal du benytte følgende kommandoer:
 | Gå til forrige objekt | NVDA+Numpad4 | NVDA+Shift+Venstre-pil | Svirp til venstre (objekttilstand) | Flytter til objektet før det aktuelle navigatorobjekt |
 | Gå til næste objekt | NVDA+Numpad6 | NVDA+Shift+Højre-pil | Svirp til højre (objekttilstand) | Flytter til objektet efter det aktuelle navigatorobjekt |
 | Gå til første underordnede objekt | NVDA+Numpad2 | NVDA+Shift+Pil-ned | Svirp ned (objekttilstand) | Flytter til det første objekt, som er indeholdt i det aktuelle navigatorobjekt.
-| Gå til objektet i fokus | NVDA+Numpad-Minus | NVDA+Backspace | Ingen | Flytter til det objekt, som er i fokus. Placerer også læsemarkøren ved systemmarkøren, hvis den er synlig. |
+| Gå til objektet i fokus | NVDA+Numpad-Minus | NVDA+Backmellemrum | Ingen | Flytter til det objekt, som er i fokus. Placerer også læsemarkøren ved systemmarkøren, hvis den er synlig. |
 | Aktiver aktuelle navigatorobjekt | NVDA+Numpad-Enter | NVDA+Enter | Dobbelttryk | Aktiverer det nuværende navigatorobjekt (svarende til at klikke med musen eller trykke på mellemrums tasten, når det er i fokus) |
-| Flyt systemfokus eller systemmarkør til den aktuelle læseposition | NVDA+Shift+Numpad-Minus | NVDA+Shift+Backspace | Ingen | Tryk en gang for at flytte systemfokus til det nuværende navigatorobjekt. Tryk to gange for at flytte systemmarkøren til læsemarkøren.
+| Flyt systemfokus eller systemmarkør til den aktuelle læseposition | NVDA+Shift+Numpad-Minus | NVDA+Shift+Backmellemrum | Ingen | Tryk en gang for at flytte systemfokus til det nuværende navigatorobjekt. Tryk to gange for at flytte systemmarkøren til læsemarkøren.
 | Sig læsemarkørens position | NVDA+Numpad-del | NVDA+Del Ingen | Giver information om placeringen af teksten eller objektet ved læsemarkøren. Fx. procentdel af dokumentet, afstand fra venstre kant af siden eller den præcise position på skærmen. To tryk kan give flere detaljer. |
 %kc:endInclude
 
@@ -685,7 +695,7 @@ Du kan vælge den ønskede indtastningstabel ved brug af indstillingen [Indtastn
 Når uforkortet punktskrift benyttes, vil tekst indsættes så snart det skrives.
 Når forkortet punkt benyttes, vil tekst indsættes når der trykkes på mellemrum eller enter efter et ord.
 Bemærk, at oversættelsen kun reflektere det aktuelle ord du er ved at indtaste, men kan ikke bearbejde eksisterende tekst.
-Hvis du f.eks. bruger en punktkode der starter indtastning af numre ved brug af et nummertegn, skal du indtaste et nummertegn igen, hvis du har trykket backspace for at flytte til slutningen af et nummer, og såfrem du ønsker at indtaste yderligere numre.
+Hvis du f.eks. bruger en punktkode der starter indtastning af numre ved brug af et nummertegn, skal du indtaste et nummertegn igen, hvis du har trykket backmellemrum for at flytte til slutningen af et nummer, og såfrem du ønsker at indtaste yderligere numre.
 
 %kc:beginInclude
 Et tryk på punkt 7 sletter sidst indtastede punktcelle eller tegn.
@@ -739,7 +749,7 @@ Dette betyder, at brugere af andre skærmlæsere, som senere åbner dette dokume
 +++ Gennemsynstilstand i Microsoft Word +++
 Ligesom på webbet kan gennemsynstilstand bruges i Microsoft word til at give adgang til funktioner som hurtignavigation og elementlisten.
 %kc:beginInclude
-For at slå gennemsynstilstand til eller fra i Microsoft Word skal du trykke NVDA+space.
+For at slå gennemsynstilstand til eller fra i Microsoft Word skal du trykke NVDA+mellemrum.
 %kc:endInclude
 For mere information om gennemsynstilstand og hurtignavigation se afsnittet om [Gennemsynstilstand #BrowseMode].
 
@@ -1271,6 +1281,14 @@ Jo længere mod venstre eller højre musen befinder sig på skærmen, desto læn
 ==== Lysstyrke kontrollerer lydstyrke for lydkoordinater ====
 Hvis checkboksen "Afspil lydkoordinater under flytning af mus" er slået til, bevirker markering af denne checkboks, at lydstyrken på biptonen ved lydkoordinaterne bestemmes af, hvor lyst skærmbilledet under musen er.
 Denne indstilling er slået fra som standard.
+
++++ Indstillinger for touch-interaktion +++[TouchInteraction]
+Denne dialog vil kun være tilgængelig på computere, der kører Windows 8 og nyere, samt har mulighed for touch-funktionalitet.
+
+==== Berøringsindtastning ====
+Denne tjekboks lader dig vælge den metode du ønsker at bruge, når du benytter touch-tastaturet.
+Hvis denne tjekboks er valgt, kan du indtaste bogstaver blot ved at løfte din finger fra den pågældende tast på tastaturet.
+Hvis denne indstilling ikke er valgt, skal du dobbelttrykke med en finger på hver bogstav, du vil skrive.
 
 +++ Indstillinger for læsemarkør +++
 Findes i menuen Indstillinger under Læsemarkør.
@@ -1866,7 +1884,7 @@ Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan
 | alt+tab tast | punktMellemrum+punkt2+punkt3+punkt4+punkt5 |
 | escape tast | punktMellemrum+punkt1+punkt5 |
 | windows tast | punktMellemrum+punkt2+punkt4+punkt5+punkt6 |
-| space tast | punktMellemrum |
+| mellemrum tast | punktMellemrum |
 | windows+d tast (minimer alle programmer) | punktMellemrum+punkt1+punkt2+punkt3+punkt4+punkt5+punkt6 |
 | Annoncér aktuelle linje | punktMellemrum+punkt1+punkt4 |
 | NVDA-menu | punktMellemrum+punkt1+punkt3+punkt4+punkt5 |
@@ -1927,7 +1945,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA understøtter de fleste displays fra [Handy Tech http://www.handytech.de/] når displayet er forbundet via USB, serielport eller eller Bluetooth.
+NVDA understøtter de fleste displays fra [Handy Tech http://www.handytech.de/] når displayet er forbundet via USB, serielport eller Bluetooth.
 Ældre punktdisplays kræver, at du installerer USB-driveren fra handy Tech på computeren.
 
 Følgende displays er ikke understøttet direkte af NVDA, men kan bruges med [Handy Techs universale driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] og NVDA-tilføjelsespakken:
@@ -1957,7 +1975,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Ændre indstillingen punkt tøjret til | b2 |
 | Ændre indstilling for punktmarkøren | b1 |
 | Ændre indstilling for fokuskontekstpræsentation | b7 |
-| Skift indstilling for punktindtastning | space+b1+b3+b4 (space+capital B) |
+| Skift indstilling for punktindtastning | mellemrum+b1+b3+b4 (mellemrum+capital B) |
 %kc:endInclude
 
 ++ MDV Lilli ++
@@ -2081,76 +2099,76 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Sig alt | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
-NVDA understøtter Braille Sense, Braille EDGE og Smart Beetle displays fra [Hims http://www.hims-inc.com/] hvis disse displays kobles til med USB eller Bluetooth. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle+ Sync Braille Series ++
+NVDA understøtter Braille Sense, Braille EDGE, Smart Beetle og Sync punktdisplays fra [Hims http://www.hims-inc.com/] hvis disse displays kobles til med USB, serielport eller Bluetooth. 
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra HIMS på dit system.
-Du kan hente disse fra denne side: http://www.himsintl.com/?c=2/13&uid=2319
+Du kan hente disse fra denne side: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Tastekombinationerne til disse displays med NVDA er følgende.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
-| Rul punktdisplay tilbage | venstre side rul ned |
-| Rul punktdisplay fremad | højre side rul ned |
-| Flyt punktdisplay to forrige linje | venstre side rul op |
-| Flyt punktdisplay til næste linje | højre side rul op |
 | Flyt til punktcelle | markørsammenføringsknapper |
-| shift+tab Tast | punkt1+punkt2+mellemrum |
-| alt Tast | punkt1+punkt3+punkt4+mellemrum |
-| escape Tast | punkt1+punkt5+mellemrum |
-| tab Tast | punkt4+punkt5+mellemrum |
-| Pil-op | punkt1+mellemrum |
-| Pil-ned | punkt4+mellemrum |
-| Caps Lock | punkt1+punkt3+punkt6+mellemrum |
-| shift+alt+tab Tast | advance2+advance3+advance1 |
-| alt+tab Tast | advance2+advance3 |
-| end Tast | punkt4+punkt6+mellemrum |
-| Ctrl+end Tast | punkt4+punkt5+punkt6+mellemrum |
-| hjem Tast | punkt1+punkt3+mellemrum |
-| Ctrl+hjem Tast | punkt1+punkt2+punkt3+mellemrum |
-| Venstre-pil | punkt3+mellemrum |
-| Ctrl+skift+Venstre-pil | punkt2+punkt8+mellemrum+advance1 |
-| Ctrl+Venstre-pil | punkt2+mellemrum |
-| shift+alt+Venstre-pil | punkt2+punkt7+advance1 |
-| alt+Venstre-pil | punkt2+punkt7 |
-| Højre-pil | punkt6+mellemrum |
-| Ctrl+skift+Højre-pil | punkt5+punkt8+mellemrum+advance1 |
-| Ctrl+Højre-pil | punkt5+mellemrum |
-| skift+alt+højre-pil | punkt5+punkt7+advance1 |
-| alt+Højre-pil | punkt5+punkt7 |
-| side op Tast | punkt1+punkt2+punkt6+mellemrum |
-| Ctrl+side op Tast | punkt1+punkt2+punkt6+punkt8+mellemrum |
-| Ctrl+skift+Pil-op | punkt2+punkt3+punkt8+mellemrum+advance1 |
-| Ctrl+Pil-op | punkt2+punkt3+mellemrum |
-| skift+alt+Pil-op | punkt2+punkt3+punkt7+advance1 |
-| alt+Pil-op | punkt2+punkt3+punkt7 |
-| skift+Pil-op | venstre side rul ned + mellemrum |
-| side ned Tast | punkt3+punkt4+punkt5+mellemrum |
-| Ctrl+side ned Tast | punkt3+punkt4+punkt5+punkt8+mellemrum |
-| Ctrl+skift+Pil-ned | punkt5+punkt6+punkt8+mellemrum+advance1 |
-| Ctrl+Pil-ned | punkt5+punkt6+mellemrum |
-| skift+alt+Pil-ned | punkt5+punkt6+punkt7+advance1 |
-| alt+Pil-ned | punkt5+punkt6+punkt7 |
-| skift+Pil-ned | højre side rul ned + mellemrum |
-| delete Tast | punkt1+punkt3+punkt5+mellemrum |
-| f1 Tast | punkt1+punkt2+punkt5+mellemrum |
-| f3 Tast | punkt1+punkt2+punkt4+punkt8 |
-| f4 Tast | punkt7+advance3 |
-| windows+b Tast | punkt1+punkt2+advance1 |
-| windows+d Tast | punkt1+punkt4+punkt5+advance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA understøtter SyncBraille Display fra [HIMS http://www.hims-inc.com/].
-Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra HIMS på dit system.
-
-Dette er tastekombinationerne til dette display til brug med NVDA.
-Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
-%kc:beginInclude
-|| Navn | Tast |
-| Rul punktdisplay tilbage | venstre side rul ned |
-| Rul punktdisplay fremad | højre side rul ned |
-| Flyt til punktcelle | markørsammenføringsknapper |
+| Rul punktdisplay tilbage | venstre side rul op, højre side rul op, venstre side rul |
+| Rul punktdisplay fremad | venstre side rul ned, højre side rul ned, højre side rul |
+| Flyt punktdisplay to forrige linje | højre side rul op+venstre side rul op |
+| Flyt punktdisplay til næste linje | venstre side rul ned+højre side rul ned |
+| Flyt til forrige linje med læsemarkør | højre side pil op |
+| Flyt til næste linje med læsemarkør | højre side pil ned |
+| Flyt til forrige tegn med læsemarkør | højre side venstre pil |
+| Flyt til næste tegn med læsemarkør | højre side højre pil |
+| Flyt til aktuelle fokus | venstre side rul op+venstre side rul ned, højre side rul op+højre side rul ned, venstre side rul+højre side rul |
+| CTRL-tast | smartbeetle:f1, brailleedge:f3 |
+| windows-tast | f7, smartbeetle:f2 |
+| alt+tast | punkt1+punkt3+punkt4+mellemrum, f2, smartbeetle:f3, brailleedge:f4 |
+| skift-tast | f5 |
+| insert-tast | punkt2+punkt4+mellemrum, f6 |
+|tasten applikationer | punkt1+punkt2+punkt3+punkt4+mellemrum, f8 |
+| capsLock-tast | punkt1+punkt3+punkt6+mellemrum |
+| tab-tast | punkt4+punkt5+mellemrum, f3, brailleedge:f2 |
+| tasterne skift+alt+tab | f2+f3+f1 |
+| tasterne alt+tab | f2+f3 |
+| tasterne skift+tab | punkt1+punkt2+mellemrum |
+| end-tast | punkt4+punkt6+mellemrum |
+| tasterne ctrl+end | punkt4+punkt5+punkt6+mellemrum |
+| hjem-tast | punkt1+punkt3+mellemrum, smartbeetle:f4 |
+| tasterne ctrl+hjem key | punkt1+punkt2+punkt3+mellemrum |
+| tasterne alt+f4 | punkt1+punkt3+punkt5+punkt6+mellemrum |
+| venstre piletast | punkt3+mellemrum, venstre side pil venstre |
+| tasterne ctrl+skift+venstre pil | punkt2+punkt8+mellemrum+f1 |
+| tasterne ctrl+venstre pil | punkt2+mellemrum |
+| skift+alt+pil venstre | punkt2+punkt7+f1 |
+| alt+pil venstre | punkt2+punkt7 |
+| højre piletast | punkt6+mellemrum, venstre side pil højre |
+| ctrl+skift+pil højre | punkt5+punkt8+mellemrum+f1 |
+| ctrl+pil højre | punkt5+mellemrum |
+| skift+alt+pil højre | punkt5+punkt7+f1 |
+| alt+højre pil | punkt5+punkt7 |
+| tasten side op | punkt1+punkt2+punkt6+mellemrum |
+| tasterne ctrl+side op | punkt1+punkt2+punkt6+punkt8+mellemrum |
+| pil op | punkt1+mellemrum, venstre side pil op |
+| ctrl+skift+pil op | punkt2+punkt3+punkt8+mellemrum+f1 |
+| ctrl+pil op | punkt2+punkt3+mellemrum |
+| skift+alt+pil op | punkt2+punkt3+punkt7+f1 |
+| alt+pil op | punkt2+punkt3+punkt7 |
+| skift+pil op | venstre side rul ned+mellemrum |
+| tasten side ned | punkt3+punkt4+punkt5+mellemrum |
+| tasterne ctrl+side ned | punkt3+punkt4+punkt5+punkt8+mellemrum |
+| pil ned | punkt4+mellemrum, venstre side pil ned |
+| ctrl+skift+pil ned | punkt5+punkt6+punkt8+mellemrum+f1 |
+| ctrl+pil ned | punkt5+punkt6+mellemrum |
+| skift+alt+pil ned | punkt5+punkt6+punkt7+f1 |
+| alt+pil ned | punkt5+punkt6+punkt7 |
+| skift+pil ned | mellemrum+højre side rul ned |
+| esc+tast | punkt1+punkt5+mellemrum, f4, brailleedge:f1 |
+| tasten slet | punkt1+punkt3+punkt5+mellemrum, punkt1+punkt4+punkt5+mellemrum |
+| f1-tast | punkt1+punkt2+punkt5+mellemrum |
+| f3-tast | punkt1+punkt2+punkt4+punkt8 |
+| f4-tast | punkt7+f3 |
+| tasterne windows+b | punkt1+punkt2+f1 |
+| tasterne windows+d | punkt1+punkt4+punkt5+f1 |
+| tasterne ctrl+insert | smartbeetle:f1+rightSideScroll |
+| tasterne alt+insert | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
 ++ Seika Braille Displays ++
@@ -2367,24 +2385,24 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 | Flyt punktdisplay til næste linje | next |
 | Flyt til punktcelle | markørsammenføringsknapper |
 | Slå "Punkt følger" til/fra | previous+next |
-| Pil-op | space+dot1 |
-| Pil-ned key | space+dot4 |
-| Venstre-pil | space+dot3 |
-| Højre-pil | space+dot6 |
-| Side op | space+dot1+dot3 |
-| side ned | space+dot4+dot6 |
-| Hjem tast | space+dot1+dot2 |
-| End tast | space+dot4+dot5 |
-| Ctrl+hjem | space+dot1+dot2+dot3 |
-| Ctrl+end | space+dot4+dot5+dot6 |
-| Mellemrumstast | space |
-| Enter tast | space+dot8 |
-| Backspace tast | space+dot7 |
-| Tab tast | space+dot2+dot3+dot4+dot5 (space+t) |
-| Shift+tab taster | space+dot1+dot2+dot5+dot6 |
-| Windows tast | space+dot2+dot4+dot5+dot6 (space+w) |
-| Alt tast | space+dot1+dot3+dot4 (space+m) |
-| Tastaturhjælp til/fra | mellemrum+dot2+dot3+dot6 (mellemrum+lavt+h) |
+| Pil-op | mellemrum+punkt1 |
+| Pil-ned key | mellemrum+punkt4 |
+| Venstre-pil | mellemrum+punkt3 |
+| Højre-pil | mellemrum+punkt6 |
+| Side op | mellemrum+punkt1+punkt3 |
+| side ned | mellemrum+punkt4+punkt6 |
+| Hjem tast | mellemrum+punkt1+punkt2 |
+| End tast | mellemrum+punkt4+punkt5 |
+| Ctrl+hjem | mellemrum+punkt1+punkt2+punkt3 |
+| Ctrl+end | mellemrum+punkt4+punkt5+punkt6 |
+| Mellemrumstast | mellemrum |
+| Enter tast | mellemrum+punkt8 |
+| Backmellemrum tast | mellemrum+punkt7 |
+| Tab tast | mellemrum+punkt2+punkt3+punkt4+punkt5 (mellemrum+t) |
+| Shift+tab taster | mellemrum+punkt1+punkt2+punkt5+punkt6 |
+| Windows tast | mellemrum+punkt2+punkt4+punkt5+punkt6 (mellemrum+w) |
+| Alt tast | mellemrum+punkt1+punkt3+punkt4 (mellemrum+m) |
+| Tastaturhjælp til/fra | mellemrum+punkt2+punkt3+punkt6 (mellemrum+lavt+h) |
 %kc:endInclude
 
 ++ EcoBraille ++

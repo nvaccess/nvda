@@ -1233,13 +1233,13 @@ If on, this option will cause speech to be interrupted each time the Enter key i
 ==== Allow skim reading in Say All ====[KeyboardSettingsSkimReading]
 If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
 
-==== Beep if Typing Lowercase Letters when Caps Lock is On ====[VoiceSettingsBeepLowercase]
+==== Beep if Typing Lowercase Letters when Caps Lock is On ====[KeyboardSettingsBeepLowercase]
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
 Generally, typing shifted letters with caps lock is unintentional and is usually due to not realizing that caps lock is enabled.
 Therefore, it can be quite helpful to be warned about this.
 
 %kc:setting
-==== Speak Command Keys ====[VoiceSettingsSpeakCommandKeys]
+==== Speak Command Keys ====[KeyboardSettingsSpeakCommandKeys]
 Key: NVDA+4
 
 When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
@@ -1338,7 +1338,7 @@ If reporting of object position information is turned on, this option allows NVD
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
-==== Report Object descriptions ====ObjectPresentationReportDescriptions]
+==== Report Object descriptions ====[ObjectPresentationReportDescriptions]
 Uncheck this checkbox if you don't wish to have the description reported along with objects.
 
 %kc:setting
@@ -1432,7 +1432,7 @@ This option is turned off by default.
 
 To toggle inclusion of layout tables from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-==== Configuring reporting of fields such as links and headings ====
+==== Configuring reporting of fields such as links and headings ====[BrowseModeLinksAndHeadings]
 Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are reported when navigating, such as links, headings and tables.
 
 ==== Automatic focus mode for focus changes ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
