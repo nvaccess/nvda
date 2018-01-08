@@ -1554,11 +1554,11 @@ class GlobalCommands(ScriptableObject):
 	script_activateSynthesizerDialog.__doc__ = _("Shows the NVDA synthesizer selection dialog")
 	script_activateSynthesizerDialog.category=SCRCAT_CONFIG
 
-	def script_activateVoiceSettingsDialog(self, gesture):
+	def script_activateVoiceDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSpeechCommand, None)
 	# Translators: Input help mode message for go to speech settings command.
-	script_activateVoiceSettingsDialog.__doc__ = _("Shows NVDA's speech settings")
-	script_activateVoiceSettingsDialog.category=SCRCAT_CONFIG
+	script_activateVoiceDialog.__doc__ = _("Shows NVDA's speech settings")
+	script_activateVoiceDialog.category=SCRCAT_CONFIG
 
 	def script_activateBrailleDisplayDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSelectBrailleDisplayCommand, None)
@@ -1602,11 +1602,11 @@ class GlobalCommands(ScriptableObject):
 	script_activateObjectPresentationDialog.__doc__ = _("Shows NVDA's object presentation settings")
 	script_activateObjectPresentationDialog.category=SCRCAT_CONFIG
 
-	def script_activateBrowseModeSettingsDialog(self, gesture):
+	def script_activateBrowseModeDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrowseModeCommand, None)
 	# Translators: Input help mode message for go to browse mode settings command.
-	script_activateBrowseModeSettingsDialog.__doc__ = _("Shows NVDA's browse mode settings")
-	script_activateBrowseModeSettingsDialog.category=SCRCAT_CONFIG
+	script_activateBrowseModeDialog.__doc__ = _("Shows NVDA's browse mode settings")
+	script_activateBrowseModeDialog.category=SCRCAT_CONFIG
 
 	def script_activateDocumentFormattingDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
@@ -2203,11 +2203,11 @@ class GlobalCommands(ScriptableObject):
 		# Preferences dialogs and panels
 		"kb:NVDA+control+g": "activateGeneralSettingsDialog",
 		"kb:NVDA+control+s": "activateSynthesizerDialog",
-		"kb:NVDA+control+v": "activateVoiceSettingsDialog",
+		"kb:NVDA+control+v": "activateVoiceDialog",
 		"kb:NVDA+control+k": "activateKeyboardSettingsDialog",
 		"kb:NVDA+control+m": "activateMouseSettingsDialog",
 		"kb:NVDA+control+o": "activateObjectPresentationDialog",
-		"kb:NVDA+control+b": "activateBrowseModeSettingsDialog",
+		"kb:NVDA+control+b": "activateBrowseModeDialog",
 		"kb:NVDA+control+d": "activateDocumentFormattingDialog",
 
 		# Configuration management
