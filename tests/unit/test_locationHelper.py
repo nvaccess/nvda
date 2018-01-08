@@ -73,6 +73,10 @@ class TestPointOperators(unittest.TestCase):
 	def test_add(self):
 		self.assertEqual(Point(x=2,y=4)+Point(x=2,y=4),Point(x=4,y=8))
 
+	def test_sum(self):
+		point=Point(x=2,y=4)
+		self.assertEqual(sum((point, point, point)), Point(x=6,y=12))
+
 	def test_sub(self):
 		self.assertEqual(Point(x=2,y=4)-Point(x=4,y=8),Point(x=-2,y=-4))
 

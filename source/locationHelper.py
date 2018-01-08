@@ -24,6 +24,8 @@ class Point(namedtuple("Point",("x","y"))):
 
 	def __radd__(self,other):
 		"""Returns a new L{Point} with x = self.x + other.x and y = self.y + other.y."""
+		if other == 0:
+			return self
 		return self.__add__(other)
 
 	def __sub__(self,other):
