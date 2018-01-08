@@ -32,6 +32,11 @@ class TestRectOperators(unittest.TestCase):
 		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4) - RectLTRB(left=3,top=3,right=5,bottom=5),RectLTRB(left=-1,top=-1,right=-1,bottom=-1))
 		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4) - RectLTRB(left=5,top=5,right=8,bottom=8),RectLTRB(left=-3,top=-3,right=-4,bottom=0-4))
 
+class TestRectUtilities(unittest.TestCase):
+
+	def test_center(self):
+		self.assertEqual(RectLTRB(left=-5,top=-5,right=5,bottom=5).center, Point(x=0,y=0))
+
 class TestToRectLTRB(unittest.TestCase):
 
 	def test_collection(self):
