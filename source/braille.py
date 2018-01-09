@@ -1493,6 +1493,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
+		import brailleViewer
+		brailleViewer.registerCallbackAndCallNow(self._onBrailleViewerChangedState)
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1502,6 +1504,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
 		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
+		import brailleViewer
+		brailleViewer.destroyBrailleViewerTool()
+		brailleViewer.deregisterCallback(self._onBrailleViewerChangedState)
 		if self.display:
 			self.display.terminate()
 			self.display = None
@@ -1565,35 +1570,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
 	
-	def _onBrailleViewerClosed(self):
-		self.brailleViewer = None
-		import gui
-		gui.mainFrame.onBrailleViewerEnabled(False)
-
-	def showBrailleViewer(self, shouldShowBrailleViewer):
-		# config.conf["braille"]["viewerTool"]
-		numCells = None if not self.display else self.display.numCells
-		if self.viewerTool:
-			try:
-				self.viewerTool.terminate()
-			except:
-				log.error("Error terminating braille viewer tool", exc_info=True)
-		if not shouldShowBrailleViewer:
+	def _onBrailleViewerChangedState(self, stateChange):
+		import brailleViewer
+		log.debug("reef stateChange: {}".format(stateChange))
+		if brailleViewer.BRAILLE_DISPLAY_DESTROYED == stateChange:
 			self.viewerTool = None
-			self.displaySize = 0 if not numCells else numCells
+			self.displaySize = None if not self.display else self.display.numCells
 			self.enabled = bool(self.displaySize)
 		else:
-			log.info("reef: create new viewer tool")
-			if not self.viewerTool:
-				log.info("reef: create new instance")
-				import brailleViewer
-				self.viewerTool = brailleViewer.BrailleViewer(self._onBrailleViewerClosed, numCells)
-			else:
-				self.viewerTool.__init__(self._onBrailleViewerClosed, numCells)
-			import gui
-			gui.mainFrame.onBrailleViewerEnabled(True)
+			self.viewerTool = brailleViewer.getBrailleViewerTool()
+			if self.displaySize and self.displaySize != self.viewerTool.numCells:
+				raise RuntimeError("BrailleViewer and physical display sizes must match")
 			self.displaySize = self.viewerTool.numCells
-			self.enabled = bool(self.displaySize)
+			self.enabled = True
+		log.debug("reef braille enabled: {}".format(self.enabled))
 
 	def _updateDisplay(self):
 		if self._cursorBlinkTimer:

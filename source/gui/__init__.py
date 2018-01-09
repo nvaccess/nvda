@@ -91,6 +91,7 @@ class MainFrame(wx.Frame):
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
+		self.sysTrayIcon = None
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
 		self.sysTrayIcon = SysTrayIcon(self)
 		#: The focus before the last popup or C{None} if unknown.
@@ -114,6 +115,8 @@ class MainFrame(wx.Frame):
 				self.Hide()
 
 	def Destroy(self):
+		import brailleViewer
+		brailleViewer.deregisterCallback(self.onBrailleViewerChangedState)
 		self.sysTrayIcon.Destroy()
 		super(MainFrame, self).Destroy()
 
@@ -272,15 +275,15 @@ class MainFrame(wx.Frame):
 		else:
 			speechViewer.deactivate()
 
-	def onBrailleViewerEnabled(self, isEnabled):
+	def onBrailleViewerChangedState(self, stateChange):
 		# its possible for this to be called after the sysTrayIcon is destroyed if we are exiting NVDA
 		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleBrailleViewer:
-			self.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(isEnabled)
+			import brailleViewer
+			self.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(brailleViewer.BRAILLE_DISPLAY_CREATED==stateChange)
 
 	def onToggleBrailleViewerCommand(self, evt):
-		import braille
-		shouldShow = braille.handler.viewerTool is None
-		braille.handler.showBrailleViewer(shouldShow)
+		import brailleViewer
+		brailleViewer.toggleBrailleViewerTool()
 
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
@@ -407,6 +410,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to toggle Braille Viewer.
 		item=self.menu_tools_toggleBrailleViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Braille viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
+		import brailleViewer
+		brailleViewer.registerCallbackAndCallNow(frame.onBrailleViewerChangedState)
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
