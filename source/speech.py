@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
 
 """High-level functions to speak information.
 """ 
@@ -122,10 +122,13 @@ def speakMessage(text,index=None):
 	speakText(text,index=index,reason=controlTypes.REASON_MESSAGE)
 
 def getCurrentLanguage():
-	try:
-		language=getSynth().language if config.conf['speech']['trustVoiceLanguage'] else None
-	except NotImplementedError:
-		language=None
+	synth=getSynth()
+	language=None
+	if  synth:
+		try:
+			language=synth.language if config.conf['speech']['trustVoiceLanguage'] else None
+		except NotImplementedError:
+			pass
 	if language:
 		language=languageHandler.normalizeLanguage(language)
 	if not language:
@@ -596,7 +599,7 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				tempInfo=oldInfo.copy()
 				tempInfo.setEndPoint(newInfo,"startToEnd")
 				unselectedTextList.append(tempInfo.text)
-	locale=languageHandler.getLanguage()
+	locale=getCurrentLanguage()
 	if speakSelected:
 		if not generalize:
 			for text in selectedTextList:
@@ -993,33 +996,18 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
+	if role==controlTypes.ROLE_CHARTELEMENT:
+		speakRole=False
 	roleText=propertyValues.get('roleText')
 	if speakRole and (roleText or reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
 		textList.append(roleText if roleText else controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
-	states=propertyValues.get('states')
+	states=propertyValues.get('states',set())
 	realStates=propertyValues.get('_states',states)
-	if states is not None:
-		positiveStates=controlTypes.processPositiveStates(role,realStates,reason,states)
-		textList.extend([controlTypes.stateLabels[x] for x in positiveStates])
-	if 'negativeStates' in propertyValues:
-		negativeStates=propertyValues['negativeStates']
-	else:
-		negativeStates=None
-	if negativeStates is not None or (reason != controlTypes.REASON_CHANGE and states is not None):
-		negativeStates=controlTypes.processNegativeStates(role, realStates, reason, negativeStates)
-		if controlTypes.STATE_DROPTARGET in negativeStates:
-			# "not drop target" doesn't make any sense, so use a custom message.
-			# Translators: Reported when drag and drop is finished.
-			# This is only reported for objects which support accessible drag and drop.
-			textList.append(_("done dragging"))
-			negativeStates.discard(controlTypes.STATE_DROPTARGET)
-		# Translators: Indicates that a particular state on an object is negated.
-		# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-		# but this still might be used in some other cases.
-		# %s will be replaced with the negated state.
-		textList.extend([controlTypes.negativeStateLabels.get(x, _("not %s")%controlTypes.stateLabels[x]) for x in negativeStates])
+	negativeStates=propertyValues.get('negativeStates',set())
+	if states or negativeStates:
+		textList.extend(controlTypes.processAndLabelStates(role, realStates, reason, states, negativeStates))
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:
@@ -1510,6 +1498,32 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
 			textList.append(text)
+		verticalAlign=attrs.get("vertical-align")
+		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
+		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
+			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
+			if verticalAlign=="top":
+				# Translators: Reported when text is vertically top-aligned.
+				text=_("vertical align top")
+			elif verticalAlign in("center","middle"):
+				# Translators: Reported when text is vertically middle aligned.
+				text=_("vertical align middle")
+			elif verticalAlign=="bottom":
+				# Translators: Reported when text is vertically bottom-aligned.
+				text=_("vertical align bottom")
+			elif verticalAlign=="baseline":
+				# Translators: Reported when text is vertically aligned on the baseline. 
+				text=_("vertical align baseline")
+			elif verticalAlign=="justify":
+				# Translators: Reported when text is vertically justified.
+				text=_("vertical align justified")
+			elif verticalAlign=="distributed":
+				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
+				text=_("vertical align distributed") 
+			else:
+				# Translators: Reported when text has reverted to default vertical alignment.
+				text=_("vertical align default")
+			textList.append(text)
 	if formatConfig["reportParagraphIndentation"]:
 		indentLabels={
 			'left-indent':(
@@ -1545,32 +1559,6 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 					textList.append(u"%s %s"%(label,newVal))
 				else:
 					textList.append(noVal)
-		verticalAlign=attrs.get("vertical-align")
-		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
-		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
-			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
-			if verticalAlign=="top":
-				# Translators: Reported when text is vertically top-aligned.
-				text=_("vertical align top")
-			elif verticalAlign in("center","middle"):
-				# Translators: Reported when text is vertically middle aligned.
-				text=_("vertical align middle")
-			elif verticalAlign=="bottom":
-				# Translators: Reported when text is vertically bottom-aligned.
-				text=_("vertical align bottom")
-			elif verticalAlign=="baseline":
-				# Translators: Reported when text is vertically aligned on the baseline. 
-				text=_("vertical align baseline")
-			elif verticalAlign=="justify":
-				# Translators: Reported when text is vertically justified.
-				text=_("vertical align justified")
-			elif verticalAlign=="distributed":
-				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
-				text=_("vertical align distributed") 
-			else:
-				# Translators: Reported when text has reverted to default vertical alignment.
-				text=_("vertical align default")
-			textList.append(text)
 	if formatConfig["reportLineSpacing"]:
 		lineSpacing=attrs.get("line-spacing")
 		oldLineSpacing=attrsCache.get("line-spacing") if attrsCache is not None else None

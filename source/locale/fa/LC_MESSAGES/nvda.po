@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-01 00:10+1000\n"
-"PO-Revision-Date: 2017-09-07 10:14+0330\n"
+"POT-Creation-Date: 2017-11-03 00:10+1000\n"
+"PO-Revision-Date: 2017-11-07 19:49+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -800,6 +800,11 @@ msgstr "کرواتی بریلِ 8 نقطه‌ی رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "کرواتی درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "مجارستانی بریلِ 8 نقطه‌ی رایانه"
 
@@ -1020,6 +1025,11 @@ msgstr "بریلِ یونیکُد"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "ویتنامی درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "چینی (هُنگ‌کُنگ, کانتونی)"
 
@@ -1028,9 +1038,12 @@ msgstr "چینی (هُنگ‌کُنگ, کانتونی)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "چینی (تایوان, ماندارین)"
 
+#. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
 msgstr "حالتِ فرمان‌پذیری"
 
+#. Translators: The mode that presents text in a flat representation
+#. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "حالتِ مرور"
@@ -1560,8 +1573,8 @@ msgstr "نوع:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&فیلتر کردن با:"
+msgid "Filt&er by:"
+msgstr "م&حدود کردن به"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1596,8 +1609,8 @@ msgstr "توضیحِ طولانی ندارد"
 msgid "Shows the long description at this position if one is found."
 msgstr "توضیحِ طولانی را در این قسمت در صورتی که یافت شود نشان میدهد."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
+#. Translators: Reported when the user attempts to move to the start or end of a container
+#. (list, table, etc.) but there is no container.
 msgid "Not in a container"
 msgstr "در هیچ دربرگیرنده ای نیستید."
 
@@ -1642,6 +1655,18 @@ msgstr "به ستونِ بَعدیِ جدول میبَرَد"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "به ستونِ قبلیِ جدول میبَرَد."
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "جدول‌های طرحبندی اعلام نمیشوند."
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "جدول‌های طرحبندی اعلام میشوند."
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "گنجانده شدنِ جدول‌های طرحبندی را در حالتِ مرور فعال یا غیرِ فعال میکند."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2689,6 +2714,24 @@ msgstr "خطا در فایلِ نقشه‌ی فرمانهای کلیدی لمس�
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA دارد بارگذاری می‌شود. لطفا شکیبا باشید..."
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "افقی"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "عمودی"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+#, python-format
+msgid "Charging battery. %d percent"
+msgstr "در حالِ شارژ. %d درصد"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+#, python-format
+msgid "Not charging battery. %d percent"
+msgstr "شارژ نمیشود. %d درصد"
+
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA آغاز به کار کرد."
@@ -3346,6 +3389,7 @@ msgid "No navigator object"
 msgstr "پِیمایِشگری وجود ندارد."
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
+#. Translators: The message presented when the status bar is copied to the clipboard.
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s در کلیپ‌برد کپی شد."
@@ -3662,10 +3706,12 @@ msgstr "هیچ خطِّ وضعیتی یافت نشد"
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
-"pressed twice, spells the information"
+"pressed twice, spells the information. If pressed three times, copies the "
+"status bar to the clipboard"
 msgstr ""
 "نوارِ وضعیتِ برنامه‌ی جاری را میخوانَد و پِیمایِشگر را به محل قرارگیری آن میبَرَد. "
-"اگر دو بار فشرده شود، اطلاعات را هِجّی میکند."
+"اگر دو بار فشرده شود، اطلاعات را هِجّی میکند. اگر سه بار فشرده شود، نوارِ وضعیت "
+"را در کلیپ‌برد کپی میکند."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4153,7 +4199,7 @@ msgstr "تعامل با محتوای ریاضی را آغاز میکند."
 
 #. Translators: Reported when Windows 10 OCR is not available.
 msgid "Windows 10 OCR not available"
-msgstr "OCRِ ویندوزِ ۱۰ در دسترس نیست"
+msgstr "نویسه‌خوانِ نوریِ ویندوزِ ۱۰ در دسترس نیست"
 
 #. Translators: Describes a command.
 msgid ""
@@ -5644,14 +5690,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "صدا"
 
-#. Translators: The description of the NVDA service.
-msgid ""
-"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
-"screens."
-msgstr ""
-"به NVDA اجازه میدهد که در صفحه‌ی ورودیِ ویندوز، صفحه‌ی کنترلِ حسابِ کاربر، و دیگر "
-"صفحاتِ محافظت‌شده اجرا شود."
-
 msgid "Type help(object) to get help about object."
 msgstr "برای دریافتِ راهنمایی در موردِ یک شیء، عبارت help(object) را تایپ کنید."
 
@@ -7027,12 +7065,21 @@ msgstr "مرورِ صفحه‌ی نمایش"
 msgid "line scroll"
 msgstr "مرورِ خط‌ها"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "نمایشگرهای بریلِ Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "پنجره‌ی تنظیماتِ راه‌اندازِ Handy Tech را نمایش میدهد."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "ورودیِ بریل فعال شد"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "ورودیِ بریل غیرِ فعال شد"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "ورودیِ بریل را فعال یا غیرِ فعال میکند"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7215,8 +7262,8 @@ msgid "Change settings of document properties"
 msgstr "تنظیماتِ ویژگیهای اسناد را تغییر میدهد."
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "OCRِ ویندوز ۱۰..."
+msgid "&Windows 10 OCR..."
+msgstr "&نویسه‌خوانِ نوریِ ویندوز ۱۰..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7456,7 +7503,7 @@ msgstr ""
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
-msgstr "میخواهید چه &کنید؟"
+msgstr "چه کار می&کنید؟"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Exit"
@@ -7571,11 +7618,23 @@ msgstr ""
 msgid "Add-on Installation"
 msgstr "نصبِ افزونه"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+#, python-brace-format
 msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
+"You are about to install version {newVersion} of {summary}, which appears to "
+"be already installed. Would you still like to update?"
 msgstr ""
-"نسخه ای از این افزونه قبلا نصب شده است. آیا میخواهید آنرا بروزرسانی کنید؟"
+"شما دارید نگارشِ {newVersion} از افزونه‌ی {summary} را نصب میکنید که به نظر "
+"میرسد قبلا نصب شده باشد. آیا همچنان میخواهید به‌روزش کنید؟"
+
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#, python-brace-format
+msgid ""
+"A version of this add-on is already installed. Would you like to update "
+"{summary} version {curVersion} to version {newVersion}?"
+msgstr ""
+"نسخه‌ای از این افزونه قبلا نصب شده است. آیا میخواهید افزونه‌ی {summary} را از "
+"نگارشِ {curVersion} به نگارشِ {newVersion} به‌روز کنید؟"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7979,6 +8038,10 @@ msgstr "انتخابِ پوشه‌ی نسخه‌ی قابلِ حمل"
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
 msgstr "کپیِ تنظیماتِ &کاربرِ فعلی"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+msgid "&Start the new portable copy after creation"
+msgstr "&اجرای نسخه‌ی قابلِ حملِ جدید پس از ایجاد"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -8693,7 +8756,7 @@ msgstr "اعلامِ ت&غییراتِ قالب‌بندی بعد از مکان�
 
 #. Translators: The title of the Windows 10 OCR dialog.
 msgid "Windows 10 OCR"
-msgstr "OCRِ ویندوز ۱۰"
+msgstr "نویسه‌خوانِ نوریِ ویندوز ۱۰"
 
 #. Translators: Label for an option in the Windows 10 OCR dialog.
 msgid "Recognition &language:"
@@ -8708,7 +8771,7 @@ msgid "Whole &word"
 msgstr "همه‌ی &واژه"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "&عبارتِ مُنتظم"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -10417,8 +10480,8 @@ msgstr "&یادداشت‌ها"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&errors"
-msgstr "&خطاها"
+msgid "&Errors"
+msgstr "&خطاهای املایی"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
@@ -10427,6 +10490,16 @@ msgstr "از سِری نمایشگرهای Braille Sense/Braille EDGE/Smart Beet
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "SyncBraille از شرکتِ HIMS"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "پنجره‌ی تنظیماتِ راه‌اندازِ Handy Tech را نمایش میدهد."
+
+#~ msgid ""
+#~ "Allows NVDA to run on the Windows Logon screen, UAC screen and other "
+#~ "secure screens."
+#~ msgstr ""
+#~ "به NVDA اجازه میدهد که در صفحه‌ی ورودیِ ویندوز، صفحه‌ی کنترلِ حسابِ کاربر، و "
+#~ "دیگر صفحاتِ محافظت‌شده اجرا شود."
 
 #~ msgid "-----"
 #~ msgstr "---"

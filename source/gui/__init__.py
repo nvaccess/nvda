@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Zahari Yurukov, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -32,6 +32,7 @@ import speechViewer
 import winUser
 import api
 import guiHelper
+import touchHandler
 import winVersion
 
 try:
@@ -239,6 +240,9 @@ class MainFrame(wx.Frame):
 	def onMouseSettingsCommand(self,evt):
 		self._popupSettingsDialog(MouseSettingsDialog)
 
+	def onTouchInteractionCommand(self,evt):
+		self._popupSettingsDialog(TouchInteractionDialog)
+
 	def onReviewCursorCommand(self,evt):
 		self._popupSettingsDialog(ReviewCursorDialog)
 
@@ -356,6 +360,13 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to open Mouse Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
+		# Touch handler might not be ready, so check if touch interaction is even supported.
+		if touchHandler.touchSupported():
+			# Translators: The label for the menu item to open Touch Interaction dialog.
+			item = menu_preferences.Append(wx.ID_ANY, _("&Touch interaction..."),
+				# Translators: tooltip for touch interaction settings item.
+				_("Change how NVDA interacts with the touchscreen"))
+			self.Bind(wx.EVT_MENU, frame.onTouchInteractionCommand, item)
 		# Translators: The label for the menu item to open Review Cursor dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
@@ -373,7 +384,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
 		if winVersion.isUwpOcrAvailable():
 			# Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-			item = menu_preferences.Append(wx.ID_ANY, _("Windows 10 OCR..."))
+			item = menu_preferences.Append(wx.ID_ANY, _("&Windows 10 OCR..."))
 			self.Bind(wx.EVT_MENU, frame.onUwpOcrCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
@@ -406,14 +417,14 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to toggle Speech Viewer.
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
-		if not globalVars.appArgs.secure:
+		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 			# Translators: The label of a menu item to open the Add-ons Manager.
 			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
-		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
+		if not globalVars.appArgs.secure and not config.isAppX and getattr(sys,'frozen',None):
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
@@ -421,9 +432,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 				# Translators: The label for the menu item to install NVDA on the computer.
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
-		# Translators: The label for the menu item to reload plugins.
-		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
-		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
+		if not config.isAppX:
+			# Translators: The label for the menu item to reload plugins.
+			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
@@ -606,7 +618,7 @@ class WelcomeDialog(wx.Dialog):
 		# Translators: The header for the Welcome dialog when user starts NVDA for the first time. This is in larger,
 		# bold lettering 
 		welcomeTextHeader = wx.StaticText(self, label=_("Welcome to NVDA!"))
-		welcomeTextHeader.SetFont(wx.Font(18, wx.NORMAL, wx.NORMAL, wx.BOLD))
+		welcomeTextHeader.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
 		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		mainSizer.Add(welcomeTextHeader,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
 		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -633,7 +645,7 @@ class WelcomeDialog(wx.Dialog):
 		startAfterLogonText = _("&Automatically start NVDA after I log on to Windows")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
-		if globalVars.appArgs.secure or not config.isInstalledCopy():
+		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		# Translators: The label of a checkbox in the Welcome dialog.
 		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
