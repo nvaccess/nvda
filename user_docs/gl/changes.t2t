@@ -5,15 +5,32 @@
 
  2018.1 =
 
+== Cambios ==
+- reemplazáronse os controladores de pantallas braille HIMS Braille Sense/Braille EDGE/Smart Beetle e Hims Sync por un único controlador. O novo controlador activarase automáticamente para os antigos usuarios do controlador syncBraille. (#7459) 
+- Algunhas teclas, especialmente as teclas de desprazamento, reasignáronse para seguir as convencións usadas polos productos de Hims. Consulta a guía do usuario para máis detalles.
+- Ao se escrebir co teclado en pantalla a través da interación tactil, por defecto agora debes facer dobre tap en cada tecla do mesmo xeito no que activarías calquera outro control.
+ - Para usar o modo de "escritura tactil" existente onde chega con quitar o dedo da tecla para activala, habilita esta opción no novo diálogo Opcións de Interación Tactil que se atopa no menú Preferencias. (#7309)
+ 
+
 == Corrección de Fallos ==
 - As mensaxes explorables como amosar o formato actual ao se premer NVDA+f dúas veces rápidamente, xa non fallan cando o NVDA se instala nunha ruta con caracteres non ASCII. (#7474)
 - O foco agora restáurase unha vez máis correctamente cando se volta ao Spotify dende outra aplicación. (#7689)
 - O NVDA xa non falla ao se actualizar en sistemas co Control de Aceso de Cartafols habilitado (dispoñible na actualización Windows 10 Fall Creators). (#7696)
+- A deteción das teclas de desprazamento nas pantallas Hims Smart Beetle xa non é pouco fiable. (#6086)
+- Unha lixeira mellora no rendemento ao se procesar grandes cantidades de contido en Mozilla Firefox 58 e posterior. (#7719)
+- Evítanse erros mentras se len correos electrónicos que conteñen táboas en Microsoft Outlook (#6827)
+- Os xestos das pantallas braille que emulan as teclas modificadoras do teclado do sistema agora poden combinarse tamén con outras teclas emuladas do teclado do sistema se uno ou máis dos xestos involucrados son específicos do modelo. (#7783)
+- En Mozilla Firefox, o modo exploración agora funciona correctamente en ventás emerxentes creadas por extensións como LastPass e bitwarden. (#7809)
+- O NVDA xa non se bloquea ás veces en cada cambio do foco se o Firefox ou o Chrome deixaron de responder debido a unha conxelación ou un colgue. (#7818)
+- En clientes de twitter como Chicken Nugget, o NVDA xa non ignorará os derradeiros 20 caracteres de tuits con 280 caracteres ao lelos. (#7828)
+- O NVDA agora usa a lingua correcta ao anunciar os símbolos cando se selecione texto. (#7687)
 
 
 == Cambios para Desenvolvedores ==
 - Engadida unha bandeira booleana oculta á seción braille na configuración: "outputPass1Only". (#7301, #7693, #7702) 
  - Esta bandeira está predeterminada a true. Se é false, usaranse as regras liblouis multi pass para a saída braille.
+- Engadiuse un novo diccionario (braille.RENAMED_DRIVERS) para permitir unha transición sen  problemas aos usuarios que utilizan controladores que foran substituidos por outros. (#7459)
+- Actualizado o paquete comtypes a 1.1.3. (#7831)
 
 
 == 2017.4 =

@@ -486,10 +486,9 @@ def getBrailleTextForProperties(**propertyValues):
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
 	if states:
-		positiveStates = controlTypes.processPositiveStates(role, states, controlTypes.REASON_FOCUS, states)
-		textList.extend(positiveStateLabels.get(state, controlTypes.stateLabels[state]) for state in positiveStates)
-		negativeStates = controlTypes.processNegativeStates(role, states, controlTypes.REASON_FOCUS, None)
-		textList.extend(negativeStateLabels.get(state, controlTypes.negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state])) for state in negativeStates)
+		textList.extend(
+			controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states, None, positiveStateLabels, negativeStateLabels)
+		)
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")
@@ -1617,7 +1616,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		# we just replace the data.
 		# This means that if multiple writes occur while an earlier write is still in progress,
 		# we skip all but the last.
-		if not alreadyQueued:
+		if not alreadyQueued and not self.display._awaitingAck:
 			# Queue a call to the background thread.
 			_BgThread.queueApc(_BgThread.executor)
 
@@ -1861,6 +1860,7 @@ class _BgThread:
 		thread.daemon = True
 		thread.start()
 		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
+		cls.ackTimerHandle = winKernel.createWaitableTimer()
 
 	@classmethod
 	def queueApc(cls, func):
@@ -1871,6 +1871,10 @@ class _BgThread:
 		if not cls.thread:
 			return
 		cls.exit = True
+		if not ctypes.windll.kernel32.CancelWaitableTimer(cls.ackTimerHandle):
+			raise ctypes.WinError()
+		winKernel.closeHandle(cls.ackTimerHandle)
+		cls.ackTimerHandle = None
 		# Wake up the thread. It will exit when it sees exit is True.
 		cls.queueApc(cls.executor)
 		cls.thread.join()
@@ -1884,6 +1888,9 @@ class _BgThread:
 		if _BgThread.exit:
 			# func will see this and exit.
 			return
+		if handler.display._awaitingAck:
+			# Do not write cells when we are awaiting an ACK
+			return
 		with _BgThread.queuedWriteLock:
 			data = _BgThread.queuedWrite
 			_BgThread.queuedWrite = None
@@ -1894,6 +1901,22 @@ class _BgThread:
 		except:
 			log.error("Error displaying cells. Disabling display", exc_info=True)
 			handler.setDisplayByName("noBraille", isFallback=True)
+		else:
+			if handler.display.receivesAckPackets:
+				handler.display._awaitingAck = True
+				winKernel.setWaitableTimer(
+					_BgThread.ackTimerHandle,
+					int(handler.display.timeout*2000),
+					0,
+					_BgThread.ackTimeoutResetter
+				)
+
+	@winKernel.PAPCFUNC
+	def ackTimeoutResetter(param):
+		if handler.display.receivesAckPackets and handler.display._awaitingAck:
+			log.debugWarning("Waiting for %s ACK packet timed out"%handler.display.name)
+			handler.display._awaitingAck = False
+			_BgThread.queueApc(_BgThread.executor)
 
 	@classmethod
 	def func(cls):
@@ -1901,6 +1924,11 @@ class _BgThread:
 			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
 			if cls.exit:
 				break
+
+#: Maps old braille display driver names to new drivers that supersede old drivers.
+RENAMED_DRIVERS = {
+	"syncBraille":"hims"
+}
 
 def initialize():
 	global handler
@@ -1912,6 +1940,12 @@ def initialize():
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
+	# #7459: the syncBraille has been dropped in favor of the native hims driver.
+	# Migrate to renamed drivers as smoothly as possible.
+	oldDriverName = config.conf["braille"]["display"]
+	newDriverName = RENAMED_DRIVERS.get(oldDriverName)
+	if newDriverName:
+		config.conf["braille"]["display"] = newDriverName
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
 	# Update the display to the current focus/review position.
@@ -1960,6 +1994,22 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	#: This is also required to use the L{hwIo} module.
 	#: @type: bool
 	isThreadSafe = False
+	#: Whether displays for this driver return acknowledgements for sent packets.
+	#: L{_handleAck} should be called when an ACK is received.
+	#: Note that thread safety is required for the generic implementation to function properly.
+	#: If a display is not thread safe, a driver should manually implement ACK processing.
+	#: @type: bool
+	receivesAckPackets = False
+	#: Whether this driver is awaiting an Ack for a connected display.
+	#: This is set to C{True} after displaying cells when L{receivesAckPackets} is True,
+	#: and set to C{False} by L{_handleAck} or when C{timeout} has elapsed.
+	#: This is for internal use by NVDA core code only and shouldn't be touched by a driver itself.
+	_awaitingAck = False
+	#: Maximum timeout to use for communication with a device (in seconds).
+	#: This can be used for serial connections.
+	#: Furthermore, it is used by L{_BgThread} to stop waiting for missed acknowledgement packets.
+	#: @type: float
+	timeout = 0.2
 
 	@classmethod
 	def check(cls):
@@ -2019,9 +2069,11 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	gestureMap = None
 
 	@classmethod
-	def _getModifierGestures(cls):
+	def _getModifierGestures(cls, model=None):
 		"""Retrieves modifier gestures from this display driver's L{gestureMap}
 		that are bound to modifier only keyboard emulate scripts.
+		@param model: the optional braille display model for which modifier gestures should also be included.
+		@type model: str; C{None} if model specific gestures should not be included
 		@return: the ids of the display keys and the associated generalised modifier names
 		@rtype: generator of (set, set)
 		"""
@@ -2030,12 +2082,26 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		globalMaps = [inputCore.manager.userGestureMap]
 		if cls.gestureMap:
 			globalMaps.append(cls.gestureMap)
+		prefixes=["br({source})".format(source=cls.name),]
+		if model:
+			prefixes.insert(0,"br({source}.{model})".format(source=cls.name, model=model))
 		for globalMap in globalMaps:
 			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
-				if gesture.startswith("br({source})".format(source=cls.name)) and scriptCls is globalCommands.GlobalCommands and scriptName.startswith("kb"):
+				if (any(gesture.startswith(prefix.lower()) for prefix in prefixes)
+					and scriptCls is globalCommands.GlobalCommands
+					and scriptName.startswith("kb")):
 					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
 					if emuGesture.isModifier:
 						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)
+
+	def _handleAck(self):
+		"""Base implementation to handle acknowledgement packets."""
+		if not self.receivesAckPackets:
+			raise NotImplementedError("This display driver does not support ACK packet handling")
+		if not ctypes.windll.kernel32.CancelWaitableTimer(_BgThread.ackTimerHandle):
+			raise ctypes.WinError()
+		self._awaitingAck = False
+		_BgThread.queueApc(_BgThread.executor)
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
@@ -2081,7 +2147,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
 		if self.model:
 			# Model based ids should take priority.
-			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id))
+			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.id))
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -2114,7 +2180,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		# Combining modifiers with braille input (#7306) is not yet supported.
 		gestureKeys = set(self.keyNames)
 		gestureModifiers = set()
-		for keys, modifiers in handler.display._getModifierGestures():
+		for keys, modifiers in handler.display._getModifierGestures(self.model):
 			if keys<gestureKeys:
 				gestureModifiers |= modifiers
 				gestureKeys -= keys
@@ -2122,11 +2188,15 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			# No modifier assignments found in this gesture.
 			return None
 		# Find a script for L{gestureKeys}.
-		fakeGestureId = u"br({source}):{id}".format(source=self.source, id="+".join(gestureKeys))
+		id = "+".join(gestureKeys)
+		fakeGestureIds = [u"br({source}):{id}".format(source=self.source, id=id),]
+		if self.model:
+			fakeGestureIds.insert(0,u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
 		scriptNames = []
 		globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
 		for globalMap in globalMaps:
-			scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId) if scriptName.startswith("kb"))
+			for fakeGestureId in fakeGestureIds:
+				scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId.lower()) if scriptName.startswith("kb"))
 		if not scriptNames:
 			# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
 			return None

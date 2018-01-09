@@ -7,14 +7,14 @@
 = Índice =[toc]
 %%toc
 
-+ Introdución +
++ Introdución +[Introduction]
 ¡Benvido ao NVDA!
 
 NonVisual Desktop Access (NVDA) é un lector de pantalla libre e de código aberto  para o Sistema Operativo  Microsoft Windows.
 Proporcionando retroalimentación a través de voz sintética e Braille, posibilita á xente cega ou deficiente visual aceder a computadores executando o Windows por un custo non maior ao dunha persoa vidente.
 NVDA está desenvolvido por [NV Access https://www.nvaccess.org/], con  colaboracións da comunidade.
 
-++ Características Xerais ++
+++ Características Xerais ++[GeneralFeatures]
 Proporcionando un apoio de voz sintética, NVDA permite ás persoas cegas e deficientes visuais acceder e interactuar co Sistema Operativo Windows e moitas aplicacións de terceiros. 
 
 O máis subliñable inclue: 
@@ -32,25 +32,25 @@ O máis subliñable inclue:
 - Soporte para o símbolo do sistema de Windows e aplicacións de consola
 -
 
-++ Internacionalización ++
+++ Internacionalización ++[Internationalization]
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
 Actualmente NVDA foi traducido a 51 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Kannada, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
-++ Soporte da Síntesis de Voz ++
+++ Soporte da Síntesis de Voz ++[SpeechSynthesizerSupport]
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ao usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
 
 NVDA ven integrado co [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizador de voz multilingüe, libre, de código aberto.
 
 Pódese atopar información acerca doutros sintetizadores de voz que soporta o NVDA na sección [Sintetizadores de Voz soportados #SupportedSpeechSynths].
 
-++ Soporte Braille ++
+++ Soporte Braille ++[BrailleSupport]
 Para usuarios que posúan unha pantalla de braille efímero, NVDA pode amosar a súa información en braille. 
 Tamén se soporta tanto a entrada de braille sin contraer comacontraída a través dun teclado braille.
 Por favor consulta a sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para información acerca das liñas braille soportadas.
 
 NVDA soporta códigos braille para moitas linguas,  incluíndo códigos braille contraído, non contraído e computerizado.
 
-++ Licencia e Copyright ++
+++ Licencia e Copyright ++[LicenseAndCopyright]
 NVDA é copyright NVDA_COPYRIGHT_YEARS polos colaboradores do NVDA.
 
 NVDA está cuberto pola GNU General Public License (Versión 2). 
@@ -58,7 +58,7 @@ es libre para compartir ou modificar este programa de calquer xeito que queras a
 Esto aplícase ao orixinal e ás copias modificadas do programa, máis calquer software que utilice código tomado dende este programa. 
 Para máis detalles, podes [ver a licencia completa.  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
-+ Requerimentos do Sistema +
++ Requerimentos do Sistema +[SystemRequirements]
 - Sistemas operativos: todas as edicións de 32 e 64 bits do Windows 7, Windows 8, Windows 8.1, Windows 10 e todos os sistemas operativos servidor comezando dende o Windows Server 2008 R2..
  - Para o Windows 7, NVDA require do Service Pack 1 ou superior.
  - Para o Windows Server 2008 R2, NVDA require do Service Pack 1 ou superior.
@@ -67,7 +67,7 @@ Para máis detalles, podes [ver a licencia completa.  http://www.gnu.org/license
 - Aproximadamente 90 MB de espazo de almacenamento.
 -
 
-+ Obtendo e Instalando NVDA +
++ Obtendo e Instalando NVDA +[GettingAndSettingUpNVDA]
 Se aínda non tes unha copia do NVDA, podes descargala de [www.nvaccess.org NVDA_URL].
 
 Vai á sección download e atoparás unha liga para descargar a derradeira versión do NVDA.
@@ -86,7 +86,7 @@ Executar a versión portable directamente dende medios de só lectura non está 
   
 Utilizar a copia temporal do NVDA é tamén unha opción, ex.: con propósitos de demostración, posto que iniciar NVDA de este xeito cada vez pode chegar a ser moi incómodo.
 
-++ Restriccións da Copia Portable e Temporal ++
+++ Restriccións da Copia Portable e Temporal ++[PortableAndTemporaryCopyRestrictions]
 Ademáis da incapacidade de iniciarse automáticamente durante e/ou despois da autentificación, as copias portable e temporal do NVDA tamén teñen as seguintes restriccións:
 - A incapacidade para interactuar con aplicacións que se executen con privilexios de administrador, ao menos que, por suposto, o mesmo NVDA tamén fora executado con estos privilexios (non é recomendable).
 - A incapacidade de ler as pantallas do Control de Contas do Usuario (UAC) cando tente iniciar unha aplicación con privilexios de administrador.
@@ -95,7 +95,7 @@ Ademáis da incapacidade de iniciarse automáticamente durante e/ou despois da a
 - Windows 8 e posterior: a atenuación de audio non se soporta.
 -
 
-++ Instalando NVDA ++
+++ Instalando NVDA ++[InstallingNVDA]
 Se se instala NVDA directamente dende o paquete descargado do NVDA, preme o botón Instalar NVDA.
 Se xa pechaches este diálogo, ou queres instalar dende unha copia portable, por favor escolle o elemento de menú Instalar NVDA que se atopa baixo Ferramentas no menú NVDA.
 
@@ -105,20 +105,20 @@ Hai tamén algunhas opcións neste diálogo que se explican máis abaixo.
 Unha vez se completara a instalación, aparecerá una mensaxe dicíndoche que foi satisfactoria.
 Premendo Aceptar neste ponto reiniciarase a copia nova instalada do NVDA.
 
-+++ Iniciar na Autentificación de Windows +++
++++ Iniciar na Autentificación de Windows +++[StartAtWindowsLogon]
 Esta opción permíteche escoller se NVDA debería arrancar automáticamente ou non mentres está na ventá de autentificación de Windows, antes de introducir unha clave.
 Esto tamén inclúe ao control do UAC e outras pantallas seguras.
 
-+++ Crear Atallos do Escritorio (ctrl+alt+n) +++
++++ Crear Atallos do Escritorio (ctrl+alt+n) +++[CreateDesktopShortcut]
 Esta opción permíteche escoller se NVDA debería crear ou non un atallo no escritorio para comezar o NVDA. 
 Se se creou, a este atallo tamén se lle asignará unha tecla de atallo control+alt+n permitíndoche arrincar ao NVDA en calquera ocasión con esta combinación de teclas.
 
-+++ Copiar Configuración Portable da Actual Conta do Usuario +++
++++ Copiar Configuración Portable da Actual Conta do Usuario +++[CopyPortableConfigurationToCurrentUserAccount]
 Esta opción permíteche escoller se NVDA debería copiar ou non a configuración do usuario do actual NVDA en execución na configuración para o usuario actualmente autentificado, para a copia instalada do NVDA. 
 Esto non copiará a configuración para calquera outro usuario deste sistema nin para a configuración do sistema para se utilizar na autentificación de Windows e outras pantallas seguras.
 Esta opción só está dispoñible cando se instala dende unha copia portable, non cando se instala directamente dende o paquete Lanzador descargado.
 
-++ Creando unha Copia Portable ++
+++ Creando unha Copia Portable ++[CreatingAPortableCopy]
 Se se crea unha copia portable directamente dende o paquete descargado do NVDA, só preme o botón Crear Copia Portable.
 Se xa pechaches este diálogo ou estás a executar unha copia instalada do NVDA, escolle o elemento de menú Crear Copia Portable que se atopa baixo Ferramentas no menú NVDA.
 
@@ -130,9 +130,9 @@ Premendo Continuar crearás a copia portable.
 Unha vez a creación estea compretada, aparecerá unha mensaxe dicíndoche que foi exitosa.
 Preme Aceptar para pechar este diálogo.
 
-+ Comezando co NVDA +
++ Comezando co NVDA +[GettingStartedWithNVDA]
 
-++ Lanzando o NVDA ++
+++ Lanzando o NVDA ++[LaunchingNVDA]
 Se instalaches o NVDA co instalador, entón iniciar NVDA é tan sinxelo coma ou premer control+alt+n, ou elexir NVDA dende o menú NVDA no Menú Inicio, submenú Programas. 
 Adicionalmente podes teclear NVDA no diálogo Executar e premer Intro. 
 Tamén podes pasar algunhas [opcións de liña de ordes #CommandLineOptions] as que che permiten reiniciar o NVDA (-r), saír (-q), deshabilitar complementos (--disable-addons), etc.
@@ -150,6 +150,7 @@ Se está tardando un tempo extra longo, NVDA debería dicir "Cargando NVDA. Agar
 Se non escoitas nada de esto, ou escoitas o son de erro de Windows, ou un grupo descendente de tons, entón esto significa que o NVDA ten un erro, e posiblemente necesitarás informar dun fallo ós desenvolvedores. 
 Por favor investiga no sitio web de NVDA para saber como facer esto.
 
++++ Diálogo de Benvida +++[WelcomeDialog]
 Cando o NVDA arrinque por primeira vez, daráseche a benvida mediante unha caixa de diálogo que che proporciona algunha información básica acerca da tecla modificadora de NVDA e do menú de NVDA. 
 (Consulta por favor seccións subseguintes acerca de estos temas). 
 A caixa de diálogo tamén contén unha caixa combinada e tres caixas de verificación. 
@@ -158,9 +159,9 @@ A primeira caixa de verificación permíteche controlar se NVDA debería utiliza
 A segunda especifica se NVDA debería arrincar automáticamente despois de autentificarte en Windows e só está dispoñible para copias instaladas do NVDA.
 A terceira permíteche controlar se esta caixa de benvida debería aparecer cada vez que o NVDA arranque.
 
-++ Acerca de Ordes de teclado de NVDA ++
+++ Acerca de Ordes de teclado de NVDA ++[AboutNVDAKeyboardCommands]
 
-+++ A Tecla Modificadora NVDA +++ 
++++ A Tecla Modificadora NVDA +++[TheNVDAModifierKey]
 A maioría das ordes específicas de teclado do NVDA consisten normalmente na pulsación da tecla modificadora de NVDA, xunto cunha ou máis teclas. 
 Unha notable excepción desto son as ordes de revisión de texto para a distribución de teclado de escritorio que só utiliza as teclas do teclado numérico por si mesmas, pero hai algunhas outras excepcións tamén.. 
 
@@ -169,7 +170,7 @@ De xeito predeterminado tanto o insert do teclado numérico como o do teclado ex
 
 Se desexas facer que unha das teclas modificadoras do NVDA se comporte como normalmente o faría sen estar NVDA en funcionamento (por exemplo desexas activar BloqMayus cando tes configurada BloqMayus para que sexa unha tecla modificadora do NVDA) podes premer a tecla dúas veces en sucesión rápida.
 
-+++ Distribucións de Teclado +++
++++ Distribucións de Teclado +++[KeyboardLayouts]
 Actualmente NVDA ven con dous conxuntos de  teclas de ordes coñecidos como distribucións. A distribución sobremesa e a distribución portátil.
 De xeito predeterminado NVDA configúrase para utilizar a distribución de sobremesa, aíndaque podes cambiar á distribución de portátiles nas Opcións de Teclado, que se atopan en Preferencias no menú NVDA.
 	
@@ -177,17 +178,17 @@ A distribución sobremesa fai un uso amplo do teclado numérico (co bloqueo num�
 Aíndaque a maioría dos portátiles non teñen un teclado numérico físico, algúns portátiles poden emular un mantendo pulsada a tecla FN e premendo letras e números na man dereita do teclado (7 8 9 u i o j k l etc).
 Se o teu portátil non pode facer esto, ou non che permite desactivar o bloqueo numérico, poderás querer cambiar á distribución Portátil no seu lugar.
 
-++ Xestos táctiles do NVDA ++
-Se estás a executar o NVDA nun dispositivo cunha pantalla tactil e está executando Windows 8 ou superior, tamén podes controlar ao NVDA directamente a través da pantalla tactil.
+++ Xestos tactiles do NVDA ++[NVDATouchGestures]
+Se estás a executar o NVDA nun dispositivo cunha pantalla tactil e está executando Windows 8 ou superior, tamén podes controlar ao NVDA directamente a través de ordes tactiles.
 Mentres NVDA estea en execución, toda a entrada tactil irá directamente ao NVDA. 
 Polo tanto, as accións que poidan efectuarse normalmente sen o NVDA non funcionarán.
 
-+++ Explorando a Pantalla +++
++++ Explorando a Pantalla +++[ExploringTheScreen]
 A maioría das accións básicas que podes realizar ca pantalla tactil son anunciar o control ou o texto en calquera ponto na pantalla.
 Para facer esto, pon un dedo en calqera lugar sobre da pantalla.
 Tamén podes manter o teu dedo sobre da pantalla e movelo arredor para ler outros controis e texto sobre o que vaias movéndoo.
 
-+++ Xestos Tactiles +++
++++ Xestos Tactiles +++[TouchGestures]
 Cando se describan as ordes do NVDA de agora en diante nesta guía do usuario, poderán listar un xesto tactil que se pode utilizar para activar esa orde ca pantalla tactil.
 Seguidamente van algunhas instruccións sobre cómo levar a cabo varios xestos tactiles.
 
@@ -210,7 +211,7 @@ Hai 4 xestos de deslizamento posibles dependendo da direción: deslizar á esque
 Ao igual que cos toques, pódese utilizar máis dun dedo para realizar o xesto.
 Polo tanto, xestos como deslizar dous dedos arriba ou deslizar 4 dedos á esquerda son todos posibles.
 
-+++ Modos Tactiles +++
++++ Modos Tactiles +++[TouchModes]
 Ao igual como hai moitas ordes do NVDA tamén hai outros tantos xestos tactiles, NVDA ten varios modos tactiles entre os que podes cambiar, que fan dispoñibles certos subconxuntos de ordes.
 Os dous modos que existen polo de agora son modo texto e modo obxecto. 
 Certas ordes do NVDA amosadas neste documento poderán ter un modo tactil amosado entre paréntesis despois do xesto tactil.
@@ -221,7 +222,16 @@ Se a orde non ten un modo asociado con ela, funcionará en calquera modo.
 Para conmutar entre os dous modos, realiza un toque con 3 dedos.
 %kc:endInclude
 
-++ Modo de Axuda de Entrada ++
++++ Teclado Tactil +++[TouchKeyboard]
+O teclado tactil úsase para introducir texto e ordes dende unha pantalla tactil.
+Cando se enfoque un campo de edición, podes despregar o teclado tactil tocando dúas veces sobre o icono do teclado tactil na parte inferior da pantalla.
+Para tablets como a Microsoft Surface Pro, o teclado tactil sempre está dispoñible cando se desbloquea o teclado.
+Para pechar o teclado tactil, toca dúas veces o icono do teclado tactil ou sae fora do campo de edición.
+
+Mentres o teclado tactil estea activo, para localizar as teclas no teclado tactil, move o dedo cara o lugar onde se atope o teclado tactil (normalmente na parte inferior da pantalla), e, entón, desprázate polo teclado cun dedo.
+Cando atopes a tecla que desexes premer, toca dúas veces a tecla ou levanta o dedo, segundo as opcións escollidas dende o [diálogo Opcións de Interación Tactil #TouchInteraction].
+
+++ Modo de Axuda de Entrada ++[InputHelpMode]
 Moitas ordes de teclado e xestos menciónanse ao longo do resto desta guía do usuario, pero unha maneira sinxela de explorar todas as diferentes ordes é activar a axuda de entrada.
 
 Para activar a axuda de entrada, preme NVDA+1.
@@ -229,7 +239,7 @@ Para desactivala, preme NVDA+1 de novo.
 Mentres esteas na axuda de entrada, premendo calquera tecla ou realizando calquer xesto tactil anunciarase a acción e describirase que fai (se é que fai algo).
 As ordes actuais non se executarán mentres se esté no modo de axuda de entrada.
 
-++ O Menú NVDA ++
+++ O Menú NVDA ++[TheNVDAMenu]
 O menú NVDA permíteche controlar as opcións do NVDA, aceder á axuda, gardar/voltar á túa configuración, Modificar os diccionarios da fala, ler o ficheiro do rexistro, e saír do NVDA.
 
 Para despregar o menú NVDA dende calquer lugar do Windows mentres NVDA se está a executar, preme NVDA+n no teclado ou realiza un doble toque con 2 dedos na pantalla tactil.
@@ -237,7 +247,7 @@ Tamén podes despregar o menú NVDA a través da bandexa de sistema de windows.
 Ou facendo clic co botón dereito sobre o icono NVDA atopado na bandexa de sistema, ou accedendo á bandexa de sistema premendo a tecla co logo de windows+B, frecha abaixo ata o icono de  NVDA e premendo a tecla aplicacións atopada seguidamente á tecla de control da dereita na maioría dos teclados. 
 Cando apareza o menú, podes utilizar as teclas de cursor para navegar polo menú, e a tecla intro para activar un elemento. 
 
-++ Ordes Básicas do NVDA ++
+++ Ordes Básicas do NVDA ++[BasicNVDACommands]
 %kc:beginInclude
 || Nome | Tecla escritorio | Tecla portátil | Tactil | Descripción |
 | Deter voz | Control |  control | toque con 2 dedos | Detén a voz instantáneamente |
@@ -250,7 +260,7 @@ Cando apareza o menú, podes utilizar as teclas de cursor para navegar polo men�
 | activar e desactivar modo aplicación durminte | NVDA+shift+s | NVDA+shift+z | non | O modo durminte desactiva todas as ordes de NVDA e a saída de voz/braille para a aplicación actual. Esto é máis útil en aplicacións que proporcionan a súa propria voz ou características de lectura de pantalla. Preme esta orde novamente para desactivar o modo durminte. |
 %kc:endInclude
 
-++ Anunciando Información do Sistema ++
+++ Anunciando Información do Sistema ++[ReportingSystemInformation]
 %kc:beginInclude
 || Nome | tecla | Descripción |
 | Anunciar data/hora | NVDA+f12 | Preméndoa  unha vez anuncia a hora actual, preméndoa dúas veces anuncia a data. |
@@ -258,7 +268,7 @@ Cando apareza o menú, podes utilizar as teclas de cursor para navegar polo men�
 | Anunciar o texto no portapapeis | NVDA+c | Anuncia o Texto no portapapeis se hai algún. |
 %kc:endInclude
 
-+ Navegando co NVDA +
++ Navegando co NVDA +[NavigatingWithNVDA]
 NVDA permíteche explorar e navegar o sistema de varios xeitos, incluíndo interacción normal e revisión.
 
 ++ Obxectos ++[Objects]
@@ -424,7 +434,7 @@ Esto é semellante á funcionalidade de revisión de pantalla ou cursor do rato 
 
  Ten en conta que nalgunhas aplicacións modernas, NVDA podería non ver algún ou todo o texto dispoñible na pantalla, debido ao uso das recentes tecnoloxías de dibuxo na pantalla que son imposibles de soportar nestos intres.
 
-++ Navegando co Rato ++
+++ Navegando co Rato ++[NavigatingWithTheMouse]
 Cando moves o rato, NVDA informa de xeito predeterminado do texto que está directamente baixo o punteiro do mesmo, segundo se mova sobre el. 
 Onde estea soportado, NVDA lerá o valor dun parágrafo de texto, aíndaque algúns controis só poderán lerse por liñas.
 
@@ -479,7 +489,7 @@ Ademáis, podes forzar manualmente o modo foco, despois permanecerá efectivo at
 %kc:endInclude
 
 
-++ Navegación con unha Soa Letra ++
+++ Navegación con unha Soa Letra ++[SingleLetterNavigation]
 Mentres se está en modo revisión, para unha navegación máis rápida NVDA tamén proporciona teclas dun so caracter para saltar cara certos campos no documento.
 Ten en conta que non todas estas ordes se soportan en cada tipo de documento.
 
@@ -521,7 +531,7 @@ Se queres utilizar éstas aínda poderás usar as teclas de cursor para ler en m
 Para activar ou desactivar a navegación cunha soa letra para o documento actual, preme NVDA+shift+espazo.
 %kc:endInclude
 
-++ A Lista de Elementos ++
+++ A Lista de Elementos ++[ElementsList]
 A lista de elementos proporciona acceso a unha lista de varios tipos de elementos no documento segundo sexa apropriado para a aplicación.
 Por exemplo, nos navegadores web, a lista de elementos pode listar ligas, cabeceiras, campos de formulario, botóns ou pontos de referencia.
 Os botóns de opción permítenche cambiar entre os diferentes tipos de elementos.
@@ -532,7 +542,7 @@ Unha vez escollas un elemento, podes utilizar os botóns proporcionados no diál
 | Lista de elementos do Modo Navegación | NVDA+f7 | Lista  varios tipos de elementos no documento actual |
 %kc:endInclude
 
-++ Obxectos Empotrados ++
+++ Obxectos Empotrados ++[ImbeddedObjects]
 As páxinas poden incluir contido enriquecido utilizando tecnoloxías como Adobe Flash, Oracle Java e HTML5, así coma aplicacións e diálogos.
 onde estas se atopen nun modo virtual, NVDA anunciará "obxecto integrado", "aplicación" ou "diálogo", respectivamente.
 Podes moverte rápidamente cara eles usando as teclas de navegación dunha soa tecla de obxectos integrados o e shift+o.
@@ -561,7 +571,7 @@ Ten en conta que esto non é un estándar official aínda, así que non hai actu
 Ao ler un documento, NVDA falará calquera contido matemático soportado onde apareza.
 Se estás a utilizar unha pantalla braille, tamén se amosará en braille.
 
-++ Navegación Interactiva ++
+++ Navegación Interactiva ++[InteractiveNavigation]
 Se estás traballando principalmente con voz, na maioría dos casos, probablemente desexarás examinar a expresión en segmentos máis pequenos, en lugar de escoitar a expresión enteira dunha vez.
 
 Se estás en modo exploración, podes facer esto movendo o cursor ao contido matemático e ppremendo intro.
@@ -583,14 +593,14 @@ Por favor consulta a [documentación de MathPlayer acerca de ordes de navegació
 
 Cando desexes voltar ao documento, simplemente preme a tecla escape.
 
-+ Braille +
++ Braille +[Braille]
 Se tes unha pantalla braille, NVDA pode amosar información en braille.
 Se a túa pantalla braille ten un teclado tipo Perkins, tamén podes introducir braille contraído ou sen contraer.
 
 Por favor consulta a seción [Pantallas Braille soportadas  #SupportedBrailleDisplays] para información  acerca das pantallas braille soportadas.
 Podes configurar o braille usando o  [diálogo Opcións de Braille #BrailleSettings].
 
-++ Abreviaturas de tipos de Control, estado e pontos de referencia ++
+++ Abreviaturas de tipos de Control, estado e pontos de referencia ++[BrailleAbbreviations]
 Co fin de ter a maior cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado así como os pontos de referencia.
 
 || Abreviatura | Tipo de Control |
@@ -678,9 +688,9 @@ Finalmente, definíronse as seguintes abreviaturas para potos de referencia:
 | busq | procura |
 | rxn | rexión |
 
-++ Entrada Braille ++
+++ Entrada Braille ++[BrailleInput]
 NVDA soporta a entrada de braille  contraído e sen contraer a través dun teclado braille.
-Podes selecionar a táboa de transcripción usada para transcribir braille no texto usando a opción [Táboa de entrada #BrailleInputTable] no diálogo Opcións de Braille.
+Podes selecionar a táboa de transcripción usada para transcribir braille no texto usando a opción [Táboa de entrada #BrailleSettingsInputTable] ] no diálogo Opcións de Braille.
 
 Cando se estea usando braille sen contraer, o texto insértase tan pronto como se introduce.
 Cando se estea usando braille contraído, o texto insértase ao premer espazo ou intro ao final dunha palabra.
@@ -693,7 +703,7 @@ O ponto 8 transcribe calquera entrada braille e preme a tecla intro.
 Premendo os pontos 7 + 8 transcribe calquera entrada braille, pero sen engadir un espazo ou premendo intro.
 %kc:endInclude
 
-+ Recoñecemento de Contidos +
++ Recoñecemento de Contidos +[ContentRecognition]
 Cando os autores non proporcionan suficiente información para que un usuario de lector de pantalla determine o contido de algo, poden usarse varias ferramentas para tentar recoñecer o contido dende unha imaxe.
 O NVDA soporta a funcionalidade de recoñecemento óptico de caracteres (OCR) integrada en Windows 10 para recoñecer texto dende imaxes.
 Poden proporcionarse recoñecedores de contido adicionais en complementos do NVDA.
@@ -718,12 +728,12 @@ Poden instalarse linguas adicionais abrindo o menú Inicio, escollendo Configura
 Para recoñecer o texto no actual navegador de obxectos usando o OCR do Windows 10, preme NVDA+r.
 %kc:endInclude
 
-+ Características Específicas para Aplicación +
++ Características Específicas para Aplicación +[ApplicationSpecificFeatures]
 NVDA proporciona as súas proprias características extra para algunhas aplicacións para facer máis sinxelas certas tarefas ou para proporcionar acceso a funcionalidade que de outra maneira non está accesible para os usuarios do lector de pantalla.
 
-++ Microsoft Word ++
+++ Microsoft Word ++[MicrosoftWord]
 
-+++ Lectura Automática de Cabeceiras de Columna e Fila +++
++++ Lectura Automática de Cabeceiras de Columna e Fila +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA poderá anunciar automáticamente  a cabeceira apropriada de fila e columna ao navegar a través de táboas no Microsoft Word.
 Esto require primeiro que a opción Anunciar  Cabeceiras de Filas e columnas no diálogo de NVDA Formateado de Documentos estea activada.
 En segundo lugar, NVDA necesita saber que fila ou columna contén a cabeceira en calquera táboa dada.
@@ -736,28 +746,28 @@ Despois de moverse á primeira celda na columna ou fila que conteña as cabeceir
 Estas opcións gardaranse no documento como marcadores, compatibles con outros lectores de pantalla coma Jaws.
 Esto significa que outros usuarios de lectores de pantalla que abran este documento máis tarde terán automáticamente as cabeceiras de fila e columna xa postas. 
 
-+++ Modo Exploración en Microsoft Word +++
++++ Modo Exploración en Microsoft Word +++[BrowseModeInMicrosoftWord]
 De xeito similar á web, o modo exploración pode usarse en Microsoft Word para permitirche utilizar características coma navegación rápida e a Lista de Elementos.
 %kc:beginInclude
 Para activar ou desactivar o modo Exploración en Microsoft Word, preme NVDA+espazo.
 %kc:endInclude
 Para información adicional acerca do modo Exploración e a Navegación Rápida, consulta a [sección Modo Exploración #BrowseMode].
 
-++++ A Lista de Elementos ++++
+++++ A Lista de Elementos ++++[WordElementsList]
 %kc:beginInclude
 Mentres se estea no modo Exploración en Microsoft Word, podes acceder á Lista de Elementos premendo NVDA+f7.
 %kc:endInclude
 A Lista de Elementos pode listar cabeceiras, ligas, anotacións (as que inclúen comentarios e seguemento de cambios) e erros (actualmente limitados a erros de ortografía).
 
-+++ Anunciado de Comentarios +++
++++ Anunciado de Comentarios +++[WordReportingComments]
 %kc:beginInclude
 Para anunciar calquera comentario na posición actual do cursor de edición, preme NVDA+alt+c.
 %kc:endInclude
 Todos os comentarios para o documento con outro seguemento de cambios tamén poden listarse na Lista de Elementos do NVDA ao seleccionar Anotacións segundo se teclea.
  
-++ Microsoft Excel ++
+++ Microsoft Excel ++[MicrosoftExcel]
 
-+++ Lectura Automática de Cabeceira de Columna e fila +++
++++ Lectura Automática de Cabeceira de Columna e fila +++[ExcelAutomaticColumnAndRowHeaderReading]
 NVDA poderá anunciar automáticamente as cabeceiras apropriadas de fila e columna ao navegar a través das follas de cálculo de Excel.
 Primeiramente esto require que a opción Anunciar Cabeceiras de Fila e Columna de táboa no diálogo de NVDA Formateado de documentos estea activado.
 En segundo lugar, NVDA necesita saber que fila ou columna contén as cabeceiras.
@@ -770,7 +780,7 @@ Despois de moverse á primeira celda na columna ou fila que conteña as cabeceir
 Estas opcións gardaranse na folla de cálculo coma rangos de nomes definidos, compatibles con outros lectores de pantalla coma Jaws.
 Esto significa que outros usuarios de lectores de pantalla que abran esta folla de cálculo máis tarde terán automáticamente as cabeceiras de fila e columna xa postas. 
 
-+++ A Lista de Elementos +++
++++ A Lista de Elementos +++[ExcelElementsList]
 De xeito similar á web, NVDA ten unha Lista de Elementos para Microsoft Excel, que che permite listar e aceder a varios tipos diferentes de información.
 %kc:beginInclude
 Para aceder á Lista de Elementos en Excel, preme NVDA+f7.
@@ -792,31 +802,31 @@ Para cada campo de formulario, a Lista de Elementos amosa o texto alternativo do
 Ao selecionar un campo de formulario e ao premer intro ou o botón Mover móveste a ese campo en modo exploración.
 -
 
-+++ Anunciando Comentarios +++
++++ Anunciando Comentarios +++[ExcelReportingComments]
 %kc:beginInclude
 Para anunciar calquera comentario para a celda actualmente enfocada, preme NVDA+alt+c.
 %kc:endInclude
 Todos os comentarios para a folla de cálculo tamén poden listarse na Lista de Elementos do NVDA.
 
-+++ Lendo Celdas Protexidas +++
++++ Lendo Celdas Protexidas +++[ExcelReadingProtectedCells]
 Se un libro de traballo foi protexido, podería non seren posible mover o foco a celdas en particular que foran bloqueadas para edición.
 %kc:beginInclude
 Para permitir o movemento a celdas bloqueadas, cambia a modo Exploración premendo NVDA+espazo, e entón usa as ordes estándar de movemento de Excel  como as teclas de cursor para moverte por todas as celdas na folla de cálculo actual.
 %kc:endInclude
 
-+++ Campos de Formulario +++
++++ Campos de Formulario +++[ExcelFormFields]
 As follas de cálculo de Excel poden incluir campos de formulario.
 Podes aceder a éstos usando a Lista de Elementos ou as teclas de navegación cunha soa letra para campos de formulario f e shift+f.
 Unha vez te movas a un campo de formulario en modo exploración, podes premer intro ou espazo para activalo ou cambiar a modo foco para poder interactuar con el, dependendo do control.
 Para información adicional acerca do modo exploración e da navegación cunha soa tecla, consulta a [sección Modo Exploración #BrowseMode].
 
-++ Microsoft PowerPoint ++
+++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | conmutar lectura de notas do orador | control+shift+s | Cando se está nunha presentación en execución, esta orde conmutará entre as notas do orador para a diapositiva e o contido da diapositiva. Esto só afecta ao que le NVDA, non ao que se amosa na pantalla. | 
 %kc:endInclude
 
-++ foobar2000 ++
+++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | Anunciar tempo restante | control+shift+r | Anuncia o tempo restante da pista actualmente en reproducción, se hai algunha. |
@@ -824,27 +834,27 @@ Para información adicional acerca do modo exploración e da navegación cunha s
 
 Nota: o atallo de teclado de anunciado do tempo restante só funciona coa cadea de formato predeterminada para a liña de estado de foobar.
 
-++ Miranda IM ++
+++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | Anunciar mensaxe recente | NVDA+control+1-4 | Anuncia unha das mensaxes recentes, dependendo do número premedo; ex.: NVDA+control+2 le a segunda mensaxe máis recente. |
 %kc:endInclude
 
-++ Poedit ++
+++ Poedit ++[Poedit]
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | Anunciar ventá de Comentarios | control+shift+c | Anuncia calquera comentario na ventá de comentarios.  |
 | Anunciar notas para traductores | control+shift+a | Anuncia calquera nota para os traductores.  |
 %kc:endInclude
 
-++ Skype ++
+++ Skype ++[Skype]
 %kc:beginInclude
 Cando se está nunha conversa:
 || Nome | Tecla | Descripción |
 | Revisar mensaxe | NVDA+control+1-0 | Anuncia e move o cursor de revisión a unha mensaxe recente, dependendo do número premedo; por ex.: NVDA+control+2 le a segunda mensaxe máis recente. |
 %kc:endInclude
 
-++ Kindle para PC ++
+++ Kindle para PC ++[Kindle]
 NVDA soporta a lectura e a navegación de libros no Amazon Kindle para PC.
 Esta funcionalidade só está dispoñible en libros de Kindle designados con "Lector de Pantalla: Soportado" o que podes verificar na páxina de detalles para o libro.
 
@@ -861,7 +871,7 @@ A navegación por ligas tamén inclúe notas ao pé.
 O NVDA proporciona soporte preliminar para a lectura e a navegación interactiva de contido matemático para libros coas matemáticas accesibles.
 Por favor consulta a seción [Lendo Contido Matemático #ReadingMath] para información adicional.
 
-+++ Seleción de Texto +++
++++ Seleción de Texto +++[KindleTextSelection]
 Kindle permíteche realizar varias funcións no texto selecionado, incluindo obter unha definición de diccionario, engadir notas e facer resaltados, copiar o texto ao portapapeis e procurar na web.
 Para facer esto, primeiro seleciona texto coma o farías normalmente en modo exploración; ex.: usando shift e as teclas de cursor.
 %kc:beginInclude
@@ -869,7 +879,7 @@ Unha vez selecionaras o texto, preme a tecla aplicacións ou shift+f10 para amos
 %kc:endInclude
 Se fas esto sen texto selecionado, as opcións que se amosarán serán para a palabra no cursor.
 
-+++ Notas de Usuario +++
++++ Notas de Usuario +++[KindleUserNotes]
 Podes engadir unha nota con referencia a unha palabra ou a unha pasaxe de texto.
 Para facer esto, primeiro seleciona o texto pertinente e accede ás opcións da seleción segundo se descrebiu arriba.
 Logo, escolle Engadir Nota.
@@ -883,7 +893,7 @@ Para ver, editar ou borrar unha nota:
 + Escolle Editar Nota.
 +
 
-++ Azardi ++
+++ Azardi ++[Azardi]
 %kc:beginInclude
 Cando se estea na táboa de vista de libros engadidos:
 || Nome | Tecla | Descripción |
@@ -891,9 +901,9 @@ Cando se estea na táboa de vista de libros engadidos:
 | Menú de Contexto | aplicacións | Abre o menú de contexto para o libro selecionado. |
 %kc:endInclude
 
-+ Configurando o NVDA +
++ Configurando o NVDA +[ConfiguringNVDA]
 
-++ Preferencias ++
+++ Preferencias ++[preferences]
 %kc:settingsSection: || Nome | Tecla Sobremesa | tecla Portátil | Descripción |
 A maioría das opcións do NVDA poden cambiarse utilizando caixas de diálogo ás que se accede a través do submenú Preferencias do menú NVDA.
 En todas as caixas de diálogo de opcións de NVDA, preme o botón Aceptar para aceptar calquera cambio que fixeras.
@@ -903,11 +913,11 @@ Algunhas opcións tamén poden cambiarse utilizando teclas de atallo,  que se li
 Ten en conta que de xeito predeterminado, non pode accederse a todos os diálogos de preferencias con xestos de entrada (ordes de teclado, xestos táctiles, etc.).
 Se desexas acceder a diálogos que non teñan atallos de teclado dedicados, utiliza o [Diálogo Xestos de Entrada #InputGestures] para engadir un xesto persoalizado para ese diálogo.
 
-+++ Opcións Xerais (NVDA+control+g) +++
++++ Opcións Xerais (NVDA+control+g) +++[GeneralSettings]
 A caixa de diálogo Opcións Xerais atópase no menú Preferencias. 
 Contén as seguintes opcións:
 
-==== Lingua ====
+==== Lingua ====[GeneralSettingsLanguage]
 Esta é unha caixa combinada que che permite seleccionar a lingua na que debería amosarse a interface do usuario e as mensaxes do NVDA. 
 Hai moitas linguas, nembargantes a derradeira elección na lista chámase "Predeterminado para o usuario". 
 Esta elección dirá ao NVDA que utilice a lingua na que Windows estea actualmente axustado. 
@@ -916,45 +926,45 @@ Por favor ten en conta que NVDA debe reiniciarse cando se cambie a lingua.
 NVDA preguntarache se desexas reiniciar se fas cambios na selección.
 Preme Aceptar e NVDA reiniciarase. 
 
-==== Gardar Configuración ao Saír ====
+==== Gardar Configuración ao Saír ====[GeneralSettingsSaveConfig]
 Esta opción é unha caixa de verificación que, cando se marca, di ao NVDA que garde automáticamente a actual configuración cando saias do NVDA. 
 
-==== Amosar opcións de saída ao saír do NVDA ====
+==== Amosar opcións de saída ao saír do NVDA ====[GeneralSettingsShowExitOptions]
 Esta opción é unha caixa de verificación que che permite escoller se aparece ou non un diálogo ao saír do NVDA que che pregunta sobre que acción queres lebar a cabo.
 Cando se marque, aparecerá un diálogo ao intentar saír do NVDA preguntándoche se queres saír, reiniciar ou reiniciar cos complementos deshabilitados.
 Cando se desmarque, o NVDA sairá inmediatamente.
 
-==== Reproducir sons ao iniciar ou saír do NVDA ====
+==== Reproducir sons ao iniciar ou saír do NVDA ====[GeneralSettingsPlaySounds]
 Esta Opción é unha caixa de verificación que, cando está marcada, di ao NVDA que reproduza sons cando se inicie ou saia.
 
-==== nivel do Rexistro ====
+==== nivel do Rexistro ====[GeneralSettingsLogLevel]
 Este é unha caixa combinada que che permite elexir canto NVDA porá no rexistro segundo se executa. 
 Xeralmente os usuarios non deberían necesitar tocar esto xa que non é demasiado amigable. 
 Sen embargo se queres proporcionar información nun informe sobre un fallo etc, entón poderá ser unha boa opción.
 
-==== Iniciar automáticamente nvda despois de autentificarse en windows ====
+==== Iniciar automáticamente nvda despois de autentificarse en windows ====[GeneralSettingsStartAfterLogOn]
 Se esta opción está activada, NVDA arrancará automáticamente tan pronto como te autentifiques en Windows. 
 Esta opción só está dispoñible para copias instaladas do NVDA.
 
-==== Utilizar nvda na pantalla de autentificación de windows (require privilexios de administrador) ====
+==== Utilizar nvda na pantalla de autentificación de windows (require privilexios de administrador) ====[GeneralSettingsStartOnLogOnScreen]
 Se te autentificas en Windows proporcionando un nome de usuario e un contrasinal, entón activando esta opción farás que o NVDA se inicie automáticamente na pantalla de autentificación cando Windows se inicie. 
 Esta opción só está dispoñible para copias instaladas do NVDA.
 
-==== Utilizar Opcións gardadas actualmente na autentificación e outras pantallas seguras ====
+==== Utilizar Opcións gardadas actualmente na autentificación e outras pantallas seguras ====[GeneralSettingsCopySettings]
 Premendo este botón copias a túa configuración de usuario do NVDA actualmente gardada ao directorio de sistema de configuración do NVDA, tal que NVDA utilizaráo cando se execute na autentificación, Control de Contas de Usuario (UAC) e outras pantallas seguras de Windows.
 Para asegurarte de que todas as túas opcións se transfiren, asegúrate de gardar primeiramente a túa configuración con control+NVDA+c ou gardar a configuración no menú NVDA.
 Esta opción só está dispoñible para copias instaladas do NVDA.
 
-==== Procurar actualizacións para NVDA automáticamente ====
+==== Procurar actualizacións para NVDA automáticamente ====[GeneralSettingsCheckForUpdates]
 Se esto está activado, NVDA procurará automáticamente versións actualizadas e informarache cando unha actualización estea dispoñible.
 Tamén podes procurar actualizacións manualmente seleccionando Procurar Actualizacións baixo o menú Axuda no menú NVDA.
 
-+++ Selección de sintetizador +++
++++ Selección de sintetizador +++[SynthesizerSelection]
 O diálogo Sintetizadores, que se atopa En "Sintetizadores..." no menú Preferencias, permíteche seleccionar que sintetizador debería utilizar NVDA para falar.
 Unha vez selecciones o teu sintetizador de elección, podes premer Aceptar e NVDA cargará o sintetizador seleccionado.
 Se hai un erro cargando o sintetizador, unha caixa de mensaxe alertarate do feito, e continuará utilizando o sintetizador anterior.
 
-==== Sintetizador ====
+==== Sintetizador ====[SynthesizerSelectionSynthesizer]
 Esta opción permíteche escoller o sintetizador  que desexas que utilice NVDA para a saída de voz.
 
 Para unha lista dos sintetizadores que soporta NVDA, por favor mira a sección [Sintetizadores de Voz Soportados #SupportedSpeechSynths].
@@ -962,11 +972,11 @@ Para unha lista dos sintetizadores que soporta NVDA, por favor mira a sección [
 Un elemento especial que aparecerá sempre nesta lista é "Sen Voz", que che permite utilizar NVDA sen saída de voz algunha.
 Esto podería ser útil para alguén que desexe utilizar só NVDA con Braille, ou  quizáis a desenvolvedores videntes que só desexen utilizar o Visualizador de Voz.
  
-==== Dispositivo de Saída ====
+==== Dispositivo de Saída ====[SynthesizerSelectionOutputDevice]
 Esta opción permíteche elexir a tarxeta de son a través da que NVDA debería mandar falar ao sintetizador seleccionado.
 
 %kc:setting
-==== Modo de Atenuación do Audio ====
+==== Modo de Atenuación do Audio ====[SynthesizerSelectionDuckingMode]
 Tecla: NVDA+shift+d
 
 En Windows 8 e superiores, esta opción permíteche escoller se NVDA debería baixar o volume doutras aplicacións mentres NVDA estea falando, ou todo o tempo mentres NVDA estea en execución.
@@ -984,62 +994,62 @@ Para un xeito alternativo rápido de controlar os parámetros de voz dende calqu
 
 A caixa de diálogo de opcións de voz contén as seguintes opcións:
 
-==== Voz ====
+==== Voz ====[VoiceSettingsVoice]
 A primeira opción que obtés neste diálogo é unha caixa combinada, que lista todas as voces do sintetizador actual que tes instalado. 
 Podes utilizar as teclas de cursor para escoitar todas as varias eleccións. 
 As frechas esquerda e arriba suben pola lista, mentres que as frechas dereita e abaixo baixan pola lista.
 
-==== Variante ====
+==== Variante ====[VoiceSettingsVariant]
 Se estás a usar o sintetizador Espeak NG empaquetado xunto co NVDA, esta é unha caixa combinada que che permite seleccionar a variante ca que o sintetizador debería falar. 
 As variantes de Espeak NG son bastante parecidas ás voces, pero proporcionan atributos lixeiramente diferentes para a voz de ESpeak NG. 
 Algunhas variantes soarán como un home, algunhas como unha muller, e algunhas como se tiveran ronqueira.
 
-==== Velocidade ====
+==== Velocidade ====[VoiceSettingsRate]
 Esta opción permíteche cambiar a velocidade da voz. 
 Esta é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 a velocidade máis lenta e sendo 100 a máis rápida).
 
-==== Ton ====
+==== Ton ====[VoiceSettingsPitch]
 Esta opción permíteche cambiar o ton da voz. 
 Esta é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o ton máis baixo e sendo 100 o máis alto). 
 
-==== Volume ====
+==== Volume ====[VoiceSettingsVolume]
 Esta opción é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o volume máis baixo e sendo 100 o máis alto).
 
-==== Entoación ====
+==== Entoación ====[VoiceSettingsInflection]
 Esta opción é unha barra de desprazamento que che permite elexir canta entoación (subida e caída no ton) o sintetizador debería utilizar para falar. (Soamente o sintetizador Espeak NG proporciona esta opción actualmente).
 
-==== Cambio Automático de Lingua ====
+==== Cambio Automático de Lingua ====[VoiceSettingsLanguageSwitching]
 Esta caixa de verificación permíteche activar ou desactivar se NVDA debería cambiar automáticamente as linguas do sintetizador de voz se o texto a se ler o especifica.
 Esta opción está activada de maneira predeterminada.
 Actualmente só o sintetizador eSpeak NG sopporta o cambio automático de lingua.
 
-==== Cambio Automático de Dialecto ====
+==== Cambio Automático de Dialecto ====[VoiceSettingsDialectSwitching]
 Esta caixa de verificación permíteche activar ou desactivar  se os cambios de dialecto deberíanse facer, en lugar de só cambiar a lingua actual. 
 Por Exemplo Se se está lendo nunha voz Inglés U.S. pero partes dun documento teñen algún texto en Inglés U.K. entón se esta característica está activada o sintetizador cambiará o seu acento.
 Esta opción está desactivada de forma predeterminada.
 
 %kc:setting
-==== Nivel de Pontoación/símbolos ====
+==== Nivel de Pontoación/símbolos ====[VoiceSettingsSymbolLevel]
 Tecla: NVDA+p
 
 Esto permíteche escoller a cantidade de pontoación e outros símbolos que deberían dicirse como palabras.
 Por exemplo, cando se configura a toda, todos os símbolos diranse como palabras.
 Esta opción aplícase a todos os sintetizadores, non só ao sintetizador activo actualmente.
 
-==== Confiar na lingua da voz para procesar símbolos e caracteres ====
+==== Confiar na lingua da voz para procesar símbolos e caracteres ====[VoiceSettingsTrust]
 Activada de xeito predeterminado, esta opción di ao NVDA se a lingua da voz actual pode ser de confianza ao procesar símbolos e caracteres.
 Se atopas que o NVDA está lendo a pontoación nunha lingua  incorrecta para un sintetizador ou voz en particular, poderás querer desactivar esta opción para forzar ao NVDA a utilizar a súa lingua global configurada no seu lugar.
 
-==== Cambio da Porcentaxe de Ton para Maiúsculas ====
+==== Cambio da Porcentaxe de Ton para Maiúsculas ====[VoiceSettingsCapPitchChange]
 Este campo de edición permíteche teclear a cantidade na que o ton da voz cambiará cando se fale unha letra maiúscula.
 Este valor é unha porcentaxe, onde un valor negativo baixa o ton e un valor positivo súbeo.
 Para non cambiar o ton utilizarías o 0.
 
-==== Dicir Maius" antes de Maiúsculas ====
+==== Dicir Maius" antes de Maiúsculas ====[VoiceSettingsSayCapBefore]
 Esta opción é unha caixa de verificación, que cando está marcada di ao NVDA que diga a palabra "maius" antes de calquera letra en maiúscula, cando se navega sobre ela ou falándoo cando está sendo escribida.
 Normalmente, NVDA eleva o ton lixeiramente para calquera letra maiúscula, pero algúns sintetizadores poderán non soportar esto ben, así quizáis esta opción poderá ser de utilidade.
 
-==== Pitar para Maiúsculas ====
+==== Pitar para Maiúsculas ====[VoiceSettingsBeepForCaps]
 Se esta caixa de verificación está marcada, NVDA emitirá un pequeno pitido cada vez que estea falando un caracter en maiúscula. 
 Como a caixa de verificación 'dicir maius para maiúsculas', esta é útil para sintetizadores que non podan modificar o seu ton para as letras maiúsculas.
 
@@ -1066,7 +1076,7 @@ Se desexas cambiar rápidamente opcións de voz  sen ir ao diálogo de Opcións 
 +++ Opcións de Braille +++[BrailleSettings]
 A caixa de diálogo de Opcións de braille pode chamarse indo ao menú preferencias e entón ir á opción opcións de braille.
 
-==== Pantalla Braille ====
+==== Pantalla Braille ====[BrailleSettingsDisplay]
 A primeira opción ca que te atoparás no diálogo de opcións de braille é unha caixa combinada que di "Pantalla braille". 
 Presentaráseche con varias opcións dependendo de cantas pantallas braille estean dispoñibles no teu sistema.
 Móvete entre estas opcións coas frechas.
@@ -1075,7 +1085,7 @@ Sen braille significa que non estás utilizando braille.
 
 Por favor mira a sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para máis información acerca das pantallas braille soportadas.
 
-==== Porto ====
+==== Porto ====[BrailleSettingsPort]
 Esta opción, se está dispoñible, permíteche escoller que porto ou tipo de conexión se utilizará para comunicar ca pantalla braille que teñas seleccioada.
 É unha caixa combinada que contén as opcións posibles para a túa pantalla braille.
 
@@ -1087,13 +1097,13 @@ Esta opción non estaría dispoñible se a túa pantalla braille só soporta a d
 
 Poderás consultar a documentación para a túa pantalla braille na sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para informarte de máis detalles sobre os tipos soportados de portos e comunicación dispoñibles.
 
-==== Táboa de Saída ====
+==== Táboa de Saída ====[BrailleSettingsOutputTable]
 A seguinte opción que virá neste diálogo é a caixa combinada da táboa de saída braille.
 Nesta caixa combinada, atoparás táboas braille, estándares braille e graos para diferentes linguas.
 A táboa escollida utilizarase para transcribir texto a braille para presentalo na pantalla braille.
 Podes moverte entre as táboas braille na lista utilizando as teclas do cursor.
 
-==== Táboa de Entrada ====[BrailleInputTable]
+==== Táboa de Entrada ====[BrailleSettingsInputTable]
 Comprementariamente coa opción anterior, o seguinte axuste que atoparás é a caixa combinada da táboa de entrada braille.
 A táboa escollida utilizarase para transcribir a texto o braille introducido no teclado tipo perkins da liña braille.
 Podes moverte entre as táboas braille na lista utilizando as teclas de cursor.
@@ -1101,34 +1111,34 @@ Podes moverte entre as táboas braille na lista utilizando as teclas de cursor.
 Ten en conta que esta opción só é útil se a túa pantalla braille ten un teclado tipo Perkins e se esta característica se soporta polo controlador da liña braille.
 Se a entrada non se soporta nunha pantalla que teña un teclado braille, esto notificarase na sección [Pantallas Braille Soportadas #SupportedBrailleDisplays].
 
-==== Expandir a braille de ordenador para a palabra no cursor ====
+==== Expandir a braille de ordenador para a palabra no cursor ====[BrailleSettingsExpandToComputerBraille]
 Esta opción permite á palabra que está baixo o cursor seren amosada en braille de ordenador non contraído.
 
-==== Amosar Cursor ====
+==== Amosar Cursor ====[BrailleSettingsShowCursor]
 Esta opción permite ao cursor braille activarse e desactivarse.
 Aplícase ao cursor do sistema e ao cursor de revisión, pero non ao indicador de seleción.
 
-==== Parpadeo de Cursor ====
+==== Parpadeo de Cursor ====[BrailleSettingsBlinkCursor]
 Esta opción permite ao cursor braille parpadear.
 Se o parpadeo está desactivado, o cursor braille estará constantemente na posición "subida".
 O indicador de seleción non está afectado por esta opción, sempre é cos pontos 7 e 8 sen parpadear.
 
-==== Velocidade de Parpadeo do Cursor (ms) ====
+==== Velocidade de Parpadeo do Cursor (ms) ====[BrailleSettingsBlinkRate]
 Esta opción é un campo numérico que che permite cambiar a velocidade de palpebreo do cursor en milésimas de segundo.
 
-==== Forma do Cursor para o Foco====
+==== Forma do Cursor para o Foco====[BrailleSettingsCursorShapeForFocus]
 Esta opción permíteche escoller a forma (patrón de pontos) do cursor braille cando o braille sega ao foco.
 O indicador de seleción non está afectado por esta opción, sempre son os pontos 7 e 8 sen palpebrar.
 
-==== Forma do Cursor para a Revisión ====
+==== Forma do Cursor para a Revisión ====[BrailleSettingsCursorShapeForReview]
 Esta opción permíteche escoller a forma (patrón de pontos) do cursor braille cando o braille sega á revisión.
 O indicador de seleción non está afectado por esta opción, sempre son os pontos 7 e 8 sen palpebrar.
 
-==== Duración da Mensaxe (en seg) ====
+==== Duración da Mensaxe (en seg) ====[BrailleSettingsMessageTimeout]
 Esta opción é un campo numérico que controla durante canto tempo se amosan as mensaxes do sistema na pantalla braille.
 Especifycando 0 deshabilítase o amosado destas mesaxes completamente.
 
-==== amosar Mensaxes Indefinidamente ====
+==== amosar Mensaxes Indefinidamente ====[BrailleSettingsNoMessageTimeout]
 Esta opción permite ás mensaxes do NVDA amosarse na pantalla braille indefinidamente.
 
 %kc:setting
@@ -1137,14 +1147,14 @@ Tecla: NVDA+control+t
 
 Esta opción permíteche escoller se a pantalla braille seguirá ao foco do sistema, ou se seguirá ao navegador de obxectos / cursor de revisión.
 
-==== Ler por Parágrafo ====
+==== Ler por Parágrafo ====[BrailleSettingsReadByParagraph]
 Se está activada, o braille amosarase por parágrafos en lugar de por liñas.
 Tamén, as ordes de liña seguinte e anterior moverán por parágrafos en concordancia.
 Esto significa que non tes que desprazar a pantalla ao final de cada liña incluso onde haia máis texto do que cabe na pantalla.
 Esto podería permitir unha mayor fluidez lendo longas cantidades de texto.
 Está desactivada de xeito predeterminado.
 
-==== Evitar separación de palabras cando sexa posible ====
+==== Evitar separación de palabras cando sexa posible ====[BrailleSettingsWordWrap]
 Se esto está habilitado, unha palabra que sexa demasiado longa para coller no final da pantalla braille non se separará.
 No seu lugar, haberá algúns espazos en branco ao final da pantalla.
 Cando despraces a pantalla, poderás ler toda a palabra.
@@ -1156,7 +1166,7 @@ Cando despraces a pantalla, entón poderás ler o resto da palabra.
 
 Habilitar esto podería permitir unha maior fluidez na lectura, pero normalmente require desprazar a pantalla máis.
 
-==== Presentación de Contexto do Foco ====
+==== Presentación de Contexto do Foco ====[BrailleSettingsFocusContextPresentation]
 Esta opción permíteche escoller que información de contexto amosará o NVDA na pantalla braille cando un obxecto obteña o foco.
 A información de contexto refírese á xerarquía de obxectos que conteñan o foco.
 Por exemplo, cando enfoques un elemento de lista, este elemento de lista é parte dunha lista.
@@ -1182,20 +1192,20 @@ Polo tanto, para ler o contexto (é dicir, que estás nunha lista e que esta lis
 
 Para conmutar a presentación de contexto do foco dende calquera lugar, por favor asigna un xesto personalizado usando o [diálogo Xestos de Entrada #InputGestures].
 
-+++ Opcións de Teclado (NVDA+control+k)+++
++++ Opcións de Teclado (NVDA+control+k)+++[KeyboardSettings]
 Esta caixa de diálogo atópase no menú Preferencias, baixo "Opcións de teclado...". 
 Contén as seguintes opcións:
 
-==== Disposición do Teclado ====
+==== Disposición do Teclado ====[KeyboardSettingsLayout]
 Esta caixa combinada permíteche escoller que tipo de distribución de teclado debería utilizar NVDA. Actualmente os dous que veñen co NVDA son Sobremesa e Portátil.
 
-==== Usar BloqMaius como unha tecla modificadora do NVDA ====
+==== Usar BloqMaius como unha tecla modificadora do NVDA ====[KeyboardSettingsCapsModifier]
 Se esta caixa de verificación está marcada, o BloqMaius pode utilizarse como unha tecla modificadora do NVDA.
 
-==== Usar o insert extendido coma unha tecla modificadora do NVDA ====
+==== Usar o insert extendido coma unha tecla modificadora do NVDA ====[KeyboardSettingsExtendedInsert]
 Se esta caixa de verificación está marcada, a tecla insert (normalmente atopada enriba das teclas de frecha, preto de inicio e fin) pode utilizarse como unha tecla modificadora do NVDA.
 
-==== Usar o insert do teclado numérico como tecla modificadora de NVDA ====
+==== Usar o insert do teclado numérico como tecla modificadora de NVDA ====[KeyboardSettingsExtendedInsert][KeyboardSettingsNumpadInsert]
 Se esta caixa de verificación está marcada, a tecla insert do teclado numérico pode utilizarse coma unha tecla modificadora do NVDA.
 
 Se non se escolle ningunha tecla como a tecla NVDA podería ser imposible acceder a certas ordes de NVDA.
@@ -1203,128 +1213,136 @@ Polo tanto, o diálogo Opcións de Teclado amosará unha mesaxe de erro se todas
 Despois de descartar a mesaxe de erro, debes seleccionar polo menos unha antes de poder premer Aceptar para pechar o diálogo correctamente.
 
 %kc:setting
-==== Falar caracteres ao se escrebir ====
+==== Falar caracteres ao se escrebir ====[KeyboardSettingsSpeakTypedCharacters]
 Tecla: NVDA+2
 
 Cando está marcada significa que NVDA anunciará todos os caracteres segundo os escrebas no teclado. 
 
 %kc:setting
-==== Falar palabras ao se escrebir ====
+==== Falar palabras ao se escrebir ====[KeyboardSettingsSpeakTypedWords]
 Tecla: NVDA+3
 
 Cando está marcada significa que NVDA anunciará todas as palabras ao se escrebir no teclado. 
 
-==== Interrupción de Voz para Caracteres Escrebidos ====
+==== Interrupción de Voz para Caracteres Escrebidos ====[KeyboardSettingsSpeechInteruptForCharacters]
 Se está activada, esta opción causará que a voz se interrumpa cada vez que se escreba un carácter. Esto está activado de maneira predeterminada.
 
-==== Interrupción de Voz para a Tecla Intro ====
+==== Interrupción de Voz para a Tecla Intro ====[KeyboardSettingsSpeechInteruptForEnter]
 Se está activada, esta opción causará que a voz se interrumpa cada vez que se prema a tecla Intro. Esto está activado de maneira predeterminada.
 
-==== Permitir lectura superficial en Falar Todo ====
+==== Permitir lectura superficial en Falar Todo ====[KeyboardSettingsSkimReading]
 Se está activada, certas ordes de navegación (como a navegación rápida en modo navegación ou o movemento por liñas ou por parágrafos) non deteñen  Falar Todo, en cambio  Falar Todo salta  á nova posición e continúa a ler.
 
-==== Pitar se se Teclean Letras Minúsculas Cando BloqMaius está Activado ====
+==== Pitar se se Teclean Letras Minúsculas Cando BloqMaius está Activado ====[VoiceSettingsBeepLowercase]
 Cando está activada, escoitarase un pitido de aviso se se escrebe unha letra ca tecla shift mentres BloqMaius está activada.
 Xeralmente, escrebir letras en maiúsculas co BloqMaius é inintencionado e normalmente é debido a non revisar que o BloqMaius estea activado.
 Polo tanto, pode ser bastante útil seres avisado acerca de esto.
 
 %kc:setting
-==== Falar teclas de ordes ====
+==== Falar teclas de ordes ====[VoiceSettingsSpeakCommandKeys]
 Tecla: NVDA+4
 
 Cando está marcada significa que NVDA anunciará todas as teclas que non sexan caracteres ao se escrebir no teclado. Esto inclúe combinacións de teclas como control más calquera outra letra. 
 
-==== Reproducir son para Erros de Ortografía mentres se escrebe ====
+==== Reproducir son para Erros de Ortografía mentres se escrebe ====[KeyboardSettingsAlertForSpellingErrors]
 Ao habilitarse, reproducirase unha sinal acústica curta cando unha palabra que esteas escrebindo conteña un erro de ortografía.
 Esta opción só está dispoñible se o anunciado de erros de ortografía está habilitado no diálogo de NVDA [Opcións de Formateado de Documento #DocumentFormattingSettings].
 
-==== Manexar teclas dende outras aplicacións ====
+==== Manexar teclas dende outras aplicacións ====[KeyboardSettingsHandleKeys]
 Esta opción permite ao usuario controlar se a pulsación das teclas xerada por aplicacións como teclados en pantalla e polo software de recoñecemento da fala debería procesarse polo NVDA. 
 Esta opción está activada por defecto, aínda que algúns usuarios poderían desexar deshabilitala, como aqueles que escreban en vietnamita co programa de escritura Unikey xa que fará que a entrada de caracteres sexa incorrecta.
 
-+++ Opcións do Rato (NVDA+control+m) +++
++++ Opcións do Rato (NVDA+control+m) +++[MouseSettings]
 O diálogo de Opcións do Rato atópase no menú Preferencias, baixo "Opcións do Rato...". 
 Contén as seguintes opcións:
 
-==== Anunciar Cambios na Forma do Rato ====
+==== Anunciar Cambios na Forma do Rato ====[MouseSettingsShape]
 Unha caixa de verificación, que cando se marca significa que NVDA anunciará a forma do punteiro do rato cada vez que cambie. 
 O punteiro do rato no Windows cambia a súa forma para comunicar certa información tal como cando algo é editable, ou cando algo é cargable etc.
 
 %kc:setting
-==== Habilitar Seguemento do Rato ====
+==== Habilitar Seguemento do Rato ====[MouseSettingsTracking]
 Tecla: NVDA+m |
 
 Cando está marcada significa que NVDA anunciará o texto actualmente baixo o punteiro do rato, segundo se mova pola pantalla. Esto permíteche atopar cousas na pantalla, movendo físicamente o rato, en lugar de tratar de atopalas a través do navegador de obxectos.
 
-==== Resolución de Unidade de Texto ====
+==== Resolución de Unidade de Texto ====[MouseSettingsTextUnit]
 Se NVDA está configurado para anunciar o texto baixo o rato segundo se mova, esta opción permíteche escoller  exactamente canto texto será falado. 
 As opcións son caracter, palabra, liña e parágrafo.
 
-==== Anunciar rol cando o rato entra nos Obxectos ====
+==== Anunciar rol cando o rato entra nos Obxectos ====[MouseSettingsRole]
 Se esta caixa de verificación está marcada, NVDA anunciará o rol (tipo) de obxecto cando o rato se mova dentro del.
 
-==== Reproducir audio cando se mova o rato ====
+==== Reproducir audio cando se mova o rato ====[MouseSettingsAudio]
 Marcando esta caixa de verificación fas que o NVDA reproduza pitidos cando o rato se mova, así que o usuario poda resolver onde está o rato con respecto ás dimensións da pantalla.
 Canto máis alto está o rato na pantalla, máis alto é o ton dos pitidos.
 Canto máis estea situado o rato á esquerda ou á dereita  na pantalla, o son reproducirase máis á esquerda ou á dereita (asumindo que o usuario teña uns altavoces ou auriculares estéreo).
 
-==== O Brilo controla o volume do audio ====
+==== O Brilo controla o volume do audio ====[MouseSettingsBrightness]
 Se a caixa de verificación 'reproducir audio cando o rato se mova' está marcada, entón marcando esta caixa de verificación significa que o volume dos pitidos de audio está controlado por cómo o brilo da pantalla estea baixo o rato. 
 Esto poderá causar algúns problemas de rendemento en Windows Vista, así que está desverificado de xeito predeterminado.
 
-+++ Opcións de Cursor de Revisión +++
++++ Opcións de Interación Tactil +++[TouchInteraction]
+Este diálogo, só dispoñible en computadores que executen Windows 8 e posterior con capacidades tactiles, permítenche configurar o xeito no que NVDA interactúa con pantallas tactiles.
+
+==== Modo de escritura tactil ====[TouchTypingMode]
+Esta caixa de verificación permíteche especificar o método que desexas usar ao introducir texto usando o teclado tactil.
+Se esta caixa de verificación está marcada, cando localices unha tecla no teclado tactil, podes levantar o dedo e a tecla selecionada premerase.
+Se está desmarcada, deberás tocar dúas veces a tecla na pantalla para premer a tecla.
+
++++ Opcións de Cursor de Revisión +++[ReviewCursorSettings]
 Atópase no menú Preferencias baixo Cursor de Revisión...
 Este diálogo contén as seguintes opcións:
 
 %kc:setting
-==== Seguir ao Foco Do sistema ====
+==== Seguir ao Foco Do sistema ====[ReviewCursorFollowFocus]
 Tecla: NVDA+7
 
 Cando se activa, o cursor de revisión sempre se colocará no mesmo obxecto que o actual foco do sistema sempre que este cambie.
 
 %kc:setting
-==== Seguir ao Cursor do Sistema ====
+==== Seguir ao Cursor do Sistema ====[ReviewCursorFollowCaret]
 Tecla: NVDA+6
 
 Cando se activa, o cursor de revisión moverase automáticamente á posición do cursor do Sistema cada vez que se mova.
 
-==== Seguir ao Cursor do Rato ====
+==== Seguir ao Cursor do Rato ====[ReviewCursorFollowMouse]
 Cando se activa, o cursor de revisión seguirá ao rato segundo se mova.
 
-==== Modo de Revisión Sinxelo ====
+==== Modo de Revisión Sinxelo ====[ReviewCursorSimple]
 Cando se activa, NVDA filtrará a xerarquía de obxectos que pode navegarse, para excluir calquer obxecto que non sexa do interese para o usuario; ex.: obxectos invisibles e obxectos utilizados só con propósitos de deseño.
 
 Para conmutar o modo de revisión sinxela dende calquera lado, por favor asigna un Xesto persoalizado usando o [diálogo Xestos de Entrada #InputGestures].
 
-+++ Opcións de Presentación de Obxectos (NVDA+control+o) +++
++++ Opcións de Presentación de Obxectos (NVDA+control+o) +++[ObjectPresentationSettings]
 Atópase no menú Preferencias baixo "Presentación de Obxectos..." 
 Esta caixa de diálogo contén as seguintes opcións:
 
-==== Anunciar Consellos ====
+==== Anunciar Consellos ====[ObjectPresentationReportToolTips]
 Unha caixa de verificación que cando está marcada di ao NVDA que anuncie consellos segundo aparezan. 
 Moitas ventás e controis amosan unha pequena mensaxe (ou consello) cando moves o punteiro do rato sobre eles, ou algunhas veces cando te moves co foco por eles.
 
-==== Anunciar globos de axuda ====
+==== Anunciar globos de axuda ====[ObjectPresentationReportBalloons]
 Esta caixa de verificación cando está marcada di ao NVDA que anuncie os globos de axuda cando aparezan. 
 Os globos de axuda son como pequenos consellos, pero normalmente son máis grandes, e están asociados con eventos do Sistema como un cable de red sendo desenchufado, ou quizáis alertarte acerca de problemas de seguridade do Windows.
 
-==== Anunciar Teclas de Atallo dos Obxectos ====
+==== Anunciar Teclas de Atallo dos Obxectos ====[ObjectPresentationShortcutKeys]
 Cando esta caixa de verificación está marcada, NVDA incluirá a tecla de atallo que estea asociada con certo obxecto ou control cando sexa anunciado. 
 Por exemplo o menú Archivo nunha barra de menú poderá ter unha tecla de atallo alt+a.
 
-==== Anunciar Información da Posición do Obxecto ====
+==== Anunciar Información da Posición do Obxecto ====[ObjectPresentationPositionInfo]
 Esta opción permíteche escoller onde desexas ter unha posición do obxecto anunciada (ex.: 1 de 4) cando te moves ao obxecto co foco ou o navegador de obxectos.
 
-==== Deducir a información de Posición do Obxecto cando non estea dispoñible ====
+==== Deducir a información de Posición do Obxecto cando non estea dispoñible ====[ObjectPresentationGuessPositionInfo]
 Se o anunciado de información de posición do obxecto está desactivada, esta opción permite ao NVDA deducir a información de posición do obxecto cando non estea dispoñible para un control en particular.
 
 Cando estea activada, NVDA anunciará información de posición para máis controis como menús e barras de ferramentas, non obstante esta información poderá ser lixeiramente incorrecta. 
 
-==== Anunciar Descripcións de Obxectos ====
+==== Anunciar Descripcións de Obxectos ====[ObjectPresentationReportDescriptions]
 Desmarca esta caixa de verificación se coidas que non necesitas escoitar a descripción anunciada xunto cos obxectos.
 
 %kc:setting
-==== Saída nas Barras de Progreso ====
+==== Saída nas Barras de Progreso ====[ObjectPresentationProgressBarOutput]
 Tecla: NVDA+u
 
 Esta opción preséntaseche cunha caixa combinada que controla como nvda anuncia as actualizacións das barras de progreso. 
@@ -1336,76 +1354,76 @@ Ten as seguintes opcións:
 - Pitar e falar: Esta opción di ao nvda que pite e fale cando se actualiza unha barra de progreso.
 -
 
-==== Anunciar Barras de Progreso de fondo ====
+==== Anunciar Barras de Progreso de fondo ====[ObjectPresentationReportBackgroundProgressBars]
 Esta é unha opción que, cando está marcada, di ao nvda que manteña o anunciado de unha barra de progreso, aínda se non está físicamente no primeiro plano. 
 Se minimizas ou cambias a outra ventá que conteña unha barra de progreso, o nvda manterá a pista dela, permitíndoche facer outras cousas mentres nvda segue á barra de progreso.
 
 %kc:setting
-==== Anunciar cambios de contido dinámico ====
+==== Anunciar cambios de contido dinámico ====[ObjectPresentationReportDynamicContent]
 Tecla: NVDA+5
 
 Conmuta o anunciado de contido novo en obxectos particulares como terminais e o control de histórico en programas de chat.
 
-==== Reproducir un son ao aparecer autosuxerencias ====
+==== Reproducir un son ao aparecer autosuxerencias ====[ObjectPresentationSuggestionSounds]
 Conmuta o anunciado da aparición de autosuxerencias, e se está habilitado, NVDA reproducirá un son para indicar esto.
 As autosuxerencias son listas de entradas suxeridas baseadas en texto introducido en certos campos de edición e documentos.
 por exempro, cando introduzas texto na caixa de procura no menú inicio en Windows Vista e posterior, Windows amosa unha lista de suxerencias baseadas no que escribiches.
 Para algúns campos de edición  coma campos de procura en varias aplicacións de Windows 10, NVDA pode notificarte que apareceu unha lista de suxerencias ao se escrebir texto.
 A lista de autosuxerencias pecharase unha vez te movas polo campo de edición, e para algúns campos, NVDA pode notificarte de esto cando elo ocorra.
 
-+++ Opcións de Composición de Entrada +++
++++ Opcións de Composición de Entrada +++[InputCompositionSettings]
 O diálogo Opcións de Composición de Entrada pode encontrarse baixo o menú Preferencias. 
 Este diálogo permíteche controlar cómo anuncia NVDA a entrada de Caracteres Asiáticos, como co IME ou métodos de Servizo de entrada de texto .
 Ten en conta que debido ao feito de que os métodos de entrada varían en grande medida polas súas características dispoñibles e por cómo transmiten a información, o máis probable será que sexa necesario configurar estas opcións de xeito diferencial para cada método de entrada para obter a experiencia de escritura máis eficiente.
 
-==== Anunciar Automáticamente todas as Candidatas Dispoñibles ====
+==== Anunciar Automáticamente todas as Candidatas Dispoñibles ====[InputCompositionReportAllCandidates]
 Esta opción, que está activada de xeito predeterminado, permíteche escoller se todas as candidatas visibles deberían anunciarse automáticamente cando apareza unha lista de candidatas ou a súa páxina cambie.
 Ter esta opción activada para métodos de entrada pictográfica como chinese Novo ChangJie ou Boshiami, é útil pois podes escoitar todos os símbolos automáticamente e os seus números e podes escoller un inmediatamente.
 Sen embargo, para os métodos de entrada fonéticos como chinese Novo Fonético, Podería ser mais útil desactivar esta opción xa que todos os símbolos soarán igual e terás que utilizar as teclas de cursor para navegar polos elementos da lista individualmente para obter mais información da descripción de caracteres para cada candidata.
 
-==== Anunciar Candidato Seleccionado ====
+==== Anunciar Candidato Seleccionado ====[InputCompositionAnnounceSelectedCandidate]
 Esta Opción, que está activada por omisión, permíteche escoller se o NVDA debería anunciar o candidato seleccionado cando aparece unha lista de candidatos ou cando a selección se cambiou.
 Para os métodos de entrada onde a selección se pode cambiar cas teclas de frechas (como Chinese Nova Fonética) esto é necesario, pero para algúns métodos de entrada podería ser máis eficiente teclear con esta opción desactivada.
 Ten en conta que aínda con esta opción desactivada, o cursor de revisión aínda se colocará sobor do candidato seleccionado permitíndoche utilizar a navegación de obxectos para revisar manualmente para ler este ou outros candidatos.
 
-==== Anunciar Cambios para a Cadea de Lectura ====
+==== Incluir sempre descripcións curtas de caracteres para os candidatos ====[InputCompositionCandidateIncludesShortCharacterDescription]
+Esta Opción, que está activada por omisión, permíteche escoller se NVDA debería proporcionar ou non unha descripción curta para cada carácter nun candidato, ou cando se seleccioe ou cando se lea automáticamente cando apareza a lista de candidatos.
+Ten en conta que para localizacións como Chinese, o anunciado de descripcións extra de caracteres para o candidato seleccionado non está afectado por esta opción.
+Esta opción podería seren útil para os métodos de entrada Coreano e xaponés.
+
+==== Anunciar Cambios para a Cadea de Lectura ====[InputCompositionReadingStringChanges]
 Algúns métodos de entrada como Chinese Novo Fonético e Novo ChangJie teñen unha cadea de lectura (coñecida ás veces como unha cadea de precomposición).
 Podes escoller se o NVDA debería anunciar caracteres novos ao seren tecleados nesta cadea de lectura con esta opción.
 Esta opción está activada de xeito predeterminado.
 Ten en conta que algúns métodos de entrada antigos como Chinese ChangJie poderían non utilizar a cadea de lectura para conter os caracteres de precomposición, no seu lugar utilizar a cadea de composición directamente. Por favor mira a seguinte opción para configurar o anunciado da cadea de composición.
 
-==== Incluir sempre descripcións curtas de caracteres para os candidatos ====
-Esta Opción, que está activada por omisión, permíteche escoller se NVDA debería proporcionar ou non unha descripción curta para cada carácter nun candidato, ou cando se seleccioe ou cando se lea automáticamente cando apareza a lista de candidatos.
-Ten en conta que para localizacións como Chinese, o anunciado de descripcións extra de caracteres para o candidato seleccionado non está afectado por esta opción.
-Esta opción podería seren útil para os métodos de entrada Coreano e xaponés.
-
-==== Anunciar Cambios á cadea de composición ====
+==== Anunciar Cambios á cadea de composición ====[InputCompositionCompositionStringChanges]
 Despois de que a lectura ou os datos de precomposición foran combinados dentro dun símbolo pictográfico válido, a maioría dos métodos de entrada colocan este símbolo dentro dunha cadea de composición para un almacenamento temporal xunto con outros símbolos combinados antes de que finalmente se inserten dentro do documento.
 Esta Opción permíteche escoller se o NVDA debería anunciar ou non símbolos novos segundo aparezan na cadea de composición.
 Esta opción está activada por omisión.
 
-+++ Opcións dos Modos Navegación (NVDA+control+b) +++
++++ Opcións dos Modos Navegación (NVDA+control+b) +++[BrowseModeSettings]
 O diálogo de opcións do Modo navegación pode atoparse no menú Preferencias, baixo "Modo Navegación"...". 
 
 O diálogo contén as seguintes opcións:
 
-==== Máximo Número de Caracteres nunha Liña ====
+==== Máximo Número de Caracteres nunha Liña ====[BrowseModeSettingsMaxLength]
 Este campo pon a anchura máxima dunha liña do modo navegación (en caracteres).
 
-==== Máximo número de Liñas por Páxina ====
+==== Máximo número de Liñas por Páxina ====[BrowseModeSettingsPageLines]
 Este campo axusta a cantidade de liñas que moverás cando premas Avance de páxina ou Retroceso de páxina mentres esteas no modo navegación.
 
 %kc:setting
-==== Utilizar deseño de pantalla ====
+==== Utilizar deseño de pantalla ====[BrowseModeSettingsScreenLayout]
 Tecla: NVDA+v
 
 Esta opción permíteche especificar se o contido no modo navegación debería colocar cousas como ligas e outros campos na súa propria liña, ou se debería conservalos no fluxo de texto segundo sexa amosado visualmente. Se a opción está activada, entón as cousas permanecerán segundo sexan amosadas visualmente, pero se está desactivada, entón os campos serán colocados na súa propria liña.
 
-==== Falar Todo Automáticamente ao Cargar a Páxina ====
+==== Falar Todo Automáticamente ao Cargar a Páxina ====[BrowseModeSettingsAutoSayAll]
 Esta caixa de verificación conmuta a fala automática dunha páxina despois de cargala en modo navegación.
 Esta opción está activada por defecto.
 
-==== Incluir Táboas de Deseño ====
+==== Incluir Táboas de Deseño ====[BrowseModeSettingsIncludeLayoutTables]
 Esta opción afecta a cómo NVDA manella as tablas utilizadas exclusivamente con fins de deseño.
 Cando está activada, NVDA trátaas como táboas normais, anunciándoas basándose nas [Opcións de Formato de Documento #DocumentFormattingSettings] e localizándoas coas ordes de navegación rápida.
 Cando está desactivada, non se anuncian nin se atopan coa navegación rápida.
@@ -1417,18 +1435,18 @@ Para conmutar a inclusión de táboas de deseño dende calquera lugar, por favor
 ==== Configurando o anunciado de campos como ligas e cabeceiras ====
 Por favor atopa as novas opcións no [diálogo Opcións de Formato de documento #DocumentFormattingSettings]. 
 
-==== Modo de foco automático para cambios do foco ====
+==== Modo de foco automático para cambios do foco ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Esta opción permite ao modo foco chamarse se o foco cambia. 
 Por exemplo, cando estás nunha páxina web, se premes tab e caes sobre un formulario, se esta opción está verificada, o modo foco chamaráse automáticamente.
 
-==== Modo foco automático para movemento de frechas ====
+==== Modo foco automático para movemento do cursor ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Esta opción, cando está marcada, permite ao NVDA entrar en e abandoar o modo foco cando se utilizan as frechas. 
 Por exemplo, se se vai pulsando frecha abaixo por unha páxina web e caes sobre unha caixa de edición, NVDA activará automáticamente o modo foco. Se pulsas as frechas para saír da caixa de edición, NVDA voltaráche a poñer no modo Navegación.
 
-==== Indicación de Audio dos modos Foco e Navegación ====
+==== Indicación de Audio dos modos Foco e Navegación ====[BrowseModeSettingsPassThroughAudioIndication]
 Se esta opción está activada, NVDA reproducirá sons especiales cando cambie entre modo Navegación e modo foco, en lugar de falar o cambio.
 
-==== Capturar os Xestos que non Sexan de Ordes  para que non Alcancen o  Documento ====
+==== Capturar os Xestos que non Sexan de Ordes  para que non Alcancen o  Documento ====[BrowseModeSettingsTrapNonCommandGestures]
 Habilitada de modo predeterminado, esta opción permíteche escoller se os xestos (como a pulsación de teclas) que non sexan unha orde do NVDA e que non se considere que sexa unha tecla de orde en xeral, deberían capturarse para non pasar ao documento que estea no foco actualmente. 
 Como un exemplo, ao estar activada, se se premeu a letra j, debería capturarse para non alcanzar o documento, xa que non é nin unha tecla de navegación rápida nin é probable que sexa unha orde da mesma aplicación.
 
@@ -1477,14 +1495,14 @@ Podes configurar o anunciado de:
 
 Para conmutar estas  opcións dende calquera lugar, por favor asigna xestos persoalizados utilizando o [diálogo Xestos de Entrada #InputGestures].
 
-==== Anunciar cambios de formato despois do cursor ====
+==== Anunciar cambios de formato despois do cursor ====[DocumentFormattingDetectFormatAfterCursor]
 Se está activada, esta opción di ao NVDA que probe e detecte todos os cambios de formato nunha liña segundo a anuncie, se se fai esto podería enlentecerse a resposta do NVDA.
 
 De xeito predeterminado, NVDA detectará o formato na posición do cursor do Sistema / Revisión, e en algúns casos podería detectar o formato no resto da liña, só se non está causando un decremento da resposta.
  
 Activa esta opción mentres comprobas a lectura de documentos en aplicacións coma Worpad, onde o formato sexa importante.
 
-==== Anunciado de sangría de liñas ====[lineIndentationOptions]
+==== Anunciado de sangría de liñas ====[DocumentFormattingSettingsLineIndentation]
 Esta opción permíteche configurar cómo debe lerse a sangría do comezo das liñas.
 A caixa combinada Anunciar sangría de liñas con ten catro opcións.
 
@@ -1498,10 +1516,10 @@ O ton incrementarase en intensidade para cada espazo, e para o tabulador,increme
 +++ Opcións do OCR do Windows 10 +++[Win10OcrSettings]
 Pódese aceder a este diálogo dende o menú Preferencias do NVDA e permíteche configurar o [OCR de Windows 10 #Win10Ocr].
 
-==== Lingua de Recoñecemento ====
+==== Lingua de Recoñecemento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa combinada permíteche escoller a lingua para usar co recoñecemento de texto.
 
-+++ Diccionarios da Fala +++
++++ Diccionarios da Fala +++[SpeechDictionaries]
 O menú de Diccionarios da fala, (atopado no menú Preferencias) contén diálogos que che permiten controlar o modo no que NVDA pronuncia palabras ou frases particulares. 
 Hai actualmente tres tipos diferentes de diccionarios da fala. 
 son:
@@ -1535,7 +1553,7 @@ Polo tanto, utilizando o exemplo anterior da sustitución da palabra "paxaro" co
 Unha expresión regular é un patrón que contén símbolos especiais que che permiten emparellar máis de un caracter ao mesmo tempo, ou emparellar so números, ou so letras, segundo uns poucos exemplos. 
 As expresións regulares non están cubertas nesta Guía do Usuario, pero hai moitos titoriais na web que poden proporcionarche máis información.
 
-+++ Pronunciación de Pontoación/símbolos +++
++++ Pronunciación de Pontoación/símbolos +++[SymbolPronunciation]
 Este diálogo permíteche cambiar o modo no que se pronuncian a puntuación e outros símbolos, así como o nivel dos símbolos no que se falan. 
 
 A lingua cuia pronuncia de símbolo vai a seren editada amosarase No título do diálogo.
@@ -1584,7 +1602,7 @@ Para borrar un xesto de unha orde, selecciona o xesto e preme o botón Eliminar.
 
 Cando teñas rematado de facer cambios, preme o botón Aceptar para gardalos ou o botón Cancelar para descartalos.
 
-++ Gardando e Recargando a configuración ++
+++ Gardando e Recargando a configuración ++[SavingAndReloading]
 De xeito predeterminado NVDA gardará automáticamente as túas opcións ao saír.
 Ten en conta, non obstante, que esta opción predeterminada pode ser cambiada baixo as opcións xerais no menú preferencias. 
 Para gardar as opcións manualmente en calquera ocasión, escolle o elemento Gardar configuración no menú NVDA.
@@ -1599,7 +1617,7 @@ As seguintes teclas de ordes de NVDA tamén son útiles:
 | Reverter configuración | NVDA+control+r | NVDA+control+r | Premendo unha vez reinicia a túa configuración a cando a gardaches por derradeira vez. Premendo tres veces reiniciaráa ós valores predeterminados de fábrica. |
 %kc:endInclude
 
-++ Perfiles de Configuración ++
+++ Perfiles de Configuración ++[ConfigurationProfiles]
 Ás veces, é posible que desexes ter diferentes configuracións para diferentes situacións.
 Por exemplo, é posible que desexes ter o anunciado de sangría habilitado mentres estás editando ou o anunciado dos atributos da fonte activado mentres estás correxindo.
 O NVDA permíteche facer esto utilizando perfiles de configuración.
@@ -1610,7 +1628,7 @@ A maioría das opcións pódense cambiar nos perfís de configuración con excep
 Os perfiles de configuración pódense activar manualmente.
 Tamén se poden activar de forma automática debido aos disparadores como o cambio a unha aplicación en particular.
 
-+++ Manexo Básico +++
++++ Manexo Básico +++[ProfilesBasicManagement]
 Manexas os perfís de configuración seleccionando "Perfís de Configuración" no menú NVDA.
 Tamén podes facer esto utilizando unha orde de teclado:
 %kc:beginInclude
@@ -1626,7 +1644,7 @@ Para cambiar o nome dun perfil ou eliminalo, preme os botóns Renomear ou Elimin
 
 Preme o botón Pechar para pechar o diálogo.
 
-+++ Creando un Perfil +++
++++ Creando un Perfil +++[ProfilesCreating]
 Para crear un perfil, preme o botón Novo.
 
 Na caixa de diálogo Novo perfil, podes introducir un nome para o perfil.
@@ -1659,7 +1677,7 @@ Podes seleccionar (configuración normal) se non queres utilizar un perfil.
 
 Preme o botón pechar para voltar á caixa de diálogo de perfiles de configuración.
 
-+++ Editando un Perfil +++
++++ Editando un Perfil +++[ConfigProfileEditing]
 Se activaches manualmente un perfil, as opcións que modifiques gardaranse nese perfil.
 Pola contra, as opcións que se modifiquen gardaranse no perfil disparado máis recentemente.
 Por exemplo, se asociaches un perfil ca aplicación Bloc de notas e cambias ao Bloc de notas, as opcións modificadas gardaranse nese perfil.
@@ -1667,12 +1685,12 @@ Por último, se non hai nin un perfil activado manualmente nin un disparado, as 
 
 Para editar o perfil asociado a falar todo, debes [activar manualmente #ConfigProfileManual] ese perfil.
 
-+++ Deshabilitar Temporalmente Disparadores +++
++++ Deshabilitar Temporalmente Disparadores +++[ConfigProfileDisablingTriggers]
 Ás veces, é útil desactivar temporalmente todos os disparadores.
 Por exemplo, poderías desexar editar un perfil activado manualmente ou a configuración normal, sen perfiles disparadores interfirindo.
 Podes facer esto marcando a caixa de verificación Desactivar Temporalmente Todos os Disparadores na caixa de diálogo  de perfís de configuración.
 
-++ Ubicación dos Ficheiros de Configuración++
+++ Ubicación dos Ficheiros de Configuración++[LocationOfConfigurationFiles]
 As versións portátiles do NVDA almacenan todas as súas opcións e complementos nun directorio chamado userConfig, que se atopa no directorio de NVDA.
 
 As versións instaladas do NVDA almacenan todas as súas opcións e complementos nun directorio especial de NVDA localizado no teu perfil de usuario de Windows. 
@@ -1683,15 +1701,15 @@ As opcións para NVDA cando se executa nas pantallas de autentificación (logon)
 Normalmente esta configuración non debería ser tocada.
 Para cambiar como se configura NVDA nas pantallas de logon/UAC, configura a NVDA cómo desexes mentres estás autentificado en Windows, e logo manda a NVDA copiar a configuración á  pantalla de autentificación (logon) utilizando o botón no diálogo Opcións Xerais.
 
-+ Ferramentas Extra +
++ Ferramentas Extra +[ExtraTools]
 
-++ Visualizador do Rexistro ++
+++ Visualizador do Rexistro ++[LogViewer]
 O visualizador do rexistro, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
 
 Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do rexistro, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do rexistro foi aberto.
 Estas accións están dispoñibles baixo o menú de visualizador do Rexistro.
 
-++ Visualizador de Voz ++
+++ Visualizador de Voz ++[SpeechViewer]
 Para desenroladores de Software videntes ou xente demostrando NVDA a unha audiencia vidente, está dispoñible unha ventá flotante que che permite ver todo o texto que NVDA estea falando actualmente.
 
 Para activar o visualizador de voz, marca o elemento de menú "Visualizador de Voz" baixo Ferramentas no menú NVDA.
@@ -1706,7 +1724,7 @@ Non obstante, se fas clic ou colocas o foco dentro do visualizador,  NVDA deter�
 
 Para conmutar o visualizador de voz dende calquera lugar, por favor asigna un xesto persoalizado utilizando o [diálogo Xestos de Entrada #InputGestures].
 
-++ Administrador de Complementos ++
+++ Administrador de Complementos ++[AddonsManager]
 O Administrador de Complementos, ao que se accesa selecionando Xestionar Complementos baixo Ferramentas no menú NVDA, permíteche instalar, desinstalar, habilitar e deshabilitar os paquetes de complementos para o NVDA.
 Estos paquetes proporcióanse pola comunidade e conteñen código persoalizado que poderá engadir ou cambiar características no NVDA ou tamén proporcionan soporte para liñas Braille ou sintetizadores de voz extra.
 
@@ -1748,18 +1766,18 @@ Aíndaque esta versión do NVDA aínda poderá cargalos, Non se amosarán no Adm
 
 Para aceder ao Administrador de Complementos dende calquera lugar, por favor asigna un xesto persoalizado utilizando o [diálogho Xestos de Entrada #InputGestures].
 
-++ Consola de Python ++
+++ Consola de Python ++[PythonConsole]
 A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenvolvemento que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
 Para máis información, por favor olla a Guía do desenvolvedor dispoñible na [sección de desenvolvemento da páxina web do NVDA https://community.nvda-project.org/wiki/Development].
 
-++ Recargar plugins ++
+++ Recargar plugins ++[ReloadPlugins]
 Este elemento, unha vez activado, recarga app modules e plugins globais sen reiniciar ao NVDA, o cal é útil para desenvolvedores.
 
 + Sintetizadores de Voz Soportados +[SupportedSpeechSynths]
 Esta sección contén información acerca dos sintetizadores de voz soportados polo NVDA.
 Para unha lista máis extensa dos sintetizadores libres e comerciais que podes descargar e comprar para utilizar co NVDA, por favor mira a páxina en [https://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
-++ eSpeak NG ++
+++ eSpeak NG ++[eSpeakNG]
 O sintetizador [eSpeak NG https://github.com/espeak-ng/espeak-ng] compílase directamente no NVDA e non require ningún outro controlador ou componente especial para instalarse.
 NVDA iníciase utilizando eSpeak NG de xeito predeterminado.
 Como este sintetizador compilouse en NVDA, é unha gran elección para cando se executa NVDA nunha memoria USB ou nun CD noutros sistemas.
@@ -1769,19 +1787,19 @@ Hai unhas 43 linguas diferentes soportadas polo eSpeak NG.
 
 Tamén hai moitas variantes que poden escollerse para alterar o son da voz.
 
-++ Microsoft Speech API versión 4 (SAPI 4) ++
+++ Microsoft Speech API versión 4 (SAPI 4) ++[SAPI4]
 SAPI 4 é un antigo estándar de Microsoft para sintetizadores de voz software.
 NVDA aínda soporta esto para usuarios que teñan sintetizadores SAPI 4 instalados.
 Non obstante, Microsoft xa non soporta esto e necesítanse compoñentes que xa non están dispoñibles dende Microsoft.
 
 Cando uses este sintetizador co NVDA, as voces dispoñibles (accesibles dende o [diálogo Opcións de Voz #VoiceSettings] ou no [Grupo de Opcións do Sintetizador #SynthSettingsRing]) conterán todas as voces de todos os motores SAPI 4 instalados que se atopen no teu sistema.
 
-++ Microsoft Speech API versión 5 (SAPI 5) ++
+++ Microsoft Speech API versión 5 (SAPI 5) ++[SAPI5]
 SAPI 5 é un estándar de Microsoft para sintetizadores de voz software.
 Moitos sintetizadores de voz que cumpren con este estándar poderán comprarse ou descargarse gratuitamente dende varias compañías e sitios web, aíndaque probablemente o teu sistema xa virá con ao menos unha voz SAPI 5 preinstalada.
 Cando se utiliza este sintetizador co NVDA, as voces dispoñibles (ás que se accede dende o [diálogo Opcións de Voz #VoiceSettings] ou dende o [Grupo de opcións de sintetizador #SynthSettingsRing]) conterán todas as voces de todos os motores SAPI 5 instalados atopados no teu sistema.
 
-++ Microsoft Speech Platform ++
+++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
 Microsoft Speech Platform proporciona voces para moitas linguas que se utilizan habitualmente no desenvolvemento de aplicacións basadas en servidores de fala. 
 Estas voces tamén poden utilizarse co NVDA.
 
@@ -1794,7 +1812,7 @@ Para utilizar estas voces, necesitarás instalar dous compoñentes:
  -
 -
 
-++ Voces Windows OneCore ++
+++ Voces Windows OneCore ++[OneCore]
 Windows 10 inclúe novas voces coñecidas coma voces "OneCore" ou "mobile".
 Proporciónanse voces para moitas linguas e son máis lixeiras que as voces Microsoft disponibles ao se usar Microsoft Speech API versión 5.
 
@@ -1805,14 +1823,14 @@ Tamén, a velocidade selecionada na configuración de Windows afecta á configur
 Estos problemas non se poden resolver sen cambios no Windows.
 Desexamos que esto se solucione nunha actualización futura do Windows.
 
-++ Audiologic Tts3 ++
+++ Audiologic Tts3 ++[Audiologic]
 Este é un sintetizador de voz commercial específicamente para a lingua italiana.
 Debes ter este sintetizador instalado no teu sistema para poder utilizalo co NVDA.
 Para máis información, por favor visita o sitio web de Audiologic en www.audiologic.it.
 
-Este sintetizador non soporta a [funcionalidade de deletreo #VoiceSpellingFunctionality].
+Este sintetizador non soporta a [funcionalidade de deletreo #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer para o NVDA ++
+++ Nuance Vocalizer para o NVDA ++[Vocalizer]
 O Nuance Vocalizer é un sintetizador de voz commercial e de alta calidade desenvolvido por Nuance Communications, Inc., e empaquetado especialmente para o NVDA por Tiflotecnia, Lda.
 Contén máis de 50 voces diferentes que podes instalar, falando en máis de 30 linguas.
 Todos Os compoñentes e voces do sintetizador agrúpanse en paquetes de complemento, os que permiten o seu uso compreto en copias portables do NVDA.
@@ -1823,7 +1841,7 @@ Unha porcentaxe das ventas deste producto dóase ao NV Access, para financiar o 
 + Pantallas Braille Soportadas +[SupportedBrailleDisplays]
 Esta sección contén información acerca das pantallas braille soportadas polo NVDA.
 
-++ Freedom Scientific Focus/PAC Mate Series ++
+++ Series das Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
 Todas as pantallas Focus e PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] sopórtanse.
 Necesitarás os controladores de pantallas braille de Freedom Scientific instalados no teu sistema.
 Se non os tes aínda, podes obtelos dende http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
@@ -1882,7 +1900,7 @@ Só para a Focus 80:
 | Desprazar pantalla braille adiante | barra frontal esquerda abaixo, barra frontal dereita abaixo |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++
+++ Optelec ALVA BC640/680 ++[OptelecALVA]
 Ambas pantallas ALVA BC640 e BC680 de [Optelec http://www.optelec.com/] sopórtanse.
 Non necesitas instalar ningún controlador en especial para utilizar estas pantallas.
 Só enchufa a pantalla e configura o NVDA para utilizalas.
@@ -1926,7 +1944,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | tecla fin | t3+spDereita |
 %kc:endInclude
 
-++ Pantallas Handy Tech ++
+++ Pantallas Handy Tech ++[HandyTech]
 O NVDA soporta a maioría das pantallas de [Handy Tech http://www.handytech.de/] cando se conecten por USB, porto serie ou bluetooth.
 Para algunhas pantallas antigas USB, necesitarás instalar os controladores USB de Handy Tech no teu sistema.
 
@@ -1960,7 +1978,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Conmutar entrada braille | espazo+b1+b3+b4 (espazo+B maiúscula) |
 %kc:endInclude
 
-++ MDV Lilli ++
+++ MDV Lilli ++[MDVLilli]
 A pantalla braille Lilli dispoñible dende [MDV http://www.mdvbologna.it/] sopórtase.
 Non necesitas instalar ningún controlador específico para utilizar esta pantalla.
 Só enchufa a pantalla e configura o NVDA para utilizala.
@@ -1980,7 +1998,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Tecla alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Pantallas braille Baum/Humanware/APH/Orbit ++
+++ Pantallas braille Baum/Humanware/APH/Orbit ++[Baum]
 Varias pantallas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] e [Orbit http://www.orbitresearch.com/] están soportadas cando se conectan a través dos portos USB, bluetooth ou serie.
 Estas inclúen:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
@@ -2016,7 +2034,7 @@ Para liñas que teñan un joystick:
 | Tecla intro | seleccionar |
 %kc:endInclude
 
-++ hedo ProfiLine USB ++
+++ hedo ProfiLine USB ++[HedoProfiLine]
 A hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] está soportada.
 Primeiro debes instalar os controladores USB proporcionados polo fabricante.
 
@@ -2033,7 +2051,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Ler todo | B6 |
 %kc:endInclude
 
-++ hedo MobilLine USB ++
+++ hedo MobilLine USB ++[HedoMobilLine]
 Sopórtase a hedo MobilLine USB de [hedo Reha-Technik http://www.hedo.de/].
 Primeiro debes instalar os controladores USB proporcionados polo fabricante.
 
@@ -2050,7 +2068,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Ler todo | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant Series BI/B ++
+++ HumanWare Brailliant Series BI/B ++[HumanWareBrailliant]
 As pantallas braille Brailliant series BI e B de [HumanWare http://www.humanware.com/], incluíndo BI 32, BI 40 e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
 Se a conectas a través de USB co protocolo configurado a HumanWare, primeiro debes instalar os controladores USB proporcionados polo fabricante.
 Non se requiren os controladores USB se o protocolo se configura a OpenBraille.
@@ -2081,79 +2099,79 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Ler todo | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Series da HIMS Braille Sense/Braille EDGE/Smart Beetle ++
-O NVDA soporta as pantallas Braille Sense, Braille EDGE e Smart Beetle de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
+++ Series das HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
+O NVDA soporta as pantallas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
 Se se conectan a través do USB, necesitarás instalar os controladores USB de HIMS no sistema.
-Podes descargalos dende esta páxina: http://www.himsintl.com/?c=2/13&uid=2319
+Podes descargalos de aquí: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seguidamente van as asignacións de teclas para estas pantallas co NVDA.
 Por favor consulta a documentación das pantallas para descripcións de onde poden atoparse estas teclas.
 %kc:beginInclude
 || Nome | Tecla |
-| Desprazar atrás pantalla braille | desplazador esquerdo abaixo |
-| Desprazar adiante pantalla braille | desprazador dereito abaixo |
-| Mover pantalla braille á liña anterior | desprazador esquerdo arriba |
-| Mover pantalla braille á liña seguinte | desprazador dereito arriba|
 | Ir á celda braille | sensores |
-| tecla shift+tab | ponto1+ponto2+Espazo |
-| tecla alt | ponto1+ponto3+ponto4+Espazo |
-| tecla escape | ponto1+ponto5+Espazo |
-| tecla tab | ponto4+ponto5+Espazo |
-| tecla frecha arriba | ponto1+Espazo |
-| Tecla frecha abaixo | ponto4+Espazo |
-| bloq maiúsculas | ponto1+ponto3+ponto6+Espazo |
-| tecla shift+alt+tab | avance2+avance3+avance1 |
-| tecla alt+tab | avance2+avance3 |
-| tecla fin | ponto4+ponto6+Espazo |
-| tecla Control+fin | ponto4+ponto5+ponto6+Espazo |
-| tecla inicio | ponto1+ponto3+Espazo |
-| tecla control+inicio | ponto1+ponto2+ponto+Espazo |
-| tecla frecha esquerda | ponto3+Espazo |
-| tecla control+shift+frecha esquerda | ponto2+ponto8+espazo+avance1 |
-| tecla control+frecha esquerda | ponto2+Espazo |
-| tecla shift+alt+frecha esquerda | ponto2+ponto7+avance1 |
-| tecla alt+frecha esquerda | ponto2+ponto7 |
-| tecla frecha dereita | ponto6+Espazo |
-| tecla control+shift+frecha dereita | ponto5+ponto6+Espazo+avance1 |
-| tecla control+frecha dereita | ponto5+espazo |
-| tecla shift+alt+frecha dereita | ponto5+ponto7+avance1 |
-| tecla alt+frecha dereita | ponto5+ponto7 |
-| tecla RePáx | ponto1+ponto2+ponto6+espazo |
-| tecla control+rePáx | ponto1+ponto2+ponto6+ponto8+espazo |
-| tecla control+shift+frecha arriba | ponto2+ponto3+ponto8+espazo+avance1 |
-| tecla control+frecha arriba | ponto2+ponto3+espazo |
-| tecla shift+alt+frecha arriba | ponto2+ponto3+ponto7+avance1 |
-| tecla alt+frecha arriba | ponto2+ponto3+ponto7 |
-| tecla shift+frecha arriba | desprazador esquerdo abaixo + espazo |
+| Desprazar pantalla braille atrás | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Desprazar pantalla braille adiante | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Mover pantalla braille á liña anterior | leftSideScrollUp+rightSideScrollUp |
+| Mover pantalla braille á liña seguinte | leftSideScrollDown+rightSideScrollDown |
+| Mover á liña anterior en revisión | rightSideUpArrow |
+| Mover á liña seguinte en revisión | rightSideDownArrow |
+| Mover ao carácter  anterior en revisión | rightSideLeftArrow |
+| Mover ao carácter seguinte en revisión | rightSideRightArrow |
+| Mover ao foco actual | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| Tecla control | smartbeetle:f1, brailleedge:f3 |
+| Tecla windows | f7, smartbeetle:f2 |
+| tecla alt | ponto1+ponto3+ponto4+espazo, f2, smartbeetle:f3, brailleedge:f4 |
+| tecla shift | f5 |
+| tecla insert | ponto2+ponto4+espazo, f6 |
+| tecla aplicacións | ponto1+ponto2+ponto3+ponto4+espazo, f8 |
+| tecla bloqueo de maiúsculas | ponto1+ponto3+ponto6+espazo |
+| tecla tab | ponto4+ponto5+espazo, f3, brailleedge:f2 |
+| teclas shift+alt+tab | f2+f3+f1 |
+| teclas alt+tab | f2+f3 |
+| teclas shift+tab | ponto1+ponto2+espazo |
+| tecla fin | ponto4+ponto6+espazo |
+| teclas control+fin | ponto4+ponto5+ponto6+espazo |
+| tecla inicio | ponto1+ponto3+espazo, smartbeetle:f4 |
+| teclas control+inicio | ponto1+ponto2+ponto3+espazo |
+| teclas alt+f4 | ponto1+ponto3+ponto5+ponto6+espazo |
+| tecla frecha esquerda | ponto3+espazo, leftSideLeftArrow |
+| teclas control+shift+frecha esquerda | ponto2+ponto8+espazo+f1 |
+| teclas control+frecha esquerda | ponto2+espazo |
+| teclas shift+frecha esquerda | ponto2+ponto7+f1 |
+| teclas alt+frecha esquerda | ponto2+ponto7 |
+| tecla frecha dereita | ponto6+espazo, leftSideRightArrow |
+| teclas control+shift+frecha dereita | ponto5+ponto8+espazo+f1 |
+| teclas control+frecha dereita | ponto5+espazo |
+| teclas shift+alt+frecha dereita | ponto5+ponto7+f1 |
+| teclas alt+frecha dereita | ponto5+ponto7 |
+| tecla rePáx | ponto1+ponto2+ponto6+espazo |
+| teclas control+rePáx | ponto1+ponto2+ponto6+ponto8+espazo |
+| tecla frecha arriba | ponto1+espazo, leftSideUpArrow |
+| teclas control+shift+frecha arriba | ponto2+ponto3+ponto8+espazo+f1 |
+| teclas control+frecha arriba | ponto2+ponto3+espazo |
+| teclas shift+alt+frecha arriba | ponto2+ponto3+ponto7+f1 |
+| teclas alt+frecha arriba | ponto2+ponto3+ponto7 |
+| teclas shift+frecha arriba | leftSideScrollDown+espazo |
 | tecla avPáx | ponto3+ponto4+ponto5+espazo |
-| tecla control+avPáx | ponto3+ponto4+ponto5+ponto8+espazo |
-| tecla control+shift+frecha abaixo | ponto5+ponto6+ponto8+espazo+avance1 |
-| tecla control+frecha abaixo | ponto5+ponto6+espazo |
-| tecla shift+alt+frecha abaixo | ponto5+ponto6+ponto7+avance1 |
-| tecla alt+frecha abaixo | ponto5+ponto6+ponto7 |
-| tecla shift+frecha abaixo | desprazador dereito abaixo + espazo |
-| tecla suprimir | ponto1+ponto3+ponto5+espazo |
+| teclas control+avPáx | ponto3+ponto4+ponto5+ponto8+espazo |
+| tecla frecha abaixo | ponto4+espazo, leftSideDownArrow |
+| teclas control+shift+frecha abaixo | ponto5+ponto6+ponto8+espazo+f1 |
+| teclas control+frecha abaixo | ponto5+ponto6+espazo |
+| teclas shift+alt+frecha abaixo | ponto5+ponto6+ponto7+f1 |
+| teclas alt+frecha abaixo | ponto5+ponto6+ponto7 |
+| teclas shift+frecha abaixo | espacio+rightSideScrollDown |
+| tecla escape | ponto1+ponto5+espazo, f4, brailleedge:f1 |
+| tecla borrar | ponto1+ponto3+ponto5+espazo, ponto1+ponto4+ponto5+espazo |
 | tecla f1 | ponto1+ponto2+ponto5+espazo |
 | tecla f3 | ponto1+ponto2+ponto4+ponto8 |
-| tecla f4 | ponto7+avance3 |
-| tecla windows+b | ponto1+ponto2+avance1 |
-| tecla windows+d | ponto1+ponto4+ponto5+avance1 |
+| tecla f4 | ponto7+f3 |
+| teclas windows+b | ponto1+ponto2+f1 |
+| teclas windows+d | ponto1+ponto4+ponto5+f1 |
+| teclas control+insert | smartbeetle:f1+rightSideScroll |
+| teclas alt+insert | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
-++ HIMS SyncBraille ++
-O NVDA soporta a pantalla SyncBraille de [HIMS http://www.hims-inc.com/].
-Necesitarás instalar os controladores USB de HIMS no sistema.
-
-Seguidamente van as asignacións de teclas para esta pantalla co NVDA.
-Por favor consulta a documentación da pantalla para descripcións de onde se poden atopar estas teclas.
-%kc:beginInclude
-|| Nome | Tecla |
-| Desprazar pantalla braille cara atrás | desprazador abaixo da esquerda |
-| Desprazar pantalla braille cara adiante | desprazador abaixo da dereita |
-| Ir á celda braille | sensores |
-%kc:endInclude
-
-++ Pantallas Braille Seika ++
+++ Pantallas Braille Seika ++[Seika]
 Sopórtanse as pantallas braille Seika Versión 3, 4 e 5 (40 celdas) e Seika80 (80 celdas) de [Nippon Telesoft http://www.nippontelesoft.com/].
 Podes atopar máis información acerca destas pantallas en http://www.seika-braille.com/.
 Primeiro debes instalar os controladores USB proporcionados polo fabricante.
@@ -2175,7 +2193,7 @@ Por favor consulta a documentación da pantalla para descripcióms de onde se at
 | Ir á celda braille | sensores |
 %kc:endInclude
 
-++ Modelos máis novos da Papenmeier BRAILLEX ++
+++ Modelos máis novos da Papenmeier BRAILLEX ++[Papenmeier]
 Sopórtanse as seguintes pantallas Braille: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
@@ -2256,7 +2274,7 @@ As teclas interiores mapéanse a espazo.
 | tecla tab | espazo cos pontos 3 7 |
 %kc:endInclude 
 
-++ Modelos Antigos Papenmeier Braille BRAILLEX ++
+++ Modelos Antigos Papenmeier Braille BRAILLEX ++[PapenmeierOld]
 Sopórtanse as seguintes pantallas Braille: 
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
@@ -2339,7 +2357,7 @@ BRAILLEX 2D Screen:
 | Moverse ao obxecto anterior | right2 |
 %kc:endInclude
 
-++ HumanWare BrailleNote ++
+++ HumanWare BrailleNote ++[HumanWareBrailleNote]
 O NVDA soporta os anotadores electrónicos BrailleNote de [Humanware http://www.humanware.com] cando actúen como un terminal braille para un lector de pantalla.
 Sopórtanse os seguintes modelos:
 - BrailleNote Classic (só conexión serie)
@@ -2387,7 +2405,7 @@ Por favor consulta a documentación do BrailleNote para atopar onde se localizan
 | Activar e desactivar axuda de entrada | espazo+ponto2+ponto3+ponto6 (espazo+h abaixo) |
 %kc:endInclude
 
-++ EcoBraille ++
+++ EcoBraille ++[EcoBraille]
 O NVDA soporta pantallas EcoBraille de [ONCE http://www.once.es/].
 Sopórtanse os seguintes modelos:
 - EcoBraille 20
@@ -2422,7 +2440,7 @@ Por favor consulta a [documentación para EcoBraille ftp://ftp.once.es/pub/utt/b
 | conmutar o braille sigue a | A |
 %kc:endInclude
 
-++ SuperBraille ++
+++ SuperBraille ++[SuperBraille]
 O dispositivo SuperBraille, dispoñible principalmente en Taiwan, pode conectarse ou por USB ou por serie.
 Como o SuperBraille non ten ningunha tecla física para escrebir ou botóns de desprazamento, toda a entrada debe facerse a través dun teclado estándar de computador.
 Debido a esto, e para manter compatibilidade con outros lectores de pantalla en Taiwan, proporciónanse dúas combinacións de teclas para desprazamento da pantalla braille:
@@ -2432,7 +2450,7 @@ Debido a esto, e para manter compatibilidade con outros lectores de pantalla en 
 | Desprazar adiante pantalla braille | Máis teclado numérico | 
 %kc:endInclude
 
-++ BRLTTY ++
+++ BRLTTY ++[BRLTTY]
 [BRLTTY http://www.brltty.com/] é un programa por separado que pode utilizarse para soportar moitas pantallas braille.
 Para utilizar esto, necesitas instalar [BRLTTY for Windows http://www.brltty.com/download.html].
 Deberías descargar e instalar o último paquete instalable, que se chamará, por exemplo, brltty-win-4.2-2.exe.
@@ -2452,7 +2470,7 @@ Por favor consulta as [listas de claves de vínculos de BRLTTY http://mielke.cc/
 | Guiar á celda braille | route (leva o cursor ao caracter) |
 %kc:endInclude
 
-+ Temas Avanzados +
++ Temas Avanzados +[AdvancedTopics]
 
 ++ Opcións de Liña de Ordes ++[CommandLineOptions]
 O NVDA pode aceptar unha ou máis opcións adicionais ao arrancar que alteren o seu comportamento.
@@ -2510,7 +2528,7 @@ Os seguintes valores poden configurarse baixo estas claves do rexistro:
 | configInLocalAppData | DWORD | 0 (predeterminado) para deshabilitado, 1 para habilitado | Se está habilitado, almacena a configuración do usuario do NVDA no cartafol local de datos de aplicación en lugar da roaming application data |
 | serviceDebug | DWORD | 0 (predeterminado) para deshabilitar, 1 para habilitar | Se se habilita, deshabilita o modo seguro nos escritorios seguros do windows, permitindo o uso da consola de Python e do visualizador do Rexistro. Debido a varias implicacións importantes de seguridade, o uso desta opción está altamente desaconsellada |
 
-+ Información Adicional +
++ Información Adicional +[FurtherInformation]
 Se requires información adicional ou asistencia referente ao NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.
 Aquí, podes atopar documentación adicional,  así como soporte técnico e recursos para a comunidade. 
 Este sitio tamén proporciona información e recursos concernintes ao desenrolo do NVDA.
