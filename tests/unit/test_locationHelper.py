@@ -58,11 +58,16 @@ class TestRectUtilities(unittest.TestCase):
 
 	def test_points(self):
 		rect = RectLTRB(left=-5,top=-5,right=5,bottom=5)
-		self.assertEqual(rect.center, Point(x=0,y=0))
 		self.assertEqual(rect.topLeft, Point(x=-5,y=-5))
 		self.assertEqual(rect.topRight, Point(x=5,y=-5))
 		self.assertEqual(rect.bottomLeft, Point(x=-5,y=5))
 		self.assertEqual(rect.bottomRight, Point(x=5,y=5))
+		self.assertEqual(rect.center, Point(x=0,y=0))
+		# Specifically test some other edge cases for center
+		self.assertEqual(RectLTRB(left=10,top=10,right=20,bottom=20).center, Point(x=15,y=15))
+		self.assertEqual(RectLTRB(left=-20,top=-20,right=-10,bottom=-10).center, Point(x=-15,y=-15))
+		self.assertEqual(RectLTRB(left=10,top=10,right=21,bottom=21).center, Point(x=16,y=16))
+		self.assertEqual(RectLTRB(left=-21,top=-21,right=-10,bottom=-10).center, Point(x=-16,y=-16))
 
 class TestToRectLTRB(unittest.TestCase):
 

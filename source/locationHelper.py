@@ -231,7 +231,7 @@ class _RectMixin:
 
 	@property
 	def center(self):
-		return Point((self.left+self.right)/2, (self.top+self.bottom)/2)
+		return Point(int(round(self.left+self.width/2.0)), int(round(self.top+self.height/2.0)))
 
 	def __contains__(self,other):
 		"""Returns whether other is a part of this rectangle."""
