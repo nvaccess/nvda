@@ -19,20 +19,23 @@ class TestRectOperators(unittest.TestCase):
 
 	def test_superset(self):
 		self.assertTrue(RectLTRB(left=2,top=2,right=6,bottom=6).isSuperset(RectLTRB(left=2,top=2,right=4,bottom=4)))
+		self.assertFalse(RectLTRB(left=2,top=2,right=4,bottom=4).isSuperset(RectLTRB(left=2,top=2,right=6,bottom=6)))
 		self.assertTrue(RectLTRB(left=2,top=2,right=6,bottom=6).isSuperset(RectLTRB(left=2,top=2,right=6,bottom=6)))
 
 	def test_subset(self):
 		self.assertTrue(RectLTRB(left=2,top=2,right=4,bottom=4).isSubset(RectLTRB(left=2,top=2,right=6,bottom=6)))
-		self.assertTrue(RectLTRB(left=2,top=2,right=6,bottom=6).isSubset(RectLTRB(left=2,top=2,right=6,bottom=6)))
 		self.assertFalse(RectLTRB(left=2,top=2,right=6,bottom=6).isSubset(RectLTRB(left=2,top=2,right=4,bottom=4)))
+		self.assertTrue(RectLTRB(left=2,top=2,right=6,bottom=6).isSubset(RectLTRB(left=2,top=2,right=6,bottom=6)))
 
 	def test_in(self):
-		self.assertIn(RectLTRB(left=2,top=2,right=4,bottom=4), RectLTRB(left=2,top=2,right=6,bottom=6))
-		self.assertNotIn(RectLTRB(left=2,top=2,right=4,bottom=4), RectLTRB(left=2,top=2,right=4,bottom=4))
-		self.assertIn(Point(x=2,y=2), RectLTRB(left=2,top=2,right=6,bottom=6))
-		self.assertIn(Point(x=4,y=4), RectLTRB(left=2,top=2,right=6,bottom=6))
-		self.assertNotIn(Point(x=2,y=6), RectLTRB(left=2,top=2,right=6,bottom=6))
-		self.assertNotIn(Point(x=6,y=6), RectLTRB(left=2,top=2,right=6,bottom=6))
+		rect = RectLTRB(left=2,top=2,right=6,bottom=6)
+		self.assertIn(RectLTRB(left=2,top=2,right=4,bottom=4), rect)
+		self.assertNotIn(rect, rect)
+		self.assertIn(Point(x=2,y=2), rect)
+		self.assertIn(Point(x=4,y=4), rect)
+		self.assertNotIn(Point(x=2,y=6), rect)
+		self.assertNotIn(Point(x=6,y=2), rect)
+		self.assertNotIn(Point(x=6,y=6), rect)
 
 	def test_equal(self):
 		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4), RectLTRB(left=2,top=2,right=4,bottom=4))
