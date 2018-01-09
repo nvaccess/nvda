@@ -146,10 +146,15 @@ class Point(namedtuple("Point",("x","y"))):
 				other=toPoint(other)
 			except ValueError:
 				return False
-		return self.x==other.x and self.y==other.y
+		return self.x == other.x and self.y == other.y
 
-	def __neq__(self,other):
-		return not (self==other)
+	def __ne__(self,other):
+		if not isinstance(other,POINT_CLASSES):
+			try:
+				other=toPoint(other)
+			except ValueError:
+				return True
+		return self.x != other.x or self.y != other.y
 
 	def toPOINT(self):
 		"""Converts self to a L{ctypes.wintypes.POINT}"""
@@ -209,6 +214,14 @@ class _RectMixin:
 		return Point(self.left,self.top)
 
 	@property
+	def topRight(self):
+		return Point(self.right,self.top)
+
+	@property
+	def bottomLeft(self):
+		return Point(self.left,self.bottom)
+
+	@property
 	def bottomRight(self):
 		return Point(self.right,self.bottom)
 
@@ -219,7 +232,7 @@ class _RectMixin:
 	def __contains__(self,other):
 		"""Returns whether other is a part of this rectangle."""
 		if isinstance(other,POINT_CLASSES):
-			return other.x >= self.left < self.right and other.y >= self.top < self.bottom
+			return self.left <= other.x < self.right and  self.top <= other.y < self.bottom
 		if not isinstance(other,RECT_CLASSES):
 			try:
 				other=toRectLTRB(other)
@@ -253,8 +266,13 @@ class _RectMixin:
 				return False
 		return other.left == self.left and other.top == self.top and other.right == self.right and other.bottom == self.bottom
 
-	def __neq__(self,other):
-		return not (self==other)
+	def __ne__(self,other):
+		if not isinstance(other,RECT_CLASSES):
+			try:
+				other=toRectLTRB(other)
+			except ValueError:
+				return True
+		return other.left != self.left or other.top != self.top or other.right != self.right or other.bottom != self.bottom
 
 	def intersection(self,other):
 		"""Returns the intersection of self and other.
