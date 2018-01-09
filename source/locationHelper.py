@@ -26,7 +26,9 @@ class Point(namedtuple("Point",("x","y"))):
 		"""Returns a new L{Point} with x = self.x + other.x and y = self.y + other.y."""
 		if other == 0:
 			return self
-		return self.__add__(other)
+		elif not isinstance(other,POINT_CLASSES):
+			return NotImplemented
+		return Point((other.x+self.x),(other.y+self.y))
 
 	def __sub__(self,other):
 		if not isinstance(other,POINT_CLASSES):
@@ -34,7 +36,9 @@ class Point(namedtuple("Point",("x","y"))):
 		return Point((self.x-other.x),(self.y-other.y))
 
 	def __rsub__(self,other):
-		return self.__sub__(other)
+		if not isinstance(other,POINT_CLASSES):
+			return NotImplemented
+		return Point((other.x-self.x),(other.y-self.y))
 
 	def yWiseLessThan(self,other):
 		"""

@@ -40,6 +40,20 @@ class TestRectOperators(unittest.TestCase):
 		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4), RectLTWH(left=2,top=2,width=2,height=2))
 		self.assertNotEqual(RectLTRB(left=2,top=2,right=4,bottom=4), RectLTWH(left=2,top=2,width=4,height=4))
 
+	def test_ctypesRECT(self):
+		# Intersection
+		self.assertEqual(RectLTRB(left=2,top=2,right=4,bottom=4).intersection(RECT(left=3,top=3,right=5,bottom=5)), RectLTRB(left=3,top=3,right=4,bottom=4))
+		# Superset
+		self.assertTrue(RectLTRB(left=2,top=2,right=6,bottom=6).isSuperset(RECT(left=2,top=2,right=4,bottom=4)))
+		# Subset
+		self.assertTrue(RectLTRB(left=2,top=2,right=4,bottom=4).isSubset(RECT(left=2,top=2,right=6,bottom=6)))
+		# in
+		self.assertIn(RECT(left=2,top=2,right=4,bottom=4), RectLTRB(left=2,top=2,right=6,bottom=6))
+		self.assertNotIn(RECT(left=2,top=2,right=4,bottom=4), RectLTRB(left=2,top=2,right=4,bottom=4))
+		# Equality
+		self.assertEqual(RECT(left=2,top=2,right=4,bottom=4), RectLTRB(left=2,top=2,right=4,bottom=4))
+		self.assertNotEqual(RECT(left=2,top=2,right=4,bottom=4), RectLTRB(left=2,top=2,right=6,bottom=6))
+
 class TestRectUtilities(unittest.TestCase):
 
 	def test_points(self):
@@ -62,10 +76,10 @@ class TestToRectLTRB(unittest.TestCase):
 			Point(20,20),
 			Point(50,50),
 			Point(400,400),
-			POINT(15,15),
-			POINT(20,20),
-			POINT(50,50),
-			POINT(400,400),
+			POINT(x=15,y=15),
+			POINT(x=20,y=20),
+			POINT(x=50,y=50),
+			POINT(x=400,y=400),
 			RectLTRB(left=450,top=450,right=490,bottom=990),
 			RECT(450,450,490,990)
 		), rect)
@@ -85,10 +99,10 @@ class TestToRectLTWH(unittest.TestCase):
 			Point(20,20),
 			Point(50,50),
 			Point(400,400),
-			POINT(15,15),
-			POINT(20,20),
-			POINT(50,50),
-			POINT(400,400),
+			POINT(x=15,y=15),
+			POINT(x=20,y=20),
+			POINT(x=50,y=50),
+			POINT(x=400,y=400),
 			RectLTRB(left=450,top=450,right=505,bottom=1010),
 			RECT(450,450,490,990)
 		), location)
@@ -130,6 +144,35 @@ class TestPointOperators(unittest.TestCase):
 
 	def test_equal(self):
 		self.assertEqual(Point(x=4,y=3), Point(x=4,y=3))
-		self.assertEqual(POINT(x=4,y=3), Point(x=4,y=3))
 		self.assertNotEqual(Point(x=3,y=4), Point(x=4,y=3))
+
+	def test_ctypesPOINT(self):
+		# Add
+		self.assertEqual(Point(x=2,y=4)+POINT(x=2,y=4),Point(x=4,y=8))
+		self.assertEqual(POINT(x=2,y=4)+Point(x=2,y=4),Point(x=4,y=8))
+		# Sum
+		self.assertEqual(sum((Point(x=2,y=4), POINT(x=2,y=4), Point(x=2,y=4))), Point(x=6,y=12))
+		# Subtract
+		self.assertEqual(Point(x=2,y=4)-POINT(x=4,y=8),Point(x=-2,y=-4))
+		self.assertEqual(POINT(x=2,y=4)-Point(x=4,y=8),Point(x=-2,y=-4))
+		# Greater than
+		self.assertTrue(Point(x=3,y=4).yWiseGreaterThan(POINT(x=4,y=3)))
+		self.assertFalse(Point(x=3,y=4).xWiseGreaterThan(POINT(x=4,y=3)))
+		self.assertTrue(Point(x=4,y=3).xWiseGreaterThan(POINT(x=3,y=4)))
+		self.assertFalse(Point(x=4,y=3).yWiseGreaterThan(POINT(x=3,y=4)))
+		self.assertTrue(Point(x=3,y=4).yWiseGreaterOrEq(POINT(x=4,y=3)))
+		self.assertFalse(Point(x=3,y=4).xWiseGreaterOrEq(POINT(x=4,y=3)))
+		self.assertTrue(Point(x=4,y=3).xWiseGreaterOrEq(POINT(x=3,y=4)))
+		self.assertFalse(Point(x=4,y=3).yWiseGreaterOrEq(POINT(x=3,y=4)))
+		# Less than
+		self.assertTrue(Point(x=4,y=3).yWiseLessThan(POINT(x=3,y=4)))
+		self.assertFalse(Point(x=4,y=3).xWiseLessThan(POINT(x=3,y=4)))
+		self.assertTrue(Point(x=3,y=4).xWiseLessThan(POINT(x=4,y=3)))
+		self.assertFalse(Point(x=3,y=4).yWiseLessThan(POINT(x=4,y=3)))
+		self.assertTrue(Point(x=4,y=3).yWiseLessOrEq(POINT(x=3,y=4)))
+		self.assertFalse(Point(x=4,y=3).xWiseLessOrEq(POINT(x=3,y=4)))
+		self.assertTrue(Point(x=3,y=4).xWiseLessOrEq(POINT(x=4,y=3)))
+		self.assertFalse(Point(x=3,y=4).yWiseLessOrEq(POINT(x=4,y=3)))
+		# Equality
+		self.assertEqual(POINT(x=4,y=3), Point(x=4,y=3))
 		self.assertNotEqual(POINT(x=3,y=4), Point(x=4,y=3))
