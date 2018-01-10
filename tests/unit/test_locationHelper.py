@@ -75,6 +75,7 @@ class TestRectUtilities(unittest.TestCase):
 class TestToRectLTRB(unittest.TestCase):
 
 	def test_collection(self):
+		"""Tests whether a collection of several rectangle and point types convert to the expected L{RectLTRB}."""
 		rect=RectLTRB(left=10,top=15,right=500,bottom=1000)
 		self.assertEqual(toRectLTRB(
 			rect.topLeft, 
@@ -98,6 +99,7 @@ class TestToRectLTRB(unittest.TestCase):
 class TestToRectLTWH(unittest.TestCase):
 
 	def test_collection(self):
+		"""Tests whether a collection of several rectangle and point types convert to the expected L{RectLTWH}."""
 		location=RectLTWH(left=10,top=15,width=500,height=1000)
 		self.assertEqual(toRectLTWH(
 			location.topLeft, 

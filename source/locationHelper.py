@@ -251,7 +251,7 @@ class _RectMixin:
 				other=toRectLTRB(other)
 			except ValueError:
 				return False
-		return self.left >= other.left and self.top >= other.top and self.right <= other.right and self.bottom <= other.bottom
+		return other.left<=self.left<=self.right<=other.right and other.top<=self.top<=self.bottom<=other.bottom
 
 	def isSuperset(self,other):
 		"""Returns whether this rectangle is a superset of other (i.e. whether all points of other are contained by this rectangle)."""
@@ -260,7 +260,7 @@ class _RectMixin:
 				other=toRectLTRB(other)
 			except ValueError:
 				return False
-		return other.left >= self.left and other.top >= self.top and other.right <= self.right and other.bottom <= self.bottom
+		return self.left<=other.left<=other.right<=self.right and self.top<=other.top<=other.bottom<=self.bottom
 
 	def __eq__(self,other):
 		if not isinstance(other,RECT_CLASSES):
