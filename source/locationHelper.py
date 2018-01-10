@@ -434,4 +434,4 @@ def toPoint(*params):
 POINT_CLASSES=(Point, POINT, textInfos.Point, wx.Point)
 #: Classes which support conversion to locationHelper RectLTRB/LTWH using their left, top, right and bottom properties.
 #: type: tuple
-RECT_CLASSES=(RectLTRB, RectLTWH, RECT, SMALL_RECT, textInfos.Rect, wx.Rect)
+RECT_CLASSES=(RectLTRB, RectLTWH, RECT, SMALL_RECT, textInfos.Rect)
