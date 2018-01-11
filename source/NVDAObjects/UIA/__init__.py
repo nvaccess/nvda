@@ -133,6 +133,7 @@ class UIATextInfo(textInfos.TextInfo):
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
 			raise ValueError("%s is not a text range"%textRange)
+		fetchAnnotationTypes=False
 		try:
 			textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 		except (COMError,AttributeError):
@@ -162,8 +163,6 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]:
 				fetchAnnotationTypes=True
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
-			else:
-				fetchAnnotationTypes=False
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
 			fetcher=BulkUIATextRangeAttributeValueFetcher(textRange,IDs)
 		if formatConfig["reportFontName"]:
