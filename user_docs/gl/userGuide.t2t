@@ -28,6 +28,7 @@ O máis subliñable inclue:
 - Traducido a 51 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
+- Anunciado de controis e texto mentres se usan xestos tactiles
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
 - Soporte para o símbolo do sistema de Windows e aplicacións de consola
 -
@@ -488,7 +489,6 @@ Ademáis, podes forzar manualmente o modo foco, despois permanecerá efectivo at
 | abrir descripción longa | NVDA+d | Abre unha ventá nova contendo unha descripción longa para o elemento sobre o que estea se ten unha. | 
 %kc:endInclude
 
-
 ++ Navegación con unha Soa Letra ++[SingleLetterNavigation]
 Mentres se está en modo revisión, para unha navegación máis rápida NVDA tamén proporciona teclas dun so caracter para saltar cara certos campos no documento.
 Ten en conta que non todas estas ordes se soportan en cada tipo de documento.
@@ -523,8 +523,8 @@ Para te mover cara o comezo ou o remate de elementos contedores como listas e t�
 || Nome | Tecla | Descripción |
 | Mover ao comezo dun contedor | shift+coma | Móvese ao comezo do contedor (lista, táboa etc) onde estea situado o cursor |
 | Mover ao final do contedor | coma | Móvese ao final do contedor (lista, táboa etc) onde estea situado o cursor |
-
 %kc:endInclude
+
 Algunhas aplicacións web coma Gmail, Twitter e Facebook usan letras soas como atallos de teclado.
 Se queres utilizar éstas aínda poderás usar as teclas de cursor para ler en modo exploración, podes desactivar temporalmente  as teclas de navegación cunha soa letra do NVDA.
 %kc:beginInclude
@@ -1233,13 +1233,13 @@ Se está activada, esta opción causará que a voz se interrumpa cada vez que se
 ==== Permitir lectura superficial en Falar Todo ====[KeyboardSettingsSkimReading]
 Se está activada, certas ordes de navegación (como a navegación rápida en modo navegación ou o movemento por liñas ou por parágrafos) non deteñen  Falar Todo, en cambio  Falar Todo salta  á nova posición e continúa a ler.
 
-==== Pitar se se Teclean Letras Minúsculas Cando BloqMaius está Activado ====[VoiceSettingsBeepLowercase]
+==== Pitar se se Teclean Letras Minúsculas Cando BloqMaius está Activado ====[KeyboardSettingsBeepLowercase]
 Cando está activada, escoitarase un pitido de aviso se se escrebe unha letra ca tecla shift mentres BloqMaius está activada.
 Xeralmente, escrebir letras en maiúsculas co BloqMaius é inintencionado e normalmente é debido a non revisar que o BloqMaius estea activado.
 Polo tanto, pode ser bastante útil seres avisado acerca de esto.
 
 %kc:setting
-==== Falar teclas de ordes ====[VoiceSettingsSpeakCommandKeys]
+==== Falar teclas de ordes ====[KeyboardSettingsSpeakCommandKeys]
 Tecla: NVDA+4
 
 Cando está marcada significa que NVDA anunciará todas as teclas que non sexan caracteres ao se escrebir no teclado. Esto inclúe combinacións de teclas como control más calquera outra letra. 
@@ -1330,7 +1330,7 @@ Os globos de axuda son como pequenos consellos, pero normalmente son máis grand
 Cando esta caixa de verificación está marcada, NVDA incluirá a tecla de atallo que estea asociada con certo obxecto ou control cando sexa anunciado. 
 Por exemplo o menú Archivo nunha barra de menú poderá ter unha tecla de atallo alt+a.
 
-==== Anunciar Información da Posición do Obxecto ====[ObjectPresentationPositionInfo]
+==== Anunciar Información da Posición do Obxecto ====[ObjectPresentationReportDescriptions]
 Esta opción permíteche escoller onde desexas ter unha posición do obxecto anunciada (ex.: 1 de 4) cando te moves ao obxecto co foco ou o navegador de obxectos.
 
 ==== Deducir a información de Posición do Obxecto cando non estea dispoñible ====[ObjectPresentationGuessPositionInfo]
@@ -1432,7 +1432,7 @@ Esta opción está desactivada de xeito predeterminado.
 
 Para conmutar a inclusión de táboas de deseño dende calquera lugar, por favor asigna un xesto personalizado usando o diálogo [Xestos de entrada #InputGestures].
 
-==== Configurando o anunciado de campos como ligas e cabeceiras ====
+==== Configurando o anunciado de campos como ligas e cabeceiras ====[BrowseModeLinksAndHeadings]
 Por favor atopa as novas opcións no [diálogo Opcións de Formato de documento #DocumentFormattingSettings]. 
 
 ==== Modo de foco automático para cambios do foco ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
