@@ -218,13 +218,13 @@ class MainFrame(wx.Frame):
 	def onSelectSynthesizerCommand(self,evt):
 		self._popupSettingsDialog(SynthesizerSelectionDialog)
 
-	def onSpeechCommand(self,evt):
+	def onSpeechSettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
 
 	def onSelectBrailleDisplayCommand(self,evt):
 		self._popupSettingsDialog(BrailleDisplaySelectionDialog)
 
-	def onBrailleCommand(self,evt):
+	def onBrailleSettingsCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
 
 	def onKeyboardSettingsCommand(self,evt):
@@ -234,7 +234,7 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
 
 	def onTouchInteractionCommand(self,evt):
-		self._popupSettingsDialog(TouchInteractionDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, TouchInteractionSettingsPanel)
 
 	def onReviewCursorCommand(self,evt):
 		self._popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
@@ -252,7 +252,7 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
 	def onUwpOcrCommand(self, evt):
-		self._popupSettingsDialog(UwpOcrDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
 	def onSpeechSymbolsCommand(self, evt):
 		self._popupSettingsDialog(SpeechSymbolsDialog)

@@ -1555,7 +1555,7 @@ class GlobalCommands(ScriptableObject):
 	script_activateSynthesizerDialog.category=SCRCAT_CONFIG
 
 	def script_activateVoiceDialog(self, gesture):
-		wx.CallAfter(gui.mainFrame.onSpeechCommand, None)
+		wx.CallAfter(gui.mainFrame.onSpeechSettingsCommand, None)
 	# Translators: Input help mode message for go to speech settings command.
 	script_activateVoiceDialog.__doc__ = _("Shows NVDA's speech settings")
 	script_activateVoiceDialog.category=SCRCAT_CONFIG
@@ -1567,7 +1567,7 @@ class GlobalCommands(ScriptableObject):
 	script_activateBrailleDisplayDialog.category=SCRCAT_CONFIG
 
 	def script_activateBrailleSettingsDialog(self, gesture):
-		wx.CallAfter(gui.mainFrame.onBrailleCommand, None)
+		wx.CallAfter(gui.mainFrame.onBrailleSettingsCommand, None)
 	# Translators: Input help mode message for go to braille settings command.
 	script_activateBrailleSettingsDialog.__doc__ = _("Shows NVDA's braille settings")
 	script_activateBrailleSettingsDialog.category=SCRCAT_CONFIG
@@ -2204,6 +2204,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+g": "activateGeneralSettingsDialog",
 		"kb:NVDA+control+s": "activateSynthesizerDialog",
 		"kb:NVDA+control+v": "activateVoiceDialog",
+		"kb:NVDA+control+a": "activateBrailleDisplayDialog",
 		"kb:NVDA+control+k": "activateKeyboardSettingsDialog",
 		"kb:NVDA+control+m": "activateMouseSettingsDialog",
 		"kb:NVDA+control+o": "activateObjectPresentationDialog",
