@@ -230,12 +230,18 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	Furthermore, in addition to Ok and Cancel buttons, it has an Apply button by default,
 	which is different  from the default behavior of L{SettingsDialog}.
 
-	To use this dialog: set title and populate L{categoryClasses} with subclasses of SettingsPanel."""
+	To use this dialog: set title and populate L{categoryClasses} with subclasses of SettingsPanel.
+	Make sure that L{categoryClasses} only  contains panels that are available on a particular system.
+	For example, if a certain category of settings is only supported on Windows 10 and higher,
+	that category should be left out of L{categoryClasses}
+	"""
 
 	title=""
 	categoryClasses=[]
 	settingsSizerOrientation = wx.HORIZONTAL
 	hasApplyButton = True # Differs from L{SettingsDialog}, where this is C{False}
+
+	class CategoryUnavailableError(RuntimeError): pass
 
 	def __init__(self, parent, initialCategory=None):
 		"""
@@ -246,6 +252,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		"""
 		if initialCategory and not issubclass(initialCategory,SettingsPanel):
 			raise TypeError("initialCategory should be an instance of SettingsPanel")
+		if initialCategory not in self.categoryClasses:
+			raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
 		self.initialCategory=initialCategory
 		self.currentCategory=None
 		self.categoryTreeItems=[]
