@@ -10,6 +10,10 @@ Quoi de Neuf dans NVDA
  - Certaines touches, en particulier les touches de défilement, ont été réassignées pour respecter les conventions utilisées par les produits Hims. Veuillez consulter le guide de l'utilisateur pour plus de détails.
 - Quand vous tapez sur le clavier à l'écran via l'interaction tactile, par défaut vous devez maintenant taper deux fois chaque touche comme vous le feriez pour activer tout autre contrôle.
  - pour utiliser le mode "frappe au toucher" où simplement lever son doigt de la touche suffit pour l'activer, activer cette option dans le nouveau dialogue Interaction Tactile du menu Préférences. (#7309)
+- Il est maintenant possible d'interagir avec les diagrammes sous Microsoft Word et Microsoft Powerpoint, de la même manière que sous Microsoft Excel. (#7046)
+ - sous Microsoft Word : En mode navigation, amener le curseur à un diagramme inclus et presser Entrer pour interagir avec lui.
+ - Sous Microsoft Powerpoint en édition d'une diapositive : Tabuler jusqu'à un objet diagramme, et presser Entrer ou Espace pour interagir avec lui.
+ - Pour cesser d'interagir avec un diagramme, presser échap.
  
  
 == Corrections de Bogues ==
@@ -18,12 +22,14 @@ Quoi de Neuf dans NVDA
 - NVDA n'interrompt plus sa mise à jour sur les systèmes où l'accès contrôlé aux dossiers est activé (disponible dans la mise à jour de Windows 10 Fall Creators). (#7696)
 - La détection des touches de défilement de l'afficheur Hims Smart Beetle n'est plus aléatoire. (#6086)
 - Une légère amélioration de performances à l'affichage d'un contenu important sous Mozilla Firefox 58 et au-delà. (#7719)
-- Suppression d'erreurs à la lecture de courriels contenant des tableaux sous Microsoft Outlook (#6827)
+- Sous Microsoft Outlook, la lecture de courriels contenant des tableaux ne provoque plus d'erreurs. (#6827)
 - Les gestes de commandes de terminaux braille qui émulent les modificateurs de touches système peuvent maintenant être combinés avec d'autres touches émulées si un ou plusieurs des gestes émulés sont spécifique au modèle de terminal. (#7783)
 - Sous Mozilla Firefox, le mode navigation fonctionne maintenant correctement dans les fenêtres contextuelles Créées par des extensions telles que LastPass et bitwarden. (#7809)
 - NVDA ne se bloque plus de temps en temps à chaque changement de focus si Firefox ou Chrome ne répondent plus en raison d'un bloquage ou d'un plantage. (#7818)
 - Dans les clients Twitter tels que Chicken Nugget, NVDA n'ignorera plus les 20 derniers caractères des tweets de 280 caractères lors de la lecture. (#7828)
 - NVDA utilise maintenant la langue appropriée pour l'annonce des symboles quand du texte est sélectionné. (#7687)
+- Dans les versions récentes d'Office 365, il est de nouveau possible de naviguer dans les diagrammes Excel en utilisant les flèches. (#7046)
+- En sortie vocale et braille, l'état des contrôles sera maintenant toujours indiqués dans le même ordre, qu'il soit positif ou négatif. Fixes #7076
 
 
 == Changements pour les Développeurs ==
@@ -31,6 +37,8 @@ Quoi de Neuf dans NVDA
  - Cet indicateur est sur true par défaut. S'il est sur false, les règles de passage multiple de Liblouis seront utilisées pour la sortie braille.
 - un nouveau dictionnaire (braille.RENAMED_DRIVERS) a été ajouté pour permettre une transition douce aux utilisateurs utilisant des pilotes remplacés par d'autres. (#7459)
 - Le package comtypes a été mis à jour à la version 1.1.3. (#7831)
+- Implémentation d'un système générique dans braille.BrailleDisplayDriver pour communiquer avec les terminaux qui envoient des paquets de confirmation. Consultez le pilote braille handyTech comme exemple. (#7590, #7721)
+- Une nouvelle variable "isAppX" dans le module config peut être utilisée pour détecter si NVDA s'exécute comme une application Windows Desktop Bridge Store. (#7851)
 
 
 
