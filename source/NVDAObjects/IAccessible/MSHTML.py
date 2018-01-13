@@ -535,7 +535,7 @@ class MSHTML(IAccessible):
 	def _get_isCurrent(self):
 		isCurrent = self.HTMLAttributes["aria-current"]
 		if isCurrent == "false":
-			isCurrent = False
+			isCurrent = None
 		return isCurrent
 
 	def _get_HTMLAttributes(self):

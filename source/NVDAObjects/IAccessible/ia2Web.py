@@ -30,9 +30,9 @@ class Ia2Web(IAccessible):
 		return info
 
 	def _get_isCurrent(self):
-		current = self.IA2Attributes.get("current", False)
+		current = self.IA2Attributes.get("current", None)
 		if current == "false":
-			current = False
+			current = None
 		return current
 
 	def _get_placeholder(self):
