@@ -251,8 +251,10 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		@type parent: SettingsPanel
 		"""
 		if initialCategory and not issubclass(initialCategory,SettingsPanel):
+			log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
 			raise TypeError("initialCategory should be an instance of SettingsPanel")
-		if initialCategory not in self.categoryClasses:
+		if initialCategory and initialCategory not in self.categoryClasses:
+			log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
 			raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
 		self.initialCategory=initialCategory
 		self.currentCategory=None
