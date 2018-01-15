@@ -250,10 +250,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		@param initialCategory: The initial category to select when opening this dialog
 		@type parent: SettingsPanel
 		"""
-		if initialCategory and not issubclass(initialCategory,SettingsPanel):
-			raise TypeError("initialCategory should be an instance of SettingsPanel")
-		if initialCategory not in self.categoryClasses:
-			raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
+		if initialCategory:
+			if not issubclass(initialCategory,SettingsPanel):
+				raise TypeError("initialCategory should be an instance of SettingsPanel")
+			if initialCategory not in self.categoryClasses:
+				raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
 		self.initialCategory=initialCategory
 		self.currentCategory=None
 		self.categoryTreeItems=[]
