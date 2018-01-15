@@ -1513,7 +1513,7 @@ class SuggestionListItem(UIA):
 		focusControllerFor=api.getFocusObject().controllerFor
 		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
-			api.setNavigatorObject(self)
+			api.setNavigatorObject(self, isFocus=True)
 			self.reportFocus()
 			# Display results as flash messages.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))

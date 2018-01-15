@@ -339,8 +339,10 @@ The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
 By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+Note that braille follows both the [focus #SystemFocus] and [caret #SystemCaret] as well as object navigation and text review by default.
+If you want it to follow the focus and caret only, you need to [configure braille to be tethered to #BrailleTether] focus.
+In this case, braille will not follow object navigation and text review.
+If you want braille to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
 
 To navigate by object, use the following commands:
 
@@ -1142,10 +1144,12 @@ Specifying 0 disables displaying of these messages completely.
 This option allows NVDA messages to be displayed on the braille display indefinitely.
 
 %kc:setting
-==== Braille Tethered to ====[BrailleTether]
+==== Tether Braille ====[BrailleTether]
 Key: NVDA+control+t
 
-This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
+This option allows you to choose whether the braille display will follow the system focus, the navigator object / review cursor, or both.
+When "automatically" is selected, NVDA will follow the system focus and caret by default.
+In this case, when the navigator object or the review cursor position is changed by means of explicit user interaction, NVDA will tether to review temporarily, until the focus or the caret changes.
 
 ==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.
