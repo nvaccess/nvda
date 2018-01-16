@@ -22,13 +22,14 @@ Tärkeimpiä ominaisuuksia ovat:
 - Yli 80 kieltä tukeva sisäänrakennettu puhesyntetisaattori
 - Tekstin muotoilutietojen, kuten fontin nimen ja koon, tyylin sekä kirjoitusvirheiden, lukeminen aina kun mahdollista
 - Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren sijainnin ilmaiseminen äänimerkillä
-- Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen pistenäytöissä, joissa on pistenäppäimistö
+- Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen näytöissä, joissa on pistenäppäimistö
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
 - Käännökset 51 kielelle
 - Tuki uusille Windows-käyttöjärjestelmille, sekä 32- että 64-bittiset versiot mukaan lukien
 - Mahdollisuus käyttää Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa
-- Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
+- Säätimien ja tekstin puhuminen kosketuseleitä käytettäessä
+- Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa käyttöjärjestelmissä)
 - Tuki Windowsin komentokehotteelle ja konsolisovelluksille
 -
 
@@ -116,7 +117,7 @@ Jos kuvake luodaan, siihen liitetään myös pikanäppäin Ctrl+Alt+N, jolla NVD
 +++ Kopioi massamuistiversion asetukset nykyiseen käyttäjätiliin +++[CopyPortableConfigurationToCurrentUserAccount]
 Tällä asetuksella voidaaan valita, kopioidaanko käynnissä olevan NVDA:n asetukset asennettuun versioon nykyiselle kirjautuneelle käyttäjälle. 
 Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin kirjautumisikkunassa tai muissa suojatuissa ruuduissa käytettäväksi.
-Tämä asetus on käytettävissä vain massamuistiversiosta asennettaessa, ei suoraan ladatusta käynnistyspaketista.
+Tämä vaihtoehto on käytettävissä vain massamuistiversiosta asennettaessa.
  
 ++ Massamuistiversion luominen ++[CreatingAPortableCopy]
 Mikäli massamuistiversio luodaan suoraan ladatusta paketista, painetaan vain Luo massamuistiversio -painiketta.
@@ -125,7 +126,7 @@ Jos tämä valintaikkuna on jo suljettu tai käytetään NVDA:n asennettua versi
 Näkyviin tulevassa valintaikkunassa valitaan sijainti, jonne massamuistiversio luodaan.
 Sijainti voi olla kiintolevyllä, USB-muistitikulla tai muulla siirrettävällä tietovälineellä oleva hakemisto.
 Tässä valintaikkunassa on myös asetus, jolla voidaan valita, kopioidaanko kirjautuneen käyttäjän asetukset massamuistiversiossa käytettäviksi.
-Asetus on käytettävissä vain luotaessa massamuistiversiota asennetusta kopiosta, ei ladatusta käynnistyspaketista.
+Asetus on käytettävissä vain luotaessa massamuistiversiota asennetusta kopiosta.
 Massamuistiversion luonti aloitetaan painamalla Jatka.
 Kun luonti on valmis, näkyviin tulee ilmoitus onnistumisesta.
 Valintaikkuna suljetaan Painamalla OK.
@@ -523,8 +524,8 @@ Säilöelementtien, kuten luetteloiden ja taulukoiden alkuun tai loppuun siirtym
 || Nimi | Näppäinkomento | Kuvaus |
 | Siirrä säilöelementin alkuun | Shift+pilkku | Siirtää sen säilöelementin alkuun, jossa kohdistin on (luettelo, taulukko jne). |
 | Siirrä säilöelementin loppuun | pilkku | Siirtää sen säilöelementin loppuun, jossa kohdistin on (luettelo, taulukko jne). |
-
 %kc:endInclude
+
 Joissakin uusissa verkkopohjaisissa sovelluksissa, kuten Gmail, Twitter ja Facebook, käytetään yksikirjaimisia pikanäppäimiä.
 Mikäli haluat samaan aikaan käyttää sekä niitä että nuolinäppäimiä selaustilassa lukemiseen, voit poistaa tilapäisesti käytöstä NVDA:n pikaselausnäppäimet.
 %kc:beginInclude
@@ -1233,13 +1234,13 @@ Jos tämä valintaruutu on valittuna, puhe keskeytetään joka kerta Enter-näpp
 ==== Käytä pikalukua jatkuvassa luvussa ====[KeyboardSettingsSkimReading]
 Jos tämä asetus on käytössä, tietyt navigointikomennot (kuten selaustilan pikaselaus tai riveittäin/kappaleittain liikkuminen) eivät keskeytä Jatkuva luku -toimintoa, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
 
-==== Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä ====[VoiceSettingsBeepLowercase]
+==== Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä ====[KeyboardSettingsBeepLowercase]
 Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Shift-näppäin pohjassa kuuluu varoitusäänimerkki, Jos Caps Lock on päällä.
 Shift-näppäin pohjassa kirjoittaminen Caps Lockin ollessa päällä on yleensä tahatonta ja johtuu tavallisesti siitä, ettei sen tajua olevan käytössä.
 Tämän vuoksi siitä varoittaminen voi olla varsin hyödyllistä.
 
 %kc:setting
-==== Puhu komentonäppäimet ====[VoiceSettingsSpeakCommandKeys]
+==== Puhu komentonäppäimet ====[KeyboardSettingsSpeakCommandKeys]
 Pikanäppäin: NVDA+4
 
 Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painetut näppäimet, jotka eivät ole merkkejä. Näitä ovat sellaiset näppäinyhdistelmät kuin Ctrl+jokin muu kirjain.
@@ -1432,7 +1433,7 @@ Asetus on oletusarvoisesti poissa käytöstä.
 
 Ota asettelutaulukoiden ilmaiseminen käyttöön tai poista se käytöstä mistä tahansa määrittämällä syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 
-==== Elementtien ilmaisemisen määrittäminen ====
+==== Elementtien ilmaisemisen määrittäminen ====[BrowseModeLinksAndHeadings]
 Katso [Dokumenttien muotoiluasetukset -valintaikkunassa #DocumentFormattingSettings] olevia asetuksia määrittääksesi ilmaistavat elementit, kuten linkit, otsikot ja taulukot.
   
 ==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
