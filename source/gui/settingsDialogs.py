@@ -605,8 +605,9 @@ class SpeechSettingsPanel(SettingsPanel):
 		self.synthNameCtrl.SetLabel(synthDesc)
 
 	def onPanelActivated(self):
-		super(SpeechSettingsPanel,self).onPanelActivated()
+		# call super after all panel updates have been completed, we dont want the panel to show until this is complete.
 		self.voicePanel.onPanelActivated()
+		super(SpeechSettingsPanel,self).onPanelActivated()
 
 	def onPanelDeactivated(self):
 		self.voicePanel.onPanelDeactivated()
