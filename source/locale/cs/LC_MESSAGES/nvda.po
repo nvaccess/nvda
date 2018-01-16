@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-02 17:11+1000\n"
-"PO-Revision-Date: 2017-11-02 12:10+0100\n"
+"POT-Creation-Date: 2017-12-15 00:10+1000\n"
+"PO-Revision-Date: 2017-12-21 02:46+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -5988,6 +5988,34 @@ msgstr "zarovnání proloženo"
 msgid "align default"
 msgstr "výchozí zarovnání"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "vertikální zarovnání navrch"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "vertikální zarovnání na střed"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "vertikální zarovnání naspod"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "vertikální zarovnání bez indexů"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "vertikální zarovnání do bloku"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "vertikální zarovnání proloženo"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "výchozí vertikální zarovnání"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "odsazení vlevo"
@@ -6019,34 +6047,6 @@ msgstr "odsazení prvního řádku"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "bez odsazení prvního řádku"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "vertikální zarovnání navrch"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "vertikální zarovnání na střed"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "vertikální zarovnání naspod"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "vertikální zarovnání bez indexů"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "vertikální zarovnání do bloku"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "vertikální zarovnání proloženo"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "výchozí vertikální zarovnání"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -6963,7 +6963,7 @@ msgstr "vypnuto"
 
 #. Translators: The name of a braille display.
 msgid "ALVA BC640/680 series"
-msgstr "Braillské řádky ALVA BC640/680"
+msgstr "ALVA BC640/680"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -6983,7 +6983,7 @@ msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant řada B"
+msgstr "HumanWare Brailliant Bi/B"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7016,6 +7016,10 @@ msgstr "Braillský vstup zakázán"
 #. Translators: description of the script to toggle braille input
 msgid "Toggle braille input"
 msgstr "Přepíná braillský vstup"
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -10349,13 +10353,8 @@ msgstr "&Anotace"
 msgid "&Errors"
 msgstr "&Chyby"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE/Smart Beetle"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Zobrazí konfiguraci ovladače pro zařízení Handy Tech."

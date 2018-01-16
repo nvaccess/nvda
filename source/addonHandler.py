@@ -119,6 +119,9 @@ def disableAddonsIfAny():
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
+	if config.isAppX:
+		log.info("Add-ons not supported when running as a Windows Store application")
+		return
 	loadState()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
