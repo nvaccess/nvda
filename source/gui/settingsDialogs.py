@@ -173,7 +173,7 @@ class SettingsPanel(wx.Panel):
 		@type parent: wx.Window
 		"""
 		super(SettingsPanel, self).__init__(parent, wx.ID_ANY)
-		self.mainSizer=wx.StaticBoxSizer(wx.StaticBox(self, label=self.title), wx.VERTICAL)
+		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
 		self.mainSizer.Add(self.settingsSizer, flag=wx.ALL)
@@ -223,6 +223,10 @@ class SettingsPanel(wx.Panel):
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
 
+""" The Id of the category panel in the multi category settings dialog, this is set when the dialog is created
+and returned to None when the dialog is destroyed. This can be used by an AppModule for NVDA to identify and announce
+changes in name for the panel when categories are changed"""
+NvdaSettingsCategoryPanelId = None
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
 	A multi category settings dialog consists of a tree view with settings categories on the left side, 
@@ -280,7 +284,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed the maximum size,
 		# its important all items can be accessed visually.
-		self.container = scrolledpanel.ScrolledPanel(self, size = (self.MAX_WIDTH,self.MAX_HEIGHT), style = wx.TAB_TRAVERSAL | wx.BORDER_THEME)
+		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is exposed via the IAccessibleName
+		# property.
+		global NvdaSettingsCategoryPanelId
+		NvdaSettingsCategoryPanelId = wx.NewId()
+		self.container = scrolledpanel.ScrolledPanel(self, id=NvdaSettingsCategoryPanelId, size = (self.MAX_WIDTH,self.MAX_HEIGHT), style = wx.TAB_TRAVERSAL | wx.BORDER_THEME)
 		self.containerSizer = wx.BoxSizer(wx.VERTICAL)
 		panelWidths=[]
 		panelHeights=[]
@@ -323,6 +331,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			self.container.SetFocus()
 		else:
 			self.categoryTree.SetFocus()
+
+	def Destroy(self):
+		global NvdaSettingsCategoryPanelId
+		NvdaSettingsCategoryPanelId = None
+		super(MultiCategorySettingsDialog, self).Destroy()
 
 	def onCharHook(self,evt):
 		"""Listens for keyboard input and switches panels for control+tab"""
@@ -369,6 +382,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			oldCat.onPanelDeactivated()
 		self.currentCategory = newCat
 		newCat.onPanelActivated()
+		# set the label for the container, this is exposed via the Name property on an NVDAObject
+		# Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+		self.container.SetLabel(_("%s Settings Category")%newCat.title)
 		# call Layout and SetupScrolling on the container to make sure that the controls apear in their expected locations.
 		self.container.Layout()
 		self.container.SetupScrolling()
