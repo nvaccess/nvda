@@ -133,6 +133,7 @@ class UIATextInfo(textInfos.TextInfo):
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
 			raise ValueError("%s is not a text range"%textRange)
+		fetchAnnotationTypes=False
 		try:
 			textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 		except (COMError,AttributeError):
@@ -151,11 +152,16 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportColor"]:
 				IDs.add(UIAHandler.UIA_BackgroundColorAttributeId)
 				IDs.add(UIAHandler.UIA_ForegroundColorAttributeId)
+			if formatConfig['reportLineSpacing']:
+				IDs.add(UIAHandler.UIA_LineSpacingAttributeId)
 			if formatConfig['reportLinks']:
 				IDs.add(UIAHandler.UIA_LinkAttributeId)
+			if formatConfig['reportStyle']:
+				IDs.add(UIAHandler.UIA_StyleNameAttributeId)
 			if formatConfig["reportHeadings"]:
 				IDs.add(UIAHandler.UIA_StyleIdAttributeId)
-			if formatConfig["reportSpellingErrors"]:
+			if formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]:
+				fetchAnnotationTypes=True
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
 			fetcher=BulkUIATextRangeAttributeValueFetcher(textRange,IDs)
@@ -192,6 +198,10 @@ class UIATextInfo(textInfos.TextInfo):
 					textPosition="baseline"
 			if textPosition:
 				formatField['text-position']=textPosition
+		if formatConfig['reportStyle']:
+			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
+				formatField["style"]=val
 		if formatConfig["reportAlignment"]:
 			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val==UIAHandler.HorizontalTextAlignment_Left:
@@ -213,19 +223,39 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_ForegroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
 				formatField['color']=colors.RGB.fromCOLORREF(val)
+		if formatConfig['reportLineSpacing']:
+			val=fetcher.getValue(UIAHandler.UIA_LineSpacingAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
+				if val:
+					formatField['line-spacing']=val
 		if formatConfig['reportLinks']:
 			val=fetcher.getValue(UIAHandler.UIA_LinkAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				if val:
-					formatField['link']
+					formatField['link']=True
 		if formatConfig["reportHeadings"]:
 			styleIDValue=fetcher.getValue(UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
-		if formatConfig["reportSpellingErrors"]:
+		if fetchAnnotationTypes:
 			annotationTypes=fetcher.getValue(UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
-				formatField["invalid-spelling"]=True
+			# Some UIA implementations return a single value rather than a tuple.
+			# Always mutate to a tuple to allow for a generic x in y matching 
+			if not isinstance(annotationTypes,tuple):
+				annotationTypes=(annotationTypes,)
+			if formatConfig["reportSpellingErrors"]:
+				if UIAHandler.AnnotationType_SpellingError in annotationTypes:
+					formatField["invalid-spelling"]=True
+				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
+					formatField["invalid-grammar"]=True
+			if formatConfig["reportComments"]:
+				if UIAHandler.AnnotationType_Comment in annotationTypes:
+					formatField["comment"]=True
+			if formatConfig["reportRevisions"]:
+				if UIAHandler.AnnotationType_InsertionChange in annotationTypes:
+					formatField["revision-insertion"]=True
+				elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
+					formatField["revision-deletion"]=True
 		cultureVal=fetcher.getValue(UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
 		if cultureVal and isinstance(cultureVal,int):
 			try:
@@ -258,11 +288,13 @@ class UIATextInfo(textInfos.TextInfo):
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 			self.collapse(True)
-		elif position==textInfos.POSITION_ALL:
+		elif position==textInfos.POSITION_ALL or position==self.obj:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
-		elif isinstance(position,UIA):
+		elif isinstance(position,UIA) or isinstance(position,UIAHandler.IUIAutomationElement):
+			if isinstance(position,UIA):
+				position=position.UIAElement
 			try:
-				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position)
 			except COMError:
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
@@ -686,14 +718,11 @@ class UIA(Window):
 			elementCache[ID]=cacheElement
 
 	def findOverlayClasses(self,clsList):
-		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithoutAutoSelectDetection)
-
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
-		elif EditableTextWithoutAutoSelectDetection in clsList and (UIAClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
 				clsList.append(WordDocument)
@@ -762,6 +791,10 @@ class UIA(Window):
 				pass
 		except ValueError:
 			pass
+
+		# Add editableText support if UIA supports a text pattern
+		if self.TextInfo==UIATextInfo:
+			clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		clsList.append(UIA)
 
@@ -1158,6 +1191,8 @@ class UIA(Window):
 		textList=[]
 		for i in xrange(val.length):
 			e=val.getElement(i)
+			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
+				continue
 			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
 			if not obj: continue
 			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
@@ -1184,6 +1219,8 @@ class UIA(Window):
 		textList=[]
 		for i in xrange(val.length):
 			e=val.getElement(i)
+			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
+				continue
 			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
 			if not obj: continue
 			text=obj.makeTextInfo(textInfos.POSITION_ALL).text

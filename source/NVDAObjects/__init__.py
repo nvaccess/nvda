@@ -15,6 +15,7 @@ import review
 import eventHandler
 from displayModel import DisplayModelTextInfo
 import baseObject
+import documentBase
 import speech
 import ui
 import api
@@ -139,7 +140,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-class NVDAObject(baseObject.ScriptableObject):
+class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
 	This allows NVDA to work with all widgets in a uniform way.
@@ -1019,9 +1020,6 @@ This code is executed if a gain focus event is received by this object.
 		else:
 			self._basicTextTime=newTime
 		return self._basicText
-
-	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
 
 	def _get__isTextEmpty(self):
 		"""
