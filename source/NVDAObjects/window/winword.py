@@ -1096,11 +1096,7 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		"kb:shift+pageDown":None,
 	}
 
-class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
-
-	treeInterceptorClass=WordDocumentTreeInterceptor
-	shouldCreateTreeInterceptor=False
-	TextInfo=WordDocumentTextInfo
+class WordDocument(Window):
 
 	def winwordColorToNVDAColor(self,val):
 		if val>=0:
@@ -1129,243 +1125,6 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			return name
 		else:
 			raise ValueError("Unknown color format %x %x %x %x"%((val>>24)&0xff,(val>>16)&0xff,(val>>8)&0xff,val&0xff))
-
-	def _get_ignoreEditorRevisions(self):
-		try:
-			ignore=not self.WinwordWindowObject.view.showRevisionsAndComments
-		except COMError:
-			log.debugWarning("showRevisionsAndComments",exc_info=True)
-			ignore=False
-		self.ignoreEditorRevisions=ignore
-		return ignore
-
-	#: True if page numbers (as well as section numbers and column numbers) should be ignored. Such as in outlook.
-	ignorePageNumbers = False
-
-	#: True if formatting should be ignored (text only) such as for spellCheck error field
-	ignoreFormatting=False
-
-	def __init__(self,*args,**kwargs):
-		super(WordDocument,self).__init__(*args,**kwargs)
-
-	def event_caret(self):
-		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
-		self._lastSelectionPos=curSelectionPos
-		if lastSelectionPos:
-			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
-				return
-		super(WordDocument,self).event_caret()
-
-	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
-
-	def _get_states(self):
-		states=super(WordDocument,self).states
-		states.add(controlTypes.STATE_MULTILINE)
-		return states
-
-	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
-		rows=table.rows
-		numHeaderRows=0
-		for rowIndex in xrange(rows.count): 
-			try:
-				row=rows.item(rowIndex+1)
-			except COMError:
-				break
-			try:
-				headingFormat=row.headingFormat
-			except (COMError,AttributeError,NameError):
-				headingFormat=0
-			if headingFormat==-1: # is a header row
-				numHeaderRows+=1
-			else:
-				break
-		if numHeaderRows>0:
-			headerCellTracker.addHeaderCellInfo(rowNumber=1,columnNumber=1,rowSpan=numHeaderRows,isColumnHeader=True,isRowHeader=False)
-
-	def populateHeaderCellTrackerFromBookmarks(self,headerCellTracker,bookmarks):
-		for x in bookmarks: 
-			name=x.name
-			lowerName=name.lower()
-			isColumnHeader=isRowHeader=False
-			if lowerName.startswith('title'):
-				isColumnHeader=isRowHeader=True
-			elif lowerName.startswith('columntitle'):
-				isColumnHeader=True
-			elif lowerName.startswith('rowtitle'):
-				isRowHeader=True
-			else:
-				continue
-			try:
-				headerCell=x.range.cells.item(1)
-			except COMError:
-				continue
-			headerCellTracker.addHeaderCellInfo(rowNumber=headerCell.rowIndex,columnNumber=headerCell.columnIndex,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
-
-	_curHeaderCellTrackerTable=None
-	_curHeaderCellTracker=None
-	def getHeaderCellTrackerForTable(self,table):
-		tableRange=table.range
-		# Sometimes there is a valid reference in _curHeaderCellTrackerTable,
-		# but we get a COMError when accessing the range (#6827)
-		try:
-			tableRangesEqual=tableRange.isEqual(self._curHeaderCellTrackerTable.range)
-		except (COMError, AttributeError):
-			tableRangesEqual=False
-		if not tableRangesEqual:
-			self._curHeaderCellTracker=HeaderCellTracker()
-			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
-			self.populateHeaderCellTrackerFromHeaderRows(self._curHeaderCellTracker,table)
-			self._curHeaderCellTrackerTable=table
-		return self._curHeaderCellTracker
-
-	def setAsHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
-		rowNumber=cell.rowIndex
-		columnNumber=cell.columnIndex
-		headerCellTracker=self.getHeaderCellTrackerForTable(cell.range.tables[1])
-		oldInfo=headerCellTracker.getHeaderCellInfoAt(rowNumber,columnNumber)
-		if oldInfo:
-			if isColumnHeader and not oldInfo.isColumnHeader:
-				oldInfo.isColumnHeader=True
-			elif isRowHeader and not oldInfo.isRowHeader:
-				oldInfo.isRowHeader=True
-			else:
-				return False
-			isColumnHeader=oldInfo.isColumnHeader
-			isRowHeader=oldInfo.isRowHeader
-		if isColumnHeader and isRowHeader:
-			name="Title_"
-		elif isRowHeader:
-			name="RowTitle_"
-		elif isColumnHeader:
-			name="ColumnTitle_"
-		else:
-			raise ValueError("One or both of isColumnHeader or isRowHeader must be True")
-		name+=uuid.uuid4().hex
-		if oldInfo:
-			self.WinwordDocumentObject.bookmarks[oldInfo.name].delete()
-			oldInfo.name=name
-		else:
-			headerCellTracker.addHeaderCellInfo(rowNumber=rowNumber,columnNumber=columnNumber,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
-		self.WinwordDocumentObject.bookmarks.add(name,cell.range)
-		return True
-
-	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
-		rowNumber=cell.rowIndex
-		columnNumber=cell.columnIndex
-		if not isColumnHeader and not isRowHeader: 
-			return False
-		headerCellTracker=self.getHeaderCellTrackerForTable(cell.range.tables[1])
-		info=headerCellTracker.getHeaderCellInfoAt(rowNumber,columnNumber)
-		if not info or not hasattr(info,'name'):
-			return False
-		if isColumnHeader and info.isColumnHeader:
-			info.isColumnHeader=False
-		elif isRowHeader and info.isRowHeader:
-			info.isRowHeader=False
-		else:
-			return False
-		headerCellTracker.removeHeaderCellInfo(info)
-		self.WinwordDocumentObject.bookmarks(info.name).delete()
-		if info.isColumnHeader or info.isRowHeader:
-			self.setAsHeaderCell(cell,isColumnHeader=info.isColumnHeader,isRowHeader=info.isRowHeader)
-		return True
-
-	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
-		table=cell.range.tables[1]
-		rowNumber=cell.rowIndex
-		columnNumber=cell.columnIndex
-		headerCellTracker=self.getHeaderCellTrackerForTable(table)
-		for info in headerCellTracker.iterPossibleHeaderCellInfosFor(rowNumber,columnNumber,columnHeader=columnHeader):
-			textList=[]
-			if columnHeader:
-				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
-					tempColumnNumber=columnNumber
-					while tempColumnNumber>=1:
-						try:
-							headerCell=table.cell(headerRowNumber,tempColumnNumber)
-						except COMError:
-							tempColumnNumber-=1
-							continue
-						break
-					textList.append(headerCell.range.text)
-			else:
-				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
-					tempRowNumber=rowNumber
-					while tempRowNumber>=1:
-						try:
-							headerCell=table.cell(tempRowNumber,headerColumnNumber)
-						except COMError:
-							tempRowNumber-=1
-							continue
-						break
-					textList.append(headerCell.range.text)
-			text=" ".join(textList)
-			if text:
-				return text
-
-	def script_setColumnHeader(self,gesture):
-		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
-		try:
-			cell=self.WinwordSelectionObject.cells[1]
-		except COMError:
-			# Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-			ui.message(_("Not in a table cell"))
-			return
-		if scriptCount==0:
-			if self.setAsHeaderCell(cell,isColumnHeader=True,isRowHeader=False):
-				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-				ui.message(_("Set row {rowNumber} column {columnNumber} as start of column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-			else:
-				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-				ui.message(_("Already set row {rowNumber} column {columnNumber} as start of column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-		elif scriptCount==1:
-			if self.forgetHeaderCell(cell,isColumnHeader=True,isRowHeader=False):
-				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-				ui.message(_("Removed row {rowNumber} column {columnNumber}  from column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-			else:
-				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell.")
-
-	def script_setRowHeader(self,gesture):
-		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetRowHeader script for Microsoft Word.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
-		try:
-			cell=self.WinwordSelectionObject.cells[1]
-		except COMError:
-			# Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-			ui.message(_("Not in a table cell"))
-			return
-		if scriptCount==0:
-			if self.setAsHeaderCell(cell,isColumnHeader=False,isRowHeader=True):
-				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
-				ui.message(_("Set row {rowNumber} column {columnNumber} as start of row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-			else:
-				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
-				ui.message(_("Already set row {rowNumber} column {columnNumber} as start of row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-		elif scriptCount==1:
-			if self.forgetHeaderCell(cell,isColumnHeader=False,isRowHeader=True):
-				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
-				ui.message(_("Removed row {rowNumber} column {columnNumber}  from row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-			else:
-				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
-				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-	script_setRowHeader.__doc__=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell.")
-
-	def script_reportCurrentHeaders(self,gesture):
-		cell=self.WinwordSelectionObject.cells[1]
-		rowText=self.fetchAssociatedHeaderCellText(cell,False)
-		columnText=self.fetchAssociatedHeaderCellText(cell,True)
-		ui.message("Row %s, column %s"%(rowText or "empty",columnText or "empty"))
 
 	def _get_WinwordVersion(self):
 		if not hasattr(self,'_WinwordVersion'):
@@ -1416,6 +1175,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		return curVal
 
 	def script_toggleBold(self,gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.bold)
 		if val:
 			# Translators: a message when toggling formatting in Microsoft word
@@ -1425,6 +1189,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ui.message(_("Bold off"))
 
 	def script_toggleItalic(self,gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.italic)
 		if val:
 			# Translators: a message when toggling formatting in Microsoft word
@@ -1434,6 +1203,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ui.message(_("Italic off"))
 
 	def script_toggleUnderline(self,gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.underline)
 		if val:
 			# Translators: a message when toggling formatting in Microsoft word
@@ -1443,6 +1217,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ui.message(_("Underline off"))
 
 	def script_toggleAlignment(self,gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.alignment)
 		alignmentMessages={
 			# Translators: a an alignment in Microsoft Word 
@@ -1459,6 +1238,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ui.message(msg)
 
 	def script_toggleSuperscriptSubscript(self,gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: (self.WinwordSelectionObject.font.superscript,self.WinwordSelectionObject.font.subscript))
 		if val[0]:
 			# Translators: a message when toggling formatting in Microsoft word
@@ -1502,42 +1286,48 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 				ui.message(_("Moved above blank paragraph"))
 
 	def script_increaseDecreaseOutlineLevel(self,gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
 		style=self.WinwordSelectionObject.style.nameLocal
 		# Translators: the message when the outline level / style is changed in Microsoft word
 		ui.message(_("{styleName} style, outline level {outlineLevel}").format(styleName=style,outlineLevel=val))
 
 	def script_increaseDecreaseFontSize(self,gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.size)
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
-	def script_caret_moveByCell(self,gesture):
-		gesture.send()
-		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		inTable=info._rangeObj.tables.count>0
-		isCollapsed=info.isCollapsed
-		if inTable:
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
-			braille.handler.handleCaretMove(self)
-
 	def script_tab(self,gesture):
+		"""
+		A script for the tab key which:
+		* if in a table, announces the newly selected cell or new cell where the caret is, or 
+		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
+		"""
 		gesture.send()
+		selectionObj=self.WinwordSelectionObject
+		inTable=selectionObj.tables.count>0 if selectionObj else False
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		inTable=info._rangeObj.tables.count>0
 		isCollapsed=info.isCollapsed
 		if inTable and isCollapsed:
-			info.expand(textInfos.UNIT_CELL)
-			isCollapsed=False
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			isCollapsed=info.isCollapsed
 		if not isCollapsed:
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
 		braille.handler.handleCaretMove(self)
-		if isCollapsed:
-			offset=info._rangeObj.information(wdHorizontalPositionRelativeToPage)
+		if selectionObj and isCollapsed:
+			offset=selectionObj.information(wdHorizontalPositionRelativeToPage)
 			msg=self.getLocalizedMeasurementTextForPointSize(offset)
 			ui.message(msg)
-			if info._rangeObj.paragraphs[1].range.start==info._rangeObj.start:
+			if selectionObj.paragraphs[1].range.start==selectionObj.start:
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 
@@ -1571,29 +1361,12 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 				# See http://support.microsoft.com/kb/76388 for details.
 				return _("{offset:.3g} picas").format(offset=offset)
 
-	def script_reportCurrentComment(self,gesture):
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(textInfos.UNIT_CHARACTER)
-		fields=info.getTextWithFields(formatConfig={'reportComments':True})
-		for field in reversed(fields):
-			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField): 
-				commentReference=field.field.get('comment')
-				if commentReference:
-					offset=int(commentReference)
-					range=self.WinwordDocumentObject.range(offset,offset+1)
-					try:
-						text=range.comments[1].range.text
-					except COMError:
-						break
-					if text:
-						ui.message(text)
-						return
-		# Translators: a message when there is no comment to report in Microsoft Word
-		ui.message(_("No comments"))
-	# Translators: a description for a script
-	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
-
 	def script_changeLineSpacing(self,gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			return gesture.send()
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda:self.WinwordSelectionObject.ParagraphFormat.LineSpacingRule)
 		if val == wdLineSpaceSingle:
 			# Translators: a message when switching to single line spacing  in Microsoft word
@@ -1604,92 +1377,6 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		elif val == wdLineSpace1pt5:
 			# Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 			ui.message(_("1.5 line spacing"))
-
-	def _moveInTable(self,row=True,forward=True):
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(textInfos.UNIT_CHARACTER)
-		formatConfig=config.conf['documentFormatting'].copy()
-		formatConfig['reportTables']=True
-		commandList=info.getTextWithFields(formatConfig)
-		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
-			# Translators: The message reported when a user attempts to use a table movement command
-			# when the cursor is not withnin a table.
-			ui.message(_("Not in table"))
-			return False
-		rowCount=commandList[1].field.get('table-rowcount',1)
-		columnCount=commandList[1].field.get('table-columncount',1)
-		rowNumber=commandList[2].field.get('table-rownumber',1)
-		columnNumber=commandList[2].field.get('table-columnnumber',1)
-		try:
-			table=info._rangeObj.tables[1]
-		except COMError:
-			log.debugWarning("Could not get MS Word table object indicated in XML")
-			ui.message(_("Not in table"))
-			return False
-		_cell=table.cell
-		getCell=lambda thisIndex,otherIndex: _cell(thisIndex,otherIndex) if row else _cell(otherIndex,thisIndex)
-		thisIndex=rowNumber if row else columnNumber
-		otherIndex=columnNumber if row else rowNumber
-		thisLimit=(rowCount if row else columnCount) if forward else 1
-		limitOp=operator.le if forward else operator.ge
-		incdecFunc=operator.add if forward else operator.sub
-		foundCell=None
-		curOtherIndex=otherIndex
-		while curOtherIndex>0:
-			curThisIndex=incdecFunc(thisIndex,1)
-			while limitOp(curThisIndex,thisLimit):
-				try:
-					foundCell=getCell(curThisIndex,curOtherIndex).range
-				except COMError:
-					pass
-				if foundCell: break
-				curThisIndex=incdecFunc(curThisIndex,1)
-			if foundCell: break
-			curOtherIndex-=1
-		if not foundCell:
-			ui.message(_("Edge of table"))
-			return False
-		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
-		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_PARAGRAPH)
-		newInfo.collapse()
-		newInfo.updateCaret()
-		return True
-
-	def script_nextRow(self,gesture):
-		self._moveInTable(row=True,forward=True)
-
-	def script_previousRow(self,gesture):
-		self._moveInTable(row=True,forward=False)
-
-	def script_nextColumn(self,gesture):
-		self._moveInTable(row=False,forward=True)
-
-	def script_previousColumn(self,gesture):
-		self._moveInTable(row=False,forward=False)
-
-	def script_nextParagraph(self,gesture):
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		# #4375: can't use self.move here as it may check document.chracters.count which can take for ever on large documents.
-		info._rangeObj.move(wdParagraph,1)
-		info.updateCaret()
-		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
-	script_nextParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
-
-	def script_previousParagraph(self,gesture):
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		# #4375: keeping cemetrical with nextParagraph script. 
-		info._rangeObj.move(wdParagraph,-1)
-		info.updateCaret()
-		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
-	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
-
-	def focusOnActiveDocument(self, officeChartObject):
-		rangeStart=officeChartObject.Parent.Range.Start
-		self.WinwordApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
-		import api
-		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
-
-
 
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",
@@ -1718,26 +1405,12 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+5":"changeLineSpacing",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
-		"kb:NVDA+shift+c":"setColumnHeader",
-		"kb:NVDA+shift+r":"setRowHeader",
-		"kb:NVDA+shift+h":"reportCurrentHeaders",
-		"kb:control+alt+upArrow": "previousRow",
-		"kb:control+alt+downArrow": "nextRow",
-		"kb:control+alt+leftArrow": "previousColumn",
-		"kb:control+alt+rightArrow": "nextColumn",
-		"kb:control+downArrow":"nextParagraph",
-		"kb:control+upArrow":"previousParagraph",
-		"kb:alt+home":"caret_moveByCell",
-		"kb:alt+end":"caret_moveByCell",
-		"kb:alt+pageUp":"caret_moveByCell",
-		"kb:alt+pageDown":"caret_moveByCell",
 		"kb:alt+shift+home":"caret_changeSelection",
 		"kb:alt+shift+end":"caret_changeSelection",
 		"kb:alt+shift+pageUp":"caret_changeSelection",
 		"kb:alt+shift+pageDown":"caret_changeSelection",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
-		"kb:NVDA+alt+c":"reportCurrentComment",
 	}
 
 class WordDocument_WwN(WordDocument):

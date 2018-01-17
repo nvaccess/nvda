@@ -184,6 +184,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
+	useInMSWordWhenAvailable = boolean(default=false)
 
 [update]
 	autoCheck = boolean(default=true)
