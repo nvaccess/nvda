@@ -1910,9 +1910,12 @@ Alternatively, you can connect an older Optelec display, such as a Braille Voyag
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
+Note: NVDA might be unable to use an ALVA BC6 display over Bluetooth when it is paired using the ALVA Bluetooth utility.
+When you have paired your device using this utility and NVDA is unable to detect your device, we recomment you to pair your ALVA display the regular way using the Windows Bluetooth settings.
+
 Note: while some of these displays do have a braille keyboard, they handle translation from braille to text themselves by default.
 This means that NVDA's braille input system is not in use in the default situation (i.e. the input braille table setting has no effect).
-For Alva displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
+For ALVA displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
 
 Following are key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
