@@ -380,11 +380,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.Freeze()
 		if oldCat:
 			oldCat.onPanelDeactivated()
-		self.currentCategory = newCat
-		newCat.onPanelActivated()
-		# set the label for the container, this is exposed via the Name property on an NVDAObject
+		# set the label for the container as soon as possible, this is exposed via the Name property on an NVDAObject
 		# Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
 		self.container.SetLabel(_("%s Settings Category")%newCat.title)
+		self.currentCategory = newCat
+		newCat.onPanelActivated()
 		# call Layout and SetupScrolling on the container to make sure that the controls apear in their expected locations.
 		self.container.Layout()
 		self.container.SetupScrolling()
