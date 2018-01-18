@@ -28,6 +28,8 @@ Was ist neu in NVDA
 - Sollten Firefox oder Chrome einfrieren oder abstürzen, ist nVDA jetzt nicht mehr unmittelbar betroffen. (#7818)
 - In Twitter-Clients, wie Chicken Nugget, werden beim Lesen 280-Zeichen-langer Beiträge nicht mehr die letzten 20 Zeichen ignoriert. (#7828)
 - Beim Markieren von Text sagt NVDA Sonderzeichen und Symbole jetzt in der richtigen Sprache an. (#7687)
+- in aktuellen Versionen von Office können Sie wieder mit den Pfeiltasten in Diagrammen navigieren. (#7046)
+- die Statusinformationen von objekten werden jetzt immer in der richtigen Reihenfolge angezeigt und angesagt. (#7076)
 
 
 == Änderungen für Entwickler ==
@@ -35,6 +37,8 @@ Was ist neu in NVDA
  - Wird diese Einstellung auf False gesetzt, werden auch Liblouis-Regeln verarbeitet, die mehrere Durchläufe erfordern. Standardmäßig ist True voreingestellt.  
 - Ein neues Wörterbuch (Braille.RENAMED_DRIVERS) wurde hinzugefügt, um einen reibungslosen übergang für Benutzer zu ermöglichen, die Treiber verwenden, die durch andere ersetzt worden sind. (#7459)
 - Python: comtypes wurde auf Version 1.1.3 aktualisiert. (#7831)
+- Um mit Braillezeilentreibern richtig umgehen zu können, die Bestätigungsmeldungen senden, wurde braille.brailledisplaydriver überarbeitet. Sehen Sie sich den Handytechtreiber für weitere Informationen an. (#7590, #7721)
+- Um zu erkennen, ob NVDA aus dem Windows Store heraus ausgeführt wurde, wurde dem Modul config eine neue Variable ISAPPX hinzugefügt. (#7851)
 
 
 = 2017.4 =
