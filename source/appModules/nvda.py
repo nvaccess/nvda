@@ -10,7 +10,10 @@ import controlTypes
 import versionInfo
 from NVDAObjects.IAccessible import IAccessible
 import gui
+import speech
+import braille
 import config
+from logHandler import log
 
 nvdaMenuIaIdentity = None
 
@@ -28,6 +31,13 @@ class NvdaDialog(IAccessible):
 			return self.presType_content
 		return presType
 
+class NvdaSettingsCategoryPanel(IAccessible):
+
+	def event_nameChange(self):
+		if True and self in api.getFocusAncestors():
+			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
+
 class AppModule(appModuleHandler.AppModule):
 
 	def isNvdaMenu(self, obj):
@@ -41,6 +51,15 @@ class AppModule(appModuleHandler.AppModule):
 		# nvdaMenuIaIdentity is True, so the next menu we encounter is the NVDA menu.
 		if obj.role == controlTypes.ROLE_POPUPMENU:
 			nvdaMenuIaIdentity = obj.IAccessibleIdentity
+			return True
+		return False
+
+	def isNvdaSettingsCategoryPanel(self, obj):
+		controlId = obj.windowControlID
+		from gui.settingsDialogs import NvdaSettingsCategoryPanelId
+		if not isinstance(obj, IAccessible):
+			return False
+		if controlId == NvdaSettingsCategoryPanelId:
 			return True
 		return False
 
@@ -66,3 +85,5 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "#32770" and obj.role == controlTypes.ROLE_DIALOG:
 			clsList.insert(0, NvdaDialog)
+		if self.isNvdaSettingsCategoryPanel(obj):
+			clsList.insert(0, NvdaSettingsCategoryPanel)
