@@ -2082,10 +2082,10 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Hepsini oku | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle Serileri ++
-USB ya da bluetooth üzerinden bağlandıklarında, NVDA [Hims http://www.hims-inc.com/] tarafından üretilen Braille Sense, Braille EDGE ve Smart Beetle kabartma ekranları  destekler. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serileri ++
+USB ya da bluetooth üzerinden bağlandıklarında, NVDA [Hims http://www.hims-inc.com/] tarafından üretilen Braille Sense, Braille EDGE, Smart Beetle ve Sync Braille kabartma ekranları  destekler. 
 USB üzerinden bağlıyorsanız, sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
-Bu sayfadan indirebilirsiniz: http://www.himsintl.com/?c=2/13&uid=2319
+Bu sayfadan indirebilirsiniz: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
  
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
@@ -2096,62 +2096,65 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Move braille display to previous line | left side scroll up |
 | Move braille display to next line | right side scroll up |
 | Route to braille cell | routing |
+| Scroll braille display back | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Scroll braille display forward | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Move braille display to previous line | leftSideScrollUp+rightSideScrollUp |
+| Move braille display to next line | leftSideScrollDown+rightSideScrollDown |
+| Move to previous line in review | rightSideUpArrow |
+| Move to next line in review | rightSideDownArrow |
+| Move to previous character in review | rightSideLeftArrow |
+| Move to next character in review | rightSideRightArrow |
+| Move to current focus | leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| control key | smartbeetle:f1, brailleedge:f3 |
+| windows key | f7, smartbeetle:f2 |
+| alt key | dot1+dot3+dot4+space, f2, smartbeetle:f3, brailleedge:f4 |
+| shift key | f5 |
+| insert key | dot2+dot4+space, f6 |
+| applications key | dot1+dot2+dot3+dot4+space, f8 |
+| capsLock key | dot1+dot3+dot6+space |
+| tab key | dot4+dot5+space, f3, brailleedge:f2 |
+| shift+alt+tab key | f2+f3+f1 |
+| alt+tab key | f2+f3 |
 | shift+tab key | dot1+dot2+space |
-| alt key | dot1+dot3+dot4+Space |
-| escape key | dot1+dot5+Space |
-| tab key | dot4+dot5+Space |
-| upArrow key | dot1+Space |
-| downArrow key | dot4+Space |
-| capsLock | dot1+dot3+dot6+space |
-| shift+alt+tab key | advance2+advance3+advance1 |
-| alt+tab key | advance2+advance3 |
 | end key | dot4+dot6+space |
-| Control+end key | dot4+dot5+dot6+space |
-| home key | dot1+dot3+space |
+| control+end key | dot4+dot5+dot6+space |
+| home key | dot1+dot3+space, smartbeetle:f4 |
 | control+home key | dot1+dot2+dot3+space |
-| leftArrow key | dot3+space |
-| control+shift+leftArrow key | dot2+dot8+space+advance1 |
+| alt+f4 key | dot1+dot3+dot5+dot6+space |
+| leftArrow key | dot3+space, leftSideLeftArrow |
+| control+shift+leftArrow key | dot2+dot8+space+f1 |
 | control+leftArrow key | dot2+space |
-| shift+alt+leftArrow key | dot2+dot7+advance1 |
+| shift+alt+leftArrow key | dot2+dot7+f1 |
 | alt+leftArrow key | dot2+dot7 |
-| rightArrow key | dot6+space |
-| control+shift+rightArrow key | dot5+dot8+space+advance1 |
+| rightArrow key | dot6+space, leftSideRightArrow |
+| control+shift+rightArrow key | dot5+dot8+space+f1 |
 | control+rightArrow key | dot5+space |
-| shift+alt+rightArrow key | dot5+dot7+advance1 |
+| shift+alt+rightArrow key | dot5+dot7+f1 |
 | alt+rightArrow key | dot5+dot7 |
 | pageUp key | dot1+dot2+dot6+space |
 | control+pageUp key | dot1+dot2+dot6+dot8+space |
-| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
+| upArrow key | dot1+space, leftSideUpArrow |
 | control+upArrow key | dot2+dot3+space |
-| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
+| shift+alt+upArrow key | dot2+dot3+dot7+f1 |
 | alt+upArrow key | dot2+dot3+dot7 |
-| shift+upArrow key | left side scroll down + space |
+| shift+upArrow key | leftSideScrollDown+space |
 | pageDown key | dot3+dot4+dot5+space |
-| control+pagedown key | dot3+dot4+dot5+dot8+space |
-| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
+| control+pageDown key | dot3+dot4+dot5+dot8+space |
+| downArrow key | dot4+space, leftSideDownArrow |
+| control+shift+downArrow key | dot5+dot6+dot8+space+f1 |
 | control+downArrow key | dot5+dot6+space |
-| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
+| shift+alt+downArrow key | dot5+dot6+dot7+f1 |
 | alt+downArrow key | dot5+dot6+dot7 |
-| shift+downArrow key | right side scroll down + space |
-| delete key | dot1+dot3+dot5+space |
+| shift+downArrow key | space+rightSideScrollDown |
+| escape key | dot1+dot5+space, f4, brailleedge:f1 |
+| delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
 | f1 key | dot1+dot2+dot5+space |
 | f3 key | dot1+dot2+dot4+dot8 |
-| f4 key | dot7+advance3 |
-| windows+b key | dot1+dot2+advance1 |
-| windows+d key | dot1+dot4+dot5+advance1 |
-%kc:endInclude
-
-++ HIMS SyncBraille ++
-NVDA [Hims http://www.hims-inc.com/] tarafından üretilen SyncBraille ekranını destekler.
-Sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
-
-Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
-Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
-%kc:beginInclude
-|| Ad | Kısayol tuşu |
-| Scroll braille display back | left side scroll down |
-| Scroll braille display forward | right side scroll down |
-| Route to braille cell | routing |
+| f4 key | dot7+f3 |
+| windows+b key | dot1+dot2+f1 |
+| windows+d key | dot1+dot4+dot5+f1 |
+| control+insert key | smartbeetle:f1+rightSideScroll |
+| alt+insert key | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
 ++ Seika Braille Displays ++

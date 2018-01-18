@@ -221,8 +221,13 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
 	app = App(redirect=False)
-	# We do support QueryEndSession events, but we don't want to do anything for them.
-	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
+	# We support queryEndSession events, but in general don't do anything for them.
+	# However, when running as a Windows Store application, we do want to request to be restarted for updates
+	def onQueryEndSession(evt):
+		if config.isAppX:
+			# Automatically restart NVDA on Windows Store update
+			ctypes.windll.kernel32.RegisterApplicationRestart(None,0)
+	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 	def onEndSession(evt):
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
