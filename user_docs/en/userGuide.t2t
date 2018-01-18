@@ -339,8 +339,10 @@ The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
 By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+Note that braille follows both the [focus #SystemFocus] and [caret #SystemCaret] as well as object navigation and text review by default.
+If you want it to follow the focus and caret only, you need to [configure braille to be tethered to #BrailleTether] focus.
+In this case, braille will not follow object navigation and text review.
+If you want braille to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
 
 To navigate by object, use the following commands:
 
@@ -1142,10 +1144,12 @@ Specifying 0 disables displaying of these messages completely.
 This option allows NVDA messages to be displayed on the braille display indefinitely.
 
 %kc:setting
-==== Braille Tethered to ====[BrailleTether]
+==== Tether Braille ====[BrailleTether]
 Key: NVDA+control+t
 
-This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
+This option allows you to choose whether the braille display will follow the system focus, the navigator object / review cursor, or both.
+When "automatically" is selected, NVDA will follow the system focus and caret by default.
+In this case, when the navigator object or the review cursor position is changed by means of explicit user interaction, NVDA will tether to review temporarily, until the focus or the caret changes.
 
 ==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.
@@ -1233,13 +1237,13 @@ If on, this option will cause speech to be interrupted each time the Enter key i
 ==== Allow skim reading in Say All ====[KeyboardSettingsSkimReading]
 If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
 
-==== Beep if Typing Lowercase Letters when Caps Lock is On ====[VoiceSettingsBeepLowercase]
+==== Beep if Typing Lowercase Letters when Caps Lock is On ====[KeyboardSettingsBeepLowercase]
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
 Generally, typing shifted letters with caps lock is unintentional and is usually due to not realizing that caps lock is enabled.
 Therefore, it can be quite helpful to be warned about this.
 
 %kc:setting
-==== Speak Command Keys ====[VoiceSettingsSpeakCommandKeys]
+==== Speak Command Keys ====[KeyboardSettingsSpeakCommandKeys]
 Key: NVDA+4
 
 When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
@@ -1338,7 +1342,7 @@ If reporting of object position information is turned on, this option allows NVD
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
-==== Report Object descriptions ====ObjectPresentationReportDescriptions]
+==== Report Object descriptions ====[ObjectPresentationReportDescriptions]
 Uncheck this checkbox if you don't wish to have the description reported along with objects.
 
 %kc:setting
@@ -1432,7 +1436,7 @@ This option is turned off by default.
 
 To toggle inclusion of layout tables from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-==== Configuring reporting of fields such as links and headings ====
+==== Configuring reporting of fields such as links and headings ====[BrowseModeLinksAndHeadings]
 Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are reported when navigating, such as links, headings and tables.
 
 ==== Automatic focus mode for focus changes ====[BrowseModeSettingsAutoPassThroughOnFocusChange]

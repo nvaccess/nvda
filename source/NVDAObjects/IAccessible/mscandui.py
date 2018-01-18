@@ -160,7 +160,7 @@ class MSCandUI21(IAccessible):
 				reportSelectedCandidate(item)
 				return
 			elif config.conf["reviewCursor"]["followFocus"]:
-				api.setNavigatorObject(candidateList)
+				api.setNavigatorObject(candidateList, isFocus=True)
 		elif role==controlTypes.ROLE_MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
