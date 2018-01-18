@@ -5,15 +5,20 @@ What's New in NVDA
 
 = 2018.1 =
 
+
+== New Features ==
+- It is now possible to interact with charts in Microsoft Word and Microsoft PowerPoint, similar to the existing support for charts in Microsoft Excel. (#7046)
+ - In Microsoft Word:  When in browse mode, cursor to an embedded chart and press enter to interact with it.
+ - In Microsoft PowerPoint when editing a slide: tab to a chart object, and press enter or space to interact with the chart.
+ - To stop interacting with a chart, press escape.
+- New language: Kyrgyz.
+
+
 == Changes ==
 - The HIMS Braille Sense/Braille EDGE/Smart Beetle and Hims Sync Braille display drivers have been replaced by one driver. The new driver will automatically be activated for former syncBraille driver users. (#7459) 
  - Some keys , notably scroll keys, have been reassigned to follow the conventions used by Hims products. Consult the user guide for more details.
 - When typing with the on-screen keyboard via touch interaction, by default you now need to double tap each key the same way you would activate any other control. (#7309)
  - To use the existing "touch typing" mode where simply lifting your finger off the key is enough to activate it, Enable this option in the new Touch Interaction settings dialog found in the Preferences menu.
-- It is now possible to interact with charts in Microsoft Word and Microsoft PowerPoint, similar to the existing support for charts in Microsoft Excel. (#7046)
- - In Microsoft Word:  When in browse mode, cursor to an embedded chart and press enter to interact with it.
- - In Microsoft PowerPoint when editing a slide: tab to a chart object, and press enter or space to interact with the chart.
- - To stop interacting with a chart, press escape.
 - It is no longer necessary to explicitly tether braille to focus or review, as this will happen automatically by default. (#2385) 
  - Note that automatic tethering to review will only occur when using a review cursor or object navigation command. Scrolling will not activate this new behavior.
 
@@ -32,6 +37,7 @@ What's New in NVDA
 - NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
 - In recent versions of Office 365, it is again possible to navigate Excel charts using the arrow keys. (#7046)
 -  In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. Fixes #7076
+- In apps such as Windows 10 Mail, NVDA will no longer fail to announce deleted characters when pressing backspace. (#7456)
 
 
 == Changes for developers ==
