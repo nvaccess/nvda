@@ -7,14 +7,14 @@ NVDA NVDA_VERSION Gebruikershandleiding
 = Inhoudsopgave=[toc]
 %%toc
 
-+ Inleiding +
++ Inleiding +[Inleiding]
 Welkom bij NVDA!
 
 NonVisual Desktop Access (NVDA) is een gratis en open source schermlezer voor het Microsoft Windows besturingssysteem.
 Door het geven van informatie in synthetische spraak en braille stelt NVDA blinden en slechtzienden in staat om toegang te krijgen tot computers met het Windows besturingssysteem zonder bijkomende kosten.
 NVDA wordt ontwikkeld door [NV Access https://www.nvaccess.org/], met bijdragen van de gebruikers.
 
-++ Algemene kenmerken ++
+++ Algemene kenmerken ++[AlgemeneKenmerken]
 NVDA stelt blinden en slechtzienden in staat om te werken met het Windows besturingssysteem en veel toepassingen van derden.
 
 Belangrijke functies zijn:
@@ -23,34 +23,35 @@ Belangrijke functies zijn:
 - Vermeldding van tekstopmaakeigenschappen , voor zover beschikbaar, zoals naam lettertype, grootte, stijl- en spelfouten
 - Tekst onder de muis wordt automatisch voorgelezen en er kan een akoestisch signaal worden ingesteld dat de muispositie aangeeft
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
-- Kan via usb-stick of ander draagbare media worden gedraaid zonder dat installatie nodig is
+- Kan via usb-stick (flash drive) of ander draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
 - In 51 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
 - Werken met beveiligde omgeving van Windows (inloggen e.d.) is mogelijk
+- Besturingselementen en tekst worden gemeld bij gebruik van aanraakgebaren
 - Ondersteuning van gangbare toegankelijkheidsinterfaces zoals Microsoft Active Accessibility, Java Access Bridge, Iaccessible 2 en UI Automation (UI Automation alleen op Windows 7 of hoger)
 - Ondersteuning voor Windows commandoprompts en consoletoepassingen.
 -
 
-++ Internationalisering ++
+++ Internationalisering ++[Internationalisering]
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
 Behalve de Engelse versie van NVDA is het programma beschikbaar in nog 51 andere talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Birmees, Braziliaans-Portugees, Bulgaars, Catalaans, Colombiaans Spaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Koreaans, Macedonisch, Pharsi, Pools, Portugees, Punjabi, Roemeens, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Zweeds, Nederlands, Russisch, Vereenvoudigd en Traditioneel Chinees, Viëtnamees, etc. 
 
-++ Ondersteuning voor spraaksynthese++
+++ Ondersteuning voor spraaksynthese ++[OndersteuningVoorSpraaksynthese]
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
 
 De gratis, open source spraakmodule [eSpeak NG https://github.com/espeak-ng/espeak-ng], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen. 
 
 Informatie over andere door NVDA ondersteunde spraaksynthesizers is te vinden onder [Ondersteunde spraaksynthesizers#SupportedSpeechSynths].
 
-++ Braille-ondersteuning ++
+++ Brailleondersteuning ++[Brailleondersteuning]
 Gebruikers van Brailleleesregels kunnen met NVDA informatie in braille uitlezen.
 Brailleïnvoer, zowel onverkort als verkort braille, door middel van een brailletoetsenbord wordt ook ondersteund.
 Voor de ondersteunde leesregels, zie [Ondersteunde brailleleesregels#SupportedBrailleDisplays]
 
 NVDA ondersteunt Braillecodes in veel talen. Het betreft braillecodes voor verkort en onverkort Braille alsmede computerbraille.
 
-++ Licentie en Copyright ++
+++ Licentie en Copyright ++[LicentieEnCopyright]
 NVDA is auteursrechtelijk beschermd NVDA_COPYRIGHT_YEARS NVDA contributors.
 
 Voor NVDA geldt de GNU General Public License (Versie 2).
@@ -58,7 +59,7 @@ De software mag met anderen worden gedeeld of naar believen worden aangepast ond
 Dit is van toepassing voor zowel originele als aangepaste kopieën van de software alsmede voor software die gebruik maakt van code uit de NVDA-software.
 Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
-+ Systeemvereisten +
++ Systeemvereisten +[Systeemvereisten]
 - Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
 - Voor Windows 7, heeft NVDA Service Pack 1 of hoger nodig.
 - Voor Windows Server 2008 R2, heeft NVDA Service Pack 1 of hoger nodig.
@@ -67,7 +68,7 @@ Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://ww
 - Opslagcapaciteit: ongeveer 90 MB vrije ruimte.
 -
 
-+ NVDA downloaden en uitvoeren +
++ NVDA downloaden en uitvoeren +[NVDADownloadenEnUitvoeren]
 Als u het programma nog niet heeft, kunt u het downloaden van [www.nvaccess.org NVDA_URL]
 
 Op de downloadpagina vindt u de link naar de nieuwste versie van NVDA.
@@ -86,7 +87,7 @@ Op dit moment kan de draagbare versie niet rechtstreeks van media met het kenmer
 
 De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het programma te demonstreren, maar het kost wel veel tijd als u NVDA telkens op deze manier moet starten.
 
-++ Beperkingen van de draagbare en tijdelijke versie van NVDA. ++
+++ Beperkingen van de draagbare en tijdelijke versie van NVDA ++[Beperkingen vandeDraagbareEnTijdelijkeVersieVanNVDA]
 Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het programma niet automatisch gestart kan worden tijdens en / of na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
 - Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
 - UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
@@ -96,7 +97,7 @@ Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het progr
 -
 
 
-++ NVDA installeren ++
+++ NVDA installeren ++[NVDAInstalleren]
 Als u NVDA direct vanuit het downloadbestand installeert, drukt u op de knop NVDA Installeren.  
 Als u het dialoogvenster reeds gesloten hebt of als u een installatie wilt uitvoeren vanuit een  draagbare kopie, kiest u NVDA Installeren wat u vindt onder Extra in het NVDA menu.
 
@@ -106,34 +107,34 @@ In dit dialoogvenster treft u enkele opties aan die hieronder worden uitgelegd.
 Als de installatie voltooid is, wordt gemeld dat deze gelukt is. 
 Door nu op OK te drukken wordt de zojuist geïnstalleerde versie van NVDA opgestart.
 
-+++ Opstarten vanaf het Aanmeldscherm van Windows +++
++++ Opstarten vanaf het Aanmeldscherm van Windows +++[OpstartenVanafHetAanmeldschermVanWindows]
 Met deze optie bepaalt u of NVDA automatisch moet worden opgestart wanneer u zich in het Aanmeldscherm bevindt nog voordat u een wachtwoord hebt ingevoerd. 
 Dit geldt ook voor UAC Beheer en andere beveiligde schermen.
 
-+++ Snelkoppeling voor het bureaublad aanmaken +++
++++ Snelkoppeling voor het bureaublad aanmaken +++[SnelkoppelingVoorHetBureaubladAanmaken]
 Met deze optie kunt u bepalen of er een snelkoppeling voor het bureaublad moet worden aangemaakt waarmee u NVDA kunt starten. 
 Als u ervoor kiest de snelkoppeling aan te maken, dient deze tevens als sneltoetscombinatie , Ctrl+Alt+n, waarmee u NVDA ook altijd kunt starten
 
-+++ De Draagbare Configuratie naar Account van Huidige Gebruiker kopiëren +++
++++ De Draagbare Configuratie naar Account van Huidige Gebruiker kopiëren +++[DeDraagbareConfiguratieNaarAccountVanHuidigeGebruikerKopiëren]
 Met deze optie kunt u bepalen of de gebruikte instellingen van de NVDA kopie die momenteel actief is, moeten worden gekopieerd naar de configuratie van momenteel aangemelde gebruiker van de geïnstalleerde versie van NVDA. 
 Als u kiest voor kopiëren van de configuratie geldt dit niet voor eventuele andere gebruikers van het systeem en ook niet voor de systeemconfiguratie betreffende het gebruik van het Windows aanmeldscherm en andere beveiligde schermen. 
 Deze  optie is alleen beschikbaar wanneer de installatie wordt uitgevoerd vanuit een draagbare kopie en niet wanneer u de installatie direct vanuit het downloadbestand uitvoert.
 
-++ Een  draagbare Kopie aanmaken ++
+++ Een  draagbare Kopie aanmaken ++[EenDraagbareKopieAanmaken]
 Als u een draagbare kopie direct vanuit het downloadbestand aanmaakt, drukt u op de knop  Draagbare Kopie Aanmaken. 
 Als u het dialoogvenster reeds gesloten hebt of als u werkt met een geïnstalleerde versie van NVDA, kiest u  Draagbare Kopie Aanmaken wat u vindt onder Extra in het NVDA menu.
 
 In het dialoogvenster dat wordt geopend kunt u aangeven waar de  draagbare versie moet worden aangemaakt.
 Dit kan een map op de harde schijf zijn of op een USB stick dan wel op een ander type  draagbare media. 
 U vindt hier ook een optie waarmee de gebruikte NVDA instellingen van de momenteel aangemelde gebruiker kunnen worden gekopieerd naar de configuratie van de zojuist aangemaakte draagbare versie. 
-Deze optie is alleen beschikbaar wanneer de  draagbare versie wordt aangemaakt vanuit een op uw computer geïnstalleerde versie van NVDA en niet wanneer u de  versie  direct vanuit het downloadbestand uitvoert.
+Deze optie is alleen beschikbaar wanneer de  draagbare kopie wordt aangemaakt vanuit een op uw computer geïnstalleerde kopie van NVDA en niet wanneer u de  kopie  direct vanuit het downloadbestand uitvoert.
 Door op de knop Doorgaan te drukken wordt de draagbare kopie aangemaakt.
 Zodra het aanmaken is voltooid, hoort u de melding dat dit gelukt is. 
 Druk nu op OK om het dialoogvenster te sluiten.
 
-+ Aan de slag met NVDA +
++ Aan de slag met NVDA +[AanDeSlagMetNVDA]
 
-++ NVDA starten ++
+++ NVDA starten ++[NVDAStarten]
 Als u NVDA hebt geïnstalleerd met het installatieprogramma, kunt u NVDA eenvoudig starten met de toetscombinatie Ctrl+Alt+n, of NVDA selecteren onder Programma’s in het Startmenu gevolgd door Enter.
 U kunt het programma ook starten door in het dialoogvenster Uitvoeren de letters NVDA te typen en vervolgens Enter in te drukken.
 U kunt ook [commandoregelopties opgeven #CommandLineOptionstart waarmee u NVDA herstart  (-r), beëindigt (-q), add -ons uitschakelt (--disable-addons), etc.
@@ -151,6 +152,7 @@ Als het laden extra lang duurt, hoort u "NVDA wordt geladen. Even geduld....".
 Als u niets hoort, of u krijgt een foutmelding van Windows dan wel een in hoogte aflopende tonenreeks hoort, is er iets fout gegaan met het programma. U doet er dan goed aan dit te melden aan de ontwikkelaars van NVDA.
 Op de NVDA website kunt u lezen hoe u dit kunt doen.
 
++++ Welkomsscherm +++[Welkomsscherm]
 Wanneer NVDA de eerste keer start, komt u in het welkomstscherm van het programma dat u informatie geeft over de NVDA-toets en het NVDA-menu.
 Verderop in deze handleiding kunt u hier meer over lezen.
 Op het welkomsscherm treft u een vervolgkeuzemenu en 3 selectievakjes aan.
@@ -159,9 +161,9 @@ Als u in het eerste selectievakje een vinkje zet, wordt de CapsLock-toets ook al
 Als u een vinkje in het tweede vakje zet, zal NVDA automatisch opstarten zodra u bij Windows bent aangemeld. Deze mogelijkheid is alleen beschikbaar voor de geïnstalleerde versie van NVDA. 
 Een vinkje in het derde selectievakje zorgt ervoor dat dit welkomsscherm verschijnt, telkens  wanneer NVDA wordt gestart.  
 
-++ Over NVDA toetsenbordcommando’s ++
+++ Over NVDA toetsenbordcommando’s ++[OverNVDAToetsenbordcommando’s]
 
-+++ De NVDA programmatoets +++
++++ De NVDA programmatoets +++[DeNVDAProgrammatoets]
 Voor de meeste commando's binnen NVDA drukt u op een bepaalde toets, de NVDA programmatoets (of kortweg NVDA-toets) in combinatie met een of meer andere toetsen.
 Als uitzondering hierop noemen we de commando's die gebruikt worden om tekst te laten voorlezen. Hiervoor gebruikt u alleen de toetsen van het numerieke toetsenbord zonder de NVDA programmatoets (dit geldt voor de desktoptoetsenbordindeling). Er zijn echter nog enkele  andere uitzonderingen. 
 
@@ -170,7 +172,7 @@ Standaard zijn zowel de numerieke Insert als de uitgebreide Insert-toets als NVD
 
 Om een toets die u als NVDA programmatoets hebt ingesteld zijn oorspronkelijke functie te laten uitvoeren, u wilt CapsLock bij voorbeeld inschakelen om hoofdletters te typen,  moet u deze toets tweemaal snel achter elkaar indrukken.
 
-+++ Toetsenbordindeling +++
++++ Toetsenbordindeling +++[Toetsenbordindeling]
 Momenteel beschikt NVDA over twee profielen met toetscommando's die toetsenbordindelingen worden genoemd: de desktoptoetsenbordindeling en de laptoptoetsenbordindeling. 
 De standaardinstelling van NVDA is de Desktoptoetsenbordindeling, maar in het NVDA-menu onder Opties en vervolgens Toetsenbord kunt u dit wijzigen in Laptoptoetsenbordindeling.
 
@@ -178,17 +180,17 @@ Bij de Desktoptoetsenbordindeling wordt zeer veel gebruik gemaakt van het numeri
 Hoewel de meeste laptops geen apart numeriek toetsenbord hebben, kan dit soms wel worden gesimuleerd door de FN-toets ingedrukt te houden en letters en cijfers in te toetsen op het rechterdeel van het toetsenbord (7, 8, 9, u, i, o, j, k, l, etc.).
 Als dit niet mogelijk is op uw laptop of als u NumLock niet kunt uitschakelen, kunt u beter kiezen voor de laptop toetsenbordindeling. 
 
-++ NVDA Aanraakgebaren ++
-Als u met NVDA werkt op een apparaat met een aanraakscherm dat draait onder Windows 8 of hoger dan kunt u NVDA ook rechtstreeks via het aanraakscherm bedienen.
+++ NVDA Aanraakgebaren ++[NVDAAanraakgebaren]
+Als u met NVDA werkt op een met een aanraakscherm uitgerust apparaat  dat draait onder Windows 8 of hoger dan kunt u NVDA ook rechtstreeks met aanraakcommando's bedienen.
 Terwijl NVDA actief is, gaat alle door aanraking gegenereerde invoer rechtstreeks naar NVDA.
 Daarom zullen taken die normaal zonder NVDA kunnen worden uitgevoerd niet werken.
 
-+++ Het Beeldscherm Verkennen +++
++++ Het Beeldscherm Verkennen +++[HetBeeldschermVerkennen]
 De meest elementaire taak die met behulp van het aanraakscherm kan worden uitgevoerd is het spraakondersteunde uitlezen van het scherm, dus wat  is er aanwezig aan besturingselementen, tekst en dergelijke.
 U doet dit door één vinger op een willekeurige plaats op het scherm te zetten.
 Als u uw vinger op het scherm  houdt en hem over het scherm beweegt zullen knoppen en tekst die u tegenkomt worden gemeld.
 
-+++ Aanraakgebaren +++
++++ Aanraakgebaren +++[Aanraakgebaren]
 Bij de beschrijving van NVDA-commando's verderop in deze handleiding kunnen ook aanraakgebaren voorkomen die het bijbehorende commando via aanraking activeert.
 Hier volgen wat aanwijzingen voor het maken van de aanraakgebaren.
 
@@ -211,7 +213,7 @@ Er zijn vier mogelijke, richtingafhankelijke veegbewegingen: veeg links, veeg re
 Net als bij tikken kunnen veegbewegingen met meer dan één vinger worden gemaakt.
 Daarom komen gebaren zoals een veegbeweging links met twee vingers en een veegbeweging omhoog met vier vingers, etc. allemaal voor.
 
-+++ Aanraakmodi +++
++++ Aanraakmodi +++[Aanraakmodi]
 Aangezien er veel meer NVDA-commando’s zijn dan mogelijke aanraakgebaren, kan in NVDA gewisseld worden tussen verschillende aanraakmodi die ervoor zorgen dat commando’s in groepen worden onderverdeeld.
 De twee modi zijn de tekstmodus en de objectmodus.
 Bij een aantal NVDA-commando’s die u in deze handleiding tegenkomt, wordt, na het aanraakgebaar, tussen haakjes de toepasselijke modus vermeld  
@@ -222,7 +224,16 @@ Als er bij een bepaald commando geen modus wordt aangegeven wordt dit altijd uit
 Wisselen tussen aanraakmodi doet u door eenmaal tikken met drie vingers.
 %kc:endInclude
 
-++ Invoerhulpmodus ++
++++ Schermtoetsenbord +++[Schermtoetsenbord]
+Bij gebruik van een aanraakscherm dient het schermtoetsenbord voor het invoeren van tekst en commando's.
+Wanneer een tekstinvoerveld de focus heeft, kunt u het schermtoetsenbord activeren door te dubbeltikken op het ikoontje van het schermtoetsenbord onderaan het scherm.
+Bij tablets zoals de Surface Pro van Microsoft , is het schermtoetsenbord altijd beschikbaar zodra het toetsenbord uit het dock is gehaald.
+Om het schermtoetsenbord te laten verdwijnen dubbeltikt u op het schermtoetsenbordikoon of gaat u uit het tekstinvoerveld.
+
+De letters en tekens op het schermtoetsenbord vindt u door met een vinger naar het toetsenbord te gaan, gewoonlijk te vinden onderaan het scherm, waar u vervolgens met uw vinger de toets zoekt van uw keuze. Hiervoor moet het toetsenbord wel actief zijn.
+Zodra u de toets die u wilt gebruiken hebt gevonden, dubbeltikt u op de toets of u haalt uw vinger van de toets al naar gelang de gekozen opties in de [Aanraakinteractie-instellingen #TouchInteraction].
+
+++ Invoerhulpmodus ++[Invoerhulpmodus]
 Er worden veel NVDA-commando’s genoemd in deze handleiding, maar om op een gemakkelijke manier de verschillende commando’s te leren kennen kunt u het beste Invoerhulp inschakelen. 
 
 Om invoerhulp in te schakelen, drukt u op de NVDA-toets+1. 
@@ -230,7 +241,7 @@ Om deze functie uit te schakelen drukt u opnieuw op NVDA+1.
 Wanneer de invoerhulpfunctie is ingeschakeld, kunt u elke willekeurige toets indrukken of een aanraakgebaar maken om te horen wat de functie ervan is (voor zover deze in NVDA is toegewezen). 
 Zolang u in de hulpmodus bent worden de commando’s niet echt uitgevoerd.
 
-++ Het NVDA-menu ++
+++ Het NVDA-menu ++[HetNVDAMenu]
 Via het NVDA-menu kunt u de instellingen van het programma aanpassen, hulpinformatie opvragen, uw configuratie opslaan of teruggaan naar een eerder opgeslagen configuratie, uitspraakwoordenboeken aanpassen, extra opties instellen, NVDA afsluiten.
 
 U kunt het menu vanuit elke Windows-toepassing oproepen door op de NVDA-toets +n te drukken of door op het aanraakscherm te dubbeltikken met twee vingers. NVDA moet dan wel actief zijn.
@@ -238,7 +249,7 @@ U kunt het NVDA-menu ook openen via het Windows systeemvak.
 Klik met de rechtermuisknop op het NVDA-ikoontje in het systeemvak of  ga naar het systeemvak door de Windows-toets+b in te drukken om vervolgens naar beneden te pijlen tot u NVDA-knop hoort waarna u de contextmenutoets indrukt. Op de meeste toetsenborden zit de contextmenutoets rechts naast de rechter Windows-toets.  (NB Als er geen aparte Contextmenutoets is, kunt u Shift+F10 hiervoor gebruiken.)
 Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te gaan en de entertoets om een item te activeren. 
 
-++ De NVDA-basiscommando’s ++
+++ De NVDA-basiscommando’s ++[DeNVDABasiscommando’s]
 %kc:beginInclude
 || Naam | Desktoptoets | Laptoptoets | Aanraken | Beschrijving |
 | Spraak stoppen | Control | Control | 1tik met 2 vingers | Spreken wordt gestopt |
@@ -251,7 +262,7 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 | Zet slaapmodus aan/uit voor huidige applicatie | NVDA+shift+s | NVDA+shift+z | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig bij applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |
 %kc:endInclude
 
-++ Systeeminformatie melden ++
+++ Systeeminformatie melden ++[SysteeminformatieMelden]
 %kc:beginInclude
 || Naam | Ttoets | Omschrijving |
 | Datum/tijd melden | NVDA+f12 | NVDA+f1| Eenmaal indrukken laat huidige tijd horen, tweemaal snel indrukken meldt de datum |
@@ -259,14 +270,14 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 | Tekst op het klembord melden | NVDA+c | Meldt de tekst op het klembord als er tekst op het klembord staat. |
 %kc:endInclude
 
-+ Navigeren met NVDA +
++ Navigeren met NVDA +[NavigerenMetNVDA]
 Met NVDA kunt u  op   verschillende manieren door en in het systeem  navigeren, zowel via normale interactie als via review.
 
-++ Objecten ++[Objects]
+++ Objecten ++[Objecten]
 Elk programma en het besturingssysteem zelf bestaat uit veel objecten.
 Een object is een afzonderlijk element zoals een stuk tekst, knop, selectievakje, schuifregelaar, lijst of bewerkbaar tekstvak.
 
-++ Navigeren met de systeemfocus ++[SystemFocus]
+++ Navigeren met de systeemfocus ++[NavigerenMetDeSysteemfocus]
 De systeemfocus, of kortweg de focus, is het [object #Objects] waar de toetsen die op het toetsenbord worden aangeslagen betrekking op hebben ( de interactie).
 Als u bijvoorbeeld in een tekstvak typt, heeft dit tekstvak de focus.
 
@@ -286,7 +297,7 @@ Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfoc
 | Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. Bij tweemaal indrukken wordt de informatie gespeld. Driemaal drukken zorgt ervoor dat deze naar het klembord wordt gekopieerd. |
 %kc:endInclude
 
-++ Navigeren met de systeemcursor ++[SystemCaret]
+++ Navigeren met de systeemcursor ++[NavigerenMetDeSysteemcursor]
 Wanneer er een [object #Objects] is [gefocusseerd #SystemFocus] dat de mogelijkheid heeft om tekst te lezen of te bewerken, kunt u de systeemcursor gebruiken om door de tekst te navigeren. De systeemcursor wordt ook wel de tekstcursor genoemd.
 
 Als een object met de systeemcursor is gefocusseerd, kunt u de pijltoetsen, pageUp, pageDown, home, end, etc gebruiken om door de tekst te navigeren.
@@ -310,7 +321,7 @@ Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 | Ga een rij omlaag | control+alt+pijl omlaag | Verplaatst de tekstcursor een rij omlaag(van dezelfde kolom) |
 %kc:endInclude
 
-++ Objectnavigatie ++[ObjectNavigation]
+++ Objectnavigatie ++[Objectnavigatie]
 U zult meestal met applicaties werken door middel van de commando's voor het verplaatsen van de [focus #SystemFocus] en de [systeemcursor #SystemCaret].
 Soms kan het echter handig zijn om de huidige applicatie of het besturingssysteem te verkennen zonder de [focus #SystemFocus] of de systeemcursor #SystemCaret] te verplaatsen.
 Ook wilt u soms werken met [objecten #Objects] die niet te bedienen zijn met de TAB-toets van het toetsenbord.
@@ -352,7 +363,7 @@ Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock uitgeschakeld worden.
 
-++ Nalezen van tekst ++[ReviewingText]
+++ Nalezen van tekst ++[NalezenVanTekst]
 Met NVDA kunt u de inhoud van het [scherm (schermoverzicht) #ScreenReview], het huidige [document (documentoverzicht) #DocumentReview] of het huidige [object #ObjectReview] ,  per karakter, per woord of regel nalezen.
 Dit is vooral handig in Windows-opdrachtvensters of andere plaatsen waar de [tekstcursor #SystemCaret] niet of slechts beperkt beschikbaar is.
 U kunt dit bijvoorbeeld gebruiken voor het lezen van een lang, informatief bericht in een dialoogvenster
@@ -394,7 +405,7 @@ Dit ziet er dan als volgt uit:
 | Vorig woord | Huidig woord | Volgend woord |
 | Vorig karakter | Huidige karakter | Volgende karakter |
 
-++ Leesoverzichtmodi (Review Modes) ++
+++ Leesoverzichtmodi (Review Modes) ++[Leesoverzichtmodi]
 Met behulp van de [leesoverzichtcommando's #ReviewingText] van NVDA kan, afhankelijk van de geselecteerde leesoverzichtmodus, de inhoud van het huidige navigatorobject, het huidige document, of scherm worden nagelezen.
 De Leesoverzichtmodi komen in de plaats van wat eerder in NVDA  "Flat Review"  (platte overzichtsmodus) heette.
 
@@ -405,12 +416,12 @@ U kunt de volgende commando’s gebruiken om van leesoverzichtmodus te wisselen:
 | Naar vorige leesoverzichtmodus schakelen | NVDA+numeriek1 | NVDA+pageDown | met 2 vingers omlaag vegen | hiermee wordt naar de vorige, beschikbare modus geschakeld. |
 %kc:endInclude
 
-+++ Objectoverzicht (Object Review) +++[ObjectReview]
++++ Objectoverzicht (Object Review) +++[Objectoverzicht]
 In de objectoverzichtmodus kan alleen de inhoud van het huidige [navigatorobject #ObjectNavigation] worden bekeken.
  Voor objecten zoals bewerkbare invoervelden of andere eenvoudige bewerkingen gaat het daarbij in het algemeen om tekst.
 Bij andere objecten kan het gaan om de naam en of de waarde van het object.
 
-+++ Documentoverzicht (Document Review) +++[DocumentReview]
++++ Documentoverzicht (Document Review) +++[Documentoverzicht]
 Wanneer het [navigatorobject #ObjectNavigation] zich binnen een bladermodusdocument bevindt (een webpagina bij voorbeeld) of een ander complex documentdat veel objecten bevat  (bij voorbeeldeen   Lotus Symphony document),  kan naar de documentoverzichtmodus worden overgeschakeld.
 In de documentoverzichtmodus kan de tekst van het gehele document worden bekeken.
 
@@ -419,7 +430,7 @@ Wanneer het document met de daarvoor bestemde leesoverzichtcommando's wordt verk
 
 Merk op dat NVDA automatisch vanuit objectoverzicht overschakelt naar documentoverzicht  wanneer bladermodusdocumenten worden verkend.
 
-+++ Schermoverzicht (Screen Review) +++[ScreenReview]
++++ Schermoverzicht (Screen Review) +++[Schermoverzicht]
 In de  schermoverzichtmodus kunt u tekst in de actieve toepassing verkennen die op het scherm te zien is.
 Dit komt overeen met schermoverzichtopties of de muiscursorfuncties zoals die in veel andere schermleesprogramma's worden geboden.
 
@@ -428,7 +439,7 @@ Wanneer het scherm met de daarvoor bestemde leesoverzichtcommando's wordt verken
 
 Merk op dat NVDA bij sommige recente toepassingen tekst die op het scherm verschijnt slechts gedeeltelijk of soms helemaal niet leest. Dit heeft te maken met nieuwe schermtechnologie die op dit moment nog niet ondersteund kan worden.
 
-++ Navigeren met de muis ++
+++ Navigeren met de muis ++[NavigerenMetDeMuis]
 Door de muis over het scherm te verplaatsen wordt tekst die zich direct onder de muisaanwijzer bevindt standaard door NVDA voorgelezen.
 Voor zover ondersteund, wordt een hele alinea tekst voorgelezen, maar bij bepaalde besturingselementen leest NVDA de tekst per regel voor.
 
@@ -482,8 +493,7 @@ Het is ook mogelijk om handmatig de focusmodus in te schakelen, deze zal dan act
 | Uitgebreide beschrijving openen | NVDA+d | Er wordt een nieuw venster geopend met een uitgebreide beschrijving, voor zover aanwezig,  van het element waarop u zich bevindt. |
 %kc:endInclude
 
-
-++ Lettertoetsnavigatie ++
+++ Lettertoetsnavigatie ++[Lettertoetsnavigatie]
 Om in de bladermodus snel te kunnen navigeren, kunt u een lettertoets gebruiken om naar bepaalde velden te springen in een document.
 Merk op  dat niet alle commando’s  worden ondersteund  in elk type document.
 
@@ -517,15 +527,15 @@ Gebruik de volgende toetscombinaties om naar het begin resp. het einde van conta
 || Naam | Toetscombinatie | Beschrijving |
 | naar begin van containerobject springen | Shift+komma | Verplaatst de systeemcursor naar begin van het containerobject (lijst, tabel etc.) |
 | achter het containerobject springen | komma | Verplaatst de systeemcursor achter het containerobject (lijst, tabel etc.) waar de cursor zich bevindt. |
-
 %kc:endInclude
+
 Webapplicaties zoals Gmail, Twitter en Facebook kunnen met lettertoetsnavigatie worden geactiveerd.
 Als u hiermee wilt werken terwijl u ook   uw cursortoetsen wilt kunnen gebruiken voor het lezen in bladermodus,  kunt u de lettertoetsnavigatie in NVDA tijdelijk uitschakelen.
 %kc:beginInclude
 Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen drukt u op NVDA+shift+spatiebalk.
 %kc:endInclude
 
-++ De lijst met elementen ++
+++ De lijst met elementen ++[DeLijstMetElementen]
 Via de lijst met elementen krijgt u toegang tot de verschillende, bij de toepassing behorende, elementtypes in het document.
 Als u zich bij voorbeeld in een webbrowser bevindt, kan de lijst met elementen koppen, koppelingen (links), formuliervelden, knoppen of oriëntatiepunten bevatten. 
 Met behulp van keuzerondjes kunt u wisselen tussen de verschillende elementtypes.
@@ -536,7 +546,7 @@ Als u uw keuze eenmaal gemaakt hebt, kunt u met de aanwezige knoppen in het dial
 | Lijst met elementen | NVDA+f7 | Hiermee roept u de lijst met de verschillende elementtypes  op die zich in het huidige document bevinden. |
 %kc:endInclude
 
-++ Ingebedde objecten ++
+++ Ingebedde objecten ++[IngebeddeObjecten]
 De inhoud van pagina’s kan verrijkt zijn met programmatuur zoals Adobe Flash, Oracle Java en HTML5, maar ook met applicaties en dialoogvensters.
 Wanneer u iets dergelijks tegenkomt in bladermodus zal NVDA dit respectievelijk melden als “Ingebed (Embedded) Object”, “applicatie”, of “dialoogvenster.
 Met de letternavigatietoetsen o en Shift + o kunt u hier snel naar toe navigeren.
@@ -548,7 +558,7 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 | Terug naar inhoud van document | NVDA+control+spatiebalk | Verplaatst de focus van het huidige ingevoegde object naar “het document waarin het zich bevindt |
 %kc:endInclude
 
-+ Inhoud van wiskundige aard lezen +[ReadingMath]
++ Inhoud van wiskundige aard lezen +[InhoudVanWiskundigeAardLezen]
 Met MathPlayer 4 van Design Science, kan NVDA ondersteunde wiskundige inhoud lezen en u er interactief in laten navigeren.
 Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
 MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
@@ -564,7 +574,7 @@ NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek ve
 Bij het lezen van een document zal NVDA alle ondersteunde wiskundige inhoud voorlezen wanneer deze voorkomt.
 Als u een brailleleesregel gebruikt, wordt deze ook in braille weergegeven.
 
-++ Interactieve Navigatie ++
+++ Interactieve Navigatie ++[InteractieveNavigatie]
 Als u voornamelijk met spraak  werkt, zult u de probleemstelling waarschijnlijk meestal liever eerst in kleinere stukjes horen dan in zijn geheel.
 
 Als u in de bladermodus bent, kunt u dit doen door de cursor naar de wiskundige inhoud te verplaatsen en dan op enter te drukken.
@@ -586,14 +596,14 @@ Raadpleeg de documentatie van MathPlayer  over navigatiecommando's voor nadere i
 
 Als u naar het document wilt teruggaan drukt u op Escape.
 
-+ Braille +
++ Braille +[Braille]
 Als u over een brailleleesregel beschikt, kan NVDA informatie in braille weergeven.
 Als uw brailleleesregel een toetsenbord heeft van het type Perkins kunt u ook zowel verkort als onverkort braille invoeren.
 
 Raadpleegde paragraaf  [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor informatie over de ondersteunde brailleleesregels.
 U kunt braille configureren via het [dialoogvenster Brailleïnstellingen #BrailleSettings].
 
-+ Braille-afkortingen voor besturingselementen, status-indicatoren en oriëntatiepunten +
+++ Braille-afkortingen voor besturingselementen, status-indicatoren en oriëntatiepunten ++[Brailleafkortingen]
 Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type en de status van een besturingselement alsmede oriëntatiepunten.
 
 || Afkorting | Type besturingselement |
@@ -681,7 +691,7 @@ Tot slot kunnen de volgende afkortingen gebruikt worden met betrekking tot orië
 | zoek | zoeken |
 | gbd | gebied |
 
-++ Braille-invoer ++
+++ Brailleinvoer ++[Brailleinvoer]
 NVDA ondersteunt de invoer van zowel onverkort als verkort braille via een brailletoetsenbord.
 U kunt een omzettabel selecteren waarmee u braille in tekst kunt laten omzetten met behulp van de [Invoertabelopties#BrailleInputTable] in het dialoogvenster Brailleinstellingen.
 
@@ -696,7 +706,7 @@ Punt  8 zet alle braille-invoer om  en activeert de Enter-toets.
 Door punt 7 + punt 8 in te drukken wordt alle braille-invoer omgezet, maar zonder de spatiebalk of Enter-toets te activeren.
 %kc:endInclude
 
-+ Inhoudherkenning +
++ Inhoudherkenning +[Inhoudherkenning]
 Wanneer auteurs onvoldoende informatie verschaffen waarmee een gebruiker van een schermleesprogramma kan bepalen om welke inhoud het gaat, kunnen verscheidene hulpprogramma's worden gebruikt om de inhoud te herkennen uit een afbeelding.
 NVDA ondersteunt de OCR Optical Character Recognition, meestal 'tekstherkenning' genoemd in het nederlands, ) functionaliteit die in Windows 10 is ingebouwd om tekst uit afbeeldingen te herkennen.
 In andere inhoudherkenningsprogramma's kan worden voorzien met behulp van NVDA add-ons.
@@ -721,12 +731,12 @@ U kunt extra talen toevoegen door in het menu Start, (of met linker Windows-toet
 Om de tekst in het huidige navigatorobject te herkennen met behulp van Windows 10 OCR drukt u op NVDA+r.
 %kc:endInclude
 
-+ Applicatie-specifieke kenmerken +
++ Applicatie-specifieke kenmerken +[ApplicatieSpecifiekeKenmerken]
 NVDA beschikt over een aantal applicatie-specifieke kenmerken om het gebruik van deze applicaties te vergemakkelijken, of om toegang te geven tot functionaliteit die anders niet bruikbaar zou zijn voor screenreader gebruikers.
 
-++ Microsoft Word ++
+++ Microsoft Word ++[MicrosoftWord]
 
-+++ Automatisch Lezen van Kolom- en Rijkoppen +++
++++ Automatisch Lezen van Kolom- en Rijkoppen +++[WordAutomatischLezenVanKolomEnRijkoppen]
 Bij het navigeren in Microsoft Word-tabellen  kan NVDA de toepasselijke  kolom- en rijkoppen automatisch melden.
 Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in het dialoogvenster Documentopmaak ingeschakeld is. 
 Ten tweede moet NVDA voor elke tabel weten in welke kolom of rij de kolom-/rijkoppen staan.
@@ -738,7 +748,7 @@ Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijk
 %kc:endInclude
 Deze instellingen worden als bladwijzers die compatibel zijn  met andere schermlezers zoals Jaws, in het document opgeslagen. Dit houdt in dat andere  gebruikers die het document op een later moment openen  direct gebruik kunnen maken van de reeds ingestelde kolom- en rijkoppen.  
 
-+++ Bladermodus in Microsoft Word +++
++++ Bladermodus in Microsoft Word +++[BladermodusMicrosoftWord]
 
 Evenals bij het navigeren op het web, kunt u Bladermodus in Microsoft Word gebruiken waardoor werken met snelnavigatie en de Lijst met Elementen mogelijk wordt.
 %kc:beginInclude
@@ -746,21 +756,21 @@ Om Bladermodus in Microsoft Word, aan en uit te zetten drukt u op NVDA+spatiebal
 %kc:endInclude
 Meer informatie over  Bladermodus en Snelnavigatie vindt u in de paragraaf Bladermodus#BrowseMode].
 
-++++ De Lijst met Elementen  ++++
+++++ De Lijst met Elementen  ++++[WordLijstMetElementen]
 %kc:beginInclude
 Terwijl u in Bladermodus bent in Microsoft Word, kunt u toegang tot de Lijst met Elementen krijgen  door opNVDA+f7 te drukken.
 %kc:endInclude
 De Elementenlijst kan koppen, hyperlinks en annotaties melden met inbegrip van opmerkingen en trackwijzigingen alsmede fouten met dien verstande dat dit momenteel alleen spelfouten betreft.
 
-+++ Opmerkingen Melden +++
++++ Opmerkingen Melden +++[WordOpmerkingenMelden]
 %kc:beginInclude
 Om eventuele opmerkingen op de positie waar de cursor op dat moment staat te laten melden drukt u op NVDA+alt+c.
 %kc:endInclude
  Alle opmerkingen bij het document  alsmede andere trackveranderingen kunnen ook worden opgenomen in de NVDA Elementenlijst  wanneer u Annotaties als het type selecteert.
 
-++ Microsoft Excel ++
+++ Microsoft Excel ++[MicrosoftExcel]
 
-+++ Automatisch Lezen van Kolom- en Rijkoppen +++
++++ Automatisch Lezen van Kolom- en Rijkoppen +++[ExcelAutomatischLezenVanKolomEnRijkoppen]
 Bij het navigeren in Microsoft Excel-werkbladen  kan NVDA de toepasselijke  kolom- en rijkoppen automatisch melden.
 Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in het dialoogvenster Documentopmaak ingeschakeld is. 
 Ten tweede moet NVDA voor elk werkblad weten in welke kolom of rij de kolom-/rijkoppen staan.
@@ -772,7 +782,7 @@ Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijk
 %kc:endInclude
 Deze instellingen worden als gedefiniëede naambereiken, die compatibel zijn met andere schermleesprogramma's zoals Jaws,  opgeslagen in de werkmap. Dit houdt in dat andere  gebruikers die de werkmap op een later moment openen  direct gebruik kunnen maken van de reeds ingestelde kolom- en rijkoppen. 
 
-+++ De Elementenlijst +++
++++ De Elementenlijst +++[ExcelElementenlijst]
 
 Evenals voor op het Web heeft NVDA een Elementenlijst voor Microsoft Excel, waarmee u verschillende types informatie in een lijst kunt weergeven en toegankelijk maakt.
 %kc:beginInclude
@@ -794,31 +804,31 @@ Een druk op de Enter- of de Ga Naar-knop terwijl u zich op een weergegeven blad 
 De Elementenlijst laat voor elk formulierveld, de alternatieve tekst van het veld zien samen met de adressen van de erbijbehorende cellen.
 Door een formulierveld te selecteren en op Enter of de Ga naar knop te drukken, gaat u in de Bladermodus naar het desbetreffende veld.-
 
-+++ Opmerkingen Melden +++
++++ Opmerkingen Melden +++[ExcelOpmerkingenMelden]
 %kc:beginInclude
 Eventuele opmerkingen voor de cel die momenteel de focus heeft, kunt u laten horen door NVDA+alt+c in te drukken.
 %kc:endInclude
 Alle opmerkingen voor het werkblad kunnen ook worden weergegeven in de NVDA Elementenlijst.
 
-+++ Beveiligde Cellen Lezen +++
++++ Beveiligde Cellen Lezen +++[ExcelBeveiligdeCellenLezen]
 Als een werkmap beveiligd is, kan het zijn dat bepaalde cellen  die niet mogen worden bewerkt, de focus niet kunnen krijgen.
 %kc:beginInclude
 Om naar beveiligde cellen te gaan, schakelt u over naar Bladermodus door op NVDA+spatiebalk te drukken, en vervolgens  gebruikt u standaard Excel navigatieopties zoals de pijltjestoetsen om door de cellen te gaan op het huidige werkblad.
 %kc:endInclude
 
-+++ Formuliervelden +++
++++ Formuliervelden +++[ExcelFormuliervelden]
 Excel werkbladen kunnen formuliervelden bevatten.
 Door middel van de Elementenlijst of, de toetsen f en shift+f in letternavigatie kunt u toegang tot het formulierveld  krijgen.
 Wanneer u in bladermodus naar een formulierveld gaat kunt u op Enter of de spatiebalk drukken om of het veld te activeren of naar focusmodus te wisselen  zodat, afhankelijk van het besturingselement, handelingen kunnen worden uitgevoerd.
 Voor verdere informatie over Bladermodus en letternavigatie, raadpleegt u de paragraaf [[Bladermodus #BrowseMode].
 
-++ Microsoft PowerPoint ++
+++ Microsoft PowerPoint ++[MicrosoftPowerpoint]
 %kc:beginInclude
 || Naam | Toets | Beschrijving |
 | Voorlezen aantekeningen van spreker in-/uitzetten | control+shift+s | Tijdens een presentatie kunt u met dit commando, of de aantekeningen bij een dia, of de tekst(inhoud) van de dia laten voorlezen. Dit heeft geen invloed op dat wat op het scherm getoond wordt.  | 
 %kc:endInclude
 
-++ Foobar2000 ++
+++ Foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Naam | Toets | Omschrijving |
 | Resterende tijd melden | control+shift+r | Meldt de resterende tijd van het huidige nummer, indien van toepassing. |
@@ -826,27 +836,27 @@ Voor verdere informatie over Bladermodus en letternavigatie, raadpleegt u de par
 
 Merk op dat de opdracht "Resterende tijd melden" alleen werkt met de standaard opmaakreeks voor de Foobar-statusregel.
 
-++ Miranda IM ++
+++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
 || Naam | Toets | Omschrijving |
 | Recent bericht melden | NVDA+control+1-4 | Meldt een recent bericht, afhankelijk van de gebruikte sneltoets. NVDA+control+2 meldt bijvoorbeeld het op één na nieuwste bericht. |
 %kc:endInclude
 
-++ Poedit ++
+++ Poedit ++[Poedit]
 %kc:beginInclude
 || Naam | Toets | Omschrijving |
 | Commentaarvenster melden | control+shift+c | Meldt eventueel commentaar in het commentaarvenster. |
 | Opmerkingen voor vertalers melden | control+shift+a | Meldt eventuele opmerkingen voor vertalers.
 %kc:endInclude
 
-++ Skype ++
+++ Skype ++[Skype]
 %kc:beginInclude
 Wanneer u zich in een berichtenreeks bevindt:
 || Naam | Toets | Beschrijving |
 | Bericht lezen | NVDA+control+1-0 | Afhankelijk van het cijfer dat u indrukt, wordt de leescursor naar het daarbijbehorende bericht verplaatst en kan het gelezen worden; als  u bij voorbeeld NVDA+control+2 indrukt, wordt het bericht dat u op één na het laatst hebt ontvangen gelezen. |
 %kc:endInclude
 
-++ Kindle voor de PC ++
+++ Kindle voor de PC ++[Kindle]
 NVDA ondersteunt het lezen van en het navigeren in boeken met  Amazon Kindle voor de PC.
 Deze functionaliteit is alleen beschikbaar voor  Kindle-boeken met het kenmerk "Schermlezers: worden ondersteund" (Screen Reader: supported). U kunt dit nagaan op de pagina met gegevens over het boek in kwestie.
 
@@ -863,7 +873,7 @@ Bij het navigeren tussen koppelingen (links) worden ook voetnoten meegenomen.
 NVDA biedt ondersteuning (nog in een pril stadium)  bij  het lezen  van en het interactief navigeren door wiskundige inhoud voor  boeken met toegankelijke wiskunde.
 Raadpleeg hierover het onderdeel  [Inhoud van Wiskundige Aard Lezen #ReadingMath] voor meer informatie.
 
-+++ Tekstselectie +++
++++ Tekstselectie +++[KindleTekstselectie]
 Met Kindle kunt u verschillende handelingen met betrekking tot geselecteerde tekst, uitvoeren, waaronder het verkrijgen van een definitie uit een woordenboek, het toevoegen van aantekeningen en tekstmarkeringen, het kopiëren van tekst naar het klembord en het doorzoeken van een webpagina. 
 Daartoe dient u eerst tekst op de gebruikelijke manier te selecteren in de bladermodus, bijv. met shift en de cursortoetsen.
 %kc:beginInclude
@@ -871,7 +881,7 @@ Nadat u tekst hebt geselecteerd drukt u op de Windows contextmenutoets of op shi
 %kc:endInclude
 Als u dit doet zonder dat er tekst is geselecteerd, worden de opties getoond voor het woord bij de cursor.
 
-+++ Aantekeningen van gebruiker +++
++++ Aantekeningen van gebruiker +++[KindleAantekeningenVanGebruiker]
 U kunt een aantekening maken bij een woord of een tekstpassage. 
 Hiertoe selecteert u eerst de tekst waar het omgaat en roept u het contextmenu voor de selectie op zoals hierboven beschreven.
 Vervolgens kiest u "Aantekening toevoegen".
@@ -885,7 +895,7 @@ Om een aantekening te bekijken, bewerken of verwijderen:
 + kiest u "Aantekening bewerken".
 +
 
-++ Azardi ++
+++ Azardi ++[Azardi]
 %kc:beginInclude
 Wanneer u in de tabelweergave  van toegevoegde boeken bent:
 || Naam | Toets | Beschrijving |
@@ -893,9 +903,9 @@ Wanneer u in de tabelweergave  van toegevoegde boeken bent:
 | Contextmenu | Toepassingen | Opent het contextmenu voor het geselecteerde boek. |
 %kc:endInclude
 
-+ NVDA configureren +
++ NVDA configureren +[NVDAConfigureren]
 
-++ Opties ++
+++ Opties ++[Opties]
 %kc:settingsSection: || Naam | Desktoptoets  | Laptoptoets  | Beschrijving |
 De meeste instellingen van NVDA kunnen via dialoogvensters worden aangepast. Om dit te doen gaat u in het NVDA-menu naar  “Opties” en kiest u het gewenste menuonderdeel.
 Voor alle instellingen die u wijzigt, geldt dat u met de OK-knop de wijzigingen accepteert.
@@ -905,11 +915,11 @@ Sommige instellingen kunnen ook gewijzigd worden met sneltoetsen. Deze worden, v
 NB. Standaard zijn niet alle dialoogvensters onder Opties toegankelijk  met invoerhandelingen (toetsenbordcommando’s, aanraakgebaren, etc.).
 Als u dialoogvensters wilt oproepen die geen specifieke sneltoetscombinatie kennen,kunt uvia het dialoogvenster Invoerhandelingen koppelen [#InputGestures] voor een dergelijk dialoogvenster een aangepaste  invoerhandeling aanmaken.
 
-+++ Algemeen (NVDA+control+g) +++
++++ Algemeen (NVDA+control+g) +++[Algemeen]
 Het dialoogvenster met “Algemene instellingen” vindt u in het NVDA-menu onder “Opties”.
 U vindt hier de volgende onderdelen:
 
-==== Taal ====
+==== Taal ====[AlgemeenTaal]
 Dit is een vervolgkeuzelijst waarmee u de taal van de gebruikersinterface en de meldingen van NVDA kunt kiezen. 
 Er is een groot aantal talen waaruit gekozen kan worden, maar de standaardinstelling is “User default, Windows”.
 Hiermee wordt bewerkstelligt dat NVDA de taal gebruikt die standaard op uw PC is ingesteld.
@@ -918,44 +928,44 @@ Merk op dat NVDA opnieuw moet worden gestart als u de taal verandert.
 NVDA vraagt u het programma opnieuw te starten als u de taalkeuze verandert.
 Druk op OK en NVDA wordt opnieuw gestart.
 
-==== Configuratie opslaan bij afsluiten ====
+==== Configuratie opslaan bij afsluiten ====[AlgemeenConfiguratieOpslaanBijAfsluiten]
 Als u een vinkje plaatst in het selectievakje zal de huidige configuratie automatisch worden opgeslagen bij afsluiting van NVDA.
 
-==== Toon afsluitopties bij het afsluiten van NVDA ====
+==== Toon afsluitopties bij het afsluiten van NVDA ====[AlgemeenToonAfsluitopties]
 Als u het selectievakje aanvinkt, verschijnt er bij het beëindigen van NVDA een dialoogvenster met afsluitopties. 
 U hebt de keuze uit Afsluiten, Herstarten of Herstarten zonder Add-ons.
 
-==== Geluid bij starten of afsluiten NVDA ====
+==== Geluid bij starten of afsluiten NVDA ====[AlgemeenGeluidAfspelen]
 Als u een vinkje plaatst in dit selectievakje zal NVDA bij het opstarten of afsluiten geluid afspelen.
 
-==== Niveau van loggen ====
+==== Niveau van loggen ====[AlgemeenLogniveau]
 Dit is een vervolgkeuzelijst waarmee u het niveau van loggen kiest, met andere worden wat moet NVDA allemaal loggen terwijl het draait.
 In het algemeen kunt u de standaardinstelling ongewijzigd laten.
 Als u evenwel informatie wilt doorgeven over mogelijke bugs van het programma kan  het nuttig zijn het niveau van loggen te wijzigen.
 
-==== NVDA automatisch starten nadat ik me bij windows heb aangemeld ====
+==== NVDA automatisch starten nadat ik me bij windows heb aangemeld ====[AlgemeenNaAanmeldingStarten]
 Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zich bij  Windows aanmeldt.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== NVDA gebruiken bij Windows aanmelding(administratieve rechten vereist) ====
+==== NVDA gebruiken bij Windows aanmelding(administratieve rechten vereist) ====[AlgemeenStartenBijAanmelding]
 Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan zal  NVDA samen met Windows bij aanmelding worden gestart. Hiervoor moet u het selectievakje inschakelen.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== Huidige instellingen van NVDA gebruiken bij windows-aanmelding (administrative rechten vereist) ====
+==== Huidige instellingen van NVDA gebruiken bij windows-aanmelding (administrative rechten vereist) ====[AlgemeenInstellingenKopiëren]
 Met deze knop kopieert u uw huidige opgeslagen configuratie naar de systeemconfiguratiemap van NVDA, zodat de instellingen worden gebruikt bij het aanmeldscherm, gebruikersaccountbeheerscherm (UAC) en andere beveiligde Windowsschermen.
 Om ervoor te zorgen dat alle instellingen worden overgezet, moet u erop letten dat u eerst uw configuratie hebt opgeslagen met control+NVDA+c, of Configuratie Opslaan in het NVDA-menu.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== Automatisch controleren op NVDA updates ====
+==== Automatisch controleren op NVDA updates ====[AlgemeenOpUpdatesControleren]
 Als dit selectievakje is aangevinkt zal NVDA automatisch controleren of er bijgewerkte versies van NVDA beschikbaar zijn en dit laten weten als dit het geval is.
 Handmatig controleren of er een update beschikbaar is, kan ook. Ga dan naar: “Op update controleren” onder Help in het NVDA Menu.
 
-+++ Synthesizerkeuze (NVDA+control+s) +++
++++ Synthesizerkeuze (NVDA+control+s) +++[Synthesizerkeuze]
 Om een synthesizer te kiezen die door NVDA wordt gebruikt voor spraakuitvoer gaat u in het NVDA-menu naar “Opties” en vervolgens naar “Synthesizer”.
 Nadat u de door u gewenste synthesizer hebt geselecteerd, drukt u op OK, en de synthesizer wordt geladen.
 Als er bij het laden van de synthesizer een fout optreedt, zal NVDA dit melden en blijft de tot dan toe gebruikte synthesizer actief. 
 
-==== Synthesizer ====
+==== Synthesizer ====[SynthesizerkeuzeSynthesizer]
 Hiermee kiest u de synthesizer die door NVDA moet worden gebruikt voor de spraakuitvoer.
 
 Onder [Ondersteunde spraaksynthesizers #SupportedSpeechSynths]treft u een lijst aan met synthesizers die in NVDA worden ondersteund.
@@ -963,11 +973,11 @@ Onder [Ondersteunde spraaksynthesizers #SupportedSpeechSynths]treft u een lijst 
 Er is één specifieke optie die altijd in deze lijst voorkomt en wel “geen spraak” waarmee alle spraakuitvoer wordt uitgeschakeld.
 Dit kan nuttig zijn voor iemand die NVDA uitsluitend met braille wil gebruiken of voor goedziende ontwikkelaars die uitsluitend de speech viewer willen gebruiken.
 
-==== Uitvoerapparaat ====
+==== Uitvoerapparaat ====[SynthesizerkeuzeUitvoerapparaat]
 Hiermee kunt u de geluidskaart kiezen die NVDA moet aansturen voor de spraakuitvoer.
 
 %kc:setting
-==== Audio-onderdrukkingsmodus ====
+==== Audio-onderdrukkingsmodus ====[SynthesizerkeuzeAudioOnderdrukking]
 Toets: NVDA+shift+d
 
 Als u Windows 8 of  hoger gebruikt, kunt u met deze optie bepalen of NVDA het volume van andere applicaties moet verlagen zodra en zolang NVDA aan het spreken  is of gedurende de hele tijd dat NVDA actief is.
@@ -978,71 +988,71 @@ Als u Windows 8 of  hoger gebruikt, kunt u met deze optie bepalen of NVDA het vo
 Deze optie is alleen beschikbaar als u de geïnstalleerde versie van NVDA gebruikt.
 audio-onderdrukking kan niet worden ondersteund bij gebruik van de draagbare en de tijdelijke versie van NVDA. 
 
-+++ Stem (NVDA+control+v) +++[VoiceSettings]
++++ Stem (NVDA+control+v) +++[Stem]
 Onder “Opties” in het NVDA-menu gaat u naar “Stem”  om instellingen aan te passen die te maken hebben met de gebruikte stem(men).
 Een snellere, alternatieve manier om steminstellingen te wijzigen vindt u onder [Synth Settings Ring #SynthSettingsRing].
 
 In het dialoogvenster Steminstellingen treft u de volgende opties aan:
 
-==== Stem ====
+==== Stem ====[StemStem]
 De eerste optie die u tegenkomt is een vervolgkeuzelijst waarin alle stemmen staan waarover de momenteel gebruikte synthesizer beschikt.
 Met de pijltoetsen kunt u alle keuzemogelijkheden beluisteren.
 Met pijl links en pijl omhoog gaat u naar het begin van de lijst en met pijl rechts en pijl omlaag naar het einde.
 
-==== Variant ====
+==== Variant ====[StemVariant]
 Als u gebruik maakt van de eSpeak NG synthesizer, die standaard is opgenomen in NVDA, kunt u via een vervolgkeuzelijst een stemvariant kiezen.
 Met de stemvarianten kunt u stemeigenschappen enigszins aanpassen.
 Er zijn varianten die als een mannen- of vrouwenstem klinken of zelfs als een kikker.
 
-==== Snelheid ====
+==== Snelheid ====[StemSnelheid]
 Hiermee kunt u de spraaksnelheid instellen.
 De schuifregelaar gaat van 0 tot 100 (0 is de laagste en 100 de hoogste snelheid).
 
-==== Toonhoogte ====
+==== Toonhoogte ====[StemHoogte]}
 Hiermee stelt u de hoogte van de gebruikte stem in.
 De schuifregelaar gaat van 0 tot 100 ( bij 0 klinkt de stem het laagst en op 100 het hoogst).
 
-==== Volume ====
+==== Volume ====[StemVolume]
 Met de schuifregelaar kunt u het volume van de stem instellen waarbij 0 het laagste en 100 het hoogste volume is. 
 
-==== Intonatie ====
+==== Intonatie ====[StemIntonatie]
 Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak NG.
 
-==== Automatisch van taal wisselen ====
+==== Automatisch van taal wisselen ====[StemTaalWisselen]
 Met dit selectievakje bepaalt u of NVDA automatisch naar een andere spraaksynthesizertaal moet overschakelen als het te lezen document is voorzien van taalcodes, zoals NL voor Nederlands.
 Deze optie is standaard ingeschakeld.
 Op dit moment wordt het automatisch wisselen van taal enkel door de eSpeak NG synthesizer ondersteund.
 
-==== Automatisch van dialect wisselen ====
+==== Automatisch van dialect wisselen ====[StemTaalvariantwisseling]
 Indien automatisch van taal wisselen is ingeschakeld, kan deze optie gebruikt worden om aan te geven dat ernaar een andere taalvariant  moet wordenovergeschakeld  in plaats van enkel taalwisselingen. Als een tekst bijvoorbeeld als Brits Engels is gemarkeerd zal de synthesizer een Britse variant van het Engels  gebruiken als deze optie is ingeschakeld.
 Deze optie staat standaard uit.
 
 %kc:setting
-==== Interpunctie-/symboolniveau ====
+==== Interpunctie-/symboolniveau ====[StemSymboolniveau]
 Toets: NVDA+p
 
 Deze optie bepaalt welke leestekens en symbolen als woorden worden uitgesproken.
 Als deze optie bijvoorbeeld op alles staat, zullen alle symbolen als woorden worden uitgesproken.
 Deze optie geldt voor alle synthesizers, niet enkel de actieve synthesizer.
 
-==== Vertrouw taal van stem bij het verwerken van karakters en symbolen ====
+==== Vertrouw taal van stem bij het verwerken van karakters en symbolen ====[StemTaalVertrouwen]
 Met deze optie, die standaard staat ingeschakeld, kunt u NVDA laten weten of de gebruikte stemtaal betrouwbaar moet worden geacht voor de verwerking van symbolen en tekens. 
 Als u vaststelt dat NVDA interpunctie in de verkeerde taal leest, een taal die niet overeenkomt met die van de gebruikte synthesizer of stem, dan wilt u deze optie wellicht uitschakelen waarmee u NVDA dwingt de algemene taalinstelling te gebruiken.   
 
-==== Percentage toonhoogteverandering bij hoofdletters ====
+==== Percentage toonhoogteverandering bij hoofdletters ====[StemHoofdletterToonhoogte]
 Dit tekstvak stelt u in staat om de mate waarin de toonhoogte van de stem verandert zodra een hoofdletter wordt gelezen in te stellen.
 Deze waarde is een percentage, een negatieve waarde verlaagt de toonhoogte en een positieve waarde verhoogt de toonhoogte.
 Om de toonhoogte niet te veranderen voert u 0 in.
 
-==== Het woord "Hoofdletter" uitspreken bij lezen van hoofdletters ====
+==== Het woord "Hoofdletter" uitspreken bij lezen van hoofdletters ====[StemZegHoofdletter]
 Als dit selectievakje is aangevinkt zal NVDA, waar nodig, het woord “hoofdletter”  zeggen bij het lezen en typen.
 Bij het gebruik van hoofdletters wordt door NVDA normaal gesproken de toonhoogte iets verhoogd, maar als dit niet ondersteund wordt door de synthesizer is de hier genoemde optie misschien een goed alternatief.
 
-==== Pieptoon bij hoofdletters ====
+==== Pieptoon bij hoofdletters ====[StemPieptoonBijHoofdletter]
 Als dit selectievakje is aangevinkt zal NVDA een korte pieptoon laten horen telkens wanneer er sprake is van een hoofdletter.
 Net als bij de optie “Het woord hoofdletter uitspreken bij gebruik hoofdletters” kan dit nuttig zijn als de gebruikte synthesizer het verhogen van de toonhoogte bij hoofdletters niet ondersteund.
 
-==== Spellingfunctionaliteit gebruiken (wanneer ondersteund) ====[VoiceSpellingFunctionality]
+==== Spellingfunctionaliteit gebruiken (wanneer ondersteund) ====[StemSpellingfunctionaliteit]
 Er zijn woorden die slechts uit één letterteken bestaan. Een voorbeeld hiervan is "a" in het Engels of "u" in het Nederlands. 
 Als "a" in het Engels als woord wordt gebruikt (het equivalent van het Nederlandse "een") is de uitspraak anders dan wanneer we de naam van dit letterteken uitspreken zoals bij het spellen.
 Door het selectievakje aan te vinken kan de synthesizer  het verschil in uitspraak weergeven.
@@ -1060,10 +1070,10 @@ Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dial
 | De huidige synthesizerinstelling aflopend bijstellen | NVDA+control+Pijl Omlaag | NVDA+shift+control+Pijl Omlaag | Stelt momenteel gebruikte spraakinstelling naar beneden bij. Verlaagt bij voorbeeld snelheid en volume, selecteert vorige stem |
 %kc:endInclude
 
-+++ Brailleïnstellingen +++
++++ Brailleïnstellingen +++[Brailleïnstellingen]
 Onder “Opties” in het NVDA-menu gaat u naar “Braille” om het dialoogvenster voor de brailleïnstellingen te openen.
 
-==== Brailleleesregel ====
+==== Brailleleesregel ====[BrailleïnstellingenLeesregel]
 Allereerst komt u in dit dialoogvenster een vervolgkeuzelijst met de naam brailleleesregel tegen.
 Het aantal keuzemogelijkheden dat u hier geboden wordt, is afhankelijk van de brailleleesregelstuurprogramma’s die op uw pc beschikbaar zijn.
 Met de pijltoetsen kunt u  het door u gewenste stuurprogramma kiezen.
@@ -1072,7 +1082,7 @@ Geen braille betekent dat u braille niet gebruikt.
 
 Meer informatie over ondersteunde brailleleesregels vindt u onder [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] .
 
-==== Poort ====
+==== Poort ====[BrailleïnstellingenPoort]
 Voor zover beschikbaar, kunt u met deze optie bepalen welke poort of welk type verbinding moet worden gebruikt om te communiceren met de geselecteerde brailleleesregel.
 In de vervolgkeuzelijst treft u de mogelijkheden aan die voor de gebruikte leesregel beschikbaar zijn.
 
@@ -1084,13 +1094,13 @@ Deze optie is niet beschikbaar als uw brailleleesregel alleen automatische poort
 
 Raadpleeg de documentatie van uw brailleleesregel in de rubriek [ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor meer informatie over de ondersteunde communicatietypes en beschikbare poorten.
 
-==== Uitvoertabel ====
+==== Uitvoertabel ====[BrailleïnstellingenUitvoertabel]
 Vervolgens komt u in dit dialoogvenster de vervolgkeuzelijst met braille-uitvoertabellen tegen.
 In de lijst vindt u brailletabellen voor verschillende talen, braillestandaarden en gradaties.
 De gekozen tabel zorgt ervoor  dat tekst wordt omgezet in braille voor weergave op de brailleleesregel.
 U kunt de pijltjestoetsen gebruiken om door de lijst met brailletabellen te navigeren.
 
-==== Invoertabel ====
+==== Invoertabel ====[BrailleïnstellingenInvoertabel]
 Terwijl de uitvoertabel tekst omzet in braille, kunt u via deze vervolgkeuzelijst kiezen welke invoertabel u wilt gebruiken om   braille, (ingevoerd met het brailletoetsenbord van uw leesregel), om te zetten in tekst.
 Momenteel ondersteunt NVDA alleen computerbrailleïnvoer, zodat alleen 8-punts computerbrailletabellen worden getoond.
 U kunt de pijltjestoetsen gebruiken om door de lijst met brailletabellen te navigeren.
@@ -1098,50 +1108,50 @@ U kunt de pijltjestoetsen gebruiken om door de lijst met brailletabellen te navi
 Merk op dat deze instelling alleen zinvol is als uw leesregel over een toetsenbord van het Perkins-type beschikt en het stuurprogramma van uw brailleleesregel hiervoor ondersteuning biedt. 
 Als invoer niet wordt ondersteund door een leesregel  die is uitgerust met een brailletoetsenbord, wordt dit vermeld in de rubriek [ondersteunde Brailleleesregels #SupportedBrailleDisplays].
 
-==== Woord onder cursor uitbreiden naar computerbraille ====
+==== Woord onder cursor uitbreiden naar computerbraille ====[BrailleïnstellingenNaarComputerbrailleUitbreiden]
 Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven in onverkort computerbraille.
 
-==== Cursor weergeven ====
+==== Cursor weergeven ====[BrailleïnstellingenCursorWeergeven]
 Met deze optie kunt u de braillecursor in- en uitschakelen.
 Deze mogelijkheid is beschikbaar voor de invoegcursor en de leescursor, maar niet voor de selectie-indicator.
 
-==== Knipperende cursor ====
+==== Knipperende cursor ====[BrailleïnstellingenKnipperendeCursor]
 Met deze optie kunt u een braillecursor laten knipperen.
 Als knipperen wordt uitgezet, blijft de braillecursor steeds in de "omhoog" stand staan.
 Deze optie heeft geen invloedt op de selectie-indicator. Hierop is altijd punt 7 en punt 8 van toepassing en de indicator knippert niet.
 
-==== Knippersnelheid cursor ====
+==== Knippersnelheid cursor ====[BrailleïnstellingenKnippersnelheidCursor]
 In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor bepaalt in milliseconden.
 
-==== Cursorvorm voor Focus ====
+==== Cursorvorm voor Focus ====[BrailleïnstellingenCursorvormVoorFocus]
 Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen wanneerbraille de focus moet volgen.
 Deze optie heeft geen invloedt op de selectie-indicator. Hierop is altijd punt 7 en punt 8 van toepassing en de indicator knippert niet.
 
-==== Leescursorvorm (Review) ====
+==== Leescursorvorm (Review) ====[BrailleïnstellingenLeescursorvorm]
 Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen wanneerbraille de leescursor (review) moet volgen.
 Deze optie heeft geen invloedt op de selectie-indicator. Hierop is altijd punt 7 en punt 8 van toepassing en de indicator knippert niet.
 
-==== Time-out voor meldingen (sec.) ====
+==== Time-out voor meldingen (sec.) ====[BrailleïnstellingenMeldingenTimeout]
 In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-meldingen op de brailleleesregel worden weergegeven.
 Als u "0" als waarde invult, worden geen meldingen getoond.
 
-==== Meldingen voor onbepaalde tijd tonen ====
+==== Meldingen voor onbepaalde tijd tonen ====[BrailleïnstellingenGeenMeldingenTimeout]
 Met deze optie kunnen NVDA-meldingen voor onbepaalde tijd op de brailleleesregel worden getoond.
 
 %kc:setting
-==== Braille koppelen aan ====[BrailleTether]
+==== Braille koppelen aan ====[Koppelen]
 Toets: NVDA+control+t
 
 Hiermee kunt u bepalen of de leesregel de systeemfocus dan wel de navigatorobject- / reviewcursor moet volgen
 
-==== Lezen per alinea ====
+==== Lezen per alinea ====[BrailleïnstellingenLezenPerAlinea]
 Als deze optie is ingeschakeld, zal braille per alinea in plaats van per regel worden weergegeven.
 Ook de vorige/volgende regel commando's zullen van alinea naar alinea springen.
 Dit betekent dat u de brailleleesregel niet hoeft te scrollen aan het eind van een regel als er nog meer tekst op de leesregel past.
 Dit maakt het mogelijk om grote hoeveelheden tekst vloeiender te lezen.
 Deze optie is standaard uitgeschakeld.
 
-==== Waar mogelijk woorden niet splitsen ====
+==== Waar mogelijk woorden niet afbreken ====[BrailleïnstellingenGeenWoordafbreking]
 Wanneer deze optie is ingeschakeld, zal een woord dat te lang is om nog op de brailleregel te passen niet worden afgebroken.
 In plaats daarvan blijft er wat lege ruimte aan het einde van de brailleleesregel.
 Door te scrollen kunt u het gehele woord lezen.
@@ -1153,7 +1163,7 @@ Door te scrollen kunt u dan de rest van het woord lezen.
 
 Vloeiend lezen wordt gemakkelijker door deze optie in te schakelen, maar u zult als gevolg hiervan meer moeten scrollen.
 
-==== Te tonen focuscontext ====
+==== Te tonen focuscontext ====[BrailleïnstellingenFocuscontextTonen]
 Met deze optie kunt u kiezen welke contextinformatie NVDA op de brailleleesregel  moet tonen wanneer een object de focus krijgt.
 Contextinformatie heeft betrekking op de  hierarchie van  objecten die de focus hebben.
 Wanneer bij voorbeeld een lijst-item de focus krijgt, is dit lijst-item onderdeel van een lijst.
@@ -1179,20 +1189,20 @@ Als u de context echter wilt lezen (dat wil zeggen wanneer  u zich in een lijst 
 
 Om Te tonen contextinformatie aan of uit te zetten vanaf elke willekeurige plaats kunt u een aangepaste invoerhandeling toekennen met behulp van het [dialoogvenster Invoerhandelingen  #InputGestures].
 
-+++ Instellingen toetsenbord (NVDA+control+k) +++
++++ Toetsenbordinstellingen (NVDA+control+k) +++[Toetsenbordinstellingen]
 Dit dialoogvenster vindt u in het NVDA-menu onder “Opties” waar u vervolgens “Toetsenbord” selecteert.
 U treft er de volgende keuzemogelijkheden aan:
 
-==== Toetsenbordindeling ====
+==== Toetsenbordindeling ====[ToetsenbordinstellingenIndeling]
 Dit is een vervolgkeuzelijst waarin u het type toetsenbordindeling kiest dat u wilt gebruiken. Momenteel zijn er in NVDA twee types beschikbaar: desktop en laptop. 
 
-==== CapsLock als NVDA-toets gebruiken ====
+==== CapsLock als NVDA-toets gebruiken ====[ToetsenbordinstellingenCapsLockProgrammatoets]
 Als dit selectievakje wordt ingeschakeld, is CapsLock als NVDA-toets ingesteld. 
 
-==== Uitgebreide Insertt-toets als NVDA-toets gebruiken ====
+==== Uitgebreide Insertt-toets als NVDA-toets gebruiken ====[ToetsenbordinstellingenUitgebreideInsertProgrammatoets]
 Door dit selectievakje in te schakelen wordt de uitgebreide Insert- (INS-) toets als NVDA-toets gebruikt. De uitgebreide INS-toets zit meestal boven de pijltjestoetsen bij de Home en End-toetsen 
 
-==== Numerieke Insert-toets als NVDA-toets gebruiken ====
+==== Numerieke Insert-toets als NVDA-toets gebruiken ====[ToetsenbordinstellingenNumeriekeInsertProgrammatoets]
 Door het selectievakje in te schakelen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
 
 Als er geen toets als NVDA-toets wordt gekozen, zijn bepaalde 
@@ -1205,128 +1215,136 @@ van tenminste één toets het selectievakje aanvinken voordat u het dialoogvenst
 afsluiten met de OK-knop.
 
 %kc:setting
-==== Getypte karakters uitspreken ====
+==== Getypte karakters uitspreken ====[ToetsenbordinstellingenGetypteKaraktersUitspreken]
 Toets: NVDA+2
 
 Door het selectievakje in te schakelen worden alle karakters die u op het toetsenbord typt uitgesproken.
 
 %kc:setting
-==== Getypte woorden uitspreken ====
+==== Getypte woorden uitspreken ====[ToetsenbordinstellingenGetypteWoordenUitspreken]
 Toets: NVDA+3
 
 Door dit selectievakje in te schakelen wordt elk woord dat u getypt hebt uitgesproken.
 
-==== Spraak onderbreken bij typen van karakters ====
+==== Spraak onderbreken bij typen van karakters ====[ToetsenbordinstellingenSpraakonderbrekingVoorKarakters]
 Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer er een letterteken wordt getypt. Deze instelling staat standaard "aan".   
 
-==== Spraak onderbreken  bij drukken van Enter-toets ====
+==== Spraak onderbreken  bij drukken van Enter-toets ====[ToetsenbordinstellingenSpraakonderbrekingEntertoets]
 Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer de Enter-toets wordt ingedrukt. Deze instelling staat standaard "aan".   
 
-==== Doorbladeren bij Alles Voorlezen toestaan ====
+==== Doorbladeren bij Alles Voorlezen toestaan ====[ToetsenbordinstellingenDoorbladerenAllesVoorlezen]
 Als dit selectievakje is aangevinkt,zullen navigatieopdrachten zoals snel navigeren in bladermodus of verplaatsen per regelof alinea er niet toe leiden dat Alles Voorlezen wordt gestopt. 
 Het is veeleer zo dat Alles Voorlezen naar de nieuwe positie springt waar het lezen wordt voortgezet.
 
-==== Piep als kleine letters worden getypt terwijl CapsLock is ingeschakeld ====
+==== Piep als kleine letters worden getypt terwijl CapsLock is ingeschakeld ====[ToetsenbordinstellingenPiepKleineLetters]
 Als deze optie is geactiveerd, zal er een waarschuwingssignaal klinken bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
 Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld. U heeft capslock dan wellicht ingeschakeld zonder dat u zich dat hebt gerealiseerd. 
 
 %kc:setting
-==== Commandotoetsen uitspreken ====
+==== Commandotoetsen uitspreken ====[ToetsenbordinstellingenCommandotoetsenUitspreken]
 Toets: NVDA+4
 
 Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter.
 
-==== Geluid voor spelfouten afspelen tijdens typen ====
+==== Geluid voor spelfouten afspelen tijdens typen ====[ToetsenbordinstellingenGeluidVoorSpelfouten ]
 Wanneer deze optie is ingeschakeld, zal er een kort zoemsignaal klinken als u een spelfout maakt in een woorrd dat u typt.
 Deze optie is alleen beschikbaar indien "Spelfouten melden"  is ingeschakeld in het dialoogvenster [Documentopmaak #DocumentFormattingSettings] van het instellingenmenu van NVDA.
 
-==== Toetsen van andere toepassingen verwerken ====
+==== Toetsen van andere toepassingen verwerken ====[ToetsenbordinstellingenVerwerkingToetsen]
 Met deze optie kan de gebruiker bepalen of invoer die afkomstig is van toepassingen zoals virtuele (scherm)toetsenborden of spraakherkenningssoftware door NVDA moet worden verwerkt. 
 Deze optie is standaard ingeschakeld, maar sommige gebruikers,zoals mensen die werken met het Unikey typeprogramma voor Viëtnamees, zullen er wellicht de voorkeur aan geven deze optie uit te zetten omdat er anders invoerfouten ontstaan. 
 
-+++ Muisinstellingen(NVDA+control+m) +++[MouseSettings]
++++ Muisinstellingen(NVDA+control+m) +++[Muisinstellingen]
 Het dialoogvenster Muisinstellingen vindt u in het NVDA-menu onder Opties waar u vervolgens Muis selecteert.
 U treft er de volgende keuzemogelijkheden aan:
 
-==== Veranderingen van muisaanwijzervorm melden ====
+==== Veranderingen van muisaanwijzervorm melden ====[MuisinstellingenAanwijzervorm]
 Als dit selectievakje is ingeschakeld, zal NVDA elke verandering die optreedt in de vorm van de muisaanwijzer melden.
 In Windows verandert de vorm van de muisaanwijzer om aan te geven waar de computer mee bezig is, zoals met het laden van iets of om te laten weten dat u tekst kunt invoeren.
 
 %kc:setting
-==== Muis volgen ====
+==== Muis volgen ====[MuisinstellingenVolgen]
 Toets : NVDA+m |
 
 Door het selectievakje in te schakelen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie.
 
-==== Resolutie van teksteenheid====
+==== Resolutie van teksteenheid====[MuisinstellingenResolutieTeksteenheid]
 Als u ervoor gekozen hebt om de tekst onder de muis te laten uitspreken, kunt u hier instellen hoeveel tekst moet worden uitgesproken.
 U hebt de keuze uit karakter, woord, regel en alinea.
 
-==== Rol melden als de muis binnen een object komt ====
+==== Rol melden als de muis binnen een object komt ====[MuisinstellingenRol]
 Als dit selectievakje is ingeschakeld, zal NVDA de rol (van het type object weergeven bij verplaatsing van de muis binnen het object.
 
-==== Geluidscoördinatie gebruiken bij verplaatsen muis====
+==== Geluidscoördinatie gebruiken bij verplaatsen muis====[MuisinstellingenGeluid]
 Als dit selectievakje is ingeschakeld laat NVDA pieptonen horen bij het verplaatsen van de muis. Met behulp van deze signalen kan de gebruiker bepalen waar de muis zich op het scherm bevindt.
 Hoe verder de muis naar de bovenrand van het scherm wordt verplaatst, hoe hoger de pieptonen worden.
 Bij gebruik van stereoluidsprekers of een koptelefoon zal het geluidssignaal steeds verder van links of rechts komen al naar gelang de muis naar links of rechts op het scherm wordt verplaatst. 
 
-==== Schermhelderheid bepaalt Volume audio-coördinatie ====
+==== Schermhelderheid bepaalt Volume audio-coördinatie ====[MuisinstellingenSchermhelderheid]
 Als dit selectievakje “geluidscoördinatie gebruiken bij verplaatsen muis” is ingeschakeld, dan zal het inschakelen van dit selectievakje ervoor zorgen dat het volume van de pieptonen wordt bepaald door de schermhelderheid onder de muis.
 Deze functies staan standaard uit.
 
-+++ Instellingen review cursor (leescursor)+++
++++ Instellingen Aanraakinteractie +++[Aanraakinteractie]
+Via dit dialoogvenster, dat u alleen aantreft op computers die draaien onder  Windows 8 en later welke beschikken over mogelijkheden voor bediening d.m.v. aanraking, kunt u configureren hoe NVDA omgaat met aanraakschermen.
+
+==== typen met het schermtoetsenbord ====[AanraakinteractieTypenSchermtoetsenbord]
+Het al dan niet aanvinken van dit selectievakje bepaalt hoe u tekst invoert als u typt met het schermtoetsenbord.
+Als het selectievakje is aangevinkt dan wordt de door u gewenste letter ingevoerd zodra u uw vinger van die letter afhaalt d.w.z. (een klein stukje optilt).
+Als u geen vinkje zet, moet u dubbeltikken op de letter van uw keuze om deze in te voeren.
+
++++ Leescursorinstellingen (review cursor) +++[Leescursorinstellingen]
 Om instellingen aan te passen gaat u in het NVDA-menu onder Opties naar Leescursor.
 In het dialoogvenster treft u de volgende keuzemogelijkheden aan:
 
 %kc:setting
-==== Ssysteemfocus volgen ====
+==== Ssysteemfocus volgen ====[LeescursorinstellingenFocusVolgen]
 Toets : NVDA+7
 
 Wanneer deze optie is ingeschakeld,wordt de leescursor (review cursor) altijd in hetzelfde object geplaatst als de systeemfocus telkens wanneer de focus zich wijzigt.
 
 %kc:setting
-====Systeemcursor volgen====
+====Systeemcursor volgen====[LeescursorinstellingenSysteemcursorVolgen]
 Toets: NVDA+6
 
 Als dit selectievakje is aangevinkt, volgt de leescursor (review cursor) automatisch de systeemcursor wanneer deze wordt verplaatst
 
-==== Muiscursor volgen====
+==== Muiscursor volgen====[LeescursorinstellingenMuiscursorVolgen]
 Als dit selectievakje aangevinkt is, zal de leescursor (review cursor) de muis volgen wanneer deze wordt verplaatst.
 
-==== Eenvoudige leesoverzichtmodus ====
+==== Eenvoudige leesoverzichtmodus ====[LeescursorinstellingenEenvoudig]
 Als dit selectievakje aangevinkt is, zorgt NVDA ervoor dat objecten die voor de gebruiker niet van belang zijn, zoals verborgen objecten of die welke slechts een lay-out technisch doel dienen, worden uitgefilterd.
 
 Om de eenvoudige leesoverzichtmodus vanaf een willekeurige plaats aan- of uit te zetten kunt u via het dialoogvenster [Invoerhandelingen #InputGestures] een aangepaste handeling hiervoor aanmaken.
 
-+++ Objectweergave-instellingen(NVDA+control+o) +++
++++ Objectweergaveïnstellingen(NVDA+control+o) +++[Objectweergaveïnstellingen]
 Om instellingen aan te passen gaat u in het NVDA-menu onder Opties naar Objectweergave.
 In het dialoogvenster treft u de volgende keuzemogelijkheden aan:
 
-==== Flitsberichten melden ====
+==== Flitsberichten melden ====[ObjectweergaveFlitsberichten]
 Als dit selectievakje aangevinkt is, zal NVDA eventuele flitsberichten (tooltips) laten horen wanneer deze op het scherm verschijnen.
 Bij veel Windows schermen en besturingselementen verschijnt een kort berichtje, – dat “tooltip” genoemd wordt, – wanneer deze zich onder de muisaanwijzer bevinden of soms wanneer deze gefocusseerd worden.
 
-==== Hulpballonnen melden ====
+==== Hulpballonnen melden ====[ObjectweergaveHulpballonnen]
 Als dit selectievakje aangevinkt is, zal NVDA eventuele hulpballonnen laten horen wanneer deze op het scherm verschijnen.
 Hulpballonnen lijken op tooltips maar ze bevatten meer informatie dan tooltips. Ze hebben te maken met dingen die aan of met uw computer gebeuren zoals het verwijderen van een netwerk kabel of wellicht wordt u er attent op gemaakt dat er een beveiligingsprobleem is.
 
-==== Objectsneltoetsen melden ====
+==== Objectsneltoetsen melden ====[ObjectweergaveSneltoetsen]
 Als dit selectievakje is aangevinkt, zal NVDA bij de aankondiging van een bepaald object of element ook de bijbehorende sneltoetscombinatie vermelden.
 Zo zal bij voorbeeld bij het onderdeel Bestand op de menubalk ook gemeld worden dat hiervoor de sneltoetscombinatie Alt + b. beschikbaar is.
 
-==== Informatie over objectpositie melden ====
+==== Informatie over objectpositie melden ====[ObjectweergaveInfoPositie]
 Als dit selectievakje aangevinkt is, wordt de objectpositie gemeld,bijvoorbeeld 1 van 4, zodra het object focus krijgt, of zich in de objectnavigatie bevind.
 
-==== Objectpositie raden indien deze niet beschikbaar is ====
+==== Objectpositie raden indien deze niet beschikbaar is ====[ObjectweergavePositieRaden]
 Als informatie van objectpositie weergeven is ingeschakeld, kan deze optie ervoor zorgen dat de positie van sommige objecten bij benadering wordt bepaald. Dit kan nodig zijn als de positie-informatie niet op een andere manier verkregen kan worden.
 
 Als deze optie is ingeschakeld, zal positie-informatie voor meer objecten (zoals menu's en werkbalken) beschikbaar zijn, maar deze informatie  is mogelijk niet geheel nauwkeurig.
 
-==== Objectbeschrijvingen melden ====
+==== Objectbeschrijvingen melden ====[ObjectweergaveBeschrijvingObjecten]
 Vink dit selectievakje niet aan als u, behalve de naam van het object, geen extra informatie hoeft te horen. 
 
 %kc:setting
-==== Weergave voortgangsbalk ====
+==== Weergave voortgangsbalk ====[ObjectweergaveVoortgangsbalkinfo]
 Toets : NVDA+u
 
 Via de vervolgkeuzelijst kunt u kiezen hoe u wilt worden geïnformeerd over de voortgang van de voortgangsbalk.
@@ -1338,76 +1356,76 @@ U kunt kiezen uit
 - Uitspreken en pieptonen: U hoort zowel pieptonen  als gesproken info over de voortgang van het proces.
 -
 
-==== Achtergrondvoortgangsbalken melden ====
+==== Achtergrondvoortgangsbalken melden ====[ObjectweergaveAchtergrondVoortgangsbalkenMelden]
 Als dit selectievakje is ingeschakeld blijft NVDA veranderingen in een voortgangsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
 Als u een venster met een voortgangsbalk minimaliseert of naar een ander venster overschakelt, zal NVDA de veranderingen in de voortgangsbalk toch bijhouden terwijl u met iets anders bezig bent. 
 
 %kc:setting
-==== Dynamische inhoudsveranderingen melden ====
+==== Dynamische inhoudsveranderingen melden ====[ObjectweergaveDynamischeInhoudsveranderingenMelden]
 Toets: NVDA+5
 
 Schakelt het automatisch melden van nieuwe inhoud aan of uit voor bepaalde besturingselementen zoals terminalvensters of chatgeschiedenis.
 
-==== Geluid afspelen wanneer auto-aanvullen suggesties oplevert ====
+==== Geluid afspelen wanneer auto-aanvullen suggesties oplevert ====[ObjectweergaveGeluidSuggestiesAutoaanvullen]
 Schakelt de melding dat auto-aanvullen suggesties oplevert in of uit. Wanneer deze optie is ingeschakeld, zal NVDA een geluid afspelen om dit aan te geven. 
 Auto-aanvullen levert mogelijk lijsten met suggesties op die gebaseerd zijn op de tekst die ingevoerd wordt in bepaalde velden en documenten.
 Wanneer u bijvoorbeeld in het zoekvak van het startmenu van Windows Vista of latere Windows versies tekst invoert, zal er een lijst met suggesties worden getoond die gebaseerd is op wat u intypte. 
 Voor bepaalde invoervelden zoals zoekvakken in verrschillende Windows 10 apps, kunt u NVDA laten melden dat   er een lijst met suggesties is open gegaan tijdens het typen. 
 De lijst met suggesties sluit zich wanneer u uit het invoerveld gaat. Voor sommige invoervelden kan NVDA hiervan melding maken.   
 
-+++ Instellingen voor Invoersamenstelling +++
++++ Instellingen voor Invoersamenstelling +++[InstellingenInvoersamenstelling]
 Het dialoogvenster Instellingen voor Invoersamenstelling vindt u onder Opties in het NVDA-menu.
 Met behulp van dit dialoogvenster kunt u regelen hoe NVDA de karakters van  Aziatische talen weergeeft, wanneer u deze invoert. Dit geldt zowel voor IME- als  voor de Text Service-invoer.
 Aangezien er grote verschillen bestaan tussen de invoermethodes wat betreft mogelijkheden en de wijze van informatieoverdracht, zal het wellicht nodig zijn de instellingen aan te passen aan de gebruikte invoermethode. Hierdoor wordt typen aangenamer en gemakkelijker.
 
-==== Automatisch alle beschikbare kandidaten melden ====
+==== Automatisch alle beschikbare kandidaten melden ====[InvoersamenstellingAlleKandidatenMelden]
 Met deze keuzemogelijkheid, die standaard geactiveerd is, bepaalt u of de zichtbare kandidaten al dan niet automatisch moeten worden gemeld wanneer er een kandidatenlijst verschijnt of wanneer de pagina verandert.
 Bij pictografische invoer, zoals voor Chinees Nieuw Tsjang-Dzji en Boshiami is het handig als deze keuze aangevinkt is, omdat u automatisch alle symbolen hoort met het bijbehorende nummer zodat u er direct één kunt kiezen.
 Bij fonetische invoermethodes zoals Chinees Nieuw Fonetisch is het evenwel verstandiger deze optie uit te zetten omdat alle tekens hetzelfde klinken en u met de pijltoetsen door de lijst moet bladeren om uit de beschrijving van de afzonderlijke karakters de benodigde informatie te verkrijgen voor de te kiezen kandidaat.
 
-==== Geselecteerde Kandidaat Melden ====
+==== Geselecteerde Kandidaat Melden ====[InvoersamenstellingGeselecteerdeKandidaatMelden]
 Met deze keuzemogelijkheid, die standaard geactiveerd is, bepaalt u of NVDA de geselecteerde kandidaat al dan niet automatisch moet melden wanneer er een kandidatenlijst verschijnt of wanneer de selectie wordt gewijzigd. 
 Deze functie is nodig voor invoermethodes waarbij de selectie kan worden gewijzigd met de pijltoetsen  (zoals het Chinees Nieuw Fonetisch), maar voor andere invoermethodes is het wellicht efficiënter deze optie uit te zetten.
 Merk op dat zelfs wanneer deze optie uit staat, de leescursor toch bij de geselecteerde kandidaat wordt geplaatst zodat u met gebruik van object navigatie / review deze of andere kandidaten handmatig kunt uitlezen.
 
-==== Altijd korte beschrijving geven van kandidaat-karakters ====
+==== Altijd korte beschrijving geven van kandidaat-karakters ====[InvoersamenstellingKandidaatkaraktersKortBeschrijven]
 Met deze keuzemogelijkheid, die standaard geactiveerd is, bepaalt u of NVDA   al dan niet een korte beschrijving moet geven van elk beoogd karakter wanneer dit wordt geselecteerd of automatisch wordt uitgelezen zodra er een kandidatenlijst verschijnt.
 Merk op dat voor talen zoals het Chinees het melden van extra karakter beschrijvingen voor de geselecteerde kandidaat niet door deze optie wordt beïnvloed.
 Deze optie kan nuttig zijn voor Koreaanse en Japanse invoermethodes.
 
-==== Wijzigingen in de leesreeks melden ====
+==== Wijzigingen in de leesreeks melden ====[InvoersamenstellingLeesreekswijzigingenMelden]
 Sommige invoermethodes zoals Chinees Nieuw Fonetisch en Nieuw TSjangDzjie hebben een leesreeks (soms ook wel precompositie reeks genoemd).
 Met deze optie kunt u bepalen of NVDA de karakters die in de leesreeks worden ingevoerd al dan niet moet melden.
 Deze optie is standaard aangevinkt.
 Merk op dat sommige oudere invoermethodes zoals Chinees TsjangDzji de leesreeks mogelijk niet gebruiken om karakters voorafgaand aan de eigenlijke samenstelling in op te nemen, maar in plaats daarvan rechtstreeks gebruik maken van de samenstellingsreeks. In de optie hierna leest u hoe het rapporteren van de samenstellingsreeks kan worden ingesteld.
 
-==== Wijzigingen in de samenstellingsreeks melden ====
+==== Wijzigingen in de samenstellingsreeks melden ====[InvoersamenstellingWijzigingenSamenstellingsreeksMelden]
 Nadat de lees- of pré-compositiegegevens tot een geldig pictografisch symbool zijn gecombineerd slaan de meeste invoermethodes dit symbool, samen met andere gecombineerde symbolen, tijdelijk op in een samenstellingsreeks om tenslotte in het document te worden ingevoegd.   
 Met deze optie kunt u bepalen of NVDA nieuwe symbolen die in de samenstellingsreeks verschijnen al dan niet moet melden.
 Deze optie is standaard aangevinkt.
 
-+++ Bladermodus-instellingen (NVDA+control+b) +++
++++ Bladermodus-instellingen (NVDA+control+b) +++[InstellingenBladermodus]
 Voor het dialoogvenster Bladermodus gaat u naar Opties in het NVDA-menu en selecteert u Bladermodus.
 
 De volgende keuzemogelijkheden zijn beschikbaar:
 
-==== Maximale aantal karakters per regel====
+==== Maximale aantal karakters per regel====[BladermodusMaxLengte]
 In het invoerveld kunt u het aantal karakters per regel instellen dat  een document in bladermodus mag bevatten.
 
-==== Aantal regels per pagina ====
+==== Aantal regels per pagina ====[BladermodusRegelsOpPagina]
 Hoewel er in bladermodus eigenlijk geen echte pagina-indeling bestaat, kunt u hier het aantal regels invoeren dat opschuift als u Page Up (pagina omhoog) of Page Down (pagina omlaag) indrukt terwijl u zich in een document in bladermodus bevindt.
 
 %kc:setting
-==== Schermlay-out gebruiken ====
+==== Schermlay-out gebruiken ====[BladermodusSchermlayoutGebruiken]
 Toets: NVDA+v
 
 Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is ingeschakeld blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
 
-==== Automatisch lezen zodra pagina geladen is ====
+==== Automatisch lezen zodra pagina geladen is ====[BladermodusAutomatischLezen]
 Deze optie bepaalt of een pagina die geladen is in bladermodus automatisch wordt gelezen.
 Deze optie is standaard ingeschakeld.
 
-==== Lay-outtabellen opnemen====
+==== Lay-outtabellen opnemen====[BladermodusLayoutTabellenOpnemen]
 Met deze optie kunt u bepalen hoe NVDA moet omgaan met tabellen die uitsluitend dienen ter ondersteuning van de layout.
 Wanneer Layout-tabellen opnemen is ingeschakeld, zal NVDA zulke tabellen als normale tabellen beschouwen. Hoe ze gemeld worden is afhankelijk van de [opmaakinstellingen #DocumentFormattingSettings] en met sneltoetscommando's kan men er naar toe navigeren.
 Wanneer deze optie niet ingeschakeld is, worden de tabellen niet opgenomen en men kan  er niet naar toe navigeren.
@@ -1417,25 +1435,25 @@ Deze optie staat standaard uit.
 
 Om het opnemen van layout tabellenin- en uit te kunnen schakelen vanuit elke willekeurige plaats maakt u met behulp  van het [dialoogvenster Invoerhandelingen #InputGestures] een daartoe aangepaste handeling aan.
 
-==== Het melden van velden zoals links en koppen instellen====
+==== Het melden van velden zoals links en koppen instellen====[BladermodusLinksEnKoppen]
 Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en tabellen.
 
-==== Automatische focusmodus bij focuswijzigingen====
+==== Automatische focusmodus bij focuswijzigingen====[BladermodusAutomatischeFocusBijFocusverandering]
 Hiermee wordt de focusmodus automatisch geactiveerd bij focusveranderingen.
 Als het selectievakje is ingeschakeld, zal de focusmodus automatisch worden geactiveerd wanneer u in een webpagina bij voorbeeld in een formulierveld terecht komt door op TAB te drukken.
 
-==== Automatische focusmodus bij cursorbeweging====
+==== Automatische focusmodus bij cursorbeweging====[BladermodusAutomatischeFocusmodusBijCursorbeweging]
 Als dit selectievakje is ingeschakeld, zal NVDA de focusmodus vanzelf aanpassen bij gebruik van de pijltjestoetsen.
 Als u bij voorbeeld met de pijltjestoetsen door een webpagina bladert en u in een invoerveld belandt, komt u automatisch in de focusmodus. Als u het invoerveld uitgaat, keert u weer terug in de bladermodus (ook wel surfmodus genoemd).  
 
-==== Geluids&markering voor focus- en bladermodus ====
+==== Geluidsmarkering voor focus- en bladermodus ====[BladermodusGeluidsmarkeringBijModuswisseling]
 Als dit selectievakje is ingeschakeld, hoort u een bepaald geluid als gewisseld wordt tussen de focus- en bladermodus in een document. Dit komt dan in de plaats van een uitgesproken wijziging van de focus.
 
-==== Niet-commandogebonden handelingen onderscheppen voordat ze het document bereiken ====
+==== Niet-commandogebonden handelingen onderscheppen voordat ze het document bereiken ====[BladermodusNietGebondenHandelingenOnderscheppen]
 Met deze optie, die standaard is ingeschakeld, kunt u bepalen of invoerhandelingen zoals toetsaanslagen die geen NVDA-commando opleveren en die niet worden beschouwd als commandotoets  in het algemeen, moeten worden onderschept voordat ze het document dat op dat moment de focus heeft, bereiken.
 Ervan uitgaande dat de optie is ingeschakeld zal de letter "j", bij voorbeeld, wanneer u deze indrukt, onderschept worden voordat ze het document bereikt, ook al is het geen navigatiesneltoets en waarschijnlijk ook geen commandotoets binnen de toepassing zelf. 
 
-+++ Documentopmaakinstellingen (NVDA+control+d) +++[DocumentFormattingSettings]
++++ Documentopmaakinstellingen (NVDA+control+d) +++[InstellingenDocumentopmaak]
 U vindt het dialoogvenster Documentopmaak in het NVDA-menu onder Opties. 
 
 U kunt de meeste selectievakjes gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
@@ -1478,14 +1496,14 @@ U kunt de vermelding laten horen van:
 
 Als u vermelding van bovenstaande kenmerken altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
-==== Opmaakwijzigingen achter de cursor melden ====
+==== Opmaakwijzigingen achter de cursor melden ====[DocumentopmaakOpmaakwijzigingenAchterCursoMelden]
 Als dit selectievakje aangevinkt is, zal NVDA proberen alle wijzigingen in de opmaak van een regel te melden bij het lezen van de regel ook als dit de prestatie vertraagt.
 
 Standaard wordt de opmaak bij de systeemcursor / review cursor gedetecteerd, maar in bepaalde gevallen wordt ook de opmaak in de rest van de regel gedetecteerd voor zover dit geen nadelige invloed heeft op de prestatie.
 
 Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoals WordPad waar opmaak van belang is.
 
-==== Regelinspringing melden ==== [lineIndentationOptions]
+==== Regelinspringing melden ==== [DocumentopmaakRegelinspringing]
 Met deze optie kunt u bepalen hoe de inspringing van een regel wordt gemeld.
 Het vervolgkeuzemenu voor het melden van regelinspringing heeft 4 keuzemogelijkheden.
 
@@ -1496,13 +1514,13 @@ De toonhoogte stijgtvoor elke spatie, en voor een tab, gaat de toon evenveel omh
 - Zowel spraak als pieptonen: Deze optie is een combinatie van de twee hiervoor genoemde mogelijkheden.
 -
 
-+++ Windows 10 OCR-instellingen +++[Win10OcrSettings]
++++ Windows 10 OCR-instellingen +++[InstellingenWin10Ocr]
 In het NVDA-menu onder Opties  vindt u dit dialoogvenster waar u [Windows 10 OCR #Win10Ocr] kunt configureren.
 
-==== Herkenningstaal ====
+==== Herkenningstaal ====[Win10OCRHerkenningstaal]
 Via het vervolgkeuzemenu kunt u de taal kiezen die voor de tekstherkenning gebruikt moet worden.
 
-+++ Uitspraakwoordenboeken +++
++++ Uitspraakwoordenboeken +++[Uitspraakwoordenboeken]
 Via het menu-item Uitspraakwoordenboeken dat te vinden is onder Opties kunt u aangeven hoe NVDA bepaalde woorden of woordgroepen moet uitspreken.
 Op dit moment zijn er 3 soorten woordenboeken beschikbaar,
 te weten, 
@@ -1534,7 +1552,7 @@ Als we uitgaan van het eerder gebruikte voorbeeld waarin “luid” werd vervang
 Een regulieire expressie (regular expression) is een reeks waarin speciale tekens worden gebruikt om aan te geven hoe en in welke mate de reeks moet worden toegepast (op specifieke tekens, alleen getallen of alleen letters, bij voorbeeld).
 In deze handleiding wordt niet verder ingegaan op reguliere expressies, maar op het internet zijn allerlei tutorials te vinden die meer informatie geven.  
 
-+++ Uitspraak van interpunctie/symbolen +++[SymbolPronunciation]
++++ Uitspraak van interpunctie/symbolen +++[UitspraakSymbolen]
 In dit dialoogvenster kan men de wijze waarop interpunctie en symbolen worden gemeld aanpassen, alsmede het interpunctieniveau waarop deze worden uitgesproken.
 
 De taal waarop de bewerking van de uitspraak van symbolen betrekking heeft, wordt in de titelbalk van het dialoogvenster getoond.
@@ -1565,7 +1583,7 @@ U kunt een eerder ingevoerd symbool verwijderen door op de knop Verwijderen te d
 
 Als u klaar bent, drukt u op Ok om de wijzigingen op te slaan of op Annuleren om deze niet door te voeren.
 
-+++ Invoerhandelingen +++[InputGestures]
++++ Invoerhandelingen +++[Invoerhandelingen]
 In dit dialoogvenster  kunt u toetsen voor invoerhandelingen op het toetsenbord,  knoppen op de brailleleesregel, etc. instellen voor het uitvoeren van NVDA  commando's.
 
 Alleen commando's die toepasbaar zijn vlak voordat u  het dialoogvenster  opent, worden getoond.
@@ -1585,7 +1603,7 @@ Om de aan een commando verbonden invoerhandeling ongedaan te maken, selecteert u
 
 Als u klaar bent met het aanbrengen van de wijzigingen drukt u op de knop OK om de wijzigingen op te slaan of op de knop Annuleren als u geen wijzigingen wilt doorvoeren.
 
-++ De configuratie opslaan en opnieuw laden ++
+++ De configuratie opslaan en opnieuw laden ++[OpslaanEnHerladen]
 Als er wijzigingen worden aangebracht in de instellingen van NVDA worden deze  automatisch opgeslagen bij het afsluiten van het programma.
 Dit is de standaardinstelling, maar u kunt dit veranderen onder Algemeen in het menu Opties.
 U kunt gewijzigde instellingen te allen tijde handmatig opslaan. Hiervoor  gaat u in het NVDA-menu naar Configuratie opslaan.
@@ -1600,7 +1618,7 @@ De volgende toetscombinaties kunnen ook handig zijn:
 | Configuratie terugzetten | NVDA+control+r | NVDA+control+r | Door eenmaal drukken  worden de instellingen hersteld zoals deze waren toen u de configuratie de laatste keer hebt opgeslagen. Bij driemaal drukken worden de fabrieksinstellingen hersteld. |
 %kc:endInclude
 
-++ Configuratieprofielen ++
+++ Configuratieprofielen ++[Configuratieprofielen]
 Het kan voorkomen dat u bepaalde instellingen wilt die gelden voor bepaalde situaties.
 Zo kan het zijn dat u wilt dat "inspringen melden" aan staat als u een tekst aan het bewerken bent, of dat het melden van opmaakeigenschappen zoals lettertype, grootte, etc. is ingeschakeld als u tekst naleest ter correctie.
 Dit kunt u in NVDA doen met behulp van configuratieprofielen.
@@ -1611,7 +1629,7 @@ De meeste instellingen kunnen in een configuratieprofiel worden aangepast behalv
 U kunt Configuratieprofielen handmatig activeren.
 Ze kunnen ook automatisch geactiveerd  "worden met behulp van een zogenaamde "trigger". Het overschakelen naar een applicatie, bij voorbeeld, kan de "trigger" zijn die een bepaald configuratieprofiel activeert.
 
-+++ Basisbeheer +++
++++ Basisbeheer +++[ProfielenBasisbeheer]
 U kunt configuratieprofielen beheren door in het NVDA-menu Configuratieprofielen te selecteren.
 U kunt hiervoor ook de volgende toetscombinatie gebruiken:
 %kc:beginInclude
@@ -1627,7 +1645,7 @@ U kunt een profiel hernoemen of verwijderen door respectievelijk op de knop "Her
 
 U sluit het dialoogvenster met de knop "Sluiten".
 
-+++ Een Profiel aanmaken +++
++++ Een Profiel aanmaken +++[ProfielenAanmaken]
 U kunt een profiel aanmaken door op de knop "Nieuw" te drukken.
 
 In het dialoogvenster Nieuw Profiel, kunt u een naam voor het profiel opgeven.
@@ -1639,7 +1657,7 @@ Ga naar [ #ConfigProfileTriggers] hierna voor meer informatie over triggers.
 
 Door op OK te drukken wordt het profiel aangemaakt en het dialoogvenster gesloten. Vervolgens kunt u het profiel bewerken.
 
-+++ Handmatig activeren +++[ConfigProfileManual]
++++ Handmatig activeren +++[ConfigProfielHandmatig]
 U kunt  een profiel handmatig activeren  door een profiel te selecteren en dan op de knop Handmatig Activeren te drukken
 Naast een handmatig geactiveerd profiel blijft het mogelijk met behulp van triggers andere profielen aan te zetten, maar de instellingen van een handmatig geactiveerd profiel krijgen prioriteit ten koste van de automatische instellingen. 
 Als er bij voorbeeld voor de huidige toepassing een profiel automatisch (via een trigger)is geactiveerd en als in dat profiel het melden van links is ingeschakeld terwijl in het handmatig geactiveerde profiel dit niet is gebeurd, dan worden links niet gemeld. 
@@ -1647,7 +1665,7 @@ Als u echter de stem in het via een trigger geactiveerde profiel hebt veranderd,
 Instellingen die u wijzigt worden opgeslagen in het handmatig geactiveerde profiel.
 U kunt een dergelijk profiel déactiveren door het te selecteren  en op de knop "Handmatig déactiveren" te drukken.
 
-+++ Triggers +++[ConfigProfileTriggers]
++++ Triggers +++[ConfigProfielTriggers]
 Door in het dialoogvenster Configuratieprofielen op de knop Triggers te drukken, kunt u instellen welke profielen met behulp van de verschillende triggers automatisch geactiveerd moeten worden.
 
 In de lijst staan de volgende beschikbare Triggers: 
@@ -1660,7 +1678,7 @@ Als u niet wilt dat er een profiel wordt gebruikt, selecteert u "(normale config
 
 Druk op de knop Sluiten om naar het dialoogvenster Configuratieprofielen terug te gaan.
 
-+++ Een Profiel bewerken +++
++++ Een Profiel bewerken +++[ConfigProfielBewerken]
 Als u handmatig een profiel hebt geactiveerd, worden alle door u gewijzigde instellingen in dat profiel opgeslagen.
 Als dat niet het geval is,zullen wijzigingen die u in de instellingen aanbrengt worden opgeslagen in het meest recente door een trigger geactiveerde profiel.
 Als u bij voorbeeld een profiel gekoppeld hebt aan de toepassing Kladblok, dan zullen, zodra u naar Kladblok overschakelt,  gewijzigde instellingen naar dat profiel worden opgeslagen.
@@ -1668,12 +1686,12 @@ Als er geen handmatig geactiveerd profiel is, en er ook geen sprake is van een a
 
 Om het profiel dat gekoppeld is aan alles voorlezen te bewerken, moet u dat profiel [#ConfigProfileManual handmatig activeren]. 
 
-+++ Triggers tijdelijk uitschakelen +++
++++ Triggers tijdelijk uitschakelen +++[ConfigProfielUitschakelenTriggers]
 Het kan van pas komen dat alle triggers tijdelijk kunnen worden uitgeschakeld. 
 U wilt bij voorbeeld een handmatig geactiveerd profiel of de normale configuratie bewerken zonder last te hebben van door triggers geactiveerde profielen 
 Dit kunt u doen door een vinkje te zetten in het selectievakje bij "Alle triggers tijdelijk uitschakelen" in het dialoogvenster Configuratieprofielen.
 
-++ De Locatie van Configuratiebestanden ++
+++ De Locatie van Configuratiebestanden ++[LocatieVanConfiguratiebestanden]
 Als u een draagbare versie van NVDA hebt, worden alle instellingen en add-ons opgeslagen in een sub-map genaamd user config. Deze map bevindt zich in de NVDA hoofdmap.
 
 Als u NVDA op een laptop of pc hebt geïnstalleerd, worden alle instellingen en add-ons opgeslagen in een aparte map die te vinden is in de map van de aangemelde gebruiker onder de Windows gebruikersprofielen.
@@ -1684,15 +1702,15 @@ De NVDA-instellingen voor inlog- en UAC-schermen zijn opgeslagen in de systemCon
 In het algemeen moet u niets veranderen aan deze configuratie.
 Om de instellingen van NVDA voor het inlogscherm of de UAC-schermen (gebruikersaccountbeheer) aan te passen, brengt u de gewenste wijzigingen aan terwijl u bij Windows bent ingelogd. Vervolgens slaat u de configuratie op  waarna u in het dialoogvenster Algemene Instellingen op de knop "Huidige Instellingen van NVDA gebruiken bij Windows-aanmelding",  drukt.
 
-+ Het menu Extra +
++ Het menu Extra +[MenuExtra]
 
-++ Logboek weergeven++
+++ Logboek weergeven++[LogboekWeergeven]
 Door Logboek weergeven te kiezen in het NVDA-menu onder Extra kunt u alles bekijken wat er in het logboek is vastgelegd vanaf het moment dat u NVDA de laatste keer startte tot het moment van openen van het logboek.
 
 U kunt niet alleen de inhoud van het logbestand lezen, maar er ook een kopie van opslaan of de inhoud van het scherm vernieuwen zodat ook de gegevens worden getoond die werden vastgelegd na openen van het logbestand.
 Dit kunt u doen via het Logboek-menu (alt+l).
 
-++ Spraakweergavevenster (schermweergave gesproken tekst)++
+++ Spraakweergavevenster (schermweergave gesproken tekst)++[Spraakweergavevenster]
 Goed-ziende software-ontwikkelaars of mensen die NVDA demonstreren voor een goed-ziend publiek is er een zwevend kader waarin alles op het scherm wordt getoond wat NVDA bezig is voor te lezen.
 
 Om het spraakweergavevenster in te schakelen zet u een vinkje voor spraakweergavevenster onder Extra in het NVDA-menu.
@@ -1707,7 +1725,7 @@ Maar klikt u in of verplaatst u de focus naar het viewer venster, dan wordt het 
 
 Als u het Spraakweergavevenster altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
-++ Add-Ons Beheren ++
+++ Add-Ons Beheren ++[AddOnsBeheren]
 Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten voor NVDA installeren, verwijderen alsmede in- en uitschakelen.
 Deze pakketten worden door de NVDA gemeenschap beschikbaar gesteld en ze bevatten aangepaste programmacode die het mogelijk maakt bepaalde functies van NVDA uit te breiden of te wijzigen. Ook zijn er Add-ons voor ondersteuning van extra brailleleesregels en spraaksynthesizers.
 
@@ -1748,18 +1766,18 @@ Het is het beste deze bestanden te verwijderen uit uw configuratie en via Add-on
 
 Als u Add-Ons Beheren altijd en overal wilt kunnen oproepen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
-++ Python Console ++
+++ Python Console ++[PythonConsole]
 Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
 Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]].].
 
-++ Plugins herladen ++
+++ Plugins herladen ++[PluginsHerladen]
 Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen zonder dat NVDA wordt herstart. Dit is handig voor ontwikkelaars.
 
-+ Ondersteunde spraaksynthesizers +[SupportedSpeechSynths]
++ Ondersteunde spraaksynthesizers +[OndersteundeSpraaksynthesizers]
 In deze rubriek vindt u informatie over spraaksynthesizers die door NVDA worden ondersteund.
 Een uitgebreidere lijst met gratis en betaalde spraaksynthesizers, die met NVDA compatibel zijn, vindt u onder Extra Stemmen op [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
-++ eSpeak NG ++
+++ eSpeak NG ++[eSpeakNG]
 De [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is in NVDA ingebouwd en hiervoor hoeven geen drivers of andere componenten te worden geïnstalleerd.
 NVDA start standaard op met de eSpeak NG spraaksynthesizer.
 Bij gebruik van de draagbare versie van NVDA is de ingebouwde eSpeak NG synthesizer de ideale optie.
@@ -1769,19 +1787,19 @@ Er worden meer dan 43 talen door eSpeak NG ondersteund.
 
 De klank van de stemmen kan worden aangepast.
 
-++ Microsoft Spraak API versie 4 (SAPI 4) ++
+++ Microsoft Spraak API versie 4 (SAPI 4) ++[SAPI4]
 Sapi 4 is een oudere Microsoft standaard voor softwarematige spraaksynthesizers.
 Voor gebruikers die reeds SAPI 4 synthesizers op hun systeem geïnstalleerd hebben, blijft NVDA deze ondersteunen.
 Microsoft ondersteunt deze standaard echter niet meer en de benodigde componenten worden door Microsoft niet langer beschikbaar gesteld.
 
 Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
 
-++ Microsoft Spraak API versie 5 (SAPI 5) ++
+++ Microsoft Spraak API versie 5 (SAPI 5) ++[SAPI5]
 Sapi 5 is een Microsoft standaard voor softwarematige spraaksynthesizers.
 Op het internet zijn veel spraaksynthesizers te koop of gratis te downloaden die compatibel zijn met deze standaard. Waarschijnlijk is er op uw computer al minstens 1 SAPI 5 stem geïnstalleerd.
 Als hiervan gebruik wordt gemaakt in NVDA dan treft u alle geïnstalleerde spraakgenerators met de beschikbare stemmen aan onder Stem in het NVDA-menu [Voice Settings dialog #VoiceSettings] of in [Synth Settins Ring #SynthSettingsRing].
 
-++ Microsoft Speech Platform ++
+++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
 Het Microsoft Speech Platform biedt stemmen voor veel talen die normaalgesproken gebruikt worden bij de ontwikkeling van server-gebaseerde spraaktoepassingen.
 Deze stemmen kunnen ook met NVDA gebruikt worden.
 
@@ -1794,7 +1812,7 @@ Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
  -
 -
 
-++ Windows OneCore-stemmen ++
+++ Windows OneCore-stemmen ++[WindowsOneCoreStemmen]
 In Windows 10 zijn nieuwe stemmen beschikbaar die bekend staan als "OneCore" of "mobiele" stemmen.
 Deze stemmen zijn er voor vele talen en ze reageren sneller dan de Microsoft-stemmen die beschikbaar zijn bij gebruik van Microsoft Speech API versie 5.
 
@@ -1805,14 +1823,14 @@ Houd er ook rekening mee dat de snelheid die u instelt in Windows de in NVDA ing
 Een oplossing hiervoor is niet mogelijk zonder aanpassingen in Windows.
 We hopen dat dit gaat gebeuren bij een volgende update van Windows.
 
-++ AudioLogic TTS 3 ++
+++ AudioLogic TTS 3 ++[AudioLogicTTS3]
 Dit is een commerciële spraaksynthesizer die speciaal ontwikkeld is voor het Italiaans.
 U moet de synthesizer op uw pc installeren als u deze voor NVDA wilt gebruiken.
 Meer informatie vindt u op http://www.audiologic.it/, de website van Audiologic.
 
 Deze synthesizer heeft geen ondersteuning voor [spellingsfunctionaliteit #VoiceSpellingFunctionality].
 
-++ Nuance Vocalizer voor NVDA ++
+++ Nuance Vocalizer voor NVDA ++[Vocalizer]
 Nuance Vocalizer is een commerciële spraaksynthesizer van hoge kwaliteit. Deze synthesizer is ontwikkeld door Nuance Communications, Inc., en wordt door Tiflotecnia, Lda aangeboden als uitbreidingspakket speciaal voor NVDA.
 Er kunnen meer dan 50 verschillende stemmen worden geïnstalleerd voor meer dan 30 talen.
 Alle synthesizercomponenten en stemmen zijn beschikbaar als add-on pakketten waardoor Nuance Vocalizer ook in de draagbare versie van NVDA optimaal functioneert.
@@ -1820,10 +1838,10 @@ Alle synthesizercomponenten en stemmen zijn beschikbaar als add-on pakketten waa
 U vindt meer informatie over Nuance Vocalizer voor NVDA, en hoe u deze kunt aanschaffen, op de web site [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
 Van de verkoop van dit product gaat een percentage naar NV Access waarmee de verdere ontwikkeling van de NVDA schermlezer wordt gefinancierd.
 
-+ Ondersteunde Brailleleesregels +[SupportedBrailleDisplays]
++ Ondersteunde Brailleleesregels +[OndersteundeLeesregels]
 In deze rubriek treft u informatie aan over de brailleleesregels die door NVDA worden ondersteund.
 
-++ Freedom Scientific Focus/PAC Mate Series ++
+++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
 Alle Focus en PAC Mate leesregels van [Freedom Scientific http://www.freedomscientific.com/] worden ondersteund.
 De drivers voor de brailleleesregels van Freedom Scientific moeten op uw computer worden geïnstalleerd.
 Zonodig kunt u de drivers downloaden van http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
@@ -1884,7 +1902,7 @@ Voor de nieuwere Focusmodellen die uitgerust zijn met "rocker bar" toetsen (Focu
 | Brailleregel verder scrollen | linkerBumperBarOmlaag, rechterBumperBarOmlaag |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++
+++ Optelec ALVA BC640/680 ++[OptelecALVA]
 Zowel de ALVA BC640 als de BC680 leesregel van [Optelec http://www.optelec.com/] worden ondersteund.
 U hoeft geen specifieke drivers te installeren om deze leesregels te gebruiken.
 Sluit de leesregel aan en pas de configuratie van NVDA aan voor het gebruik van deze leesregels.
@@ -1928,7 +1946,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | end-toets | t3+spRechts |
 %kc:endInclude
 
-++ Handy Tech Leesregels ++
+++ Handy Tech Leesregels ++[HandyTech]
 NVDA ondersteunt de meeste  via usb-gekoppelde of blutooth-verbonden dan wel op de sereële poort aangesloten leesregels van [Handy Tech http://www.handytech.de/].
 Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd. -Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
@@ -1962,7 +1980,7 @@ Bij gebruik van de Handy Tech leesregels met NVDA zijn de volgende toetscombinat
 | brailleinvoer in- of uitschakelen | spatie+b1+b3+b4 (spatie+hoofdletter B) |
 %kc:endInclude
 
-++ MDV Lilli ++
+++ MDV Lilli ++[MDVLilli]
 De Lilli brailleleesregel die verkrijgbaar is op [MDV http://www.mdvbologna.it/] wordt ondersteund.
 U hoeft geen specifieke drivers te installeren om deze leesregel te gebruiken.
 Sluit de leesregel aan en pas de configuratie van NVDA aan voor het gebruik van deze leesregel.
@@ -1982,7 +2000,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | Alt+Shift+Tabtoets | SUP |
 %kc:endInclude
 
-++ Brailleleesregels van Baum/HumanWare/APH/Orbit ++
+++ Brailleleesregels van Baum/HumanWare/APH/Orbit ++[Baum]
 Verscheidene brailleleesregels van [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] en van  [Orbit http://www.orbitresearch.com/]worden ondersteund, voor zover deze  via usb of Bluetooth dan wel serieel verbonden worden.
 Hiertoe behoren:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
@@ -2018,7 +2036,7 @@ Voor leesregels die een Joystick hebben, geldt:
 | Enter-toets | selecteren |
 %kc:endInclude
 
-++ Hedo Profiline usb ++
+++ Hedo Profiline usb ++[HedoProfiline]
 De Profiline usb leesregels van [hedo Reha-Technik  http://www.hedo.de/] worden ondersteund.
 U moet eerst  de usb-driver van de fabrikant installeren.
 
@@ -2035,7 +2053,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | alles lezen | B6 |
 %kc:endInclude
 
-++ Hedo MobilLine USB ++
+++ Hedo MobilLine USB ++[HedoMobilLine]
 De MobilLine usb leesregels van [hedo Reha-Technik  http://www.hedo.de/] worden ondersteund.
 U moet eerst  de usb-driver van de fabrikant installeren.
 
@@ -2052,7 +2070,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | alles lezen | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B-Serie ++
+++ HumanWare Brailliant BI/B-Serie ++[HumanWareBrailliant]
 De brailleleesregels uit de serie BI en B van  [HumanWare http://www.humanware.de/], waaronder  de BI 32, BI 40 en de B 80, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
 Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
 USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
@@ -2083,7 +2101,7 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | Alles lezen | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serie ++
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serie ++[HIMS]
 NVDA ondersteunt de leesregelmodellen Braille Sense, Braille EDGE, Smart Beetle en Sync Braille van [Hims http://www.hims-inc.com/] die via USB of bluetooth kunnen worden aangesloten. 
 Als u voor de USB-aansluiting kiest, moet u wel eerst de USB-drivers van HIMS op uw Systeem installeren. 
 U kunt deze downloaden van: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip.
@@ -2155,7 +2173,7 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | alt+insert-toetscombinatie | smartbeetle: f3+Rechter Scroll |
 %kc:endInclude
 
-++ Seika Brailleleesregels ++
+++ Seika Brailleleesregels ++[Seika]
 De modellen Seika Version 3, 4 en 5 (40 cellen) en de Seika80 (80 cellen) van [Nippon Telesoft http://www.nippontelesoft.com/] worden ondersteund.
 Meer informatie over deze leesregels vindt u op [http://www.seika-braille.com/ ] . 
 U moet eerst  de usb-driver van de fabrikant installeren voordat u de leesregel op de computer aansluit.
@@ -2177,7 +2195,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | NVDA-menu | links+rechts ||
 %kc:endInclude
 
-++ Papenmeier Braillex Nieuwere Modellen ++
+++ Papenmeier Braillex Nieuwere Modellen ++[PapenmeierNieuw]
 De volgende brailleleesregels worden ondersteund:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2D80s, EL 70s, EL 66s (USB)
@@ -2260,7 +2278,7 @@ De twee binnenste toetsen zijn als spatietoets gedefinieerd.
 | tab-toets | spatie + punt 3 7 |
 %kc:endInclude 
 
-++ Papenmeier Braille BRAILLEX Oudere Modellen ++
+++ Papenmeier Braille BRAILLEX Oudere Modellen ++[PapenmeierOud]
 De volgende brailleleesregels worden ondersteund: 
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
@@ -2340,7 +2358,7 @@ BRAILLEX 2D Scherm:
 | Naar voorafgaand object gaan | right2/rechts2 |
 %kc:endInclude
 
-++ HumanWare BrailleNote ++
+++ HumanWare BrailleNote ++[HumanWareBrailleNote]
 NVDA ondersteunt de BrailleNote notitieapparaten van [Humanware http://www.humanware.com] wanneer deze gebruikt worden als leesregel voor een schermlezer.
 De volgende modellen worden ondersteund:
 - BrailleNote Classic (uitsluitend seriële verbinding)
@@ -2387,7 +2405,7 @@ Raadpleeg de documentatie bij de  BrailleNote voor informatie over de positie va
 | Invoerhulp in-/uitschakelen | spatie+punt2+punt3+punt6 (spatie+kleine h) |
 %kc:endInclude
 
-++ EcoBraille ++
+++ EcoBraille ++[EcoBraille]
 NVDA biedt ondersteuning voor EcoBraille-leesregels  van [ONCE http://www.once.es/].
 De volgende modellen worden ondersteund:
 - EcoBraille 20
@@ -2422,7 +2440,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | Wisselknop “braille tethered to” | A |
 %kc:endInclude
 
-++ SuperBraille ++
+++ SuperBraille ++[SuperBraille]
 De SuperBraille leesregel die voornamelijk verkrijgbaar is in  Taiwan, kan ofwel serieel of via usb worden aangesloten. 
 Aangezien  de SuperBraille niet over fysieke invoertoetsen of scroltoetsen beschikt, moet alle invoer gebeuren door middel van een standaard computertoetsenbord.
 Om deze reden en om compatibiliteit met andere schermlezers in Taiwan te bewerkstelligen, kan men over 2 toetsen beschikken waarmee scrollen van de leesregel mogelijk wordt gemaakt:
@@ -2432,7 +2450,7 @@ Om deze reden en om compatibiliteit met andere schermlezers in Taiwan te bewerks
 | Leesregel vooruitscrollen | numerieke Plus-toets | 
 %kc:endInclude
 
-++ BRLTTY ++
+++ BRLTTY ++[BRLTTY]
 [BRLTTY http://www.brltty.com/] is een opzichzelfstaand programma dat kan dienen ter ondersteuning van veel meer brailleleesregels.
 Om hiervan gebruik te kunnen maken moet u [BRLTTY voor Windows installeren http://www.brltty.com/download.html].
 U moet de nieuwste versie van het programma (bij voorbeeld, met als naam brltty-win-4.2-2.exe) downloaden en installeren.
@@ -2491,9 +2509,9 @@ Verder worden de volgende gebruiksstatusaanduidingen gebruikt:
 | sel | wordt weergegeven wanneer object is geselecteerd |
 | submnu | wordt weergegeven wanneer een object kan worden uitgeschoven, meestal in de vorm van een sub-menu |
 
-+ Geavanceerde Onderwerpen +
++ Geavanceerde Onderwerpen +[GeavanceerdeOnderwerpen]
  
-++ Commandoregelopties ++[CommandLineOptions]	
+++ Commandoregelopties ++[Commandoregelopties]	
 Aan het commando'NVDA starten' kunnenextra  opties worden toegevoegd die van invloed zijn op het opstartgedrag. U kunt zoveel opties opgeven als u nodig hebt. 
 Deze opties kunnen worden opgegeven in het dialoogvenster Eigenschappen van de snelkoppeling waarmee NVDA wordt gestart, het venster Uitvoeren (Windows-toets + r) of via de Windows-opdrachtprompt.
 De opties moeten met spaties van de naam van  het NVDA-uitvoerbestand en van elkaar worden gescheiden.
@@ -2535,7 +2553,7 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | Geen | --Create-portable | Draagbare kopie van NVDA wordt aangemaakt  (waarbij de aangemaakte kopie vervolgens opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
 | Geen | --Create-portable-silent | Draagbare kopie van NVDA wordt aangemaakt (waarbij aangemaakte kopie vervolgens niet opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
 | Geen | --portable-path=PORTABLEPATH | Het pad waar een draagbare kopie wordt aangemaakt. |
-++ Systeem-brede Parameters ++[SystemWideParameters]
+++ Systeem-brede Parameters ++[SysteembredeParameters]
 U kunt voor NVDA enkele waarden in het systeemregister instellen die systeem-breed het gedrag van NVDA beïnvloeden.
 Deze waarden worden in het register onder een van de volgende sleutels opgeslagen:
 - 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
@@ -2547,7 +2565,7 @@ De volgende waarden kunnen onder deze registersleutel worden ingesteld:
 | configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | Indien ingeschakeld (enabled), wordt de NVDA gebruikersconfiguratie in de lokale application data opgeslagen in plaats van de roaming application data |
 | serviceDebug | DWORD | 0 (default) to disable, 1 to enable | Indien ingeschakeld (enabled), wordt veilige modus voor windows secure desktops, die gebruik van Python consool en Log viewer moglijk maakt, buiten werking gesteld. Aangezien dit een aantal belangrijke veiligheidsrisico's met zich meebrent,wordt gebruik van deze optie ten zeerste afgeraden |
 
-+ Verdere informatie +
++ Verdere informatie +[VerdereInformatie]
 Voor nadere informatie over NVDA of voor hulp kunt u terecht op de website NVDA_URL.
 Hier kunt u aanvullende documentatie vinden, technische ondersteuning krijgen, maar ook ervaringen en kennis uitwisselen met andere gebruikers en ontwikkelaars.
 U vindt er ook informatie over de nieuwste ontwikkelingen en verbeteringen van het programma.

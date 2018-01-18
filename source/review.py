@@ -167,4 +167,4 @@ def handleCaretMove(pos):
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError,RuntimeError):
 			return
-	api.setReviewPosition(info)
+	api.setReviewPosition(info, isCaret=True)
