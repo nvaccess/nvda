@@ -229,7 +229,7 @@ changes in name for the panel when categories are changed"""
 NvdaSettingsCategoryPanelId = None
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
-	A multi category settings dialog consists of a tree view with settings categories on the left side, 
+	A multi category settings dialog consists of a list view with settings categories on the left side, 
 	and a settings panel on the right side of the dialog.
 	Furthermore, in addition to Ok and Cancel buttons, it has an Apply button by default,
 	which is different  from the default behavior of L{SettingsDialog}.
@@ -262,7 +262,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
 		self.initialCategory=initialCategory
 		self.currentCategory=None
-		self.categoryTreeItems=[]
+		self.categoryListItems=[]
 		super(MultiCategorySettingsDialog, self).__init__(parent)
 
 	# maximum size for the dialog. This size was chosen as a medium fit, so the
@@ -278,9 +278,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 		categoriesLabelText=_("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
-		self.categoryTree=wx.TreeCtrl(self, style=wx.TR_HIDE_ROOT | wx.TR_NO_LINES | wx.TR_SINGLE,size=(200,300))
-		self.categoryTreeRoot = self.categoryTree.AddRoot("root")
-		self.categoryTree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onCategoryChange)
+		self.categoryList = wx.ListCtrl(self,style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER,size=(200,300))
+		self.categoryList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onCategoryChange)
 
 		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed the maximum size,
 		# its important all items can be accessed visually.
@@ -302,9 +301,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			if panel.Size[0] > self.MAX_WIDTH:
 				log.debugWarning("Panel width ({1}) too large for: {0} Try to reduce the width of this panel, or increase MultiCategorySettingsDialog.MAX_WIDTH".format(cls, panel.Size[0]))
 			panelHeights.append(panel.Size[1])
-			treeItem = self.categoryTree.AppendItem(self.categoryTreeRoot, panel.title)
-			self.categoryTree.SetItemPyData(treeItem, panel)
-			self.categoryTreeItems.append(treeItem)
+			self.categoryList.Append((panel.title,))
+			self.categoryListItems.append(panel)
 		# Find size the container panel to the biggest settings panel, without exceeding the max height and width.
 		panelWidth=min(max(panelWidths), self.MAX_WIDTH)
 		panelHeight=min(max(panelHeights), self.MAX_HEIGHT)
@@ -312,11 +310,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.SetSizer(self.containerSizer)
 
 		gridBagSizer=wx.GridBagSizer(hgap=guiHelper.SPACE_BETWEEN_BUTTONS_HORIZONTAL, vgap=guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
-		# add the label, the categories tree, and the settings panel to a 2 by 2 grid.
-		# The label should span two columns, so that the start of the categories tree
+		# add the label, the categories list, and the settings panel to a 2 by 2 grid.
+		# The label should span two columns, so that the start of the categories list
 		# and the start of the settings panel are at the same vertical position.
 		gridBagSizer.Add(categoriesLabel, pos=(0,0), span=(1,2))
-		gridBagSizer.Add(self.categoryTree, pos=(1,0), flag=wx.EXPAND)
+		gridBagSizer.Add(self.categoryList, pos=(1,0), flag=wx.EXPAND)
 		gridBagSizer.Add(self.container, pos=(1,1))
 		gridBagSizer.AddGrowableCol(1)
 		sHelper.sizer.Add(gridBagSizer)
@@ -327,10 +325,14 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def postInit(self):
 		if self.initialCategory:
-			self.categoryTree.SelectItem(self.categoryTreeItems[self.categoryClasses.index(self.initialCategory)])
+			index = self.categoryClasses.index(self.initialCategory)
+			self.categoryList.Select(index)
+			self.categoryList.Focus(index)
 			self.container.SetFocus()
 		else:
-			self.categoryTree.SetFocus()
+			self.categoryList.Select(0)
+			self.categoryList.Focus(0)
+			self.categoryList.SetFocus()
 
 	def Destroy(self):
 		global NvdaSettingsCategoryPanelId
@@ -340,30 +342,24 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def onCharHook(self,evt):
 		"""Listens for keyboard input and switches panels for control+tab"""
 		key = evt.GetKeyCode()
-		treeHadFocus = self.categoryTree and self.categoryTree.HasFocus()
+		listHadFocus = self.categoryList and self.categoryList.HasFocus()
 		if evt.ControlDown() and key==wx.WXK_TAB:
-			# Focus the tree view. If we don't, the panel won't hide correctly
-			if not treeHadFocus:
-				self.categoryTree.SetFocus()
-			currentItem = self.categoryTree.Selection
-			index = self.categoryTreeItems.index(currentItem)
+			# Focus the categories list. If we don't, the panel won't hide correctly
+			if not listHadFocus:
+				self.categoryList.SetFocus()
+			index = self.categoryList.GetFirstSelected()
 			newIndex=index-1 if evt.ShiftDown() else index+1
-			newItem=self.categoryTreeItems[newIndex % len(self.categoryTreeItems)]
-			self.categoryTree.SelectItem(newItem)
-			newPanel=self.categoryTree.GetItemPyData(newItem)
-			if not treeHadFocus:
+			newIndex=newIndex % len(self.categoryListItems)
+			self.categoryList.Select(newIndex)
+			self.categoryList.Focus(newIndex)
+			newPanel=self.categoryListItems[newIndex]
+			if not listHadFocus:
 				newPanel.SetFocus()
-		elif treeHadFocus and key == wx.WXK_RETURN:
-			# The tree control captures the return key, but we want it to save the settings.
+		elif listHadFocus and key == wx.WXK_RETURN:
+			# The list control captures the return key, but we want it to save the settings.
 			self.onOk(evt)
 		else:
 			evt.Skip()
-
-	def getCategoryInstances(self):
-		for item in self.categoryTreeItems:
-			panel=self.categoryTree.GetItemPyData(item)
-			if panel:
-				yield panel
 
 	def _onPanelLayoutChanged(self,evt):
 		# call layout and SetupScrolling on the container so that the controls apear in their expected locations.
@@ -391,29 +387,27 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.Thaw()
 
 	def onCategoryChange(self,evt):
-		# During dialog deconstruction, tree items are removed one by one
-		# This triggers EVT_TREE_SEL_CHANGED, which should really be ignored in these cases
-		if self.categoryTree.Count<len(self.categoryTreeItems):
-			evt.Skip()
-			return
+		index = evt.GetIndex()
 		oldCat = self.currentCategory
-		newCat = self.categoryTree.GetItemPyData(evt.Item)
+		newCat = self.categoryListItems[index]
 		self._doCategoryChange(oldCat, newCat)
 
 	def onOk(self,evt):
-		for panel in self.getCategoryInstances():
+		for panel in self.categoryListItems[:]:
 			panel.onSave()
 			panel.Destroy()
+			self.categoryListItems.remove(panel)
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
-		for panel in self.getCategoryInstances():
+		for panel in self.categoryListItems[:]:
 			panel.onDiscard()
 			panel.Destroy()
+			self.categoryListItems.remove(panel)
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		for panel in self.getCategoryInstances():
+		for panel in self.categoryListItems:
 			panel.onSave()
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
