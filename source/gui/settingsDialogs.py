@@ -324,7 +324,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.Bind(EVT_RW_LAYOUT_NEEDED, self._onPanelLayoutChanged)
 
 	def postInit(self):
-		if self.initialCategory:
+		# We only want to select an item when there is no selection yet.
+		# If the execution of this method was caused by an apply, don't override the selection.
+		if self.categoryList.GetFirstSelected()!=-1:
+			self.categoryList.SetFocus()
+		elif self.initialCategory:
 			index = self.categoryClasses.index(self.initialCategory)
 			self.categoryList.Select(index)
 			self.categoryList.Focus(index)
