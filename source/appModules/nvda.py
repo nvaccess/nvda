@@ -34,7 +34,7 @@ class NvdaDialog(IAccessible):
 class NvdaSettingsCategoryPanel(IAccessible):
 
 	def event_nameChange(self):
-		if True and self in api.getFocusAncestors():
+		if self in api.getFocusAncestors():
 			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
 
