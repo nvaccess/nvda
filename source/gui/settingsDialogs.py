@@ -279,6 +279,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		categoriesLabelText=_("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
 		self.categoryList = wx.ListCtrl(self,style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER,size=(200,300))
+		# This list consists of only one column.
+		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
+		self.categoryList.InsertColumn(0,categoriesLabelText,width=200)
 		self.categoryList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onCategoryChange)
 
 		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed the maximum size,
