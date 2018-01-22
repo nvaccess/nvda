@@ -401,17 +401,15 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self._doCategoryChange(oldCat, newCat)
 
 	def onOk(self,evt):
-		for panel in self.categoryListItems[:]:
+		for panel in self.categoryListItems:
 			panel.onSave()
 			panel.Destroy()
-			self.categoryListItems.remove(panel)
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
-		for panel in self.categoryListItems[:]:
+		for panel in self.categoryListItems:
 			panel.onDiscard()
 			panel.Destroy()
-			self.categoryListItems.remove(panel)
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
@@ -2198,7 +2196,11 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		if not activeConfigProfile or isinstance(self.currentCategory,GeneralSettingsPanel):
 			# Translators: The profile name for normal configuration
 			activeConfigProfile=_("normal configuration")
-		self.SetTitle("{dialogTitle}: {panelTitle} ({configProfile})".format(dialogTitle=self.title,panelTitle=self.currentCategory.title,configProfile=activeConfigProfile))
+		self.SetTitle("{dialogTitle}: {panelTitle} ({configProfile})".format(
+			dialogTitle=self.title,
+			panelTitle=self.currentCategory.title,
+			configProfile=activeConfigProfile
+		))
 
 class AddSymbolDialog(wx.Dialog):
 
