@@ -147,9 +147,9 @@ ROLE_DATAITEM=140
 ROLE_HEADERITEM=141
 ROLE_THUMB=142
 ROLE_CALENDAR=143
+ROLE_CHARTELEMENT=146
 ROLE_VIDEO=144
 ROLE_AUDIO=145
-
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -482,6 +482,8 @@ roleLabels={
 	# Translators: Identifies a thumb control (a button-like control for changing options).
 	ROLE_THUMB:_("thumb control"),
 	ROLE_CALENDAR:_("calendar"),
+	# Translators: Identifies a chart element.
+	ROLE_CHARTELEMENT:_("chart element"),
 	ROLE_VIDEO:_("video"),
 	ROLE_AUDIO:_("audio"),
 }
@@ -543,7 +545,7 @@ stateLabels={
 	STATE_DRAGGABLE:_("draggable"),
 	STATE_DRAGGING:_("dragging"),
 	# Translators: Reported where an object which is being dragged can be dropped.
-	# This is only reported for objects which support accessible drag and drop.
+	# This is only reported for objects that support accessible drag and drop.
 	STATE_DROPTARGET:_("drop target"),
 	STATE_SORTED:_("sorted"),
 	STATE_SORTED_ASCENDING:_("sorted ascending"),
@@ -573,6 +575,9 @@ negativeStateLabels={
 	STATE_PRESSED:_("not pressed"),
 	# Translators: This is presented when a checkbox is not checked.
 	STATE_CHECKED:_("not checked"),
+	# Translators: This is presented when drag and drop is finished.
+	# This is only reported for objects which support accessible drag and drop.
+	STATE_DROPTARGET:_("done dragging"),
 }
 
 silentRolesOnFocus={
@@ -637,8 +642,21 @@ isCurrentLabels = {
 	"time":_("current time"),
 }
 
-def processPositiveStates(role, states, reason, positiveStates):
-	positiveStates = positiveStates.copy()
+def processPositiveStates(role, states, reason, positiveStates=None):
+	"""Processes the states for an object and returns the positive states to output for a specified reason.
+	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is checked.
+	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	@type role: int
+	@param states: The raw states for an object to process.
+	@type states: set
+	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
+	@type reason: str
+	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
+	@type positiveStates: set
+	@return: The processed positive states.
+	@rtype: set
+	"""
+	positiveStates = positiveStates.copy() if positiveStates is not None else states.copy()
 	# The user never cares about certain states.
 	if role==ROLE_EDITABLETEXT:
 		positiveStates.discard(STATE_EDITABLE)
@@ -682,7 +700,22 @@ def processPositiveStates(role, states, reason, positiveStates):
 		positiveStates.discard(STATE_EDITABLE)
 	return positiveStates
 
-def processNegativeStates(role, states, reason, negativeStates):
+def processNegativeStates(role, states, reason, negativeStates=None):
+	"""Processes the states for an object and returns the negative states to output for a specified reason.
+	For example, if C{STATE_CHECKED} is in the returned states, it means that the processed object is not checked.
+	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	@type role: int
+	@param states: The raw states for an object to process.
+	@type states: set
+	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
+	@type reason: str
+	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
+	@type negativeStates: set
+	@return: The processed negative states.
+	@rtype: set
+	"""
+	if reason == REASON_CHANGE and not isinstance(negativeStates, set):
+		raise TypeError("negativeStates must be a set for this reason")
 	speakNegatives = set()
 	# Add the negative selected state if the control is selectable,
 	# but only if it is either focused or this is something other than a change event.
@@ -711,3 +744,36 @@ def processNegativeStates(role, states, reason, negativeStates):
 		# This is not a state change; only positive states were supplied.
 		# Return all negative states which should be spoken, excluding the positive states.
 		return speakNegatives - states
+
+def processAndLabelStates(role, states, reason, positiveStates=None, negativeStates=None, positiveStateLabelDict={}, negativeStateLabelDict={}):
+	"""Processes the states for an object and returns the appropriate state labels for both positive and negative states.
+	@param role: The role of the object to process states for (e.g. C{ROLE_CHECKBOX}.
+	@type role: int
+	@param states: The raw states for an object to process.
+	@type states: set
+	@param reason: The reason to process the states (e.g. C{REASON_FOCUS}.
+	@type reason: str
+	@param positiveStates: Used for C{REASON_CHANGE}, specifies states changed from negative to positive;
+	@type positiveStates: set
+	@param negativeStates: Used for C{REASON_CHANGE}, specifies states changed from positive to negative;
+	@type negativeStates: setpositiveStateLabelDict={}, negativeStateLabelDict
+	@param positiveStateLabelDict: Dictionary containing state identifiers as keys and associated positive labels as their values.
+	@type positiveStateLabelDict: dict
+	@param negativeStateLabelDict: Dictionary containing state identifiers as keys and associated negative labels as their values.
+	@type negativeStateLabelDict: dict
+	@return: The labels of the relevant positive and negative states.
+	@rtype: [str, ...]
+	"""
+	mergedStateLabels=[]
+	positiveStates = processPositiveStates(role, states, reason, positiveStates)
+	negativeStates = processNegativeStates(role, states, reason, negativeStates)
+	for state in sorted(positiveStates | negativeStates):
+		if state in positiveStates:
+			mergedStateLabels.append(positiveStateLabelDict.get(state, stateLabels[state]))
+		elif state in negativeStates:
+			# Translators: Indicates that a particular state of an object is negated.
+			# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+			# but this still might be used in some other cases.
+			# %s will be replaced with the full identifier of the negated state (e.g. selected).
+			mergedStateLabels.append(negativeStateLabelDict.get(state, negativeStateLabels.get(state, _("not %s") % stateLabels[state])))
+	return mergedStateLabels
