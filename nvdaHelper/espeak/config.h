@@ -7,4 +7,4 @@
 #define INCLUDE_KLATT 1
 #define HAVE_SONIC_H 1
 
-#define PACKAGE_VERSION "1.49.1 dev"
+#define PACKAGE_VERSION "1.49.3-dev"
