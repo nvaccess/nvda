@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import sys
 import itertools
@@ -285,7 +285,13 @@ def NVDAObjectHasUsefulText(obj):
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
 
-def getDisplayList():
+def getDisplayList(excludeNegativeChecks=True):
+	"""Gets a list of available display driver names with their descriptions.
+	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
+	@type excludeNegativeChecks: bool
+	@return: list of tuples with driver names and descriptions.
+	@rtype: [(str,unicode)]
+	"""
 	displayList = []
 	# The display that should be placed at the end of the list.
 	lastDisplay = None
@@ -299,7 +305,7 @@ def getDisplayList():
 				exc_info=True)
 			continue
 		try:
-			if display.check():
+			if not excludeNegativeChecks or display.check():
 				if display.name == "noBraille":
 					lastDisplay = (display.name, display.description)
 				else:
@@ -371,7 +377,9 @@ class Region(object):
 		L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are similarly updated based on L{cursorPos}, L{selectionStart} and L{selectionEnd}, respectively.
 		@postcondition: L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are updated and ready for rendering.
 		"""
-		mode = louis.dotsIO | louis.pass1Only
+		mode = louis.dotsIO
+		if config.conf["braille"]["outputPass1Only"]:
+			mode |= louis.pass1Only
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')
@@ -478,10 +486,9 @@ def getBrailleTextForProperties(**propertyValues):
 	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
 	if states:
-		positiveStates = controlTypes.processPositiveStates(role, states, controlTypes.REASON_FOCUS, states)
-		textList.extend(positiveStateLabels.get(state, controlTypes.stateLabels[state]) for state in positiveStates)
-		negativeStates = controlTypes.processNegativeStates(role, states, controlTypes.REASON_FOCUS, None)
-		textList.extend(negativeStateLabels.get(state, controlTypes.negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state])) for state in negativeStates)
+		textList.extend(
+			controlTypes.processAndLabelStates(role, states, controlTypes.REASON_FOCUS, states, None, positiveStateLabels, negativeStateLabels)
+		)
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")
@@ -1065,6 +1072,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The regions in this buffer.
 		#: @type: [L{Region}, ...]
 		self.regions = []
+		#: The raw text of the entire buffer.
+		self.rawText = ""
 		#: The position of the cursor in L{brailleCells}, C{None} if no region contains the cursor.
 		#: @type: int
 		self.cursorPos = None
@@ -1080,6 +1089,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		This removes all regions and resets the window position to 0.
 		"""
 		self.regions = []
+		self.rawText = ""
 		self.cursorPos = None
 		self.brailleCursorPos = None
 		self.brailleCells = []
@@ -1100,6 +1110,28 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			end = start + len(region.brailleCells)
 			yield RegionWithPositions(region, start, end)
 			start = end
+
+	_cache_rawToBraillePos=True
+	def _get_rawToBraillePos(self):
+		"""@return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
+		@rtype: [int, ...]
+		"""
+		rawToBraillePos = []
+		for region, regionStart, regionEnd in self.regionsWithPositions:
+			rawToBraillePos.extend(p+regionStart for p in region.rawToBraillePos)
+		return rawToBraillePos
+
+	_cache_brailleToRawPos=True
+	def _get_brailleToRawPos(self):
+		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
+		@rtype: [int, ...]
+		"""
+		brailleToRawPos = []
+		start = 0
+		for region in self.visibleRegions:
+			brailleToRawPos.extend(p+start for p in region.brailleToRawPos)
+			start+=len(region.rawText)
+		return brailleToRawPos
 
 	def bufferPosToRegionPos(self, bufferPos):
 		for region, start, end in self.regionsWithPositions:
@@ -1122,6 +1154,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# Resort to the start of the last region.
 			return start
 		raise LookupError("No such position")
+
+	def bufferPositionsToRawText(self, startPos, endPos):
+		return self.rawText[self.brailleToRawPos[startPos]:self.brailleToRawPos[endPos-1]+1]
 
 	def bufferPosToWindowPos(self, bufferPos):
 		if not (self.windowStartPos <= bufferPos < self.windowEndPos):
@@ -1247,15 +1282,18 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			self.windowEndPos = end
 
 	def update(self):
+		self.rawText = ""
 		self.brailleCells = []
 		self.cursorPos = None
 		start = 0
 		if log.isEnabledFor(log.IO):
 			logRegions = []
 		for region in self.visibleRegions:
+			rawText = region.rawText
 			if log.isEnabledFor(log.IO):
-				logRegions.append(region.rawText)
+				logRegions.append(rawText)
 			cells = region.brailleCells
+			self.rawText+=rawText
 			self.brailleCells.extend(cells)
 			if region.brailleCursorPos is not None:
 				self.cursorPos = start + region.brailleCursorPos
@@ -1274,6 +1312,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			return self.bufferPosToWindowPos(self.cursorPos)
 		except LookupError:
 			return None
+
+	def _get_windowRawText(self):
+		return self.bufferPositionsToRawText(self.windowStartPos,self.windowEndPos)
 
 	def _get_windowBrailleCells(self):
 		return self.brailleCells[self.windowStartPos:self.windowEndPos]
@@ -1431,8 +1472,18 @@ def formatCellsForLog(cells):
 		for cell in cells])
 
 class BrailleHandler(baseObject.AutoPropertyObject):
+	TETHER_AUTO = "auto"
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
+	tetherValues=[
+		# Translators: The label for a braille setting indicating that braille should be
+		# tethered to focus or review cursor automatically.
+		(TETHER_AUTO,_("automatically")),
+		# Translators: The label for a braille setting indicating that braille should be tethered to focus.
+		(TETHER_FOCUS,_("to focus")),
+		# Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+		(TETHER_REVIEW,_("to review"))
+	]
 
 	def __init__(self):
 		self.display = None
@@ -1450,6 +1501,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
+		self._tether = config.conf["braille"]["tetherTo"]
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1464,18 +1516,29 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display = None
 		_BgThread.stop()
 
+	def getTether(self):
+		return self._tether
+
 	def _get_tether(self):
-		return config.conf["braille"]["tetherTo"]
+		"""@deprecated: Use L{getTether instead."""
+		return self.getTether()
+
+	def setTether(self, tether, auto=False):
+		if auto and not self.shouldAutoTether:
+			return
+		if not auto:
+			config.conf["braille"]["tetherTo"] = tether
+		if tether == self._tether:
+			return
+		self._tether = tether
+		self.mainBuffer.clear()
 
 	def _set_tether(self, tether):
-		if tether == config.conf["braille"]["tetherTo"]:
-			return
-		config.conf["braille"]["tetherTo"] = tether
-		self.mainBuffer.clear()
-		if tether == self.TETHER_REVIEW:
-			self.handleReviewMove()
-		else:
-			self.handleGainFocus(api.getFocusObject())
+		"""@deprecated: Use L{setTether instead."""
+		self.setTether(tether, auto=False)
+
+	def _get_shouldAutoTether(self):
+		return self.enabled and config.conf["braille"]["autoTether"]
 
 	def setDisplayByName(self, name, isFallback=False):
 		if not name:
@@ -1550,7 +1613,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		# we just replace the data.
 		# This means that if multiple writes occur while an earlier write is still in progress,
 		# we skip all but the last.
-		if not alreadyQueued:
+		if not alreadyQueued and not self.display._awaitingAck:
 			# Queue a call to the background thread.
 			_BgThread.queueApc(_BgThread.executor)
 
@@ -1640,10 +1703,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._messageCallLater = None
 		self.update()
 
-	def handleGainFocus(self, obj):
+	def handleGainFocus(self, obj, shouldAutoTether=True):
 		if not self.enabled:
 			return
-		if self.tether != self.TETHER_FOCUS:
+		if shouldAutoTether:
+			self.setTether(self.TETHER_FOCUS, auto=True)
+		if self._tether != self.TETHER_FOCUS:
 			return
 		self._doNewObject(itertools.chain(getFocusContextRegions(obj, oldFocusRegions=self.mainBuffer.regions), getFocusRegions(obj)))
 
@@ -1672,17 +1737,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
-	def handleCaretMove(self, obj):
+	def handleCaretMove(self, obj, shouldAutoTether=True):
 		if not self.enabled:
 			return
-		if self.tether != self.TETHER_FOCUS:
+		prevTether = self._tether
+		if shouldAutoTether:
+			self.setTether(self.TETHER_FOCUS, auto=True)
+		if self._tether != self.TETHER_FOCUS:
 			return
-		if not self.mainBuffer.regions:
-			return
-		region = self.mainBuffer.regions[-1]
-		if region.obj is not obj:
-			return
-		region.pendingCaretUpdate=True
+		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
+		if region and region.obj==obj:
+			region.pendingCaretUpdate=True
+		elif prevTether == self.TETHER_REVIEW:
+			# The caret moved in a different object than the review position.
+			self._doNewObject(getFocusRegions(obj, review=False))
 
 	def handlePendingCaretUpdate(self):
 		"""Checks to see if the final text region needs its caret updated and if so calls _doCursorMove for the region."""
@@ -1742,7 +1810,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# There are some objects that require special update behavior even if they have no region.
 			# This only applies when tethered to focus, because tethering to review shows only one object at a time,
 			# which always has a braille region associated with it.
-			if self.tether != self.TETHER_FOCUS:
+			if self._tether != self.TETHER_FOCUS:
 				return
 			# Late import to avoid circular import.
 			from NVDAObjects import NVDAObject
@@ -1758,12 +1826,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
-	def handleReviewMove(self):
+	def handleReviewMove(self, shouldAutoTether=True):
 		if not self.enabled:
 			return
-		if self.tether != self.TETHER_REVIEW:
-			return
 		reviewPos = api.getReviewPosition()
+		if shouldAutoTether:
+			self.setTether(self.TETHER_REVIEW, auto=True)
+		if self._tether != self.TETHER_REVIEW:
+			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
 			self._doCursorMove(region)
@@ -1775,6 +1845,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
 			self.setDisplayByName(display)
+		self._tether = config.conf["braille"]["tetherTo"]
 
 class _BgThread:
 	"""A singleton background thread used for background writes and raw braille display I/O.
@@ -1793,6 +1864,7 @@ class _BgThread:
 		thread.daemon = True
 		thread.start()
 		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
+		cls.ackTimerHandle = winKernel.createWaitableTimer()
 
 	@classmethod
 	def queueApc(cls, func):
@@ -1803,6 +1875,10 @@ class _BgThread:
 		if not cls.thread:
 			return
 		cls.exit = True
+		if not ctypes.windll.kernel32.CancelWaitableTimer(cls.ackTimerHandle):
+			raise ctypes.WinError()
+		winKernel.closeHandle(cls.ackTimerHandle)
+		cls.ackTimerHandle = None
 		# Wake up the thread. It will exit when it sees exit is True.
 		cls.queueApc(cls.executor)
 		cls.thread.join()
@@ -1816,6 +1892,9 @@ class _BgThread:
 		if _BgThread.exit:
 			# func will see this and exit.
 			return
+		if handler.display._awaitingAck:
+			# Do not write cells when we are awaiting an ACK
+			return
 		with _BgThread.queuedWriteLock:
 			data = _BgThread.queuedWrite
 			_BgThread.queuedWrite = None
@@ -1826,6 +1905,22 @@ class _BgThread:
 		except:
 			log.error("Error displaying cells. Disabling display", exc_info=True)
 			handler.setDisplayByName("noBraille", isFallback=True)
+		else:
+			if handler.display.receivesAckPackets:
+				handler.display._awaitingAck = True
+				winKernel.setWaitableTimer(
+					_BgThread.ackTimerHandle,
+					int(handler.display.timeout*2000),
+					0,
+					_BgThread.ackTimeoutResetter
+				)
+
+	@winKernel.PAPCFUNC
+	def ackTimeoutResetter(param):
+		if handler.display.receivesAckPackets and handler.display._awaitingAck:
+			log.debugWarning("Waiting for %s ACK packet timed out"%handler.display.name)
+			handler.display._awaitingAck = False
+			_BgThread.queueApc(_BgThread.executor)
 
 	@classmethod
 	def func(cls):
@@ -1833,6 +1928,11 @@ class _BgThread:
 			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
 			if cls.exit:
 				break
+
+#: Maps old braille display driver names to new drivers that supersede old drivers.
+RENAMED_DRIVERS = {
+	"syncBraille":"hims"
+}
 
 def initialize():
 	global handler
@@ -1844,6 +1944,12 @@ def initialize():
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
+	# #7459: the syncBraille has been dropped in favor of the native hims driver.
+	# Migrate to renamed drivers as smoothly as possible.
+	oldDriverName = config.conf["braille"]["display"]
+	newDriverName = RENAMED_DRIVERS.get(oldDriverName)
+	if newDriverName:
+		config.conf["braille"]["display"] = newDriverName
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
 	# Update the display to the current focus/review position.
@@ -1851,9 +1957,9 @@ def initialize():
 		# Braille is disabled or focus/review hasn't yet been initialised.
 		return
 	if handler.tether == handler.TETHER_FOCUS:
-		handler.handleGainFocus(api.getFocusObject())
+		handler.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
 	else:
-		handler.handleReviewMove()
+		handler.handleReviewMove(shouldAutoTether=False)
 
 def pumpAll():
 	"""Runs tasks at the end of each core cycle. For now just caret updates."""
@@ -1892,6 +1998,22 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	#: This is also required to use the L{hwIo} module.
 	#: @type: bool
 	isThreadSafe = False
+	#: Whether displays for this driver return acknowledgements for sent packets.
+	#: L{_handleAck} should be called when an ACK is received.
+	#: Note that thread safety is required for the generic implementation to function properly.
+	#: If a display is not thread safe, a driver should manually implement ACK processing.
+	#: @type: bool
+	receivesAckPackets = False
+	#: Whether this driver is awaiting an Ack for a connected display.
+	#: This is set to C{True} after displaying cells when L{receivesAckPackets} is True,
+	#: and set to C{False} by L{_handleAck} or when C{timeout} has elapsed.
+	#: This is for internal use by NVDA core code only and shouldn't be touched by a driver itself.
+	_awaitingAck = False
+	#: Maximum timeout to use for communication with a device (in seconds).
+	#: This can be used for serial connections.
+	#: Furthermore, it is used by L{_BgThread} to stop waiting for missed acknowledgement packets.
+	#: @type: float
+	timeout = 0.2
 
 	@classmethod
 	def check(cls):
@@ -1951,9 +2073,11 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	gestureMap = None
 
 	@classmethod
-	def _getModifierGestures(cls):
+	def _getModifierGestures(cls, model=None):
 		"""Retrieves modifier gestures from this display driver's L{gestureMap}
 		that are bound to modifier only keyboard emulate scripts.
+		@param model: the optional braille display model for which modifier gestures should also be included.
+		@type model: str; C{None} if model specific gestures should not be included
 		@return: the ids of the display keys and the associated generalised modifier names
 		@rtype: generator of (set, set)
 		"""
@@ -1962,12 +2086,26 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		globalMaps = [inputCore.manager.userGestureMap]
 		if cls.gestureMap:
 			globalMaps.append(cls.gestureMap)
+		prefixes=["br({source})".format(source=cls.name),]
+		if model:
+			prefixes.insert(0,"br({source}.{model})".format(source=cls.name, model=model))
 		for globalMap in globalMaps:
 			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
-				if gesture.startswith("br({source})".format(source=cls.name)) and scriptCls is globalCommands.GlobalCommands and scriptName.startswith("kb"):
+				if (any(gesture.startswith(prefix.lower()) for prefix in prefixes)
+					and scriptCls is globalCommands.GlobalCommands
+					and scriptName and scriptName.startswith("kb")):
 					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
 					if emuGesture.isModifier:
 						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)
+
+	def _handleAck(self):
+		"""Base implementation to handle acknowledgement packets."""
+		if not self.receivesAckPackets:
+			raise NotImplementedError("This display driver does not support ACK packet handling")
+		if not ctypes.windll.kernel32.CancelWaitableTimer(_BgThread.ackTimerHandle):
+			raise ctypes.WinError()
+		self._awaitingAck = False
+		_BgThread.queueApc(_BgThread.executor)
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
@@ -2013,7 +2151,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
 		if self.model:
 			# Model based ids should take priority.
-			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model.replace(" ",""), id=self.id))
+			ids.insert(0, u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.id))
 		import brailleInput
 		if isinstance(self, brailleInput.BrailleInputGesture):
 			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
@@ -2046,7 +2184,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		# Combining modifiers with braille input (#7306) is not yet supported.
 		gestureKeys = set(self.keyNames)
 		gestureModifiers = set()
-		for keys, modifiers in handler.display._getModifierGestures():
+		for keys, modifiers in handler.display._getModifierGestures(self.model):
 			if keys<gestureKeys:
 				gestureModifiers |= modifiers
 				gestureKeys -= keys
@@ -2054,11 +2192,15 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			# No modifier assignments found in this gesture.
 			return None
 		# Find a script for L{gestureKeys}.
-		fakeGestureId = u"br({source}):{id}".format(source=self.source, id="+".join(gestureKeys))
+		id = "+".join(gestureKeys)
+		fakeGestureIds = [u"br({source}):{id}".format(source=self.source, id=id),]
+		if self.model:
+			fakeGestureIds.insert(0,u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
 		scriptNames = []
 		globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
 		for globalMap in globalMaps:
-			scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId) if scriptName.startswith("kb"))
+			for fakeGestureId in fakeGestureIds:
+				scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId.lower()) if scriptName.startswith("kb"))
 		if not scriptNames:
 			# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
 			return None
@@ -2085,7 +2227,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	def getDisplayTextForIdentifier(cls, identifier):
 		idParts = cls.ID_PARTS_REGEX.search(identifier)
 		if not idParts:
-			raise ValueError("Invalid identifier provided: %s"%identifier)
+			log.error("Invalid braille gesture identifier: %s"%identifier)
+			return handler.display.description, "malformed:%s"%identifier
 		modelName = idParts.group(3)
 		key = idParts.group(4)
 		if modelName: # The identifier contains a model name

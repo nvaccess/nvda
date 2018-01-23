@@ -521,7 +521,8 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		self.navigationHelper("endcol")
 
 	def __contains__(self,obj):
-		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
+		# Anything that is not in this window, or is not of ExcelBase (E.g. an Office chart) is not in this treeInterceptor. 
+		return isinstance(obj,ExcelBase) and winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
 
 	def _get_selection(self):
 		return self.rootNVDAObject._getSelection()
@@ -645,9 +646,16 @@ class ExcelBase(Window):
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		elif isChartActive:
 			selection = self.excelWindowObject.ActiveChart
-			import excelChart
-			obj=excelChart.ExcelChart(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelChartObject=selection)
+			import _msOfficeChart
+			parent=ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=self.excelWindowObject.activeSheet)
+			obj = _msOfficeChart.OfficeChart( windowHandle=self.windowHandle , officeApplicationObject = self.excelWindowObject , officeChartObject = selection , initialDocument = parent)  
 		return obj
+
+	def focusOnActiveDocument(self, officeChartObject):
+		cell=self.excelWindowObject.ActiveCell
+		cell.Activate()
+		cellObj=self._getSelection()
+		eventHandler.queueEvent("gainFocus",cellObj)
 
 
 class Excel7Window(ExcelBase):
