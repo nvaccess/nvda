@@ -201,11 +201,11 @@ class AddonsDialog(wx.Dialog):
 			return _("remove")
 		# Need to do this here, as 'isDisabled' overrides other flags.
 		elif addon.isPendingDisable:
-			# Translators: The status shown for an addon when its disabled.
-			return _("disable")
+			# Translators: The status shown for an addon when it requires a restart to become disabled
+			return _("Disabled after restart")
 		elif addon.isPendingEnable:
-			# Translators: The status shown for an addon when its enabled.
-			return _("enable")
+			# Translators: The status shown for an addon when it requires a restart to become enabled
+			return _("Enabled after restart")
 		elif globalVars.appArgs.disableAddons or addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			return _("disabled")
