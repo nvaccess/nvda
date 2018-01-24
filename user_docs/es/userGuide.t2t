@@ -28,6 +28,7 @@ Lo más reseñable incluye:
 - Traducido a 51 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
+- Anunciado de controles y texto mientras se utilizan gestos táctiles
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
 - Soporte para el símbolo del sistema de Windows y aplicaciones de consola
 -
@@ -488,7 +489,6 @@ Además, puedes forzar manualmente el modo foco, después permanecerá efectivo 
 | abrir descripción larga | NVDA+d | Abre una ventana nueva conteniendo una descripción larga para el elemento sobre el que esté si tiene una. | 
 %kc:endInclude
 
-
 ++ Navegación con una Sola Letra ++[SingleLetterNavigation]
 Mientras se esté en modo exploración, para una navegación más rápida NVDA también proporciona teclas de un solo carácter para saltar a ciertos campos en el documento.
 Ten en cuenta que no todas estas órdenes se soportan en cada tipo de documento.
@@ -523,8 +523,8 @@ Para moverte al comienzo o final de elementos contenedores tales como listas y t
 || Nombre | Tecla | Descripción |
 | Mover al comienzo de un contenedor | shift+coma | Se mueve al comienzo del contenedor (lista, tabla etc) donde esté situado el cursor |
 | Mover al final del contenedor | coma | Se mueve al final del contenedor (lista, tabla etc) donde esté situado el cursor |
-
 %kc:endInclude
+
 Algunas aplicaciones web tales como Gmail, Twitter y Facebook utilizan letras solas como atajos de teclado.
 Si quieres utilizar éstas aún serás capaz de utilizar las teclas de cursor para leer en modo exploración, puedes desactivar temporalmente  las teclas de navegación con una sola letra de NVDA.
 %kc:beginInclude
@@ -1233,13 +1233,13 @@ Si está activada, esta opción causará que la voz se interrumpa cada vez que s
 ==== Permitir lectura superficial en Verbalizar Todo ====[KeyboardSettingsSkimReading]
 Si está activada, ciertas órdenes de navegación (tales como la navegación rápida en modo exploración o el movimiento por líneas o por párrafos) no detienen  Verbalizar Todo, en su lugar Verbalizar Todo salta  a la nueva posición y continúa leyendo.
 
-==== Pitar si se Teclean Letras Minúsculas Cuando BloqMayus está Activado ====[VoiceSettingsBeepLowercase]
+==== Pitar si se Teclean Letras Minúsculas Cuando BloqMayus está Activado ====[KeyboardSettingsBeepLowercase]
 Cuando está activada, se escuchará un pitido de aviso si se escribe una letra con la tecla shift mientras BloqMayus está activada.
 Generalmente, escribir letras en mayúsculas con BloqMayus es inintencionado y normalmente es debido a no revisar que el BloqMayus esté activado.
 Por lo tanto, puede ser bastante útil ser avisado acerca de esto.
 
 %kc:setting
-==== Verbalizar teclas de órdenes ====[VoiceSettingsSpeakCommandKeys]
+==== Verbalizar teclas de órdenes ====[KeyboardSettingsSpeakCommandKeys]
 Tecla: NVDA+4
 
 Cuando está marcada significa que NVDA anunciará todas las teclas que no sean caracteres al escribirlas en el teclado. Esto incluye combinaciones de teclas tales como control más cualquier otra letra. 
@@ -1330,7 +1330,7 @@ Los globos de ayuda son como pequeños consejos, pero normalmente son más grand
 Cuando esta casilla de verificación está verificada, NVDA incluirá la tecla de atajo que esté asociada con cierto objeto o control cuando sea anunciado. 
 Por ejemplo el menú Archivo en una barra de menú podrá tener una tecla de atajo Alt+a.
 
-==== Anunciar Información de la Posición del Objeto ====[ObjectPresentationPositionInfo]
+==== Anunciar Información de la Posición del Objeto ====[ObjectPresentationReportDescriptions]
 Esta opción te permite elegir dónde deseas tener una posición del objeto anunciada (ej.: 1 de 4) cuando te mueves al objeto con el foco o el navegador de objetos.
 
 ==== Deducir la información de Posición del Objeto cuando no esté disponible ====[ObjectPresentationGuessPositionInfo]
@@ -1432,7 +1432,7 @@ Esta opción está desactivada de forma predeterminada.
 
 Para conmutar la inclusión de tablas de diseño desde cualquier lugar, por favor asigna un gesto personalizado utilizando el diálogo `[Gestos de entrada #InputGestures].
 
-==== Configurando el anunciado de campos tales como enlaces y encabezados ====
+==== Configurando el anunciado de campos tales como enlaces y encabezados ====[BrowseModeLinksAndHeadings]
 Por favor encuentra las nuevas opciones en el [diálogo Opciones de Formato de documento #DocumentFormattingSettings]. 
 
 ==== Modo de foco automático para cambios del foco ====[BrowseModeSettingsAutoPassThroughOnFocusChange]

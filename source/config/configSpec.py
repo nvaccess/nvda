@@ -61,6 +61,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	noMessageTimeout = boolean(default=false)
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
+	autoTether = boolean(default=true)
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
@@ -183,6 +184,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
+	useInMSWordWhenAvailable = boolean(default=false)
 
 [update]
 	autoCheck = boolean(default=true)
