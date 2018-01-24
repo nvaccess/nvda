@@ -8,17 +8,24 @@ Traduzido pela Equipa portuguesa do NVDA
 = 2018.1 =
 
 == Novas Funcionalidades ==
+-Os drivers ddas linhas Braille da HIMS, Braille Sense/ Braille Edge/Smart Beetle e HIMS Sync Braille, foram substituídos por um único driver do NVDA. O novo driver será activado automaticamente para os utilizadores do antigo driver syncBraille. (#7459)
+- algumas teclas, nomeadamente as teclas de deslocamento, foram alteradas, para seguir as convenções usadas pelos produtos da HIMS. Consulte o Manual do Utilizador, para obter mais detalhes.
 
 
 == Correções ==
 - As mensagens navegáveis, como a informação de formatação, quando se pressiona NVDA+f duas vezes, já não falha quando o NVDA está instalado numa pasta com caracteres não ASCII. (#7474)
 - O foco é novamente restaurado correctamente quando se volta ao Spotify de outra aplicação. (#7689)
 - O NVDA já pode ser actualizado num sistema com o Acesso controlado a Pastas activado (disponível no Windows 10 Fall Creators update). (#7696)
+- Uma pequena melhoria na performance ao renderizar grandes conteúdos no Mozilla Firefox 58 e seguintes. (#7719)
+- Evitados erros ao ler e-mails contendo tabelas, no Microsoft Outlook (#6827)
+- A detecção das teclas de deslocamento da linha Braille HIMS Smart Beetle já é fiável. (#6086)
+- Os comandos dados pelas linhas Braille que emulam teclas modificadoras de sistema, já podem ser combinados com outras teclas de sistema emuladas, se um ou mais dos comando involvidos for específico do modelo. (#7783)
 
 
 == Alterações para Desenvolvedores ==
 - Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
  - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
+- A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
 
 
 = 2017.4 =
