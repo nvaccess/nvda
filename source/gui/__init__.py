@@ -208,9 +208,10 @@ class MainFrame(wx.Frame):
 		try:
 			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.runPendingUpdateMenuItem)
 		except:
+			log.debug("Error while removing run pending update menu item", exc_info=True)
 			pass
-		if updateCheck and updateCheck.isPendingUpdate():
-			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.menu.GetMenuItemCount()-2,self.sysTrayIcon.runPendingUpdateMenuItem)
+		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
+			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.runPendingUpdateMenuItemPos,self.sysTrayIcon.runPendingUpdateMenuItem)
 
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
@@ -491,6 +492,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
+			self.runPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
 			item = self.runPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
 				# Translators: The label for the menu item to run a pending update.
 				_("Run pending &update"),

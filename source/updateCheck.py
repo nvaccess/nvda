@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Zahari Yurukov, Babbage B.V.
+#Copyright (C) 2012-2018 NV Access Limited, Zahari Yurukov, Babbage B.V.
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -137,16 +137,16 @@ def executeUpdate(destPath=None):
 	state["removeFile"] = destPath
 	saveState()
 	if config.isInstalledCopy():
-		exeCuteParams = u"--install -m"
+		executeParams = u"--install -m"
 	else:
 		portablePath = os.getcwdu()
 		if os.access(portablePath, os.W_OK):
-			exeCuteParams = u"--create-portable --portable-path {portablePath} --config-path {configPath}".format(
+			executeParams = u"--create-portable --portable-path {portablePath} --config-path {configPath}".format(
 				portablePath=portablePath,
 				configPath=os.path.abspath(globalVars.appArgs.configPath)
 			)
 		else:
-			exeCuteParams = u"--launcher"
+			executeParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	shellapi.ShellExecute(None, None,
 		destPath.decode("mbcs"),
@@ -274,9 +274,8 @@ class UpdateResultDialog(wx.Dialog):
 			if isPendingUpdate() and state["pendingUpdateVersion"] == updateInfo["version"]:
 				# Translators: The label of a button to install a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				item = wx.Button(self, label=_("&Install NVDA {version}").format(**updateInfo))
-				item.Bind(wx.EVT_BUTTON, lambda evt: executeUpdate())
-				mainSizer.Add(item)
+				installPendingButton = bHelper.addButton(self, label=_("&Install NVDA {version}").format(**updateInfo))
+				installPendingButton.Bind(wx.EVT_BUTTON, lambda evt: executeUpdate())
 				# Translators: The label of a button to re-download a pending NVDA update.
 				label = _("Re-&download update")
 			else:
@@ -325,21 +324,26 @@ class UpdateAskInstallDialog(wx.Dialog):
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
 		super(UpdateAskInstallDialog, self).__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		
 		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
-		mainSizer.Add(wx.StaticText(self, label=_("Update is ready to install.\n")))
+		sHelper.addItem(wx.StaticText(self, label=_("Update is ready to install.\n")))
+
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		# Translators: The label of a button to install an NVDA update.
-		item = wx.Button(self, wx.ID_OK, label=_("&Install update"))
-		item.Bind(wx.EVT_BUTTON, self.onInstallButton)
-		item.SetFocus()
-		mainSizer.Add(item)
+		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
+		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
+		installButton.SetFocus()
 		if storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
-			item = wx.Button(self, wx.ID_CLOSE, label=_("&Postpone update"))
-			item.Bind(wx.EVT_BUTTON, self.onPostponeButton)
-			mainSizer.Add(item)
+			postponeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Postpone update"))
+			postponeButton.Bind(wx.EVT_BUTTON, self.onPostponeButton)
+
 			self.EscapeId = wx.ID_CLOSE
 		else:
 			self.EscapeId = wx.ID_OK
+
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
@@ -500,7 +504,6 @@ class UpdateDownloader(object):
 			wx.OK | wx.ICON_ERROR)
 
 	def _downloadSuccess(self):
-#		global storeUpdatesDir
 		self._stopped()
 		wx.CallAfter(UpdateAskInstallDialog, gui.mainFrame, self.destPath, self.version)
 
