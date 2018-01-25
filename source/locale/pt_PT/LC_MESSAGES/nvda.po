@@ -2,16 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-17 00:10+1000\n"
+"POT-Creation-Date: 2017-12-15 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Rui Fontes <rui.fontes@tiflotecnia.com>\n"
-"Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>\n"
+"Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
+"Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
+"<ampa4374@gmail.com>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -2727,12 +2728,12 @@ msgstr "Retrato"
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
 msgid "Charging battery. %d percent"
-msgstr "Bateria em carga. %d por cento"
+msgstr "Carregamento iniciado. Bateria em %d por cento"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
 msgid "Not charging battery. %d percent"
-msgstr "Bateria  não está a carregar. %d por cento"
+msgstr "Carregamento interrompido. Bateria em %d por cento"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -6049,6 +6050,34 @@ msgstr "alinhamento distribuído"
 msgid "align default"
 msgstr "alinhamento predefinido"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "Alinhamento vertical ao topo"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "Alinhamento vertical ao meio"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "Alinhamento vertical ao fundo"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "Alinhamento vertical à linha base"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "alinhamento vertical justificado"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "Alinhamento vertical distribuído"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "alinhamento vertical predifinido"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "indentação à esquerda"
@@ -6080,34 +6109,6 @@ msgstr "Indentação da primeira linha"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "Sem indentação da primeira linha"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "Alinhamento vertical ao topo"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "Alinhamento vertical ao meio"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "Alinhamento vertical ao fundo"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "Alinhamento vertical à linha base"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "alinhamento vertical justificado"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "Alinhamento vertical distribuído"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "alinhamento vertical predifinido"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -7117,6 +7118,10 @@ msgstr "Teclado Braille desactivado"
 #. Translators: description of the script to toggle braille input
 msgid "Toggle braille input"
 msgstr "Alternar teclado Braille"
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS: Séries Braille Sense, Braille EDGE, Smart Beetle e Sync Braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -9046,7 +9051,7 @@ msgstr "Definir comandos"
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
 msgid "&Filter by:"
-msgstr "&\"Filtrar por:"
+msgstr "&Filtrar por:"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -10566,13 +10571,8 @@ msgstr "&Anotações"
 msgid "&Errors"
 msgstr "&Erros"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS: Séries Braille Sense, Braille EDGE e Smart Beetle"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Apresentar a janela de configuração do driver Handy Tech."

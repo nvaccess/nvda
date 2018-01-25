@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-03 00:10+1000\n"
-"PO-Revision-Date: 2017-11-02 21:40+0300\n"
+"POT-Creation-Date: 2017-12-29 00:10+1000\n"
+"PO-Revision-Date: 2017-12-31 11:15+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -393,11 +393,11 @@ msgstr "tkl"
 
 #. Translators: Displayed in braille when an object is sorted ascending.
 msgid "sorted asc"
-msgstr "A'dan Z'ye"
+msgstr "A'dan Z'ye sıralı"
 
 #. Translators: Displayed in braille when an object is sorted descending.
 msgid "sorted desc"
-msgstr "Z'den A'ya"
+msgstr "Z'den A'ya sıralı"
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
@@ -6009,6 +6009,34 @@ msgstr "Dağıtık hizalanmış"
 msgid "align default"
 msgstr "Varsayılan hiza"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "Dikey hiza üst"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "Dikey hiza orta"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "Dikey hiza alt"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "Dikey hiza temel"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "Dikey hiza, İki yana yaslı"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "Dikey hiza dağıtılmış"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "Dikey, varsayılan hiza"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "sol girinti"
@@ -6040,34 +6068,6 @@ msgstr "İlk satır girintisi"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "İlk satır girintisi yok"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "Dikey hiza üst"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "Dikey hiza orta"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "Dikey hiza alt"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "Dikey hiza temel"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "Dikey hiza, İki yana yaslı"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "Dikey hiza dağıtılmış"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "Dikey, varsayılan hiza"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -7080,6 +7080,10 @@ msgstr "Braille girişi devre dışı "
 msgid "Toggle braille input"
 msgstr "Braille girişini aç/kapa"
 
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille serisi"
+
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
@@ -7223,6 +7227,14 @@ msgstr "&Fare ayarları..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Fare imleci ve şekil değişimleri ile ilgili bildirimleri değiştir"
+
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "&Dokunmatik etkileşim..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "NVDA'nın dokunmatik ekran etkileşimini değiştirin"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -9015,6 +9027,15 @@ msgstr ""
 "Kullanıcı tanımlı hareket kaydedilemiyor. Muhtemelen salt okunur dosya "
 "sistemi"
 
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "Dokunmatik Etkileşim"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "&Dokunarak yazma modu"
+
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "Matematiksel etkileşimden çık"
@@ -10502,13 +10523,8 @@ msgstr "&Açıklamalar"
 msgid "&Errors"
 msgstr "&Hatalar"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serisi"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Handy Tech sürücüsü konfigürasyon penceresini göster."
