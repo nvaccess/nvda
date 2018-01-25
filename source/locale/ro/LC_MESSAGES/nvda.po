@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 00:10+1000\n"
-"PO-Revision-Date: 2018-01-08 16:03+0200\n"
+"POT-Creation-Date: 2018-01-19 00:10+1000\n"
+"PO-Revision-Date: 2018-01-21 13:31+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -87,6 +87,24 @@ msgstr "metodă de introducere necunoscută"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "ortografie și gramatică: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Ortografie: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "gramatică: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -528,6 +546,19 @@ msgstr "c%s"
 #, python-format
 msgid "%s end"
 msgstr "final de %s"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automat"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "a focaliza"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "a examina"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -1622,47 +1653,6 @@ msgstr "Jos"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Mută după sfârșitul elementului container, cum ar fi listă sau tabel"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Nu este într-o celulă de tabel"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Marginea tabelului"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "se mută lal rândul următor din tabel"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "se mută la rândul anterior din tabel"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "mută la coloana următoare din tabel"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "mută la coloana anterioară din tabel"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "Tabele de aspect dezactivate"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "Tabele de aspect activate"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr ""
-"Activează sau dezactivează includerea tabelelor de aspect din modul de "
-"navigare"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2796,6 +2786,47 @@ msgstr "Fără selecțiune"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "Copiat pe planșetă"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Nu este într-o celulă de tabel"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Marginea tabelului"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "se mută lal rândul următor din tabel"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "se mută la rândul anterior din tabel"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "mută la coloana următoare din tabel"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "mută la coloana anterioară din tabel"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Tabele de aspect dezactivate"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Tabele de aspect activate"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Activează sau dezactivează includerea tabelelor de aspect din modul de "
+"navigare"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -4034,18 +4065,10 @@ msgstr ""
 "Comută monitorul de vorbire NVDA, o fereastră mobilă care îți permite "
 "vizualizarea completă a textului curent, rostit de NVDA"
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "examinare"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "focalizare"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
+msgid "Braille tethered %s"
 msgstr "Braille asociat la %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -6145,6 +6168,14 @@ msgstr "eroare de ortografie"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "în afara erorii de ortografie"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "eroare de gramatică"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "în afara erorii de gramatică"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -9004,8 +9035,8 @@ msgid "Show &messages indefinitely"
 msgstr "Arată &mesajele pe termen nelimitat"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "B&raille asociat la:"
+msgid "Tether B&raille:"
+msgstr "&Asociere braille"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9193,8 +9224,141 @@ msgstr "RGB roșu {rgb.red}, verde {rgb.green}, albastru {rgb.blue}"
 msgid "%s items"
 msgstr "%s elemente"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Nu s-au putut defini anteturile. Activați raportarea anteturilor de tabel în "
+"Opțiunile de formatare a documentului "
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Stabilește rândul {rowNumber} coloana {columnNumber} ca început de anteturi "
+"coloană"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Rândul {rowNumber} coloana {columnNumber} au fost deja stabilite ca început "
+"de anteturi coloană "
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Eliminat rândul {rowNumber} coloana {columnNumber} din anteturile coloană"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Rândul {rowNumber} coloana {columnNumber} nu au putut fi găsite în "
+"anteturile coloană"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Apăsând o dată va stabili această celulă ca primul antet coloană pentru "
+"orice celulă mai jos și la dreapta ei din acest tabel. Apăsând de două ori "
+"se va renunța la antetul coloană curent acestei celule."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Stabilește rândul {rowNumber} coloana {columnNumber} ca început de anteturi "
+"rând"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Rândul {rowNumber} coloana {columnNumber} au fost deja stabilite ca început "
+"de anteturi rând"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "Eliminat rândul {rowNumber} coloana {columnNumber} din anteturile rând"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Rândul {rowNumber} coloana {columnNumber} nu au putut fi găsite în "
+"anteturile rând"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Apăsând o dată va stabili această celulă ca primul antet rând pentru orice "
+"celulă mai jos și la dreapta ei din acest tabel. Apăsând de două ori se va "
+"renunța la antetul rând curent acestei celule."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "Fără comentarii"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+"Anunță textul comentariului unde se află cursorul de scriere al sistemului"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "Nu este în tabel"
+
 msgid "invoke"
 msgstr "invocare"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Adnotări"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "&Erori"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "inserare: {text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "ștergere: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "schimbare de localizare: : {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Comentariu: {comment} de {author} pe {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "{comment} de {author} pe {date}"
 
 msgid "Desktop"
 msgstr "Spațiu de lucru"
@@ -10039,17 +10203,6 @@ msgid "{start} through {end}"
 msgstr "de la {start} până la {end}"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Nu s-au putut defini anteturile. Activați raportarea anteturilor de tabel în "
-"Opțiunile de formatare a documentului "
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Stabilește {address} ca început de anteturi coloană"
@@ -10373,12 +10526,6 @@ msgstr "comentariu: {text} de către {author} în {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} de {author} în {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "Ortografie: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10414,79 +10561,6 @@ msgstr "%.1f linii"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Descriere tabel"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Stabilește rândul {rowNumber} coloana {columnNumber} ca început de anteturi "
-"coloană"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Rândul {rowNumber} coloana {columnNumber} au fost deja stabilite ca început "
-"de anteturi coloană "
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr ""
-"Eliminat rândul {rowNumber} coloana {columnNumber} din anteturile coloană"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"Rândul {rowNumber} coloana {columnNumber} nu au putut fi găsite în "
-"anteturile coloană"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"Apăsând o dată va stabili această celulă ca primul antet coloană pentru "
-"orice celulă mai jos și la dreapta ei din acest tabel. Apăsând de două ori "
-"se va renunța la antetul coloană curent acestei celule."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Stabilește rândul {rowNumber} coloana {columnNumber} ca început de anteturi "
-"rând"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Rândul {rowNumber} coloana {columnNumber} au fost deja stabilite ca început "
-"de anteturi rând"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "Eliminat rândul {rowNumber} coloana {columnNumber} din anteturile rând"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-"Rândul {rowNumber} coloana {columnNumber} nu au putut fi găsite în "
-"anteturile rând"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"Apăsând o dată va stabili această celulă ca primul antet rând pentru orice "
-"celulă mai jos și la dreapta ei din acest tabel. Apăsând de două ori se va "
-"renunța la antetul rând curent acestei celule."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10599,15 +10673,6 @@ msgstr "{offset:.3g} puncte"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} unități pica"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "Fără comentarii"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr ""
-"Anunță textul comentariului unde se află cursorul de scriere al sistemului"
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "Spațiere de o singură linie"
@@ -10620,20 +10685,14 @@ msgstr "Spațiere de două linii"
 msgid "1.5 line spacing"
 msgstr "Spațiere de 1.5 linii"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "Nu este în tabel"
+#~ msgid "review"
+#~ msgstr "examinare"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&Adnotări"
+#~ msgid "focus"
+#~ msgstr "focalizare"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "&Erori"
+#~ msgid "B&raille tethered to:"
+#~ msgstr "B&raille asociat la:"
 
 #~ msgid "Not defined"
 #~ msgstr "nedefinit"

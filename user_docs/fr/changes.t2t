@@ -5,21 +5,28 @@ Quoi de Neuf dans NVDA
 
 = 2018.1 =
 
-== Changements ==
-- Les pilotes pour les terminaux HIMS Braille Sense/Braille EDGE/Smart Beetle et Hims Sync Braille ont été remplacés par un pilote unique. Le nouveau pilote sera automatiquement activé pour les utilisateurs des anciens pilotes. (#7459) 
- - Certaines touches, en particulier les touches de défilement, ont été réassignées pour respecter les conventions utilisées par les produits Hims. Veuillez consulter le guide de l'utilisateur pour plus de détails.
-- Quand vous tapez sur le clavier à l'écran via l'interaction tactile, par défaut vous devez maintenant taper deux fois chaque touche comme vous le feriez pour activer tout autre contrôle.
- - pour utiliser le mode "frappe au toucher" où simplement lever son doigt de la touche suffit pour l'activer, activer cette option dans le nouveau dialogue Interaction Tactile du menu Préférences. (#7309)
+
+== Nouvelles Fonctionnalités ==
 - Il est maintenant possible d'interagir avec les diagrammes sous Microsoft Word et Microsoft Powerpoint, de la même manière que sous Microsoft Excel. (#7046)
  - sous Microsoft Word : En mode navigation, amener le curseur à un diagramme inclus et presser Entrer pour interagir avec lui.
  - Sous Microsoft Powerpoint en édition d'une diapositive : Tabuler jusqu'à un objet diagramme, et presser Entrer ou Espace pour interagir avec lui.
  - Pour cesser d'interagir avec un diagramme, presser échap.
- 
- 
+- Nouvelle langue : Kirghize.
+
+
+== Changements ==
+- Les pilotes pour les terminaux HIMS Braille Sense/Braille EDGE/Smart Beetle et Hims Sync Braille ont été remplacés par un pilote unique. Le nouveau pilote sera automatiquement activé pour les utilisateurs des anciens pilotes. (#7459) 
+ - Certaines touches, en particulier les touches de défilement, ont été réassignées pour respecter les conventions utilisées par les produits Hims. Veuillez consulter le guide de l'utilisateur pour plus de détails.
+- Quand vous tapez sur le clavier à l'écran via l'interaction tactile, par défaut vous devez maintenant toucher deux fois chaque touche comme vous le feriez pour activer tout autre contrôle.
+ - Pour utiliser le mode "frappe au toucher" où simplement lever son doigt de la touche suffit pour l'activer, activer cette option dans le nouveau dialogue Interaction Tactile du menu Préférences. (#7309)
+- Il n'est plus nécessaire de joindre le braille au focus ou au curseur de revue explicitement car cela se fera automatiquement par défaut. (#2385)
+ - Notez que le suivi automatique du curseur de revue ne se produira que si vous utilisez le curseur de revue ou la commande de navigation par objet. Le défilement n'activera pas ce nouveau comportement.
+
+
 == Corrections de Bogues ==
 - Les messages navigables tels que ceux affichant le formatage en cours, lors de l'appui sur NVDA+f deux fois rapidement, ne dysfonctionnent plus si NVDA est installé sur un chemin comprenant des caractères non-ASCII. (#7474)
 - Le focus est maintenant restauré correctement lors du retour à Spotify à partir d'une autre application. (#7689)
-- NVDA n'interrompt plus sa mise à jour sur les systèmes où l'accès contrôlé aux dossiers est activé (disponible dans la mise à jour de Windows 10 Fall Creators). (#7696)
+- Sous Windows 10 Fall Creators Update, NVDA ne manque plus de se mettre à jour lorsque l'accès aux dossiers contrôlés est activé à partir du Centre de Sécurité de Windows Defender. (#7696)
 - La détection des touches de défilement de l'afficheur Hims Smart Beetle n'est plus aléatoire. (#6086)
 - Une légère amélioration de performances à l'affichage d'un contenu important sous Mozilla Firefox 58 et au-delà. (#7719)
 - Sous Microsoft Outlook, la lecture de courriels contenant des tableaux ne provoque plus d'erreurs. (#6827)
@@ -29,17 +36,18 @@ Quoi de Neuf dans NVDA
 - Dans les clients Twitter tels que Chicken Nugget, NVDA n'ignorera plus les 20 derniers caractères des tweets de 280 caractères lors de la lecture. (#7828)
 - NVDA utilise maintenant la langue appropriée pour l'annonce des symboles quand du texte est sélectionné. (#7687)
 - Dans les versions récentes d'Office 365, il est de nouveau possible de naviguer dans les diagrammes Excel en utilisant les flèches. (#7046)
-- En sortie vocale et braille, l'état des contrôles sera maintenant toujours indiqués dans le même ordre, qu'il soit positif ou négatif. Fixes #7076
+-  En sortie vocale et braille, l'état des contrôles sera maintenant toujours indiqués dans le même ordre, qu'il soit positif ou négatif. Fixes #7076
+- Dans les applications telles que Windows 10 Mail, NVDA ne manquera plus d'annoncer les caractères effacés lors de l'appui sur retour-arrière. (#7456)
 
 
 == Changements pour les Développeurs ==
 - Ajout d'un indicateur booléen caché à la section braille dans la configuration : "outputPass1Only". (#7301, #7693, #7702) 
  - Cet indicateur est sur true par défaut. S'il est sur false, les règles de passage multiple de Liblouis seront utilisées pour la sortie braille.
-- un nouveau dictionnaire (braille.RENAMED_DRIVERS) a été ajouté pour permettre une transition douce aux utilisateurs utilisant des pilotes remplacés par d'autres. (#7459)
+- Un nouveau dictionnaire (braille.RENAMED_DRIVERS) a été ajouté pour permettre une transition en douceur aux utilisateurs utilisant des pilotes remplacés par d'autres. (#7459)
 - Le package comtypes a été mis à jour à la version 1.1.3. (#7831)
 - Implémentation d'un système générique dans braille.BrailleDisplayDriver pour communiquer avec les terminaux qui envoient des paquets de confirmation. Consultez le pilote braille handyTech comme exemple. (#7590, #7721)
 - Une nouvelle variable "isAppX" dans le module config peut être utilisée pour détecter si NVDA s'exécute comme une application Windows Desktop Bridge Store. (#7851)
-
+- Pour les implémentations de document telles que NVDAObjects ou browseMode qui ont un textInfo, il existe maintenant une nouvelle classe documentBase.documentWithTableNavigation dont on peut hériter pour obtenir des scripts de navigation dans les tableaux standard. Veuillez vous référer à cette classe pour voir quelles méthodes helper doivent être fournies par votre implémentation pour que la navigation dans les tableaux fonctionne. (#7849)
 
 
 = 2017.4 =
@@ -167,7 +175,7 @@ Les points forts de cette version incluent la saisie en braille abrégé, le sup
 - Sous Microsoft Excel 2003 et 2007, les cellules sont de nouveau annoncées quand on se déplace avec les flèches dans une feuille de calcul. (#8243)
 - Sous Windows 10 Creators update et au-delà, on s'assure que le mode navigation est activé automatiquement quand on lit des courriels sous l'application Courrier de Windows 10. (#7289)
 - Sur la plupart des afficheurs braille possédant un clavier braille, le point 7 efface maintenant le dernier caractère entré, et le point 8 presse la touche entrer. (#6054)
-- Dans un texte éditable, quand on déplace le curseur (ex : avec les touches de manipulation du curseur ou avec retour arrière), le retour parlé de NVDA est maintenant plus précis dans beaucoup de cas, en particulier sous Chrome et les applications en mode terminal. (#6424)
+- Dans un texte éditable, quand on déplace le curseur (ex : avec les touches de manipulation du curseur ou avec retour-arrière), le retour parlé de NVDA est maintenant plus précis dans beaucoup de cas, en particulier sous Chrome et les applications en mode terminal. (#6424)
 - Le contenu de l'Éditeur de Signature sous Microsoft Outlook 2016 peut maintenant être lu. (#7253)
 - Dans les applications Java Swing, NVDA ne provoque plus de plantages quand on navigue dans les tableaux. (#6992)
 - Sous Windows 10 Creators Update, NVDA n'annonce plus les notifications plusieurs fois. (#7128)
@@ -1260,7 +1268,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - En mode navigation, il est maintenant impossible de passer le bas du document avec la flèche droite en étant sur le dernier caractère, ou en sautant à la fin d'un conteneur quand celui-ci est le dernier élément du document. (#2463)
 - Les contenus extérieurs ne sont plus incorrectement inclus lors du rapport du texte des dialogues dans les applications web (spécifiquement, les dialogues ARIA sans attribut aria-describedby). (#2390)
 - NVDA ne rapporte ou ne situe plus incorrectement certains champs d'édition dans les documents MSHTML (Ex : Internet Explorer), spécifiquement où un rôle ARIA explicite a été défini par l'auteur de la page web. (#2435)
-- La touche retour arrière est maintenant correctement traitée lors de l'annonce des mots tapés dans les invites de commandes. (#2586)
+- La touche Retour-arrière est maintenant correctement traitée lors de l'annonce des mots tapés dans les invites de commandes. (#2586)
 - Les coordonnées de cellules dans Microsoft Excel sont maintenant affichées en Braille.
 - Dans Microsoft Word, NVDA ne vous laisse plus bloqué dans un paragraphe avec liste formatée lorsque vous essayez de naviguer autour d'une puce ou d'un nombre avec la flèche gauche ou ctrl+flèche gauche. (#2402)
 - En mode navigation dans les applications Mozilla, les éléments de certaines zones de listes (spécifiquement, les zones de listes ARIA) ne sont plus mal affichés.
@@ -1396,7 +1404,7 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Les commandes de navigation par objet n'annoncent plus "pas d'enfant" ou "pas de parent" mais un texte correspondant à la documentation.
 - Quand NVDA est configuré dans une langue autre que l'anglais, le nom de la touche de tabulation est maintenant annoncé dans la langue appropriée.
 - Sous Mozilla Gecko (ex : Firefox), NVDA ne passe plus en mode navigation de manière intermittente quand on parcourt les menus dans un document. (#2025)
-- Dans la calculatrice, la touche retour arrière annonce maintenant le résultat au lieu de ne rien annoncer. (#2030)
+- Dans la calculatrice, la touche Retour-arrière annonce maintenant le résultat au lieu de ne rien annoncer. (#2030)
 - En mode navigation, la commande de déplacement de la souris vers l'objet de navigation courant amène au centre de l'objet sous le curseur de revue plutôt qu'en haut à gauche ce qui améliore le fonctionnement dans certains cas. (#2029)
 - En mode navigation, quand le passage automatique en mode formulaire au changement de focus est activé, la mise en focus d'une barre d'outils activera maintenant le mode formulaire. (#1339)
 - La commande d'annonce du titre fonctionne à nouveau correctement sous Adobe Reader.
@@ -1532,7 +1540,7 @@ Les apports majeurs de cette version incluent des améliorations notables concer
 
 
 == Changements ==
-- Pour déplacer le curseur système au curseur de revue, appuyez maintenant sur les touches qui appellent le script Déplace Focus Vers Objet Navigation (Clavier d'ordinateur de bureau NVDA+maj+Moins pavé numérique, Clavier d'ordinateur portable, NVDA+Maj+Retour arrière) deux fois rapidement. Cela libère plus de touches. (#837)
+- Pour déplacer le curseur système au curseur de revue, appuyez maintenant sur les touches qui appellent le script Déplace Focus Vers Objet Navigation (Clavier d'ordinateur de bureau NVDA+maj+Moins pavé numérique, Clavier d'ordinateur portable, NVDA+Maj+Retour-arrière) deux fois rapidement. Cela libère plus de touches. (#837)
 - Pour entendre la représentation décimale et hexadécimale du caractère sous le curseur de revue, appuyez maintenant sur Revue Caractère Courant trois fois plutôt que deux. Le double-appui vocalise la description du caractère.
 - Mise à jour de la synthèse vocale eSpeak vers la version 1.45.03. (#1465)
 - Les tableaux de visualisation ne sont plus annoncés dans les applications Mozilla Gecko quand le focus s'y déplace en mode navigation ou en dehors d'un document.
@@ -1835,7 +1843,7 @@ Cette version met l'accent principalement sur des corrections de bugs et des am�
 - NVDA n'échoue plus lors de son lancement sur un système quand aucun périphérique de sortie audio n'est présent. Bien entendu, un afficheur braille ou le synthétiseur Silence en liaison avec la visionneuse de parole devra être utilisé pour la sortie dans ce cas. (#425)
 - La case à cocher (annoncer les repères de navigation) a été ajoutée au dialogue de paramètres de formatage du document. Elle vous permet de déterminer si NVDA doit annoncer les points de repère dans les documents Web. Afin d'assurer la compatibilité avec la version précédente, cette option est activée par défaut.
 - Si annoncer les touches de commande est activée, NVDA annoncera désormais les noms des touches multimédia (par exemple, jouer, arrêter, page d'accueil, etc) disponibles sur de nombreux claviers quand elles sont actionnées. (#472)
-- NVDA annonce maintenant le mot lors de sa suppression lorsque vous appuyez sur Ctrl+Retour arrière dans les applications qui supportent un tel paramètre. (#491)
+- NVDA annonce maintenant le mot lors de sa suppression lorsque vous appuyez sur Ctrl+Retour-arrière dans les applications qui supportent un tel paramètre. (#491)
 - Les touches fléchées peuvent désormais être utilisées dans la fenêtre de Web Formator pour naviguer et lire le texte. (#452)
 - La liste des entrées du carnet d'adresses Microsoft Office Outlook est maintenant supportée.
 - NVDA supporte beaucoup mieux les documents modifiables intégrés en (mode conception) dans Internet Explorer. (#402)

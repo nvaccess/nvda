@@ -25,7 +25,7 @@ Glavne značajke uključuju:
 - podršku za mnoge brajične retke, uključujući unos kompjutorske brajice za brajične retke koji posjeduju brajičnu tipkovnicu
 - mogućnost pokretanja sa USB memorijskih stickova u cjelosti ili drugih prijenosnih medija bez potrebe instalacije samog čitača zaslona
 - govorni instalacijski program koji je jednostavan za korištenje
-- preveden na 51 jezika
+- preveden na 52 jezika
 - podršku za moderne Windows operativne sustave u 32 i 64 bitnim inačicama
 - mogućnost pokretanja na Windows zaslonu za prijavu i ostalim sigurnosnim zaslonima
 - Izgovaranje kontrola i teksta, pri korištenju dodirnih gesti
@@ -35,7 +35,7 @@ Glavne značajke uključuju:
 
 ++ Internacionalizacija ++[Internationalization]
 Vrlo je važno da ljudi bilo gdje u svijetu, bez obzira na jezik kojim govore, imaju jednak pristup tehnologijama.
-Osim engleskog, NVDA je preveden na 51 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, korejski, litavski, Makedonski, burmanski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
+Osim engleskog, NVDA je preveden na 52 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, kirgizki, korejski, litavski, Makedonski, burmanski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
 
 ++ Podrška Za Sintetizatore Govora ++[SpeechSynthesizerSupport]
 Osim podrške za mnoge jezike, NVDA može omogućiti korisniku čitanje sadržaja na bilo kojem jeziku, sve dok korisnik ima sintetizator govora za taj određeni jezik.
@@ -339,8 +339,10 @@ Objekt koji se trenutno pregledava naziva se objektom navigatora.
 Jednom kad se nađete na objektu, možete pregledati njegov sadržaj koristeći [prečace za pregled teksta #ReviewingText], kad ste u [načinu pregleda objekta #ObjectReview].
 Podrazumjeva se da se navigator objekta pokreće jednako kao i fokus sustava, ali se takvo ponašanje može uključiti ili isključiti.
 
-Imajte na umu da brajica prati [fokus #SystemFocus] i [kursor #SystemCaret] više nego objektnu navigaciju i pregled teksta.
-Ako umjesto toga želite da brajica prati pregled teksta i objektnu navigaciju, trebat ćete [podesiti brajicu usmjerenu na #BrailleTether] pregled.
+Imajte na umu, da brajica podrazumijevano prati [fokus #SystemFocus] i [kursor #SystemCaret] isto kao i pregled teksta i objektnu navigaciju.
+ako želite da brajica prati fokus i kursor, trebate [konfigurirati brajicu da prati #BrailleTether] fokus.
+U tom slučaju, brajica neće pratiti objektnu navigaciju i pregled teksta.
+Ako umjesto toga želite da brajica prati pregled teksta i objektnu navigaciju, trebate [konfigurati brajicu usmjerenu na #BrailleTether] pregled.
 
 Da biste se kretali po objektima, koristite sljedeće prečace:
 
@@ -1142,10 +1144,12 @@ Kad se upiše brojčana vrijednost 0, ove se poruke uopće neće prikazivati na 
 Ova opcija omogućuje neograničeno prikazivanje poruka, koje šalje NVDA na brajičnom retku.
 
 %kc:setting
-==== Brajica usmjerena na ====[BrailleTether]
+==== usmjerenje brajice ====[BrailleTether]
 Prečac: NVDA+kontrol+t
 
-Ova opcija omogućuje odabir brajičnog praćenja fokusa ili brajičnog praćenja objekta navigatora/preglednog kursor.
+Ova opcija odlučuje hoće li biti praćen fokus sustava, objekt navigatora/kursor pregleda, ili oboje.
+Kada je opcija "automatski" označena, NVDA će podrazumjevano pratiti sustavni pregled i fokus.
+U tom slučaju kada se pozicija preglednog kursora i/ili objektne navigacije promjeni pod utjecajem korisnikove interakcije, NVDA će se preusmjeriti privremeno na pregled, sve dok se fokus ili pregled ne promijeni.
 
 ==== Čitaj po odlomku ====[BrailleSettingsReadByParagraph]
 Ako je ova opcija omogućena, tekst na brajičnom retku bit će prikazan odlomak po odlomak umjesto redak po redak.
