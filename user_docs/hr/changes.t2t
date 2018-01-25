@@ -5,33 +5,46 @@
 
 = 2018.1 =
 
-== izmjene ==
-- The HIMS Braille Sense/Braille EDGE/Smart Beetle and Hims Sync Braille display drivers have been replaced by one driver. The new driver will automatically be activated for former syncBraille driver users. (#7459) 
- - Some keys , notably scroll keys, have been reassigned to follow the conventions used by Hims products. Consult the user guide for more details.
-- When typing with the on-screen keyboard via touch interaction, by default  you now need to double tap each key the same way you would activate any other control.
- - To use the existing "touch typing" mode where simply lifting your finger off the key is enough to activate it, Enable this option in the new Touch Interaction settings dialog found in the Preferences menu. (#7309)
+== Nove značajke ==
+- Sada je moguće ulaziti u interakciju sa grafovima u Microsoft Wordu i Microsoft PowerPointu, slično kao i kod podrške grafova u Microsoft Excelu. (#7046)
+ - U Microsoft Wordu:  kada se nalazite u načinu pregleda, kursorima dođite do grafa i pritisnite enter.
+ - U Microsoft PowerPointu prilikom uređivanja slajda: pritišćite tabulator do objekta grafa, i pritisnite enter ili razmak kako biste ušli u interakciju s grafom.
+ - Kako biste prestali biti u interakciju s grafom, Pritisnite escape.
+- Novi jezik: kirgizki.
+
+
+== Izmjene ==
+- upravljački programi za HIMS Braille Sense/Braille EDGE/Smart Beetle i Hims Sync sada su zamijenjeni jednim upravljačkim programom. ovaj upravljački program bit će automatski aktiviran za stare korisnike syncBraille upravljačkog programa. (#7459) 
+ - Neke tipke, točnije tipke za premještanje po redovima, su izmijenjene, kako bi pratile konvencije Himsovih proizvoda. Consult the user guide for more details.
+- Prilikom tipkanja na zaslonskoj tipkovnici sa uključenom dodirnom interakcijom, podrazumjevano trebate svaku tipku stisnuti dva puta, kao što aktivirate i druge kontrole. (#7309)
+ - Kako biste koristili postojeći način dodirnog unosa, gdje je jedan dodir dovoljan za aktivaciju pojedinačne tipke, omogućite tu opciju u dijaloškom okviru dodirna interakcija kojeg možete naći u izborniku postavke.
+- Više nije potrebno ručno prebacivati brajicu na fokus ili pregled, jer će se to događati automatski. (#2385) 
+ - imajte na umu, da će se prebacivanje na pregled događati samo kada se koristi pregledni kursor ili prečac objektne navigacije. pomicanje po redovima neće aktivirati ovakav način.
 
 
 == Bug Fixes ==
-- Browseable messages such as showing  current formatting when pressing NVDA+f twice quickly, no longer fails when NVDA is installed on a path with non-ASCII characters. (#7474)
-- Focus is now once again restored correctly when returning to Spotify from another application. (#7689)
-- NVDA no longer fails to update on systems with Controlled Folder Access enabled (available in the Windows 10 Fall Creaters update). (#7696)
-- Detection of scroll keys on Hims Smart Beetle displays is no longer unreliable. (#6086)
-- A slight performance improvement when rendering large amounts of content in Mozilla Firefox 58 and later. (#7719)
-- Prevent errors while reading emails containing tables in Microsoft Outlook (#6827)
-- Braille display gestures that emulate system keyboard key modifiers can now also be combined with other emulated system keyboard keys if one or more of the involved gestures are model specific. (#7783)
-- In Mozilla Firefox, browse mode now works correctly in pop-ups created by extensions such as LastPass and bitwarden. (#7809)
-- NVDA no longer sometimes freezes on every focus change if Firefox or Chrome have stopped responding such as due to a freeze or crash. (#7818)
-- In twitter clients such as Chicken Nugget, NVDA will no longer ignore the last 20 characters of 280 character tweets when reading them. (#7828)
-- NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
+- pregledne poruke poput izgovora formatiranja pri pritisku NVDA+f dva puta brzo više neće rezultirati pogreškom, kada je NVDA instaliran na sustavu sa nelatiničnim znakovima. (#7474)
+- Fokus se sada vraća ispravno, rilikom vraćanja u Spotify iz drugih aplikacija. (#7689)
+- U Windows 10 jesenskoj nadogradnji za tvorce, NVDA će sada se uspjevati nadograditi, kada je uključena opcija kontroliranog pristupa folderima u Windows defenderu. (#7696)
+- otkrivanje tipaka za pomicanje napred ' nazad po u redku kod hims brajičnih redaka sada više nije nestabilno. (#6086)
+- Malo poboljšanje performansi prilikom učitavanja velikog sadržaja u Mozilla Firefox 58 i novijim. (#7719)
+- U Microsoft Outlooku, čitanje e-mailova koji sadrže tablice, više ne prouzrokuje greške. (#6827)
+- geste brajičnog redka koje emuliraju modifikatore tipki sustava mogu biti kombinirane sa drugim tipkama sustava ako jedna ili više ukljućenih gesti ovise o modelu. (#7783)
+- U Mozilla Firefoxu, način pregleda sada ponovno radi u iskočnim prozorima dodataka poput LastPass i bitwarden. (#7809)
+- NVDA više se ne smrzava na svakoj promijeni fokusa u mozilla firefox i chrome preglednicima poput smrzavanja ili rušenja. (#7818)
+- U twitter klijentima poput Chicken Nuggeta, NVDA više neće ignorirati zadnjih 20 znakova od 280 znakovnog tweeta prilikom čitanja istog. (#7828)
+- NVDA sada koristi ispravan jezik pri označavanju teksta. (#7687)
+- U posljednjim inačicama Office 365, sada je moguće ponovo čitati excel grafove sa strelicama gore dole. (#7046)
+-  Radi li se o brajičnom ili govornom izlazu, status i tip kontrole bit će predstavljen u istpm poredku, neovisno je li pozitivan ili negativan. Fixes #7076
+- u aplikacijama poput Windows 10 Pošte, NVDA će sada izgovarati izbrisane znakove pritiskom na backspace. (#7456)
 
 
-== Changes for developers ==
+== Izmjene za razvojne programere ==
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
  
 = 2017.4 =
-Novosti u ovoj inačici uključuju poboljšanja u web podršci, ukljupujući podrazumijevani način pregleda za web dijaloge bolje izgovaranje grupa polja u načinu pregleda, Podrška za nove Windows 10 tehnologije Windows 10 zaštitnik aplikacija i windows 10 za ARM64, te automatsko čitanje statusa baterije i orijentacije ekrana.  
+Novosti u ovoj inačici uključuju poboljšanja u web podršci, uključujući podrazumijevani način pregleda za web dijaloge bolje izgovaranje grupa polja u načinu pregleda, Podrška za nove Windows 10 tehnologije Windows 10 zaštitnik aplikacija i windows 10 za ARM64, te automatsko čitanje statusa baterije i orijentacije ekrana.  
 Imajte na umu, da ova inačica NVDA ne podržava windows xp ili Windows Vistu. Minimalna podržana inačica operativnog sustava windows je windows 7 sa servisnim paketom 1.
 
  
