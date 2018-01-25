@@ -519,6 +519,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		@rtype: L{KeyboardInputGesture}
 		"""
 		keyNames = name.split("+")
+		# Normalize the key order by sorting them alphabetically, similar to L{inputCore.normalizeGestureIdentifier}.
+		keyNames.sort()
 		keys = []
 		for keyName in keyNames:
 			if keyName == "plus":
@@ -548,7 +550,24 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if not keys:
 			raise ValueError
 
-		return cls(keys[:-1], vk, 0, ext)
+		modifiers = set(
+			(vk, ext) for vk,ext in keys if isNVDAModifierKey(vk, ext) or vk in cls.NORMAL_MODIFIER_KEYS
+		)
+		nonModifiers = set(keys) - modifiers
+
+		if len(nonModifiers)>1:
+			raise ValueError()
+		elif not nonModifiers:
+			# All provided keys are modifiers.
+			# Use the last one as main key of this gesture.
+			vk, ext = keys.pop()
+			keys = set(keys)
+		else:
+			# The non-modifier should always be the main key of a gesture.
+			vk, ext = nonModifiers.pop()
+			keys = modifiers
+
+		return cls(keys, vk, 0, ext)
 
 	RE_IDENTIFIER = re.compile(r"^kb(?:\((.+?)\))?:(.*)$")
 	@classmethod
