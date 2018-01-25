@@ -5,15 +5,22 @@
 
 = 2018.1 =
 
+
+== Uudet ominaisuudet ==
+- Vuorovaikutus Microsoft Wordin ja PowerPointin kaavioiden kanssa on nyt mahdollista samalla tavoin kuin Excelissä. (#7046)
+ - Wordissa: Siirry selaustilassa ollessasi nuolinäppäimillä upotetun kaavion kohdalle ja paina Enter ollaksesi vuorovaikutuksessa sen kanssa.
+ - PowerPointissa diaa muokattaessa: Siirry Sarkain-näppäimellä kaavio-objektiin ja paina Enter tai Välilyöntiä ollaksesi vuorovaikutuksessa kaavion kanssa.
+ - Lopeta vuorovaikutus painamalla Esc-näppäintä.
+- Uusi kieli: kirgiisi.
+
+
 == Muutokset ==
 - HIMS Braille Sense/Braille EDGE/Smart Beetle- ja Sync Braille -pistenäyttöjen ajurit on korvattu yhdellä ajurilla. Uusi ajuri otetaan automaattisesti käyttöön aiemman Sync Braille -ajurin käyttäjillä. (#7459)
  - Jotkin näppäimet, erityisesti vieritykseen käytettävät, on uudelleenmääritelty seuraamaan HIMS-tuotteiden käytäntöjä. Katso lisätietoja käyttöoppaasta.
 - Kun näyttönäppäimistöllä kirjoitetaan kosketusvuorovaikutuksen avulla, kutakin näppäintä on oletusarvoisesti kaksoisnapautettava samalla tavoin kuin mitä tahansa muutakin säädintä aktivoitaessa.
  - Kosketuskirjoitustila, jossa sormen nostaminen näppäimeltä riittää sen painamiseen, otetaan käyttöön uudessa Kosketuksen vuorovaikutus -valintaikkunassa, joka löytyy Asetukset-valikosta. (#7309)
-- Vuorovaikutus Microsoft Wordin ja PowerPointin kaavioiden kanssa on nyt mahdollista samalla tavoin kuin Excelissä. (#7046)
- - Wordissa: Siirry selaustilassa ollessasi nuolinäppäimillä upotetun kaavion kohdalle ja paina Enter ollaksesi vuorovaikutuksessa sen kanssa.
- - PowerPointissa diaa muokattaessa: Siirry Sarkain-näppäimellä kaavio-objektiin ja paina Enter tai Välilyöntiä ollaksesi vuorovaikutuksessa kaavion kanssa.
- - Lopeta vuorovaikutus painamalla Esc-näppäintä.
+- Pistenäyttöä ei ole enää tarpeen määrittää seuraamaan erikseen kohdistusta tai tarkastelukohdistinta, sillä se tapahtuu nyt oletuksena automaattisesti. (#2385) 
+ - Huomaa, että tarkastelukohdistinta seurataan automaattisesti vain tekstintarkastelu- tai objektinavigointikomentoa käytettäessä. Näytön vierittäminen ei aktivoi tätä ominaisuutta.
 
 
 == Korjatut ohjelmavirheet ==
@@ -30,6 +37,7 @@
 - NVDA käyttää nyt asianmukaista kieltä symboleita puhuttaessa tekstin ollessa valittuna. (#7687)
 - Excel-kaavioissa liikkuminen on jälleen mahdollista nuolinäppäimillä Office 365:n viimeisimmissä versioissa. (#7046)
 - Säätimien tilat ilmoitetaan nyt puheella ja pistekirjoituksella aina samassa järjestyksessä riippumatta siitä, ovatko ne positiivisia vai negatiivisia. (#7076)
+- Kirjoitettujen merkkien puhuminen ei enää epäonnistu askelpalautinta painettaessa tietyissä sovelluksissa, kuten esim. Windows 10:n Sähköposti. (#7456)
 
 
 == Muutokset kehittäjille ==
