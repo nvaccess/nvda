@@ -5,15 +5,22 @@
 
  2018.1 =
 
+ 
+== Novas Características ==
+- Agora é posible interactuar con gráficos en Microsoft Word e Microsoft PowerPoint, similar ao soporte existente para gráficos en Microsoft Excel. (#7046)
+ - En Microsoft Word: cando se estea en modo exploración, pon o cursor nun gráfico integrado e preme intro para interactuar con el.
+ - En Microsoft Powerpoint cando se edite unha diapositiva: tabula a un obxecto gráfico, e preme intro ou espazo para interactuar co gráfico.
+ - Para deter a interación cun gráfico, preme escape.
+- Nova lingua: Kyrgyz.
+
+
 == Cambios ==
 - reemplazáronse os controladores de pantallas braille HIMS Braille Sense/Braille EDGE/Smart Beetle e Hims Sync por un único controlador. O novo controlador activarase automáticamente para os antigos usuarios do controlador syncBraille. (#7459) 
 - Algunhas teclas, especialmente as teclas de desprazamento, reasignáronse para seguir as convencións usadas polos productos de Hims. Consulta a guía do usuario para máis detalles.
 - Ao se escrebir co teclado en pantalla a través da interación tactil, por defecto agora debes facer dobre tap en cada tecla do mesmo xeito no que activarías calquera outro control. (#7309)
  - Para usar o modo de "escritura tactil" existente onde chega con quitar o dedo da tecla para activala, habilita esta opción no novo diálogo Opcións de Interación Tactil que se atopa no menú Preferencias. (#7309)
-- Agora é posible interactuar con gráficos en Microsoft Word e Microsoft PowerPoint, similar ao soporte existente para gráficos en Microsoft Excel. (#7046)
- - En Microsoft Word: cando se estea en modo exploración, pon o cursor nun gráfico integrado e preme intro para interactuar con el.
- - En Microsoft Powerpoint cando se edite unha diapositiva: tabula a un obxecto gráfico, e preme intro ou espazo para interactuar co gráfico.
- - Para deter a interación cun gráfico, preme escape.
+- Xa non é necesario que o braille sega explícitamente ao foco ou á revisión, xa que esto ocorrirá automáticamente por omisión. (#2385) 
+ - Ten en conta que o seguemento automático á revisión só ocorirá ao se usar un cursor de revisión ou orden de navegación de obxectos. O desprazamento non activará este novo comportamento.
 
 
 == Corrección de Fallos ==
@@ -30,6 +37,7 @@
 - O NVDA agora usa a lingua correcta ao anunciar os símbolos cando se selecione texto. (#7687)
 - En versións recentes de Office 365, é de novo posible navegar gráficos de Excel usando as teclas de frechas. (#7046)
 - En saídas de voz e graille, os estados dos controis agora sempre se anuncian no mesmo orden, sen importar se son positivos ou negativos. Arranxos #7076
+- En aplicacións coma o Mail do Windows 10, NVDA xa non fallará ao anunciar os caracteres borrados cando se prema retroceso. (#7456)
 
 
 == Cambios para Desenvolvedores ==
@@ -39,6 +47,7 @@
 - Actualizado o paquete comtypes a 1.1.3. (#7831)
 - Implementado un sistema xenérico en braille.BrailleDisplayDriver para tratar coas pantallas que envían paquetes de confirmación/acuse de recibo. Consulta o controlador das pantallas braille handyTech como un exemplo. (#7590, #7721)
 - Pódese usar unha nova variable "isAppX" no módulo config para detectar se o NVDA se está a executar coma unha aplicación Windows Desktop Bridge Store. (#7851)
+- Para implementacións de documento coma NVDAObjects ou browseMode que teñan un textInfo, agora hai unha nova clase documentBase.documentWithTableNavigation que pode herdarse para obter scripts de navegación estándar de táboa. Por favor consulta esta clase para ver que métodos helper deben proporcionarse para a túa implementación para que funcione a navegación de táboa. (#7849)
 
 
 == 2017.4 =
