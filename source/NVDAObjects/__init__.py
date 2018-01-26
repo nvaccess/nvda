@@ -15,6 +15,7 @@ import review
 import eventHandler
 from displayModel import DisplayModelTextInfo
 import baseObject
+import documentBase
 import speech
 import ui
 import api
@@ -139,7 +140,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-class NVDAObject(baseObject.ScriptableObject):
+class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
 	This allows NVDA to work with all widgets in a uniform way.
@@ -958,10 +959,16 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		speech.cancelSpeech()
 
-	def event_becomeNavigatorObject(self):
+	def event_becomeNavigatorObject(self, isFocus=False):
 		"""Called when this object becomes the navigator object.
+		@param isFocus: true if the navigator object was set due to a focus change.
+		@type isFocus: bool
 		"""
-		braille.handler.handleReviewMove()
+		# When the navigator object follows the focus and braille is auto tethered to review,
+		# we should not update braille with the new review position as a tether to focus is due.
+		if braille.handler.shouldAutoTether and isFocus:
+			return
+		braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
@@ -1013,9 +1020,6 @@ This code is executed if a gain focus event is received by this object.
 		else:
 			self._basicTextTime=newTime
 		return self._basicText
-
-	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
 
 	def _get__isTextEmpty(self):
 		"""

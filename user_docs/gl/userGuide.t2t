@@ -25,7 +25,7 @@ O máis subliñable inclue:
 - Soporte para moitas pantallas de braille efímero incluíndo a entrada de braille computerizado para pantallas braille que tenñan un teclado braille
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 51 linguas
+- Traducido a 52 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Anunciado de controis e texto mentres se usan xestos tactiles
@@ -35,7 +35,7 @@ O máis subliñable inclue:
 
 ++ Internacionalización ++[Internationalization]
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 51 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Kannada, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 51 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Kannada, Kirguistaní, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++[SpeechSynthesizerSupport]
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ao usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -339,8 +339,10 @@ O obxecto actualmente en revisión chámase navegador de obxectos.
 Unha vez que navegues a un obxecto, podes revisar o seu contido utilizando as [ordes de revisión de texto #ReviewingText] mentres se estea en [modo revisión de obxectos #ObjectReview].
 De xeito predeterminado, o navegador de obxectos móvese xunto co foco  do Sistema, aíndaque este comportamento pode activarse e desactivarse.
 
-Ten en conta que o braille segue ao [foco #SystemFocus] e ao [cursor do sistema #SystemCaret] de forma predeterminada, en lugar de ao navegador de obxectos e revisión de texto.
-Se no seu lugar queres seguir ao navegador de obxectos e á revisión de texto, necesitas [configurar que o braille sega #BrailleTether] á revisión.
+Ten en conta que o braille segue ao [foco #SystemFocus] e ao [cursor #SystemCaret] así coma por omisión á navegación de obxectos e á revisión de texto.
+Se queres que sega só ao foco e ao cursor, necesitas [configurar que o braille sega ao  #BrailleTether] foco.
+Neste caso, o braille non seguirá á navegación de obxectos e á revisión de texto.
+Se queres que o braille sega á  navegación de obxectos e á revisión de texto no seu lugar, necesitas [configurar que o braille sega á #BrailleTether] revisión.
 
 Para navegar por obxectos, utiliza as seguintes ordes:
 
@@ -1142,10 +1144,12 @@ Especifycando 0 deshabilítase o amosado destas mesaxes completamente.
 Esta opción permite ás mensaxes do NVDA amosarse na pantalla braille indefinidamente.
 
 %kc:setting
-==== O Braille segue a ====[BrailleTether]
+==== Braille Segue ====[BrailleTether]
 Tecla: NVDA+control+t
 
-Esta opción permíteche escoller se a pantalla braille seguirá ao foco do sistema, ou se seguirá ao navegador de obxectos / cursor de revisión.
+Esta opción permíteche escoller se a pantalla braille seguirá ao foco do sistema, ou se seguirá ao navegador de obxectos / cursor de revisión, ou a ambos.
+Cando se selecione "automáticamente", o NVDA seguirá ao foco e ao cursor do sistema por omisión.
+Neste caso, cando se cambie a posición do navegador de obxectos ou do cursor de revisión mediante unha interacción explícita do usuario, o NVDA seguirá á revisión temporalmente, ata que o foco ou o cursor cambie.
 
 ==== Ler por Parágrafo ====[BrailleSettingsReadByParagraph]
 Se está activada, o braille amosarase por parágrafos en lugar de por liñas.

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 00:10+1000\n"
-"PO-Revision-Date: 2018-01-05 13:59+0200\n"
+"POT-Creation-Date: 2018-01-19 00:10+1000\n"
+"PO-Revision-Date: 2018-01-19 14:20+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -87,6 +87,24 @@ msgstr "Tuntematon syöttömenetelmä"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "Oikeinkirjoitus ja kielioppi: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Kirjoitusvirhe: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "Kielioppi: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -528,6 +546,19 @@ msgstr "s%s"
 #, python-format
 msgid "%s end"
 msgstr "%s lop"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automaattisesti"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "kohdistusta"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "tarkastelukohdistinta"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -1623,47 +1654,6 @@ msgstr "Alareuna"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, loppuun."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Ei taulukon solussa"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Taulukon reuna"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "Siirtää seuraavalle taulukon riville"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "Siirtää edelliselle taulukon riville"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "Siirtää seuraavaan taulukon sarakkeeseen"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "Siirtää edelliseen taulukon sarakkeeseen"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "Asettelutaulukot pois"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "Asettelutaulukot käytössä"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr ""
-"Ottaa käyttöön tai poistaa käytöstä asettelutaulukoiden ilmaisemisen "
-"selaustilassa."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2795,6 +2785,47 @@ msgstr "Ei valintaa"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "Kopioitu leikepöydälle"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Ei taulukon solussa"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Taulukon reuna"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "Siirtää seuraavalle taulukon riville"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "Siirtää edelliselle taulukon riville"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "Siirtää seuraavaan taulukon sarakkeeseen"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "Siirtää edelliseen taulukon sarakkeeseen"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Asettelutaulukot pois"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Asettelutaulukot käytössä"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Ottaa käyttöön tai poistaa käytöstä asettelutaulukoiden ilmaisemisen "
+"selaustilassa."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -4024,18 +4055,10 @@ msgstr ""
 "Ottaa käyttöön tai poistaa käytöstä puheentarkastelun, kelluvan ikkunan, "
 "jonka avulla voit tarkastella NVDA:n tällä hetkellä puhumaa tekstiä."
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "tarkastelukohdistinta"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "kohdistusta"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
+msgid "Braille tethered %s"
 msgstr "Pistenäyttö seuraa %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -6131,6 +6154,14 @@ msgstr "kirjoitusvirhe"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "kirjoitusvirheen loppu"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "Kielioppivirhe"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "kielioppivirheen loppu"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -8970,8 +9001,8 @@ msgid "Show &messages indefinitely"
 msgstr "Näytä il&moitukset pysyvästi"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "Pist&enäyttö seuraa:"
+msgid "Tether B&raille:"
+msgstr "Pistenäyttö s&euraa:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9159,8 +9190,135 @@ msgstr "RGB: punainen {rgb.red}, vihreä {rgb.green}, sininen {rgb.blue}"
 msgid "%s items"
 msgstr "%s kohdetta"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Otsikoita ei voi määrittää. Ota käyttöön taulukon otsikoiden lukeminen "
+"dokumenttien muotoiluasetuksista"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Määritä rivi {rowNumber} ja sarake {columnNumber} sarakeotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty sarakeotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu sarakeotsikoista"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Riviä {rowNumber} ja saraketta {columnNumber} ei löydy sarakeotsikoista"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Tämä solu määritetään kerran painettaessa ensimmäiseksi sarakeotsikoksi sen "
+"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
+"painaminen nollaa solun nykyisen sarakeotsikon."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Määritä rivi {rowNumber} ja sarake {columnNumber} riviotsikoiden alkukohdaksi"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty riviotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu riviotsikoista"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy riviotsikoista"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Tämä solu määritetään kerran painettaessa ensimmäiseksi riviotsikoksi sen "
+"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
+"painaminen nollaa solun nykyisen riviotsikon."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "Ei kommentteja"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "Ei taulukossa"
+
 msgid "invoke"
 msgstr "avaa"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Selitteet"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "V&irheet"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "Lisäys: {text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "Poisto: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "Jäljitetty muutos: {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Kommentti: {comment}, muokkaaja: {author}, päivämäärä: {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "{comment}, muokkaaja: {author}, päivämäärä: {date}"
 
 msgid "Desktop"
 msgstr "Työpöytä"
@@ -10000,17 +10158,6 @@ msgid "{start} through {end}"
 msgstr "väliltä {start} ja {end}"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Otsikoita ei voi määrittää. Ota käyttöön taulukon otsikoiden lukeminen "
-"dokumenttien muotoiluasetuksista"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Määritä solu {address} sarakeotsikoiden alkukohdaksi"
@@ -10335,12 +10482,6 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "Kirjoitusvirhe: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10376,74 +10517,6 @@ msgstr "%.1f riviä"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Taulukon kuvaus"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Määritä rivi {rowNumber} ja sarake {columnNumber} sarakeotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty sarakeotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu sarakeotsikoista"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"Riviä {rowNumber} ja saraketta {columnNumber} ei löydy sarakeotsikoista"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"Tämä solu määritetään kerran painettaessa ensimmäiseksi sarakeotsikoksi sen "
-"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
-"painaminen nollaa solun nykyisen sarakeotsikon."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Määritä rivi {rowNumber} ja sarake {columnNumber} riviotsikoiden alkukohdaksi"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty riviotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu riviotsikoista"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy riviotsikoista"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"Tämä solu määritetään kerran painettaessa ensimmäiseksi riviotsikoksi sen "
-"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
-"painaminen nollaa solun nykyisen riviotsikon."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10556,14 +10629,6 @@ msgstr "{offset:.3g} pistettä"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picaa"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "Ei kommentteja"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista."
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "Yksinkertainen riviväli"
@@ -10576,20 +10641,14 @@ msgstr "Kaksinkertainen riviväli"
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "Ei taulukossa"
+#~ msgid "review"
+#~ msgstr "tarkastelukohdistinta"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&Selitteet"
+#~ msgid "focus"
+#~ msgstr "kohdistusta"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "V&irheet"
+#~ msgid "B&raille tethered to:"
+#~ msgstr "Pist&enäyttö seuraa:"
 
 #~ msgid "Not defined"
 #~ msgstr "ei määritetty"

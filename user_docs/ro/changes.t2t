@@ -5,16 +5,22 @@ Ce este nou în NVDA
 
 = 2018.1 =
 
+== Noi funcționalități ==
+- Acum, este posibilă interacțiunea cu diagramele din Microsoft Word și Microsoft  PowerPoint, similară cu suportul existent pentru diagramele din Microsoft Excel. (#7046)
+ - În modul de navigare din Microsoft Word, deplasați cursorul la o diagramă încorporată și apăsați enter pentru a interacționa cu ea.
+ - La editarea unui diapozitiv din Microsoft PowerPoint: duceți-vă  cu tasta tab la un obiect diagramă, apoi apăsați enter sau spațiu pentru a interacționa cu diagrama.
+  - Pentru a opri interacțiunea cu o diagramă, apăsați escape.
+- Limbă nouă: Kirghiză.
+
+
 == Modificări ==
 - Driverele afișajelor braille HIMS Braille Sense/Braille EDGE/Smart Beetle și Hims Sync Braille au fost înlocuite de un driver nou. Noul driver va fi activat automat pentru foștii utilizatori ai driver-ului syncBraille. (#7459)
  - Niște taste, mai exact cele de deplasare, au fost reatribuite pentru a urmări convențiile folosite de produsele Hims. Consultați ghidul utilizatorului pentru mai multe detalii.
 - La scrierea cu tastatura de pe ecran prin interacțiunea tactilă, în mod implicit, trebuie să atingeți dublu fiecare tastă, în același mod în care ați activa un oricare alt control.
  - Pentru a folosi existenta „scriere tactilă”, pur și simplu ridicându-vă degetele de pe tastă, este suficient s-o activați. Pentru a face asta, activați această opțiune din noul dialog de setări al interacțiunii tactile din meniul Preferințe. (#7309)
-- Acum, este posibilă interacțiunea cu diagramele din Microsoft Word și Microsoft  PowerPoint, similară cu suportul existent pentru diagramele din Microsoft Excel. (#7046)
- - În modul de navigare din Microsoft Word, deplasați cursorul la o diagramă încorporată și apăsați enter pentru a interacționa cu ea.
- - La editarea unui diapozitiv din Microsoft PowerPoint: duceți-vă  cu tasta tab la un obiect diagramă, apoi apăsați enter sau spațiu pentru a interacționa cu diagrama.
-  - Pentru a opri interacțiunea cu o diagramă, apăsați escape.
-
+- Nu mai este necesar să asociați explicit Braille-ul la  focalizare sau la examinare, întrucât asta se întâmplă automat în mod implicit. (#2385)
+ - Rețineți faptul că asocierea automată la examinare va apărea numai la utilizarea unui cursor de examinare sau a unei comenzi de navigare prin obiect. Derularea nu va activa acest nou comportament.
+ 
 
 == Rezolvări Defecte ==
 - Mesajele care pot fi redirecționate, cum ar fi afișarea formatării curente la apăsarea NVDA+f de două ori rapid, nu mai eșuează atunci când NVDA este instalat într-o cale cu caractere non-asci. (#7474)
@@ -30,6 +36,8 @@ O ușoară îmbunătățire a performanței la afișarea cantităților mari de 
 - Acum, NVDA utilizează limba corectă la anunțarea simbolurilor atunci când textul este selectat. (#7687)
 - În versiunile recente ale Office 365, este posibilă din nou navigarea prin diagramele Excel folosind săgețile. (#7046)
 - În ieșirile de vorbire și braille, stările controalelor nu vor fi întotdeauna raportate în aceeași ordine, indiferent dacă sunt pozitive sau negative. Reparări #7076
+- În aplicații precum Windows 10 Mail, NVDA nu va mai eșua să anunțe caracterele șterse la apăsarea tastei backspace. (#7456)
+
 
 == Modificări pentru Dezvoltatori ==
 - s-a adăugat un steag boolean ascuns la secțiunea braille din configurație: "outputPass1Only". (#7301, #7693, #7702)
@@ -38,6 +46,7 @@ O ușoară îmbunătățire a performanței la afișarea cantităților mari de 
 - S-a actualizat pachetul comtypes la 1.1.3. (#7831)
 - S-a implementat un sistem generic braille.BrailleDisplayDriver pentru a face față afișajelor care trimit pachete de confirmare. Luați ca exemplu driver-ul afișajului braille HandyTech. (#7590, #7721)
 - În modulul config, o nouă variabilă „isAppX” poate fi utilizată pentru a detecta dacă NVDA rulează ca o aplicație Windows Desktop Bridge Store. (#7851)
+- Pentru implementările documentelor precum NVDAObjects sau browseMode care au un textInfo, acum există o clasă documentBase.documentWithTableNavigation care poate fi folosită pentru a obține scripturi standard pentru navigarea prin tabel. Vă rugăm să faceți referire la această clasă pentru a vedea care dintre metodele ajutătoare trebuie să fie furnizate de implementarea dumneavoastră pentru ca navigarea prin tabel să funcționeze. (#7849)
 
 
 = 2017.4 =

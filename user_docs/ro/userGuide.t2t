@@ -25,7 +25,7 @@ Trăsăturile importante includ:
 - Suport pentru multe afișaje actualizabile Braille, incluzând introducerea de braille pentru afișajele braille care au tastatură braille
 - Capacitatea de a rula exclusiv de pe un stick USB sau alte suporturi media portabile fără nevoia instalării
 - Interfață de instalare vorbită, ușor de folosit
-- Tradus în 51 de limbi
+- Tradus în 52 de limbi
 - Suport pentru sistemele de operare Windows moderne, incluzând atât variantele pe 32 cât și pe 64 biți
 - Capacitatea de a rula pe ecranul de autentificare în Windows și alte ecrane de siguranță
 - Suport pentru interfețe de control cunoscute cum ar fi Microsoft Active Accessibility, Java Access Bridge, IAccessible2 și UI Automation (UI Automation disponibil doar pentru Windows 7 sau mai nou)
@@ -34,7 +34,7 @@ Trăsăturile importante includ:
 
 ++ Internaționalizare ++[Internationalization]
 Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, să aibă același acces la tehnologie.
-În afară de engleză, NVDA a fost tradus în 51 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, birmană, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindi, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, kanareză, lituaniană, macedoneană, nepaleză, norvegiană, poloneză, portugheză, punjabă, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamilă, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
+În afară de engleză, NVDA a fost tradus în 52 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, birmană, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindi, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, kanareză, kirghiză, lituaniană, macedoneană, nepaleză, norvegiană, poloneză, portugheză, punjabi, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamil, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
 
 ++ Suport pentru sintetizator de voce ++[SpeechSynthesizerSupport]
 În afară de furnizarea mesajelor și interfeței în mai multe limbi, NVDA mai poate permite utilizatorilor să citească texte în orice limbă, atâta timp cât au un sintetizator de voce care poate vorbi acea limbă.
@@ -335,8 +335,10 @@ Obiectul descris curent se numește „obiectul navigator”.
 Odată ce navigați la un obiect, îi puteți examina conținutul folosind [comenzile pentru examinarea textului #ExaminareaTextului] când sunteți în [Modul de examinare obiect #ExaminareObiect].
 Implicit, obiectul navigator se deplasează împreună cu focalizarea sistemului, dar acest comportament poate fi activat sau dezactivat.
 
-De notat faptul că braille urmărește în mod implicit [focalizarea #FocalizareSistem] și [cursorul de scriere #CursorScriereSistem] și nu navigarea prin obiecte și descrierea textului.
-Dacă doriți să urmărească navigarea prin obiecte și descrierea textului, trebuie să [configurați braille să se asocieze #AsociereBraille] la descriere.
+De notat faptul că în mod implicit, braille urmărește atât  [focalizarea #FocalizareSistem] cât și [cursorul de scriere #CursorScriereSistem], dar și navigarea prin obiecte și descrierea textului.
+Dacă doriți să urmărească doar focalizarea și cursorul de scriere al sistemului, trebuie să [configurați braille să se asocieze #AsociereBraille] la focalizare.
+În acest caz, braille nu va urmări navigarea prin obiect și examinarea tectului.
+Dacă vreți ca braille să urmărească în schimb navigarea prin obiect și examinarea textului, trebuie să [configurați braille să fie asociat #AsociereBraille] la examinare.
 
 Pentru a naviga prin obiecte, folosiți următoarele taste:
 
@@ -1138,7 +1140,9 @@ Această opțiune le permite mesajelor NVDA-ului  să fie afișate pe afișajul 
 ==== Braille asociat la ====[AsociereBraille]
 Tastă: NVDA+control+t
 
-Această opțiune vă permite să alegeți dacă afișajul braille va urma focalizarea sistemului sau va urma obiectul navigator / cursorul de examinare.
+Această opțiune vă permite să alegeți dacă afișajul braille va urma focalizarea sistemului, va urma obiectul navigator / cursorul de examinare sau ambele.
+Când e selectat „automat”, NVDA va urmări focalizarea sistemului și cursorul de scriere al acestuia în mod implicit.
+În acest caz, dacă poziția obiectului navigator sau cea a cursorului de examinare este modificată de interacțiunea explicită a utilizatorului, NVDA va asocia la examinare temporar, până când focalizarea sau cursorul de scriere se modifică.
 
 ==== Citire paragraf cu paragraf ====[BrailleSettingsReadByParagraph]
 Dacă este activat, braille va fi afișat per paragraf în loc de per linie.

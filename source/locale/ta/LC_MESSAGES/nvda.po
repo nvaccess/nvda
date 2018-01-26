@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-29 00:10+1000\n"
-"PO-Revision-Date: 2017-12-30 18:54+0530\n"
+"POT-Creation-Date: 2018-01-19 00:10+1000\n"
+"PO-Revision-Date: 2018-01-21 12:38+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -85,6 +85,21 @@ msgstr "தெரியாத உள்ளீட்டு முறை"
 #. Translators: the message announcing the language and keyboard layout when it changes
 msgid "{language} - {layout}"
 msgstr "{layout} - {language} "
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+msgid "spelling and grammar: {text}"
+msgstr "எழுத்து மற்றும் இலக்கணம்: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+msgid "spelling: {text}"
+msgstr "எழுத்தாக்கம்: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+msgid "grammar: {text}"
+msgstr "இலக்கணம்: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -493,14 +508,6 @@ msgstr "த%s"
 msgid "vlnk"
 msgstr "வரு"
 
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "%s இல்லை"
-
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -533,6 +540,19 @@ msgstr "செ%s"
 #, python-format
 msgid "%s end"
 msgstr "%s முடிவு"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "தன்னியக்கம்"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "குவிமையத்துடன் "
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "சீராய்வுடன்"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -1048,7 +1068,7 @@ msgstr "உலாவும் நிலை"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
-msgstr "சிட்டையிடப்படாதது"
+msgstr "குறிச்சீட்டிடப்படாதது"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1628,47 +1648,6 @@ msgstr "கீழ்"
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் முடிவிற்கு அப்பால் செல்லும்"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "அட்டவணையின் சிறுகட்டத்தில் இல்லை"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "அட்டவணையின் விளிம்பு"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "அடுத்த அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "முந்தைய அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "அட்டவணையின் அடுத்த நெடுவரிசைக்கு நகர்கிறது"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "அட்டவணையின் முந்தைய நெடுவரிசைக்கு நகர்கிறது"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "தளவமைப்பு அட்டவணைகளைச் சேர்த்துக் கொள்ளாது"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "தளவமைப்பு அட்டவணைகளைச் சே்த்துக் கொள்ளும்"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr ""
-"உலாவு நிலையில் தளவமைப்பு அட்டவணைகளை சேர்த்துக் கொள்ளும் வசதியை இயக்கவோ, நிறுத்தவோ "
-"செய்கிறது"
-
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -2199,7 +2178,7 @@ msgstr "உள்ளீட்டுச் சாளரம்"
 
 #. Translators: Identifies a label.
 msgid "label"
-msgstr "சிட்டை"
+msgstr "குறிச்சீட்டு"
 
 #. Translators: Identifies a note field.
 msgid "note"
@@ -2470,6 +2449,10 @@ msgstr "பெருவிரல் கட்டுப்பாடு"
 msgid "calendar"
 msgstr "நாட்காட்டி"
 
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "விளக்கப்படக் கூறு"
+
 msgid "video"
 msgstr "காணொளி"
 
@@ -2592,7 +2575,7 @@ msgid "dragging"
 msgstr "இழுக்கப்படுகிறது"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects which support accessible drag and drop.
+#. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
 msgstr "இலக்கில் விடுக"
 
@@ -2650,6 +2633,11 @@ msgstr "அழுத்தப்படாதது"
 msgid "not checked"
 msgstr "தேர்வாகாதது"
 
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "இழுக்கப்படுவது முடிந்தது"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr "நடப்பு"
@@ -2673,6 +2661,14 @@ msgstr "நடப்புத் தேதி"
 #. Translators: Presented when a time item is marked as current in a collection of time items
 msgid "current time"
 msgstr "நடப்பு நேரம்"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "%s இல்லை"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2771,6 +2767,47 @@ msgstr "தெரிவு ஏதுமில்லை"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "பிடிப்புப்பலகைக்குப் படியெடுக்கப்பட்டது"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "அட்டவணையின் சிறுகட்டத்தில் இல்லை"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "அட்டவணையின் விளிம்பு"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "அடுத்த அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "முந்தைய அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "அட்டவணையின் அடுத்த நெடுவரிசைக்கு நகர்கிறது"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "அட்டவணையின் முந்தைய நெடுவரிசைக்கு நகர்கிறது"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "தளவமைப்பு அட்டவணைகளைச் சேர்த்துக் கொள்ளாது"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "தளவமைப்பு அட்டவணைகளைச் சே்த்துக் கொள்ளும்"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"உலாவு நிலையில் தளவமைப்பு அட்டவணைகளை சேர்த்துக் கொள்ளும் வசதியை இயக்கவோ, நிறுத்தவோ "
+"செய்கிறது"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -3982,19 +4019,11 @@ msgstr ""
 "என்விடிஏ தற்போது பேசிக் கொண்டிருக்கும் உரைகளைக் கொண்ட மிதக்கும் திரையான பேச்சுத் தோற்றத்தை "
 "இயக்கவோ, முடக்கவோ செய்கிறது"
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "சீராய்வு"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "குவிமையம்"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
-msgstr "பிரெயில் இதனுடன் கட்டப்பட்டுள்ளது: %s"
+msgid "Braille tethered %s"
+msgstr "பிரெயில் கட்டப்பட்டுள்ளது %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -5762,11 +5791,6 @@ msgstr "%s மாற்றாகத் தெரிவாகியது"
 msgid "selection removed"
 msgstr "தெரிவு நீக்கப்பட்டது"
 
-#. Translators: Reported when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "இழுக்கப்படுவது முடிந்தது"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -6089,6 +6113,14 @@ msgstr "எழுத்துப் பிழை"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "எழுத்துப் பிழைக்கு வெளியே"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "இலக்கணப் பிழை"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "இலக்கணப் பிழைக்கு வெளியே"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7701,6 +7733,10 @@ msgstr "இணைய முகவரி: {url}"
 msgid "Add-on Information"
 msgstr "கூட்டுக்கூறுத் தகவல்"
 
+#. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
+msgstr "விண்டோஸ் ஸ்டோர் பதிப்பு என்விடிஏவில் கூட்டுக்கூறுகளை நிறுவ இயலாது"
+
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
 msgstr "அமைவடிவ தனியமைப்புகள்"
@@ -8489,7 +8525,7 @@ msgstr "பொருள் நிலையின் தகவலை அறிவ
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "பொருள் நிலையின் தகவல் இல்லாதப்பொழுது அதை ஊகிக்கவும் (&P)"
+msgstr "பொருள் நிலையின் தகவல் இல்லாதபொழுது அதை ஊகிக்கவும் (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -8897,8 +8933,8 @@ msgid "Show &messages indefinitely"
 msgstr "காலவரையறையின்றித் தகவல்களைக் காட்டுக (&M)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "பிரெயில் இதனுடன் கட்டப்பட்டுள்ளது (&R)"
+msgid "Tether B&raille:"
+msgstr "பிரெயிலைக் கட்டுக (&R)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9082,11 +9118,792 @@ msgstr "RGB சிவப்பு {rgb.red}, பச்சை {rgb.green}, நீ
 msgid "%s items"
 msgstr "%s உருப்படிகள்"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"தலைப்புகளை அமைக்க இயலாது. ஆவண வடிவூட்டம் அமைப்புகளில் இருக்கும் அட்டவணைத் தலைப்புகளை "
+"அறிவிக்கும் வசதியைச் செயற்படுத்தவும்."
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், நெடுவரிசை "
+"தலைப்புரையின் துவக்கமாக அமைக்கவும்"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் ஏற்கெனவே நெடுவரிசை "
+"தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , நெடுவரிசை "
+"தலைப்புரையிலிருந்து நீக்கப்பட்டது"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், நெடுவரிசைத் "
+"தலைப்புரையில் காணப்படவில்லை"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்குக் கீழும், வலப் புறமாகவும் "
+"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் நெடுவரிசைத் தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய நெடுவரிசைத் தலைப்புரையை "
+"மறக்கும். "
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், கிடைவரிசை "
+"தலைப்புரையின் துவக்கமாக அமைக்கவும்"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் ஏற்கெனவே கிடைவரிசை "
+"தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , கிடைவரிசை "
+"தலைப்புரையிலிருந்து நீக்கப்பட்டது"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், கிடைவரிசைத் "
+"தலைப்புரையில் காணப்படவில்லை"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்குக் கீழும், வலப் புறமாகவும் "
+"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் கிடைவரிசைத் தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசைத் தலைப்புரையை "
+"மறக்கும். "
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "கருத்துரைகள் ஏதுமில்லை"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "கணினிச் சுட்டி அமைந்திருக்கும் இடத்திற்கான கருத்துரையை அறிவிக்கும்."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "அட்டவணையில் இல்லை"
+
 msgid "invoke"
 msgstr "அழை"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "விளக்கவுரைகள் (&A)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "பிழைகள் (&E)"
+
+#. Translators: The label shown for an insertion change
+msgid "insertion: {text}"
+msgstr "{text} செருகப்பட்டது "
+
+#. Translators: The label shown for a deletion change
+msgid "deletion: {text}"
+msgstr "{text} அழிக்கப்பட்டது "
+
+#. Translators: The general label shown for track changes
+msgid "track change: {text}"
+msgstr "மாற்றப்பட்ட உரை: {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "கருத்துரை: {comment}, படைப்பாளர்: {author}, தேதி: {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+msgid "{comment} by {author} on {date}"
+msgstr "கருத்துரை: {comment}, படைப்பாளர்: {author}, தேதி: {date}"
+
 msgid "Desktop"
 msgstr "மேசைத்தளம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "முப்பரிமாணப் பகுதி"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "அடுக்கப்பட்ட முப்பரிமாணப் பகுதி"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "100 விழுக்காடு அடுக்கப்பட்டப் பகுதி"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "ஒன்றிணைக்கப்பட்ட முப்பரிமாணப் பட்டை "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "அடுக்கப்பட்ட முப்பரிமாணப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட முப்பரிமாணப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "முப்பரிமாண நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "ஒன்றிணைக்கப்பட்ட முப்பரிமாண நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "அடுக்கப்பட்ட முப்பரிமாண நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட முப்பரிமாண நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "முப்பரிமாண வரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "முப்பரிமாண வட்ட விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "சிதறுண்ட முப்பரிமாண வட்ட விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "பகுதி"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "அடுக்கப்பட்டப் பகுதி"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "ஒன்றிணைக்கப்பட்டப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "வட்ட விளக்கப்படத்தின் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "அடுக்கப்பட்டப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "100 விழுக்காடு அடுக்கப்பட்டப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "குமிழி"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "முப்பரிமாண விளைவுகளைக் கொண்டக் குமிழி"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "ஒன்றிணைக்கப்பட்ட நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "அடுக்கப்பட்ட நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "ஒன்றிணைக்கப்பட்ட கூம்புப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "அடுக்கப்பட்ட கூம்புப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட கூம்புப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "முப்பரிமாண கூம்பு நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "ஒன்றிணைக்கப்பட்ட கூம்பு நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "அடுக்கப்பட்ட கூம்பு நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட கூம்பு நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "ஒன்றிணைக்கப்பட்ட உருளைப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "அடுக்கப்பட்ட உருளைப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட உருளைப் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "முப்பரிமாண உருளை நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட உருளை நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "வலைய விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "சிதறுண்ட வலையம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "வரிசை விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "குறிப்பிகள் கொண்ட வரிசை "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "குறிப்பிகள் கொண்ட அடுக்கப்பட்ட வரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "குறிப்பிகள் கொண்ட 100 விழுக்காடு அடுக்கப்பட்ட வரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "அடுக்கப்பட்ட வரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட வரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "வட்ட விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "சிதறுண்ட வட்ட விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "வட்ட விளக்கப்படத்திலிருந்து பெறப்பட்ட பகுதி வட்ட விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "ஒன்றிணைக்கப்பட்ட பிரமிட் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "அடுக்கப்பட்ட பிரமிட் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட பிரமிட் பட்டை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "முப்பரிமாண பிரமிட் நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "ஒன்றிணைக்கப்பட்ட பிரமிட் நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "அடுக்கப்பட்ட பிரமிட் நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "100 விழுக்காடு அடுக்கப்பட்ட பிரமிட் நெடுவரிசை"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "கண்டறியும் விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "நிரப்பப்பட்ட கண்டறியும் விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "தரவு குறிப்பிகளைக் கொண்ட கண்டறியும் விளக்கப்படம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr "உயர்-தாழ்-முடிவு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr "துவக்கம்-உயர்-தாழ்-முடிவு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr "கொள்ளளவு-உயர்-தாழ்-முடிவு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr "கொள்ளளவு-துவக்கம்-உயர்-தாழ்-முடிவு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "முப்பரிமாண மேற்பரப்பு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "மேற்பரப்பின் மேல் தோற்றம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "மேற்பரப்பின் மேல் தோற்ற கம்பிச் சட்டகம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "முப்பரிமாண மேற்பரப்பு கம்பிச் சட்டகம்"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "விரவு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "கோடுகளைக் கொண்ட விரவு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "தரவுக் குறிப்பிகள் இல்லாமல் கோடுகளைக் கொண்ட விரவு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "மென்கோடுகளைக் கொண்ட விரவு"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "தரவுக் குறிப்பிகள் இல்லாமல் மென்கோடுகளைக் கொண்ட விரவு"
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "கூறு"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "நெடுவரிசை"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "தரவுப் புள்ளி "
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "உருப்படி"
+
+#. Translators: Message to be spoken to report Series Color
+msgid "Series color: {colorName} "
+msgstr "தொடர் நிறம்: {colorName} "
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Display Unit Label"
+msgstr "காட்சியமைவுத் தொகுதியின் குறிச்சீட்டு"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Major Gridlines"
+msgstr "பெரு கட்டவரிகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Minor Gridlines"
+msgstr "சிறு கட்டவரிகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "சுழலச்சு விளக்கப்படம் விடப்பட வேண்டிய இடம்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Field Button"
+msgstr "சுழலச்சு விளக்கப்படத்தின் களப் பொத்தான்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Down Bars"
+msgstr "கீழ்ப் பட்டைகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Drop Lines"
+msgstr "இணைப்புக் கோடுகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Hi Lo Lines"
+msgstr "உயர் தாழ் கோடுகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Radar Axis Labels"
+msgstr "கண்டறியும் விளக்கப்படத்தின் அச்சுக் குறிச்சீட்டுகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Series Lines"
+msgstr "தொடர் கோடுகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Up Bars"
+msgstr "மேற்பட்டைகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Corners"
+msgstr "மூலைகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+#. Translators: Data Table will be spoken when chart element Data Table is selected
+msgid "Data Table"
+msgstr "தரவு அட்டவணை"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Floor"
+msgstr "தளம்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Nothing"
+msgstr "ஏதுமில்லை"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Walls"
+msgstr "சுவர்கள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Data Label"
+msgstr "தரவுக் குறிச்சீட்டு"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Error Bars"
+msgstr "பிழைப் பட்டைகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "X Error Bars"
+msgstr "X பிழைப் பட்டைகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Y Error Bars"
+msgstr "Y பிழைப் பட்டைகள்"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Shape"
+msgstr "வடிவம்"
+
+#. Translators: Message reporting the title and type of a chart.
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "விளக்கப்படத்தின் தலைப்பு  {chartTitle}, வகை {chartType}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "இந்த விளக்கப்படத்தில் ஒரு தொடர் உள்ளது"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "இந்த விளக்கப்படத்தில் மொத்தம் %d தொடர்கள் உள்ளன"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+msgid "series {number} {name}"
+msgstr "தொடர் {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "தொடர் ஏதும் வரையறுக்கப்படவில்லை"
+
+#. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+msgid "Chart Elements"
+msgstr "விளக்கப்படக் கூறுகள்"
+
+#. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} தொடர், {seriesCount}ல் {seriesIndex}"
+
+#. Translators: Message to be spoken to report Slice Color in Pie Chart
+msgid "Slice color: {colorName} "
+msgstr "கூறின் நிறம்: {colorName} "
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+msgid "no change from point {previousIndex}, "
+msgstr "{previousIndex} புள்ளியிலிருந்து மாற்றம் ஏதுமில்லை"
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "{previousIndex} புள்ளியிலிருந்து {incrementValue} அதிகரிக்கப்பட்டுள்ளது,"
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "{previousIndex} புள்ளியிலிருந்து {decrementValue} குறைக்கப்பட்டுள்ளது,"
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "Category {categoryAxisData}: "
+msgstr "வகை {categoryAxisData}: "
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "value {valueAxisData}"
+msgstr "மதிப்பு {valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr "பின்னம் {fractionValue:.2f}  {pointCount}ல் {pointIndex} விழுக்காடு"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr "{segmentType} {pointCount}ல் {pointIndex}"
+
+#. Translators: Indicates Primary Category Axis
+msgid "Primary Category Axis"
+msgstr "முதன்மை பகுப்பு அச்சு"
+
+#. Translators: Indicates Secondary Category Axis
+msgid "Secondary Category Axis"
+msgstr "இரண்டாம்கட்ட பகுப்பு அச்சு"
+
+#. Translators: Indicates Primary Value Axis
+msgid "Primary Value Axis"
+msgstr "முதன்மை மதிப்பு அச்சு"
+
+#. Translators: Indicates Secondary Value Axis
+msgid "Secondary Value Axis"
+msgstr "இரண்டாம்கட்ட மதிப்பு அச்சு"
+
+#. Translators: Indicates Primary Series Axis
+msgid "Primary Series Axis"
+msgstr "முதன்மை தொடர் அச்சு"
+
+#. Translators: Indicates Secondary Series Axis
+msgid "Secondary Series Axis"
+msgstr "இரண்டாம்கட்ட தொடர் அச்சு"
+
+#. Translators: the title of a chart axis
+msgid " title: {axisTitle}"
+msgstr "தலைப்பு: {axisTitle}"
+
+#. Translators: Indicates that trendline type is Exponential
+msgid "Exponential"
+msgstr "அடுக்குக் குறி"
+
+#. Translators: Indicates that trendline type is Linear
+msgid "Linear"
+msgstr "நேரியல்"
+
+#. Translators: Indicates that trendline type is Logarithmic
+msgid "Logarithmic"
+msgstr "மடக்கை"
+
+#. Translators: Indicates that trendline type is Moving Average
+msgid "Moving Average"
+msgstr "நகரும் சராசரி"
+
+#. Translators: Indicates that trendline type is Polynomial
+msgid "Polynomial"
+msgstr "பல்லுறுப்புக் கோவை"
+
+#. Translators: Indicates that trendline type is Power
+msgid "Power"
+msgstr "அடுக்கெண்"
+
+#. Translators: Substitute superscript two by square for R square value
+msgid " square "
+msgstr "சதுரம்"
+
+#. Translators: Substitute - by minus in trendline equations.
+msgid " minus "
+msgstr "கழித்தல்"
+
+#. Translators: This message gives trendline type and name for selected series
+msgid ""
+"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
+"{trendlineLabel} "
+msgstr ""
+"{seriesName} போக்குக் கோட்டு வகை: {trendlineType}, பெயர்: {trendlineName}, "
+"குறிச்சீட்டு: {trendlineLabel} "
+
+#. Translators: This message gives trendline type and name for selected series
+msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
+msgstr "{seriesName} போக்குக் கோட்டு வகை: {trendlineType}, பெயர்: {trendlineName} "
+
+#. Translators: Details about a chart title in Microsoft Office.
+msgid "Chart title: {chartTitle}"
+msgstr "விளக்கப்படத்தின் தலைப்பு: {chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Office.
+msgid "Untitled chart"
+msgstr "தலைப்பிடப்படாத விளக்கப்படம்"
+
+#. Translators: Details about the chart area in a Microsoft Office chart.
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"விளக்கப்பட பகுதி, உயரம்: {chartAreaHeight}, அகலம்: {chartAreaWidth}, மேல்: "
+"{chartAreaTop}, இடது: {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Office chart.
+msgid "Chart area "
+msgstr "விளக்கப்படத்தின் பகுதி"
+
+#. Translators: Details about the plot area of a Microsoft Office chart.
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"வரைப் பகுதி, உள்பக்க உயரம்: {plotAreaInsideHeight:.0f}, உள்பக்க அகலம்: "
+"{plotAreaInsideWidth:.0f}, உள்பக்க மேல்: {plotAreaInsideTop:.0f}, உள்பக்க இடது: "
+"{plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Office chart.
+msgid "Plot area "
+msgstr "வரைப் பகுதி"
+
+#. Translators: a message for the legend entry of a chart in MS Office
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} தொடருக்கான குறிவிளக்கி உள்ளீடு, {seriesCount}ல் {seriesIndex}"
+
+#. Translators: the legend entry for a chart in Microsoft Office
+msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
+msgstr "{legendEntryCount} எண்ணிக்கையின் குறிவிளக்கி உள்ளீடு {legendEntryIndex} "
+
+#. Translators: Details about a legend key for a series in a Microsoft office chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"{seriesName} தொடருக்கான குறிவிளக்கித் திறவுகோல், {seriesCount}ல் {seriesIndex}"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
@@ -9239,17 +10056,6 @@ msgstr "தாள்கள் (&S)"
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} முதல் {end} வரை"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"தலைப்புகளை அமைக்க இயலாது. ஆவண வடிவூட்டம் அமைப்புகளில் இருக்கும் அட்டவணைத் தலைப்புகளை "
-"அறிவிக்கும் வசதியைச் செயற்படுத்தவும்."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Set {address} as start of column headers"
@@ -9445,642 +10251,6 @@ msgstr "{desc} வலது மேல் வலது கீழ் குறு�
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Area"
-msgstr "முப்பரிமாணப் பகுதி"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Area"
-msgstr "அடுக்கப்பட்ட முப்பரிமாணப் பகுதி"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Area"
-msgstr "100 விழுக்காடு அடுக்கப்பட்டப் பகுதி"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Bar"
-msgstr "ஒன்றிணைக்கப்பட்ட முப்பரிமாணப் பட்டை "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Bar"
-msgstr "அடுக்கப்பட்ட முப்பரிமாணப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Bar"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட முப்பரிமாணப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Column"
-msgstr "முப்பரிமாண நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Column"
-msgstr "ஒன்றிணைக்கப்பட்ட முப்பரிமாண நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Column"
-msgstr "அடுக்கப்பட்ட முப்பரிமாண நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Column"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட முப்பரிமாண நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Line"
-msgstr "முப்பரிமாண வரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Pie"
-msgstr "முப்பரிமாண வட்ட விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded 3D Pie"
-msgstr "சிதறுண்ட முப்பரிமாண வட்ட விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Area"
-msgstr "பகுதி"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Area"
-msgstr "அடுக்கப்பட்டப் பகுதி"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Bar"
-msgstr "ஒன்றிணைக்கப்பட்டப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bar of Pie"
-msgstr "வட்ட விளக்கப்படத்தின் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Bar"
-msgstr "அடுக்கப்பட்டப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Bar"
-msgstr "100 விழுக்காடு அடுக்கப்பட்டப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble"
-msgstr "குமிழி"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble with 3D effects"
-msgstr "முப்பரிமாண விளைவுகளைக் கொண்டக் குமிழி"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Column"
-msgstr "ஒன்றிணைக்கப்பட்ட நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Column"
-msgstr "அடுக்கப்பட்ட நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Column"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Bar"
-msgstr "ஒன்றிணைக்கப்பட்ட கூம்புப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Bar"
-msgstr "அடுக்கப்பட்ட கூம்புப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Bar"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட கூம்புப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cone Column"
-msgstr "முப்பரிமாண கூம்பு நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Column"
-msgstr "ஒன்றிணைக்கப்பட்ட கூம்பு நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Column"
-msgstr "அடுக்கப்பட்ட கூம்பு நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Column"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட கூம்பு நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cylinder Bar"
-msgstr "ஒன்றிணைக்கப்பட்ட உருளைப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cylinder Bar"
-msgstr "அடுக்கப்பட்ட உருளைப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Bar"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட உருளைப் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cylinder Column"
-msgstr "முப்பரிமாண உருளை நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Column"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட உருளை நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Doughnut"
-msgstr "வலைய விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Doughnut"
-msgstr "சிதறுண்ட வலையம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line"
-msgstr "வரிசை விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line with Markers"
-msgstr "குறிப்பிகள் கொண்ட வரிசை "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line with Markers"
-msgstr "குறிப்பிகள் கொண்ட அடுக்கப்பட்ட வரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line with Markers"
-msgstr "குறிப்பிகள் கொண்ட 100 விழுக்காடு அடுக்கப்பட்ட வரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line"
-msgstr "அடுக்கப்பட்ட வரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட வரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie"
-msgstr "வட்ட விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Pie"
-msgstr "சிதறுண்ட வட்ட விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie of Pie"
-msgstr "வட்ட விளக்கப்படத்திலிருந்து பெறப்பட்ட பகுதி வட்ட விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Bar"
-msgstr "ஒன்றிணைக்கப்பட்ட பிரமிட் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Bar"
-msgstr "அடுக்கப்பட்ட பிரமிட் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Bar"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட பிரமிட் பட்டை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Pyramid Column"
-msgstr "முப்பரிமாண பிரமிட் நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Column"
-msgstr "ஒன்றிணைக்கப்பட்ட பிரமிட் நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Column"
-msgstr "அடுக்கப்பட்ட பிரமிட் நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Column"
-msgstr "100 விழுக்காடு அடுக்கப்பட்ட பிரமிட் நெடுவரிசை"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar"
-msgstr "கண்டறியும் விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Filled Radar"
-msgstr "நிரப்பப்பட்ட கண்டறியும் விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar with Data Markers"
-msgstr "தரவு குறிப்பிகளைக் கொண்ட கண்டறியும் விளக்கப்படம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "High-Low-Close"
-msgstr "உயர்-தாழ்-முடிவு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Open-High-Low-Close"
-msgstr "துவக்கம்-உயர்-தாழ்-முடிவு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-High-Low-Close"
-msgstr "கொள்ளளவு-உயர்-தாழ்-முடிவு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-Open-High-Low-Close"
-msgstr "கொள்ளளவு-துவக்கம்-உயர்-தாழ்-முடிவு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface"
-msgstr "முப்பரிமாண மேற்பரப்பு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View)"
-msgstr "மேற்பரப்பின் மேல் தோற்றம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View wireframe)"
-msgstr "மேற்பரப்பின் மேல் தோற்ற கம்பிச் சட்டகம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface (wireframe)"
-msgstr "முப்பரிமாண மேற்பரப்பு கம்பிச் சட்டகம்"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter"
-msgstr "விரவு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines"
-msgstr "கோடுகளைக் கொண்ட விரவு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines and No Data Markers"
-msgstr "தரவுக் குறிப்பிகள் இல்லாமல் கோடுகளைக் கொண்ட விரவு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines"
-msgstr "மென்கோடுகளைக் கொண்ட விரவு"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "தரவுக் குறிப்பிகள் இல்லாமல் மென்கோடுகளைக் கொண்ட விரவு"
-
-#. Translators: Message reporting the title and type of a chart.
-msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "விளக்கப்படத்தின் தலைப்பு  {chartTitle}, வகை {chartType}"
-
-#. Translators: Reported when there is no title for an axis in a chart.
-msgid "Not defined"
-msgstr "வரையறுக்கப்படாதது"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The category axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Category"
-msgstr "வகை: "
-
-#. Translators: A type of axis in a chart.
-#. Translators: The value axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Value"
-msgstr "மதிப்பு: "
-
-#. Translators: A type of axis in a chart.
-#. Translators: The series axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Series"
-msgstr "தொடர்: "
-
-#. Translators: Message reporting the type and title of an axis in a chart.
-#. For example, this might report "Category axis is month"
-msgid "{axisName} Axis is {axisTitle}"
-msgstr "{axisName} அச்சின் தலைப்பு {axisTitle}"
-
-#. Translators: Indicates that there is 1 series in a chart.
-msgid "There is 1 series in this chart"
-msgstr "இந்த விளக்கப்படத்தில் ஒரு தொடர் உள்ளது"
-
-#. Translators: Indicates the number of series in a chart where there are multiple series.
-#, python-format
-msgid "There are total %d series in this chart"
-msgstr "இந்த விளக்கப்படத்தில் மொத்தம் %d தொடர்கள் உள்ளன"
-
-#. Translators: Specifies the number and name of a series when listing series in a chart.
-msgid "series {number} {name}"
-msgstr "தொடர் {number} {name}"
-
-#. Translators: Indicates that there are no series in a chart.
-msgid "No Series defined."
-msgstr "தொடர் ஏதும் வரையறுக்கப்படவில்லை"
-
-#. Translators: A slice in a pie chart.
-msgid "slice"
-msgstr "கூறு"
-
-#. Translators: A column in a column chart.
-msgctxt "chart"
-msgid "column"
-msgstr "நெடுவரிசை"
-
-#. Translators: A data point in a line chart.
-msgid "data point"
-msgstr "தரவுப் புள்ளி "
-
-#. Translators: A segment of a chart for charts which don't have a specific name for segments.
-msgid "item"
-msgstr "உருப்படி"
-
-msgid "Series color: {colorName} "
-msgstr "தொடர் நிறம்: {colorName} "
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Display Unit Label"
-msgstr "காட்சியமைவுத் தொகுதியின் சிட்டை"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Major Gridlines"
-msgstr "பெரு கட்டவரிகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Minor Gridlines"
-msgstr "சிறு கட்டவரிகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Drop Zone"
-msgstr "சுழலச்சு விளக்கப்படம் விடப்பட வேண்டிய இடம்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Field Button"
-msgstr "சுழலச்சு விளக்கப்படத்தின் களப் பொத்தான்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Down Bars"
-msgstr "கீழ்ப் பட்டைகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Drop Lines"
-msgstr "இணைப்புக் கோடுகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Hi Lo Lines"
-msgstr "உயர் தாழ் கோடுகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Radar Axis Labels"
-msgstr "கண்டறியும் விளக்கப்படத்தின் அச்சுச் சிட்டைகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Series Lines"
-msgstr "தொடர் கோடுகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Up Bars"
-msgstr "மேற்பட்டைகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Corners"
-msgstr "மூலைகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Table"
-msgstr "தரவு அட்டவணை"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Floor"
-msgstr "தளம்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Nothing"
-msgstr "ஏதுமில்லை"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Walls"
-msgstr "சுவர்கள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Label"
-msgstr "தரவுச் சிட்டை"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Error Bars"
-msgstr "பிழைப் பட்டைகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "X Error Bars"
-msgstr "X பிழைப் பட்டைகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Y Error Bars"
-msgstr "Y பிழைப் பட்டைகள்"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Shape"
-msgstr "வடிவம்"
-
-#. Translators: Details about a series in a chart.
-#. For example, this might report "foo series 1 of 2"
-msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "{seriesName} தொடர், {seriesCount}ல் {seriesIndex}"
-
-#. Translators: For line charts, indicates no change from the previous data point on the left
-msgid "no change from point {previousIndex}, "
-msgstr "{previousIndex} புள்ளியிலிருந்து மாற்றம் ஏதுமில்லை"
-
-#. Translators: For line charts, indicates an increase from the previous data point on the left
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "{previousIndex} புள்ளியிலிருந்து {incrementValue} அதிகரிக்கப்பட்டுள்ளது,"
-
-#. Translators: For line charts, indicates a decrease from the previous data point on the left
-msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "{previousIndex} புள்ளியிலிருந்து {decrementValue} குறைக்கப்பட்டுள்ளது,"
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}: "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-msgid "Category {categoryAxisData}: "
-msgstr "வகை {categoryAxisData}: "
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{valueAxisTitle} {valueAxisData}"
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-msgid "value {valueAxisData}"
-msgstr "மதிப்பு {valueAxisData}"
-
-#. Translators: Details about a slice of a pie chart.
-#. For example, this might report "fraction 25.25 percent slice 1 of 5"
-msgid ""
-" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr "பின்னம் {fractionValue:.2f}  {pointCount}ல் {pointIndex} விழுக்காடு"
-
-#. Translators: Details about a segment of a chart.
-#. For example, this might report "column 1 of 5"
-msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr "{segmentType} {pointCount}ல் {pointIndex}"
-
-#. Translators: The primary axis group in a Microsoft Excel chart.
-msgid "Primary"
-msgstr "முதன்மை "
-
-#. Translators: The secondary axis group in a Microsoft Excel chart.
-msgid "Secondary"
-msgstr "இரண்டாம்கட்டம்"
-
-#. Translators: Details about an axis in a chart.
-msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr "விளக்கப்பட அச்சு, வகை: {axisType}, குழு: {axisGroup}, தலைப்பு: {axisTitle}"
-
-#. Translators: Details about an untitled axis in a chart.
-msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "விளக்கப்பட அச்சு, வகை: {axisType}, குழு: {axisGroup}"
-
-#. Translators: Indicates a chart axis title in Microsoft Excel.
-msgid "Chart axis title"
-msgstr "விளக்கப்பட அச்சின் தலைப்பு"
-
-#. Translators: Indicates a trendline in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "trendline"
-msgstr "போக்கு வரிசை"
-
-#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-msgid " squared "
-msgstr "கட்டமிடப்பட்டது"
-
-#. Translators: Details about a chart title in Microsoft Excel.
-msgid "Chart title: {chartTitle}"
-msgstr "விளக்கப்படத்தின் தலைப்பு: {chartTitle}"
-
-#. Translators: Indicates an untitled chart in Microsoft Excel.
-msgid "Untitled chart"
-msgstr "தலைப்பிடப்படாத விளக்கப்படம்"
-
-#. Translators: Details about the chart area in a Microsoft Excel chart.
-msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
-"{chartAreaTop}, left: {chartAreaLeft}"
-msgstr ""
-"விளக்கப்பட பகுதி, உயரம்: {chartAreaHeight}, அகலம்: {chartAreaWidth}, மேல்: "
-"{chartAreaTop}, இடது: {chartAreaLeft}"
-
-#. Translators: Indicates the chart area of a Microsoft Excel chart.
-msgid "Chart area "
-msgstr "விளக்கப்படத்தின் பகுதி"
-
-#. Translators: Details about the plot area of a Microsoft Excel chart.
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
-"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
-"{plotAreaInsideLeft:.0f}"
-msgstr ""
-"வரைப் பகுதி, உள்பக்க உயரம்: {plotAreaInsideHeight:.0f}, உள்பக்க அகலம்: "
-"{plotAreaInsideWidth:.0f}, உள்பக்க மேல்: {plotAreaInsideTop:.0f}, உள்பக்க இடது: "
-"{plotAreaInsideLeft:.0f}"
-
-#. Translators: Indicates the plot area of a Microsoft Excel chart.
-msgid "Plot area "
-msgstr "வரைப் பகுதி"
-
-#. Translators: Indicates the legend in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend"
-msgstr "குறிவிளக்கி"
-
-#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
-msgid "No legend"
-msgstr "குறிவிளக்கி ஏதுமில்லை"
-
-#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend entry for series Temperature 1 of 2"
-msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "{seriesName} தொடருக்கான குறிவிளக்கி உள்ளீடு, {seriesCount}ல் {seriesIndex}"
-
-#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend key for series Temperature 1 of 2"
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
-"{seriesName} தொடருக்கான குறிவிளக்கித் திறவுகோல், {seriesCount}ல் {seriesIndex}"
-
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "செருகுதல்"
@@ -10191,11 +10361,6 @@ msgstr "கருத்துரை: {text}, படைப்பாளர்: {au
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}, படைப்பாளர் {author}, தேதி {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-msgid "spelling: {text}"
-msgstr "எழுத்தாக்கம்: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10231,76 +10396,6 @@ msgstr "%.1f "
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "அட்டவணை விளக்கம்"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், நெடுவரிசை "
-"தலைப்புரையின் துவக்கமாக அமைக்கவும்"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் ஏற்கெனவே நெடுவரிசை "
-"தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , நெடுவரிசை "
-"தலைப்புரையிலிருந்து நீக்கப்பட்டது"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், நெடுவரிசைத் "
-"தலைப்புரையில் காணப்படவில்லை"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்குக் கீழும், வலப் புறமாகவும் "
-"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் நெடுவரிசைத் தலைப்புரையாக "
-"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய நெடுவரிசைத் தலைப்புரையை "
-"மறக்கும். "
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், கிடைவரிசை "
-"தலைப்புரையின் துவக்கமாக அமைக்கவும்"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் ஏற்கெனவே கிடைவரிசை "
-"தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , கிடைவரிசை "
-"தலைப்புரையிலிருந்து நீக்கப்பட்டது"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், கிடைவரிசைத் "
-"தலைப்புரையில் காணப்படவில்லை"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்குக் கீழும், வலப் புறமாகவும் "
-"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் கிடைவரிசைத் தலைப்புரையாக "
-"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசைத் தலைப்புரையை "
-"மறக்கும். "
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10405,14 +10500,6 @@ msgstr "{offset:.3g} புள்ளிகள்"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} பிக்காக்கள்"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "கருத்துரைகள் ஏதுமில்லை"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "கணினிச் சுட்டி அமைந்திருக்கும் இடத்திற்கான கருத்துரையை அறிவிக்கும்."
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "ஒற்றை வரி இடைவெளி"
@@ -10425,20 +10512,51 @@ msgstr "இரட்டை வரி இடைவெளி"
 msgid "1.5 line spacing"
 msgstr "ஒன்றரை வரி இடைவெளி"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "அட்டவணையில் இல்லை"
+#~ msgid "review"
+#~ msgstr "சீராய்வு"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "விளக்கவுரைகள் (&A)"
+#~ msgid "focus"
+#~ msgstr "குவிமையம்"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "பிழைகள் (&E)"
+#~ msgid "B&raille tethered to:"
+#~ msgstr "பிரெயில் இதனுடன் கட்டப்பட்டுள்ளது (&R)"
+
+#~ msgid "Not defined"
+#~ msgstr "வரையறுக்கப்படாதது"
+
+#~ msgid "Category"
+#~ msgstr "வகை: "
+
+#~ msgid "Value"
+#~ msgstr "மதிப்பு: "
+
+#~ msgid "Series"
+#~ msgstr "தொடர்: "
+
+#~ msgid "{axisName} Axis is {axisTitle}"
+#~ msgstr "{axisName} அச்சின் தலைப்பு {axisTitle}"
+
+#~ msgid "Primary"
+#~ msgstr "முதன்மை "
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+#~ msgstr ""
+#~ "விளக்கப்பட அச்சு, வகை: {axisType}, குழு: {axisGroup}, தலைப்பு: {axisTitle}"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+#~ msgstr "விளக்கப்பட அச்சு, வகை: {axisType}, குழு: {axisGroup}"
+
+#~ msgid "Chart axis title"
+#~ msgstr "விளக்கப்பட அச்சின் தலைப்பு"
+
+#~ msgid "trendline"
+#~ msgstr "போக்கு வரிசை"
+
+#~ msgid "Legend"
+#~ msgstr "குறிவிளக்கி"
+
+#~ msgid "No legend"
+#~ msgstr "குறிவிளக்கி ஏதுமில்லை"
 
 #~ msgid "HIMS SyncBraille"
 #~ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"

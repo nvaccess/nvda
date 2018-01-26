@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 00:10+1000\n"
-"PO-Revision-Date: 2018-01-08 20:54+0100\n"
+"POT-Creation-Date: 2018-01-19 00:10+1000\n"
+"PO-Revision-Date: 2018-01-18 21:22+0100\n"
 "Last-Translator: zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -90,6 +90,24 @@ msgstr "nepoznata metoda unosa"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "pravopis i gramatika: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "pravopis: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "gramatika: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -531,6 +549,19 @@ msgstr "c%s"
 #, python-format
 msgid "%s end"
 msgstr "%s kraj"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "Automatski"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "na fokus"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "na pregled"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -1624,45 +1655,6 @@ msgstr "dno"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Premiješta iza kraja sadržanog elementa, kao što je lista ili tablica"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "nije u ćeliji tablice"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "rub tablice"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "premiješta na sljedeći redak u tablici"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "premiješta na prethodni redak u tablici"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "premiješta na sljedeći stupac u tablici"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "premiješta na prethodni stupac u tablici"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "Izvijesti o tablicama izgleda isključeno"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "Izvijesti o tablicama izgleda uključeno"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "Uključuje i isključuje izgovor tablica izgleda"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2795,6 +2787,45 @@ msgstr "nema odabira"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "kopirano u međuspremnik"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "nije u ćeliji tablice"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "rub tablice"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "premiješta na sljedeći redak u tablici"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "premiješta na prethodni redak u tablici"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "premiješta na sljedeći stupac u tablici"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "premiješta na prethodni stupac u tablici"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Izvijesti o tablicama izgleda isključeno"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Izvijesti o tablicama izgleda uključeno"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Uključuje i isključuje izgovor tablica izgleda"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -4021,19 +4052,11 @@ msgstr ""
 "Uključuje / isključuje nvda preglednik govora, plutajući prozor koji vam "
 "omogućuje pregled cijeloga tekst kojeg NVDA trenutno izgovara"
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "pregled"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "fokus"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
-msgstr "Brajica povezana na %s"
+msgid "Braille tethered %s"
+msgstr "brajica povezana s %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -6125,6 +6148,14 @@ msgstr "pravopisna pogreška"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "izvan pravopisne pogreške"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "gramatička pogreška"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "izvan gramatičke pogreške"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -8977,8 +9008,8 @@ msgid "Show &messages indefinitely"
 msgstr "Pokazuj poruku &vječno"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "B&rajica povezana na:"
+msgid "Tether B&raille:"
+msgstr "Prebacivanje b&rajice:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9166,8 +9197,135 @@ msgstr "RGB crvena {rgb.red}, zelena {rgb.green}, plava {rgb.blue}"
 msgid "%s items"
 msgstr "%s elemenata"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Nije moguće postaviti zaglavlja. Molimo omogućite izvještavanje zaglavlja "
+"tablice u postavkama oblikovanja dokumenta."
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja stupaca"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Već je postavljen redak {rowNumber} stupac {columnNumber} kao početak "
+"zaglavlja stupaca"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja stupaca"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr "Ne mogu naći {rowNumber} stupac {columnNumber} u zaglavljima stupaca"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
+"stupaca za svaku ćeliju niže i desno od nje unutar ove tablice. Kada se "
+"pritisne dvaput, zaboravit će se trenutno zaglavlje stupaca za ovu ćeliju."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Već je postavljen redak {rowNumber} stupac {columnNumber} kao početak "
+"zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Ne mogu naći redak {rowNumber} stupac {columnNumber} u zaglavljima redaka"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
+"redaka za svaku ćeliju niže i desno od nje unutar ove tablice. Kada se "
+"pritisne dvaput, zaboravit će se trenutno zaglavlje redaka za ovu ćeliju."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "Nema komentara."
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+"Izvještava o tekstu komentara na mjestu gdje se nalazi znak za umetanje."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "Nije u tablici"
+
 msgid "invoke"
 msgstr "pozovi"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&zabilješke"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "&Greške"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "umetanje: {text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "brisanje: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "praćena izmjena: {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "komentar: {comment} autor {author} datuma {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "{comment} od {author} datuma {date}"
 
 msgid "Desktop"
 msgstr "Radna površina"
@@ -10006,17 +10164,6 @@ msgid "{start} through {end}"
 msgstr "od {start} do {end}"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Nije moguće postaviti zaglavlja. Molimo omogućite izvještavanje zaglavlja "
-"tablice u postavkama oblikovanja dokumenta."
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Postavi adresu {address} kao početak zaglavlja stupaca"
@@ -10340,12 +10487,6 @@ msgstr "komentar: {text} od strane {author} datuma {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} datuma {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "pravopis: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10381,73 +10522,6 @@ msgstr "%.1f redaka"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "opis tablice"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja stupaca"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Već je postavljen redak {rowNumber} stupac {columnNumber} kao početak "
-"zaglavlja stupaca"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja stupaca"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr "Ne mogu naći {rowNumber} stupac {columnNumber} u zaglavljima stupaca"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
-"stupaca za svaku ćeliju niže i desno od nje unutar ove tablice. Kada se "
-"pritisne dvaput, zaboravit će se trenutno zaglavlje stupaca za ovu ćeliju."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja redaka"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Već je postavljen redak {rowNumber} stupac {columnNumber} kao početak "
-"zaglavlja redaka"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja redaka"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-"Ne mogu naći redak {rowNumber} stupac {columnNumber} u zaglavljima redaka"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
-"redaka za svaku ćeliju niže i desno od nje unutar ove tablice. Kada se "
-"pritisne dvaput, zaboravit će se trenutno zaglavlje redaka za ovu ćeliju."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10560,15 +10634,6 @@ msgstr "{offset:.3g} točaka"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pica"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "Nema komentara."
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr ""
-"Izvještava o tekstu komentara na mjestu gdje se nalazi znak za umetanje."
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "Jednostruki prored"
@@ -10581,20 +10646,14 @@ msgstr "Dvostruki prored"
 msgid "1.5 line spacing"
 msgstr "1.5 prored"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "Nije u tablici"
+#~ msgid "review"
+#~ msgstr "pregled"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&zabilješke"
+#~ msgid "focus"
+#~ msgstr "fokus"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "&Greške"
+#~ msgid "B&raille tethered to:"
+#~ msgstr "B&rajica povezana na:"
 
 #~ msgid "Not defined"
 #~ msgstr "nije definirano"
