@@ -549,9 +549,15 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					keys.append((winUser.VK_MENU, False))
 				# Not sure whether we need to support the Hankaku modifier (& 8).
 			else:
-				vk, ext = vkCodes.byName[keyName.lower()]
-				if ext is None:
-					ext = False
+				try:
+					vk, ext = vkCodes.byName[keyName.lower()]
+				except KeyError:
+					# A KeyError means that a supplied key name is unknown in the vkCodes.byName dictionary,
+					# which should in fact be treated as a ValueError in the context of this function.
+					raise ValueError("Unknown key: %r"%keyName)
+				else:
+					if ext is None:
+						ext = False
 			keys.append((vk, ext))
 			if not cls._isModifier(vk, ext):
 				if mainVk is not None or mainExt is not None:
@@ -559,16 +565,14 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				else:
 					mainVk, mainExt = vk, ext
 
-		if not keys:
-			raise ValueError
-
+		assert keys
 		modifiers = set(
 			(vk, ext) for vk,ext in keys if isNVDAModifierKey(vk, ext) or vk in cls.NORMAL_MODIFIER_KEYS
 		)
 		nonModifiers = set(keys) - modifiers
 
 		if len(nonModifiers)>1:
-			raise ValueError()
+			raise ValueError("Invalid key sequence: %r, multiple non-modifier keys are unsupported"%name)
 		elif not nonModifiers:
 			# All provided keys are modifiers.
 			# Use the last one as main key of this gesture.
