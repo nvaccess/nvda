@@ -166,6 +166,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 	NODE_TYPES_TO_ROLES = {
 		"link": {controlTypes.ROLE_LINK, controlTypes.ROLE_FOOTNOTE},
 		"graphic": {controlTypes.ROLE_GRAPHIC},
+		"table": {controlTypes.ROLE_TABLE},
 	}
 
 	def _iterNodesByType(self, nodeType, direction="next", pos=None):
@@ -205,9 +206,13 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				break # Can't go any further.
 			log.debug("Continuing in parent")
 			# Get the index of the embedded object we just came from.
+			parent = obj.parent
+			if not getattr(parent,'IAccessibleTextObject',None):
+				obj=parent
+				continue
 			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
 			offset = hl.startIndex
-			obj = obj.parent
+			obj=parent
 			hli = obj.iaHypertext.hyperlinkIndex(offset)
 			# Continue the walk from the next embedded object.
 			hli += 1 if direction == "next" else -1
