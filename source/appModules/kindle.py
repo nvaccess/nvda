@@ -170,12 +170,20 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 	}
 
 	def _iterNodesByType(self, nodeType, direction="next", pos=None):
-		roles = self.NODE_TYPES_TO_ROLES.get(nodeType)
-		if not roles:
-			raise NotImplementedError
 		if not pos:
 			pos = self.makeTextInfo(textInfos.POSITION_FIRST if direction == "next" else textInfos.POSITION_LAST)
 		obj = pos.innerTextInfo._startObj
+		if nodeType=="container":
+			while obj!=self.rootNVDAObject:
+				if obj.role==controlTypes.ROLE_TABLE:
+					ti=self.makeTextInfo(obj)
+					yield browseMode.TextInfoQuickNavItem(nodeType, self, ti)
+					return
+				obj=obj.parent
+			return
+		roles = self.NODE_TYPES_TO_ROLES.get(nodeType)
+		if not roles:
+			raise NotImplementedError
 		# Find the first embedded object in the requested direction.
 		# Use the text, as enumerating IAccessibleHypertext means more cross-process calls.
 		offset = pos.innerTextInfo._start._startOffset
