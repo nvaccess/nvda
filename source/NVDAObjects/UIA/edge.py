@@ -458,7 +458,7 @@ class EdgeNode(UIA):
 	# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
 	# character and before the ';' character.
 	# This could be one of: "false", "true", "page", "step", "location", "date", "time"
-	# "false" is ignored, so it falls back to the default implementation, which is false
+	# "false" is ignored by the regEx and will not produce a match
 	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
 
 	def _get_isCurrent(self):
