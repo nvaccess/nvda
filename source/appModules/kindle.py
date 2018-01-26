@@ -3,6 +3,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from comtypes import COMError
 import time
 from comtypes.hresult import S_OK
 import appModuleHandler
@@ -18,6 +19,7 @@ import browseMode
 from browseMode import BrowseModeDocumentTreeInterceptor
 import textInfos
 from textInfos import DocumentWithPageTurns
+from IAccessibleHandler import IAccessible2
 from NVDAObjects.IAccessible import IAccessible
 from globalCommands import SCRCAT_SYSTEMCARET
 from NVDAObjects.IAccessible.ia2TextMozilla import MozillaCompoundTextInfo
@@ -62,6 +64,22 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
+
+	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		obj=startPos.NVDAObjectAtStart
+		while not obj.table and obj!=startPos.obj.rootNVDAObject:
+			obj=obj.parent
+		if not obj.table:
+			raise LookupError
+		table = obj.table
+		try:
+			cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			if cell.IA2Attributes.get('hidden'):
+				raise LookupError("Found hidden cell") 
+			return self.makeTextInfo(cell)
+		except (COMError, RuntimeError):
+			raise LookupError
 
 	def _changePageScriptHelper(self,gesture,previous=False):
 		if isScriptWaiting():
