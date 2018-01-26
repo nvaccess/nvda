@@ -579,9 +579,21 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	def _get_rowSpan(self):
+		"""The number of rows spanned by this cell.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
 	def _get_rowHeaderText(self):
 		"""The text of the row headers for this cell.
 		@rtype: str
+		"""
+		raise NotImplementedError
+
+	def _get_columnSpan(self):
+		"""The number of columns spanned by this cell.
+		@rtype: int
 		"""
 		raise NotImplementedError
 
