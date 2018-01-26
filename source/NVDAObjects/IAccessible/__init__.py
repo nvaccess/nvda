@@ -1067,6 +1067,11 @@ the NVDAObject for IAccessible
 			index=self.IA2PhysicalRowNumber
 		return index
 
+	def _get_rowSpan(self):
+		if self._IATableCell:
+			return self._IATableCell.rowExtent
+		raise NotImplementedError
+
 	def _get_IA2PhysicalColumnNumber(self):
 		table=self.table
 		if table:
@@ -1089,6 +1094,11 @@ the NVDAObject for IAccessible
 		if index is None:
 			index=self.IA2PhysicalColumnNumber
 		return index
+
+	def _get_columnSpan(self):
+		if self._IATableCell:
+			return self._IATableCell.columnExtent
+		raise NotImplementedError
 
 	def _get_IA2PhysicalRowCount(self):
 		if hasattr(self,'IAccessibleTableObject'):
