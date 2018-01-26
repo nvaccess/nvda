@@ -92,7 +92,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		"""
 		raise NotImplementedError
 
-	_missingTableCellSearchLimit=3 #: The number of missing  cells L{_getNearestTableCell} is allowed to skip over to locate the next available cell
+	_missingTableCellSearchLimit=20 #: The number of missing  cells L{_getNearestTableCell} is allowed to skip over to locate the next available cell
 	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		"""
 		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
