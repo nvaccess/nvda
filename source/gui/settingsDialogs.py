@@ -2157,10 +2157,8 @@ class InputGesturesDialog(SettingsDialog):
 		# Use the last normalized identifier, which is the most generic one
 		scriptName = gesture.normalizedIdentifiers[-1]
 		from globalCommands import GlobalCommands
-		scriptInfo = inputCore.AllGesturesScriptInfo(GlobalCommands, scriptName)
-		scriptInfo.category = inputCore.SCRCAT_KBEMU
-		disp = scriptInfo.displayName = keyLabels.getKeyCombinationLabel(scriptName[3:])
-		self.tree.SetItemText(treeCom, disp)
+		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(GlobalCommands, scriptName)
+		self.tree.SetItemText(treeCom, scriptInfo.displayName)
 		self.tree.SetItemPyData(treeCom, scriptInfo)
 		self.addedKbEmuScriptInfos.add(scriptInfo)
 		self.onTreeSelect(None)

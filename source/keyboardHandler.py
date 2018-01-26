@@ -608,7 +608,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else:
 				# The main key must be last, so handle that outside the loop.
 				main = label
-		names.append(main)
+		if main is not None:
+			# If there is no main key, this gesture identifier only contains modifiers.
+			names.append(main)
 		return dispSource, "+".join(names)
 
 inputCore.registerGestureSource("kb", KeyboardInputGesture)
