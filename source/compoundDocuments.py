@@ -151,6 +151,8 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
+			field['table-rowsspanned']=obj.rowSpan
+			field['table-columnsspanned']=obj.columnSpan
 		return field
 
 	def __eq__(self, other):
