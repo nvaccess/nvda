@@ -623,23 +623,25 @@ class KeyboardSettingsDialog(SettingsDialog):
 		except:
 			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True) 
 
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings dialog.
-		capsAsNVDAText = _("Use CapsLock as an NVDA modifier key")
-		self.capsAsNVDAModifierCheckBox=sHelper.addItem(wx.CheckBox(self,label=capsAsNVDAText))
-		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings dialog.
-		numpadInsertAsModText = _("Use numpad Insert as an NVDA modifier key")
-		self.numpadInsertAsNVDAModifierCheckBox=sHelper.addItem(wx.CheckBox(self,label=numpadInsertAsModText))
-		self.numpadInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"])
-
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings dialog.
-		extendedInsertAsModText = _("Use extended Insert as an NVDA modifier key")
-		self.extendedInsertAsNVDAModifierCheckBox=sHelper.addItem(wx.CheckBox(self,label=extendedInsertAsModText))
-		self.extendedInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"])
+		#Translators: This is the label for a list of checkboxes
+		# controlling which keys are NVDA modifier keys.
+		modifierBoxLabel = _("&Select NVDA Modifier Keys")
+		self.modifierChoices = [
+			# Translators: This is the label for a choice in the
+			# NVDA key modifier selection list.
+			_("Numpad Insert"),
+			# Translators: This is the label for a choice in the
+			# NVDA key modifier selection list.
+			_("Extended Insert"),
+			# Translators: This is the label for a choice in the
+			# NVDA key modifier selection list.
+			_("CapsLock"),
+		]
+		self.kbdList=sHelper.addLabeledControl(modifierBoxLabel, nvdaControls.CustomCheckableList, choices=self.modifierChoices)
+		#self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
+		#self.numpadInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"])
+		#self.extendedInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"])
 
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings dialog.
