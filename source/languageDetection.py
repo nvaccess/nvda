@@ -1,44 +1,41 @@
+#languageDetection.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 Dinesh Kaushal, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-
-
+#Copyright (C) 2018 NV Access Limited, Dinesh Kaushal
 
 """Handles detection of languages in Unicode text.
 """
 
-import speech
 from speech import SpeechCommand
 from speech import LangChangeCommand
 import languageHandler
 import config
 from unicodeScriptData import scriptCode
 from collections import OrderedDict
-from logHandler import log
+from collections import namedtuple
 import unicodedata
+
+# unicode digit constants
+DIGIT_ZERO = 0x30
+DIGIT_NINE = 0x39
+FULLWIDTH_ZERO = 0xFF10
+FULLWIDTH_NINE = 0xFF19
 
 # maintains list of priority languages as a list of languageID, ScriptName, and LanguageDescription
 languagePriorityListSpec = []
 
 scriptIDToLangID = {}
 
+LanguageDescription = namedtuple("LanguageDescription" , "languageID description")
+LanguageScriptDescription = namedtuple("LanguageScriptDescription" , "languageID scriptID description")
+
 def initialize():
 	#reverse of langIDToScriptID, required to obtain language id for a specific script 
 	for languageID in langIDToScriptID:
-		langIDToScriptID[languageID] = (langIDToScriptID[languageID] + ('Number',)) if isinstance(langIDToScriptID[languageID], tuple) else (langIDToScriptID[languageID], 'Number')
-		#log.debugWarning("script name: {} data type: {}".format( langIDToScriptID[languageID] , type( langIDToScriptID[languageID]) ) )
-		if(isinstance(langIDToScriptID[languageID] ,tuple ) ):
-			for scriptName in langIDToScriptID[languageID]: 
-				if not (scriptName in scriptIDToLangID): scriptIDToLangID[ scriptName ] =  languageID 
-		else:
-			if not (langIDToScriptID[languageID] in scriptIDToLangID):
-				scriptIDToLangID[ langIDToScriptID[languageID] ] =  languageID 
-	# following 2 loops are only for log, they should be removed before final code
-	for languageID in langIDToScriptID:
-		log.debugWarning("script name: {} for language {}".format( langIDToScriptID[languageID] , languageID ) )
-	for scriptName in scriptIDToLangID:
-		log.debugWarning("language code: {} for script {}".format( scriptIDToLangID[ scriptName ] , scriptName ) ) 	
+		# Since every entry in langIDToScriptID is a tuple of scripts, we need to iterate all 
+		for scriptName in langIDToScriptID[languageID]: 
+			if not (scriptName in scriptIDToLangID): scriptIDToLangID[ scriptName ] =  languageID 
 	updateLanguagePriorityFromConfig()
 
 def updateLanguagePriorityFromConfig():
@@ -48,56 +45,56 @@ def updateLanguagePriorityFromConfig():
 	try:
 		languageList = config.conf["languageDetection"]["preferredLanguages"]
 		for language in languageList: 
-			tempList.append( [ language , getScriptIDFromLangID(language) , getLanguageDescription( language ) ]) 
+			tempList.append( LanguageScriptDescription(languageID   = language , scriptID = getScriptIDFromLangID(language) , description = getLanguageDescription( language ) )) 
 		languagePriorityListSpec = tempList 
 	except KeyError:
 		pass
 
 langIDToScriptID = OrderedDict([
-	("en" , "Latin"),
-	("af_ZA" , "Latin"),
-	("ca" , "Latin"),
-	("cs" , "Latin"),
-	("da" , "Latin"),
-	("de" , "Latin"),
-	("el" , ("Latin" , "Greek" ) ),
-	("es" , "Latin"),
-	("fi" , "Latin"),
-	("fr" , "Latin"),
-	("ga" , "Latin"),
-	("gl" , "Latin"),
-	("hr" , "Latin"),
-	("nl" , "Latin"),
-	("pl" , "Latin"),
-	("pt_br" , "Latin"),
-	("sl" , "Latin"),
-	("am" , "Armenian"),
-	("ar" , "Arabic"),
-	("as" , "Bengali"),
-	("bg" , "Cyrillic"),
-	("bn" , "Bengali"),
-	("fa" , "Arabic"),
-	("gu" , "Gujarati"),
-	("ka" , "Georgian"),
-	("kn" , "Kannada"),
-	("mk" , "Cyrillic"),
-	("ml" , "Malayalam"),
-	("mn" , "Mongolian"),
-	("he" , "Hebrew"),
-	("hi" , "Devanagari"),
-	("mr" , "Devanagari"),
-	("ne" , "Devanagari"),
-	("sa" , "Devanagari"),
-	("or" , "Oriya"),
-	("pa" , "Gurmukhi"),
-	("ru" , "Cyrillic"),
-	("sq" , "Caucasian_Albanian"),
-	("ta" , "Tamil"),
-	("te" , "Telugu"),
-	("sr" , ("Latin" , "Cyrillic")),
-	("ja" , ("Han", "Hiragana", "Katakana", "FullWidthNumber" )), 
-	("ko" , ("Han", "Hiragana", "Katakana", "Hangul" , "FullWidthNumber" )), 
-	("zh" , ("Han", "Hiragana", "Katakana", "FullWidthNumber"  )), 
+	("en" , ("Latin", "Number" ) ),
+	("af_ZA" , ( "Latin", "Number" ) ),
+	("ca" , ( "Latin", "Number" ) ),
+	("cs" , ( "Latin" , "Number" ) ),
+	("da" , ( "Latin" , "Number" ) ),
+	("de" , ( "Latin" , "Number" ) ),
+	("el" , ("Latin" , "Greek" , "Number" ) ),
+	("es" , ( "Latin" , "Number" ) ),
+	("fi" , ( "Latin" , "Number" ) ),
+	("fr" , ( "Latin" , "Number" ) ),
+	("ga" , ( "Latin" , "Number" ) ),
+	("gl" , ( "Latin" , "Number" ) ),
+	("hr" , ( "Latin" , "Number" ) ),
+	("nl" , ( "Latin" , "Number" ) ),
+	("pl" , ( "Latin" , "Number" ) ),
+	("pt_br" , ( "Latin" , "Number" ) ),
+	("sl" , ( "Latin" , "Number" ) ),
+	("am" , ( "Armenian" , "Number" ) ),
+	("ar" , ( "Arabic" , "Number" ) ),
+	("as" , ( "Bengali" , "Number" ) ),
+	("bg" , ( "Cyrillic" , "Number" ) ),
+	("bn" , ( "Bengali" , "Number" ) ),
+	("fa" , ( "Arabic" , "Number" ) ),
+	("gu" , ( "Gujarati" , "Number" ) ),
+	("ka" , ( "Georgian" , "Number" ) ),
+	("kn" , ( "Kannada" , "Number" ) ),
+	("mk" , ( "Cyrillic" , "Number" ) ),
+	("ml" , ( "Malayalam" , "Number" ) ),
+	("mn" , ( "Mongolian" , "Number" ) ),
+	("he" , ( "Hebrew" , "Number" ) ),
+	("hi" , ( "Devanagari" , "Number" ) ),
+	("mr" , ( "Devanagari" , "Number" ) ),
+	("ne" , ( "Devanagari" , "Number" ) ),
+	("sa" , ( "Devanagari" , "Number" ) ),
+	("or" , ( "Oriya" , "Number" ) ),
+	("pa" , ( "Gurmukhi" , "Number" ) ),
+	("ru" , ( "Cyrillic" , "Number" ) ),
+	("sq" , ( "Caucasian_Albanian" , "Number" ) ),
+	("ta" , ( "Tamil" , "Number" ) ),
+	("te" , ( "Telugu" , "Number" ) ),
+	("sr" , ("Latin" , "Cyrillic" , "Number" ) ),
+	("ja" , ("Han", "Hiragana", "Katakana", "FullWidthNumber" , "Number" ) ), 
+	("ko" , ("Han", "Hiragana", "Katakana", "Hangul" , "FullWidthNumber" , "Number" ) ), 
+	("zh" , ("Han", "Hiragana", "Katakana", "FullWidthNumber"  , "Number" ) ), 
 ])
 
 def getLanguagesWithDescriptions(ignoreLanguages=None):
@@ -109,14 +106,14 @@ def getLanguagesWithDescriptions(ignoreLanguages=None):
 	allLanguages.sort()
 	languageDescriptions = []
 	if ignoreLanguages is None:
-		ignoreLanguages = {lang[0] for lang in languagePriorityListSpec}
+		ignoreLanguages = {lang.languageID for lang in languagePriorityListSpec}
 	for language in allLanguages:  
 		if language in ignoreLanguages: 
 			continue
 		else:
 			desc=languageHandler.getLanguageDescription(language )
 			label="%s, %s"%(desc,language ) if desc else language 
-			languageDescriptions.append((language , label))
+			languageDescriptions.append( LanguageDescription(languageID= language , description = label))
 	return languageDescriptions
 
 def getScriptCode(chr):
@@ -130,9 +127,9 @@ def getScriptCode(chr):
 	characterUnicodeCode = ord(chr)
 	# Number should respect preferred language setting
 	# FullWidthNumber is in Common category, however, it indicates Japanese language context
-	if 0x30 <= characterUnicodeCode <= 0x39:
+	if DIGIT_ZERO  <= characterUnicodeCode <= DIGIT_NINE:
 		return "Number"
-	elif 0xff10 <= characterUnicodeCode <= 0xff19:
+	elif FULLWIDTH_ZERO <= characterUnicodeCode <= FULLWIDTH_NINE: 
 		return "FullWidthNumber"
 	while( mEnd >= mStart ):
 		midPoint = (mStart + mEnd ) >> 1
@@ -151,10 +148,9 @@ def getLangID(scriptName ):
 	@return: It returns languageID for a script. it first checks whether there is a language for the script in the languagePriorityListSpec. If not, then it checks whether default language script is same as the script. At last it returns languageID for the script from scriptIDToLangID.
 	@rtype: string"""
 	# we are using loop during search to maintain priority
-	for priorityLanguage, priorityScript, priorityDescription in  languagePriorityListSpec:
-		log.debugWarning(u"priorityLanguage {}, priorityScript {}, priorityDescription {}".format(priorityLanguage, priorityScript, priorityDescription )  )
-		if scriptName in priorityScript: 
-			return priorityLanguage
+	for priorityLanguage in  languagePriorityListSpec:
+		if scriptName in priorityLanguage.scriptID:
+			return priorityLanguage.languageID
 	#language not found in the languagePriorityListSpec, so check if default language can be applied for the script
 	if scriptName == getScriptIDFromLangID(languageHandler.getLanguage() ):
 		return  languageHandler.getLanguage()
@@ -234,14 +230,8 @@ def detectLanguage(text, defaultLanguage =None):
 		sequenceWithLanguage.append( text)
 		return sequenceWithLanguage
 
-
 	tempSequence = detectScript(text)
 	scriptCode = ""
-	for item in tempSequence: 
-		if isinstance(item,ScriptChangeCommand):
-			scriptCode = item.scriptCode
-		else:
-			log.debugWarning(u"script: {} for text {} ".format( scriptCode , unicode(item) ) )
 
 	if defaultLanguage:
 		scriptIDForDefaultLanguage = getScriptIDFromLangID( defaultLanguage )
@@ -274,11 +264,4 @@ def detectLanguage(text, defaultLanguage =None):
 		#end if isinstance(item,ScriptChangeCommand):
 	#end for index in xrange(len(tempSequence )):
 
-	tempLanguageCode = ""
-	for item in sequenceWithLanguage: 
-		if isinstance(item,LangChangeCommand):
-			tempLanguageCode = item.lang
-		else:
-			log.debugWarning(u"language: {} for text {} ".format( tempLanguageCode , unicode(item) ) )
-	log.debugWarning("number of items in script list: {}, number of items in language list: {} preferredLanguage: {}".format(len(tempSequence ) , len(sequenceWithLanguage) , defaultLanguage ) )
 	return sequenceWithLanguage

@@ -1,3 +1,15 @@
+#unicodeData.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2018 NV Access Limited, Dinesh Kaushal
+
+"""
+This file is created by unicodeScriptPrep and includes a list which is binary searched by languageDetection.getScriptCode.
+Each entry contains 3 items from unicode scripts.txt: range start, range end, and script name.
+These entries should not overlap, but there could be gaps
+"""
+
 scriptCode= [
 	( 0X0 , 0X40 , "Common" ), 
 	( 0X41 , 0X5a , "Latin" ), 

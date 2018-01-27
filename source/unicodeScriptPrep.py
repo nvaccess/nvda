@@ -1,7 +1,8 @@
+#unicodeScriptPrep.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015 Dinesh Kaushal, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+#Copyright (C) 2018 NV Access Limited, Dinesh Kaushal
 
 """unicodeScriptPrep module is used to build unicodeScriptData.py file. This module obtains scripts.txt from unicode.org and builds an array of unicode ranges. 
 After  the array is created, it is written to the unicodeScriptData.py module.

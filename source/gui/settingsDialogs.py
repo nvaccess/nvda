@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+﻿# -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager
@@ -2173,10 +2173,10 @@ class LanguageDetectionDialog(SettingsDialog):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		self.languageNames = list(languageDetection.languagePriorityListSpec)
-		languageChoices =[x[2] for x in self.languageNames]
+		languageChoices =[language.description for language in self.languageNames]
 		# Translators: The label for the list of preferred languages in the Language Detection dialog.
 		languageLabelText = _("&Preferred languages:")
-		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
+		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.ListBox , choices=languageChoices)
 		# Translators: tooltip text for the list of preferred languages in the Language Detection dialog.
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language that you want for a script such as latin."))
 
@@ -2191,7 +2191,7 @@ class LanguageDetectionDialog(SettingsDialog):
 		self.moveDownButton = bHelper.addButton(self, label=_("Move &Down")) 
 		self.moveDownButton.Bind(wx.EVT_BUTTON, self.OnMoveDown )
 		# Translators: The label for a button in the Language Detection dialog to add a new language.
-		self.addButton = bHelper.addButton(self, label=_("&add")) 
+		self.addButton = bHelper.addButton(self, label=_("&Add")) 
 		self.addButton.Bind(wx.EVT_BUTTON, self.OnAdd )
 		# Translators: The label for a button in the Language Detection dialog to remove a language.
 		self.removeButton = bHelper.addButton(self, label=_("&Remove")) 
@@ -2225,17 +2225,17 @@ class LanguageDetectionDialog(SettingsDialog):
 
 	def OnAdd(self,evt):
 		#while adding new languages we filter out existing languages in the prefered language list
-		ignoreLanguages = {x[0] for x in self.languageNames}
+		ignoreLanguages = {language.languageID  for language in self.languageNames }
 		languageList = languageDetection.getLanguagesWithDescriptions(ignoreLanguages)
 		dialog = wx.SingleChoiceDialog(None,
 			# Translators: The title of a dialog to choose a language.
 			_("Language"),
 			# Translators: The caption of a dialog to add a language to the preferred list of languages for auto language detection.
-			_("Choose language to be added to prefered languages"),
-			choices=[x[1] for x in languageList])
+			_("Add prefered language"),
+			choices=[language.description for language in languageList])
 		if dialog.ShowModal() == wx.ID_OK:
-			languageTuple = languageList[ dialog.GetSelection() ][0] , languageDetection.getScriptIDFromLangID( languageList[ dialog.GetSelection() ][0] ) , languageList[ dialog.GetSelection() ][1] 
-			self.languageNames.insert(0, languageTuple )
+			languageScriptDescription  = languageDetection.LanguageScriptDescription( languageID =  languageList[ dialog.GetSelection() ].languageID , scriptID = languageDetection.getScriptIDFromLangID( languageList[ dialog.GetSelection() ].languageID ) , description = languageList[ dialog.GetSelection() ].description )
+			self.languageNames.insert(0, languageScriptDescription  )
 			self.updateList()
 		dialog.Destroy()
 
@@ -2247,7 +2247,7 @@ class LanguageDetectionDialog(SettingsDialog):
 
 	def onOk(self, evt):
 		if self.languageListChanged: 
-			languageList = [item[0] for item in self.languageNames]
+			languageList = [item.languageID for item in self.languageNames]
 			config.conf["languageDetection"]["preferredLanguages"] = languageList
 			languageDetection.updateLanguagePriorityFromConfig()
 		config.conf["languageDetection"]["disableScriptDetection"]  = self.disableScriptDetectionCheckbox.IsChecked()
@@ -2255,6 +2255,6 @@ class LanguageDetectionDialog(SettingsDialog):
 
 	def updateList(self,currentSelection=0):
 		self.languageList.Clear()
-		self.languageList.AppendItems([x[2] for x in self.languageNames])
+		self.languageList.AppendItems([language.description for language in self.languageNames])
 		self.languageList.SetSelection(currentSelection)
 		self.languageListChanged = True
