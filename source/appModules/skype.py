@@ -160,7 +160,8 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 			ui.message(_("No message yet"))
 			return
 		message = self.getChild(count - index)
-		api.setNavigatorObject(message)
+		# Reviewing a message should not auto tether
+		api.setNavigatorObject(message, isFocus=True)
 		self.reportMessage(message.name)
 
 class Notification(NVDAObjects.behaviors.Notification):

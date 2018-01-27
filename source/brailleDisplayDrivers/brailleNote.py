@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-# Copyright (C) 2011, 2012  Rui Batista <ruiandrebatista@gmail.com>
+# Copyright (C) 2011-2017 Rui Batista, NV Access Limited
 
 """ Braille Display driver for the BrailleNote notetakers in terminal mode.
 USB, serial and bluetooth communications are supported.
@@ -11,12 +11,12 @@ QWERTY keyboard input and scroll weels are not yet supported.
 from collections import OrderedDict
 import itertools
 import serial
-import wx
 import braille
 import brailleInput
 import hwPortUtils
 import inputCore
 from logHandler import log
+import hwIo
 
 BLUETOOTH_NAMES = ("Braillenote",)
 BLUETOOTH_ADDRS = (
@@ -29,7 +29,6 @@ USB_IDS = frozenset((
 
 BAUD_RATE = 38400
 TIMEOUT = 0.1
-READ_INTERVAL = 50
 
 # Tags sent by the braillenote
 # Combinations of dots 1...6
@@ -87,6 +86,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailleNote"
 	# Translators: Names of braille displays
 	description = _("HumanWare BrailleNote")
+	isThreadSafe = True
 
 	@classmethod
 	def check(cls):
@@ -139,7 +139,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self._serial = None
-		self._buffer = ""
 		if port == "auto":
 			portsToTry = itertools.chain(self._getUSBPorts(), self._getBluetoothPorts())
 		elif port == "usb":
@@ -148,76 +147,51 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			portsToTry = self._getBluetoothPorts()
 		else:
 			portsToTry = (port,)
-		found = False
 		for port in portsToTry:
 			log.debug("Checking port %s for a BrailleNote", port)
 			try:
-				self._serial = serial.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, parity=serial.PARITY_NONE)
-			except serial.SerialException:
+				self._serial = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, parity=serial.PARITY_NONE, onReceive=self._onReceive)
+			except EnvironmentError:
 				continue
 			# Check for cell information
 			if self._describe():
 				log.debug("BrailleNote found on %s with %d cells", port, self.numCells)
-				found = True
 				break
 			else:
 				self._serial.close()
-		if not found:
+		else:
 			raise RuntimeError("Can't find a braillenote device (port = %s)" % port)
-		# start reading keys
-		self._readTimer = wx.PyTimer(self._readKeys)
-		self._readTimer.Start(READ_INTERVAL)
 
 	def terminate(self):
 		try:
 			super(BrailleDisplayDriver, self).terminate()
-			self._readTimer.Stop()
-			self._readTimer = None
 		finally:
-			self._closeComPort()
-
-	def _closeComPort(self):
-		if self._readTimer is not None:
-			self._readTimer.Stop()
-			self._readTimer = None
-		if self._serial is not None:
-			log.debug("Closing port %s", self._serial.port)
 			self._serial.close()
 			self._serial = None
 
 	def _describe(self):
-		log.debug("Writing sdescribe tag")
+		self.numCells = 0
+		log.debug("Writing describe tag")
 		self._serial.write(DESCRIBE_TAG)
-		# This seems always able to read the three bytes, but if someone complain it might be better to retry
-		packet = self._serial.read(3)
-		log.debug("Read %d bytes", len(packet))
-		if len(packet) != 3 or packet[0] != chr(STATUS_TAG):
-			log.debug("Not a braillenote")
-			return False
-		self._numCells = ord(packet[2])
-		return True
+		self._serial.waitForRead(TIMEOUT)
+		# If a valid response was received, _onReceive will have set numCells.
+		if self.numCells:
+			return True
+		log.debug("Not a braillenote")
+		return False
 
-	def _get_numCells(self):
-		return self._numCells
+	def _onReceive(self, command):
+		command = ord(command)
+		if command == STATUS_TAG:
+			arg = self._serial.read(2)
+			self.numCells = ord(arg[1])
+			return
+		arg = self._serial.read(1)
+		if not arg:
+			log.debugWarning("Timeout reading argument for command 0x%X" % command)
+			return
+		self._dispatch(command, ord(arg))
 
-	def _readKeys(self):
-		try:
-			while self._serial is not None and self._serial.inWaiting():
-				command, arg = self._readPacket()
-				if command:
-					self._dispatch(command, arg)
-		except serial.SerialException:
-			self._closeComPort()
-			# Reraise to be logged
-			raise
-
-	def _readPacket(self):
-		self._buffer += self._serial.read(2 - len(self._buffer))
-		if len(self._buffer) < 2:
-			return None, None
-		command, arg = ord(self._buffer[0]), ord(self._buffer[1])
-		self._buffer = ""
-		return command, arg
 	def _dispatch(self, command, arg):
 		space = False
 		if command == THUNB_KEYS_TAG :
@@ -241,16 +215,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			pass
 
 	def display(self, cells):
-		# if the serial port is not open don't even try to write
-		if self._serial is None:
-			return
 		# ESCAPE must be quoted because it is a control character
 		cells = [chr(cell).replace(ESCAPE, ESCAPE * 2) for cell in cells]
-		try:
-			self._serial.write(DISPLAY_TAG + "".join(cells))
-		except serial.SerialException, e:
-			self._closeComPort()
-			raise
+		self._serial.write(DISPLAY_TAG + "".join(cells))
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {

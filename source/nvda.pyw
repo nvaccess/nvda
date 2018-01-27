@@ -1,6 +1,6 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -24,6 +24,14 @@ import pythonMonkeyPatches
 import ctypes
 import locale
 import gettext
+
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+try:
+	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+except:
+	gettext.install('nvda',unicode=True)
+
 import time
 import argparse
 import win32con
@@ -33,6 +41,18 @@ import logHandler
 from logHandler import log
 import winUser
 import winKernel
+
+# Find out if NVDA is running as a Windows Store application
+bufLen=ctypes.c_int()
+try:
+	GetCurrentPackageFullName=ctypes.windll.kernel32.GetCurrentPackageFullName
+except AttributeError:
+	config.isAppX=False
+else:
+	bufLen=ctypes.c_int()
+	# Use GetCurrentPackageFullName to detect if we are running as a store app.
+	# It returns 0 (success) if in a store app, and an error code otherwise. 
+	config.isAppX=(GetCurrentPackageFullName(ctypes.byref(bufLen),None)==0)
 
 class NoConsoleOptionParser(argparse.ArgumentParser):
 	"""A commandline option parser that shows its messages using dialogs,  as this pyw file has no dos console window associated with it"""
@@ -51,22 +71,15 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 
 globalVars.startTime=time.time()
 
-#Localization settings
-locale.setlocale(locale.LC_ALL,'')
-try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
-except:
-	gettext.install('nvda',unicode=True)
-
 # Check OS version requirements
 import winVersion
-if not winVersion.canRunVc2010Builds():
+if not winVersion.isSupportedOS():
 	winUser.MessageBox(0, unicode(ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION)), None, winUser.MB_ICONERROR)
 	sys.exit(1)
 
 def decodeMbcs(string):
-  """Decode a multi-byte character set string"""
-  return string.decode("mbcs")
+	"""Decode a multi-byte character set string"""
+	return string.decode("mbcs")
 
 #Process option arguments
 parser=NoConsoleOptionParser()
@@ -85,6 +98,9 @@ parser.add_argument('--no-sr-flag',action="store_false",dest='changeScreenReader
 installGroup = parser.add_mutually_exclusive_group()
 installGroup.add_argument('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
 installGroup.add_argument('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
+installGroup.add_argument('--create-portable',action="store_true",dest='createPortable',default=False,help="Creates a portable copy of NVDA (starting the new copy after installation)")
+installGroup.add_argument('--create-portable-silent',action="store_true",dest='createPortableSilent',default=False,help="Creates a portable copy of NVDA silently (does not start the new copy after installation).")
+parser.add_argument('--portable-path',dest='portablePath',default=None,type=decodeMbcs,help="The path where a portable copy will be created")
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
@@ -184,14 +200,11 @@ log.debug("Debug level logging enabled")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
 #Accept wm_quit from other processes, even if running with higher privilages
-try:
-	if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
-		raise WinError()
-except AttributeError:
-	pass
+if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
+	raise WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
-if not isSecureDesktop:
+if not isSecureDesktop and not config.isAppX:
 	import easeOfAccess
 	easeOfAccess.notify(3)
 try:
@@ -201,7 +214,7 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
-	if not isSecureDesktop:
+	if not isSecureDesktop and not config.isAppX:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)

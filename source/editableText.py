@@ -14,6 +14,7 @@ import sayAllHandler
 import api
 import review
 from baseObject import ScriptableObject
+from documentBase import TextContainerObject
 import braille
 import speech
 import config
@@ -23,7 +24,7 @@ import textInfos
 import controlTypes
 from logHandler import log
 
-class EditableText(ScriptableObject):
+class EditableText(TextContainerObject,ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
 	This does not handle the selection change keys.
 	To have selection changes reported, the object must notify of selection changes.
@@ -42,6 +43,10 @@ class EditableText(ScriptableObject):
 
 	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
 	announceNewLineText=True
+	#: When announcing new line text: should the entire line be announced, or just text after the caret?
+	announceEntireNewLine=False
+
+	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
@@ -93,8 +98,11 @@ class EditableText(ScriptableObject):
 			if newBookmark and newBookmark!=bookmark:
 				log.debug("Caret move detected using bookmarks. Elapsed: %d ms" % elapsed)
 				return (True, newInfo)
-			if origWord is not None and newInfo:
+			if origWord is not None and newInfo and elapsed >= self._hasCaretMoved_minWordTimeoutMs:
 				# When pressing delete, bookmarks might not be enough to detect caret movement.
+				# Therefore try detecting if the word under the caret has changed, such as when pressing delete.
+				# some editors such as Mozilla Gecko can have text and units that get out of sync with eachother while a character is being deleted.
+				# Therefore, only check if the word has changed after a particular amount of time has elapsed, allowing the text and units to settle down.
 				wordInfo = newInfo.copy()
 				wordInfo.expand(textInfos.UNIT_WORD)
 				word = wordInfo.text
@@ -152,7 +160,8 @@ class EditableText(ScriptableObject):
 		except (RuntimeError,NotImplementedError):
 			return
 		lineInfo.expand(textInfos.UNIT_LINE)
-		lineInfo.setEndPoint(newInfo,"endToStart")
+		if not self.announceEntireNewLine: 
+			lineInfo.setEndPoint(newInfo,"endToStart")
 		if lineInfo.isCollapsed:
 			lineInfo.expand(textInfos.UNIT_CHARACTER)
 			onlyInitial=True

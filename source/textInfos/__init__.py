@@ -73,13 +73,16 @@ class ControlField(Field):
 			return self.PRESCAT_LAYOUT
 
 		if (
-			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM)
+			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_CHART, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG, controlTypes.ROLE_MATH):
+		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_MATH):
 			return self.PRESCAT_MARKER
+		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
+			# Applications and dialogs should be reported as markers when embedded within content, but not when they themselves are the root
+			return self.PRESCAT_MARKER if ancestors else self.PRESCAT_LAYOUT 
 		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			return self.PRESCAT_CELL
 		elif (

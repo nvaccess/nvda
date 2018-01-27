@@ -233,7 +233,7 @@ def listComPorts(onlyAvailable=True):
 				None
 			):
 				# #6007: SPDRP_FRIENDLYNAME sometimes doesn't exist/isn't valid.
-				log.debugWarning("Couldn't get SPDRP_FRIENDLYNAME for %s: %s" % (port, ctypes.WinError()))
+				log.debugWarning("Couldn't get SPDRP_FRIENDLYNAME for %r: %s" % (port, ctypes.WinError()))
 				entry["friendlyName"] = port
 			else:
 				entry["friendlyName"] = buf.value
