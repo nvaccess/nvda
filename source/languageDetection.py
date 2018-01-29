@@ -11,16 +11,10 @@ from speech import SpeechCommand
 from speech import LangChangeCommand
 import languageHandler
 import config
-from unicodeScriptData import scriptCode
+from unicodeScriptData import getScriptCode
 from collections import OrderedDict
 from collections import namedtuple
 import unicodedata
-
-# unicode digit constants
-DIGIT_ZERO = 0x30
-DIGIT_NINE = 0x39
-FULLWIDTH_ZERO = 0xFF10
-FULLWIDTH_NINE = 0xFF19
 
 # maintains list of priority languages as a list of languageID, ScriptName, and LanguageDescription
 languagePriorityListSpec = []
@@ -115,31 +109,6 @@ def getLanguagesWithDescriptions(ignoreLanguages=None):
 			label="%s, %s"%(desc,language ) if desc else language 
 			languageDescriptions.append( LanguageDescription(languageID= language , description = label))
 	return languageDescriptions
-
-def getScriptCode(chr):
-	"""performs a binary search in scripCodes for unicode ranges
-	@param chr: character for which a script should be found
-	@type chr: string
-	@return: script code
-	@rtype: int"""
-	mStart = 0
-	mEnd = len(scriptCode)-1
-	characterUnicodeCode = ord(chr)
-	# Number should respect preferred language setting
-	# FullWidthNumber is in Common category, however, it indicates Japanese language context
-	if DIGIT_ZERO  <= characterUnicodeCode <= DIGIT_NINE:
-		return "Number"
-	elif FULLWIDTH_ZERO <= characterUnicodeCode <= FULLWIDTH_NINE: 
-		return "FullWidthNumber"
-	while( mEnd >= mStart ):
-		midPoint = (mStart + mEnd ) >> 1
-		if characterUnicodeCode < scriptCode[midPoint][0]: 
-			mEnd = midPoint -1
-		elif characterUnicodeCode > scriptCode[midPoint][1]: 
-			mStart = midPoint + 1
-		else:
-			return scriptCode[midPoint][2] 
-	return None
 
 def getLangID(scriptName ):
 	"""This function is the heart of determining which language is selected for a script

@@ -16,15 +16,18 @@ def generateUnicodeScriptData():
 	url = 'http://www.unicode.org/Public/UNIDATA/Scripts.txt'
 	scriptDataFile = urllib2.urlopen(url)
 	for line in scriptDataFile:
+		# the following regular expression extracts fields from each line in the given format
+		#startCodePoint..endCodePoint;scriptName # comments
+		#for more information look at Unicode Technical Report #24 section 4
 		p = re.findall(r'([0-9A-F]+)(?:\.\.([0-9A-F]+))?\W+(\w+)\s*#\s*(\w+)', line)
 		if p:
-			a, b, name, cat = p[0]
-			unicodeRange.append((int(a, 16), int(b or a, 16), name  ))
+			startCodePoint, endCodePoint, scriptName, comment = p[0]
+			unicodeRange.append((int(startCodePoint, 16), int(endCodePoint or startCodePoint, 16), scriptName  ))
 	unicodeRange.sort()
 	#merge multiple adjacent ranges 
 	unicodeRange = normalize(unicodeRange )
 	#write the data to unicodeScriptData.txt
-	file = open("unicodeScriptData.py","w")
+	file = open("unicodeScriptDataTemp.py","w")
 	file.write ('\nscriptCode= [\n%s\n]\n' % ('\n'.join('\t( 0X%x , 0X%x , "%s" ), ' % c for c in unicodeRange) ) )
 	file.close()
 
