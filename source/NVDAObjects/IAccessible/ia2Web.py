@@ -13,6 +13,7 @@ import oleacc
 import IAccessibleHandler
 import controlTypes
 from logHandler import log
+from documentBase import DocumentWithTableNavigation
 from NVDAObjects.behaviors import Dialog, WebDialog 
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
@@ -49,8 +50,27 @@ class Application(Document):
 class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
 
-class Editor(Ia2Web):
+class Editor(Ia2Web, DocumentWithTableNavigation):
 	TextInfo = MozillaCompoundTextInfo
+
+	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		obj=startPos.NVDAObjectAtStart
+		while not obj.table and obj!=self:
+			obj=obj.parent
+		if not obj.table:
+			raise LookupError
+		table = obj.table
+		try:
+			try:
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+			except AttributeError:
+				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			if cell.IA2Attributes.get('hidden'):
+				raise LookupError("Found hidden cell") 
+			return self.makeTextInfo(cell)
+		except (COMError, RuntimeError):
+			raise LookupError
 
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
