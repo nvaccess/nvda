@@ -206,12 +206,12 @@ class MainFrame(wx.Frame):
 
 	def onUpdatePendingUpdateMenuItemCommand(self, evt):
 		try:
-			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.runPendingUpdateMenuItem)
+			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.installPendingUpdateMenuItem)
 		except:
-			log.debug("Error while removing run pending update menu item", exc_info=True)
+			log.debug("Error while removing  pending update menu item", exc_info=True)
 			pass
 		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
-			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.runPendingUpdateMenuItemPos,self.sysTrayIcon.runPendingUpdateMenuItem)
+			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
 
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
@@ -492,10 +492,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
-			self.runPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
-			item = self.runPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
+			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
+			item = self.installPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
 				# Translators: The label for the menu item to run a pending update.
-				_("Run pending &update"),
+				_("Install pending &update"),
 				# Translators: The description for the menu item to run a pending update.
 				_("Execute a previously downloaded NVDA update"))
 			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
@@ -805,7 +805,7 @@ class ExitDialog(wx.Dialog):
 		]
 		if updateCheck and updateCheck.isPendingUpdate():
 			# Translators: An option in the combo box to choose exit action.
-			self.actions.append(_("Run pending update"))
+			self.actions.append(_("Install pending update"))
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
