@@ -1,6 +1,6 @@
 #appModules/outlook.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NVDA Contributors <http://www.nvaccess.org/>
+#Copyright (C) 2006-2018 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -55,6 +55,20 @@ importanceLabels={
 	2:_("high importance"),
 	# Translators: For a low importance email
 	0:_("low importance"),
+}
+
+PR_LAST_VERB_EXECUTED = r"http://schemas.microsoft.com/mapi/proptag/0x10810003"
+
+lastVerbExecutedLabels={
+	# See https://stackoverflow.com/questions/44557175/getting-the-outlook-mails-latest-statusreplied-or-forwarded for a rationale for the chosen labels.
+	# Translators: for an email that has since been replied to.
+	102:_("replied"),
+	# Translators: for an email that has since been replied to all.
+	103:_("replied to all"),
+	# Translators: for an email that has since been forwarded.
+	104:_("forwarded"),
+	# Translators: for an email that has since been forwarded.
+	108:_("replied forwarded"), # Use of this is a bit vague
 }
 
 def getContactString(obj):
@@ -435,6 +449,12 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				flagIcon=0
 			flagIconLabel=oleFlagIconLabels.get(flagIcon)
 			if flagIconLabel: textList.append(flagIconLabel)
+			try:
+				lastVerbExecuted=selection.PropertyAccessor.GetProperty(PR_LAST_VERB_EXECUTED)
+			except COMError:
+				lastVerbExecuted=0
+			lastVerbExecutedLabel=lastVerbExecutedLabels.get(lastVerbExecuted)
+			if lastVerbExecutedLabel: textList.append(lastVerbExecutedLabel)
 			try:
 				attachmentCount=selection.attachments.count
 			except COMError:
