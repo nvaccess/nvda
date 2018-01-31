@@ -54,22 +54,31 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 	TextInfo = MozillaCompoundTextInfo
 
 	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		# Locate the table in the object ancestry of the given document position. 
 		obj=startPos.NVDAObjectAtStart
 		while not obj.table and obj!=self:
 			obj=obj.parent
 		if not obj.table:
+			# No table could be found
 			raise LookupError
 		table = obj.table
 		try:
+			# We support either IAccessibleTable or IAccessibleTable2 interfaces for locating table cells. 
+			# We will be able to get at least one of these.  
 			try:
 				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
 			except AttributeError:
+				# No IAccessibleTable2, try IAccessibleTable instead.
 				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
 			if cell.IA2Attributes.get('hidden'):
 				raise LookupError("Found hidden cell") 
+			# Return the position of the found cell
 			return self.makeTextInfo(cell)
 		except (COMError, RuntimeError):
+			# Any of the above calls could throw a COMError, and sometimes a RuntimeError.
+			# Treet this as the cell not existing.
 			raise LookupError
 
 class EditorChunk(Ia2Web):
