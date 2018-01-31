@@ -341,8 +341,11 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 		self.menu=wx.Menu()
 		menu_preferences=self.preferencesMenu=wx.Menu()
-		# Translators: The label for the menu item to open NVDA Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Settings..."),_("NVDA settings"))
+		item = menu_preferences.Append(wx.ID_ANY,
+			# Translators: The label for the menu item to open NVDA Settings dialog.
+			_("&Settings..."),
+			# Translators: The description for the menu item to open NVDA Settings dialog.
+			_("NVDA settings"))
 		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:

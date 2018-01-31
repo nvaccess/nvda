@@ -276,6 +276,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.sHelper = sHelper
 
+		# Translators: The label for the list of categories in a multi category settings dialog.
 		categoriesLabelText=_("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
 		self.categoryList = wx.ListCtrl(self,style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER,size=(200,300))
