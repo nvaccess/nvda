@@ -7,14 +7,14 @@ NVDA NVDA_VERSION Kullanıcı Rehberi
 = İçindekiler =[toc]
 %%toc
 
-+ Giriş +
++ Giriş +[Introduction]
 NVDA'ya hoş geldiniz!
 
 Görsel olmayan Masaüstü Erişimi anlamına gelen (NVDA) Microsoft Windows işletim sistemi için ücretsiz ve açık kaynak bir ekran okuma programıdır.
 NVDA Sentetik bir ses ya da braille ile geri bildirim sağlayarak, kör ya da az görenlerin extra bir ücret ödemeden Windows işletim sistemi kurulu bilgisayarları kullanabilmesini mümkün kılar.
 NVDA [NV Access tarafından https://www.nvaccess.org/], camiadan ilgili birçok insanın katkısıyla geliştirilmektedir.
 
-++ Genel Özellikler ++
+++ Genel Özellikler ++[GeneralFeatures]
 NVDA, kör ve az görenlerin Windows işletim sistemi ve sistemde kurulu birçok farklı uygulamaya erişimine ve bunlarla etkileşimine imkan vermektedir.
 
 En dikkat çeken özelliklere şunlar dahildir:
@@ -25,32 +25,33 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 51 dile çevrilmiş oluşu
+- 52 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
+- Dokunmatik hareketlerle metin ve kontrollerin bildirimi
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
 - Windows Komut İstemi ve Console uygulamalarının desteklenmesi
 -
 
-++ Yerel Dil Desteği ++
+++ Yerel Dil Desteği ++[Internationalization]
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 51 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Makedonca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 51 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Kırgızca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Makedonca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
-++ Konuşma Sentezleyici Desteği ++
+++ Konuşma Sentezleyici Desteği ++[SpeechSynthesizerSupport]
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
 
 NVDA ücretsiz, açık kaynak kodlu ve çok dilli bir sentezleyici olan [eSpeak NG https://github.com/espeak-ng/espeak-ng], sentezleyicisiyle birlikte dağıtılmaktadır.
 
 NVDA tarafından desteklenen diğer sentezleyicilerle ilgili bilgi [Desteklenen Konuşma Sentezleyicileri #SupportedSpeechSynths] bölümünden alınabilir.
 
-++ Braille Desteği ++
+++ Braille Desteği ++[BrailleSupport]
 NVDA birçok braille ekranı da desteklemektedir.
-Braille kılavyeyle yapılan kısaltmasız ve kısaltmalı braille girişi de ayrıca desteklenir.
+Braille klavyeyle yapılan kısaltmasız ve kısaltmalı braille girişi de ayrıca desteklenir.
 Lütfen desteklenen braille ekranlarla ilgili bilgi için [Desteklenen Braille Ekranlar #SupportedBrailleDisplays] bölümüne bakın.
 
 NVDA birçok dilde kısaltmalı, kısaltmasız ve bilgisayar braille kodlarını desteklemektedir.
 
-++ Lisans ve Kopya Hakkı ++
+++ Lisans ve Kopya Hakkı ++[LicenseAndCopyright]
 NVDA kopya hakkı NVDA_COPYRIGHT_YEARS NVDA katkı sağlayanlarına aittir.
 
 NVDA GNU General Public License (Version 2) (Yeni Genel Kamu Lisansı Sürüm2) tarafından korunmaktadır.
@@ -58,7 +59,7 @@ Programı, lisans şartlarına uyduğunuz ve kodlarını isteyen kişilerle de p
 Bu, Özgün ve değiştirilmiş yazılım kopyaları ile, bu kodları kullanan diğer yazılımlar için geçerlidir. 
 Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
-+ Sistem Gereksinimleri +
++ Sistem Gereksinimleri +[SystemRequirements]
 - İşletim Sistemleri: Windows 7  windows 8, Windows 8.1,  Windows 10 ve Windows Server 2008 R2'den itibaren Server işletim sistemleri dahil, işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
 - Windows 7 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
 - Windows Server 2008 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
@@ -67,7 +68,7 @@ Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. http://www.gnu.or
 - Yaklaşık 90 MB depolama alanı.
 -
 
-+ NVDA programının Tedariki ve Kurulumu +
++ NVDA programının Tedariki ve Kurulumu +[GettingAndSettingUpNVDA]
 Bir NVDA kopyanız yoksa, aşağıdaki bağlantıdan programı indirebilirsiniz. [www.nvaccess.org NVDA_URL].
 
 Buradan Download bölümüne giderek programın en son sürümünün indirme bağlantısına ulaşabilirsiniz.
@@ -86,7 +87,7 @@ NVDA taşınabilir sürümünün salt okunur bir medya üzerinden çalıştırı
 
 NVDA'nın geçici kopyasını kullanmaya devam etmek de bir seçenek olabilir, özellikle test ve demonstrasyon amacıyla, tabii her seferinde NVDA'nın bu şekilde başlatılması lüzumundan fazla zaman alacaktır.
 
-++ Taşınabilir ve Geçici Kopyaların Kısıtları ++
+++ Taşınabilir ve Geçici Kopyaların Kısıtları ++[PortableAndTemporaryCopyRestrictions]
 Windows'a giriş yaparken ya da giriş sonrasında otomatik olarak çalıştırılamamalarının yanında, taşınabilir ve geçici kopyalar aşağıdaki kısıtlara da sahiptir:
 - Yönetici yetkisiyle çalışan uygulamalarla etkileşim kuramaması, ki NVDA taşınabilir ve geçici kopyaları da yönetici yetkisiyle çalıştırılmaz.
 - Bir uygulama yönetici yetkisi istediğinde karşılaşılan kullanıcı hesap kontrol (UAC) ekranlarının okunamaması.
@@ -95,7 +96,7 @@ Windows'a giriş yaparken ya da giriş sonrasında otomatik olarak çalıştır�
 - Windows 8 ve sonrası: Ses zayıflaması özelliği desteklenmez.
 -
 
-++ NVDA'yı Kurma ++
+++ NVDA'yı Kurma ++[InstallingNVDA]
 NVDA'yı doğrudan indirdiğiniz dosya üzerinden kuruyorsanız, NVDA'yı kur düğmesine basın.
 Bu iletişim kutusunu kapattıysanız ya da kurulumu taşınabilir kopya üzerinden yapmak istiyorsanız, lütfen NVDA Araçlar menüsü altında bulunan NVDA'yı Kur menü ögesini bulup çalıştırın.
 
@@ -105,20 +106,20 @@ Bu iletişim kutusunda, aşağıda açıklanan birkaç seçenek daha bulunmaktad
  Kurulum bittiğinde, sürecin başarıyla tamamlandığını belirten bir mesajla karşılaşacaksınız.
  Bu noktada Tamam'a basmanız NVDA'nın kurulmuş olan kopyasını başlatacaktır.
  
-+++ Windows Giriş Ekranında NVDA'yı Kullan +++
++++ Windows Giriş Ekranında NVDA'yı Kullan +++[StartAtWindowsLogon]
 Bu seçenek NVDA'nın Windows giriş ekranında, parolanızı girmeden önce otomatik olarak başlayıp başlamayacağını belirlemenizi sağlar.
 Bu, kullanıcı hesabı denetimi (UAC) ekranı ve diğer güvenli ekranlar için de geçerlidir.
 
-+++ Masaüstünde Kısayol Oluştur (ctrl+alt+n) +++
++++ Masaüstünde Kısayol Oluştur (ctrl+alt+n) +++[CreateDesktopShortcut]
 Bu seçenek NVDA'nın başlatılması için bir masaüstü kısayolu oluşturmanızı sağlar. 
 Kısayol oluşturulduğu taktirde, NVDA'nın başlatılması için bir kısayol tuşu da kontrol+alt+n atanır.
 
-+++ Taşınabilir Konfigürasyonu Mevcut Kullanıcı Hesabına Kopyala +++
++++ Taşınabilir Konfigürasyonu Mevcut Kullanıcı Hesabına Kopyala +++[CopyPortableConfigurationToCurrentUserAccount]
 Bu seçenek, çalışmakta olan NVDA için kullanılan konfigürasyonun kurulacak NVDA için de geçerli olmasını belirlemenize olanak tanır. 
 Bu, konfigürasyonu yalnızca mevcut kullanıcı için kopyalar, başka kullanıcıların ayarları ya da güvenli ekranlar için kullanılan konfigürasyon değiştirilmez.
 Bu seçenek yalnızca kurulumu NVDA taşınabilir kopyası üzerinden yaparken sunulur, doğrudan ana kurulum paketini kullanarak yapacağınız kurulumlarda gösterilmez.
 
-++ Taşınabilir Bir Kopya Oluşturma ++
+++ Taşınabilir Bir Kopya Oluşturma ++[CreatingAPortableCopy]
 Doğrudan indirdiğiniz dosyayı çalıştırarak NVDA taşınabilir kopyasını oluşturmak istiyorsanız, Taşınabilir Kopya Oluştur düğmesine basmanız yeterli.
 Bu iletişim kutusunu kapattıysanız ya da bilgisayarınızda NVDA kurulu durumdaysa, lütfen NVDA Araçlar menüsü altında bulunan Taşınabilir Kopya Oluştur menü ögesini bulup çalıştırın.
 
@@ -130,9 +131,9 @@ Devam düğmesine basmanız taşınabilir kopyayı oluşturacaktır.
 Oluşturma işlemi bittiğinde, sürecin başarıyla tamamlandığını bildiren bir mesajla karşılaşırsınız.
 Bu iletişim kutusunu kapatmak için Tamam'a basabilirsiniz.
 
-+ NVDA'ya Başlarken +
++ NVDA'ya Başlarken +[GettingStartedWithNVDA]
 
-++ NVDA'yı açma ++
+++ NVDA'yı açma ++[LaunchingNVDA]
 NVDA'yı yükleyiciyle bilgisayarınıza kurduysanız, programı kontrol+alt+n tuşlarına basarak veya başlat menüsündeki programlar altındaki NVDA menüsünden kolayca başlatabilirsiniz.
 Ayrıca Çalıştır bölümüne NVDA yazıp girişe basarak da programı başlatabilirsiniz.
 Ek olarak, NVDA'yı yeniden başlatmak için NVDA (-r), NVDA'yı kapatmak için (-q), eklentileri devre dışı bırakmak için (--disable-addons), gibi bazı [komut satırı seçeneklerini #CommandLineOptions] de kullanabilirsiniz.
@@ -150,17 +151,18 @@ Programın başlaması ekstra daha fazla zaman alıyorsa, NVDA "NVDA başlıyor,
 Bunlardan hiçbirini duymuyorsanız, ya da Windows'un hata sesini veya kalınlaşan bir dizi ses duyuyorsanız, NVDA'nın bir hatası var demektir ve programı geliştirenlere bu olası bagı bildirmeniz gerekebilir.
 Bunu nasıl yapacağınızı öğrenmek için lütfen NVDA web sayfasını ziyaret edin.
 
++++ Hoş Geldiniz İletişim Kutusu +++[WelcomeDialog]
 NVDA ilk kez başladığında, NVDA değişken tuşu ve NVDA menüsü hakkında temel bilgiler veren bir iletişim kutusuyla karşılanacaksınız.
 Lütfen bu konularla ilgili sonraki bölümlere bakın.
 Bu iletişim kutusunda ayrıca bir seçim kutusu ve üç onay kutusu bulunmaktadır.
-Seçim kutusu kılavye düzenini belirlemenizi sağlar.
+Seçim kutusu klavye düzenini belirlemenizi sağlar.
 Birinci onay kutusu büyük harf kilidi tuşunun NVDA değişken tuşu olarak kullanılıp kullanılmayacağını kontrol ederken.
 ikincisi, NVDA'nın Windows başladıktan sonra otomatik olarak devreye girmesiyle ilgilidir ve yalnızca kurulu NVDA kopyaları için geçerlidir.
 Üçüncüsü, karşılaştığınız hoşgeldin iletişim kutusunun NVDA her açıldığında görüntülenip görüntülenmemesini kontrol eder.
 
-++ NVDA Klavye Komutları Hakkında ++
+++ NVDA Klavye Komutları Hakkında ++[AboutNVDAKeyboardCommands]
 
-+++ NVDA Tuşu +++
++++ NVDA Tuşu +++[TheNVDAModifierKey]
 Birçok NVDA'ya özel klavye komutu NVDA değişken tuşu adı verilen özel bir tuş ile klavyedeki başka tuşlara basılarak meydana gelen kombinasyonlardan oluşmaktadır.
 Masaüstü klavye düzeninde sadece numaratördeki tuşları kullanan metin inceleme komutları istisnai durumlardandır ve elbette başka istisnalar da olabilir.
 
@@ -169,7 +171,7 @@ Varsayılan olarak, numaratördeki insert ve diğer insert tuşlarının her iki
 
 NVDA değişken tuşu olarak atadığınızbir tuşun, kendi özgün görevini yapmasını istiyorsanız, (Örneğin NVDA tuşu olarak büyük harfkilidi tuşunu ayarladıysanız, büyük harf kilidini açabilmek için), bu tuşa peşpeşe 2 kez basmanız gerekir.
 
-+++ Klavye Düzenleri +++
++++ Klavye Düzenleri +++[KeyboardLayouts]
 NVDA şu an 2 klavye düzeniyle gelmektedir.
 Masaüstü ve dizüstü bilgisayarlar için klavye düzenleri bulunmaktadır.
 
@@ -177,17 +179,17 @@ Masaüstü düzeni numara kilidi kapalıyken yoğunlukla numaratörü kullanır.
 Birçok dizüstü bilgisayarın fiziki bir numaratörü olmamasına karşın, Bazı dizüstü bilgisayarlar FN tuşuyla birlikte sağ elin kullandığı 7 8 9 u ı o j k l gibi tuşlara basarak bu işlevi yapabilirler.
 Dizüstü bilgisayarınız bunu yapamıyorsa veya numaratörü kapamanıza izin vermiyorsa, dizüstü klavye düzenine geçmek isteyebilirsiniz.
 
-++ NVDA Dokunma Hareketleri ++
-NVDA'yı dokunmatik ekranı olan bir cihaz üzerinde kullanıyorsanız ve cihaz üzerinde Windows 8 ya da daha sonraki bir sürümü çalışıyorsa, NVDA'yı dokunmatik ekranı kullanarak da kontrol edebilirsiniz.
-NVDA çalışırken bütün dokunma hareketleri doğrudan NVDA'ya gönderilir..
+++ NVDA Dokunma Hareketleri ++[NVDATouchGestures]
+NVDA'yı dokunmatik ekranı olan bir cihaz üzerinde kullanıyorsanız ve cihaz üzerinde Windows 8 ya da daha sonraki bir sürümü çalışıyorsa, NVDA'yı dokunmatik hareketlerle de kontrol edebilirsiniz.
+NVDA çalışırken bütün dokunma hareketleri doğrudan NVDA'ya gönderilir.
 Dolayısıyla, NVDA çalışmıyorken normal olarak gerçekleştirilen işlemler NVDA açıkken yapılmaz.
 
-+++ Ekranı İnceleme +++
++++ Ekranı İnceleme +++[ExploringTheScreen]
 Dokunmatik ekranla Gerçekleştirebileceğiniz en temel işlem ekranda herhangi bir noktada bulunan metin ya da kontrolü seslendirmektir.
 Bunu yapmak için, ekranda herhangi bir yere bir parmağınızla dokunun.
 Parmağınızı ekranda gezdirerek diğer metin ya da kontrollerin seslendirilmesini de sağlayabilirsiniz.
 
-+++ Dokunma Hareketleri +++
++++ Dokunma Hareketleri +++[TouchGestures]
 Kullanıcı rehberinin geri kalanında NVDA komutları açıklanırken , bir işlemin gerçekleşmesi için yapılması gereken dokunma hareketi de listelenebilir.
 Aşağıda, dokunmatik ekranda çalışan NVDA ile ilgili komutların gerçekleşmesi için yapılabilecek dokunma hareketleri açıklanmaktadır.
 
@@ -210,7 +212,7 @@ Kaydırdığınız yöne göre dört olası kaydırma hareketi vardır: sola kay
 Dokunmalarda olduğu gibi, kaydırma hareketleri için birden fazla parmak kullanılabilir.
 Dolayısıyla iki parmakla sağa kaydırma, dört parmakla yukarı kaydırma gibi hareketler mümkündür..
 
-+++ Dokunma Kipleri +++
++++ Dokunma Kipleri +++[TouchModes]
 Mümkün olan dokunma hareketlerinden daha fazla NVDA komutu bulunduğu için, NVDA, arasında geçiş yapabileceğiniz birden fazla dokunma kipine sahiptir.
 Şİmdilik, varolan iki kip, metin kipi ve nesne kipidir.
 Bu belgede listelenen bazı NVDA komutları, komut sonrasında parantez içinde belirtilecek kipler için geçerli olabilir.
@@ -221,7 +223,16 @@ Komutla ilgili herhangi bir kip verilmemişse, tüm kipler için geçerli olduğ
 Dokunma kipleri arasında geçiş yapmak için, üç parmakla bir kez dokunun.
 %kc:endInclude
 
-++ Girdi Yardım Kipi ++
++++ Dokunmatik klavye +++[TouchKeyboard]
+Dokunmatik klavye, dokunmatik ekrandan metin ve komut girmek için kullanılır.
+Odak bir düzenleme alanındayken, ekranın altındaki dokunmatik klavye simgesine iki kez dokunarak dokunmatik klavyeyi etkinleştirebilirsiniz.
+Microsoft Surface Pro gibi tabletler için, klavye uzatıldığında dokunmatik klavye her zaman mevcuttur.
+Dokunmatik klavyeyi kapatmak için, dokunmatik klavye simgesine çift dokunun ya da  düzenleme alanından uzaklaşın.
+
+Dokunmatik klavye etkinken, tuşları bulmak için genellikle ekranın alt kısmında bulunan dokunmatik klavyenin üzerinde  parmağınızı hareket ettirin, sonra klavye üzerinde bir parmağınızla dolaşın.
+Basmak istediğiniz tuşu bulduğunuzda, [dokunmatik etkileşim iletişim kutusunda #TouchInteraction] yapılan ayara bağlı olarak, ekrana çift dokunun ya da parmağınızı ekrandan kaldırın.
+
+++ Girdi Yardım Kipi ++[InputHelpMode]
 Bu rehberin geri kalanında birçok dokunma hareketi ve tuş kombinasyonundan bahsedilecektir. ancak farklı tuş kombinasyonlarını keşfetmenizin en kolay yollarından birisi, girdi yardım kipini açmaktır.
 
 Girdi yardım kipini açmak için NVDA+1 tuşlarına basın.
@@ -229,7 +240,7 @@ Girdi yardım kipini kapamak için de yine NVDA+1 tuşlarına basabilirsiniz.
 Girdi yardım kipi açıkken, bir tuş ya da tuş kombinasyonuna bastığınızda veya bir dokunma hareketi yaptığınızda, tuşların ya da dokunma hareketinin NVDA tarafından ne amaçla kullanıldığı söylenecektir.
 Girdi Yardım kipindeyken, tuşlar gerçek işlevlerini yerine getirmeyeceği için, istediğiniz tuş veya tuşlara basabilirsiniz.
 
-++ NVDA Menüsü ++
+++ NVDA Menüsü ++[TheNVDAMenu]
 NVDA menüsü altında, çeşitli ayarları değiştirmenizi, Yardıma erişimi, ayarlarınızı kalıcı olarak kaydetmenizi veya geri almanızı, konuşma sözlüğünü değiştirmenizi, NVDA'yla ilgili diğer ek araçlara erişiminizi ve NVDA'yı kapatmanızı sağlayacak menü ögelerine ulaşabilirsiniz.
 
 NVDA çalışırken, herhangi bir noktada NVDA menüsüne ulaşmak için NVDA+N tuşlarına basabilirsiniz ya da dokunmatik ekranda iki parmakla iki kez dokunabilirsiniz.
@@ -237,7 +248,7 @@ veya Sistem tepsisi penceresinden buraya ulaşabilirsiniz.
 Sistem tepsisindeki NVDA simgesi üzerinde sağ tıklayın veya sistem tepsisine ulaşmak için windows tuşu+B harfine basın, aşağı oka basarak NVDA ikonunu bulun ve birçok klavyede sağdaki kontrol tuşunun hemen yanında bulunan uygulama tuşuna basın.
 Menü açıldığında, menü ögeleri arasında yön tuşlarınızla dolaşabilir ve bir ögeyi etkinleştirmek için girişe basabilirsiniz.
 
-++ Temel NVDA Komutları ++
+++ Temel NVDA Komutları ++[BasicNVDACommands]
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü kısayol tuşu | Dokunma hareketi | Tarif |
 | Konuşmayı Durdur | Kontrol | Kontrol | iki parmakla bir kez dokunma | Ekran okuyucunun konuşmasını o an için durdurur |
@@ -250,7 +261,7 @@ Menü açıldığında, menü ögeleri arasında yön tuşlarınızla dolaşabil
 | Uygulamaya özel uyku kipini açıp kapama | NVDA+shift+s | NVDA+shift+z | yok | Uyku kipinde geçerli uygulamada Tüm NVDA komutları, konuşma ve braille geribildirimleri devre dışı kalır. Bu, kendi konuşması veya ekran okuma özelliği olan uygulamalarda çok yararlıdır. Uyku kipini kapamak için bu tuşlara tekrar basın. |
 %kc:endInclude
 
-++ Sistem Bilgisini Raporlama ++
+++ Sistem Bilgisini Raporlama ++[ReportingSystemInformation]
 %kc:beginInclude
 || Ad | Kısayol tuşu  | Tarif |
 | Tarih ve Saati Söyle | NVDA+f12 | Bir kez basıldığında saat, 2 kez peşpeşe basıldığında tarih belirtilir |
@@ -258,7 +269,7 @@ Menü açıldığında, menü ögeleri arasında yön tuşlarınızla dolaşabil
 | Panodaki metni oku | NVDA+c | Varsa, panoya kopyalanmış olan metni okur. |
 %kc:endInclude
 
-+ NVDA ile Dolaşım +
++ NVDA ile Dolaşım +[NavigatingWithNVDA]
 NVDA, bilinen yöntemlere ek olarak, inceleme imleci gibi sistemi incelemenize ve dolaşmanıza yarayan olanaklar sağlar.
 
 ++ Nesneler ++[Objects]
@@ -328,8 +339,10 @@ Benzer biçimde, bir araç çubuğu da çeşitli kontrolleri kapsar ve bu kontro
 Nesne dolaşım komutlarıyla bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak [Nesne inceleme kipinde #ObjectReview] inceleyebilirsiniz.
 Varsayılan olarak, nesne sunucusu sistem odağıyla birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
-Braille'in varsayılan olarak nesne sunucusunu ve inceleme imlecini değil; [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
-Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
+Braille'in varsayılan olarak nesne sunucusu ve inceleme imlecinin yanında [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
+Yalnızca odağı ve düzenleme imlecini takip etsin istiyorsanız, [braille'i taşıyacak imleç olarak #BrailleTether] odağı seçmelisiniz.
+Bu durumda, braille nesne sunucusunu ve inceleme imlecini takip etmez.
+Yalnızca nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
 
 Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 
@@ -424,9 +437,9 @@ Ekran inceleme kipine geçildiğinde, inceleme imleci [nesne sunucusunun #Object
 
 Bazı uygulamalar için, henüz desteklenmeyen ekran çizim teknolojileri kullanılmasından dolayı, ekrandaki metnin tamamının gösterilemeyebileceğini not edin.
 
-++ Fare ile Dolaşım ++
+++ Fare ile Dolaşım ++[NavigatingWithTheMouse]
 Fare ile hareket ederken, varsayılan olarak NVDA, fare ile üzerine gelinen kontrolleri okur.
-Destekleniyorsa, NVDA metni paragraf bazında okur. ancak bazı kontroller sadece satırın okunmasına izin vermektedir.
+Destekleniyorsa, NVDA metni paragraf bazında okur. ancak bazı kontroller sadece satır satır okunmasına izin vermektedir.
 
 NVDA ayrıca, fare hareket ettikçe üzerinde bulunduğu nesnenin liste, düğme gibi türünü de okuyacak biçimde ayarlanabilmektedir.
 Bu, özellikle tamamen kör olanlar için sadece metnin okunmasının yeterli olmadığı durumlarda çok yararlıdır.
@@ -452,9 +465,9 @@ NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fa
 + Tarama Kipi +[BrowseMode]
 Web sayfaları gibi karmaşık salt okunur belgeler, NVDA'da tarama kipinde gösterilir.
  Bu, Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Google Chrome, Microsoft outlook HTML mesajları, Adobe Reader ve Adobe Flash ile açılan belgeler için geçerlidir.
-Tarama kipi aynı zamanda  Microsoft Word için karmaşık belgelerde dolaşılırken kullanılmak üzere opsiyonel olarak mevcuttur..
+Tarama kipi aynı zamanda  Microsoft Word için karmaşık belgelerde dolaşılırken kullanılmak üzere opsiyonel olarak mevcuttur.
 
-Tarama kipi, web sayfası gibi bir içeriğin değişmez biçimde gösterildiği bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
+Tarama kipi, web sayfası gibi bir içeriğin bir metin dosyası gibi sunulduğu bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
 NVDA'nın [sistem düzenleme imleci #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutları bu kip için de geçerlidir.
 Metin içinde hareket ettikçe, okunan metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
 
@@ -465,8 +478,8 @@ Tarama kipindeyken, tab ile veya tıklayarak odak kipinin gerektirdiği bir kont
 Odak kipine geçmenin gerektiği durumlarda, kontrol üzerinde giriş veya boşluk çubuğuna basılarak da odak kipine geçilebildiğini lütfen not edin.
 NVDA otomatik olarak odak kipine geçtiyse, sonrasında tab ile veya başka bir yolla odak kipine ihtiyaç olmayan bir noktaya geçildiğinde, NVDA otomatik olarak tarama kipine geri döner.
 Odak kipine otomatik olarak geçildiyse, eskeyp tuşuyla da tarama kipine geri dönülebilir.
-Tarama ve odak kipleri arasında manuel olarak da geçiş yapabilirsiniz.
-Odak kipine manuel olarak geçildikten sonra, NVDA bu kipte kalır ve siz tekrar ilgili tuşlara basarak odak kipinden çıkmadıkça tarama kipine geçilmez.
+Tarama ve odak kipleri arasında manuel olarak da geçiş yapabilirsiniz ve Odak kipine manuel olarak geçildikten sonra, NVDA bu kipte kalır ve siz tekrar ilgili tuşlara basarak odak kipinden çıkmadıkça tarama kipine geçilmez.
+
 %kc:beginInclude
 || Ad | Kısayol tuşu | Tarif |
 | Tarama ve odak kipleri arasında geçiş | NVDA+aralık çubuğu | Odak ve tarama kipleri arasında geçiş yapar |
@@ -478,8 +491,7 @@ Odak kipine manuel olarak geçildikten sonra, NVDA bu kipte kalır ve siz tekrar
 | uzun tarifi aç | NVDA+d | Eğer varsa, üzerinde bulunulan ögeyle ilgili uzun bir açıklamanın bulunduğu yeni bir pencere açar. | 
 %kc:endInclude
 
-
-++ Tek Tuş Dolaşımı ++
+++ Tek Tuş Dolaşımı ++[SingleLetterNavigation]
 Tarama kipindeyken, NVDA, mevcut belgedeki belirli ögeler arasında daha seri bir dolaşım için, tek karakterlik tuşlar sağlamaktadır.
 Bu komutların her belge için geçerli olmayabileceğini unutmadan aşağıdaki listeyi inceleyebilirsiniz.
 
@@ -521,7 +533,7 @@ Tarama kipinde kalarak harfleri kısayol olarak kullanmak istiyorsanız tek harf
 Mevcut belge için tek harf dolaşımını açıp kapatmak için, NVDA+shift+space tuşlarını kullanın.
 %kc:endInclude
 
-++ Öğe Listesi ++
+++ Öğe Listesi ++[ElementsList]
 Öğe listesi, uygulamaya bağlı olarak değişen, belgedeki çeşitli ögelerin listesine erişminizi sağlamaktadır.
 Örneğin, web tarayıcıları için bunlar, bağlantı, başlık, form alanı, düğme ya da sınır imi olabilir.
 Seçim düğmeleri, bu öge türlerinden  hangilerinin görüntüleneceğini belirlemenizi sağlar.
@@ -532,7 +544,7 @@ Seçim düğmeleri, bu öge türlerinden  hangilerinin görüntüleneceğini bel
 | Tarama kipi öge listesi | NVDA+f7 | tarama kipinde görüntülenen belge içerisindeki  çeşitli ögelerin listesini gösterir |
 %kc:endInclude
 
-++ Gömülü Nesneler ++
+++ Gömülü Nesneler ++[ImbeddedObjects]
 Sayfalar, Adobe Flash, Oracle Java ve HTML 5  gibi teknolojilerle üretilmiş öğelerin yanında uygulamalar ve iletişim kutuları    gibi zengin içerikler barındırabilir.
 Bunlarla tarama kipinde karşılaşıldığında, NVDA "gömülü nesne", "uygulama" ya da "iletişim kutusu" olduklarını bildirecektir.
 Bu öğelere  o ve shift+o gömülü nesne tek harf dolaşım tuşlarını kullanarak hızlı bir şekilde ulaşabilirsiniz.
@@ -561,7 +573,7 @@ Bunun henüz resmi bir standart olmadığını not edin, dolayısıyla  şu anda
 Bir belgeyi okurken, NVDA mevcut  desteklenen herhangi bir matematiksel içeriği seslendirecektir.
 Braille ekran kullanıyorsanız, ayrıca braille olarak da görüntülenir.
 
-++ Etkileşimli Navigasyon ++
+++ Etkileşimli Navigasyon ++[InteractiveNavigation]
 Öncelikli olarak konuşma ile çalışıyorsanız, çoğu durumda, muhtemelen tüm ifadeyi bir kerede dinlemek yerine, daha küçük segmentlerde incelemek isteyebilirsiniz.
 
 Tarama kipindeyseniz, matematiksel içerik üzerine gelip enter tuşuna basarak bunu yapabilirsiniz.
@@ -583,14 +595,14 @@ Lütfen dolaşma komutlarıyla ilgili daha fazla bilgi için MathPlayer belgeler
 
 Matematiksel içeriğe sahip olan belgeye geri dönmek istediğinizde, basitçe escape tuşuna basmanız yeterli.
 
-+ Braille +
++ Braille +[Braille]
 Eğer braille ekrana sahipseniz, NVDA bilgileri braille olarak gösterebilir.
-Braille ekranınızın perkins tarzı bir kılavyesi varsa, kısaltmalı ya da kısaltmasız braille girişi de yapabilirsiniz.
+Braille ekranınızın perkins tarzı bir klavyesi varsa, kısaltmalı ya da kısaltmasız braille girişi de yapabilirsiniz.
 
 Lütfen desteklenen braille ekranlar hakkında bilgi için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünü inceleyin.
 Braille ayarlarını  [Braille Ayarları iletişim kutusu #BrailleSettings] içinden yapabilirsiniz.
 
-++ Kontrol türü, Durumu ve Sınırimi kısaltmaları ++
+++ Braille Kontrol türü, Durumu ve Sınırimi kısaltmaları ++[BrailleAbbreviations]
 Braille ekranaa mümkün olduğunca fazla bilgi sığdırmak amacıyla, kontrol türünü  ve durumunu göstermenin yanı sıra sınırimlerinin bildirimi   için aşağıdaki kısaltmalar tanımlanmıştır.
 
 || Kısaltma | Kontrol türü |
@@ -678,9 +690,9 @@ Son olarak, sınırimleri için aşağıdaki kısaltmalar tanımlanmıştır:
 | ara | arama |
 | blg | bölge |
 
-++ Braille Girişi ++
+++ Braille Girişi ++[BrailleInput]
 NVDA braille klavye ile hem kısaltmasız ve kısaltmalı braille girişini destekler.
-Braille'i metne çevirmek için kullanılacak çeviri tablosunu Braille Ayarları iletişim kutusundaki [Giriş tablosu #BrailleInputTable] ayarını kullanarak seçebilirsiniz.
+Braille'i metne çevirmek için kullanılacak çeviri tablosunu Braille Ayarları iletişim kutusundaki [Giriş tablosu #BrailleSettingsInputTable] ayarını kullanarak seçebilirsiniz.
 
 Kısaltmasız braille kullanıldığında, metin doğrudan girilir.
 Kısaltmalı braille kullanılıyorken, metin aralık ya da enter tuşuna bastığınızda eklenir.
@@ -693,7 +705,7 @@ Mesela, rakam işaretiyle başlayıp girdiğiniz bazı rakamlardan sonra geri si
 7. ve 8. noktalara birlikte basarsanız aralık ya da enter tuşuna basılmaksızın braille girişi metne çevrilir.
 %kc:endInclude
 
-+ Görsel İçerik Tanıma +
++ Görsel İçerik Tanıma +[ContentRecognition]
 Yazarlar bir şeyin içeriğiyle ilgili ekran okuyucuların algılayabileceği tarzda yeterli bilgi sunmadıklarında, bir görüntünün içeriğinin tanınması için çeşitli araçlar kullanılabilir.
 NVDA görüntülerin içerisindeki metnin tanınması için Windows 10'la sunulan (OCR) işlevini optik karakter tanımayı destekler.
 Başka içerik tanıma araçları NVDA eklentisi olarak sunulmaktadır.
@@ -718,12 +730,12 @@ başlat menüsü, ayarlar, zaman ve dil, bölge ve dil altında dil ekle düğme
 Windows 10 OCR kullanarak geçerli nesne içindeki metni tanımak için, NVDA+r tuşlarına basın.
 %kc:endInclude
 
-+ Uygulamaya Özgü Özellikler +
++ Uygulamaya Özgü Özellikler +[ApplicationSpecificFeatures]
 NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu kullanıcıları için erişilebilir olmayan işlevleri onlar için de ulaşılabilir kılmak için bazı uygulamalara özgü ek olanaklar sağlamaktadır.
 
-++ Microsoft Word ++
+++ Microsoft Word ++[MicrosoftWord]
 
-+++ Otomatik Sütun ve Satır Başlığı Okuma +++
++++ Otomatik Sütun ve Satır Başlığı Okuma +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA Microsoft Word'de, tablolarda dolaşılırken otomatik olarak satır ve sütun başlıklarını seslendirebilir.
 Bu öncelikle, NVDA Belge formatları iletişim kutusundaki Tablo Satır ve sütun başlıklarını bildir onay kutusunun işaretli olmasını gerektirir.
 İkinci olarak, NVDA'nın, tabloda hangi satır ya da sütunun başlık bilgisini içerdiğini bilmesi gerekir.
@@ -736,28 +748,28 @@ Tabloda satır ya da sütun başlık bilgisini içeren hücreye geldikten sonra,
 Bu ayarlar, belge içinde yer imi olarak kaydedilir ve JAWS gibi başka ekran okuyucu yazılımlarla uyumludur.
 Dolayısıyla, belge daha sonra başka ekran okuyucular aktifken açıldığında da başlık bilgilerine ulaşılabilir. 
 
-+++ Microsoft Word'de Tarama Kipi +++
++++ Microsoft Word'de Tarama Kipi +++[BrowseModeInMicrosoftWord]
 Webde olduğu gibi, Microsoft Word için de Tek Harf Dolaşımı ve Öğe Listesine ulaşmanız için tarama kipi özelliği kullanılabilir.
 %kc:beginInclude
 Microsoft Word'de Tarama kipini açıp kapamak için, NVDA+Aralık tuşunu kullanın.
 %kc:endInclude
 Tarama kipi ve tek harf dolaşımı hakkında daha fazla bilgi için, [Tarama Kipi bölümüne #BrowseMode] bakın.
 
-++++ Öğe Listesi ++++
+++++ Öğe Listesi ++++[WordElementsList]
 %kc:beginInclude
 Microsoft Word'de tarama kipindeyken, öğe listesine NVDA+F7 tuşlarına basarak ulaşabilirsiniz.
 %kc:endInclude
 Öğe Listesi başlıkları, bağlantıları, yazım hatalarını ve (yorumlar ve belgede yapılmış değişiklikleri içeren) açıklamaları listeleyebilir.
 
-+++ Yorumların Bildirimi +++
++++ Yorumların Bildirimi +++[WordReportingComments]
 %kc:beginInclude
 İmleç konumundaki açıklamayı okumak için, NVDA+alt+c tuşlarına basın.
 %kc:endInclude
  Belgedeki tüm değişiklik ve yorumlar, tür bölümünden Açıklama seçeneği tercih edilerek NVDA Öğe Listesi iletişim kutusunda da listelenebilir.
  
-++ Microsoft Excel ++
+++ Microsoft Excel ++[MicrosoftExcel]
 
-+++ Otomatik Sütun ve Satır Başlığı Okuma +++
++++ Otomatik Sütun ve Satır Başlığı Okuma +++[ExcelAutomaticColumnAndRowHeaderReading]
 NVDA Microsoft Excel çalışma sayfalarında, tablolarda dolaşılırken otomatik olarak satır ve sütun başlıklarını seslendirebilir.
 Bu öncelikle, NVDA Belge formatları iletişim kutusundaki Tablo Satır ve sütun başlıklarını bildir onay kutusunun işaretli olmasını gerektirir.
 İkinci olarak, NVDA'nın, tabloda hangi satır ya da sütunun başlık bilgisini içerdiğini bilmesi gerekir.
@@ -770,7 +782,7 @@ Satır ya da sütun başlık bilgisini içeren hücreye geldikten sonra, aşağ�
 Bu ayarlar, çalışma kitabında tanımlı ad aralıkları olarak saklanacaktır  ve Jaws gibi diğer Ekran Okuyucular ile uyumludur.
 Dolayısıyla, daha sonraki bir tarihte bu çalışma kitabını açın diğer ekran okuyucu kullanıcıları için otomatik olarak satır ve sütun başlıkları önceden ayarlanmış olacaktır. 
 
-+++ Öğe Listesi +++
++++ Öğe Listesi +++[ExcelElementsList]
 Web'de olduğu gibi, NVDA'nın Microsoft Excel için de, farklı bilgi tiplerini listeleyip ulaşmanızı sağlayan öğe listesi bulunmaktadır.
 %kc:beginInclude
 Excel'de öğe listesine ulaşmak için, NVDA+f7 tuşlarını kullanın.
@@ -792,31 +804,31 @@ Her form alanı için, Öğe listesi kapsanan hücre adresleri ile birlikte alan
 Bir form alanını seçip entır tuşuna ya da git düğmesine basarak tarama kipinde o form alanına gidilebilir.
 -
 
-+++ Açıklamaların Bİldirimi +++
++++ Açıklamaların Bİldirimi +++[ExcelReportingComments]
 %kc:beginInclude
 Üzerinde bulunduğunuz hücreyle ilgili açıklamayı dinlemek için NVDA+alt+c tuşlarını kullanın.
 %kc:endInclude
 Çalışma sayfasındaki tüm açıklamalar NVDA öğe listesinde de gösterilebilir.
 
-+++ Korunmuş Hücreleri Okuma +++
++++ Korunan Hücreleri Okuma +++[ExcelReadingProtectedCells]
 Bir çalışma kitabı korunuyorsa, düzenleme için kilitlenmiş hücrelere ulaşmak mümkün olmayabilir.
 %kc:beginInclude
 Kilitli hücrelere  ulaşılmasını mümkün kılmak için, NVDA+space ile Tarama Kipi'ne geçin ve sonra Standart Excel hareket komutlarını kullanın. Örneğin yön tuşları.
 %kc:endInclude
 
-+++ Form Alanları +++
++++ Form Alanları +++[ExcelFormFields]
 Excel çalışma kitapları form alanları içerebilir.
 Bunlara öğe listesini kullanarak ya da f ve shift+f form alanı tek dolaşım tuşları ile ulaşabilirsiniz.
 Bir form alanına tarama kipinde ulaştıktan sonra, kontrole bağlı olarak, enter ya da aralık   tuşuna basarak etkinleştirebilir veya etkileşimde bulunabilmek için odak kipine geçebilirsiniz.
 Tarama kipi ve tek dolaşım tuşları hakkında daha fazla bilgi için, [tarama kipi bölümüne #BrowseMode] bakın.
 
-++ Microsoft PowerPoint ++
+++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || Ad | Kısayol tuşu | Tarif |
 | Konuşmacı notları okuma modu | kontrol+shift+s | Aktif bir slayt gösterisi içindeyken, bu komut slayt içeriğinin mi yoksa konuşmacı notlarının mı seslendirileceğini belirler. Bu sadece NVDA'nın neyi seslendireceği ile ilgilidir, ekranda görüntülenen bilgi değişmez. | 
 %kc:endInclude
 
-++ foobar2000 ++
+++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Ad | Kısayol Tuşu | Tarif |
 | Kalan süreyi oku | kontrol+shift+r | Mevcutsa, çalmakta olan parçanın bitmesi için kalan süreyi okur. |
@@ -824,27 +836,27 @@ Tarama kipi ve tek dolaşım tuşları hakkında daha fazla bilgi için, [tarama
 
 Not: Kalan süreyi oku kısayol tuşu, yalnızca Foobar2000 durum çubuğu varsayılan görünümünde geçerlidir.
 
-++ Miranda IM ++
+++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
 || Ad | Kısayol Tuşu | Tarif |
 | En son mesajı oku | NVDA+kontrol+1-4 | Basılan numaraya göre, En son mesajlardan birini okur; Örn, NVDA+kontrol+2 sondan ikinci mesajı okur. |
 %kc:endInclude
 
-++ Poedit ++
+++ Poedit ++[Poedit]
 %kc:beginInclude
 || Ad | Kısayol Tuşu | Tarif |
 | Yorum penceresini oku | kontrol+shift+c | Yorum penceresindeki yorumları okur. |
 | Çeviri notlarını oku | kontrol+shift+a | Çeviri ile ilgili notları okur. |
 %kc:endInclude
 
-++ Skype ++
+++ Skype ++[Skype]
 %kc:beginInclude
 Bir konuşma içindeyken:
 || Ad | Kısayol tuşu | Açıklama |
 | Mesajı dinle | NVDA+control+1-0 | Basılan numaraya göre, son mesajlardan birini okur ve inceleme imlecini mesajın üzerine taşır; örneğin NVDA+control+2 sondan ikinci mesajı okur. |
 %kc:endInclude
 
-++ Kindle for PC ++
+++ Kindle for PC ++[Kindle]
 NVDA supports reading and navigating books in Amazon Kindle for PC.
 This functionality is only available in Kindle books designated with "Screen Reader: Supported" which you can check on the details page for the book.
 
@@ -861,7 +873,7 @@ Navigating by link also includes footnotes.
 NVDA provides early support for reading and interactive navigation of mathematical content for books with accessible math.
 Please see the [Reading Mathematical Content #ReadingMath] section for further information.
 
-+++ Text Selection +++
++++ Text Selection +++[KindleTextSelection]
 Kindle allows you to perform various functions on selected text, including obtaining a dictionary definition, adding notes and highlights, copying the text to the clipboard and searching the web.
 To do this, first select text as you normally would in browse mode; e.g. by using shift and the cursor keys.
 %kc:beginInclude
@@ -869,7 +881,7 @@ Once you have selected text, press the applications key or shift+f10 to show the
 %kc:endInclude
 If you do this with no text selected, options will be shown for the word at the cursor.
 
-+++ User Notes +++
++++ User Notes +++[KindleUserNotes]
 You can add a note regarding a word or passage of text.
 To do this, first select the relevant text and access the selection options as described above.
 Then, choose Add Note.
@@ -883,7 +895,7 @@ To view, edit or delete a note:
 + Choose Edit Note.
 +
 
-++ Azardi ++
+++ Azardi ++[Azardi]
 %kc:beginInclude
 When in the table view of added books:
 || Name | Key | Description |
@@ -891,9 +903,9 @@ When in the table view of added books:
 | Context menu | applications | Opens the context menu for the selected book. |
 %kc:endInclude
 
-+ NVDA'yı ayarlama +
++ NVDA'yı Yapılandırma +[ConfiguringNVDA]
 
-++ Tercihler ++
+++ Tercihler ++[preferences]
 %kc:settingsSection: || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
 Birçok NVDA ayarı NVDA menüsü içindeki tercihler alt menüsünden erişilebilen iletişim kutuları kullanılarak değiştirilebilmektedir.
 Tüm NVDA iletişim kutularında yaptığınız değişiklikleri onaylamak için tamam tuşuna basın.
@@ -903,11 +915,11 @@ Bazı ayarlar kısayol tuşlarıyla da değiştirilebilmektedir. bu tuşlar ilgi
 Varsayılan olarak, klavye ayarları, dokunma hareketleri  vb bazı  iletişim kutularını açmak için  kısayol tuşları ayarlanmamıştır.
 Henüz kısayol tuşu kullanılarak açılmayan iletişim kutuları için, arzu ederseniz siz [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak kısayol tuşu belirleyebilirsiniz.
 
-+++ Genel Ayarlar (NVDA+kontrol+g) +++
++++ Genel Ayarlar (NVDA+kontrol+g) +++[GeneralSettings]
 Genel ayarlar iletişim kutusu tercihler menüsünde bulunmaktadır.
 içinde aşağıdaki seçenekler mevcuttur:
 
-==== Dil ====
+==== Dil ====[GeneralSettingsLanguage]
 NVDA arayüzü ve mesajlarının gösterileceği dilin seçildiği bir seçim kutusudur.
 içinde birçok dil bulunur; ancak varsayılan ayar "Kullanıcı varsayılan Windows" ayarıdır.
 Bu seçenek NVDA'ya O an windowsun ayarlandığı dili kullanmasını söylemektedir.
@@ -916,45 +928,45 @@ Dili değiştirdiğinizde NVDA'nın yeniden başlatılması gerektiğini lütfen
 NVDA seçimi değiştirdiğinizde programı yeniden başlatmak isteyip istemediğinizi soaracaktır.
 Tamama bastığınızda NVDA yeniden başlayacaktır.
 
-==== Çıkışta Ayarları (konfigürasyonu) Kaydet ====
+==== Çıkışta Ayarları (konfigürasyonu) Kaydet ====[GeneralSettingsSaveConfig]
 Bu bir onay kutusudur ve işaretlendiğinde, NVDA'ya çıkışta yapılan ayarların kaydedilmesini söyler.
 
-==== NVDA'yı kapatırken çıkış seçeneklerini göster ====
+==== NVDA'yı kapatırken çıkış seçeneklerini göster ====[GeneralSettingsShowExitOptions]
 Bu seçenek, NVDA kapatılırken, çeşitli seçeneklerin bulunduğu bir iletişim kutusunun gösterilip gösterilmeyeceğiyle ilgili bir onay kutusudur.
 İşaretlenirse, NVDA'yı kapatmaya teşebbüs ettiğinizde, NVDA'yı kapatmak mı, yeniden başlatmak mı yoksa, eklentileri devre dışı bırakarak yeniden başlatmak mı istediğinizi soran bir iletişim kutusu açılacaktır.
 İşaretlenmezse, NVDA hemen kapanır.
 
-==== NVDA Açılırken ya da Kapanırken Ses Çal ====
+==== NVDA Açılırken ve Kapanırken Ses Çal ====[GeneralSettingsPlaySounds]
 BU seçenek NVDA açılış ve kapanış sesinin çalınıp çalınmamasıyla ilgili bir onay kutusudur.
 
-==== Kayıt Tutma (logging) Seviyesi ====
+==== Kayıt Tutma (logging) Seviyesi ====[GeneralSettingsLogLevel]
 Bu bir seçim kutusudur ve NVDA çalışırken ne kadar kayıt tutacağınızı ayarlamanızı sağlar.
 Genellikle kullanıcıların çok fazla kayıt tutulmasını istemeye ihtiyaçları yoktur.
 Ancak, Bug raporlaması için bilgi sağlamak isterseniz, bu yararlı bir seçenek olabilir.
 
-==== NVDA'yı Windowsu açınca Otomatik Olarak Başlat ====
+==== NVDA'yı Windowsu açınca Otomatik Olarak Başlat ====[GeneralSettingsStartAfterLogOn]
 Bu seçenek etkinleştirilirse, Windowsta oturum açar açmaz NVDA otomatik olarak başlayacaktır.
 Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
 
-==== Windows Giriş Ekranında NVDA'yı Kullan (Yönetici yetkisi gerekirr) ====
+==== Windows Giriş Ekranında NVDA'yı Kullan (Yönetici yetkisi gerekirr) ====[GeneralSettingsStartOnLogOnScreen]
 Windowsa kullanıcı adı ve şifre girerek oturum açıyorsanız, bu seçeneği etkinleştirdiğinizde, oturum açma ekranında NVDA da otomatik olarak başlayacaktır.
 Bu seçenek, yalnızca sisteme yüklenmiş olan NVDA kopyalarında mevcuttur.
 
-==== Windows Giriş ve Diğer Güvenli Ekranlarda Mevcut kaydedilmiş Ayarları Kullan (Yönetici yetkisi gerekirr) ====
+==== Windows Giriş ve Diğer Güvenli Ekranlarda Mevcut kaydedilmiş Ayarları Kullan (Yönetici yetkisi gerekirr) ====[GeneralSettingsCopySettings]
 Bu düğmeye basmak Şu anki NVDA ayarlarınızı NVDA system configuration dizinine kopyalar ve böylece oturum açma, kullanıcı hesapları kontrolü (uac) ve diğer güvenli ekranlarda NVDA bu ayarları kullanır.
 Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce kontrol+NVDA+c tuşlarına basarak NVDA ayarlarınızı kaydettiğinizden emin olun veya NVDA menüsünden ayarlarınızı kaydedin.
 Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
 
-==== NVDA Güncellemelerini Otomatik Olarak Kontrol Et ====
+==== NVDA Güncellemelerini Otomatik Olarak Kontrol Et ====[GeneralSettingsCheckForUpdates]
 Bu etkinleştirildiyse, NVDA güncel versiyon olup olmadığını otomatik olarak kontrol edecek ve güncelleme bulunduğunda sizi bilgilendirecektir.
 Ek olarak, NVDA Yardım menüsü altında bulunan, güncelleme olup olmadığına bak seçeneğini kullanarak istediğiniz zaman güncelleme kontrolü yapabilirsiniz.
 
-+++ Sentezleyici Seçimi (NVDA+kontrol+s) +++
++++ Sentezleyici Seçimi (NVDA+kontrol+s) +++[SynthesizerSelection]
 Tercihler menüsü içindeki "sentezleyici..." altında bulunan sentezleyici iletişim kutusu, NVDA'nın hangi sentezleyiciyle konuşacağını seçmenizi sağlar.
 İstediğiniz sentezleyiciyi seçtikten sonra, Tamam düğmesine basarsanız, NVDA seçilen sentezleyiciyi yükleyecektir.
 Sentezleyici yükleme sırasında bir hata oluşursa, NVDA sizi bir mesajla uyarıp önceki sentezleyiciyi kullanmaya devam edecektir.
 
-==== Sentezleyici ====
+==== Sentezleyici ====[SynthesizerSelectionSynthesizer]
 Bu seçenek, NVDA'nın konuşma çıktısı için kullanmasını istediğiniz sentezleyiciyi seçmenizi sağlar.
 
 NVDA'nın desteklediği sentezleyicilerin listesi için lütfen [Desteklenen Konuşma Sentezleyicileri #SupportedSpeechSynths] bölümüne bakın.
@@ -962,11 +974,11 @@ NVDA'nın desteklediği sentezleyicilerin listesi için lütfen [Desteklenen Kon
 Bu listede sunulan seçeneklerden biri de "Konuşma Yok" ögesidir ve NVDA'yı hiç konuşma çıktısı olmadan kullanmanızı sağlar.
 BU, NVDA'yı yalnızca braille ekran ile kullanmak isteyenler ve belki de yalnızca konuşma ekranlarını görmek isteyen gören NVDA geliştiricileri için yararlı olabilir.
  
-==== Çıktı Aygıtı ====
+==== Çıktı Aygıtı ====[SynthesizerSelectionOutputDevice]
 Bu seçenek, NVDA'nın seçilen sentezleyicinin üzerinden konuşacağı ses kartını seçmenizi sağlar.
 
 %kc:setting
-==== Ses Zayıflaması Modu ====
+==== Ses Zayıflaması Modu ====[SynthesizerSelectionDuckingMode]
 Kısayol tuşu: NVDA+shift+d
 
 Windows 8 ve sonrası için, bu seçenek NVDA'nın diğer seslerin seviyesini düşürüp düşürmeyeceğini belirlemenizi sağlar.
@@ -984,66 +996,66 @@ Konuşma parametrelerini istenen her yerden değiştirebileceğiniz daha hızlı
  
 Ses ayarları iletişim kutusunda şu seçenekler bulunmaktadır:
 
-==== Ses ====
+==== Ses ====[VoiceSettingsVoice]
 Bu iletişim kutusuna girdiğinizde karşınıza çıkan ilk seçenek, yüklediğiniz sentezleyicinin seslerinin listelendiği bir seçim kutusudur.
 Oklara basarak farklı ses seçeneklerini dinleyebilirsiniz.
 Sol ve yukarı yön tuşları sizi listenin yukarısına götürürken, sağ ve aşağı yön tuşları listenin aşağısına doğru götürür.
 
-==== Konuşucu ====
+==== Konuşucu ====[VoiceSettingsVariant]
 NVDA ile gelen Espeak NG sentezleyicisini kullanıyorsanız, burası, sentezleyicinin konuşacağı konuşucuların listelendiği bir seçim kutusudur.
 Espeak NG konuşucuları farklı seslere benzer ve bir sese farklı özelliklerin yüklenmesini sağlar.
 Bazı sesler kadın, bazıları erkek, hatta bazıları kurbağ sesi gibi çıkacaktır.
 
-==== Hız ====
+==== Hız ====[VoiceSettingsRate]
 Bu seçenek sesin hızını değiştirmenizi sağlar.
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en yavaşı gösterirken, 100 en hızlıyı gösterir.
 
-==== Ses Perdesi ====
+==== Ses Perdesi ====[VoiceSettingsPitch]
 Bu seçenek sesin perdesini değiştirmenizi sağlar.
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en düşük perdeyi yani kalını gösterirken, 100 en yüksek perdeyi yani en inceyi gösterir.
 
-==== Ses Seviyesi ====
+==== Ses Seviyesi ====[VoiceSettingsVolume]
 Burası 0'dan 100'e giden bir göstergedir, ve 0 en düşük ses seviyesini gösterirken, 100 en yüksek ses seviyesini gösterir.
 
-==== Tonlama ====
+==== Tonlama ====[VoiceSettingsInflection]
 Bu seçenek, sentezleyicinin konuşmak için ne kadar tonlama (iniş çıkış) kullanacağını belirlemenizi sağlayan bir göstergedir. Şu an itibariyle bu özelliği sağlayan tek sentezleyici Espeak NG sentezleyicisidir.
 
-==== Konuşma Dilinin Otomatik Değişimi ====
+==== Konuşma Dilinin Otomatik Değişimi ====[VoiceSettingsLanguageSwitching]
 Bu onay kutusu, okunmakta olan belgedeki metinlerin dili tanımlandıysa,, NVDA'nın konuşma dilini otomatik olarak değiştirip değiştirmemesiyle ilgili ayarı yapmanızı sağlar.
 Bu seçenek varsayılan olarak etkinleştirilmiştir.
 Şuanda sadece ESpeak NG sentezleyicisi otomatik dil değişimini desteklemektedir.
 
-==== Otomatik Lehçe Değişimi ====
+==== Otomatik Lehçe Değişimi ====[VoiceSettingsDialectSwitching]
 Otomatik dil değişimiyle ilgili seçenek etkinse, bu onay kutusu da okunan belgedeki lehçe değişikliklerine göre NVDA'nın da konuşma dilini otomatik olarak değiştirip değiştirmemesiyle ilgili ayarı yapmanızı sağlar.
 Örneğin, ABD İngilizcesiyle yazılmış bir belge içinde Büyük Krallık İngilizcesiyle yazılmış kısımlar varsa, NVDA konuşma dilini otomatik olarak ABD İngilizcesinden Büyük Krallık İngilizcesine değiştirebilir.
 Bu seçenek varsayılan olarak etkin değildir.
 
 %kc:setting
-==== Noktalama İşaretlerini Söyleme düzeyi ====
+==== Noktalama İşaretlerini Söyleme düzeyi ====[VoiceSettingsSymbolLevel]
 Kısayol tuşu: NVDA+p
 
 Bu, noktalama ya da başka işaretlerin ne kadarının sözcük olarak seslendirileceğiyle ilgili ayarı değiştirmenizi sağlar.
 Örneğin, Tümü olarak ayarladığınızda işaretlerin hepsi sözcük olarak seslendirilir.
 Bu ayardan sadece halihazırda kullanılan sentezleyici değil; tüm sentezleyiciler etkilenir.
 
-==== İşaret ve karakterleri işlerken seçili sesin diline bak ====
+==== İşaret ve karakterleri işlerken seçili sesin diline bak ====[VoiceSettingsTrust]
 Bu seçenek varsayılan olarak etkindir ve  NVDA'ya işaret ve karakterler seslendirilirken seçili sesin dilinin dikkate alınıp alınmayacağını söyler.
 Eğer NVDA'nın noktalama işaretlerini  herhangi bir sentezleyici ya da ses için yanlış dilde seslendirdiğini fark ederseniz, bu seçeneği NVDA global ayarlarının kullanılmasını sağlamak için kapatabilirsiniz.
 
-==== Büyük Harflerde Ses Perdesi Değişim Yüzdesi ====
+==== Büyük Harflerde Ses Perdesi Değişim Yüzdesi ====[VoiceSettingsCapPitchChange]
 Bu yazı alanı , büyük harfler seslendirilirken ses perdesinin hangi oranda değiştirileceğini belirlemenizi sağlar.
 Bu değer yüzde belirtir ve negatif değer sesi kalınlaştırırken pozitif değer sesi inceltecektir. 
 Ses perdesinde değişiklik olmasını istemezseniz buraya 0 yazabilirsiniz. Wave tabanlı sentezleyiciler bu özelliği desteklemez.
 
-==== Büyük Harflerden Önce Büyük De ====
+==== Büyük Harflerden Önce Büyük De ====[VoiceSettingsSayCapBefore]
 Bu ayar bir onay kutusudur ve işaretlendiğinde, metin içinde oklarla dolaşırken veya bir karakteri yazarken, karakter büyük yazılmışsa, öncesinde "büyük" sözcüğü söylenecektir.
 Genellikle, NVDA büyük harflerde sesi bir miktar inceltir. ancak bunu desteklemeyen sentezleyiciler için, bu seçenek oldukça kullanışlı olabilir.
 
-==== Büyük harflerde Bip sesi çıkar ====
+==== Büyük harflerde Bip sesi çıkar ====[VoiceSettingsBeepForCaps]
 Bu onay kutusu işaretlenirse, NVDA büyük yazılmış bir karakterle karşılaştığında bip sesi çıkaracaktır.
 Büyük Harflerden önce Büyük deme onay kutusunda olduğu gibi, büyük harfler için sesini inceltemeyen sentezleyiciler için, bu seçenek yararlıdır.
 
-==== Destekleniyorsa Kodlama İşlevini Kullan ====[VoiceSpellingFunctionality]
+==== Destekleniyorsa Kodlama İşlevini Kullan ====[VoiceSpellingFunctionality][VoiceSettingsUseSpelling]
 Bazı sözcükler sadece bir karakterden oluşabilir, ancak o karakterin bir sözcüğün içerisinde kodlanırkenki telaffuzu farklılık gösterir.
 Örneğin, İngilizce'de "a" hem bir harftir hem de tek başına bir sözcük. Sözcükken "a" olarak okunurken kodlama sırasında "ey" olarak seslendirilmelidir.
 Bu seçenek, tabii destekliyorsa, mevcut sentezleyicinin bu iki durumu birbirinden ayırt etmesine olanak sağlar.
@@ -1066,7 +1078,7 @@ Eğer NVDA ile çalışırken ses ayarları iletişim kutusuna gitmeden herhangi
 +++ Braille Ayarları +++[BrailleSettings]
 Braille ayarları, tercihler menüsüne gidildikten sonra braille ayarları bölümünden yapılabilir.
 
-==== Braille Ekran ====
+==== Braille Ekran ====[BrailleSettingsDisplay]
 Braille ayarlarındaki ilk seçenek "Braille Ekran" diyen bir seçim kutusudur.
 Sisteminizde hangi braille sürücülerin yüklü olduğuna bağlı olarak, size çeşitli seçenekler sunulacaktır.
 Bu seçenekler arasında yön tuşlarınızı kullanarak dolaşın.
@@ -1075,7 +1087,7 @@ Bu seçenekler arasında yön tuşlarınızı kullanarak dolaşın.
 
 Lütfen desteklenen braille ekranlarla ilgili daha fazla bilgi için [Desteklenen Braille Ekranlar #SupportedBrailleDisplays] bölümüne bakın.
 
-==== Port ====
+==== Port ====[BrailleSettingsPort]
 Bu seçenek, eğer mevcutsa, seçtiğiniz kabartma ekranla hangi port ya da bağlantı tipini kullanarak bağlantı kuracağınızı belirlemenizi sağlar.
 Bu, kabartma ekranınız için mevcut seçeneklerin sunulduğu bir seçim kutusudur.
 
@@ -1087,13 +1099,13 @@ Bu bölüm braille ekranınız yalnızca otomatik port belirlemeyi destekliyorsa
 
 Desteklenen bağlantı tipleri ve mevcut portlar için daha fazla detaya ulaşmak için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünde Braille ekranınızın dokümantasyonuna baş vurabilirsiniz.
 
-==== Çıktı Tablosu ====
+==== Çıktı Tablosu ====[BrailleSettingsOutputTable]
 Bu iletişim kutusundaki bir sonraki seçenek braille çıktı tablosu seçim kutusudur.
 Bu seçim kutusunda, farklı diller için braille tabloları bulacaksınız.
 Seçilen tablo, kabartma ekranda metnin nasıl gösterileceğini belirler.
 Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
 
-==== Girdi Tablosu ====[BrailleInputTable]
+==== Girdi Tablosu ====[BrailleInputTable][BrailleSettingsInputTable]
 Önceki seçeneği bütünleyen bir özellik olarak, bulacağınız sonraki ayar braille girdi tablosu seçim kutusudur.
 Seçilen tablo kabartma ekranınızın klavyesinden braille olarak metin girişi yapmanız için kullanılır.
 Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
@@ -1101,50 +1113,52 @@ Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
 Bu işlev yalnızca, üzerinde klavye bulunan ve sürücüsü bu özelliği destekleyen braille ekranlar için geçerlidir.
 Üzerinde klavye bulunduğu halde kabartma ekran bu özelliği desteklemiyorsa, bu [Desteklenen Kabartma Ekranlar #SupportedBrailleDisplays] bölümünde belirtilir.
 
-==== İmleç altındaki sözcüğü bilgisayar braille olarak Genişlet ====
+==== İmleç altındaki sözcüğü bilgisayar braille olarak Genişlet ====[BrailleSettingsExpandToComputerBraille]
 Bu seçenek, imlecin üzerinde bulunduğu sözcüğün kısaltmasız bilgisayar braille ile gösterilmesini sağlar.
 
-==== İmleci göster ====
+==== İmleci göster ====[BrailleSettingsShowCursor]
 Bu seçenek, brail imlecini açıp kapatmanızı sağlar.
 Sistem imleci ve inceleme imleci için uygulanır; seçimin belirtilmesi için geçerli değildir.
 
-==== İmleç Sinyali ====
+==== İmleç Sinyali ====[BrailleSettingsBlinkCursor]
 Bu seçenek, braille imlecin yanıp sönmesini sağlar.
 Sinyal kapatıldıysa, braille imleç yukarıda sabitlenir.
 Seçim göstergesi bu tercihten etkilenmez, her zaman 7 ve 8 nokta yukarıdadır.
 
-==== İmleç inip çıkma hızı ====
+==== İmleç inip çıkma hızı ====[BrailleSettingsBlinkRate]
 Bu seçenek, imleç inip çıkma hızının milisaniyede ne kadar hızlı olacağını değiştirmenizi sağlayan rakamsal bir alandır.
 
-==== odak için imleç Şekli ====
+==== odak için imleç Şekli ====[BrailleSettingsCursorShapeForFocus]
 Bu seçenek, odak tarafından taşındığı durumda braille imlecin şeklini belirlemenizi sağlar.
 Seçim belirteci bu tercihten etkilenmez, her zaman 7 ve 8 nokta yukarıdadır.
 
-==== İnceleme için imleç Şekli ====
+==== İnceleme imleci için imleç Şekli ====[BrailleSettingsCursorShapeForReview]
 Bu seçenek, inceleme imleci  tarafından taşındığı durumda braille imlecin şeklini belirlemenizi sağlar.
 Seçim belirteci bu tercihten etkilenmez, her zaman 7 ve 8 nokta yukarıdadır.
 
-==== Mesaj Zaman Aşımı Saniyesi ====
+==== Mesaj Zaman Aşımı Saniyesi ====[BrailleSettingsMessageTimeout]
 Bu seçenek, sistem mesajlarının braille ekranda ne kadar uzun süre gösterileceğini kontrol eden bir rakamsal alandır.
 0 yazılırsa mesajların gösterimi tamamen kapatılır.
 
-==== Mesajları süresiz olarak göster ====
+==== Mesajları süresiz olarak göster ====[BrailleSettingsNoMessageTimeout]
 Bu seçenek NVDA mesajlarının braille ekranda süresiz olarak görüntülenmesini sağlar.
 
 %kc:setting
 ==== Braille'in İzleyeceği İmleç ====[BrailleTether]
 Kısayol tuşu: NVDA+kontrol+t
 
-Bu seçenek Braille ekranın sistem imlecini mi yoksa nesne sunucusu/inceleme imlecini mi izleyeceğini seçmenizi sağlar.
+Bu seçenek Braille ekranın sistem imlecini mi, nesne sunucusu/inceleme imlecini mi yoksa her ikisini de mi izleyeceğini belirlemenizi sağlar.
+"Otomatik olarak" seçildiğinde, NVDA varsayılan olarak odağı ve düzenleme imlecini  takip eder.
+Bu durumda, kullanıcı nesne sunucusunun ya da inceleme imlecinin konumunu değiştirirse, NVDA geçici olarak inceleme imlecini takip eder, odak ya da düzenleme imlecinin konumu değişene kadar.
 
-==== Paragraf Paragraf Oku ====
+==== Paragraf Paragraf Oku ====[BrailleSettingsReadByParagraph]
 Etkinleştirilirse, braille yazı satır yerine paragraf bazında görüntülenir.
 Aynı zamanda, önceki satır ve sonraki satır komutları da bu ayar uyarınca önceki ya da sonraki paragrafa gider.
 Bu, braille ekranı, daha fazla metin sığması için sürekli kaydırmak zorunda olmayacağınız anlamına gelir.
 Sayesinde, uzun metinleri daha akıcı olarak okuyabilirsiniz.
 Varsayılan olarak, bu ayar etkinleştirilmemiştir.
 
-==== Mümkün olduğunda sözcükleri bölmemeye çalış ====
+==== Mümkün olduğunda sözcükleri bölmemeye çalış ====[BrailleSettingsWordWrap]
 Bu etkinleştirilirse, braille satıra sığmayan son sözcük bölünmez.
 Bunun yerine, satır sonunda boş hücreler gösterilir.
 Ekranı kaydırdığınızda sözcüğü okuyabilirsiniz.
@@ -1156,7 +1170,7 @@ Ekranı kaydırdığınızda bölünmüş sözcüğün kalanını okuyabilirsini
 
 Bunu etkinleştirmek daha akıcı bir okuma olanağı sunmakla birlikte, ekranı kaydırmak için ilgili tuşlara daha fazla basmanızı gerektirecektir.
 
-==== Odak bağlam sunumu ====
+==== Odak bağlam sunumu ====[BrailleSettingsFocusContextPresentation]
 Bu seçenek bir nesne üzerine gittiğinizde NVDA'nın braille ekranda hangi bağlamı göstereceğini seçmenizi sağlar.
 Bağlam bilgisi odağı içeren nesnelerin hiyerarşisini ifade eder.
 Mesela, bir liste öğesine odaklanırsanız, bu liste öğesi bir listede yer alır.
@@ -1182,20 +1196,20 @@ Ancak, bağlamı tekrar okumak için (yani bir listede olduğunuzu ve bu listeni
 
 Herhangi bir yerdeyken odak bağlam sunumunu değiştirmek için, [Girdi Hareketleri iletişim  kutusu #InputGestures] kullanarak özel bir girdi hareketi oluşturun.
 
-+++ Kılavye Ayarları (NVDA+kontrol+k) +++
++++ Klavye Ayarları (NVDA+kontrol+k) +++[KeyboardSettings]
 Bu iletişim kutusu tercihler menüsü içindeki "Klavye Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
-==== Klavye Düzeni ====
+==== Klavye Düzeni ====[KeyboardSettingsLayout]
 Bu seçim kutusu, NVDA'nın hangi tür klavye düzenini kullanacağını seçmenizi sağlar. Şu an itibariyle NVDA ile gelen 2 düzen masaüstü ve dizüstü düzenleridir.
 
-==== Büyük Harf Kilidini NVDA Tuşu Olarak Kullan ====
+==== Büyük Harf Kilidini NVDA Tuşu Olarak Kullan ====[KeyboardSettingsCapsModifier]
 Bu oanay kutusu işaretlenirse, büyük harf kilidi tuşu NVDA değişken tuşu olarak kullanılabilir.
 
-==== Normal insert tuşunu NVDA Tuşu Olarak Kullan ====
+==== Normal insert tuşunu NVDA Tuşu Olarak Kullan ====[KeyboardSettingsExtendedInsert]
 Bu onay kutusu işaretlenirse, genellikle yön tuşlarının üzerinde home ve end tuşlarının yanında bulunan insert tuşu NVDA değişken tuşu olarak kullanılabilir.
 
-==== Numaratördeki insert tuşunu NVDA Değişken Tuşu Olarak Kullan ====
+==== Numaratördeki insert tuşunu NVDA Değişken Tuşu Olarak Kullan ====[KeyboardSettingsNumpadInsert]
 Bu onay kutusu işaretlenirse, numaratördeki insert tuşu NVDA değişken tuşu olarak kullanılabilir.
 
 Hiçbir tuş NVDA tuşu olarak ayarlanmazsa, bazı NVDA komutları kullanılamaz.
@@ -1203,42 +1217,42 @@ Dolayısıyla, bütün tuşlar seçilmemiş durumdaysa, Klavye Ayarları iletiş
 Bu mesajı kapattıktan sonra, iletişim kutusunu uygun bir şekilde kapatabilmek için en az bir tuşu NVDA tuşu olarak seçmelisiniz.
 
 %kc:setting
-==== Yazılan Karakterleri Söyle ====
+==== Yazılan Karakterleri Söyle ====[KeyboardSettingsSpeakTypedCharacters]
 Kısayol tuşu: NVDA+2
 
 Etkinleştirildiğinde, NVDA yazdığınız her karakteri söyleyecektir.
 
 %kc:setting
-==== Yazılan Sözcükleri Söyle ====
+==== Yazılan Sözcükleri Söyle ====[KeyboardSettingsSpeakTypedWords]
 Kısayol tuşu: NVDA+3
 
 Etkinleştirildiğinde, NVDA yazdığınız her sözcüğü söyleyecektir.
 
-==== Karakterlere Basıldığında Konuşmayı Durdur ====
+==== Karakterlere Basıldığında Konuşmayı Durdur ====[KeyboardSettingsSpeechInteruptForCharacters]
 Açıksa,, bu seçenek bir karaktere basıldığında konuşmanın durmasına neden olur. Varsayılan olarak açıktır.
 
-==== Enter tuşuna basıldığında konuşmayı durdur ====
+==== Enter tuşuna basıldığında konuşmayı durdur ====[KeyboardSettingsSpeechInteruptForEnter]
 Açıksa, bu seçenek enter tuşuna basıldığında konuşmanın durmasına neden olur. Varsayılan olarak açıktır.
 
-==== Tümünü okurken atlamaya izin ver ====
+==== Tümünü okurken atlamaya izin ver ====[KeyboardSettingsSkimReading]
 Açıksa, tümünü okuma komutu verildiğinde belli dolaşma komutları kullanıldığı zaman (örneğin tarama kipinde hızlı dolaşım tuşları ya da paragraf veya satır değiştirme komutları) konuşma durdurulmaz, yerine okuma atlanılan konumdan itibaren devam eder.
 
-==== Büyük Harf Kilidi Açıkken, şifte basılarak küçük harf Yazılırsa Bip Sesi Çıkar ====
+==== Büyük Harf Kilidi Açıkken, şifte basılarak küçük harf Yazılırsa Bip Sesi Çıkar ====[KeyboardSettingsBeepLowercase]
 Etkinleştirildiğinde, büyük harf kilidi açıkken şift tuşuyla birlikte bir harfe basıldığında uyarı bipi duyulacaktır.
 Genellikle, büyük harf kilidi açıkken şiftle birlikte bir harf yazmak istem dışıdır ve çoğunlukla büyük harf kilidinin açık olduğunun farkında olunmamasından kaynaklanır.
 o yüzden, bu konuda uyarılmak oldukça yararlı olabilir.
 
 %kc:setting
-==== Komut Tuşlarını Söyle ====
+==== Komut Tuşlarını Söyle ====[KeyboardSettingsSpeakCommandKeys]
 Kısayol tuşu: NVDA+4
 
 Etkinleştirildiğinde, NVDA bastığınız karakter olmayan (örnek, kontrol, Şift VS.) her tuşu söyleyecektir. Buna kontrolle birlikte basılan harflerden oluşan tuş kombinasyonları da dahildir.
 
-==== Yazarken yazım hataları için ses çal ====
+==== Yazarken yazım hataları için ses çal ====[KeyboardSettingsAlertForSpellingErrors]
 Etkinleştirildiğinde, yazmakta olduğunuz kelime hatalı olarak yazılıyorsa, Kısa bir zil sesi çalınır.
 Bu seçenek, yalnızca NVDA'nın [Belge format ayarları #DocumentFormattingSettings] iletişim kutusundaki Yazım hatalarının bildirimi açıksa geçerlidir.
 
-==== Diğer uygulamaların kullandığı tuşları işle ====
+==== Diğer uygulamaların kullandığı tuşları işle ====[KeyboardSettingsHandleKeys]
 Bu seçenek kullanıcının ekran klavyeleri ve konuşma tanıma uygulamaları  gibi yazılımların tuşlarının NVDA tarafından işlenip işlenmeyeceğini kontrol etmesini sağlar. 
 Bu seçenek varsayılan olarak etkindir, bazı kullanıcılar bunu kapatmak isteyebilir, örneğin  Vietnamca  yazmak için Unikey yazma programı kullananlar.
 
@@ -1246,85 +1260,93 @@ Bu seçenek varsayılan olarak etkindir, bazı kullanıcılar bunu kapatmak iste
 Fare ayarları iletişim kutusu tercihler menüsü içindeki "Fare Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
-==== Fare Şekil Değişikliğini Bildir ====
+==== Fare Şekil Değişikliğini Bildir ====[MouseSettingsShape]
 Bu onay kutusu işaretlendiğinde, fare işaretleyicisinin şekli her değiştiğinde NVDA bunu bildirecektir.
 Fare işaretleyicisi pencerelerde bir alanın yazılabilir olduğu veya bir şeyin yüklendiği gibi bilgileri vermek için şekil değiştirir.
 
 %kc:setting
-==== Fare İzlemesini Etkinleştir ====
+==== Fare İzlemesini Etkinleştir ====[MouseSettingsTracking]
 Kısayol tuşu: NVDA+m |
 
 Etkinleştirildiğinde, fare ile ekranda dolaşırken, NVDA, fare işaretinin altında bulunan metni söyleyecektir. Bu, ekrandaki bir şeyi nesne dolaşımı yerine, fiziksel olarak fareyi hareket ettirerek bulmanızı sağlar.
 
-==== Metin Birim Çözünürlüğü ====
+==== Metin Birim Çözünürlüğü ====[MouseSettingsTextUnit]
 Eğer NVDA siz hareket ettikçe fare altındaki metni söyleyecek biçimde ayarlandıysa, bu seçenek, tam olarak ne kadar metnin söyleneceğini seçmenizi sağlar.
 Seçenekler, karakter, sözcük, satır ve paragraftır.
 
-==== Fare altındaki nesne tiplerini Seslendir ====
+==== Fare altındaki nesne tiplerini Seslendir ====[MouseSettingsRole]
 Bu onay kutusu işaretlenirse, NVDA bir nesneye geldiğinde o nesnenin işlevini (türünü) belirtecektir.
 
-==== Fare hareketlerinde Koordinatları Ses Çalarak Belirt ====
+==== Fare hareketlerinde Koordinatları Ses Çalarak Belirt ====[MouseSettingsAudio]
 Bu onay kutusunu işaretlemek, NVDA'nın fare hareket ettikçe bip sesi çıkarmasını sağlar ve böylece kullanıcı ekranda farenin nerede olduğunu anlayabilir.
 Fare yukarı çıktıkça bip sesi incelir.
 Fare imleci sola ve  sağa kaydırıldıkça bip sesi de aynı doğrultuda sola ve sağa kayar. Tabii bunun anlaşılması için hoparlör ya da kulaklık steryo olmalıdır.
 
-==== Seçili bölgelerde dolaşırken fare koordinat sesini yükselt ====
+==== Seçili bölgelerde dolaşırken fare koordinat sesini yükselt ====[MouseSettingsBrightness]
 Eğer "fare hareket ettikçe ses çal" onay kutusu işaretliyse, bu onay kutusu işaretlendiğinde, sesli koordinatların miktarı ekranın parlaklığına göre kontrol edilir.
-yani seçili bir bölgede ses daha yüksek çıkar. Bu, windows Vistada bazı performans sorunlarına yol açabileceğinden, varsayılan olarak işaretli değildir.
+yani seçili bir bölgede ses daha yüksek çıkar. Bu, varsayılan olarak işaretli değildir.
 
-+++ İnceleme İmleci Ayarları +++
++++ Dokunmatik Etkileşim Ayarları +++[TouchInteraction]
+Yalnızca dokunmatik ekranlı ve windows 8 ve sonraki işletim sistemlerinde bulunan  Bu iletişim kutusu, NVDA'nın dokunmatik ekranlarla nasıl etkileşeceğini yapılandırmanızı sağlar.
+
+==== Dokunarak yazma kipi ====[TouchTypingMode]
+Bu onay kutusu dokunmatik ekrandan giriş yapma yönteminizi belirlemenize olanak tanır.
+Onay kutusu işaretli ise, dokunmatik klavyede bir tuşu bulduktan sonra, parmağınızı ekrandan çektiğinizde bu tuşa basılır.
+İşaretli değilse, tuşa basmak için ekrana çift dokunmanız gerekir.
+
++++ İnceleme İmleci Ayarları +++[ReviewCursorSettings]
 Tercihler menüsü içinde "İnceleme İmleci Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
 %kc:setting
-==== Sistem Odağını Takip et ====
+==== Sistem Odağını Takip et ====[ReviewCursorFollowFocus]
 Kısayol tuşu: NVDA+7 |
 
 Etkinleştirildiği zaman, odak değiştiğinde inceleme imleci de sistem odağının bulunduğu nesne üzerinde konumlanır.
 
 %kc:setting
-==== Sistem Düzenleme İmlecini takip et ====
+==== Sistem Düzenleme İmlecini takip et ====[ReviewCursorFollowCaret]
 Kısayol tuşu: NVDA+6
 
 Etkinleştirildiğinde, sistem düzenleme imleci hareket ettikçe, inceleme imleci de onun gittiği yere gidecektir.
 
-==== Fare İmlecini Takip Et ====
+==== Fare İmlecini Takip Et ====[ReviewCursorFollowMouse]
 Etkinleştirildiğinde, fare hareket ettikçe inceleme imleci de onu izleyecektir.
 
-==== Basit İnceleme Kipi ====
+==== Basit İnceleme Kipi ====[ReviewCursorSimple]
 Etkinleştirildiğinde, görünmez nesneler ve sadece düzenleme amacıyla kullanılan nesneler vb kullanıcıyı ilgilendirmeyecek nesneleri yoksaymak için, NVDA dolaşılabilecek nesne hiyerarşisini filtreleyecektirr.
 
 Herhangi bir yerde basit inceleme kipini açıp kapatmak için, lütfen [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak bir özel hareket atayın.
 
-+++ Nesne Sunumu Ayarları (NVDA+kontrol+o) +++
++++ Nesne Sunumu Ayarları (NVDA+kontrol+o) +++[ObjectPresentationSettings]
 Tercihler menüsü içinde "Nesne Sunumu Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
-==== İpuçlarını (baloncukları) bildir ====
+==== İpuçlarını (baloncukları) bildir ====[ObjectPresentationReportToolTips]
 İşaretlendiğinde NVDA'ya çıkan baloncuk ipuçlarını bildirmesini söyleyen bir onay kutusudur.
 Bir çok pencere ve kontrol fareyle üzerine gelindiğinde veya üzerine odaklanıldığında küçük mesajlar veya ipuçları (baloncuklar( göstermektedir.
 
-==== Yardım Balonlarını Bildir ====
+==== Yardım Balonlarını Bildir ====[ObjectPresentationReportBalloons]
 İşaretlendiğinde NVDA'ya çıkan yardım balonlarını bildirmesini söyleyen bir onay kutusudur.
 Yardım balonları ipucu balonlarına benzer, ancak boyut olarak daha büyüktür ve yerel ağ kablosunun takılı olmaması veya windows güvenliği gibi sistemsel olaylarla ilgilidir.
 
-==== Nesne Kısayol Tuşlarını Bildir ====
+==== Nesne Kısayol Tuşlarını Bildir ====[ObjectPresentationShortcutKeys]
 Bu onay kutusu işaretlendiğinde, NVDA bir kontrol veya belirli bir nesne üzerine geldiğinde, ilgili kısayol tuşunu da söyler.
 Örneğin, menü çubuğundaki dosya menüsünün kısayol tuşu alt+d olabilir.
 
-==== Nesne Konum Bilgisini Bildir ====
+==== Nesne Konum Bilgisini Bildir ====[ObjectPresentationPositionInfo]
 Bu seçenek, Nesnenin 1 bölü 4 gibi konum bilgisinin nesne dolaşımı veya klavye odağıyla üzerine gelindiğinde bildirilip bildirilmeyeceğini seçmenizi sağlar.
 
-==== Mevcut Değilse Nesne Konum Bilgisini Tahmin Et ====
+==== Mevcut Değilse Nesne Konum Bilgisini Tahmin Et ====[ObjectPresentationGuessPositionInfo]
 Eğer nesne konum bilgisinin bildirimi açıksa, Bu seçenek, NVDA'ya başka biçimde belirli bir kontrolde mevcut olmayan nesne konum bilgisini tahmin etme olanağı sağlar.
 
 Açık olduğunda, NVDA, araç çubukları ve menü çubukları gibi daha fazla nesnenin konum bilgisini bildirecek, ancak verilen bilgilerde küçük hatalar meydana gelebilecektir.
  
-==== Nesne Tariflerini Bildir ====
+==== Nesne Tariflerini Bildir ====[ObjectPresentationReportDescriptions]
 Nesne adıyla birlikte tarifini duymak istemiyorsanız, bu onay kutusunun işaretini kaldırın.
 
 %kc:setting
-==== Aşama Çubuğu bildirimi ====
+==== Aşama Çubuğu bildirimi ====[ObjectPresentationProgressBarOutput]
 Kısayol tuşu: NVDA+u |
 
 Bu seçenek Aşama çubuğu bilgilerini NVDA'nın size nasıl bildireceğini kontrol etmenizi sağlar.
@@ -1336,76 +1358,76 @@ içinde aşağıdaki seçenekler mevcuttur:
 - Konuş ve Bip Sesi Çıkar Bu seçenek NVDA'ya aşama çubuğu güncelenirken, hem konuşup hem bip sesi çıkarmasını söyler.
 -
 
-==== Arka Plan Aşama çubuklarını Bildir ====
+==== Arka Plan Aşama çubuklarını Bildir ====[ObjectPresentationReportBackgroundProgressBars]
 Bu seçenek, NVDA'nın bir aşama çubuğu o an fiziksel olarak ekranda olmasa bile güncellemeleri takip edip belirtmesini sağlar.
 Aşama çubuğu olan bir pencereyi küçülttüyseniz veya başka bir noktaya geçtiyseniz, NVDA bu çubuğu izler ve başka bir işle uğraşırken, aynı zamanda güncellemeleri de takip etmenizi sağlar.
 
 %kc:setting
-==== Dinamik İçerik Değişimlerini Bildir ====
+==== Dinamik İçerik Değişimlerini Bildir ====[ObjectPresentationReportDynamicContent]
 Kısayol tuşu: NVDA+5
 
 Terminal veya chat programlarının geçmiş alanları gibi belirli nesnelerdeki yeni içeriğin belirtilip belirtilmeyeceğini kontrol eder.
 
-==== Otomatik öneriler için ses çal ====
+==== Otomatik öneriler için ses çal ====[ObjectPresentationSuggestionSounds]
 Otomatik önerilerin bildirimiyle ilgili değişiklik yapar ve  etkinleştirilirse, NVDA listenin görüntülendiğini belirtmek için bir ses çalar.
 Otomatik öneriler belli bir alana girilen metne dayanılarak  önerilen girdilerin listesidir.
 Mesela, Windows Vista ve sonrasında Başlat Menüsünde arama kutusuna  metin girdiğinizde, Windows yazdığınıza dayalı bir öneri listesi görüntüler.
 Çeşitli Windows 10 uygulamalarında bulunan arama alanları gibi bazı yazı alanlarında , NVDA siz yazdıkça listelenen seçenekler hakkında bildirimde bulunabilir.
 Otomatik öneri listesi, yazı alanını kapattığınızda kapanır ve bazı alanlar için , NVDA BU gerçekleştiğinde  bildirimde bulunabilir.
 
-+++ Girdi Kompozisyon Ayarları +++
++++ Girdi Kompozisyon Ayarları +++[InputCompositionSettings]
 Girdi kompozisyon ayarları iletişim kutusu Tercihler menüsü altında bulunabilir.
 Bu iletişim kutusu NVDA'nın Çince, Japonca ve Korece gibi dillerle ilgili girişleri, IME veya Text Service girdi metodları, nasıl bildireceğini ayarlamanızı sağlar.
 Taşıdıkları özellik ve bilgiler açısından girdi metodları farklılaştığından, daha verimli bir yazma deneyimi için bu seçenekleri her girdi metodu için ayrı ayrı konfigüre etmeniz gerekebilir.
 
-==== Mevcut tüm önerileri otomatik olarak seslendir ====
+==== Mevcut tüm önerileri otomatik olarak seslendir ====[InputCompositionReportAllCandidates]
 Varsayılan olarak açık olan bu seçenek, bir öneri listesi oluştuğunda, görünen tüm önerilerin seslendirilip seslendirilmeyeceğini ayarlamanızı sağlar.
 Bu seçeneğin açık olması, chinese New ChangJie veya Boshiami gibi pictographic girdi metodları için faydalı olabilir.
 Ancak, chinese New Phonetic gibi phonetic girdi metodları için, seçeneğin kapalı olması daha faydalı olabilir. Tüm semboller benzer seslere sahip olduğu için öneri listesinde yön tuşlarını kullanarak seçim yapmak daha uygundur.
 
-==== Seçili Öneriyi Seslendir ====
+==== Seçili Öneriyi Seslendir ====[InputCompositionAnnounceSelectedCandidate]
 Varsayılan olarak açık olan bu seçenek, bir öneri listesi ortaya çıktığında ya da seçim değiştiğinde, seçili önerinin seslendirilip seslendirilmeyeceğini belirlemenizi sağlar.
 Seçimin yön tuşlarıyla değiştirilebildiği (Chinese New Phonetic) gibi girdi metodları için bu gereklidir, ama bazı girdi metodları için bu seçeneğin kapalı olması daha verimli olacaktır.
 Bu seçenek kapalı olsa dahi, nesne dolaşımı yoluyla önerileri manuel olarak inceleyebilmeniz için, inceleme imleci seçili önerinin üzerinde konumlandırılır.
 
-==== Öneriler için daima kısa karakter tanımlarını da kullan ====
+==== Öneriler için daima kısa karakter tanımlarını da kullan ====[InputCompositionCandidateIncludesShortCharacterDescription]
 This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when its selected or when its automatically read when the candidate list appears.
 Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
 Bu seçenek Korece ve Japonca girdi metodları için faydalı olabilir.
 
-==== İfade okunuşlarındaki değişiklikleri bildir ====
+==== İfade okunuşlarındaki değişiklikleri bildir ====[InputCompositionReadingStringChanges]
 Chinese New Phonetic ve New ChangJie gibi bazı girdi metodları (kimi zaman precomposition string olarak bilinen) ifade okumalarına sahiptir.
 Bu seçenekle, ifadelerin okunuşlarında yeni karakter girişlerinin seslendirilip seslendirilmeyeceğini ayarlayabilirsiniz.
 Bu seçenek varsayılan olarak açıktır.
 Chinese ChangJie gibi bazı eski girdi metodlarının ön kompozisyon ifade okumaları yerine doğrudan ifade kompozisyonlarını kullandığını not edin. Lütfen ifade kompozisyonunun seslendirilmesiyle ilgili ayar için sonraki seçeneğe bakın.
 
-==== İfade Kompozisyonundaki Değişiklikleri Bildir ===
+==== İfade Kompozisyonundaki Değişiklikleri Bildir ===[InputCompositionCompositionStringChanges]
 After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
 This option allows you to choose whether or not NVDA should report new symbols as they appear in the composition string.
 Bu seçenek varsayılan olarak açıktır.
 
-+++ Tarama Kipi Ayarları (NVDA+kontrol+b) +++
++++ Tarama Kipi Ayarları (NVDA+kontrol+b) +++[BrowseModeSettings]
 Tarama Kipi Ayarları iletişim kutusu tercihler menüsü içindeki "Tarama Kipi..." bölümünün altında bulunur.
 
 içinde aşağıdaki seçenekler mevcuttur:
 
-==== Satır Başına Düşen Maksimum Karakter sayısı ====
+==== Satır Başına Düşen Maksimum Karakter sayısı ====[BrowseModeSettingsMaxLength]
 Bu alan, tarama kipinde görüntülenecek her bir satırın karakter cinsinden maksimum uzunluğunu ayarlar.
 
-==== Sayfa Başına Düşen Maksimum Satır sayısı ====
+==== Sayfa Başına Düşen Maksimum Satır sayısı ====[BrowseModeSettingsPageLines]
 Bu değer, önceki sayfa ve sonraki sayfa tuşlarıyla tarama kipinde gösterilen belge içinde hareket ettiğinizde, kaç satır gidileceğini belirler.
 
 %kc:setting
-==== Destekleniyorsa Ekran Düzenini Kullan ====
+==== Destekleniyorsa Ekran Düzenini Kullan ====[BrowseModeSettingsScreenLayout]
 Kısayol tuşu: NVDA+v
 
 Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin ayrı satırlarda gösterilmesi ya da ekranda görsel olarak nasıl görünüyorsa o biçimde aktarılması seçenekleri arasında tercih yapmanızı sağlar. Etkinleştirilirse, ekrandaki içerik, görsel olarak nasıl görünüyorsa öyle sergilenir. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
 
-==== Sayfa yüklendiğinde Otomatik Olarak Hepsini Oku ====
+==== Sayfa yüklendiğinde Otomatik Olarak Hepsini Oku ====[BrowseModeSettingsAutoSayAll]
 Bu onay kutusu tarama kipinde yüklenen sayfanın otomatik olarak okunmaya başlanmasıyla ilgili ayarı değiştirir.
 Bu seçenek varsayılan olarak etkindir.
 
-==== Düzenleme Tablolarını Dahil Et ====
+==== Düzenleme Tablolarını Dahil Et ====[BrowseModeSettingsIncludeLayoutTables]
 Bu seçenek, sadece sayfa düzeniyle ilgili, veri içermeyen tablolarla karşılaştığında NVDA'nın nasıl davranacağını etkiler.
 Açıksa, NVDA bu tablolarla karşılaştığında normal tablolara davrandığı gibi tepki verir, [Belge Format Ayarları #DocumentFormattingSettings] nasıl yapıldıysa o şekilde belirtir ve tek tuş dolaşımı ile bu tablolara da ulaşılır.
 Devre dışı bırakıldığında, NVDA sadece sayfa düzeniyle ilgili olarak oluşturulmuş tabloları bildirmez ve tek tuş dolaşımıyla da bu tablolara ulaşılmaz.
@@ -1414,21 +1436,21 @@ Bu seçenek varsayılan olarak kapalıdır.
 
 Herhangi bir yerde düzen tablolarının dahil edilmesini açıp kapatmak için,    [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir komut belirleyebilirsiniz.
 
-==== Başlık ve Bağlantı gibi alanların belirtilmesini ayarlama ====
+==== Başlık ve Bağlantı gibi alanların belirtilmesini ayarlama ====[BrowseModeLinksAndHeadings]
 Başlıklar, bağlantılar, tablolar ve listeler gibi kontrollerin seslendirilmesiyle ilgili ayarlar için, lütfen [Belge Formatları İletişim Kutusu #DocumentFormattingSettings] içerisindeki seçeneklere bakın.
 
-==== Odak Değişiminde Otomatik Odak Kipi ====
+==== Odak Değişiminde Otomatik Odak Kipi ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Bu seçenek, odak değişiminde odak kipinin açılmasını sağlar.
 Örneğin, Bir web sayfasında tab tuşuyla bir form alanına geldiyseniz ve bu seçenek işaretliyse, otomatik olarak odak kipi açılacaktır.
 
-==== Düzenleme İmleci İçin Otomatik Odak Kipi ====
+==== Düzenleme İmleci İçin Otomatik Odak Kipi ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Bu seçenek işaretliyse, yön tuşlarıyla dolaşırken NVDA'nın odak kipine girmesini ve çıkmasını sağlar.
 Örneğin bir web sayfasında aşağı yön tuşuyla dolaşırken bir yazı alanına gelirseniz, NVDA otomatik olarak sizi odak kipine alacaktır. oklarla yazı alanının dışına çıktığınızda ise sizi tekrar tarama kipine geri döndürecektir.
 
-==== Odak Kipiyle Tarama Kipi Arasındaki Geçişi Ses Çalarak bildir ====
+==== Odak Kipiyle Tarama Kipi Arasındaki Geçişi Ses Çalarak bildir ====[BrowseModeSettingsPassThroughAudioIndication]
 Bu seçenek etkinse, odak kipi ve tarama kipi arasında geçiş yaparken NVDA bunu konuşarak değil, özel bir ses çalarak bildirecektir.
 
-==== Komut tuşu olmayan tuşların belgeye gönderilmesini engelle ====
+==== Komut tuşu olmayan tuşların belgeye gönderilmesini engelle ====[BrowseModeSettingsTrapNonCommandGestures]
 Bu seçenek varsayılan olarak etkindir ve NVDA komutu   olarak kullanılmayan tuşların ve hareketlerin belgeye gönderilip gönderilmeyeceğini belirlemenizi sağlar. 
 Etkinleştirildiğinde, örneğin J harfine basılırsa, bu tuş ne  NVDA komutu ne de  aktif uygulama komutu olarak kullanıldığı için , tuşun belgeye ulaşması engellenecektir.
 
@@ -1477,14 +1499,14 @@ Belge biçimlendirme seçenekleri gruplar halinde düzenlenmiştir.
 
 Bu ayarları herhangi bir yerdeyken değiştirebilmek için, lütfen [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak kısayol tuşu belirleyin.
 
-==== imleçten sonraki biçim değişikliklerini bildir ====
+==== imleçten sonraki biçim değişikliklerini bildir ====[DocumentFormattingDetectFormatAfterCursor]
 Bu seçenek NVDA'ya konuştuğu satırda herhangi bir biçim değişikliği varsa bildirmesini söyler. Ancak bu, performansı yavaşlatabilir.
 
 Varsayılan olarak NVDA sistem düzenleme imleci veya inceleme imlecinin bulunduğu konumdaki biçim değişikliklerini bildirecektir, ve bazı durumlarda yalnızca performansı yavaşlatmayacaksa satırın geri kalanındaki değişiklikleri belirtebilir.
  
 Biçimlendirmenin önemli olduğu Wordpad belgesi gibi belgelerde düzeltme yaparken bu seçeneği etkinleştirin.
 
-==== Satır girintilerinin bildirimi ====[lineIndentationOptions]
+==== Satır girintilerinin bildirimi ====[DocumentFormattingSettingsLineIndentation]
 Bu seçenek, satır başlarındaki boşlukların nasıl bildirileceğini belirlemenize olanak tanır.
 Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 
@@ -1498,10 +1520,10 @@ Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 +++ Windows 10 OCR Ayarları +++[Win10OcrSettings]
 Bu iletişim kutusuna NVDA Tercihler menüsünden erişilebilir ve [Windows 10 OCR ayarlarını #Win10Ocr] yapılandırmanızı sağlar.
 
-==== Tanıma dili ====
+==== Tanıma dili ====[Win10OcrSettingsRecognitionLanguage]
 Bu seçim kutusu metin tanıma için kullanılacak dili seçmek içindir.
 
-+++ Konuşma Sözlükleri +++
++++ Konuşma Sözlükleri +++[SpeechDictionaries]
 Tercihler menüsünde bulunan konuşma sözlükleri menüsü, belirli sözcük veya öbeklerin NVDA tarafından nasıl söyleneceğini ayarlayabileceğiniz iletişim kutularını içermektedir.
 şu an itibariyle 3 farklı konuşma sözlüğü bulunmaktadır.
 bunlar:
@@ -1584,7 +1606,7 @@ Bir komutla ilgili hareketi silmek için, hareket seçiliyken kaldır tuşuna ba
 
 Değişiklikleri yaptıktan sonra, kaydetmek için tamam, vazgeçmek için iptal tuşuna basın.
 
-++ Konfigürasyonu Kaydetme ve Yeniden Yükleme ++
+++ Konfigürasyonu Kaydetme ve Yeniden Yükleme ++[SavingAndReloading]
 Varsayılan olarak, NVDA kapatılırken, konfigürasyonda yaptığınız değişiklikler kalıcı olarak kaydedilir.
 Ancak, bu seçenek tercihler menüsündeki genel ayarlar altından değiştirilebilir.
 Otomatik kaydetme ayarını değiştirdiyseniz, ayarları kalıcı olarak kaydetmek için NVDA menüsündeki Konfigürasyonu kaydet ögesini seçebilirsiniz.
@@ -1599,7 +1621,7 @@ Ayrıca aşağıdaki NVDA tuş komutları da yararlıdır:
 | Kaydedilmiş ayarlara (konfigürasyona) geri dön | NVDA+kontrol+r | NVDA+kontrol+r | Bir kez basıldığında NVDA konfigürasyonunu en son kaydetmiş olduğunuz haline, üç kez basıldığında fabrika ayarlarına döndürür |
 %kc:endInclude
 
-++ Konfigürasyon Profilleri ++
+++ Konfigürasyon Profilleri ++[ConfigurationProfiles]
 Bazen, farklı durumlar için farklı ayarlar kullanmak isteyebilirsiniz.
 Örneğin, yazı yazarken satır girintilerinin bildirimini etkinleştirmek ya da düzeltme okuması yaparken yazı biçimi özelliklerinin bildirimini açmak isteyebilirsiniz.
 NVDA konfigürasyon profillerini kullanarak bunu yapmanıza olanak tanır.
@@ -1610,7 +1632,7 @@ Konfigürasyon profillerinde, NVDA bütünlüğü için geçerli olan Genel Ayar
 Konfigürasyon profilleri elle aktif hale getirilebilir.
 Ayrıca, tetikleyuiciler vesilesiyle, örneğin belli bir uygulama açıldığında konfigürasyon profili otomatik olarak aktif hale getirilebilir.
 
-+++ Temel Yönetim +++
++++ Temel Yönetim +++[ProfilesBasicManagement]
 Konfigürasyon profillerini NVDA menüsü altından "Konfigürasyon profilleri" öğesini seçerek yönetebilirsiniz.
 Ayrıca bunu bir tuş komutuyla yapabilirsiniz:
 %kc:beginInclude
@@ -1626,7 +1648,7 @@ Bir profili yeniden adlandırmak veya silmek için, Yeniden adlandır veya Sil d
 
 Iletişim kutusunu kapatmak için Kapat düğmesine basın.
 
-+++ Profil Oluşturma +++
++++ Profil Oluşturma +++[ProfilesCreating]
 Bir profil oluşturmak için, Yeni düğmesine basın.
 
 Yeni Profil iletişim kutusunda, profil için bir ad girebilirsiniz.
@@ -1659,7 +1681,7 @@ Bir profil kullanılmasını istemiyorsanız (normal konfigürasyon) seçeniğin
 
 Konfigürasyon profilleri iletişim kutusuna dönmek için Kapat düğmesine basın.
 
-+++ Profil Düzenleme +++
++++ Profil Düzenleme +++[ConfigProfileEditing]
 Bir profili manuel olarak etkinleştirdiyseniz, yapılacak değişiklikler bu profile kaydedilir.
 Aksi takdirde, herhangi bir ayar değişikliği en son tetiklenen profile kaydedilir.
 Örneğin, Not Dewfteri uygulaması için bir profil belirlemişseniz ve Not Defteri aktifse, NVDA ayarlarıyla ilgili değişiklikler bu profile kaydedilir.
@@ -1667,12 +1689,12 @@ Son olarak, manuel olarak etkinleştirilmiş ya da tetiklenmiş bir profil söz 
 
 Tümünü oku tetikleyicisiyle ilişkili profili düzenlemek isterseniz, bu profili [manuel olarak #ConfigProfileManual] etkinleştirmelisiniz.
 
-+++ Tetikleyicileri Geçici Olarak Devre Dışı Bırakma +++
++++ Tetikleyicileri Geçici Olarak Devre Dışı Bırakma +++[ConfigProfileDisablingTriggers]
 Bazen, tüm tetikleyicileri geçici olarak devre dışı bırakmak yararlıdır.
 Örneğin, manuel olarak etkinleştirdiğiniz bir profili ya da normal konfigürasyonu, herhangi bir tetikleyiciye atanmış bir profilin araya girmesini engelleyerek düzenlemek isteyebilirsiniz.
 Bunu, Konfigürasyon Profilleri iletişim kutusunda bulunan , Tüm tetikliyiceleri geçici olarak devre dışı bırak onay kutusunu işaretleyerek yapabilirsiniz.
 
-++ Konfigürasyon Dosyalarının Konumu ++
+++ Konfigürasyon Dosyalarının Konumu ++[LocationOfConfigurationFiles]
 NVDA taşınabilir sürümü, tüm ayarları, kişisel uygulama modüllerini ve kişisel sürücüleri NVDA dizininde bulunan ve UserConfig adı verilen dizinde saklamaktadır.
 
 Kurulabilir NVDA sürümü ise, tüm ayarları, kişisel uygulama modülleri ve kişisel sürücüleri Windows kullanıcı profilinizde bulunan özel bir NVDA dizininde saklar.
@@ -1683,15 +1705,15 @@ Logon ve Kullanıcı hesapları (UAC) gibi NVDA çalışırken kullanılan nokta
 Genellikle bu ayarlara dokunulmamalıdır.
 NVDA'nın logon ve kullanıcı hesapları ekranlarındaki ayarlarını değiştirmek için, önce NVDA ile Windows'da oturum açarken kullanılacak ayarları yapın, AYARLARI KAYDEDİP daha sonra NVDA genel ayarlar iletişim kutusundaki düğmeyi kullanarak NVDA'ya bu mevcut konfigürasyonu logon ekranına kopyalamasını söyleyin.
 
-+ Ekstra Araçlar +
++ Ekstra Araçlar +[ExtraTools]
 
-++ Log Görüntüleyicisi ++
+++ Log Görüntüleyicisi ++[LogViewer]
 Araçlar menüsü altında bulunan Log dosyasını göster öğesi, NVDA'yı en son başlattığınızdan şimdiye kadar gerçekleşen tüm NVDA oturum açma çıktılarını görmenizi sağlar.
 
 İçeriği okuyabilmenin yanısıra, Kayıt dosyasının bir kopyasını farklı kaydedebilir ya da log dosyası açık olduğundan bu yana En son çıktı görüntüsünü görebilmek için ekranı güncelleyebilirsiniz.
 Bu işlemler görüntüleyicinin Log menüsünde bulunmaktadır.
 
-++ Konuşma Görüntüleyicisi ++
+++ Konuşma Görüntüleyicisi ++[SpeechViewer]
 Gören geliştiriciler ve NVDA'yı görenlere gösteren kişiler için, NVDA'nın söylediği tüm metinleri görmenizi sağlayan hareketli bir ekran mevcuttur.
 
 Konuşma görüntüleyicisini etkinleştirmek için, NVDA menüsündeki araçlar menüsü altında bulunan "Konuşma Görüntüleyicisi" ögesini işaretleyin.
@@ -1706,7 +1728,7 @@ Ancak, Görüntüleyiciye tıklar veya odaklanırsanız, güncelleme geçici ola
 
 Konuşma görüntüleyiciyi herhangi bir yerden açıp kapatmak için [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak kısayol tuşu belirleyebilirsiniz.
 
-++ Eklenti Yöneticisi ++
+++ Eklenti Yöneticisi ++[AddonsManager]
 NVDA Araçlar menüsü altında, Eklentileri Yönet ögesini seçerek ulaşacağınız Eklenti Yöneticisi, NVDA için geliştirilmiş eklenti paketlerini kurmanıza, etkinleştirip devre dışı bırakmanıza ve kaldırmanıza olanak tanır.
 BU paketler camia tarafından sağlanırlar ve NVDA'nın özelliklerini geliştiren ya da değiştiren kodlar barındırırlar. Hatta extra kabartma ekran ya da sentezleyici için destek sağlayabilirler.
 
@@ -1748,18 +1770,18 @@ En iyisi, bulabilirseniz bu tür plug-inlerin yeni sisteme uygun olarak hazırla
  
 Eklenti yöneticisine herhangi bir yerden ulaşmak için, lütfen [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir kısayol belirleyin.
 
-++ Python Konsolu ++
+++ Python Konsolu ++[PythonConsole]
 NVDA menüsündeki araçlar altında bulunan Pithon konsolu, ayıklama, NVDA iç yapısının saptanması ve bir uygulamanın erişilebilirlik hiyerarşisinin saptanması gibi noktalar için yararlı olan bir geliştirme aracıdır.
 Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
-++ Pluginleri Yeniden Yükle ++
+++ Pluginleri Yeniden Yükle ++[ReloadPlugins]
 Bu öge etkinleştirildiğinde, uygulama modüllerini ve genel pluginleri NVDA'yı yeniden başlatmaya gerek duymadan yeniden yükler, ve bu, geliştiriciler için oldukça yararlıdır.
 
 + Desteklenen Konuşma Sentezleyicileri +[SupportedSpeechSynths]
 Bu bölümde NVDA tarafından desteklenen sentezleyici bilgileri yer almaktadır.
 NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın alabilmeniz ya da indirebilmeniz için çok daha geniş bir listeyi, bu sayfada bulabilirsiniz [http://www.nvda-project.org/wiki/ExtraVoices https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
-++ eSpeak NG ++
+++ eSpeak NG ++[eSpeakNG]
  [eSpeak NG https://github.com/espeak-ng/espeak-ng] sentezleyicisi Doğrudan NVDA içinde gömülüdür ve başka bir sürücü ya da bileşenin yüklenmesini gerektirmez.
 NVDA varsayılan olarak ESpeak NG sentezleyicisini kullanarak başlar.
 Bu sentezleyici NVDA içine gömülü olduğundan, NVDA'yı USB bellek vb medyalar üzerinden başka sistemlerde çalıştırmak için harika bir seçenektir.
@@ -1769,19 +1791,19 @@ ESpeak NG tarafından desteklenen 43'den fazla dil bulunmaktadır.
 
 Sesin duyuluşunu değiştirebilecek ayrıca bir çok konuşucu da bulunmaktadır.
 
-++ Microsoft Speech API sürüm 4 (SAPI 4) ++
+++ Microsoft Speech API sürüm 4 (SAPI 4) ++[SAPI4]
 SAPI 4, yazılım konuşma sentezleyicileri için Microsoft'un eski bir standardıdır.
 NVDA, bu sentezleyicileri kullanmaya devam eden kullanıcılar için Sapi 4 desteğini sürdürmektedir.
 Ancak, Microsoft desteğini çekmiştir ve gerekli bileşenleri artık sağlamamaktadır.
 
 Bu sentezleyicileri NVDA ile kullanırken, [Ses Ayarları iletişim kutusundan #VoiceSettings] veya [Hızlı Sentezleyici Değiştir #SynthSettingsRing]) bölümünden erişilebilen) mevcut sesler içinde, sisteminizde bulunan tüm SAPI 4 motorlarının sesleri yer alacaktır.
 
-++ Microsoft Speech API sürüm 5 (SAPI 5) ++
+++ Microsoft Speech API sürüm 5 (SAPI 5) ++[SAPI5]
 SAPI 5, yazılım konuşma sentezleyicileri için bir Microsoft standardıdır.
 Büyük olasılıkla sisteminizin önceden kurulu bir SAPI 5 sesiyle gelmesine karşın, Birçok SAPI 5 sentezleyicisi şirketlerden satın alınabilir veya ücretsiz olarak çeşitli web sayfalarından indirilebilir.
 Bu sentezleyicileri NVDA ile kullanırken, [Ses Ayarları iletişim kutusundan #VoiceSettings] veya [Hızlı Sentezleyici Değiştir #SynthSettingsRing]) bölümünden erişilebilen) mevcut sesler içinde, sisteminizde bulunan tüm SAPI 5 motorlarının sesleri yer alacaktır.
 
-++ Microsoft Konuşma Platformu (Microsoft Speech Platform) ++
+++ Microsoft Konuşma Platformu (Microsoft Speech Platform) ++[MicrosoftSpeechPlatform]
 Microsoft Konuşma Platformu normalde sunucu tabanlı konuşma uygulamaları geliştirilmesinde kullanılan bir çok dili destekleyen sesler sağlamaktadır.
 Bu sesler NVDA tarafından da kullanılabilmektedir.
 
@@ -1794,7 +1816,7 @@ Bu sesleri kullanabilmek için iki bileşeni indirip kurmanız gerekmektedir:
  -
 -
 
-++ Windows OneCore Sesleri ++
+++ Windows OneCore Sesleri ++[OneCore]
 Windows 10 "OneCore" ya da "mobile" sesler olarak bilinen yeni sesler içerir.
 Bir çok dil için sesler mevcuttur, dahası Sapi 5 kullanan önceki Microsoft seslerine kıyasla daha hızlı tepki vermektedirler.
 
@@ -1805,14 +1827,14 @@ Ayrıca, Windows Ayarlarında seçtiğiniz hız NVDA konuşma hızını da etkil
 Bunlar Windows için bir değişiklik olmadan, halledemeyeceğimiz sorunlar.
 Sorunların gelecek Windows sürümlerinde çözüleceğini sanıyoruz.
 
-++ Audiologic Tts3 ++
+++ Audiologic Tts3 ++[Audiologic]
 Bu, italyanca diline özel ücretli bir konuşma sentezleyicisidir.
 NVDA ile kullanılabilmesi için, sentezleyicinin bilgisayarınızda yüklü olması gerekir.
 Daha fazla bilgi için, lütfen Audiologic web sayfasını www.audiologic.it adresinden ziyaret edin.
 
-Bu sentezleyici [kodlama işlevini #VoiceSpellingFunctionality] desteklemez.
+Bu sentezleyici [kodlama işlevini #VoiceSettingsUseSpelling] desteklemez.
 
-++ NVDA İçin Nuance Vocalizer ++
+++ NVDA İçin Nuance Vocalizer ++[Vocalizer]
 Nuance Vocalizer Nuance Communications Inc. tarafından geliştirilen ticari ve yüksek kalitede bir konuşma sentezleyicidir ve Tiflotecnia, Lda. tarafından NVDA için paketlenmiştir.
 İçinde 50'nin üzerinde ses seçeneği bulunmaktadır ve 30'dan fazla dil desteklenmektedir.
 Tüm seentezleyici bileşenleri ve ses seçenekleri eklenti paketleri olarak oluşturulmuştur ve NVDA taşınabilir kopyalarıyla kullanılabilmektedir.
@@ -1823,7 +1845,7 @@ Bu ürünün satışının belli bir yüzdesi NVDA'nın geliştirilmesi için NV
 + Desteklenen braille ekranlar +[SupportedBrailleDisplays]
 Bu bölümde NVDA tarafından desteklenen braille ekran bilgileri yer almaktadır.
 
-++ Freedom Scientific Focus/PAC Mate Serisi ++
+++ Freedom Scientific Focus/PAC Mate Serisi ++[FreedomScientificFocus]
 USB veya bluetooth ile bağlandıklarında, [Freedom Scientific http://www.freedomscientific.com/] tarafından üretilen tüm Focus ve PAC Mate ekranlar desteklenmektedir.
 Freedom Scientific Braille Ekran sürücülerinin sisteminizde yüklü olması gerekecektir.
 Eğer henüz bu sürücüler elinizde yoksa, bunları http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp adresinden edinebilirsiniz.
@@ -1882,7 +1904,7 @@ For Focus 80 only:
 | Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++
+++ Optelec ALVA BC640/680 ++[OptelecALVA]
 USB veya bluetooth ile bağlandıklarında, [Optelec http://www.optelec.com/] tarafından üretilen ALVA BC640 ve BC680 ekranlarının her ikisi de desteklenmektedir.
 Bu ekranları kullanmak için belirli bir sürücüye gereksiniminiz bulunmamaktadır.
 Yalnızca ekranı takın ve kullanmak için NVDA'yı ayarlayın.
@@ -1926,7 +1948,7 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | end key | t3+spRight |
 %kc:endInclude
 
-++ Handy Tech Displays ++
+++ Handy Tech Displays ++[HandyTech]
 NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen çoğu braille ekranı destekler.
 Bazı daha eski USB ekranlar için Handy Tech sürücülerini sisteminize yüklemeniz gerekecektir.
 
@@ -1954,14 +1976,13 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | SolOk tuşu | joystickLeft |
 | SağOk tuşu | joystickRight |
 | NVDA Menüsü | b2+b4+b5+b6 |
-| Handy Tech ayarları | b4+b8 |
 | Toggle braille tethered to | b2 |
 | Toggle the braille cursor | b1 |
 | Toggle focus context presentation | b7 |
 | Toggle braille input | space+b1+b3+b4 (space+capital B) |
 %kc:endInclude
 
-++ MDV Lilli ++
+++ MDV Lilli ++[MDVLilli]
 [MDV http://www.mdvbologna.it/] tarafından üretilen Lilli braille ekranı desteklenmektedir.
 Bu ekranı kullanmak için belirli bir sürücüye gereksiniminiz bulunmamaktadır.
 Yalnızca ekranı takın ve kullanmak için NVDA'yı ayarlayın.
@@ -1981,7 +2002,7 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | alt+shift+tab tuşu | SUP |
 %kc:endInclude
 
-++ Baum/Humanware/APH Braille/Orbit Ekranlar ++
+++ Baum/Humanware/APH Braille/Orbit Ekranlar ++[Baum]
 Birçok [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/],  [APH http://www.aph.org/] ve [Orbit http://www.orbitresearch.com/] ekran USB veya Bluetooth ile bağlandıklarında desteklenmektedir.
 Bunlardan bazıları şunlardır:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
@@ -2017,7 +2038,7 @@ Kumanda kolu olan ekranlar için:
 | Enter tuşu | seç |
 %kc:endInclude
 
-++ hedo ProfiLine USB ++
+++ hedo ProfiLine USB ++[HedoProfiLine]
 Hedo ProfiLine USB, [hedo Reha-Technik http://www.hedo.de/] desteklenmektedir.
 Öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 
@@ -2034,7 +2055,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Hepsini oku | B6 |
 %kc:endInclude
 
-++ hedo MobilLine USB ++
+++ hedo MobilLine USB ++[HedoMobilLine]
 hedo MobilLine USB, [hedo Reha-Technik http://www.hedo.de/] desteklenmektedir.
 Öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 
@@ -2051,7 +2072,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Hepsini oku | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Serisi ++
+++ HumanWare Brailliant BI/B Serisi ++[HumanWareBrailliant]
  Brailliant BI ve B serisi braille ekranlar, [HumanWare http://www.humanware.com/], BI 32, BI 40 ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
 USB bağlantısını ve HumanWare protokolünü kullanıyorsanız, öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 OpenBraille protokolü için USB sürücüleri gerekmez.
@@ -2091,10 +2112,6 @@ Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabil
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 %kc:beginInclude
 || Ad | Kısayol tuşu |
-| Scroll braille display back | left side scroll down |
-| Scroll braille display forward | right side scroll down |
-| Move braille display to previous line | left side scroll up |
-| Move braille display to next line | right side scroll up |
 | Route to braille cell | routing |
 | Scroll braille display back | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
 | Scroll braille display forward | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
@@ -2134,6 +2151,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | pageUp key | dot1+dot2+dot6+space |
 | control+pageUp key | dot1+dot2+dot6+dot8+space |
 | upArrow key | dot1+space, leftSideUpArrow |
+| control+shift+upArrow key | dot2+dot3+dot8+space+f1 |
 | control+upArrow key | dot2+dot3+space |
 | shift+alt+upArrow key | dot2+dot3+dot7+f1 |
 | alt+upArrow key | dot2+dot3+dot7 |
@@ -2157,7 +2175,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | alt+insert key | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
-++ Seika Braille Displays ++
+++ Seika Braille Displays ++[Seika]
 [Nippon Telesoft http://www.nippontelesoft.com/] tarafından üretilen Seika Versiyon 3, 4 ve 5 (40 hücreli) ve Seika80 (80 hücreli) braille ekranlar desteklenmektedir.
  http://www.seika-braille.com/ adresinde bu ekranlar hakkında daha fazla bilgi bulabilirsiniz.
 Önce üretici tarafından sağlanan USB sürücülerini kurmalısınız.
@@ -2179,7 +2197,7 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Route to braille cell | routing |
 %kc:endInclude
 
-++ Papenmeier BRAILLEX Yeni Modelleri ++
+++ Papenmeier BRAILLEX Yeni Modelleri ++[Papenmeier]
 Aşağıdaki Braille ekranlar desteklenmektedir: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
@@ -2260,7 +2278,7 @@ The inner keys are both mapped to space.
 | tab key | space with dot 3 7 |
 %kc:endInclude 
 
-++ Papenmeier Braille BRAILLEX Older Models ++
+++ Papenmeier Braille BRAILLEX Older Models ++[PapenmeierOld]
 The following Braille displays are supported: 
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
@@ -2343,7 +2361,7 @@ BRAILLEX 2D Screen:
 | Move to previous object | right2 |
 %kc:endInclude
 
-++ HumanWare BrailleNote ++
+++ HumanWare BrailleNote ++[HumanWareBrailleNote]
 NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
 The following models are supported:
 - BrailleNote Classic (serial connection only)
@@ -2391,7 +2409,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
 %kc:endInclude
 
-++ EcoBraille ++
+++ EcoBraille ++[EcoBraille]
 NVDA supports EcoBraille displays from [ONCE http://www.once.es/].
 The following models are supported:
 - EcoBraille 20
@@ -2426,7 +2444,7 @@ Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/
 | Toggle braille tethered to | A |
 %kc:endInclude
 
-++ SuperBraille ++
+++ SuperBraille ++[SuperBraille]
 The SuperBraille device, mostly available in Taiwan, can be connected to by either USB or serial.
 As the SuperBraille does not have any physical typing keys or scrolling buttons, all input must be performed via a standard computer keyboard.
 Due to this, and to maintain compatibility with other screen readers in Taiwan, two key bindings for scrolling the braille display have been provided:
@@ -2436,7 +2454,7 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 | Scroll braille display forward | numpadPlus | 
 %kc:endInclude
 
-++ BRLTTY ++
+++ BRLTTY ++[BRLTTY]
 [BRLTTY http://www.brltty.com/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
 bunu kullanabilmek için,[BRLTTY for Windows http://www.brltty.com/download.html] programını yüklemeniz gerekecektir.
 En son kurulum sürümünü indirip kurmalısınız. bunun adı şu biçimde olabilir: brltty-win-4.2-2.exe.
@@ -2456,7 +2474,7 @@ Lütfen [BRLTTY tuş  komutları listesine http://mielke.cc/brltty/doc/KeyBindin
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | route (imleci karektere götür) |
 %kc:endInclude
 
-+ İleri Düzey Konular +
++ İleri Düzey Konular +[AdvancedTopics]
 
 ++ Komut Satırı Seçenekleri ++[CommandLineOptions]
 NVDA başladığında onun davranışını değiştirecek bir veya daha fazla ek seçenek kabul edebilir.
@@ -2514,7 +2532,7 @@ The following values can be set under this registry key:
 | configInLocalAppData | DWORD | 0 (default) to disable, 1 to enable | If enabled, stores the NVDA user configuration in the local application data instead of the roaming application data |
 | serviceDebug | DWORD | 0 (default) to disable, 1 to enable | If enabled, disables secure mode on windows secure desktops, allowing the use of the Python console and Log viewer. Due to several major security implications, the use of this option is strongly discouraged |
 
-+ Daha Detaylı Bilgi +
++ Daha Detaylı Bilgi +[FurtherInformation]
 NVDA ile ilgili daha fazla bilgiye veya yardıma ihtiyaç duyarsanız, NVDA_URL adresini ziyaret edebilirsiniz.
 Burada, ek belgeleri, ve teknik destek ile açık kaynak kodlarını bulabilirsiniz.
 Bu sayfa ayrıca NVDA geliştirmesiyle ilgili olarak bilgi ve kaynaklar da sağlamaktadır.
