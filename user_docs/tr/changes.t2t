@@ -5,25 +5,39 @@ What's New in NVDA
 
 = 2018.1 =
 
+
+== New Features ==
+- It is now possible to interact with charts in Microsoft Word and Microsoft PowerPoint, similar to the existing support for charts in Microsoft Excel. (#7046)
+ - In Microsoft Word:  When in browse mode, cursor to an embedded chart and press enter to interact with it.
+ - In Microsoft PowerPoint when editing a slide: tab to a chart object, and press enter or space to interact with the chart.
+ - To stop interacting with a chart, press escape.
+- New language: Kyrgyz.
+
+
 == Changes ==
 - The HIMS Braille Sense/Braille EDGE/Smart Beetle and Hims Sync Braille display drivers have been replaced by one driver. The new driver will automatically be activated for former syncBraille driver users. (#7459) 
  - Some keys , notably scroll keys, have been reassigned to follow the conventions used by Hims products. Consult the user guide for more details.
-- When typing with the on-screen keyboard via touch interaction, by default  you now need to double tap each key the same way you would activate any other control.
- - To use the existing "touch typing" mode where simply lifting your finger off the key is enough to activate it, Enable this option in the new Touch Interaction settings dialog found in the Preferences menu. (#7309)
+- When typing with the on-screen keyboard via touch interaction, by default you now need to double tap each key the same way you would activate any other control. (#7309)
+ - To use the existing "touch typing" mode where simply lifting your finger off the key is enough to activate it, Enable this option in the new Touch Interaction settings dialog found in the Preferences menu.
+- It is no longer necessary to explicitly tether braille to focus or review, as this will happen automatically by default. (#2385) 
+ - Note that automatic tethering to review will only occur when using a review cursor or object navigation command. Scrolling will not activate this new behavior.
 
 
 == Bug Fixes ==
-- Browseable messages such as showing  current formatting when pressing NVDA+f twice quickly, no longer fails when NVDA is installed on a path with non-ASCII characters. (#7474)
+- Browseable messages such as showing current formatting when pressing NVDA+f twice quickly no longer fails when NVDA is installed on a path with non-ASCII characters. (#7474)
 - Focus is now once again restored correctly when returning to Spotify from another application. (#7689)
-- NVDA no longer fails to update on systems with Controlled Folder Access enabled (available in the Windows 10 Fall Creaters update). (#7696)
+- In Windows 10 Fall Creaters Update, NVDA no longer fails to update when Controlled Folder Access is enabled from Windows Defender Security Center. (#7696)
 - Detection of scroll keys on Hims Smart Beetle displays is no longer unreliable. (#6086)
 - A slight performance improvement when rendering large amounts of content in Mozilla Firefox 58 and later. (#7719)
-- Prevent errors while reading emails containing tables in Microsoft Outlook (#6827)
+- In Microsoft Outlook, reading emails containing tables no longer causes errors. (#6827)
 - Braille display gestures that emulate system keyboard key modifiers can now also be combined with other emulated system keyboard keys if one or more of the involved gestures are model specific. (#7783)
 - In Mozilla Firefox, browse mode now works correctly in pop-ups created by extensions such as LastPass and bitwarden. (#7809)
 - NVDA no longer sometimes freezes on every focus change if Firefox or Chrome have stopped responding such as due to a freeze or crash. (#7818)
 - In twitter clients such as Chicken Nugget, NVDA will no longer ignore the last 20 characters of 280 character tweets when reading them. (#7828)
 - NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
+- In recent versions of Office 365, it is again possible to navigate Excel charts using the arrow keys. (#7046)
+-  In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. Fixes #7076
+- In apps such as Windows 10 Mail, NVDA will no longer fail to announce deleted characters when pressing backspace. (#7456)
 
 
 == Changes for developers ==
@@ -31,6 +45,9 @@ What's New in NVDA
  - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
 - A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
 - Updated comtypes package to 1.1.3. (#7831)
+- Implemented a generic system in braille.BrailleDisplayDriver to deal with displays which send confirmation/acknowledgement packets. See the handyTech braille display driver as an example. (#7590, #7721)
+- A new "isAppX" variable in the config module can be used to detect if NVDA is running as a Windows Desktop Bridge Store app. (#7851)
+- For document implementations such as NVDAObjects or browseMode that have a textInfo, there is now a new documentBase.documentWithTableNavigation class that can be inherited from to gain standard table navigation scripts. Please refer to this class to see which helper methods must be provided by your implementation for table navigation to work. (#7849)
 
 
 = 2017.4 =
