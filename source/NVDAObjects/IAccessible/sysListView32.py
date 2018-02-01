@@ -261,6 +261,9 @@ class GroupingItem(Window):
 		gesture.send()
 		eventHandler.queueEvent("stateChange",self)
 
+CHAR_LTR_MARK = u'\u200E'
+CHAR_RTL_MARK = u'\u200F'
+
 class ListItemWithoutColumnSupport(IAccessible):
 
 	def initOverlayClass(self):
@@ -280,7 +283,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 		if not value:
 			return None
 		#Some list view items in Windows Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
-		return value.replace(u'\u200E','').replace(u'\u200F','')
+		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 	def _get_positionInfo(self):
 		index=self.IAccessibleChildID
@@ -397,7 +400,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				textList.append(content)
 		name = "; ".join(textList)
 		#Some list view items in Windows Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
-		return name.replace(u'\u200E','').replace(u'\u200F','')
+		return name.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 	value = None
 

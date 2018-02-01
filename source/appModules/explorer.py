@@ -166,18 +166,21 @@ class StartButton(IAccessible):
 		states.discard(controlTypes.STATE_SELECTED)
 		return states
 		
+CHAR_LTR_MARK = u'\u200E'
+CHAR_RTL_MARK = u'\u200F'
 class UIProperty(UIA):
 	#Used for columns in Windows Explorer Details view.
 	#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
 	
 	def _get_value(self):
 		value = super(UIProperty, self).value
-		return value.replace(u'\u200E','').replace(u'\u200F','')
+		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		# Optimization: return early to avoid comparing class names and roles that will never match.
 		windowClass = obj.windowClassName
 		role = obj.role
 
@@ -230,12 +233,13 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, ImmersiveLauncher)
 			elif uiaClassName=="ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
 				clsList.insert(0,SuggestionListItem)
-			elif uiaClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_WINDOW:
-				clsList.insert(0,MultitaskingViewFrameWindow)
+			elif uiaClassName=="MultitaskingViewFrame":
+				if role==controlTypes.ROLE_WINDOW:
+					clsList.insert(0,MultitaskingViewFrameWindow)
+				elif role==controlTypes.ROLE_LISTITEM:
+					clsList.insert(0,MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0, UIProperty)
-			elif windowClass=="MultitaskingViewFrame" and role==controlTypes.ROLE_LISTITEM:
-				clsList.insert(0,MultitaskingViewFrameListItem)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
