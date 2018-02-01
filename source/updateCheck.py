@@ -275,7 +275,7 @@ class UpdateResultDialog(wx.Dialog):
 				# Translators: The label of a button to install a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
 				installPendingButton = bHelper.addButton(self, label=_("&Install NVDA {version}").format(**updateInfo))
-				installPendingButton.Bind(wx.EVT_BUTTON, lambda evt: executeUpdate())
+				installPendingButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
 				# Translators: The label of a button to re-download a pending NVDA update.
 				label = _("Re-&download update")
 			else:
@@ -301,6 +301,10 @@ class UpdateResultDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		self.Show()
+
+	def onInstallButton(self, evt):
+		executeUpdate()
+		self.Destroy()
 
 	def onDownloadButton(self, evt):
 		self.Hide()
