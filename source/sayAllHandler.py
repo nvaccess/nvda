@@ -81,7 +81,7 @@ def readObjectsHelper_generator(obj):
 			lastReceivedIndex=receivedIndex
 			lastReceivedObj=objIndexMap.get(lastReceivedIndex)
 			if lastReceivedObj is not None:
-				api.setNavigatorObject(lastReceivedObj)
+				api.setNavigatorObject(lastReceivedObj, isFocus=lastSayAllMode==CURSOR_CARET)
 			#Clear old objects from the map
 			for i in objIndexMap.keys():
 				if i<=lastReceivedIndex:
@@ -151,7 +151,7 @@ def readTextHelper_generator(cursor):
 					if cursor==CURSOR_CARET:
 						updater.updateCaret()
 					if cursor!=CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
-						api.setReviewPosition(updater)
+						api.setReviewPosition(updater, isCaret=cursor==CURSOR_CARET)
 			elif not keepReading and lastReceivedIndex==lastSentIndex:
 				# All text has been sent to the synth.
 				# Turn the page and start again if the object supports it.

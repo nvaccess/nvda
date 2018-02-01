@@ -11,6 +11,7 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 
 import wx
 import baseObject
+import documentBase
 import gui
 import sayAllHandler
 import review
@@ -66,7 +67,7 @@ class FindDialog(wx.Dialog):
 	def onCancel(self, evt):
 		self.Destroy()
 
-class CursorManager(baseObject.ScriptableObject):
+class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	"""
 	A mix-in providing caret navigation and selection commands for the object's virtual text range.
 	This is required where a text range is not linked to a physical control and thus does not provide commands to move the cursor, select and copy text, etc.

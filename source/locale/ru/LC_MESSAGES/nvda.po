@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 00:10+1000\n"
-"PO-Revision-Date: 2017-12-17 12:22+0400\n"
-"Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
+"POT-Creation-Date: 2017-12-22 00:10+1000\n"
+"PO-Revision-Date: 2017-12-27 12:33+0800\n"
+"Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.6.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1051,7 +1051,7 @@ msgstr "Режим обзора"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
-msgstr "Без ярлыка"
+msgstr "Без метки"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -7277,6 +7277,14 @@ msgstr "&Мышь..."
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Изменение чтения формы указателя мыши и объектов под мышью"
 
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "С&енсорный экран..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "Настройка взаимодействия NVDA с сенсорным экраном"
+
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
 msgstr "Просмотровый &курсор..."
@@ -9072,8 +9080,17 @@ msgstr "Введите Жест Ввода:"
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Не удалось сохранить определяемые пользователем жесты, вероятно, NVDA "
-"запущен из области, доступной только для чтения"
+"Не удалось сохранить определяемые пользователем жесты. Вероятно, из-за "
+"файловой системы, доступной только для чтения."
+
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "Сенсорный экран"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "&Набор текста касанием"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"

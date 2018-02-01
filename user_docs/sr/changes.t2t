@@ -5,19 +5,39 @@
 
 = 2018.1 =
 
+
+== Nove karakteristike ==
+- Sada je moguća interakcija sa grafikonima u programima Microsoft Word i  Microsoft Powerpoint, slično kao u postojećoj podršci u programu Microsoft Excel. (#7046)
+ - U programu Microsoft Word:  Kada ste u režimu pretraživanja, postavite kursor na grafikon i pritisnite enter za interakciju.
+ - U programu Microsoft Powerpoint dok uređujete slajd: Tasterom tab pronađite objekat grafikona, a zatim pritisnite Enter ili razmak za interakciju sa grafikonom.
+ - Da zaustavite interakciju sa grafikonom, pritisnite taster escape.
+- Novi jezik: Kirgijški.
+
+
 == Promene ==
 -  Drajveri za HIMS Braille Sense/Braille EDGE/Smart Beetle i  Hims Sync su zamenjeni jednim drajverom. Novi drajver će automatski biti korišćen  za bivše syncBraille korisnike. (#7459) 
  - Neke komande, na primer komande za pomeranje, su promenjene kako bi pratile standarde koje Hims proizvodi koriste. Proverite korisničko uputstvo za više detalja.
+- Kada pišete na tastaturi na ekranu korišćenjem ekrana osetljivog na dodir, po podrazumevanim podešavanjima morate pritisnuti svaki taster dva puta kao što biste aktivirali svaku drugu kontrolu na ekranu (#7309).
+- Da biste koristili stari način pisanja "unos tastera jednim dodirom" gde je jednostavno dovoljno podići prst sa slova za njegovu aktivaciju, omogućite ovu opciju u novom dijalogu interakcija sa ekranom osetljivim na dodir koji se nalazi u meniju podešavanja. (#7309)
+- Nije više neophodno vezivati brajev red za fokus ili pregled, budući da će se ovo dešavati automatski po podrazumevanim podešavanjima. (#2385) 
+ - Napomena da će do automatskog vezivanja za pregled doći samo kada koristite komande objektne navigacije ili preglednog kursora. Pomeranje brajevog reda neće aktivirati vezivanje za pregled.
 
 
 == Ispravljene greške ==
 - Poruke režima pretraživanja kao što su korišćenje komande NVDA+f dva puta za prikazivanje formatiranja više ne prikazuju grešku kada je NVDA instaliran u folderu koji sadrži znakove koji nisu ASCII. (#7474)
 - Fokus se sada ponovo ispravno vraća kada se vratite u aplikaciju Spotify iz neke druge aplikacije. (#7689)
-- NVDA više nema grešaka pri ažuriranju na sistemima gde je omogućen kontrolisan pristup folderima(dostupno na Windows 10 jesenjem creators ažuriranju). (#7696)
+- Na Windows 10 jesenjem creators ažuriranju, NVDA više nema grešaka pri ažuriranju gde je omogućen kontrolisan pristup folderima iz sigurnosnog  centra Windows defendera. (#7696)
 - Prepoznavanje komandi za pomeranje   Hims Smart Beetle brajevih redova više nije nestabilno. (#6086)
 - Određena poboljšanja brzine pri učitavanju sadržaja u programu Mozilla Firefox 58 i novijim. (#7719)
-- Sprečene greške pri čitanju Email poruka koje sadrže tabele u programu Microsoft Outlook (#6827)
+- U programu Microsoft Outlook, čitanje Email poruka koje sadrže tabele više ne izaziva greške. (#6827)
 - Komande brajevih redova koje simuliraju sistemske tastere  se sada mogu kombinovati sa drugim simuliranim sistemskim tasterima ako je jedna ili više komandi specifična za model. (#7783)
+- U programu Mozilla Firefox, režim pretraživanja sada ispravno radi u iskačućim prozorima koje otvaraju dodaci kao što su LastPass i  bitwarden. (#7809)
+- NVDA se više ne zaustavlja pri svakoj promeni fokusa ako su Firefox ili  Chrome prestali da reaguju na primer zbog greške. (#7818)
+- U Twitter programima kao što su Chicken Nugget, NVDA više neće zanemariti poslednjih 20 znakova u tvitovima koji imaju 280 znakova pri čitanju. (#7828)
+- NVDA sada koristi ispravan jezik pri izgovoru simbola u izboru teksta. (#7687)
+- U novijim verzijama usluge  Office 365, ponovo je moguća navigacija kroz Excel grafikone korišćenjem strelica. (#7046)
+-  Kada se koristi govor ili brajev red, stanja kontrola će se uvek prijavljivati u istom redosledu, bez obzira da li su pozitivna ili negativna. Ispravlja  #7076
+- U aplikacijama kao što je  Windows 10 Mail, NVDA će uvek izgovarati obrisane znakove kada se pritisne Backspace. (#7456)
 
 
 == Promene za programere ==
