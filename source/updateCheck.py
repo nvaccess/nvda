@@ -569,6 +569,7 @@ def initialize():
 	try:
 		state = cPickle.load(file(_stateFilename, "r"))
 	except:
+		log.debugWarning("Couldn't retrieve update state", exc_info=True)
 		# Defaults.
 		state = {
 			"lastCheck": 0,
@@ -582,8 +583,8 @@ def initialize():
 		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
 	# remove all update files except the one that is currently pending (if any)
 	try:
-		for file in os.listdir(storeUpdatesDir):
-			f=os.path.join(storeUpdatesDir, file)
+		for fileName in os.listdir(storeUpdatesDir):
+			f=os.path.join(storeUpdatesDir, fileName)
 			if f != state["pendingUpdateFile"]:
 				os.remove(f)
 				log.debug("Update file %s removed"%f)
