@@ -327,7 +327,7 @@ class UpdateAskInstallDialog(wx.Dialog):
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		
 		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
-		sHelper.addItem(wx.StaticText(self, label=_("NVDA version {version} is ready to be installed.\n")).format(version=version))
+		sHelper.addItem(wx.StaticText(self, label=_("NVDA version {version} is ready to be installed.\n").format(version=version)))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		# Translators: The label of a button to install an NVDA update.
