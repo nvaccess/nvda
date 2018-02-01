@@ -152,6 +152,7 @@ class MainFrame(wx.Frame):
 		x = width / 2
 		y = height / 2
 		winUser.setCursorPos(x, y)
+		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
@@ -204,7 +205,7 @@ class MainFrame(wx.Frame):
 		if updateCheck and updateCheck.isPendingUpdate():
 			updateCheck.executeUpdate()
 
-	def onUpdatePendingUpdateMenuItemCommand(self, evt):
+	def evaluateUpdatePendingUpdateMenuItemCommand(self):
 		try:
 			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.installPendingUpdateMenuItem)
 		except:
@@ -274,7 +275,7 @@ class MainFrame(wx.Frame):
 
 	def onCheckForUpdateCommand(self, evt):
 		updateCheck.UpdateChecker().check()
-		
+
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
@@ -487,7 +488,6 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label for the menu item to save current settings.
 			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
-		if not globalVars.appArgs.secure:
 			self.menu.AppendSeparator()
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
@@ -499,7 +499,6 @@ class SysTrayIcon(wx.TaskBarIcon):
 				# Translators: The description for the menu item to run a pending update.
 				_("Execute a previously downloaded NVDA update"))
 			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
-			self.Bind(wx.EVT_UPDATE_UI, frame.onUpdatePendingUpdateMenuItemCommand, item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
