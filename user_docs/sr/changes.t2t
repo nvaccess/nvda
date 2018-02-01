@@ -1,9 +1,53 @@
-﻿Šta je novo u NVDA
+Šta je novo u NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+
+
+== Nove karakteristike ==
+- Sada je moguća interakcija sa grafikonima u programima Microsoft Word i  Microsoft Powerpoint, slično kao u postojećoj podršci u programu Microsoft Excel. (#7046)
+ - U programu Microsoft Word:  Kada ste u režimu pretraživanja, postavite kursor na grafikon i pritisnite enter za interakciju.
+ - U programu Microsoft Powerpoint dok uređujete slajd: Tasterom tab pronađite objekat grafikona, a zatim pritisnite Enter ili razmak za interakciju sa grafikonom.
+ - Da zaustavite interakciju sa grafikonom, pritisnite taster escape.
+- Novi jezik: Kirgijški.
+
+
+== Promene ==
+-  Drajveri za HIMS Braille Sense/Braille EDGE/Smart Beetle i  Hims Sync su zamenjeni jednim drajverom. Novi drajver će automatski biti korišćen  za bivše syncBraille korisnike. (#7459) 
+ - Neke komande, na primer komande za pomeranje, su promenjene kako bi pratile standarde koje Hims proizvodi koriste. Proverite korisničko uputstvo za više detalja.
+- Kada pišete na tastaturi na ekranu korišćenjem ekrana osetljivog na dodir, po podrazumevanim podešavanjima morate pritisnuti svaki taster dva puta kao što biste aktivirali svaku drugu kontrolu na ekranu (#7309).
+- Da biste koristili stari način pisanja "unos tastera jednim dodirom" gde je jednostavno dovoljno podići prst sa slova za njegovu aktivaciju, omogućite ovu opciju u novom dijalogu interakcija sa ekranom osetljivim na dodir koji se nalazi u meniju podešavanja. (#7309)
+- Nije više neophodno vezivati brajev red za fokus ili pregled, budući da će se ovo dešavati automatski po podrazumevanim podešavanjima. (#2385) 
+ - Napomena da će do automatskog vezivanja za pregled doći samo kada koristite komande objektne navigacije ili preglednog kursora. Pomeranje brajevog reda neće aktivirati vezivanje za pregled.
+
+
+== Ispravljene greške ==
+- Poruke režima pretraživanja kao što su korišćenje komande NVDA+f dva puta za prikazivanje formatiranja više ne prikazuju grešku kada je NVDA instaliran u folderu koji sadrži znakove koji nisu ASCII. (#7474)
+- Fokus se sada ponovo ispravno vraća kada se vratite u aplikaciju Spotify iz neke druge aplikacije. (#7689)
+- Na Windows 10 jesenjem creators ažuriranju, NVDA više nema grešaka pri ažuriranju gde je omogućen kontrolisan pristup folderima iz sigurnosnog  centra Windows defendera. (#7696)
+- Prepoznavanje komandi za pomeranje   Hims Smart Beetle brajevih redova više nije nestabilno. (#6086)
+- Određena poboljšanja brzine pri učitavanju sadržaja u programu Mozilla Firefox 58 i novijim. (#7719)
+- U programu Microsoft Outlook, čitanje Email poruka koje sadrže tabele više ne izaziva greške. (#6827)
+- Komande brajevih redova koje simuliraju sistemske tastere  se sada mogu kombinovati sa drugim simuliranim sistemskim tasterima ako je jedna ili više komandi specifična za model. (#7783)
+- U programu Mozilla Firefox, režim pretraživanja sada ispravno radi u iskačućim prozorima koje otvaraju dodaci kao što su LastPass i  bitwarden. (#7809)
+- NVDA se više ne zaustavlja pri svakoj promeni fokusa ako su Firefox ili  Chrome prestali da reaguju na primer zbog greške. (#7818)
+- U Twitter programima kao što su Chicken Nugget, NVDA više neće zanemariti poslednjih 20 znakova u tvitovima koji imaju 280 znakova pri čitanju. (#7828)
+- NVDA sada koristi ispravan jezik pri izgovoru simbola u izboru teksta. (#7687)
+- U novijim verzijama usluge  Office 365, ponovo je moguća navigacija kroz Excel grafikone korišćenjem strelica. (#7046)
+-  Kada se koristi govor ili brajev red, stanja kontrola će se uvek prijavljivati u istom redosledu, bez obzira da li su pozitivna ili negativna. Ispravlja  #7076
+- U aplikacijama kao što je  Windows 10 Mail, NVDA će uvek izgovarati obrisane znakove kada se pritisne Backspace. (#7456)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
 = 2017.4 =
+Glavne karakteristike ove verzije uključuju puno ispravki za web podršku uključujući automatsko aktiviranje režima  pretraživanja za Web dijaloge, bolje prijavljivanje oznaka grupa za polja na Webu, Podrška za nove Windows 10 tehnologije kao što su Windows Defender zaštitnik aplikacija i Windows 10 na  ARM64, i automatsko prijavljivanje orijentacije ekrana i statusa baterije.  
+Molimo imajte na umu da ova verzija programa  NVDA više ne podržava Windows XP ili  Windows Vista. Najmanja zahtevana verzija Windowsa za NVDA je sada windows 7 sa Service Packom 1.
+
 
 == Nove karakteristike ==
 - U režimu  pretraživanja, sada je moguće doći do kraja ili početka orjentira komandama za prelazak na početak ili kraj sadrživača (zarez/šift+zarez). (#5482)
@@ -14,6 +58,14 @@
 - Dodata podrška za Azardi čitač elektronskih knjiga. (#5848)
 - Informacije o verziji dodatka se sada prikazuju kada ažurirate dodatak. (#5324)
 - Dodata podrška za nove parametre za pravljenje prenosne kopije programa NVDA iz komandne linije. (#6329)
+- Podrška za  Microsoft Edge kada se pokrene iz Windows Defender zaštitnika  aplikacija na jesenjem ažuriranju Windowsa 10. (#7600)
+- Ako je pokrenut na laptop ili tablet računaru, NVDA će sada prijaviti kada se punjač uključi ili isključi, i kada se orijentacija ekrana promeni . (#4574, #4612)
+- Novi jezik: Makedonski.
+- Nove tablice za brajev prevod: Hrvatski stepen 1, Vietnamski stepen 1. (#7518, #7565)
+- Rečnici glasova sada imaju svoju verziju i prebačeni su u folder "speechDicts/voiceDicts.v1". (#7592)
+- Datoteke koje imaju verziju (korisnička podešavanja, glasovni rečnici) se više ne čuvaju kada se privremena kopija programa NVDA pokrene. (#7688)
+- Podrška za Actilino brajev red kompanije Handy Tech je dodata. (#7590)
+- Brajev unos za  Handy Tech brajeve redove je sada podržan. (#7590)
 
 
 == Promene ==
@@ -22,9 +74,12 @@
 - U režimu pretraživanja, korišćenje tastera tab ili brze navigacije više ne izgovara početak i kraj sadrživača na primer liste, što čini navigaciju jednostavnijom. (#2591)
 - U režimu pretraživanja programa Firefox i Chrome, imena grupa polja za uređivanje se sada izgovaraju kada koristite brzu navigaciju ili taster tab. (#3321)
 - U režimu pretraživanja, komanda brze navigacije za umetnute objekte (o i  šift+o) sada uključuje elemente za zvuk i video kao i elemente sa ARIA vrednostima aplikacije i dijaloga. (#7239)
-- Espeak-ng je ažuriran (na  commit 01919cd48a566cdf34347784b2e74554b376e900), ovo ispravlja određene greške sa objavljivanjem novih verzija. (#7385)
+- Espeak-ng je ažuriran na verziju 1.49.2, ova verzija ispravlja određene probleme sa objavljivanjem  novih verzija. (#7385, #7583)
 - Nakon što tri puta koristite komandu "pročitaj statusnu traku", njen sadržaj se kopira u privremenu memoriju. (#1785)
 - Kada podešavate prečice za korišćenje na Baum brajevom redu, možete ih ograničiti na model koji koristite (na primer VarioUltra ili  Pronto). (#7517)
+- Nedodeljena prečica je dodata za režim pretraživanja koja vam omogućava da brzo uključite i isključite tabele za izgled. Možete je pronaći u kategoriji režim pretraživanja ulaznih komandi. (#7634)
+- Ažuriran  liblouis brajev prevodilac na verziju 3.3.0. (#7565)
+- brajevi redovi Braillino, Bookworm i  Modular (sa starijim softverom) kompanije Handy Tech više nisu podržani. Instalirajte Handy Tech univerzalni driver i NVDA dodatak kako biste ih koristili. (#7590)
 
 
 == Ispravljene greške ==
@@ -32,12 +87,14 @@
 - NVDA više ne postaje znatno sporiji kada imate puno otvorenih kartica u programima Firefox i Chrome. (#3138)
 - Prebacivanje kursora za  MDV Lilli brajev red više ne pomera kursor za jednu ćeliju unapred od očekivane pozicije. (#7469)
 - U programu  Internet Explorer i drugim  MSHTML dokumentima, HTML5 potreban atribut je sada podržan za izgovor stanja polja za uređivanje. (#7321)
-- Brajev red se sada ispravno ažurira kada pišete dokumente na Arapskom u programu word pad sa poravnanjem na levoj strani (#511).
+- Brajev red se sada ispravno ažurira kada pišete dokumente na Arapskom u programu word pad sa poravnanjem na levoj strani. (#511).
 - Imena za kontrole u programu Mozilla firefox u režimu pretraživanja se sada bolje prijavljuju kada ime nije deo sadržaja. (#4773)
 - Na Windows 10 creators ažuriranju, NVDA može ponovo pristupiti programu Firefox čak i kada se NVDA ponovo pokrene. (#7269)
 - Kada ponovo pokrenete program NVDA dok je program Mozilla firefox fokusiran, režim pretraživanja će ponovo biti dostupan, ali možda ćete morati da koristite komandu alt+tab da se prebacite na neki drugi prozor a nakon toga vratite u Firefox. (#5758)
 - Sada je moguće pristupiti matematičkom sadržaju u programu Google Chrome čak i na sistemima gde program Mozilla Firefox nije instaliran. (#7308)
 - Druge aplikacije i sam operativni sistem bi trebalo da budu stabilniji nakon instalacije programa NVDA bez ponovnog pokretanja, u poređenju sa instalacijom prethodnih verzija. (#7563)
+- Kada se koristi komanda za prepoznavanje sadržaja (na primer NVDA+r), NVDA sada prijavljuje grešku umesto ničega ako navigacioni objekat nestane. (#7567)
+- Pomeranje brajevih redova unazad je popravljeno za Freedom scientific brajeve redove koji poseduju levu liniju za pomeranje. (#7713)
 
 
 == Promene za programere ==

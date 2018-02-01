@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -70,7 +70,10 @@ LVCF_SUBITEM=8
 LVCF_IMAGE=16
 LVCF_ORDER=32
 
-CBEMAXSTRLEN=260
+# The size of a buffer to hold text for listview items and columns etc 
+# #7828: Windows headers define this as 260 characters. However this is not long enough for modern Twitter clients that need at least 280 characters.
+# Therefore, round it up to the nearest power of 2
+CBEMAXSTRLEN=512
 
 # listview header window messages
 HDM_FIRST=0x1200

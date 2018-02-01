@@ -41,7 +41,7 @@ class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
 		speech.cancelSpeech()
-		api.setNavigatorObject(self)
+		api.setNavigatorObject(self, isFocus=True)
 		self.reportFocus()
 		super(SuggestionListItem,self).event_UIA_elementSelected()
 
