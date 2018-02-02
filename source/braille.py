@@ -517,11 +517,11 @@ def getBrailleTextForProperties(**propertyValues):
 			if rowSpan>1:
 				# Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
 				# Occurences of %s are replaced with the corresponding row numbers.
-				rowStr = _("r%s-%s") % (rowNumber,(rowNumber+rowSpan-1))
+				rowStr = _("r{rowNumber}-{rowSpan}").format(rowNumber=rowNumber,rowSpan=rowNumber+rowSpan-1)
 			else:
 				# Translators: Displayed in braille for a table cell row number.
 				# %s is replaced with the row number.
-				rowStr = _("r%s") % rowNumber
+				rowStr = _("r{rowNumber}").format(rowNumber=rowNumber)
 			textList.append(rowStr)
 	if columnNumber:
 		columnHeaderText = propertyValues.get("columnHeaderText")
@@ -531,11 +531,11 @@ def getBrailleTextForProperties(**propertyValues):
 			if columnSpan>1:
 				# Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
 				# Occurences of %s are replaced with the corresponding column numbers.
-				columnStr = _("c%s-%s") % (columnNumber,(columnNumber+columnSpan-1))
+				columnStr = _("c{columnNumber}-{columnSpan}").format(columnNumber=columnNumber,columnSpan=columnNumber+columnSpan-1)
 			else:
 				# Translators: Displayed in braille for a table cell column number.
 				# %s is replaced with the column number.
-				columnStr = _("c%s") % columnNumber
+				columnStr = _("c{columnNumber}").format(columnNumber=columnNumber)
 			textList.append(columnStr)
 	current = propertyValues.get('current', False)
 	if current:
