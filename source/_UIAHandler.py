@@ -12,6 +12,7 @@ from comtypes import *
 import weakref
 import threading
 import time
+import config
 import api
 import appModuleHandler
 import queueHandler
@@ -63,7 +64,6 @@ badUIAWindowClassNames=[
 	"RichEdit20",
 	"RICHEDIT50W",
 	"SysListView32",
-	"_WwG",
 	"EXCEL7",
 	"Button",
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
@@ -312,7 +312,13 @@ class UIAHandler(COMObject):
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
 		# Ask the window if it supports UIA natively
-		return windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+		if res:
+			# the window does support UIA natively, but
+			# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
+			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
+				return False
+		return bool(res)
 
 	def isUIAWindow(self,hwnd):
 		now=time.time()

@@ -12,7 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 
 #include <sstream>
 #include <vector>
@@ -95,7 +95,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	//Move the selection to the given range
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 	//Expand the selection to the line
-	// #3421: Expand and or extending selection cannot be used due to MS Word bugs on the last line in a table cell, or the first/last line of a table of contents, selecting would select the entire object.  
+	// #3421: Expand and or extending selection cannot be used due to MS Word bugs on the last line in a table cell, or the first/last line of a table of contents, selecting would select the entire object.
 	// Therefore do it in two steps
 	bool lineError=false;
 	if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_STARTOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0)!=S_OK) {
@@ -108,7 +108,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 			_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
 		}
 		// the endOf method has a bug where IPAtEndOfLine gets stuck as true on wrapped lines
-		// So reset the selection to the start of the document to force it to False 
+		// So reset the selection to the start of the document to force it to False
 		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",0,0);
 	}
 	// Fall back to the older expand if there was an error getting line bounds
@@ -117,7 +117,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
 		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
 		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
-	} 
+	}
 	if(args->lineStart>=args->lineEnd) {
 		args->lineStart=args->offset;
 		args->lineEnd=args->offset+1;
@@ -598,7 +598,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				}
 			}
 		}
-	} 
+	}
 	if (formatConfig&formatConfig_reportLanguage) {
 		int languageId = 0;
 		if (_com_dispatch_raw_propget(pDispatchRange,	wdDISPID_RANGE_LANGUAGEID, VT_I4, &languageId)==S_OK) {
@@ -617,7 +617,7 @@ inline int getInlineShapesCount(IDispatch* pDispatchRange) {
 	}
 	if(_com_dispatch_raw_propget(pDispatchShapes,wdDISPID_INLINESHAPES_COUNT,VT_I4,&count)!=S_OK||count<=0) {
 		return 0;
-	} 
+	}
 	return count;
 }
 
@@ -628,9 +628,13 @@ inline int getInlineShapesCount(IDispatch* pDispatchRange) {
 inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostringstream& XMLStream) {
 	IDispatchPtr pDispatchShapes=NULL;
 	IDispatchPtr pDispatchShape=NULL;
+	IDispatchPtr pDispatchChart=NULL;
+	IDispatchPtr pDispatchChartTitle=NULL;
 	int count=0;
 	int shapeType=0;
 	BSTR altText=NULL;
+	BOOL shapeHasChart=false;
+	BOOL chartHasTitle=false;
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_INLINESHAPES,VT_DISPATCH,&pDispatchShapes)!=S_OK||!pDispatchShapes) {
 		return 0;
 	}
@@ -641,6 +645,9 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 		return 0;
 	}
 	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_TYPE,VT_I4,&shapeType)!=S_OK) {
+		return 0;
+	}
+	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_HASCHART,VT_BOOL,&shapeHasChart)!=S_OK) {
 		return 0;
 	}
 	wstring altTextStr=L"";
@@ -657,7 +664,22 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 		}
 		SysFreeString(altText);
 	}
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\"";
+	altText=NULL;
+	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_HASCHART,VT_BOOL,&shapeHasChart)==S_OK&&shapeHasChart) {
+		if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_CHART,VT_DISPATCH,&pDispatchChart)==S_OK&&pDispatchChart) {
+			if(_com_dispatch_raw_propget(pDispatchChart,wdDISPID_CHART_HASTITLE,VT_BOOL,&chartHasTitle)==S_OK&&chartHasTitle) {
+				if(_com_dispatch_raw_propget(pDispatchChart,wdDISPID_CHART_CHARTTITLE,VT_DISPATCH,&pDispatchChartTitle)==S_OK&&pDispatchChartTitle) {
+					if(_com_dispatch_raw_propget(pDispatchChartTitle,wdDISPID_CHARTTITLE_TEXT,VT_BSTR,&altText)==S_OK&&altText) {
+						for(int i=0;altText[i]!='\0';++i) {
+							appendCharToXML(altText[i],altTextStr,true);
+						}
+						SysFreeString(altText);
+					}
+				}
+			}
+		}
+	}
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":(shapeType==wdInlineShapeChart?L"chart":L"object"))<<L"\" value=\""<<altTextStr<<L"\"";
 	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
 		XMLStream<<L" shapeoffset=\""<<offset<<L"\"";
 		IDispatchPtr pOLEFormat=NULL;
@@ -727,7 +749,7 @@ std::experimental::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange
 
 	int count = -1;
 	res = _com_dispatch_raw_propget( pDispatchSections, wdDISPID_SECTIONS_COUNT, VT_I4, &count);
-	if( res != S_OK || count != 2 ) { 
+	if( res != S_OK || count != 2 ) {
 		LOG_DEBUGWARNING(L"error getting section count. There should be exactly 2 sections, count: " << count);
 		return {};
 	}
@@ -786,7 +808,7 @@ calculatePreAndPostColumnOffsets(IDispatchPtr pDispatchPageSetup) {
 	}
 
 	float rightMargin = -1.0f;
-	// right margin necessary to validate that the full width of the document has been 
+	// right margin necessary to validate that the full width of the document has been
 	// taken into account.
 	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_RIGHTMARGIN,
 		VT_R4, &rightMargin);
@@ -1282,7 +1304,7 @@ error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, cons
 	return RPC_S_OK;
 }
 
-error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const unsigned long windowHandle, const int startOffset, const int endOffset, const long formatConfig, BSTR* text) { 
+error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const unsigned long windowHandle, const int startOffset, const int endOffset, const long formatConfig, BSTR* text) {
 	winword_getTextInRange_args args={startOffset,endOffset,formatConfig,NULL};
 	SendMessage((HWND)UlongToHandle(windowHandle),wm_winword_getTextInRange,(WPARAM)&args,0);
 	*text=args.text;

@@ -10,11 +10,45 @@ import array
 import winUser
 import UIAHandler
 from UIAUtils import *
+import documentBase
 import treeInterceptorHandler
 import cursorManager
 import textInfos
 import browseMode
 from NVDAObjects.UIA import UIA
+
+class UIADocumentWithTableNavigation(documentBase.DocumentWithTableNavigation):
+
+	def _getTableCellAt(self,tableID,startPos,row,column):
+		startUIAElement=startPos.UIAElementAtStart
+		# Comtypes casts a tuple into a variant containing a  safearray of variants.
+		# However, UIA's createPropertyCondition requires a safearay of ints.
+		# By first converting the tuple to a Python int Array we can ensure this.  
+		tableIDArray=array.array("l",tableID)
+		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,tableIDArray)
+		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+		try:
+			tableUIAElement=UIAWalker.normalizeElement(startUIAElement)
+		except COMError:
+			tableUIAElement=None
+		if not tableUIAElement:
+			raise LookupError
+		UIAGridPattern=None
+		try:
+			punk=tableUIAElement.getCurrentPattern(UIAHandler.UIA_GridPatternId)
+			if punk:
+				UIAGridPattern=punk.QueryInterface(UIAHandler.IUIAutomationGridPattern)
+		except COMError:
+			raise LookupError
+		if not tableUIAElement:
+			raise RuntimeError
+		try:
+			cellElement=UIAGridPattern.getItem(row-1,column-1)
+		except COMError:
+			cellElement=None
+		if not cellElement:
+			raise LookupError
+		return self.makeTextInfo(cellElement)
 
 class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -40,6 +74,63 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 	@property
 	def label(self):
 		return self._getLabelForProperties(lambda prop: getattr(self.obj, prop, None))
+
+class TextAttribUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
+	attribID=None #: a UIA text attribute to search for
+	wantedAttribValues=set() #: A set of attribute values acceptable to match the search.
+
+	def __init__(self,attribValues,itemType,document,textInfo):
+		self.attribValues=attribValues
+		super(TextAttribUIATextInfoQuickNavItem,self).__init__(itemType,document,textInfo)
+
+class ErrorUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
+	wantedAttribValues={UIAHandler.AnnotationType_SpellingError,UIAHandler.AnnotationType_GrammarError}
+
+	@property
+	def label(self):
+		text=self.textInfo.text
+		if (UIAHandler.AnnotationType_SpellingError in self.attribValues) and (UIAHandler.AnnotationType_GrammarError in self.attribValues):
+			# Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+			# {text} will be replaced with the text of the spelling error.
+			return _(u"spelling and grammar: {text}").format(text=text)
+		elif UIAHandler.AnnotationType_SpellingError in self.attribValues:
+			# Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+			# {text} will be replaced with the text of the spelling error.
+			return _(u"spelling: {text}").format(text=text)
+		elif UIAHandler.AnnotationType_GrammarError in self.attribValues:
+			# Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+			# {text} will be replaced with the text of the spelling error.
+			return _(u"grammar: {text}").format(text=text)
+		else:
+			return text
+
+def UIATextAttributeQuicknavIterator(ItemClass,itemType,document,position,direction="next"):
+	reverse=(direction=="previous")
+	entireDocument=document.makeTextInfo(textInfos.POSITION_ALL)
+	if not position:
+		searchArea=entireDocument
+	else:
+		searchArea=position.copy()
+		if reverse:
+			searchArea.setEndPoint(entireDocument,"startToStart")
+		else:
+			searchArea.setEndPoint(entireDocument,"endToEnd")
+	firstLoop=True
+	for subrange in iterUIARangeByUnit(searchArea._rangeObj,UIAHandler.TextUnit_Format,reverse=reverse):
+		if firstLoop:
+			firstLoop=False
+			if position and not reverse:
+				# We are starting to search forward from a specific position
+				# Skip the first subrange as it is the one we started on.
+				continue
+		curAttribValue=subrange.getAttributeValue(ItemClass.attribID)
+		curAttribValues=curAttribValue if isinstance(curAttribValue,tuple) else (curAttribValue,)
+		for wantedAttribValue in ItemClass.wantedAttribValues:
+			if wantedAttribValue in curAttribValues:
+				tempInfo=document.makeTextInfo(subrange)
+				yield ItemClass(curAttribValues,itemType,document,tempInfo)
+				break
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
@@ -242,13 +333,15 @@ class UIABrowseModeDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeIn
 		return self.innerTextInfo.UIAElementAtStart
 
 
-class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
+class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=UIABrowseModeDocumentTextInfo
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType.startswith("heading"):
 			return UIAHeadingQuicknavIterator(nodeType,self,pos,direction=direction)
+		elif nodeType=="error":
+			return UIATextAttributeQuicknavIterator(ErrorUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
 		elif nodeType=="link":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_HyperlinkControlTypeId)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
@@ -326,36 +419,4 @@ class UIABrowseModeDocument(browseMode.BrowseModeDocumentTreeInterceptor):
 	def event_caret(self,obj,nextHandler):
 		pass
 
-	def _getTableCellAt(self,tableID,startPos,row,column):
-		startUIAElement=startPos.UIAElementAtStart
-		# Comtypes casts a tuple into a variant containing a  safearray of variants.
-		# However, UIA's createPropertyCondition requires a safearay of ints.
-		# By first converting the tuple to a Python int Array we can ensure this.  
-		tableIDArray=array.array("l",tableID)
-		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,tableIDArray)
-		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
-		try:
-			tableUIAElement=UIAWalker.normalizeElement(startUIAElement)
-		except COMError:
-			tableUIAElement=None
-		if not tableUIAElement:
-			raise LookupError
-		UIAGridPattern=None
-		try:
-			punk=tableUIAElement.getCurrentPattern(UIAHandler.UIA_GridPatternId)
-			if punk:
-				UIAGridPattern=punk.QueryInterface(UIAHandler.IUIAutomationGridPattern)
-		except COMError:
-			raise LookupError
-		if not tableUIAElement:
-			raise RuntimeError
-		try:
-			cellElement=UIAGridPattern.getItem(row-1,column-1)
-		except COMError:
-			cellElement=None
-		if not cellElement:
-			raise LookupError
-		cellRange=UIATextRangeFromElement(self.rootNVDAObject.UIATextPattern,cellElement)
-		if not cellRange:
-			raise LookupError
-		return self.makeTextInfo(cellRange)
+

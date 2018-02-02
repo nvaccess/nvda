@@ -3,6 +3,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import operator
 from comtypes import COMError
 import ctypes
 import UIAHandler
@@ -96,29 +97,36 @@ def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
 			raise UIAMixedAttributeError
 	return val
 
-def iterUIARangeByUnit(rangeObj,unit):
+def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 	"""
 	Splits a given UI Automation text range into smaller text ranges the size of the given unit and yields them.
 	@param rangeObj: the UI Automation text range to split.
 	@type rangeObj: L{UIAHandler.IUIAutomationTextRange}
 	@param unit: a UI Automation text unit.
+	@param reverse: true if the range should be walked backwards (from end to start)
+	@type reverse: bool
 	@rtype: a generator that yields L{UIAHandler.IUIAutomationTextRange} objects.
 	"""
+	Endpoint_relativeEnd=UIAHandler.TextPatternRangeEndpoint_Start if reverse else UIAHandler.TextPatternRangeEndpoint_End
+	Endpoint_relativeStart=UIAHandler.TextPatternRangeEndpoint_End if reverse else UIAHandler.TextPatternRangeEndpoint_Start
+	minRelativeDistance=-1 if reverse else 1
+	relativeGTOperator=operator.lt if reverse else operator.gt
+	relativeLTOperator=operator.gt if reverse else operator.lt
 	tempRange=rangeObj.clone()
-	tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
+	tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeStart)
 	endRange=tempRange.Clone()
-	while endRange.Move(unit,1)>0:
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,endRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		pastEnd=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0
+	while relativeGTOperator(endRange.Move(unit,minRelativeDistance),0):
+		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,endRange,Endpoint_relativeStart)
+		pastEnd=relativeGTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0)
 		if pastEnd:
-			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+			tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
 		yield tempRange.clone()
 		if pastEnd:
 			return
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
 	# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
-	if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+	if relativeLTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0):
+		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
 		yield tempRange.clone()
 
 def getEnclosingElementWithCacheFromUIATextRange(textRange,cacheRequest):
@@ -194,3 +202,4 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
 			raise UIAMixedAttributeError
 		return val
+

@@ -11,7 +11,7 @@ import sys
 import os
 
 # Get the path to the top of the repo; i.e. where include and miscDeps are.
-TOP_DIR = os.path.dirname(os.path.dirname(__file__))
+TOP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # Directories containing Python modules included in git submodules.
 PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "scons", "src", "engine"),
