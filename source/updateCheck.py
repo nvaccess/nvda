@@ -579,13 +579,13 @@ def initialize():
 		}
 
 	# check the pending version against the current version
-	if state["pendingUpdateVersion"] == versionInfo.version:
+	if state.get("pendingUpdateVersion") == versionInfo.version:
 		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
 	# remove all update files except the one that is currently pending (if any)
 	try:
 		for fileName in os.listdir(storeUpdatesDir):
 			f=os.path.join(storeUpdatesDir, fileName)
-			if f != state["pendingUpdateFile"]:
+			if f != state.get("pendingUpdateFile"):
 				os.remove(f)
 				log.debug("Update file %s removed"%f)
 	except OSError:
