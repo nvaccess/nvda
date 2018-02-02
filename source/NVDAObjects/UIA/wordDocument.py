@@ -3,31 +3,116 @@
 #See the file COPYING for more details.
 #Copyright (C) 2016 NV Access Limited
 
-import controlTypes
+from comtypes import COMError
+from collections import defaultdict
 import textInfos
 import eventHandler
+import UIAHandler
 import controlTypes
+import ui
 import speech
 import api
-from UIABrowseMode import UIABrowseModeDocument
+import browseMode
+from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator, TextAttribUIATextInfoQuickNavItem
 from . import UIA, UIATextInfo
+from NVDAObjects.window.winword import WordDocument as WordDocumentBase
+
+"""Support for Microsoft Word via UI Automation."""
+
+class ElementsListDialog(browseMode.ElementsListDialog):
+
+	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("annotation", _("&Annotations")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("error", _("&Errors")),
+	)
+
+class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
+	wantedAttribValues={UIAHandler.AnnotationType_InsertionChange,UIAHandler.AnnotationType_DeletionChange,UIAHandler.AnnotationType_TrackChanges}
+
+	@property
+	def label(self):
+		text=self.textInfo.text
+		if UIAHandler.AnnotationType_InsertionChange in self.attribValues:
+			# Translators: The label shown for an insertion change 
+			return _(u"insertion: {text}").format(text=text)
+		elif UIAHandler.AnnotationType_DeletionChange in self.attribValues:
+			# Translators: The label shown for a deletion change 
+			return _(u"deletion: {text}").format(text=text)
+		else:
+			# Translators: The general label shown for track changes 
+			return _(u"track change: {text}").format(text=text)
+
+def getCommentInfoFromPosition(position):
+	"""
+	Fetches information about the comment located at the given position in a word document.
+	@param position: a TextInfo representing the span of the comment in the word document.
+	@type L{TextInfo}
+	@return: A dictionary containing keys of comment, author and date
+	@rtype: dict
+	"""
+	val=position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
+	if not val:
+		return
+	try:
+		UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
+	except COMError:
+		return
+	for index in xrange(UIAElementArray.length):
+		UIAElement=UIAElementArray.getElement(index)
+		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		obj=UIA(UIAElement=UIAElement)
+		if not obj.parent or obj.parent.name!='Comment':
+			continue
+		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
+		dateObj=obj.previous
+		date=dateObj.name
+		authorObj=dateObj.previous
+		author=authorObj.name
+		return dict(comment=comment,author=author,date=date)
+
+class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
+	wantedAttribValues={UIAHandler.AnnotationType_Comment,}
+
+	@property
+	def label(self):
+		commentInfo=getCommentInfoFromPosition(self.textInfo)
+		# Translators: The message reported for a comment in Microsoft Word
+		return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
 
 class WordDocumentTextInfo(UIATextInfo):
+
+	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+		if UIAFormatUnits is None and self.UIAFormatUnits:
+			# Word documents must always split by a unit the first time, as an entire text chunk can give valid annotation types 
+			UIAFormatUnits=self.UIAFormatUnits
+		return super(WordDocumentTextInfo,self)._getTextWithFields_text(textRange,formatConfig,UIAFormatUnits=UIAFormatUnits)
 
 	def _get_controlFieldNVDAObjectClass(self):
 		return WordDocumentNode
 
-	# UIA text range comparison for bookmarks works okay in this MS Word implementation
-	# Thus __ne__ is useful
-	def __ne__(self,other):
-		return not self==other
-
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		automationID=obj.UIAElement.cachedAutomationID
-		if obj.role==controlTypes.ROLE_EDITABLETEXT and (automationID=='Body' or automationID.startswith('UIA_AutomationId_Word_Content')):
-			return None
 		field=super(WordDocumentTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
+		if automationID.startswith('UIA_AutomationId_Word_Page_'):
+			field['page-number']=automationID.rsplit('_',1)[-1]
+		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
+			# Include foot note and endnote identifiers
+			field['content']=obj.name
+			field['role']=controlTypes.ROLE_LINK
+		if obj.role==controlTypes.ROLE_LIST or obj.role==controlTypes.ROLE_EDITABLETEXT:
+			field['states'].add(controlTypes.STATE_READONLY)
+			if obj.role==controlTypes.ROLE_LIST:
+				# To stay compatible with the older MS Word implementation, don't expose lists in word documents as actual lists. This suppresses announcement of entering and exiting them.
+				# Note that bullets and numbering are still announced of course.
+				# Eventually we'll want to stop suppressing this, but for now this is more confusing than good (as in many cases announcing of new bullets when pressing enter causes exit and then enter to be spoken).
+				field['role']=controlTypes.ROLE_EDITABLETEXT
 		if obj.role==controlTypes.ROLE_GRAPHIC:
 			# Label graphics with a description before name as name seems to be auto-generated (E.g. "rectangle")
 			field['value']=field.pop('description',None) or obj.description or field.pop('name',None) or obj.name
@@ -71,6 +156,15 @@ class WordDocumentTextInfo(UIATextInfo):
 
 	def getTextWithFields(self,formatConfig=None):
 		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
+		# Fill in page number attributes where NVDA expects
+		try:
+			page=fields[0].field['page-number']
+		except KeyError:
+			page=None
+		if page is not None:
+			for field in fields:
+				if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
+					field.field['page-number']=page
 		# MS Word can sometimes return a higher ancestor in its textRange's children.
 		# E.g. a table inside a table header.
 		# This does not cause a loop, but does cause information to be doubled
@@ -98,6 +192,9 @@ class WordDocumentTextInfo(UIATextInfo):
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 
+	def _get_isAlive(self):
+		return True
+
 	def shouldSetFocusToObj(self,obj):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
 		if obj.role==controlTypes.ROLE_EDITABLETEXT and obj.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content'):
@@ -121,9 +218,55 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
 	script_shiftTab=script_tab
 
+	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		if nodeType=="annotation":
+			comments=UIATextAttributeQuicknavIterator(CommentUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
+			revisions=UIATextAttributeQuicknavIterator(RevisionUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
+			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
+		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
+
+	ElementsListDialog=ElementsListDialog
+
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
 
-class WordDocument(WordDocumentNode):
+	def _get_role(self):
+		role=super(WordDocumentNode,self).role
+		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
+		if role==controlTypes.ROLE_UNKNOWN:
+			role=controlTypes.ROLE_EDITABLETEXT
+		return role
+
+class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentBase):
 	treeInterceptorClass=WordBrowseModeDocument
 	shouldCreateTreeInterceptor=False
+	announceEntireNewLine=True
+
+	def script_reportCurrentComment(self,gesture):
+		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		caretInfo.expand(textInfos.UNIT_CHARACTER)
+		val=caretInfo._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
+		if not val:
+			return
+		try:
+			UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
+		except COMError:
+			return
+		for index in xrange(UIAElementArray.length):
+			UIAElement=UIAElementArray.getElement(index)
+			UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			obj=UIA(UIAElement=UIAElement)
+			if not obj.parent or obj.parent.name!='Comment':
+				continue
+			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			dateObj=obj.previous
+			date=dateObj.name
+			authorObj=dateObj.previous
+			author=authorObj.name
+			# Translators: The message reported for a comment in Microsoft Word
+			ui.message(_("{comment} by {author} on {date}").format(comment=comment,date=date,author=author))
+			return
+
+	__gestures={
+		"kb:NVDA+alt+c":"reportCurrentComment",
+	}
