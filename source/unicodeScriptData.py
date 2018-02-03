@@ -10,6 +10,8 @@ Each entry contains 3 items from unicode scripts.txt: range start, range end, an
 These entries should not overlap, but there could be gaps
 """
 
+import bisect
+
 # unicode digit constants
 DIGIT_ZERO = 0x30
 DIGIT_NINE = 0x39
@@ -885,14 +887,15 @@ scriptRanges= [
 	( 0Xe0020 , 0Xe007f , "Common" ), 
 ]
 
+
+unicodeScriptRangeEnd = [ k[1] for k in scriptRanges]
+
 def getScriptCode(chr):
 	"""performs a binary search in scripCodes for unicode ranges
 	@param chr: character for which a script should be found
 	@type chr: string
 	@return: script code
 	@rtype: int"""
-	mStart = 0
-	mEnd = len(scriptRanges)-1
 	characterUnicodeCode = ord(chr)
 	# Number should respect preferred language setting
 	# FullWidthNumber is in Common category, however, it indicates Japanese language context
@@ -900,13 +903,33 @@ def getScriptCode(chr):
 		return "Number"
 	elif FULLWIDTH_ZERO <= characterUnicodeCode <= FULLWIDTH_NINE: 
 		return "FullWidthNumber"
-	while( mEnd >= mStart ):
-		midPoint = (mStart + mEnd ) >> 1
-		if characterUnicodeCode < scriptRanges[midPoint][0]: 
-			mEnd = midPoint -1
-		elif characterUnicodeCode > scriptRanges[midPoint][1]: 
-			mStart = midPoint + 1
-		else:
-			return scriptRanges[midPoint][2] 
-	return None
 
+	# Based on the following assumptions: 
+	# - ranges must not overlap
+	# - range end and start values are included in that range
+	# - there may be gaps between ranges.
+
+	# Approach: Look for the first index of a range where the range end value is greater
+	# than the code we are searching for. If this is found, and the start value for this range
+	# is less than or equal to the code we are searching for then we have found the range.
+	# That is startValue <= characterUnicodeCode <= endValue
+
+	index = bisect.bisect_left(unicodeScriptRangeEnd, characterUnicodeCode )
+	if index == len(unicodeScriptRangeEnd):
+		# there is no value of index such that: `characterUnicodeCode <= scriptCode[index][1]`
+		# characterUnicodeCode is larger than all of the range end values so a range is not 
+		# found for the value:
+		return None
+
+	# Since the range at index is the first where `characterUnicodeCode <= rangeEnd` is True,
+	# we now ensure that for the range at the index `characterUnicodeCode >= rangeStart` 
+	# is also True. 
+	candidateRange = scriptRanges[index]
+	rangeStart = candidateRange[0]
+	if rangeStart > characterUnicodeCode :
+		# characterUnicodeCode comes before the start of the range at index so a range 
+		# is not found for the value
+		return None
+
+	rangeName = candidateRange[2]
+	return rangeName

@@ -19,6 +19,7 @@ import unicodedata
 # maintains list of priority languages as a list of languageID, ScriptName, and LanguageDescription
 languagePriorityListSpec = []
 
+"""scriptIDToLangID is reverse of langIDToScriptID and is used to obtain language of the current script. language of a script is used to detect whether a chunk should be broken for languages that use multiple scripts."""
 scriptIDToLangID = {}
 
 LanguageDescription = namedtuple("LanguageDescription" , "languageID description")

@@ -9,6 +9,7 @@
 import unittest
 import languageDetection
 from speech import LangChangeCommand
+from unicodeScriptData import scriptRanges
 import config
 
 class TestLanguageDetection(unittest.TestCase):
@@ -271,3 +272,19 @@ class TestLanguageDetection(unittest.TestCase):
 		languageDetection.updateLanguagePriorityFromConfig()
 		self.compareSpeechSequence(detectedLanguageSequence  , testSequence) 
 
+	def test_unicodeRangesEntryStartLessEqualEnd(self):
+		for scriptRangeStart, scriptRangeEnd, scriptName in scriptRanges:
+			self.assertTrue(scriptRangeStart <= scriptRangeEnd)
+
+	def test_unicodeRangesEntriesDoNotOverlapAndAreSorted(self):
+		for index in xrange( len(scriptRanges) -1): 
+			#check is there is no overlap
+			currentRange = scriptRanges[index]
+			nextRange = scriptRanges[index+1]
+			currentRangeEnd = currentRange[1]
+			nextRangeStart = nextRange[0]
+			self.assertTrue(currentRangeEnd   < nextRangeStart)
+
+	def test_unicodeRangesEntryScriptNamesExist(self):
+		for scriptRangeStart, scriptRangeEnd, scriptName in scriptRanges:
+			self.assertTrue(scriptName)
