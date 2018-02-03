@@ -142,7 +142,7 @@ def executeUpdate(destPath=None):
 	else:
 		portablePath = os.getcwdu()
 		if os.access(portablePath, os.W_OK):
-			executeParams = u"--create-portable --portable-path {portablePath} --config-path {configPath} -m".format(
+			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
 				configPath=os.path.abspath(globalVars.appArgs.configPath)
 			)
