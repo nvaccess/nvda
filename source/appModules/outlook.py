@@ -57,20 +57,6 @@ importanceLabels={
 	0:_("low importance"),
 }
 
-PR_LAST_VERB_EXECUTED = r"http://schemas.microsoft.com/mapi/proptag/0x10810003"
-
-lastVerbExecutedLabels={
-	# See https://stackoverflow.com/questions/44557175/getting-the-outlook-mails-latest-statusreplied-or-forwarded for a rationale for the chosen labels.
-	# Translators: for an email that has since been replied to.
-	102:_("replied"),
-	# Translators: for an email that has since been replied to all.
-	103:_("replied to all"),
-	# Translators: for an email that has since been forwarded.
-	104:_("forwarded"),
-	# Translators: for an email that has since been forwarded.
-	108:_("replied forwarded"), # Use of this is a bit vague
-}
-
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
 
@@ -449,12 +435,15 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				flagIcon=0
 			flagIconLabel=oleFlagIconLabels.get(flagIcon)
 			if flagIconLabel: textList.append(flagIconLabel)
-			try:
-				lastVerbExecuted=selection.PropertyAccessor.GetProperty(PR_LAST_VERB_EXECUTED)
-			except COMError:
-				lastVerbExecuted=0
-			lastVerbExecutedLabel=lastVerbExecutedLabels.get(lastVerbExecuted)
-			if lastVerbExecutedLabel: textList.append(lastVerbExecutedLabel)
+			# Replied or forwarded state for this message is available from the object's value.
+			# We must parse this value correctly, as it contains redundant information.
+			# The several states are localized and separated by a space.
+			# Example output: 'Message Replied Read'
+			valueParts = self._get_value().split(" ")
+			# The first valuePart is the type of the selection, e.g. Message, Contact.
+			# The last valuePart indicates whether the message is read or unread.
+			if len(valueParts)>=3:
+				textList.extend(valueParts[1:-1])
 			try:
 				attachmentCount=selection.attachments.count
 			except COMError:
