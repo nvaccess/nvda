@@ -1,26 +1,101 @@
-﻿Što je novo u NVDA
+Što je novo u NVDA
 
 
 %!includeconf: ../changes.t2tconf
- 
- 
-= 2017.4 =
+
+= 2018.1 =
 
 == Nove značajke ==
-- U načinu pregleda sada je moguće preskakati orjentire koristeći prečac prebacivanja između sadrživaća (zarez/shift+zarez). (#5482)
-- U Firefoxu, Chromeu i u Internet Exploreru, brza navigacija do uređivačkih polja i obrazaca sada uključuje tekstualna polja bogatog uređivanja (npr. contentEditable). (#5534)
-- U internet preglednicima,, popis elemenata može izlistavati obrasce i gumbe. (#588)
+- Sada je moguće ulaziti u interakciju sa grafovima u Microsoft Wordu i Microsoft PowerPointu, slično kao i kod podrške grafova u Microsoft Excelu. (#7046)
+ - U Microsoft Wordu:  kada se nalazite u načinu pregleda, kursorima dođite do grafa i pritisnite enter.
+ - U Microsoft PowerPointu prilikom uređivanja slajda: pritišćite tabulator do objekta grafa, i pritisnite enter ili razmak kako biste ušli u interakciju s grafom.
+ - Kako biste prestali biti u interakciju s grafom, Pritisnite escape.
+- Novi jezik: kirgizki.
 
 
 == Izmjene ==
+- upravljački programi za HIMS Braille Sense/Braille EDGE/Smart Beetle i Hims Sync sada su zamijenjeni jednim upravljačkim programom. ovaj upravljački program bit će automatski aktiviran za stare korisnike syncBraille upravljačkog programa. (#7459) 
+ - Neke tipke, točnije tipke za premještanje po redovima, su izmijenjene, kako bi pratile konvencije Himsovih proizvoda. Consult the user guide for more details.
+- Prilikom tipkanja na zaslonskoj tipkovnici sa uključenom dodirnom interakcijom, podrazumjevano trebate svaku tipku stisnuti dva puta, kao što aktivirate i druge kontrole. (#7309)
+ - Kako biste koristili postojeći način dodirnog unosa, gdje je jedan dodir dovoljan za aktivaciju pojedinačne tipke, omogućite tu opciju u dijaloškom okviru dodirna interakcija kojeg možete naći u izborniku postavke.
+- Više nije potrebno ručno prebacivati brajicu na fokus ili pregled, jer će se to događati automatski. (#2385) 
+ - imajte na umu, da će se prebacivanje na pregled događati samo kada se koristi pregledni kursor ili prečac objektne navigacije. pomicanje po redovima neće aktivirati ovakav način.
+
+
+== Bug Fixes ==
+- pregledne poruke poput izgovora formatiranja pri pritisku NVDA+f dva puta brzo više neće rezultirati pogreškom, kada je NVDA instaliran na sustavu sa nelatiničnim znakovima. (#7474)
+- Fokus se sada vraća ispravno, rilikom vraćanja u Spotify iz drugih aplikacija. (#7689)
+- U Windows 10 jesenskoj nadogradnji za tvorce, NVDA će sada se uspjevati nadograditi, kada je uključena opcija kontroliranog pristupa folderima u Windows defenderu. (#7696)
+- otkrivanje tipaka za pomicanje napred ' nazad po u redku kod hims brajičnih redaka sada više nije nestabilno. (#6086)
+- Malo poboljšanje performansi prilikom učitavanja velikog sadržaja u Mozilla Firefox 58 i novijim. (#7719)
+- U Microsoft Outlooku, čitanje e-mailova koji sadrže tablice, više ne prouzrokuje greške. (#6827)
+- geste brajičnog redka koje emuliraju modifikatore tipki sustava mogu biti kombinirane sa drugim tipkama sustava ako jedna ili više ukljućenih gesti ovise o modelu. (#7783)
+- U Mozilla Firefoxu, način pregleda sada ponovno radi u iskočnim prozorima dodataka poput LastPass i bitwarden. (#7809)
+- NVDA više se ne smrzava na svakoj promijeni fokusa u mozilla firefox i chrome preglednicima poput smrzavanja ili rušenja. (#7818)
+- U twitter klijentima poput Chicken Nuggeta, NVDA više neće ignorirati zadnjih 20 znakova od 280 znakovnog tweeta prilikom čitanja istog. (#7828)
+- NVDA sada koristi ispravan jezik pri označavanju teksta. (#7687)
+- U posljednjim inačicama Office 365, sada je moguće ponovo čitati excel grafove sa strelicama gore dole. (#7046)
+-  Radi li se o brajičnom ili govornom izlazu, status i tip kontrole bit će predstavljen u istpm poredku, neovisno je li pozitivan ili negativan. Fixes #7076
+- u aplikacijama poput Windows 10 Pošte, NVDA će sada izgovarati izbrisane znakove pritiskom na backspace. (#7456)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+ 
+= 2017.4 =
+Novosti u ovoj inačici uključuju poboljšanja u web podršci, uključujući podrazumijevani način pregleda za web dijaloge bolje izgovaranje grupa polja u načinu pregleda, Podrška za nove Windows 10 tehnologije Windows 10 zaštitnik aplikacija i windows 10 za ARM64, te automatsko čitanje statusa baterije i orijentacije ekrana.  
+Imajte na umu, da ova inačica NVDA ne podržava windows xp ili Windows Vistu. Minimalna podržana inačica operativnog sustava windows je windows 7 sa servisnim paketom 1.
+
+ 
+== Nove značajke ==
+- U načinu pregleda, sada je moguće preskakati orjentire koristeći prečac prebacivanja između sadrživaća (zarez/shift+zarez). (#5482)
+- U Firefoxu, Chromeu i u Internet Exploreru, brza navigacija do uređivačkih polja i obrazaca sada uključuje tekstualna polja bogatog uređivanja (NPR. contentEditable). (#5534)
+- U internet preglednicima, popis elemenata može izlistavati obrasce i gumbe. (#588)
+- Prvobitna podrška za Windows 10 na ARM64 platformama. (#7508)
+- Rana podrška za čitanje i kretanje po matematičkom sadržaju za Kindle knjige sa pristupačnom matematikom. (#7536)
+- Dodana podrška za Azardi čitač elektronskih knjiga. (#5848)
+- Prilikom ažuriranja dodataka, sada se izgovara i njihova inačica. (#5324)
+- Dodani parametri naredbenog retka koji omogućuju stvaranje prijenosne inačice NVDA. (#6329)
+- Podrška za Microsoft edge u windows zaštitniku aplikacija u Windows defenderu, koristeći windows 10 jesensko ažuriranje za tvorce. (#7600)
+- Ako je pokrenut na prijenosnom ili tablet računalu, NVDA će sada izgovarati dali je punjač spojen ili odspojen, te promjenu položaja zaslona. (#4574, #4612)
+- Novi jezik: Makedonski.
+- Nove brajične tablice: Hrvatski puno pismo, Vijetnamski puno pismo. (#7518, #7565)
+- Dodana podrška za Handy Tech Actilino brajični redak. (#7590)
+- Sada je podržan unos znakova sa brajičnih tipkovnica Handytechovih brajičnih redaka. (#7590)
+
+
+== Izmjene ==
+- Minimalna podržana inačica operativnih sustava za NVDA sada je Windows 7 sa servisnim paketom 1, ili Windows Server 2008 R2 sa servisnim paketom 1. (#7546)
 - Web dijaloški okviri u Firefox i Chrome web preglednicima sada automatski koriste način pregleda, osim ako to nije web aplikacija. (#4493)
-- U načinu pregeda, pritiskanje tabulatora i kretanje prećicama za brzo kretanje ne izgovaraju prebacivanje izvan sadrživaća poput popisa i tablica, što čini kretanje bržim. (#2591)
+- U načinu pregleda, pritiskanje tabulatora i kretanje prečicama za brzo kretanje ne izgovaraju prebacivanje izvan sadrživaća poput popisa i tablica, što čini kretanje bržim. (#2591)
 - U načinu pregleda za Firefox i Chrome, Imena grupa polja obrazaca prilikom premještanja po njima sa prečicama za brzo kretanje ili prilikom pritiskanja taba. (#3321)
+- U načinu pregleda, prečac za brzo kretanje po ugrađenim objektima (o i shift+o) sada uključuje audio i video playere, kao i elemente s aria atributima application i dialog. (#7239)
+- Espeak-ng je nadograđen na inačicu 1.49.2, koja rješava probleme sa kompiliranjem novih verzija. (#7385, #7583)
+- prilikom treće aktivacije prečaca 'čitaj statusnu traku', sadržaj izgovoren putem te komande je kopiran u međuspremnik. (#1785)
+- Prilikom dodjele prečaca na Baumovom brajičnom redku, sada je moguče ograničiti iste za model na kojem se koriste (npr. VarioUltra ili Pronto). (#7517)
+- tipkovni prečac u popisu elemenata u načinu pregleda promijenjen je sa  alt+f na kombinaciju alt+e. Bilješka prevoditelja: ovo ne važi za hrvatsku inačicu NVDA. (#7569)
+- Dodana je nedodijeljena gesta koja omogućuje uključivanje / isključivanje tablica izgleda u letu. Ovu komandu možete pronaći u kategoriji način pregleda u dijaloškom okviru ulazne geste. (#7634)
+- Nadograđen Liblouis brajični prevoditelj na inačicu 3.3.0. (#7565)
+- Tipkovnički prečac za izborni gumb pravilni izrazi u dijaloškom okviru govorni rječnici je zamjenjen sa alt+r na alt+e. Bilješka prevoditelja: ovo ne vrijedi za hrvatsku inačicu čitača zaslona NVDA. (#6782)
+- Datoteke glasovnih rječnika su sada verzijonirani i premještene su u mapu 'speechDicts/voiceDicts.v1'. (#7592)
+- verzijonirane datoteke (user configuration, voice dictionaries) izmjene nisu spremljene u pokretaču. (#7688)
+- Braillino, Bookworm i Modular Handy tech brajični retci (sa starim pogonskim softverom) više nisu podržani direktno. Koristite Handytechov univerzalni pogonski softver i NVDA dodatak kako biste mogli koristiti ove brajične retke s NVDA. (#7590)
 
 
 == Ispravke grešaka ==
 - Linkovi se sada ispravno prikazuju u aplikacijama poput Microsoft Worda. (#6780)
 - NVDA više ne postaje značajno sporiji prilikom otvaranja više kartica u Firefox ili Chrome web preglednicima. (#3138)
+- Routing tipka na MDV Lilli brajičnom retku više se ne pomiće neispravno za jednu brajičnu ćeliju u naprijed od one, na kojoj bi kursor trebao stajati. (#7469)
+- U Internet Exploreru i drugim MSHTML dokumentima, HTML5 required atribut sada je podržan kako bi slao povratnu informaciju da je polje za upis obvezno. (#7321)
+- Brajični retci se sada osvježuju prilikom upisivanja arapskih znakova u lijevo poravnatom WordPad dokumentu (#511).
+- Pristupačne oznake za kontrole u Mozilla Firefoxu sada su više izgovarane u načinu pregleda kada oznaka nije prikazana kao sadržaj. (#4773)
+- U windows 10 nadogradnji za tvorce, NVDA može ponovno pristupiti Firefoxu poslije ponovnog pokretanja NVDA. (#7269)
+- Prilikom ponovnog pokretanja NVDA sa Mozilla Firefox u fokusu, način pregleda će ponovno biti dostupan, međutim, trebalo bi pritisnuti alt tab, da se prebaci na drugu aplikaciju, te ponovno da se vratimo na Firefox. (#5758)
+- Sada je moguć pristup matematičkom Sadržaju u Google Chromeu na sustavu bez instaliranog Mozilla Firefox web preglednika. (#7308)
+- Operacijski sustav i druge aplikacije trebale bi biti stabilnije neposredno poslije instalacije NVDA prije ponovnog pokretanja, usporedno sa prijašnjim inačicama NVDA čitača zaslona. (#7563)
+- Prilikom korištenja prečaca za prepoznavanje sadržaja (npr. NVDA+r), ako objekt navigatora nestane, NVDA izgovara poruku o pogrešci umjesto nikakve poruke. (#7567)
+- Popravljeno klizanje unatrag za  freedom Scientific brajične retke kiji imaju lijevi bumper bar. (#7713)
 
 
 == Izmjene za razvojne programere ==

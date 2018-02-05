@@ -1,3 +1,4 @@
+os: Visual Studio 2017
 version: "{branch}-{build}"
 
 branches:
@@ -56,7 +57,7 @@ install:
 
 build_script:
  - ps: |
-     $sconsOutTargets = "launcher"
+     $sconsOutTargets = "launcher appx"
      $sconsArgs = "version=$env:version"
      if ($env:release) {
       $sconsOutTargets += " changes userGuide developerGuide"

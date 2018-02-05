@@ -1,4 +1,4 @@
-﻿Guida de l'Usuario d'o NVDA NVDA_VERSION
+Guida de l'Usuario d'o NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -59,9 +59,9 @@ Ixo s'aplica a l'orichinal y a las copias modificadas d'o programa, mas qualsiqu
 Pa mas detalles, puetz [veyer a licencia completa.  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requerimientos d'o Sistema +
-- Sistemas Operativos: todas as edicions de 32 y 64 bits d'o Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 y Windows 10 (incluindo os sistemas operativos servidors).
-- Pa o Windows XP de 32 bits, o NVDA requier  o Service Pack 2 u superior.
-- Pa o Windows Server 2003, o NVDA requier  o Service Pack 1 u superior.
+- Sistemas Operativos: todas as edicions de 32 y 64 bits d'o Windows 7, Windows 8, Windows 8.1 y Windows 10  y totz os sistemas operativos servidors empecipiando dende o Windows Server 2008 R2.
+- Pa o Windows 7 o NVDA requier  o Service Pack 1 u superior.
+- Pa o Windows Server 2008 R2 o NVDA requier  o Service Pack 1 u superior.
 - Pa o Windows Vista, o NVDA requier o Service Pack 2 y l'actualización [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
 Totz dos habrían d'instalar-sen si todas as actualizacions disponibles se aplicoron a traviés d'o Windows Update.
 - Memoria: 256 mb u mas de RAM
@@ -280,7 +280,7 @@ Bi ha qualques ordens de teclau utils quan nos movamos con o foco:
 | Anunciar o foco actual | NVDA+tabulador | NVDA+tabulador | anuncia l'obchecto actual u lo control que tienga o foco d'o sistema. Pretando-ne dos veces letriará a información  |
 | Anunciar o titol | NVDA+t | NVDA+t | Anuncia o titol d'a finestra activa actualment. Pretando-ne dos veces letriará a información. Pretando-ne tres veces a copiará t'o portafuellas |
 | Leyer a finestra activa | NVDA+b | NVDA+b | leye totz os controls en a finestra actualment activa (util ta dialogos) |
-| Anunciar a Barra d'Estau | NVDA+fin | NVDA+mayus+fin | Anuncia a barra d'estau si o NVDA en troba una. Tamién mueve o navegador d'obchectos ta ixa localización. En pretar dos veces letreya a información |
+| Anunciar a Barra d'Estau | NVDA+fin | NVDA+mayus+fin | Anuncia a barra d'estau si o NVDA en troba una. Tamién mueve o navegador d'obchectos ta ixa localización. En pretar dos veces letreya a información. En pretar tres veces lo copiará en o portafuellas |
 %kc:endInclude
 
 ++ Navegando con o Cursor d'o Sistema ++[SystemCaret]
@@ -506,7 +506,7 @@ As siguients teclas por ellas mesmas blincan t'o siguient campo, con a tecla may
 - m: Bastida
 - g: Grafico
 - d: Zona
-- o: Obchecto integrau
+- o: Obchecto integrau (reproductor d'audio u vidio, aplicación, dialogo, etc.)
 - 1 ta 6: Capiters d'1 ta 6 respectivament
 - a: Anotación (comentario, revisión d'editor, etc.)
 - w: error d'ortografía
@@ -524,7 +524,7 @@ Ta enchegar u desenchegar a navegación d'una sola letra t'o documento actual pr
 %kc:endInclude
 
 ++ A Lista d'Elementos ++
-A lista d'elementos proporciona acceso a una lista de quantos vinclos, capiters u zonas en a pachina. 
+A lista d'elementos proporciona acceso a una lista de quantos vinclos, capiters, campos de formulario,  botons u zonas en a pachina. 
 Por eixemplo en os navegadors web a lista d'elementos puet incluir vinclos, capiters u zonas.
 Os botons d'opción te permiten cambiar entre as diferents menas d'elementos. 
 Se Proporciona tamién un campo d'edición en o dialogo o qual te permite filtrar a lista t'aduyar-te a buscar un elemento en particular en a pachina. 
@@ -535,9 +535,10 @@ Una vez haigas trigau un elemento, puetz emplegar os botons proporcionaus en o d
 %kc:endInclude
 
 ++ Obchectos Integraus ++
-As pachinas pueden incluir conteniu enriquiu emplegando tecnolochías tals como l'Adobe Flash y o Sun Java, asinas como aplicacions y dialogos. 
+As pachinas pueden incluir conteniu enriquiu emplegando tecnolochías tals como l'Adobe Flash, l'Oracle Java u l'HTML 5, asinas como aplicacions y dialogos. 
 Do istas se troben en un modo de Navegación, o NVDA anunciará "obchecto integrau", "aplicación" u "dialogo", respectivament.
-puetz pretar intro sobre ixos obchectos ta interactuar con ells. 
+Tu puetz mover-te-ne a escape t'a ells fendo servir as teclas de navegación d'una sola letra pa obchectos integraus; o y mayus+o.
+Pa interactuar con ixos obchectos puetz pretar l'intro en ells.
 Si ye accesible, allora puetz tabular por ells y interactuar como con qualsiquier atra aplicación. 
 Se proporciona una orden de teclau ta tornar t'a pachina orichinal que contién a l'obchecto integrau.
 %kc:beginInclude
@@ -545,15 +546,18 @@ Se proporciona una orden de teclau ta tornar t'a pachina orichinal que contién 
 | Mover-se-ne t'o conteniu d'o modo de navegación | NVDA+control+espacio | Mueve o foco difuera de l'actual obchecto integrau y lo mete adintro d'o documento que lo contién |
 %kc:endInclude
  
-+ Leyer o conteniu Matematico +
++ Leyer o conteniu Matematico +[ReadingMath]
 Fendo servir o MathPlayer 4 de Design Science, o NVDA puet leyer y navegar interactivament  por o conteniu matematico suportau.
 Ixo requier que o MathPlayer 4 siga instalau en l'ordinador.
 O MathPlayer ye disponible como una descarga franca dende: http://www.dessci.com/en/products/mathplayer/
 
 O NVDA suporta as siguients menas de conteniu matematico:
 - MathML en o Mozilla Firefox, o Microsoft Internet Explorer y o Google Chrome.
-- Design Science MathType en o Microsoft Word y PowerPoint. O MathType ameniste estar instalau ta que isto marche. A versión de preba en ye prou.
-- MathML en l'Adobe Reader. Nota que isto no ye un estandar oficial encara, allora no bi ha actualment software disponible publicament que pueda producir iste conteniu.
+- Design Science MathType en o Microsoft Word y PowerPoint.
+O MathType ha d'estar instalau pa que ixo marche. A versión de preba en ye prou.
+- MathML en l'Adobe Reader.
+Nota que isto no ye un estandar oficial encara, allora no bi ha actualment software disponible publicament que pueda producir iste conteniu.
+- Math en o Kindle pa PC pa os libros con matematicas accesibles.
 -
 
 En leyer un documento, o NVDA charrará qualsiquier conteniu matematico suportau do se produzca.
@@ -577,7 +581,7 @@ Por defecto, o cursor de revisión sigue a lo cursor d'o sistema, allora puetz f
 
 En iste punto, puetz fer servir os comandos d'o MathPlayer tals como as teclas de flecha ta explorar a expresión.
 Por eixemplo, puetz mover-te-ne a traviés d'a expresión con as teclas de flecha cucha y dreita y ampliar adintro d'una parti d'a expresión como una  truesa fendo servir a tecla de flecha abaixo.
-Por favor mira-te a documentación d'o MathPlayer pa más información.
+Por favor mira-te a documentación d'o MathPlayer sobre os comandos de navegación pa más información: https://www.dessci.com/en/products/mathplayer/navigation_commands.htm
 
 Quan deseyes tornar t'o documento, simplament preta la tecla escape.
 
@@ -844,6 +848,9 @@ Puetz pasar t'a siguient pachina manualment con a tecla abance de pachina y pasa
 Se suporta a navegación d'una sola letra pa vinclos y graficos pero nomás adintro d'a pachina actual.
 A navegación por vinclos tamién inclui as notas a o piet.
 
+O NVDA furne suporte anticipau pa leyer y navegar interactivament en o conteniu matematico pa os libros con matematicas accesibles.
+Mira-te a sección [leyendo lo conteniu matematico #ReadingMath] pa mas información.
+
 +++ Selección de texto +++
 O Kindle te permite realizar qualques funcions en o texto seleccionau, incluindo obtener una definición de diccionario, adhibir notas y resaltaus, copiar o texto en o portafuellas y mirar en a web.
 Pa fer ixo, en primeras selecciona texto como lo farías normalment en o modo de navegación, -. eix. fendo servir mayus y y as teclas de cursor.
@@ -865,6 +872,13 @@ Pa veyer, editar y eliminar bella nota:
 + Triga editar una Nota.
 +
 
+++ Azardi ++
+%kc:beginInclude
+Quan se siga en a tabla d'envista de libros adhibius:
+|| Nombre | Tecla | Descripción |
+| Intro | intro | Ubre o libro seleccionau. |
+| Menú de Contexto | aplicacions | Ubre o menú de contexto pa o libro seleccionau. |
+%kc:endInclude
 
 + Configurando lo NVDA +
 
@@ -872,7 +886,7 @@ Pa veyer, editar y eliminar bella nota:
 %kc:settingsSection: || Nombre | Tecla Sobremesa | tecla Portatil | Descripción |
 A mayoría d'as opcions d'o NVDA pueden cambiar-se emplegando quadros de dialogo a os quals s'accedeix a traviés d'o submenú Preferencias d'o menú NVDA.
 En totz os quadros de dialogo d'opcions d'o NVDA, preta o botón Acceptar ta acceptar qualsiquier cambeo que haigas feito.
-Ta cancelar qualsiquier cambeo, preta o botón Cancelar u a tecla escape.
+Pa cancelar qualsiquier cambeo, preta o botón Cancelar u a tecla escape.
 Qualques opcions tamién pueden cambiar-se emplegando teclas d'alcorce,  que se listan do sigan relevants en as seccions subsiguients.
 
 Nota que por defecto, no totz os dialogos de preferencias  pueden estar accediuss con cenyos de dentrada (comandos de teclau, cenyos tactils, etc.).
@@ -1387,14 +1401,16 @@ Quan ye desactivada, no s'anuncian ni se troban con a navegación rapida.
 Manimenos, o conteniu d'as tablas encara s'incluirá como texto normal.
 Ista opción ye desactivada de traza predeterminada.
 
+Pa conmutar a inclusión d'as tablas de disenyo dende qualsiquier puesto, asigna bell cenyo personalizau fendo servir o [dialogo de cenyos de dentrada #InputGestures].
+
 ==== Configurando l'anunciau de campos tals como vinclos y encabezaus ====
 Por favor troba las nuevas opcions en o [dialogo Opcions de Formatiau de documento #DocumentFormattingSettings]. 
 
-==== Modo de foco automatico ta cambeos d'o foco ====
+==== Modo de foco automatico pa cambeos d'o foco ====
 Ista opción permite a lo modo de foco invocar-se si o foco cambea. 
 Por eixemplo, quan yes en una pachina Web, si pretas o tabulador y cayes sobre un formulario, si ista opción ye verificada, o modo de foco s'invocará automaticament.
 
-==== Modo de foco automatico ta movimiento de cursor ====
+==== Modo de foco automatico pa o movimiento de cursor ====
 Ista opción, quan ye marcada, permite a lo NVDA dentrar en y abandonar o modo de foco en que s'utilizan as flechas. 
 Por eixemplo, si vas pretando flecha abaixo por una pachina Web y cayes sobre un quadro d'edición, o NVDA activará automaticament o modo de foco. Si pretas as flechas ta salir d'o quadro d'edición, o NVDA te'n tornará a meter en o modo de revisión.
 
@@ -2459,6 +2475,9 @@ As siguients son as opcions d'a linia de comandos d'o NVDA:
 | garra | --no-sr-flag  | No cambiar l'indicador global de lector de pantalla d'o sistema |
 | garra | --install | Instala o NVDA (rancando a copia recient instalada) |
 | garra | --install-silent | Instala o NVDA silenciosament (no ranca la copia recient instalada) |
+| garra | --create-portable | Creya una copia portable d'o NVDA (rancando a copia creyada recientment). Requier que --portable-path siga especificada |
++| garra | --create-portable-silent | Creya una copia portable d'o NVDA (sin rancar a copia recientment instalada). Requier que --portable-path siga especificada |
++| garra | --portable-path=PORTABLEPATH | A rota en do se creyará una copia portable |
 
 ++ Parametros d'o Sistema ++[SystemWideParameters]
 O NVDA permite configurar bellas valors en o rechistro d'o sistema que alteran o comportamiento de tot o sistema d'o NVDA.

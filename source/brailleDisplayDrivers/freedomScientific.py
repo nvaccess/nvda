@@ -229,7 +229,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	gestureMap=inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands" : {
 			"braille_routeTo":("br(freedomScientific):routing",),
-			"braille_scrollBack" : ("br(freedomScientific):leftAdvanceBar", "br(freedomScientific]:leftBumperBarUp","br(freedomScientific):rightBumperBarUp",),
+			"braille_scrollBack" : ("br(freedomScientific):leftAdvanceBar", "br(freedomScientific):leftBumperBarUp","br(freedomScientific):rightBumperBarUp",),
 			"braille_scrollForward" : ("br(freedomScientific):rightAdvanceBar","br(freedomScientific):leftBumperBarDown","br(freedomScientific):rightBumperBarDown",),
 			"braille_previousLine" : ("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp",),
 			"braille_nextLine" : ("br(freedomScientific):leftRockerBarDown", "br(freedomScientific):rightRockerBarDown",),

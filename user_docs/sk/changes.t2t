@@ -3,6 +3,61 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2017.4 =
+Prednosti tejto verzie zahŕňajú opravy týkajúce sa režimu prehliadania (podporu pre prezeranie dialógov v režime prehliadania, lepšie oznamovanie skupín prvkov), podporu pre Windows Defender Guard v systéme Windows 10, podporu systému Windows 10 na architektúre ARM64 a automatické oznamovanie zmeny orientácie obrazovky a stavu napájania.
+Zdôrazňujeme, že táto verzia NVDA viac nepracuje v systémoch Windows XP a Vista. Aby ste mohli NVDA používať, musíte mať nainštalovaný Windows 7 a Service Pack 1.
+
+
+== Nové vlastnosti ==
+- V režime prehliadania je možné preskakovať pred a za oblasti stránky skratkami rýchlej navigácie na prechod pred a za prvok (čiarka, shift+čiarka). (#5324)
+- V prehliadačoch Firefox, Chrome a Internet Explorer je možné skratky rýchlej navigácie na prechod medzi prvkami formulára a editačnými poliami použiť tiež na prechod do poľa rich text (contentEditable) (#5534)
+- V režime prehliadania je teraz možné v zozname prvkov zobraziť zoznam tlačidiel a prvkov formulára. (#588)
+- Prvotná podpora pre Windows 10 na architektúre ARM64. (#7508)
+- Prvotná podpora pre čítanie matematického obsahu v aplikácii Kindle. (#7536)
+- Pridaná podpora pre čítačku kníh Azardi. (#5848)
+- Pri pokuse aktualizovať doplnok sa  zobrazí informácia o verzii doplnku. (#5324)
+- Pridaný argument príkazového riadka, ktorý umožní vytvoriť prenosnú verziu NVDA. (#6329)
+- Pridaná podpora pre Microsoft Edge, ak je spustený pod ochranou Windows Defender Guard v systéme Windows 10 Fall Creators update. (#7600)
+- NVDA odteraz oznamuje zmenu orientácie obrazovky a tiež pripojenie a odpojenie nabíjačky. (#4574, #4612)
+- Pridaná lokalizácia NVDA do Macedónčiny.
+- Pridané nové braillovské tabuľky: Chorvátčina Plnopis, vietnamčina plnopis. (#7518, #7565)
+- Pridaná podpora pre braillovský riadok Actilino od firmy handy tech. (#7590)
+- Pridaná podpora pre písanie cez braillovské riadky výrobcu Handy tech. )
+
+
+== Zmeny ==
+- Najnižšie požiadavky pre NVDA sú odteraz Windows 7 Servicepack 1 alebo Windows Server 2008 R2 Service Pack 1. (#7546)
+- Webové dialógi v režime prehliadania v prehliadačoch Firefox a Chrome sa automaticky zobrazujú v režime prehliadania, ak nie ste vnorený priamo v aplikácii. (#4493)
+- pri použití tabulátora alebo skratiek rýchlej navigácie NVDA viac neoznamuje  opustenie zoznamu alebo tabuľky, čo zrýchľuje navigáciu. (#2591)
+- V prehliadačoch Firefox a Chrome sú oznamované názvy skupín formulárových prvkov, ak sa medzi nimi presúvate skratkami rýchlej navigácie alebo tabulátorom. (#3321)
+- Skratka O a shift+O v režime prehliadania odteraz presúva fokus aj na audio a videoprehrávače, tiež prvky s aria označením aplikácia a dialóg. (#7239)
+- Hlasový výstup eSpeak-ng aktualizovaný na verziu 1.49.2, opravené boli hlavne chyby v súvislosti s distribúciou verzií. (#7385, #7583)
+- Trojnásobné stlačenie skratky na prečítanie stavového riadka skopíruje odteraz obsah stavového riadka do schránky. (#1785)
+- Keď priraďujete skratky na riadku od firmy Baum, môžete určiť, na akom modely chcete skratku používať (napríklad VarioUltra alebo Pronto.) (#7517)
+- Skratka pre rýchly prístup k poľu filter v zozname prvkov sa zmenila z alt+F na alt+E. (#7569)
+- Odteraz môžete vypínať a zapínať oznamovanie tabuliek formujúcich vzhľad klávesovou skratkou. Skratku si nastavíte v dialógu klávesové skratky v časti režim prehliadania. (#7634)
+- Braillovská prekladová tabuľka liblouis aktualizovaná na verziu 3.3.0. (#7565)
+- Klávesová skratka pre prepínač regulárny výraz v dialógoch rečové slovníky sa zmenila z alt+r na alt+e. (len v anglickom preklade NVDA. V slovenskom už dlhší čas používame alt+E). (#6782)
+- Odteraz sa ukladajú zálohy rečových slovníkov a aktuálna verzia je presunutá do priečinka speechDicts/voiceDicts.v1 (#7592)
+- Ak je spustená dočasná kópia NVDA, neukladajú sa zmeny do súborov s konfiguráciou a rečovými slovníkmi. (#7688)
+- Staršie modely riadkov Handy tech (Braillino, Bookworm a Modular so starším firmwérom) nie sú viac priamo podporované. Pre správnu funkčnosť je potrebné nainštalovať univerzálny ovládač a príslušný doplnok do NVDA. (#7590)
+
+
+== Opravy ==
+- Odkazy v dokumentoch MS Word a ostatných aplikáciách sú odteraz zobrazované aj na braillovských riadkoch. (#6780)
+- NVDA sa viac nespomalý, ak máte vo firefoxe alebo Chrome otvorené viaceré záložky. (#3138)
+- Sledovanie kurzora funguje správne pri riadkoch MDV Lilli. (#7469)
+- V prehliadači Internet Explorer a iných MSHTML prvkoch je podporovaný prvok HTML5 na určenie, či je prvok formulára povinný. (#7321)
+- Obsah na Braillovskom riadku sa aktualizuje aj pri písaní arabských znakov v programe Wordpad v smere zprava doľava. (#511)
+- Prístupné popisy k prvkom sú lepšie čítané v prehliadači Mozilla firefox, ak popis nie je súčasťou obsahu prvku. (#4773)
+- V systéme Windows 10 Creators NVDA opäť dokáže správne pracovať s prehliadačom Firefox aj po reštarte NVDA. (#7269)
+- Ak reštartujete NVDA, režim prehliadania v prehliadači Mozilla Firefox bude správne fungovať, je však niekedy potrebné z aplikácie vyskočiť a nanovo sa do nej vrátiť, napríklad skratkou alt+tab. (#5758)
+- Odteraz je možné prezerať matematický obsah v prehliadači Google Chrome bez toho, aby ste museli mať nainštalovaný Firefox. (#7308)
+- Ak ste nainštalovali NVDA, aj pred reštartom počítača by mali aplikácie a systém fungovať stabilnejšie. (#7563)
+- Ak sa pokúsite rozpoznať text a rozpoznávaný objekt medzitým zmizne, NVDA na to upozorní. (#7567)
+- Opravené skrolovanie braillovských riadkov pri modeloch od firmy Freedom Scientific. (#7713)
+
+
 = 2017.3 =
 Prednosti tejto verzie zahŕňajú možnosť písania v braillovom  skratkopise cez braillovský riadok, podporu pre hlasy One core a OCR v systéme Windows 10 a rôzne doplnkové opravy pre Braillovské riadky a web.
 

@@ -12,6 +12,7 @@ from comtypes import *
 import weakref
 import threading
 import time
+import config
 import api
 import appModuleHandler
 import queueHandler
@@ -21,6 +22,7 @@ import winKernel
 import winUser
 import eventHandler
 from logHandler import log
+import UIAUtils
 
 from comtypes.gen.UIAutomationClient import *
 
@@ -45,7 +47,10 @@ HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
-  
+
+# The name of the WDAG (Windows Defender Application Guard) process
+WDAG_PROCESS_NAME=u'hvsirdpclient'
+
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
@@ -59,7 +64,6 @@ badUIAWindowClassNames=[
 	"RichEdit20",
 	"RICHEDIT50W",
 	"SysListView32",
-	"_WwG",
 	"EXCEL7",
 	"Button",
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
@@ -291,6 +295,9 @@ class UIAHandler(COMObject):
 			return False
 		import NVDAObjects.window
 		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
+		# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
+		if windowClass=='RAIL_WINDOW':
+			return True
 		# There are certain window classes that just had bad UIA implementations
 		if windowClass in badUIAWindowClassNames:
 			return False
@@ -305,7 +312,13 @@ class UIAHandler(COMObject):
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
 		# Ask the window if it supports UIA natively
-		return windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+		if res:
+			# the window does support UIA natively, but
+			# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
+			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
+				return False
+		return bool(res)
 
 	def isUIAWindow(self,hwnd):
 		now=time.time()
@@ -320,19 +333,26 @@ class UIAHandler(COMObject):
 			# Called previously. Use cached result.
 			return UIAElement._nearestWindowHandle
 		try:
-			window=UIAElement.cachedNativeWindowHandle
+			processID=UIAElement.cachedProcessID
+		except COMError:
+			return None
+		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
+		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
+		if appModule.appName==WDAG_PROCESS_NAME:
+			condition=UIAUtils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:[u'ApplicationFrameWindow',u'CabinetWClass']})
+			walker=self.clientObject.createTreeWalker(condition)
+		else:
+			# Not WDAG, just walk up to the nearest valid windowHandle
+			walker=self.windowTreeWalker
+		try:
+			new=walker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
+		except COMError:
+			return None
+		try:
+			window=new.cachedNativeWindowHandle
 		except COMError:
 			window=None
-		if not window:
-			# This element reports no window handle, so use the nearest ancestor window handle.
-			try:
-				new=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
-			except COMError:
-				return None
-			try:
-				window=new.cachedNativeWindowHandle
-			except COMError:
-				window=None
 		# Cache for future use to improve performance.
 		UIAElement._nearestWindowHandle=window
 		return window

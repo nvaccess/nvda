@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1352,7 +1352,7 @@ class DictionaryEntryDialog(wx.Dialog):
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_REGEXP: _("&Regular expression")
+		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression")
 	}
 	TYPE_LABELS_ORDERING = (speechDictHandler.ENTRY_TYPE_ANYWHERE, speechDictHandler.ENTRY_TYPE_WORD, speechDictHandler.ENTRY_TYPE_REGEXP)
 
@@ -1654,13 +1654,12 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.messageTimeoutEdit.Disable()
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-		tetherListText = _("B&raille tethered to:")
+		tetherListText = _("Tether B&raille:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
-		tetherChoices = [x[1] for x in self.tetherValues]
+		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
-		tetherConfig=braille.handler.tether
-		selection = (x for x,y in enumerate(self.tetherValues) if y[0]==tetherConfig).next()  
+		tetherChoice=braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
+		selection = (x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice).next()
 		try:
 			self.tetherList.SetSelection(selection)
 		except:
@@ -1709,7 +1708,13 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["cursorShapeReview"] = self.cursorShapes[self.cursorShapeReviewList.GetSelection()]
 		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
+		tetherChoice = braille.handler.tetherValues[self.tetherList.GetSelection()][0]
+		if tetherChoice==braille.handler.TETHER_AUTO:
+			config.conf["braille"]["autoTether"] = True
+			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
+		else:
+			config.conf["braille"]["autoTether"] = False
+			braille.handler.setTether(tetherChoice, auto=False)
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
@@ -1763,7 +1768,7 @@ class AddSymbolDialog(wx.Dialog):
 		# Translators: This is the label for the edit field in the add symbol dialog.
 		symbolText = _("Symbol:")
 		self.identifierTextCtrl = sHelper.addLabeledControl(symbolText, wx.TextCtrl)
-		
+
 		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
@@ -2159,3 +2164,21 @@ class InputGesturesDialog(SettingsDialog):
 					_("Error"), wx.OK | wx.ICON_ERROR)
 
 		super(InputGesturesDialog, self).onOk(evt)
+
+class TouchInteractionDialog(SettingsDialog):
+	# Translators: This is the label for the touch interaction settings dialog.
+	title = _("Touch Interaction")
+
+	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a checkbox in the
+		# touch interaction settings dialog.
+		self.touchTypingCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Touch typing mode"))
+		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
+		settingsSizer.Add(self.touchTypingCheckBox,border=10,flag=wx.BOTTOM)
+
+	def postInit(self):
+		self.touchTypingCheckBox.SetFocus()
+
+	def onOk(self,evt):
+		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
+		super(TouchInteractionDialog, self).onOk(evt)

@@ -1,11 +1,27 @@
+#nvda_slave.pyw
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2009-2017 NV Access Limited
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 """NVDA slave process
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
+
+import gettext
+import locale
+#Localization settings
+locale.setlocale(locale.LC_ALL,'')
+try:
+	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+except:
+	gettext.install('nvda',unicode=True)
 
 import pythonMonkeyPatches
 
 import sys
 import os
+import versionInfo
 import logHandler
 if hasattr(sys, "frozen"):
 	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
@@ -22,10 +38,7 @@ def main():
 	args = sys.argv[2:]
 
 	try:
-		if action == "service_NVDALauncher":
-			import nvda_service
-			nvda_service.nvdaLauncher()
-		elif action=="install":
+		if action=="install":
 			installer.install(bool(int(args[0])),bool(int(args[1])))
 		elif action=="unregisterInstall":
 			import installer
@@ -45,18 +58,6 @@ def main():
 			enable = bool(int(args[0]))
 			import config
 			config._setStartOnLogonScreen(enable)
-		elif action == "installer_installService":
-			import nvda_service
-			nvdaDir = os.path.dirname(sys.argv[0])
-			nvda_service.installService(nvdaDir)
-			nvda_service.startService()
-		elif action == "installer_uninstallService":
-			import nvda_service
-			try:
-				nvda_service.stopService()
-			except:
-				pass
-			nvda_service.removeService()
 		elif action == "explore_userConfigPath":
 			import config
 			path=config.getUserDefaultConfigPath()
@@ -73,7 +74,7 @@ def main():
 				raise ValueError("Addon path was not provided.")
 			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 			import ctypes
-			h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
+			h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(u"lib",versionInfo.version,u"nvdaHelperRemote.dll")),0,0x8)
 			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
 			ret = remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
 			if ret != 0:

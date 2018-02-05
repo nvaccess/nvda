@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2016 NV Access Limited
+Copyright 2007-2017 NV Access Limited, Mozilla Corporation
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -28,6 +28,7 @@ using namespace std;
 
 #define NAVRELATION_LABELLED_BY 0x1003
 #define NAVRELATION_NODE_CHILD_OF 0x1005
+const wchar_t EMBEDDED_OBJ_CHAR = 0xFFFC;
 
 HWND findRealMozillaWindow(HWND hwnd) {
 	if(hwnd==0||!IsWindow(hwnd))
@@ -232,6 +233,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	// Defaults.
 	this->shouldDisableTableHeaders = false;
 	this->hasEncodedAccDescription = false;
+	this->canDetectLabelVisibility=false;
 
 	IServiceProvider* serv = NULL;
 	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
@@ -258,6 +260,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	iaApp = NULL;
 
 	if (wcscmp(toolkitName, L"Gecko") == 0) {
+		this->canDetectLabelVisibility=true;
 		if (wcsncmp(toolkitVersion, L"1.", 2) == 0) {
 			if (wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0) {
 				// Gecko 1.9.2.x.
@@ -279,11 +282,11 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-bool isLabelVisible(IAccessible2* acc) {
+bool isLabelVisible(IAccessible2* pacc2) {
 	VARIANT child, target;
 	child.vt = VT_I4;
 	child.lVal = 0;
-	if (acc->accNavigate(NAVRELATION_LABELLED_BY, child, &target) != S_OK)
+	if (pacc2->accNavigate(NAVRELATION_LABELLED_BY, child, &target) != S_OK)
 		return false;
 	IAccessible2* targetAcc;
 	HRESULT res;
@@ -533,18 +536,35 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	const long childCount = getChildCount(isAriaHidden, pacc);
 
 	const bool isImgMap = role == ROLE_SYSTEM_GRAPHIC && childCount > 0;
+	IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name");
+	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
+	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
 	const bool nameIsContent = isEmbeddedApp
-		|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
-		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
-
+		|| role == ROLE_SYSTEM_LINK 
+		|| role == ROLE_SYSTEM_PUSHBUTTON 
+		|| role == IA2_ROLE_TOGGLE_BUTTON 
+		|| role == ROLE_SYSTEM_MENUITEM 
+		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) 
+		|| (role == ROLE_SYSTEM_TEXT && !isEditable) 
+		|| role == IA2_ROLE_HEADING 
+		|| role == ROLE_SYSTEM_PAGETAB 
+		|| role == ROLE_SYSTEM_BUTTONMENU;
+	// Whether this node has a visible label somewhere else in the tree
+	const bool labelVisible = canDetectLabelVisibility // Not all browsers support getting a node's labelledBy node
+		&& nameIsExplicit && name && name[0] //this node must actually have an explicit name, and not be just an empty string
+		&&(!nameIsContent||role==ROLE_SYSTEM_TABLE) // We only need to know if the name won't be used as content or if it is a table (for table summary)
+		&&isLabelVisible(pacc); // actually do the check
+	// If the node is explicitly labeled for accessibility, and we haven't used the label as the node's content, and the label does not visibly appear anywhere else in the tree (E.g. aria-label on an edit field)
+	// then ensure that the label is always reported along withe the node
+	// We must exclude tables from this though as table summaries / captions are handled very specifically
+	if(canDetectLabelVisibility&&nameIsExplicit&&!nameIsContent&&(role!=ROLE_SYSTEM_TABLE)&&!labelVisible) {
+		parentNode->addAttribute(L"alwaysReportName",L"true");
+	}
 
 	IAccessibleText* paccText=NULL;
-	IAccessibleHypertext* paccHypertext=NULL;
 	//get IAccessibleText interface
 	pacc->QueryInterface(IID_IAccessibleText,(void**)&paccText);
-	//Get IAccessibleHypertext interface
-	pacc->QueryInterface(IID_IAccessibleHypertext,(void**)&paccHypertext);
 	//Get the text from the IAccessibleText interface
 	BSTR IA2Text=NULL;
 	int IA2TextLength=0;
@@ -581,7 +601,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			|| isEmbeddedApp
 			|| role == ROLE_SYSTEM_OUTLINE
 			|| role == ROLE_SYSTEM_EQUATION
-			|| (nameIsContent && (IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true")
+			|| (nameIsContent && nameIsExplicit)
 		) {
 			renderChildren = false;
 		}
@@ -668,7 +688,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 				(!description.empty() && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, description))) ||
 				// If there is no caption, the summary (if any) is the name.
 				// There is no caption if the label isn't visible.
-				(name && !isLabelVisible(pacc) && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
+				(name && !labelVisible && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
 			) {
 				if(!locale.empty()) tempNode->addAttribute(L"language",locale);
 				previousNode = tempNode;
@@ -724,8 +744,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			long attribsStart = 0;
 			long attribsEnd = 0;
 			map<wstring,wstring> textAttribs;
+			auto linkGetter = makeHyperlinkGetter(pacc);
 			for(int i=0;;++i) {
-				if(i!=chunkStart&&(i==IA2TextLength||i==attribsEnd||IA2Text[i]==0xfffc)) {
+				if(i!=chunkStart&&(i==IA2TextLength||i==attribsEnd||IA2Text[i]==EMBEDDED_OBJ_CHAR)) {
 					// We've reached the end of the current chunk of text.
 					// (A chunk ends at the end of the text, at the end of an attributes run
 					// or at an embedded object char.)
@@ -758,28 +779,22 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 						attribsEnd=IA2TextLength;
 					}
 				}
-				if(paccHypertext&&IA2Text[i]==0xfffc) {
+				if (IA2Text[i] == EMBEDDED_OBJ_CHAR && linkGetter) {
 					// Embedded object char.
 					// The next chunk of text shouldn't include this char.
 					chunkStart=i+1;
-					long hyperlinkIndex;
-					if(paccHypertext->get_hyperlinkIndex(i,&hyperlinkIndex)!=S_OK)
-						continue;
-					IAccessibleHyperlink* paccHyperlink=NULL;
-					if(paccHypertext->get_hyperlink(hyperlinkIndex,&paccHyperlink)!=S_OK)
-						continue;
-					IAccessible2* childPacc=NULL;
-					if(paccHyperlink->QueryInterface(IID_IAccessible2,(void**)&childPacc)!=S_OK) {
-						paccHyperlink->Release();
+					// In Gecko, hyperlinks correspond to embedded object chars,
+					// so there's no need to call IAHyperlink::hyperlinkIndex.
+					IAccessibleHyperlinkPtr link = move(linkGetter->next());
+					IAccessible2Ptr childPacc = link;
+					if(!childPacc) {
 						continue;
 					}
-					paccHyperlink->Release();
 					if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, presentationalRowNumber, ignoreInteractiveUnlabelledGraphics)) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in fillVBuf");
 					}
-					childPacc->Release();
 				}
 			}
 
@@ -878,8 +893,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		SysFreeString(IA2Text);
 	if(paccText)
 		paccText->Release();
-	if(paccHypertext)
-		paccHypertext->Release();
 	if (releaseTable) {
 		if(paccTable2)
 			paccTable2->Release();

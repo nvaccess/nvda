@@ -1,7 +1,64 @@
-﻿Co nowego w NVDA.
+Co nowego w NVDA.
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2017.4 =
+Najważniejsze zmiany w tej wersji to liczne ulepszenia aplikacji sieci web  w tym domyślne włączenie trybu czytania dla okien dialogowych stron www, lepszy odczyt grup pól w trybie czytania, obsługa nowych technologii Windows 10 takich jak strażnik aplikacji Windows Defender  oraz Windows 10 na ARM64, automatyczny odczyt orientacji ekranu i stanu baterii.  
+Proszę zauważyć, że ta wersja NVDA nie obsługuje Windows XP ani Windows Vista. Minimalny wymagany system operacyjny dla  NVDA to od teraz windows 7 with Service Pack 1.
+
+
+== Nowe funkcje ==
+- W trybie czytania, można przeskoczyć poza koniec lub do początku punktów orientacyjnych przy użyciu komendy przeskocz na koniec/początek kontenera (przecinek/shift+przecinek). (#5482)
+- W przeglądarkach Firefox, Chrome i Internet Explorer, szybka nawigacja do pól edycyjnych i kontrolek formularzy, uwzględnia pola edytowalne Rich Text (np. contentEditable). (#5534)
+- W przeglądarkach internetowych lista elementów może wyświetlać kontrolki formularzy i przyciski. (#588)
+- Wstępna obsługa Windows 10 na procesorach ARM64. (#7508)
+- Wczesne wsparcie odczytywania i interaktywnej nawigacji treści matematycznych dla książek Kindle z dostępną matematyką. (#7536)
+- Dodana obsługa czytnika książek Azardi. (#5848)
+- Informacje o wersji dodatków są zgłaszane podczas ich aktualizacji. (#5324)
+- Dodana obsługa nowych parametrów wiersza poleceń tworzących przenośną kopię NVDA. (#6329)
+- Obsługa Microsoft Edge uruchomionego wewnątrz strażnika aplikacji Windows Defender (#7600)
+- Podczas pracy na laptopie lub tablecie, NVDA zgłosi podłączenie lub odłączenie ładowarki, oraz zmianę orientacji ekranu. (#4574, #4612)
+- Nowy język: macedoński.
+- Nowe tablice brajlowskie: chorwacki stopień 1, wietnamski stopień 1. (#7565, #7518)
+- Dodana obsługa monitora brajlowskiego Actilino produkcji Handy Tech. (#7590)
+- Obsługiwane jest wprowadzanie brajla na monitorach Handy Tech. (#7590)
+
+
+== Zmiany ==
+- Najstarszy system operacyjny obsługiwany przez NVDA to od teraz Windows 7 z Service Pack 1, albo Windows Server 2008 R2 z Service Pack 1. (#7546)
+- Okna dialogowe stron www w Firefox i Chrome używają automatycznie trybu czytania, chyba, że znajdują się wewnątrz aplikacji web. (#4493)
+- W trybie czytania, przemieszczanie się między elementami przy pomocy tabulatora lub klawiszy szybkiej nawigacji, nie oznajmia wychodzenia z kontenerów, takich jak listy i tabele, co czyni nawigację bardziej efektywną. (#2591)
+- W trybie czytania dla Firefox i Chrome, nazwy grup pól formularzy są wypowiadane przy wchodzeniu w ich obręb z użyciem klawiszy szybkiej nawigacji lub tabulatora. (#3321)
+- W trybie czytania, komenda szybkiej nawigacji przechodzenia do obiektów zagnieżdżonych (o i shift+o) teraz uwzględnia elementy audio i video oraz elementy z rolami aria application i dialog. (#7239)
+- Espeak-ng został zaktualizowany do wersji 1.49.2, co rozwiązuje pewne problemy z wytwarzaniem wydań produkcyjnych. (#7385)
+- Po trzecim wywołaniu polecenia odczytania paska stanu, jego zawartość jest kopiowana do schowka. (#1785)
+- Przypisując zdarzenia do klawiszy na monitorze Baum, można ograniczyć definicję do konkretnego modelu (np. VarioUltra or Pronto). (#7517)
+- Nieprzypisana do klawisza komenda została dodana do trybu czytania, umożliwiająca przełączanie zgłaszania tabel układu treści. Można ją znaleźć w kategorii tryb czytania w oknie zdarzeń wejścia. (#7634)
+- Translator brajlowski liblouis zaktualizowany do wersji 3.3.0. (#7565)
+- Pliki słownika głosu są wersjonowane i zostały przeniesione do folderu 'speechDicts/voiceDicts.v1'. (#7592)
+- Modyfikacje plików wersjonowanych (konfiguracja użytkownika, słowniki głosu) nie są zapisywane, gdy NVDA  jest uruchomiony z pakietu uruchomieniowego. (#7688)
+- Monitory Braillino, Bookworm i Modular (ze starą wersją firmware) produkcji Handy Tech, nie są obsługiwane bezpośrednio. Należy zainstalować uniwersalny sterownik Handy Tech i dodatek NVDA, aby używać tych monitorów. (#7590)
+
+
+== Poprawki błędów ==
+- Linki są identyfikowane w brajlu w aplikacjach takich jak Microsoft Word. (#6780)
+- NVDA nie spowalnia zauważalnie, gdy otwarte jest wiele kart w przeglądarkach Firefox lub Chrome. (#3138)
+- Przywoływanie kursora na monitorach MDV Lilli Braille nie przesuwa kursora nieprawidłowo o jedną komórkę brajlowską dalej, niż powinien się znaleźć. (#7469)
+- W Internet Explorer i innych dokumentach MSHTML, atrybut required języka HTML5 jest obsługiwany dla oznaczenia wymaganego stanu pola formularza. (#7321)
+- Monitory brajlowskie są aktualizowane podczas wpisywania znaków arabskich w dokumentach WordPada wyrównanych do lewej (#511).
+- Dostępne etykiety kontrolek w Mozilla Firefox są teraz bardziej czytelnie zgłaszane w trybie czytania, gdy sama etykieta nie jest treścią. (#4773)
+- W aktualizacji dla twórców windows 10 , NVDA może ponownie uzyskać dostęp do Firefox po restarcie NVDA. (#7269)
+- Po restarcie NVDA z Mozilla Firefox w punkcie uwagi, tryb czytania będzie ponownie dostępny, chociaż może być konieczne wyjście i powrót do przeglądarki przy pomocy alt+tab. (#5758)
+- Można uzyskać dostęp do treści matematycznej w Google Chrome na systemie bez zainstalowanego Mozilla Firefox. (#7308)
+- System operacyjny i aplikacje powinny być bardziej stabilne bezpośrednio po instalacji NVDA, a przed restartem systemu w porównaniu do instalacji wcześniejszych wersji NVDA. (#7563)
+- Po użyciu komendy rozpoznawania treści (np. NVDA+r), NVDA zgłosi błąd zamiast milczenia, gdy obiekt nawigacyjny zniknął. (#7567)
+- Poprawiona funkcjonalność przewijania wstecz dla monitorów freedom Scientific zawierających lewy pasek ochraniający. (#7713)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
 
 = 2017.3 =
 Najważniejsze zmiany w tej wersji to wprowadzanie brajla skrótami, obsługa nowych głosów Windows OneCore dostępnych w Windows 10, wbudowana obsługa silnika OCR Windows 10, wiele znaczących usprawnień brajla i przeglądania sieci.
