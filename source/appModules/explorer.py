@@ -180,46 +180,44 @@ class UIProperty(UIA):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		# Optimization: return early to avoid comparing class names and roles that will never match.
 		windowClass = obj.windowClassName
 		role = obj.role
 
 		if windowClass in ("Search Box","UniversalSearchBand") and role==controlTypes.ROLE_PANE and isinstance(obj,IAccessible):
 			clsList.insert(0,SearchBoxClient)
-			return
+			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == "ToolbarWindow32" and role == controlTypes.ROLE_POPUPMENU:
-			parent = obj.parent
-			if parent and parent.windowClassName == "SysPager" and obj.windowStyle & 0x80:
-				clsList.insert(0, ClassicStartMenu)
-			return
+		if windowClass == "ToolbarWindow32":
+			if role == controlTypes.ROLE_POPUPMENU:
+				parent = obj.parent
+				if parent and parent.windowClassName == "SysPager" and obj.windowStyle & 0x80:
+					clsList.insert(0, ClassicStartMenu)
+			else:
+				# Check whether this is the notification area, a.k.a. system tray.
+				if isinstance(obj.parent, ClassicStartMenu):
+					return # This can't be a notification area
+				try:
+					# The toolbar's immediate parent is its window object, so we need to go one further.
+					toolbarParent = obj.parent.parent
+					if role != controlTypes.ROLE_TOOLBAR:
+						# Toolbar item.
+						toolbarParent = toolbarParent.parent
+				except AttributeError:
+					toolbarParent = None
+				if toolbarParent and toolbarParent.windowClassName == "SysPager":
+					clsList.insert(0, NotificationArea)
+			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:
 			clsList.insert(0, SysListView32MenuItem)
-			return
-
-		if windowClass == "ToolbarWindow32":
-			# Check whether this is the notification area, a.k.a. system tray.
-			if isinstance(obj.parent, ClassicStartMenu):
-				return # This can't be a notification area
-			try:
-				# The toolbar's immediate parent is its window object, so we need to go one further.
-				toolbarParent = obj.parent.parent
-				if role != controlTypes.ROLE_TOOLBAR:
-					# Toolbar item.
-					toolbarParent = toolbarParent.parent
-			except AttributeError:
-				toolbarParent = None
-			if toolbarParent and toolbarParent.windowClassName == "SysPager":
-				clsList.insert(0, NotificationArea)
-				return
+			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		# #5178: Start button in Windows 8.1 and 10 should not have been a list in the first place.
 		if windowClass == "Start" and role in (controlTypes.ROLE_LIST, controlTypes.ROLE_BUTTON):
 			if role == controlTypes.ROLE_LIST:
 				clsList.remove(List)
 			clsList.insert(0, StartButton)
-			return
+			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
@@ -231,13 +229,12 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.ROLE_PANE:
 				clsList.insert(0, ImmersiveLauncher)
-			elif uiaClassName=="ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
-				clsList.insert(0,SuggestionListItem)
-			elif uiaClassName=="MultitaskingViewFrame":
-				if role==controlTypes.ROLE_WINDOW:
-					clsList.insert(0,MultitaskingViewFrameWindow)
-				elif role==controlTypes.ROLE_LISTITEM:
-					clsList.insert(0,MultitaskingViewFrameListItem)
+			elif uiaClassName == "ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
+				clsList.insert(0, SuggestionListItem)
+			elif uiaClassName == "MultitaskingViewFrame" and role == controlTypes.ROLE_WINDOW:
+				clsList.insert(0, MultitaskingViewFrameWindow)
+			elif windowClassName == "MultitaskingViewFrame" and role == controlTypes.ROLE_LISTITEM:
+				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0, UIProperty)
 
