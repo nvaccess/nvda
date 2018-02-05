@@ -41,12 +41,12 @@ Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, 
 
 NVDA are încorporat [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizator de voce multilingv, gratuit și cu sursă disponibilă.
 
-Informații despre alte sintetizatoare de voce suportate de NVDA pot fi găsite în secțiunea [Sintetizatoare de voce suportate #SintetizatoareSuportate].
+Informații despre alte sintetizatoare de voce suportate de NVDA pot fi găsite în secțiunea [Sintetizatoare de voce suportate #SupportedSpeechSynths].
 
 ++ Suport pentru Braille ++[BrailleSupport]
 Pentru utilizatorii care dețin un afișaj braille actualizabil, NVDA poate comunica informația în braille.
 Sunt compatibile tastaturi braille atât cu coduri abreviate cât și neabreviate.
-Vă rugăm citiți secțiunea [Afișaje braille compatibile #AfisajeBraille] pentru informații despre afișajele braille suportate.
+Vă rugăm citiți secțiunea [Afișaje braille compatibile #SupportedBrailleDisplays] pentru informații despre afișajele braille suportate.
 
 NVDA suportă coduri braille pentru multe limbi, inclusiv coduri abreviate, neabreviate și braille pentru calculatoare, pentru multe limbi.
 
@@ -139,7 +139,7 @@ Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #L
 
 În mod implicit, Pentru copiile instalate NVDA stochează configurația în dosarul de date al aplicației de roaming a utilizatorului curent (ex. "C:\Users\<user>\AppData\Roaming").
 Puteți modifica asta într-un mod în care NVDA își încarcă în schimb configurația din dosarul local de date al aplicației.
-Consultați secțiunea despre [parametrii la nivel de sistem #ParametriLaNivelDeSistem] pentru mai multe detalii.
+Consultați secțiunea despre [parametrii la nivel de sistem #SystemWideParameters] pentru mai multe detalii.
 
 Pentru a porni versiunea portabilă, mergeți în dosarul unde ați dezarhivat NVDA și apăsați „Enter” sau faceți dublu clic pe nvda.exe.
 
@@ -596,7 +596,7 @@ Când doriți să vă reîntoarceți la document, pur și simplu apăsați tasta
 Dacă dețineți un afișaj braille, NVDA poate afișa informația în braille.
 Dacă afișajul dumneavoastră braille are o tastatură stil Perkins, puteți, de asemenea, să introduceți braille abreviat și neabreviat.
 
-Vă rugăm să citiți secțiunea [Afișaje braille suportate #AfisajeBraille] pentru informații despre acestea. Puteți configura braille-ul folosind [dialogul de setări braille #SetariBraille]
+Vă rugăm să citiți secțiunea [Afișaje braille suportate #SupportedBrailleDisplays] pentru informații despre acestea. Puteți configura braille-ul folosind [dialogul de setări braille #SetariBraille]
 
 ++ Abrevieri pentru tipuri de controale, stări și repere ++[BrailleAbbreviations]
 Pentru a încăpea cât mai multe informații pe un afișaj braille, au fost definite următoarele abrevieri pentru a indica tipul de controale, stările, precum și reperele.
@@ -688,7 +688,7 @@ Următorii indicatori de stare sunt definiți:
 
 ++ Intrări braille ++[BrailleInput]
 NVDA suportă atât intrarea braille-ului neabreviat cât și a celui abreviat printr-o tastatură braille.
-Puteți selecta tabelul de traducere utilizat pentru a traduce braille-ul în text folosind setarea [tabelului de intrări #TabelIntrareBraille] din dialogul de setări braille.
+Puteți selecta tabelul de traducere utilizat pentru a traduce braille-ul în text folosind setarea [tabelului de intrări #BrailleSettingsInputTable] din dialogul de setări braille.
 
 Atunci când se utilizează braille-ul neabreviat, textul este inserat de îndată ce este introdus.
 La utilizarea braille-ului neabreviat, textul este inserat atunci când apăsați  spațiu sau enter la sfârșitul unui cuvânt.
@@ -719,7 +719,7 @@ Apăsând „Escape”, se va diminua rezultatul identificării.
 Windows 10 include OCR pentru multe limbi.
 NVDA poate folosi această funcționalitate pentru a recunoaște text din imagini sau aplicații inaccesibile.
 
-Puteți seta limba folosită pentru recunoașterea de text în dialogul de [setări pentru Windows 10 OCR #SetariWin10Ocr] .
+Puteți seta limba folosită pentru recunoașterea de text în dialogul de [setări pentru Windows 10 OCR #Win10OcrSettings] .
 Pot fi instalate limbi adiționale din meniul de Start, alegând „Setări”, apoi „Timp și Limbi” -> „Regiune și Limbă” și apoi alegând „Adaugă limbă nouă”.
 
 %kc:beginInclude
@@ -1078,7 +1078,7 @@ Deplasați-vă între aceste opțiuni cu tastele direcționale.
 
 „Fără braille” înseamnă că nu folosiți braille.
 
-Vă rugăm citiți secțiunea [Afișaje Braille suportate #AfisajeBraille] pentru mai multe informații despre afișajele braille suportate.
+Vă rugăm citiți secțiunea [Afișaje Braille suportate #SupportedBrailleDisplays] pentru mai multe informații despre afișajele braille suportate.
 
 ==== Port ====[BrailleSettingsPort]
 Această opțiune, dacă este disponibilă, vă permite să alegeți ce port sau tip de conexiune va fi folosit la comunicarea cu afișajul braille pe care l-ați selectat.
@@ -1695,7 +1695,7 @@ Semnificația este aceea că fiecare utilizator al sistemului dumneavoastră poa
 Pentru a ajunge la dosarul dumneavoastră cu setări pentru o versiune instalată a NVDA, din meniul de Start accesați Programe -> NVDA -> Explorează dosarul NVDA pentru configurație utilizator.
 
 Setările NVDA pentru rularea pe ecranul de autentificare sau ecrane UAC sunt păstrate în dosarul „systemConfig” din dosarul de instalare NVDA.
-De obicei aceată configurație nu trebuie atinsă.
+De obicei această configurație nu trebuie atinsă.
 Pentru a schimba configurația NVDA la ecranul de autentificare sau alte ecrane UAC, configurați NVDA după cum doriți cât sunteți autentificat în Windows, salvați configurația și apăsați butonul „Folosește preferințele curent salvate asupra ecranului de autentificare și a altor ecrane securizate” din fereastra de dialog pentru „Setări generale”.
 
 + Alte instrumente +[ExtraTools]
@@ -2096,7 +2096,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Rostește tot | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS gamele Braille Sense/Braille EDGE/Smart Beetle ++
+++ HIMS gamele Braille Sense/Braille EDGE/Smart Beetle Sync Braille ++
 NVDA suportă afișajele Braille Sense, Braille EDGE și Smart Beetle de la [Hims http://www.hims-inc.com/] când sunt conectate via USB sau bluetooth.
 Dacă sunt conectate prin USB, va trebui să instalați driverele USB de la HIMS pe sistemul dumneavoastră.
 Le puteți descărca de aici: http://www.himsintl.com/?c=2/13&uid=2319
@@ -2168,7 +2168,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Mută la celula braille | routing |
 %kc:endInclude
 
-++ Afișaje Braille Seika ++
+++ Afișaje Braille Seika ++[Seika]
 Versiunile de afișaje braille Seika 3, 4 și 5 (cu 40 de celule) și Seika80 (cu 80 de celule) de la [Nippon Telesoft http://www.nippontelesoft.com/] sunt suportate.
 Puteți găsi mai multe informații despre aceste afișaje la http://www.seika-braille.com/ .
 Trebuie, mai întâi, să instalați driverele USB puse la dispoziție de producător.
@@ -2190,7 +2190,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Mută la celula braille | routing |
 %kc:endInclude
 
-++ Modelele mai noi Papenmeier BRAILLEX ++
+++ Modelele mai noi Papenmeier BRAILLEX ++[Papenmeier]
 Următoarele afișaje braille sunt suportate:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
@@ -2271,7 +2271,7 @@ Ambele taste din mijloc sunt mapate la spațiu.
 | tasta tab | spațiu cu punct  3 7 |
 %kc:endInclude 
 
-++ Modele mai vechi Papenmeier Braille BRAILLEX ++
+++ Modele mai vechi Papenmeier Braille BRAILLEX ++[PapenmeierOld]
 Următoarele afișaje Braille sunt suportate:
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
@@ -2354,7 +2354,7 @@ BRAILLEX 2D Screen:
 | Mută la obiectul anterior | dreapta2 |
 %kc:endInclude
 
-++ HumanWare BrailleNote ++
+++ HumanWare BrailleNote ++[HumanWareBrailleNote]
 NVDA suportă dispozitivul de luat notițe BrailleNote de la [Humanware http://www.humanware.com] când este folosit ca terminal de afișare pentru un cititor de ecran.
 Următoarele modele sunt suportate:
 - BrailleNote Classic (doar conexiune serială)
@@ -2529,5 +2529,3 @@ Următoarele valori pot fi setate sub această cheie de regiștri:
 Dacă aveți nevoie de informații suplimentare sau asistență în privința NVDA, vizitați site-ul internațional în limba engleză la NVDA_URL. Aici puteți găsi documentație adițională, precum și asistență tehnică și resurse ale comunității. De asemenea, el furnizează informații și resurse privind dezvoltarea NVDA.
 
 Puteți vizita și site-ul comunității românești a NVDA-ului la www.ro-nvda.tk. Acest site le oferă vizitatorilor săi tutoriale audio, text,  voci pentru NVDA puse la dispoziția acestora de membrii comunității, dar și modalitatea de a-i contacta pe cei ce se ocupă cu traducerea NVDA-ului și a suplimentelor sale în limba română. De asemenea, comunitatea mai pune la dispoziția utilizatorilor vorbitori de română și o listă de mailing unde aceștia pot să discute și să pună întrebări în legătură cu NVDA și suplimentele sale. Aceasta este NVDA-romanian-comunity@googlegroups.com.
-
-Ultima actualizare a manualului: %%date(%d %b %Y), traducere realizată de Dan Pungă, Florian Ionașcu, Nicușor Untilă și Alexandru Matei

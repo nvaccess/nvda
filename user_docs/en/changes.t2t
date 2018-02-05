@@ -40,7 +40,7 @@ What's New in NVDA
 - In twitter clients such as Chicken Nugget, NVDA will no longer ignore the last 20 characters of 280 character tweets when reading them. (#7828)
 - NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
 - In recent versions of Office 365, it is again possible to navigate Excel charts using the arrow keys. (#7046)
--  In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. Fixes #7076
+- In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. Fixes #7076
 - In apps such as Windows 10 Mail, NVDA will no longer fail to announce deleted characters when pressing backspace. (#7456)
 
 
@@ -52,6 +52,7 @@ What's New in NVDA
 - Implemented a generic system in braille.BrailleDisplayDriver to deal with displays which send confirmation/acknowledgement packets. See the handyTech braille display driver as an example. (#7590, #7721)
 - A new "isAppX" variable in the config module can be used to detect if NVDA is running as a Windows Desktop Bridge Store app. (#7851)
 - For document implementations such as NVDAObjects or browseMode that have a textInfo, there is now a new documentBase.documentWithTableNavigation class that can be inherited from to gain standard table navigation scripts. Please refer to this class to see which helper methods must be provided by your implementation for table navigation to work. (#7849)
+- The scons batch file now better handles when  Python 3 is also installed, making use of the launcher to specifically launch python 2.7 32 bit. (#7541)
 
 
 = 2017.4 =
