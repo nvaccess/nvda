@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -433,6 +433,13 @@ class AppModule(baseObject.ScriptableObject):
 			return False
 		self.is64BitProcess = not res
 		return self.is64BitProcess
+
+	def isGoodUIAWindow(self,hwnd):
+		"""
+		returns true if the UIA implementation of the given window must be used, regardless whether native or not.
+		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
+		"""
+		return False
 
 	def isBadUIAWindow(self,hwnd):
 		"""
