@@ -288,3 +288,7 @@ class TestLanguageDetection(unittest.TestCase):
 	def test_unicodeRangesEntryScriptNamesExist(self):
 		for scriptRangeStart, scriptRangeEnd, scriptName in scriptRanges:
 			self.assertTrue(scriptName)
+
+	def test_unicodeRangesEntryFirstRangeStartGreaterThanZero(self):
+		firstRangeStart = scriptRanges[0][0]
+		self.assertTrue(firstRangeStart >= 0)

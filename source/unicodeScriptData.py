@@ -887,7 +887,7 @@ scriptRanges= [
 	( 0Xe0020 , 0Xe007f , "Common" ), 
 ]
 
-
+"""For performance reasons, unicodeScriptRangeEnd should be created only once hence it is placed outside getScriptCode."""
 unicodeScriptRangeEnd = [ k[1] for k in scriptRanges]
 
 def getScriptCode(chr):
