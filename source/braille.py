@@ -1490,6 +1490,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
+		self._rawText=u""
 		import brailleViewer
 		brailleViewer.registerCallbackAndCallNow(self._onBrailleViewerChangedState)
 
