@@ -11,6 +11,7 @@ import copy
 import re
 import wx
 from wx.lib import scrolledpanel
+from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
 import winUser
 import logHandler
@@ -590,9 +591,14 @@ class SpeechSettingsPanel(SettingsPanel):
 		synthLabel = _("&Synthesizer:")
 		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=synthLabel), wx.HORIZONTAL))
 		settingsSizerHelper.addItem(synthGroup)
-		
+
+		# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
+		# standard readonly TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
+		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
+		# display here.
 		synthDesc = getSynth().description
-		self.synthNameCtrl = wx.StaticText(self, label=synthDesc)
+		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
 		# Translators: This is the label for the button used to change synthesizer,
 		# it appears in the context of a synthesizer group on the speech settings panel.
 		changeSynthBtn = wx.Button(self, label=_("Change&..."))
@@ -619,7 +625,7 @@ class SpeechSettingsPanel(SettingsPanel):
 
 	def updateCurrentSynth(self):
 		synthDesc = getSynth().description
-		self.synthNameCtrl.SetLabel(synthDesc)
+		self.synthNameCtrl.SetValue(synthDesc)
 
 	def onPanelActivated(self):
 		# call super after all panel updates have been completed, we dont want the panel to show until this is complete.
@@ -1881,7 +1887,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(displayGroup)
 		
 		displayDesc = braille.handler.display.description
-		self.displayNameCtrl = wx.StaticText(self, label=displayDesc)
+		self.displayNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=displayDesc, style=wx.TE_READONLY)
 		# Translators: This is the label for the button used to change braille display,
 		# it appears in the context of a braille display group on the braille settings panel.
 		changeDisplayBtn = wx.Button(self, label=_("Change&..."))
@@ -1908,7 +1914,7 @@ class BrailleSettingsPanel(SettingsPanel):
 
 	def updateCurrentDisplay(self):
 		displayDesc = braille.handler.display.description
-		self.displayNameCtrl.SetLabel(displayDesc)
+		self.displayNameCtrl.SetValue(displayDesc)
 
 	def onPanelActivated(self):
 		self.brailleSubPanel.onPanelActivated()
