@@ -28,6 +28,7 @@ Zu den wichtigsten Funktionen gehören:
 - Übersetzt in rund 51 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
+- Unterstützung für berührungsempfindliche Bildschirme (Touchscreens).
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
 - Unterstützung für die Windows-Eingabeaufforderung und Konsolenanwendungen.
 -
@@ -125,7 +126,7 @@ Wenn Sie den Eingangsdialog bereits geschlossen haben oder grade eine fest insta
 In dem erscheinenden Dialog können Sie das Verzeichnis angeben, in dem die portable Version erstellt werden soll.
 Dies kann ein Ordner auf einer Festplatte, einem USB-Stick oder einem anderen transportablen Medium sein.
 Des Weiteren können Sie entscheiden, ob die Benutzerspezifischen Konfigurationsdateien und Plugins der aktuell laufenden NVDA-Instanz in die portable Version übernommen werden sollen. 
- Diese Option ist nur verfügbar, wenn die portable Version von einer installierten Version erstellt wird - nicht jedoch beim Ausführen einer heruntergeladenen Version.
+Diese Option ist nur verfügbar, wenn die portable Version von einer installierten Version erstellt wird - nicht jedoch beim Ausführen einer heruntergeladenen Version.
 Wenn Sie auf "Fortfahren" klicken, wird die portable Version erstellt.
 Nach Abschluss des Vorgangs erscheint eine Meldung, die sie über die Erfolgreiche Erstellung der portablen Version informiert.
 Klicken Sie auf "OK", um den Dialog zu schließen.
@@ -488,7 +489,6 @@ Zusätzlich können Sie auch den Fokusmodus erzwingen. In diesem Fall bleibt der
 | ausführliche Beschreibung öffnen | NVDA+d | Öffnet ein neues Fenster, welches eine ausführliche Beschreibung für das aktuelle Objekt enthält, fals dieses eine ausführliche Beschreibung aufweist. |
 %kc:endInclude
 
-
 ++ Die Schnellnavigationstasten ++[SingleLetterNavigation]
 Um im Lesemodus eine schnellere Navigation zu ermöglichen, stellt NVDA die so genannten Schnellnavigationstasten für das Ansteuern bestimmter Seitenelemente zur Verfügung.
 Bitte beachten Sie, dass nicht alle Schnellnavigationstasten in jedem Dokumententyp verfügbar sind.
@@ -523,8 +523,8 @@ Verwenden Sie folgende Tastenkombinationen, um zum Beginn oder zum Ende eines Co
 || Name | Tastenkombination | Beschreibung |
 | zum Beginn des Containerobjekts springen | Umschalt+Komma | Bewegt den Systemcursor zum Beginn des Containerobjekts (Liste, Tabelle, etc.) auf welchem sich der Cursor befindet. |
 | Hinter das Containerobjekt springen | Komma | bewegt den Systemcursor hinter das Containerobjekt (Liste, Tabelle, etc.) auf welchem sich der Cursor befindet. |
-
 %kc:endInclude
+
 Einige Web-Anwendungen verwenden einzelne Buchstaben als Tastenkürzel. Hierzu zählen Twitter, Gmail und Facebook.
 Um in solchen Web-Anwendungen deren eigene Kurztasten zu verwenden und dennoch mit den Pfeiltasten durch die Web-Anwendung navigieren zu können, können Sie die Schnellnavigation von NVDA ein- oder ausschalten.
 %kc:beginInclude
@@ -1432,7 +1432,7 @@ Die Option ist standardmäßig deaktiviert.
 
 Um die Ausgabe von Layout-Tabellen zur Laufzeit ein- oder auszuschalten, müssen Sie den Dialog "[Eingaben #InputGestures]" verwenden, um eine Tastenkombination zuzuweisen.
 
-==== Ansagen für Elemente konfigurieren ====
+==== Ansagen für Elemente konfigurieren ====[BrowseModeLinksAndHeadings]
 Bitte beachten Sie die Optionen im Dialog[Einstellungen für die Dokumentformatierungen #DocumentFormattingSettings], um festzulegen, welche Elemente wie Links, Überschriften und Tabellen beim Navigieren angesagt werden sollen.
 
 ==== Bei Änderungen des Fokuses automatisch den Fokusmodus einschalten ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
