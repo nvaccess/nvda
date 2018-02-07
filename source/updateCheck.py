@@ -135,7 +135,6 @@ def executeUpdate(destPath=None):
 		return
 	state["pendingUpdateFile"]=None
 	state["pendingUpdateVersion"]=None
-	state["removeFile"] = destPath
 	saveState()
 	if config.isInstalledCopy():
 		executeParams = u"--install -m"
