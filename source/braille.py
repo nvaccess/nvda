@@ -1154,12 +1154,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		raise LookupError("No such position")
 
 	def bufferPositionsToRawText(self, startPos, endPos):
-		log.debug(u"startPos: {} endPos: {} lenbrailleToRawPos: {} \nbrailleToRawPos: {}\nrawText: {}".format(
-			startPos, endPos, len(self.brailleToRawPos), self.brailleToRawPos, self.rawText))
-		rawStart = self.brailleToRawPos[startPos]
-		rawEnd = self.brailleToRawPos[endPos-1]
-		log.debug(u"rawStart: {} rawEnd: {} lenRawText: {} rawText: {}".format(rawStart, rawEnd, len(self.rawText), self.rawText))
-		return self.rawText[rawStart:rawEnd+1]
+		return self.rawText[self.brailleToRawPos[startPos]:self.brailleToRawPos[endPos-1]+1]
 
 	def bufferPosToWindowPos(self, bufferPos):
 		if not (self.windowStartPos <= bufferPos < self.windowEndPos):
@@ -1207,11 +1202,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		else:
 			restrictPos = 0
 		if startPos <= restrictPos:
-			log.debug("reef1 restrictPos: {} startPos: {}".format(restrictPos, startPos))
 			self.windowStartPos = restrictPos
 			return
 		if not config.conf["braille"]["wordWrap"]:
-			log.debug("reef2 startPos: {}".format(startPos))
 			self.windowStartPos = startPos
 			return
 		try:
@@ -1226,14 +1219,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 					break
 		except ValueError:
 			pass
-		log.debug("reef3 startPos: {}".format(startPos))
 		self.windowStartPos = startPos
 
 	def _nextWindow(self):
 		oldStart = self.windowStartPos
 		end = self.windowEndPos
 		if end < len(self.brailleCells):
-			log.debug("reef")
 			self.windowStartPos = end
 		return self.windowStartPos != oldStart
 
@@ -1279,7 +1270,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		@type region: L{Region}
 		"""
 		pos = self.regionPosToBufferPos(region, 0)
-		log.debug("reef")
 		self.windowStartPos = pos
 		if region.focusToHardLeft or config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_SCROLL:
 			return
@@ -1350,7 +1340,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			Otherwise, the nearest position is restored.
 		"""
 		region, pos = self._savedWindow
-		log.debug("reef")
 		self.windowStartPos = self.regionPosToBufferPos(region, pos, allowNearest=True)
 
 _cachedFocusAncestorsEnd = 0
@@ -1501,7 +1490,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
-		self._rawText=u""
 		import brailleViewer
 		brailleViewer.registerCallbackAndCallNow(self._onBrailleViewerChangedState)
 
