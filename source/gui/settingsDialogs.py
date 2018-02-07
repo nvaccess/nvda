@@ -45,6 +45,7 @@ import nvdaControls
 import touchHandler
 import winVersion
 import weakref
+import time
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -89,6 +90,8 @@ class SettingsDialog(wx.Dialog):
 			Note that still only one instance of a particular SettingsDialog subclass may exist at one time.
 		@type multiInstanceAllowed: bool
 		"""
+		if gui._isDebug():
+			startTime = time.time()
 		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(self.settingsSizerOrientation)
@@ -105,6 +108,8 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onApply,id=wx.ID_APPLY)
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		if gui._isDebug():
+			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
@@ -173,6 +178,8 @@ class SettingsPanel(wx.Panel):
 		@param parent: The parent for this panel; C{None} for no parent.
 		@type parent: wx.Window
 		"""
+		if gui._isDebug():
+			startTime = time.time()
 		super(SettingsPanel, self).__init__(parent, wx.ID_ANY)
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
@@ -180,6 +187,8 @@ class SettingsPanel(wx.Panel):
 		self.mainSizer.Add(self.settingsSizer, flag=wx.ALL)
 		self.mainSizer.Fit(self)
 		self.SetSizer(self.mainSizer)
+		if gui._isDebug():
+			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
 	def makeSettings(self, sizer):
 		"""Populate the panel with settings controls.
@@ -256,10 +265,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		@type parent: SettingsPanel
 		"""
 		if initialCategory and not issubclass(initialCategory,SettingsPanel):
-			log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
+			if gui._isDebug():
+				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
 			raise TypeError("initialCategory should be an instance of SettingsPanel")
 		if initialCategory and initialCategory not in self.categoryClasses:
-			log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
+			if gui._isDebug():
+				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
 			raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
 		self.initialCategory=initialCategory
 		self.currentCategory=None
@@ -303,7 +314,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			panel.Hide()
 			self.containerSizer.Add(panel, flag=wx.ALL, border=guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 			panelWidths.append(panel.Size[0])
-			if panel.Size[0] > self.MAX_WIDTH:
+			if panel.Size[0] > self.MAX_WIDTH and gui._isDebug():
 				log.debugWarning("Panel width ({1}) too large for: {0} Try to reduce the width of this panel, or increase MultiCategorySettingsDialog.MAX_WIDTH".format(cls, panel.Size[0]))
 			panelHeights.append(panel.Size[1])
 			self.categoryList.Append((panel.title,))
@@ -844,7 +855,8 @@ class VoiceSettingsPanel(SettingsPanel):
 
 	def onPanelActivated(self):
 		if getSynth().name is not self._synth.name:
-			log.debug("refreshing voice panel")
+			if gui._isDebug():
+				log.debug("refreshing voice panel")
 			self.sizerDict.clear()
 			self.settingsSizer.Clear(deleteWindows=True)
 			self.makeSettings(self.settingsSizer)

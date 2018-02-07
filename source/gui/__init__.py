@@ -863,3 +863,6 @@ def shouldConfigProfileTriggersBeSuspended():
 		if window.IsShown() and getattr(window, "shouldSuspendConfigProfileTriggers", False):
 			return True
 	return False
+
+def _isDebug():
+	return config.conf["debugLog"]["gui"]
