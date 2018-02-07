@@ -216,12 +216,15 @@ class AutoUpdateChecker(UpdateChecker):
 
 	def __init__(self):
 		self._checkTimer = wx.PyTimer(self.check)
-		# Set the initial check based on the last check time.
-		# #3260: If the system time is earlier than the last check,
-		# treat the last check as being right now (so the next will be tomorrow).
-		secsSinceLast = max(time.time() - state["lastCheck"], 0)
-		# The maximum time till the next check is CHECK_INTERVAL.
-		secsTillNext = CHECK_INTERVAL - int(min(secsSinceLast, CHECK_INTERVAL))
+		if config.conf["update"]["startupNotification"] and isPendingUpdate():
+			secsTillNext = 0 # Display the update message instantly
+		else:
+			# Set the initial check based on the last check time.
+			# #3260: If the system time is earlier than the last check,
+			# treat the last check as being right now (so the next will be tomorrow).
+			secsSinceLast = max(time.time() - state["lastCheck"], 0)
+			# The maximum time till the next check is CHECK_INTERVAL.
+			secsTillNext = CHECK_INTERVAL - int(min(secsSinceLast, CHECK_INTERVAL))
 		self._checkTimer.Start(secsTillNext * 1000, True)
 
 	def terminate(self):
@@ -242,7 +245,7 @@ class AutoUpdateChecker(UpdateChecker):
 	def _result(self, info):
 		if not info:
 			return
-		if info["version"] in (state["dontRemindVersion"],state["pendingUpdateVersion"]):
+		if info["version"]==state["dontRemindVersion"]:
 			return
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
@@ -597,7 +600,7 @@ def initialize():
 	except OSError:
 		log.warning("Unable to remove old update file %s"%f, exc_info=True)
 
-	if config.conf["update"]["autoCheck"] and not globalVars.appArgs.launcher:
+	if not globalVars.appArgs.launcher and (config.conf["update"]["autoCheck"] or (config.conf["update"]["startupNotification"] and isPendingUpdate())):
 		autoChecker = AutoUpdateChecker()
 
 def terminate():
