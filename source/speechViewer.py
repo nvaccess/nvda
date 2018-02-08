@@ -78,7 +78,7 @@ def activate():
 	"""
 		Function to call to trigger the speech viewer window to open.
 	"""
-	_setActive(True, SpeechViewerFrame(_cleanup) )
+	_setActive(True, SpeechViewerFrame(_cleanup))
 
 def _setActive(isNowActive, speechViewerFrame=None):
 	global _guiFrame, isActive
@@ -108,7 +108,7 @@ def deactivate():
 	global _guiFrame, isActive
 	if not isActive:
 		return
-	# #7077: If the window is destroyed, text control wil be gone, so save speech viewer position before destroying the window.
+	# #7077: If the window is destroyed, text control will be gone, so save speech viewer position before destroying the window.
 	_guiFrame.savePositionInformation()
 	_guiFrame.Destroy()
 	isActive = False
