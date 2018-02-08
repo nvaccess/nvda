@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -435,7 +435,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		_inNotify=False
 		def Notify(self):
 			if self._inNotify:
-				# #7104: Timers in wxPython 4 are now re-entrant. However, wx.Yield is not allowed to be called recursively.
+				# #7077: Timers in wxPython 4 are now re-entrant. However, wx.Yield is not allowed to be called recursively.
 				# Therefore, stop this timer callback from ever being re-entered.
 				# Note that If code does try to request a pump from within this call, it will be detected and re-queued by restarting the timer.
 				return
