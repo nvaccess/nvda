@@ -354,7 +354,8 @@ class UpdateAskInstallDialog(wx.Dialog):
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
-		self.Show()
+		gui.mainFrame.prePopup()
+		self.ShowModal()
 
 	def onInstallButton(self, evt):
 		executeUpdate(self.destPath)
