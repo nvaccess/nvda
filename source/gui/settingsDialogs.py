@@ -2027,6 +2027,8 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 class BrailleSettingsSubPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
+		if gui._isDebug():
+			startTime = time.time()
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		tables = brailleTables.listTables()
@@ -2041,6 +2043,8 @@ class BrailleSettingsSubPanel(SettingsPanel):
 			self.outTableList.SetSelection(selection)
 		except:
 			pass
+		if gui._isDebug():
+			log.debug("Loading output tables completed, now at %.2f seconds from start"%(time.time() - startTime))
 
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
@@ -2052,6 +2056,8 @@ class BrailleSettingsSubPanel(SettingsPanel):
 			self.inTableList.SetSelection(selection)
 		except:
 			pass
+		if gui._isDebug():
+			log.debug("Loading input tables completed, now at %.2f seconds from start"%(time.time() - startTime))
 
 		# Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 		expandAtCursorText = _("E&xpand to computer braille for the word at the cursor")
@@ -2105,6 +2111,8 @@ class BrailleSettingsSubPanel(SettingsPanel):
 			pass
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorShapeReviewList.Disable()
+		if gui._isDebug():
+			log.debug("Loading cursor settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message &timeout (sec)")
@@ -2121,6 +2129,9 @@ class BrailleSettingsSubPanel(SettingsPanel):
 		if self.noMessageTimeoutCheckBox.GetValue():
 			self.messageTimeoutEdit.Disable()
 
+		if gui._isDebug():
+			log.debug("Loading timeout settings completed, now at %.2f seconds from start"%(time.time() - startTime))
+
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		tetherListText = _("Tether B&raille:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
@@ -2132,6 +2143,8 @@ class BrailleSettingsSubPanel(SettingsPanel):
 			self.tetherList.SetSelection(selection)
 		except:
 			pass
+		if gui._isDebug():
+			log.debug("Loading tether settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
 		# Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 		readByParagraphText = _("Read by &paragraph")
@@ -2152,6 +2165,8 @@ class BrailleSettingsSubPanel(SettingsPanel):
 		except:
 			index=0
 		self.focusContextPresentationList.SetSelection(index)
+		if gui._isDebug():
+			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
 	def onSave(self):
 		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
