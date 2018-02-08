@@ -1904,15 +1904,20 @@ Samo za Focus 80:
 | Prebaci brajev red za red u napred | leviBumperBarDole, desniBumperBarDole |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec ALVA 6 serije/pretvarač protokola++[OptelecALVA]
 ALVA BC640 i BC680 brajevi retovi firme [Optelec http://www.optelec.com/] podržani su kada se povezuju putem USB ili bluetooth veze.
+Alternativno, možete povezati stariji Optelec brajev red, kao što je Braille Voyager, korišćenjem pretvarača protokola koji izdaje Optelec.
 Ne morate imati specijalne drajvere da biste koristili ove brajeve retove.
 Samo povežite brajev red i podesite NVDA za njegovo korišćenje.
 
-Iako ovi brajevi redovi poseduju brajevu tastaturu, oni upravljaju prevodom "Brajevog pisma u tekst" iz samih sebe.
-Dakle, podešavanje ulazna brajeva tabela nije bitno.
+Napomena: NVDA možda neće moći da koristi ALVA BC6 preko Bluetooth veze kada je uparen korišćenjem ALVA Bluetooth alatke.
+Kada uparite ovaj uređaj korišćenjem ove alatke i NVDA ga ne prepoznaje, preporučujemo vam da uparite vaš ALVA red na standardan način korišćenjem Windows Bluetooth podešavanja.
 
-Slede komande dodeljene za ovaj brajev red za korišćenje sa NVDA.
+Napomena: Iako neki od ovih redova imaju brajevu tastaturu, po podrazumevanim podešavanjima oni sami kontrolišu prevod teksta.
+Ovo znači da se NVDA podešavanja ne koriste po podrazumevanim podešavanjima (na primer podešavanje ulazne tabele nema efekta).
+Za ALVA redove sa novijim softverom, moguće je onemogućiti HID simulaciju tastature korišćenjem ulazne komande.
+
+Slede komande za ovaj red sa programom NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i raspored tastera na brajevom redu.
 %kc:beginInclude
 || Ime | Komanda |
@@ -1922,6 +1927,7 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i r
 | Premesti brajev red na sledeći red | t4 |
 | Pomeri brajev red  napred za red | t5 ili etouch 3|
 | Prebaci na brajevu ćeliju | routing |
+| Uključuje i isključuje HID simulaciju tastature | t1+spEnter |
 | premesti se na najgornji red u pregledu | t1+t2 |
 | premesti se na poslednji red u pregledu | t4+t5 |
 | prebaci brajev vezan za| t1+t3 |
@@ -1935,17 +1941,18 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i r
 | strelicaDole | spDown |
 | strelicaLevo | spLeft |
 | strelicaDesno | spRight |
-| enter | spEnter |
+| enter | spEnter, enter |
 | izgovori datum i vreme | sp1+sp2 |
 | NVDA meni | sp1+sp3 |
 | windows+d (umanji sve aplikacije) | sp1+sp4 |
 | windows+b taster (fokusiranje sistemske trake) | sp3+sp4 |
-| windows taster | sp2+sp3 |
+| windows taster | sp2+sp3, windows  |
 | alt+tab | sp2+sp4 |
 | ctrl+home | t3+spUp |
 | control+end | t3+spDown |
 | home | t3+spLeft |
 | end | t3+spRight |
+| alt  | alt |
 %kc:endInclude
 
 ++ Handy Tech brajevi redovi ++[HandyTech]
