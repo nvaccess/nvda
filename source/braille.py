@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import sys
 import itertools
@@ -1845,6 +1845,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
 			self.setDisplayByName(display)
+		self._tether = config.conf["braille"]["tetherTo"]
 
 class _BgThread:
 	"""A singleton background thread used for background writes and raw braille display I/O.
@@ -1930,7 +1931,8 @@ class _BgThread:
 
 #: Maps old braille display driver names to new drivers that supersede old drivers.
 RENAMED_DRIVERS = {
-	"syncBraille":"hims"
+	"syncBraille":"hims",
+	"alvaBc6":"alva"
 }
 
 def initialize():
@@ -2092,7 +2094,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
 				if (any(gesture.startswith(prefix.lower()) for prefix in prefixes)
 					and scriptCls is globalCommands.GlobalCommands
-					and scriptName.startswith("kb")):
+					and scriptName and scriptName.startswith("kb")):
 					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
 					if emuGesture.isModifier:
 						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)

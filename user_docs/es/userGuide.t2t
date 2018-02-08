@@ -25,7 +25,7 @@ Lo más reseñable incluye:
 - Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a 51 idiomas
+- Traducido a 52 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Anunciado de controles y texto mientras se utilizan gestos táctiles
@@ -35,7 +35,7 @@ Lo más reseñable incluye:
 
 ++ Internacionalización ++[Internationalization]
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a 51 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
+Actualmente NVDA ha sido traducido a 52 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Kirguistaní, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++[SpeechSynthesizerSupport]
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -339,8 +339,10 @@ El objeto actualmente en revisión se llama navegador de objetos.
 Una vez que navegues a un objeto, puedes revisar su contenido utilizando las [órdenes de revisión de texto #ReviewingText] mientras se esté en [modo revisión de objetos #ObjectReview].
 De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema aunque este comportamiento puede activarse y desactivarse.
 
-Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
-Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
+Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor #SystemCaret] así como por omisión a la navegación de objetos y a la revisión de texto.
+Si quieres que siga sólo al foco y al cursor, necesitas [configurar que el braille siga al  #BrailleTether] foco.
+En este caso, el braille no seguirá a la navegación de objetos y a la revisión de texto.
+Si quieres que el braille siga a la navegación de objetos y a la revisión de texto en su lugar, necesitas [configurar que el braille siga a la #BrailleTether] revisión.
 
 Para navegar por objetos, utiliza las siguientes órdenes:
 
@@ -1142,10 +1144,12 @@ Especifycando 0 se deshabilita el mostrado de estos mensajes completamente.
 Esta opción permite a los mensajes de NVDA mostrarse en la pantalla braille indefinidamente.
 
 %kc:setting
-==== El Braille sigue a ====[BrailleTether]
+==== Braille Sigue ====[BrailleTether]
 Tecla: NVDA+control+t
 
-Esta opción te permite elegir si la pantalla braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión.
+Esta opción te permite elegir si la pantalla braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión, o a ambos.
+Cuando se seleccione "automáticamente", NVDA seguirá al foco y al cursor del sistema por omisión.
+En este caso, cuando se cambie la posición del navegador de objetos o del cursor de revisión mediante una interacción explícita del usuario, NVDA seguirá a la revisión temporalmente, hasta que el foco o el cursor cambie.
 
 ==== Leer por Párrafo ====[BrailleSettingsReadByParagraph]
 Si está activado, el braille se mostrará por párrafos en lugar de por líneas.
@@ -1900,13 +1904,18 @@ Sólo para la Focus 80:
 | Desplazar pantalla braille adelante | barra frontal izquierda abajo, barra frontal derecha abajo |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Series de la Optelec ALVA 6/conversor de protocolo ++[OptelecALVA]
 Ambas pantallas ALVA BC640 y BC680 de [Optelec http://www.optelec.com/] están soportadas.
+Alternativamente, puedes conectar una pantalla antigua de Optelec, tal como una Braille Voyager, utilizando un conversor de protocolo suministrado por Optelec.
 No necesitas instalar ningún controlador en especial para utilizar estas pantallas.
 Sólo enchufa la pantalla y configura NVDA para utilizarla.
 
-Dado que estas pantallas tienen un teclado braille, manejarán la transcripción de braille a texto por sí mismas.
-Por lo tanto, la configuración de la tabla de entrada braille de NVDA es irrelevante.
+Nota: NVDA podría no ser capaz de usar una pantalla ALVA BC6 con Bluetooth cuando se empareja utilizando la utilidad ALVA Bluetooth.
+Cuando hayas emparejado tu dispositivo usando su utilidad y NVDA no pueda detectarlo, te recomendamos enparejar tu pantalla ALVA de la forma ordinaria utilizando las opciones de Bluetooth de Windows.
+
+Nota: dado que algunas de estas pantallas tienen un teclado braille, manejan la transcripción de braille a texto por sí mismas por omisión.
+Esto significa que el sistema de entrada braille de NVDA no se está utilizando en una situación predeterminada (es decir, la tabla de entrada braille configurada no tiene efecto).
+Para pantallas ALVA con firmware reciente, es posible deshabilitar esta simulación de teclado HID utilizando un gesto de entrada.
 
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
@@ -1918,6 +1927,7 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Mover la pantalla braille a la línea siguiente | t4 |
 | Desplazar pantalla braille hacia adelante | t5 o etouch3 |
 | Guiar a la celda braille | sensor |
+| Conmutar la simulación de teclado HID | t1+spEnter |
 | Mover a la línea superior en revisión | t1+t2 |
 | Mover a la línea inferior en revisión | t4+t5 |
 | Conmutar el seguimiento braille | t1+t3 |
@@ -1931,17 +1941,19 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | tecla flecha abajo | spDown |
 | tecla flecha izquierda | spLeft |
 | tecla flecha derecha | spRight |
-| tecla intro | spEnter |
+| tecla intro | spEnter, intro |
 | Anunciar fecha/hora | sp1+sp2 |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas las aplicaciones) | sp1+sp4 |
 | Tecla windows+b (enfocar la bandeja del sistema) | sp3+sp4 |
-| tecla windows | sp2+sp3 |
+| tecla windows | sp2+sp3, windows |
 | tecla alt+tab | sp2+sp4 |
 | tecla control+inicio | t3+spArriba |
 | tecla control+fin | t3+spAbajo |
 | tecla inicio | t3+spIzquierda |
 | tecla fin | t3+spDerecha |
+| tecla alt | alt |
+| tecla control | control |
 %kc:endInclude
 
 ++ Pantallas Handy Tech ++[HandyTech]

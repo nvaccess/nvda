@@ -1904,15 +1904,20 @@ For Focus 80 only:
 | Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
 Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
+Alternatively, you can connect an older Optelec display, such as a Braille Voyager, using a protocol converter supplied by Optelec.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
-While these displays do have a braille keyboard, they handle translation from braille to text themselves.
-Therefore, NVDA's braille input table setting is not relevant.
+Note: NVDA might be unable to use an ALVA BC6 display over Bluetooth when it is paired using the ALVA Bluetooth utility.
+When you have paired your device using this utility and NVDA is unable to detect your device, we recommend you to pair your ALVA display the regular way using the Windows Bluetooth settings.
 
-Following are the key assignments for this display with NVDA.
+Note: while some of these displays do have a braille keyboard, they handle translation from braille to text themselves by default.
+This means that NVDA's braille input system is not in use in the default situation (i.e. the input braille table setting has no effect).
+For ALVA displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
+
+Following are key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
@@ -1922,6 +1927,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move braille display to next line | t4 |
 | Scroll braille display forward | t5 or etouch3 |
 | Route to braille cell | routing |
+| Toggle HID keyboard simulation | t1+spEnter |
 | Move to top line in review | t1+t2 |
 | Move to bottom line in review | t4+t5 |
 | Toggle braille tethered to | t1+t3 |
@@ -1935,17 +1941,19 @@ Please see the display's documentation for descriptions of where these keys can 
 | downArrow key | spDown |
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
-| enter key | spEnter |
+| enter key | spEnter, enter|
 | Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
 | windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3 |
+| windows key | sp2+sp3, windows |
 | alt+tab key | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
+| alt key | alt |
+| control key | control |
 %kc:endInclude
 
 ++ Handy Tech Displays ++[HandyTech]
