@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-26 00:10+1000\n"
-"PO-Revision-Date: 2018-01-29 11:08+0800\n"
+"POT-Creation-Date: 2018-02-02 00:10+1000\n"
+"PO-Revision-Date: 2018-02-04 15:11+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -7109,8 +7109,29 @@ msgid "off"
 msgstr "выключено"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6 series/protocol converter"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Последовательный канал Bluetooth: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "Эмуляция HID-клавиатуры не поддерживается"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "Эмуляция HID-клавиатуры включена"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "Эмуляция HID-клавиатуры выключена"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "Включает и выключает эмуляцию HID-клавиатуры"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7314,7 +7335,7 @@ msgstr "Изменение чтения формы указателя мыши �
 
 #. Translators: The label for the menu item to open Touch Interaction dialog.
 msgid "&Touch interaction..."
-msgstr "С&енсорный экран..."
+msgstr "С&енсорное взаимодействие"
 
 #. Translators: tooltip for touch interaction settings item.
 msgid "Change how NVDA interacts with the touchscreen"
@@ -10678,3 +10699,6 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "ALVA BC640/680"
