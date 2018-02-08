@@ -15,6 +15,7 @@ from unicodeScriptData import getScriptCode
 from collections import OrderedDict
 from collections import namedtuple
 import unicodedata
+from logHandler import log
 
 # maintains list of priority languages as a list of languageID, ScriptName, and LanguageDescription
 languagePriorityListSpec = []
@@ -200,6 +201,8 @@ def detectLanguage(text, defaultLanguage =None):
 		sequenceWithLanguage.append( text)
 		return sequenceWithLanguage
 
+	import timeit
+	startTime = timeit.default_timer()
 	tempSequence = detectScript(text)
 	scriptCode = ""
 
@@ -218,20 +221,21 @@ def detectLanguage(text, defaultLanguage =None):
 				languageCode = defaultLanguage 
 			else:
 				languageCode = getLangID( item.scriptCode  )  
-			#end if scriptIDForPreferredLanguage and (item.scriptCode == scriptIDForPreferredLanguage):
 
 			if languageCode:
-				if (languageCode == previousLanguageCode) or ( ( previousLanguageCode == "") and  (languageCode == defaultLanguage ) ): continue # if 2 scripts have same language, we don't need to add additional language. 
+				# if 2 scripts have same language, we don't need to add additional language. 
+				if (languageCode == previousLanguageCode) or ( ( previousLanguageCode == "") 
+				and  (languageCode == defaultLanguage ) ): 
+					continue 
+
 				sequenceWithLanguage.append( LangChangeCommand( languageHandler.normalizeLanguage( languageCode ) ) )
 				previousLanguageCode = languageCode 
-			# end if languageCode
 		else:
 			if( len(sequenceWithLanguage) > 0) and ( not isinstance(sequenceWithLanguage[-1],LangChangeCommand) ): 
 				sequenceWithLanguage[-1] = sequenceWithLanguage[-1] + item
 			else:
 				sequenceWithLanguage.append(item)	
-			#end if( len(sequenceWithLanguage) > 0) and ( not isinstance(sequenceWithLanguage[-1],LangChangeCommand) ): 
-		#end if isinstance(item,ScriptChangeCommand):
-	#end for index in xrange(len(tempSequence )):
 
+	elapsedTime = timeit.default_timer()
+	log.debugWarning("time taken for language detection: {}".format(elapsedTime - startTime) )
 	return sequenceWithLanguage
