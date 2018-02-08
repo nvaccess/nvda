@@ -1904,13 +1904,18 @@ Vain Focus 80:
 | Vieritä eteenpäin | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
-[Optelecin http://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä käytettäessä.
+++ Optelec ALVA 6/protokollamuunnin ++[OptelecALVA]
+[Optelecin http://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan sekä USB-liitäntää että bluetooth-yhteyttä käytettäessä.
+Vaihtoehtoisesti voit liittää vanhemman näytön, kuten Braille Voyagerin, käyttämällä Optelecin toimittamaa protokollamuunninta.
 Niiden käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
-Vaikka näissä pistenäytöissä onkin pistenäppäimistö, ne huolehtivat itse pistekirjoituksen kääntämisestä tekstiksi.
-Tämän vuoksi NVDA:n pistesyöttötaulukkoasetuksella ei ole merkitystä.
+Huom: NVDA ei välttämättä pysty käyttämään ALVA BC6 -näyttöä bluetoothin välityksellä, kun sen ja tietokoneen välinen laitepari on muodostettu ALVA:n bluetooth-apuohjelmalla.
+Kun pariliitos on luotu tätä apuohjelmaa käyttäen ja  NVDA ei tunnista laitettasi, suosittelemme käyttämään laiteparin muodostamiseen Windowsin bluetooth-asetuksia.
+
+Vaikka joissakin näistä pistenäytöistä onkin pistenäppäimistö, ne huolehtivat itse pistekirjoituksen kääntämisestä tekstiksi.
+Tämä tarkoittaa, että oletusarvoisesti NVDA:n pistekirjoituksen syöttöjärjestelmää ei käytetä (ts. pistesyöttötaulukkoasetuksella ei ole vaikutusta).
+HID-näppäimistöemulointi on mahdollista poistaa käytöstä syötekomennolla ALVA-näytöissä, joissa on viimeisin laiteohjelmisto.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1922,6 +1927,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä seuraavalle riville | t4 |
 | Vieritä eteenpäin | t5 tai etouch3 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| HID-näppäimistöemulointi käyttöön/pois käytöstä | t1+spEnter |
 | Siirrä ylimmälle riville | t1+t2 |
 | Siirrä alimmalle riville | t4+t5 |
 | Vaihda Pistenäyttö seuraa -asetusta | t1+t3 |
@@ -1935,17 +1941,19 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Nuoli alas -näppäin | spDown |
 | Nuoli vasemmalle -näppäin | spLeft |
 | Nuoli oikealle -näppäin | spRight |
-| Enter-näppäin | spEnter |
+| Enter-näppäin | spEnter, enter |
 | Lue päiväys/aika | sp1+sp2 |
 | NVDA-valikko | sp1+sp3 |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | sp1+sp4 |
 | Windows+B-näppäinyhdistelmä (siirrä kohdistus järjestelmätarjottimelle) | sp3+sp4 |
-| Windows-näppäin | sp2+sp3 |
+| Windows-näppäin | sp2+sp3, windows |
 | Alt+Sarkain-näppäinyhdistelmä | sp2+sp4 |
 | Ctrl+Home-näppäinyhdistelmä | t3+spUp |
 | Ctrl+End-näppäinyhdistelmä | t3+spDown |
 | Home-näppäin | t3+spLeft |
 | End-näppäin | t3+spRight |
+| Alt-näppäin | alt |
+| Ctrl-näppäin | control |
 %kc:endInclude
 
 ++ Handy Tech ++[HandyTech]
