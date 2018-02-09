@@ -4,8 +4,7 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.1 =
-
-Highlights of this release include  support for charts in Microsoft word and Powerpoint, newly supported braille displays: Eurobraille and the Optelec protocol convertor, improved support for Hims and Optelec braille displays, performance improvements fore Mozilla Firefox 58 and higher, and much more.
+Highlights of this release include  support for charts in Microsoft word and PowerPoint, support for new braille displays including Eurobraille and the Optelec protocol converter, improved support for Hims and Optelec braille displays, performance improvements for Mozilla Firefox 58 and higher, and much more.
 
 == New Features ==
 - It is now possible to interact with charts in Microsoft Word and Microsoft PowerPoint, similar to the existing support for charts in Microsoft Excel. (#7046)
@@ -13,7 +12,7 @@ Highlights of this release include  support for charts in Microsoft word and Pow
  - In Microsoft PowerPoint when editing a slide: tab to a chart object, and press enter or space to interact with the chart.
  - To stop interacting with a chart, press escape.
 - New language: Kyrgyz.
-- Add support for VitalSource Bookshelf. (#7155)
+- Added support for VitalSource Bookshelf. (#7155)
 - Added support for the Optelec protocol converter, a device that allows one to use Braille Voyager and Satellite displays using the ALVA BC6 communication protocol. (#6731)
 - It is now possible to use braille input with an ALVA 640 Comfort braille display. (#7733) 
  - NVDA's braille input functionality can be used with these as well as other BC6 displays with firmware 3.0.0 and above.
@@ -43,7 +42,7 @@ Highlights of this release include  support for charts in Microsoft word and Pow
 - In twitter clients such as Chicken Nugget, NVDA will no longer ignore the last 20 characters of 280 character tweets when reading them. (#7828)
 - NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
 - In recent versions of Office 365, it is again possible to navigate Excel charts using the arrow keys. (#7046)
-- In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. Fixes #7076
+- In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. (#7076)
 - In apps such as Windows 10 Mail, NVDA will no longer fail to announce deleted characters when pressing backspace. (#7456)
 - All keys on the Hims Braille Sense Polaris displays are now working as expected. (#7865)
 
@@ -61,7 +60,7 @@ Highlights of this release include  support for charts in Microsoft word and Pow
 
 
 = 2017.4 =
-Highlights of this release include many  fixes and enhancements to web support including browse mode for web dialogs by default, better reporting of field group labels in browse mode, support for new Windows 10 technologies such as Windows Defender Application Guard and Windows 10 on ARM64, and automatic reporting of screen orientation and battery status.  
+Highlights of this release include many  fixes and enhancements to web support including browse mode for web dialogs by default, better reporting of field group labels in browse mode, support for new Windows 10 technologies such as Windows Defender Application Guard and Windows 10 on ARM64, and automatic reporting of screen orientation and battery status.
 Please note that this version of NVDA no longer supports Windows XP or Windows Vista. The minimum requirement for NVDA is now windows 7 with Service Pack 1.
 
 
