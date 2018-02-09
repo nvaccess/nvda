@@ -17,6 +17,7 @@ What's New in NVDA
 - It is now possible to use braille input with an ALVA 640 Comfort braille display. (#7733) 
  - NVDA's braille input functionality can be used with these as well as other BC6 displays with firmware 3.0.0 and above.
 - Early support for Google Sheets with Braille mode enabled. (#7935)
+- Support for Eurobraille Esys, Esytime and Iris braille displays. (#7488)
 
 
 == Changes ==
@@ -55,6 +56,7 @@ What's New in NVDA
 - A new "isAppX" variable in the config module can be used to detect if NVDA is running as a Windows Desktop Bridge Store app. (#7851)
 - For document implementations such as NVDAObjects or browseMode that have a textInfo, there is now a new documentBase.documentWithTableNavigation class that can be inherited from to gain standard table navigation scripts. Please refer to this class to see which helper methods must be provided by your implementation for table navigation to work. (#7849)
 - The scons batch file now better handles when  Python 3 is also installed, making use of the launcher to specifically launch python 2.7 32 bit. (#7541)
+- hwIo.Hid now takes an additional parameter exclusive, which defaults to True. If set to False, other applications are allowed to communicate with a device while it is connected to NVDA. (#7859)
 
 
 = 2017.4 =
