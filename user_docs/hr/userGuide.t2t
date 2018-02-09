@@ -1904,13 +1904,18 @@ Samo za Focus 80:
 | Pomakni brajični redakza redak u naprijed | lijeviBumperBarDolje, desniBumperBarDolje |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec Alva 6 serije/pretvornik protokola ++[OptelecALVA]
 ALVA BC640 i BC680 brajični retci firme [Optelec http://www.optelec.com/] podržani su kada se spajaju putem USB ili bluetooth veze.
+U drugom slučaju, možete spojiti stariji Optelec brajični redak , kao što je braille voyager, koristeći pretvornik protokola kojeg dostavlja Optelec.
 Ne trebate imati specijalne upravljačke programe da biste koristili ove brajične retke.
 Samo spojite brajični redak i podesite NVDA za njegovo korištenje.
 
-Iako ovi brajični retci posjeduju brajičnu tipkovnicu, oni upravljaju prijevodom "brajice u tekst" iz samih sebe.
-Dakle, postavka ulazna brajična tablica nije bitna.
+Upozorenje: NVDA može biti u nemogučnosti koristiti ALVA BC6 brajični redak, kada je isti spojen koristeći ALVA Bluetooth dodatak.
+Ako ste uparivali vaš brajični redak koristeći taj dodatak, a NVDA ga nije prepoznao, preporučujemo uparivanje brajičnog redka koristeći standardne bluetoot postavke operativnog sustava. .
+
+Upozorenje: iako neki od ovih brajičnih redaka imaju tipkovnicu, isti podrazumjevano rukuju brajičnim prijevodom interno, tj. hardverski.
+To znači, da se podrazumijevano ne koristi NVDA sustav unosa (odnosno, postavka ulazne brajučne tablice nema nikakvog utjecaja).
+Za ALV'Ine redke na kojima je instaliran posljednji firmware, sada je moguće onemogučiti tu simulaciju tipkovnice, koristeći tipkovnički prečac.
 
 Sljede prečaci dodjeljeni za ovaj brajični redak za korištenje sa NVDA.
 Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis i smještaj tipaka na brajičnom retku.
@@ -1922,6 +1927,7 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis 
 | Premjesti brajični redak na slijedeći redak | t4 |
 | Pomakni brajični redak u naprijed za redak | t5 ili etouch 3|
 | Prebaci na brajičnu ćeliju | routing |
+| Uključi/isključi simulaciju tipkovnice | t1+spEnter |
 | premjesti se na najgornji redak u pregledu | t1+t2 |
 | premjesti se na posljednji redak u pregledu | t4+t5 |
 | prebaci brajicu usmjerenu na | t1+t3 |
@@ -1935,17 +1941,19 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis 
 | strelicaDolje | spDown |
 | strelicaLijevo | spLeft |
 | strelicaDesno | spRight |
-| enter | spEnter |
+| enter | spEnter, enter|
 | izgovori datum i vrijeme | sp1+sp2 |
 | NVDA Izbornik | sp1+sp3 |
 | windows+d (minimiziraj sve aplikacije) | sp1+sp4 |
 | windows+b tipka (fokusiranje područja obavjesti) | sp3+sp4 |
-| windows tipka | sp2+sp3 |
+| windows tipka | sp2+sp3, windows |
 | alt+tab | sp2+sp4 |
 | ctrl+home | t3+spUp |
 | control+end | t3+spDown |
 | home | t3+spLeft |
 | end | t3+spRight |
+| alt | alt |
+| ctrl | control |
 %kc:endInclude
 
 ++ Handy Tech brajični retci ++[HandyTech]

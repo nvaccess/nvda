@@ -1150,6 +1150,7 @@ Tast: NVDA+Ctrl+t
 Med denne indstilling kan du vælge, om punktdisplayet skal følge systemfokus, om det skal følge navigatorobjektet /læsemarkøren eller begge dele.
 Når "automatisk" er valgt, vil NVDA følge systemmarkøren og læsemarkøren som standard.
 I dette tilfæld vil NVDA følge læsemarkøren midlertidigt, når brugeren ændre positionen af læsemarkøren, eller når navigatorobjektet ændres. Denne tilstand ophører, når systemmarkøren flyttes eller fokus ændres.
+
 ==== Læs i afsnit ====[BrailleSettingsReadByParagraph]
 Hvis du slår denne indstilling til, vil du få vist punkt et afsnit ad gangen i stedet for en linje ad gangen.
 Desuden vil kommandoer til forrige og næste linje flytte et afsnit ad gangen.
@@ -1903,13 +1904,18 @@ Kun for Focus 80:
 | Rul punktdisplay fremad | venstre vippe bjælke ned, højre vippe bjælke ned |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec ALVA 6 serien/protokolomformer++[OptelecALVA]
 Der er understøttelse af både ALVA BC640 og BC680 punktdisplays fra [Optelec http://www.optelec.com/].
+Desuden kan du forbinde et ældre punktdisplay fra Optelec, som Braille Voyager, ved brug af en protokolomformer, der leveres af Optelek.
 Der kræves ingen særskilte drivere installeret for at bruge disse displays.
 Sæt blot displayet til computeren og indstil NVDA til at bruge det.
 
-Selv om disse punktdisplays har et tastatur, håndtere de selv oversættelsen fra punkt til tekst.
+Bemærk: NVDA er måske ikke i stand til at benytte et ALVA BC6 Bluetooth-punktdisplay, når det pares ved hjælp af Alva Bluetooth-værktøjet.
+Når du har benyttet dette værktøj, og NVDA ikke kan finde dit display, anbefales det at du parer dit display ved hjælp af Bluetooth-indstillingerne, der findes i Windows.
+
+Bemærk: Selv om disse punktdisplays har et tastatur, håndtere de selv oversættelsen fra punkt til tekst.
 Derfor er NVDAs punkt input indstilling ikke relevant.
+For ALVA-punkdisplays med den nyeste firmware, vil det være muligt at slå simuleringen af dette HID-tastatur fra ved hjælp af en tastaturkommando.
 
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
@@ -1921,6 +1927,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Flyt punktdisplay til næste linje | t4 |
 | Rul punktdisplay fremad | t5 eller etouch3 |
 | Flyt til punktcelle | markørsammenføringsknapper |
+| Slå HID-tastatursimulation til og fra | t1+spEnter |
 | Flyt til øverste linje i læsning | t1+t2 |
 | Flyt til nederste linje i læsning | t4+t5 |
 | Skift punkt tøjret til | t1+t3 |
@@ -1934,17 +1941,19 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Pil-ned | spNed |
 | Venstre-pil | spVenstre |
 | Højre-pil | spHøjre |
-| enter tast | spEnter |
+| enter tast | spEnter, enter |
 | Rapporter dato/tid | sp1+sp2 |
 | NVDA-menu | sp1+sp3 |
 | windows+d tast (Minimer alle programmer) | sp1+sp4 |
 | windows+b key (gå til systembakke) | sp3+sp4 |
-| windows tast | sp2+sp3 |
+| windows tast | sp2+sp3, Windows |
 | alt+tab tast | sp2+sp4 |
 | CTRL+hjem | t3+spUp |
 | CTRL+end | t3+spDown |
 | hjem tast | t3+spLeft |
 | end tast | t3+spRight |
++| alt key | alt |
++| control key | control |
 %kc:endInclude
 
 ++ Handy Tech Displays ++[HandyTech]

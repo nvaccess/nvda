@@ -1904,13 +1904,18 @@ Sólo para la Focus 80:
 | Desplazar pantalla braille adelante | barra frontal izquierda abajo, barra frontal derecha abajo |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Series de la Optelec ALVA 6/conversor de protocolo ++[OptelecALVA]
 Ambas pantallas ALVA BC640 y BC680 de [Optelec http://www.optelec.com/] están soportadas.
+Alternativamente, puedes conectar una pantalla antigua de Optelec, tal como una Braille Voyager, utilizando un conversor de protocolo suministrado por Optelec.
 No necesitas instalar ningún controlador en especial para utilizar estas pantallas.
 Sólo enchufa la pantalla y configura NVDA para utilizarla.
 
-Dado que estas pantallas tienen un teclado braille, manejarán la transcripción de braille a texto por sí mismas.
-Por lo tanto, la configuración de la tabla de entrada braille de NVDA es irrelevante.
+Nota: NVDA podría no ser capaz de usar una pantalla ALVA BC6 con Bluetooth cuando se empareja utilizando la utilidad ALVA Bluetooth.
+Cuando hayas emparejado tu dispositivo usando su utilidad y NVDA no pueda detectarlo, te recomendamos enparejar tu pantalla ALVA de la forma ordinaria utilizando las opciones de Bluetooth de Windows.
+
+Nota: dado que algunas de estas pantallas tienen un teclado braille, manejan la transcripción de braille a texto por sí mismas por omisión.
+Esto significa que el sistema de entrada braille de NVDA no se está utilizando en una situación predeterminada (es decir, la tabla de entrada braille configurada no tiene efecto).
+Para pantallas ALVA con firmware reciente, es posible deshabilitar esta simulación de teclado HID utilizando un gesto de entrada.
 
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
@@ -1922,6 +1927,7 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Mover la pantalla braille a la línea siguiente | t4 |
 | Desplazar pantalla braille hacia adelante | t5 o etouch3 |
 | Guiar a la celda braille | sensor |
+| Conmutar la simulación de teclado HID | t1+spEnter |
 | Mover a la línea superior en revisión | t1+t2 |
 | Mover a la línea inferior en revisión | t4+t5 |
 | Conmutar el seguimiento braille | t1+t3 |
@@ -1935,17 +1941,19 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | tecla flecha abajo | spDown |
 | tecla flecha izquierda | spLeft |
 | tecla flecha derecha | spRight |
-| tecla intro | spEnter |
+| tecla intro | spEnter, intro |
 | Anunciar fecha/hora | sp1+sp2 |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas las aplicaciones) | sp1+sp4 |
 | Tecla windows+b (enfocar la bandeja del sistema) | sp3+sp4 |
-| tecla windows | sp2+sp3 |
+| tecla windows | sp2+sp3, windows |
 | tecla alt+tab | sp2+sp4 |
 | tecla control+inicio | t3+spArriba |
 | tecla control+fin | t3+spAbajo |
 | tecla inicio | t3+spIzquierda |
 | tecla fin | t3+spDerecha |
+| tecla alt | alt |
+| tecla control | control |
 %kc:endInclude
 
 ++ Pantallas Handy Tech ++[HandyTech]
