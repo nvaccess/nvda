@@ -272,9 +272,10 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			if gui._isDebug():
 				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
 			raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
-		self.initialCategory=initialCategory
-		self.currentCategory=None
-		self.categoryListItems=[]
+		self.initialCategory = initialCategory
+		self.currentCategory = None
+		# dictionary key is index of category in self.catList, value is the instance. Partially filled, check for KeyError
+		self.catIdToInstanceMap = {}
 		super(MultiCategorySettingsDialog, self).__init__(parent)
 
 	# maximum size for the dialog. This size was chosen as a medium fit, so the
@@ -291,11 +292,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Translators: The label for the list of categories in a multi category settings dialog.
 		categoriesLabelText=_("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
-		self.categoryList = wx.ListCtrl(self,style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER,size=(200,300))
+		self.catListCtrl = wx.ListCtrl(self,style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER,size=(200,300))
 		# This list consists of only one column.
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
-		self.categoryList.InsertColumn(0,categoriesLabelText,width=200)
-		self.categoryList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onCategoryChange)
+		self.catListCtrl.InsertColumn(0,categoriesLabelText,width=200)
+		self.catListCtrl.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onCategoryChange)
 
 		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed the maximum size,
 		# its important all items can be accessed visually.
@@ -304,33 +305,24 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		global NvdaSettingsCategoryPanelId
 		NvdaSettingsCategoryPanelId = wx.NewId()
 		self.container = scrolledpanel.ScrolledPanel(self, id=NvdaSettingsCategoryPanelId, size = (self.MAX_WIDTH,self.MAX_HEIGHT), style = wx.TAB_TRAVERSAL | wx.BORDER_THEME)
+		self.container.SetSize((self.MAX_WIDTH, self.MAX_HEIGHT))
+
 		self.containerSizer = wx.BoxSizer(wx.VERTICAL)
-		panelWidths=[]
-		panelHeights=[]
+		self.container.SetSizer(self.containerSizer)
+
 		for cls in self.categoryClasses:
 			if not issubclass(cls,SettingsPanel):
 				raise RuntimeError("Invalid category class %s provided in %s.categoryClasses"%(cls.__name__,self.__class__.__name__))
-			panel=cls(parent=self.container)
-			panel.Hide()
-			self.containerSizer.Add(panel, flag=wx.ALL, border=guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-			panelWidths.append(panel.Size[0])
-			if panel.Size[0] > self.MAX_WIDTH and gui._isDebug():
-				log.debugWarning("Panel width ({1}) too large for: {0} Try to reduce the width of this panel, or increase MultiCategorySettingsDialog.MAX_WIDTH".format(cls, panel.Size[0]))
-			panelHeights.append(panel.Size[1])
-			self.categoryList.Append((panel.title,))
-			self.categoryListItems.append(panel)
-		# Find size the container panel to the biggest settings panel, without exceeding the max height and width.
-		panelWidth=min(max(panelWidths), self.MAX_WIDTH)
-		panelHeight=min(max(panelHeights), self.MAX_HEIGHT)
-		self.container.SetSize((panelWidth,panelHeight))
-		self.container.SetSizer(self.containerSizer)
+			# It's important here that the listItems are added to catListCtrl in the same order that they exist in categoryClasses.
+			# the ListItem index / Id is used to index categoryClasses, and used as the key in catIdToInstanceMap
+			self.catListCtrl.Append((cls.title,))
 
 		gridBagSizer=wx.GridBagSizer(hgap=guiHelper.SPACE_BETWEEN_BUTTONS_HORIZONTAL, vgap=guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
 		# add the label, the categories list, and the settings panel to a 2 by 2 grid.
 		# The label should span two columns, so that the start of the categories list
 		# and the start of the settings panel are at the same vertical position.
 		gridBagSizer.Add(categoriesLabel, pos=(0,0), span=(1,2))
-		gridBagSizer.Add(self.categoryList, pos=(1,0), flag=wx.EXPAND)
+		gridBagSizer.Add(self.catListCtrl, pos=(1,0), flag=wx.EXPAND)
 		gridBagSizer.Add(self.container, pos=(1,1))
 		gridBagSizer.AddGrowableCol(1)
 		sHelper.sizer.Add(gridBagSizer)
@@ -339,20 +331,38 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		self.Bind(EVT_RW_LAYOUT_NEEDED, self._onPanelLayoutChanged)
 
+	def _getCategoryPanel(self, catId):
+		panel = self.catIdToInstanceMap.get(catId, None)
+		if not panel:
+			try:
+				cls = self.categoryClasses[catId]
+			except IndexError:
+				raise ValueError("Unable to create panel for unknown category ID: {}".format(catId))
+			panel = cls(parent=self.container)
+			panel.Hide()
+			self.containerSizer.Add(panel, flag=wx.ALL, border=guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+			self.catIdToInstanceMap[catId] = panel
+			if panel.Size[0] > self.MAX_WIDTH and gui._isDebug():
+				log.debugWarning(
+						"Panel width ({1}) too large for: {0} Try to reduce the width of this panel, or increase MultiCategorySettingsDialog.MAX_WIDTH"
+						.format(cls, panel.Size[0])
+						)
+		return panel
+
 	def postInit(self):
 		# We only want to select an item when there is no selection yet.
 		# If the execution of this method was caused by an apply, don't override the selection.
-		if self.categoryList.GetFirstSelected()!=-1:
-			self.categoryList.SetFocus()
+		if self.catListCtrl.GetFirstSelected()!=-1:
+			self.catListCtrl.SetFocus()
 		elif self.initialCategory:
 			index = self.categoryClasses.index(self.initialCategory)
-			self.categoryList.Select(index)
-			self.categoryList.Focus(index)
+			self.catListCtrl.Select(index)
+			self.catListCtrl.Focus(index)
 			self.container.SetFocus()
 		else:
-			self.categoryList.Select(0)
-			self.categoryList.Focus(0)
-			self.categoryList.SetFocus()
+			self.catListCtrl.Select(0)
+			self.catListCtrl.Focus(0)
+			self.catListCtrl.SetFocus()
 
 	def Destroy(self):
 		global NvdaSettingsCategoryPanelId
@@ -362,19 +372,20 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def onCharHook(self,evt):
 		"""Listens for keyboard input and switches panels for control+tab"""
 		key = evt.GetKeyCode()
-		listHadFocus = self.categoryList and self.categoryList.HasFocus()
+		listHadFocus = self.catListCtrl and self.catListCtrl.HasFocus()
 		if evt.ControlDown() and key==wx.WXK_TAB:
 			# Focus the categories list. If we don't, the panel won't hide correctly
 			if not listHadFocus:
-				self.categoryList.SetFocus()
-			index = self.categoryList.GetFirstSelected()
+				self.catListCtrl.SetFocus()
+			index = self.catListCtrl.GetFirstSelected()
 			newIndex=index-1 if evt.ShiftDown() else index+1
-			newIndex=newIndex % len(self.categoryListItems)
-			self.categoryList.Select(newIndex)
-			self.categoryList.Focus(newIndex)
-			newPanel=self.categoryListItems[newIndex]
-			if not listHadFocus:
-				newPanel.SetFocus()
+			# Less than first wraps to the last index, greater than last wraps to first index.
+			newIndex=newIndex % self.catListCtrl.ItemCount
+			self.catListCtrl.Select(newIndex)
+			# we must focus the category list to trigger the change of category.
+			self.catListCtrl.Focus(newIndex)
+			if not listHadFocus and self.currentCategory:
+				self.currentCategory.SetFocus()
 		elif listHadFocus and key == wx.WXK_RETURN:
 			# The list control captures the return key, but we want it to save the settings.
 			self.onOk(evt)
@@ -389,11 +400,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# erase the old contents and must be redrawn
 		self.container.Refresh()
 
-	def _doCategoryChange(self, oldCat, newCat):
+	def _doCategoryChange(self, oldCat, newCatId):
 		# Freeze and Thaw are called to stop visual artefacts while the GUI
 		# is being rebuilt. Without this, the controls can sometimes be seen being
 		# added.
 		self.container.Freeze()
+		newCat = self._getCategoryPanel(newCatId)
 		if oldCat:
 			oldCat.onPanelDeactivated()
 		self.currentCategory = newCat
@@ -410,23 +422,27 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def onCategoryChange(self,evt):
 		index = evt.GetIndex()
 		oldCat = self.currentCategory
-		newCat = self.categoryListItems[index]
-		self._doCategoryChange(oldCat, newCat)
+		if not oldCat or index != self.categoryClasses.index(oldCat.__class__):
+			try:
+				self._doCategoryChange(oldCat, index)
+			except ValueError as e:
+				newCatTitle = self.catListCtrl.GetItemText(index)
+				log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
 
 	def onOk(self,evt):
-		for panel in self.categoryListItems:
+		for panel in self.catIdToInstanceMap.itervalues():
 			panel.onSave()
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
-		for panel in self.categoryListItems:
+		for panel in self.catIdToInstanceMap.itervalues():
 			panel.onDiscard()
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		for panel in self.categoryListItems:
+		for panel in self.catIdToInstanceMap.itervalues():
 			panel.onSave()
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
@@ -599,7 +615,7 @@ class SpeechSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the synthesizer on the speech panel.
-		synthLabel = _("&Synthesizer:")
+		synthLabel = _("&Synthesizer")
 		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=synthLabel), wx.HORIZONTAL))
 		settingsSizerHelper.addItem(synthGroup)
 
@@ -1894,7 +1910,7 @@ class BrailleSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the braille display on the braille panel.
-		displayLabel = _("Braille &display:")
+		displayLabel = _("Braille &display")
 		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=displayLabel), wx.HORIZONTAL))
 		settingsSizerHelper.addItem(displayGroup)
 		
