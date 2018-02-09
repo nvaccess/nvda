@@ -37,6 +37,13 @@ class Ia2Web(IAccessible):
 		placeholder = self.IA2Attributes.get('placeholder', None)
 		return placeholder
 
+	def _get_isPresentableFocusAncestor(self):
+		if self.role==controlTypes.ROLE_TABLEROW:
+			# It is not useful to present IAccessible2 table rows in the focus ancestry as  cells contain row and column information anyway.
+			# Also presenting the rows would cause duplication of information
+			return False
+		return super(Ia2Web,self).isPresentableFocusAncestor
+
 class Document(Ia2Web):
 	value = None
 

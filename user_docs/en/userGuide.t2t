@@ -22,19 +22,20 @@ Major highlights include:
 - Built-in speech synthesizer supporting over 80 languages
 - Reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
-- Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
-- Ability to run entirely from a USB stick or other portable media without the need for installation
+- Support for many refreshable braille displays, including braille input on braille displays with a braille keyboard
+- Ability to run entirely from a USB flash drive or other portable media without the need for installation
 - Easy to use talking installer
-- Translated into 51 languages
+- Translated into 52 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
+- Announcing controls and text while using touch gestures
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
 - Support for Windows Command Prompt and console applications
 -
 
 ++ Internationalization ++[Internationalization]
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 51 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Burmese, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Lithuanian, Macedonian, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 52 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Burmese, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++[SpeechSynthesizerSupport]
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -125,7 +126,7 @@ If you have already closed this dialog or you are running an installed copy of N
 The Dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
 There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
- This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
+This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successful.
 Press OK to dismiss this dialog.
@@ -338,8 +339,10 @@ The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
 By default, the navigator object moves along with the System focus, though this behavior can be toggled on and off.
 
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+Note that braille follows both the [focus #SystemFocus] and [caret #SystemCaret] as well as object navigation and text review by default.
+If you want it to follow the focus and caret only, you need to [configure braille to be tethered to #BrailleTether] focus.
+In this case, braille will not follow object navigation and text review.
+If you want braille to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
 
 To navigate by object, use the following commands:
 
@@ -407,8 +410,8 @@ Review modes are a replacement for the older Flat Review concept found in NVDA.
 The following commands switch between review modes:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
-| switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode |
-| switch to previous review mode | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | switches to the previous available review mode |
+| Switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode |
+| Switch to previous review mode | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | switches to the previous available review mode |
 %kc:endInclude
 
 +++ Object Review +++[ObjectReview]
@@ -488,7 +491,6 @@ In addition, you can manually force focus mode, after which it will remain in ef
 | Open long description | NVDA+d | Opens a new window containing a long description for the element you are on if it has one. | 
 %kc:endInclude
 
-
 ++ Single Letter Navigation ++[SingleLetterNavigation]
 While in browse mode, for quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
 Note that not all of these commands are supported in every type of document.
@@ -523,8 +525,8 @@ To move to the beginning or end of containing elements such as lists and tables:
 || Name | Key | Description |
 | Move to start of container | shift+comma | Moves to the start of the container (list, table, etc.) where the caret is positioned |
 | Move past end of container | comma | Moves past the end of the container (list, table, etc.) where the caret is positioned |
-
 %kc:endInclude
+
 Some web applications such as Gmail, Twitter and Facebook use single letters as shortcut keys.
 If you want to use these while still being able to use your cursor keys to read in browse mode, you can temporarily disable NVDA's single letter navigation keys.
 %kc:beginInclude
@@ -1142,10 +1144,12 @@ Specifying 0 disables displaying of these messages completely.
 This option allows NVDA messages to be displayed on the braille display indefinitely.
 
 %kc:setting
-==== Braille Tethered to ====[BrailleTether]
+==== Tether Braille ====[BrailleTether]
 Key: NVDA+control+t
 
-This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
+This option allows you to choose whether the braille display will follow the system focus, the navigator object / review cursor, or both.
+When "automatically" is selected, NVDA will follow the system focus and caret by default.
+In this case, when the navigator object or the review cursor position is changed by means of explicit user interaction, NVDA will tether to review temporarily, until the focus or the caret changes.
 
 ==== Read by Paragraph ====[BrailleSettingsReadByParagraph]
 If enabled, braille will be displayed by paragraphs instead of lines.
@@ -1233,13 +1237,13 @@ If on, this option will cause speech to be interrupted each time the Enter key i
 ==== Allow skim reading in Say All ====[KeyboardSettingsSkimReading]
 If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
 
-==== Beep if Typing Lowercase Letters when Caps Lock is On ====[VoiceSettingsBeepLowercase]
+==== Beep if Typing Lowercase Letters when Caps Lock is On ====[KeyboardSettingsBeepLowercase]
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
 Generally, typing shifted letters with caps lock is unintentional and is usually due to not realizing that caps lock is enabled.
 Therefore, it can be quite helpful to be warned about this.
 
 %kc:setting
-==== Speak Command Keys ====[VoiceSettingsSpeakCommandKeys]
+==== Speak Command Keys ====[KeyboardSettingsSpeakCommandKeys]
 Key: NVDA+4
 
 When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
@@ -1338,7 +1342,7 @@ If reporting of object position information is turned on, this option allows NVD
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
-==== Report Object descriptions ====ObjectPresentationReportDescriptions]
+==== Report Object descriptions ====[ObjectPresentationReportDescriptions]
 Uncheck this checkbox if you don't wish to have the description reported along with objects.
 
 %kc:setting
@@ -1402,7 +1406,7 @@ After reading or precomposition data has been combined into a valid pictographic
 This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
 This option is on by default.
 
-+++ Browse Mode Settings (NVDA+control+b) +++BrowseModeSettings]
++++ Browse Mode Settings (NVDA+control+b) +++[BrowseModeSettings]
 The Browse Mode settings dialog can be found in the Preferences menu, under "Browse mode...".
 
 The dialog contains the following options:
@@ -1432,7 +1436,7 @@ This option is turned off by default.
 
 To toggle inclusion of layout tables from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-==== Configuring reporting of fields such as links and headings ====
+==== Configuring reporting of fields such as links and headings ====[BrowseModeLinksAndHeadings]
 Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are reported when navigating, such as links, headings and tables.
 
 ==== Automatic focus mode for focus changes ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
@@ -1830,14 +1834,6 @@ For more information, please visit the Audiologic website at www.audiologic.it.
 
 This synthesizer does not support [spelling functionality #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer for NVDA ++[Vocalizer]
-Nuance Vocalizer is a commercial, high quality voice synthesizer developed by Nuance Communications, Inc. and packaged specifically for NVDA by Tiflotecnia, Lda.
-It contains over 50 different voices you can install, speaking over 30 languages.
-All synthesizer components and voices are bundled in add-on packages, which allows for full usage in portable copies of NVDA.
-
-You can get more information about Nuance Vocalizer for NVDA and how to buy it on its website at [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-A percentage of sales of this product is donated to NV Access to fund further development of the NVDA screen reader.
-
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
 
@@ -1900,15 +1896,20 @@ For Focus 80 only:
 | Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
 Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
+Alternatively, you can connect an older Optelec display, such as a Braille Voyager, using a protocol converter supplied by Optelec.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
-While these displays do have a braille keyboard, they handle translation from braille to text themselves.
-Therefore, NVDA's braille input table setting is not relevant.
+Note: NVDA might be unable to use an ALVA BC6 display over Bluetooth when it is paired using the ALVA Bluetooth utility.
+When you have paired your device using this utility and NVDA is unable to detect your device, we recommend you to pair your ALVA display the regular way using the Windows Bluetooth settings.
 
-Following are the key assignments for this display with NVDA.
+Note: while some of these displays do have a braille keyboard, they handle translation from braille to text themselves by default.
+This means that NVDA's braille input system is not in use in the default situation (i.e. the input braille table setting has no effect).
+For ALVA displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
+
+Following are key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
@@ -1918,6 +1919,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move braille display to next line | t4 |
 | Scroll braille display forward | t5 or etouch3 |
 | Route to braille cell | routing |
+| Toggle HID keyboard simulation | t1+spEnter |
 | Move to top line in review | t1+t2 |
 | Move to bottom line in review | t4+t5 |
 | Toggle braille tethered to | t1+t3 |
@@ -1931,17 +1933,19 @@ Please see the display's documentation for descriptions of where these keys can 
 | downArrow key | spDown |
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
-| enter key | spEnter |
+| enter key | spEnter, enter|
 | Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
 | windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3 |
+| windows key | sp2+sp3, windows |
 | alt+tab key | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
+| alt key | alt |
+| control key | control |
 %kc:endInclude
 
 ++ Handy Tech Displays ++[HandyTech]
@@ -2448,6 +2452,86 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 || Name | Key |
 | Scroll braille display back | numpadMinus |
 | Scroll braille display forward | numpadPlus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
+The Esys, Esytime and Iris displays from [Eurobraille http://www.eurobraille.fr/] are supported by NVDA.
+Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
+Older Esytime devices only support USB.
+Iris displays can only be connected via a serial port.
+Therefore, for these displays, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialog.
+
+Iris and Esys displays have a braille keyboard with 10 keys.
+Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
+
+Following are the key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | switch1-6left, l1 |
+| Scroll braille display forward | switch1-6Right, l8 |
+| Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
+| Route to braille cell | routing, doubleRouting|
+| Move to previous line in review | joystick1Up |
+| Move to next line in review | joystick1Down |
+| Move to previous character in review | joystick1Left |
+| Move to next character in review | joystick1Right |
+| Switch to previous review mode | joystick1Left+joystick1Up |
+| Switch to next review mode | joystick1Right+joystick1Down |
+| Erase the last entered braille cell or character | backSpace |
+| Translate any braille input and press the enter key | backSpace+space |
+| insert key | dot3+dot5+space, l7 |
+| delete key | dot3+dot6+space |
+| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
+| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
+| leftArrow key | dot2+space, joystick2Left, leftArrow |
+| rightArrow key | dot5+space, joystick2Right, rightArrow |
+| upArrow key | dot1+space, joystick2Up, upArrow |
+| downArrow key | dot6+space, joystick2Down, downArrow |
+| enter key | joystick2Center |
+| pageUp key | dot1+dot3+space |
+| pageDown key | dot4+dot6+space |
+| numpad1 key | dot1+dot6+backspace |
+| numpad2 key | dot1+dot2+dot6+backspace |
+| numpad3 key | dot1+dot4+dot6+backspace |
+| numpad4 key | dot1+dot4+dot5+dot6+backspace |
+| numpad5 key | dot1+dot5+dot6+backspace |
+| numpad6 key | dot1+dot2+dot4+dot6+backspace |
+| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
+| numpad8 key | dot1+dot2+dot5+dot6+backspace |
+| numpad9 key | dot2+dot4+dot6+backspace |
+| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
+| numpadDecimal key | dot2+backspace |
+| numpadDivide key | dot3+dot4+backspace |
+| numpadMultiply key | dot3+dot5+backspace |
+| numpadMinus key | dot3+dot6+backspace |
+| numpadPlus key | dot2+dot3+dot5+backspace |
+| numpadEnter key | dot3+dot4+dot5+backspace |
+| escape key | dot1+dot2+dot4+dot5+space, l2 |
+| tab key | dot2+dot5+dot6+space, l3 |
+| shift+tab key | dot2+dot3+dot5+space |
+| printScreen key | dot1+dot3+dot4+dot6+space |
+| pause key | dot1+dot4+space |
+| applications key | dot5+dot6+backspace |
+| f1 key | dot1+backspace |
+| f2 key | dot1+dot2+backspace |
+| f3 key | dot1+dot4+backspace |
+| f4 key | dot1+dot4+dot5+backspace |
+| f5 key | dot1+dot5+backspace |
+| f6 key | dot1+dot2+dot4+backspace |
+| f7 key | dot1+dot2+dot4+dot5+backspace |
+| f8 key | dot1+dot2+dot5+backspace |
+| f9 key | dot2+dot4+backspace |
+| f10 key | dot2+dot4+dot5+backspace |
+| f11 key | dot1+dot3+backspace |
+| f12 key | dot1+dot2+dot3+backspace |
+| windows key | dot1+dot2+dot3+dot4+backspace |
+| capsLock key | dot7+backspace, dot8+backspace |
+| numLock key | dot3+backspace, dot6+backspace |
+| shift key | dot7+space, l4 |
+| control key | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
+| alt key | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
+| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

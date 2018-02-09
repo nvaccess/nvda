@@ -197,8 +197,16 @@ constexpr int wdLanguageUnknown = 9999999;
 constexpr int wdInlineShapeEmbeddedOLEObject = 1;
 constexpr int wdInlineShapePicture = 3;
 constexpr int wdInlineShapeLinkedPicture = 4;
+constexpr int wdInlineShapeChart = 12;
 
 // WdGutterStyle Enumeration
 constexpr int wdGutterPosLeft = 0;
 constexpr int wdGutterPosRight = 2;
 constexpr int wdGutterPosTop = 1;
+
+// chart constants
+constexpr int wdDISPID_INLINESHAPE_HASCHART = 148;
+constexpr int wdDISPID_INLINESHAPE_CHART = 149;
+constexpr int wdDISPID_CHART_CHARTTITLE = 1610743811;
+constexpr int wdDISPID_CHART_HASTITLE = 1610743809;
+constexpr int wdDISPID_CHARTTITLE_TEXT = 1610743820;
