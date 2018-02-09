@@ -354,12 +354,10 @@ class UpdateAskInstallDialog(wx.Dialog):
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
-		gui.mainFrame.prePopup()
-		self.ShowModal()
 
 	def onInstallButton(self, evt):
 		executeUpdate(self.destPath)
-		self.Destroy()
+		self.EndModal(wx.ID_OK)
 
 	def onPostponeButton(self, evt):
 		finalDest=os.path.join(storeUpdatesDir, os.path.basename(self.destPath))
@@ -376,7 +374,7 @@ class UpdateAskInstallDialog(wx.Dialog):
 		state["pendingUpdateFile"]=finalDest
 		state["pendingUpdateVersion"]=self.version
 		saveState()		
-		self.Destroy()
+		self.EndModal(wx.ID_CLOSE)
 
 class UpdateDownloader(object):
 	"""Download and start installation of an updated version of NVDA, presenting appropriate user interface.
@@ -513,7 +511,7 @@ class UpdateDownloader(object):
 
 	def _downloadSuccess(self):
 		self._stopped()
-		wx.CallAfter(UpdateAskInstallDialog, gui.mainFrame, self.destPath, self.version)
+		gui.runScriptModalDialog(UpdateAskInstallDialog(gui.mainFrame, self.destPath, self.version))
 
 class DonateRequestDialog(wx.Dialog):
 	# Translators: The message requesting donations from users.
