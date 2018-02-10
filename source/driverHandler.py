@@ -1,0 +1,204 @@
+# -*- coding: UTF-8 -*-
+#driverHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2006-2018 NV Access Limited, Leonard de Ruijter
+
+"""Handler for driver functionality that is global to synthesizers nand braille displays."""
+
+from baseObject import AutoPropertyObject
+import config
+from copy import deepcopy
+
+class Driver(AutoPropertyObject):
+	"""
+	Abstract base class for drivers, such as speech synthesizer and braille display drivers.
+
+	At a minimum, drivers must set L{name}, L{description} and L{configSection} and override the L{check} method.
+
+	L{supportedSettings} should be set as appropriate for the settings supported by the driver.
+	Each setting is retrieved and set using attributes named after the setting;
+	e.g. the L{dotFirmness} attribute is used for the L{dotFirmness} setting.
+	These will usually be properties.
+	@ivar supportedSettings: The settings supported by the driver.
+	@type supportedSettings: list or tuple of L{DriverSetting}
+	"""
+
+	#: The name of the driver; must be the original module file name.
+	#: @type: str
+	name = ""
+	#: A description of the driver.
+	#: @type: str
+	description = ""
+	#: The configuration section where driver specific subsections should be saved.
+	#: @type: str
+	configSection = ""
+
+	def __init__(self):
+		"""Initialize this driver.
+		This method can also set default settings for the driver.
+		@raise Exception: If an error occurs.
+		@postcondition: This driver can be used.
+		"""
+
+	def terminate(self):
+		"""Terminate this driver.
+		This should be used for any required clean up.
+		@precondition: L{initialize} has been called.
+		@postcondition: This driver can no longer be used.
+		"""
+
+	def _get_supportedSettings(self):
+		raise NotImplementedError
+
+	@classmethod
+	def check(cls):
+		"""Determine whether this driver is available.
+		The driver will be excluded from the list of available drivers if this method returns C{False}.
+		For example, if a speech synthesizer requires installation and it is not installed, C{False} should be returned.
+		@return: C{True} if this driver is available, C{False} if not.
+		@rtype: bool
+		"""
+		return False
+
+	def isSupported(self,settingName):
+		"""Checks whether given setting is supported by the driver.
+		@rtype: l{bool}
+		"""
+		for s in self.supportedSettings:
+			if s.name==settingName: return True
+		return False
+
+	def getConfigSpec(self):
+		spec=deepcopy(config.confspec[self.configSection]["__many__"])
+		for setting in self.supportedSettings:
+			spec[setting.name]=setting.configSpec
+		return spec
+
+	def saveSettings(self):
+		conf=config.conf[self.configSection][self.name]
+		# Make sure the config spec is up to date, so the config validator does its work.
+		conf.spec.update(self.getConfigSpec())
+		for setting in self.supportedSettings:
+			try:
+				conf[setting.name]=getattr(self,setting.name)
+			except UnsupportedConfigParameterError:
+				log.debugWarning("Unsupported setting %s; ignoring"%s.name, exc_info=True)
+				continue
+
+	def loadSettings(self, onlyChanged=False):
+		c=config.conf[self.configSection][self.name]
+		for s in self.supportedSettings:
+			if c.get(s.name) is None:
+				continue
+			val=c[s.name]
+			if onlyChanged and getattr(self,s.name)==val:
+				continue
+			try:
+				setattr(self,s.name,val)
+			except UnsupportedConfigParameterError:
+				log.debugWarning("Unsupported setting %s; ignoring"%s.name, exc_info=True)
+				continue
+
+	@classmethod
+	def _paramToPercent(cls, current, min, max):
+		"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
+		@param current: The current value.
+		@type current: int
+		@param min: The minimum value.
+		@type current: int
+		@param max: The maximum value.
+		@type max: int
+		"""
+		return int(round(float(current - min) / (max - min) * 100))
+
+	@classmethod
+	def _percentToParam(cls, percent, min, max):
+		"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum raw parameter values.
+		@param percent: The current percentage.
+		@type percent: int
+		@param min: The minimum raw parameter value.
+		@type min: int
+		@param max: The maximum raw parameter value.
+		@type max: int
+		"""
+		return int(round(float(percent) / 100 * (max - min) + min))
+
+class DriverSetting(AutoPropertyObject):
+	"""Represents a synthesizer or braille display setting such as voice, variant or dot firmness.
+	"""
+	#: Configuration specification of this particular setting for config file validator.
+	#: @type: str
+	configSpec="string(default=None)"
+
+	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,displayName=None):
+		"""
+		@param name: internal name of the setting
+		@type name: str
+		@param displayNameWithAccelerator: the localized string shown in voice or braille settings dialog
+		@type displayNameWithAccelerator: str
+		@param displayName: the localized string used in synth settings ring or None to use displayNameWithAccelerator
+		@type displayName: str
+		@param availableInSynthSettingsRing: Will this option be available in synthesizer settings ring?
+		@type availableInSynthSettingsRing: bool
+		"""
+		self.name=name
+		self.displayNameWithAccelerator=displayNameWithAccelerator
+		if not displayName:
+			# Strip accelerator from displayNameWithAccelerator.
+			displayName=displayNameWithAccelerator.replace("&","")
+		self.displayName=displayName
+		self.availableInSynthSettingsRing=availableInSynthSettingsRing
+
+class NumericDriverSetting(DriverSetting):
+	"""Represents a numeric driver setting such as rate, volume, pitch or dot firmness."""
+
+	def _get_configSpec(self):
+		return "integer(default={defaultVal},min={minVal},max={maxVal})".format(
+			defaultVal=self.defaultVal,minVal=self.minVal,maxVal=self.maxVal)
+
+	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,
+		defaultVal=50,minVal=0,maxVal=100,minStep=1,normalStep=5,largeStep=10,displayName=None):
+		"""
+		@param defaultVal: Specifies the default value for a numeric driver setting.
+		@type defaultVal: int
+		@param minVal: Specifies the minimum valid value for a numeric driver setting.
+		@type minVal: int
+		@param maxVal: Specifies the maximum valid value for a numeric driver setting.
+		@type maxVal: int
+		@param minStep: Specifies the minimum step between valid values for each numeric setting. For example, if L{minStep} is set to 10, setting values can only be multiples of 10; 10, 20, 30, etc.
+		@type minStep: int
+		@param normalStep: Specifies the step between values that a user will normally prefer. This is used in the settings ring.
+		@type normalStep: int
+		@param largeStep: Specifies the step between values if a large adjustment is desired. This is used for pageUp/pageDown on sliders in the Voice Settings dialog.
+		@type largeStep: int
+		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
+		"""
+		super(NumericDriverSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		self.minVal=minVal
+		self.defaultVal=max(defaultVal,self.minVal)
+		self.maxVal=max(maxVal,self.defaultVal)
+		self.minStep=minStep
+		self.normalStep=max(normalStep,minStep)
+		self.largeStep=max(largeStep,self.normalStep)
+
+class BooleanDriverSetting(DriverSetting):
+	"""Represents a boolean driver setting such as rate boost or automatic time sync.
+	"""
+
+	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,displayName=None,defaultVal=False):
+		"""
+		@param defaultVal: Specifies the default value for a boolean driver setting.
+		@type defaultVal: bool
+		"""
+		super(BooleanDriverSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		self.defaultVal=defaultVal
+
+	def _get_configSpec(self):
+		return "boolean(default={defaultVal})".format(defaultVal=str(self.defaultVal).lower())
+
+class UnsupportedConfigParameterError(NotImplementedError):
+	"""
+	Raised when changing or retrieving a driver setting that is unsupported for the connected device.
+	"""

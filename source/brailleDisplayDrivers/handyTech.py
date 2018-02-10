@@ -24,6 +24,7 @@ from globalCommands import SCRCAT_BRAILLE
 from logHandler import log
 import time
 import datetime
+from driverHandler import BooleanDriverSetting
 
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
@@ -553,6 +554,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	isThreadSafe = True
 	receivesAckPackets = True
 	timeout = 0.2
+	supportedSettings=(
+		braille.BrailleDisplayDriver.BrailleInputSetting(),
+		# Translators: Name of the ATC (active tactile control) setting in braille settings.
+		# Active tactile control should be left untranslated.
+		BooleanDriverSetting("atc",_("Enable &Active Tactile Control for supported displays")),
+	)
+
 
 	@classmethod
 	def check(cls):
@@ -669,6 +677,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# We also must sleep after closing, as it sometimes takes some time for the device to disconnect.
 			# This has been observed for Active Braille displays.
 			time.sleep(self.timeout)
+
+	def _get_atc(self):
+		return self._atc
+
+	def _set_atc(self, state):
+		if self._atc is state:
+			return
+		if isinstance(self._model,AtcMixin):
+			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, state)
+		else:
+			log.debugWarning("Changing ATC setting for unsupported device %s"%self._model.name)
+		# Regardless whether this setting is supported or not, we want to safe its state.
+		self._atc = state
 
 	def _get_atc(self):
 		return self._atc

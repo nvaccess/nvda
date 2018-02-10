@@ -11,9 +11,10 @@ import _espeak
 import Queue
 import threading
 import languageHandler
-from synthDriverHandler import SynthDriver,VoiceInfo,BooleanSynthSetting
+from synthDriverHandler import SynthDriver,VoiceInfo
 import speech
 from logHandler import log
+from driverHandler import BooleanDriverSetting
 
 class SynthDriver(SynthDriver):
 	name = "espeak"
@@ -25,7 +26,7 @@ class SynthDriver(SynthDriver):
 		SynthDriver.RateSetting(),
 		# Translators: This is the name of the rate boost voice toggle
 		# which further increases the speaking rate when enabled.
-		BooleanSynthSetting("rateBoost",_("Rate boos&t")),
+		BooleanDriverSetting("rateBoost",_("Rate boos&t")),
 		SynthDriver.PitchSetting(),
 		SynthDriver.InflectionSetting(),
 		SynthDriver.VolumeSetting(),

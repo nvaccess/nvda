@@ -8,6 +8,7 @@
 import sys
 import itertools
 import os
+import driverHandler
 import pkgutil
 import ctypes.wintypes
 import threading
@@ -1572,7 +1573,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = 0
 			return
 		# See if the user have defined a specific port to connect to
-		if name not in config.conf["braille"]:
+		firstLoad = not config.conf["braille"].isSet(name)
+		if firstLoad:
 			# No port was set.
 			config.conf["braille"][name] = {"port" : ""}
 		port = config.conf["braille"][name].get("port")
@@ -1593,6 +1595,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					# Start the thread if it wasn't already.
 					_BgThread.start()
 				newDisplay = newDisplay(**kwargs)
+				if not firstLoad:
+					newDisplay.loadSettings()
+				else:
+					newDisplay.saveSettings() #save defaults
 				if self.display:
 					try:
 						self.display.terminate()
@@ -2007,7 +2013,7 @@ def terminate():
 	handler.terminate()
 	handler = None
 
-class BrailleDisplayDriver(baseObject.AutoPropertyObject):
+class BrailleDisplayDriver(driverHandler.Driver):
 	"""Abstract base braille display driver.
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
 
@@ -2020,13 +2026,11 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
 
 	@see: L{hwIo} for raw serial and HID I/O.
+
+	There are factory functions to create L{driverHandler.DriverSetting} instances for common display specific settings; e.g. L{DotFirmnessSetting}.
 	"""
-	#: The name of the braille display; must be the original module file name.
-	#: @type: str
-	name = ""
-	#: A description of the braille display.
-	#: @type: str
-	description = ""
+	configSection = "braille"
+	supportedSettings = ()
 	#: Whether this driver is thread-safe.
 	#: If it is, NVDA may initialize, terminate or call this driver  on any thread.
 	#: This allows NVDA to read from and write to the display in the background,
@@ -2052,16 +2056,6 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	#: @type: float
 	timeout = 0.2
 
-	@classmethod
-	def check(cls):
-		"""Determine whether this braille display is available.
-		The display will be excluded from the list of available displays if this method returns C{False}.
-		For example, if this display is not present, C{False} should be returned.
-		@return: C{True} if this display is available, C{False} if not.
-		@rtype: bool
-		"""
-		return False
-
 	def terminate(self):
 		"""Terminate this display driver.
 		This will be called when NVDA is finished with this display driver.
@@ -2069,6 +2063,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		Subclasses should call the superclass method first.
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
+		super(BrailleDisplayDriver,self).terminate()
 		# Clear the display.
 		try:
 			self.display([0] * self.numCells)
@@ -2143,6 +2138,18 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 			raise ctypes.WinError()
 		self._awaitingAck = False
 		_BgThread.queueApc(_BgThread.executor)
+
+	@classmethod
+	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal):
+		"""Factory function for creating dot firmness setting."""
+		# Translators: Label for a setting in braille settings dialog.
+		return driverHandler.NumericDriverSetting("dotFirmness",_("Dot firm&ness"),defaultVal=defaultVal,minVal=minVal,maxVal=maxVal)
+
+	@classmethod
+	def BrailleInputSetting(cls):
+		"""Factory function for creating braille input setting."""
+		# Translators: Label for a setting in braille settings dialog.
+		return driverHandler.BooleanDriverSetting("brailleInput",_("Braille inp&ut"))
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.

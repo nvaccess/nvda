@@ -2,15 +2,16 @@ import baseObject
 import config
 import synthDriverHandler
 import queueHandler
+import driverHandler
 
 class SynthSetting(baseObject.AutoPropertyObject):
 	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
 	def __init__(self,synth,setting,min=0,max=100):
-		self.synth=synth
-		self.setting=setting
-		self.min=min
-		self.max=max
-		self.step = setting.normalStep if isinstance(setting,synthDriverHandler.NumericSynthSetting) else 1
+		self.synth = synth
+		self.setting = setting
+		self.min = setting.minVal  if isinstance(setting,driverHandler.NumericDriverSetting) else min
+		self.max = setting.maxVal  if isinstance(setting,driverHandler.NumericDriverSetting) else max
+		self.step = setting.normalStep if isinstance(setting,driverHandler.NumericDriverSetting) else 1
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)
@@ -75,7 +76,7 @@ class BooleanSynthSetting(SynthSetting):
 
 class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
-	 A synth settings ring which enables the user to change to the next and previous settings and ajust the selected one
+	A synth settings ring which enables the user to change to the next and previous settings and ajust the selected one
 	It was written to facilitate the implementation of a way to change the settings resembling the window-eyes way.
 	"""
 
@@ -134,9 +135,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if not s.availableInSynthSettingsRing: continue
 			if prevName==s.name: #restore the last setting
 				self._current=len(list)
-			if isinstance(s,synthDriverHandler.NumericSynthSetting):
+			if isinstance(s,driverHandler.NumericDriverSetting):
 				cls=SynthSetting
-			elif isinstance(s,synthDriverHandler.BooleanSynthSetting):
+			elif isinstance(s,driverHandler.BooleanDriverSetting):
 				cls=BooleanSynthSetting
 			else:
 				cls=StringSynthSetting
