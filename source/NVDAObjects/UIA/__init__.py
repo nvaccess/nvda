@@ -964,6 +964,21 @@ class UIA(Window):
 		except Exception as e:
 			ret="Exception: %s"%e
 		info.append("UIA className: %s"%ret)
+		patternsAvailable = []
+		patternAvailableConsts = dict(
+			(const, name) for name, const in UIAHandler.__dict__.iteritems()
+			if name.startswith("UIA_Is") and name.endswith("PatternAvailablePropertyId")
+		)
+		self._prefetchUIACacheForPropertyIDs(list(patternAvailableConsts))
+		for const, name in patternAvailableConsts.iteritems():
+			try:
+				res = self._getUIACacheablePropertyValue(const)
+			except COMError:
+				res = False
+			if res:
+				# Every name has the same format, so the string indexes can be safely hardcoded here.
+				patternsAvailable.append(name[6:-19])
+		info.append("UIA patterns available: %s"%", ".join(patternsAvailable))
 		return info
 
 	def _get_name(self):
