@@ -1279,7 +1279,7 @@ class GlobalCommands(ScriptableObject):
 	script_sayAll.__doc__ = _("Reads from the system caret up to the end of the text, moving the caret as it goes")
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
-	def _reportFormattingHelper(self, info):
+	def _reportFormattingHelper(self, info, browseable=False):
 		formatConfig={
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
@@ -1304,8 +1304,7 @@ class GlobalCommands(ScriptableObject):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 
-		repeats=scriptHandler.getLastScriptRepeatCount()
-		if repeats==0:
+		if not browseable:
 			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
 			if text:
 				textList.append(text)
@@ -1316,7 +1315,7 @@ class GlobalCommands(ScriptableObject):
 				return
 				
 			ui.message(" ".join(textList))
-		elif repeats==1:
+		else:
 			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
 			if text:
 				textList.append(text)
@@ -1331,7 +1330,11 @@ class GlobalCommands(ScriptableObject):
 
 	def script_reportFormatting(self,gesture):
 		info=api.getReviewPosition()
-		self._reportFormattingHelper(info)
+		repeats=scriptHandler.getLastScriptRepeatCount()
+		if repeats==0:
+			self._reportFormattingHelper(info,False)
+		elif repeats==1:
+			self._reportFormattingHelper(info,True)
 	# Translators: Input help mode message for report formatting command.
 	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document. If pressed twice, presents the information in browse mode")
 	script_reportFormatting.category=SCRCAT_TEXTREVIEW
@@ -1916,8 +1919,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 			ui.message(_("No formatting information"))
 			return
-		self._reportFormattingHelper(info)
-	script_braille_reportFormatting.__doc__ = _("Reports formatting info for the text under this braille cell. If pressed twice, presents the information in browse mode")
+		self._reportFormattingHelper(info, False)
+	script_braille_reportFormatting.__doc__ = _("Reports formatting info for the text under this braille cell")
 	script_braille_reportFormatting.category=SCRCAT_BRAILLE
 
 	def script_braille_previousLine(self, gesture):
