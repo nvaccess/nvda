@@ -1917,7 +1917,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No formatting information"))
 			return
 		self._reportFormattingHelper(info)
-	script_braille_reportFormatting.__doc__ = _("Reports formatting info for the text under this braille cell")
+	script_braille_reportFormatting.__doc__ = _("Reports formatting info for the text under this braille cell. If pressed twice, presents the information in browse mode")
 	script_braille_reportFormatting.category=SCRCAT_BRAILLE
 
 	def script_braille_previousLine(self, gesture):

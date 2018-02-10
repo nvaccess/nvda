@@ -1919,7 +1919,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move braille display to next line | t4 |
 | Scroll braille display forward | t5 or etouch3 |
 | Route to braille cell | routing |
-| Report formatting under braille cell | secondRouting |
+| Report text formatting under braille cell | secondary routing |
 | Toggle HID keyboard simulation | t1+spEnter |
 | Move to top line in review | t1+t2 |
 | Move to bottom line in review | t4+t5 |
@@ -2253,7 +2253,7 @@ Following are the Papenmeier command assignments for NVDA:
 | Move to first contained object | dn2 |
 | Move to previous object | left2 |
 | Move to next object | right2 |
-| Report text formatting | upper routing row |
+| Report text formatting under braille cell | upper routing row |
 %kc:endInclude
 
 The Trio model has four additional keys which are in front of the braille keyboard.
@@ -2327,7 +2327,7 @@ Devices with EAB:
 | Move to first contained object | dn2 |
 | Move to next object | right2 |
 | Move to previous object | left2 |
-| Report text formatting | Upper routing strip |
+| Report text formatting under braille cell | upper routing strip |
 
 BRAILLEX Tiny:
 || Name | Key |
@@ -2342,7 +2342,7 @@ BRAILLEX Tiny:
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
 | Move to next object | r1+right |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Report title | l1+up |
 | Report status bar | l2+down |
 
@@ -2351,7 +2351,7 @@ BRAILLEX 2D Screen:
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
 | Toggle braille tethered to | r2 |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
 | Scroll braille display forward | right |
