@@ -1290,7 +1290,7 @@ class GlobalCommands(ScriptableObject):
 			"reportBorderStyle":True,"reportBorderColor":True,
 		}
 		textList=[]
-		info=api.getReviewPosition()
+		info=api.getReviewPosition().copy()
 
 		# First, fetch indentation.
 		line=info.copy()
