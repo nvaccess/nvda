@@ -766,7 +766,14 @@ Tries to force this object to take the focus.
 		@return: True if this object is protected (hides its input for passwords), or false otherwise
 		@rtype: boolean
 		"""
-		return False
+		# Objects with the protected state, or with a role of passWordEdit should always be protected.
+		isProtected=(controlTypes.STATE_PROTECTED in self.states or self.role==controlTypes.ROLE_PASSWORDEDIT)
+		# #7908: If this object is currently protected, keep it protected for the rest of its lifetime.
+		# The most likely reason it would lose its protected state is because the object is dying.
+		# In this case it is much more secure to assume it is still protected, thus the end of PIN codes will not be accidentally reported. 
+		if isProtected:
+			self.isProtected=isProtected
+		return isProtected
 
 	def _get_indexInParent(self):
 		"""The index of this object in its parent object.
