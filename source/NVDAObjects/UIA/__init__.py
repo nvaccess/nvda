@@ -712,7 +712,11 @@ class UIA(Window):
 			return
 		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
 		for ID in IDs:
-			cacheRequest.addProperty(ID)
+			try:
+				cacheRequest.addProperty(ID)
+			except COMError:
+				log.debug("Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"%ID)
+				continue
 		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
 		for ID in IDs:
 			elementCache[ID]=cacheElement
