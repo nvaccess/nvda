@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Joseph Lee, Mohammad Suliman
+#Copyright (C) 2009-2018 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V.
 
 """Support for UI Automation (UIA) controls."""
 
@@ -716,7 +716,6 @@ class UIA(Window):
 				cacheRequest.addProperty(ID)
 			except COMError:
 				log.debug("Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"%ID)
-				continue
 		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
 		for ID in IDs:
 			elementCache[ID]=cacheElement
