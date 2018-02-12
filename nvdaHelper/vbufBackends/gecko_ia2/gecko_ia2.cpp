@@ -233,7 +233,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	// Defaults.
 	this->shouldDisableTableHeaders = false;
 	this->hasEncodedAccDescription = false;
-	this->canDetectLabelVisibility=false;
+	this->canDetectLabelVisibility=true;
 
 	IServiceProvider* serv = NULL;
 	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
@@ -283,17 +283,33 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 }
 
 bool isLabelVisible(IAccessible2* pacc2) {
-	VARIANT child, target;
-	child.vt = VT_I4;
-	child.lVal = 0;
-	if (pacc2->accNavigate(NAVRELATION_LABELLED_BY, child, &target) != S_OK)
-		return false;
-	IAccessible2* targetAcc;
 	HRESULT res;
-	res = target.pdispVal->QueryInterface(IID_IAccessible2, (void**)&targetAcc);
-	VariantClear(&target);
-	if (res != S_OK)
+	IAccessible2_2* pacc2_2=NULL;
+	if(pacc2->QueryInterface(IID_IAccessible2_2,(void**)&pacc2_2)!=S_OK) {
 		return false;
+	}
+	IUnknown** pUnkTargets=NULL;
+	long nTargets=0;
+	res=pacc2_2->get_relationTargetsOfType(L"labelledBy",1,&pUnkTargets,&nTargets);
+	pacc2_2->Release();
+	if(res!=S_OK) {
+		return false;
+	}
+	if(nTargets<=0) {
+		return false;
+	}
+	IAccessible2* targetAcc=NULL;
+	res=pUnkTargets[0]->QueryInterface(IID_IAccessible2,(void**)&targetAcc);
+	for(long i=0;i<nTargets;++i) {
+		pUnkTargets[i]->Release();
+	}
+	CoTaskMemFree(pUnkTargets);
+	if(res!=S_OK) {
+		return false;
+	}
+	VARIANT child;
+	child.vt=VT_I4;
+	child.lVal=0;
 	VARIANT state;
 	res = targetAcc->get_accState(child, &state);
 	targetAcc->Release();
