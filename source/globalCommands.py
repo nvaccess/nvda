@@ -1298,6 +1298,7 @@ class GlobalCommands(ScriptableObject):
 		if indentation:
 			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
 		
+		info=info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
 		for field in info.getTextWithFields(formatConfig):
