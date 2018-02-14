@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -628,7 +628,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
 		# Translators: This is the label for the button used to change synthesizer,
 		# it appears in the context of a synthesizer group on the speech settings panel.
-		changeSynthBtn = wx.Button(self, label=_("Change&..."))
+		changeSynthBtn = wx.Button(self, label=_("C&hange..."))
 		synthGroup.addItem(
 			guiHelper.associateElements(
 				self.synthNameCtrl,
@@ -1918,7 +1918,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		self.displayNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=displayDesc, style=wx.TE_READONLY)
 		# Translators: This is the label for the button used to change braille display,
 		# it appears in the context of a braille display group on the braille settings panel.
-		changeDisplayBtn = wx.Button(self, label=_("Change&..."))
+		changeDisplayBtn = wx.Button(self, label=_("C&hange..."))
 		displayGroup.addItem(
 			guiHelper.associateElements(
 				self.displayNameCtrl,
