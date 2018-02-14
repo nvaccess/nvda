@@ -436,14 +436,19 @@ class AppModule(baseObject.ScriptableObject):
 
 	def isGoodUIAWindow(self,hwnd):
 		"""
-		returns true if the UIA implementation of the given window must be used, regardless whether native or not.
+		returns C{True} if the UIA implementation of the given window must be used, regardless whether native or not.
+		This function is the counterpart of and takes precedence over L{isBadUIAWindow}.
+		If both functions return C{False}, the decision of whether to use UIA for the window is left to core.
 		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
 		"""
 		return False
 
 	def isBadUIAWindow(self,hwnd):
 		"""
-		returns true if the UIA implementation of the given window must be ignored due to it being broken in some way.
+		returns C{True} if the UIA implementation of the given window must be ignored due to it being broken in some way.
+		This function is the counterpart of L{isGoodUIAWindow}.
+		When both functions return C{True}, L{isGoodUIAWindow} takes precedence.
+		If both functions return C{False}, the decision of whether to use UIA for the window is left to core.
 		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
 		"""
 		return False
