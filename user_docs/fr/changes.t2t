@@ -4,7 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.1 =
-
+Points forts de cette version : support des graphiques sous Microsoft word et Powerpoint, le support de nouveaux terminaux braille : Eurobraille et le convertisseur de protocole Optelec, support amélioré des terminaux braille Hims et Optelec, améliorations de performances pour Mozilla Firefox 58 et au-delà, et bien d'autres choses.
 
 == Nouvelles Fonctionnalités ==
 - Il est maintenant possible d'interagir avec les diagrammes sous Microsoft Word et Microsoft Powerpoint, de la même manière que sous Microsoft Excel. (#7046)
@@ -16,6 +16,8 @@ Quoi de Neuf dans NVDA
 - Ajout du support du convertisseur de protocole Optelec, un mécanisme permettant d'utiliser les terminaux Braille Voyager et Satellite avec le protocole de communication ALVA BC6. (#6731)
 - Il est maintenant possible d'utiliser la saisie braille avec un terminal ALVA 640 Comfort braille. (#7733) 
  - Les fonctionnalités de saisie braille de NVDA peuvent être utilisées avec  ceux-ci ainsi qu'avec les autres terminaux BC6 possédant le firmware 3.0.0 et au-delà.
+- Support initial de Google Sheets avec le mode Braille activé. (#7935)
+- Support des terminaux braille Eurobraille Esys, Esytime et Iris . (#7488)
 
 
 == Changements ==
@@ -34,14 +36,15 @@ Quoi de Neuf dans NVDA
 - La détection des touches de défilement de l'afficheur Hims Smart Beetle n'est plus aléatoire. (#6086)
 - Une légère amélioration de performances à l'affichage d'un contenu important sous Mozilla Firefox 58 et au-delà. (#7719)
 - Sous Microsoft Outlook, la lecture de courriels contenant des tableaux ne provoque plus d'erreurs. (#6827)
-- Les gestes de commandes de terminaux braille qui émulent les modificateurs de touches système peuvent maintenant être combinés avec d'autres touches émulées si un ou plusieurs des gestes émulés sont spécifique au modèle de terminal. (#7783)
+- Les gestes de commandes de terminaux braille qui émulent les modificateurs de touches système peuvent maintenant être combinés avec d'autres touches émulées si un ou plusieurs des gestes émulés sont spécifiques au modèle de terminal. (#7783)
 - Sous Mozilla Firefox, le mode navigation fonctionne maintenant correctement dans les fenêtres contextuelles Créées par des extensions telles que LastPass et bitwarden. (#7809)
 - NVDA ne se bloque plus de temps en temps à chaque changement de focus si Firefox ou Chrome ne répondent plus en raison d'un bloquage ou d'un plantage. (#7818)
 - Dans les clients Twitter tels que Chicken Nugget, NVDA n'ignorera plus les 20 derniers caractères des tweets de 280 caractères lors de la lecture. (#7828)
 - NVDA utilise maintenant la langue appropriée pour l'annonce des symboles quand du texte est sélectionné. (#7687)
 - Dans les versions récentes d'Office 365, il est de nouveau possible de naviguer dans les diagrammes Excel en utilisant les flèches. (#7046)
--  En sortie vocale et braille, l'état des contrôles sera maintenant toujours indiqués dans le même ordre, qu'il soit positif ou négatif. Fixes #7076
+- En sortie vocale et braille, l'état des contrôles sera maintenant toujours indiqués dans le même ordre, qu'il soit positif ou négatif. #7076
 - Dans les applications telles que Windows 10 Mail, NVDA ne manquera plus d'annoncer les caractères effacés lors de l'appui sur retour-arrière. (#7456)
+- Toutes les touches du terminal braille Hims Braille Sense Polaris fonctionnent maintenant comme prévu. (#7865)
 
 
 == Changements pour les Développeurs ==
@@ -52,6 +55,8 @@ Quoi de Neuf dans NVDA
 - Implémentation d'un système générique dans braille.BrailleDisplayDriver pour communiquer avec les terminaux qui envoient des paquets de confirmation. Consultez le pilote braille handyTech comme exemple. (#7590, #7721)
 - Une nouvelle variable "isAppX" dans le module config peut être utilisée pour détecter si NVDA s'exécute comme une application Windows Desktop Bridge Store. (#7851)
 - Pour les implémentations de document telles que NVDAObjects ou browseMode qui ont un textInfo, il existe maintenant une nouvelle classe documentBase.documentWithTableNavigation dont on peut hériter pour obtenir des scripts de navigation dans les tableaux standard. Veuillez vous référer à cette classe pour voir quelles méthodes helper doivent être fournies par votre implémentation pour que la navigation dans les tableaux fonctionne. (#7849)
+- Le fichier batch scons prend maintenant mieux en compte la présence de Python 3, en utilisant le launcher pour lancer spécifiquement python 2.7 32 bit. (#7541)
+- hwIo.Hid prend maintenant un paramètre additionnel exclusive, dont la valeur par défaut est True. Si initialisé à False, les autres applications peuvent accéder au périphérique quand il est connecté à NVDA. (#7859)
 
 
 = 2017.4 =

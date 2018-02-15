@@ -1834,14 +1834,6 @@ Pour plus d'informations, veuillez visiter le site Audiologic à www.audiologic.
 
 Ce synthétiseur ne supporte pas la [fonction d'épellation #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer pour NVDA ++[Vocalizer]
-Nuance Vocalizer est une synthèse vocale commerciale de haute qualité développée par Nuance Communications, Inc., et mise en module complémentaire NVDA par Tiflotecnia, Lda.
-Elle comprend plus de 50 voix différentes que vous pouvez installer, parlant plus de 30 langues.
-Tous les composants de la synthèse vocale et les voix sont sous forme de paquets de modules complémentaires, ce qui permet une utilisation avec la copie portable de NVDA.
-
-Vous pouvez obtenir plus d'informations sur Vocalizer pour NVDA, et où l'acheter, sur le site internet [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Un pourcentage des ventes de ce produit est donné à NVAccess, pour financer le développement de NVDA.
-
 + Terminaux braille pris en charge +[SupportedbrailleDisplays]
 Cette section contient des informations sur les terminaux braille pris en charge par NVDA.
 
@@ -1904,13 +1896,18 @@ Pour le Focus 80 seulement :
 | Défiler vers l'avant | barreBumperBas, barreBumperBas |
 %kc:endInclude
 
-++ Les terminaux Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Séries Optelec ALVA 6/convertisseur de protocole ++[OptelecALVA]
 Les terminaux BC640 et BC680 de chez [Optelec http://www.optelec.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
+Par ailleurs, vous pouvez connecter un terminal Optelec plus ancien, tel qu'un Braille Voyager, en utilisant un convertisseur de protocole fourni par Optelec.
 Vous n'avez besoin d'aucun pilote particulier pour utiliser ces terminaux.
 Il suffit de brancher le terminal et de configurer NVDA pour l'utiliser.
 
-Bien que ces afficheurs disposent d'un clavier braille, ils gèrent eux-mêmes la saisie du braille.
-L'option table d'entrée n'est donc pas applicable.
+Note : NVDA pourrait être incapable d'utiliser un terminal ALVA BC6 via Bluetooth s'il est appairé en utilisant l'utilitaire ALVA Bluetooth.
+Si vous avez appairé votre terminal en utilisant cet utilitaire et que NVDA est incapable de le détecter, nous vous recommandons d'appairer votre terminal ALVA de façon standard en utilisant les paramètres Bluetooth de Windows.
+
+Note : Bien que certains de ces terminaux aient un clavier braille, ils prennent en charge la conversion braille vers texte par eux-mêmes par défaut.
+Cela signifie que le système de saisie du braille de NVDA n'est pas utilisé dans la situation par défaut (le paramètre table de saisie braille n'a pas d'effet).
+Pour les terminaux ALVA avec un microprogramme récent, il est possible de désactiver cette simulation de clavier HID en utilisant un geste de commande.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1922,6 +1919,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Amener l'affichage braille à la ligne suivante | t4 |
 | Défilement avant de l'affichage braille | t5 ou etouch3 |
 | Aller à la cellule braille | routing |
+| Activer/désactiver la simulation de clavier HID | t1+spEnter |
 | Aller à la première ligne en mode revue | t1+t2 |
 | Aller à la dernière ligne en mode revue | t4+t5 |
 | Bascule du suivi braille | t1+t3 |
@@ -1935,17 +1933,19 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Flèche bas | spDown |
 | Flèche gauche | spLeft |
 | Flèche droite | spRight |
-| Entrer | spEnter |
+| Entrer | spEnter, enter |
 | date et heure | sp1+sp2 |
 | Menu NVDA | sp1+sp3 |
 | Touche Windows+d (Minimiser toutes les applications) | sp1+sp4 |
 | Touche Windows+b (focus sur la zone de notification) | sp3+sp4 |
-| Touche Windows | sp2+sp3 |
+| Touche Windows | sp2+sp3, windows |
 | Touche alt+tab | sp2+sp4 |
 | Touche contrôle+début | t3+spUp |
 | Touche contrôle+fin | t3+spDown |
 | Touche home | t3+spLeft |
 | Touche fin | t3+spRight |
+| touche alt | alt |
+| touche contrôle | control |
 %kc:endInclude
 
 ++ Les terminaux Handy Tech ++[HandyTech]
@@ -2103,7 +2103,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Dire tout | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supporte les afficheurs braille Braille Sense, Braille EDGE, Smart Beetle et Sync Braille de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou Bluetooth. 
 Si vous connectez votre afficheur braille par USB, vous devrez installer les pilotes USB de HIMS sur votre système.
 Vous pouvez les télécharger ici: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2454,6 +2454,86 @@ Pour cette raison, et pour maintenir la compatibilité avec d'autres revues d'é
 | Défilement braille avant | pavnumPlus | 
 %kc:endInclude
 
+++ Terminaux Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+Les terminaux Esys, Esytime et Iris de chez [Eurobraille http://www.eurobraille.fr/] sont supportés par NVDA.
+Les terminaux Esys et Esytime-Evo sont supportés quand ils sont connectés via USB ou bluetooth.
+Les terminaux Esytime plus anciens ne supportent que l'USB.
+Les terminaux Iris ne peuvent être connectés que via un port série.
+Par conséquent, pour ces terminaux, vous devez sélectionner le port auquel le terminal est connecté après avoir choisi ce pilote dans le dialogue "Braille".
+
+Les terminaux Iris et Esys ont un clavier braille avec 10 touches.
+Dans les deux touches disposées comme une barre d'espace, celle de gauche correspond au retour arrière et celle de droite à l'espace.
+
+Voici les assignations de touche pour ces terminaux sous NVDA.
+Veuillez consulter la documentation du terminal pour connaître la position de ces touches.
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement arrière | molette1-6Gauche, l1 |
+| Défilement avant | molette1-6Droite, l8 |
+| Aller au focus courant | molette1-6Gauche+molette1-6Droite, l1+l8 |
+| Aller à la cellule braille | routage, doubleRoutage|
+| Aller à la ligne précédente en mode revue | joystick1Haut |
+| Aller à la ligne suivante en mode revue | joystick1Bas |
+| Aller au caractère précédent en mode revue | joystick1Gauche |
+| Aller au caractère suivant en mode revue | joystick1Droite |
+| Passer au mode de revue précédent | joystick1Gauche+joystick1Haut |
+| Passer au mode de revue suivant | joystick1Droite+joystick1Bas |
+| Effacer la dernière cellule braille entrée ou le dernier caractère | retourArrière |
+| Convertir toute entrée braille et presser la touche entrer | retourArrière+espace |
+| touche insertion | point3+point5+espace, l7 |
+| touche effacement | point3+point6+espace |
+| touche début | point1+point2+point3+espace, joystick2Gauche+joystick2Haut |
+| touche fin | point4+point5+point6+espace, joystick2Droite+joystick2Bas |
+| touche flècheGauche | point2+espace, joystick2Gauche, flècheGauche |
+| touche flècheDroite | point5+espace, joystick2Droite, flècheDroite |
+| touche flècheHaut | point1+espace, joystick2Haut, flècheHaut |
+| touche flècheBas | point6+espace, joystick2Bas, flècheBas |
+| touche entrer | joystick2Centre |
+| touche pagePrec | point1+point3+espace |
+| touche pageSuiv | point4+point6+espace |
+| touche pavnum1 | point1+point6+retourArrière |
+| touche pavnum2 | point1+point2+point6+retourArrière |
+| touche pavnum3 | point1+point4+point6+retourArrière |
+| touche pavnum4 | point1+point4+point5+point6+retourArrière |
+| touche pavnum5 | point1+point5+point6+retourArrière |
+| touche pavnum6 | point1+point2+point4+point6+retourArrière |
+| touche pavnum7 | point1+point2+point4+point5+point6+retourArrière |
+| touche pavnum8 | point1+point2+point5+point6+retourArrière |
+| touche pavnum9 | point2+point4+point6+retourArrière |
+| touche pavnumInsert | point3+point4+point5+point6+retourArrière |
+| touche pavnumDecimal | point2+retourArrière |
+| touche pavnumDiviser | point3+point4+retourArrière |
+| touche pavnumMultiplier | point3+point5+retourarrière |
+| touche pavnumMoins | point3+point6+retourArrière |
+| touche pavnumPlus | point2+point3+point5+retourArrière |
+| touche pavnumEntrer | point3+point4+point5+retourArrière |
+| touche échap | point1+point2+point4+point5+espace, l2 |
+| touche tab | point2+point5+point6+espace, l3 |
+| touche maj+tab | point2+point3+point5+espace |
+| touche impressionEcran | point1+point3+point4+point6+espace |
+| touche pause | point1+point4+espace |
+| touche applications | point5+point6+retourArrière |
+| touche f1 | point1+retourArrière |
+| touche f2 | point1+point2+retourArrière |
+| touche f3 | point1+point4+retourArrière |
+| touche f4 | point1+point4+point5+retourArrière |
+| touche f5 | point1+point5+retourArrière |
+| touche f6 | point1+point2+point4+retourArrière |
+| touche f7 | point1+point2+point4+point5+retourArrière |
+| touche f8 | point1+point2+point5+retourArrière |
+| touche f9 | point2+point4+retourArrière |
+| touche f10 | point2+point4+point5+retourArrière |
+| touche f11 | point1+point3+retourArrière |
+| touche f12 | point1+point2+point3+retourArrière |
+| touche windows | point1+point2+point3+point4+retourArrière |
+| touche verrouillage majuscule | point7+retourArrière, point8+retourArrière |
+| touche verrouillage majuscule | point3+retourArrière, point6+retourArrière |
+| touche majuscule | point7+espace, l4 |
+| touche contrôle | point7+point8+espace, point1+point7+point8+espace, point4+point7+point8+espace, l5 |
+| touche alt | point8+espace, point1+point8+espace, point4+point8+espace, l6 |
+| Activer/désactiver simulation clavier HID | esytime):l1+joystick1Bas, esytime):l8+joystick1Bas |
+%kc:endInclude
+
 ++ BRLTTY ++[BRLTTY]
 [BRLTTY http://www.brltty.com/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
 Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://www.brltty.com/download.html].
@@ -2536,4 +2616,5 @@ Les valeurs suivantes peuvent être définies dans ces clés de registre :
 Si vous avez besoin d'informations complémentaires ou d'aide concernant l'utilisation de NVDA, veuillez visiter le site NVDA à NVDA_URL.
 Sur ce site, vous pourrez trouver des informations complémentaires telles que des listes de discussion spécialisées et d'autres ressources communautaires pour vous aider à utiliser NVDA.
 Ce site fournit également des informations concernant le développement de NVDA.
+
 
