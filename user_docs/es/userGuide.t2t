@@ -1834,14 +1834,6 @@ Para más información, por favor visita el sitio Web de Audiologic en www.audio
 
 Este sintetizador no soporta la [funcionalidad de deletreo #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer para NVDA ++[Vocalizer]
-Nuance Vocalizer es un sintetizador de voz commercial y de alta calidad desarrollado por Nuance Communications, Inc., y empaquetado especialmente para NVDA por Tiflotecnia, Lda.
-Contiene más de 50 voces diferentes que puedes instalar, hablando en más de 30 idiomas.
-Todos los componentes y voces del sintetizador se agrupan en paquetes de complemento, los cuales permiten su uso completo en copias portables de NVDA.
-
-Puedes obtener más información acerca de Nuance Vocalizer para NVDA y de cómo comprarlo, en su sitio web en [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Un porcentaje de las ventas de este producto se dona a NV Access, para financiar el desarrollo del Lector de Pantalla  NVDA.
-
 + Pantallas Braille Soportadas +[SupportedBrailleDisplays]
 Esta sección contiene información acerca de las pantallas braille soportadas por NVDA.
 
@@ -2080,7 +2072,7 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Leer todo | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant Series BI/B ++[HumanWareBrailliant]
+++ Series de la HumanWare Brailliant BI/B ++[HumanWareBrailliant]
 Las pantallas braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluyendo BI 32, BI 40 y B 80, están soportadas cuando se conectan a través del USB o bluetooth.
 Si la conectas a través de USB con el protocolo configurado a HumanWare, primero debes instalar los controladores USB proporcionados por el fabricante.
 Los controladores USB no se requieren si el protocolo se configura a OpenBraille.
@@ -2111,7 +2103,7 @@ Por favor conhsulta la documentación de la pantalla para descripciones de dónd
 | Leer todo | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
+++ Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 NVDA soporta las pantallas Braille Sense, Braille EDGE, Smart Beetle y Sync Braille de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
 Puedes descargarlos de aquí: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2460,6 +2452,86 @@ Debido a esto, y para mantener compatibilidad con otros lectores de pantalla en 
 || Nombre | Tecla |
 | Desplazar atrás pantalla braille | Menos teclado numérico |
 | Desplazar adelante pantalla braille | Más teclado numérico | 
+%kc:endInclude
+
+++ Pantallas Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+Se soportan por NVDA las pantallas Esys, Esytime e Iris de [Eurobraille http://www.eurobraille.fr/].
+Los dispositivos Esys y Esytime-Evo se soportan cuando se conecten a través de USB o bluetooth.
+Los dispositivos Esytime antiguos sólo soportan USB.
+Las pantallas Iris sólo se pueden conectar a través de un puerto serie.
+Por lo tanto, para estas pantallas, deberías seleccionar el puerto al cual se conecta después de haber elegido este controlador en el diálogo Opciones de Braille.
+
+Las pantallas Iris y Esys tienen un teclado braille con 10 teclas.
+De las dos teclas colocadas como barra espaciadora, la tecla de la izquierda se corresponde con la tecla retroceso y la tecla derecha con la barra espaciadora.
+
+Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
+Por favor consulta la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar pantalla braille hacia atrás | switch1-6Izquierda, l1 |
+| Desplazar pantalla braille hacia adelante | switch1-6Derecha, l8 |
+| Mover al foco actual | switch1-6Izquierda+switch1-6Derecha, l1+l8 |
+| Enrutar a la celda braille | sensores, double sensor |
+| Mover a la línea anterior en revisión | joystick1Arriba |
+| Mover a la siguiente línea en revisión | joystick1Abajo |
+| Mover al carácter anterior en revisión | joystick1Izquierda |
+| Mover al carácter siguiente en revisión | joystick1Derecha |
+| Cambiar al modo de revisión anterior | joystick1Izquierda+joystick1Arriba |
+| Cambiar al siguiente modo de revisión | joystick1Derecha+joystick1Abajo |
+| Eliminar la última celda braille o carácter introducido | retroceso |
+| Transcribir cualquier entrada braille y pulsar la tecla intro | retroceso+espacio |
+| tecla insert | punto3+punto5+espacio, l7 |
+| tecla suprimir | punto3+punto6+espacio |
+| tecla inicio | punto1+punto2+punto3+espacio, joystick2Izquierda+joystick2Arriba |
+| tecla fin | punto4+punto5+punto6+espacio, joystick2Derecha+joystick2Abajo |
+| tecla flecha izquierda | punto2+espacio, joystick2Izquierda, flecha izquierda |
+| tecla flecha derecha | punto5+espacio, joystick2Derecha, flecha derecha |
+| tecla flecha arriba  | punto1+espacio, joystick2Arriba, flecha arriba |
+| tecla flecha abajo  | punto6+espacio, joystick2Abajo, flecha abajo |
+| tecla intro | joystick2Centro |
+| tecla RePág | punto1+punto3+espacio |
+| tecla AvPág | punto4+punto6+espacio |
+| tecla 1 numérico | punto1+punto6+retroceso |
+| tecla 2 numérico | punto1+punto2+punto6+retroceso |
+| tecla 3 numérico | punto1+punto4+punto6+retroceso |
+| tecla 4 numérico | punto1+punto4+punto5+punto6+retroceso |
+| tecla 5 numérico | punto1+punto5+punto6+retroceso |
+| tecla 6 numérico | punto1+punto2+punto4+punto6+retroceso |
+| tecla 7 numérico | punto1+punto2+punto4+punto5+punto6+retroceso |
+| tecla 8 numérico | punto1+punto2+punto5+punto6+retroceso |
+| tecla 9 numérico | punto2+punto4+punto6+retroceso |
+| tecla Insert numérico | punto3+punto4+punto5+punto6+retroceso |
+| tecla punto numérico | punto2+retroceso |
+| tecla dividir numérico | punto3+punto4+retroceso |
+| tecla multiplicar numérico | punto3+punto5+retroceso |
+| tecla menos numérico | punto3+punto6+retroceso |
+| tecla más numérico | punto2+punto3+punto5+retroceso |
+| tecla intro numérico | punto3+punto4+punto5+retroceso |
+| tecla escape | punto1+punto2+punto4+punto5+espacio, l2 |
+| tecla tab | punto2+punto5+punto6+espacio, l3 |
+| tecla shift+tab | punto2+punto3+punto5+espacio |
+| tecla imprimir pantalla | punto1+punto3+punto4+punto6+espacio |
+| tecla pausa | punto1+punto4+espacio |
+| tecla aplicaciones | punto5+punto6+retroceso |
+| tecla f1 | punto1+retroceso |
+| tecla f2 | punto1+punto2+retroceso |
+| tecla f3 | punto1+punto4+retroceso |
+| tecla f4 | punto1+punto4+punto5+retroceso |
+| tecla f5 | punto1+punto5+retroceso |
+| tecla f6 | punto1+punto2+punto4+retroceso |
+| tecla f7 | punto1+punto2+punto4+punto5+retroceso |
+| tecla f8 | punto1+punto2+punto5+retroceso |
+| tecla f9 | punto2+punto4+retroceso |
+| tecla f10 | punto2+punto4+punto5+retroceso |
+| tecla f11 | punto1+punto3+retroceso |
+| tecla f12 | punto1+punto2+punto3+retroceso |
+| tecla windows | punto1+punto2+punto3+punto4+retroceso |
+| tecla bloqMayus | punto7+retroceso, punto8+retroceso |
+| tecla BloqNum | punto3+retroceso, punto6+retroceso |
+| tecla shift | punto7+espacio, l4 |
+| tecla control | punto7+punto8+espacio, punto1+punto7+punto8+espacio, punto4+punto7+punto8+espacio, l5 |
+| tecla alt | punto8+espacio, punto1+punto8+espacio, punto4+punto8+espacio, l6 |
+| Conmutar simulación de entrada de teclado HID | esytime):l1+joystick1Abajo, esytime):l8+joystick1Abajo |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

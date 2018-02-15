@@ -1834,14 +1834,6 @@ Za više informacija molimo posjetite Audiologic web stranicu na www.audiologic.
 
 Ova govorna jedinica ne podržava [funkcionalnost slovkanja #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer za NVDA ++[Vocalizer]
-Nuance Vocalizer je komercijalna, visokokvalitetna govorna jedinica koju je razvila tvrtka Nuance Communications, Inc. i specijalno pakiran za NVDA od strane Tiflotecnia, Lda.
-Sadrži preko 50 mogućih glasova za instalaciju koji govore preko 30 jezika.
-Svi su glasovi i komponente pakirani kao NVDA dodaci, što omogućuje potpuno korištenje u prijenosnim inačicama NVDA.
-
-Za više informacija o Nuance Vocalizer za nvda i o načinima na koje ga možete kupiti posjetite web stranicu na adresi [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Postotak od prodaje se donira NV-access da bi se podržao daljnji razvoj NVDA čitača ekrana.
-
 + Podržani brajični retci +[SupportedBrailleDisplays]
 Ovo poglavlje sadrži informacije o brajičnim retcima koje podržava NVDA.
 
@@ -2111,7 +2103,7 @@ Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali
 | Reci sve | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serije ++
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serije ++[Hims]
 NVDA podržava Braille Sense, Braille EDGE, Smart Beetle i Sync Braille brajične retke tvrtke [Hims http://www.hims-inc.com/] kada su spojeni preko USB ili bluetooth veze. 
 Ako redak spajate preko USB priključka, trebat ćete instalirati USB upravljačke programe tvrtke HIMS na vaš sustav.
 Možete ih preuyeti ovdje: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2460,6 +2452,86 @@ Zbog toga, te kako bi se zadržala kompatibilnost sa drugim čitačima ekrana na
 || Naziv | Prečac |
 | prebaci brajični redak u natrag | numeričkiMinus |
 | prebaci brajični redak u naprijed | numeričkiPlus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
+Esys, Esytime и Iris brajični retci tvrtke [Eurobraille http://www.eurobraille.fr/] podržavaju NVDA čitač ekrana.
+Esys i Esytime-Evo podržani su, kada su spojeni putem USB ili Bluetooth veze.
+Stariji Esytime uređaji podržavaju samo USB vezu.
+Iris brajični retci mogu se koristiti, ako su spojeni preko Serijskog priključka.
+Dakle, poslije izbora ovog uređaja trebate označiti priključak na koji je spojen.
+
+Iris i Esys retci imaju brajičnu tipkovnicu sa deset tipaka.
+Dvije tipke koje izgledaju kao razmaknica, lijeva služi kao backspace dok desna služi kao razmaknica.
+
+Slijede prečaci dodijeljeni ovom brajičnom retku za korištenje s NVDA.
+Molimo pogledajte uputstvo za upotrebu vašeg brajičnog retka, kako biste doznali gdje se nalaze te tipke.
+%kc:beginInclude
+|| naziv | tipka |
+| prebaci brajični redak u nazad | switch1-6left, l1 |
+| prebaci brajični redak u naprijed | switch1-6Right, l8 |
+| premjesti na trenutni fokus | switch1-6Left+switch1-6Right, l1+l8 |
+| premjesti na brajičnu ćeliju | routing, doubleRouting|
+| premjesti na prethodni redak u pregledu | joystick1Up |
+| premjesti na sljedeći redak u pregledu | joystick1Down |
+| Premjesti na sprethodni znak u retku | joystick1Left |
+| Premjesti na sljedeći znak u pregledu | joystick1Right |
+| Prebaci se na prethodni pregledni način | joystick1Left+joystick1Up |
+| prebaci se na sljedeći pregledni način | joystick1Right+joystick1Down |
+| Izbriši prethodni znak u retku | backSpace |
+| prevodi unešeni tekst i pritišće enter | backSpace+space |
+| insert | točkica3+točkica5+space, l7 |
+| delete | točkica3+točkica6+space |
+| home | točkica1+točkica2+točkica3+space, joystick2Left+joystick2Up |
+| end | točkica4+točkica5+točkica6+space, joystick2Right+joystick2Down |
+| StrelicaLijevo | točkica2+space, joystick2Left, leftArrow |
+| Strelicadesno | točkica5+space, joystick2Right, rightArrow |
+| Strelicagore | točkica1+space, joystick2Up, upArrow |
+| StrelicaDolje | točkica6+space, joystick2Down, downArrow |
+| enter | joystick2Center |
+| pageUp | točkica1+točkica3+space |
+| pageDown | točkica4+točkica6+space |
+| numerički1 | točkica1+točkica6+backspace |
+| numerički2 | točkica1+točkica2+točkica6+backspace |
+| numerički3 | točkica1+točkica4+točkica6+backspace |
+| numerički4 | točkica1+točkica4+točkica5+točkica6+backspace |
+| numerički5 | točkica1+točkica5+točkica6+backspace |
+| numerički6 | točkica1+točkica2+točkica4+točkica6+backspace |
+| numerički7 | točkica1+točkica2+točkica4+točkica5+točkica6+backspace |
+| numerički8 | točkica1+točkica2+točkica5+točkica6+backspace |
+| numerički9 | točkica2+točkica4+točkica6+backspace |
+| numeričkiInsert | točkica3+točkica4+točkica5+točkica6+backspace |
+| Numerički decimalni zarez | točkica2+backspace |
+| Numerički podjeljeno | točkica3+točkica4+backspace |
+| Numerički množenje | točkica3+točkica5+backspace |
+| numeričkiMinus | točkica3+točkica6+backspace |
+| numeričkiPlus | točkica2+točkica3+točkica5+backspace |
+| numeričkiEnter | točkica3+točkica4+točkica5+backspace |
+| escape | točkica1+točkica2+točkica4+točkica5+space, l2 |
+| tab | točkica2+točkica5+točkica6+space, l3 |
+| shift+tab | točkica2+točkica3+točkica5+space |
+| printScreen | točkica1+točkica3+točkica4+točkica6+space |
+| pause | točkica1+točkica4+space |
+| aplikacijska tipka | točkica5+točkica6+backspace |
+| f1 | točkica1+backspace |
+| f2 | točkica1+točkica2+backspace |
+| f3 | točkica1+točkica4+backspace |
+| f4 | točkica1+točkica4+točkica5+backspace |
+| f5 | točkica1+točkica5+backspace |
+| f6 | točkica1+točkica2+točkica4+backspace |
+| f7 | točkica1+točkica2+točkica4+točkica5+backspace |
+| f8 | točkica1+točkica2+točkica5+backspace |
+| f9 | točkica2+točkica4+backspace |
+| f10 | točkica2+točkica4+točkica5+backspace |
+| f11 | točkica1+točkica3+backspace |
+| f12 | točkica1+točkica2+točkica3+backspace |
+| windows | točkica1+točkica2+točkica3+točkica4+backspace |
+| capsLock | točkica7+backspace, točkica8+backspace |
+| numLock | točkica3+backspace, točkica6+backspace |
+| shift | točkica7+space, l4 |
+| ctrl | točkica7+točkica8+space, točkica1+točkica7+točkica8+space, točkica4+točkica7+točkica8+space, l5 |
+| alt | točkica8+space, točkica1+točkica8+space, točkica4+točkica8+space, l6 |
+| Uključi/isključi simulaciju HID tipkovnice | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

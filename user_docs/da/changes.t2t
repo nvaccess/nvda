@@ -4,8 +4,7 @@ Nyheder i NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.1 =
-
-
+Af væsentlige ændringer i denne version af NVDA kan nævnes understøttelse af diagrammer i Microsoft Word og Powerpoint, understøttelse for de nye Eurobraille-punktdisplays samt Optelec protokolomformer, forbedret understøttelse for Hims og Optelec-punktdisplays, forbedret ydeevne i Firefox 58 eller nyere og meget mere.
 
 == Nye Funktioner ==
 - Det er nu muligt at interagere med diagrammer i Microsoft Word og Microsoft Powerpoint, ligesom man kan i Microsoft Excel. (#7046)
@@ -16,8 +15,10 @@ Nyheder i NVDA
 - Understøttelse for Optelecs protokolomformer, der er en enhed der lader dig benytte punktdisplays som Braille Voyager og Satelite ved brug af ALVA BC6 kommunikationsprotokolen. (#6731)
 - Det er nu muligt at bruge punktindtastning med et ALVA 640 Comfort punktdisplay. (#7733)
  - NVDAs punktindtastningsfunktionalitet kan benyttes med disse samt andre BC6-punktdisplays med firmwareversion 3.0.0 og nyere.
+- Initiel understøttelse af Google Sheets med punkttilstand slået til. (#7935)
+- Understøttelse for Eurobraille Esys, Esytime og Iris punktdisplays. (#7488)
 
-
+ 
 == Ændringer ==
 - HIMS Braille Sense/Braille EDGE/Smart Beetle og Hims SyncBraille punktdisplay-drivere er blevet erstattet af en driver. Denne driver bliver automatisk benyttet for brugere af SyncBraille punktdisplays. (#7459)
  - Nogle taster, navnligt dem der benyttes til at rulle displayet, er blevet tildelt de taster anvendt af Hims egne produkter. Se brugervejledningen for yderligere information.
@@ -42,6 +43,7 @@ Nyheder i NVDA
 - I de seneste versioner af Office 365 er det nu igen muligt at bevæge sig rundt i Excel-diagrammer ved brug af piletasterne. (#7046)
 - Kontroltilstande vil nu altid rapporteres med tale og punkt i samme rækkefølg, uanset om de er positive eller negative. Fixes #7076
 - I apps som Windows 10 Mail vil NVDA nu korrekt rapportere når tegn slettes ved hjælp af backspace. (#7456)
+- All taster på punktdisplayet Hims Braille Sense Polaris virker nu som forventet. (#7865)
 
 
 == Ændringer for udviklere ==

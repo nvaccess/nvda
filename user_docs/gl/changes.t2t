@@ -3,9 +3,9 @@
 
 %!includeconf: ../changes.t2tconf
 
- 2018.1 =
+= 2018.1 =
+O subliñable desta versión inclúe o soporte para gráficos en Microsoft word e PowerPoint, o soporte para pantallas braille novas incluíndo as Eurobraille e o conversor de protocolo de Optelec, mellorado o soporte para as pantallas braille Hims e Optelec, melloras de rendemento para Mozilla Firefox 58 e posteriores, e moitho máis.
 
- 
 == Novas Características ==
 - Agora é posible interactuar con gráficos en Microsoft Word e Microsoft PowerPoint, similar ao soporte existente para gráficos en Microsoft Excel. (#7046)
  - En Microsoft Word: cando se estea en modo exploración, pon o cursor nun gráfico integrado e preme intro para interactuar con el.
@@ -16,6 +16,8 @@
 - Engadido o soporte para o protocolo conversor Optelec , un dispositivo que che permite usar as pantallas Braille Voyager e Satellite usando o protocolo de comunicación das ALVA BC6. (#6731)
 - Agora é posible usar a entrada braille cunha pantalla braille ALVA 640 Comfort. (#7733) 
  - A funcionalidade de entrada braille do NVDA pode usarse tanto con éstas coma con outras pantallas BC6 co firmware 3.0.0 e anterior.
+- Soporte inicial para Google Sheets co modo Braille habilitado. (#7935)
+- Soporte para pantallas braille Eurobraille Esys, Esytime e Iris. (#7488)
 
 
 == Cambios ==
@@ -42,6 +44,7 @@
 - En versións recentes de Office 365, é de novo posible navegar gráficos de Excel usando as teclas de frechas. (#7046)
 - En saídas de voz e graille, os estados dos controis agora sempre se anuncian no mesmo orden, sen importar se son positivos ou negativos. Arranxos #7076
 - En aplicacións coma o Mail do Windows 10, NVDA xa non fallará ao anunciar os caracteres borrados cando se prema retroceso. (#7456)
+- Agora todas as teclas nas pantallas Hims Braille Sense Polaris funcionan como se espera. (#7865)
 
 
 == Cambios para Desenvolvedores ==
@@ -52,6 +55,8 @@
 - Implementado un sistema xenérico en braille.BrailleDisplayDriver para tratar coas pantallas que envían paquetes de confirmación/acuse de recibo. Consulta o controlador das pantallas braille handyTech como un exemplo. (#7590, #7721)
 - Pódese usar unha nova variable "isAppX" no módulo config para detectar se o NVDA se está a executar coma unha aplicación Windows Desktop Bridge Store. (#7851)
 - Para implementacións de documento coma NVDAObjects ou browseMode que teñan un textInfo, agora hai unha nova clase documentBase.documentWithTableNavigation que pode herdarse para obter scripts de navegación estándar de táboa. Por favor consulta esta clase para ver que métodos helper deben proporcionarse para a túa implementación para que funcione a navegación de táboa. (#7849)
+- O ficheiro por lotes scons agora manéxase mellor cando Python 3 tamén está instalado, facendo o uso do lanzador para lanzar específicamente a python 2.7 de 32 bit. (#7541)
+- hwIo.Hid agora toma un parámetro adicional exclusivo, o que por omisión é True. Se se configura a False, permítese a outras aplicacións comunicarse cun dispositivo mentres estea conectado ao NVDA. (#7859)
 
 
 == 2017.4 =

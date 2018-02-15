@@ -4,17 +4,20 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.1 =
+Novosti u ovoj inačici uključuju podršku grafova u Microsoft wordu i Powerpointu, novopodržani brajični retci: Eurobraille i Optelec protocol converter, unapređena podrška za Hims i Optelec brajične retke, poboljšanje performansi u Mozilla Firefox 58 i novijim, i puno više.
 
 == Nove značajke ==
 - Sada je moguće ulaziti u interakciju sa grafovima u Microsoft Wordu i Microsoft PowerPointu, slično kao i kod podrške grafova u Microsoft Excelu. (#7046)
  - U Microsoft Wordu:  kada se nalazite u načinu pregleda, kursorima dođite do grafa i pritisnite enter.
  - U Microsoft PowerPointu prilikom uređivanja slajda: pritišćite tabulator do objekta grafa, i pritisnite enter ili razmak kako biste ušli u interakciju s grafom.
- - Kako biste prestali biti u interakciju s grafom, Pritisnite escape.
+ - Kako biste prestali biti u interakciji s grafom, Pritisnite escape.
 - Novi jezik: kirgizki.
 - Dodana podrška za VitalSource Bookshelf čitač elektronskih knjiga. (#7155)
-- Dodana podrška za Optelec pretvarač protokola, Uređaj koji imogućava korištenje Alvine Vozager i Satellite brajične retku koristeći noviji ALVA BC6 protokol. (#6731)
+- Dodana podrška za Optelec pretvarač protokola, Uređaj koji omogućava korištenje Alvinih Voyager i Satellite brajičnih redaka koristeći noviji ALVA BC6 protokol. (#6731)
 - Sada je moguće koristiti brajični unos teksta sa brajičnim retkom ALVA 640 Comfort. (#7733) 
  - NVDA brajični unos može se koristiti sa istim brajičnim retcima, kao i sa  BC6 sa firmverom 3.0.0 ili novijim.
+- Rana podrška za Google Sheets sa uključenim brajičnim načinom. (#7935)
+- Podrška za Eurobraille Esys, Esytime i Iris brajične retke. (#7488)
 
 
 == Izmjene ==
@@ -26,7 +29,7 @@
  - imajte na umu, da će se prebacivanje na pregled događati samo kada se koristi pregledni kursor ili prečac objektne navigacije. pomicanje po redovima neće aktivirati ovakav način.
 
 
-== Bug Fixes ==
+== Ispravke grešaka ==
 - pregledne poruke poput izgovora formatiranja pri pritisku NVDA+f dva puta brzo više neće rezultirati pogreškom, kada je NVDA instaliran na sustavu sa nelatiničnim znakovima. (#7474)
 - Fokus se sada vraća ispravno, rilikom vraćanja u Spotify iz drugih aplikacija. (#7689)
 - U Windows 10 jesenskoj nadogradnji za tvorce, NVDA će sada se uspjevati nadograditi, kada je uključena opcija kontroliranog pristupa folderima u Windows defenderu. (#7696)
@@ -41,6 +44,7 @@
 - U posljednjim inačicama Office 365, sada je moguće ponovo čitati excel grafove sa strelicama gore dole. (#7046)
 -  Radi li se o brajičnom ili govornom izlazu, status i tip kontrole bit će predstavljen u istpm poredku, neovisno je li pozitivan ili negativan. Fixes #7076
 - u aplikacijama poput Windows 10 Pošte, NVDA će sada izgovarati izbrisane znakove pritiskom na backspace. (#7456)
+- Sve tipke na Hims Braille Sense Polaris brajičnim retcima sada rade kako treba. (#7865)
 
 
 == Izmjene za razvojne programere ==

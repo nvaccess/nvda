@@ -1834,14 +1834,6 @@ For yderligere oplysninger om talesyntesen henvises til Audiologics netsted på 
 
 Denne talesyntese understøtter ikke [stavefunktionalitet #VoiceSpellingFunctionality].
 
-++ Nuance Vocalizer for NVDA ++[Vocalizer]
-Nuance Vocalizer er et kommercielt produkt, som giver dig stemmer af høj kvalitet. Dette produkt er udviklet af Nuance Communications, Inc., og er omdannet til brug med NVDA af Tiflotecnia, Lda.
-Produktet omfatter over 50 forskellige stemmer du kan installere og dækker over 30 sprog.
-Alle komponenterne til syntesen er indpakket som et tilføjelsesprogram, så de kan bruges med en flytbar kopi af NVDA.
-
-Du kan finde mere information om Nuance Vocalizer for NVDA, samt hvordan du kan købe en licens på siden [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-En procentdel af salget af dette produkt doneres til NV Access til videreudvikling af NVDA skærmlæseren.
-
 + Understøttede punktdisplays +[SupportedBrailleDisplays]
 Dette afsnit indeholder oplysninger om de punktdisplays, som NVDA understøtter.
 
@@ -2111,7 +2103,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Sig alt | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle+ Sync Braille Series ++
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle+ Sync Braille Series ++[Hims]
 NVDA understøtter Braille Sense, Braille EDGE, Smart Beetle og Sync punktdisplays fra [Hims http://www.hims-inc.com/] hvis disse displays kobles til med USB, serielport eller Bluetooth. 
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra HIMS på dit system.
 Du kan hente disse fra denne side: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2459,7 +2451,87 @@ På grund af dette, og for at bevare kompatibiliteten mellem andre skærmlæsere
 %kc:beginInclude
 || Navn | Tast |
 | Rul punktdisplay tilbage | numpadMinus |
-| Rul punktdisplay adfrem | numpadPlus | 
+| Rul punktdisplay fremad | numpadPlus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
+Esys, Esytime og Iris punktdisplays fra [Eurobraille http://www.eurobraille.fr/] understøttes af NVDA.
+Esy og Esytime-Evo-enheder er understøttede, når de forbindes via Bluetooth eller USB.
+Ældre Esytime-enheder understøtter kun USB.
+Iris-punktdisplays kan kun forbindes via en serielport.
+Derfor kræves det, at du vælger den port punktdisplayet er forbundet til i punktindstillingerne, når du har valgt den tilsvarende driver.
+
+Iris og Esys-punktdisplays har et punkttastatur med ti taster.
+Af de to taster der er placeret som en mellemrumstast svarer den venstre tast til backspace, hvor den højre tast svarer til mellemrum.
+
+Dette er tastekombinationerne til disse displays i brug med NVDA.
+Læs venligst dokumentationen for det pågældende display der beskriver, hvor disse taster findes.
+%kc:beginInclude
+|| Navn | Tast |
+| Rul display tilbage | switch1-6left, l1 |
+| Rul display fremad | switch1-6Right, l8 |
+| Flyt til aktuelle fokus | switch1-6Left+switch1-6Right, l1+l8 |
+| Flyt til punktcelle | routing, doubleRouting|
+| Flyt til forrige linje i læsetilstand | joystick1Up |
+| Flyt til næste linje i læsetilstand | joystick1Down |
+| Flyt til forrige tegn i læsetilstand | joystick1Left |
+| Flyt til næste tegn i læsetilstand | joystick1Right |
+| Skift til forrige læsetilstand | joystick1Left+joystick1Up |
+| Skift til næste læsetilstand | joystick1Right+joystick1Down |
+| Slet sidst indtastede punktcelle eller tegn | backSpace |
+| Oversæt indtastet punkt og tryk på enter-tasten | backSpace+space |
+| Insert-tast | punkt3+punkt5+mellemrum, l7 |
+| slet-tast | punkt3+punkt6+mellemrum |
+| Hjem-tast | punkt1+punkt2+punkt3+mellemrum, joystick2Left+joystick2Up |
+| End-tast | punkt4+punkt5+punkt6+mellemrum, joystick2Right+joystick2Down |
+| Piletast venstre | punkt2+mellemrum, joystick2Left, leftArrow |
+| piletast højre | punkt5+mellemrum, joystick2Right, rightArrow |
+| pil op | punkt1+mellemrum, joystick2Up, upArrow |
+| pil ned | punkt6+mellemrum, joystick2Down, downArrow |
+| enter-tast | joystick2Center |
+| side op-tast | punkt1+punkt3+mellemrum |
+| side ned-tast | punkt4+punkt6+mellemrum |
+| numpad1-tast | punkt1+punkt6+backspace |
+| numpad2-tast | punkt1+punkt2+punkt6+backspace |
+| numpad3-tast | punkt1+punkt4+punkt6+backspace |
+| numpad4-tast | punkt1+punkt4+punkt5+punkt6+backspace |
+| numpad5-tast | punkt1+punkt5+punkt6+backspace |
+| numpad6-tast | punkt1+punkt2+punkt4+punkt6+backspace |
+| numpad7-tast | punkt1+punkt2+punkt4+punkt5+punkt6+backspace |
+| numpad8-tast | punkt1+punkt2+punkt5+punkt6+backspace |
+| numpad9-tast | punkt2+punkt4+punkt6+backspace |
+| numpadInsert-tast | punkt3+punkt4+punkt5+punkt6+backspace |
+| numpadDecimal-tast | punkt2+backspace |
+| numpadDivider-tast | punkt3+punkt4+backspace |
+| numpadMultiplicer-tast | punkt3+punkt5+backspace |
+| numpadMinus-tast | punkt3+punkt6+backspace |
+| numpadPlus-tast | punkt2+punkt3+punkt5+backspace |
+| numpadEnter-tast | punkt3+punkt4+punkt5+backspace |
+| escape-tast | punkt1+punkt2+punkt4+punkt5+space, l2 |
+| tab-tast | punkt2+punkt5+punkt6+space, l3 |
+| skift+tab-taster | punkt2+punkt3+punkt5+space |
+| printScreen-tast | punkt1+punkt3+punkt4+punkt6+space |
+| pause-tast | punkt1+punkt4+space |
+| Tasten applikationer | punkt5+punkt6+backspace |
+| f1-tast | punkt1+backspace |
+| f2-tast | punkt1+punkt2+backspace |
+| f3-tast | punkt1+punkt4+backspace |
+| f4-tast | punkt1+punkt4+punkt5+backspace |
+| f5-tast | punkt1+punkt5+backspace |
+| f6-tast | punkt1+punkt2+punkt4+backspace |
+| f7-tast | punkt1+punkt2+punkt4+punkt5+backspace |
+| f8-tast | punkt1+punkt2+punkt5+backspace |
+| f9-tast | punkt2+punkt4+backspace |
+| f10-tast | punkt2+punkt4+punkt5+backspace |
+| f11-tast | punkt1+punkt3+backspace |
+| f12-tast | punkt1+punkt2+punkt3+backspace |
+| Windows-tast | punkt1+punkt2+punkt3+punkt4+backspace |
+| capsLock-tast | punkt7+backspace, punkt8+backspace |
+| numLock-tast | punkt3+backspace, punkt6+backspace |
+| skift-tast | punkt7+space, l4 |
+| Ctrl-tast | punkt7+punkt8+space, punkt1+punkt7+punkt8+space, punkt4+punkt7+punkt8+space, l5 |
+| alt-tast | punkt8+space, punkt1+punkt8+space, punkt4+punkt8+space, l6 |
+| Slå HID-tastatursimulation til og fra | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
