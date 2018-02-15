@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2016 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee
+#Copyright (C) 2012-2018 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -27,6 +27,8 @@ import globalVars
 import languageHandler
 from logHandler import log
 import winKernel
+import re
+import buildVersion
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -35,6 +37,11 @@ BUNDLE_MIMETYPE = "application/x-nvda-addon"
 NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
 ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
 DELETEDIR_SUFFIX=".delete"
+#: Compiled regular expression to match an NVDA version string.
+#: Supports year.month versions (e.g. 2018.1) and an additional suffix for bug fix releases (e.g. 2018.1.1)
+#: It also matches against strings like 2018.1dev
+#: @type: RegexObject
+NVDA_VERSION_REGEX = re.compile(r"(\d{4,4})\.(\d)(?:\.(\d))?")
 
 state={}
 
@@ -101,8 +108,13 @@ def removeFailedDeletions():
 				log.error("Failed to delete path %s, try removing manually"%path)
 
 _disabledAddons = set()
+prohibitedAddons = set()
 def disableAddonsIfAny():
-	"""Disables add-ons if told to do so by the user from add-ons manager"""
+	"""
+	Disables add-ons if told to do so by the user from add-ons manager.
+	This is usually executed before refreshing the list of available add-ons.
+	This does not deal with prohibited add-ons, as these are detected at refresh time.
+	"""
 	global _disabledAddons
 	if "disabledAddons" not in state:
 		state["disabledAddons"] = set()
@@ -128,8 +140,11 @@ def initialize():
 	completePendingAddonInstalls()
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
-	saveState()
 	getAvailableAddons(refresh=True)
+	# #6275: The add-on refresh could have yielded prohibited add-ons.
+	# Add these to the disabled add-ons
+	state["disabledAddons"] |= prohibitedAddons
+	saveState()
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
@@ -165,6 +180,8 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", name)
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
+				elif a.isProhibited:
+					a.forceDisable()
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
@@ -203,8 +220,53 @@ def installAddonBundle(bundle):
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
 
+class AddonBase(object):
+	"""The base class for functionality that is available both for add-on bundles and add-ons on the file system.
+	Subclasses should at least implement L{manifest}.
+	"""
 
-class Addon(object):
+	@property
+	def name(self):
+		return self.manifest['name']
+
+	@property
+	def minimumNVDAVersion(self):
+		version = self.manifest.get('minimumNVDAVersion')
+		if not version:
+			return None
+		return getNVDAVersionTupleFromString(version)
+
+	@property
+	def lastTestedNVDAVersion(self):
+		version = self.manifest.get('lastTestedNVDAVersion')
+		if not version:
+			return None
+		return getNVDAVersionTupleFromString(version)
+
+	@property
+	def isSupported(self):
+		"""True if this add-on is supported on this version of NVDA.
+		This property returns False if the supported state is unsure, e.g. because the minimumNVDAVersion manifest key is missing.
+		"""
+		# If minimumNVDAVersion is None, it will always be less than the current NVDA version.
+		# Therefore, we should account for this
+		minVersion = self.minimumNVDAVersion
+		return minVersion and minVersion<=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)
+
+	@property
+	def isTested(self):
+		"""True if this add-on is tested for this version of NVDA.
+		Note that the configuration can ignore this property by allowing untested versions to load, which is the default.
+		"""
+		return self.isSupported and self.lastTestedNVDAVersion>=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)
+
+	@property
+	def isProhibited(self):
+		"""True if loading or installing this add-on is prohibited given the current configuration."""
+		return ((not self.isSupported and self.manifest['minimumNVDAVersion'] is not None) or
+			(config.conf['general']['disableUntestedAddons'] and not self.isTested))
+
+class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
 	def __init__(self, path):
 		""" Constructs an L[Addon} from.
@@ -213,7 +275,6 @@ class Addon(object):
 		"""
 		self.path = os.path.abspath(path)
 		self._extendedPackages = set()
-		self._isLoaded = False
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path) as f:
 			translatedInput = None
@@ -269,10 +330,6 @@ class Addon(object):
 		if os.path.exists(tempPath):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
 
-	@property
-	def name(self):
-		return self.manifest['name']
-
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
 		@param package: the python module representing the package.
@@ -294,6 +351,10 @@ class Addon(object):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
+			if self.isProhibited:
+				raise AddonError("Add-on unsupported: minimum NVDA version %s, last tested version %s" % (
+					self.manifest['minimumNVDAVersion'], self.manifest['lastTestedNVDAVersion']
+				))
 			if self.name in state["pendingDisableSet"]:
 				# Undoing a pending disable.
 				state["pendingDisableSet"].discard(self.name)
@@ -307,6 +368,10 @@ class Addon(object):
 				state["pendingDisableSet"].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		saveState()
+
+	def forceDisable(self):
+		"""Forcefully add this add-on to the set of disabled add-ons."""
+		prohibitedAddons.add(self.name)
 
 	@property
 	def isRunning(self):
@@ -452,7 +517,7 @@ def _translatedManifestPaths(lang=None, forBundle=False):
 	return [sep.join(("locale", lang, MANIFEST_FILENAME)) for lang in langs]
 
 
-class AddonBundle(object):
+class AddonBundle(AddonBase):
 	""" Represents the contents of an NVDA addon suitable for distribution.
 	The bundle is compressed using the zip file format. Manifest information
 	is available without the need for extraction."""
@@ -544,6 +609,10 @@ description = string(default=None)
 author = string()
 # Version of the add-on. Should preferably in some standard format such as x.y.z
 version = string()
+# The minimum required NVDA version for this add-on to work correctly
+minimumNVDAVersion = string(default=None)
+# The last NVDA version this add-on has been tested with.
+lastTestedNVDAVersion = string(default=None)
 # URL for more information about the add-on. New versions and such.
 url= string(default=None)
 # Name of default documentation file for the add-on.
@@ -575,3 +644,10 @@ docFileName = string(default=None)
 	@property
 	def errors(self):
 		return self._errors
+
+def getNVDAVersionTupleFromString(version):
+	"""Converts a string containing an NVDA version to a tuple of the form (versionYear, versionMajor, versionMinor)"""
+	match = NVDA_VERSION_REGEX.match(version)
+	if not match:
+		raise ValueError(version)
+	return tuple(int(i) if i is not None else 0 for i in match.groups())

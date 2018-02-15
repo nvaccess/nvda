@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V., Davy Kager
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -25,6 +25,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
+	disableUntestedAddons = boolean(default=false)
 
 # Speech settings
 [speech]

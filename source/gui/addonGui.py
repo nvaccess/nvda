@@ -13,6 +13,7 @@ import gui
 from logHandler import log
 import addonHandler
 import globalVars
+import buildVersion
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
@@ -117,16 +118,45 @@ class AddonsDialog(wx.Dialog):
 					_("Error"),
 					wx.OK | wx.ICON_ERROR)
 				return
+			# Translators: The message displayed to give information about the compatibility of this add-on with certain NVDA versions.
+			versionInfoMessage = _(
+				"The minimum compatible NVDA version for this add-on is {minimumNVDAVersion}.\n"
+				"The last version of NVDA this add-on has been reported to work with is {lastTestedNVDAVersion}"
+			).format(
+				# Translators: Displayed in the compatibility message when a version is unknown.
+				minimumNVDAVersion=bundle.manifest['minimumNVDAVersion'] or _("unknown"),
+				lastTestedNVDAVersion=bundle.manifest['lastTestedNVDAVersion'] or _("unknown")
+			)
+			if bundle.isProhibited:
+				# Translators: The message displayed when installing an add-on package is prohibited.
+				prohibitedMessage = _(
+					"The installation of {summary} {version} by {author} has been blocked for "
+					"installation within NVDA version {NVDAVersion}.\n{versionInfoMessage}"
+				).format(
+					NVDAVersion="%d.%d (%s)"%(
+						buildVersion.version_year, buildVersion.version_major, buildVersion.version
+					) if buildVersion.isTestVersion else buildVersion.version,
+					versionInfoMessage=versionInfoMessage, **bundle.manifest
+				)
+				gui.messageBox(prohibitedMessage,
+					# Translators: The title of a dialog presented when an error occurs.
+					_("Error"),
+					wx.OK | wx.ICON_ERROR)
+				return
+
 			# Translators: A message asking the user if they really wish to install an addon.
-			if gui.messageBox(_("Are you sure you want to install this add-on? Only install add-ons from trusted sources.\nAddon: {summary} {version}\nAuthor: {author}").format(**bundle.manifest),
+			if gui.messageBox(_(
+				"Are you sure you want to install this add-on? "
+				"Only install add-ons from trusted sources.\n"
+				"Addon: {summary} {version}\nAuthor: {author}\n{versionInfoMessage}"
+			).format(versionInfoMessage=versionInfoMessage,**bundle.manifest),
 				# Translators: Title for message asking if the user really wishes to install an Addon.
 				_("Add-on Installation"),
 				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 				return
-			bundleName=bundle.manifest['name']
 			prevAddon=None
 			for addon in self.curAddons:
-				if not addon.isPendingRemove and bundleName==addon.manifest['name']:
+				if not addon.isPendingRemove and bundle.name==addon.manifest['name']:
 					prevAddon=addon
 					break
 			if prevAddon:
@@ -206,6 +236,10 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingEnable:
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			return _("Enabled after restart")
+		elif addon.isProhibited:
+			# Translators: The status shown for an addon when it's unsupported or untested
+			# and therefore prohibited.
+			return _("prohibited")
 		elif globalVars.appArgs.disableAddons or addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			return _("disabled")
@@ -245,7 +279,7 @@ class AddonsDialog(wx.Dialog):
 			self.enableDisableButton.SetLabel(_("&Enable add-on") if not self._shouldDisable(addon) else _("&Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
-		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove)
+		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove and not addon.isProhibited)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
@@ -279,6 +313,14 @@ Description: {description}
 		if url: 
 			# Translators: the url part of the About Add-on information
 			message+=_("URL: {url}").format(url=url)
+		minimumNVDAVersion=manifest['minimumNVDAVersion']
+		if minimumNVDAVersion:
+			# Translators: the minimum NVDA version part of the About Add-on information
+			message+=_("Minimum required NVDA version: {version}").format(version=minimumNVDAVersion)
+		lastTestedNVDAVersion=manifest['lastTestedNVDAVersion']
+		if lastTestedNVDAVersion:
+			# Translators: the last NVDA version tested part of the About Add-on information
+			message+=_("Last NVDA version tested: {version}").format(version=lastTestedNVDAVersion)
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox(message, title, wx.OK)
@@ -296,7 +338,21 @@ Description: {description}
 		addon=self.curAddons[index]
 		shouldDisable = self._shouldDisable(addon)
 		# Counterintuitive, but makes sense when context is taken into account.
-		addon.enable(not shouldDisable)
+		try:
+			addon.enable(not shouldDisable)
+		except addonHandler.AddonError:
+			log.error("Couldn't change state for %s add-on"%addon.name, exc_info=True)
+			gui.messageBox(
+				# Translators: The message displayed when the state of an add-on cannot be changed.
+				_("Could not {state} the {description} add-on.").format(
+					state=_("disable") if shouldDisable else _("enable"),
+					description=addon.manifest['summary']
+				), 
+				# Translators: The title of a dialog presented when an error occurs.
+				_("Error"),
+				wx.OK | wx.ICON_ERROR)
+			return
+
 		self.enableDisableButton.SetLabel(_("&Enable add-on") if shouldDisable else _("&Disable add-on"))
 		self.refreshAddonsList(activeIndex=index)
 
