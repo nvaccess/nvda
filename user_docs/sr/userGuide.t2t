@@ -1834,14 +1834,6 @@ Za više informacija, posetite Audiologic websajt na lokaciji www.audiologic.it.
 
 Ovaj sintetizator ne podržava[sricanje#VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer za NVDA ++[Vocalizer]
-Nuance Vocalizer je komercionalan, sintetizator visokog kvaliteta razvijen od strane kompanije Nuance, Inc. i napravljen za NVDA od strane kompanije Tiflotecnia, Lda.
-Sadrži preko 50 različitih glasova koje možete da instalirate, koji govore preko 30 različitih jezika.
-Svi glasovi su napravljeni kao dodaci, što dozvoljava korišćenje u potpunosti u prenosivim kopijama programa NVDA.
-
-Možete dobiti više informacija o Vocalizeru za NVDA i da ga kupite na websajtu[www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Procenat od prodaje se donira kompaniji NV access za dodatni razvoj programa NVDA.
-
 + Podržani brajevi redovi+[SupportedBrailleDisplays]
 Ovaj deo sadrži informacije o brajevim redovima koje NVDA podržava.
 
@@ -1953,6 +1945,7 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i r
 | home | t3+spLeft |
 | end | t3+spRight |
 | alt  | alt |
+| Kontrol  | Kontrol |
 %kc:endInclude
 
 ++ Handy Tech brajevi redovi ++[HandyTech]
@@ -2110,7 +2103,7 @@ Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali o
 | Izgovori sve | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE  / smart beetle /Sync BrailleSerije ++
+++ HIMS Braille Sense/Braille EDGE  / smart beetle /Sync BrailleSerije ++[Hims]
 NVDA podržava Braille Sense,  Braille EDGE, SMART BEETLE i Sync Braille brajeve redove firme [Hims http://www.hims-inc.com/] kada su povezani preko USB ili Bluetooth veze. 
 Ako brajev red povezujete putem USB, morate instalirati USB Hims drajvere na vaš sistem.
 Možete ih preuzeti ovde: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2459,6 +2452,86 @@ Zbog ovoga, i zbog zadržavanja kompatibilnosti sa drugim čitačima ekrana u Ta
 || Ime | Komanda |
 | Pomeri brajev red nazad| NumeričkiMinus |
 | Pomeri brajev red napred| NumeričkiPlus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris redovi ++[Eurobraille]
+ Esys, Esytime i  Iris redovi kompanije [Eurobraille http://www.eurobraille.fr/] su podržani od strane programa NVDA.
+Esys i  Esytime-Evo su podržani putem USB ili  bluetooth veze.
+Stariji  Esytime uređaji podržavaju samo USB.
+Iris redovi se mogu povezati samo putem serijskog porta.
+Zbog toga, za ove redove, neophodno je izabrati port na koji je brajev red povezan nakon izbora odgovarajućeg drivera u podešavanjima brajevog reda.
+
+Iris i Esys brajevi redovi imaju brajevu tastaturu sa 10 tastera.
+Od dva tastera koji izgledaju slično razmaku, levi taster je backspace i desni je razmak.
+
+Slede komande ovog brajevog reda sa programom NVDA.
+Molimo pogledajte dokumentaciju brajevog reda za opis i raspored ovih tastera.
+%kc:beginInclude
+|| Ime | Taster |
+| Pomeri brajev red unazad| switch1-6left, l1 |
+| Pomeri brajev red u napred| switch1-6Right, l8 |
+| Prebaci se na trenutni fokus| switch1-6Left+switch1-6Right, l1+l8 |
+| Prebaci na brajevu ćeliju| routing, doubleRouting|
+| Prebaci na prethodni red u pregledu| joystick1Up |
+| Prebaci se na sledeći red u pregledu| joystick1Down |
+| Prebaci se na prethodni znak u pregledu| joystick1Left |
+| Prebaci se na sledeći znak u pregledu| joystick1Right |
+| Prebaci se na prethodni režim pregleda| joystick1Left+joystick1Up |
+| Prebaci se na sledeći režim pregleda| joystick1Right+joystick1Down |
+| Obriši poslednju unetu brajevu ćeliju ili znak| backSpace |
+| Prevedi bilo koji brajev unos i pritisni taster Enter| backSpace+razmak |
+| Taster insert| Tačka3+tačka5+razmak, l7 |
+| Taster za brisanje| tačka3+tačka6+razmak |
+| Taster home| tačka1+tačka2+tačka3+razmak, joystick2Left+joystick2Up |
+| Taster end| tačka4+tačka5+tačka6+razmak, joystick2Right+joystick2Down |
+| StrelicaLevo   | tačka2+razmak, joystick2Left, StrelicaLevo |
+| StrelicaDesno  | tačka5+razmak, joystick2Right, StrelicaDesno |
+| StrelicaGore  | tačka1+razmak, joystick2Up, StrelicaGore |
+| StrelicaDole  | tačka6+razmak, joystick2Down, StrelicaDole |
+| Taster Enter| joystick2Center |
+| Taster PageUp | tačka1+tačka3+razmak |
+| Taster PageDown | Tačka4+tačka6+razmak |
+| Numerički taster 1  | Tačka1+tačka6+backspace |
+| Numerički taster 2   | Tačka1+tačka2+tačka6+backspace |
+| Numerički taster 3 | Tačka1+tačka4+tačka6+backspace |
+| Numerički taster 4  | Tačka1+Tačka4+Tačka5+tačka6+backspace |
+| Numerički taster 5  | Tačka1+tačka5+tačka6+backspace |
+| Numerički taster 6   | Tačka1+tačka2+tačka4+tačka6+backspace |
+| Numerički taster 7 | tačka1+tačka2+tačka4+tačka5+tačka6+backspace |
+| Numerički taster 8  | Tačka1+tačka2+tačka5+tačka6+backspace |
+| Numerički taster 9  | Tačka2+tačka4+tačka6+backspace |
+| Numerički taster Insert  | tačka3+tačka4+tačka5+tačka6+backspace |
+| Decimalni zarez na numeričkoj tastaturi  | Tačka2+backspace |
+| Taster podeljeno na numeričkoj tastaturi  | Tačka3+tačka4+backspace |
+| Taster za množenje na numeričkoj tastaturi  | Tačka3+tačka5+backspace |
+| Taster minus na numeričkoj tastaturi  | Tačka3+tačka6+backspace |
+| Taster plus na numeričkoj tastaturi  | Tačka2+tačka3+tačka5+backspace |
+| Taster Enter na numeričkoj tastaturi | Tačka3+tačka4+tačka5+backspace |
+| escape taster | tačka1+tačka2+tačka4+tačka5+razmak, l2 |
+| tab taster | tačka2+tačka5+tačka6+razmak, l3 |
+| Šift +tab  | tačka2+tačka3+tačka5+razmak |
+| printScreen taster | tačka1+tačka3+tačka4+tačka6+razmak |
+| Taster pauza | tačka1+tačka4+razmak |
+| applications taster | tačka5+tačka6+backspace |
+| f1 taster | tačka1+backspace |
+| f2 taster | tačka1+tačka2+backspace |
+| f3 taster | tačka1+tačka4+backspace |
+| f4 taster | tačka1+tačka4+tačka5+backspace |
+| f5 taster | tačka1+tačka5+backspace |
+| f6 taster | tačka1+tačka2+tačka4+backspace |
+| f7 taster | tačka1+tačka2+tačka4+tačka5+backspace |
+| f8 taster | tačka1+tačka2+tačka5+backspace |
+| f9 taster | tačka2+tačka4+backspace |
+| f10 taster | tačka2+tačka4+tačka5+backspace |
+| f11 taster | tačka1+tačka3+backspace |
+| f12 taster | tačka1+tačka2+tačka3+backspace |
+| windows taster | tačka1+tačka2+tačka3+tačka4+backspace |
+| Taster za velika slova | tačka7+backspace, tačka8+backspace |
+| numLock taster | tačka3+backspace, tačka6+backspace |
+| šift taster | tačka7+razmak, l4 |
+| kontrol taster | tačka7+tačka8+razmak, tačka1+tačka7+tačka8+razmak, tačka4+tačka7+tačka8+razmak, l5 |
+| alt taster | tačka8+razmak, tačka1+tačka8+razmak, tačka4+tačka8+razmak, l6 |
+| Uključuje i isključuje HID simulaciju unosa tastature| esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
