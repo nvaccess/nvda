@@ -1907,13 +1907,18 @@ Apenas para a Focus 80:
 | Deslocar a linha braille para a frente | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec: ALVA BC640 e 680 ++[OptelecALVA]
-Ambas as linhas ALVA BC640 e BC680, da [Optelec, http://www.optelec.com/] são suportadas.
+++ Optelec: ALVA série 6 / protocol converter ++[OptelecALVA]
+As linhas ALVA BC640 e BC680, da [Optelec, http://www.optelec.com/] são suportadas, quer por USB quer por Bluetooth.
+Também pode usar uma linha antiga, como a Braille Voyager, usando o Protocol converter, vendido pela Optelec.
 Não necessita de quaisquer drivers específicos instalados para utilizar estes terminais.
-Basta Conectar o terminal e configurar o NVDA para o utilizar.
+Basta ligar o terminal e configurar o NVDA para o utilizar.
 
-Estas linhas possuem um teclado Braille, e controlam, elas próprias, a conversão de Braille em texto .
-Por isso, a configuração da Tabela de conversão de escrita do NVDA não é relevante.
+Note que o NVDA pode não conseguir usar uma ALVA BC6 por Bluetooth, se tiver sido emparelhada através do utilitário Bluetooth da ALVA.
+Se isso acontecer, recomendamos que emparelhe a ALVA através das configurações Bluetooth do Windows.
+
+Estas linhas possuem um teclado Braille, e controlam, elas próprias, a conversão de Braille em texto.
+This means that NVDA's braille input system is not in use in the default situation (i.e. the input braille table setting has no effect).
+For ALVA displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
 
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
