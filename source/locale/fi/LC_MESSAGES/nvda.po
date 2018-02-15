@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-02 00:10+1000\n"
-"PO-Revision-Date: 2018-02-01 19:47+0200\n"
+"POT-Creation-Date: 2018-02-09 14:17+1000\n"
+"PO-Revision-Date: 2018-02-10 12:50+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -7138,7 +7138,7 @@ msgstr "Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
-msgstr "Sarja: {portName}"
+msgstr "Sarjaportti: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7151,6 +7151,18 @@ msgstr "HumanWare Brailliant BI/B"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Eurobraille Esys/Esytime/Iris"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "HID-näppäimistöemulointi ei ole käytettävissä."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Ottaa HID-näppäimistöemuloinnin käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -9818,7 +9830,7 @@ msgstr "Tässä kaaviossa on yhteensä %d sarjaa"
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #, python-brace-format
 msgid "series {number} {name}"
-msgstr "sarja {number} {name}"
+msgstr "sarja {number}: {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
@@ -9833,7 +9845,7 @@ msgstr "Kaavioelementit"
 #. For example, this might report "foo series 1 of 2"
 #, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "sarja {seriesName} {seriesIndex} / {seriesCount}"
+msgstr "Sarja {seriesIndex} / {seriesCount}: {seriesName}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
 #, python-brace-format
@@ -9866,7 +9878,7 @@ msgstr "{categoryAxisTitle} {categoryAxisData}: "
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "Category {categoryAxisData}: "
-msgstr "Luokka {categoryAxisData}: "
+msgstr "Luokka: {categoryAxisData}, "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
@@ -9879,7 +9891,7 @@ msgstr "{valueAxisTitle} {valueAxisData}"
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 #, python-brace-format
 msgid "value {valueAxisData}"
-msgstr "arvo {valueAxisData}"
+msgstr "arvo: {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
