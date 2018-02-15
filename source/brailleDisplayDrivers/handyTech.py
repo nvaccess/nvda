@@ -724,7 +724,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Pylint complains about many branches, might be worth refactoring
 	def _onReceive(self, data):
 		if self.isHidSerial:
-			# The HID serial converter seems to wrap one or two bytes into a single HID packet
+			# The HID serial converter wraps one or two bytes into a single HID packet
 			hidLength = ord(data[1])
 			self._hidSerialBuffer+=data[2:(2+hidLength)]
 			currentBufferLength=len(self._hidSerialBuffer)
@@ -753,7 +753,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					stream = StringIO(self._hidSerialBuffer[:packet_length])
 					self._hidSerialBuffer = self._hidSerialBuffer[packet_length:]
 				else:
-					assert self._hidSerialBuffer.endswith("\x16")	# Extended packets are terminated with \x16
+					assert(self._hidSerialBuffer.endswith("\x16"), "Extended packet termionator expected"
 					stream = StringIO(self._hidSerialBuffer)
 					self._hidSerialBuffer = b""
 			else:
