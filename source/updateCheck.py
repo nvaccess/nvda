@@ -373,6 +373,9 @@ class UpdateAskInstallDialog(wx.Dialog):
 			finalDest=self.destPath
 		state["pendingUpdateFile"]=finalDest
 		state["pendingUpdateVersion"]=self.version
+		# Postponing an update indicates that the user is likely interested in getting a reminder.
+		# Therefore, clear the dontRemindVersion.
+		state["dontRemindVersion"] = None
 		saveState()		
 		self.EndModal(wx.ID_CLOSE)
 
