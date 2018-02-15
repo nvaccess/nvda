@@ -127,9 +127,9 @@ class AddonsDialog(wx.Dialog):
 				minimumNVDAVersion=bundle.manifest['minimumNVDAVersion'] or _("unknown"),
 				lastTestedNVDAVersion=bundle.manifest['lastTestedNVDAVersion'] or _("unknown")
 			)
-			if bundle.isProhibited:
+			if bundle.isIncompatible:
 				# Translators: The message displayed when installing an add-on package is prohibited.
-				prohibitedMessage = _(
+				incompatibleMessage = _(
 					"The installation of {summary} {version} by {author} has been blocked for "
 					"installation within NVDA version {NVDAVersion}.\n{versionInfoMessage}"
 				).format(
@@ -138,7 +138,7 @@ class AddonsDialog(wx.Dialog):
 					) if buildVersion.isTestVersion else buildVersion.version,
 					versionInfoMessage=versionInfoMessage, **bundle.manifest
 				)
-				gui.messageBox(prohibitedMessage,
+				gui.messageBox(incompatibleMessage,
 					# Translators: The title of a dialog presented when an error occurs.
 					_("Error"),
 					wx.OK | wx.ICON_ERROR)
@@ -236,10 +236,10 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingEnable:
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			return _("Enabled after restart")
-		elif addon.isProhibited:
+		elif addon.isIncompatible:
 			# Translators: The status shown for an addon when it's unsupported or untested
 			# and therefore prohibited.
-			return _("prohibited")
+			return _("incompatible")
 		elif globalVars.appArgs.disableAddons or addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			return _("disabled")
@@ -279,7 +279,7 @@ class AddonsDialog(wx.Dialog):
 			self.enableDisableButton.SetLabel(_("&Enable add-on") if not self._shouldDisable(addon) else _("&Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
-		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove and not addon.isProhibited)
+		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove and not addon.isIncompatible)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):

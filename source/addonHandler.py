@@ -108,12 +108,11 @@ def removeFailedDeletions():
 				log.error("Failed to delete path %s, try removing manually"%path)
 
 _disabledAddons = set()
-prohibitedAddons = set()
 def disableAddonsIfAny():
 	"""
 	Disables add-ons if told to do so by the user from add-ons manager.
 	This is usually executed before refreshing the list of available add-ons.
-	This does not deal with prohibited add-ons, as these are detected at refresh time.
+	This does not deal with incompatible add-ons, as these are detected at refresh time.
 	"""
 	global _disabledAddons
 	if "disabledAddons" not in state:
@@ -129,6 +128,11 @@ def disableAddonsIfAny():
 	state["pendingDisableSet"].clear()
 	state["pendingEnableSet"].clear()
 
+_incompatibleAddons = set()
+def incompatibleAddonsDisabledOnStart():
+	"""Returns C{True} if incompatible add-ons have been disabled during the last start of NVDA."""
+	return bool(_incompatibleAddons)
+
 def initialize():
 	""" Initializes the add-ons subsystem. """
 	if config.isAppX:
@@ -141,9 +145,9 @@ def initialize():
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True)
-	# #6275: The add-on refresh could have yielded prohibited add-ons.
+	# #6275: The add-on refresh could have yielded incompatible add-ons.
 	# Add these to the disabled add-ons
-	state["disabledAddons"] |= prohibitedAddons
+	state["disabledAddons"] |= _incompatibleAddons
 	saveState()
 
 def terminate():
@@ -180,8 +184,8 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", name)
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
-				elif a.isProhibited:
-					a.forceDisable()
+				elif a.isIncompatible:
+					_incompatibleAddons.add(a.name)
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
@@ -261,7 +265,7 @@ class AddonBase(object):
 		return self.isSupported and self.lastTestedNVDAVersion>=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)
 
 	@property
-	def isProhibited(self):
+	def isIncompatible(self):
 		"""True if loading or installing this add-on is prohibited given the current configuration."""
 		return ((not self.isSupported and self.manifest['minimumNVDAVersion'] is not None) or
 			(config.conf['general']['disableUntestedAddons'] and not self.isTested))
@@ -351,8 +355,8 @@ class Addon(AddonBase):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			if self.isProhibited:
-				raise AddonError("Add-on unsupported: minimum NVDA version %s, last tested version %s" % (
+			if self.isIncompatible:
+				raise AddonError("Add-on incompatible: minimum NVDA version %s, last tested version %s" % (
 					self.manifest['minimumNVDAVersion'], self.manifest['lastTestedNVDAVersion']
 				))
 			if self.name in state["pendingDisableSet"]:
@@ -368,10 +372,6 @@ class Addon(AddonBase):
 				state["pendingDisableSet"].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		saveState()
-
-	def forceDisable(self):
-		"""Forcefully add this add-on to the set of disabled add-ons."""
-		prohibitedAddons.add(self.name)
 
 	@property
 	def isRunning(self):

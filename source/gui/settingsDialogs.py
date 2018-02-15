@@ -183,11 +183,6 @@ class GeneralSettingsDialog(SettingsDialog):
 		else:
 			log.debugWarning("Could not set log level list to current log level")
 
-		# Translators: The label for a setting in general settings to disable untested add-ons.
-		self.disableUntestedAddonsCheckbox=wx.CheckBox(self,label=_("&Disable add-ons that are not tested for the current version of NVDA"))
-		self.disableUntestedAddonsCheckbox.SetValue(config.conf["general"]["disableUntestedAddons"])
-		settingsSizerHelper.addItem(self.disableUntestedAddonsCheckbox)
-
 		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("&Automatically start NVDA after I log on to Windows"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
@@ -215,6 +210,13 @@ class GeneralSettingsDialog(SettingsDialog):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+
+		# Translators: The label for a setting in general settings to disable untested add-ons.
+		self.disableUntestedAddonsCheckbox=wx.CheckBox(self,label=_("&Disable add-ons that are not tested for the current version of NVDA"))
+		self.disableUntestedAddonsCheckbox.SetValue(config.conf["general"]["disableUntestedAddons"])
+		if globalVars.appArgs.secure or config.isAppX:
+			self.disableUntestedAddonsCheckbox.Disable()
+		settingsSizerHelper.addItem(self.disableUntestedAddonsCheckbox)
 
 	def postInit(self):
 		self.languageList.SetFocus()
@@ -272,7 +274,6 @@ class GeneralSettingsDialog(SettingsDialog):
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
 		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
 		logHandler.setLogLevelFromConfig()
-		config.conf["general"]["disableUntestedAddons"]=self.disableUntestedAddonsCheckbox.IsChecked()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
 		if self.startOnLogonScreenCheckBox.IsEnabled():
@@ -284,6 +285,7 @@ class GeneralSettingsDialog(SettingsDialog):
 			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
+		config.conf["general"]["disableUntestedAddons"]=self.disableUntestedAddonsCheckbox.IsChecked()
 		if self.oldLanguage!=newLanguage:
 			if gui.messageBox(
 				# Translators: The message displayed after NVDA interface language has been changed.
