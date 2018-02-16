@@ -52,33 +52,33 @@ Có Gì Mới trong NVDA
 
 = 2017.4 =
 Những tính năng mới và thay đổi nổi bật trong bản phát hành này bao gồm việc hỗ trợ web như chế duyệt cho các hộp thoại web ở mặc định, cải thiện khả năng thông báo nhãn của các nhóm trường ở chế độ duyệt, hỗ trợ những công nghệ mới trên Windows 10 như Windows Defender Application Guard và Windows 10 trên ARM64, và tự động thông báo hướng màn hình cũng như tình trạng pin.
-Lưu ý, từ phiên bản NVDA này trở đi, sẽ không còn hỗ trợ cho Windows XP và Vista. Yêu cầu tối thiểu là từ Windows 7 SP1.
+Lưu ý, từ phiên bản NVDA này trở đi, sẽ không còn hỗ trợ cho Windows XP và Vista. Yêu cầu tối thiểu là từ Windows 7 SP1 trở lên.
 
 
 == Tính Năng Mới ==
-- In browse mode, it is now possible to skip past/to the start of landmarks using the skip to end/beginning of container commands (comma/shift+comma). (#5482)
-- In Firefox, Chrome and Internet Explorer, quick navigation to edit fields and form fields now includes editable rich text content (I.e. contentEditable). (#5534)
-- In web browsers, the Elements List can now list form fields and buttons. (#588)
-- Initial support for Windows 10 on ARM64. (#7508)
-- Early support for reading and interactive navigation of mathematical content for Kindle books with accessible math. (#7536)
-- Added support for Azardi e-book reader. (#5848)
-- Version information for add-ons is now reported when being updated. (#5324)
-- Added new command line parameters to create a portable copy of NVDA. (#6329)
-- Support for Microsoft Edge running within Windows Defender Application Guard in Windows 10 Fall Creators Update. (#7600)
-- If running on a laptop or tablet, NVDA will now report when a charger is connected/disconnected, and when the screen orientation changes. (#4574, #4612)
-- New language: Macedonian.
-- New braille translation tables: Croatian grade 1, Vietnamese grade 1. (#7518, #7565)
-- Support for the Actilino braille display from Handy Tech has been added. (#7590)
-- Braille input for Handy Tech braille displays is now supported. (#7590)
+- Ở chế độ duyệt, đã có thể đi đến/bỏ qua đầu/cuối của các landmark với lệnh chuyển đến cuối hoặc đầu đối tượng chứa (phẩy hoặc shift+phẩy). (#5482)
+- Lệnh di chuyển nhanh đến ô soạn thảo và các trường biểu mẫu trong Firefox, Chrome và Internet Explorer đã gồm luôn trường soạn thảo có thuộc tính, ví dụ như contentEdible. (#5534)
+- Danh sách các thành phần trong các trình duyệt web đã có thể liệt kê các trường biểu mẫu và nút. (#588)
+- Hỗ trợ bước đầu cho Windows 10 trên ARM64. (#7508)
+- Bước đầu hỗ trợ đọc và tương tác với nội dung Toán của sách Kindle có định dạng tiếp cận. (#7536)
+- Thêm hỗ trợ cho phần mềm đọc sách Azardi. (#5848)
+- Đã thông báo thông tin phiên bản của add-on khi được cặp nhật. (#5324)
+- Thêm tham số dòng lệnh để tạo bản NVDA chạy trực tiếp. (#6329)
+- Hỗ trợ Microsoft Edge chạy với Windows Defender Application Guard trên Windows 10 Fall Creators Update. (#7600)
+- Khi chạy trên laptop hay tablet, NVDA sẽ thông báo khi cắm hoặc gỡ dây sạc và khi thiết bị thay đổi hướng màn hình. (#4574, #4612)
+- Thêm ngôn ngữ mới: Macedonian.
+- Thêm bảng chữ nổi mới: Croatian cấp 1, tiếng Việt cấp 1. (#7518, #7565)
+- Hỗ trợ màn hình nổi Actilino của hãng Handy Tech. (#7590)
+- Hỗ trợ nhập liệu chữ nổi cho các màn hình nổi của Handy Tech. (#7590)
 
 
-== Changes ==
-- The minimum supported Operating System for NVDA is now Windows 7 Service Pack 1, or Windows Server 2008 R2 Service Pack 1. (#7546)
-- Web dialogs in Firefox and Chrome web browsers now automatically use browse Mode, unless inside of a web application. (#4493)
-- In browse mode, tabbing and moving with quick navigation commands no longer announces jumping out of containers such as lists and tables, which makes navigating more efficient. (#2591)
-- In Browse mode for Firefox and Chrome, the name of form field groups are now announced when moving into them with quick navigation or when tabbing. (#3321)
-- In browse mode, the quick navigation command for embedded objects (o and shift+o) now includes audio and video elements as well as elements with the aria roles application and dialog. (#7239)
-- Espeak-ng has been updated to 1.49.2, resolving some issues with producing release builds. (#7385, #7583)
+== Thay Đổi ==
+- Hệ điều hành Windows yêu cầu tối thiểu hiện nay cho NVDA là Windows 7 Service Pack 1, hoặc Windows Server 2008 R2 Service Pack 1. (#7546)
+- Nếu không đứng ở ứng dụng web, các hộp thoại web trong Firefox và Chrome sẽ mặc định ở chế độ duyệt. (#4493)
+- Ở chế độ duyệt, NVDA không còn thông báo ra khỏi đối tượng chứa như danh sách và bảng biểu. Điều này giúp việc di chuyển ổn định hơn. (#2591)
+- NVDA đã thông báo tên các nhóm biểu mẫu khi di chuyển nhanh đến đó trong chế độ duyệt với Firefox và Chrome. (#3321)
+- Ở chế độ duyệt, phím tắt di chuyển nhanh đến đối tượng nhúng (o và shift+o) cũng sẽ bao gồm các đối tượng audio, video cũng như những thành phần là hộp thoại và ứng dụng có các vai trò aria. (#7239)
+- Đã cập nhật lên bản Espeak-ng 1.49.2, sửa một số vấn đề của bản build trước đó. (#7385, #7583)
 - On the third activation of the 'read status bar' command, its contents is copied to the clipboard. (#1785)
 - When assigning gestures to keys on a Baum display, you can limit them to the model of the braille display in use (e.g. VarioUltra or Pronto). (#7517)
 - The hotkey for the filter field in the elements list in browse mode has changed from alt+f to alt+e. (#7569)

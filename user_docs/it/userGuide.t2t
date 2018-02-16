@@ -1836,14 +1836,6 @@ Per maggiori informazioni si veda il sito www.audiologic.it.
 
 Questo sintetizzatore non supporta [funzionalità spelling #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer per NVDA ++[Vocalizer]
-Nuance Vocalizer è una sintesi vocale commerciale di alta qualità sviluppata da Nuance Communications, Inc., e realizzato ad uso esclusivo per NVDA da Tiflotecnia, Lda.
-Contiene più di 50 voci diverse, tutte facilmente installabili, arrivando a parlare in oltre 30 lingue. 
-Tutte le voci e i file che costituiscono l'intero programma vengono distribuiti sotto forma di componenti aggiuntivi, di modo da renderne possibile l'utilizzo anche su copie portable.
-
-Per ottenere maggiori informazioni ed eventualmente acquistare le sintesi vocali, è possibile consultare la pagina dedicata per l'Italia all'indirizzo http://www.sintesivocale.it oppure a livello internazionale questo link [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Una percentuale delle vendite di questo prodotto è devoluto a NV Access, per finanziare un ulteriore sviluppo dello screen reader NVDA.
-
 + Display braille supportati +[SupportedBrailleDisplays]
 Questa sezione contiene informazioni sulle barre braille supportate da NVDA.
 
@@ -1906,13 +1898,17 @@ Solo per Focus 80:
 | Scorri display Braille avanti | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
-Sono supportati sia i modelli BC640 che BC680 prodotti dalla [Optelec http://www.optelec.com/].
+++ Optelec ALVA serie 6/protocol converter ++[OptelecALVA]
+Sono supportati sia i modelli BC640 che BC680 prodotti dalla [Optelec http://www.optelec.com/] sia con connessione usb che bluetooth.
+In alternativa , è possibile connettere un display  Optelec più vecchio, ad esempio il Braille Voyager, servendosi di un convertitore di protocolli prodotto dalla stessa Optelec.
 Per un corretto funzionamento non si avrà bisogno di alcun driver aggiuntivo.
 Semplicemente collegare la Barra Braille e configurare NVDA selezionando tale dispositivo.
+Nota: NVDA  potrebbe non essere in grado di connettersi via bluetooth  con un display Alva BC6 quando l'accoppiamento viene effettuato tramite l'utility Alva Bluetooth.
+Nel caso si sia associato il dispositivo tramite questa utility e si riscontra che NVDA non è in grado di connettersi o di riconoscere il dispositivo, si consiglia di utilizzare la procedura standard di accoppiamento presente nelle impostazioni bluetooth di Windows. 
 
-Poiché questi display possiedono una tastiera braille, essi gestiscono autonomamente la procedura di traduzione dal braille al testo.
+Nota: Poiché la maggior parte di questi display possiedono una tastiera braille, essi gestiscono autonomamente la procedura di traduzione dal braille al testo.
 Pertanto, le impostazioni di immissione tabella braille in NVDA non sono rilevanti.
+Per i display Alva con un firmware recente, è possibile disabilitare  la simulazione tastiera HID servendosi di un gesto di immissione.
 
 Segue un elenco dei tasti associati con NVDA:
 Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
@@ -1924,6 +1920,7 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Sposta il Display Braille alla riga successiva | t4 |
 | Scorrimento Display Braille avanti | t5 o etouch3 |
 | Portare cursore sulla cella braille  | routing |
+| Alterna simulazione tastiera HID | t1+spEnter |
 | spostarsi all'inizio della riga in modalità in linea | t1+t2 |
 | Spostarsi alla fine della riga in modalità in linea | t4+t5 |
 | Commuta inseguimento braille | t1+t3 |
@@ -1937,17 +1934,19 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Freccia giù | spDown |
 | Freccia sinistra | spLeft |
 | Freccia destra | spRight |
-| Tasto invio | spEnter |
+| Tasto invio | spEnter, Enter |
 | leggere data/ora | sp1+sp2 |
 | Menu NVDA  | sp1+sp3 |
 | Tasto windows+d  (ridurre ad icona tutte le applicazioni) | sp1+sp4 |
 | tasto windows+b (focus sul system tray) | sp3+sp4 |
-| Tasto windows | sp2+sp3 |
+| Tasto windows | sp2+sp3, Windows |
 | Tasto alt+tab | sp2+sp4 |
 | tasto control+home | t3+spUp |
 | tasto control+end | t3+spDown |
 | Tasto home | t3+spLeft |
 | Tasto end | t3+spRight |
+| Tasto alt | alt |
+| Tasto control | control |
 %kc:endInclude
 
 ++ Modelli Handy Tech ++[HandyTech]
@@ -2105,7 +2104,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Dire Tutto | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS serie Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
+++ HIMS serie Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 NVDA supporta i modelli Braille Sense, Braille EDGE,  SmartBeetle e SyncBraille prodotti dalla [Hims http://www.hims-inc.com/] quando connessi tramite USB o bluetooth.
 In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
 Si possono scaricare da qui all'indirizzo: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2454,6 +2453,86 @@ A causa di ciò, e per mantenere una buona compatibilità con altri screen reade
 || Nome | Tasto |
 | Scorrimento display braille indietro | Meno del tastierino numerico |
 | Scorrimento display braille avanti | Più del tastierino numerico | 
+%kc:endInclude
+
+++ Display Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+I display Esys, Esytime e Iris propuntoti da [Eurobraille http://www.eurobraille.fr/] sono supportati da NVDA.
+I dispositivi Esys e Esytime-Evo sono supportati quando connessi via USB o bluetooth.
+I dispositivi Esytime più vecchi invece sono gestiti solo tramite USB.
+Le barre Iris infine possono essere connesse soltanto tramite porta seriale.
+Pertanto, per questi display, è necessario selezionare la porta a cui è collegata la barra dopo aver scelto il driver nella finestra impostazioni Braille.
+
+I display Iris eEsys dispongono di una tastiera braille con dieci tasti.
+Dei due tasti disposti come una barra spaziatrice, il tasto sinistro corrisponde al tasto indietro e il tasto destro al tasto spazio.
+
+Seguono i tasti che sono stati associati per questi modelli a NVDA.
+Consultare la documentazione della barra braille per informazioni sulla posizione dei tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri display braille indietro | switch1-6sinistro, l1 |
+| Scorri display braille avanti | switch1-6Destro, l8 |
+| Vai al focus attuale | switch1-6Sinistro+switch1-6Destro, l1+l8 |
+| Route to braille cell | routing, doubleRouting|
+| Vai alla riga precedente in modalità revisione | joystick1Su |
+| Vai alla riga successiva in modalità revisione | joystick1Giù |
+| Vai al carattere precedente in modalità revisione | joystick1Sinistro |
+| Vai al carattere successivo in modalità revisione | joystick1Destro |
+| Passa alla modalità di revisione precedente | joystick1Sinistro+joystick1Su |
+| Passa alla modalità di revisione successiva | joystick1Destro+joystick1Giù |
+| Cancella l'ultima cella braille inserita o l'ultimo carattere | backspace |
+| Transcodifica l'immissione braille e preme il tasto invio | backspace+spazio |
+| Tasto insert | punto3+punto5+spazio, l7 |
+| Tasto cancella | punto3+punto6+spazio |
+| Tasto inizio | punto1+punto2+punto3+spazio, joystick2Sinistro+joystick2Su |
+| Tasto fine | punto4+punto5+punto6+spazio, joystick2Destro+joystick2Giù |
+| Freccia sinistra | punto2+spazio, joystick2Sinistro, Freccia sinistra |
+| Freccia destra | punto5+spazio, joystick2Destro, Freccia destra |
+| Freccia su | punto1+spazio, joystick2Su, Freccia su |
+| Freccia giù | punto6+spazio, joystick2Giù, freccia giù |
+| Tasto invio | joystick2Center |
+| Pagina su | punto1+punto3+spazio |
+| pagina giù | punto4+punto6+spazio |
+| Tasto 1 del tastierino numerico | punto1+punto6+backspace |
+| Tasto 2 del tastierino numerico | punto1+punto2+punto6+backspace |
+| Tasto 3 del tastierino numerico | punto1+punto4+punto6+backspace |
+| Tasto 4 del tastierino numerico | punto1+punto4+punto5+punto6+backspace |
+| %asto 5 del tastierino numerico | punto1+punto5+punto6+backspace |
+| Tasto 6 del tastierino numerico | punto1+punto2+punto4+punto6+backspace |
+| Tasto 7 del tastierino numerico | punto1+punto2+punto4+punto5+punto6+backspace |
+| Tasto 8 del tastierino numerico | punto1+punto2+punto5+punto6+backspace |
+| tasto 9 del tastierino numerico | punto2+punto4+punto6+backspace |
+| Tasto Insert del tastierino numerico | punto3+punto4+punto5+punto6+backspace |
+| Tasto Punto del tastierino numerico | punto2+backspace |
+| Tasto Diviso del tastierino numerico | punto3+punto4+backspace |
+| Tasto Per del tastierino numerico | punto3+punto5+backspace |
+| Tasto Meno del tastierino numerico | punto3+punto6+backspace |
+| Tasto Più del tastierino numerico | punto2+punto3+punto5+backspace |
+| Tasto Invio del tastierino numerico | punto3+punto4+punto5+backspace |
+| Tasto escape | punto1+punto2+punto4+punto5+spazio, l2 |
+| Tasto tab | punto2+punto5+punto6+spazio, l3 |
+| Tasto shift+tab | punto2+punto3+punto5+spazio |
+| Tasto stampaSchermo | punto1+punto3+punto4+punto6+spazio |
+| Tasto pausa | punto1+punto4+spazio |
+| Tasto applicazioni | punto5+punto6+backspace |
+| Tasto f1 | punto1+backspace |
+| Tasto f2 | punto1+punto2+backspace |
+| Tasto f3  | punto1+punto4+backspace |
+| Tasto f4 | punto1+punto4+punto5+backspace |
+| Tasto f5 | punto1+punto5+backspace |
+| Tasto f6 | punto1+punto2+punto4+backspace |
+| Tasto f7 | punto1+punto2+punto4+punto5+backspace |
+| Tasto f8 | punto1+punto2+punto5+backspace |
+| Tasto f9 | punto2+punto4+backspace |
+| Tasto f10 | punto2+punto4+punto5+backspace |
+| Tasto f11 | punto1+punto3+backspace |
+| Tasto f12 | punto1+punto2+punto3+backspace |
+| Tasto windows | punto1+punto2+punto3+punto4+backspace |
+| Tasto BloccaMaiuscole | punto7+backspace, punto8+backspace |
+| Tasto numLock | punto3+backspace, punto6+backspace |
+| Tasto shift | punto7+spazio, l4 |
+| Tasto control | punto7+punto8+spazio, punto1+punto7+punto8+spazio, punto4+punto7+punto8+spazio, l5 |
+| Tasto alt | punto8+spazio, punto1+punto8+spazio, punto4+punto8+spazio, l6 |
+| Alterna simulazione tastiera HID | esytime):l1+joystick1Giù, esytime):l8+joystick1Giù |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

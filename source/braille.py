@@ -1892,6 +1892,11 @@ class _BgThread:
 		if _BgThread.exit:
 			# func will see this and exit.
 			return
+		if not handler.display:
+			# Sometimes, the executor is triggered when a display is not fully initialized.
+			# For example, this happens when handling an ACK during initialisation.
+			# We can safely ignore this.
+			return
 		if handler.display._awaitingAck:
 			# Do not write cells when we are awaiting an ACK
 			return
