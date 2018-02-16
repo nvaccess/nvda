@@ -659,9 +659,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
-			if not self.isHid:
-				# We must sleep after closing the COM port, as it takes some time for the device to disconnect.
-				time.sleep(self.timeout)
+			# We must sleep after closing, as it sometimes takes some time for the device to disconnect.
+			time.sleep(self.timeout)
 
 	def _get_atc(self):
 		return self._atc
@@ -753,7 +752,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					stream = StringIO(self._hidSerialBuffer[:packet_length])
 					self._hidSerialBuffer = self._hidSerialBuffer[packet_length:]
 				else:
-					assert(self._hidSerialBuffer.endswith("\x16"), "Extended packet termionator expected"
+					assert self._hidSerialBuffer.endswith("\x16"), "Extended packet termionator expected"
 					stream = StringIO(self._hidSerialBuffer)
 					self._hidSerialBuffer = b""
 			else:
