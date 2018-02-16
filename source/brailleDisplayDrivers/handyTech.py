@@ -620,16 +620,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self.isHid = portType.startswith("USB HID")
 			self.isHidSerial = portType == "USB HID serial converter"
 			try:
-				if self.isHid:
-					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
-					if self.isHidSerial:
-						# This is either the standalone HID adapter cable for older displays,
-						# or an older display with a HID - serial adapter built in
-						# Send a flush to open the serial channel
-						self._dev.write(HT_HID_RPT_InCommand + HT_HID_CMD_FlushBuffers)
+				if self.isHidSerial:
+					# This is either the standalone HID adapter cable for older displays,
+					# or an older display with a HID - serial adapter built in
+					self._dev = hwIo.Hid(port, onReceive=self._hidSerialOnReceive)
+					# Send a flush to open the serial channel
+					self._dev.write(HT_HID_RPT_InCommand + HT_HID_CMD_FlushBuffers)
+				elif self.isHid:
+					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY,
-						timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
+						timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._serialOnReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -659,9 +660,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
-			if not self.isHid:
-				# We must sleep after closing the COM port, as it takes some time for the device to disconnect.
-				time.sleep(self.timeout)
+			# We must sleep after closing, as it sometimes takes some time for the device to disconnect.
+			time.sleep(self.timeout)
 
 	def _get_atc(self):
 		return self._atc
@@ -722,21 +722,29 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	# pylint: disable=R0912
 	# Pylint complains about many branches, might be worth refactoring
-	def _onReceive(self, data):
-		if self.isHidSerial:
-			# The HID serial converter wraps one or two bytes into a single HID packet
-			hidLength = ord(data[1])
-			self._hidSerialBuffer+=data[2:(2+hidLength)]
+	def _hidOnReceive(self, data):
+		# data contains the entire packet.
+		stream = StringIO(data)
+		serPacketType = data[2]
+		# Skip the header, so reading the stream will only give the rest of the data
+		stream.seek(3)
+		self._handleInputStream(serPacketType, stream)
+
+	def _hidSerialOnReceive(self, data):
+		# The HID serial converter wraps one or two bytes into a single HID packet
+		hidLength = ord(data[1])
+		self._hidSerialBuffer+=data[2:(2+hidLength)]
+		self._processHidSerialBuffer()
+
+	def _processHidSerialBuffer(self):
+		while self._hidSerialBuffer:
 			currentBufferLength=len(self._hidSerialBuffer)
 			serPacketType = self._hidSerialBuffer[0]
 			if serPacketType!=HT_PKT_EXTENDED:
 				packetLength = 2 if serPacketType==HT_PKT_OK else 1
-				if currentBufferLength>packetLength:
+				if currentBufferLength>=packetLength:
 					stream = StringIO(self._hidSerialBuffer[:packetLength])
 					self._hidSerialBuffer = self._hidSerialBuffer[packetLength:]
-				elif currentBufferLength==packetLength:
-					stream = StringIO(self._hidSerialBuffer)
-					self._hidSerialBuffer = b""
 				else:
 					# The packet is not yet complete
 					return
@@ -748,29 +756,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				if len(self._hidSerialBuffer)<packet_length:
 					# The packet is not yet complete
 					return
-				# We have a complete packet, but it must be isolated from another packet that could have landed in the buffer
-				if len(self._hidSerialBuffer)>packet_length:
-					stream = StringIO(self._hidSerialBuffer[:packet_length])
-					self._hidSerialBuffer = self._hidSerialBuffer[packet_length:]
-				else:
-					assert(self._hidSerialBuffer.endswith("\x16"), "Extended packet termionator expected"
-					stream = StringIO(self._hidSerialBuffer)
-					self._hidSerialBuffer = b""
+				# We have a complete packet.
+				# We also isolate it from another packet that could have landed in the buffer,
+				stream = StringIO(self._hidSerialBuffer[:packet_length])
+				self._hidSerialBuffer = self._hidSerialBuffer[packet_length:]
+				if len(self._hidSerialBuffer)==packet_length:
+					assert self._hidSerialBuffer.endswith("\x16"), "Extended packet termionator expected"
 			else:
 				# The packet is not yet complete
 				return
 			stream.seek(1)
-		elif self.isHid:
-			# data contains the entire packet.
-			stream = StringIO(data)
-			serPacketType = data[2]
-			# Skip the header, so reading the stream will only give the rest of the data
-			stream.seek(3)
-		else:
-			serPacketType = data
-			# data only contained the packet type. Read the rest from the device.
-			stream = self._dev
+			self._handleInputStream(serPacketType, stream)
 
+	def _serialOnReceive(self, data):
+		self._handleInputStream(data, self._dev)
+
+	def _handleInputStream(self, serPacketType, stream):
 		if serPacketType in (HT_PKT_OK, HT_PKT_EXTENDED):
 			modelId = stream.read(1)
 			if not self._model:
@@ -846,7 +847,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	scriptCategory = SCRCAT_BRAILLE
 
 	def script_toggleBrailleInput(self, _gesture):
-		self.brailleInput = not self._brailleInput
+		self.brailleInput = not self.brailleInput
 		if self.brailleInput:
 			# Translators: message when braille input is enabled
 			ui.message(_('Braille input enabled'))
