@@ -66,6 +66,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		return obj==self.rootNVDAObject
 
 	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		""" Override of documentBase.DocumentWithTableNavigation._getTableCellAt."""
 		# Locate the table in the object ancestry of the given document position. 
 		obj=startPos.NVDAObjectAtStart
 		while not obj.table and obj!=startPos.obj.rootNVDAObject:
