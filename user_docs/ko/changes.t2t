@@ -23,12 +23,14 @@ NVDA 변경 이력
 - 힘스 스마트 비틀 스크롤 키 사용시 명령 인식 정확도가 향상됨. (#6086)
 - 모질라 파이어폭스 58 이상 사용시 대용량 컨텐츠를 탐색시 NVDA의 반응 속도가 개선됨. (#7719)
 - 마이크로소프트 Outlook 사용시 표가 있는 이메일 읽을시 NVDA가 다운되던 문제 수정. (#6827)
+- 점자 입력 사용시 점자 키보드에 할당된 시스템 기능키와 다른 기능키를 조합한 명령을 사용할 수 있음(모델별로 다름). (#7783)
 - 모질라 파이어폭스 사용시 LastPass와 bitwarden과 같은 추가 기능 팝업에서 브라우즈 모드가 작동하도록 함. (#7809)
 - 파이어폭스나 크롬 사용시 프로그램이 다운되었을때 나타나던 포커스 변경시 NVDA 반응 속도 저하 문제 수정. (#7818)
 - Chicken Nugget와 같은 트위터 앱에서 280자 트위트 읽을시 마지막 20개 글자가 출력되지 않던 문제 수정. (#7828)
 - NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
 - 최신 Office 365 사용시 방향키를 이용한 Excel 차트 탐색 기능이 복원됨. (#7046)
 -  In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. Fixes #7076
+- In apps such as Windows 10 Mail, NVDA will no longer fail to announce deleted characters when pressing backspace. (#7456)
 
 
 = 2017.4 =

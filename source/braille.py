@@ -1892,6 +1892,11 @@ class _BgThread:
 		if _BgThread.exit:
 			# func will see this and exit.
 			return
+		if not handler.display:
+			# Sometimes, the executor is triggered when a display is not fully initialized.
+			# For example, this happens when handling an ACK during initialisation.
+			# We can safely ignore this.
+			return
 		if handler.display._awaitingAck:
 			# Do not write cells when we are awaiting an ACK
 			return
@@ -1931,7 +1936,8 @@ class _BgThread:
 
 #: Maps old braille display driver names to new drivers that supersede old drivers.
 RENAMED_DRIVERS = {
-	"syncBraille":"hims"
+	"syncBraille":"hims",
+	"alvaBc6":"alva"
 }
 
 def initialize():
