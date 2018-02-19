@@ -1492,7 +1492,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
 		self._rawText=u""
 		import brailleViewer
-		brailleViewer.registerCallbackAndCallNow(self._onBrailleViewerChangedState)
+		brailleViewer.brailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1504,7 +1504,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
 		import brailleViewer
 		brailleViewer.destroyBrailleViewerTool()
-		brailleViewer.deregisterCallback(self._onBrailleViewerChangedState)
 		if self.display:
 			self.display.terminate()
 			self.display = None
@@ -1568,10 +1567,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
 	
-	def _onBrailleViewerChangedState(self, stateChange):
+	def _onBrailleViewerChangedState(self, created):
 		import brailleViewer
-		log.debug("reef stateChange: {}".format(stateChange))
-		if brailleViewer.BRAILLE_DISPLAY_DESTROYED == stateChange:
+		if not created:
 			self.viewerTool = None
 			self.displaySize = None if not self.display else self.display.numCells
 			self.enabled = bool(self.displaySize)

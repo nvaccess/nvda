@@ -10,6 +10,7 @@ import braille
 from braille import BrailleDisplayDriver
 import inputCore
 from logHandler import log
+import extensionPoints
 
 # global callbacks for braille viewer creation and destruction.
 _callbacks = []
@@ -17,27 +18,14 @@ _callbacks = []
 # global braille viewer driver:
 _display = None
 
+# this extension points action is triggered everytime the the brailleDisplayTool
+# is created or destroyed.
+# Args given to Notify:
+# created - A boolean argument is given, True for created, False for destructed.
+brailleViewerToolToggledAction = extensionPoints.Action()
+
 def isBrailleDisplayCreated():
 	return bool(_display)
-
-# I suspect this could keep objects alive longer than intended
-# or cause object deletion order problems. Need to look into the
-# iodomaitic pattern for handling this in python.
-# would a week reference to the callback mean that the deregister func
-# no longer needs to be called?
-BRAILLE_DISPLAY_DESTROYED = 0
-BRAILLE_DISPLAY_CREATED = 1
-def registerCallbackAndCallNow(onBrailleDisplayChangeState):
-	_callbacks.append(onBrailleDisplayChangeState)
-	# call function now to set initial state.
-	onBrailleDisplayChangeState(BRAILLE_DISPLAY_CREATED if isBrailleDisplayCreated() else BRAILLE_DISPLAY_DESTROYED)
-
-def deregisterCallback(onBrailleDisplayChangeState):
-	_callbacks.remove(onBrailleDisplayChangeState)
-
-def _doCallBacks(evt):
-	for x in _callbacks:
-		x(evt)
 
 def getBrailleViewerTool():
 	return _display
@@ -49,7 +37,6 @@ def toggleBrailleViewerTool():
 		createBrailleViewerTool()
 
 def destroyBrailleViewerTool():
-	log.debug("reef destroyBrailleViewerTool")
 	global _display
 	if not _display:
 		return
@@ -58,7 +45,7 @@ def destroyBrailleViewerTool():
 	except:
 		log.error("Error terminating braille viewer tool", exc_info=True)
 	_display = None
-	_doCallBacks(BRAILLE_DISPLAY_DESTROYED)
+	brailleViewerToolToggledAction.Notify(created=False)
 
 DEFAULT_NUM_CELLS = 40
 def createBrailleViewerTool():
@@ -76,15 +63,19 @@ def createBrailleViewerTool():
 		_display.__init__(cells)
 	else:
 		_display = BrailleViewerDriver(cells)
-	_doCallBacks(BRAILLE_DISPLAY_CREATED)
+	brailleViewerToolToggledAction.notify(created=True)
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 SPACE_CHARACTER = u" "
 
 class BrailleViewerFrame(wx.MiniFrame):
 
+	#Translators: The title of the NVDA Braille Viewer tool window.
+	title = _("NVDA Braille Viewer")
+
 	def __init__(self, numCells, onCloseFunc):
-		super(BrailleViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Braille Viewer"), style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
+
+		super(BrailleViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, self.title, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
 		self._notifyOfClose = onCloseFunc
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.lastBraille = SPACE_CHARACTER * numCells
@@ -137,6 +128,7 @@ class BrailleViewerFrame(wx.MiniFrame):
 
 class BrailleViewerDriver(BrailleDisplayDriver):
 	name = "brailleViewer"
+	#Translators: Description of the braille viewer tool
 	description = _("Braille viewer")
 	numCells = DEFAULT_NUM_CELLS # Overriden to match an active braille display
 	_brailleGui = None # A BrailleViewer instance
