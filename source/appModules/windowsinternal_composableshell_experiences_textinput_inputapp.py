@@ -43,3 +43,10 @@ class AppModule(appModuleHandler.AppModule):
 			# Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
 			ui.message(_("No emoji"))
 		nextHandler()
+
+	def event_UIA_window_windowOpen(self, obj, nextHandler):
+		# Make sure to announce most recently used emoji first in post-1709 builds.
+		# Fake the announcement by locating 'most recently used" category and calling selected event on this.
+		if obj.childCount == 3:
+			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
+		nextHandler()
