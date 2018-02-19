@@ -1,6 +1,6 @@
 ﻿#locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -43,7 +43,7 @@ date separator		none	always
  	Leerzeichen	char
  	Geschütztes Leerzeichen	char
 
-# Standard punctuation/symbols
+# Standard-Satzzeichen/-Symbole
 !	Ausrufezeichen	all
 "	Anführungszeichen	most
 \#	Nummernzeichen	some
@@ -73,7 +73,7 @@ $	Dollar	all	norep
 @	Ät	some
 [	Eckige Klammer auf	most
 ]	Eckige Klammer zu	most
-\\	Bäcksläsch	most
+\	Bäcksläsch	most
 ^	Dach	most
 _	Unterstrich	most
 `	Graav	most
@@ -82,7 +82,7 @@ _	Unterstrich	most
 |	Senkrechter Strich	most
 ~	Tilde	most
 
-# Other characters
+# Andere Zeichen
 •	Aufzählungszeichen	some
 …	Punkt Punkt Punkt	all	always
 ...	Punkt Punkt Punkt	all	always
@@ -118,12 +118,14 @@ _	Unterstrich	most
 ×	Mal	some
 ÷	Geteilt Durch	some
 ←	Pfeil nach links	some
+↑	Pfeil aufwärts	some
 →	Pfeil nach rechts	some
+↓	Pfeil abwärts	some
 ✓	Häkchen	some
 ✔	Fettes Häkchen	some
 ℃	Grad Celsius	some
 
-# Mathematical Operators U+2200 to U+220F
+# Mathematische Operatoren U+2200 bis U+220F
 ∀	Für Alles	none
 ∁	Komplement	none
 ∂	Partielles Differential	none
@@ -141,7 +143,7 @@ _	Unterstrich	most
 ∎	Ende des Beweises	none
 ∏	Produktzeichen	none
 
-# Verschiedene mathematische Operatoren
+# Übliche mathematische Operatoren
 ∑	Summenzeichen	none
 √	Quadratwurzel	none
 ∛	Kubikwurzel	none
@@ -158,7 +160,7 @@ _	Unterstrich	most
 ∪	Vereinigungsmengenzeichen	none
 ∫	Integralzeichen	none
 ∴	Folglich	none
-∵	Pfeil	none
+∵	Weil	none
 ∶	Verhältniszeichen	none
 ∷	Proportionszeichen	none
 ≤	Kleiner oder gleich	none
@@ -167,3 +169,20 @@ _	Unterstrich	most
 ⊃	Ist Obermenge von	none
 ⊆	Teilmenge oder gleich	none
 ⊇	Obermenge oder gleich	none
+
+# Vulgur-Teilmengen U+2150 bis U+215E
+⅐	Ein Siebtel	none
+⅑	Ein Neuntel	none
+⅒	Ein Zehntel	none
+⅓	Ein Drittel	none
+⅔	Zwei Drittel	none
+⅕	Ein Fünftel	none
+⅖	Zwei Fünftel	none
+⅗	Drei Fünftel	none
+⅘	Vier Fünftel	none
+⅙	Ein Sechstel	none
+⅚	Fünf Sechstel	none
+⅛	Ein Achtel	none
+⅜	Drei Achtel	none
+⅝	Fünf Achtel	none
+⅞	Sieben Achtel	none

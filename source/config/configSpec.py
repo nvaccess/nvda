@@ -61,6 +61,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	noMessageTimeout = boolean(default=false)
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
+	autoTether = boolean(default=true)
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
@@ -138,6 +139,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
 
+[touch]
+	touchTyping = boolean(default=False)
+
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
 	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
@@ -181,6 +185,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
+	useInMSWordWhenAvailable = boolean(default=false)
 
 [update]
 	autoCheck = boolean(default=true)
