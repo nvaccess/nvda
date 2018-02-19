@@ -643,15 +643,6 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 				return self.presType_layout
 			if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and (not config.conf["documentFormatting"]["reportTables"] or not config.conf["documentFormatting"]["reportTableCellCoords"]):
 				return self.presType_layout
-		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
-			try:
-				table=self.table
-			except NotImplementedError:
-				table=None
-			if table:
-				# This is part of a real table, so the cells will report row/column information.
-				# Therefore, this object is just for layout.
-				return self.presType_layout
 		return self.presType_content
 
 	def _get_simpleParent(self):

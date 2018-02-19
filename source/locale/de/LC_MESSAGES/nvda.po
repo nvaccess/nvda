@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 00:10+1000\n"
+"POT-Creation-Date: 2018-02-09 14:17+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"Last-Translator: Adriani Botez <adriani.botez@gmail.com>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.5.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -86,25 +86,21 @@ msgid "unknown input method"
 msgstr "Unbekannte Eingabemethode"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
 msgid "spelling and grammar: {text}"
 msgstr "Rechtschreibung und Grammatik: {text}"
 
 #. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
 msgid "spelling: {text}"
 msgstr "Rechtschreibfehler: {text}"
 
 #. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
 msgid "grammar: {text}"
 msgstr "Grammatik: {text}"
 
@@ -161,7 +157,7 @@ msgstr "Nie"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "NVDA-Klänge beim Sprechen und Wiedergeben"
+msgstr "Beim Sprechen und Wiedergeben von NVDA-Signaltönen"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -521,7 +517,6 @@ msgstr "bl"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} von {total}"
 
@@ -578,7 +573,7 @@ msgstr "Leertaste mit Punkt"
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
-msgstr "Leerzeichen"
+msgstr "Leertaste"
 
 #. Translators: Used when describing keys on a braille keyboard.
 msgid "braille keyboard"
@@ -1746,7 +1741,7 @@ msgstr "rot"
 #. Translators: The color between  red and orange (HSV hue 15 degrees)
 msgctxt "color hue"
 msgid "red-orange"
-msgstr "rötliches orange"
+msgstr "rot-orange"
 
 #. Translators: The color orange (HSV hue 30 degrees)
 msgctxt "color hue"
@@ -1756,7 +1751,7 @@ msgstr "orange"
 #. Translators: The color between  orange and yellow (HSV hue 45 degrees)
 msgctxt "color hue"
 msgid "orange-yellow"
-msgstr "grelles gelb"
+msgstr "gelb-orange"
 
 #. Translators: The color yellow (HSV hue 60 degrees)
 msgctxt "color hue"
@@ -1806,7 +1801,7 @@ msgstr "lila"
 #. Translators: The color between  purple and pink (HSV hue 312 degrees)
 msgctxt "color hue"
 msgid "purple-pink"
-msgstr "violettes pink"
+msgstr "pink-violette"
 
 #. Translators: The color pink (HSV hue 324 degrees)
 msgctxt "color hue"
@@ -1816,76 +1811,64 @@ msgstr "pink"
 #. Translators: The color between  pink and red (HSV hue 342 degrees)
 msgctxt "color hue"
 msgid "pink-red"
-msgstr "grelles rot"
+msgstr "pink-rot"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
-msgstr "grelles {color}"
+msgstr "Hell {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
-msgstr "dunkles {color}"
+msgstr "dunkl {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "sehr dunkles {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
-msgstr "helles {color}"
+msgstr "hell Blass{color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
-msgstr "helles {color}"
+msgstr "Blass{color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "getöntes {color}"
+msgstr "dunkles Blas{color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
-msgstr "stark getöntes hell{color}"
+msgstr "Sehr dunkles Blass{color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color}weiß"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color}grau"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "dunkles grau{color}"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
-#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "sehr dunkles grau{color}"
@@ -1923,7 +1906,7 @@ msgstr "Titelleiste"
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
-msgstr "Feld"
+msgstr "Fenster"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
@@ -1955,7 +1938,7 @@ msgstr "Menüleiste"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 msgid "menu item"
-msgstr "Menüeintrag"
+msgstr "Menü-Eintrag"
 
 #. Translators: The word used for menus such as edit menu.
 #. Translators: Identifies a menu such as file menu.
@@ -2017,7 +2000,7 @@ msgstr "Fortschrittsanzeige"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
-msgstr "Rollbalken"
+msgstr "Scrollbalken"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
@@ -2058,7 +2041,7 @@ msgstr "Zeilenüberschrift"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "Ausklapplistenschalter"
+msgstr "Ausklappschalter"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -2078,27 +2061,27 @@ msgstr "Überschrift"
 
 #. Translators: Identifies a heading level.
 msgid "heading 1"
-msgstr "Überschriftsebene 1"
+msgstr "Überschrift-Ebene 1"
 
 #. Translators: Identifies a heading level.
 msgid "heading 2"
-msgstr "Überschriftsebene 2"
+msgstr "Überschrift-Ebene 2"
 
 #. Translators: Identifies a heading level.
 msgid "heading 3"
-msgstr "Überschriftsebene 3"
+msgstr "Überschrift-Ebene 3"
 
 #. Translators: Identifies a heading level.
 msgid "heading 4"
-msgstr "Überschriftsebene 4"
+msgstr "Überschrift-Ebene 4"
 
 #. Translators: Identifies a heading level.
 msgid "heading 5"
-msgstr "Überschriftsebene 5"
+msgstr "Überschrift-Ebene 5"
 
 #. Translators: Identifies a heading level.
 msgid "heading 6"
-msgstr "Überschriftsebene 6"
+msgstr "Überschrift-Ebene 6"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 msgid "paragraph"
@@ -2156,7 +2139,7 @@ msgstr "Beschreibung"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
-msgstr "Aktivierbarer Menü-Eintrag - Mehrfachauswahl ist möglich"
+msgstr "Kontrollfeld Menü-Eintrag"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
@@ -2189,7 +2172,7 @@ msgstr "Fußnote"
 #. Translators: Reported for an object which is a glass pane; i.e.
 #. a pane that is guaranteed to be on top of all panes beneath it.
 msgid "glass pane"
-msgstr "Transparentes Feld"
+msgstr "Transparentes Fenster"
 
 #. Translators: Identifies a header (usually text at top of documents or on tops of pages).
 msgid "header"
@@ -2197,7 +2180,7 @@ msgstr "Überschrift"
 
 #. Translators: Identifies an image map (a type of graphical link).
 msgid "image map"
-msgstr "Grafischer Link"
+msgstr "Grafik-Link"
 
 # Deutsche Sprachdatei für NVDA
 # Copyright © 2006 - 2010, das Deutsche NVDA-Team.
@@ -2219,7 +2202,7 @@ msgstr "Seite"
 
 #. Translators: Identifies a radio menu item.
 msgid "radio menu item"
-msgstr "aktivierbarer Menüeintrag, Mehrfachauswahl nicht möglich"
+msgstr "Auswahl Menüeintrag"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
@@ -2227,16 +2210,16 @@ msgstr "Schichtfeld"
 
 #. Translators: Identifies a redundant object.
 msgid "redundant object"
-msgstr "Zusätzliches Objekt"
+msgstr "mehrfaches Objekt"
 
 #. Translators: Identifies a root pane.
 msgid "root pane"
-msgstr "Hauptfeld"
+msgstr "Hauptfenster"
 
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
 msgid "edit bar"
-msgstr "Eingabezeile"
+msgstr "Eingabeleiste"
 
 #. Translators: Identifies a terminal window such as command prompt.
 msgid "terminal"
@@ -2252,7 +2235,7 @@ msgstr "Lineal"
 
 #. Translators: Identifies a scroll pane.
 msgid "scroll pane"
-msgstr "Verschiebbares Feld"
+msgstr "Verschiebbares Fenster"
 
 #. Translators: Identifies a section of text.
 msgid "section"
@@ -2376,11 +2359,11 @@ msgstr "Benachrichtigung"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
-msgstr "Desktopfeld"
+msgstr "Desktopfenster"
 
 #. Translators: Identifies an option pane.
 msgid "option pane"
-msgstr "Optionsfeld"
+msgstr "Optionsfenster"
 
 #. Translators: Identifies a color chooser.
 msgid "color chooser"
@@ -2606,7 +2589,7 @@ msgstr "Ziehen"
 #. Translators: Reported where an object which is being dragged can be dropped.
 #. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
-msgstr "Fallengelassen"
+msgstr "Ziel zum Loslassen"
 
 msgid "sorted"
 msgstr "sortiert"
@@ -2724,7 +2707,7 @@ msgstr "Fehler in der Zuweisungsdatei für Eingabemethoden!"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
-msgstr "NVDA wird geladen. Bitte warten..."
+msgstr "NVDA wird gestartet. Bitte warten..."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -2732,7 +2715,7 @@ msgstr "Querformat"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr "Portrait"
+msgstr "Hochformat"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
@@ -3000,8 +2983,8 @@ msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"Bei ein Mal drücken der Tastenkombination wird die aktuelle Uhrzeit und bei "
-"zwei Mal drücken das aktuelle Datum angesagt."
+"Bei einmaligem Drücken der Tastenkombination wird die aktuelle Uhrzeit und "
+"bei zweimaligem Drücken das aktuelle Datum angesagt."
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -3910,7 +3893,6 @@ msgid "AC power on"
 msgstr "Netzbetrieb"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} Stunden und {minutes:d} Minuten verbleiben"
 
@@ -4216,15 +4198,15 @@ msgstr "Übersetzt eine Braille-Eingabe"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
-msgstr "Erweiterungen neu geladen"
+msgstr "Plugins wurden neu geladen"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"Lädt die Anwendungsmodule und die globalen Erweiterungen neu ohne NVDA neu "
-"zu starten (hilfreich für die Entwickler)."
+"Lädt die Anwendungsmodule und die globalen Plugins neu ohne NVDA neu zu "
+"starten (hilfreich für Entwickler)."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4249,7 +4231,7 @@ msgstr "%smodus"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Cycles between available touch modes"
-msgstr "Durchläuft alle Arbeitsmodi für Touchscreens zyklisch."
+msgstr "Wechselt zwischen verfügbaren Modi für Touchscreen-Bedienung."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -4278,7 +4260,7 @@ msgstr "Interagiert mit mathematischen Inhalten."
 
 #. Translators: Reported when Windows 10 OCR is not available.
 msgid "Windows 10 OCR not available"
-msgstr "Die Windows 10-Ocr ist nicht verfügbar"
+msgstr "Die Windows 10-OCR ist nicht verfügbar"
 
 #. Translators: Describes a command.
 msgid ""
@@ -4303,7 +4285,7 @@ msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
-msgstr "Internetseite von NVDA"
+msgstr "Webseite von NVDA"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 msgid "Uninstall NVDA"
@@ -4982,7 +4964,7 @@ msgstr "Pfeil nach unten"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr "Callout with Down Arrow"
+msgstr "Aufrufsymbol mit Pfeil nach unten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5000,169 +4982,169 @@ msgstr "Flussdiagramm für alternativen Prozess"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Card flowchart symbol"
-msgstr "Card flowchart symbol"
+msgstr "Kartenflussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Collate flowchart symbol"
-msgstr "Collate flowchart symbol"
+msgstr "Flussdiagramm für Datenabgleich"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Connector flowchart symbol"
-msgstr "Connector flowchart symbol"
+msgstr "Connector-Flussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Data flowchart symbol"
-msgstr "Data flowchart symbol"
+msgstr "Datenflussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Decision flowchart symbol"
-msgstr "Decision flowchart symbol"
+msgstr "Entscheidungsflussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Delay flowchart symbol"
-msgstr "Delay flowchart symbol"
+msgstr "Flussdiagramm für Prozessverzögerung"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Direct access storage flowchart symbol"
-msgstr "Direct access storage flowchart symbol"
+msgstr "Flussdiagramm für direkten Zugriff auf Datenspeicher"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Display flowchart symbol"
-msgstr "Display flowchart symbol"
+msgstr "Flussdiagramm für Datenanzeige"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Document flowchart symbol"
-msgstr "Document flowchart symbol"
+msgstr "Dokumentenflussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Extract flowchart symbol"
-msgstr "Extract flowchart symbol"
+msgstr "Flussdiagramm für Datenauszug"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Internal storage flowchart symbol"
-msgstr "Internal storage flowchart symbol"
+msgstr "Flussdiagramm für internen Datenspeicher"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Magnetic disk flowchart symbol"
-msgstr "Magnetic disk flowchart symbol"
+msgstr "Flussdiagramm für magnetischen Datenspeicher"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual input flowchart symbol"
-msgstr "Manual input flowchart symbol"
+msgstr "Flussdiagramm für manuelle Dateneingabe"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Manual operation flowchart symbol"
-msgstr "Manual operation flowchart symbol"
+msgstr "Flussdiagram für manuelle Prozessausführung"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Merge flowchart symbol"
-msgstr "Merge flowchart symbol"
+msgstr "Flussdiagramm für Daten zusammenführen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Multi-document flowchart symbol"
-msgstr "Multi-document flowchart symbol"
+msgstr "Flussdiagramm für multiple Dokumente"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Offline storage flowchart symbol"
-msgstr "Offline storage flowchart symbol"
+msgstr "Flussdiagramm für Offline-Speicher"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Off-page connector flowchart symbol"
-msgstr "Off-page connector flowchart symbol"
+msgstr "Off-page-connector-Flussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'Or' flowchart symbol"
-msgstr "'Or' flowchart symbol"
+msgstr "Flussdiagramm für 'oder'"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Predefined process flowchart symbol"
-msgstr "Predefined process flowchart symbol"
+msgstr "Flussdiagramm für vordefinierten Prozess"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Preparation flowchart symbol"
-msgstr "Preparation flowchart symbol"
+msgstr "Vorbereitungsflussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Process flowchart symbol"
-msgstr "Process flowchart symbol"
+msgstr "Prozessflussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr "Punched tape flowchart symbol"
+msgstr "Lochstreifenflussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr "Sequential access storage flowchart symbol"
+msgstr "Flussdiagramm für sequenziellen Zugriff auf Datenspeicher"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sort flowchart symbol"
-msgstr "Sort flowchart symbol"
+msgstr "Flussdiagram für Datensortierung"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Stored data flowchart symbol"
-msgstr "Stored data flowchart symbol"
+msgstr "Flussdiagramm für gespeicherte Daten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Summing junction flowchart symbol"
-msgstr "Summing junction flowchart symbol"
+msgstr "Flussdiagramm für Daten zusammenzählen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Terminator flowchart symbol"
-msgstr "Terminator flowchart symbol"
+msgstr "Terminator-Flussdiagramm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5240,7 +5222,7 @@ msgstr "Pfeil nach links"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Left Arrow"
-msgstr "Callout with Left Arrow"
+msgstr "Aufrufsymbol mit Pfeil nach links"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5258,31 +5240,31 @@ msgstr "Eckige Klammer links"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Counter-clockwise Circular arrow"
-msgstr "Counter-clockwise Circular arrow"
+msgstr "runder Pfeil gegen den Uhrzeigersinn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended horizontal Arrow"
-msgstr "Double-ended horizontal Arrow"
+msgstr "Horizontaler Pfeil mit zwei Enden"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr "Callout with Double-ended horizontal Arrow"
+msgstr "Aufrufsymbol mit horizontalem Pfeil mit zwei Enden"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Circular arrow"
-msgstr "Double-ended Circular arrow"
+msgstr "runder Pfeil mit zwei Enden"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Ribbon with left and right arrows"
-msgstr "Ribbon mit Pfeilen nach links und rechts"
+msgstr "Schleife mit Pfeilen nach links und rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5294,7 +5276,7 @@ msgstr "Pfeil nach oben und zu den Seiten"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Left and up Arrows"
-msgstr "Pfeile nach links oben"
+msgstr "Pfeile nach links und nach oben"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5306,85 +5288,86 @@ msgstr "Blitzschlag"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line Callout"
-msgstr "Line Callout"
+msgstr "Aufrufsymbol mit Linie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with horizontal accent bar"
-msgstr "Callout with horizontal accent bar"
+msgstr "Aufrufsymbol mit horizontaler Akzentleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border and horizontal accent bar"
-msgstr "Callout with border and horizontal accent bar"
+msgstr "Aufrufsymbol mit Rand und horizontaler Akzentleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr "Callout with horizontal line"
+msgstr "Aufrufsymbol mit horizontaler Linie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with diagonal straight line"
-msgstr "Callout with diagonal straight line"
+msgstr "Aufrufsymbol mit diagonaler Gerade"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with diagonal callout line and accent bar"
-msgstr "Callout with diagonal callout line and accent bar"
+msgstr "Aufrufsymbol mit diagonaler Gerade und horizontaler Akzentleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr "Callout with border, diagonal straight line and accent bar"
+msgstr "Aufrufsymbol mit Rand, diagonaler Gerade und horizontaler Akzentleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and diagonal callout line"
-msgstr "Callout with no border and diagonal callout line"
+msgstr "Aufrufsymbol ohne Rand mit diagonaler Gerade"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled line"
-msgstr "Callout with angled line"
+msgstr "Aufrufsymbol mit gebogener Linie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with angled callout line and accent bar"
-msgstr "Callout with angled callout line and accent bar"
+msgstr "Aufrufsymbol mit gebogener Linie und Akzentleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, angled callout line, and accent bar"
-msgstr "Callout with border, angled callout line, and accent bar"
+msgstr "Aufrufsymbol mit Rand, gebogener Linie und Akzentleiste"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and angled callout line"
-msgstr "Callout with no border and angled callout line"
+msgstr "Aufrufsymbol ohne Rand mit gebogener Linie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with callout line segments forming a U-shape"
-msgstr "Callout with callout line segments forming a U-shape"
+msgstr "Aufrufsymbol mit U-förmig angeordneten Liniensegmenten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with accent bar and callout line segments forming a U-shape"
-msgstr "Callout with accent bar and callout line segments forming a U-shape"
+msgstr ""
+"Aufrufsymbol mit Akzentleiste und U-förmig angeordneten Liniensegmenten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5392,19 +5375,19 @@ msgctxt "shape"
 msgid ""
 "Callout with border, accent bar, and callout line segments forming a U-shape"
 msgstr ""
-"Callout with border, accent bar, and callout line segments forming a U-shape"
+"Aufrufsymbol mit Rand, Akzentleiste und U-förmig angeordneten Liniensegmenten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with no border and callout line segments forming a U-shape"
-msgstr "Callout with no border and callout line segments forming a U-shape"
+msgstr "Aufrufsymbol ohne Rand mit U-förmig angeordneten Liniensegmenten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line inverse"
-msgstr "Line inverse"
+msgstr "Umkehrlinie"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5440,7 +5423,7 @@ msgstr "Mathematisches Antivalenzsymbol"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Math Addition symbol"
-msgstr "Math Addition symbol"
+msgstr "Mathematisches Additionssymbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5458,13 +5441,13 @@ msgstr "Trapez mit asymetrisch nichtparallelen Seiten"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "'No' symbol"
-msgstr "'No' symbol"
+msgstr "'Nein'-Symbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Notched RightArrow"
-msgstr "Eingeschnittener rechter Pfeil"
+msgstr "Eingeschnittener Pfeil nach rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5476,13 +5459,13 @@ msgstr "Oktagon"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval"
-msgstr "Elipse"
+msgstr "Oval"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr "Oval-shaped callout"
+msgstr "Ovales Aufrufsymbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5500,13 +5483,13 @@ msgstr "Pentagon"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Incomplete Pie with wedge missing"
-msgstr "Incomplete Pie with wedge missing"
+msgstr "unvollständiger Kreis mit einem fehlenden Kreisstück"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr "Gevierteilter Pie-Keil"
+msgstr "Gevierteilter Kreisstück"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5524,13 +5507,13 @@ msgstr "Tabellarische Tafel"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Arrows pointing left right up and down"
-msgstr "Arrows pointing left right up and down"
+msgstr "Pfeile, die nach links, oben, rechts und unten zeigen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Arrows pointing left right up and down"
-msgstr "Callout with Arrows pointing left right up and down"
+msgstr "Aufrufsymbol mit Pfeilen in allen Richtungen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5542,7 +5525,7 @@ msgstr "Rechteck"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangular callout"
-msgstr "Rechteckige Legende"
+msgstr "Rechteckiges Aufrufsymbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5554,7 +5537,7 @@ msgstr "Pfeil nach rechts"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr "Callout with Right Arrow"
+msgstr "Aufrufsymbol mit Pfeil nach Rechts"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5602,7 +5585,7 @@ msgstr "Abgerundetes Rechteck"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rounded rectangle-shaped callout"
-msgstr "Abgerundeter, rechteckförmiger  Ausruf"
+msgstr "Abgerundetes, rechtecckiges Aufrufsymbol"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5638,7 +5621,7 @@ msgstr "Rechteck mit einer abgeschnittenen und einer abgerundeten Ecke"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Four small squares that define a rectangular shape"
-msgstr "Four small squares that define a rectangular shape"
+msgstr "Vier Quatrate, die ein Rechteck bilden"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5680,19 +5663,19 @@ msgstr "Pfeil nach oben"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with UpArrow"
-msgstr "Callout with UpArrow"
+msgstr "Aufrufsymbol mit Pfeil nach oben"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr "Double-ended Arrow pointing up and down"
+msgstr "Pfeil mit zwei Enden zeigt nach oben und unten"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr "Callout with arrows that point up and down"
+msgstr "Aufrufsymbol mit Pfeilen, die nach oben und unten zeigen"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5854,7 +5837,6 @@ msgid "column %s"
 msgstr "Spalte %s"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
 msgstr "mit {rowCount} Zeilen und {columnCount} spalten"
 
@@ -5898,7 +5880,6 @@ msgstr "Abschnitt %s"
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
 #. {1} will be replaced with the number of text columns.
-#, python-brace-format
 msgid "column {0} of {1}"
 msgstr "Spalte {0} von {1}"
 
@@ -5912,16 +5893,16 @@ msgid "continuous section break"
 msgstr "fortlaufender Abschnittswechsel"
 
 msgid "new column section break"
-msgstr "Abschnittswechsel bei neuer Spalte"
+msgstr "Abschnittswechsel in neue Spalte"
 
 msgid "new page section break"
-msgstr "Abschnittswechsel bei neuer Seite"
+msgstr "Abschnittswechsel auf neue Seite"
 
 msgid "even pages section break"
-msgstr "Abschnittswechsel bei geraden Seiten"
+msgstr "Abschnittswechsel auf geraden Seiten"
 
 msgid "odd pages section break"
-msgstr "Abschnittswechsel bei ungeraden Seiten"
+msgstr "Abschnittswechsel auf ungeraden Seiten"
 
 msgid "column break"
 msgstr "Spaltenwechsel"
@@ -5929,7 +5910,7 @@ msgstr "Spaltenwechsel"
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
-msgstr "Überschrifts-Ebene %d"
+msgstr "Überschriftebene %d"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
@@ -5951,30 +5932,25 @@ msgstr "Keine Rahmenlinien."
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} auf {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} auf {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "Hintergrund {backgroundColor}"
 
-#, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "Hintergrundmuster {pattern}"
 
@@ -6165,7 +6141,7 @@ msgstr "Zeilenabstand %s"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "Kein Kommentar."
+msgstr "Kommentar Ende"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -6173,7 +6149,7 @@ msgstr "Rechtschreibfehler"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "Keine Rechtschreibfehler."
+msgstr "Rechtschreibfehler Ende"
 
 #. Translators: Reported when text contains a grammar error.
 msgid "grammar error"
@@ -6181,14 +6157,13 @@ msgstr "Grammatikfehler"
 
 #. Translators: Reported when moving out of text containing a grammar error.
 msgid "out of grammar error"
-msgstr "außerhalb des Grammatikfehlers"
+msgstr "Grammatikfehler Ende"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
-msgstr "Keine Tabelle."
+msgstr "Tabellen-Ende"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "Tabelle mit {columnCount} Spalten und {rowCount} Reihen."
 
@@ -6269,27 +6244,22 @@ msgid "object mode"
 msgstr "Objektmodus"
 
 #. Translators: a touch screen action performed once
-#, python-brace-format
 msgid "single {action}"
 msgstr "einmal {action}"
 
 #. Translators: a touch screen action performed twice
-#, python-brace-format
 msgid "double {action}"
 msgstr "zweimal {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, python-brace-format
 msgid "tripple {action}"
 msgstr "dreimal {action}"
 
 #. Translators: a touch screen action performed 4 times
-#, python-brace-format
 msgid "quadruple {action}"
 msgstr "viermal {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{action} mit {numFingers} fingern"
 
@@ -6371,7 +6341,6 @@ msgstr "NVDA aktualisieren"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "NVDA Version {version} ist verfügbar."
 
@@ -6468,11 +6437,9 @@ msgstr ""
 "NonVisual Desktop Access (NVDA) ist ein freier Screen Reader für Microsoft "
 "Windows."
 
-#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
-msgstr "Copyright (C) {years} NVDA-Team"
+msgstr "Copyright (C) {years} NVDA-Mitwirkende"
 
-#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6521,7 +6488,6 @@ msgstr ""
 "Hilfe-Menü tun."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -6530,7 +6496,6 @@ msgstr ""
 "Sie müssen NVDA ausführen, um eine Erweiterung installieren zu können."
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -6541,12 +6506,10 @@ msgstr ""
 "vom unteren Bildschirmrand entfernt."
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} wie {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -6588,7 +6551,7 @@ msgstr "Start"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
-msgstr "Es wird gerade kein Track wiedergegeben."
+msgstr "Es wird gerade kein Titel wiedergegeben."
 
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -6602,12 +6565,11 @@ msgstr ""
 "Zeigt Optionen zum ausgewählten Text oder den Text unter dem Cursor an."
 
 #. Translators: A position in a Kindle book
-#, no-python-format, python-brace-format
+#, no-python-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, Ort {curLocation} von {maxLocation}"
 
 #. Translators: a page in a Kindle book
-#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Seite {pageNumber}"
 
@@ -6641,7 +6603,7 @@ msgstr "Zeigt die neueste Nachricht an."
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
 msgid "has attachment"
-msgstr "Hat Anlage"
+msgstr "Anlage"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
@@ -6766,12 +6728,10 @@ msgid "Waiting for Outlook..."
 msgstr "Auf Outlook warten..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} bis {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
-#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Termin um {time}, {subject}"
 
@@ -6933,7 +6893,6 @@ msgid "Master Thumbnails"
 msgstr "Hauptminiaturansichten"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Folie {slideNumber}"
 
@@ -6942,102 +6901,84 @@ msgid "other item"
 msgstr "Weitere Formen"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
 msgstr ""
 "überlagert das linke Ende von {otherShape} auf {distance:.3g} Bildpunkten"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "wird vom linken Ende von {otherShape} auf {distance:.3g} überlagert"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr ""
 "überlagert das obere Ende von {otherShape} auf {distance:.3g} Bildpunkten"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr ""
 "wird vom oberen Ende von {otherShape} auf {distance:.3g} Bildpunkten "
 "überlagert"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "überlagert das rechte Ende von {otherShape} auf {distance:.3g} Bildpunkten"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr ""
 "wird vom rechten Ende von {otherShape} auf {distance:.3g} Bildpunkten "
 "überlagert"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr ""
 "überlagert das untere Ende von {otherShape} auf {distance:.3g} Bildpunkten"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr ""
 "wird vom unteren Ende von {otherShape} auf {distance:.3g} Bildpunkten "
 "überlagert"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
-#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "überlagert {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "wird von {otherShape} überlagert"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
-#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} Bildpunkte vom linken Folienrand entfernt"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
-#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "ragt {distance:.3g} Bildpunkte über den linken Folienrand hinaus"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
-#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} Bildpunkte vom oberen Folienrand entfernt"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
-#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "ragt {distance:.3g} Bildpunkte über den oberen Folienrand hinaus"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
-#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} Bildpunkte vom rechten Folienrand entfernt"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
-#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "ragt {distance:.3g} Bildpunkte über den rechten Folienrand hinaus"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
-#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} Bildpunkte vom unteren Folienrand entfernt"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
-#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "ragt {distance:.3g} Bildpunkte über den unteren Folienrand hinaus"
 
@@ -7052,12 +6993,10 @@ msgstr ""
 "sondern hat lediglich Einfluss auf die von NVDA dargestellten Inhalte."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Notizen zur Präsentation - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Präsentation - {slideName}"
 
@@ -7138,8 +7077,28 @@ msgid "off"
 msgstr "Wiederholen Aus"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA Serie BC640/680"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6-Serien/Protokoll-Konverter"
+
+#. Translators: Name of a bluetooth serial communications port.
+msgid "Bluetooth serial: {portName}"
+msgstr "Bluetooth-Anschluss: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "HID-Tastatur-Simulation wird nicht unterstützt"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "HID-Tastatur-Simulation eingeschaltet."
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "HID-Tastatur-Simulation ausgeschaltet."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "Schaltet die HID-Tastatur-Simulation um."
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7150,7 +7109,6 @@ msgstr "Baum / HumanWare / APH  / Orbit Braillezeilen"
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
-#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "seriell: {portName}"
 
@@ -7165,6 +7123,18 @@ msgstr "HumanWare Brailliant Serie BI/B"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Eco-Braillezeilen"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Eurobraille Esys/Esytime/Iris-Braillezeilen"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "HID-Tastatur-Simulation ist nicht verfügbar."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Schaltet die HID-Tastatur-Simulation um."
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7286,7 +7256,7 @@ msgstr ""
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
 "Es ist bereits ein NVDA-Einstellungsdialog geöffnet. Bitte Schließen Sie "
-"diesen Dialog zunächst."
+"zunächst diesen Dialog."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7355,7 +7325,7 @@ msgstr "&Touch-Interaktion..."
 
 #. Translators: tooltip for touch interaction settings item.
 msgid "Change how NVDA interacts with the touchscreen"
-msgstr "Ändern Sie, wie NVDA mit dem Touchscreen interagieren soll."
+msgstr "Bestimmen Sie, wie NVDA mit dem Touchscreen interagieren soll."
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -7380,7 +7350,7 @@ msgid "&Object presentation..."
 msgstr "&Objektdarstellung..."
 
 msgid "Change reporting of objects"
-msgstr "Ansage der Änderungen der Objekte"
+msgstr "Ansage der Objekte ändern"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
@@ -7408,8 +7378,8 @@ msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
 msgstr ""
-"Dialog zum Auswählen eines Standardwörterbuchs, indem Einträge zur Liste "
-"hinzugefügt werden."
+"Dialog zum Auswählen eines Standardwörterbuchs, in welchem neue Einträge zur "
+"Liste hinzugefügt werden können."
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
@@ -7419,8 +7389,8 @@ msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr ""
-"Dialog zum Auswählen eines Stimmenwörterbuchs, indem Einträge zur Liste "
-"hinzugefügt werden."
+"Dialog zum Auswählen eines Stimmenwörterbuchs, in welchem neue Einträge zur "
+"Liste hinzugefügt werden können."
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
@@ -7430,8 +7400,8 @@ msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr ""
-"Dialog zum Auswählen eines temporären Wörterbuchs, indem Einträge zur Liste "
-"hinzugefügt werden."
+"Dialog zum Auswählen eines temporären Wörterbuchs, in welchem neue Einträge "
+"zur Liste hinzugefügt werden können."
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -7494,7 +7464,7 @@ msgid "What's &new"
 msgstr "Was ist &Neu"
 
 msgid "NVDA &web site"
-msgstr "&Internetseite von NVDA"
+msgstr "&Webseite von NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
@@ -7611,7 +7581,7 @@ msgstr "&Diesen Dialog beim Starten von NVDA anzeigen"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
-msgstr "Lizenzvertrag"
+msgstr "Lizenzbestimmungen"
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
@@ -7635,7 +7605,7 @@ msgid ""
 "unless you choose to disable them again."
 msgstr ""
 "Alle Erweiterungen sind nun deaktiviert. Sie werden beim nächsten Start von "
-"NVDA wieder aktiv sein - es sei denn, Sie deaktivieren sie erneut."
+"NVDA wieder aktiv sein. Es sei denn, Sie deaktivieren sie erneut."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -7724,7 +7694,6 @@ msgid "Choose Add-on Package File"
 msgstr "Erweiterungspaket auswählen"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA-Erweiterungspaket (*.{ext})"
 
@@ -7738,7 +7707,6 @@ msgstr ""
 "Dateiformat"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -7756,7 +7724,6 @@ msgid "Add-on Installation"
 msgstr "Erweiterung installieren"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
-#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
@@ -7765,7 +7732,6 @@ msgstr ""
 "Möchten Sie die vorhandene Version dennoch aktualisieren?"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-#, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
@@ -7812,7 +7778,7 @@ msgstr "Aktivieren"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "suspended"
-msgstr "Stillgelegt"
+msgstr "Angehalten"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -7835,7 +7801,6 @@ msgid "Restart NVDA"
 msgstr "NVDA neu starten"
 
 #. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -7848,7 +7813,6 @@ msgstr ""
 "Beschreibung: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#, python-brace-format
 msgid "URL: {url}"
 msgstr "Adresse: {url}"
 
@@ -8120,7 +8084,6 @@ msgstr ""
 "Version wird nun aktualisiert."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -8567,7 +8530,7 @@ msgstr "&Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren"
 
 #. Translators: This is the label for the review cursor settings dialog.
 msgid "Review Cursor Settings"
-msgstr "Einstellungen zum NVDA-Cursor"
+msgstr "Einstellungen des NVDA-Cursors"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -8664,7 +8627,7 @@ msgstr "Informationen zur Objekt&position ausgeben"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "Informationen zur Objektposition bei &Nichtverfügbarkeit ermitteln"
+msgstr "Informationen zur Objektposition bei &Nichtverfügbarkeit schätzen"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -8739,7 +8702,7 @@ msgstr "Ak&ustische Ausgabe von Fokus- und Lesemodus"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "Nur Kurztasten im virtuellen Dokument verarbeiten"
+msgstr "Nur Tastenkombinationen im virtuellen Dokument verarbeiten"
 
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
@@ -8750,8 +8713,7 @@ msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
 msgstr ""
-"Die folgenden Optionen legen die Ansagen in NVDA für die Einstellungen zur "
-"Dokumentformatierung fest."
+"Die folgenden Optionen legen die Ansagen von Dokumentformatierungen fest."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings dialog
@@ -9160,13 +9122,12 @@ msgstr "Filt&ern nach:"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
-#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "Drücken Sie die gewünschte Taste(nkombination):"
+msgstr "Drücken Sie die gewünschte Taste(n)kombination:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -9181,7 +9142,7 @@ msgstr "Touch-Interaktion"
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings dialog.
 msgid "&Touch typing mode"
-msgstr "&Touch-Modus"
+msgstr "&Touch-Eingabemodus"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -9214,12 +9175,10 @@ msgid "word"
 msgstr "Wort"
 
 #. Translators: current position in a document as a percentage of the document length
-#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "bei {x},{y}"
 
@@ -9255,7 +9214,6 @@ msgid "Taskbar"
 msgstr "Taskleiste"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
-#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB rot {rgb.red}, grün {rgb.green}, blau {rgb.blue}"
 
@@ -9276,14 +9234,12 @@ msgstr ""
 "Dokumentformatierungen ein."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Die Zeile {rowNumber} und die Spalte {columnNumber} wurden als Beginn der "
 "Spaltenüberschrift festgelegt"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -9291,14 +9247,12 @@ msgstr ""
 "Beginn der Spaltenüberschrift festgelegt"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
 "Die Zeile {rowNumber} und die Spalte {columnNumber} wurden als "
 "Spaltenüberschrift entfernt"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Die Zeile {rowNumber} und die Spalte {columnNumber} konnten in der "
@@ -9315,14 +9269,12 @@ msgstr ""
 "zweimal, um die Zuweisung wieder zu löschen."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Die Zeile {rowNumber} und die Spalte {columnNumber} wurden als Beginn der "
 "Zeilenbeschriftung festgelegt"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -9330,14 +9282,12 @@ msgstr ""
 "Beginn der Zeilenbeschriftung festgelegt"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
 "Die Zeile {rowNumber} und die Spalte {columnNumber} wurden als Beginn der "
 "Zeilenbeschriftung entfernt"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
 "Die Zeile {rowNumber} und die Spalte {columnNumber} konnten in der "
@@ -9380,27 +9330,22 @@ msgid "&Errors"
 msgstr "&Fehler"
 
 #. Translators: The label shown for an insertion change
-#, python-brace-format
 msgid "insertion: {text}"
 msgstr "Einfügung: {text}"
 
 #. Translators: The label shown for a deletion change
-#, python-brace-format
 msgid "deletion: {text}"
 msgstr "Löschung: {text}"
 
 #. Translators: The general label shown for track changes
-#, python-brace-format
 msgid "track change: {text}"
 msgstr "Änderung verfolgen: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
 msgstr "Kommentar: {comment} von {author} am {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, python-brace-format
 msgid "{comment} by {author} on {date}"
 msgstr "{comment} von {author} am {date}"
 
@@ -9410,12 +9355,12 @@ msgstr "Desktop"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
-msgstr "Fläche mit einem visuellen 3D Effekt"
+msgstr "3D-Fläche"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
-msgstr "gestapelte Fläche mit einem visuellen 3D Effekt."
+msgstr "gestapelte 3D-Fläche"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -9425,52 +9370,52 @@ msgstr "100% gestapelte Fläche"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
-msgstr "Gruppierter Balken mit einem visuellen 3D Effekt."
+msgstr "Gruppierter 3D-Balken"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
-msgstr "gestapelte Balken mit einem visuellen 3D Effekt."
+msgstr "gestapelter 3D-Balken"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
-msgstr "100% Gestapelter Balken mit einem visuellen 3D Effekt"
+msgstr "100% Gestapelter 3D-Balken"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
-msgstr "Spalten mit einem visuellen 3D Effekt."
+msgstr "3D-Spalte"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
-msgstr "Gruppierte Spalten mit einem visuellen 3D Effekt."
+msgstr "Gruppierte 3D-Spalte"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
-msgstr "gestapelte Spalten mit einem visuellen 3D Effekt."
+msgstr "gestapelte 3D-Spalte"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
-msgstr "100% Gestapelte Spalten mit einem visuellen 3D Effekt"
+msgstr "100% Gestapelte 3D-Spalte"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr "Linie mit einem visuellen 3D Effekt."
+msgstr "3D-Linie"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
-msgstr "Kreis mit einem visuellen 3D Effekt"
+msgstr "3D-Kreisdiagramm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
-msgstr "Explodierter Kreis mit einem visuellen 3D Effekt."
+msgstr "Explodierter 3D-Kreis"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -9715,17 +9660,17 @@ msgstr "Volumen-Eröffnung-Höchst-Tiefst-Schlusskurs"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
-msgstr "Oberfläche mit einem visuellen 3D Effekt."
+msgstr "3D-Oberfläche"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View)"
-msgstr "Oberfläche (Draufsicht)"
+msgstr "Oberfläche (Ansicht von oben)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
-msgstr "oberfläche (Draufsicht, Drahtmodell)"
+msgstr "oberfläche (Ansicht von oben, Drahtmodell)"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -9775,13 +9720,12 @@ msgid "item"
 msgstr "Eintrag"
 
 #. Translators: Message to be spoken to report Series Color
-#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Serienfarbe:  {colorName} "
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Display Unit Label"
-msgstr "Einheitenbeschriftungsanzeige"
+msgstr "Anzeige der Einheitenbeschriftungen"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Major Gridlines"
@@ -9793,7 +9737,7 @@ msgstr "Untergeordnete Gitternetzlinien"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Pivot Chart Drop Zone"
-msgstr "Pivot-Chart Dropzone"
+msgstr "Pivot-Chart Bezugsregion"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Pivot Chart Field Button"
@@ -9805,7 +9749,7 @@ msgstr "Negative Abweichungsbalken"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Drop Lines"
-msgstr "\tBezugslinie"
+msgstr "Bezugslinie"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Hi Lo Lines"
@@ -9865,7 +9809,6 @@ msgid "Shape"
 msgstr "Form"
 
 #. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Diagrammtitel ist {chartTitle} Typ ist {chartType}"
 
@@ -9879,7 +9822,6 @@ msgid "There are total %d series in this chart"
 msgstr "Es gibt %d Serien in diesem Diagramm."
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
 msgid "series {number} {name}"
 msgstr "Serien {number} {name}"
 
@@ -9894,59 +9836,49 @@ msgstr "Diagramm-Elemente"
 #. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
-#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} Serie {seriesIndex} von {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
-#, python-brace-format
 msgid "Slice color: {colorName} "
 msgstr "Diagrammfarbe: {colorName} "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "Keine Änderung im Vergleich zu Punkt {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "Im Vergleich zu Punkt {previousIndex} um {incrementValue} erhöht, "
+msgstr "Um {incrementValue} höher als Punkt {previousIndex}"
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "Im Vergleich zu Punkt {previousIndex} um {decrementValue} verringert, "
+msgstr "Um {decrementValue} geringer als Punkt {previousIndex}"
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Kategorie {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "Wert {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
@@ -9954,7 +9886,6 @@ msgstr ""
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
-#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} von {pointCount}"
 
@@ -9968,22 +9899,21 @@ msgstr "Sekundäre Kategorie-Achse"
 
 #. Translators: Indicates Primary Value Axis
 msgid "Primary Value Axis"
-msgstr "Primäre Werte-Achse"
+msgstr "Primäre Wertachse"
 
 #. Translators: Indicates Secondary Value Axis
 msgid "Secondary Value Axis"
-msgstr "Sekundäre Werte-Achse"
+msgstr "Sekundäre Wertachse"
 
 #. Translators: Indicates Primary Series Axis
 msgid "Primary Series Axis"
-msgstr "Primäre Skala"
+msgstr "Primäre Serien-Achse"
 
 #. Translators: Indicates Secondary Series Axis
 msgid "Secondary Series Axis"
-msgstr "Sekundäre Skala"
+msgstr "Sekundäre Serien-Achse"
 
 #. Translators: the title of a chart axis
-#, python-brace-format
 msgid " title: {axisTitle}"
 msgstr " Titel: {axisTitle}"
 
@@ -10020,21 +9950,18 @@ msgid " minus "
 msgstr "Minus"
 
 #. Translators: This message gives trendline type and name for selected series
-#, python-brace-format
 msgid ""
 "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
 "{trendlineLabel} "
 msgstr ""
-"{seriesName}-Trennlinien: {trendlineType}, name: {trendlineName}, label: "
-"{trendlineLabel} "
+"{seriesName}-Trennlinien: {trendlineType}, name: {trendlineName}, "
+"Bezeichnung: {trendlineLabel} "
 
 #. Translators: This message gives trendline type and name for selected series
-#, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
 msgstr "{seriesName}-Trennlinien: {trendlineType}, Name: {trendlineName}"
 
 #. Translators: Details about a chart title in Microsoft Office.
-#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Diagrammtitel: {chartTitle}"
 
@@ -10043,7 +9970,6 @@ msgid "Untitled chart"
 msgstr "Unbenanntes Diagramm"
 
 #. Translators: Details about the chart area in a Microsoft Office chart.
-#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -10056,7 +9982,6 @@ msgid "Chart area "
 msgstr "Diagrammbereich"
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
-#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -10071,22 +9996,20 @@ msgid "Plot area "
 msgstr "Zeichnungsbereich"
 
 #. Translators: a message for the legend entry of a chart in MS Office
-#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "Legendeneintrag für Serie {seriesName} {seriesIndex} von {seriesCount}"
+msgstr ""
+"Legennden-Eintrag für Serie {seriesName} {seriesIndex} von {seriesCount}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
-#, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr "Legendeneintrag {legendEntryIndex} von {legendEntryCount}"
+msgstr "Legennden-Eintrag {legendEntryIndex} von {legendEntryCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
-"Legendenschlüssel für Serie {seriesName} {seriesIndex} von {seriesCount}"
+"Legennden-Schlüssel für Serie {seriesName} {seriesIndex} von {seriesCount}"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
@@ -10237,29 +10160,24 @@ msgid "&Sheets"
 msgstr "&Arbeitsblätter"
 
 #. Translators: Used to express an address range in excel.
-#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} bis {end}"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Die Zelle {address} wird als Beginn der Spaltenüberschrift festgelegt"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr ""
 "Die Zelle {address} wurde bereits als Beginn der Spaltenüberschrift "
 "zugewiesen"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "Die Zelle {address} wurde aus der Spaltenüberschrift entfernt"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr ""
 "Die Zelle {address} kann in der Spaltenüberschrift nicht gefunden werden."
@@ -10275,24 +10193,20 @@ msgstr ""
 "zweimal, um die Zuweisung zu löschen."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "Die Zelle {address} wurde als Beginn der Zeilenbeschriftung festgelegt"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr ""
 "Die Zelle {address} wurde bereits als Beginn der Zeilenbeschriftung "
 "festgelegt."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "Die Zelle {address} wurde aus der Zeilenbeschriftung entfernt"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr ""
 "Die Zelle {address} konnte in der Zeilenbeschriftung nicht gefunden werden."
@@ -10308,15 +10222,12 @@ msgstr ""
 "zweimal, um die Zuweisung zu löschen."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
-#, python-brace-format
 msgid "Sheet {0}, {1}"
 msgstr "Tabelle {0}, {1}"
 
-#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "die eingegebene Meldung lautet  {title}: {message}"
 
-#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "die eingegebene Meldung lautet  {message}"
 
@@ -10329,12 +10240,10 @@ msgid "Reports the comment on the current cell"
 msgstr "Gibt den Kommentar zur aktuellen Zelle aus"
 
 #. Translators: Dialog text for
-#, python-brace-format
 msgid "Editing comment for cell {address}"
 msgstr "Kommentar für die Zelle {address} bearbeiten"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#, python-brace-format
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} bis {lastAddress} {lastContent}"
 
@@ -10429,37 +10338,30 @@ msgid "medium dashed"
 msgstr "Gestrichelt (Medium)"
 
 #. Translators: border styles in Microsoft Excel.
-#, python-brace-format
 msgid "{weight} {style}"
 msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
-#, python-brace-format
 msgid "{color} {desc}"
 msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
-#, python-brace-format
 msgid "{desc} surrounding border"
 msgstr "Randlinien {desc}"
 
 #. Translators: border styles in Microsoft Excel.
-#, python-brace-format
 msgid "{desc} top and bottom edges"
 msgstr "Obere und untere Ecke {desc}"
 
 #. Translators: border styles in Microsoft Excel.
-#, python-brace-format
 msgid "{desc} left and right edges"
 msgstr "Linke und rechte Ecken {desc}"
 
 #. Translators: border styles in Microsoft Excel.
-#, python-brace-format
 msgid "{desc} up-right and down-right diagonal lines"
-msgstr "Rechte Diagonallinien nach oben und unten {desc}"
+msgstr "Diagonale Linien nach rechts oben und rechts unten {desc}"
 
 #. Translators: border styles in Microsoft Excel.
-#, python-brace-format
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
@@ -10563,7 +10465,6 @@ msgstr "Textrahmen"
 
 #. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
 #. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
-#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "Kommentar: {text} von {author} am {date}"
 
@@ -10571,7 +10472,6 @@ msgstr "Kommentar: {text} von {author} am {date}"
 #. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
 #. {description} will be replaced with a description of the formatting changes, if any.
 #. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
-#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} von {author} am {date}"
 
@@ -10682,43 +10582,35 @@ msgid "Moved above blank paragraph"
 msgstr "Über leeren Absatz verschoben"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "Gliederungsebene {outlineLevel}; {styleName}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#, python-brace-format
 msgid "{size:g} point font"
 msgstr "Schriftgröße {size:g}"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} Zeichen"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} Zoll"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} Zentimeter"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} Millimeter"
 
 #. Translators: a measurement in Microsoft Word
-#, python-brace-format
 msgid "{offset:.3g} points"
 msgstr "{offset:.3g} Punkte"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} Pixel"
 
@@ -10733,6 +10625,9 @@ msgstr "Doppelter Zeilenabstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 Zeilenabstand"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "ALVA Serie BC640/680"
 
 #~ msgid "review"
 #~ msgstr "NVDA-Cursor"

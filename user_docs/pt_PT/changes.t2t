@@ -1,4 +1,4 @@
-﻿Novidades do NVDA
+﻿Novidades do  NVDA
 
 
 %!includeconf: ../changes.t2tconf
@@ -6,10 +6,34 @@
 Traduzido pela Equipa portuguesa do NVDA
 
 = 2018.1 =
+Os destaques desta versão são:
+- Suporte para gráficos no Microsoft word e PowerPoint
+- Suporte para mais linhas Braille, Eurobraille e Optelec ALVA protocol converter
+- Suporte melhorado para as linhas Braille HIMS e Optelec
+- Melhorias no desempenho do NVDA no Mozilla Firefox 58 e superiores.
+-
 
 == Novas Funcionalidades ==
--Os drivers ddas linhas Braille da HIMS, Braille Sense/ Braille Edge/Smart Beetle e HIMS Sync Braille, foram substituídos por um único driver do NVDA. O novo driver será activado automaticamente para os utilizadores do antigo driver syncBraille. (#7459)
-- algumas teclas, nomeadamente as teclas de deslocamento, foram alteradas, para seguir as convenções usadas pelos produtos da HIMS. Consulte o Manual do Utilizador, para obter mais detalhes.
+- Já é possível interagir com gráficos no Microsoft Word e Microsoft PowerPoint, de maneira similar ao suporte existente para gráficos no Microsoft Excel. (#7046)
+ - No Microsoft Word: Em modo de navegação, navegue com o cursor para um gráfico embutido e pressione Enter  para iniciar a interacção com o gráfico;
+ - No Microsoft PowerPoint durante a edição de um slide: Navegue com Tab para um objecto gráfico,  e pressione Enter ou Espaço para iniciar a interacção com esse gráfico;
+ - Para terminar a interacção com um gráfico, pressione Escape.
+- Novo idioma: Quirguiz.
+- Adicionado suporte para VitalSource Bookshelf. (#7155)
+- Adicionado suporte para o Optelec protocol converter, um dispositivo que permite usar as linhas Braille Voyager e Satellite com o protocolo de comunicações das ALVA BC6. (#6731)
+- Já é possível escrever em Braille com as linhas Braille ALVA 640 Comfort. (#7733) 
+ - A funcionalidade de escrita Braille do NVDA pode ser usada com este modelo e com outros da série BC6 com o firmware 3.0.0 ou superior.
+- Suporte parcial para o Google Sheets com o modo Braille activado. (#7935)
+- Suporte para as linhas Braille Eurobraille Esys, Esytime and Iris. (#7488)
+
+
+== Alterações ==
+- Os drivers das linhas Braille da HIMS, Braille Sense/ Braille Edge/Smart Beetle e HIMS Sync Braille, foram substituídos por um único driver do NVDA. O novo driver será activado automaticamente para os utilizadores do antigo driver syncBraille. (#7459)
+ - Algumas teclas, nomeadamente as teclas de deslocamento, foram alteradas, para seguir as convenções usadas pelos produtos da HIMS. Consulte o Manual do Utilizador, para obter mais detalhes.
+- Quando se escreve com o teclado virtual através da interacção por toque, por padrão, é necessário dar dois toques para activar a letra desejada, tal como em qualquer outro controlo.
+ - Para usar o modo existente, em que basta levantar o dedo para activar a letra, active a opção nas novas definições da Interação por toque, presente no menu Preferências. (#7309)
+- Já não é necessário configurar se o braille segue o cursor do sistema ou da revisão, pois a configuração será feita automaticamente por padrão. (#2385) 
+ - Note que o seguimento automático do cursor de revisão só acontecerá quando se utiliza o cursor de revisão ou um comando de navegação por objectos.
 
 
 == Correções ==
@@ -20,12 +44,26 @@ Traduzido pela Equipa portuguesa do NVDA
 - Evitados erros ao ler e-mails contendo tabelas, no Microsoft Outlook (#6827)
 - A detecção das teclas de deslocamento da linha Braille HIMS Smart Beetle já é fiável. (#6086)
 - Os comandos dados pelas linhas Braille que emulam teclas modificadoras de sistema, já podem ser combinados com outras teclas de sistema emuladas, se um ou mais dos comando involvidos for específico do modelo. (#7783)
+- No Mozilla Firefox, o Modo de navegação já funciona correctamente em janelas pop-up criadas por extensõess como LastPass e bitwarden. (#7809)
+- O NVDA já não tem paragens ocasionais de cada vez que há mudanças de foco no Firefox ou Chrome devidas a paragens ou crashes. (#7818)
+- Em clientes twitter, como Chicken Nugget, o NVDA já não ignora os últimos 20 caracteres ao ler tweets  com 280 caracteres. (#7828)
+- O NVDA já usa o idioma correcto ao anunciar símbolos e pontuação ao seleccionar texto. (#7687)
+- Em versões recentes do Office 365, volta a ser possível navegar com as setas nos gráficos do Excel. (#7046)
+-  Em voz e em Braille, o estado dos controlos são sempre anunciados na mesma ordem, independentemente de serem positivos ou negativos. Corrige o bug #7076
+- Em aplicações como o Windows 10 Mail, o NVDA já anuncia os caracteres apagados com backspace. (#7456)
+- Todas as teclas do HIMS Braille Sense Polaris já funcionam como esperado. (#7865)
 
 
 == Alterações para Desenvolvedores ==
 - Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
  - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
 - A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
+- Updated comtypes package to 1.1.3. (#7831)
+- Implemented a generic system in braille.BrailleDisplayDriver to deal with displays which send confirmation/acknowledgement packets. See the handyTech braille display driver as an example. (#7590, #7721)
+- A new "isAppX" variable in the config module can be used to detect if NVDA is running as a Windows Desktop Bridge Store app. (#7851)
+- For document implementations such as NVDAObjects or browseMode that have a textInfo, there is now a new documentBase.documentWithTableNavigation class that can be inherited from to gain standard table navigation scripts. Please refer to this class to see which helper methods must be provided by your implementation for table navigation to work. (#7849)
+- The scons batch file now better handles when  Python 3 is also installed, making use of the launcher to specifically launch python 2.7 32 bit. (#7541)
+- hwIo.Hid now takes an additional parameter exclusive, which defaults to True. If set to False, other applications are allowed to communicate with a device while it is connected to NVDA. (#7859)
 
 
 = 2017.4 =
