@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.1 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat tuki kaavioille Microsoft Wordissa ja PowerPointissa, tuki uusille Eurobraille-pistenäytöille ja Optelecin protokollamuuntimelle, paranneltu tuki Hims- ja Optelec-pistenäytöille, suorituskyvyn parannukset Mozilla Firefox 58:lle ja uudemmille, sekä monet muut.
 
 
 == Uudet ominaisuudet ==
@@ -16,6 +17,8 @@
 - Lisätty tuki Optelecin protokollamuunninlaitteelle, joka mahdollistaa Braille Voyager- ja Satellite-näyttöjen käytön ALVA BC6:n kommunikointiprotokollan avulla. (#6731)
 - Pistekirjoituksen syöttäminen on nyt mahdollista ALVA 640 Comfort -pistenäytöllä. (#7733) 
  - NVDA:n pistekirjoituksensyöttötoimintoa voidaan käyttää tällä laitteella sekä muillakin BC6-näytöillä, joissa on laiteohjelmiston versio 3.0.0 tai uudempi.
+- Varhainen tuki Google Sheetsille pistekirjoitustilan ollessa käytössä. (#7935)
+- Tuki Eurobraille Esys-, Esytime- ja Iris-pistenäytöille. (#7488)
 
 
 == Muutokset ==
@@ -42,6 +45,7 @@
 - Excel-kaavioissa liikkuminen on jälleen mahdollista nuolinäppäimillä Office 365:n viimeisimmissä versioissa. (#7046)
 - Säätimien tilat ilmoitetaan nyt puheella ja pistekirjoituksella aina samassa järjestyksessä riippumatta siitä, ovatko ne positiivisia vai negatiivisia. (#7076)
 - Kirjoitettujen merkkien puhuminen ei enää epäonnistu askelpalautinta painettaessa tietyissä sovelluksissa, kuten esim. Windows 10:n Sähköposti. (#7456)
+- Kaikki Hims Braille Sense Polaris -pistenäyttöjen näppäimet toimivat nyt odotetusti. (#7865)
 
 
 == Muutokset kehittäjille ==

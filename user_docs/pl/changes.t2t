@@ -3,6 +3,54 @@ Co nowego w NVDA.
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+Najważniejsze zmiany w tej wersji to obsługa wykresów w Microsoft word i Powerpoint, nowe obsługiwane monitory brajlowskie: Eurobraille i Optelec protocol converter, poprawiona obsługa monitorów brajlowskich Hims i Optelec, poprawki wydajności przy współpracy z Mozilla Firefox 58 i nowszymi, oraz wiele więcej.
+
+== Nowe funkcje ==
+- Możliwa jest interakcja z wykresami w Microsoft Word i Microsoft Powerpoint, podobna do istniejącego wsparcia wykresów w Microsoft Excel. (#7046)
+ - W Microsoft Word:  w trybie czytania, przejdź do załączonego wykresu i naciśnij Enter, aby wejść z nim w interakcję.
+ - W Microsoft Powerpoint podczas edycji slajdu: przejdź klawiszem Tab do obiektu wykresu i naciśnij enter lub spację aby rozpocząć interakcję z wykresem.
+ - Aby zakończyć interakcję z wykresem, naciśnij escape.
+- Nowy język: kirgizki.
+- Dodana obsługa VitalSource Bookshelf. (#7155)
+- Dodane wsparcie Optelec protocol converter, urządzenia pozwalającego używać monitorów brajlowskich Braille Voyager i Satellite przy zastosowaniu protokołu komunikacyjnego ALVA BC6. (#6731)
+- Można używać wprowadzania brajlowskiego na linijce ALVA 640 Comfort. (#7733) 
+ - Funkcjonalność NVDA może być używana z tym, jak i innymi monitorami brajlowskimi BC6 posiadającymi firmware 3.0.0 i wyższe.
+- Wczesne wsparcie arkuszy Google z włączonym trybem brajlowskim. (#7935)
+- Obsługa monitorów brajlowskich Eurobraille Esys, Esytime i Iris. (#7488)
+
+
+== Zmiany ==
+- Sterowniki monitorów brajlowskich HIMS Braille Sense/Braille EDGE/Smart Beetle i Hims Sync Braille zostały zastąpione przez jeden sterownik. Sterownik zostanie aktywowany automatycznie dla użytkowników starszych sterowników. (#7459) 
+ - Zmieniono przypisania niektórych klawiszy, szczególnie klawiszy przewijania, dla dopasowania ich do konwencji stosowanej w produktach Hims. Więcej szczegółów w podręczniku użytkownika.
+- Podczas pisania na klawiaturze ekranowej przy użyciu dotyku, domyślnie należy dwukrotnie stuknąć każdy klawisz w taki sam sposób, jak aktywuje się dowolną inną kontrolkę.
+ - Aby użyć istniejącego trybu "wpisywania dotykowego" , w którym podniesienie palca z dotykanego klawisza wystarczy by go aktywować, włącz tę opcję w nowym oknie dialogowym interakcji dotykowej dostępnym w menu ustawień NVDA. (#7309)
+- Nie jest od teraz konieczne powiązywanie brajla z punktem uwagi lub kursorem przeglądu, ponieważ domyślnie stanie się to automatycznie. (#2385) 
+ - Automatyczne przywiązywanie będzie wykonywane, gdy użyto komend kursora przeglądu lub nawigacji w hierarchii obiektów. Przewijanie nie będzie aktywować tego nowego zachowania.
+
+
+== Poprawki błędów ==
+- Wiadomości dostępne w trybie czytania, takie jak aktualne formatowanie po dwukrotnym szybkim naciśnięciu NVDA+f, działają teraz prawidłowo, gdy NVDA jest zainstalowany w lokalizacji zawierającej znaki z poza ASCII. (#7474)
+- Punkt uwagi jest ponownie prawidłowo przywracany po powrocie do Spotify z innej aplikacji. (#7689)
+- NVDA nie ma problemów z aktualizacją w systemach z włączoną kontrolą dostępu do folderów (dostępną w jesiennej aktualizacji dla twórców Windows 10). (#7696)
+- Poprawione wykrywanie klawiszy przewijania na monitorach brajlowskich Hims Smart Beetle. (#6086)
+- Niewielka poprawa wydajności przy odczytywaniu dużej ilości treści w Mozilla Firefox 58 i nowszych. (#7719)
+- W Microsoft Outlook, podczas odczytywania wiadomości email zawierających tabele, nie pojawiają się błędy.  (#6827)
+- Zdarzenia wprowadzania brajla, które emulują systemowe modyfikatory klawiatury, mogą teraz być łączone z innymi emulowanymi klawiszami systemowymi, jeśli jedno lub więcej takich zdarzeń jest specyficzne dla modelu. (#7783)
+- W Mozilla Firefox, tryb czytania działa prawidłowo w oknach wyskakujących, utworzonych przez dodatki takie jak LastPass i bitwarden. (#7809)
+- NVDA nie zawiesza się dłużej przy każdej zmianie punktu uwagi, gdy Firefox lub Chrome przestały odpowiadać np. wskutek awarii, albo zawieszenia się przeglądarki. (#7818)
+- w klientach twitter takich jak Chicken Nugget, NVDA nie pomija od teraz ostatnich 20 znaków 280-znakowych tweetów podczas ich odczytywania. (#7828)
+- NVDA teraz używa prawidłowego języka oznajmiając symbole, gdy zaznaczony jest tekst. (#7687)
+- W nowszych wersjach Office 365, ponownie jest możliwa nawigacja w wykresach Excel przy użyciu klawiszy strzałek. (#7046)
+-  w wyjściu brajla i mowy, stany kontrolek będą zawsze zgłaszane w takiej samej kolejności, niezależnie od tego, czy są pozytywne czy negatywne. (#7076)
+- W aplikacjach takich jak Poczta systemu Windows 10, NVDA nie ma od teraz problemów z oznajmianiem znaków kasowanych przy użyciu backspace. (#7456)
+- Wszystkie klawisze na linijce Hims Braille Sense Polaris, działają teraz tak jak powinny. (#7865)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
 = 2017.4 =
 Najważniejsze zmiany w tej wersji to liczne ulepszenia aplikacji sieci web  w tym domyślne włączenie trybu czytania dla okien dialogowych stron www, lepszy odczyt grup pól w trybie czytania, obsługa nowych technologii Windows 10 takich jak strażnik aplikacji Windows Defender  oraz Windows 10 na ARM64, automatyczny odczyt orientacji ekranu i stanu baterii.  
 Proszę zauważyć, że ta wersja NVDA nie obsługuje Windows XP ani Windows Vista. Minimalny wymagany system operacyjny dla  NVDA to od teraz windows 7 with Service Pack 1.
