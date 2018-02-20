@@ -411,7 +411,7 @@ class Braillino(TripleActionKeysMixin, OldProtocolMixin, Model):
 	genericName = name = 'Braillino'
 
 
-class BrailleWave(Model):
+class BrailleWave(OldProtocolMixin, Model):
 	deviceId = MODEL_BRAILLE_WAVE
 	numCells = 40
 	genericName = name = "Braille Wave"
