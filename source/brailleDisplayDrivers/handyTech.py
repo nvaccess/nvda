@@ -725,10 +725,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _hidOnReceive(self, data):
 		# data contains the entire packet.
 		stream = StringIO(data)
-		serPacketType = data[2]
+		htPacketType = data[2]
 		# Skip the header, so reading the stream will only give the rest of the data
 		stream.seek(3)
-		self._handleInputStream(serPacketType, stream)
+		self._handleInputStream(htPacketType, stream)
 
 	def _hidSerialOnReceive(self, data):
 		# The HID serial converter wraps one or two bytes into a single HID packet
@@ -739,16 +739,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _processHidSerialBuffer(self):
 		while self._hidSerialBuffer:
 			currentBufferLength=len(self._hidSerialBuffer)
-			serPacketType = self._hidSerialBuffer[0]
-			if serPacketType!=HT_PKT_EXTENDED:
-				packetLength = 2 if serPacketType==HT_PKT_OK else 1
+			htPacketType = self._hidSerialBuffer[0]
+			if htPacketType!=HT_PKT_EXTENDED:
+				packetLength = 2 if htPacketType==HT_PKT_OK else 1
 				if currentBufferLength>=packetLength:
 					stream = StringIO(self._hidSerialBuffer[:packetLength])
 					self._hidSerialBuffer = self._hidSerialBuffer[packetLength:]
 				else:
 					# The packet is not yet complete
 					return
-			elif serPacketType==HT_PKT_EXTENDED and currentBufferLength>=5:
+			elif htPacketType==HT_PKT_EXTENDED and currentBufferLength>=5:
 				# Check whether our packet is complete
 				# Extended packets are at least 5 bytes in size.
 				# The second byte is the model, the third byte is the data length, excluding the terminator
@@ -766,13 +766,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# The packet is not yet complete
 				return
 			stream.seek(1)
-			self._handleInputStream(serPacketType, stream)
+			self._handleInputStream(htPacketType, stream)
 
 	def _serialOnReceive(self, data):
 		self._handleInputStream(data, self._dev)
 
-	def _handleInputStream(self, serPacketType, stream):
-		if serPacketType in (HT_PKT_OK, HT_PKT_EXTENDED):
+	def _handleInputStream(self, htPacketType, stream):
+		if htPacketType in (HT_PKT_OK, HT_PKT_EXTENDED):
 			modelId = stream.read(1)
 			if not self._model:
 				if not modelId in MODELS:
@@ -786,14 +786,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# plugged in the same (already open) serial port.
 				self.terminate()
 
-		if serPacketType==HT_PKT_OK:
+		if htPacketType==HT_PKT_OK:
 			pass
-		elif serPacketType == HT_PKT_ACK:
+		elif htPacketType == HT_PKT_ACK:
 			# This is unexpected, but we need to make sure that we handle old style ack
 			self._handleAck()
-		elif serPacketType == HT_PKT_NAK:
+		elif htPacketType == HT_PKT_NAK:
 			log.debugWarning("NAK received!")
-		elif serPacketType == HT_PKT_EXTENDED:
+		elif htPacketType == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
 			terminator = stream.read(1)
@@ -819,12 +819,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				log.debugWarning("Unhandled extended packet of type %r: %r" %
 					(extPacketType, packet))
 		else:
-			serPacketOrd = ord(serPacketType)
+			serPacketOrd = ord(htPacketType)
 			if isinstance(self._model, OldProtocolMixin) and serPacketOrd&~KEY_RELEASE_MASK < HT_PKT_EXTENDED:
 				self._handleInput(serPacketOrd)
 			else:
 				# Unknown packet type, log it
-				log.debugWarning("Unhandled packet of type %r" % serPacketType)
+				log.debugWarning("Unhandled packet of type %r" % htPacketType)
 
 
 	def _handleInput(self, key):
