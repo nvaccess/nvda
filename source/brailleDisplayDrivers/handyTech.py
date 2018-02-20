@@ -373,7 +373,7 @@ class ModularEvolution64(ModularEvolution):
 	numCells = 64
 
 
-class EasyBraille(Model):
+class EasyBraille(OldProtocolMixin, Model):
 	deviceId = MODEL_EASY_BRAILLE
 	numCells = 40
 	genericName = name = "Easy Braille"
@@ -847,7 +847,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	scriptCategory = SCRCAT_BRAILLE
 
 	def script_toggleBrailleInput(self, _gesture):
-		self.brailleInput = not self._brailleInput
+		self.brailleInput = not self.brailleInput
 		if self.brailleInput:
 			# Translators: message when braille input is enabled
 			ui.message(_('Braille input enabled'))
