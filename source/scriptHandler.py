@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import numbers
 import time
 import weakref
 import inspect
@@ -23,6 +24,7 @@ _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
 _numIncompleteInterceptedCommandScripts=0
 _lastScriptTime=0 #Time in MS of when the last script was executed
+_lastScriptRepeatTimeout=0.5  #: The maximum amount of time in seconds that can pass before the last script is no longer considered as being repeated if the same script is executed again. 
 _lastScriptRef=None #Holds a weakref to the last script that was executed
 _lastScriptCount=0 #The amount of times the last script was repeated
 _isScriptRunning=False
@@ -165,7 +167,7 @@ def executeScript(script,gesture):
 	@param gesture: the input gesture that activated this script
 	@type gesture: L{inputCore.InputGesture}
 	"""
-	global _lastScriptTime, _lastScriptCount, _lastScriptRef, _isScriptRunning 
+	global _lastScriptTime, _lastScriptRepeatTimeout, _lastScriptCount, _lastScriptRef, _isScriptRunning 
 	lastScriptRef=_lastScriptRef() if _lastScriptRef else None
 	#We don't allow the same script to be executed from with in itself, but we still should pass the key through
 	scriptFunc=getattr(script,"__func__",script)
@@ -184,6 +186,14 @@ def executeScript(script,gesture):
 			_lastScriptCount=0
 		_lastScriptRef=scriptRef
 		_lastScriptTime=scriptTime
+		scriptRepeatTimeout=getattr(scriptFunc,'repeatTimeout',0.5)
+		print "Script set repeatTimeout of %s"%scriptRepeatTimeout
+		if scriptRepeatTimeout is not None and not isinstance(scriptRepeatTimeout,numbers.Real):
+			log.debugWarning("Ignoring invalid script repeatTimeout of %s"%scriptRepeatTimeout)
+			scriptRepeatTimeout=None
+		if scriptRepeatTimeout is None:
+			scriptRepeatTimeout=0.5
+		_lastScriptRepeatTimeout=scriptRepeatTimeout
 		script(gesture)
 	except:
 		log.exception("error executing script: %s with gesture %r"%(script,gesture.displayName))
@@ -198,7 +208,8 @@ def getLastScriptRepeatCount():
 	@returns: a value greater or equal to 0. If the script has not been repeated it is 0, if it has been repeated once its 1, and so forth.
 	@rtype: integer
 	"""
-	if (time.time()-_lastScriptTime)>0.5:
+	print "Checking repeatTimeout of %s"%_lastScriptRepeatTimeout
+	if (time.time()-_lastScriptTime)>_lastScriptRepeatTimeout:
 		return 0
 	else:
 		return _lastScriptCount
