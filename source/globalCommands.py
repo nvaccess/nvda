@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V.
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Ethan Holliger
 
 import time
 import itertools
@@ -40,6 +40,7 @@ import virtualBuffers
 import characterProcessing
 from baseObject import ScriptableObject
 import core
+import winVersion
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -723,13 +724,14 @@ class GlobalCommands(ScriptableObject):
 	def script_reviewMode_next(self,gesture):
 		label=review.nextMode()
 		if label:
-			ui.message(label)
+			ui.reviewMessage(label)
 			pos=api.getReviewPosition().copy()
 			pos.expand(textInfos.UNIT_LINE)
+			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 			speech.speakTextInfo(pos)
 		else:
 			# Translators: reported when there are no other available review modes for this object 
-			ui.message(_("No next review mode"))
+			ui.reviewMessage(_("No next review mode"))
 	# Translators: Script help message for next review mode command.
 	script_reviewMode_next.__doc__=_("Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object")
 	script_reviewMode_next.category=SCRCAT_TEXTREVIEW
@@ -737,13 +739,14 @@ class GlobalCommands(ScriptableObject):
 	def script_reviewMode_previous(self,gesture):
 		label=review.nextMode(prev=True)
 		if label:
-			ui.message(label)
+			ui.reviewMessage(label)
 			pos=api.getReviewPosition().copy()
 			pos.expand(textInfos.UNIT_LINE)
+			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 			speech.speakTextInfo(pos)
 		else:
 			# Translators: reported when there are no  other available review modes for this object 
-			ui.message(_("No previous review mode"))
+			ui.reviewMessage(_("No previous review mode"))
 	# Translators: Script help message for previous review mode command.
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
@@ -767,7 +770,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			speech.speakMessage(_("No navigator object"))
+			ui.reviewMessage(_("No navigator object"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if curObject.TextInfo!=NVDAObjectTextInfo:
@@ -969,7 +972,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakMessage(_("Top"))
+		ui.reviewMessage(_("Top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to top line command.
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
@@ -995,6 +998,8 @@ class GlobalCommands(ScriptableObject):
 	def script_review_currentLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
+		# Explicitly tether here
+		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
@@ -1003,7 +1008,7 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for read current line under review cursor command.
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions.")
 	script_review_currentLine.category=SCRCAT_TEXTREVIEW
- 
+
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
@@ -1025,7 +1030,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakMessage(_("Bottom"))
+		ui.reviewMessage(_("Bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to bottom line command.
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
@@ -1050,6 +1055,8 @@ class GlobalCommands(ScriptableObject):
 	def script_review_currentWord(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_WORD)
+		# Explicitly tether here
+		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
@@ -1081,7 +1088,7 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		speech.speakMessage(_("Left"))
+		ui.reviewMessage(_("Left"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to start of current line command.
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
@@ -1111,6 +1118,8 @@ class GlobalCommands(ScriptableObject):
 	def script_review_currentCharacter(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
+		# Explicitly tether here
+		braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
@@ -1155,7 +1164,7 @@ class GlobalCommands(ScriptableObject):
 		info.move(textInfos.UNIT_CHARACTER,-1)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		speech.speakMessage(_("Right"))
+		ui.reviewMessage(_("Right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
@@ -1332,7 +1341,7 @@ class GlobalCommands(ScriptableObject):
 			else:
 				speech.speakSpelling(focusObject.name)
 		else:
-			speech.speakMessage(_("No focus"))
+			ui.message(_("No focus"))
 	# Translators: Input help mode message for report current focus command.
 	script_reportCurrentFocus.__doc__ = _("Reports the object with focus. If pressed twice, spells the information")
 	script_reportCurrentFocus.category=SCRCAT_FOCUS
@@ -1360,10 +1369,14 @@ class GlobalCommands(ScriptableObject):
 			return
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			ui.message(text)
-		else:
+		elif scriptHandler.getLastScriptRepeatCount()==1:
 			speech.speakSpelling(text)
+		else:
+			if api.copyToClip(text):
+				# Translators: The message presented when the status bar is copied to the clipboard.
+				ui.message(_("%s copied to clipboard")%text)
 	# Translators: Input help mode message for report status line text command.
-	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information")
+	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard")
 	script_reportStatusLine.category=SCRCAT_FOCUS
 
 	def script_toggleMouseTracking(self,gesture):
@@ -1650,7 +1663,7 @@ class GlobalCommands(ScriptableObject):
 	script_revertConfiguration.category=SCRCAT_CONFIG
 
 	def script_activatePythonConsole(self,gesture):
-		if globalVars.appArgs.secure:
+		if globalVars.appArgs.secure or config.isAppX:
 			return
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -1684,19 +1697,55 @@ class GlobalCommands(ScriptableObject):
 	script_toggleSpeechViewer.category=SCRCAT_TOOLS
 
 	def script_braille_toggleTether(self, gesture):
-		if braille.handler.tether == braille.handler.TETHER_FOCUS:
-			braille.handler.tether = braille.handler.TETHER_REVIEW
-			# Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-			tetherMsg = _("review")
+		values = [x[0] for x in braille.handler.tetherValues]
+		labels = [x[1] for x in braille.handler.tetherValues]
+		try:
+			index = values.index(
+				braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
+			)
+		except:
+			index=0
+		newIndex = (index+1) % len(values)
+		newTetherChoice = values[newIndex]
+		if newTetherChoice==braille.handler.TETHER_AUTO:
+			config.conf["braille"]["autoTether"] = True
+			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
 		else:
-			braille.handler.tether = braille.handler.TETHER_FOCUS
-			# Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-			tetherMsg = _("focus")
-		# Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
-		ui.message(_("Braille tethered to %s") % tetherMsg)
+			config.conf["braille"]["autoTether"] = False
+			braille.handler.setTether(newTetherChoice, auto=False)
+			if newTetherChoice==braille.handler.TETHER_REVIEW:
+				braille.handler.handleReviewMove(shouldAutoTether=False)
+			else:
+				focus = api.getFocusObject()
+				if focus.treeInterceptor and not focus.treeInterceptor.passThrough:
+					braille.handler.handleGainFocus(focus.treeInterceptor,shouldAutoTether=False)
+				else:
+					braille.handler.handleGainFocus(focus,shouldAutoTether=False)
+		# Translators: Reports which position braille is tethered to
+		# (braille can be tethered automatically or to either focus or review position).
+		ui.message(_("Braille tethered %s") % labels[newIndex])
 	# Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
 	script_braille_toggleTether.category=SCRCAT_BRAILLE
+
+	def script_braille_toggleFocusContextPresentation(self, gesture):
+		values = [x[0] for x in braille.focusContextPresentations]
+		labels = [x[1] for x in braille.focusContextPresentations]
+		try:
+			index = values.index(config.conf["braille"]["focusContextPresentation"])
+		except:
+			index=0
+		newIndex = (index+1) % len(values)
+		config.conf["braille"]["focusContextPresentation"] = values[newIndex]
+		braille.invalidateCachedFocusAncestors(0)
+		braille.handler.handleGainFocus(api.getFocusObject())
+		# Translators: Reports the new state of braille focus context presentation.
+		# %s will be replaced with the context presentation setting.
+		# For example, the full message might be "Braille focus context presentation: fill display for context changes"
+		ui.message(_("Braille focus context presentation: %s")%labels[newIndex].lower())
+	# Translators: Input help mode message for toggle braille focus context presentation command.
+	script_braille_toggleFocusContextPresentation.__doc__ = _("Toggle the way context information is presented in braille")
+	script_braille_toggleFocusContextPresentation.category=SCRCAT_BRAILLE
 
 	def script_braille_toggleShowCursor(self, gesture):
 		if config.conf["braille"]["showCursor"]:
@@ -1718,13 +1767,17 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Braille cursor is turned off"))
 			return
 		shapes = [s[0] for s in braille.CURSOR_SHAPES]
+		if braille.handler.getTether() == braille.handler.TETHER_FOCUS:
+			cursorShape = "cursorShapeFocus"
+		else:
+			cursorShape = "cursorShapeReview"
 		try:
-			index = shapes.index(config.conf["braille"]["cursorShape"]) + 1
+			index = shapes.index(config.conf["braille"][cursorShape]) + 1
 		except:
 			index = 1
 		if index >= len(braille.CURSOR_SHAPES):
 			index = 0
-		config.conf["braille"]["cursorShape"] = braille.CURSOR_SHAPES[index][0]
+		config.conf["braille"][cursorShape] = braille.CURSOR_SHAPES[index][0]
 		shapeMsg = braille.CURSOR_SHAPES[index][1]
 		# Translators: Reports which braille cursor shape is activated.
 		ui.message(_("Braille cursor %s") % shapeMsg)
@@ -1875,21 +1928,47 @@ class GlobalCommands(ScriptableObject):
 	script_braille_dots.category=SCRCAT_BRAILLE
 
 	def script_braille_toFocus(self, gesture):
-		if braille.handler.tether == braille.handler.TETHER_REVIEW:
+		braille.handler.setTether(braille.handler.TETHER_FOCUS, auto=True)
+		if braille.handler.getTether() == braille.handler.TETHER_REVIEW:
 			self.script_navigatorObject_toFocus(gesture)
 		else:
-			if not braille.handler.mainBuffer.regions:
-				return
-			region = braille.handler.mainBuffer.regions[-1]
-			braille.handler.mainBuffer.focus(region)
-			if region.brailleCursorPos is not None:
-				braille.handler.mainBuffer.scrollTo(region, region.brailleCursorPos)
-			elif region.brailleSelectionStart is not None:
-				braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
-			braille.handler.mainBuffer.updateDisplay()
+			obj = api.getFocusObject()
+			region = braille.handler.mainBuffer.regions[-1] if braille.handler.mainBuffer.regions else None
+			if region and region.obj==obj:
+				braille.handler.mainBuffer.focus(region)
+				if region.brailleCursorPos is not None:
+					braille.handler.mainBuffer.scrollTo(region, region.brailleCursorPos)
+				elif region.brailleSelectionStart is not None:
+					braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
+				braille.handler.mainBuffer.updateDisplay()
+			else:
+				# We just tethered to focus from review,
+				# Handle this case as we just focused the object
+				if obj.treeInterceptor and not obj.treeInterceptor.passThrough:
+					braille.handler.handleGainFocus(obj.treeInterceptor,shouldAutoTether=False)
+				else:
+					braille.handler.handleGainFocus(obj,shouldAutoTether=False)
 	# Translators: Input help mode message for a braille command.
 	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
 	script_braille_toFocus.category=SCRCAT_BRAILLE
+
+	def script_braille_eraseLastCell(self, gesture):
+		brailleInput.handler.eraseLastCell()
+	# Translators: Input help mode message for a braille command.
+	script_braille_eraseLastCell.__doc__= _("Erases the last entered braille cell or character")
+	script_braille_eraseLastCell.category=SCRCAT_BRAILLE
+
+	def script_braille_enter(self, gesture):
+		brailleInput.handler.enter()
+	# Translators: Input help mode message for a braille command.
+	script_braille_enter.__doc__= _("Translates any braille input and presses the enter key")
+	script_braille_enter.category=SCRCAT_BRAILLE
+
+	def script_braille_translate(self, gesture):
+		brailleInput.handler.translate()
+	# Translators: Input help mode message for a braille command.
+	script_braille_translate.__doc__= _("Translates any braille input")
+	script_braille_translate.category=SCRCAT_BRAILLE
 
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
@@ -1974,10 +2053,12 @@ class GlobalCommands(ScriptableObject):
 
 	def script_touch_hoverUp(self,gesture):
 		#Specifically for touch typing with onscreen keyboard keys
-		obj=api.getNavigatorObject()
-		import NVDAObjects.UIA
-		if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
-			obj.doAction()
+		# #7309: by default, one mustdouble tap the touch key. To restore old behavior, go to Touch Interaction dialog and change touch typing option.
+		if config.conf["touch"]["touchTyping"]:
+			obj=api.getNavigatorObject()
+			import NVDAObjects.UIA
+			if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
+				obj.doAction()
 	script_touch_hoverUp.category=SCRCAT_TOUCH
 
 	def script_activateConfigProfilesDialog(self, gesture):
@@ -2004,6 +2085,17 @@ class GlobalCommands(ScriptableObject):
 		mathPres.interactWithMathMl(mathMl)
 	# Translators: Describes a command.
 	script_interactWithMath.__doc__ = _("Begins interaction with math content")
+
+	def script_recognizeWithUwpOcr(self, gesture):
+		if not winVersion.isUwpOcrAvailable():
+			# Translators: Reported when Windows 10 OCR is not available.
+			ui.message(_("Windows 10 OCR not available"))
+			return
+		from contentRecog import uwpOcr, recogUi
+		recog = uwpOcr.UwpOcr()
+		recogUi.recognizeNavigatorObject(recog)
+	# Translators: Describes a command.
+	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
 	__gestures = {
 		# Basic
@@ -2176,6 +2268,9 @@ class GlobalCommands(ScriptableObject):
 
 		# Braille keyboard
 		"bk:dots" : "braille_dots",
+		"bk:dot7" : "braille_eraseLastCell",
+		"bk:dot8" : "braille_enter",
+		"bk:dot7+dot8" : "braille_translate",
 
 		# Tools
 		"kb:NVDA+f1": "navigatorObject_devInfo",
@@ -2184,6 +2279,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 		"kb:NVDA+alt+m": "interactWithMath",
+		"kb:NVDA+r": "recognizeWithUwpOcr",
 	}
 
 #: The single global commands instance.

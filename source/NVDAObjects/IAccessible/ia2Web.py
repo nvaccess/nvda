@@ -13,7 +13,7 @@ import oleacc
 import IAccessibleHandler
 import controlTypes
 from logHandler import log
-from NVDAObjects.behaviors import Dialog
+from NVDAObjects.behaviors import Dialog, WebDialog 
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
 
@@ -32,6 +32,17 @@ class Ia2Web(IAccessible):
 	def _get_isCurrent(self):
 		current = self.IA2Attributes.get("current", False)
 		return current
+
+	def _get_placeholder(self):
+		placeholder = self.IA2Attributes.get('placeholder', None)
+		return placeholder
+
+	def _get_isPresentableFocusAncestor(self):
+		if self.role==controlTypes.ROLE_TABLEROW:
+			# It is not useful to present IAccessible2 table rows in the focus ancestry as  cells contain row and column information anyway.
+			# Also presenting the rows would cause duplication of information
+			return False
+		return super(Ia2Web,self).isPresentableFocusAncestor
 
 class Document(Ia2Web):
 	value = None
@@ -98,10 +109,11 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
 		clsList.append(Math)
 
-	isApp = iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG)
-	if isApp:
+	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)
-	if isApp or iaRole == oleacc.ROLE_SYSTEM_DOCUMENT:
+	elif iaRole==oleacc.ROLE_SYSTEM_DIALOG:
+		clsList.append(WebDialog)
+	if iaRole in (oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_DOCUMENT):
 		clsList.append(documentClass)
 
 	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:

@@ -1,11 +1,12 @@
 #treeInterceptorHandler.py
 #A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 from logHandler import log
 import baseObject
+import documentBase
 import api
 import review
 import textInfos
@@ -116,7 +117,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 					if review.getCurrentMode()=='document':
 						# if focus is in this treeInterceptor and review mode is document, turning on passThrough should force object review
 						review.setCurrentMode('object')
-					api.setNavigatorObject(focusObj)
+					api.setNavigatorObject(focusObj, isFocus=True)
 			braille.handler.handleGainFocus(api.getFocusObject())
 		else:
 			obj=api.getNavigatorObject()
@@ -133,14 +134,18 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		"""Prepares this treeInterceptor so that it becomes ready to accept event/script input."""
 		raise NotImplementedError
 
-class DocumentTreeInterceptor(TreeInterceptor):
+class DocumentTreeInterceptor(documentBase.TextContainerObject,TreeInterceptor):
 	"""A TreeInterceptor that supports document review."""
 
-	def _get_TextInfo(self):
-		raise NotImplementedError
-
-	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
+	#: Indicates if the text selection is anchored at the start.
+	#: The anchored position is the end that doesn't move when extending or shrinking the selection.
+	#: For example, if you have no selection and you press shift+rightArrow to select the next character,
+	#: this will be True.
+	#: In contrast, if you have no selection and you press shift+leftArrow to select the previous character,
+	#: this will be False.
+	#: If the selection is anchored at the end or there is no information this is C{False}.
+	#: @type: bool
+	isTextSelectionAnchoredAtStart=True
 
 class RootProxyTextInfo(textInfos.TextInfo):
 
