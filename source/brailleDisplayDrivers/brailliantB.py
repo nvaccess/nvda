@@ -78,10 +78,12 @@ DOT1_KEY = 2
 DOT8_KEY = 9
 SPACE_KEY = 10
 
+USBID_BrailleNoteTouch="VID_1C71&PID_C00A"
+
 USB_IDS_HID = {
 	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
 	"VID_1C71&PID_C022", # Brailliant BI 14
-	"VID_1C71&PID_C00A", # BrailleNote Touch
+	USBID_BrailleNoteTouch, # BrailleNote Touch
 }
 USB_IDS_SER = (
 	"Vid_1c71&Pid_c005", # Brailliant BI 32, 40 and 80
@@ -130,7 +132,7 @@ def _getPorts():
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
-	description = _("HumanWare Brailliant BI/B series")
+	description = _("HumanWare Brailliant BI/B series, and BrailleNote Touch")
 	isThreadSafe = True
 
 	@classmethod
@@ -148,6 +150,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		for portType, port in _getPorts():
 			self.isHid = portType.endswith(" HID")
+			#: BrailleNote touch requires the use of HidD_SetOutputReport when sending data to the device via HID, as WriteFile seems to block forever.
+			self._useHidSetOutputReport=self.isHid and (USBID_BrailleNoteTouch.lower() in port)
 			# Try talking to the display.
 			try:
 				if self.isHid:
@@ -270,10 +274,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# cells will already be padded up to numCells.
 		cells = "".join(chr(cell) for cell in cells)
 		if self.isHid:
-			self._dev.write("{id}"
+			outputReport=("{id}"
 				"\x01\x00" # Module 1, offset 0
 				"{length}{cells}"
 			.format(id=HR_BRAILLE, length=chr(self.numCells), cells=cells))
+			if self._useHidSetOutputReport:
+				# Some displays such as BrailleNote touch via USB HID seem to block when using WriteFile, thus use the HID output report mechanism instead.
+				self._dev.setOutputReport(outputReport)
+			else:
+				self._dev.write(outputReport)
 		else:
 			self._serSendMessage(MSG_DISPLAY, cells)
 
@@ -294,7 +303,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:tab": ("br(brailliantB):space+dot4+dot6",),
 			"kb:alt": ("br(brailliantB):space+dot1+dot3+dot4",),
 			"kb:escape": ("br(brailliantB):space+dot1+dot5",),
-			"kb:enter": ("br(brailliantB):dot8", "br(brailliantB):stickAction"),
+			"kb:enter": ("br(brailliantB):stickAction"),
 			"kb:windows+d": ("br(brailliantB):c1+c4+c5",),
 			"kb:windows": ("br(brailliantB):space+dot3+dot4",),
 			"kb:alt+tab": ("br(brailliantB):space+dot2+dot3+dot4+dot5",),
