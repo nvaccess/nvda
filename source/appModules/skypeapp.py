@@ -10,10 +10,8 @@ import re
 import appModuleHandler
 import ui
 from NVDAObjects.UIA import UIA
-from nvdaBuiltin.appModules.skype import SCRCAT_SKYPE
+from skype import SCRCAT_SKYPE
 import api
-import addonHandler
-addonHandler.initTranslation()
 
 # #7126: Unfortunately, cherry-picking parts of message items via looking at their children isn't reliable due to odd UIA implementation.
 # Therefore, resort to this regular expression.
