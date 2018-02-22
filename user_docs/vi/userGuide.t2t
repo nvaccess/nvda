@@ -59,12 +59,10 @@ Bạn có thể chia sẻ hoặc thay đổi phần mềm này theo ý mình mi�
 Để biết thêm thông tin chi tiết, xin xem đầy đủ nội dung [Giấy phép http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Yêu Cầu Hệ Thống +
-- Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 và Windows 10 (bao gồm cả hệ điều hành cho máy chủ)
- - Đối với Windows XP 32-bit, NVDA yêu cầu Service Pack 2 hoặc cao hơn
- - Đối với Windows Server 2003, NVDA yêu cầu Service Pack 1 hoặc cao hơn
- - Đối với Windows Vista, NVDA yêu cầu Service Pack 2 và gói cập nhật [KB2763674 https://support.microsoft.com/en-us/kb/2763674]
- Nên cài đặt cả hai phiên bản thông qua các bản cập nhật bằng Windows Update
-- Bộ nhớ RAM: 256 mb hoặc cao hơn
+- Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10 và các bản máy chủ từ bản Windows Server 2008 R2.
+ - Đối với Win 7, NVDA yêu cầu bản SP1 hoặc cao hơn.
+ - Đối với bản  Windows Server 2008 R2, NVDA yệu cầu bản SP 1 hoặc cao hơn.
+ - Bộ nhớ RAM: 256 mb hoặc cao hơn
 - Tốc độ bộ vi xử lý: 1.0 ghz hoặc cao hơn
 - Yêu cầu ít nhất 90 MB không gian lưu trữ ổ cứng
 -
@@ -506,7 +504,7 @@ Dưới đây là các phím cho phép chuyển nhanh đến các đối tượn
 - m: frame (khung)
 - g: graphic (hình ảnh)
 - d: landmark (cột mốc)
-- o: embedded object (đối tượng nhúng)
+- o: đối tượng nhúng (như trình phát âm thanh/video, ứng dụng, hộp thoại vvv.)
 - 1 to 6: headings at levels 1 to 6 respectively (tương ứng từ tiêu đề cấp 1 đến 6)
 - a: annotation (chú thích, phần chỉnh sửa, vvv.)
 - w: lỗi chính tả
@@ -525,7 +523,7 @@ Nhấn NVDA+shift+khoảng trắng để bật/tắt ký tự di chuyển đơn.
 
 ++ Hộp thoại danh sách các thành phần ++
 NVDA cho phép bạn lọc và truy cập nhanh đến các đối tượng trong tài liệu 
-Ví dụ như liên kết (link), tiêu đề (heading) hay cột mốc (landmarks) bằng hộp thoại danh sách các thành phần. 
+Ví dụ như liên kết (link), tiêu đề (heading), biểu mẫu, nút  hay cột mốc (landmarks) bằng hộp thoại danh sách các thành phần. 
 Bạn có thể thay đổi liệt kê giữa các loại thành phần trên ở nhóm nút radio.
 Có ô nhập liệu cũng cho phép bạn nhập các ký tự để lọc các đối tượng trong danh sách.
 Khi tìm thấy đối tượng mình mong muốn, bạn có thể nhảy đến đối tượng đó hoặc kích hoạt luôn nó.
@@ -535,8 +533,9 @@ Khi tìm thấy đối tượng mình mong muốn, bạn có thể nhảy đến
 %kc:endInclude
 
 ++ Thao tác trên đối tượng nhúng ++
-Tài liệu có thể chứa các loại đối tượng như Adobe Flash và Sun Java, cũng như các cửa sổ hay ứng dụng khác.
+Tài liệu có thể chứa các loại đối tượng sử dụng công nghệ như Adobe Flash, Oracle Java, HTML5 cũng như các hộp thoại hay ứng dụng  khác.
 Trong quá trình duyệt tài liệu, nếu gặp các đối tượng trên thì NVDA sẽ thông báo kiểu đối tượng cho bạn, ví dụ đối tượng nhúng, hộp thoại, v..v.
+Có thể nhấn phím di chuyển đơn o và shift+o để đi nhanh đến các đối tượng đó.
 Bạn có thể nhấn phím enter để tương tác trực tiếp trên các đối tượng này.
 Nếu đối tượng đó có thể tương tác được thì bạn có thể dùng phím tab để chuyển qua lại giữa các thành phần con trong đối tượng này.
 Dưới đây là phím tắt để giúp bạn quay trở lại chế độ duyệt tài liệu có chứa đối tượng nhúng:

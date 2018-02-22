@@ -91,7 +91,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Desktop',
 	'Input Message is {title}: {message}',
 	'Input Message is {message}',
-	'Series color: {colorName} ',
 	'Comments',
 	'Endnotes',
 	'Even pages footer',
