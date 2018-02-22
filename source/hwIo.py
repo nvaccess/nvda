@@ -312,6 +312,16 @@ class Hid(IoBase):
 				log.debug("Set feature failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
 
+	def setOutputReport(self,data):
+		"""
+		Write the given data to the device using HidD_SetOutputReport.
+		This is instead of using the standard WriteFile which may freeze with some USB HID implementations.
+		@ param data: the report string (starting with the report ID).
+		"""
+		buf=ctypes.create_string_buffer(self._writeSize)
+		buf.raw=data
+		ctypes.windll.hid.HidD_SetOutputReport(self._writeFile,buf,self._writeSize)
+
 	def close(self):
 		if not self._file:
 			return
