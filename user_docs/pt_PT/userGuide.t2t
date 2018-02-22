@@ -371,9 +371,7 @@ No entanto, por padrão, quando se move o cursor do Sistema, o cursor de revisã
 Isto pode ser activado e desactivado.
 
 Note que, por padrão, o Braille segue o [foco #SystemFocus] e o [cursor, #SystemCaret], bem como a navegação por objectos e a revisão de texto.
-Se pretender que o Braille não siga a navegação por objectos e a revisão de texto, deve definir o [Braille segue: #BrailleTether] para "Cursor do sistema".
-Assim o Braille não seguirá a navegação por objectos e a revisão de texto.
-Se quiser que o Braille os siga, tem de configurar a opção Braille segue #BrailleTether] para "Cursor de revisão".
+Se pretender que o Braille não siga a navegação por objectos e a revisão de texto, deve definir o [Braille segue: #BrailleTether] para "Cursor do sistema". Assim o Braille não seguirá a navegação por objectos e a revisão de texto.
 
 Os comandos seguintes estão disponíveis para a revisão de texto:
 %kc:beginInclude
@@ -523,7 +521,6 @@ As teclas seguintes, por si mesmas, saltam para o próximo elemento disponível.
 - a: anotação (comentário, revisão do editor, etc.)
 - w: erro ortográfico
 -
-
 Para se mover para o início ou fim de elementos contentores como listas ou tabelas, que contêm outros elementos:
 || Nome | Comando de Teclado | Descrição |
 | Mover para o início do contentor | shift+vírgula | Move para o início do contentor (lista, tabela, etc.) onde o cursor está posicionado |
@@ -1837,14 +1834,6 @@ Para mais informações, por favor visite a página Internet da Audiologic em ww
 
 Este sintetizador não suporta [Utilizar funcionalidade de soletrar #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer for NVDA ++[Vocalizer]
-Nuance Vocalizer é um sintetizador comercial, com vozes de alta qualidade, desenvolvido pela Nuance Communications, Inc., e adaptado, especificamente para o NVDA, pela Tiflotecnia, Lda.
-Contém cerca de 50 vozes, falando em mais de 30 idiomas, que pode instalar, segundo as suas necessidades e gostos.
-Quer os componentes do driver, quer as vozes estão empacotados em Extras, que permitem a sua utilização nas versões portáteis do NVDA.
-
-Pode obter mais informações sobre o Nuance Vocalizer para NVDA, e como o comprar na sua página web em [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Uma percentagem das vendas deste produto é doada à NV Access, para financiar a continuação do desenvolvimento do leitor de ecrã NVDA.
-
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
 Esta secção contém informação sobre as linhas Braille suportadas pelo NVDA.
 
@@ -1917,8 +1906,8 @@ Note que o NVDA pode não conseguir usar uma ALVA BC6 por Bluetooth, se tiver si
 Se isso acontecer, recomendamos que emparelhe a ALVA através das configurações Bluetooth do Windows.
 
 Estas linhas possuem um teclado Braille, e controlam, elas próprias, a conversão de Braille em texto.
-This means that NVDA's braille input system is not in use in the default situation (i.e. the input braille table setting has no effect).
-For ALVA displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
+Isto significa que o sistema de escrita pelo teclado Braille do NVDA não é usado, e portanto a tabela de escrita Braille não tem nenhum efeito.
+Para as linhas Braille da ALVA com firmware recente, é possível desactivar a simulação do teclado HID, através de um comando.
 
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -1930,6 +1919,7 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 | Mover a linha braille para a linha seguinte | t4 |
 | Deslocar a linha braille para a frente | t5 ou etouch3 |
 | Encaminhar para a célula braille | routing |
+| Alternar simulação de teclado HID | t1+spEnter |
 | mover para a primeira linha em revisão | t1+t2 |
 | mover para a última linha em revisão | t4+t5 |
 | Alternar "Braille segue:" | t1+t3 |
@@ -1943,17 +1933,19 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 | Tecla seta abaixo | spDown |
 | Tecla seta esquerda | spLeft |
 | Tecla seta direita | spRight |
-| Tecla Enter | spEnter |
+| Tecla Enter | spEnter, Enter |
 | Anunciar hora/data | sp1+sp2 |
 | Menu do NVDA | sp1+sp3 |
 | Teclas Windows+d (Minimizar todas as aplicações)  | sp1+sp4 |
 | Teclas windows+b (Mover para a Área de notificações) | sp3+sp4 |
-| Tecla Windows | sp2+sp3 |
+| Tecla Windows | sp2+sp3, Windows |
 | Teclas alt+tab | sp2+sp4 |
 | Teclas control+home | t3+spUp |
 | Teclas control+end | t3+spDown |
 | Tecla home | t3+spLeft |
 | Tecla end | t3+spRight |
+| Tecla Alt | alt |
+| Tecla Control | control |
 %kc:endInclude
 
 ++ Handy Tech ++[HandyTech]
@@ -2111,7 +2103,7 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 | Leitura contínua | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS: Séries Braille Sense, Braille EDGE, Smart Beetle e Sync Braille ++
+++ HIMS: Séries Braille Sense, Braille EDGE, Smart Beetle e Sync Braille ++[Hims]
 O NVDA suporta as linhas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
 Se ligar a linha via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
 Pode fazer o download dos drivers de http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2428,7 +2420,7 @@ Os modelos seguintes são suportados:
 
 No NVDA, pode configurar a que porta série a linha está ligada no diálogo Definições de Braille.
 
-Seguem-se as associações de comandos para as linhas EcoBraille 
+Seguem-se as associações de comandos para as linhas EcoBraille com o NVDA.
 Por favor consulte a documentação [EcoBraille em ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] para uma descrição da localização das teclas.
 
 %kc:beginInclude
@@ -2460,6 +2452,86 @@ Por isso, e para manter a compatibilidade com outros leitores de ecrã em Taiwan
 || Nome | Tecla |
 | Mover a linha Braille para trás | Menos do bloco numérico |
 | Mover a linha Braille para a frente | Mais do bloco numérico | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
+As linhas Braille Esys, Esytime e Iris da [Eurobraille http://www.eurobraille.fr/] são suportadas pelo NVDA.
+Esys e Esytime-Evo são suportadas quando ligadas quer por USB ou bluetooth.
+As Esytime antigas apenas são suportadas via USB.
+As Iris apenas podem ser ligadas por portas série.
+Não é possível a detecção automática da porta, portanto, após escolher a linha Braille, é necessário escolher a porta correcta à qual a linha está ligada.
+
+As linhas Iris e Esys têm um teclado Braille com 10 teclas.
+As duas teclas colocadas como se fossem a tecla Espaço, são a Retrocesso, à esquerda, e o Espaço à direita.
+
+Seguem-se as associações de comandos das linhas EuroBraille com o NVDA.
+Por favor consulte a documentação destas linhas Braille para obter a descrição de onde estas teclas podem ser encontradas.
+%kc:beginInclude
+|| Name | Key |
+| Mover a linha Braille para trás | switch1-6left, l1 |
+| Mover a linha Braille para a frente | switch1-6Right, l8 |
+| Mover para o foco actual | switch1-6Left+switch1-6Right, l1+l8 |
+| Encaminhar para a célula Braille | routing, doubleRouting|
+| Mover a linha braille para a linha anterior em revisão | joystick1Up |
+| Mover a linha braille para a linha seguinte em revisão | joystick1Down |
+| Mover a linha braille para o caractere anterior em revisão | joystick1Left |
+| Mover a linha braille para o caractere seguinte em revisão | joystick1Right |
+| Mudar para o modo de revisão anterior | joystick1Left+joystick1Up |
+| Mudar para o modo de revisão seguinte | joystick1Right+joystick1Down |
+| Erase the last entered braille cell or character | backSpace |
+| Translate any braille input and press the enter key | backSpace+space |
+| Tecla Insert | dot3+dot5+space, l7 |
+| Tecla Delete | dot3+dot6+space |
+| Tecla Home | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
+| Tecla End | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
+| Tecla Seta à esquerda | dot2+space, joystick2Left, leftArrow |
+| Tecla Seta à direita | dot5+space, joystick2Right, rightArrow |
+| Tecla Seta para cima | dot1+space, joystick2Up, upArrow |
+| Tecla Seta para baixo | dot6+space, joystick2Down, downArrow |
+| Tecla enter | joystick2Center |
+| Tecla PageUp | dot1+dot3+space |
+| Tecla PageDown| dot4+dot6+space |
+| numpad1 | dot1+dot6+backspace |
+| numpad2 | dot1+dot2+dot6+backspace |
+| numpad3 | dot1+dot4+dot6+backspace |
+| numpad4 | dot1+dot4+dot5+dot6+backspace |
+| numpad5 | dot1+dot5+dot6+backspace |
+| numpad6 | dot1+dot2+dot4+dot6+backspace |
+| numpad7 | dot1+dot2+dot4+dot5+dot6+backspace |
+| numpad8 | dot1+dot2+dot5+dot6+backspace |
+| numpad9 key | dot2+dot4+dot6+backspace |
+| numpadInsert | dot3+dot4+dot5+dot6+backspace |
+| numpadDelete| dot2+backspace |
+| numpadBarra | dot3+dot4+backspace |
+| numpadAsterisco | dot3+dot5+backspace |
+| numpadMenos | dot3+dot6+backspace |
+| numpadMais | dot2+dot3+dot5+backspace |
+| numpadEnter | dot3+dot4+dot5+backspace |
+| Tecla Escape | dot1+dot2+dot4+dot5+space, l2 |
+| Tecla Tab | dot2+dot5+dot6+space, l3 |
+| Teclas Shift+Tab | dot2+dot3+dot5+space |
+| Tecla PrintScreen | dot1+dot3+dot4+dot6+space |
+| Tecla Pause | dot1+dot4+space |
+| Tecla Aplicações | dot5+dot6+backspace |
+| Tecla F1 | dot1+backspace |
+| Tecla 2 | dot1+dot2+backspace |
+| Tecla F3 | dot1+dot4+backspace |
+| Tecla F4 | dot1+dot4+dot5+backspace |
+| Tecla F5 | dot1+dot5+backspace |
+| Tecla F6 | dot1+dot2+dot4+backspace |
+| Tecla F7 | dot1+dot2+dot4+dot5+backspace |
+| Tecla F8 | dot1+dot2+dot5+backspace |
+| Tecla F9 | dot2+dot4+backspace |
+| Tecla F10 | dot2+dot4+dot5+backspace |
+| Tecla F11 | dot1+dot3+backspace |
+| Tecla F12 | dot1+dot2+dot3+backspace |
+| Tecla Windows | dot1+dot2+dot3+dot4+backspace |
+| Tecla CapsLock | dot7+backspace, dot8+backspace |
+| Tecla NumLock | dot3+backspace, dot6+backspace |
+| Tecla Shift | dot7+space, l4 |
+| Tecla Control | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
+| Tecla Alt | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
+| Alternar simulação de teclado HID | Esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

@@ -4,24 +4,30 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.1 =
+Zu den Highlights dieser Version gehören die Unterstützung für Diagramme in Microsoft Word und Powerpoint, neu unterstützte Braillezeilen einschließlich Eurobraille und dem Optelec Protokollkonverter, verbesserte Unterstützung für Hims und Optelec Braillezeilen, Leistungsverbesserungen für Mozilla Firefox 58 und höher und vieles mehr.
 
-
-== Neuerungen ==
+== Neue Funktionen ==
 - In Microsoft Word und PowerPoint ist es nun möglich mit Diagrammen zu interagieren, ähnlich der Unterstützung für Diagramme in Microsoft Excel. (#7046)
  - In Microsoft Word: Wenn Sie sich im Lesemodus befinden, stellen Sie sich auf ein eingebettetes Diagramm und drücken Eingabe, um damit zu interagieren.
- - In Microsoft PowerPoint: Während Sie eine Folie bearbeiten: Springen Sie mit der Tabulatortaste auf ein diagramm-Objekt und drücken Sie die Eingabe- oder Leertaste, um damit zu interagieren.
+ - In Microsoft PowerPoint, während Sie eine Folie bearbeiten: Springen Sie mit der Tabulatortaste auf ein diagramm-Objekt und drücken Sie die Eingabe- oder Leertaste, um damit zu interagieren.
  - Das interagieren beenden Sie mit der Escape-Taste.
 - neue Sprache: Kirgisisch.
+- Unterstützung für VitalSource Bookshelf wurde hinzugefügt. (#7155)
+- Unterstützung für den Optelec-Protokollkonverter wurde hinzugefügt. Dies ist ein Gerät, dass die Nutzung von Braille-Voyager- und Satellite-Braillezeielen ermöglicht. Dabei wird das ALVA BC6 Kommunikationsprotocol verwendet. (#6731)
+- Die Breilleeingabe über eine ALVA-640-Comfort-Braillezeile wird nun unterstützt. (#7733)
+- Die Brailleeingabe kann auch  mit den obigen oder mit anderen BC6-Braillezeilen mit firmware 3.0.0 oder höher genutzt werden.
+- Erstmalige Unterstützung von Google Tabellen mit aktiviertem Braillemodus. (#7935)
+- Die Braillezeilen Esys, Esytime und Iris von Eurobraille werden nun unterstützt. (#7488)
 
 
 == Änderungen ==
 - Die Treiber für die Zeilen HIMS Braille Sense / Braille EDGE / Smart Beetle und Hims Sync Braille wurden durch einen einzelnen Treiber ersetzt, der automatisch aktiviert wird, sofern Sie eine Syncbraille-zeile verwenden. (#7459)
- - Einige Tasten, insbesondere die Scroll-Tasten, wurden neu zugewiesen, um den von Hims-Produkten verwendeten Konventionen zu entsprechen.
+ - Einige Tasten, insbesondere die Scroll-Tasten, wurden neu zugewiesen, um den von Hims-Produkten verwendeten Konventionen zu entsprechen. Für mehr Details siehe die Bedienungsanleitung.
 - Beim Eingeben von Zeichen über die bildschirmtastatur müssen Sie nun jedes zeichen doppelt antippen, so wie Sie jedes andere Steuerelement betätigen. (#7309)
  - Um das vorherige Verhalten zurückzubekommen und Touch typing zu aktivieren, benutzen Sie die neu hinzugekommenen Optionen im Touch interaktion-Einstellungsdialog.
 - Es ist nicht mehr nötig, die Braillezeile ausdrücklich an den Fokus oder den NVDA-Cursor zu koppeln. Standardmäßig wird die Braillezeile automatisch gekoppelt. (#2385) 
- - Die automatische Kopplung der Braillezeile an den NVDA-Cursor funktioniert nur bei Befehlen, die ausdrücklich den NVDA-Cursor oder den Navigator betreffen (wie z. B. die Befehle zum Betrachten von Text).
-
+ - Die automatische Kopplung der Braillezeile an den NVDA-Cursor funktioniert nur bei Befehlen, die ausdrücklich den NVDA-Cursor oder den Navigator betreffen (wie z. B. die Befehle zum Betrachten von Text). Scrollen auf der Braillezeile wird keine automatische Kopplung auslösen.
+ 
  
 == Fehlerkorrekturen ==
 - Sollte der Pfad des Ordners, in dem NVDA installiert ist, nicht-ASCII-Zeichen enthalten, schlägt die Anzeige der Formatierungsinformationen im lesemodus nicht mehr fehl, wenn Sie NVDA+F zweimal drücken. (#7474)
@@ -33,21 +39,24 @@ Was ist neu in NVDA
 - Braillezeilen-Befehle, die ModifikationsTasten der Computertastatur emulieren, können auch dann kombiniert werden, wenn sie auf ein bestimmtes Braillezeilenmodell beschränkt sind. (#7783)
 - Dialoge, die von Erweiterungen wie LastPass oder bitwarden in Firefox erzeugt werden, werden nun korrekt im Lesemodus angezeigt. (#7809)
 - Sollten Firefox oder Chrome einfrieren oder abstürzen, ist nVDA jetzt nicht mehr unmittelbar betroffen. (#7818)
-- In Twitter-Clients, wie Chicken Nugget, werden beim Lesen 280-Zeichen-langer Beiträge nicht mehr die letzten 20 Zeichen ignoriert. (#7828)
+- In Twitter-Clients, wie Chicken Nugget, werden beim Lesen von Beiträgen mit 280 Zeichen die letzten 20 Zeichen nicht mehr ignoriert. (#7828)
 - Beim Markieren von Text sagt NVDA Sonderzeichen und Symbole jetzt in der richtigen Sprache an. (#7687)
-- in aktuellen Versionen von Office können Sie wieder mit den Pfeiltasten in Diagrammen navigieren. (#7046)
-- die Statusinformationen von objekten werden jetzt immer in der richtigen Reihenfolge angezeigt und angesagt. (#7076)
-- In Metro-Apps wie windows Mail sagt nVDA gelöschte zeichen beim Drücken der Rücktaste korrekt an. (#7456)
+- in aktuellen Versionen von Office können Sie wieder mit den Pfeiltasten in Microsoft Excel-Diagrammen navigieren. (#7046)
+- Der Status  für aktivierbare Kontrollfelder wird nun in Sprache und braille immer in der richtigen Reihenfolge ausgegeben, sowohl im positiven als auch im negativen Fall. (#7076)
+- In Windows-Apps wie windows Mail sagt nVDA gelöschte zeichen beim Drücken der Rücktaste korrekt an. (#7456)
+- Alle Tasten der Hims Braille Sense Polaris Braillezeilen funktionieren nun richtig. (#7865)
 
 
 == Änderungen für Entwickler ==
 - Neue versteckte bool'sche Einstellung im Abschnitt Braille in der NVDA-Konfiguration: "outputPass1Only". (#7301, #7693, #7702)
  - Wird diese Einstellung auf False gesetzt, werden auch Liblouis-Regeln verarbeitet, die mehrere Durchläufe erfordern. Standardmäßig ist True voreingestellt.  
-- Ein neues Wörterbuch (Braille.RENAMED_DRIVERS) wurde hinzugefügt, um einen reibungslosen übergang für Benutzer zu ermöglichen, die Treiber verwenden, die durch andere ersetzt worden sind. (#7459)
+- Ein neues Wörterbuch (Braille.RENAMED_DRIVERS) wurde hinzugefügt, um einen reibungslosen übergang beim Wechseln von alten Treibern für Benutzer zu ermöglichen. (#7459)
 - Python: comtypes wurde auf Version 1.1.3 aktualisiert. (#7831)
 - Um mit Braillezeilentreibern richtig umgehen zu können, die Bestätigungsmeldungen senden, wurde braille.brailledisplaydriver überarbeitet. Sehen Sie sich den Handytechtreiber für weitere Informationen an. (#7590, #7721)
 - Um zu erkennen, ob NVDA aus dem Windows Store heraus ausgeführt wurde, wurde dem Modul config eine neue Variable ISAPPX hinzugefügt. (#7851)
-- Für Dokumentklassen, die den Lesemodus unterstützen und ein Textinfo-Objekt enthalten wurde eine neue Klasse documentBase.documentWithTableNavigation eingeführt, um Standard-Tabellennavigationsbefehle zur Verfügung zu stellen. Weitere Informationen finden Sie in  der Entwicklerdokumentation für die Klasse. (#7849)
+- Für Dokumentklassen, die den Lesemodus unterstützen und ein Textinfo-Objekt enthalten, wurde eine neue Klasse documentBase.documentWithTableNavigation eingeführt, um Standard-Tabellennavigationsbefehle zur Verfügung zu stellen. Weitere Informationen über die Helper-Methoten, die bei der Implementierung berücksichtigt werden müssen, finden Sie in  der Entwicklerdokumentation für die Klasse. (#7849)
+- Die Scons-Batch-Datei kann nun besser funktionieren wenn  auch Python 3 installiert ist. Die Batch-Datei nutzt den Launcher, um python 2.7 32 bit auszuführen. (#7541)
+- hwIo.Hid erhält einen zusätzlichen exklusiven parameter, welcher standardmäßig auf True gesetzt ist. Wenn der Parameter auf False gesetzt wird, dann können andere Anwendunngen  mit einem Gerät kommunizieren, während die Anwendungen von NVDA getriggert werden. (#7859)
 
 
 = 2017.4 =

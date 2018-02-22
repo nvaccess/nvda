@@ -3,6 +3,62 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+Lo resiñable d'ista versión inclui o suporte pa graficos en o Microsoft word y o PowerPoint, o suporte pa nuevas linias braille incluindo as Eurobraille y o conversor de protocolo d'Optelec, s'ha amillorau lo suporte pa las linias braille Hims y Optelec, milloras de rendimiento pa o Mozilla Firefox 58 y posteriors y muito mas.
+
+== Nuevas Caracteristicas ==
+- Agora ye posible d'interactuar con os graficos en o Microsoft Word y o Microsoft PowerPoint, semellant a lo suporte existent pa os graficos en o Microsoft Excel. (#7046)
+ - En o Microsoft Word: quan se siga en o modo de navegación, mete o cursor en un grafico integrau y preta l'intro pa interactuar con ell.
+ - En o Microsoft Powerpoint quan s'edite una diapositiva: tabula ta un obchecto grafico, y preta l'intro u lo espacio pa interactuar con o grafico.
+ - Pa aturar la interacción con un grafico, preta lo escape.
+- Nuevo idioma: Kyrgyz.
+- S'ha adhibiu o suporte pa o VitalSource Bookshelf. (#7155)
+- S'ha adhibiu lo suporte pa o protocolo convertidor Optelec , un dispositivo que te permite d'utilizar as linias Braille Voyager y Satellite fendo servir o protocolo de comunicación d'as ALVA BC6. (#6731)
+- Agora ye posible d'emplegar a dentrada braille con una linia braille ALVA 640 Comfort. (#7733) 
+ - A funcionalidat de dentrada braille d'o NVDA puet emplegar-se tanto con istas como con atras linias BC6 con o firmware 3.0.0 y anteriors.
+ - Suporte inicial pa lo Google Sheets con o modo de braille encehgau. (#7935)
+ - Suporte pa las linias braille Eurobraille Esys, Esytime y Iris. (#7488)
+
+
+== Cambios ==
+- S'ha reemplazau los controladors de linias braille HIMS Braille Sense/Braille EDGE/Smart Beetle y Hims Sync por un solo controlador. O nuevo controlador s'activará automaticament pa os antigos usuarios d'o controlador syncBraille. (#7459) 
+ - Qualques teclas, especialment as teclas de desplazamiento, s'han reasignadas pa seguir as convencions emplegadas por os productos d'Hims. Mira-te la guida de l'usuario pa mas detalles.
+- En escribir con o teclau en pantalla a traviés d'a interacción tactil, por defecto agora has de fer dople tap en cada tecla d'o mesmo modo en que activarías qualsiquier atro control. (#7309)
+ - Pa emplegar o modo d'escritura tactil existent en que ye prau con sacar o dido d'a tecla pa activar-la, enchega ixa opción en o nuevo dialogo d'opcions d'interacción tactil que se troba en o menú de preferencias. (#7309)
+- Ya no ye menister que lo braille siga explicitament a o foco u a la revisión, ya que ixo ocurrirá automaticament por defecto. (#2385) 
+ - Para cuenta que lo seguimiento automatico a la revisión no ocurrirá que en emplegar un cursor de revisión u orden de navegación d'obchectos. O desplazamiento no activará ixe nuevo comportamiento.
+
+
+== Corrección d'errors ==
+- Os mensaches explorables tals como amostrar o formato actual en pretar NVDA+f dos veces a escape ya no fallan quan o NVDA s'instala en una rota con caracters que no sigan ASCII. (#7474)
+- O foco agora se restaura correctament atra vez quan se torna t'o Spotify dende belatra aplicación. (#7689)
+- En l'actualización Fall Creators d'o Windows 10 o NVDA ya no falla en esviellar-se quan l'acceso controlau a la carpeta ye enchegau dende o Windows Defender Security Center. (#7696)
+- A detección d'as teclas de desplazamiento en as linias Hims Smart Beetle ya no ye fulera. (#6086)
+- Una lichera millora en o rendimiento en procesar grans cantidatz de conteniu en o Mozilla Firefox 58 y posteriors. (#7719)
+- En o Microsoft Outlook,  leyer correus electronicos que contiengan tablas ya no causa errors. (#6827)
+- Os cenyos d'as linias braille que emulan as teclas modificaderas d'o teclau d'o sistema agora pueden combinar-sen tamién con atras teclas emuladas d'o teclau d'o sistema si un u mas d'os cenyos embrecaus son especificos d'o modelo. (#7783)
+- En o Mozilla Firefox o modo de navegación agora funciona correctament en as finestras emerchents creyadas por extensions tals como LastPass y bitwarden. (#7809)
+- O NVDA ya no se conchela a veces en cada cambio d'o foco si o Firefox u lo Chrome han deixau de responder a causa d'una conchelación u una penchada. (#7818)
+- En clients de twitter tals como lo Chicken Nugget o NVDA ya no ignorará los zaguers 20 caracters de tuits con 280 caracters en leyer-los. (#7828)
+- O NVDA agora fa servir l'idioma correcto en anunciar os simbolos en que se seleccione texto. (#7687)
+- En versions recients de l'Office 365 ye nuevament posible navegar por graficos de l'Excel fendo servir as teclas d'as flechas. (#7046)
+- En as salidas de voz y braille os estaus d'os controls agora siempre s'anuncian en o mesmo orden, sin importar si son positivos u negativos. (#7076)
+- En aplicacions tals como lo Mail d'o Windows 10 o NVDA ya no fallará en anunciar os caracters eliminaus quan se prete o recule. (#7456)
+- Agora todas as teclas en as linias Hims Braille Sense Polaris funcionan como se'n alguarda. (#7865)
+
+
+== Cambios pa os Desembolicadors ==
+- S'ha adhibiu una bandera booleana amagada en a sección d'o braille en a configuración: "outputPass1Only". (#7301, #7693, #7702) 
+ - Ixa bandera ye por defecto a verdadero. Si ye a falso s'emplegará las reglas liblouis multi pass pa la salida braille.
+- S'ha adhibiu un nuevo diccionario (braille.RENAMED_DRIVERS) pa permitir una transición sin  problemas a los usuarios que utilizan controladors que sigan estaus substituius por atros. (#7459)
+- S'ha esviellau lo paquet comtypes ta 1.1.3. (#7831)
+- S'ha implementau un sistema chenerico en braille.BrailleDisplayDriver pa tractar con as linias que ninvian paquetz de confirmación/acuse de recibimiento. Mira-te o controlador d'as linias braille handyTech como un eixemplo. (#7590, #7721)
+- Se puet emplegar una nueva variable "isAppX" en o modulo config pa detectar si o NVDA se ye executando como una aplicación Windows Desktop Bridge Store. (#7851)
+- Pa implementacions de documento tals como lo NVDAObjects u lo browseMode que tiengan un textInfo, agora bi ha una nueva clase documentBase.documentWithTableNavigation que puet heredar-se pa obtener scripts de navegación estandar de tabla. Por favor mira-te ixa clase pa veyer qué metodos helper han de furnir-sen pa la tuya implementación pa que marche a navegación de tabla. (#7849)
+- O fichero por lotes scons agora se maneya millor quan o Python 3 tamién ye instalau, fendo l'uso d'o lanzador pa lanzar especificament o python 2.7 de 32 bits. (#7541)
+- hwIo.Hid agora prene un parametro adicional exclusivo que por defecto ye verdadero. Si se mete como falso, se permite a atras aplicacions de comunicar-sen con un dispositivo entre que siga connectau a lo NVDA. (#7859)
+
+
 = 2017.4 =
 Lo resinyable d'ista versión inclui muitas correccions y milloras pa lo suporte web incluindo lo modo de navegación pa dialogos web por defecto, millor anunciau d'as etiquetas d'os grupos de campos en o modo de navegación, lo suporte pa tecnolochías nuevas de Windows 10 tals como l'aplicación Windows Defender Guard y Windows 10 en ARM64, y l'anunciau automatico d'a orientación d'a pantalla y o estau d'a batería.  
 Por favor tiene en cuenta que ista versión d'o NVDA ya no suporta o Windows XP u lo Windows Vista. O requisito minimo pa o NVDA agora ye o windows 7 con o Service Pack 1.
@@ -2216,4 +2272,3 @@ Lo mas resaltable d'ista release incluye o suporte ta edicions de 64 bit de Wind
 - Quan se carga un sintetizador por primera vegada, NVDA permite a o sintetizador trigar a voz mas convenient, os parametros de velocidat y ton, en cuenta de forzar-lo a deixar-lo como piense que ye bien. Isto corriche un problema an os sintetizadores sapi4 Eloquence y Viavoice prencipian a charrar d'un modo pro rapido ta una primera vegada.
 
 
-	
