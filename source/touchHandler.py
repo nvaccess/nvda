@@ -299,7 +299,7 @@ handler=None
 def touchSupported():
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
 	"""
-	if not config.isInstalledCopy():
+	if not config.isAppX and not config.isInstalledCopy():
 		log.debugWarning("Touch only supported on installed copies")
 		return False
 	if (winVersion.winVersion.major*10+winVersion.winVersion.minor)<62:
