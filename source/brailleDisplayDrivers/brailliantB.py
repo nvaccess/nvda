@@ -151,7 +151,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for portType, port in _getPorts():
 			self.isHid = portType.endswith(" HID")
 			#: BrailleNote touch requires the use of HidD_SetOutputReport when sending data to the device via HID, as WriteFile seems to block forever.
-			self._useHidSetOutputReport=self.isHid and (USBID_BrailleNoteTouch.lower() in port)
+			self._useHidSetOutputReport=self.isHid
 			# Try talking to the display.
 			try:
 				if self.isHid:
