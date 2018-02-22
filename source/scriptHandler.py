@@ -187,7 +187,6 @@ def executeScript(script,gesture):
 		_lastScriptRef=scriptRef
 		_lastScriptTime=scriptTime
 		scriptRepeatTimeout=getattr(scriptFunc,'repeatTimeout',0.5)
-		print "Script set repeatTimeout of %s"%scriptRepeatTimeout
 		if scriptRepeatTimeout is not None and not isinstance(scriptRepeatTimeout,numbers.Real):
 			log.debugWarning("Ignoring invalid script repeatTimeout of %s"%scriptRepeatTimeout)
 			scriptRepeatTimeout=None
@@ -208,7 +207,6 @@ def getLastScriptRepeatCount():
 	@returns: a value greater or equal to 0. If the script has not been repeated it is 0, if it has been repeated once its 1, and so forth.
 	@rtype: integer
 	"""
-	print "Checking repeatTimeout of %s"%_lastScriptRepeatTimeout
 	if (time.time()-_lastScriptTime)>_lastScriptRepeatTimeout:
 		return 0
 	else:
