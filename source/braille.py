@@ -1540,11 +1540,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _get_shouldAutoTether(self):
 		return self.enabled and config.conf["braille"]["autoTether"]
 
+	_lastRequestedDisplayName=None #: the name of the last requested braille display driver with setDisplayByName, even if it failed and has fallen back to no braille.
 	def setDisplayByName(self, name, isFallback=False):
 		if not name:
 			self.display = None
 			self.displaySize = 0
 			return
+		if not isFallback:
+			# #8032: Take note of the display requested, even if it is going to fail.
+			self._lastRequestedDisplayName=name
 		# See if the user have defined a specific port to connect to
 		if name not in config.conf["braille"]:
 			# No port was set.
@@ -1843,7 +1847,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def handleConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
-		if display != self.display.name:
+		if display != self._lastRequestedDisplayName:
 			self.setDisplayByName(display)
 		self._tether = config.conf["braille"]["tetherTo"]
 
