@@ -45,7 +45,7 @@ Zu den Highlights dieser Version gehören die Unterstützung für Diagramme in M
 - Der Status  für aktivierbare Kontrollfelder wird nun in Sprache und braille immer in der richtigen Reihenfolge ausgegeben, sowohl im positiven als auch im negativen Fall. (#7076)
 - In Windows-Apps wie windows Mail sagt nVDA gelöschte zeichen beim Drücken der Rücktaste korrekt an. (#7456)
 - Alle Tasten der Hims Braille Sense Polaris Braillezeilen funktionieren nun richtig. (#7865)
-
+- NVDA gibt beim Starten auf Windows 7 keine Fehlermeldung mehr aus, wenn bestimmte Versionen der Visual Studio 2017 Redistributable durch andere Anwendungen installiert wurden. Die Fehlermeldung betraf interne API-LS dll-Dateien. (#7975)
 
 == Änderungen für Entwickler ==
 - Neue versteckte bool'sche Einstellung im Abschnitt Braille in der NVDA-Konfiguration: "outputPass1Only". (#7301, #7693, #7702)
