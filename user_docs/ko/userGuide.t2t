@@ -602,7 +602,7 @@ MathType가 설치되어 있어야 함. 임시 버전을 사용하셔도 됩니�
 NVDA가 지원하는 점자 디스플레이에 대한 정보는 [지원하는 점자 디스플레이 #SupportedBrailleDisplays] 섹션을 참조하세요.
 점자 관련 설정에 대해서는 [점자 설정 대화상자 #BrailleSettings] 섹션을 참조하세요.
 
-++ 컨트롤, 상태 및 랜드마크 표시용 점자 기호 목록 ++
+++ 컨트롤, 상태 및 랜드마크 표시용 점자 기호 목록 ++[BrailleAbbreviations]
 점자 디스플레이에 최대한의 정보를 보여줄 수 있도록 컨트롤, 상태 및 랜드마크 정보를 다음과 같이 표기하였습니다.
 
 || 점자 기호 | 컨트롤 |
@@ -690,7 +690,7 @@ NVDA가 지원하는 점자 디스플레이에 대한 정보는 [지원하는 �
 | srch | search |
 | rgn | region |
 
-++ 점자 입력 ++
+++ 점자 입력 ++[BrailleInput]
 점자 키보드를 사용하여 정자 및 약자 점자 입력이 가능합니다.
 점자 설정 대화상자에 있는 [점자 입력 표기법 #BrailleInputTable] 설정을 통해 텍스트 입력시 사용될 점자 코드를 선택할 수 있습니다.
 
@@ -733,7 +733,7 @@ NVDA가 지원하는 점자 디스플레이에 대한 정보는 [지원하는 �
 + 응용프로그램별 NVDA 기능 +[ApplicationSpecificFeatures]
 NVDA는 몇몇 프로그램에서 특정 작업을 좀 더 쉽게 수행하도록 또는 스크린 리더 사용자들에게 달리 접근할 방법이 없는 특정한 기능을 사용할 수 있도록 별도의 기능을 제공합니다.
 
-++ Microsoft Word ++
+++ Microsoft Word ++[MicrosoftWord]
 
 +++ 행/열 머릿말 자동으로 알리기 +++
 마이크로소프트 워드에서 표 셀 단위로 이동시 행 및 열 머릿말 내용을 자동으로 알릴 수 있습니다.
@@ -767,7 +767,7 @@ NVDA는 몇몇 프로그램에서 특정 작업을 좀 더 쉽게 수행하도�
 %kc:endInclude
 요소 목록에서 주석을 선택시 문서내 주석 및 track 변경을 볼 수 있습니다.
 
-++ Microsoft Excel ++
+++ Microsoft Excel ++[MicrosoftExcel]
 
 +++ 행/열 머릿말 자동으로 알리기 +++
 마이크로소프트 엑셀에서 셀로 이동시 행 및 열 머릿말 내용을 자동으로 알릴 수 있습니다.
@@ -822,13 +822,13 @@ Sheet의 이름을 변경하려면 sheet를 선택한 후 f2를 누르세요.
 필드 형식에 따라 브라우즈 모드를 사용하여 접근후 엔터를 누르거나 포커스 모드로 전환하여 필드를 접근할 수 있습니다.
 브라우즈 모드 및 첫 글자 명령에 대해서는 [부라우즈 모드 섹션 #BrowseMode].을 참조하세요.
 
-++ Microsoft PowerPoint ++
+++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || 이름 | 키 | 설명 |
 | 스피커 노트 읽기 설정 | control+shift+s | 슬라이드쇼가 진행될때 NvDA가 슬라이드 내용 또는 스피커 노트를 읽을것인지를 설정합니다 (스크린 텍스트와 상관 없음). | 
 %kc:endInclude
 
-++ foobar2000 ++
+++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || 이름 | 키 | 설명 |
 | 남은 시간 알림 | control+shift+r | 재생중인 트랙의 남은 시간을 알립니다. |
@@ -836,27 +836,27 @@ Sheet의 이름을 변경하려면 sheet를 선택한 후 f2를 누르세요.
 
 주의: 남은 시간 알림 기능은 Foobar의 상태 표시줄이 기본 형식으로 설정되어 있을때만 유효합니다.
 
-++ Miranda IM ++
+++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
 || 이름 | 키 | 설명 |
 | 최근 메시지 알림 | NVDA+control+1-4 | 숫자키 조합에 따라서 최근 메시지 중 하나를 읽습니다. 예) NVDA+control+2를 누르면 두 번째 최근 메시지를 읽습니다. |
 %kc:endInclude
 
-++ Poedit ++
+++ Poedit ++[Poedit]
 %kc:beginInclude
 || 이름 | 키 | 설명 |
 | 주석창 읽기 | control+shift+c | 주석창에 있는 주석을 읽습니다. |
 | 자동 주석 읽기 | control+shift+a | 자동 주석창에 있는 주석을 읽습니다. |
 %kc:endInclude
 
-++ Skype ++
+++ Skype ++[Skype]
 %kc:beginInclude
 메시지를 주고받을때:
 || 이름 | 명령 | 설명 |
 | 메시지 확인 | NVDA+control+1-0 | 이전 메시지를 출력 및 리뷰 커서를 메시지로 옮깁니다(예: Control+NVDA+2를 눌러 두번째 최신 메시지 확인). |
 %kc:endInclude
 
-++ Kindle for PC ++
+++ Kindle for PC ++[Kindle]
 Amazon Kindle PC 버전과 NVDA를 사용하여 독서 및 책 탐색이 가능합니다.
 본 기능은 "Screen Reader: Supported"이 설정된 Kindle 책(책 세부 내용 참고 바람)에서 사용할 수 있습니다.
 
@@ -895,7 +895,7 @@ Kindle 사용 시 책 내용을 선택한 후 여러 액션을 취할 수 있습
 + 노트 편집을 선택합니다.
 +
 
-++ Azardi ++
+++ Azardi ++[Azardi]
 %kc:beginInclude
 책 표 탐색중:
 || 이름 | 명령 | 설명 |
@@ -1896,13 +1896,18 @@ Focus 80에만 해당:
 %kc:endInclude
 
 
-++ Optelec ALVA BC640/680 ++
+++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
 [Optelec http://www.optelec.com/]에서 출시한 Alva BC640 및 BC680을 USB나 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.
+또한 Braille Voyager와 같은 구형 디스플레이를 Optelec 프로토컬 컨버터와 연결하여 사용할 수 있습니다.
 별도의 점자 디스플레이 드라이버 설치는 않하셔도 됩니다.
 다만 디스플레이를 연결한 후 NVDA를 이 디스플레이를 사용하도록 설정하십시요.
 
-이 디스플레이는 점자 키보드를 탑제하고 있지만 디스플레이 자체에서 점자 입력을 지원하고 있습니다.
-그럼으로 NVDA의 점자 입력 표기법 설정을 무시하셔도 됩니다.
+주의: 만약 ALVA 블루투스 도구를 사용하여 ALVA BC6 디스플레이와 연결하였다면 NVDA에서 본 디스플레이를 사용할 수 없습니다.
+이때 윈도우에서 제공하는 블루투스 설정을 사용하여 본 디스플레이와 연결한 후 사용하여야 합니다.
+
+기본적으로 본 디스플레이는 점자 키보드를 탑제하고 있지만 디스플레이 자체에서 점자 입력을 지원하고 있습니다.
+이 경우 NVDA의 점자 입력 표기법 설정을 무시하셔도 됩니다.
+그러나 최신 ALVA 디스플레이 펌웨어 버전을 사용하면 핫키를 통해 HID keyboard simulation 기능을 끄고 사용할 수 있습니다.
 
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
@@ -1914,6 +1919,7 @@ Focus 80에만 해당:
 | 점자 디스플레이를 다음 줄로 이동 | t4 |
 | 점자 디스플레이 앞으로 스크롤 | t5/etouch3 |
 | 점자 셀로 이동 | routing |
+| HID keyboard simulation 기능 토글 | t1+spEnter |
 | 리뷰에서 맨 윗 줄로 이동 | t1+t2 |
 | 리뷰에서 맨 아래 줄로 이동 | t4+t5 |
 | 점자 연계 커서 | t1+t3 |
@@ -1927,20 +1933,22 @@ Focus 80에만 해당:
 | 아래쪽 방향키 | spDown |
 | 왼쪽 방향키 | spLeft |
 | 오른쪽 방향키 | spRight |
-| enter key | spEnter |
+| enter key | spEnter, enter|
 | 날자와 시각 확인 | sp1+sp2 |
 | NVDA 메뉴 | sp1+sp3 |
 | windows+d (모든 창 최소화) | sp1+sp4 |
 | windows+b 키 (알림 영역으로 포커스 옮김) | sp3+sp4 |
-| windows 키 | sp2+sp3 |
+| windows 키 | sp2+sp3, windows |
 | alt+tab 키  | sp2+sp4 |
 | control+home 키 | t3+spUp |
 | control+end 키 | t3+spDown |
 | home 키 | t3+spLeft |
 | end 키 | t3+spRight |
+| alt 키 | alt |
+| control 키 | control |
 %kc:endInclude
 
-++ Handy Tech ++
+++ Handy Tech ++[HandyTech]
 [Handy Tech http://www.handytech.de/]에서 출시한 거의 모든 디스플레이 모델을 USB, 시리얼 또는 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.
 만약 예전 USB 디스플레이를 사용하신다면 별도의 드라이버를 설치하십시요.
 
@@ -2445,6 +2453,86 @@ NVDA 점자 설정 대화상자에서 본 디스플레이가 연결된 시리얼
 | 점자 디스플레이 뒤로 스크롤 | numpadMinus |
 | 점자 디스플레이 앞으로 스크롤 | numpadPlus |
 %kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+[Eurobraille http://www.eurobraille.fr/]에서 출시한 Esys, Esytime 및 Iris를 NVDA와 연동하여 사용할 수 있습니다.
+Esys와 Esytime-Evo 디스플레이는 USB 및 블루투스 연결을 지원합니다.
+구형 Esytime 디스플레이는 USB만을 진원합니다.
+Iris 디스플레이는 시리얼 포트 연결을 지원합니다(디스플레이 선택시 포트도 선택하여야 함).
+
+Iris 및 Esys 디스플레이는 10개 키로 된 점자 키보드를 탑제하고 있습니다.
+스페이스바처럼 생긴 두개의 키 중 왼쪽은 백스페이스, 오른쪽은 스페이스키입니다.
+
+다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
+각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
+%kc:beginInclude
+|| 이름 | 키 |
+| 점자 디스플레이 뒤로 스크롤 | switch1-6left, l1 |
+| 점자 디스플레이 앞으로 스크롤 | switch1-6Right, l8 |
+| 포커스된 객체로 이동 | switch1-6Left+switch1-6Right, l1+l8 |
+| 점자 셀로 이동 | routing, doubleRouting|
+| Move to previous line in review | joystick1Up |
+| Move to next line in review | joystick1Down |
+| Move to previous character in review | joystick1Left |
+| Move to next character in review | joystick1Right |
+| Switch to previous review mode | joystick1Left+joystick1Up |
+| Switch to next review mode | joystick1Right+joystick1Down |
+| Erase the last entered braille cell or character | backSpace |
+| Translate any braille input and press the enter key | backSpace+space |
+| insert key | dot3+dot5+space, l7 |
+| delete key | dot3+dot6+space |
+| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
+| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
+| leftArrow key | dot2+space, joystick2Left, leftArrow |
+| rightArrow key | dot5+space, joystick2Right, rightArrow |
+| upArrow key | dot1+space, joystick2Up, upArrow |
+| downArrow key | dot6+space, joystick2Down, downArrow |
+| enter key | joystick2Center |
+| pageUp key | dot1+dot3+space |
+| pageDown key | dot4+dot6+space |
+| numpad1 key | dot1+dot6+backspace |
+| numpad2 key | dot1+dot2+dot6+backspace |
+| numpad3 key | dot1+dot4+dot6+backspace |
+| numpad4 key | dot1+dot4+dot5+dot6+backspace |
+| numpad5 key | dot1+dot5+dot6+backspace |
+| numpad6 key | dot1+dot2+dot4+dot6+backspace |
+| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
+| numpad8 key | dot1+dot2+dot5+dot6+backspace |
+| numpad9 key | dot2+dot4+dot6+backspace |
+| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
+| numpadDecimal key | dot2+backspace |
+| numpadDivide key | dot3+dot4+backspace |
+| numpadMultiply key | dot3+dot5+backspace |
+| numpadMinus key | dot3+dot6+backspace |
+| numpadPlus key | dot2+dot3+dot5+backspace |
+| numpadEnter key | dot3+dot4+dot5+backspace |
+| escape key | dot1+dot2+dot4+dot5+space, l2 |
+| tab key | dot2+dot5+dot6+space, l3 |
+| shift+tab key | dot2+dot3+dot5+space |
+| printScreen key | dot1+dot3+dot4+dot6+space |
+| pause key | dot1+dot4+space |
+| applications key | dot5+dot6+backspace |
+| f1 key | dot1+backspace |
+| f2 key | dot1+dot2+backspace |
+| f3 key | dot1+dot4+backspace |
+| f4 key | dot1+dot4+dot5+backspace |
+| f5 key | dot1+dot5+backspace |
+| f6 key | dot1+dot2+dot4+backspace |
+| f7 key | dot1+dot2+dot4+dot5+backspace |
+| f8 key | dot1+dot2+dot5+backspace |
+| f9 key | dot2+dot4+backspace |
+| f10 key | dot2+dot4+dot5+backspace |
+| f11 key | dot1+dot3+backspace |
+| f12 key | dot1+dot2+dot3+backspace |
+| windows key | dot1+dot2+dot3+dot4+backspace |
+| capsLock key | dot7+backspace, dot8+backspace |
+| numLock key | dot3+backspace, dot6+backspace |
+| shift key | dot7+space, l4 |
+| control key | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
+| alt key | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
+| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+%kc:endInclude
+
 
 ++ BRLTTY ++
 외부 프로그램인 [BRLTTY http://www.brltty.com/]을 사용하여 다른 점자 디스플레이를 사용할 수 있습니다.

@@ -4,16 +4,29 @@ NVDA 변경 이력
 %!includeconf: ../changes.t2tconf
 
 = 2018.1 =
+이번 버전의 주 기능들: 마이크로소프트 워드 및 파워포인트내 차트 접근 지원; Eurobraille과 구형 Optelec/프로토컬 컨버터 디스플레이 지원 추가; Optelec 및 힘스 디스플레이 지원 향상; 파이어폭스 58 이상에서의 반응 속도 향상 등입니다.
+
+== 새로 추가된 기능 ==
+- Microsoft Excel에서만 지원하던 차트 탐색 기능을 Word와 PowerPoint로도 확대함. (#7046)
+ - Microsoft Word 사용 시 브라우즈 모드를 사용하여 차트로 이동 후 엔터를 눌러 차트에 접근할 수 있음.
+ - Microsoft PowerPoint에서 슬라이드 편집 중 차트 객체로 이동하여 엔터나 스페이스를 눌러 차트에 접근할 수 있음.
+ - 차트에서 빠져나가려면 escape 키를 눌러야 함.
+- 새 NVDA 언어: 키르기즈스탄어 추가..
+- VitalSource Bookshelf 지원 추가. (#7155)
+- Alva Braille Voyager/Satellite 디스플레이에 사용되는 프로토콜을 BC6 버전으로 변환하는 장치인 Optelec 프로토콜 컨버터 지원 추가. (#6731)
+- ALVA 640 Comfort 디스플레이 사용 시 점자 입력 기능이 작동하도록 함. (#7733) 
+ - 이 디스플레이 외 다른 BC6 디스플레이 사용 시 펌웨어 3.0.0 사용 바람.
+- Google 시트 점자 모드 지원 추가(기초 단계임). (#7935)
+- Eurobraille Esys, Esytime 및 Iris 점자 디스플레이 지원 추가. (#7488)
+
 
 == 변경된 기능 ==
 - 힘스 한소네/브레일 엣지/스마트 비틀과 힘스 싱크브레일 점자 디스플레이 드라이버를 하나로 통일함. 이로 인해 싱크브레일 사용시 새 드라이버가 동작되도록 함. (#7459) 
  - 이로 인해 특정 명령(특히 스크롤 키 명령)이 통힐됨.
 - 터치 키보드 사용하여 글자 입력 시 다른 객체처럼 한 손가락을 두번 태핑해야 함. (#7309)
  - 이전 입력 방식(터치 타이핑)을 사용하려면 NVDA 설정 메뉴에 추가된 터치 기능 설정 대화상자를 통해 설정 바람.
-- Microsoft Excel에서만 지원하던 차트 탐색 기능을 Word와 PowerPoint로도 확대함. (#7046)
- - Microsoft Word 사용 시 브라우즈 모드를 사용하여 차트로 이동 후 엔터를 눌러 차트에 접근할 수 있음.
- - Microsoft PowerPoint에서 슬라이드 편집 중 차트 객체로 이동하여 엔터나 스페이스를 눌러 차트에 접근할 수 있음.
- - 차트에서 빠져나가려면 escape 키를 눌러야 함.
+- 점자 연계 커서가 자동으로 포커스 또는 리뷰 모드로 전환될 수 있도록 함. (#2385) 
+ - 포커스된 객체에서 객체 탐색 또는 리뷰 명령을 사용 시(단 스크롤 기능은 지원 안 함) 점자가 리뷰 커서에 연계되도록 함.
 
 
 == 버그 수정 ==
@@ -27,10 +40,16 @@ NVDA 변경 이력
 - 모질라 파이어폭스 사용 시 LastPass와 bitwarden과 같은 추가 기능 팝업에서 브라우즈 모드가 작동하도록 함. (#7809)
 - 파이어폭스나 크롬 사용 시 프로그램이 다운되었을 때 나타나던 포커스 변경 시 NVDA 반응 속도 저하 문제 수정. (#7818)
 - Chicken Nugget와 같은 트위터 앱에서 280자 트위트 읽을 시 마지막 20개 글자가 출력되지 않던 문제 수정. (#7828)
-- NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
+- 텍스트가 선택되었을 때 음성 엔진 언어로 기호가 출력되도록 함. (#7687)
 - 최신 Office 365 사용 시 방향키를 이용한 Excel 차트 탐색 기능이 복원됨. (#7046)
--  In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. Fixes #7076
-- In apps such as Windows 10 Mail, NVDA will no longer fail to announce deleted characters when pressing backspace. (#7456)
+- 컨트롤 정보를 음성 및 점자로 출력 시 컨트롤 상태 출력 순서가 통일됨. (#7076)
+- 윈도우 10 Mail 앱과 같은 앱 사용 시 backspace를 눌렀을 때 삭제된 글자가 출력되지 않던 문제 수정. (#7456)
+- Hims 한소네 5/폴라리스 점자키가 제대로 인식되도록 함. (#7865)
+- 윈도우 7 사용 시 다른 앱이 특정 Visual Studio 2017 redistributables를 설치한 경우 NVDA 시작 시 특정 api-ms dll에 대한 오류 메시지가 출력되지 않도록 함. (#7975)
+
+
+== 개발자를 위한 내용 ==
+개발자를 위한 내용에 대해서는 영어판 changes.html 문서를 참조하세요.
 
 
 = 2017.4 =
