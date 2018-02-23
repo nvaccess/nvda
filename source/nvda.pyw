@@ -44,15 +44,17 @@ import winKernel
 
 # Find out if NVDA is running as a Windows Store application
 bufLen=ctypes.c_int()
+appXCheck=None
 try:
 	GetCurrentPackageFullName=ctypes.windll.kernel32.GetCurrentPackageFullName
 except AttributeError:
 	config.isAppX=False
 else:
-	bufLen=ctypes.c_int()
+	bufLen=ctypes.c_int(128)
+	buf=ctypes.create_unicode_buffer(bufLen.value)
 	# Use GetCurrentPackageFullName to detect if we are running as a store app.
 	# It returns 0 (success) if in a store app, and an error code otherwise. 
-	config.isAppX=(GetCurrentPackageFullName(ctypes.byref(bufLen),None)==0)
+	config.isAppX=(GetCurrentPackageFullName(ctypes.byref(bufLen),buf)==0)
 
 class NoConsoleOptionParser(argparse.ArgumentParser):
 	"""A commandline option parser that shows its messages using dialogs,  as this pyw file has no dos console window associated with it"""
@@ -194,9 +196,11 @@ if globalVars.appArgs.debugLogging:
 	logLevel=log.DEBUG
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
-
 log.info("Starting NVDA")
 log.debug("Debug level logging enabled")
+if config.isAppX:
+	log.info("Running as Windows Store application")
+
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
 #Accept wm_quit from other processes, even if running with higher privilages
