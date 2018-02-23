@@ -2454,84 +2454,84 @@ NVDA از نمایشگرهای بریل EcoBraille، محصول [شرکت ONCE h
 | جلو بردن نمایشگر بریل | به‌علاوه در صفحه‌کلید اعداد | 
 %kc:endInclude
 
-++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
-The Esys, Esytime and Iris displays from [Eurobraille http://www.eurobraille.fr/] are supported by NVDA.
-Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
-Older Esytime devices only support USB.
-Iris displays can only be connected via a serial port.
-Therefore, for these displays, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialog.
+++ نمایشگرهای Esys، Esytime، Iris، از شرکت Eurobraille ++[Eurobraille]
+نمایشگرهای Esys، Esytime و Iris، محصول [Eurobraille http://www.eurobraille.fr/]، توسط NVDA پشتیبانی میشوند.
+دستگاه‌های Esys و Esytime-Evo هنگامی که با یو‌اس‌بی یا بلوتوث متصل شوند پشتیبانی میشوند.
+دستگاه‌های قدیمیترِ Esytime تنها از یو‌اس‌بی پشتیبانی میکنند.
+دستگاه‌های Iris تنها میتوانند از طریق درگاه سریال متصل شوند.
+بنا بر این، برای این دستگاه‌ها، بعد از این‌که درایورشان را در تنظیمات بریل انتخاب کردید، باید درگاهی را که نمایشگر از آن به رایانه متصل شده‌است انتخاب کنید.
 
-Iris and Esys displays have a braille keyboard with 10 keys.
-Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
+نمایشگرهای Iris و Esys دارای یک صفحه‌کلید بریل ده‌کلیدی هستند.
+که مشتمل است بر دو کلید فاصله ؛ کلید فاصله‌ی چپ کار Backspace را انجام میدهد و کلید فاصله‌ی راست، فاصله است.
 
-Following are the key assignments for these displays with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+در زیر فرمان‌های صفحه‌کلیدیِ این نمایشگر برای استفاده با NVDA می‌آید.
+برای توضیح این‌که کلیدهایی که در جدول زیر به آن‌ها اشاره شده در کجای نمایشگر قرار گرفته اند، لطفاً مستندات نمایشگر را ببینید.
 %kc:beginInclude
-|| Name | Key |
-| Scroll braille display back | switch1-6left, l1 |
-| Scroll braille display forward | switch1-6Right, l8 |
-| Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
-| Route to braille cell | routing, doubleRouting|
-| Move to previous line in review | joystick1Up |
-| Move to next line in review | joystick1Down |
-| Move to previous character in review | joystick1Left |
-| Move to next character in review | joystick1Right |
-| Switch to previous review mode | joystick1Left+joystick1Up |
-| Switch to next review mode | joystick1Right+joystick1Down |
-| Erase the last entered braille cell or character | backSpace |
-| Translate any braille input and press the enter key | backSpace+space |
-| insert key | dot3+dot5+space, l7 |
-| delete key | dot3+dot6+space |
-| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
-| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
-| leftArrow key | dot2+space, joystick2Left, leftArrow |
-| rightArrow key | dot5+space, joystick2Right, rightArrow |
-| upArrow key | dot1+space, joystick2Up, upArrow |
-| downArrow key | dot6+space, joystick2Down, downArrow |
-| enter key | joystick2Center |
-| pageUp key | dot1+dot3+space |
-| pageDown key | dot4+dot6+space |
-| numpad1 key | dot1+dot6+backspace |
-| numpad2 key | dot1+dot2+dot6+backspace |
-| numpad3 key | dot1+dot4+dot6+backspace |
-| numpad4 key | dot1+dot4+dot5+dot6+backspace |
-| numpad5 key | dot1+dot5+dot6+backspace |
-| numpad6 key | dot1+dot2+dot4+dot6+backspace |
-| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
-| numpad8 key | dot1+dot2+dot5+dot6+backspace |
-| numpad9 key | dot2+dot4+dot6+backspace |
-| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
-| numpadDecimal key | dot2+backspace |
-| numpadDivide key | dot3+dot4+backspace |
-| numpadMultiply key | dot3+dot5+backspace |
-| numpadMinus key | dot3+dot6+backspace |
-| numpadPlus key | dot2+dot3+dot5+backspace |
-| numpadEnter key | dot3+dot4+dot5+backspace |
-| escape key | dot1+dot2+dot4+dot5+space, l2 |
-| tab key | dot2+dot5+dot6+space, l3 |
-| shift+tab key | dot2+dot3+dot5+space |
-| printScreen key | dot1+dot3+dot4+dot6+space |
-| pause key | dot1+dot4+space |
-| applications key | dot5+dot6+backspace |
-| f1 key | dot1+backspace |
-| f2 key | dot1+dot2+backspace |
-| f3 key | dot1+dot4+backspace |
-| f4 key | dot1+dot4+dot5+backspace |
-| f5 key | dot1+dot5+backspace |
-| f6 key | dot1+dot2+dot4+backspace |
-| f7 key | dot1+dot2+dot4+dot5+backspace |
-| f8 key | dot1+dot2+dot5+backspace |
-| f9 key | dot2+dot4+backspace |
-| f10 key | dot2+dot4+dot5+backspace |
-| f11 key | dot1+dot3+backspace |
-| f12 key | dot1+dot2+dot3+backspace |
-| windows key | dot1+dot2+dot3+dot4+backspace |
-| capsLock key | dot7+backspace, dot8+backspace |
-| numLock key | dot3+backspace, dot6+backspace |
-| shift key | dot7+space, l4 |
-| control key | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
-| alt key | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
-| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+|| نام | کلید |
+| عقب بردن نمایشگر بریل | switch1-6left, l1 |
+| جلو بردن نمایشگر بریل | switch1-6Right, l8 |
+| بردن به فکوس جاری | switch1-6Left+switch1-6Right, l1+l8 |
+| رفتن به خانه‌ی بریل | routing, doubleRouting|
+| رفتن به خط قبلی در بازبینی | joystick1Up |
+| رفتن به خط بعدی در بازبینی | joystick1Down |
+| رفتن به نویسه‌ی قبلی در بازبینی | joystick1Left |
+| رفتن به نویسه‌ی بعدی در بازبینی | joystick1Right |
+| رفتن به حالت قبلی بازبینی | joystick1Left+joystick1Up |
+| رفتن به حالت بعدی بازبینی | joystick1Right+joystick1Down |
+| پاک کردن آخرین خانه یا نویسه‌ی وارد‌شده | backSpace |
+| برگرداندن ورودی بریل و فشردن کلید اینتر | backSpace+space |
+| کلید Insert | dot3+dot5+space, l7 |
+| کلید Delete | dot3+dot6+space |
+| کلید home | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
+| کلید end | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
+| کلید جهت‌نمای چپ | dot2+space, joystick2Left, جهت‌نمای چپ |
+| کلید جهت‌نمای راست | dot5+space, joystick2Right, جهت‌نمای راست |
+| کلید جهت‌نمای بالا | dot1+space, joystick2Up, جهت‌نمای بالا |
+| کلید جهت‌نمای پایین | dot6+space, joystick2Down, جهت‌نمای پایین |
+| کلید enter | joystick2Center |
+| کلید pageUp | dot1+dot3+space |
+| کلید pageDown | dot4+dot6+space |
+| کلید ۱ در ماشین‌حساب | dot1+dot6+backspace |
+| کلید ۲ در ماشین‌حساب | dot1+dot2+dot6+backspace |
+| کلید ۳ در ماشین‌حساب | dot1+dot4+dot6+backspace |
+| کلید ۴ در ماشین‌حساب | dot1+dot4+dot5+dot6+backspace |
+| کلید ۵ در ماشین‌حساب | dot1+dot5+dot6+backspace |
+| کلید ۶ در ماشین‌حساب | dot1+dot2+dot4+dot6+backspace |
+| کلید ۷ در ماشین‌حساب | dot1+dot2+dot4+dot5+dot6+backspace |
+| کلید ۸ در ماشین‌حساب | dot1+dot2+dot5+dot6+backspace |
+| کلید ۹ در ماشین‌حساب | dot2+dot4+dot6+backspace |
+| کلید insert در ماشین‌حساب | dot3+dot4+dot5+dot6+backspace |
+| کلید ممیز در ماشین‌حساب | dot2+backspace |
+| کلید تقسیم در ماشین‌حساب | dot3+dot4+backspace |
+| کلید ضرب در ماشین‌حساب | dot3+dot5+backspace |
+| کلید منها در ماشین‌حساب | dot3+dot6+backspace |
+| کلید بعلاوه در ماشین‌حساب | dot2+dot3+dot5+backspace |
+| کلید enter در ماشین‌حساب | dot3+dot4+dot5+backspace |
+| کلید escape | dot1+dot2+dot4+dot5+space, l2 |
+| کلید tab | dot2+dot5+dot6+space, l3 |
+| کلید shift+tab | dot2+dot3+dot5+space |
+| کلید printScreen | dot1+dot3+dot4+dot6+space |
+| کلید pause | dot1+dot4+space |
+| کلید applications | dot5+dot6+backspace |
+| کلید f1 | dot1+backspace |
+| کلید f2 | dot1+dot2+backspace |
+| کلید f3 | dot1+dot4+backspace |
+| کلید f4 | dot1+dot4+dot5+backspace |
+| کلید f5 | dot1+dot5+backspace |
+| کلید f6 | dot1+dot2+dot4+backspace |
+| کلید f7 | dot1+dot2+dot4+dot5+backspace |
+| کلید f8 | dot1+dot2+dot5+backspace |
+| کلید f9 | dot2+dot4+backspace |
+| کلید f10 | dot2+dot4+dot5+backspace |
+| کلید f11 | dot1+dot3+backspace |
+| کلید f12 | dot1+dot2+dot3+backspace |
+| کلید windows | dot1+dot2+dot3+dot4+backspace |
+| کلید capsLock | dot7+backspace, dot8+backspace |
+| کلید numLock | dot3+backspace, dot6+backspace |
+| کلید shift | dot7+space, l4 |
+| کلید control | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
+| کلید alt | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
+| تعویض حالت شبیه‌سازی صفحه‌کلید HID | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
