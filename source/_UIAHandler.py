@@ -148,6 +148,35 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
+def getIUIAInterface():
+	"""
+	Returns the highest supported IUIAutomation interface based on Windows releases, particularly based on build ranges.
+	For example, if using Windows 8.1 (build 9600), it will return IUIAutomation3.
+	This is useful on Windows 10 where different releases ship with updated UIA interfaces.
+	For Windows 10, a companion function will return appropriate IUIAutomation interface based on build ranges.
+	"""
+	import sys
+	major, minor = sys.getwindowsversion()[:2]
+	if major == 6:
+		if minor == 1:
+			return IUIAutomation
+		elif minor == 2:
+			return IUIAutomation2
+		elif minor == 3:
+			return IUIAutomation3
+	elif major == 10:
+		return _getIUIAInterface10()
+
+def _getIUIAInterface10():
+	import sys
+	build = sys.getwindowsversion().build
+	if build < 14393:
+		return IUIAutomation3
+	elif 14393 < build < 16299:
+		return IUIAutomation4
+	else:
+		return IUIAutomation5
+
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationNotificationEventHandler]
 
