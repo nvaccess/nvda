@@ -329,7 +329,7 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		eventHandler.queueEvent("UIA_notification",obj, sender=sender, NotificationKind=NotificationKind, NotificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
+		eventHandler.queueEvent("UIA_notification",obj, sender=sender, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
 	def _isUIAWindowHelper(self,hwnd):
 		# UIA in NVDA's process freezes in Windows 7 and below
