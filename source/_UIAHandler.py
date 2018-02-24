@@ -290,7 +290,12 @@ class UIAHandler(COMObject):
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(self,sender,NotificationKind,NotificationProcessing,displayString,activityId):
-		pass
+		if not self.MTAThreadInitEvent.isSet():
+			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			return
+		import NVDAObjects.UIA
+		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		eventHandler.queueEvent("UIA_notification",obj, sender=sender, NotificationKind=NotificationKind, NotificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
 	def _isUIAWindowHelper(self,hwnd):
 		# UIA in NVDA's process freezes in Windows 7 and below
