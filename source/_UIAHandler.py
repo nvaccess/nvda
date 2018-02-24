@@ -211,11 +211,14 @@ class UIAHandler(COMObject):
 			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
+				# #8009: use appropriate interface based on highest supported interface, and if not, fall back to IUIAutomation2 (Windows 8).
 				try:
-					self.clientObject=self.clientObject.QueryInterface(IUIAutomation5)
+					self.clientObject=self.clientObject.QueryInterface(_getIUIAInterface10())
 				except COMError:
-					self.clientObject=self.clientObject.QueryInterface(IUIAutomation4)
-			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
+					self.clientObject=self.clientObject.QueryInterface(IUIAutomation2)
+			# Have this handy because we want to add things corresponding to the interface version.
+			IUIAVersion = self.clientObject.__class__.__mro__[1].__name__
+			log.info("UIAutomation: %s"%IUIAVersion)
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
 			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)
@@ -235,7 +238,9 @@ class UIAHandler(COMObject):
 			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
 			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
-			self.clientObject.AddNotificationEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
+			# #8009: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
+			if IUIAVersion >= "IUIAutomation5":
+				self.clientObject.AddNotificationEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 		except Exception as e:
 			self.MTAThreadInitException=e
 		finally:
