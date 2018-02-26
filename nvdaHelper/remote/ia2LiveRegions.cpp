@@ -193,6 +193,34 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 	return gotText;
 }
 
+bool checkAccessibleStateAndRole(IAccessible* pacc, VARIANT varChild) {
+	//Retrieve the object states, and if its invisible or offscreen ignore the event.
+	VARIANT varState, varRole;
+	// #7709: Ensure The VARIANT is initialized, as accState may try to clear it before setting it.
+	VariantInit(&varState);
+	pacc->get_accState(varChild,&varState);
+	if(varState.vt==VT_I4&&(varState.lVal&STATE_SYSTEM_INVISIBLE)) {
+		VariantClear(&varState);
+		return false;
+	}
+	VariantClear(&varState);
+	//Retrieve the object role and ignore ROLE_SYSTEM_STATICTEXT unless it's a hyperlink. There will be
+	//an event on its parent which handles this better.
+	VariantInit(&varRole);
+	pacc->get_accRole(varChild,&varRole);
+	if(varRole.vt==VT_I4&&varRole.lVal==ROLE_SYSTEM_STATICTEXT) {
+		VariantClear(&varRole);
+		IAccessibleHyperlink* paccHyperlink=NULL;
+		if(pacc->QueryInterface(IID_IAccessibleHyperlink,(void**)&paccHyperlink)==S_OK) {
+			paccHyperlink->Release();
+			return true;
+		}
+		return false;
+	}
+	VariantClear(&varRole);
+	return true;
+}
+
 void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
 	HWND fgHwnd=GetForegroundWindow();
 	//Ignore events for windows that are invisible or are not in the foreground
@@ -216,18 +244,12 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	if(AccessibleObjectFromEvent(hwnd,objectID,childID,&pacc,&varChild)!=S_OK) {
 		return;
 	}
-	//Retreave the object states, and if its invisible or offscreen ignore the event.
-	VARIANT varState;
-	// #7709: Ensure The VARIANT is initialized, as accState may try to clear it before setting it.
-	VariantInit(&varState);
-	pacc->get_accState(varChild,&varState);
-	VariantClear(&varChild);
-	if(varState.vt==VT_I4&&(varState.lVal&STATE_SYSTEM_INVISIBLE)) {
-		VariantClear(&varState);
+	if (!checkAccessibleStateAndRole(pacc, varChild)) {
+		VariantClear(&varChild);
 		pacc->Release();
 		return;
 	}
-	VariantClear(&varState);
+	VariantClear(&varChild);
 	//Retreave an IAccessible2 via IServiceProvider if it exists.
 	pacc->QueryInterface(IID_IServiceProvider,(void**)(&pserv));
 	pacc->Release();
