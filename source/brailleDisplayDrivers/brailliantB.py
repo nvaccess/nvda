@@ -165,7 +165,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Sometimes, a few attempts are needed to init successfully.
 			for attempt in xrange(INIT_ATTEMPTS):
 				if attempt > 0: # Not the first attempt
-					time.sleep(INIT_RETRY_DELAY) # Delay before next attempt.
+					self._dev.waitForRead(INIT_RETRY_DELAY) # Delay before next attempt.
 				self._initAttempt()
 				if self.numCells:
 					break # Success!
