@@ -338,12 +338,13 @@ class CalendarView(IAccessible):
 		startDate=startTime.date()
 		endDate=endTime.date()
 		if not CalendarView._lastStartDate or startDate!=CalendarView._lastStartDate or endDate!=startDate: 
-			startText="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None),startText)
+			startDateText=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None)
+			startText="%s %s"%(startDateText,startText)
 		CalendarView._lastStartDate=startDate
 		if endDate!=startDate:
 			if (endDate - startDate).total_seconds()==SECONDS_PER_DAY:
 				# Translators: a message reporting the date of a whole day Outlook calendar entry
-				return _("{date} (entire day)").format(date=startText)
+				return _("{date} (entire day)").format(date=startDateText)
 			endText="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
 		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
