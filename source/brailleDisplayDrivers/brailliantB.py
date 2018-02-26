@@ -132,7 +132,7 @@ def _getPorts():
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
-	description = _("HumanWare Brailliant BI/B series, and BrailleNote Touch")
+	description = _("HumanWare Brailliant BI/B series / BrailleNote Touch")
 	isThreadSafe = True
 
 	@classmethod
