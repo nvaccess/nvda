@@ -291,16 +291,25 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:downArrow": ("br(brailliantB):space+dot4", "br(brailliantB):stickDown"),
 			"kb:leftArrow": ("br(brailliantB):space+dot3", "br(brailliantB):stickLeft"),
 			"kb:rightArrow": ("br(brailliantB):space+dot6", "br(brailliantB):stickRight"),
-			"showGui": ("br(brailliantB):c1+c3+c4+c5",),
+			"showGui": (
+				"br(brailliantB):c1+c3+c4+c5",
+				"br(brailliantB):space+dot1+dot3+dot4+dot5",
+			),
 			"kb:shift+tab": ("br(brailliantB):space+dot1+dot3",),
 			"kb:tab": ("br(brailliantB):space+dot4+dot6",),
 			"kb:alt": ("br(brailliantB):space+dot1+dot3+dot4",),
 			"kb:escape": ("br(brailliantB):space+dot1+dot5",),
 			"kb:enter": ("br(brailliantB):stickAction"),
-			"kb:windows+d": ("br(brailliantB):c1+c4+c5",),
+			"kb:windows+d": (
+				"br(brailliantB):c1+c4+c5",
+				"br(brailliantB):Space+dot1+dot4+dot5",
+			),
 			"kb:windows": ("br(brailliantB):space+dot3+dot4",),
 			"kb:alt+tab": ("br(brailliantB):space+dot2+dot3+dot4+dot5",),
-			"sayAll": ("br(brailliantB):c1+c2+c3+c4+c5+c6",),
+			"sayAll": (
+				"br(brailliantB):c1+c2+c3+c4+c5+c6",
+				"br(brailliantB):Space+dot1+dot2+dot3+dot4+dot5+dot6",
+			),
 		},
 	})
 
