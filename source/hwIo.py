@@ -326,7 +326,7 @@ class Hid(IoBase):
 			log.debug("Set output report: %r" % report)
 		if not ctypes.windll.hid.HidD_SetOutputReport(self._writeFile,buf,length):
 			if _isDebug():
-				log.debug("Set feature failed: %s" % ctypes.WinError())
+				log.debug("Set output report failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
 
 	def close(self):
