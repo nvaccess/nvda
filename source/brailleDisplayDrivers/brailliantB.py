@@ -78,12 +78,10 @@ DOT1_KEY = 2
 DOT8_KEY = 9
 SPACE_KEY = 10
 
-USBID_BrailleNoteTouch="VID_1C71&PID_C00A"
-
 USB_IDS_HID = {
 	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
 	"VID_1C71&PID_C022", # Brailliant BI 14
-	USBID_BrailleNoteTouch, # BrailleNote Touch
+	"VID_1C71&PID_C00A", # BrailleNote Touch
 }
 USB_IDS_SER = (
 	"Vid_1c71&Pid_c005", # Brailliant BI 32, 40 and 80
@@ -150,8 +148,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		for portType, port in _getPorts():
 			self.isHid = portType.endswith(" HID")
-			#: BrailleNote touch requires the use of HidD_SetOutputReport when sending data to the device via HID, as WriteFile seems to block forever.
-			self._useHidSetOutputReport=self.isHid and (USBID_BrailleNoteTouch.lower() in port)
 			# Try talking to the display.
 			try:
 				if self.isHid:
@@ -278,11 +274,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"\x01\x00" # Module 1, offset 0
 				"{length}{cells}"
 			.format(id=HR_BRAILLE, length=chr(self.numCells), cells=cells))
-			if self._useHidSetOutputReport:
-				# Some displays such as BrailleNote touch via USB HID seem to block when using WriteFile, thus use the HID output report mechanism instead.
-				self._dev.setOutputReport(outputReport)
-			else:
-				self._dev.write(outputReport)
+			#: Humanware HID devices require the use of HidD_SetOutputReport when sending data to the device via HID, as WriteFile seems to block forever or fail to reach the device at all.
+			self._dev.setOutputReport(outputReport)
 		else:
 			self._serSendMessage(MSG_DISPLAY, cells)
 
