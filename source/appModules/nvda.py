@@ -32,11 +32,19 @@ class NvdaDialog(IAccessible):
 		return presType
 
 class NvdaSettingsCategoryPanel(IAccessible):
+	# The configuration profile that has been previously edited.
+	# This ought to be a class property.
+	oldProfile = None
 
 	def event_nameChange(self):
 		if self in api.getFocusAncestors():
 			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		from gui.settingsDialogs import NvdaSettingsDialogActiveConfigProfile as newProfile
+		if newProfile is not None and newProfile != NvdaSettingsCategoryPanel.oldProfile:
+			# Translators: A message announcing what configuration profile is currently being edited.
+			speech.speakMessage(_("Editing profile {profile}").format(profile=newProfile))
+		NvdaSettingsCategoryPanel.oldProfile = newProfile
 
 class AppModule(appModuleHandler.AppModule):
 

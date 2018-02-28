@@ -233,10 +233,6 @@ class SettingsPanel(wx.Panel):
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
 
-""" The Id of the category panel in the multi category settings dialog, this is set when the dialog is created
-and returned to None when the dialog is destroyed. This can be used by an AppModule for NVDA to identify and announce
-changes in name for the panel when categories are changed"""
-NvdaSettingsCategoryPanelId = None
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
 	A multi category settings dialog consists of a list view with settings categories on the left side, 
@@ -363,11 +359,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			self.catListCtrl.Select(0)
 			self.catListCtrl.Focus(0)
 			self.catListCtrl.SetFocus()
-
-	def Destroy(self):
-		global NvdaSettingsCategoryPanelId
-		NvdaSettingsCategoryPanelId = None
-		super(MultiCategorySettingsDialog, self).Destroy()
 
 	def onCharHook(self,evt):
 		"""Listens for keyboard input and switches panels for control+tab"""
@@ -2218,6 +2209,15 @@ class BrailleSettingsSubPanel(SettingsPanel):
 	def onNoMessageTimeoutChange(self, evt):
 		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
+""" The Id of the category panel in the multi category settings dialog, this is set when the dialog is created
+and returned to None when the dialog is destroyed. This can be used by an AppModule for NVDA to identify and announce
+changes in name for the panel when categories are changed"""
+NvdaSettingsCategoryPanelId = None
+""" The name of the config profile currently being edited, if any.
+This is set when the currently edited configuration profile is determined and returned to None when the dialog is destroyed.
+This can be used by an AppModule for NVDA to identify and announce
+changes in the name of the edited configuration profile when categories are changed"""
+NvdaSettingsDialogActiveConfigProfile = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA")
@@ -2242,15 +2242,22 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		super(NVDASettingsDialog,self).onCategoryChange(evt)
 		if evt.Skipped:
 			return
-		activeConfigProfile=config.conf.profiles[-1].name
-		if not activeConfigProfile or isinstance(self.currentCategory,GeneralSettingsPanel):
+		global NvdaSettingsDialogActiveConfigProfile
+		NvdaSettingsDialogActiveConfigProfile=config.conf.profiles[-1].name
+		if not NvdaSettingsDialogActiveConfigProfile or isinstance(self.currentCategory,GeneralSettingsPanel):
 			# Translators: The profile name for normal configuration
-			activeConfigProfile=_("normal configuration")
+			NvdaSettingsDialogActiveConfigProfile=_("normal configuration")
 		self.SetTitle("{dialogTitle}: {panelTitle} ({configProfile})".format(
 			dialogTitle=self.title,
 			panelTitle=self.currentCategory.title,
-			configProfile=activeConfigProfile
+			configProfile=NvdaSettingsDialogActiveConfigProfile
 		))
+
+	def Destroy(self):
+		global NvdaSettingsCategoryPanelId, NvdaSettingsDialogActiveConfigProfile
+		NvdaSettingsCategoryPanelId = None
+		NvdaSettingsDialogActiveConfigProfile = None
+		super(NVDASettingsDialog, self).Destroy()
 
 class AddSymbolDialog(wx.Dialog):
 
