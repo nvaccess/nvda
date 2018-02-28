@@ -148,35 +148,6 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
-def getIUIAInterface():
-	"""
-	Returns the highest supported IUIAutomation interface based on Windows releases, particularly based on build ranges.
-	For example, if using Windows 8.1 (build 9600), it will return IUIAutomation3.
-	This is useful on Windows 10 where different releases ship with updated UIA interfaces.
-	For Windows 10, a companion function will return appropriate IUIAutomation interface based on build ranges.
-	"""
-	import sys
-	major, minor = sys.getwindowsversion()[:2]
-	if major == 6:
-		if minor == 1:
-			return IUIAutomation
-		elif minor == 2:
-			return IUIAutomation2
-		elif minor == 3:
-			return IUIAutomation3
-	elif major == 10:
-		return _getIUIAInterface10()
-
-def _getIUIAInterface10():
-	import sys
-	build = sys.getwindowsversion().build
-	if build < 14393:
-		return IUIAutomation3
-	elif 14393 < build < 16299:
-		return IUIAutomation4
-	else:
-		return IUIAutomation5
-
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationNotificationEventHandler]
 
@@ -211,11 +182,13 @@ class UIAHandler(COMObject):
 			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
-				# #8009: use appropriate interface based on highest supported interface, and if not, fall back to IUIAutomation2 (Windows 8).
-				try:
-					self.clientObject=self.clientObject.QueryInterface(_getIUIAInterface10())
-				except COMError:
-					self.clientObject=self.clientObject.QueryInterface(IUIAutomation2)
+				# #8009: use appropriate interface based on highest supported interface.
+				for interface in (IUIAutomation5, IUIAutomation4, IUIAutomation3, IUIAutomation2):
+					try:
+						self.clientObject=self.clientObject.QueryInterface(interface)
+						break
+					except COMError:
+						pass
 			# Have this handy because we want to add things corresponding to the interface version.
 			IUIAVersion = self.clientObject.__class__.__mro__[1].__name__
 			log.info("UIAutomation: %s"%IUIAVersion)
@@ -238,7 +211,7 @@ class UIAHandler(COMObject):
 			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
 			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
-			# #8009: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
+			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 			if IUIAVersion >= "IUIAutomation5":
 				self.clientObject.AddNotificationEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 		except Exception as e:
