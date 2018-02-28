@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Joseph Lee, Mohammad Suliman
+#Copyright (C) 2009-2018 NV Access Limited, Joseph Lee, Mohammad Suliman
 
 """Support for UI Automation (UIA) controls."""
 
@@ -31,6 +31,7 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
 import time
+import ui
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -1367,6 +1368,16 @@ class UIA(Window):
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
 		# Ideally, we wouldn't use getBrailleTextForProperties directly.
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
+	def event_UIA_notification(self, sender=None, notificationKind=None, notificationProcessing=None, displayString=None, activityId=None):
+		"""
+		Introduced in Windows 10 Fall Creators Update (build 16299).
+		This base implementation announces all notifications from the sender element.
+		Unlike other events, the text to be announced is not the name of the object, and parameters control how the incoming notification should be processed.
+		Subclasses can override this event and can react to notification processing instructions.
+		"""
+		if displayString:
+			ui.message(displayString)
 
 class TreeviewItem(UIA):
 
