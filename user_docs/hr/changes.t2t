@@ -8,21 +8,21 @@ Novosti u ovoj inačici uključuju podršku grafova u Microsoft wordu i Powerpoi
 
 == Nove značajke ==
 - Sada je moguće ulaziti u interakciju sa grafovima u Microsoft Wordu i Microsoft PowerPointu, slično kao i kod podrške grafova u Microsoft Excelu. (#7046)
- - U Microsoft Wordu:  kada se nalazite u načinu pregleda, kursorima dođite do grafa i pritisnite enter.
+ - U Microsoft Wordu:  kada se nalazite u načinu pregleda, kursorom dođite do grafa i pritisnite enter.
  - U Microsoft PowerPointu prilikom uređivanja slajda: pritišćite tabulator do objekta grafa, i pritisnite enter ili razmak kako biste ušli u interakciju s grafom.
  - Kako biste prestali biti u interakciji s grafom, Pritisnite escape.
 - Novi jezik: kirgizki.
 - Dodana podrška za VitalSource Bookshelf čitač elektronskih knjiga. (#7155)
 - Dodana podrška za Optelec pretvarač protokola, Uređaj koji omogućava korištenje Alvinih Voyager i Satellite brajičnih redaka koristeći noviji ALVA BC6 protokol. (#6731)
 - Sada je moguće koristiti brajični unos teksta sa brajičnim retkom ALVA 640 Comfort. (#7733) 
- - NVDA brajični unos može se koristiti sa istim brajičnim retcima, kao i sa  BC6 sa firmverom 3.0.0 ili novijim.
+ - NVDA brajični unos može se koristiti sa istim brajičnim retcima, kao i sa  BC6 sa firmware-om 3.0.0 ili novijim.
 - Rana podrška za Google Sheets sa uključenim brajičnim načinom. (#7935)
 - Podrška za Eurobraille Esys, Esytime i Iris brajične retke. (#7488)
 
 
 == Izmjene ==
-- upravljački programi za HIMS Braille Sense/Braille EDGE/Smart Beetle i Hims Sync sada su zamijenjeni jednim upravljačkim programom. ovaj upravljački program bit će automatski aktiviran za stare korisnike syncBraille upravljačkog programa. (#7459) 
- - Neke tipke, točnije tipke za premještanje po redovima, su izmijenjene, kako bi pratile konvencije Himsovih proizvoda. Consult the user guide for more details.
+- upravljački programi za HIMS Braille Sense/Braille EDGE/Smart Beetle i Hims Sync sada su zamijenjeni jednim upravljačkim programom. Ovaj upravljački program bit će automatski aktiviran za stare korisnike syncBraille upravljačkog programa. (#7459) 
+ - Neke tipke, točnije tipke za premještanje po redovima su izmijenjene, kako bi pratile konvencije Himsovih proizvoda. Za više detalja, pročitajte vodič za korisnike.
 - Prilikom tipkanja na zaslonskoj tipkovnici sa uključenom dodirnom interakcijom, podrazumjevano trebate svaku tipku stisnuti dva puta, kao što aktivirate i druge kontrole. (#7309)
  - Kako biste koristili postojeći način dodirnog unosa, gdje je jedan dodir dovoljan za aktivaciju pojedinačne tipke, omogućite tu opciju u dijaloškom okviru dodirna interakcija kojeg možete naći u izborniku postavke.
 - Više nije potrebno ručno prebacivati brajicu na fokus ili pregled, jer će se to događati automatski. (#2385) 
@@ -31,21 +31,21 @@ Novosti u ovoj inačici uključuju podršku grafova u Microsoft wordu i Powerpoi
 
 == Ispravke grešaka ==
 - pregledne poruke poput izgovora formatiranja pri pritisku NVDA+f dva puta brzo više neće rezultirati pogreškom, kada je NVDA instaliran na sustavu sa nelatiničnim znakovima. (#7474)
-- Fokus se sada vraća ispravno, rilikom vraćanja u Spotify iz drugih aplikacija. (#7689)
-- U Windows 10 jesenskoj nadogradnji za tvorce, NVDA će sada se uspjevati nadograditi, kada je uključena opcija kontroliranog pristupa folderima u Windows defenderu. (#7696)
-- otkrivanje tipaka za pomicanje napred ' nazad po u redku kod hims brajičnih redaka sada više nije nestabilno. (#6086)
+- Fokus se sada vraća ispravno, prilikom vraćanja u Spotify iz drugih aplikacija. (#7689)
+- U Windows 10 jesenskoj nadogradnji za tvorce, NVDA će se sada uspjevati nadograditi, kada je uključena opcija kontroliranog pristupa folderima u Windows defenderu. (#7696)
+- otkrivanje tipaka za pomicanje napred ' nazad po redku kod hims brajičnih redaka sada više nije nestabilno. (#6086)
 - Malo poboljšanje performansi prilikom učitavanja velikog sadržaja u Mozilla Firefox 58 i novijim. (#7719)
 - U Microsoft Outlooku, čitanje e-mailova koji sadrže tablice, više ne prouzrokuje greške. (#6827)
-- geste brajičnog redka koje emuliraju modifikatore tipki sustava mogu biti kombinirane sa drugim tipkama sustava ako jedna ili više ukljućenih gesti ovise o modelu. (#7783)
+- geste brajičnog redka koje emuliraju modifikatore tipki sustava mogu biti kombinirane sa drugim tipkama sustava ako jedna ili više uključenih gesti ovise o modelu. (#7783)
 - U Mozilla Firefoxu, način pregleda sada ponovno radi u iskočnim prozorima dodataka poput LastPass i bitwarden. (#7809)
-- NVDA više se ne smrzava na svakoj promijeni fokusa u mozilla firefox i chrome preglednicima poput smrzavanja ili rušenja. (#7818)
+- NVDA se više ne smrzava na svakoj promijeni fokusa u mozilla firefox i chrome preglednicima poput smrzavanja ili rušenja. (#7818)
 - U twitter klijentima poput Chicken Nuggeta, NVDA više neće ignorirati zadnjih 20 znakova od 280 znakovnog tweeta prilikom čitanja istog. (#7828)
 - NVDA sada koristi ispravan jezik pri označavanju teksta. (#7687)
 - U posljednjim inačicama Office 365, sada je moguće ponovo čitati excel grafove sa strelicama gore dole. (#7046)
--  Radi li se o brajičnom ili govornom izlazu, status i tip kontrole bit će predstavljen u istpm poredku, neovisno je li pozitivan ili negativan. Fixes #7076
+-  Radi li se o brajičnom ili govornom izlazu, status i tip kontrole bit će predstavljen u istom poredku, neovisno je li pozitivan ili negativan. Ispravlja #7076
 - u aplikacijama poput Windows 10 Pošte, NVDA će sada izgovarati izbrisane znakove pritiskom na backspace. (#7456)
 - Sve tipke na Hims Braille Sense Polaris brajičnim retcima sada rade kako treba. (#7865)
-
+- NVDA se sada uspješno pokreće na Windows 7 kada se prije pojavljivala greška o unutrašnjem api-ms dll, kada je u aplikaciji instalirana konkretna inačica Visual Studio 2017 redistributivnog paketa. (#7975)
 
 == Izmjene za razvojne programere ==
 Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
