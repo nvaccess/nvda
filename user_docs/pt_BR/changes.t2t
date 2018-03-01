@@ -46,6 +46,7 @@ Os destaques desta versão incluem suporte para gráficos em Microsoft word e Po
 - Na saída de fala e braille, os estados de controle agora serão sempre anunciados na mesma ordem, independentemente de serem positivos ou negativos. (#7076)
 - Em aplicativos como o Windows 10 Mail, o NVDA já não deixará mais de anunciar caracteres excluídos ao pressionar o backspace. (#7456)
 - Todas as teclas nas linhas Hims Braille Sense Polaris estão funcionando como esperado. (#7865)
+- O NVDA não deixa de ser iniciado no Windows 7 reclamando duma dll api-ms interna, quando uma outra versão do Visual Studio 2017 redistribuível foi instalada por outro aplicativo. (#7975)
 
 
 == Alterações Específicas para Desenvolvedores ==
