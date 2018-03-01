@@ -193,7 +193,7 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 	return gotText;
 }
 
-bool checkAccessibleStateAndRole(IAccessible* pacc, VARIANT varChild) {
+bool useIAccessibleForLiveRegionUpdate(IAccessible* pacc, VARIANT varChild) {
 	//Retrieve the object states, and if its invisible or offscreen ignore the event.
 	VARIANT varState, varRole;
 	// #7709: Ensure The VARIANT is initialized, as accState may try to clear it before setting it.
@@ -204,8 +204,10 @@ bool checkAccessibleStateAndRole(IAccessible* pacc, VARIANT varChild) {
 		return false;
 	}
 	VariantClear(&varState);
-	//Retrieve the object role and ignore ROLE_SYSTEM_STATICTEXT unless it's a hyperlink. There will be
-	//an event on its parent which handles this better.
+	//Return false for text leaf nodes as their text is available by their parents' IAccessibleText interface.
+	//Text leaf nodes have a role of staticText and do not support the IAccessibleHyperlink interface (I.e. they
+	//are not represented by an embedded object character on their parent).
+	//#8044: Chrome fires redundant events on these nodes which would cause us to double speak live regions if not ignored.
 	VariantInit(&varRole);
 	pacc->get_accRole(varChild,&varRole);
 	if(varRole.vt==VT_I4&&varRole.lVal==ROLE_SYSTEM_STATICTEXT) {
@@ -244,7 +246,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	if(AccessibleObjectFromEvent(hwnd,objectID,childID,&pacc,&varChild)!=S_OK) {
 		return;
 	}
-	if (!checkAccessibleStateAndRole(pacc, varChild)) {
+	if (!useIAccessibleForLiveRegionUpdate(pacc, varChild)) {
 		VariantClear(&varChild);
 		pacc->Release();
 		return;
