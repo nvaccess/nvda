@@ -1369,10 +1369,10 @@ class UIA(Window):
 		# Ideally, we wouldn't use getBrailleTextForProperties directly.
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
-	def event_UIA_notification(self, sender=None, notificationKind=None, notificationProcessing=None, displayString=None, activityId=None):
+	def event_UIA_notification(self, notificationKind=None, notificationProcessing=None, displayString=None, activityId=None):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
-		This base implementation announces all notifications from the sender element.
+		This base implementation announces all notifications from the UIA element.
 		Unlike other events, the text to be announced is not the name of the object, and parameters control how the incoming notification should be processed.
 		Subclasses can override this event and can react to notification processing instructions.
 		"""
