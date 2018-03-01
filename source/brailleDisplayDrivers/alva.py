@@ -293,8 +293,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _handleTime(self, timeStr):
 		ords = map(ord, timeStr)
+		year=ords[0] | ords[1] << 8
+		if not year:
+			log.debug("This ALVA display doesn't reveal clock information")
+			return
 		displayDateTime = datetime.datetime(
-			year=ords[0] | ords[1] << 8,
+			year=year,
 			month=ords[2],
 			day=ords[3],
 			hour=ords[4],
