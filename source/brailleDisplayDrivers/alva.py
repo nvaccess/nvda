@@ -88,9 +88,10 @@ ALVA_KEYS = {
 }
 
 USB_IDS = {
+	"VID_0798&PID_0600", # USB protocol converter (from BRLTTY)
 	"VID_0798&PID_0640", # BC640
 	"VID_0798&PID_0680", # BC680
-	"VID_0798&PID_0699", # USB protocol converter
+	"VID_0798&PID_0699", # USB protocol converter (from protocol documentation)
 }
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
