@@ -411,7 +411,7 @@ As ordens que siguen cambean entre os modos de revisión:
 %kc:beginInclude
 || Nombre | Tecla Escritorio | Tecla Portatil | Tactil | Descripción |
 | Cambiar t'o  modo de revisión siguient | NVDA+7 teclau numerico | NVDA+rePach | eslizar 2 didos enta alto | cambea t'o siguient modo de revisión disponible. | 
-| cambiar t'o modo de revisión anterior | NVDA+1 teclau numerico | NVDA+avPach | eslizar 2 didos enta baixo | Cambea ta l'anterior modo de revisión disponible. |
+| Cambiar t'o modo de revisión anterior | NVDA+1 teclau numerico | NVDA+avPach | eslizar 2 didos enta baixo | Cambea ta l'anterior modo de revisión disponible. |
 %kc:endInclude
 
 +++ Revisión d'Obchectos +++[ObjectReview]
@@ -1376,8 +1376,8 @@ Pa bells campos d'edición  tals como campos de busca en qualques aplicacions d'
 A lista de sucherencias automaticas se zarrará malas que te'n muevas por o campo d'edición, y pa bells campos, o NVDA puet notificar-te d'ixo en que ixo ocurra.
 
 +++ Opcions de redacción de Dentrada +++[InputCompositionSettings]
-O dialogo Opcions de redacción de Dentrada puet trobar-se baixo o menú Preferencias. 
-Iste dialogo te permite controlar cómo anuncia lo NVDA a dentrada de Caracters Asiaticos, tals como con IME u metodos de Servicio de dentrada de texto .
+O dialogo d'opcions de redacción de dentrada puet trobar-se baixo lo menú de preferencias. 
+Iste dialogo te permite de controlar cómo anuncia o NVDA a dentrada de Caracters Asiaticos, tals como con IME u metodos de Servicio de dentrada de texto .
 Para cuenta que a causa d'o feito que os metodos de dentrada varean en gran medida por as suyas caracteristicas disponibles y por cómo transmiten a información, lo mas prebable será que siga necesario configurar istas opcions de modo diferencial ta cada metodo de dentrada ta obtener a experiencia d'escritura mas eficient.
 
 ==== Anunciar Automaticament totz os Candidatos Disponibles ====[InputCompositionReportAllCandidates]
@@ -1406,7 +1406,7 @@ Dimpués que a lectura u os datos de precomposición haigan estau combinaus dent
 Ista Opción te permite de trigar si o NVDA habría d'anunciar u no pas simbolos nuevos seguntes amaneixcan en a cadena de redacción.
 Ista opción ye activada por omisión.
 
-+++ Opcions d'o modo de navegación (NVDA+control+b) +++[BrowseModeSettings]]
++++ Opcions d'o modo de navegación (NVDA+control+b) +++[BrowseModeSettings]
 O dialogo d'opcions d'os Modos de navegación puet trobar-se en o menú Preferencias, baixo "modo Navegación"...". 
 
 O dialogo contién as siguients opcions:
@@ -1896,16 +1896,21 @@ Solament pa la Focus 80:
 | Desplazar a linia braille enta avant | barra frontal cucha abaixo, barra frontal dreita abaixo |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Series d'Optelec ALVA 6 / conversor de protocolo ++[OptelecALVA]
 Todas dos linias ALVA BC640 y BC680 d'[Optelec http://www.optelec.com/] son suportadas.
+Alternativament puetz connectar una linia antiga d'Optelec, tal como una Braille Voyager, fendo servir un conversor de protocolo furniu por Optelec.
 No te cal instalar garra controlador en especial pa emplegar istas linias.
 Nomás enchega la linia y configura o NVDA pa emplegar-la.
 
-Entre que istas linias tiengan un teclau braille, manean a transcripción de braille ta texto por ellas mesmas.
-Por tanto, a configuración d'a tabla de dentrada braille d'o NVDA ye irrelevant.
+Nota: O NVDA podría no estar capaz d'usar una linia ALVA BC6 con Bluetooth quan s'emparella fendo servir a utilidat ALVA Bluetooth.
+Quan haigas emparellau lo tuyo dispositivo fendo servir a suya utilidat y o NVDA no pueda detectar-lo, te recomendamos d'enparellar a tuya linia ALVA d'a forma ordinaria fendo servir as opcions de Bluetooth d'o Windows.
+
+Nota: dau que belunas d'istas linias tienen un teclau braille, maneyan a transcripción de braille ta texto por ellas mesmas por defecto.
+Ixo significa que o sistema de dentrada braille d'o NVDA no se ye emplegando en a situgación predeterminada (ye decir, a tabla de dentrada braille configurada no tien efecto).
+Pa linias ALVA con firmware recient, ye posible desenchegar ixa simulación de teclau HID fendo servir un cenyo de dentrada.
 
 Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Por favor mira a documentación d'a linia pa descripcions de dó puet trobar-se istas teclas.
+Por favor mira-te a documentación d'a linia pa descripcions de dó pueden trobar-sen istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta zaga | t1 u etouch1 |
@@ -1914,6 +1919,7 @@ Por favor mira a documentación d'a linia pa descripcions de dó puet trobar-se 
 | Mover a linia braille t'a linia siguient | t4 |
 | Desplazar a linia braille enta debant | t5 u etouch3 |
 | Guidar t'a celda braille | sensor |
+| Conmutar a simulación de teclau HID | t1+spEnter |
 | Mover-se-ne t'a linia d'alto en a revisión | t1+t2 |
 | Mover-se-ne t'a linia d'abaixo en a revisión | t4+t5 |
 | Alternar o braille ancorau ta | t1+t3 |
@@ -1932,12 +1938,14 @@ Por favor mira a documentación d'a linia pa descripcions de dó puet trobar-se 
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas as aplicacions) | sp1+sp4 |
 | Tecla windows+b (servilla de sistema d'o foco) | sp3+sp4 |
-| tecla windows | sp2+sp3 |
+| tecla windows | sp2+sp3, windows |
 | tecla alt+tabuladorb | sp2+sp4 |
 | control+tecla d'inicio | t3+spUp |
 | control+tecla de fin | t3+spDown |
 | tecla d'inicio | t3+spLeft |
 | tecla de fin | t3+spRight |
+| tecla alt | alt |
+| tecla control | control |
 %kc:endInclude
 
 ++ Linias Handy Tech ++[HandyTech]
@@ -2444,6 +2452,86 @@ A resultas d'ixo, y pa mantener a compatibilidad con atros lectors de pantalla e
 || Nombre | Tecla |
 | Desplazar ta zaga a linia braille | Menos teclau numerico |
 | Desplazar entabant a linia braille | Mas teclau numerico | 
+%kc:endInclude
+
+++ Linias Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+O NVDA suporta las linias Esys, Esytime y Iris d'[Eurobraille http://www.eurobraille.fr/].
+Os dispositivos Esys y Esytime-Evo se suportan quan se connecten a traviés d'USB u bluetooth.
+Os dispositivos Esytime antigos nomás suportan l'USB.
+As linias Iris nomás se pueden connectar a traviés d'un puerto serie.
+Por tanto, pa ixas linias, habrías de seleccionar o puerto a lo que se connecta dimpués d'haber trigau iste controlador en o dialogo d'opcions de braille.
+
+As pantallas Iris y Esys tienen un teclau braille con 10 teclas.
+D'as dos teclas colocadas como barra espaciadera, la tecla d'a zurda se corresponde con a tecla de recule y a tecla dreita con a barra espaciadera.
+
+Seguidament va las asignacions de teclas pa istas linias con o NVDA.
+Por favor mira-te a documentación d'a pantalla pa descripcions d'án pueden trobar-sen istas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar a linia braille enta zaga | switch1-6Zurda, l1 |
+| Desplazar a linia braille entadebant | switch1-6Dreita, l8 |
+| Mover-se-ne t'o foco actual | switch1-6Zurda+switch1-6Dreita, l1+l8 |
+| Enrotar t'a celda braille | sensors, double sensor |
+| Mover-se-ne t'a linia anterior en revisión | ceprén1Alto |
+| Mover-se-ne t'a siguient linia en revisión | ceprén1Baixo |
+| Mover-se-ne t'o caracter anterior en revisión | ceprén1Cucha |
+| Mover-se-ne t'o caracter siguient en revisión | ceprén1Dreita |
+| Cambiar a lo modo de revisión anterior | ceprén1Cucha+ceprén1Alto |
+| Cambiar a lo siguient modo de revisión | ceprén1Dreita+ceprén1Abaixo |
+| Eliminar a zaguer celda braille u caracter introduciu | recule |
+| Transcribir qualsiquier dentrada braille y pretar a tecla intro | recule+espacio |
+| tecla insert | punto3+punto5+espacio, l7 |
+| tecla suprimir | punto3+punto6+espacio |
+| tecla inicio | punto1+punto2+punto3+espacio, ceprén2Cucha+ceprén2Alto |
+| tecla fin | punto4+punto5+punto6+espacio, ceprén2Dreita+ceprén2Abaixo |
+| tecla flecha cucha | punto2+espacio, ceprén2Cucha, flecha cucha |
+| tecla flecha dreita | punto5+espacio, ceprén2Dreita, flecha dreita |
+| tecla flecha alto  | punto1+espacio,ceprén2Alto, flecha alto |
+| tecla flecha abaixo  | punto6+espacio, ceprén2Abaixo, flecha abaixo |
+| tecla intro | ceprén2Centro |
+| tecla RePach | punto1+punto3+espacio |
+| tecla AvPach | punto4+punto6+espacio |
+| tecla 1 numerico | punto1+punto6+recule |
+| tecla 2 numerico | punto1+punto2+punto6+recule |
+| tecla 3 numerico | punto1+punto4+punto6+recule |
+| tecla 4 numerico | punto1+punto4+punto5+punto6+recule |
+| tecla 5 numerico | punto1+punto5+punto6+recule |
+| tecla 6 numerico | punto1+punto2+punto4+punto6+recule |
+| tecla 7 numerico | punto1+punto2+punto4+punto5+punto6+recule |
+| tecla 8 numerico | punto1+punto2+punto5+punto6+recule |
+| tecla 9 numerico | punto2+punto4+punto6+recule |
+| tecla Insert numerico | punto3+punto4+punto5+punto6+recule |
+| tecla punto numerico | punto2+recule |
+| tecla dividir numerico | punto3+punto4+recule |
+| tecla multiplicar numerico | punto3+punto5+recule |
+| tecla menos numerico | punto3+punto6+recule |
+| tecla mas numerico | punto2+punto3+punto5+recule |
+| tecla intro numerico | punto3+punto4+punto5+recule |
+| tecla escape | punto1+punto2+punto4+punto5+espacio, l2 |
+| tecla tabuladera | punto2+punto5+punto6+espacio, l3 |
+| tecla mayus+tabuladera | punto2+punto3+punto5+espacio |
+| tecla imprentar pantalla | punto1+punto3+punto4+punto6+espacio |
+| tecla pausa | punto1+punto4+espacio |
+| tecla aplicacions | punto5+punto6+recule |
+| tecla f1 | punto1+recule |
+| tecla f2 | punto1+punto2+recule |
+| tecla f3 | punto1+punto4+recule |
+| tecla f4 | punto1+punto4+punto5+recule |
+| tecla f5 | punto1+punto5+recule |
+| tecla f6 | punto1+punto2+punto4+recule |
+| tecla f7 | punto1+punto2+punto4+punto5+recule |
+| tecla f8 | punto1+punto2+punto5+recule |
+| tecla f9 | punto2+punto4+recule |
+| tecla f10 | punto2+punto4+punto5+recule |
+| tecla f11 | punto1+punto3+recule |
+| tecla f12 | punto1+punto2+punto3+recule |
+| tecla windows | punto1+punto2+punto3+punto4+recule |
+| tecla bloqMayus | punto7+retroceso, punto8+recule |
+| tecla BloqNum | punto3+recule, punto6+recule |
+| tecla mayus | punto7+espacio, l4 |
+| tecla control | punto7+punto8+espacio, punto1+punto7+punto8+espacio, punto4+punto7+punto8+espacio, l5 |
+| tecla alt | punto8+espacio, punto1+punto8+espacio, punto4+punto8+espacio, l6 |
+| Commutar a simulación de dentrada de teclau HID | esytime):l1+ceprén1Abaixo, esytime):l8+ceprén1Abaixo |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
