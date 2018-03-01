@@ -141,8 +141,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self.isHid:
 			displaySettings = self._dev.getFeature(ALVA_DISPLAY_SETTINGS_REPORT)
 			self.numCells = ord(displaySettings[ALVA_DISPLAY_SETTINGS_CELL_COUNT_POS])
-			timeStr = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
-			self._handleTime(timeStr)
+			try:
+				timeStr = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
+			except:
+				log.debugWarning("Getting time from ALVA display failed", exc_info=True)
+			else:
+				self._handleTime(timeStr)
 			keySettings = self._dev.getFeature(ALVA_KEY_SETTINGS_REPORT)[ALVA_KEY_SETTINGS_POS]
 			self._rawKeyboardInput = bool(ord(keySettings) & ALVA_KEY_RAW_INPUT_MASK)
 		else:
@@ -293,8 +297,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _handleTime(self, timeStr):
 		ords = map(ord, timeStr)
+		year=ords[0] | ords[1] << 8
+		if not year:
+			log.debug("This ALVA display doesn't reveal clock information")
+			return
 		displayDateTime = datetime.datetime(
-			year=ords[0] | ords[1] << 8,
+			year=year,
 			month=ords[2],
 			day=ords[3],
 			hour=ords[4],
