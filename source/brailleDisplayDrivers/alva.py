@@ -301,14 +301,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if not year:
 			log.debug("This ALVA display doesn't reveal clock information")
 			return
-		displayDateTime = datetime.datetime(
-			year=year,
-			month=ords[2],
-			day=ords[3],
-			hour=ords[4],
-			minute=ords[5],
-			second=ords[6]
-		)
+		try:
+			displayDateTime = datetime.datetime(
+				year=year,
+				month=ords[2],
+				day=ords[3],
+				hour=ords[4],
+				minute=ords[5],
+				second=ords[6]
+			)
+		except ValueError:
+			log.debugWarning("Invalid time/date of Alva display: %r"%timeStr)
+			return
 		localDateTime = datetime.datetime.today()
 		if abs((displayDateTime - localDateTime).total_seconds()) >= ALVA_RTC_MAX_DRIFT:
 			log.debugWarning("Display time out of sync: %s"%displayDateTime.isoformat())
