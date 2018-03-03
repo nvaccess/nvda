@@ -34,6 +34,8 @@ ALVA_KEY_SETTINGS_POS = 1 # key settings are stored as bits in 1 byte
 ALVA_RTC_REPORT = b"\x0a"
 ALVA_RTC_STR_LENGTH = 7
 ALVA_RTC_MAX_DRIFT = 5
+ALVA_RTC_MIN_YEAR = 1900
+ALVA_RTC_MAX_YEAR = 3000
 
 ALVA_MODEL_IDS = {
 	0x40: "BC640",
@@ -298,7 +300,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _handleTime(self, timeStr):
 		ords = map(ord, timeStr)
 		year=ords[0] | ords[1] << 8
-		if not 1900 <= year <= 3000:
+		if not ALVA_RTC_MIN_YEAR <= year <= ALVA_RTC_MAX_YEAR:
 			log.debug("This ALVA display doesn't reveal clock information")
 			return
 		try:
