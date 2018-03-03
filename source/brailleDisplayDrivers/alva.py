@@ -141,12 +141,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self.isHid:
 			displaySettings = self._dev.getFeature(ALVA_DISPLAY_SETTINGS_REPORT)
 			self.numCells = ord(displaySettings[ALVA_DISPLAY_SETTINGS_CELL_COUNT_POS])
+			timeStr = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
 			try:
-				timeStr = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
+				self._handleTime(timeStr)
 			except:
 				log.debugWarning("Getting time from ALVA display failed", exc_info=True)
-			else:
-				self._handleTime(timeStr)
 			keySettings = self._dev.getFeature(ALVA_KEY_SETTINGS_REPORT)[ALVA_KEY_SETTINGS_POS]
 			self._rawKeyboardInput = bool(ord(keySettings) & ALVA_KEY_RAW_INPUT_MASK)
 		else:
@@ -239,6 +238,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		elif cmd == b"r": # Raw keyboard messages enable/disable
 			self._rawKeyboardInput = bool(ord(value))
 		elif cmd == b"H": # Time
+			# Handling time for serial displays does not block initialization if it fails.
 			self._handleTime(value)
 
 	def _hidOnReceive(self, data):
@@ -298,7 +298,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _handleTime(self, timeStr):
 		ords = map(ord, timeStr)
 		year=ords[0] | ords[1] << 8
-		if not year:
+		if not 1900 <= year <= 3000:
 			log.debug("This ALVA display doesn't reveal clock information")
 			return
 		try:
@@ -311,7 +311,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				second=ords[6]
 			)
 		except ValueError:
-			log.debugWarning("Invalid time/date of Alva display: %r"%timeStr)
+			log.debugWarning("Invalid time/date of ALVA display: %r"%timeStr)
 			return
 		localDateTime = datetime.datetime.today()
 		if abs((displayDateTime - localDateTime).total_seconds()) >= ALVA_RTC_MAX_DRIFT:
