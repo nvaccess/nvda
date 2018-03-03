@@ -193,7 +193,7 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 	return gotText;
 }
 
-bool useIAccessibleForLiveRegionUpdate(IAccessible* pacc, VARIANT varChild) {
+bool useIAccessibleForLiveRegionUpdate(IAccessible* pacc, IAccessible* pacc2, VARIANT varChild) {
 	//Retrieve the object states, and if its invisible or offscreen ignore the event.
 	VARIANT varState, varRole;
 	// #7709: Ensure The VARIANT is initialized, as accState may try to clear it before setting it.
@@ -213,7 +213,8 @@ bool useIAccessibleForLiveRegionUpdate(IAccessible* pacc, VARIANT varChild) {
 	if(varRole.vt==VT_I4&&varRole.lVal==ROLE_SYSTEM_STATICTEXT) {
 		VariantClear(&varRole);
 		IAccessibleHyperlink* paccHyperlink=NULL;
-		if(pacc->QueryInterface(IID_IAccessibleHyperlink,(void**)&paccHyperlink)==S_OK) {
+		//Note: IAccessibleHyperlink must be QI'ed from IAccessible2
+		if(pacc2->QueryInterface(IID_IAccessibleHyperlink,(void**)&paccHyperlink)==S_OK) {
 			paccHyperlink->Release();
 			return true;
 		}
@@ -246,20 +247,29 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	if(AccessibleObjectFromEvent(hwnd,objectID,childID,&pacc,&varChild)!=S_OK) {
 		return;
 	}
-	if (!useIAccessibleForLiveRegionUpdate(pacc, varChild)) {
+	//Retrieve an IAccessible2 via IServiceProvider if it exists.
+	pacc->QueryInterface(IID_IServiceProvider,(void**)(&pserv));
+	if(!pserv) {
 		VariantClear(&varChild);
 		pacc->Release();
 		return;
 	}
-	VariantClear(&varChild);
-	//Retreave an IAccessible2 via IServiceProvider if it exists.
-	pacc->QueryInterface(IID_IServiceProvider,(void**)(&pserv));
-	pacc->Release();
-	if(!pserv) return; 
 	pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)(&pacc2));
 	pserv->Release();
-	if(!pacc2) return;
-	//Retreave the IAccessible2 attributes, and if the object is not a live region then ignore the event.
+	if(!pacc2) {
+		pacc->Release();
+		VariantClear(&varChild);
+		return;
+	}
+	if (!useIAccessibleForLiveRegionUpdate(pacc,pacc2,varChild)) {
+		pacc2->Release();
+		pacc->Release();
+		VariantClear(&varChild);
+		return;
+	}
+	pacc->Release();
+	VariantClear(&varChild);
+	//Retrieve the IAccessible2 attributes, and if the object is not a live region then ignore the event.
 	map<wstring,wstring> attribsMap;
 	if(!fetchIA2Attributes(pacc2,attribsMap)) {
 		pacc2->Release();
