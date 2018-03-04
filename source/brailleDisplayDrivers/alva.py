@@ -34,6 +34,8 @@ ALVA_KEY_SETTINGS_POS = 1 # key settings are stored as bits in 1 byte
 ALVA_RTC_REPORT = b"\x0a"
 ALVA_RTC_STR_LENGTH = 7
 ALVA_RTC_MAX_DRIFT = 5
+ALVA_RTC_MIN_YEAR = 1900
+ALVA_RTC_MAX_YEAR = 3000
 
 ALVA_MODEL_IDS = {
 	0x40: "BC640",
@@ -142,7 +144,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			displaySettings = self._dev.getFeature(ALVA_DISPLAY_SETTINGS_REPORT)
 			self.numCells = ord(displaySettings[ALVA_DISPLAY_SETTINGS_CELL_COUNT_POS])
 			timeStr = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
-			self._handleTime(timeStr)
+			try:
+				self._handleTime(timeStr)
+			except:
+				log.debugWarning("Getting time from ALVA display failed", exc_info=True)
 			keySettings = self._dev.getFeature(ALVA_KEY_SETTINGS_REPORT)[ALVA_KEY_SETTINGS_POS]
 			self._rawKeyboardInput = bool(ord(keySettings) & ALVA_KEY_RAW_INPUT_MASK)
 		else:
@@ -235,6 +240,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		elif cmd == b"r": # Raw keyboard messages enable/disable
 			self._rawKeyboardInput = bool(ord(value))
 		elif cmd == b"H": # Time
+			# Handling time for serial displays does not block initialization if it fails.
 			self._handleTime(value)
 
 	def _hidOnReceive(self, data):
@@ -293,14 +299,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _handleTime(self, timeStr):
 		ords = map(ord, timeStr)
-		displayDateTime = datetime.datetime(
-			year=ords[0] | ords[1] << 8,
-			month=ords[2],
-			day=ords[3],
-			hour=ords[4],
-			minute=ords[5],
-			second=ords[6]
-		)
+		year=ords[0] | ords[1] << 8
+		if not ALVA_RTC_MIN_YEAR <= year <= ALVA_RTC_MAX_YEAR:
+			log.debug("This ALVA display doesn't reveal clock information")
+			return
+		try:
+			displayDateTime = datetime.datetime(
+				year=year,
+				month=ords[2],
+				day=ords[3],
+				hour=ords[4],
+				minute=ords[5],
+				second=ords[6]
+			)
+		except ValueError:
+			log.debugWarning("Invalid time/date of ALVA display: %r"%timeStr)
+			return
 		localDateTime = datetime.datetime.today()
 		if abs((displayDateTime - localDateTime).total_seconds()) >= ALVA_RTC_MAX_DRIFT:
 			log.debugWarning("Display time out of sync: %s"%displayDateTime.isoformat())
