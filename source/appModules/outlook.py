@@ -34,7 +34,7 @@ from NVDAObjects.UIA import UIA
 silentMessageClasses = [
 	"IPM.Appointment",
 	"IPM.Contact",
-	"IPM.Note",
+	"IPM.Note", # The class for a message
 ]
 
 #: The number of seconds in a day, used to make all day appointments and selections less verbose.
@@ -438,10 +438,9 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				# The last valuePart indicates whether the message is read or unread.
 				# Do not expose the read state
 				lastPart = valueCount if unread else valueCount-1
-				# The first valuePart is the type of the selection, e.g. Message, Contact, meeting request.
-				# We can safely assume that the message class of a regular message or appointment is one word.
-				# For messages other than regular mail messages, the message class is relevant.
-				# Contact folders may contain both contacts and distribution lists,
+				# The first valuePart is the type of the selection, e.g. Message, Contact.
+				# We can safely assume that the classes in silentMessageClasses are one word.
+				# For messages other than regular mail messages (e.g. meeting request), the message class is relevant.
 				firstPart = 1 if messageClass in silentMessageClasses else 0
 				textList.extend(valueParts[firstPart:lastPart])
 		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
