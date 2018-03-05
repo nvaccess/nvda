@@ -272,7 +272,7 @@ addTable("mn-in-g1.utb", _("Manipuri grade 1"))
 addTable("mn-MN-g1.utb", _("Mongolian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("mn-MN-g2.ctb", _("Mongolian grade 2"))
+addTable("mn-MN-g2.ctb", _("Mongolian grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("mr-in-g1.utb", _("Marathi grade 1"))
