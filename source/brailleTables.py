@@ -68,6 +68,7 @@ RENAMED_TABLES = {
 	"en-us-comp8.ctb" : "en-us-comp8-ext.utb",
 	"gr-gr-g1.utb":"el.ctb",
 	"hr.ctb":"hr-comp8.utb",
+	"mn-MN.utb":"mn-MN-g1.utb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
 	"no-no.ctb":"no-no-comp8.ctb",
@@ -268,7 +269,10 @@ addTable("ml-in-g1.utb", _("Malayalam grade 1"))
 addTable("mn-in-g1.utb", _("Manipuri grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("mn-MN.utb", _("Mongolian"))
+addTable("mn-MN-g1.utb", _("Mongolian grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("mn-MN-g2.ctb", _("Mongolian grade 2"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("mr-in-g1.utb", _("Marathi grade 1"))
