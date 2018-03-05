@@ -342,7 +342,9 @@ class CalendarView(IAccessible):
 			startText="%s %s"%(startDateText,startText)
 		CalendarView._lastStartDate=startDate
 		if endDate!=startDate:
-			if (endDate - startDate).total_seconds()==SECONDS_PER_DAY:
+			if ((startTime.hour, startTime.minute, startTime.second) == (0, 0, 0) and
+				(endDate - startDate).total_seconds()==SECONDS_PER_DAY
+			):
 				# Translators: a message reporting the date of a whole day Outlook calendar entry
 				return _("{date} (entire day)").format(date=startDateText)
 			endText="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
