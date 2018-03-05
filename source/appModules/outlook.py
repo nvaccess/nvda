@@ -37,7 +37,7 @@ silentMessageClasses = [
 	"IPM.Note",
 ]
 
-#: The number of seconds in a day, used to make whole day appointments and selections less verbose.
+#: The number of seconds in a day, used to make all day appointments and selections less verbose.
 #: Type: float
 SECONDS_PER_DAY = 86400.0
 
@@ -345,8 +345,8 @@ class CalendarView(IAccessible):
 			if ((startTime.hour, startTime.minute, startTime.second) == (0, 0, 0) and
 				(endDate - startDate).total_seconds()==SECONDS_PER_DAY
 			):
-				# Translators: a message reporting the date of a whole day Outlook calendar entry
-				return _("{date} (entire day)").format(date=startDateText)
+				# Translators: a message reporting the date of a all day Outlook calendar entry
+				return _("{date} (all day)").format(date=startDateText)
 			endText="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
 		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
