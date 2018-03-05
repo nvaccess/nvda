@@ -190,7 +190,7 @@ addTable("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille"))
 addTable("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("fr-bfu-g2.ctb", _("French (unified) Grade 2"), contracted=True)
+addTable("fr-bfu-g2.ctb", _("French (unified) grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ga-g1.utb", _("Irish grade 1"))
