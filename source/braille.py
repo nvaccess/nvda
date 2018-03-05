@@ -14,6 +14,7 @@ import threading
 import time
 import wx
 import louis
+import gui
 import winKernel
 import keyboardHandler
 import baseObject
@@ -1595,7 +1596,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		cursorShouldBlink = config.conf["braille"]["cursorBlink"]
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
 		if cursorShouldBlink and blinkRate:
-			self._cursorBlinkTimer = wx.PyTimer(self._blink)
+			self._cursorBlinkTimer = gui.NonReEntrantTimer(self._blink)
 			self._cursorBlinkTimer.Start(blinkRate)
 
 	def _writeCells(self, cells):

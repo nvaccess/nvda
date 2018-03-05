@@ -430,39 +430,29 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# Doing this here is a bit ugly, but we don't want these modules imported
 	# at module level, including wx.
 	log.debug("Initializing core pump")
-	class CorePump(wx.Timer):
+	class CorePump(gui.NonReEntrantTimer):
 		"Checks the queues and executes functions."
-		_inNotify=False
-		def Notify(self):
-			if self._inNotify:
-				# #7077: Timers in wxPython 4 are now re-entrant. However, wx.Yield is not allowed to be called recursively.
-				# Therefore, stop this timer callback from ever being re-entered.
-				# Note that If code does try to request a pump from within this call, it will be detected and re-queued by restarting the timer.
-				return
+		def run(self):
+			global _isPumpPending
+			_isPumpPending = False
+			watchdog.alive()
 			try:
-				self._inNotify=True
-				global _isPumpPending
-				_isPumpPending = False
-				watchdog.alive()
-				try:
-					if touchHandler.handler:
-						touchHandler.handler.pump()
-					JABHandler.pumpAll()
-					IAccessibleHandler.pumpAll()
-					queueHandler.pumpAll()
-					mouseHandler.pumpAll()
-					braille.pumpAll()
-				except:
-					log.exception("errors in this core pump cycle")
-				baseObject.AutoPropertyObject.invalidateCaches()
-				watchdog.asleep()
-				if _isPumpPending and not _pump.IsRunning():
-					# #3803: A pump was requested, but the timer was ignored by a modal loop
-					# because timers aren't re-entrant.
-					# Therefore, schedule another pump.
-					_pump.Start(PUMP_MAX_DELAY, True)
-			finally:
-				self._inNotify=False
+				if touchHandler.handler:
+					touchHandler.handler.pump()
+				JABHandler.pumpAll()
+				IAccessibleHandler.pumpAll()
+				queueHandler.pumpAll()
+				mouseHandler.pumpAll()
+				braille.pumpAll()
+			except:
+				log.exception("errors in this core pump cycle")
+			baseObject.AutoPropertyObject.invalidateCaches()
+			watchdog.asleep()
+			if _isPumpPending and not _pump.IsRunning():
+				# #3803: A pump was requested, but the timer was ignored by a modal loop
+				# because timers aren't re-entrant.
+				# Therefore, schedule another pump.
+				_pump.Start(PUMP_MAX_DELAY, True)
 	global _pump
 	_pump = CorePump()
 	requestPump()

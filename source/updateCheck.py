@@ -159,7 +159,7 @@ class AutoUpdateChecker(UpdateChecker):
 	AUTO = True
 
 	def __init__(self):
-		self._checkTimer = wx.PyTimer(self.check)
+		self._checkTimer = gui.NonReEntrantTimer(self.check)
 		# Set the initial check based on the last check time.
 		# #3260: If the system time is earlier than the last check,
 		# treat the last check as being right now (so the next will be tomorrow).
@@ -277,7 +277,7 @@ class UpdateDownloader(object):
 		"""
 		self._shouldCancel = False
 		# Use a timer because timers aren't re-entrant.
-		self._guiExecTimer = wx.PyTimer(self._guiExecNotify)
+		self._guiExecTimer = gui.NonReEntrantTimer(self._guiExecNotify)
 		gui.mainFrame.prePopup()
 		# Translators: The title of the dialog displayed while downloading an NVDA update.
 		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
