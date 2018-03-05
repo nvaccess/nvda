@@ -45,6 +45,7 @@ Points forts de cette version : support des graphiques sous Microsoft word et Po
 - En sortie vocale et braille, l'état des contrôles sera maintenant toujours indiqués dans le même ordre, qu'il soit positif ou négatif. #7076
 - Dans les applications telles que Windows 10 Mail, NVDA ne manquera plus d'annoncer les caractères effacés lors de l'appui sur retour-arrière. (#7456)
 - Toutes les touches du terminal braille Hims Braille Sense Polaris fonctionnent maintenant comme prévu. (#7865)
+- NVDA n'échoue plus au démarrage sous Windows 7 à cause d'une api-ms dll interne, quand une version particulière des redistribuables de Visual Studio 2017 ont été installés par une autre application. (#7975)
 
 
 == Changements pour les Développeurs ==
