@@ -359,6 +359,9 @@ addTable("te-in-g1.utb", _("Telugu grade 1"))
 addTable("tr.ctb", _("Turkish grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("uk.utb", _("Ukrainian"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("unicode-braille.utb", _("Unicode braille"), output=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
