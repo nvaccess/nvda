@@ -29,7 +29,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				attrs[attr]=int(attrVal)
 
 		current = attrs.get("IAccessible2::attribute_current")
-		if current is not None:
+		if current not in (None, 'false'):
 			attrs['current']= current
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:

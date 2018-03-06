@@ -44,6 +44,7 @@ Af væsentlige ændringer i denne version af NVDA kan nævnes understøttelse af
 - Kontroltilstande vil nu altid rapporteres med tale og punkt i samme rækkefølg, uanset om de er positive eller negative. Fixes #7076
 - I apps som Windows 10 Mail vil NVDA nu korrekt rapportere når tegn slettes ved hjælp af backspace. (#7456)
 - All taster på punktdisplayet Hims Braille Sense Polaris virker nu som forventet. (#7865)
+- NVDA vil ikke længere klage over en manglende internal MS-API DLL og være ud af stand til at starte op i Windows 7, når en bestemt version af Visual Studio 2017 redistributables er blevet installerede af en anden applikation. (#7975)
 
 
 == Ændringer for udviklere ==
