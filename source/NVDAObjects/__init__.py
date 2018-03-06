@@ -831,10 +831,10 @@ Tries to force this object to take the focus.
 
 	def _get_isCurrent(self):
 		"""Gets the value that indicates whether this object is the current element in a set of related 
-		elements. This maps to aria-current. Normally returns False. If this object is current
-		it will return one of the following values: True, "page", "step", "location", "date", "time"
+		elements. This maps to aria-current. Normally returns None. If this object is current
+		it will return one of the following values: "true", "page", "step", "location", "date", "time"
 		"""
-		return False
+		return None
 
 	def _get_shouldAcceptShowHideCaretEvent(self):
 		"""Some objects/applications send show/hide caret events when we don't expect it, such as when the cursor is blinking.

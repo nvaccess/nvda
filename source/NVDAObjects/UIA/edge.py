@@ -457,18 +457,19 @@ class EdgeNode(UIA):
 	# RegEx to get the value for the aria-current property. This will be looking for a the value of 'current'
 	# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
 	# character and before the ';' character.
-	# This could be one of: True, "page", "step", "location", "date", "time"
-	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(\w+);")
+	# This could be one of: "false", "true", "page", "step", "location", "date", "time"
+	# "false" is ignored by the regEx and will not produce a match
+	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
 
 	def _get_isCurrent(self):
 		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		match = self.RE_ARIA_CURRENT_PROP_VALUE.match(ariaProperties)
+		match = self.RE_ARIA_CURRENT_PROP_VALUE.search(ariaProperties)
 		log.debug("aria props = %s" % ariaProperties)
 		if match:
 			valueOfAriaCurrent = match.group(1)
 			log.debug("aria current value = %s" % valueOfAriaCurrent)
 			return valueOfAriaCurrent
-		return False
+		return None
 
 	def _get_placeholder(self):
 		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
