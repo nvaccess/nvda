@@ -302,7 +302,9 @@ class SynthDriver(SynthDriver):
 	def _getDefaultVoice(self):
 		"""
 		Finds the best available voice that can be used as a default.
-		It first tries finding a voice with the same language and country as the user's configured Windows language (E.g. en_AU), else one that matches just the language (E.g. en), else simply the first available.
+		It first tries finding a voice with the same language and country as the user's configured Windows language (E.g. en_AU), 
+		else one that matches just the language (E.g. en), 
+		else simply the first available.
 		@returns: the ID of the voice, suitable for passing to self.voice for setting.
 		@rtype: string
 		"""

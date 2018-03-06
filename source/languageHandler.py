@@ -146,11 +146,13 @@ def getWindowsLanguage():
 		localeName=locale.windows_locale[windowsLCID]
 	except KeyError:
 		# #4203: some locale identifiers from Windows 8 don't exist in Python's list.
-		# Therefore use window' own function to get the locale name.
+		# Therefore use windows' own function to get the locale name.
 		# Eventually this should probably be used all the time.
-		buf=ctypes.create_unicode_buffer(32)
+		bufSize=32
+		buf=ctypes.create_unicode_buffer(bufSize)
+		dwFlags=0
 		try:
-			ctypes.windll.kernel32.LCIDToLocaleName(windowsLCID,buf,32,0)
+			ctypes.windll.kernel32.LCIDToLocaleName(windowsLCID,buf,bufSize,dwFlags)
 		except AttributeError:
 			pass
 		localeName=buf.value
