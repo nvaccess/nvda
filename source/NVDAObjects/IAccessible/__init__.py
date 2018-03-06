@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NVDA Contributors
+#Copyright (C) 2006-2018 NV Access Limited 
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1073,6 +1073,11 @@ the NVDAObject for IAccessible
 			index=self.IA2PhysicalRowNumber
 		return index
 
+	def _get_rowSpan(self):
+		if self._IATableCell:
+			return self._IATableCell.rowExtent
+		raise NotImplementedError
+
 	def _get_IA2PhysicalColumnNumber(self):
 		table=self.table
 		if table:
@@ -1108,6 +1113,11 @@ the NVDAObject for IAccessible
 		if index is None:
 			index=self.IA2PhysicalColumnNumber
 		return index
+
+	def _get_columnSpan(self):
+		if self._IATableCell:
+			return self._IATableCell.columnExtent
+		raise NotImplementedError
 
 	def _get_IA2PhysicalRowCount(self):
 		if hasattr(self,'IAccessibleTableObject'):

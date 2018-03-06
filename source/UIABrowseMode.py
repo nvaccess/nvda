@@ -336,6 +336,9 @@ class UIABrowseModeDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeIn
 class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=UIABrowseModeDocumentTextInfo
+	# UIA browseMode documents cannot remember caret positions across loads (I.e. when going back a page in Edge) 
+	# Because UIA TextRanges are opaque and are tied specifically to one particular document.
+	shouldRememberCaretPositionAcrossLoads=False
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType.startswith("heading"):
