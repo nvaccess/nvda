@@ -623,7 +623,8 @@ Otherwise, the add-on will not install.
 - lastTestedNVDAVersion: The last version of NVDA this add-on has been tested with.
 -
 
-The minimumNVDAVersion and lastTestedNVDAVersion keys are strictly spoken not mandatory, but might become mandatory in future.
+The minimumNVDAVersion and lastTestedNVDAVersion keys are not currently mandatory.
+It is highly recommended that these keys be included as it is expected that they will become mandatory keys in the future.
 
 +++ An Example Manifest File +++
 ```
