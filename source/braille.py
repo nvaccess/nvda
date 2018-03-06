@@ -464,6 +464,8 @@ def getBrailleTextForProperties(**propertyValues):
 	cellCoordsText=propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
+	rowSpan = propertyValues.get("rowSpan")
+	columnSpan = propertyValues.get("columnSpan")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:
@@ -511,17 +513,29 @@ def getBrailleTextForProperties(**propertyValues):
 			textList.append(_('lv %s')%positionInfo['level'])
 	if rowNumber:
 		if includeTableCellCoords and not cellCoordsText: 
-			# Translators: Displayed in braille for a table cell row number.
-			# %s is replaced with the row number.
-			textList.append(_("r%s") % rowNumber)
+			if rowSpan>1:
+				# Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+				# Occurences of %s are replaced with the corresponding row numbers.
+				rowStr = _("r{rowNumber}-{rowSpan}").format(rowNumber=rowNumber,rowSpan=rowNumber+rowSpan-1)
+			else:
+				# Translators: Displayed in braille for a table cell row number.
+				# %s is replaced with the row number.
+				rowStr = _("r{rowNumber}").format(rowNumber=rowNumber)
+			textList.append(rowStr)
 	if columnNumber:
 		columnHeaderText = propertyValues.get("columnHeaderText")
 		if columnHeaderText:
 			textList.append(columnHeaderText)
 		if includeTableCellCoords and not cellCoordsText:
-			# Translators: Displayed in braille for a table cell column number.
-			# %s is replaced with the column number.
-			textList.append(_("c%s") % columnNumber)
+			if columnSpan>1:
+				# Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+				# Occurences of %s are replaced with the corresponding column numbers.
+				columnStr = _("c{columnNumber}-{columnSpan}").format(columnNumber=columnNumber,columnSpan=columnNumber+columnSpan-1)
+			else:
+				# Translators: Displayed in braille for a table cell column number.
+				# %s is replaced with the column number.
+				columnStr = _("c{columnNumber}").format(columnNumber=columnNumber)
+			textList.append(columnStr)
 	current = propertyValues.get('current', False)
 	if current:
 		try:
@@ -628,6 +642,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"states": states,
 			"rowNumber": field.get("table-rownumber"),
 			"columnNumber": field.get("table-columnnumber"),
+			"rowSpan": field.get("table-rowsspanned"),
+			"columnSpan": field.get("table-columnsspanned"),
 			"includeTableCellCoords": reportTableCellCoords,
 			"current": current,
 		}
