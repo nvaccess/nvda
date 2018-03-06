@@ -1,6 +1,6 @@
 #_UIAHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -50,6 +50,11 @@ HorizontalTextAlignment_Justified=3
 
 # The name of the WDAG (Windows Defender Application Guard) process
 WDAG_PROCESS_NAME=u'hvsirdpclient'
+
+goodUIAWindowClassNames=[
+	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
+	'RAIL_WINDOW',
+]
 
 badUIAWindowClassNames=[
 	"SysTreeView32",
@@ -295,8 +300,13 @@ class UIAHandler(COMObject):
 			return False
 		import NVDAObjects.window
 		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
-		# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
-		if windowClass=='RAIL_WINDOW':
+		# For certain window classes, we always want to use UIA.
+		if windowClass in goodUIAWindowClassNames:
+			return True
+		# allow the appModule for the window to also choose if this window is good
+		# An appModule should be able to override bad UIA class names as prescribed by core
+		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		if appModule and appModule.isGoodUIAWindow(hwnd):
 			return True
 		# There are certain window classes that just had bad UIA implementations
 		if windowClass in badUIAWindowClassNames:
@@ -308,7 +318,6 @@ class UIAHandler(COMObject):
 			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
 				return False
 		# allow the appModule for the window to also choose if this window is bad
-		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
 		# Ask the window if it supports UIA natively
