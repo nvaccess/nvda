@@ -24,6 +24,7 @@ What's New in NVDA
 
 == Changes for developers ==
 - The developer info for UIA objects now contains a list of the UIA patterns available. (#5712)
+- App modules can now force certain windows to always use UIA by implementing the isGoodUIAWindow method. (#7961)
 
 
 = 2018.1 =
