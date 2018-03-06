@@ -254,14 +254,18 @@ class TimeSyncMixin(object):
 
 	def handleTime(self, timeStr):
 		ords = map(ord, timeStr)
-		displayDateTime = datetime.datetime(
-			year=ords[0] << 8 | ords[1],
-			month=ords[2],
-			day=ords[3],
-			hour=ords[4],
-			minute=ords[5],
-			second=ords[6]
-		)
+		try:
+			displayDateTime = datetime.datetime(
+				year=ords[0] << 8 | ords[1],
+				month=ords[2],
+				day=ords[3],
+				hour=ords[4],
+				minute=ords[5],
+				second=ords[6]
+			)
+		except ValueError:
+			log.debugWarning("Invalid time/date of Handy Tech display: %r"%timeStr)
+			return
 		localDateTime = datetime.datetime.today()
 		if abs((displayDateTime - localDateTime).total_seconds()) >= 5:
 			log.debugWarning("Display time out of sync: %s"%displayDateTime.isoformat())
