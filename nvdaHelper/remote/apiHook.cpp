@@ -78,7 +78,7 @@ defMHFP(MH_DisableHook);
 		return false;
 	}
 	if ((res=MH_Initialize_fp())!=MH_OK) {
-		LOG_ERROR("MH_CreateHook failed with " << res);
+		LOG_ERROR("MH_Initialize failed with " << res);
 		FreeLibrary(minhookLibHandle);
 		minhookLibHandle=NULL;
 		return false;
