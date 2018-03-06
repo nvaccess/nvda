@@ -1834,14 +1834,6 @@ Katso lisätietoja Audiologicin verkkosivustolta osoitteesta www.audiologic.it.
 
 Tämä syntetisaattori ei tue [tavaustoimintoa #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer for NVDA ++[Vocalizer]
-Nuance Vocalizer on Nuance Communications, Inc.:n kehittämä ja Tiflotecnia, Lda:n erityisesti NVDA:ta varten paketoima kaupallinen ja korkealaatuinen puhesyntetisaattori.
-Vocalizeriin sisältyy yli 50 eri puheääntä yli 30 kielellä.
-Kaikki syntetisaattorin osat ja puheäänet toimitetaan lisäosapaketteina, mikä mahdollistaa käytön NVDA:n massamuistiversioissa.
-
-Saat lisätietoja Nuance Vocalizer for NVDA:sta ja sen ostamisesta tuotteen verkkosivustolta osoitteesta [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Prosenttiosuus tämän tuotteen myynnistä lahjoitetaan NV Accessille NVDA:n jatkokehityksen rahoittamiseen.
-
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
@@ -2111,7 +2103,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Jatkuva luku | c1, c2, c3, c4, c5 ja c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 NVDA tukee [HIMSin http://www.hims-inc.com/] Braille Sense-, Braille EDGE-, Smart Beetle- ja Sync Braille -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
 USB-liitäntää käytettäessä tietokoneelle on asennettava HIMSin ajurit.
 Voit ladata ne tältä sivulta: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2460,6 +2452,86 @@ Tämän vuoksi, ja jotta säilytetään yhteensopivuus muiden taiwanilaisten ruu
 || Nimi | Näppäin |
 | Vieritä taaksepäin | Laskinnäppäimistön miinus |
 | Vieritä eteenpäin | Laskinnäppäimistön plus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+NVDA tukee [Eurobraillen http://www.eurobraille.fr/] Esys-, Esytime- ja Iris-pistenäyttöjä.
+Esys- ja Esytime-Evo-laitteiden kytkemiseen voidaan käyttää USB-liitäntää tai bluetooth-yhteyttä.
+Vanhemmat Esytime-näytöt tukevat vain USB:tä.
+Iris-mallit voidaan kytkeä vain sarjaportin kautta.
+Siksi näiden näyttöjen käyttämä portti kannattaa valita sen jälkeen, kun olet valinnut tämän ajurin Pistekirjoituksen asetukset -valintaikkunasta.
+
+Iris- ja Esys-näytöissä on 10-näppäiminen pistekirjoitusnäppäimistö.
+Kahdesta Väli-näppäimen tavoin sijoitellusta näppäimestä vasemmanpuoleinen vastaa Askelpalautinta ja oikea Väli-näppäintä.
+
+Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso kuvaukset näppäinten paikoista näytön käyttöohjeesta.
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä taaksepäin | switch1-6left, l1 |
+| Vieritä eteenpäin | switch1-6Right, l8 |
+| Siirrä nykyiseen kohdistukseen | switch1-6Left+switch1-6Right, l1+l8 |
+| Siirrä pistesoluun | routing, doubleRouting|
+| Siirrä edelliselle riville tarkastelutilassa | joystick1Up |
+| Siirrä seuraavalle riville tarkastelutilassa | joystick1Down |
+| Siirrä edelliseen merkkiin tarkastelutilassa | joystick1Left |
+| Siirrä seuraavaan merkkiin tarkastelutilassa | joystick1Right |
+| Vaihda edelliseen tarkastelutilaan | joystick1Left+joystick1Up |
+| Vaihda seuraavaan tarkastelutilaan | joystick1Right+joystick1Down |
+| Poista viimeksi syötetty pistesolu tai merkki | askelpalautin |
+| Käännä mikä tahansa pistekirjoitussyöte ja paina Enter-näppäintä | askelpalautin+väli |
+| Insert-näppäin | piste 3+piste 5+väli, l7 |
+| Delete-näppäin | piste 3+piste 6+väli |
+| Home-näppäin | piste 1+piste 2+piste 3+väli, joystick2Left+joystick2Up |
+| End-näppäin | piste 4+piste 5+piste 6+väli, joystick2Right+joystick2Down |
+| Nuoli vasemmalle -näppäin | piste 2+väli, joystick2Left, nuoli vasemmalle |
+| Nuoli oikealle -näppäin | piste 5+väli, joystick2Right, nuoli oikealle |
+| Nuoli ylös -näppäin | piste 1+väli, joystick2Up, nuoli ylös |
+| Nuoli alas -näppäin | piste 6+väli, joystick2Down, nuoli alas |
+| Enter-näppäin | joystick2Center |
+| Page up -näppäin | piste 1+piste 3+väli |
+| Page down -näppäin | piste 4+piste 6+väli |
+| Numeronäppäimistön 1 | piste 1+piste 6+askelpalautin |
+| Numeronäppäimistön 2 | piste 1+piste 2+piste 6+askelpalautin |
+| Numeronäppäimistön 3 | piste 1+piste 4+piste 6+askelpalautin |
+| Numeronäppäimistön 4 | piste 1+piste 4+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön 5 | piste 1+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön 6 | piste 1+piste 2+piste 4+piste 6+askelpalautin |
+| Numeronäppäimistön 7 | piste 1+piste 2+piste 4+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön 8 | piste 1+piste 2+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön 9 | piste 2+piste 4+piste 6+askelpalautin |
+| Numeronäppäimistön Insert -näppäin | piste 3+piste 4+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön pilkku | piste 2+askelpalautin |
+| Numeronäppäimistön / | piste 3+piste 4+askelpalautin |
+| Numeronäppäimistön * | piste 3+piste 5+askelpalautin |
+| Numeronäppäimistön miinus | piste 3+piste 6+askelpalautin |
+| Numeronäppäimistön plus | piste 2+piste 3+piste 5+askelpalautin |
+| Numeronäppäimistön Enter -näppäin | piste 3+piste 4+piste 5+askelpalautin |
+| Esc-näppäin | piste 1+piste 2+piste 4+piste 5+väli, l2 |
+| Sarkain-näppäin | piste 2+piste 5+piste 6+väli, l3 |
+| Vaihto+Sarkain-näppäinyhdistelmä | piste 2+piste 3+piste 5+väli |
+| Print Screen -näppäin | piste 1+piste 3+piste 4+piste 6+väli |
+| Pause-näppäin | piste 1+piste 4+väli |
+| Sovellusnäppäin | piste 5+piste 6+askelpalautin |
+| F1-näppäin | piste 1+askelpalautin |
+| F2-näppäin | piste 1+piste 2+askelpalautin |
+| F3-näppäin | piste 1+piste 4+askelpalautin |
+| F4-näppäin | piste 1+piste 4+piste 5+askelpalautin |
+| F5-näppäin | piste 1+piste 5+askelpalautin |
+| F6-näppäin | piste 1+piste 2+piste 4+askelpalautin |
+| F7-näppäin | piste 1+piste 2+piste 4+piste 5+askelpalautin |
+| F8-näppäin | piste 1+piste 2+piste 5+askelpalautin |
+| F9-näppäin | piste 2+piste 4+askelpalautin |
+| F10-näppäin | piste 2+piste 4+piste 5+askelpalautin |
+| F11-näppäin | piste 1+piste 3+askelpalautin |
+| F12-näppäin | piste 1+piste 2+piste 3+askelpalautin |
+| Windows-näppäin | piste 1+piste 2+piste 3+piste 4+askelpalautin |
+| Caps Lock -näppäin | piste 7+askelpalautin, piste 8+askelpalautin |
+| Num Lock -näppäin | piste 3+askelpalautin, piste 6+askelpalautin |
+| Vaihto-näppäin | piste 7+väli, l4 |
+| Ctrl-näppäin | piste 7+piste 8+väli, piste 1+piste 7+piste 8+väli, piste 4+piste 7+piste 8+väli, l5 |
+| Alt-näppäin | piste 8+väli, piste 1+piste 8+väli, piste 4+piste 8+väli, l6 |
+| Ota HID-näppäimistösyötteen emulointi käyttöön tai poista se käytöstä | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

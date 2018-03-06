@@ -7,14 +7,14 @@ Ghidul Utilizatorului NVDA NVDA_VERSION
 = Cuprins =[toc]
 %%toc
 
-+ Introducere +[Introduction]
++ Introducere +[Introducere]
 Bun venit în NVDA!
 
 NonVisual Desktop Access (NVDA) este un cititor de ecran gratuit și cu sursă disponibilă pentru sistemul de operare Microsoft Windows.
 Folosind sintetizarea vocală și Braille pentru a raporta acțiunile, acesta permite nevăzătorilor și persoanelor cu deficiență de vedere să acceseze calculatoarele care rulează Windows fără un cost adițional față de persoanele cu vedere.
 NVDA este dezvoltat de [NV Access https://www.nvaccess.org/], cu contribuții din partea comunității.
 
-++ Caracteristici generale ++[GeneralFeatures]
+++ Caracteristici generale ++[CaracteristiciGenerale]
 NVDA permite nevăzătorilor și persoanelor cu deficiență de vedere să interacționeze și să aibă acces la sistemul de operare Windows și multe alte terțe aplicații.
 
 Trăsăturile importante includ:
@@ -28,29 +28,30 @@ Trăsăturile importante includ:
 - Tradus în 52 de limbi
 - Suport pentru sistemele de operare Windows moderne, incluzând atât variantele pe 32 cât și pe 64 biți
 - Capacitatea de a rula pe ecranul de autentificare în Windows și alte ecrane de siguranță
+- Raportare de comenzi și text în timpul folosirii gesturilor de atingere pe ecrane tactile
 - Suport pentru interfețe de control cunoscute cum ar fi Microsoft Active Accessibility, Java Access Bridge, IAccessible2 și UI Automation (UI Automation disponibil doar pentru Windows 7 sau mai nou)
 - Suport pentru Windows Command Prompt și aplicații de consolă
 -
 
-++ Internaționalizare ++[Internationalization]
+++ Internaționalizare ++[Internationalizare]
 Este important ca oamenii de oriunde din lume, indiferent de ce limbă vorbesc, să aibă același acces la tehnologie.
 În afară de engleză, NVDA a fost tradus în 52 de limbi incluzând: afrikaans, albaneză, amharică, arabă, aragoneză, portugheză braziliană, bulgară, birmană, catalană, spaniolă columbiană, croată, cehă, daneză, neerlandeză, persană, finlandeză, franceză, galiciană, greacă, georgiană, germană, ebraică, hindi, maghiară, islandeză, irlandeză, italiană, japoneză, coreeană, kanareză, kirghiză, lituaniană, macedoneană, nepaleză, norvegiană, poloneză, portugheză, punjabi, română, rusă, sârbă, slovacă, slovenă, spaniolă, suedeză, tamil, thailandeză, chineză tradițională și simplificată, turcă, ucraineană și vietnameză.
 
-++ Suport pentru sintetizator de voce ++[SpeechSynthesizerSupport]
+++ Suport pentru sintetizator de voce ++[SuportSintVoce]
 În afară de furnizarea mesajelor și interfeței în mai multe limbi, NVDA mai poate permite utilizatorilor să citească texte în orice limbă, atâta timp cât au un sintetizator de voce care poate vorbi acea limbă.
 
 NVDA are încorporat [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sintetizator de voce multilingv, gratuit și cu sursă disponibilă.
 
-Informații despre alte sintetizatoare de voce suportate de NVDA pot fi găsite în secțiunea [Sintetizatoare de voce suportate #SupportedSpeechSynths].
+Informații despre alte sintetizatoare de voce suportate de NVDA pot fi găsite în secțiunea [Sintetizatoare de voce suportate #SintetizatoareVorbireCompatibile].
 
-++ Suport pentru Braille ++[BrailleSupport]
+++ Suport pentru Braille ++[SuportBraille]
 Pentru utilizatorii care dețin un afișaj braille actualizabil, NVDA poate comunica informația în braille.
 Sunt compatibile tastaturi braille atât cu coduri abreviate cât și neabreviate.
-Vă rugăm citiți secțiunea [Afișaje braille compatibile #SupportedBrailleDisplays] pentru informații despre afișajele braille suportate.
+Vă rugăm citiți secțiunea [Afișaje braille compatibile #AfisBrailleCompatibile] pentru informații despre afișajele braille suportate.
 
 NVDA suportă coduri braille pentru multe limbi, inclusiv coduri abreviate, neabreviate și braille pentru calculatoare, pentru multe limbi.
 
-++ Licență și Drept de Autor ++[LicenseAndCopyright]
+++ Licență și Drept de Autor ++[LicentaSiAutor]
 NVDA este cu drept de autor NVDA_COPYRIGHT_YEARS pentru colaboratorii NVDA.
 
 NVDA este acoperit de Licența GNU General Public License (Versiune 2).
@@ -58,7 +59,7 @@ Sunteți liberi să distribuiți sau să schimbați acest program în orice mod 
 Acest lucru se aplică atât originalului cât și copiilor modificate ale programului, plus oricărui alt program care folosește codul extras din acest program.
 Pentru alte detalii, puteți [vedea licența online. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] (în engleză)
 
-+ Cerințe de sistem +[SystemRequirements]
++ Cerințe de sistem +[CerinteSistem]
 - Sisteme de operare: toate versiunile Windows 7, Windows 8, Windows 8.1 și Windows 10 pe 32 biți și 64 biți, precum și versiunile Server ale lor pornind de la Windows Server 2008 R2.
  - Pentru Windows 7, NVDA necesită Service Pack 1 sau o actualizare superioară.
  - Pentru Windows Server 2008 R2, NVDA necesită Service Pack 1 sau o actualizare superioară.
@@ -67,7 +68,7 @@ Pentru alte detalii, puteți [vedea licența online. http://www.gnu.org/licenses
 - Aproximativ 90 MB de spațiu de stocare.
 -
 
-+ Obținerea și configurarea NVDA +[GettingAndSettingUpNVDA]
++ Obținerea și configurarea NVDA +[ObtSiConfigNVDA]
 Dacă încă nu ați obținut o copie a NVDA, o puteți descărca de la [www.nvaccess.org NVDA_URL].
 
 Mergeți la secțiunea Download și veți găsi un link pentru descărcarea ultimei versiuni de NVDA.
@@ -86,7 +87,7 @@ Copia portabilă are, de asemenea, capacitatea de a se instala, mai târziu, pe 
 
 Aveți, de asemenea, opțiunea să folosiți copia temporară a NVDA (de ex. în scop demonstrativ), dar pornirea NVDA în acest mod, de fiecare dată, poate deveni o mare consumatoare de timp.
 
-++ Restricții pentru copiile Portabilă și Temporară ++[PortableAndTemporaryCopyRestrictions]
+++ Restricții pentru copiile Portabilă și Temporară ++[RestrictiiPortabilaSiTemporara]
 Pe lângă incapacitatea de a porni automat în timpul și/sau după autentificare, copiile portabilă și temporară ale NVDA mai au și următoarele restricții:
 - Incapacitatea de interacțiune cu aplicații care se execută cu privilegii de administrator, desigur în afara cazului în care NVDA însuși a fost pornit cu aceste privilegii (nerecomandat)
 - Incapacitatea de a citi ferestre de Controlul Contului Utilizatorului (UAC) când se încearcă pornirea unei aplicații cu privilegii de administrator.
@@ -95,7 +96,7 @@ Pe lângă incapacitatea de a porni automat în timpul și/sau după autentifica
 - Windows 8 și mai nou: atenuarea audio nu este suportată.
 -
 
-++ Instalarea NVDA ++[InstallingNVDA]
+++ Instalarea NVDA ++[InstalNVDA]
 Dacă instalați NVDA direct din pachetul de instalare, apăsați butonul „Instalează NVDA”.
 Dacă ați închis deja această fereastră de dialog sau doriți să instalați dintr-o copie portabilă, alegeți opțiunea „Instalează NVDA” care apare în „Instrumente” din meniul NVDA.
 
@@ -105,11 +106,11 @@ Apăsând butonul „Continuă”, va porni instalarea NVDA.
 Odată finalizată instalarea, va apărea un mesaj care vă va notifica succesul operației.
 Apăsând „OK”, în acest moment, se va reporni copia nou-instalată a NVDA.
 
-+++ Pornirea la autentificarea în Windows +++[StartAtWindowsLogon]
++++ Pornirea la autentificarea în Windows +++[PornireCuWindows]
 Această opțiune vă permite să alegeți dacă NVDA ar trebui să pornească sau nu automat, în timpul afișării ferestrei de autentificare în Windows, înainte de a vă introduce parola.
 Opțiunea include și controlul UAC și alte ecrane securizate.
 
-+++ Creează scurtătură pe spațiul de lucru (ctrl+alt+n) +++[CreateDesktopShortcut]
++++ Creează scurtătură pe spațiul de lucru (ctrl+alt+n) +++[CreeazaScurtaturaLucru]
 Această opțiune vă permite să alegeți dacă NVDA ar trebui să creeze sau nu o scurtătură de pornire NVDA în spațiul de lucru.
 Dacă este creată, acestei scurtături i se va asocia combinația control+alt+n, permițându-vă să lansați NVDA în orice moment cu această combinație de taste.
 
@@ -118,7 +119,7 @@ Această opțiune vă permite să alegeți dacă NVDA ar trebui să copieze sau 
 Această acțiune nu va copia configurarea pentru alți utilizatori ai acestui sistem și nici pentru configurația de sistem a programului, folosită la Autentificare în Windows sau alte ecrane securizate.
 Această opțiune este disponibilă doar când se face instalare dintr-o copie portabilă, nu și când se instalează direct din Pachetul de execuție descărcat.
 
-++ Crearea unei copii portabile ++[CreatingAPortableCopy]
+++ Crearea unei copii portabile ++[CreazaCopiePortabila]
 Dacă rulați crearea copiei portabile direct din pachetul NVDA descărcat, doar apăsați butonul „Creează” copie portabilă.
 Dacă ați închis deja această fereastră de dialog, sau rulați o versiune instalată a NVDA, alegeți opțiunea „Creează copie portabilă” care se află în meniul „Instrumente” din meniul principal NVDA.
 
@@ -130,16 +131,16 @@ Apăsând „Continuă” se va crea copia portabilă.
 Odată procesul de creare finalizat, va apărea un mesaj, notificându-vă că a fost realizat cu succes.
 Apăsați „OK” pentru a elimina fereastra de dialog. 
 
-+ Primii pași în NVDA +[GettingStartedWithNVDA]
++ Primii pași în NVDA +[PrimiiPasiNVDA]
 
-++ Lansarea NVDA ++[LaunchingNVDA]
+++ Lansarea NVDA ++[LansareNVDA]
 Dacă ați instalat NVDA cu interfața de instalare, atunci pornirea NVDA se reduce la apăsarea control+alt+n, sau alegând NVDA din meniul NVDA aflat în meniul Start, Programe.
 În plus, puteți scrie NVDA în fereastra de dialog „Executare” și apăsați „Enter”.
-Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #LinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea suplimentelor (--disable-addons), etc.
+Puteți, de asemenea, să specificați niște [opțiuni în linie de comandă #OptiuniLinieComanda] care vă permit repornirea NVDA (-r), ieșirea (-q), dezactivarea suplimentelor (--disable-addons), etc.
 
-În mod implicit, Pentru copiile instalate NVDA stochează configurația în dosarul de date al aplicației de roaming a utilizatorului curent (ex. "C:\Users\<user>\AppData\Roaming").
+În mod implicit, Pentru copiile instalate NVDA stochează configurația în dosarul de date al aplicației de roaming a utilizatorului curent (ex. „C:\Users\<user>\AppData\Roaming”).
 Puteți modifica asta într-un mod în care NVDA își încarcă în schimb configurația din dosarul local de date al aplicației.
-Consultați secțiunea despre [parametrii la nivel de sistem #SystemWideParameters] pentru mai multe detalii.
+Consultați secțiunea despre [parametrii la nivel de sistem #ParametriGeneraliSistem] pentru mai multe detalii.
 
 Pentru a porni versiunea portabilă, mergeți în dosarul unde ați dezarhivat NVDA și apăsați „Enter” sau faceți dublu clic pe nvda.exe.
 
@@ -150,6 +151,7 @@ Dacă pornirea NVDA-ului necesită timp îndelungat, acesta ar trebui să anunț
 Dacă nu auziți nimic din toate acestea, sau dacă auziți sunetul de eroare al Windows, sau câteva tonuri descendente, asta înseamnă că NVDA are o eroare și e posibil să trebuiască să raportați un defect dezvoltatorilor.
 Vă rugăm verificați site-ul NVDA pentru informații despre cum să faceți asta.
 
++++ Fereastra dialog de întâmpinare +++[DialogIntampinare]
 Când NVDA pornește pentru prima dată, veți fi întâmpinat de o fereastră de dialog care vă oferă câteva informații de bază despre tasta de modificare NVDA și meniul NVDA.
 (Vă rugăm citiți secțiunile următoare în legătură cu aceste subiecte).
 Fereastra de dialog conține o casetă combinată și trei  casete de bifat.
@@ -221,12 +223,14 @@ Dacă nu este specificat și modul lângă comandă, înseamnă că aceasta func
 Pentru a comuta între modurile de atingere, efectuați o atingere cu trei degete.
 %kc:endInclude
 
-+++ Tastatura tactilă +++[TouchKeyboard]
++++ Tastatura tactilă +++[TastaturaTactila]
+Tastatura tactilă este folosită pentru introducerea de text și comenzi de la un ecran tactil.
 Când sunteți focalizat pe un câmp d editare, puteți accesa tastatura tactilă atingând de două ori iconița acesteia din partea de jos a ecranului.
 Pentru tabletele precum Microsoft Surface Pro, tastatura tactilă este mereu disponibilă atunci când tastatura fizică este deconectată.
 Pentru a renunța la tastatura tactilă, atingeți de două ori iconița tastaturii tactile sau treceți de câmpul de editare.
-Atâta timp cât tastatura tactilă este activă, pentru a localiza tastele de pe ea, deplasați-vă degetul acolo unde este tastatura tactilă (de obicei în partea de jos a ecranului), deplasați-vă în jurul tastaturii cu un deget.
-Dacă găsiți tasta pe care doriți să o apăsați, atingeți-o de două ori sau ridicați degetul, asta depinde de opțiunea aleasă  din [Dialogul de setări al tastaturii tactile #Interactiune_Tactila].
+
+În timp ce tastatura tactilă este activă, pentru a localiza tastele de pe ea, deplasați-vă degetul acolo unde este tastatura tactilă (de obicei în partea de jos a ecranului), apoi mișcați-vă în zona tastaturii folosind un deget.
+Când găsiți tasta pe care doriți să o apăsați, atingeți-o de două ori sau ridicați degetul; asta depinde de opțiunea aleasă  din [Dialogul de setări al tastaturii tactile #Interactiune_Tactila].
 
 ++ Modul de ajutor pentru intrări ++[InputHelpMode]
 Multe comenzi NVDA sunt menționate de-a lungul acestui ghid, dar un mod simplu de a le explora este să activați ajutorul pentru intrări.
@@ -268,11 +272,11 @@ Când se deschide meniul, puteți folosi săgețile direcționale pentru navigar
 + Navigarea cu NVDA +[NavigatingWithNVDA]
 NVDA vă permite să  explorați sistemul în mai multe feluri, incluzând atât intereacțiunea normală cât și examinare.
 
-++ Obiecte ++[Objects]
+++ Obiecte ++[Obiecte]
 Fiecare aplicație și sistemul de operare însuși sunt constituite din numeroase obiecte.
 Un obiect este un element cum ar fi o bucată de text, un buton, o casetă de bifare, un glisor, o listă sau un câmp de text editabil.
 
-++ Navigarea cu focalizarea sistemului ++[SystemFocus]
+++ Navigarea cu focalizarea sistemului ++[FocalizareSistem]
 Focalizarea sistemului, cunoscută mai simplu ca „focus”, este [obiectul #Obiecte] care primește semnalele tastelor apăsate pe tastatură.
 De exemplu, dacă tastați într-un câmp de text editabil, respectivul câmp are focusul.
 
@@ -288,7 +292,7 @@ Există câteva comenzi din taste care sunt utile când vă deplasați cu focali
 | Raportează bara de stare | NVDA+end | NVDA+shift+end | Raportează bara de stare, dacă este găsită de NVDA. În plus mută obiectul navigator la această poziție. Apăsând de două ori va pronunța informația pe litere. Apăsând de trei ori o va copia pe planșetă |
 %kc:endInclude
 
-++ Navigarea cu cursorul de scriere al sistemului ++[SystemCaret]
+++ Navigarea cu cursorul de scriere al sistemului ++[CursorScriereSistem]
 Când este [focalizat #FocalizareSistem] un [obiect #Obiecte] care permite navigarea și/sau editarea de text, vă puteți mișca prin text folosind cursorul de scriere al sistemului, cunoscut și cu numele de „cursor de editare”.
 
 Când este focalizat obiectul care deține cursorul de scriere, puteți folosi tastele săgeți, pagină sus(page up), pagină jos(page down), acasă(home), sfârșit(end), etc. pentru a vă mișca prin text.
@@ -313,7 +317,7 @@ Când vă aflați într-un tabel, sunt disponibile următoarele comenzi din tast
 | Mută la rândul următor | control+alt+săgeată jos | Mută cursorul sistemului la rândul următor (rămânând pe aceeași coloană) |
 %kc:endInclude
 
-++ Navigarea prin obiecte ++[ObjectNavigation]
+++ Navigarea prin obiecte ++[NavigareObiect]
 Majoritatea timpului veți lucra cu aplicațiile, folosind comenzi care mută [focalizarea #FocalizareSistem] sau [cursorul de editare #CursorScriereSistem].
 În schimb, uneori, veți dori să explorați aplicația curentă sau sistemul de operare fără să mutați focalizarea sau cursorul de editare.
 Ați putea, de asemenea, să doriți să lucrați cu [obiecte #Obiecte] care nu pot fi accesate în mod normal, folosind tastatura.
@@ -357,7 +361,7 @@ Pentru a naviga prin obiecte, folosiți următoarele taste:
 
 Notă: pentru ca tastele din blocul numeric să funcționeze corect, tasta „NumLock”, pentru blocul numeric, trebuie dezactivată.
 
-++ Examinarea Textului ++[ReviewingText]
+++ Examinarea Textului ++[ExaminareaTextului]
 NVDA vă permite să citiți conținutul [ecranului #ExaminareEcran], [documentului #ExaminareDocument] curent sau [obiectului #ExaminareObiect] curent la nivel de  caracter, cuvânt sau rând.
 Acest lucru este foarte util în locuri (incluzând consola de comandă Windows) unde nu există [cursorul de scriere al sistemului #CursorScriereSistem].
 De exemplu, puteți folosi examinarea textului pentru un mesaj lung de informare dintr-o fereastră de dialog.
@@ -399,7 +403,7 @@ Așezarea este ilustrată după cum urmează:
 | Cuvânt anterior | Cuvânt curent | Cuvânt următor |
 | Caracter anterior | Caracter curent | Caracter următor |
 
-++ Moduri de examinare ++[ReviewModes]
+++ Moduri de examinare ++[ModuriExaminare]
 [Comenzile de examinare text #ExaminareaTextului] ale NVDA pot examina conținut din interiorul obiectului navigator curent, documentului curent sau ecranului, depinzând de modul de examinare ales.
 Modurile de examinare înlocuiesc conceptul mai vechi de „Examinare uniformă” al NVDA.
 
@@ -410,12 +414,12 @@ Următoarele comenzi sunt folosite pentru schimbarea între modurile de examinar
 | Comută la modul de examinare anterior | NVDA+numpad1 | NVDA+pageDown | glisează brusc jos cu 2 degete | Comută la anteriorul mod de examinare disponibil. |
 %kc:endInclude
 
-+++ Examinare obiect +++[ObjectReview]
++++ Examinare obiect +++[ExaminareObiect]
 Cât timp sunteți în modul „Examinare obiect”, puteți doar să examinați conținutul [obiectului navigator #NavigareObiect] curent.
 Pentru obiecte precum câmp text editabil sau alte controale de bază cu text, acesta va fi, în general, conținutul text.
 Pentru alte obiecte, acesta poate fi numele și/sau valoarea.
 
-+++ Examinare document +++[DocumentReview]
++++ Examinare document +++[ExaminareDocument]
 Când [obiectul navigator #NavigareObiect] se află într-un document cu mod navigare (de ex. pagină web) sau alt document complex (de ex. un document Lotus Symphony), este posibilă schimbarea în modul „Examinare document”.
 Modul „Examinare document” vă permite să examinați textul întregului document.
 
@@ -424,7 +428,7 @@ Când vă mișcați în interiorul documentului folosind comenzi de examinare, o
 
 Notați faptul că NVDA va comuta la Examinare document din modul Examinare obiect automat atunci când vă mișcați în interiorul documentelor cu mod navigare.
 
-+++ Examinare ecran +++[ScreenReview]
++++ Examinare ecran +++[ExaminareEcran]
 Modul „Examinare ecran” vă permite analiza textului ecranului pe măsură ce apare, din punct de vedere vizual, în aplicația curentă.
 Acesta este similar ca funcționalitate cu multe alte cititoare ecran de Windows care au funcții de examinare ecran sau cursor de maus.
 
@@ -458,7 +462,7 @@ Cu toate că un dispozitiv fizic de maus sau un trackpad ar trebui folosit pentr
 | Navighează la obiectul de sub maus | NVDA+numpad Înmulțire | NVDA+shift+n | Pune obiectul navigator pe obiectul aflat la poziția mausului |
 %kc:endInclude
 
-+ Modul de navigare +[BrowseMode]
++ Modul de navigare +[ModNavigare]
 Documente complexe ce pot fi doar citite, cum ar fi paginile web, sunt examinate în NVDA folosind „Modul navigare”.
 Acestea includ documente în Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mesaje HTML în Microsoft Outlook, Google Chrome, Adobe Reader și Adobe Flash.
 Modul navigare este disponibil opțional și pentru documentele Microsoft Word.
@@ -486,7 +490,6 @@ Adițional, puteți forța modul formular manual, după care va rămâne activat
 | Găsește anterior | NVDA+shift+f3 | Găsește apariția anterioară în document a textului care a fost căutat anterior |
 | deschide descriere amplă | NVDA+d | Deschide o fereastră nouă ce conține o descriere amplă a elementului pe care sunteți, în caz că acesta are o astfel de descriere. |
 %kc:endInclude
-
 
 ++ Navigarea cu o singură literă ++[SingleLetterNavigation]
 În modul de navigare, pentru o explorare mai rapidă NVDA asigură și trecerea directă la anumite câmpuri din document apăsând tasta unui singur caracter.
@@ -516,8 +519,7 @@ Următoarele taste trec direct la elementul următor disponibil, iar combinându
 - o: obiect încorporat
 - 1 la 6: rubrici de nivel de la 1 la 6, respectiv
 - a: adnotare (comentariu, editor, versiune, etc.)
--
-w: eroare de ortografie
+- w: eroare de ortografie
 -
 Pentru mutarea la începutul sau sfârșitul elementelor cu conținut cum ar fi liste sau tabele:
 || Nume | Tastă | Descriere |
@@ -545,6 +547,7 @@ Odată ce ați ales un element, puteți folosi butoanele din fereastra de dialog
 ++ Obiecte încorporate ++[ImbeddedObjects]
 Paginile pot include conținut complex folosind tehnologii ca Adobe Flash, Oracle Java și HTML5, precum și aplicații și dialoguri.
 Când acestea sunt întâlnite în modul navigare, NVDA va anunța „obiect incorporat”, „aplicație” sau „dialog”, respectiv.
+Vă puteți muta rapid la ele, folosind tastele de navigare cu o singură literă „o“ și „shift+o“, pentru obiecte încorporate. 
 Puteți apăsa Enter pe aceste obiecte pentru a interacționa cu ele.
 Dacă este accesibil, puteți naviga prin el și puteți interacționa cu el la fel cu orice altă aplicație.
 Există o tastă de comandă pentru revenirea la pagina originală care conține obiectul încorporat:
@@ -553,7 +556,7 @@ Există o tastă de comandă pentru revenirea la pagina originală care conține
 | Trece în mod navigare la documentul care conține obiectul | NVDA+control+spațiu | Mută focalizarea în afară obiectului incorporat curent și în documentul care îl conține |
 %kc:endInclude
 
-+ Citirea conținutului matematic +[ReadingMath]
++ Citirea conținutului matematic +[CitireMatematica]
  Folosind MathPlayer 4 creat de Design Science, NVDA poate citi și naviga interactiv prin conținutul matematic compatibil.
 Pentru acest lucru este nevoie ca MathPlayer 4 să fie instalat pe calculatorul dumneavoastră.
 MathPlayer este disponibil ca descărcare gratuită la: http://www.dessci.com/en/products/mathplayer/
@@ -596,7 +599,8 @@ Când doriți să vă reîntoarceți la document, pur și simplu apăsați tasta
 Dacă dețineți un afișaj braille, NVDA poate afișa informația în braille.
 Dacă afișajul dumneavoastră braille are o tastatură stil Perkins, puteți, de asemenea, să introduceți braille abreviat și neabreviat.
 
-Vă rugăm să citiți secțiunea [Afișaje braille suportate #SupportedBrailleDisplays] pentru informații despre acestea. Puteți configura braille-ul folosind [dialogul de setări braille #SetariBraille]
+Vă rugăm să citiți secțiunea [Afișaje braille suportate #AfisBrailleCompatibile] pentru informații despre acestea. 
+Puteți configura braille-ul folosind [dialogul de setări braille #SetariBraille]
 
 ++ Abrevieri pentru tipuri de controale, stări și repere ++[BrailleAbbreviations]
 Pentru a încăpea cât mai multe informații pe un afișaj braille, au fost definite următoarele abrevieri pentru a indica tipul de controale, stările, precum și reperele.
@@ -688,7 +692,7 @@ Următorii indicatori de stare sunt definiți:
 
 ++ Intrări braille ++[BrailleInput]
 NVDA suportă atât intrarea braille-ului neabreviat cât și a celui abreviat printr-o tastatură braille.
-Puteți selecta tabelul de traducere utilizat pentru a traduce braille-ul în text folosind setarea [tabelului de intrări #BrailleSettingsInputTable] din dialogul de setări braille.
+Puteți selecta tabelul de traducere utilizat pentru a traduce braille-ul în text folosind setarea [tabelului de intrări #SetariBrailleTabelIntrari] din dialogul de setări braille.
 
 Atunci când se utilizează braille-ul neabreviat, textul este inserat de îndată ce este introdus.
 La utilizarea braille-ului neabreviat, textul este inserat atunci când apăsați  spațiu sau enter la sfârșitul unui cuvânt.
@@ -719,7 +723,7 @@ Apăsând „Escape”, se va diminua rezultatul identificării.
 Windows 10 include OCR pentru multe limbi.
 NVDA poate folosi această funcționalitate pentru a recunoaște text din imagini sau aplicații inaccesibile.
 
-Puteți seta limba folosită pentru recunoașterea de text în dialogul de [setări pentru Windows 10 OCR #Win10OcrSettings] .
+Puteți seta limba folosită pentru recunoașterea de text în dialogul de [setări pentru Windows 10 OCR #SetariWin10Ocr] .
 Pot fi instalate limbi adiționale din meniul de Start, alegând „Setări”, apoi „Timp și Limbi” -> „Regiune și Limbă” și apoi alegând „Adaugă limbă nouă”.
 
 %kc:beginInclude
@@ -866,6 +870,9 @@ Puteți răsfoi la pagina următoare manual cu tasta pageDown și puteți să v�
 Navigarea cu o singură tastă este suportată pentru legături sau grafice, dar doar în cadrul paginii curente.
 Navigarea prin legături include, de asemenea, note de subsol.
 
+NVDA furnizează asistență timpurie pentru citire și navigare interactivă a conținutului matematic pentru cărți cu format matematic accesibil.
+Vă rugăm consultați secțiunea de [Citire a conținutului matematic #CitireMatematica] pentru informații adiționale.
+
 +++ Selectarea textului +++[KindleTextSelection]
 Kindle vă permite să executați diferite funcții pe textul selectat, incluzând obținerea unei definiții de dicționar, adăugarea de note sau sublinieri, copierea textului pe planșetă sau căutarea pe Web.
 Pentru a face asta, mai întâi selectați textul cum o faceți în mod obișnuit în modul navigare; de ex: folosind shift și tastele cursor.
@@ -962,7 +969,7 @@ Dacă apare o eroare la încărcarea sintetizatorului, NVDA vă va anunța cu un
 ==== Sintetizator ====[SynthesizerSelectionSynthesizer]
 Această opțiune vă permite să alegeți sintetizatorul pe care doriți să-l folosească NVDA pentru vorbire.
 
-Pentru o listă de sintetizatoare suportate de NVDA, vă rugăm citiți secțiunea [Sintetizatoare de vorbire suportate #SintetizatoareSuportate].
+Pentru o listă de sintetizatoare suportate de NVDA, vă rugăm citiți secțiunea [Sintetizatoare de vorbire suportate #SintetizatoareVorbireCompatibile].
 
 Un element special care va apărea întotdeauna în această listă este „Fără vorbire”, care vă permite să folosiți NVDA fără niciun fel de vorbire.
 Această opțiune poate fi utilă pentru cineva care dorește să folosească NVDA doar cu Braille sau poate programatorii cu vedere care doresc să folosească doar ecranul de vorbire.
@@ -983,9 +990,9 @@ Tastă: NVDA+shift+d
 Această opțiune este disponibilă doar dacă NVDA a fost instalată.
 Atenuarea audio nu este suportată pentru copiile portabile sau temporare ale NVDA.
 
-+++ Setări voce (NVDA+Control+v) +++[VoiceSettings]
++++ Setări voce (NVDA+Control+v) +++[OptiuniVoce]
 Fereastra de dialog a setărilor pentru voce, găsită în meniul „Preferințe”, conține opțiuni care vă lasă să schimbați sunetul vorbirii.
-Pentru un mod alternativ mai rapid de control al parametrilor de vorbire de oriunde, vă rugăm citiți secțiunea [Inelul setărilor sintetizatorului #InelSintetizator].
+Pentru un mod alternativ mai rapid de control al parametrilor de vorbire de oriunde, vă rugăm citiți secțiunea [Inelul setărilor sintetizatorului #InelSetariSintetizator].
 
 Fereastra de dialog pentru setările vocii conține următoarele opțiuni:
 
@@ -1048,7 +1055,7 @@ De obicei, NVDA crește ușor amplitudinea pentru orice literă majusculă, dar 
 Dacă această casetă este bifată, NVDA va emite un scurt semnal sonor de fiecare dată când întâlnește o majusculă.
 La fel ca opțiunea „spune «mare» pentru majuscule”, aceasta este utilă pentru sintetizatoare care nu pot schimba amplitudinea pentru majuscule.
 
-==== Folosește funcționalitatea de silabisire dacă este suportată ====[VoiceSettingsUseSpelling]
+==== Folosește funcționalitatea de silabisire dacă este suportată ====[OptiuniVoceFolosesteSilabisire]
 Anumite cuvinte au un singur caracter, dar pronunția este diferită dacă respectivul caracter este pronunțat ca un caracter individual (la fel ca pronunția pe litere) sau ca un cuvânt.
 De exemplu, în engleză, „a” este atât o literă cât și un cuvânt și este pronunțat diferit în fiecare caz. 
 Această opțiune permite sintetizatorului să distingă între aceste două cazuri, dacă sintetizatorul suportă asta.
@@ -1058,7 +1065,7 @@ Această opțiune ar trebui, în general, să fie activată.
 Cu toate acestea, anumite sintetizatoare Microsoft Speech API nu implementează această opțiune corect și se comportă ciudat când este activată.
 Dacă aveți probleme cu pronunția caracterelor individuale, încercați să dezactivați această opțiune.
 
-+++ Inelul setărilor sintetizatorului +++[SynthSettingsRing]
++++ Inelul setărilor sintetizatorului +++[InelSetariSintetizator]
 Dacă doriți să schimbați rapid setările vocii fără să intrați în fereastra de dialog pentru setările vocii, există câteva comenzi NVDA din taste care vă permit să accesați cele mai comune setări pentru vorbire de oriunde, când rulați NVDA:
 %kc:beginInclude
 || Nume | Tastă birou | Tastă laptop | Descriere |
@@ -1068,7 +1075,7 @@ Dacă doriți să schimbați rapid setările vocii fără să intrați în ferea
 | Scade setarea curentă a sintetizatorului | NVDA+control+săgeată jos | NVDA+shift+control+săgeată jos | Scade setarea curentă a vorbirii. De exemplu scade viteza, alege vocea anterioară, scade volumul |
 %kc:endInclude
 
-+++ Setări Braille +++[BrailleSettings]
++++ Setări Braille +++[SetariBraille]
 Fereastra de dialog a setărilor Braille poate fi afișată intrând în meniul „Preferințe” și apoi în „Setări Braille...”.
 
 ==== Afișaj Braille ====[BrailleSettingsDisplay]
@@ -1078,7 +1085,7 @@ Deplasați-vă între aceste opțiuni cu tastele direcționale.
 
 „Fără braille” înseamnă că nu folosiți braille.
 
-Vă rugăm citiți secțiunea [Afișaje Braille suportate #SupportedBrailleDisplays] pentru mai multe informații despre afișajele braille suportate.
+Vă rugăm citiți secțiunea [Afișaje Braille suportate #AfisBrailleCompatibile] pentru mai multe informații despre afișajele braille suportate.
 
 ==== Port ====[BrailleSettingsPort]
 Această opțiune, dacă este disponibilă, vă permite să alegeți ce port sau tip de conexiune va fi folosit la comunicarea cu afișajul braille pe care l-ați selectat.
@@ -1090,7 +1097,7 @@ Variantele obișnuite sunt „Automat” (îi spune NVDA-ului să folosească pr
 
 Opțiunea nu va fi disponibilă dacă afișajul dumneavoastră braille suportă doar detectarea automată a portului.
 
-Puteți consulta documentația pentru afișajul dumneavoastră braille în secțiunea [Afișaje Braille suportate #AfisajeBraille], pentru a căuta mai multe detalii despre tipurile de comunicație și porturile disponibile.
+Puteți consulta documentația pentru afișajul dumneavoastră braille în secțiunea [Afișaje Braille suportate #AfisBrailleCompatibile], pentru a căuta mai multe detalii despre tipurile de comunicație și porturile disponibile.
 
 ==== Tabel ieșiri ====[BrailleSettingsOutputTable]
 Următoarea opțiune întâlnită în această fereastră de dialog este caseta combinată a tabelului braille. 
@@ -1098,13 +1105,13 @@ Următoarea opțiune întâlnită în această fereastră de dialog este caseta 
 Tabelul ales va fi folosit pentru traducerea textului în braille pentru a fi prezentat pe afișajul dumneavoastră braille.
 Vă puteți deplasa de la un tabel braille la altul din listă folosind tastele direcționale.
 
-==== Tabel intrări ====[BrailleSettingsInputTable]
+==== Tabel intrări ====[SetariBrailleTabelIntrari]
 Complementar opțiunii anterioare, următoarea setare pe care o veți găsi este caseta combinată pentru tabelul de intrări.
 Tabelul ales va fi folosit pentru traducerea braille, introdus cu tastatura dumneavoastră în format Perkins, de la afișajul dumneavoastră braille în text.
 Vă puteți deplasa de la un tabel braille la altul din listă folosind tastele săgeată.
 
 De notat faptul că această opțiune este utilizabilă doar dacă afișajul dumneavoastră braille are o tastatură în format Perkins și această funcționalitate este suportată de driverul afișajului braille.
-Dacă intrările nu sunt suportate pe un afișaj care are o tastatură braille, acest lucru va fi notat în secțiunea [Afișaje Braille suportate #AfisajeBraille].
+Dacă intrările nu sunt suportate pe un afișaj care are o tastatură braille, acest lucru va fi notat în secțiunea [Afișaje Braille suportate #AfisBrailleCompatibile].
 
 ==== Dezvoltă cuvântul de la cursor în braille pentru calculator ====[BrailleSettingsExpandToComputerBraille]
 Această opțiune permite cuvântului de sub cursor să fie afișat în braille pentru computere necontractat.
@@ -1249,7 +1256,7 @@ Această opțiune este disponibilă doar dacă raportarea erorilor de ortografie
 Această opțiune permite utilizatorului să controleze dacă apăsările de tastă generate de aplicații, cum ar fi tastaturi pe ecran și aplicații de recunoaștere a vorbirii, ar trebui să fie procesate de NVDA. 
 Opțiunea este activată implcit, deși anumiți utilizatori vor dori să o dezactiveze, cum ar fi cei care tastează în Vietnameză cu software-ul de tastare Unikey, pentru care se vor produce intrări de caractere incorecte.
 
-+++ Setări maus (NVDA+control+m) +++[MouseSettings]
++++ Setări maus (NVDA+control+m) +++[OptiuniMaus]
 Fereastra de dialog pentru setările mausului se găsește în meniul „Preferințe”, la „Setări maus...”.
 Conține următoarele opțiuni:
 
@@ -1279,7 +1286,7 @@ Cu cât cursorul se află mai în extremitățile ecranului (stânga sau dreapta
 Dacă este bifată caseta „Redă audio coordonatele mausului când se mișcă”, atunci bifarea acestei casete înseamnă că volumul semnalelor audio pentru coordonate este controlat de cât de luminos este ecranul sub cursorul mausului.
 Aceasta este dezactivată implicit.
 
-+++ Setările interacțiunii tactile +++[TouchInteraction]
++++ Setările interacțiunii tactile +++[Interactiune_Tactila]
 Această fereastră de dialog, disponibilă doar pentru calculatoarele care rulează Windows 8 sau mai nou cu capabilități de atingere, vă permite să configurați modul în care NVDA interacționează cu ecranele tactile.
 
 ==== Modul de scriere tactilă ====[TouchTypingMode]
@@ -1469,7 +1476,7 @@ Puteți configura anunțarea pentru:
 - Pagini și spațiere
  - Număr de pagină
  - Număr de rând
- - Raportarea indentației de rând [(dezactivat, vorbire, tonuri, atât vorbire cât și tonuri) #optiuniIndentRand]
+ - Raportarea indentației de rând [(dezactivat, vorbire, tonuri, atât vorbire cât și tonuri) #FormatDocumentSetariIndentatieRand]
  - Indentație paragraf (de ex. negativă, a primului rând)
  - Spațiere între linii (simplă, dublă, etc)
  - Aliniere
@@ -1499,7 +1506,7 @@ Implicit, NVDA va detecta formatarea de la poziția cursorului sistemului sau a 
 
 Activând această opțiune, NVDA va corecta documentele din aplicații precum WordPad, unde formatarea este importantă.
 
-==== Anunță indentație rând ====[DocumentFormattingSettingsLineIndentation]
+==== Anunță indentație rând ====[FormatDocumentSetariIndentatieRand]
 Această opțiune vă permite să configurați cum se face raportarea indentației la început de rând.
 Caseta combinată pentru opțiunea de anunț a indentației are patru variante.
 
@@ -1510,7 +1517,7 @@ Sunetul își va mări amplitudinea cu fiecare spațiu adăugat, iar pentru un t
 - Atât vorbire cât și tonuri: Această opțiune semnalează indentația folosind ambele metode de mai sus.
 -
 
-+++ Setări Windows 10 OCR +++[Win10OcrSettings]
++++ Setări Windows 10 OCR +++[SetariWin10Ocr]
 Această fereastră de dialog poate fi accesată din meniul de „Preferințe“ al NVDA și vă permite configurarea [Windows 10 OCR #Win10Ocr].
 
 ==== Limba de recunoaștere ====[Win10OcrSettingsRecognitionLanguage]
@@ -1579,7 +1586,7 @@ Puteți elimina un simbol pe care l-ați adăugat anterior, apăsând butonul �
 
 Când ați terminat, apăsați butonul „OK” pentru a salva modificările sau butonul „Anulează” pentru a renunța la ele.
 
-+++ Gesturi de intrare +++[InputGestures]
++++ Gesturi de intrare +++[GesturiIntrare]
 În această fereastră de dialog puteți personaliza gesturile de intrare pentru comenzi NVDA (taste pe tastatură, butoane pe afișajul braille, etc.). 
 
 Sunt afișate doar comenzile care se aplicau imediat înainte de deschiderea ferestrei.
@@ -1649,11 +1656,11 @@ Puteți, de asemenea, să alegeți cum va fi folosit acest profil.
 Dacă doriți să folosiți acest profil doar manual, alegeți „Activare manuală” care este și selecția implicită.
 Altfel, alegeți un declanșator care ar trebui să activeze automat acest profil.
 Pentru comoditate, dacă nu ați introdus un nume pentru acest profil, selectarea unui declanșator va adăuga un nume corespunzător.
-Vedeți [mai jos #DeclansatoareProfil] pentru mai multe informații despre declanșatoare.
+Vedeți [mai jos #ConfigDeclansatoareProfil] pentru mai multe informații despre declanșatoare.
 
 Apăsarea butonului „OK” va crea acest profil și va închide fereastra Profile de configurare pentru ca să îl puteți edita.
 
-+++ Activarea manuală +++[ConfigProfileManual]
++++ Activarea manuală +++[ConfigProfilManual]
 Puteți activa manual un profil, selectându-l și apăsând butonul „Activează manual”.
 Odată activat, și alte profile pot fi activate datorită declanșatoarelor, dar orice opțiune a profilului activat manual va prevala.
 De exemplu, dacă un profil este declanșat de aplicația curentă și raportarea legăturilor este activată în acel profil dar dezactivată în profilul activat manual, atunci legăturile nu vor fi anunțate.
@@ -1661,7 +1668,7 @@ Cu toate acestea, dacă ați schimbat vocea în profilul declanșat dar nu ați 
 Orice preferință schimbată de dumneavoastră va fi salvată în profilul activat manual. 
 Pentru a dezactiva un profil activat manual, selectați-l din fereastra „Configurarea profilurilor” și apăsați butonul „Dezactivează manual”.
 
-+++ Declanșatoare +++[ConfigProfileTriggers]
++++ Declanșatoare +++[ConfigDeclansatoareProfil]
 Apăsând butonul „Declanșatoare...” din fereastra „Configurarea profilurilor” vă permite să schimbați profilurile care ar trebui să fie activate automat de diferite declanșatoare.
 
 Lista declanșatoarelor le prezintă pe cele disponibile, care sunt după cum urmează:
@@ -1680,7 +1687,7 @@ Altfel orice opțiune pe care o modificați va fi salvată în cel mai recent pr
 De exemplu, dacă ați asociat un profil cu aplicația „Notepad” și deschideți Notepad, orice opțiune schimbată va fi salvată în acle profil.
 În cele din urmă, dacă nu există nici profil activat manual, nici profil declanșat, orice opțiune pe care o modificați va fi salvată în configurația normală.
 
-Pentru a edita profilul asociat cu Rostește tot, trebuie să [activați manual #ProfilManual] acel profil.
+Pentru a edita profilul asociat cu Rostește tot, trebuie să [activați manual #ConfigProfilManual] acel profil.
 
 +++ Dezactivarea temporară a declanșatoarelor +++[ConfigProfileDisablingTriggers]
 Uneori este util să dezactivați temporar declanșatoarele.
@@ -1770,7 +1777,7 @@ Pentru mai multe informații, vă rugăm citiți [Ghidul Dezvoltatorului https:/
 ++ Reîncărcare extensii plugin ++[ReloadPlugins]
 Această opțiune, odată activată, reîncarcă module de aplicație și extensii plugin globale fără repornirea NVDA, acțiune utilă pentru dezvoltatori.
 
-+ Sintetizatoarele de vorbire compatibile +[SupportedSpeechSynths]
++ Sintetizatoarele de vorbire compatibile +[SintetizatoareVorbireCompatibile]
 Această secțiune conține informații despre sintetizatoarele de vorbire compatibile cu NVDA.
 Pentru o listă extinsă cu sintetizatoare gratuite și comerciale care pot fi achiziționate și descărcate pentru a fi folosite cu NVDA, accesați [pagina extravocilor https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
@@ -1789,12 +1796,12 @@ SAPI 4 este un standard Microsoft mai vechi pentru sintetizatoare de vorbire sof
 NVDA încă suportă standardul pentru utilizatori care au în continuare instalate sintetizatoare pentru SAPI 4.
 Cu toate acestea, standardul nu mai este suportat de Microsoft, iar componentele necesare nu mai sunt disponibile de la Microsoft.
 
-Când folosiți acest sintetizator cu NVDA, vocile disponibile (accesate din [Fereastra de dialog pentru setările vocii #OptiuniVoce] sau de [Inelul setărilor sintetizatorului #InelSintetizator]) vor conține toate vocile din toate motoarele SAPI 4 instalate în sistemul dv.
+Când folosiți acest sintetizator cu NVDA, vocile disponibile (accesate din [Fereastra de dialog pentru setările vocii #OptiuniVoce] sau de [Inelul setărilor sintetizatorului #InelSetariSintetizator]) vor conține toate vocile din toate motoarele SAPI 4 instalate în sistemul dv.
 
 ++ Microsoft Speech API versiunea 5 (SAPI 5) ++[SAPI5]
 SAPI 5 este un standard Microsoft pentru sintetizatoare de vorbire software. 
 Multe sintetizatoare de vorbire care se supun acestui standard pot fi cumpărate sau descărcate gratuit de la mai multe companii sau siteuri web, deși sistemul dv. probabil a venit cu cel puțin o voce SAPI 5 preinstalată.
-Când folosiți acest sintetizator cu NVDA, vocile disponibile (accesate din [Fereastra de dialog pentru Setările vocii #OptiuniVoce] sau de [Inelul setărilor sintetizatorului #InelSintetizator]) vor conține toate vocile din toate motoarele SAPI 5 instalate în sistemul dv.
+Când folosiți acest sintetizator cu NVDA, vocile disponibile (accesate din [Fereastra de dialog pentru Setările vocii #OptiuniVoce] sau de [Inelul setărilor sintetizatorului #InelSetariSintetizator]) vor conține toate vocile din toate motoarele SAPI 5 instalate în sistemul dv.
 
 ++ Platforma de vorbire Microsoft (Microsoft Speech Platform)  ++[MicrosoftSpeechPlatform]
 Microsoft Speech Platform oferă voci pentru multe dintre limbile care sunt folosite în mod normal la dezvoltarea aplicațiilor de vorbire pe server.
@@ -1825,17 +1832,9 @@ Acesta este un sintetizator de voce comercial specific pentru limba italiană.
 Trebuie să aveți acest sintetizator instalat în sistemul dv. pentru a putea fi folosit cu NVDA.
 Pentru mai multe informații, vă rugăm vizitați siteul Audiologic la www.audiologic.it.
 
-Acest sintetizator nu suportă [funcționalitatea de silabisire #SilabisireVocala].
+Acest sintetizator nu suportă [funcționalitatea de silabisire #OptiuniVoceFolosesteSilabisire].
 
-++ Nuance Vocalizer pentru NVDA ++[Vocalizer]
-Nuance Vocalizer este un sintetizator vocal comercial, de înaltă calitate, dezvoltat de Nuance Communications, Inc. și compatibilizat cu NVDA de Tiflotecnia, Lda.
-Conține peste 50 de voci diferite pe care le puteți instala, care vorbesc în peste 30 de limbi.
-Toate componentele sintetizatorului și vocile sunt împachetate in extensii add-on care permit utilizarea completă pentru copiile portabile ale NVDA.
-
-Puteți obține mai multe informații despre Nuance Vocalizer pentru NVDA și cum îl puteți achiziționa, de pe site-ul său web la [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Un procent din vânzările acestui produs este donat către NV Access pentru finanțarea continuării dezvoltării Cititorului de ecran NVDA.
-
-+ Afișajele Braille compatibile +[SupportedBrailleDisplays]
++ Afișajele Braille compatibile +[AfisBrailleCompatibile]
 Această secțiune conține informații despre afișajele Braille suportate de NVDA.
 
 ++ Freedom Scientific gamele Focus/PAC Mate ++[FreedomScientificFocus]
@@ -1886,7 +1885,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Anunță rândul curent | bară spațiu braille+punct 1+punct 4 |
 | meniul NVDA | bară spațiu braille+punct 1+punct 3+punct 4+punct 5 |
 
-Pentru modele Focus mai noi, care conțin taste "rocker bar" (focus 40, focus 80 și focus blue):
+Pentru modele Focus mai noi, care conțin taste „rocker bar” (focus 40, focus 80 și focus blue):
 || Nume | Tastă |
 | Mută afișajul braille la rândul anterior | leftRockerBarUp, rightRockerBarUp |
 | Mută afișajul braille la rândul următor | leftRockerBarDown, rightRockerBarDown |
@@ -1897,13 +1896,18 @@ Doar pentru Focus 80:
 | Derulează afișajul braille înainte | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec ALVA seria 6/convertor de protocol ++[OptelecALVA]
 Atât afișajele ALVA BC640 cât și BC680 de la [Optelec http://www.optelec.com/] sunt suportate dacă sunt conectate prin USB sau bluetooth.
+Alternativ, puteți conecta un afișaj Optelec mai vechi, cum ar fi Braille Voyager, folosind un convertor de protocol furnizat de Optelec.
 Nu aveți nevoie de un driver specific instalat pentru a folosi aceste afișaje. 
 Doar conectați afișajul și configurați NVDA să-l folosească.
 
-Chiar dacă aceste afișaje au o tastatură braille, fac transformarea din braille în text chiar ele.
-În aceste condiții, configurarea NVDA cu tabelul de intrări braille este irelevantă.
+Notă: NVDA s-ar putea să nu fie capabil să folosească un afișaj ALVA BC6 prin bluetooth, atunci când este împerecheat folosind utilitarul ALVA Bluetooth
+Când ați împerecheat dispozitivul, folosind acest utilitar și NVDA nu vă poate detecta dispozitivul, vă recomandăm să împerecheați afișajul dumneavoastră ALVA prin metoda tradițională, folosind opțiunile Windows pentru Bluetooth.
+
+Notă: în timp ce unele dintre aceste afișaje au tastatură braille, tratează traducerea din braille în text chiar ele, în mod implicit
+Asta înseamnă că sistemul de intrări braille al NVDA nu este folosit în acest mod implicit (de ex. opțiunile tabelului de intrări braille nu au niciun efect)
+Pentru afișajele ALVA de model recent, este posibil să dezactivați simularea HID a tastaturii, folosind un gest de intrare.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -1915,7 +1919,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Mută afișajul braille la rândul următor | t4 |
 | Derulează afișajul braille înainte | t5 sau etouch3 |
 | Mută la celula braille | routing |
-| Comută la simularea tastaturii HID |
+| Comută simularea HID a tastaturii | t1+spEnter |
 | Mută la linia de sus în examinare | t1+t2 |
 | Mută la linia de jos în examinare | t4+t5 |
 | Comută braille asociat la | t1+t3 |
@@ -1934,12 +1938,14 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Meniu NVDA | sp1+sp3 |
 | tasta windows+d (minimizează toate aplicațiile) | sp1+sp4 |
 | tasta windows+b (focalizează pe zona de notificare a sistemului) | sp3+sp4 |
-| tasta windows | sp2+sp3 |
+| tasta windows | sp2+sp3, windows |
 | tasta alt+tab | sp2+sp4 |
 | tasta control+home | t3+spUp |
 | tasta control+end | t3+spDown |
 | tasta home | t3+spLeft |
 | tasta end | t3+spRight |
+| tasta alt | alt |
+| tasta control | control |
 %kc:endInclude
 
 ++ Afișajele Handy Tech ++[HandyTech]
@@ -2097,7 +2103,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Rostește tot | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS gamele Braille Sense/Braille EDGE/Smart Beetle Sync Braille ++
+++ HIMS gamele Braille Sense/Braille EDGE/Smart Beetle Sync Braille ++[Hims]
 NVDA suportă afișajele Braille Sense, Braille EDGE și Smart Beetle de la [Hims http://www.hims-inc.com/] când sunt conectate via USB sau bluetooth.
 Dacă sunt conectate prin USB, va trebui să instalați driverele USB de la HIMS pe sistemul dumneavoastră.
 Le puteți descărca de aici: http://www.himsintl.com/?c=2/13&uid=2319
@@ -2448,6 +2454,86 @@ Datorită acestui fapt, dar și pentru a menține compatibilitatea cu alte citit
 | Derulează afișarea braille înainte | plus de pe blocul numeric | 
 %kc:endInclude
 
+++ Afișajele Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+Afișajele Esys, Esytime și Iris de la [Eurobraille http://www.eurobraille.fr/] sunt suportate de NVDA.
+Dispozitivele Esys and Esytime-Evo sunt suportate atunci când sunt conectate prin USB sau prin bluetooth.
+Dispozitivele Esytime mai vechi suportă doar USB.
+Afișajele Iris pot fi conectate printr-un port serial.
+Prin urmare, pentru aceste afișaje, trebuie să selectați portul la care este conectat afișajul după ce ați ales driver-ul din dialogul setărilor braille.
+
+Afișajele Iris și Esys au o tastatură braille cu 10 taste.
+Sunt două taste puse ca o bară de spațiu, tasta din stânga fiind corespondenta lui backspace, iar tasta din dreapta corespondenta tastei spațiu.
+
+Urmează asocierile de taste pentru aceste afișaje cu NVDA.
+Vă rugăm să citiți documentația afișajului pentru descrierile locului în care pot fi găsite aceste taste.
+%kc:beginInclude
+|| Nume | tastă |
+| Derulează înapoi afișajul braille | switch1-6stânga, l1 |
+| Derulează înainte afișajul braille | switch1-6dreapta, l8 |
+| Mută la focalizarea curentă | switch1-6stânga+switch1-6dreapta, l1+l8 |
+| Comută la celula braille | routing, doubleRouting|
+| Mută la linia precedentă din examinare | joystick1Sus |
+| Mută la linia următoare din examinare | joystick1Jos |
+| Mută la caracterul anterior din examinare | joystick1Stânga |
+| Mută la caracterul următor din examinare | joystick1Dreapta |
+| Comută la modul de examinare anterior | joystick1Stânga+joystick1Sus |
+| Comută la modul de examinare următor | joystick1Dreapta+joystick1Jos |
+| Șterge ultima celulă sau ultimul caracter braille introdus | backspace |
+| Traduce orice intrare braille și apasă tasta enter | backSpace+spațiu |
+| insert | punct3+punct5+spațiu, l7 |
+| șterge | punct3+punct6+spațiu |
+| home | punct1+punct2+punct3+spațiu, joystick2Stânga+joystick2Sus |
+| end | punct4+punct5+punct6+spațiu, joystick2Dreapta+joystick2Jos |
+| săgeată jos | punct2+spațiu, joystick2Stânga, săgeată jos |
+| săgeată dreapta | punct5+spațiu, joystick2Dreapta, săgeată dreapta |
+| săgeată sus | punct1+spațiu, joystick2Sus, săgeată sus |
+| săgeată jos | punct6+spațiu, joystick2Jos, săgeată jos |
+| enter | joystick2Centru |
+| pagină sus | punct1+punct3+spațiu |
+| pagină jos | punct4+punct6+spațiu |
+| 1 bloc numeric | punct1+punct6+backspace |
+| 2 bloc numeric | punct1+punct2+punct6+backspace |
+| 3 bloc numeric | punct1+punct4+punct6+backspace |
+| 4 bloc numeric | punct1+punct4+punct5+punct6+backspace |
+| 5 bloc numeric | punct1+punct5+punct6+backspace |
+| 6 bloc numeric | punct1+punct2+punct4+punct6+backspace |
+| 7 bloc numeric | punct1+punct2+punct3+punct4+punct5+punct6+backspace |
+| 8 bloc numeric | punct1+punct2+punct5+punct6+backspace |
+| 9 bloc numeric | punct2+punct4+punct6+backspace |
+| insert bloc numeric | punct3+punct4+punct5+punct6+backspace |
+| decimală bloc numeric | punct2+backspace |
+| împărțire bloc numeric | punct3+punct4+backspace |
+| înmulțire bloc numeric | punct3+punct5+backspace |
+| minus bloc numeric | punct3+punct6+backspace |
+| plus bloc numeric | punct2+punct3+punct5+backspace |
+| enter bloc numeric | punct3+punct4+punct5+backspace |
+| escape bloc numeric | punct1+punct2+punct4+punct5+spațiu, l2 |
+| tab | punct2+punct5+punct6+spațiu |
+| shift+tab | punct2+punct3+punct5+spațiu |
+| captură de ecran | punct1+punct3+punct4+punct6+spațiu |
+| pauză | punct1+punct4+spațiu |
+| aplicații | punct5+punct6+backspace |
+| f1 | punct1+backspace |
+| f2 | punct1+punct2+backspace |
+| f3 | punct1+punct4+backspace |
+| f4 | punct1+punct4+punct5+backspace |
+| f5 | punct1+punct5+backspace |
+| f6 | punct1+punct2+punct4+backspace |
+| f7 | punct1+punct2+punct4+punct5+backspace |
+| f8 | punct1+punct2+punct5+backspace |
+| f9 | punct2+punct4+backspace |
+| f10 | punct2+punct4+punct5+backspace |
+| f11 | punct1+punct3+backspace |
+| f12 | punct1+punct2+punct3+backspace |
+| windows | punct1+punct2+punct3+punct4+backspace |
+| capslock | punct7+backspace, punct8+backspace |
+| bloc numeric | punct3+backspace, punct6+backspace |
+| shift | punct7+spațiu, l4 |
+| control | punct7+punct8+spațiu, punct1+punct7+punct8+spațiu, punct4+punct7+punct8+spațiu, l5 |
+| alt | punct8+spațiu, punct1+punct8+spațiu, punct4+punct8+spațiu, l6 |
+| Activează sau dezactivează intrarea simulării tastaturii HID | esytime):l1+joystick1Jos, esytime):l8+joystick1Jos |
+%kc:endInclude
+
 ++ BRLTTY ++[BRLTTY]
 [BRLTTY http://www.brltty.com/] este un program separat care poate fi folosit pentru a suporta multe alte afișaje braille.
 Pentru a-l folosi, trebuie să instalați [BRLTTY pentru Windows http://www.brltty.com/download.html].
@@ -2470,7 +2556,7 @@ Vă rugăm să consultați [lista de asocieri de taste BRLTTY http://mielke.cc/b
 
 + Subiecte avansate +[AdvancedTopics]
 
-++ Opțiuni în Linie de comandă ++[CommandLineOptions]
+++ Opțiuni în Linie de comandă ++[OptiuniLinieComanda]
 NVDA poate accepta una sau mai multe opțiuni adiționale, atunci când pornește, care îi pot modifica execuția.
 Puteți trimite oricâte opțiuni aveți nevoie.
 Aceste opțiuni pot fi trimise atunci când pornirea se face printr-o scurtătură (în proprietățile scurtăturii), din dialogul de Execuție (Meniul Start -> Execută, sau Windows+r) sau dintr-o consolă de comandă Windows.
@@ -2514,7 +2600,7 @@ Urmează opțiunile în linie de comandă ale NVDA:
 | None | --create-portable-silent | Creează o copie portabilă a NVDA-ului (nu pornește copia nou instalată). Necesită --portable-path pentru a fi specificată |
 | None | --portable-path=PORTABLEPATH | Calea în care va fi creată o copie portabilă |
 
-++ Parametri la nivel de sistem ++[[SystemWideParameters]]
+++ Parametri la nivel de sistem ++[ParametriGeneraliSistem]
 NVDA permite setarea unor valori în regiștrii de sistem care modifică comportamentul la nivel de sistem al acestuia.
 Aceste valori sunt stocate în regiștrii, sub una din următoarele chei:
 - Sistem pe 32 de biți: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
@@ -2527,6 +2613,8 @@ Următoarele valori pot fi setate sub această cheie de regiștri:
 | serviceDebug | DWORD | 0 (implicit) pentru dezactivare, 1 pentru activare | Dacă este activată, dezactivează modul securizat pe desktop-urile Windows securizate, permițând utilizarea consolei Python și a monnitorului de jurnale. Datorită mai multor implicații majore în materie de securitate, utilizarea acestei opțiuni este puternic descurajată |
 
 + Informații suplimentare +[FurtherInformation]
-Dacă aveți nevoie de informații suplimentare sau asistență în privința NVDA, vizitați site-ul internațional în limba engleză la NVDA_URL. Aici puteți găsi documentație adițională, precum și asistență tehnică și resurse ale comunității. De asemenea, el furnizează informații și resurse privind dezvoltarea NVDA.
+Dacă aveți nevoie de informații suplimentare sau asistență în privința NVDA, vizitați site-ul internațional în limba engleză la NVDA_URL. 
+Aici puteți găsi documentație adițională, precum și asistență tehnică și resurse ale comunității. 
+De asemenea, el furnizează informații și resurse privind dezvoltarea NVDA.
 
 Puteți vizita și site-ul comunității românești a NVDA-ului la www.ro-nvda.tk. Acest site le oferă vizitatorilor săi tutoriale audio, text,  voci pentru NVDA puse la dispoziția acestora de membrii comunității, dar și modalitatea de a-i contacta pe cei ce se ocupă cu traducerea NVDA-ului și a suplimentelor sale în limba română. De asemenea, comunitatea mai pune la dispoziția utilizatorilor vorbitori de română și o listă de mailing unde aceștia pot să discute și să pună întrebări în legătură cu NVDA și suplimentele sale. Aceasta este NVDA-romanian-comunity@googlegroups.com.

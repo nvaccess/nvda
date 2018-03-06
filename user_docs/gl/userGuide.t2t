@@ -1834,14 +1834,6 @@ Para máis información, por favor visita o sitio web de Audiologic en www.audio
 
 Este sintetizador non soporta a [funcionalidade de deletreo #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer para o NVDA ++[Vocalizer]
-O Nuance Vocalizer é un sintetizador de voz commercial e de alta calidade desenvolvido por Nuance Communications, Inc., e empaquetado especialmente para o NVDA por Tiflotecnia, Lda.
-Contén máis de 50 voces diferentes que podes instalar, falando en máis de 30 linguas.
-Todos Os compoñentes e voces do sintetizador agrúpanse en paquetes de complemento, os que permiten o seu uso compreto en copias portables do NVDA.
-
-Podes obter máis información acerca do Nuance Vocalizer para o NVDA e de como compralo, no seu sitio web en [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Unha porcentaxe das ventas deste producto dóase ao NV Access, para financiar o desenvolvemento do Lector de Pantalla  NVDA.
-
 + Pantallas Braille Soportadas +[SupportedBrailleDisplays]
 Esta sección contén información acerca das pantallas braille soportadas polo NVDA.
 
@@ -2111,7 +2103,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Ler todo | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Series das HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
+++ Series das HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 O NVDA soporta as pantallas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
 Se se conectan a través do USB, necesitarás instalar os controladores USB de HIMS no sistema.
 Podes descargalos de aquí: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2460,6 +2452,86 @@ Debido a esto, e para manter compatibilidade con outros lectores de pantalla en 
 || Nome | Tecla |
 | Desprazar atrás pantalla braille | Menos teclado numérico |
 | Desprazar adiante pantalla braille | Máis teclado numérico | 
+%kc:endInclude
+
+++ Pantallas Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+Sopórtanse por NVDA as pantallas Esys, Esytime e Iris de [Eurobraille http://www.eurobraille.fr/].
+Os dispositivos Esys e Esytime-Evo sopórtanse cando se conecten a través de USB ou de bluetooth.
+Os dispositivos Esytime vellos só soportan USB.
+As pantallas Iris só se poden conectar a través dun porto serie.
+Polo tanto, para estas pantallas, deberías selecionar o porto ao que se conecta despois de teren escolleito este controlador nol diálogo Opcións de Braille.
+
+As pantallas Iris e Esys teñen un teclado braille con 10 teclas.
+Das dúas teclas colocadas como barra espaciadora, a tecla da esquerda correspóndese coa tecla retroceso e a tecla dereita coa barra espaciadora.
+
+Seguidamente van as asignacións de teclas para estas pantallas co NVDA.
+Por favor consulta a documentación da pantalla para descripcións de onde se poden atopar estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar pantalla braille cara atrás | switch1-6Esquerda, l1 |
+| Desprazar pantalla braille cara adiante | switch1-6Dereita, l8 |
+| Mover ao foco actual | switch1-6Esquerda+switch1-6Dereita, l1+l8 |
+| Enrutar á celda braille | sensores, double sensor |
+| Mover á liña anterior en revisión | joystick1Arriba |
+| Mover á liña seguinte en revisión | joystick1Abaixo |
+| Mover ao carácter anterior en revisión | joystick1Eszquerda |
+| Mover ao carácter seguinte en revisión | joystick1Dereita |
+| Cambiar ao modo de revisión anterior | joystick1Esquerda+joystick1Arriba |
+| Cambiar ao seguinte modo de revisión | joystick1Dereita+joystick1Abaixo |
+| Borrar a última celda braille ou carácter introducido | retroceso |
+| Transcribir calquera entrada braille e premer a tecla intro | retroceso+espazo |
+| tecla insert | ponto3+ponto5+espazo, l7 |
+| tecla suprimir | ponto3+ponto6+espazo |
+| tecla inicio | ponto1+ponto2+ponto3+espazo, joystick2Esquerda+joystick2Arriba |
+| tecla fin | ponto4+ponto5+ponto6+espazo, joystick2Dereita+joystick2Abaixo |
+| tecla frecha esquerda | ponto2+espazo, joystick2Esquerda, frecha esquerda |
+| tecla frecha dereita | ponto5+espazo, joystick2Dereita, frecha dereita |
+| tecla frecha arriba  | ponto1+espazo, joystick2Arriba, frecha arriba |
+| tecla frecha abaixo  | ponto6+espazo, joystick2Abaixo, frecha abaixo |
+| tecla intro | joystick2Centro |
+| tecla RePáx | ponto1+ponto3+espazo |
+| tecla AvPáx | ponto4+ponto6+espazo |
+| tecla 1 numérico | ponto1+ponto6+retroceso |
+| tecla 2 numérico | ponto1+ponto2+ponto6+retroceso |
+| tecla 3 numérico | ponto1+ponto4+ponto6+retroceso |
+| tecla 4 numérico | ponto1+ponto4+ponto5+ponto6+retroceso |
+| tecla 5 numérico | ponto1+ponto5+ponto6+retroceso |
+| tecla 6 numérico | ponto1+ponto2+ponto4+ponto6+retroceso |
+| tecla 7 numérico | ponto1+ponto2+ponto4+ponto5+ponto6+retroceso |
+| tecla 8 numérico | ponto1+ponto2+ponto5+ponto6+retroceso |
+| tecla 9 numérico | ponto2+ponto4+ponto6+retroceso |
+| tecla Insert numérico | ponto3+ponto4+ponto5+ponto6+retroceso |
+| tecla ponto numérico | ponto2+retroceso |
+| tecla dividir numérico | ponto3+ponto4+retroceso |
+| tecla multiplicar numérico | ponto3+ponto5+retroceso |
+| tecla menos numérico | ponto3+ponto6+retroceso |
+| tecla máis numérico | ponto2+ponto3+ponto5+retroceso |
+| tecla intro numérico | ponto3+ponto4+ponto5+retroceso |
+| tecla escape | ponto1+ponto2+ponto4+ponto5+espazo, l2 |
+| tecla tab | ponto2+ponto5+ponto6+espazo, l3 |
+| tecla shift+tab | ponto2+ponto3+ponto5+espazo |
+| tecla imprimir pantalla | ponto1+ponto3+ponto4+ponto6+espazo |
+| tecla pausa | ponto1+ponto4+espazo |
+| tecla aplicacións | ponto5+ponto6+retroceso |
+| tecla f1 | ponto1+retroceso |
+| tecla f2 | ponto1+ponto2+retroceso |
+| tecla f3 | ponto1+ponto4+retroceso |
+| tecla f4 | ponto1+ponto4+ponto5+retroceso |
+| tecla f5 | ponto1+ponto5+retroceso |
+| tecla f6 | ponto1+ponto2+ponto4+retroceso |
+| tecla f7 | ponto1+ponto2+ponto4+ponto5+retroceso |
+| tecla f8 | ponto1+ponto2+ponto5+retroceso |
+| tecla f9 | ponto2+ponto4+retroceso |
+| tecla f10 | ponto2+ponto4+ponto5+retroceso |
+| tecla f11 | ponto1+ponto3+retroceso |
+| tecla f12 | ponto1+ponto2+ponto3+retroceso |
+| tecla windows | ponto1+ponto2+ponto3+ponto4+retroceso |
+| tecla bloqMayus | ponto7+retroceso, ponto8+retroceso |
+| tecla BloqNum | ponto3+retroceso, ponto6+retroceso |
+| tecla shift | ponto7+espazo, l4 |
+| tecla control | ponto7+ponto8+espazo, ponto1+ponto7+ponto8+espazo, ponto4+ponto7+ponto8+espazo, l5 |
+| tecla alt | ponto8+espazo, ponto1+ponto8+espazo, ponto4+ponto8+espazo, l6 |
+| Conmutar simulación de entrada de teclado HID | esytime):l1+joystick1Abaixo, esytime):l8+joystick1Abaixo |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
