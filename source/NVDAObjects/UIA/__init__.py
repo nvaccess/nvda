@@ -268,7 +268,12 @@ class UIATextInfo(textInfos.TextInfo):
 	def __init__(self,obj,position,_rangeObj=None):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
-			self._rangeObj=_rangeObj.clone()
+			try:
+				self._rangeObj=_rangeObj.clone()
+			except COMError:
+				# IUIAutomationTextRange::clone can sometimes fail, such as in UWP account login screens
+				log.debugWarning("Could not clone range",exc_info=True)
+				raise RuntimeError("Could not clone range")
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			try:
 				sel=self.obj.UIATextPattern.GetSelection()

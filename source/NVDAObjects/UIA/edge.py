@@ -571,6 +571,19 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDoc
 			return True
 		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
 
+	def makeTextInfo(self,position):
+		try:
+			return super(EdgeHTMLTreeInterceptor,self).makeTextInfo(position)
+		except RuntimeError as e:
+			# sometimes the stored TextRange we have for the caret/selection can die if the page mutates too much.
+			# Therefore, if we detect this, just give back the first position in the document, updating our stored version as we go.
+			if position in (textInfos.POSITION_SELECTION,textInfos.POSITION_CARET):
+				log.debugWarning("%s died. Using first position instead."%position)
+				info=self.makeTextInfo(textInfos.POSITION_FIRST)
+				self._selection=info
+				return info
+			raise e
+
 class EdgeHTMLRoot(EdgeNode):
 
 	treeInterceptorClass=EdgeHTMLTreeInterceptor
