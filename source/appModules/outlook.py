@@ -441,7 +441,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				# The first valuePart is the type of the selection, e.g. Message, Contact.
 				# We can safely assume that the classes in silentMessageClasses are one word.
 				# For messages other than regular mail messages (e.g. meeting request), the message class is relevant.
-				firstPart = 1 if messageClass in silentMessageClasses else 0
+				firstPart = max(1, valueCount-2) if messageClass in silentMessageClasses else 0
 				textList.extend(valueParts[firstPart:lastPart])
 		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
