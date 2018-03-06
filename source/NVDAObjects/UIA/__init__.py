@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Joseph Lee, Mohammad Suliman
+#Copyright (C) 2009-2018 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V.
 
 """Support for UI Automation (UIA) controls."""
 
@@ -717,7 +717,10 @@ class UIA(Window):
 			return
 		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
 		for ID in IDs:
-			cacheRequest.addProperty(ID)
+			try:
+				cacheRequest.addProperty(ID)
+			except COMError:
+				log.debug("Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"%ID)
 		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
 		for ID in IDs:
 			elementCache[ID]=cacheElement
@@ -969,6 +972,21 @@ class UIA(Window):
 		except Exception as e:
 			ret="Exception: %s"%e
 		info.append("UIA className: %s"%ret)
+		patternsAvailable = []
+		patternAvailableConsts = dict(
+			(const, name) for name, const in UIAHandler.__dict__.iteritems()
+			if name.startswith("UIA_Is") and name.endswith("PatternAvailablePropertyId")
+		)
+		self._prefetchUIACacheForPropertyIDs(list(patternAvailableConsts))
+		for const, name in patternAvailableConsts.iteritems():
+			try:
+				res = self._getUIACacheablePropertyValue(const)
+			except COMError:
+				res = False
+			if res:
+				# Every name has the same format, so the string indexes can be safely hardcoded here.
+				patternsAvailable.append(name[6:-19])
+		info.append("UIA patterns available: %s"%", ".join(patternsAvailable))
 		return info
 
 	def _get_name(self):
