@@ -1,12 +1,12 @@
 # Traduction française de NVDA
-# Copyright (C) 2006-2017 NVDA Contributors <http://www.nvaccess.org/>
+# Copyright (C) 2006-2018 NVDA Contributors <http://www.nvaccess.org/>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 00:10+1000\n"
-"PO-Revision-Date: 2018-01-18 15:49+0100\n"
+"POT-Creation-Date: 2018-02-16 00:10+1000\n"
+"PO-Revision-Date: 2018-02-09 09:16+0100\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -2552,7 +2552,7 @@ msgstr "expiré"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
-msgstr "entrée incorrecte"
+msgstr "entrée invalide"
 
 msgid "modal"
 msgstr "modal"
@@ -4054,7 +4054,7 @@ msgstr ""
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr "Braille attaché à %s"
+msgstr "Le Braille suit %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -7095,8 +7095,29 @@ msgid "off"
 msgstr "désactivé"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA séries BC640/680"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Séries Optelec ALVA 6/convertisseur de protocole"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Port série Bluetooth : {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "Simulation de clavier HID non supportée."
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "Simulation de clavier HID activée"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "Simulation de clavier HID désactivée"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "Activer/désactiver la simulation de clavier HID"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7122,6 +7143,18 @@ msgstr "HumanWare Séries Brailliant BI/b"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Terminaux EcoBraille"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Terminaux Eurobraille Esys/Esytime/Iris"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "Simulation de clavier HID indisponible"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Activer/désactiver la simulation de clavier HID"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -9024,7 +9057,7 @@ msgstr "Afficher les &messages indéfiniment"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
-msgstr "&Braille suit :"
+msgstr "Le &Braille suit :"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -10671,6 +10704,9 @@ msgstr "Interligne double"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interligne 1.5"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "ALVA séries BC640/680"
 
 #~ msgid "review"
 #~ msgstr "revue"
