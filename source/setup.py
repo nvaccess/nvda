@@ -114,7 +114,7 @@ class py2exe(build_exe.py2exe):
 
 	def build_manifest(self, target, template):
 		mfest, rid = build_exe.py2exe.build_manifest(self, target, template)
-		if getattr(target, "script", None) == "nvda.pyw":
+		if getattr(target, "script", "").endswith(".pyw"):
 			# This is one of the main application executables.
 			mfest = mfest[:mfest.rindex("</assembly>")]
 			mfest += MAIN_MANIFEST_EXTRA + "</assembly>"
@@ -217,6 +217,7 @@ setup(
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*")),
+		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
 		(".", ['message.html' ])
 	] + (
 		getLocaleDataFiles()
