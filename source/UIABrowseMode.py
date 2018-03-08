@@ -189,7 +189,11 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		element=position.UIAElementAtStart
 		while element:
 			element=walker.normalizeElement(element)
-			if not element or UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) or UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement):
+			if (
+				not element 
+				or UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) 
+				or UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement)
+			):
 				break
 			try:
 				yield itemClass(itemType,document,element)
