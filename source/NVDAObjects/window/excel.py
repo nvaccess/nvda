@@ -906,7 +906,7 @@ class ExcelWorksheet(ExcelBase):
 
 	def script_changeSelection(self,gesture):
 		# Detect if this script is being repeated a lot (E.g. held down)
-		repeated=scriptHandler.getLastScriptRepeatCount()>2
+		repeated=scriptHandler.getLastScriptRepeatCount()>=2
 		if repeated and scriptHandler.isScriptWaiting():
 			# This script is being pressed a lot in quick succession and there are more coming.
 			# Just send the gesture and return to not cause a lag.
@@ -946,8 +946,6 @@ class ExcelWorksheet(ExcelBase):
 			# Fire a focus event for the new selection
 			eventHandler.executeEvent('gainFocus',newSelection)
 	script_changeSelection.canPropagate=True
-	# Drop this script's repeat timeout down so as to only kick in when the user is really moving fast or holding down a key
-	script_changeSelection.repeatTimeout=0.1
 
 	__changeSelectionGestures = (
 		"kb:tab",
