@@ -1921,6 +1921,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No formatting information"))
 			return
 		self._reportFormattingHelper(info, False)
+	# Translators: Input help mode message for Braille report formatting command.
 	script_braille_reportFormatting.__doc__ = _("Reports formatting info for the text under this braille cell")
 	script_braille_reportFormatting.category=SCRCAT_BRAILLE
 
