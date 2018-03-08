@@ -899,6 +899,9 @@ class NonReEntrantTimer(wx.Timer):
 	the timer would not fire until the first callback had completed.
 	However, in WXPython 4, wx.Timer is now re-entrant.
 	Code in NVDA is not written to handle re-entrant timers, so this class provides a Timer with the old behaviour.
+	This should be used in place of wx.Timer and wx.PyTimer where the callback will directly or indirectly call wx.Yield or some how process the Windows window message queue. 
+	For example, NVDA's core pump or other timers that run in NVDA's main thread.
+	Timers on braille display drivers for key detection don't need to use this as they only queue gestures rather than actually executing them.  
 	"""
 
 	def __init__(self, run=None):
