@@ -672,12 +672,7 @@ def speakTypedCharacters(ch):
 		# delete character produced in some apps with control+backspace
 		return
 	elif len(curWordChars)>0:
-		typedWord="".join(curWordChars)
-		curWordChars=[]
-		if log.isEnabledFor(log.IO):
-			log.io("typed word: %s"%typedWord)
-		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
-			speakText(typedWord)
+		speakPreviousWord(realChar)
 	global _suppressSpeakTypedCharactersNumber, _suppressSpeakTypedCharactersTime
 	if _suppressSpeakTypedCharactersNumber > 0:
 		# We primarily suppress based on character count and still have characters to suppress.
@@ -692,6 +687,48 @@ def speakTypedCharacters(ch):
 		suppress = False
 	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
 		speakSpelling(realChar)
+
+def speakPreviousWord(wordSeparator):
+	global curWordChars
+	bufferedWord = "".join(curWordChars)
+	curWordChars = []
+	typingIsProtected = api.isTypingProtected()
+	speakWord = log.isEnabledFor(log.IO) or (config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected)
+	reportSpellingError = config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"]
+	if not (speakWord or reportSpellingError):
+		return
+	try:
+		# self might be a descendant of the text control; e.g. Symphony.
+		# We want to deal with the entire text, so use the caret object.
+		obj = api.getCaretObject()
+		# The caret object can be an NVDAObject or a TreeInterceptor.
+		# Editable caret cases inherrit from EditableText.
+		from editableText import EditableText
+		if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj,"states",()):
+			return
+		info = obj.makeTextInfo(textInfos.POSITION_CARET)
+		if not info.findWordBeforeCaret(wordSeparator):
+			return 
+	except (RuntimeError, LookupError):
+		word = bufferedWord
+	else:
+		if bufferedWord in info.text:
+			word = info.text
+		else:
+			word = bufferedWord
+	if speakWord:
+		log.io("typed word: %s"%word)
+		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
+			speakText(word)
+	if word != bufferedWord and reportSpellingError:
+		for command in info.getTextWithFields():
+			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
+				break
+		else:
+			# No error.
+			return
+		import nvwave
+		nvwave.playWaveFile(r"waves\textError.wav")
 
 class SpeakTextInfoState(object):
 	"""Caches the state of speakTextInfo such as the current controlField stack, current formatfield and indentation."""
