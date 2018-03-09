@@ -135,6 +135,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 			"focus": api.getFocusObject(),
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
 			"focusAnc": list(api.getFocusAncestors()),
+			"caret": api.getCaretObject(),
 			"fdl": api.getFocusDifferenceLevel(),
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),

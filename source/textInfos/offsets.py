@@ -148,7 +148,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
 	useUniscribe=True #Use uniscribe to calculate word offsets etc
- 
+
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
@@ -337,6 +337,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			return True
 		else:
 			return False
+
+	def isCollapsedAtUnitEndPoint(self,unit):
+		if not self.isCollapsed:
+			return False
+		if self._getUnitOffsets(unit, self._startOffset)[0] == self._startOffset:
+			return True
+		#if self._getUnitOffsets(unit, self._endOffset)[1] == self._endOffset+1:
+		#	return True
+		return False
 
 	def collapse(self,end=False):
 		if not end:

@@ -15,6 +15,8 @@ import re
 import baseObject
 import config
 import controlTypes
+import unicodedata
+from logHandler import log
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -229,7 +231,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
 	@type bookmark: L{Bookmark}
 	"""
- 
+
+	#: Whether this TextInfo should be used for word echo.
+	#: Set to C{False} when word echo with this TextInfo is unreliable.
+	#: @type: bool
+	useForWordEcho = True 
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
@@ -384,6 +390,59 @@ class TextInfo(baseObject.AutoPropertyObject):
 @rtype: bool
 """ 
 		raise NotImplementedError
+
+	def findWordBeforeCaret(self, wordSeparator=None):
+		"""
+		Locates the word before the caret and positions this TextInfo object at the start.
+		This requires this TextInfo object to be created at the caret position.
+		@param wordSeparator: The word separator that is expected to be one position before the caret.
+			C{None} if the word separator can be ignored.
+		@type wordSeparator: str
+		@returns: C{True} if a word with word separator is found before the caret, C{False} if the word before the caret is not yet complete.
+		@rtype: bool
+		@raise LookupError: If no word can be found before the caret (i.e. when there is no word or the caret is inside a word).
+		"""
+		if self.basePosition != POSITION_CARET:
+			raise RuntimeError("This function should only be called for TextInfos positioned at the caret")
+		# cache the caret position
+		caret = self.copy()
+		# Uniscribe doesn't treat most of the punctuation characters as word separators.
+		# Therefore, we do not use Uniscribe to calculate word boundaries.
+		self.useUniscribe = caret.useUniscribe = False
+		# This gets called for characters which might end a word; e.g. space.
+		# The character before the caret usually is the word end.
+		# The one before that is most likely the last of the word, which is what we want.
+		res = self.move(UNIT_CHARACTER, -2)
+		if res == 0:
+			# Trying to look up a word before the caret, but there is none.
+			raise LookupError("No word before caret")
+		self.expand(UNIT_WORD)
+		diff = self.compareEndPoints(caret,"endToStart")
+		if diff==0 and unicodedata.category(self.text[-1])[0] in "LMN":
+			# This is no word boundary
+			return False
+		if diff>0:
+			# The caret is inside a word.
+			# This usually happens in command consoles, where the line after the carret could be padded up with spaces.
+			caret.expand(UNIT_CHARACTER)
+			if not caret.text.isspace():
+				# Some offset based TextInfos (e.g. IA2Text) just tend to fail sometimes.
+				raise LookupError("Caret inside word")
+		elif self.text == "\n":
+			# In most programs (e.g. Wordpad, Word, pressing enter produces a single carriage return character.
+			# In Notepad however, enter produces crlf.
+			self.move(UNIT_CHARACTER, 1, endPoint="end")
+		# For CRLF, the last character of the word is one position before the current.
+		if self.text in (wordSeparator, "\r\n"):
+			# We need to move te start endpoint an additional -1 character.
+			if self.move(UNIT_CHARACTER, -1) == 0:
+				raise LookupError("No word before word separator or CRLF")
+			self.expand(UNIT_WORD)
+		elif self.text.isspace():
+			# There is only space, which is not considered a word.
+			# For example, this can occur in Notepad++ when auto indentation is on.
+			raise LookupError("Word before caret contains only spaces")
+		return True
 
 	def _get_NVDAObjectAtStart(self):
 		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.

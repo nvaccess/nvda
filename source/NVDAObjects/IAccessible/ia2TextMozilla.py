@@ -53,7 +53,7 @@ def _getEmbedded(obj, offset):
 		pass
 	return None
 
-class MozillaCompoundTextInfo(CompoundTextInfo):
+class MozillaCompoundTextInfo(CompoundTextInfo):	# Word echo with this TextInfo is unreliable.
 
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
@@ -352,7 +352,6 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				expandTi = baseTi.copy()
 				expandTi.expand(unit)
 				if expandTi.isCollapsed:
-					# This shouldn't happen, but can due to server implementation bugs; e.g. MozillaBug:1149415.
 					expandTi.expand(textInfos.UNIT_OFFSET)
 			allTi = self._makeRawTextInfo(obj, textInfos.POSITION_ALL)
 

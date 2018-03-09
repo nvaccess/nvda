@@ -184,7 +184,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return 0
 
 	def _getLineCount(self):
-			return -1
+		return -1
 
 	def _getTextRange(self,start,end):
 		try:
@@ -238,16 +238,29 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
 		if start>offset or offset>end:
 			# HACK: Work around buggy implementations which return a range that does not include offset.
+			log.debugWarning(
+				"IAccessibleTextObject.TextAtOffset returned word start offset %d, "
+				"end offset %d and text %s for given offset %d" 
+				% (start, end, text, offset)
+			)
 			return offset,offset+1
 		return start,end
 
 	def _getLineOffsets(self,offset):
 		try:
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
-			return start,end
 		except COMError:
 			log.debugWarning("IAccessibleText::textAtOffset failed",exc_info=True)
 			return offset,offset+1
+		if start>offset or offset>end:
+			# HACK: Work around buggy implementations which return a range that does not include offset.
+			log.debugWarning(
+				"IAccessibleTextObject.TextAtOffset returned line start offset %d, "
+				"end offset %d and text %s for given offset %d" 
+				% (start, end, text, offset)
+			)
+			return offset,offset+1
+		return start,end
 
 	def _getSentenceOffsets(self,offset):
 		try:

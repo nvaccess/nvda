@@ -379,38 +379,6 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				start=end
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		elif winVersion.winVersion.major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
-			lineStart,lineEnd=self._getLineOffsets(offset)
-			if offset>=lineEnd:
-				return offset,offset+1
-			lineText=self._getTextRange(lineStart,lineEnd)
-			lineTextLen=len(lineText)
-			relativeOffset=offset-lineStart
-			if relativeOffset>=lineTextLen:
-				return offset,offset+1
-			#cariage returns are always treeted as a word by themselves
-			if lineText[relativeOffset] in ['\r','\n']:
-				return offset,offset+1
-			#Find the start of the word (possibly moving through space to get to the word first)
-			tempOffset=relativeOffset
-			while tempOffset>=0 and lineText[tempOffset].isspace():
-				tempOffset-=1
-			while tempOffset>=0 and not lineText[tempOffset].isspace():
-				tempOffset-=1
-			tempOffset+=1
-			start=lineStart+tempOffset
-			startOnSpace=True if tempOffset<lineTextLen and lineText[tempOffset].isspace() else False
-			#Find the end of the word and trailing space
-			tempOffset=relativeOffset
-			if startOnSpace:
-				while tempOffset<lineTextLen and lineText[tempOffset].isspace():
-					tempOffset+=1
-			while tempOffset<lineTextLen and not lineText[tempOffset].isspace():
-				tempOffset+=1
-			while tempOffset<lineTextLen and lineText[tempOffset].isspace():
-				tempOffset+=1
-			end=lineStart+tempOffset
-			return start,end
 		else:
 			if self._getTextRange(offset,offset+1) in ['\r','\n']:
 				return offset,offset+1
