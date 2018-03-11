@@ -1399,6 +1399,9 @@ class UIA(Window):
 		Unlike other events, the text to be announced is not the name of the object, and parameters control how the incoming notification should be processed.
 		Subclasses can override this event and can react to notification processing instructions.
 		"""
+		# Do not announce notifications from background apps.
+		if self.appModule != api.getFocusObject().appModule:
+			return
 		if displayString:
 			ui.message(displayString)
 
