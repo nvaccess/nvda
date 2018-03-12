@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Mongolian Translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-16 00:10+1000\n"
-"PO-Revision-Date: 2018-03-01 21:18+0800\n"
+"PO-Revision-Date: 2018-03-08 19:46+0800\n"
 "Last-Translator: \n"
 "Language-Team: MongolianNVDATranslationTeam <mongoliannvdatranslation@gmail."
 "com>\n"
@@ -1913,7 +1913,7 @@ msgstr "Гарчигийн мөр "
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
-msgstr "Цонх нээгдэж байна"
+msgstr "Идэвхитэй цонх"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
@@ -1933,7 +1933,7 @@ msgstr "бичвэр"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 msgid "edit"
-msgstr "бичих боломжтой"
+msgstr "бичих талбар"
 
 #. Translators: The word used to identify a button such as OK button.
 msgid "button"
@@ -1982,11 +1982,11 @@ msgstr "холбоос"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 msgid "tree view"
-msgstr "зүйлсийн жагсаалт"
+msgstr "зүйлсийн жагсаалтад"
 
 #. Translators: Identifies a tree view item.
 msgid "tree view item"
-msgstr "зүйлсийн харагдах байдал "
+msgstr "зүйлсийн жагсаалтад"
 
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
@@ -2015,7 +2015,7 @@ msgstr "Төлвийн мөр "
 
 #. Translators: Identifies a table such as ones used in various websites.
 msgid "table"
-msgstr "хүснэгт"
+msgstr "Хүснэгтэнд"
 
 #. Translators: Identifies a cell in a table.
 msgid "cell"
@@ -2360,7 +2360,7 @@ msgstr "Ажлын тавцангийн дүрс"
 #. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
-msgstr "Анхаараарай! "
+msgstr "Анхааруулж байна."
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2506,11 +2506,11 @@ msgstr "хагас чагтлагдсан"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
-msgstr "зөвхөн уншигдах боломжтой"
+msgstr "зөвхөн унших боломжтой"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "дэлгэрэнгүй "
+msgstr "дэлгэрэнгүй харах боломжтой"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
@@ -3886,7 +3886,7 @@ msgstr "цэнэглэгч залгаатай байна"
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "Үлдсэн  {hours:d} цаг {minutes:d} минут"
+msgstr "{hours:d} цаг {minutes:d} минут Үлдсэн  "
 
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
@@ -5823,7 +5823,7 @@ msgstr "багана %s"
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "{rowCount} мөрүүд and {columnCount} багануудтай"
+msgstr "{rowCount} мөртэй {columnCount} баганатай"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #, python-format
@@ -5838,7 +5838,7 @@ msgstr "%s мөрүүдтэй"
 #. Translators: Speaks the item level in treeviews (example output: level 2).
 #, python-format
 msgid "level %s"
-msgstr "төвшин %s"
+msgstr "төвшинд %s"
 
 #. Translators: Speaks number of items in a list (example output: list with 5 items).
 #, python-format
@@ -6155,7 +6155,7 @@ msgstr "хүснэгтийн гадна"
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
 #, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
-msgstr "хүснэгттэй {columnCount} баганууд {rowCount} мөрүүд"
+msgstr "Хүснэгтэнд {columnCount} баганатай {rowCount} мөртэй"
 
 msgid "NVDA Speech Viewer"
 msgstr "Дэлгэц уншигч програмын Speech Viewer"
@@ -6571,7 +6571,9 @@ msgstr "Shows options related to selected text or text at the cursor"
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
-msgstr "{bookPercentage}%, location {curLocation} of {maxLocation}"
+msgstr ""
+"{bookPercentage}%, байршил {curLocation} одоогийн байршил {maxLocation} "
+"байршил"
 
 #. Translators: a page in a Kindle book
 #, python-brace-format
@@ -7256,7 +7258,7 @@ msgstr "Тохируулгыг аюулгүй  горимд хадгалж ча�
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
-msgstr "Тохируулга хадгалагдсан"
+msgstr "Тохируулга хадгалагдлаа."
 
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
