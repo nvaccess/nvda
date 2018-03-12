@@ -313,6 +313,27 @@ class MainFrame(wx.Frame):
 		from gui import installerGui
 		installerGui.showInstallGui()
 
+	def onRunCOMRegistrationFixesCommand(self, evt):
+		if isInMessageBox:
+			return
+		progressDialog = IndeterminateProgressDialog(mainFrame,
+			# Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool 
+			_("COM Registration Fixing Tool"),
+			# Translators: The message displayed while NVDA is running the COM Registration fixing tool 
+			_("Please wait while NVDA tries to fix your system's COM registrations.")
+		)
+		try:
+			config.execElevated(config.SLAVE_FILENAME,["fixCOMRegistrations"])
+		except:
+			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
+		progressDialog.done()
+		del progressDialog
+		# Translators: The message displayed when the COM Registration Fixing tool completes.
+		gui.messageBox(_("COM Registration Fixing tool complete"),
+			# Translators: The title of a dialog presented when the COM Registration Fixing tool is complete. 
+			_("COM Registration Fixing Tool"),
+			wx.OK)
+
 	def onConfigProfilesCommand(self, evt):
 		if isInMessageBox:
 			return
@@ -420,6 +441,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 				# Translators: The label for the menu item to install NVDA on the computer.
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
+			# Translators: The label for the menu item to run the COM registration fix tool 
+			item = menu_tools.Append(wx.ID_ANY, _("Run COM Registration Fixing tool..."))
+			self.Bind(wx.EVT_MENU, frame.onRunCOMRegistrationFixesCommand, item)
 		if not config.isAppX:
 			# Translators: The label for the menu item to reload plugins.
 			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
