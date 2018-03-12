@@ -316,6 +316,13 @@ class MainFrame(wx.Frame):
 	def onRunCOMRegistrationFixesCommand(self, evt):
 		if isInMessageBox:
 			return
+		if gui.messageBox(
+			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
+			_("You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"),
+			# Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool 
+			_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
+		)==wx.NO:
+			return
 		progressDialog = IndeterminateProgressDialog(mainFrame,
 			# Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool 
 			_("COM Registration Fixing Tool"),
