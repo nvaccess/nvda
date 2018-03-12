@@ -4,6 +4,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+"""Utilities to re-register  particular system COM interfaces needed by NVDA."""
+
 import os
 import subprocess
 import winVersion
