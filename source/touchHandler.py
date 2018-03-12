@@ -208,7 +208,7 @@ inputCore.registerGestureSource("ts", TouchInputGesture)
 class TouchHandler(threading.Thread):
 
 	def __init__(self):
-		self.pendingEmitsTimer=gui.NonReentrantTimer(core.requestPump)
+		self.pendingEmitsTimer=gui.NonReEntrantTimer(core.requestPump)
 		super(TouchHandler,self).__init__()
 		self._curTouchMode='object'
 		self.initializedEvent=threading.Event()
