@@ -1,5 +1,3 @@
-import ctypes
-import comtypes
 import os
 import subprocess
 import winVersion
@@ -9,7 +7,7 @@ from logHandler import log
 systemRoot=os.path.expandvars('%SYSTEMROOT%')
 system32=os.path.join(systemRoot,'system32')
 sysWow64=os.path.join(systemRoot,'syswow64')
-systemDrive=os.path.expandvars('%SYSTEMDRIVE%')
+systemDrive=os.path.expandvars('%SYSTEMDRIVE%\\')
 programFiles=os.path.join(systemDrive,'program files')
 programFilesX86=os.path.join(systemDrive,'program files (x86)')
 
@@ -44,34 +42,6 @@ def applyRegistryPatch(fileName):
 		log.error("Error applying registry patch: %s, %s"%(fileName,e))
 	else:
 		log.debug("Applied registry patch: %s"%fileName)
-
-def checkCOMInterface(interface):
-	log.debug("Checking interface: %s"%interface.__name__)
-	psClsid=comtypes.GUID()
-	try:
-		ctypes.oledll.ole32.CoGetPSClsid(ctypes.byref(interface._iid_),ctypes.byref(psClsid))
-	except WindowsError as e:
-		log.debugWarning("Interface not registered: %s"%e)
-		return False
-	try:
-		comtypes.CoGetClassObject(psClsid,clsctx=comtypes.CLSCTX_INPROC_SERVER,interface=comtypes.IUnknown)
-	except WindowsError as e:
-		log.debugWarning("Proxy stub not registered: %s"%e)
-		return False
-	log.debug("Interface is Registered")
-	return True
-
-def checkCommonCOMInterfaces():
-	from comtypes.automation import IDispatch, IEnumVARIANT
-	if not checkCOMInterface(IDispatch) or not checkCOMInterface(IEnumVARIANT):
-		return False
-	from comtypes import IServiceProvider
-	if not checkCOMInterface(IServiceProvider):
-		return False
-	from oleacc import IAccessible
-	if not checkCOMInterface(IAccessible):
-		return False
-	return True
 
 def fixCOMRegistrations():
 	"""
