@@ -454,14 +454,17 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			isFlag = e.cachedClassName=="FlagField"
-			if selection and isFlag:
-				try:
-					flagIcon=selection.flagIcon
-				except COMError:
-					flagIcon=0
+			if isFlag:
+				flagIcon=0
+				if selection:
+					try:
+						flagIcon=selection.flagIcon
+					except COMError:
+						pass
 				if not flagIcon:
 					# This message has no flag.
 					# Filter the flag field, as it provides redundant information.
+					# Ignore flags if the object model couldn't be accessed.
 					continue
 			name=e.cachedName
 			columnHeaderTextList=[]
