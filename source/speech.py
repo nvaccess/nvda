@@ -691,11 +691,11 @@ def speakTypedCharacters(ch):
 def speakPreviousWord(wordSeparator):
 	global curWordChars
 	bufferedWord = "".join(curWordChars)
-	curWordChars = []
 	typingIsProtected = api.isTypingProtected()
 	speakWord = log.isEnabledFor(log.IO) or (config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected)
 	reportSpellingError = config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"]
 	if not (speakWord or reportSpellingError):
+		curWordChars = []
 		return
 	try:
 		# self might be a descendant of the text control; e.g. Symphony.
@@ -705,9 +705,11 @@ def speakPreviousWord(wordSeparator):
 		# Editable caret cases inherrit from EditableText.
 		from editableText import EditableText
 		if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj,"states",()):
+			curWordChars = []
 			return
 		info = obj.makeTextInfo(textInfos.POSITION_CARET)
 		if not info.findWordBeforeCaret(wordSeparator):
+			curWordChars.append(wordSeparator)
 			return 
 	except (RuntimeError, LookupError):
 		word = bufferedWord
@@ -716,6 +718,7 @@ def speakPreviousWord(wordSeparator):
 			word = info.text
 		else:
 			word = bufferedWord
+	curWordChars = []
 	if speakWord:
 		log.io("typed word: %s"%word)
 		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:

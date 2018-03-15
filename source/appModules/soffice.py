@@ -181,6 +181,11 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 		return formatField,(startOffset,endOffset)
 
+	def _getWordOffsets(self, offset):
+		# #8065: At least in LibreOffice, the word offsets returned by IA2TextTextInfo do not match reality.
+		# The LibreOffice implementation much more closely matches the OffsetsTextInfo implementation to fetch word offsets.
+		return super(IA2TextTextInfo, self)._getWordOffsets(offset)
+
 	def _getLineOffsets(self, offset):
 		start, end = super(SymphonyTextInfo, self)._getLineOffsets(offset)
 		if offset == 0 and start == 0 and end == 0:
