@@ -451,7 +451,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			isFlag = e.cachedClassName=="FlagField"
-			if isFlag:
+			if selection and isFlag:
 				try:
 					flagIcon=selection.flagIcon
 				except COMError:
