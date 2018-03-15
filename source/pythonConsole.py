@@ -26,6 +26,7 @@ import api
 import gui
 from logHandler import log
 import braille
+import config
 
 class HelpCommand(object):
 	"""
@@ -308,7 +309,8 @@ class ConsoleUI(wx.Frame):
 		if not insert:
 			return
 		self.inputCtrl.SetValue(self.inputCtrl.GetValue() + insert)
-		queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
+		if not config.conf["keyboard"]["speakTypedWords"]:
+			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
 		self.inputCtrl.SetInsertionPointEnd()
 
 	def onInputChar(self, evt):
