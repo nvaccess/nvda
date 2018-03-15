@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-23 00:10+1000\n"
+"POT-Creation-Date: 2018-03-09 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adriani Botez <adriani.botez@gmail.com>\n"
 "Language-Team: \n"
@@ -167,7 +167,7 @@ msgstr "Immer"
 #. Translators: Displayed in braille for an object which is a
 #. window.
 msgid "wnd"
-msgstr "Fnst"
+msgstr "Fst"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
@@ -312,12 +312,12 @@ msgstr "eObj"
 #. Translators: Displayed in braille for an object which is a
 #. end note.
 msgid "enote"
-msgstr "enote"
+msgstr "en"
 
 #. Translators: Displayed in braille for an object which is a
 #. foot note.
 msgid "fnote"
-msgstr "fnote"
+msgstr "fN"
 
 #. Translators: Displayed in braille for an object which is a
 #. terminal.
@@ -366,7 +366,7 @@ msgstr "kwef"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
-msgstr "mrk"
+msgstr "{x}"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 msgid "ro"
@@ -430,7 +430,7 @@ msgstr "kmnt"
 
 #. Translators: Displayed in braille when an object is not selected.
 msgid "nsel"
-msgstr "<N/A>"
+msgstr "{ }"
 
 #. Translators: Displayed in braille for the banner landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
@@ -487,19 +487,19 @@ msgstr "Alle Punkte"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr "Bei Kontextänderungen"
+msgstr "Füllt das Braille-Display bei Kontextänderungen"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 msgid "Always fill display"
-msgstr "Immer"
+msgstr "Immer die komplette Display-Zeile füllen"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
 #. (i.e. you will have to scroll back for focus context information).
 msgid "Only when scrolling back"
-msgstr "Nur beim Scrollen"
+msgstr "Nur beim Zurückscrollen"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -526,23 +526,31 @@ msgstr "{number} von {total}"
 msgid "lv %s"
 msgstr "E%s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "r{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "R%s"
+msgid "r{rowNumber}"
+msgstr "r{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "s{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "S%s"
+msgid "c{columnNumber}"
+msgstr "s{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
-msgstr "%sende"
+msgstr "%s ende"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
@@ -1622,7 +1630,7 @@ msgstr "smk %s"
 #. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
-msgstr "%s markiert"
+msgstr "%s ausgewählt"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -3534,7 +3542,7 @@ msgstr "Zieht das Navigatorobjekt zum ersten untergeordneten Objekt."
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 msgid "Activate"
-msgstr "&aktivieren"
+msgstr "Aktivieren"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -4049,7 +4057,7 @@ msgstr ""
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr "Braillezeilenkopplung %s"
+msgstr "Braillezeile an %s gekoppelt"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -4061,11 +4069,12 @@ msgstr ""
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr "Kontext anzeigen: %s"
+msgstr "Kontext-Darstellung in Braille: %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
-msgstr "Schaltet zwischen verschiedenen Arten der Kontextanzeige in Braille um"
+msgstr ""
+"Schaltet zwischen verschiedenen Arten der Kontext-Dasstellung in Braille um"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -4181,7 +4190,7 @@ msgstr "Ermöglicht das Eingeben von Braillezeichen über eine Brailletastatur"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the current focus"
-msgstr "Zieht die Braillezeile zum aktuellen Fokus"
+msgstr "Zieht die Brailleausgabe zum aktuellen Fokus"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Erases the last entered braille cell or character"
@@ -4227,7 +4236,7 @@ msgstr ""
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
 msgid "%s mode"
-msgstr "%smodus"
+msgstr "%s modus"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Cycles between available touch modes"
@@ -4281,7 +4290,7 @@ msgstr "Verschiedenes"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr "CTRL+ALT+N"
+msgstr "STRG+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -4476,7 +4485,7 @@ msgstr "drucken"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "scroll lock"
-msgstr "Rollen"
+msgstr "Scrollen blockieren"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
@@ -4934,7 +4943,7 @@ msgstr "Dodekagon"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Donut"
-msgstr "Kreise"
+msgstr "Ring"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5831,10 +5840,21 @@ msgstr "Auswahl entfernt."
 msgid "row %s"
 msgstr "Reihe %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "durch %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "Spalte %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+msgid "through row {row} column {column}"
+msgstr "durch Reihe {row} Spalte {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 msgid "with {rowCount} rows and {columnCount} columns"
@@ -7142,7 +7162,7 @@ msgstr "FreedomScientific Focus / PAC Mate Serien"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 msgid "display scroll"
-msgstr "Bildschirmweises Scrollen"
+msgstr "Eine ganze Display-Zeile scrollen"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line.
 msgid "line scroll"
@@ -7768,21 +7788,21 @@ msgstr "Installieren"
 msgid "remove"
 msgstr "Entfernen"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "Deaktivieren"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "Nach Neustart deaktiviert"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "Aktivieren"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Nach Neustart aktiviert"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "Angehalten"
+msgid "disabled"
+msgstr "Deaktiviert"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "Wird ausgeführt"
+msgid "enabled"
+msgstr "Aktiviert"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -9049,7 +9069,7 @@ msgstr "&Wortumbruch verhindern (falls möglich)"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr "Kontext anzeigen:"
+msgstr "Kontext-Darstellung für das fokusierte Objekt:"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -10625,6 +10645,18 @@ msgstr "Doppelter Zeilenabstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 Zeilenabstand"
+
+#~ msgid "r%s"
+#~ msgstr "R%s"
+
+#~ msgid "c%s"
+#~ msgstr "S%s"
+
+#~ msgid "suspended"
+#~ msgstr "Angehalten"
+
+#~ msgid "running"
+#~ msgstr "Wird ausgeführt"
 
 #~ msgid "ALVA BC640/680 series"
 #~ msgstr "ALVA Serie BC640/680"

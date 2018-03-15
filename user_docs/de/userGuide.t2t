@@ -1757,8 +1757,9 @@ Solange Sie den Neustart von NVDA nicht durchführen, wird im Erweiterungs-Manag
 
 Um eine Erweiterung zu deaktivieren, drücken Sie den Schalter "deaktivieren"
 Um eine zuvor deaktivierte Erweiterung wieder zu aktivieren, verwenden Sie den Schalter "aktivieren".
-Sie können momentan laufende sowie aktivierte Erweiterungen deaktivieren. Sie können solche Erweiterungen aktivieren, deren Status als "stillgelegt" oder "deaktiviert" angezeigt wird.
+Sie können momentan laufende sowie aktivierte Erweiterungen deaktivieren. Sie können Erweiterungen aktivieren, deren Status als "deaktiviert" angezeigt wird.
 Nach jedem Tastendruck des aktivieren/deaktivieren- Schalters zeigt der Status der Erweiterung an, was nach dem Neustart von NVDA passiert.
+Wenn eine Erweiterung zuvor deaktiviert war, wird ihr Status als "aktiviert nach Neustart" angezeigt. Wenn eine Erweiterung zuvor aktiviert war, wird ihr Status als "deaktiviert nach Neustart" angezeigt.
 Ähnlich wie beim Installieren oder Entfernen von Erweiterungen müssen Sie NVDA neu starten, damit die Änderungen wirksam werden.
 
 Die Erweiterungsverwaltung enthält außerdem noch den Schalter "schließen", um den Dialog zu schließen.
@@ -2494,17 +2495,18 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 | Nummernblock 1 | Punkte1+6+Rücktaste |
 | Nummernblock 2 | Punkte1+2+6+Rücktaste |
 | Nummernblock 3 | Punkte1+4+6+Rücktaste |
-| Nummerblock 4 | Punkte1+4+5+6+Rücktaste |
+| Nummernblock 4 | Punkte1+4+5+6+Rücktaste |
 | Nummernblock 5 | Punkte1+5+6+Rücktaste |
 | Nummernblock 6 | Punkte1+2+4+6+Rücktaste |
 | Nummernblock 7 | Punkte1+2+4+5+6+Rücktaste |
 | Nummernblock 8 | Punkte1+2+5+6+Rücktaste |
 | Nummernblock 9 | Punkte2+4+6+Rücktaste |+| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
+| Nummernblock Einfügen | Punkt3+Punkt4+Punkt5+Punkt6+Rücktaste |
 | Nummernblock Komma | Punkt2+Rücktaste |
 | Nummerblock Divisionszeichen | Punkte3+4+Rücktaste |
 | Nummernblock Mal-Zeichen | Punkte3+5+Rücktaste |
 | Nummernblock Minus | Punkte3+6+Rücktaste |
-| Nummbernblock Plus | Punkte2+3+5+Rücktaste |
+| Nummernblock Plus | Punkte2+3+5+Rücktaste |
 | Nummernblock Eingabe | Punkte3+4+5+Rücktaste |
 | Escape-Taste | Punkte1+2+4+5+Leertaste, l2 |
 | Tab-Taste | Punkte2+5+6+Leertaste, l3 |
