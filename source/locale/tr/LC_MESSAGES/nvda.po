@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-16 00:10+1000\n"
-"PO-Revision-Date: 2018-02-22 09:31+0300\n"
+"POT-Creation-Date: 2018-03-09 00:10+1000\n"
+"PO-Revision-Date: 2018-03-13 08:31+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -528,17 +528,29 @@ msgstr "{number} bölü {total}"
 msgid "lv %s"
 msgstr "sv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "sat{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "sat%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "sat{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "süt{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "süt%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "süt{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -599,12 +611,12 @@ msgstr "Arapça Derece 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Assamese grade 1"
-msgstr "Assamese grade 1"
+msgstr "Assam dili derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bengali grade 1"
-msgstr "Bengali grade 1"
+msgstr "Bengalce derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -629,27 +641,27 @@ msgstr "Çekçe Derece 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot computer braille"
-msgstr "Danimarka 8 noktalı bilgisayar braille "
+msgstr "Danca 8 noktalı bilgisayar braille "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 1"
-msgstr "Danish 6 nokta derece 1"
+msgstr "Danca 6 nokta derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 1"
-msgstr "Danish 8 nokta derece1"
+msgstr "Danca 8 nokta derece1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 2"
-msgstr "Danish 6 nokta derece 2"
+msgstr "Danca 6 nokta derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
-msgstr "Danish 8 dot grade 2"
+msgstr "Danca 8 dot derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -679,17 +691,17 @@ msgstr "Yunanca"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "Birleşik Kırallık İngilizcesi 8 noktalı bilgisayar braille"
+msgstr "İngilizce (b.k.) 8 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) grade 1"
-msgstr "B.K. İngilizcesi Derece 1"
+msgstr "İngilizce (B.K.) Derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) grade 2"
-msgstr "B.K. İngilizcesi Derece 2"
+msgstr "İngilizce (B.K.) Derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -714,17 +726,17 @@ msgstr "ABD İngilizcesi 8 noktalı bilgisayar braille"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.S.) grade 1"
-msgstr "A.B.D İngilizcesi Derece 1"
+msgstr "ABD İngilizcesi Derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
-msgstr "A.B.D İngilizcesi Derece 2"
+msgstr "ABD İngilizcesi Derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
-msgstr "İspanyolca 8 noktalı bilgisayar braille"
+msgstr "Ispanyolca 8 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -749,12 +761,12 @@ msgstr "Farsça 8 noktalı bilgisayar braille "
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Persian grade 1"
-msgstr "Farsçaderece 1"
+msgstr "Farsça derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 6 dot"
-msgstr "Finnish 6 dot"
+msgstr "Fince 6 dot"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -779,22 +791,22 @@ msgstr "Fransızca derece 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (Canada) grade 1"
-msgstr "Kanada Fransızcası Derece 1"
+msgstr "Fransızca (kanada) Derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
-msgstr "Kanada Fransızcası Derece 2"
+msgstr "Fransızca (kanada) Derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Irish grade 1"
-msgstr "Irish grade 1"
+msgstr "İrlandaca derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Irish grade 2"
-msgstr "Irish grade 2"
+msgstr "İrlandaca derece 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -809,7 +821,7 @@ msgstr "Koine Greek"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hebrew 8 dot computer braille"
-msgstr "İbranice 8 noktalı bilgisayar braille"
+msgstr "Ibranice 8 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -839,32 +851,32 @@ msgstr "Macarca derece 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Icelandic 8 dot computer braille"
-msgstr "İzlanda dili 8 noktalı bilgisayar braille"
+msgstr "Izlanda dili 8 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 6 dot computer braille"
-msgstr "İtalyanca 6 noktalı bilgisayar braille"
+msgstr "Italyanca 6 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 8 dot computer braille"
-msgstr "İtalyanca 8 noktalı bilgisayar braille"
+msgstr "Italyanca 8 noktalı bilgisayar braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kannada grade 1"
-msgstr "Kannada grade 1"
+msgstr "Kannada derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 1 (2006)"
-msgstr "Korean grade 1 (2006)"
+msgstr "Korece derece 1 (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 2 (2006)"
-msgstr "Korean grade 2 (2006)"
+msgstr "Korece derece 2 (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -879,7 +891,7 @@ msgstr "Korece derece 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
-msgstr "Kashmiri grade 1"
+msgstr "Keşmir grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -954,7 +966,7 @@ msgstr "Nepal dili derece 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Oriya grade 1"
-msgstr "Oriya grade 1"
+msgstr "Kazakça derece 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -989,7 +1001,7 @@ msgstr "Punjabi grade 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian braille for computer code"
-msgstr "Bilgisayar kodu için Rusça braille"
+msgstr "Rusça braille Bilgisayar kodu"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1014,7 +1026,7 @@ msgstr "Slovakça derece 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovenian 8 dot computer braille"
-msgstr "Slovenya 8 noktalı bilgisayar braille "
+msgstr "Slovence 8 noktalı bilgisayar braille "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1104,7 +1116,7 @@ msgstr "Bu belgedeki çeşitli öğeleri listeler"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
-msgstr "Belge içindeki üzerinde bulunulan nesneyi etkinleştirir"
+msgstr "Belgede üzerinde bulunulan nesneyi etkinleştirir"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -5778,10 +5790,22 @@ msgstr "Seçim iptal edildi"
 msgid "row %s"
 msgstr "satır %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "%s boyunca"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sütun %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "satır {row} sütun {column} boyunca"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -7736,21 +7760,21 @@ msgstr "kur"
 msgid "remove"
 msgstr "kaldır"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "devre dışı"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "Yeniden başlatıldıktan sonra devre dışı"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "etkin"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Yeniden başlatıldıktan sonra Etkin"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "Askıya alınmış"
+msgid "disabled"
+msgstr "devre dışı"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "çalışıyor"
+msgid "enabled"
+msgstr "etkin"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -10625,6 +10649,18 @@ msgstr "Çift satır aralığı"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 satır aralığı"
+
+#~ msgid "r%s"
+#~ msgstr "sat%s"
+
+#~ msgid "c%s"
+#~ msgstr "süt%s"
+
+#~ msgid "suspended"
+#~ msgstr "Askıya alınmış"
+
+#~ msgid "running"
+#~ msgstr "çalışıyor"
 
 #~ msgid "ALVA BC640/680 series"
 #~ msgstr "ALVA BC640/680 serisi"

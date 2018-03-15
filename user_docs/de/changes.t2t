@@ -3,6 +3,31 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== neue Funktionen ==
+- Zeilen- und Spaltenausdehnungen werden nun per Sprache und Braille wiedergegeben. (#2642)
+- Die Tabellennavigationsbefehle funktionieren jetzt auch in Google Docs-Dokumenten mit aktiviertem Braille-Modus. (#7946)
+- Unterstützung für Tabellen in Kindle für Pc (#7977)
+
+
+== Änderungen ==
+- Die Spalte Status im Dialogfeld Erweiterungen verwalten zeigt den Status als «aktiviert» Bzw. «deaktiviert» an; nicht mehr als «wird ausgeführt» Bzw. «stillgelegt». (#7929)
+
+
+== Fehlerkorrekturen ==
+- Das Auslesen des Anmeldebildschirms für das Microsoft-Konto funktioniert nun auch ordnungsgemäß, nachdem Sie eine E-Mail-Adresse eingegeben haben. (#7997)
+- Das Auslesen von Webseiten in Microsoft Edge funkitioniert nun auch dann noch, wenn Sie eine Seite zurückgesprungen sind. (#7997)
+- NVDA zeigt nun nicht mehr die letzte Ziffer der Pin beim Entsprerren des Rechners im Klartext an. (#7908)
+- Beim Navigieren durch Webseiten mit Tab oder mit den Schnellnavigationsbefehlen werden Beschriftungen für Auswahlschalter Bzw. Kontrollkästchen nicht mehr doppelt angezeigt. (#7960)
+- Aria-Current wird auch dann korrekt ausgewertet, wenn es auf False gesetzt ist. (#7892).
+
+
+== Änderungen für Entwickler ==
+- Die Entwicklerinfo für UIA-Objekte enthält nun eine Liste aller unterstützten Muster. (#5712)
+- Sie können nun die Verwendung von UIA innerhalb Ihres Anwendungsmoduls erzwingen, indem Sie die Methode isGoodUIAWindow implementieren. (#7961)
+
+
 = 2018.1 =
 Zu den Highlights dieser Version gehören die Unterstützung für Diagramme in Microsoft Word und Powerpoint, neu unterstützte Braillezeilen einschließlich Eurobraille und dem Optelec Protokollkonverter, verbesserte Unterstützung für Hims und Optelec Braillezeilen, Leistungsverbesserungen für Mozilla Firefox 58 und höher und vieles mehr.
 
@@ -46,6 +71,7 @@ Zu den Highlights dieser Version gehören die Unterstützung für Diagramme in M
 - In Windows-Apps wie windows Mail sagt nVDA gelöschte zeichen beim Drücken der Rücktaste korrekt an. (#7456)
 - Alle Tasten der Hims Braille Sense Polaris Braillezeilen funktionieren nun richtig. (#7865)
 - NVDA gibt beim Starten auf Windows 7 keine Fehlermeldung mehr aus, wenn bestimmte Versionen der Visual Studio 2017 Redistributable durch andere Anwendungen installiert wurden. Die Fehlermeldung betraf interne API-LS dll-Dateien. (#7975)
+
 
 == Änderungen für Entwickler ==
 - Neue versteckte bool'sche Einstellung im Abschnitt Braille in der NVDA-Konfiguration: "outputPass1Only". (#7301, #7693, #7702)

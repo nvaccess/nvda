@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-09 14:17+1000\n"
-"PO-Revision-Date: 2018-02-09 20:56+0100\n"
+"POT-Creation-Date: 2018-03-09 00:10+1000\n"
+"PO-Revision-Date: 2018-03-11 01:51+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -528,17 +528,25 @@ msgstr "{number} od {total}"
 msgid "lv %s"
 msgstr "nv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "v{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "v%s"
+msgid "r{rowNumber}"
+msgstr "v{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "s{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "s%s"
+msgid "c{columnNumber}"
+msgstr "s{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -5845,10 +5853,21 @@ msgstr "izbor je odstranjen"
 msgid "row %s"
 msgstr "vrstica %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "do %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "stolpec %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+msgid "through row {row} column {column}"
+msgstr "do vrstice {row} stolpca {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 msgid "with {rowCount} rows and {columnCount} columns"
@@ -7768,23 +7787,22 @@ msgstr "namesti"
 msgid "remove"
 msgstr "odstrani"
 
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "Onemogočen po ponovnem zagonu"
+
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Omogočen po ponovnem zagonu"
+
 # raje uredljivo pa ne obstaja
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "onemogoči"
-
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "omogoči"
-
-# začasen prevod
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "suspendiran"
+msgid "disabled"
+msgstr "onemogočen"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "teče"
+msgid "enabled"
+msgstr "omogočen"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -10228,7 +10246,7 @@ msgstr "Ni na komentarju"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the comment on the current cell"
-msgstr "Sporoča komentar mad trenutno celico"
+msgstr "Sporoča komentar nad trenutno celico"
 
 #. Translators: Dialog text for
 msgid "Editing comment for cell {address}"
@@ -10341,11 +10359,11 @@ msgstr "{desc} okolna obroba"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "{desc} top and bottom edges"
-msgstr "{desc} sgornji in spodnji rob"
+msgstr "{desc} zgornji in spodnji robovi"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "{desc} left and right edges"
-msgstr "{desc} levi in desni rob"
+msgstr "{desc} levi in desni robovi"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "{desc} up-right and down-right diagonal lines"
@@ -10619,26 +10637,8 @@ msgstr "Dvojni razmik med vrsticami"
 msgid "1.5 line spacing"
 msgstr "1,5 razmik med vrsticami"
 
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "ALVA BC640/680 serija"
+#~ msgid "r%s"
+#~ msgstr "v%s"
 
-#~ msgid "review"
-#~ msgstr "pregled"
-
-#~ msgid "focus"
-#~ msgstr "žarišče"
-
-#~ msgid "B&raille tethered to:"
-#~ msgstr "Braj se &omeji na:"
-
-#~ msgid "Not defined"
-#~ msgstr "Ni definirano"
-
-#~ msgid "Category"
-#~ msgstr "Zvrst"
-
-#~ msgid "Value"
-#~ msgstr "Vrednost"
-
-#~ msgid "Series"
-#~ msgstr "Niz"
+#~ msgid "c%s"
+#~ msgstr "s%s"
