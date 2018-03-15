@@ -406,9 +406,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 			raise RuntimeError("This function should only be called for TextInfos positioned at the caret")
 		# cache the caret position
 		caret = self.copy()
-		# Uniscribe doesn't treat most of the punctuation characters as word separators.
-		# Therefore, we do not use Uniscribe to calculate word boundaries.
-		self.useUniscribe = caret.useUniscribe = False
 		# This gets called for characters which might end a word; e.g. space.
 		# The character before the caret usually is the word end.
 		# The one before that is most likely the last of the word, which is what we want.
@@ -418,17 +415,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 			raise LookupError("No word before caret")
 		self.expand(UNIT_WORD)
 		diff = self.compareEndPoints(caret,"endToStart")
-		if diff==0 and unicodedata.category(self.text[-1])[0] in "LMN":
+		if diff>=0 and not wordSeparator.isspace():
 			# This is no word boundary
 			return False
-		if diff>0:
-			# The caret is inside a word.
-			# This usually happens in command consoles, where the line after the carret could be padded up with spaces.
-			caret.expand(UNIT_CHARACTER)
-			if not caret.text.isspace():
-				# Some offset based TextInfos (e.g. IA2Text) just tend to fail sometimes.
-				raise LookupError("Caret inside word")
-		elif self.text == "\n":
+		if self.text == "\n":
 			# In most programs (e.g. Wordpad, Word, pressing enter produces a single carriage return character.
 			# In Notepad however, enter produces crlf.
 			self.move(UNIT_CHARACTER, 1, endPoint="end")

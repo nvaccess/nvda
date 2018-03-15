@@ -147,7 +147,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	"""
 
 	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
-	useUniscribe=True #Use uniscribe to calculate word offsets etc
+	useUniscribe=False #Use uniscribe to calculate word offsets etc
 
 
 	def __eq__(self,other):

@@ -171,6 +171,7 @@ WB_LEFTBREAK=6
 WB_RIGHTBREAK=7
 
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
+	useUniscribe=True
 
 	def _getPointFromOffset(self,offset):
 		if self.obj.editAPIVersion==1 or self.obj.editAPIVersion>=3:
