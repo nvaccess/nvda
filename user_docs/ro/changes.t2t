@@ -3,6 +3,32 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+
+== Noi Funcționalități ==
+- Distanța dintre rândurile și coloanele din celulele tabelului este acum raportată atât vocal, cât și în braille. (#2642)
+- Comenzile de navigare prin tabel ale NVDA-ului sunt suportate acum în Google Docs ( cu modul braille activat). (#7946)
+- Abilitatea de a citi și de a naviga prin tabelele  din Kindle pentru PC. (#7977)
+
+
+== Modificări ==
+- Coloana de stare din administratorul de suplimente a fost modificată astfel încât să indice dacă suplimentul este activat sau dezactivat, mai degrabă decât indicarea faptului că acesta rulează sau că-i suspendat. (#7929)
+
+
+== Rezolvări Defecte ==
+- NVDA nu mai eșuează să citească controalele focalizate în ecranul de autentificare din setări al contului Microsoft  după introducerea unei adrese de e-mail. (#7997)
+- NVDA nu mai eșuează să citească pagina atunci când se merge înapoi la o pagină anterioară din Microsoft Edge. (#7997)
+- NVDA nu va mai anunța incorect caracterul final al unui pin de autentificare în Windows 10 în momentul în care calculatorul se deblochează. (#7908)
+- Etichetele casetelor de bifat și ale butoanelor rotative din Chrome și Firefox nu mai sunt raportate de două ori la deplasarea cu tab sau la utilizarea navigării rapide din modul de navigare. (#7960)
+- se manipulează aria-curent cu o valoare de fals ca fiind falsă în loc de o valoare de adevăr (#7892).
+
+
+== Modificări pentru Dezvoltatori ==
+- Informația dezvoltatorului pentru obiectele UIA conține acum o listă a modelelor UIA disponibile. (#5712)
+- Modulele de aplicație pot acum să forțeze anumite ferestre să folosească mereu UIA implementând metoda isGoodUIAWindow. (#7961)
+
+
 = 2018.1 =
 Caracteristicile principale ale acestei versiuni includ suport pentru diagramele din Microsoft Word și Microsoft PowerPoint, suport pentru noi afișaje braille, incluzând Eurobraille și convertorul de protocol Optelec, suport îmbunătățit pentru afișajele braille Hims și Optelec, îmbunătățiri de performanță pentru Mozilla Firefox 58 sau mai nou și multe altele.
 
