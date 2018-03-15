@@ -3,6 +3,26 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== Uudet ominaisuudet ==
+- Taulukon solujen rivien ja sarakkeiden jakaantuminen useammalle riville ilmaistaan nyt puheena ja pistekirjoituksella. (#2642)
+- NVDA:n taulukonselauskomentoja tuetaan nyt Google Docsissa pistekirjoitustilan ollessa käytössä. (#7946)
+- Taulukoiden lukeminen ja niissä liikkuminen on nyt mahdollista Kindle for PC:ssä. (#7977)
+
+
+== Muutokset ==
+- Lisäosien hallinnan Tila-saraketta on muutettu niin, että se ilmaisee käynnissä- tai pysäytetty-tilojen sijaan, onko lisäosa "käytössä" vai poistettu käytöstä ("ei käytössä"). (#7929)
+
+
+== Korjatut ohjelmavirheet ==
+- NVDA lukee nyt Asetukset-sovelluksen Microsoft-tilin kirjautumisnäytön aktiiviset säätimet sähköpostiosoitteen syöttämisen jälkeen. (#7997)
+- NVDA lukee nyt asianmukaisesti edellisen sivun palattaessa sille Microsoft Edgessä. (#7997)
+- NVDA ei enää virheellisesti puhu windows 10:n kirjautumisen PIN-koodin viimeistä merkkiä koneen lukitusta avattaessa. (#7908)
+- Valintaruutujen ja -painikkeiden selitteitä ei enää puhuta kahdesti Chromessa ja Firefoxissa selaustilassa Sarkaimella siirryttäessä tai pikaselauskomentoja käytettäessä. (#7960)
+- Aria-current-attribuuttia, jonka arvo on false, käsitellään nyt truen sijaan falsena. (#7892).
+
+
 = 2018.1 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat tuki kaavioille Microsoft Wordissa ja PowerPointissa, tuki uusille Eurobraille-pistenäytöille ja Optelecin protokollamuuntimelle, paranneltu tuki Hims- ja Optelec-pistenäytöille, suorituskyvyn parannukset Mozilla Firefox 58:lle ja uudemmille, sekä monet muut.
 
