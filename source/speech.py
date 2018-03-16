@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
 
 """High-level functions to speak information.
 """ 
@@ -692,9 +692,10 @@ def speakPreviousWord(wordSeparator):
 	global curWordChars
 	bufferedWord = "".join(curWordChars)
 	typingIsProtected = api.isTypingProtected()
-	speakWord = log.isEnabledFor(log.IO) or (config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected)
 	reportSpellingError = config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"]
-	if not (speakWord or reportSpellingError):
+	if not (log.isEnabledFor(log.IO) or (
+		config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected
+	) or reportSpellingError):
 		curWordChars = []
 		return
 	try:
@@ -713,16 +714,20 @@ def speakPreviousWord(wordSeparator):
 			return 
 	except (RuntimeError, LookupError):
 		word = bufferedWord
+	except:
+		# Focus probably moved.
+		log.debugWarning("Error fetching previous word before caret", exc_info=True)
+		word = bufferedWord
 	else:
 		if bufferedWord in info.text:
 			word = info.text
 		else:
 			word = bufferedWord
 	curWordChars = []
-	if speakWord:
+	if log.isEnabledFor(log.IO):
 		log.io("typed word: %s"%word)
-		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
-			speakText(word)
+	if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
+		speakText(word)
 	if word != bufferedWord and reportSpellingError:
 		for command in info.getTextWithFields():
 			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):

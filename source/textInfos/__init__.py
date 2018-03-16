@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -15,8 +15,6 @@ import re
 import baseObject
 import config
 import controlTypes
-import unicodedata
-from logHandler import log
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -232,10 +230,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@type bookmark: L{Bookmark}
 	"""
 
-	#: Whether this TextInfo should be used for word echo.
-	#: Set to C{False} when word echo with this TextInfo is unreliable.
-	#: @type: bool
-	useForWordEcho = True 
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
@@ -408,14 +402,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 		caret = self.copy()
 		# This gets called for characters which might end a word; e.g. space.
 		# The character before the caret usually is the word end.
-		# The one before that is most likely the last of the word, which is what we want.
+		# The one before that is the last of the word, which is what we want.
 		res = self.move(UNIT_CHARACTER, -2)
 		if res == 0:
 			# Trying to look up a word before the caret, but there is none.
 			raise LookupError("No word before caret")
 		self.expand(UNIT_WORD)
 		diff = self.compareEndPoints(caret,"endToStart")
-		if diff>=0 and not wordSeparator.isspace():
+		if diff>=0 and wordSeparator and not wordSeparator.isspace():
 			# This is no word boundary
 			return False
 		if self.text == "\n":

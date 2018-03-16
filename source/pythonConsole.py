@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited
+#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V.
 
 import watchdog
 
@@ -136,8 +136,8 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 			"focus": api.getFocusObject(),
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
 			"focusAnc": list(api.getFocusAncestors()),
-			"caret": api.getCaretObject(),
 			"fdl": api.getFocusDifferenceLevel(),
+			"caret": api.getCaretObject(),
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),
 			"review":api.getReviewPosition(),

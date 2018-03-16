@@ -27,7 +27,6 @@ import treeInterceptorHandler
 import braille
 import globalPluginHandler
 import brailleInput
-from characterProcessing import isEndOfWordCharacter
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
