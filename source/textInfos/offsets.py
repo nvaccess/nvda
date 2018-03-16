@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 
 import re
 import ctypes
@@ -337,15 +337,6 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			return True
 		else:
 			return False
-
-	def isCollapsedAtUnitEndPoint(self,unit):
-		if not self.isCollapsed:
-			return False
-		if self._getUnitOffsets(unit, self._startOffset)[0] == self._startOffset:
-			return True
-		#if self._getUnitOffsets(unit, self._endOffset)[1] == self._endOffset+1:
-		#	return True
-		return False
 
 	def collapse(self,end=False):
 		if not end:

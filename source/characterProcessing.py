@@ -11,7 +11,6 @@ import collections
 import re
 from logHandler import log
 import globalVars
-import unicodedata
 
 class LocaleDataMap(object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
@@ -633,9 +632,3 @@ def processSpeechSymbol(locale, symbol):
 	except KeyError:
 		pass
 	return symbol
-
-def isEndOfWordCharacter(ch):
-	if not ch:
-		return True
-	#return unicodedata.category(ch)[0] not in "LMN" and ch!=u'\u007f' and ch!="\b"
-	return ch.isspace() or (ch >= u" " and ch not in u"'\x7f" and not ch.isalpha())
