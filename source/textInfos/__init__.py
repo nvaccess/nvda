@@ -412,11 +412,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 		if diff>=0 and wordSeparator and not wordSeparator.isspace():
 			# This is no word boundary
 			return False
-		if self.text == "\n":
+		if wordSeparator == "\r" and self.text == "\n":
 			# In most programs (e.g. Wordpad, Word, pressing enter produces a single carriage return character.
 			# In Notepad however, enter produces crlf.
 			self.move(UNIT_CHARACTER, 1, endPoint="end")
 		# For CRLF, the last character of the word is one position before the current.
+		# This is also the case when the text is equal to the word separator,
+		# I.e. when using the US International keyboard layout:
+		# https://support.microsoft.com/en-us/help/306560/how-to-use-the-united-states-international-keyboard-layout-in-windows
 		if self.text in (wordSeparator, "\r\n"):
 			# We need to move te start endpoint an additional -1 character.
 			if self.move(UNIT_CHARACTER, -1) == 0:
