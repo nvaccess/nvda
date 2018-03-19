@@ -119,3 +119,27 @@ void __stdcall ocSpeech_setVoice(OcSpeech* instance, int index) {
 const char16 * __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* instance) {
 	return instance->synth->Voice->Language->Data();
 }
+
+double __stdcall ocSpeech_getPitch(OcSpeech* instance) {
+	return instance->synth->Options->AudioPitch;
+}
+
+void __stdcall ocSpeech_setPitch(OcSpeech* instance, double pitch) {
+	instance->synth->Options->AudioPitch = pitch;
+}
+
+double __stdcall ocSpeech_getVolume(OcSpeech* instance) {
+	return instance->synth->Options->AudioVolume;
+}
+
+void __stdcall ocSpeech_setVolume(OcSpeech* instance, double volume) {
+	instance->synth->Options->AudioVolume = volume;
+}
+
+double __stdcall ocSpeech_getRate(OcSpeech* instance) {
+	return instance->synth->Options->SpeakingRate;
+}
+
+void __stdcall ocSpeech_setRate(OcSpeech* instance, double rate) {
+	instance->synth->Options->SpeakingRate = rate;
+}
