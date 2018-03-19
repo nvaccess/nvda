@@ -33,24 +33,6 @@ ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
 
-	def __init__(self, defaultLanguage, rate, pitch, volume):
-		super(_OcSsmlConverter, self).__init__(defaultLanguage)
-		self._rate = rate
-		self._pitch = pitch
-		self._volume = volume
-
-	def generateBalancerCommands(self, speechSequence):
-		commands = super(_OcSsmlConverter, self).generateBalancerCommands(speechSequence)
-		# The EncloseAllCommand from SSML must be first.
-		yield next(commands)
-		# OneCore doesn't provide a way to set base prosody values.
-		# Therefore, the base values need to be set using SSML.
-		yield self.convertRateCommand(speech.RateCommand(multiplier=1))
-		yield self.convertVolumeCommand(speech.VolumeCommand(multiplier=1))
-		yield self.convertPitchCommand(speech.PitchCommand(multiplier=1))
-		for command in commands:
-			yield command
-
 	def _convertProsody(self, command, attr, default, base):
 		if command.multiplier == 1 and base == default:
 			# Returning to synth default.
@@ -81,6 +63,12 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
 
 class SynthDriver(SynthDriver):
+
+	MIN_PITCH = 0.0
+	MAX_PITCH = 2.0
+	MIN_RATE = 0.5
+	MAX_RATE = 6.0
+
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
@@ -90,10 +78,6 @@ class SynthDriver(SynthDriver):
 		SynthDriver.PitchSetting(),
 		SynthDriver.VolumeSetting(),
 	)
-	# These are all controlled via SSML, so we only need attributes, not properties.
-	rate = None
-	pitch = None
-	volume = None
 
 	@classmethod
 	def check(cls):
@@ -115,6 +99,9 @@ class SynthDriver(SynthDriver):
 		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player= None
+		self._dll.ocSpeech_getPitch.restype = ctypes.c_double
+		self._dll.ocSpeech_getVolume.restype = ctypes.c_double
+		self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		# Initialize state.
 		self._queuedSpeech = []
 		self._wasCancelled = False
@@ -156,12 +143,14 @@ class SynthDriver(SynthDriver):
 		self._wasCancelled = True
 		log.debug("Cancelling")
 		# There might be more text pending. Throw it away.
-		self._queuedSpeech = []
+		# However, we must keep any parameter changes.
+		self._queuedSpeech = [item for item in self._queuedSpeech
+			if not isinstance(item, basestring)]
 		if self._player:
 			self._player.stop()
 
 	def speak(self, speechSequence):
-		conv = _OcSsmlConverter(self.language, self.rate, self.pitch, self.volume)
+		conv = _OcSsmlConverter(self.language)
 		text = conv.convertToXml(speechSequence)
 		# #7495: Calling WaveOutOpen blocks for ~100 ms if called from the callback
 		# when the SSML includes marks.
@@ -177,6 +166,36 @@ class SynthDriver(SynthDriver):
 		if not self._isProcessing:
 			self._processQueue()
 
+	@classmethod
+	def _percentToParam(self, percent, min, max):
+		"""Overrides SynthDriver._percentToParam to return floating point parameter values.
+		"""
+		return float(percent) / 100 * (max - min) + min
+
+	def _get_pitch(self):
+		rawPitch = self._dll.ocSpeech_getPitch(self._handle)
+		return self._paramToPercent(rawPitch, self.MIN_PITCH, self.MAX_PITCH)
+
+	def _set_pitch(self, pitch):
+		rawPitch = self._percentToParam(pitch, self.MIN_PITCH, self.MAX_PITCH)
+		self._queuedSpeech.append((self._dll.ocSpeech_setPitch, rawPitch))
+
+	def _get_volume(self):
+		rawVolume = self._dll.ocSpeech_getVolume(self._handle)
+		return int(rawVolume * 100)
+
+	def _set_volume(self, volume):
+		rawVolume = volume / 100.0
+		self._queuedSpeech.append((self._dll.ocSpeech_setVolume, rawVolume))
+
+	def _get_rate(self):
+		rawRate = self._dll.ocSpeech_getRate(self._handle)
+		return self._paramToPercent(rawRate, self.MIN_RATE, self.MAX_RATE)
+
+	def _set_rate(self, rate):
+		rawRate = self._percentToParam(rate, self.MIN_RATE, self.MAX_RATE)
+		self._queuedSpeech.append((self._dll.ocSpeech_setRate, rawRate))
+
 	def _processQueue(self):
 		if not self._queuedSpeech:
 			# There are no more queued utterances at this point, so call idle.
@@ -184,8 +203,14 @@ class SynthDriver(SynthDriver):
 			# so by the time this is done, there might be something queued.
 			log.debug("Calling idle on audio player")
 			self._player.idle()
-		if self._queuedSpeech:
+		while self._queuedSpeech:
 			item = self._queuedSpeech.pop(0)
+			if isinstance(item, tuple):
+				# Parameter change.
+				func, value = item
+				value = ctypes.c_double(value)
+				func(self._handle, value)
+				continue
 			self._wasCancelled = False
 			log.debug("Begin processing speech")
 			self._isProcessing = True
