@@ -58,7 +58,10 @@ class BasicTextProvider(NVDAObject):
 		self.selectionOffsets = selection
 
 	def makeTextInfo(self, position):
+		basePosition = position
 		if position in (textInfos.POSITION_CARET, textInfos.POSITION_SELECTION):
 			start, end = self.selectionOffsets
 			position = Offsets(start, end)
-		return super(BasicTextProvider, self).makeTextInfo(position)
+		textInfo = super(BasicTextProvider, self).makeTextInfo(position)
+		textInfo.basePosition = basePosition
+		return textInfo

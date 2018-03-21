@@ -413,8 +413,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 			# This is no word boundary
 			return False
 		if wordSeparator == "\r" and self.text == "\n":
-			# In most programs (e.g. Wordpad, Word, pressing enter produces a single carriage return character.
+			# #8065: In most programs (e.g. Wordpad, Word, pressing enter produces a single carriage return character.
 			# In Notepad however, enter produces crlf.
+			# This can't yet be unit tested as long as the unit testing framework doesn't use NVDAHelper/Uniscribe
 			self.move(UNIT_CHARACTER, 1, endPoint="end")
 		# For CRLF, the last character of the word is one position before the current.
 		# This is also the case when the text is equal to the word separator,
