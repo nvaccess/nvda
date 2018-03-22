@@ -2073,13 +2073,16 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Hepsini oku | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Serisi ++[HumanWareBrailliant]
- Brailliant BI ve B serisi braille ekranlar, [HumanWare http://www.humanware.com/], BI 32, BI 40 ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
+++ HumanWare Brailliant BI/B Serisi / BrailleNote Touch  ++[HumanWareBrailliant]
+ Brailliant BI ve B serisi braille ekranlar, [HumanWare http://www.humanware.com/], BI 14, BI 32, BI 40 ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
 USB bağlantısını ve HumanWare protokolünü kullanıyorsanız, öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 OpenBraille protokolü için USB sürücüleri gerekmez.
 
-Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
+ayrıca BrailleNote Touch da desteklenir, ve herhangi bir sürücü yüklü olmasını gerektirmez.
+
+Aşağıda Brailliant BI/B ve BrailleNote touch braille ekranları NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
++++ Tüm modeller için tuş atamaları +++
 %kc:beginInclude
 || Ad | Kısayol tuşu |
 | Braille ekranı geri kaydır | sol |
@@ -2092,7 +2095,6 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | aşağı yön tuşu | space+dot4 |
 | sol yön tuşu | space+dot3 |
 | sağ yön tuşu | space+dot6 |
-| NVDA Menüsü | c1+c3+c4+c5 (command n) |
 | shift+tab tuşu | space+dot1+dot3 |
 | tab tuşu | space+dot4+dot6 |
 | alt tuşu | space+dot1+dot3+dot4 (space+m) |
@@ -2101,7 +2103,27 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | windows+d tuşu (tüm uygulamaları küçült) | c1+c4+c5 (command d) |
 | windows tuşu | space+dot3+dot4 |
 | alt+tab tuşu | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+%kc:endInclude
+
++++ Brailliant BI 32, BI 40 ve  B 80 için Tuş atamaları +++ 
+%kc:beginInclude
+|| Name | Key |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
 | Hepsini oku | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Brailliant BI 14 için Tuş atamaları +++ 
+%kc:beginInclude
+|| Ad | Tuş |
+| up arrow key | joystick up |
+| down arrow key | joystick down |
+| left arrow key | joystick left |
+| right arrow key | joystick right |
+| enter key | joystick action |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serileri ++[Hims]
