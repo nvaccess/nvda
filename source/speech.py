@@ -713,6 +713,7 @@ def speakPreviousWord(wordSeparator):
 			curWordChars.append(wordSeparator)
 			return 
 	except (RuntimeError, LookupError):
+		log.debug("Couldn't rely on TextInfo for word echo", exc_info=True)
 		word = bufferedWord
 	except:
 		# Focus probably moved.
