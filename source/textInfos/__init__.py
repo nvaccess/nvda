@@ -409,9 +409,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 			raise LookupError("No word before caret")
 		self.expand(UNIT_WORD)
 		diff = self.compareEndPoints(caret,"endToStart")
-		if diff>=0 and wordSeparator and not wordSeparator.isspace():
+		if diff >= 0 and wordSeparator and not wordSeparator.isspace():
 			# This is no word boundary
 			return False
+		# Hack: Work around cases in Firefox where the TextInfo is lagging behind,
+		# not reflecting the last typed character.
+		if diff > 0 and wordSeparator not in self.text:
+			raise LookupError("Word separator expected as part of the word, but not found")
 		if wordSeparator == "\r" and self.text == "\n":
 			# #8065: In most programs (e.g. Wordpad, Word, pressing enter produces a single carriage return character.
 			# In Notepad however, enter produces crlf.
