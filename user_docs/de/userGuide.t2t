@@ -620,8 +620,8 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | ef | Eingabefeld |
 | kwef | Kennworteingabefeld |
 | eObj | eingebettetes Objekt |
-| enote | endnote |
-| fnote | Fußnote |
+| en | endnote |
+| fn | Fußnote |
 | grf | Grafik |
 | grp | Gruppe |
 | üN | Überschrift der Ordnung N, zum Beispiel ü1, ü2. |
@@ -651,7 +651,7 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | BAE | Eintrag einer Baumstruktur |
 | ba | Baumansicht |
 | EN | Ein Eintrag in einer Baumansicht in der Ebene N |
-| fnst | Fenster |
+| fst | Fenster |
 | ``⠤⠤⠤⠤⠤`` | Trennlinie |
 
 Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
@@ -667,16 +667,16 @@ Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
 | *** | wird angezeigt, wenn das Objekt geschützt ist |
 | klk | Wird bei anklickbaren Objekten angezeigt |
 | Kmnt | wird angezeigt, wenn das aktuelle Objekt ein Kommentar ist |
-| frml | wird angezeigt, wenn das aktuelle Objekt eine Formel enthält |
+| frm | wird angezeigt, wenn das aktuelle Objekt eine Formel enthält |
 | ungültig | wird angezeigt, sobald Sie in ein Formularfeld einen ungültigen Wert eingegeben haben. |
 | lbesch | wird angezeigt, wenn das aktuelle Objekt (meist eine Grafik) eine lange Beschreibung enthält |
 | mz | wird angezeigt, wenn Sie in das aktuelle Eingabefeld mehrere Zeilen Text eingeben können |
 | erf | wird angezeigt, wenn in dem aktuellen Eingabefeld eine Eingabe erforderlich ist |
 | sef | wird bei Objekten (zum Beispiel Eingabefeldern) angezeigt, die schreibgeschützt sind. |
-| mrk | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
-| <n/a> | wird angezeigt, wenn der aktuelle Listeneintrag nicht ausgewählt ist |
-| <auf> | wird angezeigt, wenn die aktuelle Liste aufsteigend sortiert ist|
-| <ab> | wird angezeigt, wenn die aktuelle Liste absteigend sortiert ist |
+| {x} | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
+| { } | wird angezeigt, wenn der aktuelle Listeneintrag nicht ausgewählt ist |
+| <aufsteigend sortiert> | wird angezeigt, wenn die aktuelle Liste aufsteigend sortiert ist|
+| <absteigend sortiert> | wird angezeigt, wenn die aktuelle Liste absteigend sortiert ist |
 | -> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
 
 Die folgenden Abkürzungen werden für Sprungmarken verwendet:
@@ -687,7 +687,7 @@ Die folgenden Abkürzungen werden für Sprungmarken verwendet:
 | form | Formular |
 | haupt | Haupt |
 | navi | navigation |
-| srch | Suche |
+| Such | Suche |
 | rgn | region |
 
 ++ Braille-Eingabe ++[BrailleInput]
@@ -2073,13 +2073,16 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Alles ansagen | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B-Serie ++[HumanWareBrailliant]
+++ HumanWare Brailliant BI/B-Serie / BrailleNote Touch ++[HumanWareBrailliant]
 Die Braillezeilen der Serien BI und B von [HumanWare http://www.humanware.de/], so auch die BI 32, BI 40 und B 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
 Wenn Sie die Zeile über USB anschließen wollen während das Übertragungsprotokoll HumanWare verwendet wird, müssen sie zunächst den USB-Treiber des herstellers installieren.
-VerwendenSie hingegen das Protokoll OpenBraille, wird kein USB-Treiber benötigt.
+Verwenden Sie hingegen das Protokoll OpenBraille, wird kein USB-Treiber benötigt.
+
+Das Braillezeilenmodell Braillenote Touch wird ebenfalls unterstützt; hierfür wird kein zusätzlicher Treiber benötigt.
 
 Folgende Tastenkombinationen sind bei diesen Braillezeilen verfügbar
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
++++ Tasten für alle Braillezeilenmodelle +++
 %kc:beginInclude
 || Name | Taste |
 | Braillezeile zurückscrollen | Links |
@@ -2092,16 +2095,34 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Taste Pfeil nach unten | Leertaste+Punkt4 |
 | Taste Pfeil nach links | Leertaste+Punkt3 |
 | Taste Pfeil nach rechts | Leertaste+Punkt6 |
-| NVDA-Menü | C1+C3+C4+C5 (Befehl N) |
 | Umschalt+Tabulator-Taste | Leertaste+Punkt1+Punkt3 |
 | Tabulator-Taste | Leertaste+Punkt4+Punkt6 |
 | Alt-Taste | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+m) |
 | Escape-Taste | Leertaste+Punkt1+Punkt5 (Leertaste+e) |
 | Eingabetaste | Punkt8 |
-| Windows-Taste+D (Alle Anwendungen minimieren) | C1+C4+C5 (Befehl D) |
 | Windows-Taste | Leertaste+Punkt3+Punkt4 |
 | Alt+Tabulatortaste | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T) |
+| NVDA-Menü | Lertaste+Punkt1+Punkt3+Punkt4+Punkt5 (Leerttaste+N) |
+| Windows-Taste+D (Alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt4+Punkt5 (Leertaste+D) |
+| alles ansagen | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
+%kc:endInclude
+
++++ Tasten für Brailliant BI 32, BI 40 und B 80 +++ 
+%kc:beginInclude
+|| Name | Taste |
+| NVDA-Menü | c1+c3+c4+c5 (Befehl n) |
+| windows+d (alle Anwendungen minimieren) | c1+c4+c5 (Befehl d) |
 | Alles ansagen | C1+C2+C3+C4+C5+C6 |
+%kc:endInclude
+
++++ Tasten für Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Name | Taste |
+| Pfeil auf | joystick auf |
+| Pfeil ab | joystick ab |
+| Pfeil links | joystick Links |
+| Pfeil rechts | joystick Rechts |
+| Eingabetaste | joystick-Aktion |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Syncbraille Serie ++[Hims]
@@ -2370,6 +2391,8 @@ Die folgenden Modelle werden unterstützt:
 - BrailleNote MPower (Seriell und Bluetooth)
 - BrailleNote Apex (Verbunden über USB oder Bluetooth)
 -
+
+Weitere informationen zu Braillenote Touch finden Sie im Abschnitt über [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant].
 
 Wenn Ihre Braillezeile mehr als eine Verbindungsmethode unterstützt, müssen Sie den verwendeten Anschluss in den Braille-Terminal-Einstellungen festlegen.
 Bitte sehen Sie in die Dokumentation Ihrer Braillezeile nach für weitere informationen.
