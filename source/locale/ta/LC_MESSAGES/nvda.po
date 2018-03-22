@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-09 14:17+1000\n"
-"PO-Revision-Date: 2018-02-11 16:34+0530\n"
+"POT-Creation-Date: 2018-03-16 00:10+1000\n"
+"PO-Revision-Date: 2018-03-17 11:33+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -523,17 +523,25 @@ msgstr "{total}ல் {number} "
 msgid "lv %s"
 msgstr "மட் %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "r{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "கி%s"
+msgid "r{rowNumber}"
+msgstr "r{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "செ%s"
+msgid "c{columnNumber}"
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -5796,10 +5804,21 @@ msgstr "தெரிவு நீக்கப்பட்டது"
 msgid "row %s"
 msgstr "கிடைவரிசை %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "%s சேர்க்கப்பட்டது"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "நெடுவரிசை %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+msgid "through row {row} column {column}"
+msgstr "கிடைவரிசை {row} முதல் நெடுவரிசை {column} வரை"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 msgid "with {rowCount} rows and {columnCount} columns"
@@ -7072,8 +7091,8 @@ msgid "HumanWare BrailleNote"
 msgstr "ஹ்யூமேன் வேர் பிரெயில்நோட்"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "ஹ்யூமேன் வேர் பிரெயிலண்ட் BI/B தொடர்"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "ஹ்யூமேன் வேர் பிரெயிலண்ட் BI/B தொடர் / பிரெயில்நோட் டச்"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7713,21 +7732,21 @@ msgstr "நிறுவுக"
 msgid "remove"
 msgstr "நீக்குக"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "முடங்கியுள்ளது"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "முடக்கப்பட மறுதுவக்கப்பட வேண்டும்"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "இயக்கத்திலுள்ளது"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "இயக்கப்பட மறுதுவக்கப்பட வேண்டும்"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "இடைநிறுத்தப்பட்டுள்ளது"
+msgid "disabled"
+msgstr "முடங்கியுள்ளது"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "ஓடிக் கொண்டிருக்கிறது"
+msgid "enabled"
+msgstr "இயக்கத்திலுள்ளது"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -10543,6 +10562,18 @@ msgstr "இரட்டை வரி இடைவெளி"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ஒன்றரை வரி இடைவெளி"
+
+#~ msgid "r%s"
+#~ msgstr "கி%s"
+
+#~ msgid "c%s"
+#~ msgstr "செ%s"
+
+#~ msgid "suspended"
+#~ msgstr "இடைநிறுத்தப்பட்டுள்ளது"
+
+#~ msgid "running"
+#~ msgstr "ஓடிக் கொண்டிருக்கிறது"
 
 #~ msgid "ALVA BC640/680 series"
 #~ msgstr "ஆல்வா BC640/680 தொடர்"
