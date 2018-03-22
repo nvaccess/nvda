@@ -2073,13 +2073,16 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Rostește tot | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant gamele BI/B ++[HumanWareBrailliant]
-Afișajele Brailliant din gamele BI și B de la [HumanWare http://www.humanware.com/], incluzând BI 32, BI 40 și B 80, sunt suportate când sunt conectate prin USB sau bluetooth.
+++ HumanWare Brailliant seriile BI/B / BrailleNote Touch ++[HumanWareBrailliant]
+Afișajele Brailliant din gamele BI și B de la [HumanWare http://www.humanware.com/], incluzând BI 14, BI 32, BI 40 și B 80, sunt suportate când sunt conectate prin USB sau bluetooth.
 Dacă sunt conectate prin USB cu protocolul setat pe HumanWare, va trebui mai întâi să instalați driverele USB puse la dispoziție de producător.
 Nu sunt necesare drivere USB, dacă protoculul este setat pe OpenBraille.
+Pentru Braillenote Touch nu mai este necesară instalarea unui driver.
 
-Urmează asocierile de taste pentru acest afișaj și NVDA.
+Urmează asocierile de taste în NVDA pentru display-urile Brailliant BI/B și BrailleNote touch.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
+
++++ Asocieri de taste pentru toate  modelele +++
 %kc:beginInclude
 || Nume | Tastă |
 | Derulează afișajul braille înapoi | stânga |
@@ -2092,16 +2095,34 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | tasta săgeată jos | spațiu+punct 4 |
 | tasta săgeată stânga | spațiu+punct 3 |
 | tasta săgeată dreapta | spațiu+punct 6 |
-| Meniul NVDA | c1+c3+c4+c5 (comanda n) |
 | tasta shift+tab | spațiu+punct 1+punct 3 |
 | tasta tab | spațiu+punct 4+punct 6 |
 | tasta alt | spațiu+punct 1+punct 3+punct 4 (spațiu+m) |
 | tasta escape | spațiu+punct 1+punct 5 (spațiu+e) |
 | tasta enter | punct 8 |
-| tasta windows+d (minimizează toate aplicațiile) | c1+c4+c5 (comanda d) |
 | tasta windows | spațiu+punct 3+punct 4 |
 | tasta alt+tab | spațiu+punct 2+punct 3+punct 4+punct 5 (spațiu+t) |
+| Meniul NVDA | spațiu+punct1+punct3+punct4+punct5 (spațiu+n) |
+| Tastele windows+d (minimizeaza toate aplicațiile) | spațiu+punct1+punct4+punct5 (spațiu+d) |
+| Rostește tot | spațiu+punct1+punct2+punct3+punct4+punct5+punct6 |
+%kc:endInclude
+
++++ Asocieri de taste pentru Brailliant BI 32, BI 40 și B 80 +++
+%kc:beginInclude
+|| Nume | Tastă |
+| Meniul NVDA | c1+c3+c4+c5 (commandă n) |
+| Tastele windows+d (minimizeaza toate aplicațiile) | c1+c4+c5 (commandă d) |
 | Rostește tot | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Asocieri de taste pentru Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Nume | Tastă |
+| Săgeată sus | joystick sus |
+| Săgeată jos | joystick jos |
+| Săgeată stânga | joystick stânga |
+| Săgeată dreapta | joystick dreapta |
+| Tasta enter | joystick acțiune (mijloc) |
 %kc:endInclude
 
 ++ HIMS gamele Braille Sense/Braille EDGE/Smart Beetle Sync Braille ++[Hims]
@@ -2370,6 +2391,8 @@ Următoarele modele sunt suportate:
 - BrailleNote MPower (conexiuni serială și prin bluetooth)
 - BrailleNote Apex (conexiuni USB și prin bluetooth)
 -
+
+Pentru BrailleNote Touch, vă rugăm citiți pasajul [Brailliant seriile BI/B / BrailleNote Touch HumanWareBrailliant].
 
 Dacă, după ce conectați BrailleNote la NVDA, dispozitivul dumneavoastră este compatibil cu mai mult de un tip de conexiune, trebuie să stabiliți portul terminalului braille în opțiunile terminalului braille.
 Consultați manualul BrailleNote pentru detalii.

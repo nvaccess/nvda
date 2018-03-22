@@ -2073,13 +2073,16 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Jatkuva luku | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B ++[HumanWareBrailliant]
-[HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä, BI 32, BI 40 ja B 80 mukaan lukien, tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetoothilla.
-Mikäli näyttö yhdistetään USB:n kautta ja kun protokollaksi on määritetty HumanWare, sinun on ensin asennettava valmistajan toimittamat USB-ajurit.
-Jos protokollaksi on määritetty OpenBraille, USB-ajureita ei tarvita.
+++ HumanWare Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
+[HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä tuetaan, BI 14, BI 32, BI 40 ja B 80 mukaan lukien, kun ne liitetään tietokoneeseen USB:llä tai bluetoothilla.
+Mikäli käytetään USB-liitäntää ja protokollaksi on määritetty HumanWare, valmistajan toimittamat ajurit on asennettava ensin.
+OpenBraille-protokollaa käytettäessä ajureita ei tarvita.
 
-Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+Myös BrailleNote Touchia tuetaan, eikä sitä varten tarvitse asentaa ajureita.
+
+Seuraavassa on Brailliant BI/B- ja BrailleNote Touch -näyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
++++ Kaikki mallit +++
 %kc:beginInclude
 || Nimi | Näppäinkomento |
 | Vieritä taaksepäin | vasen |
@@ -2092,16 +2095,34 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Nuoli alas -näppäin | välilyönti+piste 4 |
 | Nuoli vasemmalle -näppäin | välilyönti+piste 3 |
 | Nuoli oikealle -näppäin | välilyönti+piste 6 |
-| NVDA-valikko | c1, c3, c4 ja c5 (komento n) |
 | Shift+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 3 |
 | Sarkain-näppäin | välilyönti+pisteet 4 ja 6 |
 | Alt-näppäin | välilyönti+pisteet 1, 3 ja 4 (välilyönti+m) |
 | Esc-näppäin | välilyönti+pisteet 1 ja 5 (välilyönti+e) |
 | Enter-näppäin | piste 8 |
-| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1, c4 ja c5 (komento d) |
 | Windows-näppäin | välilyönti+pisteet 3 ja 4 |
 | Alt+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 (välilyönti+t) |
+| NVDA-valikko | väli+pisteet 1, 3, 4 ja 5 (väli+n) |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | väli+pisteet 1, 4 ja 5 (väli+d) |
+| Jatkuva luku | väli+pisteet 1, 2, 3, 4, 5 ja 6 |
+%kc:endInclude
+
++++ Brailliant BI 32, BI 40 ja B 80 +++
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| NVDA-valikko | c1, c3, c4 ja c5 (komento n) |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1, c4 ja c5 (komento d) |
 | Jatkuva luku | c1, c2, c3, c4, c5 ja c6 |
+%kc:endInclude
+
++++ Brailliant BI 14 +++
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| Nuoli ylös -näppäin | ohjaussauva ylös |
+| Nuoli alas -näppäin | ohjaussauva alas |
+| Vasen nuoli -näppäin | ohjaussauva vasemmalle |
+| Oikea nuoli -näppäin | ohjaussauva oikealle |
+| Enter-näppäin | ohjaussauvan toiminto |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
@@ -2110,7 +2131,7 @@ USB-liitäntää käytettäessä tietokoneelle on asennettava HIMSin ajurit.
 Voit ladata ne tältä sivulta: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
 | Siirrä pistesoluun | kosketuskohdistin |
@@ -2370,6 +2391,8 @@ Seuraavia malleja tuetaan:
 - BrailleNote MPower (sarjaportti- ja bluetooth-liitännät)
 - BrailleNote Apex (USB- ja bluetooth-liitännät)
 -
+
+Katso BrailleNote Touchin näppäinkomennot [Brailliant BI/B / BrailleNote Touch HumanWareBrailliant] -kappaleesta.
 
 Käytettävä portti on määritettävä pistenäytön omista asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
 Katso lisätietoja BrailleNoten käsikirjasta.

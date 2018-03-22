@@ -3,6 +3,32 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== Nuevas Características ==
+- Ahora se anuncia el rango de filas y columnas para celdas de tablas  en voz y braille. (#2642)
+- Ahora se soportan las órdenes de navegación de táblas de NVDA en Google Docs (con el modo Braille habilitado). (#7946)
+- Capacidad para leer y navegar tablas en Kindle for PC. (#7977)
+- Soporte para las pantallas BrailleNote touch y Brailliant BI 14 a través tanto de USB como de bluetooth. (#6524)
+
+
+== Cambios ==
+- Se ha cambiado la columna de estado en el administrador de complementos para indicar si el complemento está habilitado o deshabilitado además de en ejecución o suspendido. (#7929)
+
+
+== Corrección de fallos ==
+- NVDA ya no falla al leer controles enfocados en la pantalla de inicio de sesión de la cuenta de Microsoft en Configuración después de introducir una dirección de correo. (#7997)
+- NVDA ya no falla al leer la página cuando se retrocede a una página anterior en Microsoft Edge. (#7997)
+- NVDA ya no anunciará incorrectamente el carácter final de un PIN de inicio de sesión de windows 10 según la máquina se desbloquee. (#7908)
+- Las etiquetas de las casillas de verificación y de los botones de opción en Chrome y Firefox ya no se anuncian dos veces cuando se tabule o se utilice la navegación rápida en modo exploración. (#7960)
+- Se maneja aria-current con un valor de false como false en lugar de true (#7892).
+
+
+== Cambios para Desarrolladores ==
+- La información para desarrolladores para objetos UIA ahora contiene una lista de los patrones UIA disponibles. (#5712)
+- Los módulos de aplicación ahora pueden forzar ciertas ventanas para utilizar siempre UIA implementando el método isGoodUIAWindow. (#7961)
+
+
 = 2018.1 =
 Lo reseñable de esta versión incluye el soporte para gráficos en Microsoft word y PowerPoint, el soporte para pantallas braille nuevas incluyendo las Eurobraille y el conversor de protocolo de Optelec, mejorado el soporte para las pantallas braille Hims y Optelec, mejoras de rendimiento para Mozilla Firefox 58 y posteriores, y mucho más.
 

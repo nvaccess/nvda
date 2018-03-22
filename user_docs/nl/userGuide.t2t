@@ -2075,13 +2075,16 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | alles lezen | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B-Serie ++[HumanWareBrailliant]
-De brailleleesregels uit de serie BI en B van  [HumanWare http://www.humanware.de/], waaronder  de BI 32, BI 40 en de B 80, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
+++ HumanWare Brailliant BI/B Serie / BrailleNote Touch ++[HumanWareBrailliant]
+De brailleleesregels uit de serie BI en B van  [HumanWare http://www.humanware.com/]], waaronder  de BI 14, BI 32, BI 40 en B 80,, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
 Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
 USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
 
-Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
+De BrailleNote Touch wordt ook ondersteund en hiervoor hoeven geen drivers te worden geïnstalleerd.
+
+Bij gebruik van de Brailliant BI/B en de BrailleNote touch  met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
++++Toegewezen toetsen die  gelden voor  Alle modellen +++
 %kc:beginInclude
 || Naam | Toets |
 | Brailleregel terugscrollen | Links |
@@ -2094,16 +2097,34 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | Toets Pijl omlaag | Spatiebalk+Punt4 |
 | Toets Pijl links | Spatiebalk+Punt3 |
 | Toets Pijl rechts | Spatiebalk+Punt6 |
-| NVDA-menu | c1+c3+c4+c5 (commando n) |
 | Shift+Tab-toets | Spatiebalk+Punt1+Punt3 |
 | Tab-Toets | Spatiebalk+Punt4+Punt6 |
 | Alt-Toets | Spatiebalk+Punt1+Punt3+Punt4 (spatiebalk+m) |
 | Escape-toets | Spatiebalk+Punt1+Punt5 (spatiebalk+e) |
 | Enter-toets | Punt8 |
-| Windows-toets+d (alle toepassingen minimaliseren) | c1+c4+c5 (commando d) |
 | Windows-toets | Spatiebalk+Punt3+Punt4 |
 | Alt+Tabtoets | Spatiebalk+Punt2+Punt3+Punt4+Punt5 (spatiebalk+t) |
-| Alles lezen | c1+c2+c3+c4+c5+c6 |
+| NVDA Menu | spatie+punt1+punt3+punt4+punt5 (spatie+n) |
+| windows+d toets (alle toepassingen minimaliseren) | spatie+punt1+punt4+punt5 (spatie+d) |
+| alles lezen | spatie+punt1+punt2+punt3+punt4+punt5+punt6 |
+%kc:endInclude
+
++++ Toegewezen toetsen  voor de Brailliant BI 32, BI 40 en B 80 +++ 
+%kc:beginInclude
+|| Naam | toets |
+| NVDA Menu | c1+c3+c4+c5 (commando n) |
+| windows+d toets (alle toepassingen minimaliseren) | c1+c4+c5 (commanod d) |
+ |Alles lezen | c1+c2+c3+c4+c5+c6 |
+ %kc:endInclude
+ 
++++ Toegewezen toetsen voor de Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Naam | Toets |
+| Pijl Omhoog | joystick naar boven |
+| Pijl Omlaag | joystick naar beneden |
+| Pijl Links | joystick naar links |
+| Pijl Rechts | joystick naar rechts |
+| Enter-toets | joystick actie |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serie ++[Hims]
