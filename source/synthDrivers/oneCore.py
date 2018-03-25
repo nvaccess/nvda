@@ -1,6 +1,6 @@
 #synthDrivers/oneCore.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2017 Tyler Spivey, NV Access Limited
+#Copyright (C) 2016-2018 Tyler Spivey, NV Access Limited, James Teh
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,6 +12,8 @@ import sys
 from collections import OrderedDict
 import ctypes
 import _winreg
+import wave
+import cStringIO
 from synthDriverHandler import SynthDriver, VoiceInfo
 from logHandler import log
 import config
@@ -22,12 +24,8 @@ import languageHandler
 import winVersion
 import NVDAHelper
 
-SAMPLES_PER_SEC = 22050
-BITS_PER_SAMPLE = 16
-BYTES_PER_SEC = SAMPLES_PER_SEC * (BITS_PER_SAMPLE / 8)
 #: The number of 100-nanosecond units in 1 second.
 HUNDRED_NS_PER_SEC = 10000000 # 1000000000 ns per sec / 100 ns
-WAV_HEADER_LEN = 44
 ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
@@ -113,7 +111,7 @@ class SynthDriver(SynthDriver):
 		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
 		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
-		self._player = nvwave.WavePlayer(1, SAMPLES_PER_SEC, BITS_PER_SAMPLE, outputDevice=config.conf["speech"]["outputDevice"])
+		self._player= None
 		# Initialize state.
 		self._queuedSpeech = []
 		self._wasCancelled = False
@@ -123,6 +121,23 @@ class SynthDriver(SynthDriver):
 		self.rate = 50
 		self.pitch = 50
 		self.volume = 100
+
+	def _maybeInitPlayer(self, wav):
+		"""Initialize audio playback based on the wave header provided by the synthesizer.
+		If the sampling rate has not changed, the existing player is used.
+		Otherwise, a new one is created with the appropriate parameters.
+		"""
+		samplesPerSec = wav.getframerate()
+		if self._player and self._player.samplesPerSec == samplesPerSec:
+			return
+		if self._player:
+			# Finalise any pending audio.
+			self._player.idle()
+		bytesPerSample = wav.getsampwidth()
+		self._bytesPerSec = samplesPerSec * bytesPerSample
+		self._player = nvwave.WavePlayer(channels=wav.getnchannels(),
+			samplesPerSec=samplesPerSec, bitsPerSample=bytesPerSample * 8,
+			outputDevice=config.conf["speech"]["outputDevice"])
 
 	def terminate(self):
 		super(SynthDriver, self).terminate()
@@ -137,7 +152,8 @@ class SynthDriver(SynthDriver):
 		log.debug("Cancelling")
 		# There might be more text pending. Throw it away.
 		self._queuedSpeech = []
-		self._player.stop()
+		if self._player:
+			self._player.stop()
 
 	def speak(self, speechSequence):
 		conv = _OcSsmlConverter(self.language, self.rate, self.pitch, self.volume)
@@ -146,7 +162,8 @@ class SynthDriver(SynthDriver):
 		# when the SSML includes marks.
 		# We're not quite sure why.
 		# To work around this, open the device before queuing.
-		self._player.open()
+		if self._player:
+			self._player.open()
 		self._queueSpeech(text)
 
 	def _queueSpeech(self, item):
@@ -182,11 +199,10 @@ class SynthDriver(SynthDriver):
 			self._processQueue()
 			return
 		# This gets called in a background thread.
-		# Strip the wav header.
-		assert len > WAV_HEADER_LEN
-		bytes += WAV_HEADER_LEN
-		len -= WAV_HEADER_LEN
-		data = ctypes.string_at(bytes, len)
+		stream = cStringIO.StringIO(ctypes.string_at(bytes, len))
+		wav = wave.open(stream, "r")
+		self._maybeInitPlayer(wav)
+		data = wav.readframes(wav.getnframes())
 		if markers:
 			markers = markers.split('|')
 		else:
@@ -203,7 +219,7 @@ class SynthDriver(SynthDriver):
 			# pos is a time offset in 100-nanosecond units.
 			# Convert this to a byte offset.
 			# Order the equation so we don't have to do floating point.
-			pos = pos * BYTES_PER_SEC / HUNDRED_NS_PER_SEC
+			pos = pos * self._bytesPerSec / HUNDRED_NS_PER_SEC
 			# Push audio up to this marker.
 			self._player.feed(data[prevPos:pos])
 			# _player.feed blocks until the previous chunk of audio is complete, not the chunk we just pushed.
@@ -280,4 +296,5 @@ class SynthDriver(SynthDriver):
 		return self._dll.ocSpeech_getCurrentVoiceLanguage(self._handle)
 
 	def pause(self, switch):
-		self._player.pause(switch)
+		if self._player:
+			self._player.pause(switch)
