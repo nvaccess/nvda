@@ -28,7 +28,7 @@ from logHandler import log
 from UIAUtils import *
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions, ToolTip
 import braille
 import time
 
@@ -741,6 +741,9 @@ class UIA(Window):
 			clsList.append(Toast_win8)
 		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
 			clsList.append(Toast_win10)
+		# #8118: treat UWP tooltips as proper tooltips, especially those found in Microsoft Edge and other apps.
+		elif UIAClassName=="ToolTip" and self.UIAElement.cachedFrameworkID == "XAML":
+			clsList.append(UWPToolTip)
 		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
@@ -1539,6 +1542,12 @@ class Toast_win10(Notification, UIA):
 			self.__class__._lastToastTimestamp = toastTimestamp
 			self.__class__._lastToastRuntimeID = toastRuntimeID
 		Notification.event_alert(self)
+
+
+class UWPToolTip(ToolTip, UIA):
+
+	event_UIA_toolTipOpened=ToolTip.event_show
+
 
 #WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
 #This causes major lags when using this control with Braille in NVDA. (#2759) 
