@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
+#Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
 import sys
 import itertools
@@ -464,6 +464,8 @@ def getBrailleTextForProperties(**propertyValues):
 	cellCoordsText=propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
+	rowSpan = propertyValues.get("rowSpan")
+	columnSpan = propertyValues.get("columnSpan")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:
@@ -511,17 +513,29 @@ def getBrailleTextForProperties(**propertyValues):
 			textList.append(_('lv %s')%positionInfo['level'])
 	if rowNumber:
 		if includeTableCellCoords and not cellCoordsText: 
-			# Translators: Displayed in braille for a table cell row number.
-			# %s is replaced with the row number.
-			textList.append(_("r%s") % rowNumber)
+			if rowSpan>1:
+				# Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+				# Occurences of %s are replaced with the corresponding row numbers.
+				rowStr = _("r{rowNumber}-{rowSpan}").format(rowNumber=rowNumber,rowSpan=rowNumber+rowSpan-1)
+			else:
+				# Translators: Displayed in braille for a table cell row number.
+				# %s is replaced with the row number.
+				rowStr = _("r{rowNumber}").format(rowNumber=rowNumber)
+			textList.append(rowStr)
 	if columnNumber:
 		columnHeaderText = propertyValues.get("columnHeaderText")
 		if columnHeaderText:
 			textList.append(columnHeaderText)
 		if includeTableCellCoords and not cellCoordsText:
-			# Translators: Displayed in braille for a table cell column number.
-			# %s is replaced with the column number.
-			textList.append(_("c%s") % columnNumber)
+			if columnSpan>1:
+				# Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+				# Occurences of %s are replaced with the corresponding column numbers.
+				columnStr = _("c{columnNumber}-{columnSpan}").format(columnNumber=columnNumber,columnSpan=columnNumber+columnSpan-1)
+			else:
+				# Translators: Displayed in braille for a table cell column number.
+				# %s is replaced with the column number.
+				columnStr = _("c{columnNumber}").format(columnNumber=columnNumber)
+			textList.append(columnStr)
 	current = propertyValues.get('current', False)
 	if current:
 		try:
@@ -628,6 +642,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"states": states,
 			"rowNumber": field.get("table-rownumber"),
 			"columnNumber": field.get("table-columnnumber"),
+			"rowSpan": field.get("table-rowsspanned"),
+			"columnSpan": field.get("table-columnsspanned"),
 			"includeTableCellCoords": reportTableCellCoords,
 			"current": current,
 		}
@@ -1845,6 +1861,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
 			self.setDisplayByName(display)
+		self._tether = config.conf["braille"]["tetherTo"]
 
 class _BgThread:
 	"""A singleton background thread used for background writes and raw braille display I/O.
@@ -1891,6 +1908,11 @@ class _BgThread:
 		if _BgThread.exit:
 			# func will see this and exit.
 			return
+		if not handler.display:
+			# Sometimes, the executor is triggered when a display is not fully initialized.
+			# For example, this happens when handling an ACK during initialisation.
+			# We can safely ignore this.
+			return
 		if handler.display._awaitingAck:
 			# Do not write cells when we are awaiting an ACK
 			return
@@ -1930,7 +1952,8 @@ class _BgThread:
 
 #: Maps old braille display driver names to new drivers that supersede old drivers.
 RENAMED_DRIVERS = {
-	"syncBraille":"hims"
+	"syncBraille":"hims",
+	"alvaBC6":"alva"
 }
 
 def initialize():
@@ -2092,7 +2115,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
 				if (any(gesture.startswith(prefix.lower()) for prefix in prefixes)
 					and scriptCls is globalCommands.GlobalCommands
-					and scriptName.startswith("kb")):
+					and scriptName and scriptName.startswith("kb")):
 					emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
 					if emuGesture.isModifier:
 						yield set(gesture.split(":")[1].split("+")), set(emuGesture._keyNamesInDisplayOrder)

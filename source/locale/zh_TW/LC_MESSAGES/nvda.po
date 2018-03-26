@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 00:10+1000\n"
-"PO-Revision-Date: 2018-01-11 10:04+0800\n"
+"POT-Creation-Date: 2018-03-16 00:10+1000\n"
+"PO-Revision-Date: 2018-03-21 10:13+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -89,6 +89,24 @@ msgstr "未知的輸入法"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{layout} - {language}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "拼字和文法：{text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "拼字:{text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "文法：{text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -514,23 +532,48 @@ msgstr "{total} 之 {number}"
 msgid "lv %s"
 msgstr "lv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "從第 {rowNumber} 列向下合併了 {rowSpan} 列"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "第 {rowNumber} 列"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "從第 {columnNumber} 欄向右合併了 {columnSpan} 欄"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "第 {columnNumber} 欄"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
 msgstr "%s 結尾"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "自動"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "系統焦點"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "檢閱游標"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -1626,45 +1669,6 @@ msgstr "到了底部"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "跳過清單或表格"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "不在表格的儲存格中"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "表格的邊緣了"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "移到表格的下一列"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "移到表格的上一列"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "移到表格的右一欄"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "移到表格的左一欄"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "排版表格關"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "排版表格開"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "切換在瀏覽模式下讀出所有排版表格的開關"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2796,9 +2800,48 @@ msgstr "沒有選取文字"
 msgid "Copied to clipboard"
 msgstr "複製到剪貼簿"
 
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "不在表格的儲存格中"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "表格的邊緣了"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "移到表格的下一列"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "移到表格的上一列"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "移到表格的右一欄"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "移到表格的左一欄"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "排版表格關"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "排版表格開"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "切換在瀏覽模式下讀出所有排版表格的開關"
+
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
-msgstr "文字瀏覽"
+msgstr "文字檢閱"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Object navigation"
@@ -3371,15 +3414,15 @@ msgstr ""
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
-msgstr "簡易瀏覽模式關"
+msgstr "簡易檢閱模式關"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
-msgstr "簡易瀏覽模式開"
+msgstr "簡易檢閱模式開"
 
 #. Translators: Input help mode message for toggle simple review mode command.
 msgid "Toggles simple review mode on and off"
-msgstr "切換簡易瀏覽模式的開關"
+msgstr "切換簡易檢閱模式的開關"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3659,7 +3702,7 @@ msgstr "沒有格式資訊"
 
 #. Translators: title for formatting information dialog.
 msgid "Formatting"
-msgstr "格式設定"
+msgstr "格式資訊"
 
 #. Translators: Input help mode message for report formatting command.
 msgid ""
@@ -3932,23 +3975,15 @@ msgid ""
 msgstr ""
 "切換「檢視報讀」視窗的開關，以便讓您可查看目前 NVDA 正在報讀的文字內容。"
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "瀏覽焦點"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "系統焦點"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
-msgstr "點字游標跟隨%s"
+msgid "Braille tethered %s"
+msgstr "點字游標跟隨 %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "切換點字游標跟隨系統焦點或瀏覽位置"
+msgstr "切換點字游標跟隨系統焦點和檢閱位置"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -5643,15 +5678,15 @@ msgstr "NVDA Python主控台"
 
 #. Translators: One of the review modes.
 msgid "Object review"
-msgstr "物件瀏覽"
+msgstr "物件檢閱"
 
 #. Translators: One of the review modes.
 msgid "Document review"
-msgstr "文件瀏覽"
+msgstr "文件檢閱"
 
 #. Translators: One of the review modes.
 msgid "Screen review"
-msgstr "畫面瀏覽"
+msgstr "畫面檢閱"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
@@ -5699,12 +5734,24 @@ msgstr "移除所選"
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
-msgstr "%s列"
+msgstr "第%s列"
+
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "合併%s個儲存格"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
-msgstr "%s欄"
+msgstr "第%s欄"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "合併{row}個列儲存格{column}個欄儲存格"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -5759,7 +5806,7 @@ msgstr "第 {1} 之 {0} 欄"
 #. %s will be replaced with the number of text columns.
 #, python-format
 msgid "%s columns"
-msgstr "%s 欄"
+msgstr "%s欄"
 
 # continuous在Word裡的譯名是接續本頁，section break是分節符號。
 msgid "continuous section break"
@@ -6026,6 +6073,14 @@ msgstr "拼錯字"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "離開拼錯字"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "文法錯誤"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "離開文法錯誤"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -6950,8 +7005,29 @@ msgid "off"
 msgstr "關"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 系列"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6 系列/協議轉換器"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "藍牙串列埠：{portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "不支援設定HID鍵盤模擬"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "啟動HID鍵盤模擬"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "停用HID模擬鍵盤"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "切換HID鍵盤模擬"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -6971,12 +7047,24 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B 系列"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "HumanWare Brailliant BI/B 系列/ BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Eco-點字顯示器"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Eurobraille Esys/Esytime/Iris 點顯器"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "停用HID鍵盤輸入模擬"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "切換HID鍵盤模擬"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7585,21 +7673,21 @@ msgstr "安裝"
 msgid "remove"
 msgstr "移除"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "停用"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "重新啟動後停用"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "啟用"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "重新啟動後啟用"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
+msgid "disabled"
 msgstr "停用"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "正在執行"
+msgid "enabled"
+msgstr "啟用"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8327,7 +8415,7 @@ msgstr "跟隨鼠標(&M)"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Simple review mode"
-msgstr "簡易瀏覽模式"
+msgstr "簡易檢閱模式"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 msgid "Input Composition Settings"
@@ -8808,8 +8896,8 @@ msgid "Show &messages indefinitely"
 msgstr "持續顯示訊息"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "點字游標跟隨(&R)"
+msgid "Tether B&raille:"
+msgstr "點字游標跟隨 (&R)："
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -8993,8 +9081,123 @@ msgstr "RGB 紅 {rgb.red}、綠 {rgb.green}、藍 {rgb.blue}"
 msgid "%s items"
 msgstr "%s 項目"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr "無法設定標題，請將文件格式設定中的讀出表格的「列及欄標題」勾選"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "設定第{rowNumber}列 第{columnNumber}欄為欄標題"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "已設定第{rowNumber}列 第{columnNumber}欄為欄標題!"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "清除第{rowNumber}列 第{columnNumber}欄的欄標題"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr "無法找到第{rowNumber}列 第{columnNumber}欄的欄標題"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"按一下設定此儲存格為其右側及以下儲存格所形成的表格之欄標題。 連續按二下即清除"
+"此設定。"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "設定第{rowNumber}列 第{columnNumber}欄為列標題"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "已設定第{rowNumber}列 第{columnNumber}欄為列標題"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "清除第{rowNumber}列 第{columnNumber}欄的列標題"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "無法找到第{rowNumber}列 第{columnNumber}欄的列標題"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"按一下設定此儲存格為其右側及以下儲存格所形成的表格之列標題。 連續按二下即清除"
+"此設定。"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "沒有註解"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "讀出在系統游標上所加的註解"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "不在表格中"
+
 msgid "invoke"
 msgstr "啟用"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "標記 (&A)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "拼錯字 (&E)"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "插入：{text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "刪除：{text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "追蹤修訂：{text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "註解：由 {author} 於 {date} 加註的 {comment}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "由 {author} 於 {date} 加註的 {comment}"
 
 msgid "Desktop"
 msgstr "桌面"
@@ -9832,15 +10035,6 @@ msgid "{start} through {end}"
 msgstr "{start} 到 {end}"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr "無法設定標題，請將文件格式設定中的讀出表格的「列及欄標題」勾選"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "設定 {address} 為欄標題的開頭"
@@ -10165,12 +10359,6 @@ msgstr "註解: 由 {author} 於 {date} 加註的 {text}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} 由 {author} 於 {date} 修訂"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "拼字:{text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10206,64 +10394,6 @@ msgstr "%.1f 行"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "表格說明"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "設定{rowNumber}列{columnNumber}欄為欄標題"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "已設定{rowNumber}列{columnNumber}欄為欄標題!"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "清除{rowNumber}列{columnNumber}欄的欄標題"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr "無法找到{rowNumber}列{columnNumber}欄的欄標題"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"按一下設定此儲存格為其右側及以下儲存格所形成的表格之欄標題。 連續按二下即清除"
-"此設定。"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "設定{rowNumber}列{columnNumber}欄為列標題"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "已設定{rowNumber}列{columnNumber}欄為列標題"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "清除{rowNumber}列{columnNumber}欄的列標題"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "無法找到{rowNumber}列{columnNumber}欄的列標題"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"按一下設定此儲存格為其右側及以下儲存格所形成的表格之列標題。 連續按二下即清除"
-"此設定。"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10376,14 +10506,6 @@ msgstr "{offset:.3g} 點"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 皮卡"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "沒有註解"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "讀出在系統游標上所加的註解"
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "單行間距"
@@ -10396,20 +10518,29 @@ msgstr "2倍行高"
 msgid "1.5 line spacing"
 msgstr "1.5倍行高"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "不在表格中"
+#~ msgid "r%s"
+#~ msgstr "r%s"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "標記 (&A)"
+#~ msgid "c%s"
+#~ msgstr "c%s"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "拼錯字 (&E)"
+#~ msgid "suspended"
+#~ msgstr "停用"
+
+#~ msgid "running"
+#~ msgstr "正在執行"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "ALVA BC640/680 系列"
+
+#~ msgid "review"
+#~ msgstr "瀏覽焦點"
+
+#~ msgid "focus"
+#~ msgstr "系統焦點"
+
+#~ msgid "B&raille tethered to:"
+#~ msgstr "點字游標跟隨(&R)"
 
 #~ msgid "Not defined"
 #~ msgstr "未定義"

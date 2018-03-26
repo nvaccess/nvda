@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 00:10+1000\n"
-"PO-Revision-Date: 2018-01-04 18:19+0100\n"
-"Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
+"POT-Creation-Date: 2018-03-16 00:10+1000\n"
+"PO-Revision-Date: 2018-03-15 17:09+0100\n"
+"Last-Translator: Iván Novegil <ivan.novegil.cancelas@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
 "Language: es_ES\n"
@@ -87,6 +87,24 @@ msgstr "método de entrada desconocido"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "ortografía y gramática: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "deletreando: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "gramática: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -511,23 +529,48 @@ msgstr "{number} de {total}"
 msgid "lv %s"
 msgstr "nv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "f{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "f%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "f{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
 msgstr "%s fin"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automáticamente"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "al foco"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "a la revisión"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -579,7 +622,7 @@ msgstr "Bengalí grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
-msgstr "Braille Búlgaro computerizado de 8 puntos"
+msgstr "Búlgaro computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -599,7 +642,7 @@ msgstr "Checo grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot computer braille"
-msgstr "Braille danés computerizado de 8 puntos"
+msgstr "Danés Cmputerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -624,7 +667,7 @@ msgstr "Danés de 8 puntos grado 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German 8 dot computer braille"
-msgstr "Braille Alemán computerizado de 8 puntos"
+msgstr "Alemán computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -664,22 +707,22 @@ msgstr "Inglés (U.K.) grado 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
-msgstr "Código Braille Grado 1 Inglés Unificado"
+msgstr "Inglés  Unificado Grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 2"
-msgstr "Código Braille Grado 2 Inglés Unificado"
+msgstr "Inglés  Unificado Grado 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.S.) 6 dot computer braille"
-msgstr "Braille de Ordenador de 6 puntos Inglés (U.S.)"
+msgstr "Inglés (U.S.) computerizado de 6 puntos "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.S.) 8 dot computer braille"
-msgstr "Braille de Ordenador de 8 puntos Inglés (U.S.)"
+msgstr "Inglés (U.S.) computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -694,7 +737,7 @@ msgstr "Inglés (U.S.) grado 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
-msgstr "Braille español computerizado de 8 puntos"
+msgstr "Español computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -714,7 +757,7 @@ msgstr "Etíope grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Persian 8 dot computer braille"
-msgstr "Braille persa computerizado de 8 puntos"
+msgstr "Persa computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -729,22 +772,22 @@ msgstr "Finlandés 6 puntos"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
-msgstr "Braille computerizado Finlandés de 8 puntos"
+msgstr "Finlandés computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
-msgstr "Braille de ordenador de 6 puntos francés (unificado)"
+msgstr "Francés computerizado de 6 puntos (unificado)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 8 dot computer braille"
-msgstr "Braille de ordenador de 8 puntos francés (unificado)"
+msgstr "Francés computerizado de 8 puntos (unificado)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) Grade 2"
-msgstr "Grado 2 Francés (unificado)"
+msgstr "Francés grado 2 (unificado)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -779,7 +822,7 @@ msgstr "Griego Koiné"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hebrew 8 dot computer braille"
-msgstr "Braille computerizado Hebreo de ocho puntos"
+msgstr "Hebreo computerizado de ocho puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -789,7 +832,7 @@ msgstr "Hindi grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
-msgstr "Braille Croata computerizado de 8 puntos"
+msgstr "Croata computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -799,7 +842,7 @@ msgstr "Croata grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
-msgstr "Braille computerizado húngaro de ocho puntos"
+msgstr "Húngaro computerizado de ocho puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -809,17 +852,17 @@ msgstr "Húngaro grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Icelandic 8 dot computer braille"
-msgstr "Braille computerizado islandés de 8 puntos"
+msgstr "Islandés computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 6 dot computer braille"
-msgstr "Braille computerizado italiano de 6 puntos"
+msgstr "Italiano computerizado de 6 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 8 dot computer braille"
-msgstr "Braille computerizado italiano de 8 puntos"
+msgstr "Italiano computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -894,7 +937,7 @@ msgstr "Holandés (Holanda)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian 8 dot computer braille"
-msgstr "Braille noruego computerizado de 8 puntos"
+msgstr "Noruego computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -929,7 +972,7 @@ msgstr "Oriya grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Polish 8 dot computer braille"
-msgstr "Braille computerizado polaco de 8 puntos"
+msgstr "Polaco computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -939,7 +982,7 @@ msgstr "Polaco grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Portuguese 8 dot computer braille"
-msgstr "Braille computerizado portugués de 8 puntos"
+msgstr "Portugués computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -959,7 +1002,7 @@ msgstr "Punjabí grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian braille for computer code"
-msgstr "Braille ruso para código computerizado"
+msgstr "Ruso para código computerizado"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -984,7 +1027,7 @@ msgstr "Eslovaco grado 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovenian 8 dot computer braille"
-msgstr "Braille esloveno computerizado de 8 puntos"
+msgstr "Esloveno computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1623,46 +1666,6 @@ msgstr "Fin"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Se mueve al final del elemento contenedor, tal como una lista o tabla"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "No estás en una celda de tabla"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Borde de la tabla"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "Se mueve a la siguiente fila de la tabla"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "se mueve a la anterior fila de la tabla"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "se mueve a la siguiente columna de la tabla"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "se mueve a la anterior columna de la tabla"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "Tablas de diseño desactivado"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "Tablas de diseño activado"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr ""
-"Activa y desactiva la inclusión de tablas de diseño en modo exploración"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2797,6 +2800,46 @@ msgstr "Sin selección"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "Copiado al portapapeles"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "No estás en una celda de tabla"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Borde de la tabla"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "Se mueve a la siguiente fila de la tabla"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "se mueve a la anterior fila de la tabla"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "se mueve a la siguiente columna de la tabla"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "se mueve a la anterior columna de la tabla"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Tablas de diseño desactivado"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Tablas de diseño activado"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Activa y desactiva la inclusión de tablas de diseño en modo exploración"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -4034,19 +4077,11 @@ msgstr ""
 "Activa o desactiva el Visualizador de voz de NVDA, una ventana flotante que "
 "te permite ver todo el texto que esté verbalizando NVDA actualmente"
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "revisión"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "foco"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
-msgstr "El braille sigue a %s"
+msgid "Braille tethered %s"
+msgstr "El braille sigue %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -5820,10 +5855,22 @@ msgstr "selección eliminada"
 msgid "row %s"
 msgstr "fila %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "hasta %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "columna %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "hasta fila {row} columna {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6144,6 +6191,14 @@ msgstr "error de ortografía"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "fuera de error de ortografía"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "error gramatical"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "fuera de error gramatical"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7082,8 +7137,29 @@ msgid "off"
 msgstr "desactivada"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "Series de la ALVA BC640/680"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "series de la Optelec ALVA 6/conversor de protocolo"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Bluetooth serie: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "Opción de simulación de teclado HID no soportada"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "Simulación de teclado HID habilitada"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "Simulación de teclado HID deshabilitada"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "Conmuta la simulación de teclado HID"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7103,12 +7179,24 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "serie de las HumanWare Brailliant BI/B"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "Series de las HumanWare Brailliant BI/B / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Pantallas EcoBraille"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Pantallas Eurobraille Esys/Esytime/Iris"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "La simulación de entrada de teclado HID no está disponible."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Conmuta la simulación de teclado HID"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7739,21 +7827,21 @@ msgstr "instalar"
 msgid "remove"
 msgstr "eliminar"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "deshabilitar"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "Deshabilitado después de reiniciar"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "habilitar"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Habilitado después de reiniciar"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "suspendido"
+msgid "disabled"
+msgstr "deshabilitado"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "ejecutando"
+msgid "enabled"
+msgstr "habilitado"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -9004,8 +9092,8 @@ msgid "Show &messages indefinitely"
 msgstr "Mostrar &mensajes indefinidamente"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "El B&raille sigue a:"
+msgid "Tether B&raille:"
+msgstr "B&raille sigue:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9193,8 +9281,145 @@ msgstr "RVA rojo {rgb.red}, verde Q{rgb.green}, azul {rgb.blue}"
 msgid "%s items"
 msgstr "%s elementos"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"No se puede configurar encabezados. Por favor activa el anunciado de "
+"emcabezados de tabla en Opciones de Formato de Documento"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Fijar fila {rowNumber} columna {columnNumber} como inicio de las cabeceras "
+"de las columnas"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Ya se fijó fila {rowNumber} columna {columnNumber} , como comienzo de "
+"encabezados de columna"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Eliminada fila {rowNumber} columna {columnNumber}  de las cabeceras de las "
+"columnas"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"No se encontró  fila {rowNumber} columna {columnNumber}  en las cabeceras de "
+"las columnas"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Pulsando una vez se establece esta celda como la primera cabecera de columna "
+"para cualquier celda inferior y a la derecha de la misma dentro de esta "
+"tabla. Pulsando dos veces se olvidará de la cabecera de la columna actual "
+"para esta celda."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Fijar fila {rowNumber} columna {columnNumber} , como comienzo de encabezados "
+"de fila"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Ya se fijó fila {rowNumber} columna {columnNumber} , como comienzo de "
+"encabezados de fila"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"Eliminada fila {rowNumber} columna {columnNumber}  de los encabezados de fila"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"No se encontró fila {rowNumber} columna {columnNumber}  en los encabezados "
+"de fila"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Pulsando una vez se establece esta celda como la primera cabecera de la fila "
+"de las celdas más abajo y hacia la derecha de la misma dentro de esta tabla. "
+"Pulsando dos veces se olvidará de la cabecera de la fila actual de esta "
+"celda."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "No hay comentarios."
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+"Anuncia el texto del comentario en el que se encuentra el cursor del Sistema."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "No estás en una tabla"
+
 msgid "invoke"
 msgstr "invocar"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Anotaciones"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "&Errores"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "inserción: {text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "eliminación: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "rastrear cambio: {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Comentario: {comment} por {author} en {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "{comment} por {author} en {date}"
 
 msgid "Desktop"
 msgstr "Escritorio"
@@ -10037,17 +10262,6 @@ msgid "{start} through {end}"
 msgstr "{start} hasta {end}"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"No se puede configurar encabezados. Por favor activa el anunciado de "
-"emcabezados de tabla en Opciones de Formato de Documento"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "Fijar {address} , como comienzo de encabezados de columna"
@@ -10374,12 +10588,6 @@ msgstr "comentario: {text} por {author} en {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} en {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "deletreando: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10415,83 +10623,6 @@ msgstr "%.1f líneas"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Descripción de tabla"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Fijar fila {rowNumber} columna {columnNumber} como inicio de las cabeceras "
-"de las columnas"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Ya se fijó fila {rowNumber} columna {columnNumber} , como comienzo de "
-"encabezados de columna"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr ""
-"Eliminada fila {rowNumber} columna {columnNumber}  de las cabeceras de las "
-"columnas"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"No se encontró  fila {rowNumber} columna {columnNumber}  en las cabeceras de "
-"las columnas"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"Pulsando una vez se establece esta celda como la primera cabecera de columna "
-"para cualquier celda inferior y a la derecha de la misma dentro de esta "
-"tabla. Pulsando dos veces se olvidará de la cabecera de la columna actual "
-"para esta celda."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Fijar fila {rowNumber} columna {columnNumber} , como comienzo de encabezados "
-"de fila"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Ya se fijó fila {rowNumber} columna {columnNumber} , como comienzo de "
-"encabezados de fila"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
-"Eliminada fila {rowNumber} columna {columnNumber}  de los encabezados de fila"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-"No se encontró fila {rowNumber} columna {columnNumber}  en los encabezados "
-"de fila"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"Pulsando una vez se establece esta celda como la primera cabecera de la fila "
-"de las celdas más abajo y hacia la derecha de la misma dentro de esta tabla. "
-"Pulsando dos veces se olvidará de la cabecera de la fila actual de esta "
-"celda."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10604,15 +10735,6 @@ msgstr "{offset:.3g} puntos"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picas"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "No hay comentarios."
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr ""
-"Anuncia el texto del comentario en el que se encuentra el cursor del Sistema."
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "Espaciado de línea simple"
@@ -10625,20 +10747,29 @@ msgstr "Espaciado de línea doble"
 msgid "1.5 line spacing"
 msgstr "espaciado de línea a 1.5"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "No estás en una tabla"
+#~ msgid "r%s"
+#~ msgstr "f%s"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&Anotaciones"
+#~ msgid "c%s"
+#~ msgstr "c%s"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "&Errores"
+#~ msgid "suspended"
+#~ msgstr "suspendido"
+
+#~ msgid "running"
+#~ msgstr "ejecutando"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "Series de la ALVA BC640/680"
+
+#~ msgid "review"
+#~ msgstr "revisión"
+
+#~ msgid "focus"
+#~ msgstr "foco"
+
+#~ msgid "B&raille tethered to:"
+#~ msgstr "El B&raille sigue a:"
 
 #~ msgid "Not defined"
 #~ msgstr "No definido"
