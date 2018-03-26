@@ -370,9 +370,10 @@ class BrailleInputHandler(AutoPropertyObject):
 		@type withModifiers: bool
 		"""
 		if withModifiers:
-			keys = self.currentModifiers
 			# The emulated key should be the last item in the identifier string.
-			gesture = "+".join(keys)+"+"+key
+			keys = list(self.currentModifiers)
+			keys.append(key)
+			gesture = "+".join(keys)
 		else:
 			gesture = key
 		try:
