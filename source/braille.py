@@ -2237,7 +2237,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
 		for globalMap in globalMaps:
 			for fakeGestureId in fakeGestureIds:
-				scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId.lower()) if scriptName.startswith("kb"))
+				scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId.lower()) if scriptName and scriptName.startswith("kb"))
 		if not scriptNames:
 			# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
 			return None
