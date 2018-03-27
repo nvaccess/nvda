@@ -226,9 +226,9 @@ class GeneralSettingsDialog(SettingsDialog):
 					return
 				break
 		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while settings are being copied 
+		# Translators: The title of the dialog presented while settings are being copied
 		_("Copying Settings"),
-		# Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc) 
+		# Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 		_("Please wait while settings are copied to the system configuration."))
 		while True:
 			try:
@@ -323,7 +323,7 @@ class SynthesizerDialog(SettingsDialog):
 			selection = 0
 		self.deviceList.SetSelection(selection)
 
-		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog 
+		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
 		duckingListLabelText=_("Audio &ducking mode:")
 		self.duckingList=settingsSizerHelper.addLabeledControl(duckingListLabelText, wx.Choice, choices=audioDucking.audioDuckingModes)
 		index=config.conf['audio']['audioDuckingMode']
@@ -342,7 +342,7 @@ class SynthesizerDialog(SettingsDialog):
 			# NVDA is unable to load the selected
 			# synthesizer.
 			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
-			return 
+			return
 		if audioDucking.isAudioDuckingSupported():
 			index=self.duckingList.GetSelection()
 			config.conf['audio']['audioDuckingMode']=index
@@ -485,7 +485,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		autoLanguageSwitchingText = _("Automatic language switching (when supported)")
 		self.autoLanguageSwitchingCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=autoLanguageSwitchingText))
 		self.autoLanguageSwitchingCheckbox.SetValue(config.conf["speech"]["autoLanguageSwitching"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 		autoDialectSwitchingText =_("Automatic dialect switching (when supported)")
@@ -506,7 +506,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		trustVoiceLanguageText = _("Trust voice's language when processing characters and symbols")
 		self.trustVoiceLanguageCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=trustVoiceLanguageText))
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
-		
+
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
 		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
@@ -621,7 +621,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
 			self.kbdList.SetSelection(index)
 		except:
-			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True) 
+			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True)
 
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings dialog.
@@ -706,7 +706,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 			log.debugWarning("No NVDA key set")
 			gui.messageBox(
 				# Translators: Message to report wrong configuration of the NVDA key
-				_("At least one key must be used as the NVDA key."), 
+				_("At least one key must be used as the NVDA key."),
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
 			return
@@ -926,7 +926,7 @@ class ObjectPresentationDialog(SettingsDialog):
 		descriptionText = _("Report object &descriptions")
 		self.descriptionCheckBox=sHelper.addItem(wx.CheckBox(self,label=descriptionText))
 		self.descriptionCheckBox.SetValue(config.conf["presentation"]["reportObjectDescriptions"])
-		
+
 		# Translators: This is the label for a combobox in the
 		# object presentation settings dialog.
 		progressLabelText = _("Progress &bar output:")
@@ -938,13 +938,13 @@ class ObjectPresentationDialog(SettingsDialog):
 				break
 		else:
 			log.debugWarning("Could not set progress list to current report progress bar updates setting")
-		
+
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
 		reportBackgroundProgressBarsText = _("Report background progress bars")
 		self.reportBackgroundProgressBarsCheckBox=sHelper.addItem(wx.CheckBox(self,label=reportBackgroundProgressBarsText))
 		self.reportBackgroundProgressBarsCheckBox.SetValue(config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
 		dynamicContentText = _("Report dynamic &content changes")
@@ -1063,7 +1063,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		scrolledItemsBorder.Add(scrolledItems.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag = wx.ALL|wx.EXPAND)
 		scrolledPanel.SetSizer(scrolledItemsBorder)
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings dialog
 		fontGroupText = _("Font")
 		fontGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=fontGroupText), wx.VERTICAL))
@@ -1080,7 +1080,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		fontSizeText = _("Font &size")
 		self.fontSizeCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel,label=fontSizeText))
 		self.fontSizeCheckBox.SetValue(config.conf["documentFormatting"]["reportFontSize"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		fontAttributesText = _("Font attri&butes")
@@ -1098,25 +1098,25 @@ class DocumentFormattingDialog(SettingsDialog):
 		styleText =_("St&yle")
 		self.styleCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel,label=styleText))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		colorsText = _("&Colors")
 		self.colorCheckBox=fontGroup.addItem(wx.CheckBox(scrolledPanel,label=colorsText))
 		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings dialog
 		documentInfoGroupText = _("Document information")
 		docInfoGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=documentInfoGroupText), wx.VERTICAL))
 		scrolledItems.addItem(docInfoGroup)
-		
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		commentsText = _("Co&mments")
 		self.commentsCheckBox=docInfoGroup.addItem(wx.CheckBox(scrolledPanel,label=commentsText))
 		self.commentsCheckBox.SetValue(config.conf["documentFormatting"]["reportComments"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		revisionsText = _("&Editor revisions")
@@ -1129,7 +1129,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.spellingErrorsCheckBox=docInfoGroup.addItem(wx.CheckBox(scrolledPanel,label=spellingErrorText))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings dialog
 		pageAndSpaceGroupText = _("Pages and spacing")
 		pageAndSpaceGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=pageAndSpaceGroupText), wx.VERTICAL))
@@ -1140,7 +1140,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		pageText = _("&Pages")
 		self.pageCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=pageText))
 		self.pageCheckBox.SetValue(config.conf["documentFormatting"]["reportPage"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		lineText = _("Line &numbers")
@@ -1166,13 +1166,13 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.lineIndentationCombo.SetSelection(curChoice)
 
 		# Translators: This message is presented in the document formatting settings dialogue
-		# If this option is selected, NVDA will report paragraph indentation if available. 
+		# If this option is selected, NVDA will report paragraph indentation if available.
 		paragraphIndentationText = _("&Paragraph indentation")
 		self.paragraphIndentationCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=paragraphIndentationText))
 		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
-		
+
 		# Translators: This message is presented in the document formatting settings dialogue
-		# If this option is selected, NVDA will report line spacing if available. 
+		# If this option is selected, NVDA will report line spacing if available.
 		lineSpacingText=_("&Line spacing")
 		self.lineSpacingCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=lineSpacingText))
 		self.lineSpacingCheckBox.SetValue(config.conf["documentFormatting"]["reportLineSpacing"])
@@ -1183,7 +1183,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.alignmentCheckBox=pageAndSpaceGroup.addItem(wx.CheckBox(scrolledPanel,label=alignmentText))
 		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings dialog
 		tablesGroupText = _("Table information")
 		tablesGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=tablesGroupText), wx.VERTICAL))
@@ -1225,8 +1225,8 @@ class DocumentFormattingDialog(SettingsDialog):
 			else:
 				curChoice = 1
 		self.borderComboBox.SetSelection(curChoice)
-		
-		# Translators: This is the label for a group of document formatting options in the 
+
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings dialog
 		elementsGroupText = _("Elements")
 		elementsGroup = guiHelper.BoxSizerHelper(scrolledPanel, sizer=wx.StaticBoxSizer(wx.StaticBox(scrolledPanel, label=elementsGroupText), wx.VERTICAL))
@@ -1251,17 +1251,17 @@ class DocumentFormattingDialog(SettingsDialog):
 		# document formatting settings dialog.
 		self.blockQuotesCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Block &quotes")))
 		self.blockQuotesCheckBox.SetValue(config.conf["documentFormatting"]["reportBlockQuotes"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		self.landmarksCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Lan&dmarks")))
 		self.landmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportLandmarks"])
-		
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		self.framesCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("Fra&mes")))
 		self.framesCheckBox.Value=config.conf["documentFormatting"]["reportFrames"]
-		
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		self.clickableCheckBox=elementsGroup.addItem(wx.CheckBox(scrolledPanel,label=_("&Clickable")))
@@ -1373,7 +1373,7 @@ class DictionaryEntryDialog(wx.Dialog):
 		# Translators: This is a label for an edit field in add dictionary entry dialog.
 		commentLabelText = _("&Comment")
 		self.commentTextCtrl=sHelper.addLabeledControl(commentLabelText, wx.TextCtrl)
-		
+
 		# Translators: This is a label for a checkbox in add dictionary entry dialog.
 		caseSensitiveText = _("Case &sensitive")
 		self.caseSensitiveCheckBox=sHelper.addItem(wx.CheckBox(self,label=caseSensitiveText))
@@ -1382,7 +1382,7 @@ class DictionaryEntryDialog(wx.Dialog):
 		typeText = _("&Type")
 		typeChoices = [DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING]
 		self.typeRadioBox=sHelper.addItem(wx.RadioBox(self,label=typeText, choices=typeChoices))
-		
+
 		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
 
 		mainSizer.Add(sHelper.sizer,border=20,flag=wx.ALL)
@@ -1403,14 +1403,14 @@ class DictionaryEntryDialog(wx.Dialog):
 			# Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
 			gui.messageBox(_("A pattern is required."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
 			self.patternTextCtrl.SetFocus()
-			return 
+			return
 		try:
 			self.dictEntry=speechDictHandler.SpeechDictEntry(self.patternTextCtrl.GetValue(),self.replacementTextCtrl.GetValue(),self.commentTextCtrl.GetValue(),bool(self.caseSensitiveCheckBox.GetValue()),self.getType())
 		except Exception as e:
 			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
 			# Translators: This is an error message to let the user know that the dictionary entry is not valid.
 			gui.messageBox(_("Regular Expression error: \"%s\".")%e, _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
-			return 
+			return
 		evt.Skip()
 
 	def setType(self, type):
@@ -1452,11 +1452,11 @@ class DictionaryDialog(SettingsDialog):
 		addButtonID=wx.ID_ANY
 		# Translators: The label for a button in speech dictionaries dialog to add new entries.
 		bHelper.addButton(self, addButtonID,_("&Add"),wx.DefaultPosition)
-		
+
 		editButtonID=wx.ID_ANY
 		# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 		bHelper.addButton(self, editButtonID,_("&Edit"),wx.DefaultPosition)
-		
+
 		removeButtonID=wx.ID_ANY
 		bHelper.addButton(self, removeButtonID,_("&Remove"),wx.DefaultPosition)
 		sHelper.addItem(bHelper)
@@ -1697,7 +1697,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			config.conf["braille"][display]["port"] = port
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
-			return 
+			return
 		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
@@ -1816,9 +1816,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 		changeSymbolText = _("Change selected symbol")
 		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=changeSymbolText), wx.VERTICAL)))
 
-		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More 
+		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More
 		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
-		# to allow the default handling to take place. The command events are, however, normally not skipped as usually 
+		# to allow the default handling to take place. The command events are, however, normally not skipped as usually
 		# a single command such as a button click or menu item selection must only be processed by one handler."
 		def skipEventAndCall(handler):
 			def wrapWithEventSkip(event):
@@ -1827,7 +1827,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 				return handler()
 			return wrapWithEventSkip
 
-		
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
 		self.replacementEdit = changeSymbolHelper.addLabeledControl(replacementText, wx.TextCtrl)
@@ -1987,9 +1986,9 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.Add(filterSizer, flag=wx.EXPAND)
 		settingsSizer.AddSpacer(5)
 		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
-		
+
 		tree = self.tree = wx.TreeCtrl(self, size=wx.Size(600, 400), style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE )
-		
+
 		self.treeRoot = tree.AddRoot("root")
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
