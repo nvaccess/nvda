@@ -1742,7 +1742,7 @@ Se NVDA está instalado e executándose no teu sistema, podes abrir directamente
 Pola contra, garda o paquete de complemento e segue as instruccións máis abaixo.
 
 Para instalar un complemento que conseguiches previamente, preme o botón Instalar.
- Esto permitirache buscar un paquete de complemento (ficheiro .nvda-addon) en algún lugar do teu computador ou nunha rede.
+Esto permitirache buscar un paquete de complemento (ficheiro .nvda-addon) en algún lugar do teu computador ou nunha rede.
 Unha vez premas Abrir, o proceso de instalación comezará.
 
 Cando un complemento se vai a instalar, NVDA primeiro pedirache que confirmes que realmente desexas instalalo.
@@ -1759,6 +1759,7 @@ Para deshabilitar un complemento, preme o botón deshabilitar.
 Para habilitar un comnplemento anteriormente deshabilitado, preme o botón habilitar.
 Podes deshabilitar un complemento se o seu estado indica que está en execución ou habilitado, ou habilitalo se o complemento está suspendido ou deshabilitado.
 Para cada pulsación do botón habilitar/deshabilitar, o estado do complemento cambia para indicar que ocurrirá ao reiniciar NVDA.
+Se o complemento foi deshabilitado anteriormente, amosarase un estado "habilitado despois de reiniciar". Se o complemento foi anteriormente "Habilitado", amosarase un estado "deshabilitado despois de reiniciar"
 Ao igual que cando instalas ou eliminas complementos, tes que reiniciar o NVDA para que os cambios teñan efecto.
 
 O administrador tamén ten un botón Pechar para pechar o diálogo.
@@ -2072,13 +2073,16 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Ler todo | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant Series BI/B ++[HumanWareBrailliant]
-As pantallas braille Brailliant series BI e B de [HumanWare http://www.humanware.com/], incluíndo BI 32, BI 40 e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
+++ HumanWare Brailliant Series BI/B / BrailleNote Touch  ++[HumanWareBrailliant]
+As pantallas braille Brailliant series BI e B de [HumanWare http://www.humanware.com/], incluíndo BI 14, BI 32, BI 40 e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
 Se a conectas a través de USB co protocolo configurado a HumanWare, primeiro debes instalar os controladores USB proporcionados polo fabricante.
 Non se requiren os controladores USB se o protocolo se configura a OpenBraille.
 
-Seguidamente van as asignacións de teclas para esta pantalla co NVDA.
+Tamén se soporta a BrailleNote Touch, e non require instalar ningún controlador.
+
+Seguidamente van as asignacións de teclas para as pantallas Brailliant BI/B e BrailleNote touch co NVDA.
 Por favor consulta a documentación da pantalla para descripcións de onde poden atoparse estas teclas.
++++ Asignacións de teclas para todos os modelos +++
 %kc:beginInclude
 || Nome | Tecla |
 | Desprazar pantalla braille cara atrás | esquerda |
@@ -2091,16 +2095,34 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | tecla frecha abaixo | espazo+ponto4 |
 | tecla frecha esquerda | espazo+ponto3 |
 | tecla frecha dereita | espazo+ponto6 |
-| Menú NVDA | c1+c3+c4+c5 (comando n) |
 | tecla shift+tab | espazo+ponto1+ponto3 |
 | tecla tab | espazo+ponto4+ponto6 |
 | tecla alt | espazo+ponto1+ponto3+ponto4 (espazo+m) |
 | tecla escape | espazo+ponto1+ponto5 (espazo+e) |
 | tecla intro | ponto8 |
-| tecla windows+d (minimizar todas as aplicacións) | c1+c4+c5 (comando d) |
 | tecla windows | espazo+ponto3+ponto4 |
 | tecla alt+tab | espazo+ponto2+ponto3+ponto4+ponto5 (espazo+t) |
+| Menú NVDA | espazo+ponto1+ponto3+ponto4+ponto5 (espazo+n) |
+| tecla windows+d (minimizar todas las aplicaciones) | espacio+punto1+punto4+punto5 (espacio+d) |
+| Ler todo | espazo+ponto1+ponto2+ponto3+ponto4+ponto5+ponto6 |
+%kc:endInclude
+
++++ Asignacións de teclas para Brailliant BI 32, BI 40 e B 80 +++ 
+%kc:beginInclude
+|| Nome | Tecla |
+| Menú NVDA | c1+c3+c4+c5 (comando n) |
+| tecla windows+d (minimizar todas as aplicacións) | c1+c4+c5 (comando d) |
 | Ler todo | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Asignacións de teclas para Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Nome | Tecla |
+| tecla frecha arriba | joystick arriba |
+| tecla frecha abaixo | joystick abaixo |
+| tecla frecha esquerda | joystick esquerda |
+| tecla frecha dereita | joystick dereita |
+| tecla intro | accionar joystick |
 %kc:endInclude
 
 ++ Series das HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
@@ -2369,6 +2391,8 @@ Sopórtanse os seguintes modelos:
 - BrailleNote MPower (Conexións serie e bluetooth)
 - BrailleNote Apex (Conexións USB e Bluetooth)
 -
+
+Para o BrailleNote Touch, por favor consulta a seción [series das Brailliant BI / BrailleNote Touch HumanWareBrailliant].
 
 Se o teu dispositivo soporta máis dun tipo de conexión, cando conectes o teu BrailleNote ao NVDA, debes configurar o porto da terminal braille nas opcións de terminal braille.
 Por favor consulta o manual do BrailleNote para detalles.

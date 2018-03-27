@@ -1755,10 +1755,11 @@ NVDA će vas pitati želite li to doista.
 Kao i kod instalacije, NVDA mora ponovno biti pokrenut da bi dodatak bio potpuno uklonjen.
 Sve dok to ne učinite, status "uklanjanje" će se prikazivati za taj dodatak na popisu.
 
-Da biste uklonili dodatak, pritisnite gumb "Ukloni".
-Da biste omogućili dodatak koji je prije bio omogućen, pritisnite gumb "omogući".
-Možete onemogučiti dodatak ako status dodatka pokazuje "pokrenut", ili omogućen,, ili ga onemogućite ako je dodatak suspendiran ili omogućen.
+Kako biste onemogućili dodatak, pritisnite gumb Onemogući..
+Kako biste   mnemogućili prethodno onemogućen dodatak, pritisnite gumb omogući.
+Možete onemogućiti dodatak, ako je status dodatka omogućen,, ili ga možete omogućiti ako je onemogućen.
 Pri svakom pritisku na gumb omogući-onemogući, stanje dodatka se mijenja kako bi pokazivalo na akciju koja će se izvršiti pri ponovnom pokretanju nvda.
+Ako je dodatak prethodno onemogućen, prikazat će se stanje "omogućeno poslije ponovnog pokretanja". ako je dodatak prethodno omogućen, prikazat će se status, onemogućeno poslije ponovnog pokretanja
 Kao i prilikom uklanjanja i-ili deinstalacije dodataka, trebate ponovno pokrenuti nvda, kako bi vaše izmjene stupile na snagu.
 
 Upravitelj također ima gumb zatvori da biste zatvorili dijaloški okvir.
@@ -2072,13 +2073,16 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste saznali smje�
 | Reci sve | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Serije ++[HumanWareBrailliant]
-Brailliant BI i B serije brajičnih redaka tvrtke [HumanWare http://www.humanware.com/], uključujući BI 32, BI 40 i B 80, su podržani kad su spojeni putem USB ili Bluetooth veze.
+++ HumanWare Brailliant BI/B Serije / BrailleNote Touch  ++[HumanWareBrailliant]
+Brailliant BI i B serije brajični retci tvrtke [HumanWare http://www.humanware.com/], uključujući the BI 14, BI 32, BI 40 i B 80, su podržani kada su spojeni putem USB ili bluetooth veze.
 Ako brajični redak spajate putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
 USB upravljački programi nisu potrebni ako  je protokol postavljen na OpenBraille.
 
-Sljede tipkovnički prečaci za ove brajične retke za korištenje uz pomoć NVDA.
+BrailleNote Touch je također podržan, i nisu potrebni dodatni upravljački programi.
+
+Slijede tipkovnički prečaci za Brailliant BI/B i BrailleNote touch brajične retke za NVDA.
 Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali opise tipaka i njihov raspored.
++++ dodijele prečaca za sve modele +++
 %kc:beginInclude
 || Naziv | Prečac |
 | Pomakni brajični redak u natrag | Lijevo |
@@ -2091,16 +2095,34 @@ Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali
 | strelicaDolje | razmak+točkica4 |
 | strelicaLijevo | razmak+točkica3 |
 | strelicaDesno | razmak+točkica6 |
-| NVDA Izbornik | c1+c3+c4+c5 (komanda n) |
 | shift+tab | razmak+točkica1+točkica3 |
 | tab | razmak+točkica4+točkica6 |
 | alt | razmak+točkica1+točkica3+točkica4 (razmak+m) |
 | escape | razmak+točkica1+točkica5 (razmak+e) |
 | enter | točkica8 |
-| windows+d (minimiziraj sve aplikacije) | c1+c4+c5 (komanda d) |
 | windows tipka | razmak+točkica3+točkica4 |
 | alt+tab | razmak+točkica2+točkica3+točkica4+točkica5 (razmak+t) |
+| NVDA Izbornik | razmaknica+točkica1+točkica3+točkica4+točkica5 (razmaknica+n) |
+| windows+d tipka (minimizira sve aplikacije | razmaknica+točkice1+točkica4+točkica5 (razmaknica+d) |
+| Reci sve | razmak+točkica1+točkica2+točkica3+točkica4+točkica5+točkica6 |
+%kc:endInclude
+
++++ dodijeljeni prečaci za Brailliant BI 32, BI 40 and B 80 +++ 
+%kc:beginInclude
+|| Naziv | Prečac |
+| NVDA Izbornik | c1+c3+c4+c5 (command n) |
+| windows+d tipka (minimizira sve programe) | c1+c4+c5 (command d) |
 | Reci sve | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Dodijeljeni prečaci za Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Naziv | Prečac |
+| strelica gore | joystick up |
+| strelica dolje | joystick down |
+| strelica lijevo | joystick left |
+| Strelica desno | joystick right |
+| enter | joystick action |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serije ++[Hims]
@@ -2369,6 +2391,8 @@ Sljedeći modeli su podržani:
 - BrailleNote MPower (Serijska i Bluetooth veza)
 - BrailleNote Apex (USB i bluetooth veza)
 -
+
+Za BrailleNote Touch, molimo pogledajte poglavlje [Brailliant BI serije / BrailleNote Touch HumanWareBrailliant].
 
 Ako vaš uređaj podržava više od jedne vrste veze, kada spajate vaš BrailleNote za korištenje sa NVDA, morate postaviti priključak brajičnog terminala u postavkama brajičnog terminala.
 Za više informacija, molimo pogledajte korisničke upute za BrailleNote elektroničku bilježnicu.

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mongolian Translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-16 00:10+1000\n"
+"POT-Creation-Date: 2018-03-09 00:10+1000\n"
 "PO-Revision-Date: 2018-03-08 19:46+0800\n"
 "Last-Translator: \n"
 "Language-Team: MongolianNVDATranslationTeam <mongoliannvdatranslation@gmail."
@@ -530,17 +530,29 @@ msgstr "{number} of {total}"
 msgid "lv %s"
 msgstr "зүйлүүд %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr ""
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr ""
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr ""
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr ""
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -5815,10 +5827,22 @@ msgstr "идэвэхгүй боллоо."
 msgid "row %s"
 msgstr "мөр %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, fuzzy, python-format
+msgid "through %s"
+msgstr "дээрээс нь дарсан"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "багана %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, fuzzy, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "{rowCount} мөртэй {columnCount} баганатай"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -7790,21 +7814,23 @@ msgstr "Суулга"
 msgid "remove"
 msgstr "Арилга"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "Идэвхигүй болго"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr ""
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "Идэвхитэй болго"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr ""
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "Түр зогсоосон "
+#, fuzzy
+msgid "disabled"
+msgstr "Идэвхигүй болго"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "Ажиллагаатай байна"
+#, fuzzy
+msgid "enabled"
+msgstr "Идэвхитэй болго"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -10687,6 +10713,18 @@ msgstr "Давхар мөр хоорондын зай"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 мөр хоорондын зай"
+
+#~ msgid "r%s"
+#~ msgstr "r%s"
+
+#~ msgid "c%s"
+#~ msgstr "c%s"
+
+#~ msgid "suspended"
+#~ msgstr "Түр зогсоосон "
+
+#~ msgid "running"
+#~ msgstr "Ажиллагаатай байна"
 
 #~ msgid "review"
 #~ msgstr "шалгаж харах"

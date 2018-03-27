@@ -2073,13 +2073,16 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Series ++[HumanWareBrailliant]
-The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+++ HumanWare Brailliant BI/B Series / BrailleNote Touch  ++[HumanWareBrailliant]
+The Brailliant BI and B series of displays  from [HumanWare http://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
-Following are the key assignments for this display with NVDA.
+The BrailleNote Touch is also supported, and does not require any drivers to be installed.
+
+Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
++++ Key assignments for All models +++
 %kc:beginInclude
 || Name | Key |
 | Scroll braille display back | left |
@@ -2092,16 +2095,34 @@ Please see the display's documentation for descriptions of where these keys can 
 | downArrow key | space+dot4 |
 | leftArrow key | space+dot3 |
 | rightArrow key | space+dot6 |
-| NVDA Menu | c1+c3+c4+c5 (command n) |
 | shift+tab key | space+dot1+dot3 |
 | tab key | space+dot4+dot6 |
 | alt key | space+dot1+dot3+dot4 (space+m) |
 | escape key | space+dot1+dot5 (space+e) |
 | enter key | dot8 |
-| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
 | windows key | space+dot3+dot4 |
 | alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+%kc:endInclude
+
++++ Key assignments for Brailliant BI 32, BI 40 and B 80 +++ 
+%kc:beginInclude
+|| Name | Key |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
 | Say all | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Key assignments for Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Name | Key |
+| up arrow key | joystick up |
+| down arrow key | joystick down |
+| left arrow key | joystick left |
+| right arrow key | joystick right |
+| enter key | joystick action |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
@@ -2370,6 +2391,8 @@ The following models are supported:
 - BrailleNote MPower (Serial and bluetooth connections)
 - BrailleNote Apex (USB and Bluetooth connections)
 -
+
+For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
 
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.

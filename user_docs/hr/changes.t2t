@@ -3,6 +3,31 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== Nove značajke ==
+- Širina redka i dužina stupca sada se mogu isčitati uz pomić govora i brajice. (#2642)
+- NVDA prečaci za navigaciju u tablicama sada su podržani u  Google Dokumentima (sa uključenim brajičnim načinom). (#7946)
+- Mogućnost navigacije po tablicama u Kondle za osobna računala. (#7977)
+- Podrška za BrailleNote touch i Brailliant BI 14 brajične retke preko USB i bluetooth veze. (#6524)
+
+
+== Izmjene ==
+- Stupac statusa je promijenjen tako da će pokazivati je li dodatak omogućen ili onemogućen puno bolje od prijašnjeg obavještenja pokrenut ili suspendiran. (#7929)
+
+
+== ispravke grešaka ==
+- NVDA sada uspjeva pročitati fokusirane kontrole u zaslonu za prijavu Microsoft naloga u postavkama poslije upisivanja e-mail adrese. (#7997)
+- NVDA no longer fails to read the page when going back to a previous page in Microsoft Edge. (#7997)
+- NVDA will no longer incorrectly announce the final character of a windows 10 sign-in PIN as the machine unlocks. (#7908)
+- Labels of checkboxes and radio buttons in Chrome and Firefox are no longer reported twice when tabbing or using quick navigation in Browse mode. (#7960)
+- Handle aria-current with a value of false as false instead of true (#7892).
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2018.1 =
 Novosti u ovoj inačici uključuju podršku grafova u Microsoft wordu i Powerpointu, novopodržani brajični retci: Eurobraille i Optelec protocol converter, unapređena podrška za Hims i Optelec brajične retke, poboljšanje performansi u Mozilla Firefox 58 i novijim, i puno više.
 

@@ -3,6 +3,32 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== Novas Características ==
+- Agora anúnciase o rango de filas e columnas para celdas de táboas  en voz e braille. (#2642)
+- Agora sopórtanse as ordes de navegación de táboas de NVDA en Google Docs (co modo Braille habilitado). (#7946)
+- Capacidade para ler e navegar táboas en Kindle for PC. (#7977)
+- Soporte para as pantallas BrailleNote touch y Brailliant BI 14 a través tanto do USB coma do bluetooth. (#6524)
+
+
+== Cambios ==
+- Cambiouse a columna de estado no administrador de complementos para indicar se o complemento está habilitado ou deshabilitado ademais de en execución ou suspendido. (#7929)
+
+
+== Correción de fallos ==
+- O NVDA xa non falla ao ler controis enfocados na pantalla de inicio de sesión da conta de Microsoft en Configuración despois de introducir un enderezo de correo. (#7997)
+- O NVDA xa non falla ao ler a páxina cando se retrocede a unha páxina anterior en Microsoft Edge. (#7997)
+- O NVDA xa non anunciará incorrectamente o carácter final dun PIN de inicio de sesión de windows 10 segundo a máquina se desbloquee. (#7908)
+- As etiquetas das caixas de verificación e dos botóns de opción en Chrome e Firefox xa non se anuncian dúas veces cando se tabule ou se use a navegación rápida en modo exploración. (#7960)
+- Se manexa aria-current cun valor de false como false en lugares de true (#7892).
+
+
+== Cambios para Desenvolvedores ==
+- A información para desenvolvedores para obxectos UIA agora contén unha listaxe dos patróns UIA dispoñibles. (#5712)
+- Os módulos de aplicación agora poden forzar certas ventás para usar sempre UIA implementando o método isGoodUIAWindow. (#7961)
+
+
 = 2018.1 =
 O subliñable desta versión inclúe o soporte para gráficos en Microsoft word e PowerPoint, o soporte para pantallas braille novas incluíndo as Eurobraille e o conversor de protocolo de Optelec, mellorado o soporte para as pantallas braille Hims e Optelec, melloras de rendemento para Mozilla Firefox 58 e posteriores, e moitho máis.
 
