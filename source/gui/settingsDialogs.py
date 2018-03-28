@@ -40,6 +40,7 @@ except RuntimeError:
 	updateCheck = None
 import inputCore
 import nvdaControls
+import keyLabels
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -2003,6 +2004,9 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
 
 		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
+		if not inputCore.SCRCAT_KBEMU in self.gestures:
+			self.gestures[inputCore.SCRCAT_KBEMU] = {}
+		self._kbEmuCategory = None
 		self.populateTree()
 
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
@@ -2021,6 +2025,7 @@ class InputGesturesDialog(SettingsDialog):
 
 		self.pendingAdds = set()
 		self.pendingRemoves = set()
+		self.addedKbEmuScriptInfos = set()
 
 		settingsSizer.Add(bHelper.sizer)
 
@@ -2034,8 +2039,11 @@ class InputGesturesDialog(SettingsDialog):
 			# Because we're escaping, words must then be split on "\ ".
 			filter = re.escape(filter)
 			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split('\ ')) + r')', re.U|re.IGNORECASE)
+		self._kbEmuCategory = None
 		for category in sorted(self.gestures):
 			treeCat = self.tree.AppendItem(self.treeRoot, category)
+			if category==inputCore.SCRCAT_KBEMU:
+				self._kbEmuCategory = treeCat
 			commands = self.gestures[category]
 			for command in sorted(commands):
 				if filter and not filterReg.match(command):
@@ -2046,7 +2054,7 @@ class InputGesturesDialog(SettingsDialog):
 				for gesture in commandInfo.gestures:
 					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
 					self.tree.SetItemPyData(treeGes, gesture)
-			if not self.tree.ItemHasChildren(treeCat):
+			if not self.tree.ItemHasChildren(treeCat) and (treeCat!=self._kbEmuCategory or filter):
 				self.tree.Delete(treeCat)
 			elif filter:
 				self.tree.Expand(treeCat)
@@ -2069,32 +2077,56 @@ class InputGesturesDialog(SettingsDialog):
 	def onTreeSelect(self, evt):
 		item = self.tree.Selection
 		data = self.tree.GetItemPyData(item)
+		isKbEmuCategory = item == self._kbEmuCategory
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
 		isGesture = isinstance(data, basestring)
-		self.addButton.Enabled = isCommand or isGesture
-		self.removeButton.Enabled = isGesture
+		isObsoleteAddedKbEmuScriptInfo = (isCommand and data in self.addedKbEmuScriptInfos
+			and not self.tree.ItemHasChildren(item))
+		self.addButton.Enabled = isKbEmuCategory or isCommand or isGesture
+		self.removeButton.Enabled = isGesture or isObsoleteAddedKbEmuScriptInfo
 
 	def onAdd(self, evt):
 		if inputCore.manager._captureFunc:
 			return
 
-		treeCom = self.tree.Selection
-		scriptInfo = self.tree.GetItemPyData(treeCom)
-		if not isinstance(scriptInfo, inputCore.AllGesturesScriptInfo):
-			treeCom = self.tree.GetItemParent(treeCom)
-			scriptInfo = self.tree.GetItemPyData(treeCom)
-		# Translators: The prompt to enter a gesture in the Input Gestures dialog.
-		treeGes = self.tree.AppendItem(treeCom, _("Enter input gesture:"))
-		self.tree.SelectItem(treeGes)
-		self.tree.SetFocus()
+		treeSel = self.tree.Selection
+		if treeSel == self._kbEmuCategory:
+			# Translators: The prompt to enter an emulated gesture in the Input Gestures dialog.
+			treeCom = self.tree.AppendItem(treeSel, _("Enter gesture to emulate:"))
+			self.tree.SelectItem(treeCom)
+			self.tree.SetFocus()
 
-		def addGestureCaptor(gesture):
-			if gesture.isModifier:
+			def addKbEmuGestureCaptor(gesture):
+				if not isinstance(gesture, keyboardHandler.KeyboardInputGesture) or gesture.isModifier:
+					return False
+				inputCore.manager._captureFunc = None
+				wx.CallAfter(self._addCapturedKbEmu, treeCom, gesture)
 				return False
-			inputCore.manager._captureFunc = None
-			wx.CallAfter(self._addCaptured, treeGes, scriptInfo, gesture)
-			return False
-		inputCore.manager._captureFunc = addGestureCaptor
+			inputCore.manager._captureFunc = addKbEmuGestureCaptor
+
+		else:
+			treeCom = treeSel
+			scriptInfo = self.tree.GetItemPyData(treeCom)
+			if not isinstance(scriptInfo, inputCore.AllGesturesScriptInfo):
+				treeCom = self.tree.GetItemParent(treeCom)
+				scriptInfo = self.tree.GetItemPyData(treeCom)
+			# Translators: The prompt to enter a gesture in the Input Gestures dialog.
+			treeGes = self.tree.AppendItem(treeCom, _("Enter input gesture:"))
+			self.tree.SelectItem(treeGes)
+			self.tree.SetFocus()
+
+			def addGestureCaptor(gesture):
+				if gesture.isModifier:
+					return False
+				if scriptInfo.category == inputCore.SCRCAT_KBEMU:
+					gesName = keyLabels.getKeyCombinationLabel(gesture.normalizedIdentifiers[-1][3:])
+					if gesName == scriptInfo.displayName:
+						# Disallow assigning an emulated gesture to itself
+						return False
+				inputCore.manager._captureFunc = None
+				wx.CallAfter(self._addCaptured, treeGes, scriptInfo, gesture)
+				return False
+			inputCore.manager._captureFunc = addGestureCaptor
 
 	def _addCaptured(self, treeGes, scriptInfo, gesture):
 		gids = gesture.normalizedIdentifiers
@@ -2129,19 +2161,34 @@ class InputGesturesDialog(SettingsDialog):
 		scriptInfo.gestures.append(gid)
 		self.onTreeSelect(None)
 
+	def _addCapturedKbEmu(self, treeCom, gesture):
+		# Use the last normalized identifier, which is the most generic one
+		scriptName = gesture.normalizedIdentifiers[-1]
+		from globalCommands import GlobalCommands
+		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(GlobalCommands, scriptName)
+		self.tree.SetItemText(treeCom, scriptInfo.displayName)
+		self.tree.SetItemPyData(treeCom, scriptInfo)
+		self.addedKbEmuScriptInfos.add(scriptInfo)
+		self.onTreeSelect(None)
+
 	def onRemove(self, evt):
-		treeGes = self.tree.Selection
-		gesture = self.tree.GetItemPyData(treeGes)
-		treeCom = self.tree.GetItemParent(treeGes)
-		scriptInfo = self.tree.GetItemPyData(treeCom)
-		entry = (gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
-		try:
-			# If this was just added, just undo it.
-			self.pendingAdds.remove(entry)
-		except KeyError:
-			self.pendingRemoves.add(entry)
-		self.tree.Delete(treeGes)
-		scriptInfo.gestures.remove(gesture)
+		treeSel = self.tree.Selection
+		data = self.tree.GetItemPyData(treeSel)
+		if data in self.addedKbEmuScriptInfos:
+			self.addedKbEmuScriptInfos.remove(data)
+		else:
+			treeCom = self.tree.GetItemParent(treeSel)
+			scriptInfo = self.tree.GetItemPyData(treeCom)
+			entry = (data, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
+			try:
+				# If this was just added, just undo it.
+				self.pendingAdds.remove(entry)
+			except KeyError:
+				self.pendingRemoves.add(entry)
+			scriptInfo.gestures.remove(data)
+		self.tree.Delete(treeSel)
+		# Explicitly trigger a selection here as the buttons don't get updated otherwise
+		self.onTreeSelect(None)
 		self.tree.SetFocus()
 
 	def onOk(self, evt):

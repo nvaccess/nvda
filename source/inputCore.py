@@ -164,7 +164,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 		This should only be called with normalized gesture identifiers returned by the
 		L{normalizedIdentifiers} property in the same subclass.
 		For example, C{KeyboardInputGesture.getDisplayTextForIdentifier} should only be called
-		for "kb:*" identifiers returned by C{KeyboardInputGesture.identifiers}.
+		for "kb:*" identifiers returned by C{KeyboardInputGesture.normalizedIdentifiers}.
 		Most callers will want L{inputCore.getDisplayTextForIdentifier} instead.
 		The display text consists of two strings:
 		the gesture's source (e.g. "laptop keyboard")
@@ -631,27 +631,32 @@ class _AllGestureMappingsRetriever(object):
 				self.addResult(scriptInfo)
 			scriptInfo.gestures.append(gesture)
 
-	def makeKbEmuScriptInfo(self, cls, scriptName):
-		info = AllGesturesScriptInfo(cls, scriptName)
+	@classmethod
+	def makeKbEmuScriptInfo(cls, scriptCls, scriptName):
+		info = AllGesturesScriptInfo(scriptCls, scriptName)
 		info.category = SCRCAT_KBEMU
-		info.displayName = keyLabels.getKeyCombinationLabel(scriptName[3:])
+		info.displayName = getDisplayTextForGestureIdentifier(
+			normalizeGestureIdentifier(scriptName)
+		)[1]
 		return info
 
-	def makeNormalScriptInfo(self, cls, scriptName, script):
-		info = AllGesturesScriptInfo(cls, scriptName)
-		info.category = self.getScriptCategory(cls, script)
+	@classmethod
+	def makeNormalScriptInfo(cls, scriptCls, scriptName, script):
+		info = AllGesturesScriptInfo(scriptCls, scriptName)
+		info.category = cls.getScriptCategory(scriptCls, script)
 		info.displayName = script.__doc__
 		if not info.displayName:
 			return None
 		return info
 
-	def getScriptCategory(self, cls, script):
+	@classmethod
+	def getScriptCategory(cls, scriptCls, script):
 		try:
 			return script.category
 		except AttributeError:
 			pass
 		try:
-			return cls.scriptCategory
+			return scriptCls.scriptCategory
 		except AttributeError:
 			pass
 		return SCRCAT_MISC

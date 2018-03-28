@@ -12,6 +12,7 @@ import controlTypes
 
 class PlaceholderNVDAObject(NVDAObject):
 	processID = None # Must be implemented to instantiate.
+	windowThreadID = 0 # Must be implemented to test the keyboardHandler.
 
 class NVDAObjectWithRole(PlaceholderNVDAObject):
 	"""An object that accepts a role as one of its construction parameters.
