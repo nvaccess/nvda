@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2013 NV Access Limited
+#Copyright (C) 2010-2018 NV Access Limited
 
 import winUser
 import textInfos
@@ -151,6 +151,8 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
+			field['table-rowsspanned']=obj.rowSpan
+			field['table-columnsspanned']=obj.columnSpan
 		return field
 
 	def __eq__(self, other):
