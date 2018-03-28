@@ -1988,6 +1988,41 @@ class GlobalCommands(ScriptableObject):
 	script_braille_translate.__doc__= _("Translates any braille input")
 	script_braille_translate.category=SCRCAT_BRAILLE
 
+	def script_braille_toggleShift(self, gesture):
+		brailleInput.handler.toggleModifier("shift")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleShift.__doc__= _("Virtually toggles the shift key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleShift.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleShift.bypassInputHelp = True
+
+	def script_braille_toggleControl(self, gesture):
+		brailleInput.handler.toggleModifier("control")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleControl.__doc__= _("Virtually toggles the control key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleControl.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleControl.bypassInputHelp = True
+
+	def script_braille_toggleAlt(self, gesture):
+		brailleInput.handler.toggleModifier("alt")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleAlt.__doc__= _("Virtually toggles the alt key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleAlt.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleAlt.bypassInputHelp = True
+
+	def script_braille_toggleWindows(self, gesture):
+		brailleInput.handler.toggleModifier("leftWindows")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleAlt.__doc__= _("Virtually toggles the left windows key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleAlt.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleAlt.bypassInputHelp = True
+
+	def script_braille_toggleNVDAKey(self, gesture):
+		brailleInput.handler.toggleModifier("NVDA")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleNVDAKey.__doc__= _("Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleNVDAKey.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleNVDAKey.bypassInputHelp = True
+
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
