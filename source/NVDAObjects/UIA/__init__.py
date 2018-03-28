@@ -288,7 +288,11 @@ class UIATextInfo(textInfos.TextInfo):
 		elif isinstance(position,UIATextInfo): #bookmark
 			self._rangeObj=position._rangeObj
 		elif position==textInfos.POSITION_FIRST:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			try:
+				self._rangeObj=self.obj.UIATextPattern.documentRange
+			except COMError:
+				# Error: first position not supported by the UIA text pattern.
+				raise RuntimeError
 			self.collapse()
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
@@ -569,7 +573,11 @@ class UIATextInfo(textInfos.TextInfo):
 					continue
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
-				childRange=documentTextPattern.rangeFromChild(childElement)
+				try:
+					childRange=documentTextPattern.rangeFromChild(childElement)
+				except COMError as e:
+					log.debug("rangeFromChild failed with %s"%e)
+					childRange=None
 				if not childRange:
 					log.debug("NULL childRange. Skipping")
 					continue

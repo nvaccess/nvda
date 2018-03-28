@@ -55,6 +55,8 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def __init__(self,itemType,document,UIAElementOrRange):
 		if isinstance(UIAElementOrRange,UIAHandler.IUIAutomationElement):
 			UIATextRange=document.rootNVDAObject.getNormalizedUIATextRangeFromElement(UIAElementOrRange)
+			if not UIATextRange:
+				raise ValueError("Could not get text range for UIA element")
 			self._UIAElement=UIAElementOrRange
 		elif isinstance(UIAElementOrRange,UIAHandler.IUIAutomationTextRange):
 			UIATextRange=UIAElementOrRange
@@ -185,9 +187,19 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 	if direction=="up":
 		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 		element=position.UIAElementAtStart
-		element=walker.normalizeElement(element)
-		if element and not UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) and not UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement):
-			yield itemClass(itemType,document,element)
+		while element:
+			element=walker.normalizeElement(element)
+			if (
+				not element 
+				or UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) 
+				or UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement)
+			):
+				break
+			try:
+				yield itemClass(itemType,document,element)
+			except ValueError:
+				pass # this element was not represented in the document's text content.
+			element=walker.getParentElement(element)
 		return
 	elif direction=="previous":
 		# Fetching items previous to the given position.
