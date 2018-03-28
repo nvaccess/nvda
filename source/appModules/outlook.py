@@ -447,7 +447,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
-		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.CreatePropertyCondition(UIAHandler.UIA_IsContentElementPropertyId, True)
+		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.ContentViewCondition
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.
