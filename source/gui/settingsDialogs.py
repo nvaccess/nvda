@@ -210,6 +210,13 @@ class GeneralSettingsDialog(SettingsDialog):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+			# Translators: The label of a checkbox in general settings to toggle startup notifications
+			# for a pending NVDA update.
+			item=self.notifyForPendingUpdateCheckBox=wx.CheckBox(self,label=_("Notify for &pending update on startup"))
+			item.Value=config.conf["update"]["startupNotification"]
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizerHelper.addItem(item)
 
 	def postInit(self):
 		self.languageList.SetFocus()
@@ -276,6 +283,7 @@ class GeneralSettingsDialog(SettingsDialog):
 				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if updateCheck:
 			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
+			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
 		if self.oldLanguage!=newLanguage:

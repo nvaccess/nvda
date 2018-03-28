@@ -933,7 +933,7 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 
 ==== Show exit options when exiting NVDA ====[GeneralSettingsShowExitOptions]
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart or restart with add-ons disabled.
+When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with addons disabled or install pending updates (if any).
 When unchecked, NVDA will exit immediately.
 
 ==== Play sounds when starting or exiting NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ This option is only available for installed copies of NVDA.
 ==== Automatically check for updates to NVDA ====[GeneralSettingsCheckForUpdates]
 If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
 You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
+
+==== Notify for pending updates on startup ====[GeneralSettingsNotifyPendingUpdates]
+If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
+You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
 +++ Synthesizer Selection (NVDA+control+s) +++[SynthesizerSelection]
 The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu, allows you to select which Synthesizer NVDA should use to speak with.
@@ -1920,6 +1924,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move braille display to next line | t4 |
 | Scroll braille display forward | t5 or etouch3 |
 | Route to braille cell | routing |
+| Report text formatting under braille cell | secondary routing |
 | Toggle HID keyboard simulation | t1+spEnter |
 | Move to top line in review | t1+t2 |
 | Move to bottom line in review | t4+t5 |
@@ -2274,7 +2279,7 @@ Following are the Papenmeier command assignments for NVDA:
 | Move to first contained object | dn2 |
 | Move to previous object | left2 |
 | Move to next object | right2 |
-| Report text formatting | upper routing row |
+| Report text formatting under braille cell | upper routing row |
 %kc:endInclude
 
 The Trio model has four additional keys which are in front of the braille keyboard.
@@ -2348,7 +2353,7 @@ Devices with EAB:
 | Move to first contained object | dn2 |
 | Move to next object | right2 |
 | Move to previous object | left2 |
-| Report text formatting | Upper routing strip |
+| Report text formatting under braille cell | upper routing strip |
 
 BRAILLEX Tiny:
 || Name | Key |
@@ -2363,7 +2368,7 @@ BRAILLEX Tiny:
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
 | Move to next object | r1+right |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Report title | l1+up |
 | Report status bar | l2+down |
 
@@ -2372,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
 | Toggle braille tethered to | r2 |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
 | Scroll braille display forward | right |
@@ -2495,7 +2500,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | Scroll braille display back | switch1-6left, l1 |
 | Scroll braille display forward | switch1-6Right, l8 |
 | Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
-| Route to braille cell | routing, doubleRouting|
+| Route to braille cell | routing |
+| Report text formatting under braille cell | doubleRouting |
 | Move to previous line in review | joystick1Up |
 | Move to next line in review | joystick1Down |
 | Move to previous character in review | joystick1Left |
