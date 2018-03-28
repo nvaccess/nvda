@@ -979,6 +979,16 @@ class TextInfoRegion(Region):
 		else:
 			self._brailleInputIndStart = None
 
+	def getTextInfoForBraillePos(self, braillePos):
+		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
+		# pos is relative to the start of the reading unit.
+		# Therefore, get the start of the reading unit...
+		dest = self._readingInfo.copy()
+		dest.collapse()
+		# and move pos characters from there.
+		dest.move(textInfos.UNIT_CHARACTER, pos)
+		return dest
+
 	def routeTo(self, braillePos):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
 			# The user is moving within untranslated braille input.
@@ -1003,14 +1013,7 @@ class TextInfoRegion(Region):
 			except NotImplementedError:
 				pass
 			return
-
-		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
-		# pos is relative to the start of the reading unit.
-		# Therefore, get the start of the reading unit...
-		dest = self._readingInfo.copy()
-		dest.collapse()
-		# and move pos characters from there.
-		dest.move(textInfos.UNIT_CHARACTER, pos)
+		dest = self.getTextInfoForBraillePos(braillePos)
 		self._setCursor(dest)
 
 	def nextLine(self):
@@ -1339,6 +1342,15 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			return
 		region, pos = self.bufferPosToRegionPos(pos)
 		region.routeTo(pos)
+
+	def getTextInfoForWindowPos(self, windowPos):
+		pos = self.windowStartPos + windowPos
+		if pos >= self.windowEndPos:
+			return None
+		region, pos = self.bufferPosToRegionPos(pos)
+		if not isinstance(region, TextInfoRegion):
+			return None
+		return region.getTextInfoForBraillePos(pos)
 
 	def saveWindow(self):
 		"""Save the current window so that it can be restored after the buffer is updated.
@@ -1670,6 +1682,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.buffer.routeTo(windowPos)
 		if self.buffer is self.messageBuffer:
 			self._dismissMessage()
+
+	def getTextInfoForWindowPos(self, windowPos):
+		if self.buffer is not self.mainBuffer:
+			return None
+		return self.buffer.getTextInfoForWindowPos(windowPos)
 
 	def message(self, text):
 		"""Display a message to the user which times out after a configured interval.
