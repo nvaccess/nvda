@@ -447,10 +447,13 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
-		# #7949: A cache request without tree filter causes a NULL COM pointer access error
-		# when fetching the length of the cached children array.
 		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.CreatePropertyCondition(UIAHandler.UIA_IsContentElementPropertyId, True)
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		if not cachedChildren:
+			# GetCachedChildren returns null if there are no children.
+			# This is unexpected here.
+			log.debugWarning("Unable to get relevant children for UIAGridRow", exc_info=True)
+			return super(UIAGridRow, self).name
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			isFlag = e.cachedClassName=="FlagField"
