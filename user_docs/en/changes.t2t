@@ -23,6 +23,8 @@ What's New in NVDA
 - NVDA will no longer incorrectly announce the final character of a windows 10 sign-in PIN as the machine unlocks. (#7908)
 - Labels of checkboxes and radio buttons in Chrome and Firefox are no longer reported twice when tabbing or using quick navigation in Browse mode. (#7960)
 - Handle aria-current with a value of false as false instead of true (#7892).
+- The Windows Onecore Voices synth driver no longer fails to load if the configured voice has been uninstalled. (#7999)
+- Changing voices in the Windows Onecore Voices synth driver is now a lot faster. (#7999)
 
 
 == Changes for developers ==
