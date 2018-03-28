@@ -37,7 +37,7 @@ def _updateVersionFromVCS():
 name="NVDA"
 version_year=2018
 version_major=1
-version_minor=0
+version_minor=1
 version_build=0
 version="%s.%s.%sdev"%(version_year,version_major,version_minor)
 publisher="unknown"
