@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V., Davy Kager
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -65,7 +65,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
-	outputPass1Only = boolean(default=true)
 
 	# Braille display driver settings
 	[[__many__]]
