@@ -43,7 +43,7 @@ def applyRegistryPatch(fileName):
 	@ param fileName: the path to the dll
 	@type fileName: str
 	"""
-	regedit=os.path.join(system32,'regedit.exe')
+	regedit=os.path.join(systemRoot,'regedit.exe')
 	try:
 		subprocess.check_call([regedit,'/s',fileName])
 	except subprocess.CalledProcessError as e:
