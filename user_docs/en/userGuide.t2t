@@ -933,7 +933,7 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 
 ==== Show exit options when exiting NVDA ====[GeneralSettingsShowExitOptions]
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart or restart with add-ons disabled.
+When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with addons disabled or install pending updates (if any).
 When unchecked, NVDA will exit immediately.
 
 ==== Play sounds when starting or exiting NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ This option is only available for installed copies of NVDA.
 ==== Automatically check for updates to NVDA ====[GeneralSettingsCheckForUpdates]
 If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
 You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
+
+==== Notify for pending updates on startup ====[GeneralSettingsNotifyPendingUpdates]
+If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
+You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
 +++ Synthesizer Selection (NVDA+control+s) +++[SynthesizerSelection]
 The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu, allows you to select which Synthesizer NVDA should use to speak with.
