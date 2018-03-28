@@ -116,6 +116,8 @@ class SynthDriver(SynthDriver):
 		self._queuedSpeech = []
 		self._wasCancelled = False
 		self._isProcessing = False
+		# Initialize the voice to a sane default
+		self.voice=self._getDefaultVoice()
 		# Set initial values for parameters that can't be queried.
 		# This initialises our cache for the value.
 		self.rate = 50
@@ -237,24 +239,45 @@ class SynthDriver(SynthDriver):
 			log.debug("Done pushing audio")
 		self._processQueue()
 
-	def _getAvailableVoices(self, onlyValid=True):
+	def _getVoiceInfoFromOnecoreVoiceString(self, voiceStr):
+		"""
+		Produces an NVDA VoiceInfo object representing the given voice string from Onecore speech.
+		"""
+		# The voice string is made up of the ID, the language, and the display name.
+		ID,language,name=voiceStr.split(':')
+		language=language.replace('-','_')
+		return VoiceInfo(ID,name,language=language)
+
+	def _getAvailableVoices(self):
 		voices = OrderedDict()
+		# Fetch the full list of voices that Onecore speech knows about.
+		# Note that it may give back voices that are uninstalled or broken. 
 		voicesStr = self._dll.ocSpeech_getVoices(self._handle).split('|')
-		for voiceStr in voicesStr:
-			id, name = voiceStr.split(":")
-			if onlyValid and not self._isVoiceValid(id):
+		for index,voiceStr in enumerate(voicesStr):
+			voiceInfo=self._getVoiceInfoFromOnecoreVoiceString(voiceStr)
+			# Filter out any invalid voices.
+			if not self._isVoiceValid(voiceInfo.ID):
 				continue
-			voices[id] = VoiceInfo(id, name)
+			voiceInfo.onecoreIndex=index
+			voices[voiceInfo.ID] =  voiceInfo
 		return voices
 
-	def _isVoiceValid(self, id):
-		idParts = id.split('\\')
-		rootKey = getattr(_winreg, idParts[0])
-		subkey = "\\".join(idParts[1:])
+	def _isVoiceValid(self,ID):
+		"""
+		Checks that the given voice actually exists and is valid.
+		It checks the Registry, and also ensures that its data files actually exist on this machine.
+		@param ID: the ID of the requested voice.
+		@type ID: string
+		@returns: True if the voice is valid, false otherwise.
+		@rtype: boolean
+		"""
+		IDParts = ID.split('\\')
+		rootKey = getattr(_winreg, IDParts[0])
+		subkey = "\\".join(IDParts[1:])
 		try:
 			hkey = _winreg.OpenKey(rootKey, subkey)
 		except WindowsError as e:
-			log.debugWarning("Could not open registry key %s, %s" % (id, e))
+			log.debugWarning("Could not open registry key %s, %s" % (ID, e))
 			return False
 		try:
 			langDataPath = _winreg.QueryValueEx(hkey, 'langDataPath')
@@ -283,14 +306,39 @@ class SynthDriver(SynthDriver):
 	def _get_voice(self):
 		return self._dll.ocSpeech_getCurrentVoiceId(self._handle)
 
-	def _set_voice(self, id):
-		voices = self._getAvailableVoices(onlyValid=False)
-		for index, voice in enumerate(voices):
-			if voice == id:
-				break
-		else:
-			raise LookupError("No such voice: %s" % id)
-		self._dll.ocSpeech_setVoice(self._handle, index)
+	def _set_voice(self, ID):
+		voices = self.availableVoices
+		# Try setting the requested voice
+		for voice in voices.itervalues():
+			if voice.ID == ID:
+				self._dll.ocSpeech_setVoice(self._handle, voice.onecoreIndex)
+				return
+		raise LookupError("No such voice: %s"%ID)
+
+	def _getDefaultVoice(self):
+		"""
+		Finds the best available voice that can be used as a default.
+		It first tries finding a voice with the same language and country as the user's configured Windows language (E.g. en_AU), 
+		else one that matches just the language (E.g. en), 
+		else simply the first available.
+		@returns: the ID of the voice, suitable for passing to self.voice for setting.
+		@rtype: string
+		"""
+		voices = self.availableVoices
+		# Try matching to NVDA language
+		fullLanguage=languageHandler.getWindowsLanguage()
+		for voice in voices.itervalues():
+			if voice.language==fullLanguage:
+				return voice.ID
+		baseLanguage=fullLanguage.split('_')[0]
+		if baseLanguage!=fullLanguage:
+			for voice in voices.itervalues():
+				if voice.language.startswith(baseLanguage):
+					return voice.ID
+		# Just use the first available
+		for voice in voices.itervalues():
+			return voice.ID
+		raise RuntimeError("No voices available")
 
 	def _get_language(self):
 		return self._dll.ocSpeech_getCurrentVoiceLanguage(self._handle)
