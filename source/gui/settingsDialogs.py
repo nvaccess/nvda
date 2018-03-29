@@ -2255,11 +2255,14 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		if not NvdaSettingsDialogActiveConfigProfile or isinstance(self.currentCategory,GeneralSettingsPanel):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile=_("normal configuration")
-		self.SetTitle("{dialogTitle}: {panelTitle} ({configProfile})".format(
+		self.SetTitle(self._getDialogTitle())
+
+	def _getDialogTitle(self):
+		return "{dialogTitle}: {panelTitle} ({configProfile})".format(
 			dialogTitle=self.title,
 			panelTitle=self.currentCategory.title,
 			configProfile=NvdaSettingsDialogActiveConfigProfile
-		))
+		)
 
 	def Destroy(self):
 		global NvdaSettingsCategoryPanelId, NvdaSettingsDialogActiveConfigProfile
