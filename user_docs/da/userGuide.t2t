@@ -1757,8 +1757,9 @@ Før du udfører denne handling, vil statusen af dit afinstallerede tilføjelses
 
 For at deaktivére et tilføjelsesprogram, tryk på knappen "Deaktivér".
 For at aktivére et tidligere deaktivéret tilføjelsesprogram, tryk på knappen "Aktivér".
-Du kan deaktivére et tilføjelsesprogram, hvis status indikerer at programmet kører eller er i gang, eller deaktivére det hvis tilføjelsesprogrammet er stoppet eller deaktivéret.
+Du kan deaktivére et tilføjelsesprogram, hvis status indikerer at tilføjelsespakken er aktiveret, eller deaktivére det hvis tilføjelsesprogrammet er aktiveret.
 For hvert tryk af disse knapper vil status ændres, så du ved hvad der vil ske, når NVDA genstartes.
+Hvis tilføjelsespakken tidligere var deaktiveret, vil status vise "aktiveret efter genstart". Hvis tilføjelsespakken tidligere var aktiveret, vil status vise "deaktiveret efter genstart".
 Hvis du har lavet ændringer til tilføjelsesprogrammer,skal du genstarte NVDA, så dine ændringer kan træde i kraft.
 
 Dialogboksen har også en luk-knap.
@@ -1771,7 +1772,7 @@ Det er bedst at slette disse filer, og derefter installere det rigtige tilføjel
 Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra hvor som helst på computeren, kan du tilknytte en inputbevægelse med [dialogen inputbevægelser [InputGestures].
 
 ++ Python konsollen ++[PythonConsole]
-NVDAs Python-konsol, der ligger under Værktøjer i NVDA-menuen, er et udviklerværktøj. Det er især velegnet til brug ved debugging, generel inspektion af interne processer i NVDA eller inspektion af tilgængelighedshierarkiet i en applikation.
+NVDAs Python-konsol, der ligger under Værktøjer i NVDA-menuen, er et udviklerværktøj. Det er især velegnet til brug ved fejlfinding, generel inspektion af interne processer i NVDA eller inspektion af tilgængelighedshierarkiet i en applikation.
 For yderligere oplysninger henvises til [udviklingsguiden til NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Genindlæs plugins++[ReloadPlugins]
@@ -2072,13 +2073,16 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Sig alt | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Series ++[HumanWareBrailliant]
-Brailliant BI og B serierne af punktdisplays fra [HumanWare http://www.humanware.com/], herunder BI 32, BI 40 og B 80, er understøttede når du kobler til via USB eller Bluetooth.
+++ HumanWare Brailliant BI/B Series/BrailleNote Touch++[HumanWareBrailliant]
+Brailliant BI og B serierne af punktdisplays fra [HumanWare http://www.humanware.com/], herunder BI 14, BI 32, BI 40 og B 80, er understøttede når du kobler til via USB eller Bluetooth.
 Hvis du ønsker at koble displayet til ved brug af USB med protokollen sat til HumanWare, skal du først installere driveren fra leverandøren.
 USB drivere kræves ikke, hvis protokollen er sat til OpenBraille.
 
-Dette er tastekombinationerne til dette display til brug med NVDA.
+BrailleNote Touch er også understøttet, men kræver ingen driver for at fungere.
+
+Dette er tastekombinationerne til Brailliant BI/B og BrailleNote Touch displays til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
++++ Tastekombinationer til alle modeller +++
 %kc:beginInclude
 || Navn | Tast |
 | Rul punktdisplay tilbage | venstre |
@@ -2091,16 +2095,34 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Pil-ned | mellemrum+punkt4 |
 | Venstre-pil | mellemrum+punkt3 |
 | højre-pil | mellemrum+punkt6 |
-| NVDA-menu | c1+c3+c4+c5 (kommando n) |
 | shift+tab Tast | mellemrum+punkt1+punkt3 |
 | tab Tast | mellemrum+punkt4+punkt6 |
 | alt Tast | mellemrum+punkt1+punkt3+punkt4 (mellemrum+m) |
 | escape Tast | mellemrum+punkt1+punkt5 (mellemrum+e) |
 | enter Tast | punkt8 |
-| windows+d Tast (Minimer alle programmer) | c1+c4+c5 (command d) |
-| windows Tast | mellemrum+punkt3+punkt4 |
+| windows-tast | mellemrum+punkt3+punkt4 |
 | alt+tab Tast | mellemrum+punkt2+punkt3+punkt4+punkt5 (mellemrum+t) |
+| NVDA-menu | mellemrum+punkt1+punkt3+punkt4+punkt5 (space+n) |
+| Tasterne Windows+D (minimer alle programmer) | mellemrum+punkt1+punkt4+punkt5 (mellemrum+D) |
+| Sig alt | mellemrum+punkt1+punkt2+punkt3+punkt4+punkt5+punkt6 |
+%kc:endInclude
+
++++ Tastekombinationer for Brailliant BI 32, BI 40 og B 80 +++ 
+%kc:beginInclude
+|| Navn | Tast |
+| NVDA-menu | c1+c3+c4+c5 (command n) |
+| Tasterne Windows+D (minimer alle programmer) | c1+c4+c5 (command d) |
 | Sig alt | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Tastekombinationer for Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Navn | Tast |
+| Pil op | joystick op |
+| Pil ned | joystick ned |
+| Venstre piletast | joystick venstre |
+| Højre piletast | joystick højre |
+| enter-tast | joystick action |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle+ Sync Braille Series ++[Hims]
@@ -2370,6 +2392,8 @@ Følgende modeller er understøttede:
 - BrailleNote Apex (USB og Bluetooth forbindelser)
 -
 
+For BrailleNote Touch, læs venligst afsnittet [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] for yderligere information.
+
 Hvis din enhed understøtter mere end en forbindelsestype, skal du indstille porten til punktterminal under indstillinger for PunktTerminal.
 Læs venligst Braillenote manualen for detaljer.
 Det kan også være nødvendigt at indstille porten i Braille-indstillinger.
@@ -2576,7 +2600,7 @@ De, som har en kort version, kan kombineres på denne måde:
 
 Med nogle af kommandolinjeparametrene kan du angive yderlige parametre, fx. hvor detaljeret loggen skal være, eller stien til mappen med brugerprofiler.
 Disse yderligere parametre skal skrives efter indstillingen og adskilles fra indstillingen af et mellemrum i den korte version og af et lighedstegn (=) i den lange version, fx.
-| nvda -l 10 | Starter NVDA med logningsniveau sat til "debug" |
+| nvda -l 10 | Starter NVDA med logningsniveau sat til fejlfinding |
 | nvda --log-file=c:\nvda.log |  Får NVDA til at skrive sin log til c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Får NVDA til at starte med logniveau sat til "info" og gemme sin log i filen c:\nvda.log |
 
@@ -2587,13 +2611,13 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | -r | --replace | Afslut en allerede kørende kopi af NVDA og start denne kopi |
 | -k | --check-running | Fortæl via exitkoden, om NVDA kører (0 hvis NVDA kører, 1 hvis den ikke gør) |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Filen hvor NVDAs log skal gemmes |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Det laveste niveau af meddelelser, som skal logges (debug 10, info 20, advarsler 30, fejl 40 og kritiske fejl 50). Standard er advarsler. |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Det laveste niveau af meddelelser, som skal logges (fejlfinding 10, info 20, advarsler 30, fejl 40 og kritiske fejl 50). Standard er advarsler. |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Stien hvor alle indstillinger i NVDA bliver gemt |
 | -m | --minimal | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
 | -s | --secure | Sikker tilstand (uden Python console) |
 | Ingen | --disable-addons | ingen tilføjelsesprogrammer |
-| Ingen | --debug-logging | Aktiver debug-logningsniveau for kun denne opstart. Denne indstilling vil overstyre alle logningsniveau ( ""--loglevel"", -l) argumenter. |
-| Ingen | --no-sr-flag  | Lad være med at ændre det globale skærmlæserflag |
+| Ingen | --debug-logging | Aktivér logningsniveau til brug ved fejlfinding for kun denne opstart. Denne indstilling vil overstyre alle logningsniveau ( ""--loglevel"", -l) argumenter. |
+| Ingen | --no-sr-flag  | Forhindre ændring af det globale skærmlæserflag |
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
 | Ingen | --create-portable | Opretter en flytbar kopi af NVDA (starter den nyoprettede kopi). Kræver --portable-path angives |
