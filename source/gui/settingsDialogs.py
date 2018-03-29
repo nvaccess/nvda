@@ -1310,7 +1310,7 @@ class ObjectPresentationPanel(SettingsPanel):
 		# object presentation settings panel.
 		progressLabelText = _("Progress &bar output:")
 		progressChoices = [name for setting, name in self.progressLabels]
-		self.progressList=sHelper.addLabeledControl(progressLabelText, wx.Choice,choices=progressChoices)
+		self.progressList=sHelper.addLabeledControl(progressLabelText, wx.Choice, choices=progressChoices)
 		for index, (setting, name) in enumerate(self.progressLabels):
 			if setting == config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]:
 				self.progressList.SetSelection(index)
@@ -1968,7 +1968,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 		# Translators: The label for a setting in braille settings to choose a braille display.
 		displayLabelText = _("Braille &display:")
-		self.displayList = sHelper.addLabeledControl(displayLabelText, wx.Choice,choices=[])
+		self.displayList = sHelper.addLabeledControl(displayLabelText, wx.Choice, choices=[])
 		self.Bind(wx.EVT_CHOICE, self.onDisplayNameChanged, self.displayList)
 
 		# Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
@@ -1978,7 +1978,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		self.updateBrailleDisplayLists()
 
 	def postInit(self):
-		# Finally, ensure that focus is on the list of display.
+		# Finally, ensure that focus is on the list of displays.
 		self.displayList.SetFocus()
 
 	def updateBrailleDisplayLists(self):
@@ -1992,29 +1992,6 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			self.displayList.SetSelection(selection)
 		except:
 			pass
-		self.updatePossiblePorts()
-
-	def onOk(self, evt):
-		if not self.displayNames:
-			# The list of displays has not been populated yet, so we didn't change anything in this panel
-			return
-		display = self.displayNames[self.displayList.GetSelection()]
-		if display not in config.conf["braille"]:
-			config.conf["braille"][display] = {}
-		if self.possiblePorts:
-			port = self.possiblePorts[self.portsList.GetSelection()][0]
-			config.conf["braille"][display]["port"] = port
-		if not braille.handler.setDisplayByName(display):
-			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
-			return 
-
-		if self.IsModal():
-			# Hack: we need to update the display in our parent window before closing.
-			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
-			self.Parent.updateCurrentDisplay()
-		super(BrailleDisplaySelectionDialog, self).onOk(evt)
-
-	def onDisplayNameChanged(self, evt):
 		self.updatePossiblePorts()
 
 	def updatePossiblePorts(self):
@@ -2038,6 +2015,29 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		# If no port selection is possible or only automatic selection is available, disable the port selection control
 		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
+
+	def onDisplayNameChanged(self, evt):
+		self.updatePossiblePorts()
+
+	def onOk(self, evt):
+		if not self.displayNames:
+			# The list of displays has not been populated yet, so we didn't change anything in this panel
+			return
+		display = self.displayNames[self.displayList.GetSelection()]
+		if display not in config.conf["braille"]:
+			config.conf["braille"][display] = {}
+		if self.possiblePorts:
+			port = self.possiblePorts[self.portsList.GetSelection()][0]
+			config.conf["braille"][display]["port"] = port
+		if not braille.handler.setDisplayByName(display):
+			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
+			return 
+
+		if self.IsModal():
+			# Hack: we need to update the display in our parent window before closing.
+			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
+			self.Parent.updateCurrentDisplay()
+		super(BrailleDisplaySelectionDialog, self).onOk(evt)
 
 class BrailleSettingsSubPanel(SettingsPanel):
 
