@@ -45,12 +45,15 @@ class NvdaSettingsCategoryPanel(IAccessible):
 	@classmethod
 	def _handlePossibleProfileSwitch(cls):
 		from gui.settingsDialogs import NvdaSettingsDialogActiveConfigProfile as newProfile
-		if cls.oldProfile and newProfile and newProfile != cls.oldProfile:
+		if (cls.oldProfile and newProfile and newProfile != cls.oldProfile:
 			# Translators: A message announcing what configuration profile is currently being edited.
 			speech.speakMessage(_("Editing profile {profile}").format(profile=newProfile))
 		cls.oldProfile = newProfile
 
 class AppModule(appModuleHandler.AppModule):
+
+	def event_appModule_loseFocus(self):
+		NvdaSettingsCategoryPanel.oldProfile = None
 
 	def isNvdaMenu(self, obj):
 		global nvdaMenuIaIdentity
