@@ -210,6 +210,13 @@ class GeneralSettingsDialog(SettingsDialog):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+			# Translators: The label of a checkbox in general settings to toggle startup notifications
+			# for a pending NVDA update.
+			item=self.notifyForPendingUpdateCheckBox=wx.CheckBox(self,label=_("Notify for &pending update on startup"))
+			item.Value=config.conf["update"]["startupNotification"]
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizerHelper.addItem(item)
 			# Translators: The label of a checkbox in general settings to toggle automatic checking for ad-on updates at startup.
 			item=self.autoCheckForAddonUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &add-on updates when NVDA starts"))
 			item.Value=config.conf["update"]["addonUpdateAtStartup"]
@@ -282,6 +289,7 @@ class GeneralSettingsDialog(SettingsDialog):
 				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if updateCheck:
 			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
+			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
 		config.conf["update"]["addonUpdateAtStartup"]=self.autoCheckForAddonUpdatesCheckBox.IsChecked()
@@ -1661,13 +1669,12 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.messageTimeoutEdit.Disable()
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-		tetherListText = _("B&raille tethered to:")
+		tetherListText = _("Tether B&raille:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
-		tetherChoices = [x[1] for x in self.tetherValues]
+		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
-		tetherConfig=braille.handler.tether
-		selection = (x for x,y in enumerate(self.tetherValues) if y[0]==tetherConfig).next()  
+		tetherChoice=braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
+		selection = (x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice).next()
 		try:
 			self.tetherList.SetSelection(selection)
 		except:
@@ -1716,7 +1723,13 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["cursorShapeReview"] = self.cursorShapes[self.cursorShapeReviewList.GetSelection()]
 		config.conf["braille"]["noMessageTimeout"] = self.noMessageTimeoutCheckBox.GetValue()
 		config.conf["braille"]["messageTimeout"] = self.messageTimeoutEdit.GetValue()
-		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
+		tetherChoice = braille.handler.tetherValues[self.tetherList.GetSelection()][0]
+		if tetherChoice==braille.handler.TETHER_AUTO:
+			config.conf["braille"]["autoTether"] = True
+			config.conf["braille"]["tetherTo"] = braille.handler.TETHER_FOCUS
+		else:
+			config.conf["braille"]["autoTether"] = False
+			braille.handler.setTether(tetherChoice, auto=False)
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]

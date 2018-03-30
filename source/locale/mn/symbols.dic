@@ -1,0 +1,175 @@
+﻿#locale/mn/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	цэг	all	always
+! sentence ending	анхаарлын тэмдэг	all	always
+? sentence ending	асуултын тэмдэг	all	always
+; phrase ending	цэгтэй таслал	most	always
+: phrase ending	давхар цэг	most	always
+decimal point		none	always
+in-word '	апостроф	all	norep
+negative number	хасах	none	norep
+
+# Whitespace
+\0	цэвэрлэх	char	# null
+\t	таб
+\n	мөр шилжих	char
+\f	хуудас зааглагч	none
+\r	мөрийн эх	char
+ 	зай	char
+ 	зай	char	# no-break space
+
+# Standard punctuation/symbols
+!	анхаарлын тэмдэг	all
+"	хос дусал хаалт	most
+\#	чагт	most
+$	дооллар	all	norep
+£	фуунт	all	norep
+€	ёвроо	all	norep
+¢	цээнт	all	norep
+¥	еэн	all	norep
+%	хувь	some
+&	ээнд	some
+'	дусал хаал	all
+(	нээх хаалт	most
+)	хаах хаалт	most
+*	од	most
++	нэмэх	most
+,	таслал	all	always
+-	хасах	most
+.	цэг	some
+/	налуу зураас	some
+:	давхар цэг	most	norep
+;	цэгтэй таслал	most
+<	бага	most
+>	их	most
+=	тэнцүү	most
+?	асуултын тэмдэг	all
+@	эт	some
+[	нээх дөрвөлжин хаалт	most
+]	хаах дөрвөлжин хаалт	most
+\\	бөхрөг зураас	most
+^	малгай	most
+_	доогуур зураас	most
+`	гэдрэг дусал хаалт	most
+{	зүүн гоё хаалт	most
+}	баруун гоё хаалт	most
+|	вэртэкаалны чаарт	most
+~	долгио	most
+
+# Other characters
+•	тод	some
+…	гурван цэг	all	always
+...	гурван цэг	all	always
+	тод	some
+“	зүүн хос дусал хаалт	most
+”	баруун хос дусал хаалт	most
+‘	зүүн дусал хаалт	most
+’	баруун дусал хаалт	most
+–	дундуур зураас	most
+—	дундуур зураас	most
+●	тойрог	most
+¨	диерезис	most
+‎	зүүнээс баруун меэтка	char
+‏	баруунаас зүүн меэтка	char
+■	хар дөрвөлжин	some
+➔	баруун сум	some
+§	хэсэг	all
+°	хэм	some
+«	зүүн давхар өнцөг
+»	баруун давхар өнцөг
+µ	бэчил	some
+¹	дээд индекс нэг	some
+²	дээд индекс хоёр	some
+³	дээд индекс гурав	some
+®	бүртгэлтэй	some
+™	худалдааны тэмдэг	some
+©	зохиогчийн эрх	some
+±	нэмэх хасах	most
+×	үржүүлэх	most
+÷	хуваах на	most
+→	баруун сум	some
+✓	чагт	some
+✔	чагт	some
+
+#Mathematical Operators U+2200 to U+220F
+∀	for all	none
+∁	complement	none
+∂	partial derivative	none
+∃	there exists	none
+∄	there does not exist	none
+∅	empty set	none
+∆	increment	none
+∇	nabla	none
+∈	element of	none
+∉	not an element of	none
+∊	small element of	none
+∋	contains as member	none
+∌	does not contain as member	none
+∍	small contains as member	none
+∎	end of proof	none
+∏	n-ary product	none
+
+# Miscellaneous Mathematical Operators
+∑	n-ary summation	none
+√	square root	none
+∛	cube root	none
+∜	fourth root	none
+∝	proportional to	none
+∞	infinity	none
+∟	right angle	none
+∠	angle	none
+∥	parallel to	none
+∦	not parallel to	none
+∧	logical and	none
+∨	logical or	none
+∩	intersection	none
+∪	union	none
+∫	integral	none
+∴	therefore	none
+∵	because	none
+∶	ratio	none
+∷	proportion	none
+≤	less- than or equal to	none
+≥	greater-than or equal to	none
+⊂	subset of	none
+⊃	superset of	none
+⊆	subset of or equal to	none
+⊇	superset of or equal to	none
+
+# Vulgur Fractions U+2150 to U+215E
+⅐	one seventh	none
+⅑	one ninth	none
+⅒	one tenth	none
+⅓	one third	none
+⅔	two thirds	none
+⅕	one fifth	none
+⅖	two fifths	none
+⅗	three fifths	none
+⅘	four fifths	none
+⅙	one sixth	none
+⅚	five sixths	none
+⅛	one eighth	none
+⅜	three eights	none
+⅝	five eighths	none
+⅞	seven eighths	none
