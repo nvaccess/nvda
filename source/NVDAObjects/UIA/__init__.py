@@ -31,6 +31,7 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions, ToolTip
 import braille
 import time
+import ui
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -288,7 +289,11 @@ class UIATextInfo(textInfos.TextInfo):
 		elif isinstance(position,UIATextInfo): #bookmark
 			self._rangeObj=position._rangeObj
 		elif position==textInfos.POSITION_FIRST:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			try:
+				self._rangeObj=self.obj.UIATextPattern.documentRange
+			except COMError:
+				# Error: first position not supported by the UIA text pattern.
+				raise RuntimeError
 			self.collapse()
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
@@ -569,7 +574,11 @@ class UIATextInfo(textInfos.TextInfo):
 					continue
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
-				childRange=documentTextPattern.rangeFromChild(childElement)
+				try:
+					childRange=documentTextPattern.rangeFromChild(childElement)
+				except COMError as e:
+					log.debug("rangeFromChild failed with %s"%e)
+					childRange=None
 				if not childRange:
 					log.debug("NULL childRange. Skipping")
 					continue
@@ -1393,6 +1402,19 @@ class UIA(Window):
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
 		# Ideally, we wouldn't use getBrailleTextForProperties directly.
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
+	def event_UIA_notification(self, notificationKind=None, notificationProcessing=None, displayString=None, activityId=None):
+		"""
+		Introduced in Windows 10 Fall Creators Update (build 16299).
+		This base implementation announces all notifications from the UIA element.
+		Unlike other events, the text to be announced is not the name of the object, and parameters control how the incoming notification should be processed.
+		Subclasses can override this event and can react to notification processing instructions.
+		"""
+		# Do not announce notifications from background apps.
+		if self.appModule != api.getFocusObject().appModule:
+			return
+		if displayString:
+			ui.message(displayString)
 
 class TreeviewItem(UIA):
 

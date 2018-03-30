@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2018 NV Access Limited
+#Copyright (C) 2010-2018 NV Access Limited, Bram Duvigneau
 
 import winUser
 import textInfos
@@ -17,6 +17,7 @@ from NVDAObjects import behaviors
 import api
 import config
 import review
+from logHandler import log
 
 class CompoundTextInfo(textInfos.TextInfo):
 
@@ -151,8 +152,17 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
-			field['table-rowsspanned']=obj.rowSpan
-			field['table-columnsspanned']=obj.columnSpan
+			# Row/column span is not supported by all implementations (e.g. LibreOffice)
+			try:
+				field['table-rowsspanned']=obj.rowSpan
+			except NotImplementedError:
+				log.debug("Row span not supported")
+				pass
+			try:
+				field['table-columnsspanned']=obj.columnSpan
+			except NotImplementedError:
+				log.debug("Column span not supported")
+				pass
 		return field
 
 	def __eq__(self, other):
