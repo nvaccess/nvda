@@ -752,7 +752,7 @@ class UIA(Window):
 			clsList.append(Toast_win10)
 		# #8118: treat UWP tooltips as proper tooltips, especially those found in Microsoft Edge and other apps.
 		elif UIAClassName=="ToolTip" and self.UIAElement.cachedFrameworkID == "XAML":
-			clsList.append(UWPToolTip)
+			clsList.append(XAMLToolTip)
 		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
@@ -1566,7 +1566,7 @@ class Toast_win10(Notification, UIA):
 		Notification.event_alert(self)
 
 
-class UWPToolTip(ToolTip, UIA):
+class XAMLToolTip(ToolTip, UIA):
 
 	event_UIA_toolTipOpened=ToolTip.event_show
 
