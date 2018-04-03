@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-10 00:10+1000\n"
-"PO-Revision-Date: 2017-11-14 11:03+0100\n"
+"POT-Creation-Date: 2018-02-16 00:10+1000\n"
+"PO-Revision-Date: 2018-02-18 20:06+0100\n"
 "Last-Translator: Ondrej rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "Language: sk\n"
@@ -86,6 +86,24 @@ msgstr "neznáma metóda vstupu"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "Pravopisná a gramatická chyba: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Pravopisná chyba: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "gramatická chyba: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -494,14 +512,6 @@ msgstr "h%s"
 msgid "vlnk"
 msgstr "nodk"
 
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "ne %s"
-
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -535,6 +545,19 @@ msgstr "s%s"
 #, python-format
 msgid "%s end"
 msgstr "koniec %s"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automaticky"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "Na fokus"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "Na prezerací kurzor"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -1633,45 +1656,6 @@ msgstr ""
 "Prejde za prvok, ktorý zoskupuje viaceré prvky rovnakého typu napr. za "
 "tabuľku alebo zoznam."
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "nie v bunke tabuľky"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Okraj tabuľky"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "Prejde do nasledujúceho riadku tabuľky."
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "Prejde do predchádzajúceho riadku tabuľky."
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "Prejde do nasledujúceho stĺpca tabuľky."
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "Prejde do predchádzajúceho stĺpca tabuľky."
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "neoznamovať tabuľky formujúce vzhľad"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "Oznamovať tabuľky formujúce vzhľad"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "Zapína alebo vypína oznamovanie tabuliek formujúcich vzhľad"
-
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -2485,6 +2469,10 @@ msgstr ""
 msgid "calendar"
 msgstr "kalendár"
 
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "prvok grafu"
+
 msgid "video"
 msgstr "Video"
 
@@ -2607,7 +2595,7 @@ msgid "dragging"
 msgstr "označené pre operáciu ťahať a pustiť"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects which support accessible drag and drop.
+#. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
 msgstr "cieľ akcie ťahať a pustiť"
 
@@ -2665,6 +2653,11 @@ msgstr "nestlačené"
 msgid "not checked"
 msgstr "nezačiarknuté"
 
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "akcia ťahať a pustiť ukončená"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr "aktuálna"
@@ -2688,6 +2681,14 @@ msgstr "aktuálny dátum"
 #. Translators: Presented when a time item is marked as current in a collection of time items
 msgid "current time"
 msgstr "aktuálny čas"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "ne %s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2784,6 +2785,45 @@ msgstr "Nič nie je vybraté"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "Okopírované do schránky"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "nie v bunke tabuľky"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Okraj tabuľky"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "Prejde do nasledujúceho riadku tabuľky."
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "Prejde do predchádzajúceho riadku tabuľky."
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "Prejde do nasledujúceho stĺpca tabuľky."
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "Prejde do predchádzajúceho stĺpca tabuľky."
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "neoznamovať tabuľky formujúce vzhľad"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Oznamovať tabuľky formujúce vzhľad"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "Zapína alebo vypína oznamovanie tabuliek formujúcich vzhľad"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -4002,18 +4042,10 @@ msgstr ""
 "Zobrazí alebo skryje plávajúce okno, v ktorom NVDA zobrazuje to, čo práve "
 "hovorí"
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "prezeracím kurzorom"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "systémovým kurzorom"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
+msgid "Braille tethered %s"
 msgstr "Braillovský kurzor zviazaný s %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -5778,11 +5810,6 @@ msgstr "%s namiesto pôvodného výberu"
 msgid "selection removed"
 msgstr "Výber vymazaný."
 
-#. Translators: Reported when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "akcia ťahať a pustiť ukončená"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
@@ -6036,6 +6063,34 @@ msgstr "rovnomerne zarovnané"
 msgid "align default"
 msgstr "Predvolené zarovnanie"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "vertikálne zarovnanie nahor"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "vertikálne zarovnanie nastred"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "Vertikálne zarovnanie nadol"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "Vertikálne zarovnanie podľa čiari"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "vertikálne zarovnané do bloku"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "Vertikálne zarovnanie rozmiestnené"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "Predvolené zarovnanie"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "ľavé odsadenie"
@@ -6068,34 +6123,6 @@ msgstr "odsadenie prvého riadka"
 msgid "no first line indent"
 msgstr "bez odsadeného prvého riadka"
 
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "vertikálne zarovnanie nahor"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "vertikálne zarovnanie nastred"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "Vertikálne zarovnanie nadol"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "Vertikálne zarovnanie podľa čiari"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "vertikálne zarovnané do bloku"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "Vertikálne zarovnanie rozmiestnené"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "Predvolené zarovnanie"
-
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
 msgid "line spacing %s"
@@ -6112,6 +6139,14 @@ msgstr "Pravopisná chyba"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "Mimo pravopisnej chyby"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "gramatická chyba"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "Mimo gramatickej chyby"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -7049,8 +7084,29 @@ msgid "off"
 msgstr "vypnuté"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6 series/protocol converter"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Bluetooth Sériový: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "nastavenie pre simuláciu HID klávesnice nie je dostupné"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "Simulácia HID klávesnice zapnutá"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "Simulácia HID klávesnice vypnutá"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "zapína a vypína simuláciu HID klávesnice"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7076,6 +7132,18 @@ msgstr "HumanWare Brailliant BI/B "
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "riadky Eurobraille Esys/Esytime/Iris"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "Simulácia HID klávesnice nie je dostupná."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Prepnúť simuláciu HID klávesnice"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7104,6 +7172,10 @@ msgstr "Braillovský vstup vypnutý"
 #. Translators: description of the script to toggle braille input
 msgid "Toggle braille input"
 msgstr "Prepnúť braillovský vstup"
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7248,6 +7320,14 @@ msgstr "Nastavenia &myši..."
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
 "Nastavuje oznamovanie zmeny tvaru kurzora myši a objektov pod kurzorom myši"
+
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "&DoTyková obrazovka..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "Určiť, ako sa NVDA bude správať pri používaní dotykovej obrazovky"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -7747,6 +7827,10 @@ msgstr "URL: {url}"
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
 msgstr "Informácie o doplnku"
+
+#. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
+msgstr "Vo verzii NVDA z windows obchodu nie je možné inštalovať doplnky"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8939,8 +9023,8 @@ msgid "Show &messages indefinitely"
 msgstr "Zobraz&iť správy bez obmedzenia"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "Braillovský kurzor &zviazaný s:"
+msgid "Tether B&raille:"
+msgstr "B&railovský kurzor zviazaný s:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9039,6 +9123,15 @@ msgstr ""
 "Nie je možné uložiť zmeny klávesových skratiek. Pravdepodobne je NVDA "
 "spustený z systému len na čítanie."
 
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "Dotyková obrazovka"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "Písať okamžite po do&tyku"
+
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "Ukončí prepúšťanie klávesových príkazov do aplikácie MathPlayer"
@@ -9117,11 +9210,824 @@ msgstr "RGB červená {rgb.red}, zelená {rgb.green}, modrá {rgb.blue}"
 msgid "%s items"
 msgstr "%s položiek"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Nie je možné nastaviť hlavičku. Začiarknite oznamovanie hlavičiek stĺpcov/"
+"riadkov tabuľky v nastaveniach čítania textu."
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber} nastavený ako začiatok pre hlavičky "
+"stĺpcov"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber} je už nastavený ako začiatok "
+"hlavičky pre stĺpce"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber}  odstránený z hlavičky pre stĺpce"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}  v hlavičkách "
+"pre stĺpce"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Stlačené raz nastaví túto bunku ako prvý stĺpec hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tabuľke. Stlačené dvakrát odstráni informáciu o "
+"hlavičkách pre stĺpce."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber} nastavený ako hlavička pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber} už nastavený ako začiatok hlavičky "
+"pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber}  odstránený z hlavičky pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}  v hlavičke pre "
+"riadky"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Stlačené raz nastaví túto bunku ako prvý riadok hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tabuľke. Stlačené dvakrát odstráni informáciu o "
+"hlavičkách pre riadky."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "Žiadny komentár"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "prečíta text komentára pod systémovým kurzorom."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "Nie v tabuľke"
+
 msgid "invoke"
 msgstr "aktivovať"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Komentáre a zmeny"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "&Chyby"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "vložené: {text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "Odstránené: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "Zmena: {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Komentár: {comment} od {author} dňa {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "{comment} od {author} dňa {date}"
+
 msgid "Desktop"
 msgstr "Pracovná plocha"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "Plošný s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "Skladaný plošný s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "100% skladaný plošný"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "Skupinový pruhový s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "Skladaný pruhový s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "Priestorový pomerový skladaný pruhový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "Priestorový stĺpcový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "Skupinový stĺpcový s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "Skladaný stĺpcový s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "Pomerový skladaný stĺpcový s priestorovým efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "Čiarový s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "Koláčový s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "Rozložený koláčový s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "Plošný"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "skladaný plošný"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "Skupinový pruhový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "Koláčový s detailmi v pruhoch"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "Skladaný pruhový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "100% skladaný pruhový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "Bublinový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "bublinový s 3-D efektom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "skupinový stĺpcový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "Skladaný stĺpcový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "100% skladaný stĺpcový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "Skupinový pruhový s kužeľovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "Skladaný pruhový s kužeľovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "100 % skladaný pruhový s kužeľovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "3-D stĺpcový s kužeľovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "Skupinový stĺpcový s kužeľovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "Skladaný stĺpcový s kužeľovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "100% skladaný stĺpcový s kužeľovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "Pruhový s valcovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "Skladaný pruhový s valcovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "100% skladaný pruhový s valcovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "3-D stĺpcový s valcovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "100% skladaný stĺpcový s valcovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "Prstencový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "rozložený prstencový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "Čiarový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "Čiarový so značkami"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "Skladaný čiarový so značkami"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "100% skladaný čiarový so značkami"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "Skladaný čiarový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "100% skladaný čiarový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "Koláčový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "Rozložený koláčový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "Koláčový s detailmi"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "Pruhový s ihlanovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "Skladaný pruhový s ihlanovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "100% skladaný pruhový s ihlanovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "3-D stĺpcový s ihlanovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "Skupinový stĺpcový s ihlanovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "Skladaný stĺpcový s ihlanovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "100% skladaný stĺpcový s ihlanovým tvarom"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "Radarový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "Radarový s výplňou"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "Radarový so značkami pri každom údajovom bode"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr "Maximum-minimum-koniec"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr "Začiatok-maximum-minimum-koniec"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr "objem-maximum-minimum-koniec"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr "Objem-začiatok-maximum-minimum-koniec"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "3-D povrchový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "Obrysový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "Drôtený obrysový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "Priestorový drôtený povrchový"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "XY (závislosť)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "XY (závislosť) s údajovými bodmi spojenými čiarami"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "XY (závislosť) s údajovými bodmi spojenými čiarami bez značiek"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "XY (závislosť) s údajovými bodmi spojenými hladkými čiarami"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "XY (závislosť) s údajovými bodmi spojenými hladkými čiarami"
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "výsek"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "Stĺpec"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "dátová položka"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "položka"
+
+#. Translators: Message to be spoken to report Series Color
+#, python-brace-format
+msgid "Series color: {colorName} "
+msgstr "Farba radu: {colorName} "
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Display Unit Label"
+msgstr "Názov jednotky zobrazenia"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Major Gridlines"
+msgstr "Hlavné mriežky"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Minor Gridlines"
+msgstr "Vedľajšie mriežky"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "Klesajúca zóna kontigenčného grafu"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Field Button"
+msgstr "tlačidlo poľa pre kontigenčný graf"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Down Bars"
+msgstr "Stĺpce poklesu"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Drop Lines"
+msgstr "Vynášacie čiary"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Hi Lo Lines"
+msgstr "Stĺpce rastu a poklesu"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Radar Axis Labels"
+msgstr "Menovky lúčov"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Series Lines"
+msgstr "Čiary radov"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Up Bars"
+msgstr "stĺpce rastu"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Corners"
+msgstr "Rohy"
+
+#. Translators: A type of element in a Microsoft Office chart.
+#. Translators: Data Table will be spoken when chart element Data Table is selected
+msgid "Data Table"
+msgstr "Tabuľka údajov"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Floor"
+msgstr "Podstava"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Nothing"
+msgstr "Nič"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Walls"
+msgstr "Steny"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Data Label"
+msgstr "Menovka údajov"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Error Bars"
+msgstr "Chybové úsečky"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "X Error Bars"
+msgstr "X Chybové úsečky"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Y Error Bars"
+msgstr "Y Chybové úsečky"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Shape"
+msgstr "Tvar"
+
+#. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "Názov grafu: {chartTitle}, typ: {chartType}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "V tomto grafe je jeden rad"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "V tomto grafe je %d radov"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
+msgid "series {number} {name}"
+msgstr "rad {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "Nie sú nastavené žiadne rady."
+
+#. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+msgid "Chart Elements"
+msgstr "prvky grafu"
+
+#. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+#, python-brace-format
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "rad {seriesName} {seriesIndex} z {seriesCount}"
+
+#. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, python-brace-format
+msgid "Slice color: {colorName} "
+msgstr "Farba výseku: {colorName} "
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
+msgid "no change from point {previousIndex}, "
+msgstr "žiadna zmena od bodu {previousIndex}, "
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "Zvýšené o {incrementValue} z bodu {previousIndex}, "
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "znížené o {decrementValue} z bodu {previousIndex}, "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "Category {categoryAxisData}: "
+msgstr "Kategória {categoryAxisData}: "
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "value {valueAxisData}"
+msgstr "hodnota {valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+" zlomok {fractionValue:.2f} percento výseku {pointIndex} z {pointCount}"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+#, python-brace-format
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} z {pointCount}"
+
+#. Translators: Indicates Primary Category Axis
+msgid "Primary Category Axis"
+msgstr "Primárna kategória osy"
+
+#. Translators: Indicates Secondary Category Axis
+msgid "Secondary Category Axis"
+msgstr "vedľajšia kategória osy"
+
+#. Translators: Indicates Primary Value Axis
+msgid "Primary Value Axis"
+msgstr "primárna hodnota osy"
+
+#. Translators: Indicates Secondary Value Axis
+msgid "Secondary Value Axis"
+msgstr "vedľajšia hodnota osy"
+
+#. Translators: Indicates Primary Series Axis
+msgid "Primary Series Axis"
+msgstr "primárna séria osy"
+
+#. Translators: Indicates Secondary Series Axis
+msgid "Secondary Series Axis"
+msgstr "Vedľajšia séria osy"
+
+#. Translators: the title of a chart axis
+#, python-brace-format
+msgid " title: {axisTitle}"
+msgstr " Názov osy grafu: {axisTitle}"
+
+#. Translators: Indicates that trendline type is Exponential
+msgid "Exponential"
+msgstr "Exponenciálny"
+
+#. Translators: Indicates that trendline type is Linear
+msgid "Linear"
+msgstr "Čiarový"
+
+#. Translators: Indicates that trendline type is Logarithmic
+msgid "Logarithmic"
+msgstr "Logaritmický"
+
+#. Translators: Indicates that trendline type is Moving Average
+msgid "Moving Average"
+msgstr "Kĺzavý priemer"
+
+#. Translators: Indicates that trendline type is Polynomial
+msgid "Polynomial"
+msgstr "Polynomický"
+
+#. Translators: Indicates that trendline type is Power
+msgid "Power"
+msgstr "mocninový"
+
+#. Translators: Substitute superscript two by square for R square value
+msgid " square "
+msgstr " umocnená "
+
+#. Translators: Substitute - by minus in trendline equations.
+msgid " minus "
+msgstr " mínus "
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid ""
+"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
+"{trendlineLabel} "
+msgstr ""
+"{seriesName} typ trendovej spojnice: {trendlineType}, názov: "
+"{trendlineName}, označenie: {trendlineLabel} "
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
+msgstr ""
+"{seriesName} typ trendovej spojnice: {trendlineType}, názov: {trendlineName} "
+
+#. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
+msgid "Chart title: {chartTitle}"
+msgstr "Názov grafu: {chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Office.
+msgid "Untitled chart"
+msgstr "Nepomenovaný graf"
+
+#. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"oblasť grafu, výška: {chartAreaHeight}, šírka: {chartAreaWidth}, horný "
+"okraj: {chartAreaTop}, ľavý okraj: {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Office chart.
+msgid "Chart area "
+msgstr "Oblasť grafu"
+
+#. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"Zobrazovaná oblasť, vnútorná výška: {plotAreaInsideHeight:.0f}, vnútorná "
+"šírka: {plotAreaInsideWidth:.0f}, vnútorný horný okraj: "
+"{plotAreaInsideTop:.0f}, vnútorný ľavý orakj: {plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Office chart.
+msgid "Plot area "
+msgstr "zobrazovaná oblasť"
+
+#. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "legenda pre rad {seriesName} {seriesIndex} z {seriesCount}"
+
+#. Translators: the legend entry for a chart in Microsoft Office
+#, python-brace-format
+msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
+msgstr "Legenda pre rad {legendEntryIndex} z {legendEntryCount}"
+
+#. Translators: Details about a legend key for a series in a Microsoft office chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "Kľúč legendy pre rad {seriesName} {seriesIndex} z {seriesCount}"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
@@ -9275,17 +10181,6 @@ msgstr "&Hárky"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} do {end}"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Nie je možné nastaviť hlavičku. Začiarknite oznamovanie hlavičiek stĺpcov/"
-"riadkov tabuľky v nastaveniach čítania textu."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -9499,663 +10394,6 @@ msgstr "{desc} čiari zhora nadol a zdola nahor"
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Area"
-msgstr "Plošný s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Area"
-msgstr "Skladaný plošný s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Area"
-msgstr "100% skladaný plošný"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Bar"
-msgstr "Skupinový pruhový s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Bar"
-msgstr "Skladaný pruhový s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Bar"
-msgstr "Priestorový pomerový skladaný pruhový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Column"
-msgstr "Priestorový stĺpcový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Column"
-msgstr "Skupinový stĺpcový s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Column"
-msgstr "Skladaný stĺpcový s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Column"
-msgstr "Pomerový skladaný stĺpcový s priestorovým efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Line"
-msgstr "Čiarový s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Pie"
-msgstr "Koláčový s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded 3D Pie"
-msgstr "Rozložený koláčový s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Area"
-msgstr "Plošný"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Area"
-msgstr "skladaný plošný"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Bar"
-msgstr "Skupinový pruhový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bar of Pie"
-msgstr "Koláčový s detailmi v pruhoch"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Bar"
-msgstr "Skladaný pruhový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Bar"
-msgstr "100% skladaný pruhový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble"
-msgstr "Bublinový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble with 3D effects"
-msgstr "bublinový s 3-D efektom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Column"
-msgstr "skupinový stĺpcový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Column"
-msgstr "Skladaný stĺpcový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Column"
-msgstr "100% skladaný stĺpcový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Bar"
-msgstr "Skupinový pruhový s kužeľovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Bar"
-msgstr "Skladaný pruhový s kužeľovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Bar"
-msgstr "100 % skladaný pruhový s kužeľovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cone Column"
-msgstr "3-D stĺpcový s kužeľovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Column"
-msgstr "Skupinový stĺpcový s kužeľovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Column"
-msgstr "Skladaný stĺpcový s kužeľovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Column"
-msgstr "100% skladaný stĺpcový s kužeľovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cylinder Bar"
-msgstr "Pruhový s valcovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cylinder Bar"
-msgstr "Skladaný pruhový s valcovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Bar"
-msgstr "100% skladaný pruhový s valcovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cylinder Column"
-msgstr "3-D stĺpcový s valcovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Column"
-msgstr "100% skladaný stĺpcový s valcovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Doughnut"
-msgstr "Prstencový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Doughnut"
-msgstr "rozložený prstencový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line"
-msgstr "Čiarový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line with Markers"
-msgstr "Čiarový so značkami"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line with Markers"
-msgstr "Skladaný čiarový so značkami"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line with Markers"
-msgstr "100% skladaný čiarový so značkami"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line"
-msgstr "Skladaný čiarový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line"
-msgstr "100% skladaný čiarový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie"
-msgstr "Koláčový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Pie"
-msgstr "Rozložený koláčový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie of Pie"
-msgstr "Koláčový s detailmi"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Bar"
-msgstr "Pruhový s ihlanovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Bar"
-msgstr "Skladaný pruhový s ihlanovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Bar"
-msgstr "100% skladaný pruhový s ihlanovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Pyramid Column"
-msgstr "3-D stĺpcový s ihlanovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Column"
-msgstr "Skupinový stĺpcový s ihlanovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Column"
-msgstr "Skladaný stĺpcový s ihlanovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Column"
-msgstr "100% skladaný stĺpcový s ihlanovým tvarom"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar"
-msgstr "Radarový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Filled Radar"
-msgstr "Radarový s výplňou"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar with Data Markers"
-msgstr "Radarový so značkami pri každom údajovom bode"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "High-Low-Close"
-msgstr "Maximum-minimum-koniec"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Open-High-Low-Close"
-msgstr "Začiatok-maximum-minimum-koniec"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-High-Low-Close"
-msgstr "objem-maximum-minimum-koniec"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-Open-High-Low-Close"
-msgstr "Objem-začiatok-maximum-minimum-koniec"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface"
-msgstr "3-D povrchový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View)"
-msgstr "Obrysový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View wireframe)"
-msgstr "Drôtený obrysový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface (wireframe)"
-msgstr "Priestorový drôtený povrchový"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter"
-msgstr "XY (závislosť)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines"
-msgstr "XY (závislosť) s údajovými bodmi spojenými čiarami"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines and No Data Markers"
-msgstr "XY (závislosť) s údajovými bodmi spojenými čiarami bez značiek"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines"
-msgstr "XY (závislosť) s údajovými bodmi spojenými hladkými čiarami"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "XY (závislosť) s údajovými bodmi spojenými hladkými čiarami"
-
-#. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
-msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "Názov grafu: {chartTitle}, typ: {chartType}"
-
-#. Translators: Reported when there is no title for an axis in a chart.
-msgid "Not defined"
-msgstr "Nie je definované"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The category axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Category"
-msgstr "Kategória"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The value axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Value"
-msgstr "Hodnota"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The series axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Series"
-msgstr "Rad"
-
-#. Translators: Message reporting the type and title of an axis in a chart.
-#. For example, this might report "Category axis is month"
-#, python-brace-format
-msgid "{axisName} Axis is {axisTitle}"
-msgstr "{axisName} os je {axisTitle}"
-
-#. Translators: Indicates that there is 1 series in a chart.
-msgid "There is 1 series in this chart"
-msgstr "V tomto grafe je jeden rad"
-
-#. Translators: Indicates the number of series in a chart where there are multiple series.
-#, python-format
-msgid "There are total %d series in this chart"
-msgstr "V tomto grafe je %d radov"
-
-#. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
-msgid "series {number} {name}"
-msgstr "rad {number} {name}"
-
-#. Translators: Indicates that there are no series in a chart.
-msgid "No Series defined."
-msgstr "Nie sú nastavené žiadne rady."
-
-#. Translators: A slice in a pie chart.
-msgid "slice"
-msgstr "výsek"
-
-#. Translators: A column in a column chart.
-msgctxt "chart"
-msgid "column"
-msgstr "Stĺpec"
-
-#. Translators: A data point in a line chart.
-msgid "data point"
-msgstr "dátová položka"
-
-#. Translators: A segment of a chart for charts which don't have a specific name for segments.
-msgid "item"
-msgstr "položka"
-
-#, python-brace-format
-msgid "Series color: {colorName} "
-msgstr "Farba radu: {colorName} "
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Display Unit Label"
-msgstr "Názov jednotky zobrazenia"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Major Gridlines"
-msgstr "Hlavné mriežky"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Minor Gridlines"
-msgstr "Vedľajšie mriežky"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Drop Zone"
-msgstr "Klesajúca zóna kontigenčného grafu"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Field Button"
-msgstr "tlačidlo poľa pre kontigenčný graf"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Down Bars"
-msgstr "Stĺpce poklesu"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Drop Lines"
-msgstr "Vynášacie čiary"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Hi Lo Lines"
-msgstr "Stĺpce rastu a poklesu"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Radar Axis Labels"
-msgstr "Menovky lúčov"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Series Lines"
-msgstr "Čiary radov"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Up Bars"
-msgstr "stĺpce rastu"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Corners"
-msgstr "Rohy"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Table"
-msgstr "Tabuľka údajov"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Floor"
-msgstr "Podstava"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Nothing"
-msgstr "Nič"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Walls"
-msgstr "Steny"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Label"
-msgstr "Menovka údajov"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Error Bars"
-msgstr "Chybové úsečky"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "X Error Bars"
-msgstr "X Chybové úsečky"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Y Error Bars"
-msgstr "Y Chybové úsečky"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Shape"
-msgstr "Tvar"
-
-#. Translators: Details about a series in a chart.
-#. For example, this might report "foo series 1 of 2"
-#, python-brace-format
-msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "rad {seriesName} {seriesIndex} z {seriesCount}"
-
-#. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
-msgid "no change from point {previousIndex}, "
-msgstr "žiadna zmena od bodu {previousIndex}, "
-
-#. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "Zvýšené o {incrementValue} z bodu {previousIndex}, "
-
-#. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
-msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "znížené o {decrementValue} z bodu {previousIndex}, "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}: "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "Category {categoryAxisData}: "
-msgstr "Kategória {categoryAxisData}: "
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{valueAxisTitle} {valueAxisData}"
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "value {valueAxisData}"
-msgstr "hodnota {valueAxisData}"
-
-#. Translators: Details about a slice of a pie chart.
-#. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
-msgid ""
-" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
-" zlomok {fractionValue:.2f} percento výseku {pointIndex} z {pointCount}"
-
-#. Translators: Details about a segment of a chart.
-#. For example, this might report "column 1 of 5"
-#, python-brace-format
-msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} z {pointCount}"
-
-#. Translators: The primary axis group in a Microsoft Excel chart.
-msgid "Primary"
-msgstr "Primárna"
-
-#. Translators: The secondary axis group in a Microsoft Excel chart.
-msgid "Secondary"
-msgstr "Vedľajšia"
-
-#. Translators: Details about an axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr "Os grafu, typ: {axisType}, skupina: {axisGroup}, názov: {axisTitle}"
-
-#. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "Os grafu, typ: {axisType}, skupina: {axisGroup}"
-
-#. Translators: Indicates a chart axis title in Microsoft Excel.
-msgid "Chart axis title"
-msgstr "Názov osy grafu"
-
-#. Translators: Indicates a trendline in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "trendline"
-msgstr "trendová spojnica"
-
-#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-msgid " squared "
-msgstr " umocnená "
-
-#. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
-msgid "Chart title: {chartTitle}"
-msgstr "Názov grafu: {chartTitle}"
-
-#. Translators: Indicates an untitled chart in Microsoft Excel.
-msgid "Untitled chart"
-msgstr "Nepomenovaný graf"
-
-#. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
-"{chartAreaTop}, left: {chartAreaLeft}"
-msgstr ""
-"oblasť grafu, výška: {chartAreaHeight}, šírka: {chartAreaWidth}, horný "
-"okraj: {chartAreaTop}, ľavý okraj: {chartAreaLeft}"
-
-#. Translators: Indicates the chart area of a Microsoft Excel chart.
-msgid "Chart area "
-msgstr "Oblasť grafu"
-
-#. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
-"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
-"{plotAreaInsideLeft:.0f}"
-msgstr ""
-"Zobrazovaná oblasť, vnútorná výška: {plotAreaInsideHeight:.0f}, vnútorná "
-"šírka: {plotAreaInsideWidth:.0f}, vnútorný horný okraj: "
-"{plotAreaInsideTop:.0f}, vnútorný ľavý orakj: {plotAreaInsideLeft:.0f}"
-
-#. Translators: Indicates the plot area of a Microsoft Excel chart.
-msgid "Plot area "
-msgstr "zobrazovaná oblasť"
-
-#. Translators: Indicates the legend in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend"
-msgstr "Legenda"
-
-#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
-msgid "No legend"
-msgstr "Neobsahuje legendu"
-
-#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
-msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "legenda pre rad {seriesName} {seriesIndex} z {seriesCount}"
-
-#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend key for series Temperature 1 of 2"
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
-msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "Kľúč legendy pre rad {seriesName} {seriesIndex} z {seriesCount}"
-
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "vložené"
@@ -10268,12 +10506,6 @@ msgstr "komentár: {text} od {author} dňa {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dňa {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "Pravopisná chyba: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10309,79 +10541,6 @@ msgstr "%.1f riadkov"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Popis tabuľky"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"riadok {rowNumber} stĺpec {columnNumber} nastavený ako začiatok pre hlavičky "
-"stĺpcov"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"riadok {rowNumber} stĺpec {columnNumber} je už nastavený ako začiatok "
-"hlavičky pre stĺpce"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr ""
-"Riadok {rowNumber} stĺpec {columnNumber}  odstránený z hlavičky pre stĺpce"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"Nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}  v hlavičkách "
-"pre stĺpce"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"Stlačené raz nastaví túto bunku ako prvý stĺpec hlavičky pre ostatné bunky, "
-"ktoré sú napravo a nižšie v tabuľke. Stlačené dvakrát odstráni informáciu o "
-"hlavičkách pre stĺpce."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Riadok {rowNumber} stĺpec {columnNumber} nastavený ako hlavička pre riadky"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Riadok {rowNumber} stĺpec {columnNumber} už nastavený ako začiatok hlavičky "
-"pre riadky"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
-"riadok {rowNumber} stĺpec {columnNumber}  odstránený z hlavičky pre riadky"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-"Nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}  v hlavičke pre "
-"riadky"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"Stlačené raz nastaví túto bunku ako prvý riadok hlavičky pre ostatné bunky, "
-"ktoré sú napravo a nižšie v tabuľke. Stlačené dvakrát odstráni informáciu o "
-"hlavičkách pre riadky."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10494,14 +10653,6 @@ msgstr "{offset:.3g} bodov"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pica"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "Žiadny komentár"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "prečíta text komentára pod systémovým kurzorom."
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "jednoduché riadkovanie"
@@ -10514,28 +10665,56 @@ msgstr "dvojité riadkovanie"
 msgid "1.5 line spacing"
 msgstr "1,5 riadka"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "Nie v tabuľke"
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "ALVA BC640/680"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&Komentáre a zmeny"
+#~ msgid "review"
+#~ msgstr "prezeracím kurzorom"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "&Chyby"
+#~ msgid "focus"
+#~ msgstr "systémovým kurzorom"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
+#~ msgid "B&raille tethered to:"
+#~ msgstr "Braillovský kurzor &zviazaný s:"
 
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "Not defined"
+#~ msgstr "Nie je definované"
+
+#~ msgid "Category"
+#~ msgstr "Kategória"
+
+#~ msgid "Value"
+#~ msgstr "Hodnota"
+
+#~ msgid "Series"
+#~ msgstr "Rad"
+
+#~ msgid "{axisName} Axis is {axisTitle}"
+#~ msgstr "{axisName} os je {axisTitle}"
+
+#~ msgid "Primary"
+#~ msgstr "Primárna"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+#~ msgstr "Os grafu, typ: {axisType}, skupina: {axisGroup}, názov: {axisTitle}"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+#~ msgstr "Os grafu, typ: {axisType}, skupina: {axisGroup}"
+
+#~ msgid "Chart axis title"
+#~ msgstr "Názov osy grafu"
+
+#~ msgid "trendline"
+#~ msgstr "trendová spojnica"
+
+#~ msgid "Legend"
+#~ msgstr "Legenda"
+
+#~ msgid "No legend"
+#~ msgstr "Neobsahuje legendu"
+
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Zobrazí konfiguráciu ovládača zariadení Handy Tech"

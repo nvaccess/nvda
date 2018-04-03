@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-24 00:10+1000\n"
-"PO-Revision-Date: 2017-11-08 02:16+0800\n"
+"POT-Creation-Date: 2018-02-23 00:10+1000\n"
+"PO-Revision-Date: 2018-02-23 03:53+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 1.6.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -86,6 +86,24 @@ msgstr "未知输入法"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{layout} - {language}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "拼写和语法： {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "拼读： {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "语法: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -254,7 +272,6 @@ msgstr "状态栏"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
-#, fuzzy
 msgid "tbl"
 msgstr "表格"
 
@@ -290,7 +307,6 @@ msgstr "分组"
 
 #. Translators: Displayed in braille for an object which is a
 #. embedded object.
-#, fuzzy
 msgid "embedded"
 msgstr "嵌入式对象"
 
@@ -301,19 +317,16 @@ msgstr "尾注"
 
 #. Translators: Displayed in braille for an object which is a
 #. foot note.
-#, fuzzy
 msgid "fnote"
-msgstr "注解"
+msgstr "脚注"
 
 #. Translators: Displayed in braille for an object which is a
 #. terminal.
-#, fuzzy
 msgid "term"
 msgstr "终端"
 
 #. Translators: Displayed in braille for an object which is a
 #. section.
-#, fuzzy
 msgid "sect"
 msgstr "区域"
 
@@ -344,7 +357,6 @@ msgstr "树视图按钮"
 
 #. Translators: Displayed in braille for an object which is a
 #. panel.
-#, fuzzy
 msgid "pnl"
 msgstr "面板"
 
@@ -503,14 +515,6 @@ msgstr "%s级标题"
 msgid "vlnk"
 msgstr "以访问"
 
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "没有%s"
-
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -544,6 +548,19 @@ msgstr "第%s列"
 #, python-format
 msgid "%s end"
 msgstr "第%s行尾"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "自动"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "焦点"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "浏览光标"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -809,9 +826,8 @@ msgstr "克罗地亚语八点电脑点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Croatian grade 1"
-msgstr "拉脱维亚语一级点字"
+msgstr "克罗地亚语一级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1005,7 +1021,6 @@ msgstr "斯洛文尼亚语八级电脑点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Slovenian grade 1"
 msgstr "斯洛文尼亚语一级点字"
 
@@ -1036,9 +1051,8 @@ msgstr "Unicode 盲文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Vietnamese grade 1"
-msgstr "阿萨姆语一级点字"
+msgstr "越南语一级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1639,46 +1653,6 @@ msgstr "底部"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "移到元素的结尾处，例如列表或表格。"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "不在表格的单元格中"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "表格边缘"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "移到表格的下一行"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "移到表格的上一行"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "移到表格的下一列"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "移到表格内的上一列"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "关闭忽略布局表格菜单"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "朗读布局列表"
-
-#. Translators: Input help mode message for include layout tables command.
-#, fuzzy
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "切换表格朗读的开关"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2493,6 +2467,10 @@ msgstr "触摸控件"
 msgid "calendar"
 msgstr "日历"
 
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "图表元素"
+
 msgid "video"
 msgstr "视频"
 
@@ -2615,7 +2593,7 @@ msgid "dragging"
 msgstr "正在拖拽"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects which support accessible drag and drop.
+#. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
 msgstr "放置目标"
 
@@ -2673,6 +2651,11 @@ msgstr "未按下"
 msgid "not checked"
 msgstr "未选中"
 
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "拖拽完成"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr "当前"
@@ -2696,6 +2679,14 @@ msgstr "当前日期"
 #. Translators: Presented when a time item is marked as current in a collection of time items
 msgid "current time"
 msgstr "当前时间"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "没有%s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2725,23 +2716,22 @@ msgid "Loading NVDA. Please wait..."
 msgstr "正在载入 NVDA，请稍后..."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
-#, fuzzy
 msgid "Landscape"
-msgstr "esc"
+msgstr "横向"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr ""
+msgstr "纵向"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
 msgid "Charging battery. %d percent"
-msgstr "正在充电，%d%"
+msgstr "正在充电， 百分之 %d "
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #, python-format
 msgid "Not charging battery. %d percent"
-msgstr "没有充电，电量 %d% "
+msgstr "没有充电，电量为百分之 %d "
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -2790,6 +2780,45 @@ msgstr "没有选择文本"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "复制到剪贴板"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "不在表格的单元格中"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "表格边缘"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "移到表格的下一行"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "移到表格的上一行"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "移到表格的下一列"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "移到表格内的上一列"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "关闭忽略布局表格菜单"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "朗读布局列表"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "切换使用浏览模式时是否隐藏布局表格"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -3671,12 +3700,13 @@ msgid "No status line found"
 msgstr "没有状态栏"
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
-msgstr "读出当前应用程序的状态栏，并将浏览光标移至该处，连按两次拼读该信息"
+msgstr ""
+"读出当前应用程序的状态栏，并将浏览光标移至该处，连按两次拼读该信息，连按三次"
+"复制该信息到剪贴板。"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3927,19 +3957,11 @@ msgid ""
 msgstr ""
 "切换是否显示朗读查看器，这是一个用来显示所有 NVDA 正在朗读内容的浮动窗口。"
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "浏览光标"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "系统焦点"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
-msgstr "点字光标移到 %s"
+msgid "Braille tethered %s"
+msgstr "点字光标捆绑到 %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -5578,7 +5600,6 @@ msgstr "第一个"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "action"
 msgid "Document"
 msgstr "文档"
@@ -5693,11 +5714,6 @@ msgstr "%s,作为覆盖选择"
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
 msgstr "移除所选"
-
-#. Translators: Reported when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "拖拽完成"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
@@ -6028,6 +6044,14 @@ msgstr "拼写错误"
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
 msgstr "离开拼写错误"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "语法错误"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "离开语法错误"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -6952,8 +6976,29 @@ msgid "off"
 msgstr "关"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 系列"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6 series/协议转换器"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "蓝牙系列: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "不支持设置触键仿真"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "启用人体学输入设备键盘触控仿真"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "停用人体学输入设备键盘触控仿真"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "切换人体学输入设备键盘触控仿真"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -6981,6 +7026,18 @@ msgid "EcoBraille displays"
 msgstr "EcoBraille displays"
 
 #. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Eurobraille Esys/Esytime/Iris 点显器"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "人体学输入设备触键仿真不可用"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "切换键盘仿真开关"
+
+#. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Freedom Scientific Focus/PAC Mate 系列"
 
@@ -7001,14 +7058,16 @@ msgid "Braille input enabled"
 msgstr "点字输入已启用"
 
 #. Translators: message when braille input is disabled
-#, fuzzy
 msgid "Braille input disabled"
-msgstr "点显器(&D):"
+msgstr "停用点字输入"
 
 #. Translators: description of the script to toggle braille input
-#, fuzzy
 msgid "Toggle braille input"
-msgstr "翻译任何盲文输入"
+msgstr "切换盲文输入开关"
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille 系列"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7149,6 +7208,14 @@ msgstr "鼠标设置(&M)..."
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "切换是否读出鼠标型态和所指对象"
 
+#. Translators: The label for the menu item to open Touch Interaction dialog.
+msgid "&Touch interaction..."
+msgstr "触控交互(&T)..."
+
+#. Translators: tooltip for touch interaction settings item.
+msgid "Change how NVDA interacts with the touchscreen"
+msgstr "修改 NVDA 和触控屏的交互方式"
+
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
 msgstr "浏览光标(&C)..."
@@ -7187,9 +7254,8 @@ msgid "Change settings of document properties"
 msgstr "修改文档属性设置"
 
 #. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-#, fuzzy
 msgid "&Windows 10 OCR..."
-msgstr "Windows 10 文字光学识别..."
+msgstr "Windows 10 文字光学识别(&W)..."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7529,18 +7595,19 @@ msgid "Add-on Installation"
 msgstr "插件安装"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
-msgstr "此插件的先前版本已经安装。是否更新？"
+msgstr "插件 {summary} 的 {newVersion} 版本已经安装。是否更新？"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
-msgstr "此插件的先前版本已经安装。是否更新？"
+msgstr ""
+"插件 {summary} 的 {curVersion} 版本已经安装。是否更新到 {newVersion} ？"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -7624,6 +7691,10 @@ msgstr "网址: {url}"
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
 msgstr "插件信息"
+
+#. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
+msgstr "插件无法安装在 windows 商店版本的 nvda 中。"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8661,9 +8732,8 @@ msgid "Whole &word"
 msgstr "整词匹配(&W)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "正则表达式(&R)"
+msgstr "正则表达式(&E)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -8790,8 +8860,8 @@ msgid "Show &messages indefinitely"
 msgstr "随机显示消息(&M)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "点字光标跟随到(&R):"
+msgid "Tether B&raille:"
+msgstr "点字光标捆绑到(&R)："
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -8888,6 +8958,15 @@ msgstr "创建手式："
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "保存手式设置时发生错误，文件系统可能处于只读状态"
 
+#. Translators: This is the label for the touch interaction settings dialog.
+msgid "Touch Interaction"
+msgstr "触控屏交互"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings dialog.
+msgid "&Touch typing mode"
+msgstr "触控输入模式(&T)"
+
 #. Translators: Describes a command.
 msgid "Exit math interaction"
 msgstr "退出 math 交互"
@@ -8966,11 +9045,810 @@ msgstr "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgid "%s items"
 msgstr "%s项"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr "无法设置标题。请在“文档格式”对话框起用“读出表格序号”选项。"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "设置行{rowNumber}列{columnNumber}为列标题的开始点"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "行{rowNumber}列{columnNumber}已被设置成列标题的开始单元"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "行{rowNumber}列{columnNumber}已从列标题中移除"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr "无法再列标题找到行{rowNumber}列{columnNumber}"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"按一次，设置此单元以及其右边的单元作为在单元格下方形成的表格的表格行标题，按"
+"两次清除此设置。"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "行{rowNumber}列{columnNumber}作为行标题的开始单元"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "行{rowNumber}列{columnNumber}已设置为行标题的开始单元"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "行{rowNumber}列{columnNumber}已从行标题中移除"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "无法在行标题中找到行{rowNumber}列{columnNumber}"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"按一次，设置此单元作为在其右边和下边形成的表格的表格行标题，按两次清除该设置"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "没有注释。"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "朗读系统输入焦点所在的注释文本。"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "不在表格中"
+
 msgid "invoke"
 msgstr "启用"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "批注(&A)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "错误(&E)错误"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "插入： {text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "删除： {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "轨迹偏移：{text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "评论： {comment}，由 {author} 在{date}时提交"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "{comment}，由 {author} 在{date}时提交"
+
 msgid "Desktop"
 msgstr "桌面"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "三维区域"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "三维堆积区域"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "100%堆积区域"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "三维簇状条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "三维堆积条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "三维100%堆积条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "三维柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "三维簇状柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "三维堆积柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "三维100%堆积柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "三维折线图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "三维饼图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "分离形三维饼图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "区域"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "堆积区"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "簇状条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "复合条饼图    "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "堆积条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "100%堆积条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "气泡图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "三维效果气泡图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "簇状柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "堆积柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "100%堆积柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "簇状圆锥条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "堆积圆锥条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "100%堆积圆锥条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "三维圆锥柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "簇状圆锥柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "堆积圆锥柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "100%堆积圆锥柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "簇状圆柱条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "堆积圆柱条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "100%堆积圆柱条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "三维圆柱柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "100%堆积圆柱柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "圆环图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "分离型圆环图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "折线图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "数据标记折线图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "数据标记堆积折线图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "100%数据标记堆积折线图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "堆积折线图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "100%堆积折线图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "饼图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "分离型饼图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "复合饼图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "簇状锥形条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "堆积锥形条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "100%堆积锥形条形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "三维锥形柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "簇状锥形柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "堆积锥形柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "100%锥形柱形图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "雷达图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "填充雷达图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "数据标记雷达图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr "盘高-盘低-收盘股价图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr "开盘-盘高-盘低-收盘股价图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr "成交量-盘高-盘低-收盘股价图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr "成交量-开盘-盘高-盘低-收盘股价图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "三维曲面图    "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "曲面图（俯视图）"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "曲面图（俯视框架图）"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "三维曲面图（框架图）"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "散点图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "带平滑线的散点图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "没有标记的带平滑线散点图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "带直线的散点图"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "没有标记的带直线散点图"
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "扇区"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "列"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "数据点"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "项目"
+
+#. Translators: Message to be spoken to report Series Color
+#, python-brace-format
+msgid "Series color: {colorName} "
+msgstr "系列颜色： {colorName} "
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Display Unit Label"
+msgstr "显示单元标签"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Major Gridlines"
+msgstr "主要网格线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Minor Gridlines"
+msgstr "次要网格线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "透视图表拖放区"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Field Button"
+msgstr "透视图表填充按钮"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Down Bars"
+msgstr "跌柱线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Drop Lines"
+msgstr "垂直线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Hi Lo Lines"
+msgstr "涨跌线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Radar Axis Labels"
+msgstr "雷达图轴刻度线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Series Lines"
+msgstr "系列线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Up Bars"
+msgstr "涨柱线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Corners"
+msgstr "角"
+
+#. Translators: A type of element in a Microsoft Office chart.
+#. Translators: Data Table will be spoken when chart element Data Table is selected
+msgid "Data Table"
+msgstr "数据表格"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Floor"
+msgstr "取整"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Nothing"
+msgstr "无"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Walls"
+msgstr "背景墙"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Data Label"
+msgstr "数据标签"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Error Bars"
+msgstr "误差线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "X Error Bars"
+msgstr "X误差线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Y Error Bars"
+msgstr "Y误差线"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Shape"
+msgstr "主石形状"
+
+#. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "图表标题： {chartTitle}， 类型： {chartType}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "在这个图表中有1个系列"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "在这个图表总共有%d 个系列"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
+msgid "series {number} {name}"
+msgstr "系列 {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "没有定义系列。"
+
+#. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+msgid "Chart Elements"
+msgstr "图表元素"
+
+#. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+#, python-brace-format
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} 系列{seriesCount}的{seriesIndex}"
+
+#. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, python-brace-format
+msgid "Slice color: {colorName} "
+msgstr "面积颜色： {colorName} "
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
+msgid "no change from point {previousIndex}, "
+msgstr "没有对点{previousIndex}进行修改"
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "从点{previousIndex}增加{incrementValue}，"
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "从点{previousIndex}减小{decrementValue}"
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}："
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "Category {categoryAxisData}: "
+msgstr "类别{categoryAxisData}："
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "value {valueAxisData}"
+msgstr "值{valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr "分数{fractionValue:.2f}百分比 扇区 {pointCount}的{pointIndex}"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+#, python-brace-format
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr "{segmentType} {pointCount}的{pointIndex}"
+
+#. Translators: Indicates Primary Category Axis
+#, fuzzy
+msgid "Primary Category Axis"
+msgstr "主要页脚"
+
+#. Translators: Indicates Secondary Category Axis
+msgid "Secondary Category Axis"
+msgstr "标示第二分类轴"
+
+#. Translators: Indicates Primary Value Axis
+#, fuzzy
+msgid "Primary Value Axis"
+msgstr "主要页首"
+
+#. Translators: Indicates Secondary Value Axis
+#, fuzzy
+msgid "Secondary Value Axis"
+msgstr "次要组"
+
+#. Translators: Indicates Primary Series Axis
+#, fuzzy
+msgid "Primary Series Axis"
+msgstr "主要页脚"
+
+#. Translators: Indicates Secondary Series Axis
+#, fuzzy
+msgid "Secondary Series Axis"
+msgstr "次要组"
+
+#. Translators: the title of a chart axis
+#, python-brace-format
+msgid " title: {axisTitle}"
+msgstr " title: {axisTitle}"
+
+#. Translators: Indicates that trendline type is Exponential
+msgid "Exponential"
+msgstr "指数"
+
+#. Translators: Indicates that trendline type is Linear
+#, fuzzy
+msgid "Linear"
+msgstr "折线图"
+
+#. Translators: Indicates that trendline type is Logarithmic
+msgid "Logarithmic"
+msgstr "对数"
+
+#. Translators: Indicates that trendline type is Moving Average
+msgid "Moving Average"
+msgstr "移动平均值"
+
+#. Translators: Indicates that trendline type is Polynomial
+msgid "Polynomial"
+msgstr "多项式"
+
+#. Translators: Indicates that trendline type is Power
+msgid "Power"
+msgstr "幂"
+
+#. Translators: Substitute superscript two by square for R square value
+#, fuzzy
+msgid " square "
+msgstr "平方"
+
+#. Translators: Substitute - by minus in trendline equations.
+msgid " minus "
+msgstr "减号"
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid ""
+"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
+"{trendlineLabel} "
+msgstr ""
+"{seriesName} 趋势线类型： {trendlineType}, 名称： {trendlineName}， 标签： "
+"{trendlineLabel} "
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
+msgstr "{seriesName} 趋势线类型： {trendlineType}， 名称： {trendlineName} "
+
+#. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
+msgid "Chart title: {chartTitle}"
+msgstr "图表标题：{chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Office.
+msgid "Untitled chart"
+msgstr "无标题图表"
+
+#. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"图表区域， 高度：{chartAreaHeight}，宽度：{chartAreaWidth}鼎边："
+"{chartAreaTop}，左边： {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Office chart.
+msgid "Chart area "
+msgstr "图表区域"
+
+#. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"区域面积，内高：{plotAreaInsideHeight:.0f}，内宽：{plotAreaInsideWidth:.0f}内"
+"鼎边： {plotAreaInsideTop:.0f}，内左边：{plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Office chart.
+msgid "Plot area "
+msgstr "面积区域"
+
+#. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "系列{seriesName}的图例条目{seriesCount}的{seriesIndex} "
+
+#. Translators: the legend entry for a chart in Microsoft Office
+#, python-brace-format
+msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
+msgstr "Legend entry {legendEntryIndex} of {legendEntryCount}"
+
+#. Translators: Details about a legend key for a series in a Microsoft office chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "系列{seriesName}的图例项标示{seriesCount}的{seriesIndex}"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
@@ -9124,15 +10002,6 @@ msgstr "表格(&S)"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start}到{end}"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr "无法设置标题。请在“文档格式”对话框起用“读出表格序号”选项。"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -9344,661 +10213,6 @@ msgstr "{desc} 右上和右下对角线"
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Area"
-msgstr "三维区域"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Area"
-msgstr "三维堆积区域"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Area"
-msgstr "100%堆积区域"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Bar"
-msgstr "三维簇状条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Bar"
-msgstr "三维堆积条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Bar"
-msgstr "三维100%堆积条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Column"
-msgstr "三维柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Column"
-msgstr "三维簇状柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Column"
-msgstr "三维堆积柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Column"
-msgstr "三维100%堆积柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Line"
-msgstr "三维折线图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Pie"
-msgstr "三维饼图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded 3D Pie"
-msgstr "分离形三维饼图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Area"
-msgstr "区域"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Area"
-msgstr "堆积区"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Bar"
-msgstr "簇状条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bar of Pie"
-msgstr "复合条饼图    "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Bar"
-msgstr "堆积条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Bar"
-msgstr "100%堆积条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble"
-msgstr "气泡图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble with 3D effects"
-msgstr "三维效果气泡图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Column"
-msgstr "簇状柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Column"
-msgstr "堆积柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Column"
-msgstr "100%堆积柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Bar"
-msgstr "簇状圆锥条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Bar"
-msgstr "堆积圆锥条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Bar"
-msgstr "100%堆积圆锥条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cone Column"
-msgstr "三维圆锥柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Column"
-msgstr "簇状圆锥柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Column"
-msgstr "堆积圆锥柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Column"
-msgstr "100%堆积圆锥柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cylinder Bar"
-msgstr "簇状圆柱条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cylinder Bar"
-msgstr "堆积圆柱条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Bar"
-msgstr "100%堆积圆柱条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cylinder Column"
-msgstr "三维圆柱柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Column"
-msgstr "100%堆积圆柱柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Doughnut"
-msgstr "圆环图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Doughnut"
-msgstr "分离型圆环图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line"
-msgstr "折线图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line with Markers"
-msgstr "数据标记折线图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line with Markers"
-msgstr "数据标记堆积折线图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line with Markers"
-msgstr "100%数据标记堆积折线图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line"
-msgstr "堆积折线图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line"
-msgstr "100%堆积折线图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie"
-msgstr "饼图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Pie"
-msgstr "分离型饼图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie of Pie"
-msgstr "复合饼图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Bar"
-msgstr "簇状锥形条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Bar"
-msgstr "堆积锥形条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Bar"
-msgstr "100%堆积锥形条形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Pyramid Column"
-msgstr "三维锥形柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Column"
-msgstr "簇状锥形柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Column"
-msgstr "堆积锥形柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Column"
-msgstr "100%锥形柱形图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar"
-msgstr "雷达图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Filled Radar"
-msgstr "填充雷达图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar with Data Markers"
-msgstr "数据标记雷达图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "High-Low-Close"
-msgstr "盘高-盘低-收盘股价图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Open-High-Low-Close"
-msgstr "开盘-盘高-盘低-收盘股价图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-High-Low-Close"
-msgstr "成交量-盘高-盘低-收盘股价图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-Open-High-Low-Close"
-msgstr "成交量-开盘-盘高-盘低-收盘股价图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface"
-msgstr "三维曲面图    "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View)"
-msgstr "曲面图（俯视图）"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View wireframe)"
-msgstr "曲面图（俯视框架图）"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface (wireframe)"
-msgstr "三维曲面图（框架图）"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter"
-msgstr "散点图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines"
-msgstr "带平滑线的散点图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines and No Data Markers"
-msgstr "没有标记的带平滑线散点图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines"
-msgstr "带直线的散点图"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "没有标记的带直线散点图"
-
-#. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
-msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "图表标题： {chartTitle}， 类型： {chartType}"
-
-#. Translators: Reported when there is no title for an axis in a chart.
-msgid "Not defined"
-msgstr "没有定义"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The category axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Category"
-msgstr "类别"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The value axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Value"
-msgstr "值"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The series axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Series"
-msgstr "系列"
-
-#. Translators: Message reporting the type and title of an axis in a chart.
-#. For example, this might report "Category axis is month"
-#, python-brace-format
-msgid "{axisName} Axis is {axisTitle}"
-msgstr "{axisName}的轴是 {axisTitle}"
-
-#. Translators: Indicates that there is 1 series in a chart.
-msgid "There is 1 series in this chart"
-msgstr "在这个图表中有1个系列"
-
-#. Translators: Indicates the number of series in a chart where there are multiple series.
-#, python-format
-msgid "There are total %d series in this chart"
-msgstr "在这个图表总共有%d 个系列"
-
-#. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
-msgid "series {number} {name}"
-msgstr "系列 {number} {name}"
-
-#. Translators: Indicates that there are no series in a chart.
-msgid "No Series defined."
-msgstr "没有定义系列。"
-
-#. Translators: A slice in a pie chart.
-msgid "slice"
-msgstr "扇区"
-
-#. Translators: A column in a column chart.
-msgctxt "chart"
-msgid "column"
-msgstr "列"
-
-#. Translators: A data point in a line chart.
-msgid "data point"
-msgstr "数据点"
-
-#. Translators: A segment of a chart for charts which don't have a specific name for segments.
-msgid "item"
-msgstr "项目"
-
-#, python-brace-format
-msgid "Series color: {colorName} "
-msgstr "系列颜色： {colorName} "
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Display Unit Label"
-msgstr "显示单元标签"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Major Gridlines"
-msgstr "主要网格线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Minor Gridlines"
-msgstr "次要网格线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Drop Zone"
-msgstr "透视图表拖放区"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Field Button"
-msgstr "透视图表填充按钮"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Down Bars"
-msgstr "跌柱线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Drop Lines"
-msgstr "垂直线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Hi Lo Lines"
-msgstr "涨跌线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Radar Axis Labels"
-msgstr "雷达图轴刻度线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Series Lines"
-msgstr "系列线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Up Bars"
-msgstr "涨柱线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Corners"
-msgstr "角"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Table"
-msgstr "数据表格"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Floor"
-msgstr "取整"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Nothing"
-msgstr "无"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Walls"
-msgstr "背景墙"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Label"
-msgstr "数据标签"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Error Bars"
-msgstr "误差线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "X Error Bars"
-msgstr "X误差线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Y Error Bars"
-msgstr "Y误差线"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Shape"
-msgstr "主石形状"
-
-#. Translators: Details about a series in a chart.
-#. For example, this might report "foo series 1 of 2"
-#, python-brace-format
-msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "{seriesName} 系列{seriesCount}的{seriesIndex}"
-
-#. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
-msgid "no change from point {previousIndex}, "
-msgstr "没有对点{previousIndex}进行修改"
-
-#. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "从点{previousIndex}增加{incrementValue}，"
-
-#. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
-msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "从点{previousIndex}减小{decrementValue}"
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}："
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "Category {categoryAxisData}: "
-msgstr "类别{categoryAxisData}："
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{valueAxisTitle} {valueAxisData}"
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "value {valueAxisData}"
-msgstr "值{valueAxisData}"
-
-#. Translators: Details about a slice of a pie chart.
-#. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
-msgid ""
-" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr "分数{fractionValue:.2f}百分比 扇区 {pointCount}的{pointIndex}"
-
-#. Translators: Details about a segment of a chart.
-#. For example, this might report "column 1 of 5"
-#, python-brace-format
-msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr "{segmentType} {pointCount}的{pointIndex}"
-
-#. Translators: The primary axis group in a Microsoft Excel chart.
-msgid "Primary"
-msgstr "主要组"
-
-#. Translators: The secondary axis group in a Microsoft Excel chart.
-msgid "Secondary"
-msgstr "次要组"
-
-#. Translators: Details about an axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr "图表轴，类型：{axisType}，组：{axisGroup}，标题：{axisTitle}"
-
-#. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "图表轴，类型：{axisType}，组：{axisGroup}"
-
-#. Translators: Indicates a chart axis title in Microsoft Excel.
-msgid "Chart axis title"
-msgstr "图表轴标题"
-
-#. Translators: Indicates a trendline in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "trendline"
-msgstr "趋势线"
-
-#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-msgid " squared "
-msgstr "平方"
-
-#. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
-msgid "Chart title: {chartTitle}"
-msgstr "图表标题：{chartTitle}"
-
-#. Translators: Indicates an untitled chart in Microsoft Excel.
-msgid "Untitled chart"
-msgstr "无标题图表"
-
-#. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
-"{chartAreaTop}, left: {chartAreaLeft}"
-msgstr ""
-"图表区域， 高度：{chartAreaHeight}，宽度：{chartAreaWidth}鼎边："
-"{chartAreaTop}，左边： {chartAreaLeft}"
-
-#. Translators: Indicates the chart area of a Microsoft Excel chart.
-msgid "Chart area "
-msgstr "图表区域"
-
-#. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
-"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
-"{plotAreaInsideLeft:.0f}"
-msgstr ""
-"区域面积，内高：{plotAreaInsideHeight:.0f}，内宽：{plotAreaInsideWidth:.0f}内"
-"鼎边： {plotAreaInsideTop:.0f}，内左边：{plotAreaInsideLeft:.0f}"
-
-#. Translators: Indicates the plot area of a Microsoft Excel chart.
-msgid "Plot area "
-msgstr "面积区域"
-
-#. Translators: Indicates the legend in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend"
-msgstr "图例"
-
-#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
-msgid "No legend"
-msgstr "没有图例"
-
-#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
-msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "系列{seriesName}的图例条目{seriesCount}的{seriesIndex} "
-
-#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend key for series Temperature 1 of 2"
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
-msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "系列{seriesName}的图例项标示{seriesCount}的{seriesIndex}"
-
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "插入"
@@ -10111,12 +10325,6 @@ msgstr "评论: 由 {author} 在 {date} {text} "
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} by {author} on {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "拼读： {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10152,63 +10360,6 @@ msgstr "%.1f 行"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "表格描述"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "设置行{rowNumber}列{columnNumber}为列标题的开始点"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "行{rowNumber}列{columnNumber}已被设置成列标题的开始单元"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "行{rowNumber}列{columnNumber}已从列标题中移除"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr "无法再列标题找到行{rowNumber}列{columnNumber}"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"按一次，设置此单元以及其右边的单元作为在单元格下方形成的表格的表格行标题，按"
-"两次清除此设置。"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "行{rowNumber}列{columnNumber}作为行标题的开始单元"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "行{rowNumber}列{columnNumber}已设置为行标题的开始单元"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "行{rowNumber}列{columnNumber}已从行标题中移除"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "无法在行标题中找到行{rowNumber}列{columnNumber}"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"按一次，设置此单元作为在其右边和下边形成的表格的表格行标题，按两次清除该设置"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10321,14 +10472,6 @@ msgstr "{offset:.3g} 磅"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 十二点活字"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "没有注释。"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "朗读系统输入焦点所在的注释文本。"
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "1行行间距"
@@ -10341,28 +10484,56 @@ msgstr "双倍行间距"
 msgid "1.5 line spacing"
 msgstr "1.5倍行间距"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "不在表格中"
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "ALVA BC640/680 系列"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "批注(&A)"
+#~ msgid "review"
+#~ msgstr "浏览光标"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "错误(&E)错误"
+#~ msgid "focus"
+#~ msgstr "系统焦点"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
+#~ msgid "B&raille tethered to:"
+#~ msgstr "点字光标跟随到(&R):"
 
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "Not defined"
+#~ msgstr "没有定义"
+
+#~ msgid "Category"
+#~ msgstr "类别"
+
+#~ msgid "Value"
+#~ msgstr "值"
+
+#~ msgid "Series"
+#~ msgstr "系列"
+
+#~ msgid "{axisName} Axis is {axisTitle}"
+#~ msgstr "{axisName}的轴是 {axisTitle}"
+
+#~ msgid "Primary"
+#~ msgstr "主要组"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+#~ msgstr "图表轴，类型：{axisType}，组：{axisGroup}，标题：{axisTitle}"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+#~ msgstr "图表轴，类型：{axisType}，组：{axisGroup}"
+
+#~ msgid "Chart axis title"
+#~ msgstr "图表轴标题"
+
+#~ msgid "trendline"
+#~ msgstr "趋势线"
+
+#~ msgid "Legend"
+#~ msgstr "图例"
+
+#~ msgid "No legend"
+#~ msgstr "没有图例"
+
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "显示 Handy Tech 驱动配置窗口"
