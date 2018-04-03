@@ -279,6 +279,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
 		self.initialCategory = initialCategory
 		self.currentCategory = None
+		self.setPostInitFocus = None
 		# dictionary key is index of category in self.catList, value is the instance. Partially filled, check for KeyError
 		self.catIdToInstanceMap = {}
 		super(MultiCategorySettingsDialog, self).__init__(parent, resizeable=True)
@@ -309,7 +310,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# This list consists of only one column.
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
-		self.catListCtrl.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onCategoryChange)
 
 		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed the maximum size,
 		# its important all items can be accessed visually.
@@ -333,6 +333,16 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			# the ListItem index / Id is used to index categoryClasses, and used as the key in catIdToInstanceMap
 			self.catListCtrl.Append((cls.title,))
 
+		# populate the GUI with the initial category
+		initialCatIndex = 0 if not self.initialCategory else self.categoryClasses.index(self.initialCategory)
+		self._doCategoryChange(initialCatIndex)
+		self.catListCtrl.Select(initialCatIndex)
+		if self.initialCategory:
+			self.setPostInitFocus = self.container.SetFocus
+		else:
+			self.catListCtrl.Focus(initialCatIndex)
+			self.setPostInitFocus = self.catListCtrl.SetFocus
+
 		self.gridBagSizer=gridBagSizer=wx.GridBagSizer(
 			hgap=guiHelper.SPACE_BETWEEN_BUTTONS_HORIZONTAL,
 			vgap=guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL
@@ -353,6 +363,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		sHelper.sizer.Add(gridBagSizer, flag=wx.EXPAND, proportion=1)
 
 		self.container.Layout()
+		self.catListCtrl.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onCategoryChange)
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		self.Bind(EVT_RW_LAYOUT_NEEDED, self._onPanelLayoutChanged)
 
@@ -378,24 +389,27 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		return panel
 
 	def postInit(self):
-		# We only want to select an item when there is no selection yet.
-		# If the execution of this method was caused by an apply, don't override the selection.
-		if self.catListCtrl.GetFirstSelected()!=-1:
-			self.catListCtrl.SetFocus()
-		elif self.initialCategory:
-			index = self.categoryClasses.index(self.initialCategory)
-			self.catListCtrl.Select(index)
-			self.catListCtrl.Focus(index)
-			self.container.SetFocus()
+		# By default after the dialog is created, focus lands on the button group for wx.Dialogs. However this is not where
+		# we wantfocus. We only want to modify focus after creation (makeSettings), but postInit is also called after
+		# onApply, so we reset the setPostInitFocus function.
+		if self.setPostInitFocus:
+			self.setPostInitFocus()
+			self.setPostInitFocus = None
 		else:
-			self.catListCtrl.Select(0)
-			self.catListCtrl.Focus(0)
+			# when postInit is called without a setPostInitFocus ie because onApply was called
+			# then set the focus to the listCtrl. This is a good starting point for a "fresh state"
 			self.catListCtrl.SetFocus()
+
 
 	def onCharHook(self,evt):
 		"""Listens for keyboard input and switches panels for control+tab"""
+		if not self.catListCtrl:
+			# Dialog has not yet been constructed.
+			# Allow another handler to take the event, and return early.
+			evt.Skip()
+			return
 		key = evt.GetKeyCode()
-		listHadFocus = self.catListCtrl and self.catListCtrl.HasFocus()
+		listHadFocus = self.catListCtrl.HasFocus()
 		if evt.ControlDown() and key==wx.WXK_TAB:
 			# Focus the categories list. If we don't, the panel won't hide correctly
 			if not listHadFocus:
@@ -2281,15 +2295,17 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	if winVersion.isUwpOcrAvailable():
 		categoryClasses.append(UwpOcrPanel)
 
-	def onCategoryChange(self,evt):
-		super(NVDASettingsDialog,self).onCategoryChange(evt)
-		if evt.Skipped:
-			return
+	def makeSettings(self, settingsSizer):
+		# Ensure that after the settings dialog is created the name is set correctly
+		super(NVDASettingsDialog, self).makeSettings(settingsSizer)
+		self._doOnCategoryChange()
+
+	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
-		NvdaSettingsDialogActiveConfigProfile=config.conf.profiles[-1].name
-		if not NvdaSettingsDialogActiveConfigProfile or isinstance(self.currentCategory,GeneralSettingsPanel):
+		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
+		if not NvdaSettingsDialogActiveConfigProfile or isinstance(self.currentCategory, GeneralSettingsPanel):
 			# Translators: The profile name for normal configuration
-			NvdaSettingsDialogActiveConfigProfile=_("normal configuration")
+			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
 		self.SetTitle(self._getDialogTitle())
 
 	def _getDialogTitle(self):
@@ -2298,6 +2314,12 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			panelTitle=self.currentCategory.title,
 			configProfile=NvdaSettingsDialogActiveConfigProfile
 		)
+
+	def onCategoryChange(self,evt):
+		super(NVDASettingsDialog,self).onCategoryChange(evt)
+		if evt.Skipped:
+			return
+		self._doOnCategoryChange()
 
 	def Destroy(self):
 		global NvdaSettingsCategoryPanelId, NvdaSettingsDialogActiveConfigProfile
