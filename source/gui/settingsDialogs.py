@@ -82,24 +82,33 @@ class SettingsDialog(wx.Dialog):
 		SettingsDialog._instances.add(obj)
 		return obj
 
-	def __init__(self, parent, multiInstanceAllowed=False):
+	def __init__(self, parent, resizeable=False, multiInstanceAllowed=False):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
+		@param resizeable: True if the settings dialog should be resizable by the user, only set this if
+			you have tested that the components resize correctly.
+		@type resizeable: bool
 		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
 			Note that still only one instance of a particular SettingsDialog subclass may exist at one time.
 		@type multiInstanceAllowed: bool
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		super(SettingsDialog, self).__init__(parent, wx.ID_ANY, self.title)
+		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
+		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(self.settingsSizerOrientation)
 		self.makeSettings(self.settingsSizer)
 
-		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
 		self.mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-		self.mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL|(wx.APPLY if self.hasApplyButton else 0)), border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL|wx.ALIGN_RIGHT)
+		buttonFlags = wx.OK|wx.CANCEL|(wx.APPLY if self.hasApplyButton else 0)
+		self.mainSizer.Add(
+			self.CreateButtonSizer(flags=buttonFlags),
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL|wx.ALIGN_RIGHT
+		)
 		self.mainSizer.Fit(self)
 		self.SetSizer(self.mainSizer)
 
@@ -272,15 +281,17 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.currentCategory = None
 		# dictionary key is index of category in self.catList, value is the instance. Partially filled, check for KeyError
 		self.catIdToInstanceMap = {}
-		super(MultiCategorySettingsDialog, self).__init__(parent)
+		super(MultiCategorySettingsDialog, self).__init__(parent, resizeable=True)
+		self.SetMinSize(self.MIN_SIZE)
+		self.SetInitialSize(self.MIN_SIZE)
 
-	# maximum size for the dialog. This size was chosen as a medium fit, so the
+	# Initial / min size for the dialog. This size was chosen as a medium fit, so the
 	# smaller settings panels are not surrounded by too much space but most of
 	# the panels fit. Vertical scrolling is acceptable. Horizontal scrolling less
 	# so, the width was choosen to eliminate horizontal scroll bars. If a panel
-	# exceeds the MAX_WIDTH a debugWarning will be added to the log.
-	MAX_WIDTH = 750
-	MAX_HEIGHT = 500
+	# exceeds the the initial width a debugWarning will be added to the log.
+	MIN_SIZE = (1000, 600)
+
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.sHelper = sHelper
@@ -288,10 +299,16 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Translators: The label for the list of categories in a multi category settings dialog.
 		categoriesLabelText=_("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
-		self.catListCtrl = wx.ListCtrl(self,style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER,size=(200,300))
+		catListDim = (180, 300)
+		self.catListCtrl = nvdaControls.AutoWidthColumnListCtrl(
+			self,
+			autoSizeColumnIndex=0,
+			size=catListDim,
+			style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER
+		)
 		# This list consists of only one column.
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
-		self.catListCtrl.InsertColumn(0,categoriesLabelText,width=200)
+		self.catListCtrl.InsertColumn(0,categoriesLabelText)
 		self.catListCtrl.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onCategoryChange)
 
 		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed the maximum size,
@@ -300,8 +317,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# property.
 		global NvdaSettingsCategoryPanelId
 		NvdaSettingsCategoryPanelId = wx.NewId()
-		self.container = scrolledpanel.ScrolledPanel(self, id=NvdaSettingsCategoryPanelId, size = (self.MAX_WIDTH,self.MAX_HEIGHT), style = wx.TAB_TRAVERSAL | wx.BORDER_THEME)
-		self.container.SetSize((self.MAX_WIDTH, self.MAX_HEIGHT))
+		self.container = scrolledpanel.ScrolledPanel(
+			parent = self,
+			id = NvdaSettingsCategoryPanelId,
+			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME
+		)
 
 		self.containerSizer = wx.BoxSizer(wx.VERTICAL)
 		self.container.SetSizer(self.containerSizer)
@@ -313,15 +333,24 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			# the ListItem index / Id is used to index categoryClasses, and used as the key in catIdToInstanceMap
 			self.catListCtrl.Append((cls.title,))
 
-		gridBagSizer=wx.GridBagSizer(hgap=guiHelper.SPACE_BETWEEN_BUTTONS_HORIZONTAL, vgap=guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
+		self.gridBagSizer=gridBagSizer=wx.GridBagSizer(
+			hgap=guiHelper.SPACE_BETWEEN_BUTTONS_HORIZONTAL,
+			vgap=guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL
+		)
 		# add the label, the categories list, and the settings panel to a 2 by 2 grid.
 		# The label should span two columns, so that the start of the categories list
 		# and the start of the settings panel are at the same vertical position.
 		gridBagSizer.Add(categoriesLabel, pos=(0,0), span=(1,2))
 		gridBagSizer.Add(self.catListCtrl, pos=(1,0), flag=wx.EXPAND)
-		gridBagSizer.Add(self.container, pos=(1,1))
-		gridBagSizer.AddGrowableCol(1)
-		sHelper.sizer.Add(gridBagSizer)
+		gridBagSizer.Add(self.container, pos=(1,1), flag=wx.EXPAND)
+		# Make the row with the listCtrl and settings panel grow vertically.
+		gridBagSizer.AddGrowableRow(1)
+		# Make the columns with the listCtrl and settings panel grow horizontally.
+		# They should grow 1:20, since the settings panel is much more important, and already wider
+		# than the listCtrl.
+		gridBagSizer.AddGrowableCol(0, proportion=1)
+		gridBagSizer.AddGrowableCol(1, proportion=20)
+		sHelper.sizer.Add(gridBagSizer, flag=wx.EXPAND, proportion=1)
 
 		self.container.Layout()
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
@@ -338,11 +367,14 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			panel.Hide()
 			self.containerSizer.Add(panel, flag=wx.ALL, border=guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 			self.catIdToInstanceMap[catId] = panel
-			if panel.Size[0] > self.MAX_WIDTH and gui._isDebug():
+			panelWidth = panel.Size[0]
+			availableWidth = self.containerSizer.GetSize()[0]
+			if panelWidth > availableWidth and gui._isDebug():
 				log.debugWarning(
-						"Panel width ({1}) too large for: {0} Try to reduce the width of this panel, or increase MultiCategorySettingsDialog.MAX_WIDTH"
-						.format(cls, panel.Size[0])
-						)
+					("Panel width ({1}) too large for: {0} Try to reduce the width of this panel, or increase width of " +
+					 "MultiCategorySettingsDialog.MIN_SIZE"
+					).format(cls, panel.Size[0])
+				)
 		return panel
 
 	def postInit(self):
@@ -391,12 +423,17 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# erase the old contents and must be redrawn
 		self.container.Refresh()
 
-	def _doCategoryChange(self, oldCat, newCatId):
+	def _doCategoryChange(self, newCatId):
+		oldCat = self.currentCategory
 		# Freeze and Thaw are called to stop visual artefacts while the GUI
 		# is being rebuilt. Without this, the controls can sometimes be seen being
 		# added.
 		self.container.Freeze()
-		newCat = self._getCategoryPanel(newCatId)
+		try:
+			newCat = self._getCategoryPanel(newCatId)
+		except ValueError as e:
+			newCatTitle = self.catListCtrl.GetItemText(newIndex)
+			log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
 		if oldCat:
 			oldCat.onPanelDeactivated()
 		self.currentCategory = newCat
@@ -410,15 +447,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.SetLabel(_("%s Settings Category")%newCat.title)
 		self.container.Thaw()
 
-	def onCategoryChange(self,evt):
-		index = evt.GetIndex()
-		oldCat = self.currentCategory
-		if not oldCat or index != self.categoryClasses.index(oldCat.__class__):
-			try:
-				self._doCategoryChange(oldCat, index)
-			except ValueError as e:
-				newCatTitle = self.catListCtrl.GetItemText(index)
-				log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
+	def onCategoryChange(self, evt):
+		currentCat = self.currentCategory
+		newIndex = evt.GetIndex()
+		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
+			self._doCategoryChange(newIndex)
+		else:
+			evt.Skip()
 
 	def onOk(self,evt):
 		for panel in self.catIdToInstanceMap.itervalues():
