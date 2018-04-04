@@ -115,8 +115,11 @@ def getAvailableLanguages(presentational=False):
 	d=[]
 	for i in l:
 		desc=getLanguageDescription(i)
-		label="%s, %s"%(desc,i) if desc else i
-		d.append(label)
+		if desc and presentational:
+			# #7284: just add language description.
+			d.append(desc)
+		else:
+			d.append("%s, %s"%(desc,i) if desc else i)
 	#Prepare a zipped view of language codes and descriptions.
 	# #7284: especially for sorting by description.
 	langs = zip(l,d)
