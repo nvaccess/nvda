@@ -45,7 +45,7 @@ class NvdaSettingsCategoryPanel(IAccessible):
 	@classmethod
 	def _handlePossibleProfileSwitch(cls):
 		from gui.settingsDialogs import NvdaSettingsDialogActiveConfigProfile as newProfile
-		if (cls.oldProfile and newProfile and newProfile != cls.oldProfile:
+		if (cls.oldProfile and newProfile and newProfile != cls.oldProfile):
 			# Translators: A message announcing what configuration profile is currently being edited.
 			speech.speakMessage(_("Editing profile {profile}").format(profile=newProfile))
 		cls.oldProfile = newProfile
