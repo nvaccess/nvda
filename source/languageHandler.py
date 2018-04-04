@@ -1,6 +1,6 @@
 #languageHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2016 NV access Limited, Joseph Lee
+#Copyright (C) 2007-2018 NV access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -94,8 +94,10 @@ def getLanguageDescription(language):
 		}.get(language,None)
 	return desc
 
-def getAvailableLanguages():
+def getAvailableLanguages(presentational=False):
 	"""generates a list of locale names, plus their full localized language and country names.
+	@param presentational: whether this is meant to be shown alphabetically by language description
+	@type presentational: bool
 	@rtype: list of tuples
 	"""
 	#Make a list of all the locales found in NVDA's locale dir
@@ -111,12 +113,16 @@ def getAvailableLanguages():
 		desc=getLanguageDescription(i)
 		label="%s, %s"%(desc,i) if desc else i
 		d.append(label)
+	#Prepare a zipped view of language codes and descriptions.
+	# #7284: especially for sorting by description.
+	langs = zip(l,d)
+	if presentational:
+		langs.sort(key=lambda lang: lang[1])
 	#include a 'user default, windows' language, which just represents the default language for this user account
-	l.append("Windows")
-	# Translators: the label for the Windows default NVDA interface language.
-	d.append(_("User default"))
-	#return a zipped up version of both the lists (a list with tuples of locale,label)
-	return zip(l,d)
+	langs.append(("Windows",
+		# Translators: the label for the Windows default NVDA interface language.
+		_("User default")))
+	return langs
 
 def makePgettext(translations):
 	"""Obtaina  pgettext function for use with a gettext translations instance.
