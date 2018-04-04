@@ -4,6 +4,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+"""Language and localization support subsystem.
+This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
+"""
+
 import __builtin__
 import os
 import sys
