@@ -289,7 +289,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	# Initial / min size for the dialog. This size was chosen as a medium fit, so the
 	# smaller settings panels are not surrounded by too much space but most of
 	# the panels fit. Vertical scrolling is acceptable. Horizontal scrolling less
-	# so, the width was choosen to eliminate horizontal scroll bars. If a panel
+	# so, the width was chosen to eliminate horizontal scroll bars. If a panel
 	# exceeds the the initial width a debugWarning will be added to the log.
 	MIN_SIZE = (1000, 600)
 
@@ -439,15 +439,16 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def _doCategoryChange(self, newCatId):
 		oldCat = self.currentCategory
-		# Freeze and Thaw are called to stop visual artefacts while the GUI
+		# Freeze and Thaw are called to stop visual artifact's while the GUI
 		# is being rebuilt. Without this, the controls can sometimes be seen being
 		# added.
 		self.container.Freeze()
 		try:
 			newCat = self._getCategoryPanel(newCatId)
 		except ValueError as e:
-			newCatTitle = self.catListCtrl.GetItemText(newIndex)
+			newCatTitle = self.catListCtrl.GetItemText(newCatId)
 			log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
+			return
 		if oldCat:
 			oldCat.onPanelDeactivated()
 		self.currentCategory = newCat
