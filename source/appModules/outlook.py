@@ -41,6 +41,34 @@ silentMessageClasses = [
 #: Type: float
 SECONDS_PER_DAY = 86400.0
 
+oleFlagIconLabels={
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	1:_("purple flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	2:_("Orange flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	3:_("Green flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	4:_("Yellow flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	5:_("Blue flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	6:_("Red flag"),
+}
+
+importanceLabels={
+	# Translators: for a high importance email
+	2:_("high importance"),
+	# Translators: For a low importance email
+	0:_("low importance"),
+}
+
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
 
@@ -421,6 +449,24 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				messageClass=selection.messageClass
 			except COMError:
 				messageClass=None
+			try:
+				flagIcon=selection.flagIcon
+			except COMError:
+				flagIcon=0
+			flagIconLabel=oleFlagIconLabels.get(flagIcon)
+			if flagIconLabel: textList.append(flagIconLabel)
+			try:
+				attachmentCount=selection.attachments.count
+			except COMError:
+				attachmentCount=0
+			# Translators: when an email has attachments
+			if attachmentCount>0: textList.append(_("has attachment"))
+			try:
+				importance=selection.importance
+			except COMError:
+				importance=1
+			importanceLabel=importanceLabels.get(importance)
+			if importanceLabel: textList.append(importanceLabel)
 			if self.appModule.outlookVersion<15:
 				# Translators: when an email is unread
 				if unread: textList.append(_("unread"))
@@ -447,32 +493,18 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
-		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.ContentViewCondition
+		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		if not cachedChildren:
-			# GetCachedChildren returns null if there are no children.
+			# There are no children
 			# This is unexpected here.
-			log.debugWarning("Unable to get relevant children for UIAGridRow", exc_info=True)
+			log.debugWarning("Unable to get relevant children for UIAGridRow", stack_info=True)
 			return super(UIAGridRow, self).name
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
-			isFlag = e.cachedClassName=="FlagField"
-			if isFlag:
-				flagIcon=0
-				if selection:
-					try:
-						flagIcon=selection.flagIcon
-					except COMError:
-						pass
-				if not flagIcon:
-					# This message has no flag.
-					# Filter the flag field, as it provides redundant information.
-					# Ignore flags if the object model couldn't be accessed.
-					continue
 			name=e.cachedName
 			columnHeaderTextList=[]
-			# The column header for flags is redundant.
-			if name and config.conf['documentFormatting']['reportTableHeaders'] and not isFlag:
+			if name and config.conf['documentFormatting']['reportTableHeaders']:
 				columnHeaderItems=e.getCachedPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId,True)
 			else:
 				columnHeaderItems=None
@@ -487,13 +519,8 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			else:
 				text=name
 			if text:
-				if isFlag:
-					# At least Outlook 2016 seems to have a bug where it is not possible to reorder the flag field in a view.
-					# Since flags are considered important, announce them as early as possible.
-					textList.insert(0, text)
-				else:
-					text+=u","
-					textList.append(text)
+				text+=u","
+				textList.append(text)
 		return " ".join(textList)
 
 	value=None
