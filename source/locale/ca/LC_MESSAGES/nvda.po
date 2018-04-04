@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 00:10+1000\n"
+"POT-Creation-Date: 2018-02-09 14:17+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
@@ -581,14 +581,12 @@ msgid "automatically"
 msgstr "automàtic"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-#, fuzzy
 msgid "to focus"
-msgstr "Sense focus"
+msgstr "cap al focus"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-#, fuzzy
 msgid "to review"
-msgstr "Revisió de text"
+msgstr "per revisar"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -1629,9 +1627,8 @@ msgstr "Tipus:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#, fuzzy
 msgid "Filt&er by:"
-msgstr "&Filtra per:"
+msgstr "Filtra p&er:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -2847,19 +2844,18 @@ msgid "moves to the previous table column"
 msgstr "salta a la columna anterior de la taula"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables off"
-msgstr "Desactiva l'informe de les taules"
+msgstr "No incloguis les taules de disposició"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables on"
-msgstr "Activa l'informe de les taules"
+msgstr "Inclou les taules de disposició"
 
 #. Translators: Input help mode message for include layout tables command.
-#, fuzzy
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "Activa i desactiva la verbalització de les taules"
+msgstr ""
+"Activa i desactiva la verbalització de les taules de disposició en el mode "
+"de navegació"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -4965,10 +4961,9 @@ msgstr "Decàgon"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Diagonal stripe"
-msgstr "franja en diagonal"
+msgstr "Franja en diagonal"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7154,8 +7149,29 @@ msgid "off"
 msgstr "desactivat"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "sèries ALVA BC640/680 "
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Convertidor Optelec ALVA 6 series/protocol"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Port Bluetooth: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "No se suporta simulació del teclat HID"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "Simulació de teclat HID activada"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "Simulació de teclat HID desactivada"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "Activa i desactiva el mode de simulació del teclat HID"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7181,6 +7197,19 @@ msgstr "sèries HumanWare Brailliant BI/B"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Terminal EcoBraille"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Línies braille Eurobraille Esys/Esytime/Iris"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr ""
+"La simulació de l'entrada de dades amb el teclat HID no es troba disponible."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Activa i desactiva la simulació del teclat HID"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7211,9 +7240,8 @@ msgid "Toggle braille input"
 msgstr "Activa i desativa l'entrada braille"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
-msgstr "Sèries HIMS Braille Sense/Braille EDGE"
+msgstr "Sèries HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7359,9 +7387,8 @@ msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Canvia l'infome de la forma del ratolí i de l'objecte sota el ratolí"
 
 #. Translators: The label for the menu item to open Touch Interaction dialog.
-#, fuzzy
 msgid "&Touch interaction..."
-msgstr "Diccionari de &veus..."
+msgstr "In&teracció tàctil..."
 
 #. Translators: tooltip for touch interaction settings item.
 msgid "Change how NVDA interacts with the touchscreen"
@@ -9077,9 +9104,8 @@ msgid "Show &messages indefinitely"
 msgstr "Mostra els &missatges indefinidament"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#, fuzzy
 msgid "Tether B&raille:"
-msgstr "SuperBraille"
+msgstr "Segueix B&raille:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9179,9 +9205,8 @@ msgstr ""
 "és només de lectura."
 
 #. Translators: This is the label for the touch interaction settings dialog.
-#, fuzzy
 msgid "Touch Interaction"
-msgstr "Surt de la interacció amb el contingut matemàtic"
+msgstr "Interacció tàctil"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings dialog.
@@ -9384,14 +9409,14 @@ msgid "&Errors"
 msgstr "&Errors"
 
 #. Translators: The label shown for an insertion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "insertion: {text}"
-msgstr "error ortogràfic: {text}"
+msgstr "inserció: {text}"
 
 #. Translators: The label shown for a deletion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "deletion: {text}"
-msgstr "error ortogràfic: {text}"
+msgstr "eliminació: {text}"
 
 #. Translators: The general label shown for track changes
 #, python-brace-format
@@ -9399,14 +9424,14 @@ msgid "track change: {text}"
 msgstr "canvi de seguiment: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
-msgstr "comentari: {text} per {author} el {date}"
+msgstr "comentari: {comment} per {author} el {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment} by {author} on {date}"
-msgstr "comentari: {text} per {author} el {date}"
+msgstr "{comment} per {author} el {date}"
 
 msgid "Desktop"
 msgstr "Escriptori"
@@ -9962,48 +9987,41 @@ msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} de {pointCount}"
 
 #. Translators: Indicates Primary Category Axis
-#, fuzzy
 msgid "Primary Category Axis"
-msgstr "Peu de pàgina principal"
+msgstr "Eix de la categoria princial"
 
 #. Translators: Indicates Secondary Category Axis
-#, fuzzy
 msgid "Secondary Category Axis"
-msgstr "Categoria {categoryAxisData}: "
+msgstr "Eix de la categoria secundària"
 
 #. Translators: Indicates Primary Value Axis
-#, fuzzy
 msgid "Primary Value Axis"
-msgstr "Capçalera principal"
+msgstr "Valor de l'eix princial"
 
 #. Translators: Indicates Secondary Value Axis
-#, fuzzy
 msgid "Secondary Value Axis"
-msgstr "Secundari"
+msgstr "Valor de l'eix secundari"
 
 #. Translators: Indicates Primary Series Axis
-#, fuzzy
 msgid "Primary Series Axis"
-msgstr "Peu de pàgina principal"
+msgstr "Eix de la sèrie principal"
 
 #. Translators: Indicates Secondary Series Axis
-#, fuzzy
 msgid "Secondary Series Axis"
-msgstr "Secundari"
+msgstr "Eix de la sèrie secundària"
 
 #. Translators: the title of a chart axis
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid " title: {axisTitle}"
-msgstr "El títol del gràfic és {chartTitle}"
+msgstr "El títol de l'eix és {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
 msgstr "Exponencial"
 
 #. Translators: Indicates that trendline type is Linear
-#, fuzzy
 msgid "Linear"
-msgstr "Línia"
+msgstr "Lineal"
 
 #. Translators: Indicates that trendline type is Logarithmic
 msgid "Logarithmic"
@@ -10019,7 +10037,7 @@ msgstr "Polinòmica"
 
 #. Translators: Indicates that trendline type is Power
 msgid "Power"
-msgstr ""
+msgstr "Potencial"
 
 #. Translators: Substitute superscript two by square for R square value
 #, fuzzy
@@ -10027,9 +10045,8 @@ msgid " square "
 msgstr "quadrat "
 
 #. Translators: Substitute - by minus in trendline equations.
-#, fuzzy
 msgid " minus "
-msgstr "Resta del teclat numèric"
+msgstr "menys"
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
@@ -10093,9 +10110,9 @@ msgstr ""
 "{seriesCount}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr " {segmentType} {pointIndex} de {pointCount}"
+msgstr "Llegenda {legendEntryIndex} de {legendEntryCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
@@ -10743,6 +10760,9 @@ msgstr "Doble interlineat"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "interlineat de 1.5"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "sèries ALVA BC640/680 "
 
 #~ msgid "review"
 #~ msgstr "revisió"

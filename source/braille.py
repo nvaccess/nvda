@@ -378,8 +378,6 @@ class Region(object):
 		@postcondition: L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are updated and ready for rendering.
 		"""
 		mode = louis.dotsIO
-		if config.conf["braille"]["outputPass1Only"]:
-			mode |= louis.pass1Only
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')
@@ -464,6 +462,8 @@ def getBrailleTextForProperties(**propertyValues):
 	cellCoordsText=propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
+	rowSpan = propertyValues.get("rowSpan")
+	columnSpan = propertyValues.get("columnSpan")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:
@@ -511,17 +511,29 @@ def getBrailleTextForProperties(**propertyValues):
 			textList.append(_('lv %s')%positionInfo['level'])
 	if rowNumber:
 		if includeTableCellCoords and not cellCoordsText: 
-			# Translators: Displayed in braille for a table cell row number.
-			# %s is replaced with the row number.
-			textList.append(_("r%s") % rowNumber)
+			if rowSpan>1:
+				# Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+				# Occurences of %s are replaced with the corresponding row numbers.
+				rowStr = _("r{rowNumber}-{rowSpan}").format(rowNumber=rowNumber,rowSpan=rowNumber+rowSpan-1)
+			else:
+				# Translators: Displayed in braille for a table cell row number.
+				# %s is replaced with the row number.
+				rowStr = _("r{rowNumber}").format(rowNumber=rowNumber)
+			textList.append(rowStr)
 	if columnNumber:
 		columnHeaderText = propertyValues.get("columnHeaderText")
 		if columnHeaderText:
 			textList.append(columnHeaderText)
 		if includeTableCellCoords and not cellCoordsText:
-			# Translators: Displayed in braille for a table cell column number.
-			# %s is replaced with the column number.
-			textList.append(_("c%s") % columnNumber)
+			if columnSpan>1:
+				# Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+				# Occurences of %s are replaced with the corresponding column numbers.
+				columnStr = _("c{columnNumber}-{columnSpan}").format(columnNumber=columnNumber,columnSpan=columnNumber+columnSpan-1)
+			else:
+				# Translators: Displayed in braille for a table cell column number.
+				# %s is replaced with the column number.
+				columnStr = _("c{columnNumber}").format(columnNumber=columnNumber)
+			textList.append(columnStr)
 	current = propertyValues.get('current', False)
 	if current:
 		try:
@@ -628,6 +640,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			"states": states,
 			"rowNumber": field.get("table-rownumber"),
 			"columnNumber": field.get("table-columnnumber"),
+			"rowSpan": field.get("table-rowsspanned"),
+			"columnSpan": field.get("table-columnsspanned"),
 			"includeTableCellCoords": reportTableCellCoords,
 			"current": current,
 		}
@@ -965,6 +979,16 @@ class TextInfoRegion(Region):
 		else:
 			self._brailleInputIndStart = None
 
+	def getTextInfoForBraillePos(self, braillePos):
+		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
+		# pos is relative to the start of the reading unit.
+		# Therefore, get the start of the reading unit...
+		dest = self._readingInfo.copy()
+		dest.collapse()
+		# and move pos characters from there.
+		dest.move(textInfos.UNIT_CHARACTER, pos)
+		return dest
+
 	def routeTo(self, braillePos):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
 			# The user is moving within untranslated braille input.
@@ -989,14 +1013,7 @@ class TextInfoRegion(Region):
 			except NotImplementedError:
 				pass
 			return
-
-		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
-		# pos is relative to the start of the reading unit.
-		# Therefore, get the start of the reading unit...
-		dest = self._readingInfo.copy()
-		dest.collapse()
-		# and move pos characters from there.
-		dest.move(textInfos.UNIT_CHARACTER, pos)
+		dest = self.getTextInfoForBraillePos(braillePos)
 		self._setCursor(dest)
 
 	def nextLine(self):
@@ -1325,6 +1342,15 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			return
 		region, pos = self.bufferPosToRegionPos(pos)
 		region.routeTo(pos)
+
+	def getTextInfoForWindowPos(self, windowPos):
+		pos = self.windowStartPos + windowPos
+		if pos >= self.windowEndPos:
+			return None
+		region, pos = self.bufferPosToRegionPos(pos)
+		if not isinstance(region, TextInfoRegion):
+			return None
+		return region.getTextInfoForBraillePos(pos)
 
 	def saveWindow(self):
 		"""Save the current window so that it can be restored after the buffer is updated.
@@ -1657,6 +1683,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.buffer is self.messageBuffer:
 			self._dismissMessage()
 
+	def getTextInfoForWindowPos(self, windowPos):
+		if self.buffer is not self.mainBuffer:
+			return None
+		return self.buffer.getTextInfoForWindowPos(windowPos)
+
 	def message(self, text):
 		"""Display a message to the user which times out after a configured interval.
 		The timeout will be reset if the user scrolls the display.
@@ -1892,6 +1923,11 @@ class _BgThread:
 		if _BgThread.exit:
 			# func will see this and exit.
 			return
+		if not handler.display:
+			# Sometimes, the executor is triggered when a display is not fully initialized.
+			# For example, this happens when handling an ACK during initialisation.
+			# We can safely ignore this.
+			return
 		if handler.display._awaitingAck:
 			# Do not write cells when we are awaiting an ACK
 			return
@@ -1931,7 +1967,8 @@ class _BgThread:
 
 #: Maps old braille display driver names to new drivers that supersede old drivers.
 RENAMED_DRIVERS = {
-	"syncBraille":"hims"
+	"syncBraille":"hims",
+	"alvaBC6":"alva"
 }
 
 def initialize():
