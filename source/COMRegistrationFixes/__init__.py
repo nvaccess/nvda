@@ -36,20 +36,20 @@ def registerServer(fileName,wow64=False):
 	else:
 		log.debug("Registered %s"%fileName)
 
-def applyRegistryPatch(fileName):
+def applyRegistryPatch(fileName,wow64=False):
 	"""
 	Applies the registry patch with the given file name
 	using regedit.
 	@ param fileName: the path to the dll
 	@type fileName: str
 	"""
-	regedit=os.path.join(systemRoot,'regedit.exe')
+	regedit=os.path.join(sysWow64 if wow64 else systemRoot,'regedit.exe')
 	try:
 		subprocess.check_call([regedit,'/s',fileName])
 	except subprocess.CalledProcessError as e:
-		log.error("Error applying registry patch: %s, %s"%(fileName,e))
+		log.error("Error applying registry patch: %s with %s, %s"%(fileName,regedit,e))
 	else:
-		log.debug("Applied registry patch: %s"%fileName)
+		log.debug("Applied registry patch: %s with %s"%(fileName,regedit))
 
 def fixCOMRegistrations():
 	"""
@@ -62,7 +62,7 @@ def fixCOMRegistrations():
 	# OLEACC (MSAA) proxies
 	applyRegistryPatch(os.path.join('COMRegistryFixes','oleaccProxy.reg'))
 	if is64bit:
-		applyRegistryPatch(os.path.join('COMRegistryFixes','oleaccProxy64.reg'))
+		applyRegistryPatch(os.path.join('COMRegistryFixes','oleaccProxy.reg'),wow64=True)
 	# IDispatch and other common OLE interfaces
 	registerServer(os.path.join(system32,'oleaut32.dll'))
 	registerServer(os.path.join(system32,'actxprxy.dll'))
