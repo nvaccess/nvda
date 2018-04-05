@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-16 00:10+1000\n"
-"PO-Revision-Date: 2018-03-17 11:33+0530\n"
+"POT-Creation-Date: 2018-03-30 00:10+1000\n"
+"PO-Revision-Date: 2018-04-01 11:31+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -776,18 +776,8 @@ msgstr "பிரெஞ்சு (ஒருங்கிணைந்த) 8 பு
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+msgid "French (unified) grade 2"
 msgstr "பிரெஞ்சு (ஒருங்கிணைந்த) படிநிலை 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "பிரெஞ்சு (கனடா) படிநிலை 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "பிரெஞ்சு (கனடா) படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -886,8 +876,13 @@ msgstr "காஷ்மீரம் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "லித்துவேனியம்"
+msgid "Lithuanian 8 dot"
+msgstr "லித்துவேனியம் 8 புள்ளி"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "லித்துவேனியம் 6 புள்ளி"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -906,8 +901,13 @@ msgstr "மணிப்புரி படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "மங்கோலியன்"
+msgid "Mongolian grade 1"
+msgstr "மங்கோலியம் படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "மங்கோலியம் படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -991,6 +991,11 @@ msgstr "பஞ்சாபி படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "ரோமானியம்"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "கணினிக் குறியீட்டிற்கான ருஷ்ய பிரெயில்"
 
@@ -1043,6 +1048,11 @@ msgstr "தெலுங்கு படிநிலை 1"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "துருக்கிய படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "யுக்ரேனியம்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2734,7 +2744,7 @@ msgstr "கண்டறிக"
 
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
-msgstr "தாங்கள் கண்டறிய விரும்பும் உரையைத் தட்டச்சிடவும்"
+msgstr "தாங்கள் கண்டறிய விரும்பும் உரையைத் தட்டச்சிடுக"
 
 #. Translators: An option in find dialog to perform case-sensitive search.
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
@@ -4147,6 +4157,10 @@ msgstr "பிரெயில் காட்சியமைவை முன்�
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
 "பிரெயில் சிறுகட்டத்திற்குளிருக்கும் பொருளிடம் சுட்டியை நகர்த்தும், அல்லது அப்பொருளை இயக்கும்"
+
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "பிரெயில் சிறுகட்டத்தின் கீழிருக்கும் உரையின் வடிவூட்டத்தை அறிவிக்கிறது"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -6312,14 +6326,21 @@ msgid "Error checking for update."
 msgstr "இற்றாக்கத்திற்குத் துழாவுவதில் பிழை."
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "பிழை"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "என்விடிஏ இற்றாக்கம்"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr "என்விடிஏ பதிப்பு {version} தரவிறக்கப்பட்டு, நிறுவுதலுக்காக காத்திருக்கிறது."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6330,9 +6351,14 @@ msgstr "என்விடிஏ பதிப்பு {version} கிடைப
 msgid "No update available."
 msgstr "இற்றாக்கம் ஏதும் கிடைப்பிலில்லை."
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "தரவிறக்கி நிறுவுக (&I)"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+msgid "&Install NVDA {version}"
+msgstr "என்விடிஏ {version} பதிப்பை நிறுவுக (&I)"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "இற்றாக்கத்தை மீண்டும் தரவிறக்குக (&D)"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6347,6 +6373,22 @@ msgstr "பிறகு நினைவூட்டுக (&L)"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "மூடுக (&C)"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "என்விடிஏ பதிப்பு {version} நிறுவுதலுக்கு ஆயத்தமாக உள்ளது.\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "இற்றாக்கத்தை நிறுவுக (&I)"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "இற்றாக்கத்தை ஒத்திவைக்கவும் (&P)"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "இற்றாக்கத்தை ஒத்திவைக்க இயலவில்லை."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6363,15 +6405,6 @@ msgstr "தரவிறக்கப்படுகிறது"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "இற்றாக்கத்தைத் தரவிறக்குவதில் பிழை."
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "இற்றாக்கம் தரவிறக்கமாகிவிட்டது. இப்பொழுது அது நிறுவப்படும்."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "இற்றாக்கத்தை நிறுவுக"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7154,10 +7187,6 @@ msgstr "பிரெயில் ஏதுமில்லை"
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "பேப்பன்மேயர் பிரெயிலெக்ஸ் புதிய மாதிரிகள்"
 
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "வழியிட்டு அமைவடிவத் தகவலை அறிவிக்கவும்"
-
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
 msgstr "பேப்பன்மேயர் பிரெயிலெக்ஸ் பழைய மாதிரிகள்"
@@ -7484,6 +7513,14 @@ msgstr "தற்போதைய அமைவடிவத்தை nvda.ini க�
 msgid "Donate"
 msgstr "நன்கொடையளியுங்கள் (&D)"
 
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "காத்திருப்பிலிருக்கும் இற்றாக்கத்தை நிறுவுக (&U)"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "முன்னதாக தரவிறக்கப்பட்டிருக்கும் என்விடிஏவின் இற்றாக்கத்தை இயக்குக"
+
 msgid "E&xit"
 msgstr "வெளியேறுக (&X)"
 
@@ -7588,6 +7625,10 @@ msgstr "கூட்டுக்கூறுகள் முடக்கப்�
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "வழுநீக்கப் பதிவு செயற்படுத்தப்பட்ட நிலையில் மறுதுவக்குக"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "காத்திருப்பிலிருக்கும் இற்றாக்கத்தை நிறுவுக"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8237,6 +8278,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "இற்றாக்கங்களுக்குத் தானாகத் துழாவுக (&U)"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "துவக்கப்படும்பொழுது காத்திருப்பிலிருக்கும் இற்றாக்கத்தைத் தெரியப்படுத்துக (&P)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -10562,6 +10608,24 @@ msgstr "இரட்டை வரி இடைவெளி"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ஒன்றரை வரி இடைவெளி"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "பிரெஞ்சு (கனடா) படிநிலை 1"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "பிரெஞ்சு (கனடா) படிநிலை 2"
+
+#~ msgid "Mongolian"
+#~ msgstr "மங்கோலியன்"
+
+#~ msgid "Download and &install update"
+#~ msgstr "தரவிறக்கி நிறுவுக (&I)"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "இற்றாக்கம் தரவிறக்கமாகிவிட்டது. இப்பொழுது அது நிறுவப்படும்."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "வழியிட்டு அமைவடிவத் தகவலை அறிவிக்கவும்"
 
 #~ msgid "r%s"
 #~ msgstr "கி%s"

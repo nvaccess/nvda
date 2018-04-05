@@ -10,11 +10,19 @@ Ce este nou în NVDA
 - lățimea și lungimea celulelor tabelului sunt acum raportată atât vocal, cât și în braille. (#2642)
 - Comenzile de navigare prin tabel ale NVDA-ului sunt suportate acum în Google Docs ( cu modul braille activat). (#7946)
 - Abilitatea de a citi și de a naviga prin tabelele  din Kindle pentru PC. (#7977)
-- A fost introdus suport vir USB și Bluetooth pentru display-urile braille BrailleNote touch and Brailliant BI 14. (#6524)
+- A fost introdus suportul prin USB și Bluetooth pentru display-urile braille BrailleNote Touch și Brailliant BI 14. (#6524)
+- În Windows 10 Fall Creators Update și mai nou, NVDA poate anunța notificări de la aplicații precum Calculator și Windows Store. (#8045)
+- Noi tabele de traducere braille: lituaniană 8 puncte, ucraineană, mongolă grad 2. (#7839)
+- S-a adăugat un script pentru raportarea informațiilor de formatare pentru un text de sub o celulă braille specifică. (#7106)
+- La actualizarea NVDA, puteți să amânați instalarea noii versiuni și s-o realizați mai târziu. (#4263)
 
 
 == Modificări ==
 - Coloana de stare din administratorul de suplimente a fost modificată astfel încât să indice dacă suplimentul este activat sau dezactivat, mai degrabă decât indicarea faptului că acesta rulează sau că-i suspendat. (#7929)
+- S-a actualizat traducătorul braille liblouis la 3.5.0. (#7839)
+- Tabelul braille lituanian a fost redenumit în lituaniană 6 puncte pentru a se evita confuzia cu noul tabel în 8 puncte. (#7839)
+- Tabelele franceză (Canada) grad 1 și 2 au fost șterse. În schimb, se vor utiliza tabelele franceze (unificate) braille pentru calculator în 6 puncte, respectiv tabelele de gradul 2. (#7839)
+- Butoannele secundare de deplasare de pe afișajele Alva BC6, EuroBraille și Papenmeier raportează acum informații de formatare pentru un text de sub o celulă braille de-a acelui buton. (#7106)
 
 
 == Rezolvări Defecte ==
@@ -23,11 +31,21 @@ Ce este nou în NVDA
 - NVDA nu va mai anunța incorect caracterul final al unui pin de autentificare în Windows 10 în momentul în care calculatorul se deblochează. (#7908)
 - Etichetele casetelor de bifat și ale butoanelor rotative din Chrome și Firefox nu mai sunt raportate de două ori la deplasarea cu tab sau la utilizarea navigării rapide din modul de navigare. (#7960)
 - se manipulează aria-curent cu o valoare de fals ca fiind falsă în loc de o valoare de adevăr (#7892).
+- Sintetizatorul vocilor Windows OneCore nu va mai eșua să se încarce dacă vocea setată a fost dezinstalată. (#7999)
+- Schimbarea vocilor din sintetizatorul OneCore este mult mai rapidă acum. (#7999)
+- S-a reparat ieșirea braille malformată pentru câteva tabele braille, incluzând majusculele din tabelul danez abreviat în 8 puncte. (#7526, #7693)
+- Acum, NVDA poate să raporteze mai multe tipuri de buline în Microsoft Word. (#6778)
+- Apăsarea pe scriptul de raportare a formatării nu mai deplasează incorect poziția de examinare, iar prin urmare, apăsarea lui în mod repetat nu mai dă rezultate diferite. (#7869)
 
 
 == Modificări pentru Dezvoltatori ==
 - Informația dezvoltatorului pentru obiectele UIA conține acum o listă a modelelor UIA disponibile. (#5712)
 - Modulele de aplicație pot acum să forțeze anumite ferestre să folosească mereu UIA implementând metoda isGoodUIAWindow. (#7961)
+- Steagul ascuns "outputPass1Only" din secțiunea braille a configurării a fost șters din nou. Liblouis nu mai suportă ieșirea Pass 1 Only. (#7839)
+
+
+= 2018.1.1 =
+Ei bine, aceasta este o versiune specială de NVDA carre a fost făcută pentru a reflecta repararea unui defect  care ar fi putut să fie în viitoarea versiune de Windows 10, Spring Creators update, alias Windows 10 Redstone 4 sau Windows 10 (versiunea 1803), dacă Microsoft nu l-ar fi reparat într-o versiune de Windows Insider. Acesta făcea ca vocile să vorbească cu un ton mai înalt și cu o viteză mult mai mare decât ar fi trebuit. (#8082)  
 
 
 = 2018.1 =
