@@ -9,12 +9,20 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana, e Tiago Melo 
 == Novas Características ==
 - O intervalo de linhas e colunas para células de tabela agora é anunciado em fala e braille. (#2642)
 - Os comandos do NVDA para navegação em tabela agora são suportados no Google Docs (com o modo braille ativado). (#7946)
-- A capacidade de ler e navegar em tabelas no Kindle para PC. (#7977)
+- Capacidade de ler e navegar em tabelas no Kindle para PC. (#7977)
 - Suporte para as linhas braille BrailleNote touch e Brailliant BI 14 via USB e bluetooth. (#6524)
+- No Windows 10 Fall Creators Update e posterior, o NVDA pode anunciar notificações de aplicativos como a Calculadora e a Windows Store ""[Loja Windows]"". (#8045)
+- Novas tabelas de transcrição braille: lituano de 8 pontos, ucraniano, mongol grau 2. (#7839)
+- Adicionado um script para anunciar informações de formatação do texto em uma célula braille específica. (#7106)
+- Ao atualizar o NVDA, agora é possível postergar a instalação da atualização para um momento posterior de sua preferência. (#4263)
 
 
 == Alterações ==
 - A coluna de status no gerenciador de complementos foi alterada para indicar se o complemento está habilitado ou desativado em vez de executando ou suspenso. (#7929)
+- Transcritor braille liblouis atualizado para 3.5.0. (#7839)
+- A tabela de braille Lituano foi renomeado para Lituano de 6 pontos para evitar confusão com a nova tabela de 8 pontos. (#7839)
+- As tabelas em Francês (Canadá) grau 1 e 2 foram removidas. Em vez disso, as tabelas braille em francês (unificado) de 6 pontos para computador e a Grau 2 serão usadas respectivamente. (#7839)
+- Os botões secundários de rolagem nas linhas braille Alva BC6, EuroBraille e Papenmeier agora anunciam informações de formatação para o texto sob a célula braille desse botão. (#7106)
 
 
 == Correção de Falhas ==
@@ -23,11 +31,21 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana, e Tiago Melo 
 - NVDA não anunciará de forma incorreta o caractere final de um PIN de login do Windows 10 à medida que a máquina desbloqueia. (#7908)
 - Os rótulos das caixas de verificação e dos botões de opção no Chrome e no Firefox não são mais anunciados duas vezes quando teclando tab ou usando a navegação rápida no modo de navegação. (#7960)
 - Manipula aria-current com um valor de falso como falso em vez de verdadeiro (#7892).
+- O driver de sintetizador Windows Onecore Voices não falha mais ao carregar se a voz configurada foi desinstalada. (#7999)
+- Alterar vozes no driver de sintetizador Windows Onecore Voices agora é muito mais rápido. (#7999)
+- Corrigida a saída de braille malformado para várias tabelas braille, incluindo sinais de maiúsculas em braille dinamarquês abreviado de 8 pontos. (#7526, #7693)
+- NVDA agora pode reportar mais tipos de marcadores no Microsoft Word. (#6778)
+- Pressionando o script para anunciar formatação não move mais o reviewPosition ""[posição da exploração]"" incorretamente e, portanto, pressionando-o várias vezes não dá mais resultados diferentes. (#7869)
 
 
 == Alterações Específicas para Desenvolvedores ==
 - A informação do desenvolvedor ""[developer info]"" para objetos UIA agora contém uma lista dos padrões UIA disponíveis. (#5712)
 - Os módulos de aplicativos ""[app modules]"" agora podem forçar certas janelas a usar sempre o UIA implementando o método isGoodUIAWindow. (#7961)
+- O sinalizador ""[flag]"" booleano oculto "outputPass1Only" na seção braille da configuração foi removido novamente. Liblouis não suporta mais saída de só 1 passagem. (#7839)
+
+
+= 2018.1.1 =
+Esta é uma versão especial do NVDA que corrige um erro no driver do sintetizador de fala Windows Onecore, que estava fazendo com que ele falasse com um tom e velocidade mais altos no Windows 10 Redstone 4 (1803). (#8082)
 
 
 = 2018.1 =
