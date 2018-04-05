@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 00:10+1000\n"
-"PO-Revision-Date: 2018-03-21 10:13+0800\n"
+"POT-Creation-Date: 2018-03-30 00:10+1000\n"
+"PO-Revision-Date: 2018-04-02 16:14+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -792,18 +792,8 @@ msgstr "法文統一八點（電腦）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
-msgstr "法文統一二級"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "法文（加拿大）一級"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "法文（加拿大）二級"
+msgid "French (unified) grade 2"
+msgstr "法文統一二級（電腦）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -902,8 +892,13 @@ msgstr "喀什米爾文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "立陶宛文"
+msgid "Lithuanian 8 dot"
+msgstr "立陶宛文八點"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "立陶宛文六點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -922,8 +917,13 @@ msgstr "曼尼普爾文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "蒙古文"
+msgid "Mongolian grade 1"
+msgstr "蒙古文一級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "蒙古文二級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1007,6 +1007,11 @@ msgstr "旁遮普文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "羅馬尼亞文"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "俄文（電腦）"
 
@@ -1059,6 +1064,11 @@ msgstr "泰盧固文一級"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "土耳其文一級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "烏克蘭文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3990,7 +4000,7 @@ msgstr "切換點字游標跟隨系統焦點和檢閱位置"
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr "點字游標跟隨: %s"
+msgstr "點字游標跟隨： %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4015,7 +4025,7 @@ msgstr "點字游標已關閉"
 #. Translators: Reports which braille cursor shape is activated.
 #, python-format
 msgid "Braille cursor %s"
-msgstr "點字游標跟隨 %s"
+msgstr "點字游標型態 %s"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
@@ -4090,6 +4100,10 @@ msgstr "點字游標向後捲動"
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "把游標移到這個點字格或啟動點字格之上的項目"
+
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "報讀點字格上的文字之格式資訊"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -6259,14 +6273,22 @@ msgid "Error checking for update."
 msgstr "檢查更新時發生錯誤。"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "錯誤"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "NVDA更新"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr "NVDA版本 {version} 已下載，有待安裝。"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6278,9 +6300,15 @@ msgstr "NVDA版本{version}已可供使用"
 msgid "No update available."
 msgstr "沒有更新版可供下載。"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "下載並安裝更新(&I)"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "安裝NVDA{version}(&I)"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "重新下載更新(&D)"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6295,6 +6323,23 @@ msgstr "稍後再提醒我 (&L)"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "關閉(&C)"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "NVDA版本{version}已準備好可以安裝。\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "安裝更新(&I)"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "延遲更新(&P)"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "無法延遲更新。"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6311,15 +6356,6 @@ msgstr "下載中"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "下載更新時發生錯誤"
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "更新程式以下載，將開始安裝。"
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "安裝更新"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7110,10 +7146,6 @@ msgstr "不用點顯器"
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX 點字較新模組"
 
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "移至並讀出格式訊息"
-
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
 msgstr "Papenmeier BRAILLEX 點字較舊模組"
@@ -7430,6 +7462,14 @@ msgstr "將現在的設定寫入 nvda.ini 檔案內"
 msgid "Donate"
 msgstr "請贊助"
 
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "安裝有待更新的版本(&U)"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "執行先前已下載的NVDA更新版本"
+
 msgid "E&xit"
 msgstr "結束 (&X)"
 
@@ -7532,6 +7572,10 @@ msgstr "重新啟動並停用附加元件"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "在啟用除錯事件紀錄下重新啟動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "安裝有待更新的版本"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8162,6 +8206,11 @@ msgstr "將目前儲存的設定套用到登入或其他安全畫面(需要系�
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "自動檢查NVDA的更新(&U)"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "是否通知當啟動時有待更新的版本(&P)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -10517,6 +10566,24 @@ msgstr "2倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行高"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "法文（加拿大）一級"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "法文（加拿大）二級"
+
+#~ msgid "Mongolian"
+#~ msgstr "蒙古文"
+
+#~ msgid "Download and &install update"
+#~ msgstr "下載並安裝更新(&I)"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "更新程式以下載，將開始安裝。"
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "移至並讀出格式訊息"
 
 #~ msgid "r%s"
 #~ msgstr "r%s"
