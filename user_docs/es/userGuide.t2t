@@ -933,7 +933,7 @@ Esta opción es una casilla de verificación que, cuando se marca, dice a NVDA q
 
 ==== Mostrar opciones de salida al salir de NVDA ====[GeneralSettingsShowExitOptions]
 Esta opción es una casilla de verificación que te permite elegir si aparece o no un diálogo al salir de NVDA que te pregunta sobre qué acción quieres llebar a cabo.
-Cuando se marque, aparecerá un diálogo al intentar salir de NVDA preguntándote si quieres salir, reiniciar o reiniciar con los complementos deshabilitados.
+Cuando se marque, aparecerá un diálogo al intentar salir de NVDA preguntándote si quieres salir, reiniciar, reiniciar con los complementos deshabilitados o instalar actualizaciones pendientes si las hay.
 Cuando se desmarque, NVDA saldrá inmediatamente.
 
 ==== Reproducir sonidos al iniciar o salir de NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Esta opción sólo está disponible para copias instaladas de NVDA.
 ==== Buscar actualizaciones para NVDA automáticamente ====[GeneralSettingsCheckForUpdates]
 Si esto está activado, NVDA buscará automáticamente versiones actualizadas y te informará cuando una actualización esté disponible.
 También puedes buscar actualizaciones manualmente seleccionando Buscar Actualizaciones bajo el menú Ayuda en el menú NVDA.
+
+==== Notificar actualizaciones pendientes al arrancar ====[GeneralSettingsNotifyPendingUpdates]
+Si esto está habilitado, NVDA te informará cuando haya una actualización pendiente al arrancar, ofreciéndote la posibilidad de instalarla.
+También puedes instalar manualmente la actualización pendiente desde el diálogo Salir de NVDA (si está habilitado), desde el menú NVDA, o al realizar una nueva búsqueda desde el menú Ayuda.
 
 +++ Selección de sintetizador (NVDA+control+s) +++[SynthesizerSelection]
 El diálogo Sintetizadores, que se encuentra en "Sintetizadores..." en el menú Preferencias, te permite seleccionar qué sintetizador debería utilizar NVDA para hablar.
@@ -1920,6 +1924,7 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Mover la pantalla braille a la línea siguiente | t4 |
 | Desplazar pantalla braille hacia adelante | t5 o etouch3 |
 | Guiar a la celda braille | sensor |
+| Anunciar formato de texto bajo la celda braille | sensores secundarios |
 | Conmutar la simulación de teclado HID | t1+spEnter |
 | Mover a la línea superior en revisión | t1+t2 |
 | Mover a la línea inferior en revisión | t4+t5 |
@@ -2274,7 +2279,7 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 | Mover al primer objeto contenido | dn2 |
 | Mover al objeto anterior | derecha2 |
 | Mover al siguiente objeto | izquierda2 |
-| Anunciar formato de texto | fila de sensores superior |
+| Anunciar formato de texto bajo la celda braille | fila de sensores superior |
 %kc:endInclude
 
 El modelo Trio tiene cuatro teclas adicionales que están delante del teclado braille.
@@ -2348,7 +2353,7 @@ Dispositivos con EAB:
 | Moverse al primer objeto contenido | dn2 |
 | Moverse al siguiente objeto | left2 |
 | Moverse al objeto anterior | right2 |
-| Anunciar formato de texto | Upper routing strip |
+| Anunciar formato de texto bajo la celda braille | Upper routing strip |
 
 BRAILLEX Tiny:
 || Nombre | Tecla |
@@ -2363,7 +2368,7 @@ BRAILLEX Tiny:
 | Moverse al primer objeto contenido | r1+dn |
 | Moverse al objeto anterior | r1+left |
 | Moverse al siguiente objeto | r1+right |
-| Anunciar formato de texto | reportf |
+| Anunciar formato de texto bajo la celda braille | sensores superiores |
 | Anunciar título | l1+arriba |
 | Anunciar barra de estado | l2+abajo |
 
@@ -2372,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Anunciar carácter actual en revisión | l1 |
 | Activar navegador de objetos actual | l2 |
 | Activar o desactivar seguimiento de braille | r2 |
-| Anunciar formato de texto | reportf |
+| Anunciar formato de texto bajo la celda braille | sensores superior |
 | Mover pantalla braille a la línea anterior| up |
 | Desplazar pantalla braille atrás | left |
 | Desplazar pantalla braille adelante | right |
@@ -2495,7 +2500,8 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Desplazar pantalla braille hacia atrás | switch1-6Izquierda, l1 |
 | Desplazar pantalla braille hacia adelante | switch1-6Derecha, l8 |
 | Mover al foco actual | switch1-6Izquierda+switch1-6Derecha, l1+l8 |
-| Enrutar a la celda braille | sensores, double sensor |
+| Enrutar a la celda braille | sensores |
+| Anunciar formato de texto bajo la celda braille | dobleSensor |
 | Mover a la línea anterior en revisión | joystick1Arriba |
 | Mover a la siguiente línea en revisión | joystick1Abajo |
 | Mover al carácter anterior en revisión | joystick1Izquierda |
