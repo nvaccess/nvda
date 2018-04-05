@@ -268,10 +268,10 @@ class AppModule(appModuleHandler.AppModule):
 			return
 
 		if wClass in ("ForegroundStaging", "LauncherTipWnd", "ApplicationManager_DesktopShellWindow"):
-			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window before and after it appears.
+			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window and foreground staging screen before and after it appears.
 			# This causes NVDA to report "unknown", so ignore it.
 			# We can't do this using shouldAllowIAccessibleFocusEvent because this isn't checked for foreground.
-			# #8137: also seen when opening quick link menu (Windows+X).
+			# #8137: also seen when opening quick link menu (Windows+X) on Windows 8 and later.
 			return
 
 		if wClass == "WorkerW" and obj.role == controlTypes.ROLE_PANE and obj.name is None:
