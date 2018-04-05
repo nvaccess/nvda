@@ -36,9 +36,10 @@ bool error_setNHFP=false;
 //function pointer typedefs for all minHook functions for use with getProcAddress
 typedef MH_STATUS(WINAPI *MH_Initialize_funcType)();
 typedef MH_STATUS(WINAPI *MH_Uninitialize_funcType)();
-typedef MH_STATUS(WINAPI *MH_CreateHook_funcType)(void*,void*,void**);
-typedef MH_STATUS(WINAPI *MH_EnableHook_funcType)(void*);
-typedef MH_STATUS(WINAPI *MH_DisableHook_funcType)(void*);
+typedef MH_STATUS(WINAPI *MH_CreateHook_funcType)(LPVOID,LPVOID,LPVOID*);
+typedef MH_STATUS(WINAPI *MH_EnableHook_funcType)(LPVOID);
+typedef MH_STATUS(WINAPI *MH_DisableHook_funcType)(LPVOID);
+typedef const char*(WINAPI *MH_StatusToString_funcType)(MH_STATUS);
 
 #define defMHFP(funcName) funcName##_funcType funcName##_fp=NULL
 
@@ -55,10 +56,11 @@ defMHFP(MH_Uninitialize);
 defMHFP(MH_CreateHook);
 defMHFP(MH_EnableHook);
 defMHFP(MH_DisableHook);
+defMHFP(MH_StatusToString);
 
  bool apiHook_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
-	int res;
+	MH_STATUS res;
 	wstring dllPath=dllDirectory;
 	dllPath+=L"\\minhook.dll";
 	if((minhookLibHandle=LoadLibrary(dllPath.c_str()))==NULL) {
@@ -78,7 +80,7 @@ defMHFP(MH_DisableHook);
 		return false;
 	}
 	if ((res=MH_Initialize_fp())!=MH_OK) {
-		LOG_ERROR("MH_Initialize failed with " << res);
+		LOG_ERROR("MH_Initialize failed with " << res << " (" << MH_StatusToString_fp(res) <<")");
 		FreeLibrary(minhookLibHandle);
 		minhookLibHandle=NULL;
 		return false;
@@ -104,9 +106,9 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 	}
 	LOG_DEBUG("requesting to hook function " << functionName << " at address 0X" << std::hex << realFunc << " in module " << moduleName << " at address 0X" << moduleHandle << " with  new function at address 0X" << newHookProc);
 	void* origFunc;
-	int res;
+	MH_STATUS res;
 	if((res=MH_CreateHook_fp(realFunc,newHookProc,&origFunc))!=MH_OK) {
-		LOG_ERROR("MH_CreateHook failed with " << res);
+		LOG_ERROR("MH_CreateHook failed with " << res << " (" << MH_StatusToString_fp(res) <<")");
 		FreeLibrary(moduleHandle);
 		return NULL;
 	}
@@ -117,7 +119,7 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 }
 
 bool apiHook_enableHooks() {
-	int res;
+	MH_STATUS res;
 	if(!minhookLibHandle) {
 		LOG_ERROR(L"apiHooks not initialized");
 		return false;
@@ -128,7 +130,7 @@ bool apiHook_enableHooks() {
 }
 
 bool apiHook_terminate() {
-	int res;
+	MH_STATUS res;
 	//If the process is exiting then minHook will have already removed all hooks and unloaded
 	if(isProcessExiting) return true;
 	if(!minhookLibHandle) {
