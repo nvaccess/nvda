@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Joseph Lee
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
