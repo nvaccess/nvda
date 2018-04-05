@@ -1734,7 +1734,7 @@ Ces paquets sont fournis par la communauté et contiennent du code qui peut ajou
 
 Le gestionnaire de modules complémentaires contient une liste affichant tous les modules complémentaires actuellement installés dans votre configuration utilisateur de NVDA.
 Un nom de paquet, la version et l'auteur sont affichés pour chaque module complémentaire, et des informations supplémentaires telles qu'une description et une URL peuvent être affichées en sélectionnant le module complémentaire et en activant le bouton "À propos" du module complémentaire...
-Si une aide est disponible pour le module sélectionné, vous pouvez y accéder en pressant le bouton "Aide du module complémentaire".
+Si une aide est disponible pour le module sélectionné, vous pouvez y accéder en appuyant sur le bouton "Aide du module complémentaire".
 
 Pour télécharger des modules complémentaires mis à disposition par la communauté, cliquez sur le bouton "Obtenir des modules complémentaires".
 Ce bouton ouvre la [page des modules complémentaires NVDA https://addons.nvda-project.org/].
@@ -1757,8 +1757,9 @@ Jusqu'au redémarrage, ce module aura le statut Supprimé dans la liste.
 
 Pour désactiver un module, pressez le bouton désactiver.
 Pour activer un module précédemment désactivé, pressez le bouton activer.
-Vous pouvez désactiver un module si le statut du module indique qu'il est en cours d'exécution ou activé, ou l'activer si le module est suspendu ou désactivé.
-Pour chaque appui sur le bouton Activer/Désactiver, le statut du module change pour indiquer ce qui arrivera au redémarrage de NVDA.
+Vous pouvez désactiver un module si le statut du module indique qu'il est en cours d'exécution ou activé, ou l'activer si le module est désactivé.
+Pour chaque appui sur le bouton Activer/Désactiver, le statut du module change pour indiquer ce qui arrivera quand NVDA redémarrera.
+Si le module a été précédemment désactivé, son statut affichera "activé après redémarrage". Si le module a été précédemment "Activé", son statut affichera "désactivé après redémarrage"
 Comme lorsque vous installez ou supprimez un module, vous devez redémarrer NVDA pour que les changements prennent effet.
 
 Le gestionnaire a également un bouton "Fermer" pour fermer le dialogue.
