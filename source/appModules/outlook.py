@@ -479,7 +479,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				# We only expose the unread state, and message class for non-messages.
 				# The several states are localized and separated by a space.
 				# Example output: 'Meeting request Replied Read'
-				valueParts = self._get_value().split(" ")
+				valueParts = self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId).split(" ")
 				valueCount = len(valueParts)
 				# The last valuePart indicates whether the message is read or unread.
 				# Do not expose the read state
