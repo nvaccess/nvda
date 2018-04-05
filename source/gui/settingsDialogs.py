@@ -54,11 +54,11 @@ class SettingsDialog(wx.Dialog):
 
 	To use this dialog:
 		* Set L{title} to the title of the dialog.
-		* Set L{settingsSizerOrientation} to one of wx.VERTICAL or wx.horizontal to set the orientation of the settings sizer.
-		* Set L{hasApplyButton} to C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
 		* Override L{makeSettings} to populate a given sizer with the settings controls.
-		* Optionally, override L{postInit} to perform actions after the dialog is created, such as setting the focus.
-		* Optionally, extend one or more of L{onOk}, L{onCancel} or L{onApply} to perform actions in response to the OK, Cancel or Apply buttons, respectively.
+		* Optionally, override L{postInit} to perform actions after the dialog is created, such as setting the focus. Be
+			aware that L{postInit} is also called by L{onApply}.
+		* Optionally, extend one or more of L{onOk}, L{onCancel} or L{onApply} to perform actions in response to the
+			OK, Cancel or Apply buttons, respectively.
 
 	@ivar title: The title of the dialog.
 	@type title: str
@@ -68,8 +68,6 @@ class SettingsDialog(wx.Dialog):
 
 	_instances=weakref.WeakSet()
 	title = ""
-	settingsSizerOrientation=wx.VERTICAL
-	hasApplyButton = False
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
@@ -82,13 +80,22 @@ class SettingsDialog(wx.Dialog):
 		SettingsDialog._instances.add(obj)
 		return obj
 
-	def __init__(self, parent, resizeable=False, multiInstanceAllowed=False):
+	def __init__(self, parent,
+	             resizeable=False,
+	             hasApplyButton=False,
+	             settingsSizerOrientation=wx.VERTICAL,
+	             multiInstanceAllowed=False):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
 		@param resizeable: True if the settings dialog should be resizable by the user, only set this if
 			you have tested that the components resize correctly.
 		@type resizeable: bool
+		@param hasApplyButton: C{True} to add an apply button to the dialog; defaults to C{False} for backwards compatibility.
+		@type hasApplyButton: bool
+		@param settingsSizerOrientation: Either wx.VERTICAL or wx.HORIZONTAL. This controls the orientation of the
+			sizer that is passed into L{makeSettings}. The default is wx.VERTICAL.
+		@type settingsSizerOrientation: wx.Orientation
 		@param multiInstanceAllowed: Whether multiple instances of SettingsDialog may exist.
 			Note that still only one instance of a particular SettingsDialog subclass may exist at one time.
 		@type multiInstanceAllowed: bool
@@ -98,12 +105,12 @@ class SettingsDialog(wx.Dialog):
 		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
 		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
-		self.settingsSizer=wx.BoxSizer(self.settingsSizerOrientation)
+		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
 		self.makeSettings(self.settingsSizer)
 
 		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
 		self.mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-		buttonFlags = wx.OK|wx.CANCEL|(wx.APPLY if self.hasApplyButton else 0)
+		buttonFlags = wx.OK|wx.CANCEL|(wx.APPLY if hasApplyButton else 0)
 		self.mainSizer.Add(
 			self.CreateButtonSizer(flags=buttonFlags),
 			border=guiHelper.BORDER_FOR_DIALOGS,
@@ -257,8 +264,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	title=""
 	categoryClasses=[]
-	settingsSizerOrientation = wx.HORIZONTAL
-	hasApplyButton = True # Differs from L{SettingsDialog}, where this is C{False}
 
 	class CategoryUnavailableError(RuntimeError): pass
 
@@ -276,13 +281,23 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		if initialCategory and initialCategory not in self.categoryClasses:
 			if gui._isDebug():
 				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
-			raise MultiCategorySettingsDialog.CategoryUnavailableError("The provided initial category is not a part of this dialog")
+			raise MultiCategorySettingsDialog.CategoryUnavailableError(
+				"The provided initial category is not a part of this dialog"
+			)
 		self.initialCategory = initialCategory
 		self.currentCategory = None
 		self.setPostInitFocus = None
 		# dictionary key is index of category in self.catList, value is the instance. Partially filled, check for KeyError
 		self.catIdToInstanceMap = {}
-		super(MultiCategorySettingsDialog, self).__init__(parent, resizeable=True)
+
+		super(MultiCategorySettingsDialog, self).__init__(
+			parent,
+			resizeable=True,
+			hasApplyButton=True,
+			settingsSizerOrientation=wx.HORIZONTAL
+		)
+
+		# setting the size must be done after the parent is constructed.
 		self.SetMinSize(self.MIN_SIZE)
 		self.SetInitialSize(self.MIN_SIZE)
 
