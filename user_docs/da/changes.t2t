@@ -3,48 +3,25 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2018.1 =
-Af væsentlige ændringer i denne version af NVDA kan nævnes understøttelse af diagrammer i Microsoft Word og Powerpoint, understøttelse for de nye Eurobraille-punktdisplays samt Optelec protokolomformer, forbedret understøttelse for Hims og Optelec-punktdisplays, forbedret ydeevne i Firefox 58 eller nyere og meget mere.
+= 2018.2 =
 
 == Nye Funktioner ==
-- Det er nu muligt at interagere med diagrammer i Microsoft Word og Microsoft Powerpoint, ligesom man kan i Microsoft Excel. (#7046)
- - Microsoft Word: Bevæg markøren til et diagram. Tryk dernæst enter for at interagere med diagrammet.
- - I Microsoft Powerpoint når et dias redigeres: Tab til et diagramobjekt. Dernæst tryk enter eller mellemrum for at aktivere med diagrammet.
- - For at stoppe med at interagere med et diagram, tryk ESC.
-- Nyt sprog: Kirgesisk
-- Understøttelse for Optelecs protokolomformer, der er en enhed der lader dig benytte punktdisplays som Braille Voyager og Satelite ved brug af ALVA BC6 kommunikationsprotokolen. (#6731)
-- Det er nu muligt at bruge punktindtastning med et ALVA 640 Comfort punktdisplay. (#7733)
- - NVDAs punktindtastningsfunktionalitet kan benyttes med disse samt andre BC6-punktdisplays med firmwareversion 3.0.0 og nyere.
-- Initiel understøttelse af Google Sheets med punkttilstand slået til. (#7935)
-- Understøttelse for Eurobraille Esys, Esytime og Iris punktdisplays. (#7488)
+- NVDA rapporterer nu hvor mange kolonner og rækker en tabel omfatter med tale og punkt. (#2642)
+- Kommandoer til tabelnavigation kan nu benyttes i Google Docs (med braille-tilstand slået til). (#7946)
+ - Det er muligt at navigere rundt i tabeller i Kindle for PC. (#7977)
+ - Understøtter BrailleNote touch og Brailliant BI 14 punktdisplays via både USB og bluetooth. (#6524)
 
  
 == Ændringer ==
-- HIMS Braille Sense/Braille EDGE/Smart Beetle og Hims SyncBraille punktdisplay-drivere er blevet erstattet af en driver. Denne driver bliver automatisk benyttet for brugere af SyncBraille punktdisplays. (#7459)
- - Nogle taster, navnligt dem der benyttes til at rulle displayet, er blevet tildelt de taster anvendt af Hims egne produkter. Se brugervejledningen for yderligere information.
-- Hvis du benytter touch-tastaturet på skærmen til at indtaste tekst, skal du nu trykke to gange på en tast for at skrive. Dette er en standardindstilling. (#7309)
- - For at bruge den eksisterende tilstand for berøringsindstastning, hvor du blot kan løfte fingeren for at indtaste et tegn, skal du gå til dialogen "Touch-interaktion" under "Indstillinger" i NVDA-menuen.
-- Det er ikke længere nødvendigt at indstille NVDA til at få punkt til at følge fokus eller læsemarkøren, da dette nu sker automatisk. (#2385)
- - Bemærk: Automatisk vil kun forekomme, hvis kommandoer til læsemarkøren eller objektnavigation benyttes. Punkt følger ikke automatisk, hvis du blot ruller dit punktdisplay.
+- Statuskolonnen i dialogen for styring af tilføjelsespakker vil nu indikere om pakken er aktiveret eller deaktiveret, hvor den før viste om pakken var i gang eller stoppet. (#7929)
  
  
 == Fejlrettelser ==
-- Meddelelser, der kan gennemses ved brug af gennemsynstilstand (som at vise den aktuelle tekstformatering ved brug af to tryk på NVDA+F) vil ikke længere fejle, når NVDA indstalleres til en sti med non-ASCII-tegn. (#7474)
-- Fokus er nu igen gendannet korrekt, hvis du vender tilbage til Spotify fra en anden applikation. (#7689)
-- NVDA vil ikke længere have problemer med at opdatere, når styret mappeadgang er slået til i Windows Defender Security Center i Windows 10 Fall Creators Update. (#7696)
-- Aktivering af rulletaster på Hims Smart Beetle punktdisplays er ikke længere upålidelig. (#6086)
-- Forbedret ydeevne, når der læses store mængder indhold i Mozilla Firefox 58 og nyere. (#7719)
-- Læsning af emails der indeholder tabeller vil ikke længere resultere i fejl i Microsoft Outlook. (#6827)
-- Punktdisplaytaster der emulere systemtastaturets funktionstaster kan nu kombineres med andre emulerede systemtastaturtaster, hvis bevægelsen er modelspecifik. (#7783)
-- Mozilla Firefox: Gennemsynstilstand virker nu som forventet i pop-ops der fremkommer af udvidelser som LastPass og bitwarden. (#7809)
-- NVDA vil ikke længere fryse nogle gange hvis fokus ændres, når Mozilla Firefox eller Google Chrome ikke længere svarer. (#7818)
-- NVDA vil ikke længere ignorere de sidste tyve tegn i en tweet på 280 tegn i Twitter-klienter som Chicken Nugget. (#7828)
-- NVDA benytter nu det korrekte sprog når symboler annonceres under valg af tekst. (#7687)
-- I de seneste versioner af Office 365 er det nu igen muligt at bevæge sig rundt i Excel-diagrammer ved brug af piletasterne. (#7046)
-- Kontroltilstande vil nu altid rapporteres med tale og punkt i samme rækkefølg, uanset om de er positive eller negative. Fixes #7076
-- I apps som Windows 10 Mail vil NVDA nu korrekt rapportere når tegn slettes ved hjælp af backspace. (#7456)
-- All taster på punktdisplayet Hims Braille Sense Polaris virker nu som forventet. (#7865)
-- NVDA vil ikke længere klage over en manglende internal MS-API DLL og være ud af stand til at starte op i Windows 7, når en bestemt version af Visual Studio 2017 redistributables er blevet installerede af en anden applikation. (#7975)
+- NVDA har ikke længere problemer med at læse kontroller, når du befinder dig i indstillingerne du skal benytte for at logge ind på din Microsoft-konto, hvis du har indtastet en email-adresse. (#7997)
+- NVDA vil ikke længere fejle ved oplæsning af en side, når du bevæger dig til den forrige side i Microsoft Edge. (#7997)
+- NVDA vil ikke længere ukorrekt meddele det endelige tegn, når du logger på ved brug af en PIN-kode i Windows 10. (#7908)
+- Mærker på tjekbokse og radioknapper i Chrome og Firefox annonceres ikke længere to gange, når der bruges bogstavnavigation eller tab-tasten benyttes. (#7960)
+- Håndter aria-current med en værdi false som false i stedet for true (#7892).
 
 
 == Ændringer for udviklere ==

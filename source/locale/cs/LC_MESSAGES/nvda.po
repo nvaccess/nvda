@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-16 00:10+1000\n"
-"PO-Revision-Date: 2018-02-18 02:10+0100\n"
+"POT-Creation-Date: 2018-03-23 00:10+1000\n"
+"PO-Revision-Date: 2018-03-25 05:28+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -525,17 +525,25 @@ msgstr "{number} z {total}"
 msgid "lv %s"
 msgstr "úr %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "ř{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "ř %s"
+msgid "r{rowNumber}"
+msgstr "ř{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "s{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "s%s"
+msgid "c{columnNumber}"
+msgstr "s{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -5771,10 +5779,21 @@ msgstr "výběr odstraněn"
 msgid "row %s"
 msgstr "řádek %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "přes %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sloupec %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+msgid "through row {row} column {column}"
+msgstr "přes řádek {row} sloupec {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 msgid "with {rowCount} rows and {columnCount} columns"
@@ -7034,8 +7053,8 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant Bi/B"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "HumanWare Brailliant BI/B series / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7670,21 +7689,21 @@ msgstr "nainstalováno"
 msgid "remove"
 msgstr "odstraněno"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "zakázat"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "Zakázán po restartu"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "povolit"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Povolen po restartu"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "pozastaveno"
+msgid "disabled"
+msgstr "zakázán"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "spuštěno"
+msgid "enabled"
+msgstr "povolen"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -10474,6 +10493,18 @@ msgstr "Dvojí řádkování"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "řádkování 1.5"
+
+#~ msgid "r%s"
+#~ msgstr "ř %s"
+
+#~ msgid "c%s"
+#~ msgstr "s%s"
+
+#~ msgid "suspended"
+#~ msgstr "pozastaveno"
+
+#~ msgid "running"
+#~ msgstr "spuštěno"
 
 #~ msgid "ALVA BC640/680 series"
 #~ msgstr "ALVA BC640/680"
