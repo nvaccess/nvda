@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
 
 import time
 import itertools
@@ -127,7 +127,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 			ui.message(_("Sleep mode on"))
 	# Translators: Input help mode message for toggle sleep mode command.
-	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
+	script_toggleCurrentAppSleepMode.__doc__=_("Toggles sleep mode on and off for the active application.")
 	script_toggleCurrentAppSleepMode.allowInSleepMode=True
 
 	def script_reportCurrentLine(self,gesture):
@@ -745,7 +745,7 @@ class GlobalCommands(ScriptableObject):
 			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 			speech.speakTextInfo(pos)
 		else:
-			# Translators: reported when there are no  other available review modes for this object 
+			# Translators: reported when there are no other available review modes for this object 
 			ui.reviewMessage(_("No previous review mode"))
 	# Translators: Script help message for previous review mode command.
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
@@ -801,7 +801,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 	# Translators: Input help mode message for report current navigator object command.
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this  object to the clipboard")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard")
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_currentDimensions(self,gesture):
@@ -1404,7 +1404,7 @@ class GlobalCommands(ScriptableObject):
 		obj=api.getForegroundObject()
 		title=obj.name
 		if not isinstance(title,basestring) or not title or title.isspace():
-			title=obj.appModule.appName  if obj.appModule else None
+			title=obj.appModule.appName if obj.appModule else None
 			if not isinstance(title,basestring) or not title or title.isspace():
 				# Translators: Reported when there is no title text for current program or window.
 				title=_("No title")
@@ -1559,68 +1559,74 @@ class GlobalCommands(ScriptableObject):
 
 	def script_activateGeneralSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onGeneralSettingsCommand, None)
-	# Translators: Input help mode message for go to general settings dialog command.
-	script_activateGeneralSettingsDialog.__doc__ = _("Shows the NVDA general settings dialog")
+	# Translators: Input help mode message for go to general settings command.
+	script_activateGeneralSettingsDialog.__doc__ = _("Shows NVDA's general settings")
 	script_activateGeneralSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateSynthesizerDialog(self, gesture):
-		wx.CallAfter(gui.mainFrame.onSynthesizerCommand, None)
-	# Translators: Input help mode message for go to synthesizer dialog command.
-	script_activateSynthesizerDialog.__doc__ = _("Shows the NVDA synthesizer dialog")
+		wx.CallAfter(gui.mainFrame.onSelectSynthesizerCommand, None)
+	# Translators: Input help mode message for go to select synthesizer command.
+	script_activateSynthesizerDialog.__doc__ = _("Shows the NVDA synthesizer selection dialog")
 	script_activateSynthesizerDialog.category=SCRCAT_CONFIG
 
 	def script_activateVoiceDialog(self, gesture):
-		wx.CallAfter(gui.mainFrame.onVoiceCommand, None)
-	# Translators: Input help mode message for go to voice settings dialog command.
-	script_activateVoiceDialog.__doc__ = _("Shows the NVDA voice settings dialog")
+		wx.CallAfter(gui.mainFrame.onSpeechSettingsCommand, None)
+	# Translators: Input help mode message for go to speech settings command.
+	script_activateVoiceDialog.__doc__ = _("Shows NVDA's speech settings")
 	script_activateVoiceDialog.category=SCRCAT_CONFIG
 
+	def script_activateBrailleDisplayDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onSelectBrailleDisplayCommand, None)
+	# Translators: Input help mode message for go to select braille display command.
+	script_activateBrailleDisplayDialog.__doc__ = _("Shows the NVDA braille display selection dialog")
+	script_activateBrailleDisplayDialog.category=SCRCAT_CONFIG
+
 	def script_activateBrailleSettingsDialog(self, gesture):
-		wx.CallAfter(gui.mainFrame.onBrailleCommand, None)
-	# Translators: Input help mode message for go to braille settings dialog command.
-	script_activateBrailleSettingsDialog.__doc__ = _("Shows the NVDA braille settings dialog")
+		wx.CallAfter(gui.mainFrame.onBrailleSettingsCommand, None)
+	# Translators: Input help mode message for go to braille settings command.
+	script_activateBrailleSettingsDialog.__doc__ = _("Shows NVDA's braille settings")
 	script_activateBrailleSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateKeyboardSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onKeyboardSettingsCommand, None)
-	# Translators: Input help mode message for go to keyboard settings dialog command.
-	script_activateKeyboardSettingsDialog.__doc__ = _("Shows the NVDA keyboard settings dialog")
+	# Translators: Input help mode message for go to keyboard settings command.
+	script_activateKeyboardSettingsDialog.__doc__ = _("Shows NVDA's keyboard settings")
 	script_activateKeyboardSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateMouseSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onMouseSettingsCommand, None)
-	# Translators: Input help mode message for go to mouse settings dialog command.
-	script_activateMouseSettingsDialog.__doc__ = _("Shows the NVDA mouse settings dialog")
+	# Translators: Input help mode message for go to mouse settings command.
+	script_activateMouseSettingsDialog.__doc__ = _("Shows NVDA's mouse settings")
 	script_activateMouseSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateReviewCursorDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onReviewCursorCommand, None)
-	# Translators: Input help mode message for go to review cursor settings dialog command.
-	script_activateReviewCursorDialog.__doc__ = _("Shows the NVDA review cursor settings dialog")
+	# Translators: Input help mode message for go to review cursor settings command.
+	script_activateReviewCursorDialog.__doc__ = _("Shows NVDA's review cursor settings")
 	script_activateReviewCursorDialog.category=SCRCAT_CONFIG
 
 	def script_activateInputCompositionDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputCompositionCommand, None)
-	# Translators: Input help mode message for go to input composition dialog.
-	script_activateInputCompositionDialog.__doc__ = _("Shows the NVDA input composition settings dialog")
+	# Translators: Input help mode message for go to input composition settings command.
+	script_activateInputCompositionDialog.__doc__ = _("Shows NVDA's input composition settings")
 	script_activateInputCompositionDialog.category=SCRCAT_CONFIG
 
 	def script_activateObjectPresentationDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame. onObjectPresentationCommand, None)
-	# Translators: Input help mode message for go to object presentation dialog command.
-	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
+	# Translators: Input help mode message for go to object presentation settings command.
+	script_activateObjectPresentationDialog.__doc__ = _("Shows NVDA's object presentation settings")
 	script_activateObjectPresentationDialog.category=SCRCAT_CONFIG
 
 	def script_activateBrowseModeDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrowseModeCommand, None)
-	# Translators: Input help mode message for go to browse mode dialog command.
-	script_activateBrowseModeDialog.__doc__ = _("Shows the NVDA browse mode settings dialog")
+	# Translators: Input help mode message for go to browse mode settings command.
+	script_activateBrowseModeDialog.__doc__ = _("Shows NVDA's browse mode settings")
 	script_activateBrowseModeDialog.category=SCRCAT_CONFIG
 
 	def script_activateDocumentFormattingDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
-	# Translators: Input help mode message for go to document formatting dialog command.
-	script_activateDocumentFormattingDialog.__doc__ = _("Shows the NVDA document formatting settings dialog")
+	# Translators: Input help mode message for go to document formatting settings command.
+	script_activateDocumentFormattingDialog.__doc__ = _("Shows NVDA's document formatting settings")
 	script_activateDocumentFormattingDialog.category=SCRCAT_CONFIG
 
 	def script_activateDefaultDictionaryDialog(self, gesture):
@@ -2280,10 +2286,11 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+space": "toggleVirtualBufferPassThrough",
 		"kb:NVDA+control+space": "moveToParentTreeInterceptor",
 
-		# Preferences dialogs
+		# Preferences dialogs and panels
 		"kb:NVDA+control+g": "activateGeneralSettingsDialog",
 		"kb:NVDA+control+s": "activateSynthesizerDialog",
 		"kb:NVDA+control+v": "activateVoiceDialog",
+		"kb:NVDA+control+a": "activateBrailleDisplayDialog",
 		"kb:NVDA+control+k": "activateKeyboardSettingsDialog",
 		"kb:NVDA+control+m": "activateMouseSettingsDialog",
 		"kb:NVDA+control+o": "activateObjectPresentationDialog",
