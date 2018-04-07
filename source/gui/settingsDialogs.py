@@ -352,11 +352,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		initialCatIndex = 0 if not self.initialCategory else self.categoryClasses.index(self.initialCategory)
 		self._doCategoryChange(initialCatIndex)
 		self.catListCtrl.Select(initialCatIndex)
-		if self.initialCategory:
-			self.setPostInitFocus = self.container.SetFocus
-		else:
-			self.catListCtrl.Focus(initialCatIndex)
-			self.setPostInitFocus = self.catListCtrl.SetFocus
+		# we must focus the initial category in the category list.
+		self.catListCtrl.Focus(initialCatIndex)
+		self.setPostInitFocus = self.container.SetFocus if self.initialCategory else self.catListCtrl.SetFocus
 
 		self.gridBagSizer=gridBagSizer=wx.GridBagSizer(
 			hgap=guiHelper.SPACE_BETWEEN_BUTTONS_HORIZONTAL,
@@ -434,7 +432,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			# Less than first wraps to the last index, greater than last wraps to first index.
 			newIndex=newIndex % self.catListCtrl.ItemCount
 			self.catListCtrl.Select(newIndex)
-			# we must focus the category list to trigger the change of category.
+			# we must focus the new selection in the category list to trigger the change of category.
 			self.catListCtrl.Focus(newIndex)
 			if not listHadFocus and self.currentCategory:
 				self.currentCategory.SetFocus()
