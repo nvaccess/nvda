@@ -1749,7 +1749,6 @@ class TouchInteractionPanel(SettingsPanel):
 
 	def onSave(self):
 		config.conf["touch"]["touchTyping"]=self.touchTypingCheckBox.IsChecked()
-		super(TouchInteractionPanel, self).onSave()
 
 class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows 10 OCR panel.
