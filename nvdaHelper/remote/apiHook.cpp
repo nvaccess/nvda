@@ -39,7 +39,6 @@ typedef MH_STATUS(WINAPI *MH_Uninitialize_funcType)();
 typedef MH_STATUS(WINAPI *MH_CreateHook_funcType)(LPVOID,LPVOID,LPVOID*);
 typedef MH_STATUS(WINAPI *MH_EnableHook_funcType)(LPVOID);
 typedef MH_STATUS(WINAPI *MH_DisableHook_funcType)(LPVOID);
-typedef const char*(WINAPI *MH_StatusToString_funcType)(MH_STATUS);
 
 #define defMHFP(funcName) funcName##_funcType funcName##_fp=NULL
 
@@ -56,7 +55,6 @@ defMHFP(MH_Uninitialize);
 defMHFP(MH_CreateHook);
 defMHFP(MH_EnableHook);
 defMHFP(MH_DisableHook);
-defMHFP(MH_StatusToString);
 
  bool apiHook_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
@@ -80,7 +78,7 @@ defMHFP(MH_StatusToString);
 		return false;
 	}
 	if ((res=MH_Initialize_fp())!=MH_OK) {
-		LOG_ERROR("MH_Initialize failed with " << res << " (" << MH_StatusToString_fp(res) <<")");
+		LOG_ERROR("MH_Initialize failed with " << res);
 		FreeLibrary(minhookLibHandle);
 		minhookLibHandle=NULL;
 		return false;
@@ -108,7 +106,7 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 	void* origFunc;
 	MH_STATUS res;
 	if((res=MH_CreateHook_fp(realFunc,newHookProc,&origFunc))!=MH_OK) {
-		LOG_ERROR("MH_CreateHook failed with " << res << " (" << MH_StatusToString_fp(res) <<")");
+		LOG_ERROR("MH_CreateHook failed with " << res);
 		FreeLibrary(moduleHandle);
 		return NULL;
 	}
