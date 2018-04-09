@@ -106,7 +106,7 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 	void* origFunc;
 	MH_STATUS res;
 	if((res=MH_CreateHook_fp(realFunc,newHookProc,&origFunc))!=MH_OK) {
-		LOG_ERROR("MH_CreateHook failed with " << res);
+		LOG_ERROR("MH_CreateHook for function " << functionName << " in module " << moduleName << " failed with " << res);
 		FreeLibrary(moduleHandle);
 		return NULL;
 	}
