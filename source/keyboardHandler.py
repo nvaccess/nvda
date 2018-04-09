@@ -365,8 +365,12 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _get_isNVDAModifierKey(self):
 		return isNVDAModifierKey(self.vkCode, self.isExtended)
 
+	@classmethod
+	def _isModifier(cls, vkCode,extended):
+		return vkCode in cls.NORMAL_MODIFIER_KEYS or isNVDAModifierKey(vkCode,extended)
+
 	def _get_isModifier(self):
-		return self.vkCode in self.NORMAL_MODIFIER_KEYS or self.isNVDAModifierKey
+		return self._isModifier(self.vkCode, self.isExtended)
 
 	def _get_mainKeyName(self):
 		if self.isNVDAModifierKey:
@@ -514,12 +518,15 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def fromName(cls, name):
 		"""Create an instance given a key name.
 		@param name: The key name.
+			Multiple, + separated key names are supported in indeterminate order.
 		@type name: str
 		@return: A gesture for the specified key.
 		@rtype: L{KeyboardInputGesture}
 		"""
 		keyNames = name.split("+")
 		keys = []
+		mainVk = None
+		mainExt = None
 		for keyName in keyNames:
 			if keyName == "plus":
 				# A key name can't include "+" except as a separator.
@@ -544,11 +551,19 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				if ext is None:
 					ext = False
 			keys.append((vk, ext))
+			if not cls._isModifier(vk, ext):
+				if mainVk is not None or mainExt is not None:
+					raise ValueError("Invalid key name sequence with multiple main keys: %s" % name)
+				else:
+					mainVk, mainExt = vk, ext
 
 		if not keys:
 			raise ValueError
 
-		return cls(keys[:-1], vk, 0, ext)
+		if mainVk is None or mainExt is None:
+			mainVk, mainExt = vk, ext
+		keys.remove((mainVk, mainExt))
+		return cls(keys[:-1], mainVk, 0, mainExt)
 
 	RE_IDENTIFIER = re.compile(r"^kb(?:\((.+?)\))?:(.*)$")
 	@classmethod

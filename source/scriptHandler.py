@@ -28,6 +28,7 @@ _lastScriptCount=0 #The amount of times the last script was repeated
 _isScriptRunning=False
 
 def _makeKbEmulateScript(scriptName):
+	scriptName = inputCore.normalizeGestureIdentifier(scriptName)
 	import keyboardHandler
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)

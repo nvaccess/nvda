@@ -71,12 +71,18 @@ languageHandler.setLanguage("en")
 import appModuleHandler
 appModuleHandler.initialize()
 # Anything which notifies of cursor updates requires braille to be initialized.
+# Furthermore, for braille unit tests, we need to construct a fake braille display as well as enable the braille and braille input handlers
 import braille
 braille.initialize()
-# For braille unit tests, we need to construct a fake braille display as well as enable the braille handler
-# Give the display 40 cells
-braille.handler.displaySize=40
+import brailleInput
+brailleInput.initialize()
+from .brailleDisplayProvider import BrailleDisplayDriver as dummyBrl
+braille.handler.display = dummyBrl()
+braille.handler.displaySize = dummyBrl.numCells
 braille.handler.enabled = True
+# The input manager needs to be initialized to query the user gesture map
+import inputCore
+inputCore.initialize()
 # The focus and navigator objects need to be initialized to something.
 from objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()
