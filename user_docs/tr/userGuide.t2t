@@ -933,7 +933,7 @@ Bu bir onay kutusudur ve işaretlendiğinde, NVDA'ya çıkışta yapılan ayarla
 
 ==== NVDA'yı kapatırken çıkış seçeneklerini göster ====[GeneralSettingsShowExitOptions]
 Bu seçenek, NVDA kapatılırken, çeşitli seçeneklerin bulunduğu bir iletişim kutusunun gösterilip gösterilmeyeceğiyle ilgili bir onay kutusudur.
-İşaretlenirse, NVDA'yı kapatmaya teşebbüs ettiğinizde, NVDA'yı kapatmak mı, yeniden başlatmak mı yoksa, eklentileri devre dışı bırakarak yeniden başlatmak mı istediğinizi soran bir iletişim kutusu açılacaktır.
+İşaretlenirse, NVDA'yı kapatmaya teşebbüs ettiğinizde, NVDA'yı kapatmak mı, yeniden başlatmak mı, eklentileri devre dışı bırakarak yeniden başlatmak mı yoksa, varsa bekleyen güncellemeyi kurmak mı istediğinizi soran bir iletişim kutusu açılacaktır.
 İşaretlenmezse, NVDA hemen kapanır.
 
 ==== NVDA Açılırken ve Kapanırken Ses Çal ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
 ==== NVDA Güncellemelerini Otomatik Olarak Kontrol Et ====[GeneralSettingsCheckForUpdates]
 Bu etkinleştirildiyse, NVDA güncel versiyon olup olmadığını otomatik olarak kontrol edecek ve güncelleme bulunduğunda sizi bilgilendirecektir.
 Ek olarak, NVDA Yardım menüsü altında bulunan, güncelleme olup olmadığına bak seçeneğini kullanarak istediğiniz zaman güncelleme kontrolü yapabilirsiniz.
+
+==== NVDA başladığında Bekleyen Güncelleme Varsa Bildir ====[GeneralSettingsNotifyPendingUpdates]
+Etkinleştirilmişse, NVDA başlangıçta bekleyen bir güncelleme olduğu zaman, kurma seçeneği sunarak size bilgi verecektir.
+NVDA kapatılırken çıkış seçenekleri gösteriliyorsa, buradan manuel olarak da bekleyen güncellemeyi kurabilirsiniz  ya da yardım menüsü altından güncelleme kontrolü yapabilirsiniz.
 
 +++ Sentezleyici Seçimi (NVDA+kontrol+s) +++[SynthesizerSelection]
 Tercihler menüsü içindeki "sentezleyici..." altında bulunan sentezleyici iletişim kutusu, NVDA'nın hangi sentezleyiciyle konuşacağını seçmenizi sağlar.
@@ -1920,6 +1924,7 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | Braille ekran sonraki satır | t4 |
 | Scroll braille display forward | t5 or etouch3 |
 | Odağı braille konumuna taşı | routing |
+| braille hücre altındaki metin biçimlendirmesini bildir | secondary routing |
 | HID klavye simülasyonunu açıp kapama | t1+spEnter |
 | Move to top line in review | t1+t2 |
 | Move to bottom line in review | t4+t5 |
@@ -2073,13 +2078,16 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Hepsini oku | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Serisi ++[HumanWareBrailliant]
- Brailliant BI ve B serisi braille ekranlar, [HumanWare http://www.humanware.com/], BI 32, BI 40 ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
+++ HumanWare Brailliant BI/B Serisi / BrailleNote Touch  ++[HumanWareBrailliant]
+ Brailliant BI ve B serisi braille ekranlar, [HumanWare http://www.humanware.com/], BI 14, BI 32, BI 40 ve B 80 dahil, USB ya da bluetooth ile bağlandığında desteklenmektedir.
 USB bağlantısını ve HumanWare protokolünü kullanıyorsanız, öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 OpenBraille protokolü için USB sürücüleri gerekmez.
 
-Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
+ayrıca BrailleNote Touch da desteklenir, ve herhangi bir sürücü yüklü olmasını gerektirmez.
+
+Aşağıda Brailliant BI/B ve BrailleNote touch braille ekranları NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
++++ Tüm modeller için tuş atamaları +++
 %kc:beginInclude
 || Ad | Kısayol tuşu |
 | Braille ekranı geri kaydır | sol |
@@ -2092,7 +2100,6 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | aşağı yön tuşu | space+dot4 |
 | sol yön tuşu | space+dot3 |
 | sağ yön tuşu | space+dot6 |
-| NVDA Menüsü | c1+c3+c4+c5 (command n) |
 | shift+tab tuşu | space+dot1+dot3 |
 | tab tuşu | space+dot4+dot6 |
 | alt tuşu | space+dot1+dot3+dot4 (space+m) |
@@ -2101,7 +2108,27 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | windows+d tuşu (tüm uygulamaları küçült) | c1+c4+c5 (command d) |
 | windows tuşu | space+dot3+dot4 |
 | alt+tab tuşu | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+%kc:endInclude
+
++++ Brailliant BI 32, BI 40 ve  B 80 için Tuş atamaları +++ 
+%kc:beginInclude
+|| Name | Key |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
 | Hepsini oku | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Brailliant BI 14 için Tuş atamaları +++ 
+%kc:beginInclude
+|| Ad | Tuş |
+| up arrow key | joystick up |
+| down arrow key | joystick down |
+| left arrow key | joystick left |
+| right arrow key | joystick right |
+| enter key | joystick action |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serileri ++[Hims]
@@ -2253,7 +2280,7 @@ Following are the Papenmeier command assignments for NVDA:
 | Move to first contained object | dn2 |
 | Move to previous object | left2 |
 | Move to next object | right2 |
-| Report text formatting | upper routing row |
+| Report text formatting under braille cell | upper routing row |
 %kc:endInclude
 
 The Trio model has four additional keys which are in front of the braille keyboard.
@@ -2327,7 +2354,7 @@ Devices with EAB:
 | Move to first contained object | dn2 |
 | Move to next object | right2 |
 | Move to previous object | left2 |
-| Report text formatting | Upper routing strip |
+| Report text formatting under braille cell | upper routing strip |
 
 BRAILLEX Tiny:
 || Name | Key |
@@ -2342,7 +2369,7 @@ BRAILLEX Tiny:
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
 | Move to next object | r1+right |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Report title | l1+up |
 | Report status bar | l2+down |
 
@@ -2351,7 +2378,7 @@ BRAILLEX 2D Screen:
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
 | Toggle braille tethered to | r2 |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
 | Scroll braille display forward | right |
@@ -2472,7 +2499,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | Scroll braille display back | switch1-6left, l1 |
 | Scroll braille display forward | switch1-6Right, l8 |
 | Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
-| Route to braille cell | routing, doubleRouting|
+| Route to braille cell | routing |
+| Report text formatting under braille cell | doubleRouting |
 | Move to previous line in review | joystick1Up |
 | Move to next line in review | joystick1Down |
 | Move to previous character in review | joystick1Left |

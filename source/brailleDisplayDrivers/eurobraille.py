@@ -481,7 +481,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
-			"braille_routeTo": ("br(eurobraille):routing","br(eurobraille):doubleRouting",),
+			"braille_routeTo": ("br(eurobraille):routing",),
+			"braille_reportFormatting": ("br(eurobraille):doubleRouting",),
 			"braille_scrollBack": (
 				"br(eurobraille):switch1Left",
 				"br(eurobraille):l1",
