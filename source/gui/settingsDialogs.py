@@ -105,7 +105,7 @@ class SettingsDialog(wx.Dialog):
 		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
 		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
 
-		# the parent window must be constructed before we can get the handle.
+		# the wx.Window must be constructed before we can get the handle.
 		import windowUtils
 		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
 
@@ -174,7 +174,7 @@ class SettingsDialog(wx.Dialog):
 
 	def scaleSize(self, size):
 		"""Helper method to scale a size using the logical DPI
-		@param size: The size (x,y) to scale
+		@param size: The size (x,y) as a tuple to scale
 		@returns: The scaled size (scaled_X, scaled_Y)"""
 		return (self.scaleFactor * size[0], self.scaleFactor * size[1])
 
@@ -321,7 +321,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	# so, the width was chosen to eliminate horizontal scroll bars. If a panel
 	# exceeds the the initial width a debugWarning will be added to the log.
 	INITIAL_SIZE = (800, 480)
-	MIN_SIZE = (470, 240) # Min height to show the buttons.
+	MIN_SIZE = (470, 240) # Min height required to show the OK, Cancel, Apply buttons
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -332,10 +332,10 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
 
 		# since the categories list and the container both expand in height, the y
-		# portion is essentially a "min" height
-		# These sizes are set manually so that the initial proportions within the dialog look correct. Otherwise the
-		# proportion arguments (as given to the gridBagSizer.AddGrowableColumn) are used. We want the proportion argument
-		# to be used for resizing, but not the initial size.
+		# portion is essentially a "min" height.
+		# These sizes are set manually so that the initial proportions within the dialog look correct. If these sizes are
+		# not given, then I believe the proportion arguments (as given to the gridBagSizer.AddGrowableColumn) are used
+		# to set their relative sizes. We want the proportion argument to be used for resizing, but not the initial size.
 		catListDim = (150, 10)
 		catListDim = self.scaleSize(catListDim)
 
@@ -353,7 +353,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
 
-		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed
+		# Put the settings panel in a scrolledPanel, we don't know how large the settings panels might grow. If they exceed
 		# the maximum size, its important all items can be accessed visually.
 		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is
 		# exposed via the IAccessibleName property.
@@ -402,7 +402,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		gridBagSizer.Add(self.container, pos=(1,1), flag=wx.EXPAND)
 		# Make the row with the listCtrl and settings panel grow vertically.
 		gridBagSizer.AddGrowableRow(1)
-		# Make the columns with the listCtrl and settings panel grow horizontally.
+		# Make the columns with the listCtrl and settings panel grow horizontally if the dialog is resized.
 		# They should grow 1:3, since the settings panel is much more important, and already wider
 		# than the listCtrl.
 		gridBagSizer.AddGrowableCol(0, proportion=1)
@@ -437,7 +437,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def postInit(self):
 		# By default after the dialog is created, focus lands on the button group for wx.Dialogs. However this is not where
-		# we wantfocus. We only want to modify focus after creation (makeSettings), but postInit is also called after
+		# we want focus. We only want to modify focus after creation (makeSettings), but postInit is also called after
 		# onApply, so we reset the setPostInitFocus function.
 		if self.setPostInitFocus:
 			self.setPostInitFocus()
