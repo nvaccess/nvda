@@ -40,10 +40,10 @@ class NvdaSettingsCategoryPanel(IAccessible):
 		if self in api.getFocusAncestors():
 			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
-		self._handlePossibleProfileSwitch()
+		self.handlePossibleProfileSwitch()
 
 	@classmethod
-	def _handlePossibleProfileSwitch(cls):
+	def handlePossibleProfileSwitch(cls):
 		from gui.settingsDialogs import NvdaSettingsDialogActiveConfigProfile as newProfile
 		if (cls.oldProfile and newProfile and newProfile != cls.oldProfile):
 			# Translators: A message announcing what configuration profile is currently being edited.
@@ -51,6 +51,9 @@ class NvdaSettingsCategoryPanel(IAccessible):
 		cls.oldProfile = newProfile
 
 class AppModule(appModuleHandler.AppModule):
+
+	def event_appModule_gainFocus(self):
+		NvdaSettingsCategoryPanel.handlePossibleProfileSwitch()
 
 	def event_appModule_loseFocus(self):
 		NvdaSettingsCategoryPanel.oldProfile = None
