@@ -789,7 +789,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
-		if getSynth().name is not newSynth and not setSynth(newSynth):
+		if not setSynth(newSynth):
 			# Translators: This message is presented when
 			# NVDA is unable to load the selected
 			# synthesizer.
