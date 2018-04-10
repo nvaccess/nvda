@@ -94,6 +94,27 @@ def physicalToLogicalPoint(window, x, y):
 	_physicalToLogicalPoint(window, ctypes.byref(point))
 	return point.x, point.y
 
+DEFAULT_DPI_LEVEL = 96.0
+# The constant (defined in winGdi.h) to get the number of logical pixels per inch on the x axis
+# via the GetDeviceCaps function.
+LOGPIXELSX = 88
+def getWindowScalingFactor(window):
+	user32 = ctypes.windll.user32
+	try:
+		winDpi = user32.GetDpiForWindow(window)
+	except:
+		dc = user32.GetDC(window)
+		winDpi = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+		ret = user32.ReleaseDC(window, dc)
+		if ret != 1:
+			log.ERROR("Unable to release the device context.")
+
+	if winDpi != 0:
+		return winDpi / DEFAULT_DPI_LEVEL
+
+	return 1.0
+
+
 appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
 class CustomWindow(object):
 	"""Base class to enable simple implementation of custom windows.

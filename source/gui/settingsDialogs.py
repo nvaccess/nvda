@@ -104,6 +104,11 @@ class SettingsDialog(wx.Dialog):
 			startTime = time.time()
 		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
 		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
+
+		# the parent window must be constructed before we can get the handle.
+		import windowUtils
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
 		self.makeSettings(self.settingsSizer)
@@ -166,6 +171,13 @@ class SettingsDialog(wx.Dialog):
 		"""
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
+
+	def scaleSize(self, size):
+		"""Helper method to scale a size using the logical DPI
+		@param size: The size (x,y) to scale
+		@returns: The scaled size (scaled_X, scaled_Y)"""
+		return (self.scaleFactor * size[0], self.scaleFactor * size[1])
+
 
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
@@ -298,15 +310,18 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		)
 
 		# setting the size must be done after the parent is constructed.
-		self.SetMinSize(self.MIN_SIZE)
-		self.SetInitialSize(self.MIN_SIZE)
+		self.SetMinSize(self.scaleSize(self.MIN_SIZE))
+		self.SetSize(self.scaleSize(self.INITIAL_SIZE))
+		# the size has changed, so recenter on the screen
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	# Initial / min size for the dialog. This size was chosen as a medium fit, so the
 	# smaller settings panels are not surrounded by too much space but most of
 	# the panels fit. Vertical scrolling is acceptable. Horizontal scrolling less
 	# so, the width was chosen to eliminate horizontal scroll bars. If a panel
 	# exceeds the the initial width a debugWarning will be added to the log.
-	MIN_SIZE = (1000, 600)
+	INITIAL_SIZE = (800, 480)
+	MIN_SIZE = (470, 240) # Min height to show the buttons.
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -315,7 +330,19 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Translators: The label for the list of categories in a multi category settings dialog.
 		categoriesLabelText=_("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
-		catListDim = (180, 300)
+
+		# since the categories list and the container both expand in height, the y
+		# portion is essentially a "min" height
+		# These sizes are set manually so that the initial proportions within the dialog look correct. Otherwise the
+		# proportion arguments (as given to the gridBagSizer.AddGrowableColumn) are used. We want the proportion argument
+		# to be used for resizing, but not the initial size.
+		catListDim = (150, 10)
+		catListDim = self.scaleSize(catListDim)
+
+		containerDim = self.scaleSize((self.INITIAL_SIZE[0], 10))
+		spaceForBorders = self.scaleSize((20, 10))
+		containerDim = (containerDim[0] - catListDim[0] - spaceForBorders[0], containerDim[1])
+
 		self.catListCtrl = nvdaControls.AutoWidthColumnListCtrl(
 			self,
 			autoSizeColumnIndex=0,
@@ -326,17 +353,22 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
 
-		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed the maximum size,
-		# its important all items can be accessed visually.
-		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is exposed via the IAccessibleName
-		# property.
+		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed
+		# the maximum size, its important all items can be accessed visually.
+		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is
+		# exposed via the IAccessibleName property.
 		global NvdaSettingsCategoryPanelId
 		NvdaSettingsCategoryPanelId = wx.NewId()
 		self.container = scrolledpanel.ScrolledPanel(
 			parent = self,
 			id = NvdaSettingsCategoryPanelId,
-			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME
+			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME,
+			size=containerDim
 		)
+
+		# Th min size is reset so that they can be reduced to below their "size" constraint.
+		self.container.SetMinSize((1,1))
+		self.catListCtrl.SetMinSize((1,1))
 
 		self.containerSizer = wx.BoxSizer(wx.VERTICAL)
 		self.container.SetSizer(self.containerSizer)
@@ -371,10 +403,10 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Make the row with the listCtrl and settings panel grow vertically.
 		gridBagSizer.AddGrowableRow(1)
 		# Make the columns with the listCtrl and settings panel grow horizontally.
-		# They should grow 1:20, since the settings panel is much more important, and already wider
+		# They should grow 1:3, since the settings panel is much more important, and already wider
 		# than the listCtrl.
 		gridBagSizer.AddGrowableCol(0, proportion=1)
-		gridBagSizer.AddGrowableCol(1, proportion=20)
+		gridBagSizer.AddGrowableCol(1, proportion=3)
 		sHelper.sizer.Add(gridBagSizer, flag=wx.EXPAND, proportion=1)
 
 		self.container.Layout()
