@@ -68,20 +68,28 @@ ALVA_SER_CMD_LENGTHS = {
 	b"K": 2, # Keys message
 }
 
+ALVA_THUMB_GROUP = 0x71
+ALVA_ETOUCH_GROUP = 0x72
+ALVA_SP_GROUP = 0x73
 ALVA_CR_GROUP = 0x74
 ALVA_FEATURE_PACK_GROUP = 0x78
 ALVA_SPECIAL_KEYS_GROUP = 0x01
 ALVA_SPECIAL_SETTINGS_CHANGED = 0x01
 
+DOUBLED_KEY_COUNTS = {
+	ALVA_THUMB_GROUP: 5,
+	ALVA_SP_GROUP: 9
+}
+
 ALVA_KEYS = {
 	# Thumb keys (FRONT_GROUP)
-	0x71: ("t1", "t2", "t3", "t4", "t5",
+	ALVA_THUMB_GROUP: ("t1", "t2", "t3", "t4", "t5",
 		# Only for BC680
 		"t1", "t2", "t3", "t4", "t5"),
 	# eTouch keys (ETOUCH_GROUP)
-	0x72: ("etouch1", "etouch2", "etouch3", "etouch4"),
+	ALVA_ETOUCH_GROUP: ("etouch1", "etouch2", "etouch3", "etouch4"),
 	# Smartpad keys (PDA_GROUP)
-	0x73: ("sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4",
+	ALVA_SP_GROUP: ("sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4",
 		# Only for BC680
 		"sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4"),
 	# Feature pack keys.
@@ -434,27 +442,39 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, model, keys, brailleInput=False):
 		super(InputGesture, self).__init__()
+		isNoBC640 = model != ALVA_MODEL_IDS[0x40]
 		# Model identifiers should not contain spaces.
 		self.model = model.replace(" ", "")
 		assert(self.model.isalnum())
 		self.keyCodes = set(keys)
 		self.keyNames = names = []
+		if isNoBC640:
+			secondaryNames = []
 		dots = 0
 		space = False
 		for group, number in self.keyCodes:
 			if group == ALVA_CR_GROUP:
 				if number & ALVA_2ND_CR_MASK:
-					names.append("secondRouting")
+					keyName = "secondRouting"
 					self.routingIndex = number & ~ALVA_2ND_CR_MASK
 				else:
-					names.append("routing")
+					keyName = "routing"
 					self.routingIndex = number
+				names.append(keyName)
+				if isNoBC640:
+					secondaryNames.append(keyName)
 			else:
 				try:
-					names.append(ALVA_KEYS[group][number])
+					keyName = ALVA_KEYS[group][number]
 				except (KeyError, IndexError):
 					log.debugWarning("Unknown key with group %d and number %d" % (group, number))
-
+					return
+				names.append(keyName)
+				if isNoBC640:
+					doubledKeyCount = DOUBLED_KEY_COUNTS.get(group)
+					if doubledKeyCount:
+						keyName = ("r" if number>=doubledKeyCount else "l") + keyName
+					secondaryNames.append(keyName)
 			# Braille input
 			if brailleInput:
 				if group == ALVA_FEATURE_PACK_GROUP:
@@ -468,6 +488,15 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 					brailleInput = False
 
 		self.id = "+".join(names)
+		self.secondaryId = "+".join(secondaryNames) if isNoBC640 else self.id
 		if brailleInput:
 			self.dots = dots
 			self.space = space
+
+	def _get_identifiers(self):
+		ids = [
+			u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.secondaryId),
+			u"br({source}):{id}".format(source=self.source, id=self.id),
+		]
+		ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
+		return ids
