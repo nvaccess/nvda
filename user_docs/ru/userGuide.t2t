@@ -164,7 +164,7 @@ NVDA распространяется под лицензией GNU General Publ
 
 +++ Клавиши-модификаторы NVDA +++[TheNVDAModifierKey]
 Большинство специфичных для NVDA клавиатурных команд обычно состоят из комбинации особой клавиши (так называемая клавиша-модификатор NVDA) плюс одна или несколько других клавиш.
-Исключениями из этого правила являются команды просмотра текста для настольных клавиатур, в которых используются лишь сами клавиши на цифровом блоке клавиатуры, но имеются еще и другие исключения.
+Исключениями из этого правила являются команды просмотра текста для настольных клавиатур, в которых используются лишь сами клавиши на цифровом блоке клавиатуры, но имеются ещё и другие исключения.
 
 NVDA можно настроить так, что в качестве клавиши-модификатора NVDA может выступать "Insert" на цифровом блоке клавиатуры, обычный "Insert" или же "Capslock".
 В качестве клавиш-модификаторов по умолчанию выступают как обычный "Insert", так и "Insert" на цифровом блоке клавиатуры.
@@ -933,7 +933,7 @@ NVDA спросит вас, хотите ли вы перезапустить п
 
 ==== Показывать варианты выхода при завершении NVDA ====[GeneralSettingsShowExitOptions]
 Этот флажок позволяет вам выбирать, следует ли показывать диалоговое окно "Завершение работы NVDA" и запрашивать нужное действие при выходе из программы.
-Если флажок установлен, то при попытке завершить NVDA, появится это диалоговое окно, в котором можно выбрать обычное завершение работы, перезагрузку или перезагрузку с отключёнными дополнениями.
+Если флажок установлен, то при попытке завершить NVDA, появится это диалоговое окно, в котором можно выбрать обычное завершение работы, перезагрузку, перезагрузку с отключёнными дополнениями или установку ожидающего обновления (если таковое имеется).
 Если флажок снят, то NVDA будет выгружаться немедленно, без каких либо запросов.
 
 ==== Воспроизводить звуки при запуске или завершении NVDA ====[GeneralSettingsPlaySounds]
@@ -958,28 +958,32 @@ NVDA спросит вас, хотите ли вы перезапустить п
 Эта кнопка доступна только в установленной копии NVDA.
 
 ==== Автоматически проверять наличие обновлений NVDA ====[GeneralSettingsCheckForUpdates]
-Если эта опция разрешена, то NVDA будет автоматически проверять наличие обновлений, если обновление доступно, то проинформирует об этом.
+Если этот флажок установлен, то NVDA будет автоматически проверять наличие своей более новой версии и сообщать, когда она доступна.
 Вы также можете вручную проверять наличие обновлений, выбрав в меню NVDA "Справка > Проверить на наличие обновлений...".
+
+==== Сообщать об отложенных обновлениях при запуске NVDA ====[GeneralSettingsNotifyPendingUpdates]
+Если этот флажок установлен, то NVDA при своём запуске будет информировать вас о наличии отложенного обновления и предлогать его установку.
+Вы также можете вручную установить отложенное обновление из диалога завершения работы NVDA (если он включён), из меню NVDA или при проверке обновлений из меню "Справка".
 
 +++ Выбор синтезатора (NVDA+control+s) +++[SynthesizerSelection]
 При помощи диалогового окна выбора синтезаторов "NVDA Меню > Синтезатор..." вы можете выбрать синтезатор, который будет использовать NVDA.
-Как только вы выберете синтезатор из списка и нажмете кнопку "OK", NVDA загрузит этот синтезатор.
+Как только вы выберете синтезатор из списка и нажмёте кнопку "OK", NVDA загрузит этот синтезатор.
 Если при загрузке синтезатора возникнет ошибка, NVDA сообщит вам об этом и продолжит использовать прежний синтезатор.
 
 ==== Синтезатор ====[SynthesizerSelectionSynthesizer]
-Эта опция позволяет вам выбрать синтезатор, с которым вы хотите работать.
+Этот комбинированный список позволяет вам выбрать синтезатор, с которым вы хотите работать в NVDA.
 
-Список поддерживаемых синтезаторов в NVDA вы можете посмотреть в разделе [поддерживаемые синтезаторы #SupportedSpeechSynths].
+Список поддерживаемых синтезаторов вы можете посмотреть в разделе [поддерживаемые синтезаторы речи #SupportedSpeechSynths].
 
-Особый элемент, который всегда будет присутствовать в этом списке, это элемент "Нет речи", он позволяет использовать NVDA вообще без речевого вывода.
-Это может быть нужно тем пользователям, которые хотят использовать NVDA только с брайлевским дисплеем, или, вероятно, зрячим разработчикам, которым нужен в NVDA только просмотрщик речи.
+Особый элемент, который всегда присутствует в этом списке, это элемент "Нет речи". Он позволяет использовать NVDA вообще без речевого вывода.
+Это требуется тем пользователям, которые хотят использовать NVDA только с брайлевским дисплеем, или, возможно, зрячим разработчикам, которым нужен в NVDA только просмотрщик речи.
 
 ==== Устройство вывода ====[SynthesizerSelectionOutputDevice]
-Эта опция позволяет вам выбрать звуковую карту, через которую NVDA должна осуществлять речевой вывод.
+Этот комбинированный список позволяет вам выбрать звуковую карту, через которую NVDA должна осуществлять речевой вывод.
 
 %kc:setting
 ==== Режим приглушения звука ====[SynthesizerSelectionDuckingMode]
-Горячая клавиша: NVDA+shift+d
+Горячая комбинация клавиш: NVDA+shift+d
 
 В Windows 8 и более поздних версиях, эта опция позволяет вам выбрать, следует ли уменьшать громкость других приложений, когда NVDA говорит, или всё время, пока NVDA работает.
 - Не приглушать: NVDA никогда не будет приглушать громкость других звуков.
@@ -987,11 +991,11 @@ NVDA спросит вас, хотите ли вы перезапустить п
 - Всегда приглушать: NVDA будет приглушать громкость других звуков всё время, пока работает.
 -
 
-Эта опция доступна только если NVDA была установлена.
+Эта опция доступна только в установленной копии NVDA.
 В переносной или во временной копии NVDA, поддержка функции приглушения звука невозможна.
 
 +++ Настройки голоса (NVDA+control+v) +++[VoiceSettings]
-Диалоговое окно "Настройки голоса", которое доступно через меню NVDA "Параметры > Голоса...", содержит опции, позволяющие менять различные параметры речи.
+Диалоговое окно "Настройки голоса", которое доступно через меню NVDA "Параметры > Голоса...", содержит опции, позволяющие менять различные параметры речи активного синтезатора.
 Для ускоренного и альтернативного доступа к этим параметрам, независимо от местонахождения, пожалуйста смотрите раздел [кольцо настроек синтезатора #SynthSettingsRing].
 
 Диалоговое окно "Настройки голоса" содержит следующие опции:
@@ -1083,9 +1087,9 @@ NVDA спросит вас, хотите ли вы перезапустить п
 Вы увидете определенное количество настроек в зависимости от того, какие драйверы брайлевских дисплеев доступны в вашей операционной системе.
 Используйте клавиши-стрелки для перемещения между этими настройками.
 
-"Нет Брайля" означает, что вы не используете брайль.
+Пункт "Нет брайля" означает, что вы не используете брайлевский дисплей.
 
-Для дальнейшей информации читайте в разделе [поддерживаемые брайлевские дисплеи #SupportedBrailleDisplays].
+Для получения более подробной информации, пожалуйста обратитесь к разделу [поддерживаемые брайлевские дисплеи #SupportedBrailleDisplays].
 
 ==== Порт ====[BrailleSettingsPort]
 При помощи данной опции, если она доступна, вы можете выбирать, какой порт или тип подключения будет использоваться для работы с выбранным вами брайлевским дисплеем.
@@ -1106,7 +1110,7 @@ NVDA спросит вас, хотите ли вы перезапустить п
 По этому списку можно перемещаться клавишами-стрелками.
 
 ==== Брайлевская таблица ввода ====[BrailleSettingsInputTable]
-Вдобавок к предыдущей опции имеется еще один комбинированный список, в котором содержатся брайлевские таблицы ввода.
+Вдобавок к предыдущей опции имеется ещё один комбинированный список, в котором содержатся брайлевские таблицы ввода.
 Выбранная таблица будет служить для перевода вводимых брайлевских символов в текст с помощью 8-клавишной клавиатуры в стиле Perkins брайлевского дисплея.
 По этому списку можно перемещаться клавишами-стрелками.
 
@@ -1388,7 +1392,7 @@ NVDA спросит вас, хотите ли вы перезапустить п
 ==== Читать выбранный вариант ====[InputCompositionAnnounceSelectedCandidate]
 С помощью этого, установленного по умолчанию флажка вы можете выбрать, следует ли NVDA автоматически читать выделенный вариант иероглифа при появлении списка вариантов или при изменении выделения.
 Для методов ввода, где выделение можно изменять с помощью курсорных клавиш (такой как "Китайский Новый Фонетический" метод), это будет полезным, но для некоторых методов ввода может быть более эффективным отключить эту опцию при наборе текста.
-Обратите внимание, что даже при отключенной опции просмотровый курсор все еще будет находиться на выделенном варианте иероглифа, что позволит вам использовать объектную навигацию / просмотровый курсор, чтобы вручную прочитать этот или другой варианты.
+Обратите внимание, что даже при отключенной опции просмотровый курсор всё ещё будет находиться на выделенном варианте иероглифа, что позволит вам использовать объектную навигацию / просмотровый курсор, чтобы вручную прочитать этот или другой варианты.
 
 ==== Всегда включать краткое описание иероглифа при чтении вариантов ====[InputCompositionCandidateIncludesShortCharacterDescription]
 С помощью этого, установленного по умолчанию флажка вы можете выбрать, следует ли NVDA давать краткое символьное описание иероглифа при его выделении или при появлении списка вариантов.
@@ -1662,7 +1666,7 @@ NVDA не учитывает регистр букв по умолчанию.
 
 +++ Ручная активация +++[ConfigProfileManual]
 Вы можете вручную активировать профиль, выбрав его и нажав кнопку "Ручная активация".
-Как только вы активируете профиль вручную, он будет перекрывать одинаковые параметры в других профилях, которые все еще могут автоматически активироваться, благодаря автопереключателям профилей.
+Как только вы активируете профиль вручную, он будет перекрывать одинаковые параметры в других профилях, которые всё ещё могут автоматически активироваться, благодаря автопереключателям профилей.
 Например, если профиль запущен работающим приложением и чтение ссылок разрешено в этом профиле, но при этом в профиле ручной активации чтение ссылок запрещено, то ссылки уже не будут читаться в профиле, который был запущен работающим приложением.
 Однако, если вы изменили голос в профиле, запущенном работающим приложением, и при этом голос не менялся в профиле ручной активации, будет использоваться все же голос из профиля, который был запущен приложением.
 Любые настройки, которые вы меняете, будут сохраняться в профиле ручной активации.
@@ -1708,23 +1712,23 @@ NVDA не учитывает регистр букв по умолчанию.
 + Сервис +[ExtraTools]
 
 ++ Просмотрщик журнала ++[LogViewer]
-При помощи просмотрщика журнала, который можно найти в меню NVDA "Сервис -> Просмотр журнала", вы можете просматривать весь записываемый вывод, происходивший с момента начала загрузки программы NVDA и до текущего момента.
+С помощью просмотрщика журнала, который можно найти в меню NVDA "Сервис -> Просмотр журнала", вы можете просматривать весь записываемый вывод журнала NVDA, происходивший от её запуска и до текущего момента.
 
-Помимо чтения содержимого вы также можете сохранять копию файла журнала или же обновлять просмотрщик, так чтобы он показывал самый актуальный записываемый вывод с момента открытия просмотрщика журнала.
+Помимо чтения журнала NVDA, вы можете сохранять его копию в файл, а также обновлять отображаемый вывод просмотрщика для получения более новых записей.
 Эти опции доступны в меню просмотрщика журнала.
 
 ++ Просмотрщик речи ++[SpeechViewer]
-Для зрячих разработчиков программного обеспечения или для людей, демонстрирующих работу NVDA зрячей аудитории, доступно всплывающее окно, в котором вы можете просматривать весь текст, проговариваемый NVDA на текущий момент времени.
+Для зрячих разработчиков или для людей, демонстрирующих работу NVDA зрячей аудитории, доступно всплывающее окно, в котором они могут просматривать весь текст, проговариваемый NVDA в текущий момент времени.
 
-Чтобы активировать просмотрщик речи, установите галочку на пункте меню NVDA "Сервис -> Просмотрщик речи".
-Сбросьте галочку на пункте меню NVDA "Сервис -> Просмотрщик речи", чтобы деактивировать просмотрщик речи.
+Чтобы активировать просмотрщик речи, установите отметку на пункте меню NVDA "Сервис -> Просмотрщик речи".
+Для отключения просмотрщика речи просто снимите эту отметку.
 
 Окно просмотрщика речи содержит флажок "Открывать просмотрщик речи при запуске NVDA".
 Если этот флажок установлен, то просмотрщик речи будет автоматически открываться при каждом запуске NVDA.
 Окно просмотрщика речи всегда будет пытаться открываться с теми же размерами и расположением, которые были при его последнем закрытии.
 
-Пока просмотрщик речи активирован, он постоянно обновляется, чтобы вы могли видеть текст, проговариваемый NVDA на текущий момент времени.
-Но если вы произведете щелчок или переместите системный фокус внутри просмотрщика, NVDA временно прекратит обновлять текст, так что у вас появится возможность легко выделить и скопировать существующее содержимое.
+Пока просмотрщик речи активирован, он постоянно обновляется, чтобы вы могли видеть текст, проговариваемый NVDA в текущий момент времени.
+Но если вы произведёте щелчок мышью по просмотрщику или переместите в него системный фокус, NVDA временно прекратит обновлять вывод, так что у вас появится возможность легко выделить и скопировать желаемый текст.
 
 Для включения/выключения просмотрщика речи в любом месте, пожалуйста, назначьте пользовательский жест используя диалог [Жесты ввода #InputGestures].
 
@@ -1747,114 +1751,107 @@ NVDA не учитывает регистр букв по умолчанию.
  
  Перед началом установки NVDA сначала попросит подтвердить, что вы, действительно, хотите установить это дополнение.
 Поскольку функциональность дополнений не ограничивается рамками программы NVDA, и в теории может включать в себя доступ к вашим личным данным или даже ко всей системе, если в NVDA устанавливается копия дополнения, то очень важно устанавливать дополнения только из источников, которым вы доверяете.
-После того как дополнение было установлено, NVDA должен быть перезапущен, для того чтобы дополнение начало работать.
-Пока вы этого не сделаете, для него будет отображаться статус "будет установлено" в списке дополнений.
+После того как дополнение было установлено, NVDA должна быть перезагружена, для того чтобы дополнение начало работать.
+Пока вы этого не сделаете, в списке дополнений для него будет отображаться статус "будет установлено".
 
-Чтобы удалить дополнение, выберите дополнение из списка и нажмите кнопку "Удалить".
+Чтобы удалить желаемое дополнение, выберите его из списка и нажмите кнопку "Удалить".
 NVDA спросит, хотите ли вы, действительно, сделать это.
-Как и при установке, NVDA должен быть перезапущен для того чтобы дополнение было полностью удалено. 
+Как и при установке, для полного удаления дополнения, NVDA должна быть перезагружена.
 Пока вы этого не сделаете, для него в списке будет отображаться статус "будет удалено".
 
-Чтобы отключить дополнение, нажмите кнопку "Отключить".
+Для отключения дополнения, нажмите кнопку "Отключить".
 Чтобы включить ранее отключенное дополнение, нажмите кнопку "Включить".
-Вы можете отключить дополнение если статус указывает, что оно включено или будет включено, или включить его, если дополнение отключено или будет отключено.
+Вы можете отключить дополнение если статус указывает, что оно включено, или включить его, если дополнение отключено.
 После каждого нажатия на кнопки Включить/Отключить, состояние дополнения изменяется, указывая, что произойдёт с ним после перезагрузки NVDA.
-Так же, как при установке или удалении дополнения, вы должны перезагрузить NVDA, чтобы изменения вступили в силу.
+Если дополнение было отключено, то после его включения, статус изменится на "будет включено". Если дополнение было включено, то после его отключения, статус изменится на "будет отключено".
+Так же, как при установке или удалении дополнения, для вступления в силу сделанных изменений, вы должны перезагрузить NVDA.
 
 Менеджер дополнений также имеет кнопку "Закрыть", для закрытия диалогового окна.
 Если вы установили, удалили или изменили состояние дополнения, NVDA сначала спросит вас, хотите ли вы перезагрузить программу, для того чтобы изменения вступили в силу.
 
-В прошлом было возможно расширить функциональность NVDA, копируя отдельные плагины и драйверы в папку настроек NVDA.
-Несмотря на то, что эта версия NVDA всё ещё может загрузить их, они не будут показаны в менеджере дополнений.
+В прошлом было возможно расширять функциональность NVDA, копируя отдельные плагины и драйверы в папку настроек NVDA.
+Несмотря на то, что эта версия NVDA всё ещё может загружать их, они не будут отображаться в менеджере дополнений.
 Лучше удалить эти файлы из вашей конфигурации и установить соответствующее дополнение, если оно доступно.
 
 Чтобы получить доступ к менеджеру дополнений в любом месте, пожалуйста, назначьте пользовательский жест используя диалог [Жесты ввода #InputGestures].
 
 ++ Консоль Python ++[PythonConsole]
-Консоль Python NVDA(меню NVDA "Сервис -> Консоль Python") является инструментом разработки, который полезен для отладки, общих внутренних компонентов NVDA или проверки доступности иерархии приложения.
-Для получения дополнительной информации, пожалуйста, обратитесь к [руководству разработчика NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
+Консоль Python NVDA (меню NVDA "Сервис -> Консоль Python") является инструментом разработки, полезным для отладки, получения доступа к внутренним компонентам NVDA или проверки доступности иерархии объектов приложения.
+Для получения дополнительной информации, пожалуйста обратитесь к [руководству разработчика NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
 ++ Перезагрузить плагины ++[ReloadPlugins]
-При помощи этого пункта меню вы можете перезагрузить глобальные модули и модули для приложений, не перезапуская NVDA, это может быть полезным для разработчиков.
+При помощи этого пункта меню вы можете перезагрузить глобальные модули и модули для приложений, не перезагружая саму NVDA. Это может быть удобно для разработчиков.
 
 + Поддерживаемые синтезаторы речи +[SupportedSpeechSynths]
 Этот раздел содержит информацию о синтезаторах речи, поддерживаемых в NVDA.
-Более обширный список свободных и коммерческих синтезаторов, которые вы можете купить и загрузить для использования с NVDA, смотрите на [странице дополнительных голосов https://github.com/nvaccess/nvda/wiki/ExtraVoices].
+Более обширный список свободных и коммерческих синтезаторов речи, которые вы можете купить и загрузить для использования в NVDA, смотрите на [странице дополнительных голосов https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++[eSpeakNG]
-Синтезатор [eSpeak NG https://github.com/espeak-ng/espeak-ng] встроен непосредственно в NVDA и не требует установки других специальных драйверов или компонентов.
-NVDA запускается с использованием eSpeak NG по умолчанию.
-Поскольку этот синтезатор встроен в NVDA, это отличный выбор при работе NVDA с USB флэш-накопителя в других системах.
+Синтезатор [eSpeak NG https://github.com/espeak-ng/espeak-ng] встроен непосредственно в NVDA и не требует установки каких-либо сторонних драйверов или компонентов.
+NVDA при запуске по умолчанию использует eSpeak NG.
+Поскольку этот синтезатор встроен в NVDA, это отличный выбор для работы NVDA с USB-флэш-накопителей на других системах.
 
-Каждый голос, который идет с eSpeak NG, говорит на различных языках.
-Имеются более 43 различных языков, поддерживаемых eSpeak NG.
+Каждый голос, который поставляется с eSpeak NG, говорит на множестве различных языков.
+В настоящее время eSpeak NG поддерживает более 43 различных языков.
 
-Доступны также множество различных вариантов, которые могут быть выбраны для изменения звука голоса.
+Также доступны множество различных вариантов одного голоса, которые могут быть использованы для изменения звука синтезируемой речи.
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++[SAPI4]
 SAPI 4 является устаревшим стандартом Microsoft для программных синтезаторов речи.
-NVDA по-прежнему поддерживает этот драйвер для пользователей, которые до сих пор имеют установленные SAPI 4 синтезаторы.
+NVDA по-прежнему поддерживает этот драйвер для пользователей, которые до сих пор имеют установленные SAPI4 синтезаторы.
 Тем не менее, Microsoft более не поддерживает этот стандарт и необходимые компоненты больше не доступны на сайте Microsoft.
 
-При использовании этого синтезатора с NVDA, имеющиеся голоса (доступные из диалогового окна [Настроек голоса #VoiceSettings] или [Кольца настроек синтезатора #SynthSettingsRing]) будет содержать все голоса из всех установленных SAPI 4 движков найденых в вашей системе.
+При использовании этого синтезатора с NVDA, набор доступных голосов (из диалогового окна [Настроек голоса #VoiceSettings] или [Кольца настроек синтезатора #SynthSettingsRing]) будет содержать все голоса из всех установленных SAPI 4 движков найденных в вашей системе.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++[SAPI5]
 SAPI 5 является стандартом Microsoft для программных синтезаторов речи.
-Многие синтезаторы речи, которые соответствуют этому стандарту, могут быть куплены или загружены бесплатно у различных компаний и на web-сайтах, хотя Ваша система будет, вероятно, уже идти по крайней мере с одним предустановленным SAPI 5 голосом.
-При использовании этого синтезатора с NVDA, имеющиеся голоса (доступные из диалогового окна [Настроек голоса #VoiceSettings] или [Кольца настроек синтезатора #SynthSettingsRing]) будет содержать все голоса из всех установленных SAPI 5 движков найденых в вашей системе.
+Многие синтезаторы речи соответствующие этому стандарту, могут быть куплены или бесплатно загружены на web-сайтах различных компаний, хотя скорее всего, ваша система уже будет идти по крайней мере с одним предустановленным SAPI5 голосом.
+При использовании этого синтезатора с NVDA, набор доступных голосов (из диалогового окна [Настроек голоса #VoiceSettings] или [Кольца настроек синтезатора #SynthSettingsRing]) будет содержать все голоса из всех установленных SAPI 5 движков найденных в вашей системе.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
-Microsoft Speech Platform предоставляет голоса для многих языков, которые обычно используются в разработке серверных речевых приложений.
+Microsoft Speech Platform предоставляет голоса для множества различных языков, которые обычно используются в разработке серверных речевых приложений.
 Эти голоса могут также использоваться в NVDA.
 
-Для использования этих голосов вы должны установить два компонента:
+Для использования этих голосов вы должны установить следующие два компонента:
 - Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
 - Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
- - Эта страница содержит много файлов и для распознавания речи и для преобразования текста в речь.
- Выберите файлы, содержащие данные TTS для требуемых языков/речи.
- Например, файл MSSpeech_TTS_en-US_ZiraPro.msi голос англиского языка.
+ - Эта страница содержит множество файлов относящихся как к распознаванию речи, так и к преобразованию текста в речь.
+ Выберите файлы, содержащие данные TTS для желаемых языков/голосов.
+ Например, файл MSSpeech_TTS_ru-RU_Elena.msi для голоса русского языка.
  -
 -
 
 ++ Windows OneCore Voices ++[OneCore]
 Windows 10 включает в себя новые голоса, известные как "OneCore" или "мобильные" голоса.
-Эти голоса предоставляются для множества языков, и они более отзывчивы, чем голоса Microsoft SAPI5.
+Эти голоса доступны для множества языков, и они более отзывчивы, чем голоса Microsoft SAPI5.
 
 Обратитесь к этой статье Microsoft для получения списка доступных голосов и инструкции по их установке: https://support.microsoft.com/en-us/help/22797/windows-10-narrator-tts-voices
 
-Обратите внимание, что более высокая скорость доступная в экранном дикторе в настоящее время не доступна в NVDA.
+Обратите внимание, что более высокая скорость речи доступная в экранном дикторе в настоящее время недоступна в NVDA.
 Кроме того, скорость, которую вы выбираете в настройках Windows, влияет на скорость установленную в NVDA.
 Это проблемы, которые мы не можем разрешить без изменений в операционной системе.
 Мы надеемся, что они будут решены в будущих обновлениях Windows.
 
 ++ Audiologic Tts3 ++[Audiologic]
-Это коммерческий синтезатор речи специально для Итальянского языка.
-Вы должны установить синтезатор на вашу систему для того, чтобы использовать его с NVDA.
-Для получения дополнительной информации, посетите web-сайт Audiologic по адресу www.audiologic.it.
+Это коммерческий синтезатор речи для Итальянского языка.
+Для использования этого синтезатора в NVDA, вы должны установить его на вашу систему.
+Для получения более подробной информации, пожалуйста, посетите web-сайт Audiologic по адресу www.audiologic.it.
 
 Этот синтезатор не поддерживает [функцию посимвольного чтения #VoiceSettingsUseSpelling].
-
-++ Nuance Vocalizer для NVDA ++[Vocalizer]
-Nuance Vocalizer это коммерческий синтезатор речи с высококачественными голосами, разрабатываемый компанией Nuance Communications, inc., который комплектуется специально для NVDA компанией Tiflotecnia, Lda.
-Он содержит более 50 разных голосов, говорящих на более чем 30 языках, доступных для установки.
-Все компоненты и голоса синтезатора речи поставляются в виде пакетов дополнений, которые можно использовать в переносных версиях NVDA.
-
-Для получения дополнительной информации о Nuance Vocalizer для NVDA, и по вопросам приобретения этого продукта, посетите web-сайт [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Процент от продаж этого продукта жертвуется в фонд NV Access для дальнейшего развития ппрограммы NVDA.
 
 + Поддерживаемые брайлевские дисплеи (оставлено без перевода)+[SupportedBrailleDisplays]
 Этот раздел содержит информацию о брайлевских дисплеях, поддерживаемых NVDA.
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
-Все брайлевские дисплеи Focus и PAC Mate от компании [Freedom Scientific http://www.freedomscientific.com/] поддерживаются по USB- и bluetooth-подключению.
+Все брайлевские дисплеи Focus и PAC Mate от компании [Freedom Scientific https://www.freedomscientific.com/] поддерживаются посредством USB или bluetooth-подключения.
 На вашей системе должны быть установлены драйвера брайлевских дисплеев компании Freedom Scientific.
-Если у вас еще нет этих драйверов, то вы можете их скачать по ссылке http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Если у вас ещё нет этих драйверов, то вы можете скачать их на странице https://www.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver
 Несмотря на то, что на этой страничке упоминается лишь брайлевский дисплей "Focus Blue", драйвера поддерживают все дисплеи "Focus" и "Pacmate" компании Freedom Scientific.
-Если у вас 64-разрядная операционная система Windows, и драйверы были уже установлены другой программой экранного доступа, то вам, вероятнее всего, все еще потребуется установить драйвера по вышеупомянутой ссылке, так как файлы, необходимые для NVDA вряд ли были установлены другой программой экранного доступа.
+Если у вас 64-разрядная операционная система Windows, и драйверы были уже установлены другой программой экранного доступа, то вам, вероятнее всего, всё ещё потребуется установить драйвера по вышеупомянутой ссылке, так как файлы, необходимые для NVDA вряд ли были установлены другой программой экранного доступа.
 
 По умолчанию NVDA автоматически определяет и устанавливает соединение с этими дисплеями как по USB-, так и по bluetooth-связи.
-Однако, при настройке дисплея вы можете точно выбрать порты "USB" или "Bluetooth" для ограничения использования типов связи.
-Это может быть полезным, если вы хотите соединить дисплей focus к программе NVDA по bluetooth-связи, при этом заряжая его через USB-порт.
+Однако, при настройке дисплея вы можете явно указать порты "USB" или "Bluetooth" для ограничения использования типов связи.
+Это может быть полезным, например если вы хотите подключить дисплей focus к NVDA по bluetooth, при этом заряжая его через USB-порт.
 
 В NVDA используются следующие комбинации клавиш для этого дисплея.
 Для описания расположения клавиш, пожалуйста, обратитесь к руководству для брайлевского дисплея.
@@ -1904,15 +1901,20 @@ For Focus 80 only:
 | Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
 Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
+Alternatively, you can connect an older Optelec display, such as a Braille Voyager, using a protocol converter supplied by Optelec.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
-While these displays do have a braille keyboard, they handle translation from braille to text themselves.
-Therefore, NVDA's braille input table setting is not relevant.
+Note: NVDA might be unable to use an ALVA BC6 display over Bluetooth when it is paired using the ALVA Bluetooth utility.
+When you have paired your device using this utility and NVDA is unable to detect your device, we recommend you to pair your ALVA display the regular way using the Windows Bluetooth settings.
 
-Following are the key assignments for this display with NVDA.
+Note: while some of these displays do have a braille keyboard, they handle translation from braille to text themselves by default.
+This means that NVDA's braille input system is not in use in the default situation (i.e. the input braille table setting has no effect).
+For ALVA displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
+
+Following are key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
@@ -1922,6 +1924,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move braille display to next line | t4 |
 | Scroll braille display forward | t5 or etouch3 |
 | Route to braille cell | routing |
+| Report text formatting under braille cell | secondary routing |
+| Toggle HID keyboard simulation | t1+spEnter |
 | Move to top line in review | t1+t2 |
 | Move to bottom line in review | t4+t5 |
 | Toggle braille tethered to | t1+t3 |
@@ -1935,17 +1939,19 @@ Please see the display's documentation for descriptions of where these keys can 
 | downArrow key | spDown |
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
-| enter key | spEnter |
+| enter key | spEnter, enter|
 | Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
 | windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3 |
+| windows key | sp2+sp3, windows |
 | alt+tab key | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
+| alt key | alt |
+| control key | control |
 %kc:endInclude
 
 ++ Handy Tech Displays ++[HandyTech]
@@ -2072,13 +2078,16 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Series ++[HumanWareBrailliant]
-The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+++ HumanWare Brailliant BI/B Series / BrailleNote Touch ++[HumanWareBrailliant]
+The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
-Following are the key assignments for this display with NVDA.
+The BrailleNote Touch is also supported, and does not require any drivers to be installed.
+
+Following are the key assignments for the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
++++ Key assignments for All models +++
 %kc:beginInclude
 || Name | Key |
 | Scroll braille display back | left |
@@ -2091,19 +2100,37 @@ Please see the display's documentation for descriptions of where these keys can 
 | downArrow key | space+dot4 |
 | leftArrow key | space+dot3 |
 | rightArrow key | space+dot6 |
-| NVDA Menu | c1+c3+c4+c5 (command n) |
 | shift+tab key | space+dot1+dot3 |
 | tab key | space+dot4+dot6 |
 | alt key | space+dot1+dot3+dot4 (space+m) |
 | escape key | space+dot1+dot5 (space+e) |
 | enter key | dot8 |
-| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
 | windows key | space+dot3+dot4 |
 | alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+%kc:endInclude
+
++++ Key assignments for Brailliant BI 32, BI 40 and B 80 +++ 
+%kc:beginInclude
+|| Name | Key |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++
++++ Key assignments for Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Name | Key |
+| up arrow key | joystick up |
+| down arrow key | joystick down |
+| left arrow key | joystick left |
+| right arrow key | joystick right |
+| enter key | joystick action |
+%kc:endInclude
+
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
 You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2252,7 +2279,7 @@ Following are the Papenmeier command assignments for NVDA:
 | Move to first contained object | dn2 |
 | Move to previous object | left2 |
 | Move to next object | right2 |
-| Report text formatting | upper routing row |
+| Report text formatting under braille cell | upper routing row |
 %kc:endInclude
 
 The Trio model has four additional keys which are in front of the braille keyboard.
@@ -2326,7 +2353,7 @@ Devices with EAB:
 | Move to first contained object | dn2 |
 | Move to next object | right2 |
 | Move to previous object | left2 |
-| Report text formatting | Upper routing strip |
+| Report text formatting under braille cell | upper routing strip |
 
 BRAILLEX Tiny:
 || Name | Key |
@@ -2341,7 +2368,7 @@ BRAILLEX Tiny:
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
 | Move to next object | r1+right |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Report title | l1+up |
 | Report status bar | l2+down |
 
@@ -2350,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
 | Toggle braille tethered to | r2 |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
 | Scroll braille display forward | right |
@@ -2369,6 +2396,8 @@ The following models are supported:
 - BrailleNote MPower (Serial and bluetooth connections)
 - BrailleNote Apex (USB and Bluetooth connections)
 -
+
+For BrailleNote Touch, please refer to the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
 
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.
@@ -2452,6 +2481,87 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 || Name | Key |
 | Scroll braille display back | numpadMinus |
 | Scroll braille display forward | numpadPlus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
+The Esys, Esytime and Iris displays from [Eurobraille http://www.eurobraille.fr/] are supported by NVDA.
+Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
+Older Esytime devices only support USB.
+Iris displays can only be connected via a serial port.
+Therefore, for these displays, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialog.
+
+Iris and Esys displays have a braille keyboard with 10 keys.
+Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
+
+Following are the key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | switch1-6left, l1 |
+| Scroll braille display forward | switch1-6Right, l8 |
+| Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
+| Route to braille cell | routing |
+| Report text formatting under braille cell | doubleRouting |
+| Move to previous line in review | joystick1Up |
+| Move to next line in review | joystick1Down |
+| Move to previous character in review | joystick1Left |
+| Move to next character in review | joystick1Right |
+| Switch to previous review mode | joystick1Left+joystick1Up |
+| Switch to next review mode | joystick1Right+joystick1Down |
+| Erase the last entered braille cell or character | backSpace |
+| Translate any braille input and press the enter key | backSpace+space |
+| insert key | dot3+dot5+space, l7 |
+| delete key | dot3+dot6+space |
+| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
+| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
+| leftArrow key | dot2+space, joystick2Left, leftArrow |
+| rightArrow key | dot5+space, joystick2Right, rightArrow |
+| upArrow key | dot1+space, joystick2Up, upArrow |
+| downArrow key | dot6+space, joystick2Down, downArrow |
+| enter key | joystick2Center |
+| pageUp key | dot1+dot3+space |
+| pageDown key | dot4+dot6+space |
+| numpad1 key | dot1+dot6+backspace |
+| numpad2 key | dot1+dot2+dot6+backspace |
+| numpad3 key | dot1+dot4+dot6+backspace |
+| numpad4 key | dot1+dot4+dot5+dot6+backspace |
+| numpad5 key | dot1+dot5+dot6+backspace |
+| numpad6 key | dot1+dot2+dot4+dot6+backspace |
+| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
+| numpad8 key | dot1+dot2+dot5+dot6+backspace |
+| numpad9 key | dot2+dot4+dot6+backspace |
+| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
+| numpadDecimal key | dot2+backspace |
+| numpadDivide key | dot3+dot4+backspace |
+| numpadMultiply key | dot3+dot5+backspace |
+| numpadMinus key | dot3+dot6+backspace |
+| numpadPlus key | dot2+dot3+dot5+backspace |
+| numpadEnter key | dot3+dot4+dot5+backspace |
+| escape key | dot1+dot2+dot4+dot5+space, l2 |
+| tab key | dot2+dot5+dot6+space, l3 |
+| shift+tab key | dot2+dot3+dot5+space |
+| printScreen key | dot1+dot3+dot4+dot6+space |
+| pause key | dot1+dot4+space |
+| applications key | dot5+dot6+backspace |
+| f1 key | dot1+backspace |
+| f2 key | dot1+dot2+backspace |
+| f3 key | dot1+dot4+backspace |
+| f4 key | dot1+dot4+dot5+backspace |
+| f5 key | dot1+dot5+backspace |
+| f6 key | dot1+dot2+dot4+backspace |
+| f7 key | dot1+dot2+dot4+dot5+backspace |
+| f8 key | dot1+dot2+dot5+backspace |
+| f9 key | dot2+dot4+backspace |
+| f10 key | dot2+dot4+dot5+backspace |
+| f11 key | dot1+dot3+backspace |
+| f12 key | dot1+dot2+dot3+backspace |
+| windows key | dot1+dot2+dot3+dot4+backspace |
+| capsLock key | dot7+backspace, dot8+backspace |
+| numLock key | dot3+backspace, dot6+backspace |
+| shift key | dot7+space, l4 |
+| control key | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
+| alt key | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
+| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
