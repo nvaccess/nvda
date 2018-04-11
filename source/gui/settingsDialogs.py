@@ -104,6 +104,11 @@ class SettingsDialog(wx.Dialog):
 			startTime = time.time()
 		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
 		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
+
+		# the wx.Window must be constructed before we can get the handle.
+		import windowUtils
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
 		self.makeSettings(self.settingsSizer)
@@ -167,6 +172,15 @@ class SettingsDialog(wx.Dialog):
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
 
+	def scaleSize(self, size):
+		"""Helper method to scale a size using the logical DPI
+		@param size: The size (x,y) as a tuple or a single numerical type to scale
+		@returns: The scaled size, returned as the same type"""
+		if isinstance(size, tuple):
+			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
+		return self.scaleFactor * size
+
+
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
@@ -197,6 +211,9 @@ class SettingsPanel(wx.Panel):
 		if gui._isDebug():
 			startTime = time.time()
 		super(SettingsPanel, self).__init__(parent, wx.ID_ANY)
+		# the wx.Window must be constructed before we can get the handle.
+		import windowUtils
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
@@ -249,6 +266,14 @@ class SettingsPanel(wx.Panel):
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
 
+	def scaleSize(self, size):
+		"""Helper method to scale a size using the logical DPI
+		@param size: The size (x,y) as a tuple or a single numerical type to scale
+		@returns: The scaled size, returned as the same type"""
+		if isinstance(size, tuple):
+			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
+		return self.scaleFactor * size
+
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
 	A multi category settings dialog consists of a list view with settings categories on the left side, 
@@ -298,15 +323,18 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		)
 
 		# setting the size must be done after the parent is constructed.
-		self.SetMinSize(self.MIN_SIZE)
-		self.SetInitialSize(self.MIN_SIZE)
+		self.SetMinSize(self.scaleSize(self.MIN_SIZE))
+		self.SetSize(self.scaleSize(self.INITIAL_SIZE))
+		# the size has changed, so recenter on the screen
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	# Initial / min size for the dialog. This size was chosen as a medium fit, so the
 	# smaller settings panels are not surrounded by too much space but most of
 	# the panels fit. Vertical scrolling is acceptable. Horizontal scrolling less
 	# so, the width was chosen to eliminate horizontal scroll bars. If a panel
 	# exceeds the the initial width a debugWarning will be added to the log.
-	MIN_SIZE = (1000, 600)
+	INITIAL_SIZE = (800, 480)
+	MIN_SIZE = (470, 240) # Min height required to show the OK, Cancel, Apply buttons
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -315,7 +343,20 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Translators: The label for the list of categories in a multi category settings dialog.
 		categoriesLabelText=_("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
-		catListDim = (180, 300)
+
+		# since the categories list and the container both expand in height, the y
+		# portion is essentially a "min" height.
+		# These sizes are set manually so that the initial proportions within the dialog look correct. If these sizes are
+		# not given, then I believe the proportion arguments (as given to the gridBagSizer.AddGrowableColumn) are used
+		# to set their relative sizes. We want the proportion argument to be used for resizing, but not the initial size.
+		catListDim = (150, 10)
+		catListDim = self.scaleSize(catListDim)
+
+		initialScaledWidth = self.scaleSize(self.INITIAL_SIZE[0])
+		spaceForBorderWidth = self.scaleSize(20)
+		catListWidth = catListDim[0]
+		containerDim = (initialScaledWidth - catListWidth - spaceForBorderWidth, self.scaleSize(10))
+
 		self.catListCtrl = nvdaControls.AutoWidthColumnListCtrl(
 			self,
 			autoSizeColumnIndex=0,
@@ -326,17 +367,22 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
 
-		# Put the settings panel in a scrolledPanel, we dont know how large the settings panels might grow. If they exceed the maximum size,
-		# its important all items can be accessed visually.
-		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is exposed via the IAccessibleName
-		# property.
+		# Put the settings panel in a scrolledPanel, we don't know how large the settings panels might grow. If they exceed
+		# the maximum size, its important all items can be accessed visually.
+		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is
+		# exposed via the IAccessibleName property.
 		global NvdaSettingsCategoryPanelId
 		NvdaSettingsCategoryPanelId = wx.NewId()
 		self.container = scrolledpanel.ScrolledPanel(
 			parent = self,
 			id = NvdaSettingsCategoryPanelId,
-			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME
+			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME,
+			size=containerDim
 		)
+
+		# Th min size is reset so that they can be reduced to below their "size" constraint.
+		self.container.SetMinSize((1,1))
+		self.catListCtrl.SetMinSize((1,1))
 
 		self.containerSizer = wx.BoxSizer(wx.VERTICAL)
 		self.container.SetSizer(self.containerSizer)
@@ -368,11 +414,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		gridBagSizer.Add(self.container, pos=(1,1), flag=wx.EXPAND)
 		# Make the row with the listCtrl and settings panel grow vertically.
 		gridBagSizer.AddGrowableRow(1)
-		# Make the columns with the listCtrl and settings panel grow horizontally.
-		# They should grow 1:20, since the settings panel is much more important, and already wider
+		# Make the columns with the listCtrl and settings panel grow horizontally if the dialog is resized.
+		# They should grow 1:3, since the settings panel is much more important, and already wider
 		# than the listCtrl.
 		gridBagSizer.AddGrowableCol(0, proportion=1)
-		gridBagSizer.AddGrowableCol(1, proportion=20)
+		gridBagSizer.AddGrowableCol(1, proportion=3)
 		sHelper.sizer.Add(gridBagSizer, flag=wx.EXPAND, proportion=1)
 
 		self.container.Layout()
@@ -403,7 +449,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def postInit(self):
 		# By default after the dialog is created, focus lands on the button group for wx.Dialogs. However this is not where
-		# we wantfocus. We only want to modify focus after creation (makeSettings), but postInit is also called after
+		# we want focus. We only want to modify focus after creation (makeSettings), but postInit is also called after
 		# onApply, so we reset the setPostInitFocus function.
 		if self.setPostInitFocus:
 			self.setPostInitFocus()
@@ -687,7 +733,8 @@ class SpeechSettingsPanel(SettingsPanel):
 		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
 		# display here.
 		synthDesc = getSynth().description
-		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
+		self.synthNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), value=synthDesc, style=wx.TE_READONLY)
+
 		# Translators: This is the label for the button used to change synthesizer,
 		# it appears in the context of a synthesizer group on the speech settings panel.
 		changeSynthBtn = wx.Button(self, label=_("C&hange..."))
@@ -1976,7 +2023,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(displayGroup)
 		
 		displayDesc = braille.handler.display.description
-		self.displayNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=displayDesc, style=wx.TE_READONLY)
+		self.displayNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), value=displayDesc, style=wx.TE_READONLY)
 		# Translators: This is the label for the button used to change braille display,
 		# it appears in the context of a braille display group on the braille settings panel.
 		changeDisplayBtn = wx.Button(self, label=_("C&hange..."))
