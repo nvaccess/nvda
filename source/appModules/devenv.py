@@ -50,7 +50,8 @@ from NVDAObjects.window import Window
 from NVDAObjects.window import DisplayModelEditableText
 
 import appModuleHandler
-
+import api
+import ui
 
 #
 # A few helpful constants
@@ -144,7 +145,6 @@ class AppModule(appModuleHandler.AppModule):
 		serviceProvider = self._getDTE().QueryInterface(comtypes.IServiceProvider)
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
-
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
