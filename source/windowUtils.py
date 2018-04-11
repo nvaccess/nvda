@@ -108,12 +108,16 @@ def getWindowScalingFactor(window):
 	try:
 		winDpi = user32.GetDpiForWindow(window)
 	except:
+		log.debug("GetDpiForWindow failed, using GetDeviceCaps instead")
 		dc = user32.GetDC(window)
 		winDpi = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
 		ret = user32.ReleaseDC(window, dc)
 		if ret != 1:
-			log.ERROR("Unable to release the device context.")
+			log.error("Unable to release the device context.")
 
+	# For GetDpiForWindow: an invalid hwnd value will result in a return value of 0.
+	# There is little information about what GetDeviceCaps does in the case of a failure for LOGPIXELSX, however,
+	# a value of zero is certainly an error.
 	if winDpi != 0:
 		return winDpi / DEFAULT_DPI_LEVEL
 
