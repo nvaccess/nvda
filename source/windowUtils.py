@@ -118,10 +118,14 @@ def getWindowScalingFactor(window):
 	# For GetDpiForWindow: an invalid hwnd value will result in a return value of 0.
 	# There is little information about what GetDeviceCaps does in the case of a failure for LOGPIXELSX, however,
 	# a value of zero is certainly an error.
-	if winDpi != 0:
-		return winDpi / DEFAULT_DPI_LEVEL
+	if winDpi <= 0:
+		log.debugWarning("Failed to get the DPI for the window, assuming a "
+		                 "DPI of {} and using a scaling of 1.0. The hWnd value "
+		                 "used was: {}".format(DEFAULT_DPI_LEVEL, window))
+		return 1.0
 
-	return 1.0
+	return winDpi / DEFAULT_DPI_LEVEL
+
 
 
 appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
