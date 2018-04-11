@@ -99,6 +99,11 @@ DEFAULT_DPI_LEVEL = 96.0
 # via the GetDeviceCaps function.
 LOGPIXELSX = 88
 def getWindowScalingFactor(window):
+	"""Gets the logical scaling factor used for the given window handle. This is based off the Dpi reported by windows
+	for the given window handle / divided by the "base" DPI level of 96. Typically this is a result of using the scaling
+	percentage in the windows display settings. 100% is typically 96 DPI, 150% is typically 144 DPI.
+	@param window: a native Windows window handle (hWnd)
+	@returns the logical scaling factor. EG. 1.0 if the window DPI level is 96, 1.5 if the window DPI level is 144"""
 	user32 = ctypes.windll.user32
 	try:
 		winDpi = user32.GetDpiForWindow(window)
