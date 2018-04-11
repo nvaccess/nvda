@@ -234,6 +234,7 @@ class AppModule(appModuleHandler.AppModule):
 			elif uiaClassName == "MultitaskingViewFrame" and role == controlTypes.ROLE_WINDOW:
 				clsList.insert(0, MultitaskingViewFrameWindow)
 			elif windowClass == "MultitaskingViewFrame" and role == controlTypes.ROLE_LISTITEM:
+				# Use windowClass here as there is no uiaClassName for these list items.
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0, UIProperty)
