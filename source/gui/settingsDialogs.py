@@ -174,9 +174,11 @@ class SettingsDialog(wx.Dialog):
 
 	def scaleSize(self, size):
 		"""Helper method to scale a size using the logical DPI
-		@param size: The size (x,y) as a tuple to scale
-		@returns: The scaled size (scaled_X, scaled_Y)"""
-		return (self.scaleFactor * size[0], self.scaleFactor * size[1])
+		@param size: The size (x,y) as a tuple or a single numerical type to scale
+		@returns: The scaled size, returned as the same type"""
+		if isinstance(size, tuple):
+			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
+		return self.scaleFactor * size
 
 
 # An event and event binder that will notify the containers that they should
@@ -209,6 +211,9 @@ class SettingsPanel(wx.Panel):
 		if gui._isDebug():
 			startTime = time.time()
 		super(SettingsPanel, self).__init__(parent, wx.ID_ANY)
+		# the wx.Window must be constructed before we can get the handle.
+		import windowUtils
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
@@ -260,6 +265,14 @@ class SettingsPanel(wx.Panel):
 		event = _RWLayoutNeededEvent(self.GetId())
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
+
+	def scaleSize(self, size):
+		"""Helper method to scale a size using the logical DPI
+		@param size: The size (x,y) as a tuple or a single numerical type to scale
+		@returns: The scaled size, returned as the same type"""
+		if isinstance(size, tuple):
+			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
+		return self.scaleFactor * size
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
@@ -339,9 +352,10 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		catListDim = (150, 10)
 		catListDim = self.scaleSize(catListDim)
 
-		containerDim = self.scaleSize((self.INITIAL_SIZE[0], 10))
-		spaceForBorders = self.scaleSize((20, 10))
-		containerDim = (containerDim[0] - catListDim[0] - spaceForBorders[0], containerDim[1])
+		initialScaledWidth = self.scaleSize(self.INITIAL_SIZE[0])
+		spaceForBorderWidth = self.scaleSize(20)
+		catListWidth = catListDim[0]
+		containerDim = (initialScaledWidth - catListWidth - spaceForBorderWidth, self.scaleSize(10))
 
 		self.catListCtrl = nvdaControls.AutoWidthColumnListCtrl(
 			self,
@@ -721,7 +735,8 @@ class SpeechSettingsPanel(SettingsPanel):
 		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
 		# display here.
 		synthDesc = getSynth().description
-		self.synthNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=synthDesc, style=wx.TE_READONLY)
+		self.synthNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), value=synthDesc, style=wx.TE_READONLY)
+
 		# Translators: This is the label for the button used to change synthesizer,
 		# it appears in the context of a synthesizer group on the speech settings panel.
 		changeSynthBtn = wx.Button(self, label=_("C&hange..."))
@@ -2011,7 +2026,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(displayGroup)
 		
 		displayDesc = braille.handler.display.description
-		self.displayNameCtrl = ExpandoTextCtrl(self, size=(250,-1), value=displayDesc, style=wx.TE_READONLY)
+		self.displayNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), value=displayDesc, style=wx.TE_READONLY)
 		# Translators: This is the label for the button used to change braille display,
 		# it appears in the context of a braille display group on the braille settings panel.
 		changeDisplayBtn = wx.Button(self, label=_("C&hange..."))
