@@ -291,10 +291,14 @@ class JAB(Window):
 			stateSet.add(controlTypes.STATE_OFFSCREEN)
 		if "expandable" not in stateStrings:
 			stateSet.discard(controlTypes.STATE_COLLAPSED)
+		#fix toggle buttun: checked means pressed
+		if self.role == controlTypes.ROLE_TOGGLEBUTTON and controlTypes.STATE_CHECKED in stateSet:
+			stateSet.remove(controlTypes.STATE_CHECKED)
+			stateSet.add(controlTypes.STATE_PRESSED)
 		return stateSet
 
 	def _get_value(self):
-		if self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
+		if self.role not in [controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_MENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_BUTTON,controlTypes.ROLE_TOGGLEBUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
