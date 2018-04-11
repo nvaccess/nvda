@@ -233,7 +233,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, SuggestionListItem)
 			elif uiaClassName == "MultitaskingViewFrame" and role == controlTypes.ROLE_WINDOW:
 				clsList.insert(0, MultitaskingViewFrameWindow)
-			elif windowClassName == "MultitaskingViewFrame" and role == controlTypes.ROLE_LISTITEM:
+			elif windowClass == "MultitaskingViewFrame" and role == controlTypes.ROLE_LISTITEM:
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0, UIProperty)
