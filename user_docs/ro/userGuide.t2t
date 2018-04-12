@@ -933,7 +933,7 @@ Această opțiune este o casetă de bifat care, când este bifată, instruiește
 
 ==== Arată opțiunile de ieșire când se părăsește NVDA ====[GeneralSettingsShowExitOptions]
 Această opțiune este o casetă de bifat care vă permite să alegeți dacă apare sau nu o fereastră de dialog la ieșirea din NVDA care întreabă ce acțiune ați vrea să faceți.
-Când este bifată, va apărea o fereastră de dialog când încercați să ieșiți din NVDA, care vă întreabă dacă doriți să ieșiți, reporniți sau reporniți cu extensiile add-on dezactivate.
+Când este bifată, va apărea o fereastră de dialog când încercați să ieșiți din NVDA, care vă întreabă dacă doriți să ieșiți, reporniți, reporniți cu extensiile add-on dezactivate sau să instalați actualizările aflate în așteptare (dacă există).
 Când nu este bifată, NVDA se va închide imediat.
 
 ==== Redă sunete când se pornește sau se părăsește NVDA ====[GeneralSettingsPlaySounds]
@@ -963,7 +963,7 @@ Puteți, de asemenea, să verificați manual apariția noilor versiuni prin sele
 
 ==== Notifică actualizările în așteptare la pornire ====[GeneralSettingsNotifyPendingUpdates]
 Dacă e activată, NVDA vă va informa atunci când există o actualizare în așteptare la pornire, oferindu-vă posibilitatea de a o instala.
-De asemenea, puteți instala manual actualizarea în așteptare din dialogul de ieșire al NVDA-ului (dacă-i activat), din meniul NVDA sau când efectuați o căutare de actualizări din din meniul ajutor.
+De asemenea, puteți instala manual actualizarea în așteptare din dialogul de ieșire al NVDA-ului (dacă-i activat), din meniul NVDA sau când efectuați o căutare de actualizări din meniul ajutor.
 
 +++ Selectarea sintetizatorului (NVDA+Control+S) +++[SynthesizerSelection]
 Fereastra de dialog pentru sintetizator, care se găsește în submeniul „Sintetizator...” în meniul Preferințe, vă permite să alegeți ce sintetizator să folosească NVDA pentru vorbire.
@@ -1681,7 +1681,7 @@ Lista declanșatoarelor le prezintă pe cele disponibile, care sunt după cum ur
 -
 
 Pentru a schimba profilul care ar trebui activat automat de un declanșator, selectați declanșatorul și apoi profilul dorit din Lista de profiluri.
-Puteți alege (configurație normală) dacă nu doriți folosirea unui profil.
+Puteți alege „(configurație normală)” dacă nu doriți folosirea unui profil.
 
 Apăsați butonul „Închide” pentru a reveni la fereastra „Configurarea profilurilor”.
 
@@ -1786,7 +1786,7 @@ Această opțiune, odată activată, reîncarcă module de aplicație și extens
 Această secțiune conține informații despre sintetizatoarele de vorbire compatibile cu NVDA.
 Pentru o listă extinsă cu sintetizatoare gratuite și comerciale care pot fi achiziționate și descărcate pentru a fi folosite cu NVDA, accesați [pagina extravocilor https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
-++ Espeak NG ++[eSpeakNG]
+++ eSpeak NG ++[eSpeakNG]
 Sintetizatorul [eSpeak NG https://github.com/espeak-ng/espeak-ng] este integrat direct în NVDA și nu necesită instalarea unor drivere sau componente speciale.
 NVDA pornește folosind eSpeak NG implicit.
 Acest sintetizator fiind integrat în NVDA, e o alegere excelentă când rulați NVDA de pe un stick USB sau CD pe alte sisteme.
@@ -1924,6 +1924,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Mută afișajul braille la rândul următor | t4 |
 | Derulează afișajul braille înainte | t5 sau etouch3 |
 | Mută la celula braille | routing |
+| Raportează formatul textului de sub celula braille | routing secundară |
 | Comută simularea HID a tastaturii | t1+spEnter |
 | Mută la linia de sus în examinare | t1+t2 |
 | Mută la linia de jos în examinare | t4+t5 |
@@ -2278,7 +2279,7 @@ Urmează asocierile de comenzi pentru Papenmeier și NVDA:
 | Mută la primul obiect conținut | dn2 |
 | Mută la obiectul anterior | stânga2 |
 | Mută la următorul obiect | dreapta2 |
-| Anunță formatarea textului | upper routing row |
+| Anunță formatarea textului de sub celula braille | upper routing row |
 %kc:endInclude
 
 Modelul Trio are patru taste adiționale care se află în partea din față a tastaturii braille.
@@ -2352,7 +2353,7 @@ Dispozitive cu EAB:
 | Mută la primul obiect conținut | dn2 |
 | Mută la următorul obiect | dreapta2 |
 | Mută la obiectul anterior | stânga2 |
-| Anunță formatarea textului | Upper routing strip |
+| Anunță formatarea textului de sub celula braille | upper routing strip |
 
 BRAILLEX Tiny:
 || Nume | Tastă |
@@ -2367,7 +2368,7 @@ BRAILLEX Tiny:
 | Mută la primul obiect conținut | r1+dn |
 | Mută la obiectul anterior | r1+stânga |
 | Mută la următorul obiect | r1+dreapta |
-| Anunță formatarea textului | reportf |
+| Anunță formatarea textului de sub celula braille | upper routing strip |
 | Anunță titlu | l1+sus |
 | Anunță bara de stare | l2+jos |
 
@@ -2376,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Anunță caracterul analizat curent | l1 |
 | Activează obiectul navigator curent | l2 |
 | Comută braille asociat la | r2 |
-| Anunță formatarea textului | reportf |
+| Anunță formatarea textului de sub celula braille | upper routing strip |
 | Mută afișajul braille la rândul anterior | sus |
 | Derulează afișajul braille înapoi | stânga |
 | Derulează afișajul braille înainte | dreapta |
@@ -2499,7 +2500,8 @@ Vă rugăm să citiți documentația afișajului pentru descrierile locului în 
 | Derulează înapoi afișajul braille | switch1-6stânga, l1 |
 | Derulează înainte afișajul braille | switch1-6dreapta, l8 |
 | Mută la focalizarea curentă | switch1-6stânga+switch1-6dreapta, l1+l8 |
-| Comută la celula braille | routing, doubleRouting|
+| Comută la celula braille | routing |
+| Raportează formatul textului de sub celula braille | doubleRouting |
 | Mută la linia precedentă din examinare | joystick1Sus |
 | Mută la linia următoare din examinare | joystick1Jos |
 | Mută la caracterul anterior din examinare | joystick1Stânga |
