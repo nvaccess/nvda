@@ -3,6 +3,48 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== Nove karakteristike ==
+- Redovi i kolone koje pokriva određena ćelija u tabeli se sada izgovaraju i ispisuju na brajevom redu. (#2642)
+- NVDA komande za navigaciju kroz tabele su  sada podržane u servisu  Google Docs (sa omogućenim brajevim režimom). (#7946)
+- Sposobnost čitanja i navigacije kroz tabele u programu Kindle za  PC. (#7977)
+- Podrška za  BrailleNote touch i  Brailliant BI 14 brajeve redove putem USB i  bluetooth veze. (#6524)
+- U Windows 10 jesenjem Creators ažuriranju i novijim, NVDA će  izgovarati obaveštenja u aplikacijama kao što su  kalkulator i  Windows prodavnica. (#8045)
+- Nove tabele za brajev prevod: Litvanski osmotačkasti, Ukrajinski, Mongolski. (#7839)
+- Kada ažurirate  NVDA, moguće je odložiti instalaciju ažuriranja za kasnije. (#4263) 
+
+
+== Promene ==
+- Kolone statusa u upravljaču dodataka su promenjene kako bi označile da je dodatak  onemogućen ili omogućen umesto pokrenut i suspendovan. (#7929)
+- Ažuriran liblouis brajev prevodilac  na verziju 3.5.0. (#7839)
+- Litvanska brajeva tabela je preimenovana  u Litvanski šestotačkasti da bi se izbeglo mešanje sa novom osmotačkastom tabelom. (#7839)
+- Francuske  (Kanadske) brajeve tabele stepen 1 i stepen 2 su uklonjene. Umesto toga, Francuska (unificirana) šestotačkasta i tabela stepena 2 će se koristiti. (#7839)
+- Sekundarni tasteri za prebacivanje kursora na brajevim redovima  Alva BC6, EuroBraille i  Papenmeier  sada prijavljuju informacije o formatiranju teksta trenutne ćelije. (#7106)
+
+
+== Ispravljene greške ==
+- NVDA sada ispravno čita fokusirane kontrole pri unosu informacija Microsoft naloga u podešavanjima nakon unosa Email adrese. (#7997)
+- NVDA sada ispravno čita Web stranicu nakon vraćanja nazad u programu Microsoft Edge. (#7997)
+- NVDA neće više neispravno izgovarati poslednji znak  windows 10 PIN koda za prijavu  dok se računar otključava. (#7908)
+- Oznake za radio dugmiće i izborna polja u programima Chrome i  Firefox se više ne prijavljuju dva puta kada se koristi taster tab ili brza navigacija u režimu pretraživanja. (#7960)
+- Računaj  aria-current koji ima vrednost false kao false umesto  true (#7892).
+- Windows Onecore drajver više nema greške kada  je podešen glas uklonjen. (#7999)
+- Menjanje glasova u Windows Onecore sintetizatoru je sada puno brže. (#7999)
+- Ispravljen pogrešan prikaz brajevog unosa za nekoliko brajevih tabela, uključujući velika slova u skraćenom unosu osmotačkaste Danske brajeve tabele. (#7526, #7693)
+- NVDA sada može  prijaviti više vrsta nabrajanja u programu  Microsoft Word. (#6778)
+- Dodata komanda za prijavljivanje formatiranja teksta ispod trenutne brajeve ćelije. (#7106)
+- Pritiskanje komande za prijavljivanje formatiranja više ne pomera poziciju pregleda, pa s time pritiskanje komande više puta ne daje različite rezultate. (#7869)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2018.1.1 =
+Ovo je posebna verzija programa NVDA koja ispravlja grešku u drajveru za Onecore Windows sintetizator govora, koji je zvučao kao da ima povećanu visinu i brzinu u Windows 10 Redstone 4 (1803). (#8082)  
+
+
 = 2018.1 =
 Glavne karakteristike ove verzije uključuju podršku za grafikone u programima  Microsoft word i  Powerpoint, podrška za nove brajeve redove: Eurobraille i Optelec pretvarač protokola, poboljšana podrška za Hims i Optelec brajeve redove, poboljšanja u brzini rada sa programom Mozilla Firefox 58 i novijim verzijama, i još puno toga.
 

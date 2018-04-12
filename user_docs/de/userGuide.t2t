@@ -933,7 +933,7 @@ Diese Option ist ein Kontrollfeld, wenn aktiviert, speichert NVDA jedes Mal beim
 
 ==== Optionen zum Beenden von NVDA anzeigen ====[GeneralSettingsShowExitOptions]
 Mit diesem Kontrollkästchen legen Sie fest, ob beim Beenden von NVDA ein Dialog angezeigt wird. Hier können Sie verschiedne Aktionen auslösen.
-Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialog bestimmen, ob Sie NVDA beenden, neu starten oder mit deaktivierten Erweiterungen neu starten möchten.
+Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialog bestimmen, ob Sie NVDA beenden, neu starten, mit deaktivierten Erweiterungen neu starten oder eine ausstehende Aktualisierung installieren möchten.
 Wenn das Kontrollkästchen nicht aktiviert ist, wird NVDA sofort beendet.
 
 ==== Klänge abspielen, wenn NVDA gestartet oder beendet wird ====[GeneralSettingsPlaySounds]
@@ -959,7 +959,11 @@ Diese Option ist nur in der installierten Version verfügbar!
 
 ==== Automatisch nach Aktualisierungen suchen ====[GeneralSettingsCheckForUpdates]
 Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
-Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe| -machenenü wählen.
+Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe-Menü wählen.
+
++==== Beim Start von NVDA &ausstehende Aktualisierungen melden ====[GeneralSettingsNotifyPendingUpdates]
+Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, falls eine Aktualisierung aussteht und Ihnen die Möglichkeit geben, diese zu installieren. 
+Sie können die ausstehende Aktualisierung auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Aktualisierungen aus dem Hilfe-Menü installieren
 
 +++ Sprachausgabe (NVDA+Steuerung+S) +++[SynthesizerSelection]
 Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden soll.
@@ -1920,6 +1924,7 @@ Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 | Braillezeile zur nächsten Zeile ziehen | T4 |
 | Braillezeile weiterscrollen | T5 oder etouch3 |
 | Zum aktuellen Modul auf der Brailezeile springen | Routing |
+| Textformatierung am aktuellen Modul ausgeben | obere Routing |
 | HID-Tastatursimulation ein- oder ausschalten | t1+spEingabe |
 | NVDA-Cursor zur ersten Zeile bewegen | t1+t2 |
 | NVDA-Cursor zur letzten Zeile bewegen | t4+t5 |
@@ -2274,7 +2279,7 @@ Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen in Kombination mi
 | Bewegt das Navigator-Objekt zum ersten beinhaltenden Objekt | Ab2 |
 | Bewegt das Navigator-Objekt zum nächsten Objekt | Rechts2 |
 | Bewegt das Navigator-Objekt zum vorherigen Objekt | Links2 |
-| Liest Formatierungsinformationen an der Cursorposition in einen Dokument vor | Obere Routingreihe |
+| Textformatierung am aktuellen Modul ausgeben | Obere Routingreihe |
 %kc:endInclude
 
 Die Braillex Trio besitzt vor der BrailleTastatur noch vier zusätzliche Tasten.
@@ -2348,7 +2353,7 @@ Geräte mit Navigationsleiste
 | Zum ersten untergeordneten Objekt springen | Ab2 |
 | Zum vorherigen objekt bewegen | Links2 |
 | Zum nächsten Objekt bewegen | Rechts2 |
-| Textformatierungen ausgeben | Obere Routingreihe |
+| Textformatierung am Modul ausgeben | Obere Routingreihe |
 
 BRAILLEX Tiny
 || Name | Taste |
@@ -2363,7 +2368,7 @@ BRAILLEX Tiny
 | Zum ersten untergeordneten Objekt bewegen | R1+Ab |
 | Zum vorherigen Objekt bewegen | R1+Links |
 | Zum nächsten Objekt bewegen | R1+Rechts |
-| Textformatierungen angeben | Attribut |
+| Textformatierung am Modul  ausgeben | obere Routing-Reihe |
 | Titelzeile der aktuellen Anwendung anzeigen | L1+Auf |
 | Statuszeile anzeigen | L2+Ab |
 
@@ -2372,7 +2377,7 @@ BRAILLEX 2D Screen
 | Aktuelles Zeichen am NVDA-Cursor ausgeben | L1 |
 | Aktuelles Navigator-Objekt aktivieren | L2 |
 | Kopplung der Braillezeile konfigurieren | R2 |
-| Textformatierungen angeben | ReportF |
+| Textformatierung am Braille-Modul ausgeben | obere Routing-Reihe |
 | Braillezeile zur vorherigen Zeile bewegen | Auf |
 | Braillezeile zurückscrollen | Links |
 | Braillezeile vorwärtsscrollen | Rechts |
@@ -2495,7 +2500,8 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 | Rückwärts scrollen | Wechsel1-6links, l1 |
 | Vorwärts scrollen | Wechsel1-6Rechts, l8 |
 | zum aktuellen Fokus ziehen | Wechsel1-6Links+Wechsel1-6Rechts, l1+l8 |
-| Cursor zur Breillezelle ziehen | routing, doppelRouting|
+| Cursor zur Braillezelle ziehen | routing |
+| Textformatierung an der Braillezelle ausgeben | Doppel-Routing |
 | NVDA-Cursor zur vorherigen zeile ziehen | Joystick1nach oben |
 | NVDA-Cursor zur nächsten Zeile ziehen | joystick1nach unten |
 | NVDA-Cursor zum vorherigen Zeichen ziehen | joystick1Links |

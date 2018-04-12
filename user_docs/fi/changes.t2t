@@ -6,14 +6,22 @@
 = 2018.2 =
 
 == Uudet ominaisuudet ==
-- Taulukon solujen rivien ja sarakkeiden jakaantuminen useammalle riville ilmaistaan nyt puheena ja pistekirjoituksella. (#2642)
+- Taulukon solujen rivien ja sarakkeiden jakaantuminen useammalle riville ilmaistaan nyt puheella ja pistekirjoituksella. (#2642)
 - NVDA:n taulukonselauskomentoja tuetaan nyt Google Docsissa pistekirjoitustilan ollessa käytössä. (#7946)
 - Taulukoiden lukeminen ja niissä liikkuminen on nyt mahdollista Kindle for PC:ssä. (#7977)
 - Tuki BrailleNote Touch- ja Brailliant BI 14 -pistenäytöille sekä USB:llä että bluetoothilla liitettäessä. (#6524)
+- NVDA voi puhua sovellusten (esim. Laskin ja Kauppa) ilmoitukset Windows 10:n Fall Creators -päivityksessä ja uudemmissa. (#8045)
+- Uusia pistetaulukkoja: liettualainen 8 pisteen merkistö, ukrainalainen, mongolilainen taso 2. (#7839)
+- Lisätty komento määrätyssä pistesolussa olevan tekstin muotoilutietojen ilmoittamiseen. (#7106)
+- Päivityksen asentamista on nyt mahdollista lykätä myöhemmäksi NVDA:ta päivitettäessä. (#4263) 
 
 
 == Muutokset ==
 - Lisäosien hallinnan Tila-saraketta on muutettu niin, että se ilmaisee käynnissä- tai pysäytetty-tilojen sijaan, onko lisäosa "käytössä" vai poistettu käytöstä ("ei käytössä"). (#7929)
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.5.0. (#7839)
+- Liettualaisen pistetaulukon uusi nimi on nyt "liettua, 6 pisteen merkistö", jotta vältetään sekaannus uuden 8 pisteen taulukon kanssa. (#7839)
+- Kanadanranskalaiset tason 1 ja 2 taulukot on poistettu. Niiden asemesta käytetään ranskalaista yhdenmukaistettua 6 pisteen tietokonemerkistön ja tason 2 taulukoita. (#7839)
+- Alva BC6-, EuroBraille- ja Papenmeier-pistenäyttöjen toissijaiset kosketuskohdistinnäppäimet ilmoittavat nyt pistesolussa olevan tekstin muotoilutiedot. (#7106)
 
 
 == Korjatut ohjelmavirheet ==
@@ -22,6 +30,15 @@
 - NVDA ei enää virheellisesti puhu windows 10:n kirjautumisen PIN-koodin viimeistä merkkiä koneen lukitusta avattaessa. (#7908)
 - Valintaruutujen ja -painikkeiden selitteitä ei enää puhuta kahdesti Chromessa ja Firefoxissa selaustilassa Sarkaimella siirryttäessä tai pikaselauskomentoja käytettäessä. (#7960)
 - Aria-current-attribuuttia, jonka arvo on false, käsitellään nyt truen sijaan falsena. (#7892).
+- Windows OneCore -syntetisaattoriajurin lataaminen ei enää epäonnistu, jos käytettävä puheääni on poistettu. (#7999)
+- Windows OneCore -puheäänen vaihtaminen on nyt paljon nopeampaa. (#7999)
+- Korjattu väärin muotoiltu pistekirjoituksen tulostus useista pistetaulukoista, mukaan lukien isojen kirjainten merkit tanskalaisessa 8 pisteen lyhennekirjoituksessa. (#7526, #7693)
+- NVDA voi nyt puhua Microsoft Wordissa useammantyyppisiä luettelomerkkejä. (#6778)
+- Lue muotoilutiedot -komennon painaminen ei enää siirrä virheellisesti tarkastelukohtaa, ja näin ollen useasti painaminen ei myöskään anna enää eri tuloksia. (#7869)
+
+
+= 2018.1.1 =
+Tämä on erikoisversio, joka ratkaisee Windowsin OneCoreSpeech-syntetisaattoriajurissa olevan ohjelmavirheen,  jonka vuoksi NVDA puhui korkeammalla äänellä ja nopeammin Windows 10:n Redstone 4 (1803) -versiossa. (#8082)  
 
 
 = 2018.1 =
