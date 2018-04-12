@@ -115,11 +115,7 @@ def getAvailableLanguages(presentational=False):
 	displayNames = []
 	for entry in locales:
 		desc=getLanguageDescription(entry)
-		if desc and presentational:
-			# #7284: present language description and ISO 639 code.
-			displayNames.append(desc)
-		else:
-			displayNames.append("%s, %s"%(desc,entry) if desc else entry)
+		displayNames.append("%s, %s"%(desc,entry) if desc else entry)
 	#Prepare a zipped view of language codes and descriptions.
 	# #7284: especially for sorting by description.
 	langs = zip(locales,displayNames)
