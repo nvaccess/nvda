@@ -86,7 +86,7 @@ _keyNames = {
 }
 
 # Scroll wheel components (Apex BT)
-_scrWheel = ("wcounterclockwise", "wclockwise", "wup", "wdown", "wleft", "wright", "wcenter")
+_scrWheel = ("wCounterclockwise", "wClockwise", "wUp", "wDown", "wLeft", "wRight", "wCenter")
 
 # Dots:
 # Backspace is dot7 and enter dot8
@@ -284,19 +284,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_nextLine": ("br(braillenote):tnext",),
 			"braille_routeTo": ("br(braillenote):routing",),
 			"braille_toggleTether": ("br(braillenote):tprevious+tnext",),
-			"kb:upArrow": ("br(braillenote):space+d1", "br(braillenote):wup", "br(braillenote):upArrow",),
-			"kb:downArrow": ("br(braillenote):space+d4", "br(braillenote):wdown","br(braillenote):downArrow",),
-			"kb:leftArrow": ("br(braillenote):space+d3","br(braillenote):wleft","br(braillenote):leftArrow",),
-			"kb:rightArrow": ("br(braillenote):space+d6","br(braillenote):wright","br(braillenote):rightArrow",),
+			"kb:upArrow": ("br(braillenote):space+d1", "br(braillenote):wUp", "br(braillenote):upArrow",),
+			"kb:downArrow": ("br(braillenote):space+d4", "br(braillenote):wDown","br(braillenote):downArrow",),
+			"kb:leftArrow": ("br(braillenote):space+d3","br(braillenote):wLeft","br(braillenote):leftArrow",),
+			"kb:rightArrow": ("br(braillenote):space+d6","br(braillenote):wRight","br(braillenote):rightArrow",),
 			"kb:pageup": ("br(braillenote):space+d1+d3","br(braillenote):function+upArrow",),
 			"kb:pagedown": ("br(braillenote):space+d4+d6","br(braillenote):function+downArrow",),
 			"kb:home": ("br(braillenote):space+d1+d2","br(braillenote):function+leftArrow",),
 			"kb:end": ("br(braillenote):space+d4+d5","br(braillenote):function+rightArrow",),
 			"kb:control+home": ("br(braillenote):space+d1+d2+d3","br(braillenote):read+T",),
 			"kb:control+end": ("br(braillenote):space+d4+d5+d6","br(braillenote):read+B",),
-			"braille_enter": ("br(braillenote):space+d8","br(braillenote):wcenter","br(braillenote):enter",),
-			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6","br(braillenote):wcounterclockwise","br(braillenote):shift+tab",),
-			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5","br(braillenote):wclockwise","br(braillenote):tab",),
+			"braille_enter": ("br(braillenote):space+d8","br(braillenote):wCenter","br(braillenote):enter",),
+			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6","br(braillenote):wCounterclockwise","br(braillenote):shift+tab",),
+			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5","br(braillenote):wClockwise","br(braillenote):tab",),
 			"braille_eraseLastCell": ("br(braillenote):space+d7","br(braillenote):backspace",),
 			"showGui": ("br(braillenote):space+d1+d3+d4+d5","br(braillenote):read+N",),
 			"kb:windows": ("br(braillenote):space+d2+d4+d5+d6","br(braillenote):read+W",),
