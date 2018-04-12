@@ -105,24 +105,24 @@ def getAvailableLanguages(presentational=False):
 	@rtype: list of tuples
 	"""
 	#Make a list of all the locales found in NVDA's locale dir
-	l=[x for x in os.listdir('locale') if not x.startswith('.')]
-	l=[x for x in l if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
+	locales = [x for x in os.listdir('locale') if not x.startswith('.')]
+	locales = [x for x in locales if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
 	#Make sure that en (english) is in the list as it may not have any locale files, but is default
-	if 'en' not in l:
-		l.append('en')
-		l.sort()
+	if 'en' not in locales:
+		locales.append('en')
+		locales.sort()
 	#For each locale, ask Windows for its human readable display name
-	d=[]
-	for i in l:
-		desc=getLanguageDescription(i)
+	displayNames = []
+	for entry in locales:
+		desc=getLanguageDescription(entry)
 		if desc and presentational:
-			# #7284: just add language description.
-			d.append(desc)
+			# #7284: present language description and ISO 639 code.
+			displayNames.append(desc)
 		else:
-			d.append("%s, %s"%(desc,i) if desc else i)
+			displayNames.append("%s, %s"%(desc,entry) if desc else entry)
 	#Prepare a zipped view of language codes and descriptions.
 	# #7284: especially for sorting by description.
-	langs = zip(l,d)
+	langs = zip(locales,displayNames)
 	if presentational:
 		langs.sort(key=lambda lang: lang[1])
 	#include a 'user default, windows' language, which just represents the default language for this user account
