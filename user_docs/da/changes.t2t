@@ -1,29 +1,41 @@
-﻿Nyheder i NVDA
+Nyheder i NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.4 = 
+= 2018.2 =
 
 == Nye Funktioner ==
-- Det er nu muligt at springe til starten og forbi landmærker ved brug af kommandoerne til at springe til starten og slutningen af indholdselementer (komma og skift+komma). (#5482)
-- Bogstavnavigation til editfelter og formularfelter inkluderer nu redigerbart RTF-indhold (f.eks. contentEditable). (#5534)
-- Elementlisten er nu i stand til at vise formularfelter og knapper i webbrowsere. (#588)
-- Første version af NVDA der understøtter Windows 10 på ARM64-processorarkitekturen. (#7508)
-
-
+- NVDA rapporterer nu hvor mange kolonner og rækker en tabel omfatter med tale og punkt. (#2642)
+- Kommandoer til tabelnavigation kan nu benyttes i Google Docs (med braille-tilstand slået til). (#7946)
+- Det er muligt at navigere rundt i tabeller i Kindle for PC. (#7977)
+- Understøtter BrailleNote touch og Brailliant BI 14 punktdisplays via både USB og bluetooth. (#6524)
+- NVDA kan nu annoncere notifikationer fra apps som Lommeregner og Windows Store. (#8045)
+- Nye punkttabeller: Litauisk ottepunkt, ukrainsk, mongolsk Niveau 2. (#7839)
+- Tilføjede et script, der kan rapportere tekstformatering under den aktuelle punktcelle. (#7106)
+- Det er nu muligt at udskyde installationen af NVDA til et mere bekvemt tidspunkt. (#4263)
+ 
+ 
 == Ændringer ==
-- Webdialoger bruger nu automatisk gennemsynstilstand i Chrome og Firefox, med mindre du befinder dig indeni en webapplikation. (#4493)
-- Ved brug af tab og bogstavnavigation i gennemsynstilstand, vil NVDA ikke længere annoncere hvert indholdselement, du navigere ud af, såsom tabeller og lister. Dette gør navigation hurtigere. (#2591)
-- NVDA vil nu oplæse grupper af formularfelter når disse får fokus ved brug af bogstavnavigation og tab-tasten i Chrome og Firefox. (#3321)
-- Bogstavnavigationstasterne for indlejrede objekter (O og skift+O) vil nu også hoppe til lyd- og videoafspillere, samt elementer med ARIA-rollerne dialog og applikation. (#7239)
+- Statuskolonnen i dialogen for styring af tilføjelsespakker vil nu indikere om pakken er aktiveret eller deaktiveret, hvor den før viste om pakken var i gang eller stoppet. (#7929)
+- Opdaterede liblouis Braille Translator til 3.5.0. (#7839)
+- Den litauiske punktoversættelsestabel er blevet omdøbt til litauisk sekspunkt for at undgå forvirring, da vi nu har en tabel til litauisk ottepunkt. (#7839)
+- Det fransk (Canada) niveau 1 og niveau 2 punkttabeller er blevet erstattet med Fransk (Unified) og Fransk (Niveau 2). (#7839)
+- De sekundære markørsammenføringsknapper på Alva BC6, EuroBraille og Papenmeier punktdisplays
+ rapporterer nu tekstformateringen under den aktuelle punktcelle. (#7106)
 
-
-== Fejlrettelser ==
-- Links bliver nu oplyst på punkt i Microsoft Word. (#6780)
-- NVDA vil ikke længere blive mærkbart langsom, når der er flere faner åbnede i Chrome eller Firefox webbrowsere. (#3138)
-- Markørflytning på punktdisplayet MDV Lilli vil ikke længere fejlagtigt flytte markøren en punktcelle foran dens position, hvortil markøren oprindeligt skulle flyttes. (#7469)
-- Attributten HTML5 required er nu understøttet i Internet Explorer og andre MSHTML-dokumenter, hvor et felt indikeres som "påkrævet". (#7321)
+ 
+ == Fejlrettelser ==
+- NVDA har ikke længere problemer med at læse kontroller, når du befinder dig i indstillingerne du skal benytte for at logge ind på din Microsoft-konto, hvis du har indtastet en email-adresse. (#7997)
+- NVDA vil ikke længere fejle ved oplæsning af en side, når du bevæger dig til den forrige side i Microsoft Edge. (#7997)
+- NVDA vil ikke længere ukorrekt meddele det endelige tegn, når du logger på ved brug af en PIN-kode i Windows 10. (#7908)
+- Mærker på tjekbokse og radioknapper i Chrome og Firefox annonceres ikke længere to gange, når der bruges bogstavnavigation eller tab-tasten benyttes. (#7960)
+- Håndter aria-current med en værdi false som false i stedet for true (#7892).
+- Talesyntesen for stemmerne Windows OneCore vil ikke længere være ude af stand til at indlæse, hvis en konfigureret stemme tilhørende den pågældende syntese er blevet fjernet. (#7999)
+- Det er nu hurtigere at skifte imellem stemmer, når Windows OneCore benyttes. (#7999)
+- Rettede ukorrekt punktoutput for flere punkttabeller, herunder store bogstaver i ottepunkt forkortet dansk punkt. (#7526, #7693)
+- NVDA kan nu rapportere flere typer af punkter i Microsoft Word. (#6778)
+- Udførelse af scriptet til rapportering af tekstformatering vil ikke længere have uventede resultater og flytte læsepositionen. (#7869)
 
 
 == Ændringer for udviklere ==

@@ -1,6 +1,6 @@
 #_UIAHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,6 +12,7 @@ from comtypes import *
 import weakref
 import threading
 import time
+import config
 import api
 import appModuleHandler
 import queueHandler
@@ -21,6 +22,7 @@ import winKernel
 import winUser
 import eventHandler
 from logHandler import log
+import UIAUtils
 
 from comtypes.gen.UIAutomationClient import *
 
@@ -45,7 +47,15 @@ HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
-  
+
+# The name of the WDAG (Windows Defender Application Guard) process
+WDAG_PROCESS_NAME=u'hvsirdpclient'
+
+goodUIAWindowClassNames=[
+	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
+	'RAIL_WINDOW',
+]
+
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
@@ -59,7 +69,6 @@ badUIAWindowClassNames=[
 	"RichEdit20",
 	"RICHEDIT50W",
 	"SysListView32",
-	"_WwG",
 	"EXCEL7",
 	"Button",
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
@@ -145,7 +154,7 @@ UIAEventIdsToNVDAEventNames={
 }
 
 class UIAHandler(COMObject):
-	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler]
+	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationNotificationEventHandler]
 
 	def __init__(self):
 		super(UIAHandler,self).__init__()
@@ -178,10 +187,13 @@ class UIAHandler(COMObject):
 			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
-				try:
-					self.clientObject=self.clientObject.QueryInterface(IUIAutomation3)
-				except COMError:
-					self.clientObject=self.clientObject.QueryInterface(IUIAutomation2)
+				# #8009: use appropriate interface based on highest supported interface.
+				for interface in (IUIAutomation5, IUIAutomation4, IUIAutomation3, IUIAutomation2):
+					try:
+						self.clientObject=self.clientObject.QueryInterface(interface)
+						break
+					except COMError:
+						pass
 			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
@@ -202,6 +214,9 @@ class UIAHandler(COMObject):
 			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
 			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
+			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
+			if isinstance(self.clientObject, IUIAutomation5):
+				self.clientObject.AddNotificationEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 		except Exception as e:
 			self.MTAThreadInitException=e
 		finally:
@@ -284,6 +299,14 @@ class UIAHandler(COMObject):
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
+	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(self,sender,NotificationKind,NotificationProcessing,displayString,activityId):
+		if not self.MTAThreadInitEvent.isSet():
+			# UIAHandler hasn't finished initialising yet, so just ignore this event.
+			return
+		import NVDAObjects.UIA
+		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
+
 	def _isUIAWindowHelper(self,hwnd):
 		# UIA in NVDA's process freezes in Windows 7 and below
 		processID=winUser.getWindowThreadProcessID(hwnd)[0]
@@ -291,6 +314,14 @@ class UIAHandler(COMObject):
 			return False
 		import NVDAObjects.window
 		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
+		# For certain window classes, we always want to use UIA.
+		if windowClass in goodUIAWindowClassNames:
+			return True
+		# allow the appModule for the window to also choose if this window is good
+		# An appModule should be able to override bad UIA class names as prescribed by core
+		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		if appModule and appModule.isGoodUIAWindow(hwnd):
+			return True
 		# There are certain window classes that just had bad UIA implementations
 		if windowClass in badUIAWindowClassNames:
 			return False
@@ -301,11 +332,16 @@ class UIAHandler(COMObject):
 			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
 				return False
 		# allow the appModule for the window to also choose if this window is bad
-		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
 		# Ask the window if it supports UIA natively
-		return windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+		if res:
+			# the window does support UIA natively, but
+			# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
+			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
+				return False
+		return bool(res)
 
 	def isUIAWindow(self,hwnd):
 		now=time.time()
@@ -320,19 +356,26 @@ class UIAHandler(COMObject):
 			# Called previously. Use cached result.
 			return UIAElement._nearestWindowHandle
 		try:
-			window=UIAElement.cachedNativeWindowHandle
+			processID=UIAElement.cachedProcessID
+		except COMError:
+			return None
+		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
+		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
+		if appModule.appName==WDAG_PROCESS_NAME:
+			condition=UIAUtils.createUIAMultiPropertyCondition({UIA_ClassNamePropertyId:[u'ApplicationFrameWindow',u'CabinetWClass']})
+			walker=self.clientObject.createTreeWalker(condition)
+		else:
+			# Not WDAG, just walk up to the nearest valid windowHandle
+			walker=self.windowTreeWalker
+		try:
+			new=walker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
+		except COMError:
+			return None
+		try:
+			window=new.cachedNativeWindowHandle
 		except COMError:
 			window=None
-		if not window:
-			# This element reports no window handle, so use the nearest ancestor window handle.
-			try:
-				new=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
-			except COMError:
-				return None
-			try:
-				window=new.cachedNativeWindowHandle
-			except COMError:
-				window=None
 		# Cache for future use to improve performance.
 		UIAElement._nearestWindowHandle=window
 		return window

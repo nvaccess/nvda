@@ -16,7 +16,6 @@ import sys
 # Note that checkPot will fail with an unexpected success
 # if a translator comment is found for one of these messages.
 EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
-	'Focus mode',
 	'%s landmark',
 	'border',
 	'filler',
@@ -92,7 +91,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Desktop',
 	'Input Message is {title}: {message}',
 	'Input Message is {message}',
-	'Series color: {colorName} ',
 	'Comments',
 	'Endnotes',
 	'Even pages footer',
