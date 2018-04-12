@@ -486,13 +486,19 @@ the NVDAObject for IAccessible
 		if windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
-		elif windowClassName == "AVL_AVView":
+		elif not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and windowClassName == "AVL_AVView":
 			from . import adobeAcrobat
 			adobeAcrobat.findExtraOverlayClasses(self, clsList)
 		elif windowClassName == "WebViewWindowClass":
 			from . import webKit
 			webKit.findExtraOverlayClasses(self, clsList)
-		elif windowClassName.startswith("Chrome_"):
+		
+		elif (
+			# Chrome / Chromium frameworks
+		windowClassName.startswith("Chrome_") or
+			# Adobe Acrobat embeds Chromium, if it exposes IAccessible2
+			(isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and windowClassName=="AVL_AVView")
+		):
 			from . import chromium
 			chromium.findExtraOverlayClasses(self, clsList)
 
@@ -1087,7 +1093,10 @@ the NVDAObject for IAccessible
 	def _get_IA2PhysicalColumnNumber(self):
 		tableCell=self._IATableCell
 		if tableCell:
-			return tableCell.columnIndex+1
+			try:
+				return tableCell.columnIndex+1
+			except COMError:
+				raise NotImplementedError
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
@@ -1167,6 +1176,7 @@ the NVDAObject for IAccessible
 		return count
 
 	def _get__IATableCell(self):
+		return None
 		# Permanently cache the result.
 		try:
 			self._IATableCell = self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTableCell)
@@ -1207,6 +1217,7 @@ the NVDAObject for IAccessible
 		return self._tableHeaderTextHelper("column")
 
 	def _get_table(self):
+		return None
 		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			return None
 		table=getattr(self,'_table',None)
