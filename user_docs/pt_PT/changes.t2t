@@ -3,6 +3,51 @@ Traduzido pela Equipa portuguesa do NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== Novas Funcionalidades==
+- A expansão de linhas e colunas numa célula de tabela passa a ser anunciada em voz e Braille. (#2642)
+- Os comandos de navegação em tabelas do NVDA já são suportados no Google Docs, com o modo Braille activado. (#7946)
+- Possibilidade de ler e navegar por tabelas no Kindle para PC. (#7977)
+- Suporte para as linhas BrailleNote touch e Brailliant BI 14 via USB e Bluetooth. (#6524)
+- No Windows 10 Fall Creators Update e seguintes, o NVDA já anuncia as notificações de aplicações como a Calculadora e a Loja. (#8045)
+- Novas tabelas de conversão Braille: Lituano 8 pontos, Ucraniano, Mongol grau 2. (#7839)
+- Introduzido um comando para anunciar as informações de formatação do caracter numa célula Braille. (#7106)
+- Ao actualizar o NVDA, já é possível adiar a instalação da versão descarregada para um momento mais opurtuno. (#4263) 
+
+
+== Alterações ==
+- Os valors da coluna "Estado" do Gestor de extras foi alterado de "Em execução" e "Suspenso", para "Activado" e Desactivado" . (#7929)
+- Foram também introduzidos mais dois estados, "Activado após reinício" e "Desactivado após reinício". (#7929)
+- Actualizado o liblouis braille translator para a versão 3.5.0. (#7839)
+- A tabela Braille Lituano foi renomeada para Lituano 6 pontos, para evitar confusão com a nova tabela de 8 pontos. (#7839)
+- As tabelas Braille Francês (Canadá) grau 1 e grau 2 foram removidas. Passam a ser usadas Francês (unificado) braille de computador de 6 pontos e Grau 2, respectivamente. (#7839)
+- Os botões da  linha secundária de routing das linhas Braille Alva BC6, EuroBraille e Papenmeier passam a anunciar a informação de formatação do caracter respectivo. (#7106)
+
+
+== Correções ==
+- O NVDA já lê sempre os controlos em foco da janela de login da conta Microsoft após ser introduzido o endereço de e-mail. (#7997)
+- O NVDA já não deixa de ler o conteúdo de uma página quando se retrocede para a mesma no Microsoft Edge. (#7997)
+- O NVDA já não anuncia, incorrectamente, o último caracter da password, na janela de login do windows 10, ao desbloquear o PC. (#7908)
+- As etiquetas de caixas de verificação e botões de rádio já não são anunciadas em duplicado no Chrome e Firefox, ao navegar com Tab ou por caracteres em modo de navegação. (#7960)
+- Tratar aria-current com o valor de false como false em vez de true (#7892).
+- O driver do sintetizador Windows OneCore Voices já não deixa de carregar pela remoção de uma voz configurada. (#7999)
+- A alteração de voz no driver do sintetizador Windows OneCore Voices é agora muito mais rápida. (#7999)
+- Corrigidos erros na saída Braille em diversas tabelas Braille, incluindo o sinal de maiúsculas em dinamarquês de 8 pontos. (#7526, #7693)
+- O NVDA passa a anunciar mais tipos de bullets no Microsoft Word. (#6778)
+- Ao pressionar o comando para anúncio de informações de formatação, a posição de revisão já não é alterada, e por isso já não são fornecidas falsas informações ao pressionar o comando mais de uma vez. (#7869)
+
+
+== Alterações para Desenvolvedores ==
+- The developer info for UIA objects now contains a list of the UIA patterns available. (#5712)
+- App modules can now force certain windows to always use UIA by implementing the isGoodUIAWindow method. (#7961)
+- The hidden boolean flag "outputPass1Only" in the braille section of the configuration has again been removed. Liblouis no longer supports pass 1 only output. (#7839)
+
+
+= 2018.1.1 =
+Esta é uma versão especial do NVDA 2018.1 para resolver um problema do driver do sintetizador Windows OneCore voices, que provocava um aumento da entoação e velocidade no Windows 10 Redstone 4 (1803). (#8082)  
+
+
 = 2018.1 =
 Os destaques desta versão são:
 - Suporte para gráficos no Microsoft word e PowerPoint
