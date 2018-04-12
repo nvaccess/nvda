@@ -3,6 +3,94 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== Uudet ominaisuudet ==
+- Taulukon solujen rivien ja sarakkeiden jakaantuminen useammalle riville ilmaistaan nyt puheella ja pistekirjoituksella. (#2642)
+- NVDA:n taulukonselauskomentoja tuetaan nyt Google Docsissa pistekirjoitustilan ollessa käytössä. (#7946)
+- Taulukoiden lukeminen ja niissä liikkuminen on nyt mahdollista Kindle for PC:ssä. (#7977)
+- Tuki BrailleNote Touch- ja Brailliant BI 14 -pistenäytöille sekä USB:llä että bluetoothilla liitettäessä. (#6524)
+- NVDA voi puhua sovellusten (esim. Laskin ja Kauppa) ilmoitukset Windows 10:n Fall Creators -päivityksessä ja uudemmissa. (#8045)
+- Uusia pistetaulukkoja: liettualainen 8 pisteen merkistö, ukrainalainen, mongolilainen taso 2. (#7839)
+- Lisätty komento määrätyssä pistesolussa olevan tekstin muotoilutietojen ilmoittamiseen. (#7106)
+- Päivityksen asentamista on nyt mahdollista lykätä myöhemmäksi NVDA:ta päivitettäessä. (#4263) 
+
+
+== Muutokset ==
+- Lisäosien hallinnan Tila-saraketta on muutettu niin, että se ilmaisee käynnissä- tai pysäytetty-tilojen sijaan, onko lisäosa "käytössä" vai poistettu käytöstä ("ei käytössä"). (#7929)
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.5.0. (#7839)
+- Liettualaisen pistetaulukon uusi nimi on nyt "liettua, 6 pisteen merkistö", jotta vältetään sekaannus uuden 8 pisteen taulukon kanssa. (#7839)
+- Kanadanranskalaiset tason 1 ja 2 taulukot on poistettu. Niiden asemesta käytetään ranskalaista yhdenmukaistettua 6 pisteen tietokonemerkistön ja tason 2 taulukoita. (#7839)
+- Alva BC6-, EuroBraille- ja Papenmeier-pistenäyttöjen toissijaiset kosketuskohdistinnäppäimet ilmoittavat nyt pistesolussa olevan tekstin muotoilutiedot. (#7106)
+
+
+== Korjatut ohjelmavirheet ==
+- NVDA lukee nyt Asetukset-sovelluksen Microsoft-tilin kirjautumisnäytön aktiiviset säätimet sähköpostiosoitteen syöttämisen jälkeen. (#7997)
+- NVDA lukee nyt asianmukaisesti edellisen sivun palattaessa sille Microsoft Edgessä. (#7997)
+- NVDA ei enää virheellisesti puhu windows 10:n kirjautumisen PIN-koodin viimeistä merkkiä koneen lukitusta avattaessa. (#7908)
+- Valintaruutujen ja -painikkeiden selitteitä ei enää puhuta kahdesti Chromessa ja Firefoxissa selaustilassa Sarkaimella siirryttäessä tai pikaselauskomentoja käytettäessä. (#7960)
+- Aria-current-attribuuttia, jonka arvo on false, käsitellään nyt truen sijaan falsena. (#7892).
+- Windows OneCore -syntetisaattoriajurin lataaminen ei enää epäonnistu, jos käytettävä puheääni on poistettu. (#7999)
+- Windows OneCore -puheäänen vaihtaminen on nyt paljon nopeampaa. (#7999)
+- Korjattu väärin muotoiltu pistekirjoituksen tulostus useista pistetaulukoista, mukaan lukien isojen kirjainten merkit tanskalaisessa 8 pisteen lyhennekirjoituksessa. (#7526, #7693)
+- NVDA voi nyt puhua Microsoft Wordissa useammantyyppisiä luettelomerkkejä. (#6778)
+- Lue muotoilutiedot -komennon painaminen ei enää siirrä virheellisesti tarkastelukohtaa, ja näin ollen useasti painaminen ei myöskään anna enää eri tuloksia. (#7869)
+
+
+= 2018.1.1 =
+Tämä on erikoisversio, joka ratkaisee Windowsin OneCoreSpeech-syntetisaattoriajurissa olevan ohjelmavirheen,  jonka vuoksi NVDA puhui korkeammalla äänellä ja nopeammin Windows 10:n Redstone 4 (1803) -versiossa. (#8082)  
+
+
+= 2018.1 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat tuki kaavioille Microsoft Wordissa ja PowerPointissa, tuki uusille Eurobraille-pistenäytöille ja Optelecin protokollamuuntimelle, paranneltu tuki Hims- ja Optelec-pistenäytöille, suorituskyvyn parannukset Mozilla Firefox 58:lle ja uudemmille, sekä monet muut.
+
+
+== Uudet ominaisuudet ==
+- Vuorovaikutus Microsoft Wordin ja PowerPointin kaavioiden kanssa on nyt mahdollista samalla tavoin kuin Excelissä. (#7046)
+ - Wordissa: Siirry selaustilassa ollessasi nuolinäppäimillä upotetun kaavion kohdalle ja paina Enter ollaksesi vuorovaikutuksessa sen kanssa.
+ - PowerPointissa diaa muokattaessa: Siirry Sarkain-näppäimellä kaavio-objektiin ja paina Enter tai Välilyöntiä ollaksesi vuorovaikutuksessa kaavion kanssa.
+ - Lopeta vuorovaikutus painamalla Esc-näppäintä.
+- Uusi kieli: kirgiisi.
+- Lisätty tuki VitalSource Bookshelf -ePUB-lukijalle. (#7155)
+- Lisätty tuki Optelecin protokollamuunninlaitteelle, joka mahdollistaa Braille Voyager- ja Satellite-näyttöjen käytön ALVA BC6:n kommunikointiprotokollan avulla. (#6731)
+- Pistekirjoituksen syöttäminen on nyt mahdollista ALVA 640 Comfort -pistenäytöllä. (#7733) 
+ - NVDA:n pistekirjoituksensyöttötoimintoa voidaan käyttää tällä laitteella sekä muilla BC6-näytöillä, joissa on laiteohjelmiston versio 3.0.0 tai uudempi.
+- Varhainen tuki Google Sheetsille pistekirjoitustilan ollessa käytössä. (#7935)
+- Tuki Eurobraille Esys-, Esytime- ja Iris-pistenäytöille. (#7488)
+
+
+== Muutokset ==
+- HIMS Braille Sense/Braille EDGE/Smart Beetle- ja Sync Braille -pistenäyttöjen ajurit on korvattu yhdellä ajurilla. Uusi ajuri otetaan automaattisesti käyttöön aiemman Sync Braille -ajurin käyttäjillä. (#7459)
+ - Jotkin näppäimet, erityisesti vieritykseen käytettävät, on uudelleenmääritelty seuraamaan HIMS-tuotteiden käytäntöjä. Katso lisätietoja käyttöoppaasta.
+- Kun näyttönäppäimistöllä kirjoitetaan kosketusvuorovaikutuksen avulla, kutakin näppäintä on oletusarvoisesti kaksoisnapautettava samalla tavoin kuin mitä tahansa muutakin säädintä aktivoitaessa.
+ - Kosketuskirjoitustila, jossa sormen nostaminen näppäimeltä riittää sen painamiseen, otetaan käyttöön uudessa Kosketuksen vuorovaikutus -valintaikkunassa, joka löytyy Asetukset-valikosta. (#7309)
+- Pistenäyttöä ei ole enää tarpeen määrittää seuraamaan erikseen kohdistusta tai tarkastelukohdistinta, sillä se tapahtuu nyt oletuksena automaattisesti. (#2385) 
+ - Huomaa, että tarkastelukohdistinta seurataan automaattisesti vain tekstintarkastelu- tai objektinavigointikomentoa käytettäessä. Näytön vierittäminen ei aktivoi tätä ominaisuutta.
+
+
+== Korjatut ohjelmavirheet ==
+- Selattavat ilmoitukset, kuten nykyisten muotoilutietojen näyttäminen painettaessa kaksi kertaa nopeasti NVDA+F, eivät enää epäonnistu, kun NVDA on asennettu hakemistopolkuun, jonka nimessä on muita kuin ASCII-merkkejä. (#7474)
+- Kohdistus palautetaan taas asianmukaisesti palattaessa Spotifyhin toisesta sovelluksesta. (#7689)
+- NVDA:n päivittäminen ei enää epäonnistu Windows 10:n Fall Creators -päivityksessä, kun hallittu kansion käyttö on otettu käyttöön Windows Defender Security Centeristä. (#7696)
+- Hims Smart Beetle -pistenäyttöjen vieritysnäppäinten havaitseminen ei enää ole epäluotettavaa. (#6086)
+- Pieni suorituskyvyn parannus ladattaessa suurta määrää sisältöä Mozilla Firefox 58:ssa ja uudemmissa. (#7719)
+- Taulukoita sisältävien sähköpostien lukeminen ei enää aiheuta virheitä Microsoft Outlookissa. (#6827)
+- Pistenäyttöjen näppäinkomentoja, jotka emuloivat näppäimistön Alt-, Ctrl-, Shift- ja Windows-näppäimiä, voi nyt käyttää myös yhdessä muiden emuloitujen näppäimistön näppäinten kanssa, mikäli yksi tai useampi käytetyistä näytön näppäinkomennoista on mallikohtaisia. (#7783)
+- Selaustila toimii nyt asianmukaisesti Mozilla Firefoxissa lisäosien, kuten LastPass ja bitwarden, luomissa ponnahdusikkunoissa. (#7809)
+- NVDA ei jää enää ajoittain jumiin jokaisesta kohdistusmuutoksesta, mikäli Firefox tai Chrome on lakannut vastaamasta esim. hyytymisen tai kaatumisen vuoksi. (#7818)
+- NVDA ei enää ohita viimeistä 20 merkkiä 280 merkin mittaisista twiiteistä luettaessa niitä Twitter-asiakasohjelmissa, kuten Chicken Nuggetissa. (#7828)
+- NVDA käyttää nyt asianmukaista kieltä symboleita puhuttaessa tekstin ollessa valittuna. (#7687)
+- Excel-kaavioissa liikkuminen on jälleen mahdollista nuolinäppäimillä Office 365:n viimeisimmissä versioissa. (#7046)
+- Säätimien tilat ilmoitetaan nyt puheella ja pistekirjoituksella aina samassa järjestyksessä riippumatta siitä, ovatko ne positiivisia vai negatiivisia. (#7076)
+- Kirjoitettujen merkkien puhuminen ei enää epäonnistu askelpalautinta painettaessa tietyissä sovelluksissa, kuten esim. Windows 10:n Sähköposti. (#7456)
+- Kaikki Hims Braille Sense Polaris -pistenäyttöjen näppäimet toimivat nyt odotetusti. (#7865)
+- NVDA:n käynnistyminen ei enää epäonnistu Windows 7:ssä virheilmoitukseen puuttuvasta api-ms-DLL-tiedostosta, kun jokin toinen sovellus on asentanut tietyn version Visual Studio 2017:n edelleenjaettavista osista. (#7975)
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2017.4 =
 Tämän version merkittävimpiä ominaisuuksia ovat mm. useat verkkoselauksen tuen korjaukset ja parannukset, mukaan lukien oletusarvoinen selaustila verkkopohjaisille valintaikkunoille ja parempi lomakekenttäryhmien nimien ilmaiseminen selaustilassa, tuki uusille Windows 10:n teknologioille, kuten Windows Defenderin sovellussuojalle ja ARM64-alustalle, sekä automaattinen ruudun suunnan ja akun tilan ilmoittaminen.  
 Huomaa, että tämä versio ei enää tue Windows XP:tä tai Vistaa. Vähimmäisvaatimus on nyt Windows 7 Service Pack 1-päivityksellä.
@@ -58,7 +146,7 @@ Huomaa, että tämä versio ei enää tue Windows XP:tä tai Vistaa. Vähimmäis
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2017.3 =
@@ -136,7 +224,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat lyhennepistekirjoituks
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2017.2 =
@@ -180,7 +268,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat täysi tuki äänenvoi
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2017.1 =
@@ -224,7 +312,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. osien ja tekstipal
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2016.4 =
@@ -281,7 +369,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat paranneltu Microsoft E
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2016.3 =
@@ -337,7 +425,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. yksittäisten lis�
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2016.2.1 =
@@ -387,7 +475,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mahdollisuus kirjoitus
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2016.1 =
@@ -440,7 +528,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mahdollisuus valinnais
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2015.4 =
@@ -539,7 +627,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat alustava tuki Windows 
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2015.2 =
@@ -573,7 +661,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. kaavioiden lukeminen Micros
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2015.1 =
@@ -632,7 +720,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2014.4 =
@@ -673,7 +761,7 @@ Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2014.3 =
@@ -757,7 +845,7 @@ Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2014.2 =
@@ -859,7 +947,7 @@ Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2013.3 =
@@ -900,7 +988,7 @@ Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2013.2 =
@@ -972,7 +1060,7 @@ Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2013.1.1 =
@@ -1066,7 +1154,7 @@ Katso uudet näppäinkomennot [komentojen pikaoppaasta. keyCommands.html]
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2012.3 =
@@ -1176,7 +1264,7 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2012.2.1 =
@@ -1219,7 +1307,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat sisäänrakennettu asennus
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2012.1 =
@@ -1293,7 +1381,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat pistenäytön sujuvampi lu
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2011.3 =
@@ -1356,7 +1444,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen puhesyntetis
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2011.2 =
@@ -1473,7 +1561,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat merkittävät välimerkkej
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2011.1.1 =
@@ -1562,7 +1650,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teksti
 
 
 == Muutokset kehittäjille ==
-Katso tämän dokumentin [englanninkielistä versiota. ../en/changes.html]
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
 = 2010.2 =

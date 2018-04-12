@@ -3,6 +3,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from comtypes import COMError
 import time
 from comtypes.hresult import S_OK
 import appModuleHandler
@@ -18,6 +19,7 @@ import browseMode
 from browseMode import BrowseModeDocumentTreeInterceptor
 import textInfos
 from textInfos import DocumentWithPageTurns
+from IAccessibleHandler import IAccessible2
 from NVDAObjects.IAccessible import IAccessible
 from globalCommands import SCRCAT_SYSTEMCARET
 from NVDAObjects.IAccessible.ia2TextMozilla import MozillaCompoundTextInfo
@@ -62,6 +64,29 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
+
+	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		""" Override of documentBase.DocumentWithTableNavigation._getTableCellAt."""
+		# Locate the table in the object ancestry of the given document position. 
+		obj=startPos.NVDAObjectAtStart
+		while not obj.table and obj!=startPos.obj.rootNVDAObject:
+			obj=obj.parent
+		if not obj.table:
+			# No table could be found
+			raise LookupError
+		table = obj.table
+		try:
+			cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
+			if cell.IA2Attributes.get('hidden'):
+				raise LookupError("Found hidden cell") 
+			# Return the position of the found cell
+			return self.makeTextInfo(cell)
+		except (COMError, RuntimeError):
+			# Any of the above calls could throw a COMError, and sometimes a RuntimeError.
+			# Treet this as the cell not existing.
+			raise LookupError
 
 	def _changePageScriptHelper(self,gesture,previous=False):
 		if isScriptWaiting():
@@ -148,15 +173,24 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 	NODE_TYPES_TO_ROLES = {
 		"link": {controlTypes.ROLE_LINK, controlTypes.ROLE_FOOTNOTE},
 		"graphic": {controlTypes.ROLE_GRAPHIC},
+		"table": {controlTypes.ROLE_TABLE},
 	}
 
 	def _iterNodesByType(self, nodeType, direction="next", pos=None):
-		roles = self.NODE_TYPES_TO_ROLES.get(nodeType)
-		if not roles:
-			raise NotImplementedError
 		if not pos:
 			pos = self.makeTextInfo(textInfos.POSITION_FIRST if direction == "next" else textInfos.POSITION_LAST)
 		obj = pos.innerTextInfo._startObj
+		if nodeType=="container":
+			while obj!=self.rootNVDAObject:
+				if obj.role==controlTypes.ROLE_TABLE:
+					ti=self.makeTextInfo(obj)
+					yield browseMode.TextInfoQuickNavItem(nodeType, self, ti)
+					return
+				obj=obj.parent
+			return
+		roles = self.NODE_TYPES_TO_ROLES.get(nodeType)
+		if not roles:
+			raise NotImplementedError
 		# Find the first embedded object in the requested direction.
 		# Use the text, as enumerating IAccessibleHypertext means more cross-process calls.
 		offset = pos.innerTextInfo._start._startOffset
@@ -187,9 +221,13 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				break # Can't go any further.
 			log.debug("Continuing in parent")
 			# Get the index of the embedded object we just came from.
+			parent = obj.parent
+			if not getattr(parent,'IAccessibleTextObject',None):
+				obj=parent
+				continue
 			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
 			offset = hl.startIndex
-			obj = obj.parent
+			obj=parent
 			hli = obj.iaHypertext.hyperlinkIndex(offset)
 			# Continue the walk from the next embedded object.
 			hli += 1 if direction == "next" else -1

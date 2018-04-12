@@ -3,183 +3,165 @@
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
-complexSymbols:
-# identifier	regexp
-# Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
-# Others
-decimal point	(?<![^\d -])\.(?=\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
-
 symbols:
 # identifier	replacement[[
 
 # Complex symbols
-. sentence ending	chấm	all	always
-! sentence ending	chấm than	all	always
-? sentence ending	chấm hỏi	all	always
-; phrase ending	chấm phẩy	most	always
-: phrase ending	hai chấm	most	always
-decimal chấm		none	always
-in-word '	nháy đơn	all	norep
-negative number	âm	none	norep
+. sentence ending	chấm
+! sentence ending	chấm than
+? sentence ending	chấm hỏi
+; phrase ending	chấm phẩy
+: phrase ending	hai chấm
+in-word '	nháy đơn
+negative number	âm
 
 # Whitespace
-\0	dòng trắng	char	# null
+\0	dòng trắng	# null
 \t	táp
-\n	xuống dòng	char
-\f	hết trang	none
-\r	cuối dòng	char
- 	khoảng trắng	char
- 	khoảng trắng	char	# no-break space
+\n	xuống dòng
+\f	hết trang
+\r	cuối dòng
+ 	khoảng trắng
+ 	khoảng trắng	# no-break space
 
 # Standard punctuation/symbols
-!	chấm than	all
-"	ngoặc kép	most
-\#	báo số	some
-$	đô la	all	norep
-£	đồng bảng	all	norep
-€	u rô	all	norep
-¢	Xen	all	norep
-¥	Yên	all	norep
-₹	Ru Bi Ấn	some	norep
-%	phần trăm	some
-&	và	some
-'	nháy đơn	all
-(	mở ngoặc tròn	always
-)	đóng ngoặc tròn	always
-*	sao	some
-+	cộng	some
-,	phẩy	all	always
--	gạch ngang	most
-.	chấm	some
-/	gạch chéo	some
-:	hai chấm	most	norep
-;	chấm phẩy	most
-<	nhỏ hơn	some
->	lớn hơn	some
-=	bằng	some
-?	chấm hỏi	all
-@	a còng	some
-[	Mở ngoặc vuông	most
-]	Đóng ngoặc vuông	most
-\\	chéo ngược	most
-^	dấu mũ	most
-_	gạch dưới	most
-`	dấu huyền	most
-{	Mở ngoặc móc	most
-}	Đóng ngoặc móc	most
-|	gạch đứng	most
-~	dấu ngã	most
+!	chấm than
+"	ngoặc kép
+\#	báo số
+$	đô la
+£	đồng bảng
+€	u rô
+¢	Xen
+¥	Yên
+₹	Ru Bi Ấn
+%	phần trăm
+&	và
+'	nháy đơn
+(	mở ngoặc tròn
+)	đóng ngoặc tròn
+*	sao
++	cộng
+,	phẩy
+-	gạch ngang
+.	chấm
+/	gạch chéo
+:	hai chấm
+;	chấm phẩy
+<	nhỏ hơn
+>	lớn hơn
+=	bằng
+?	chấm hỏi
+@	a còng
+[	Mở ngoặc vuông
+]	Đóng ngoặc vuông
+\\	chéo ngược
+^	dấu mũ
+_	gạch dưới
+`	dấu huyền
+{	Mở ngoặc móc
+}	Đóng ngoặc móc
+|	gạch đứng
+~	dấu ngã
 
 # Other characters
-•	bun lét	some
-…	ba chấm	all	always
-...	ba chấm	all	always
-	bun lét	some
-“	mở ngoặc kép	most
-”	đóng ngoặc kép	most
-‘	nháy đơn trái	most
-’	nháy đơn phải	most
-–	gạch ngang	always
-—	gạch nối	most
-●	bun lét tròn	most
-¨	dấu tách đôi	most
-‎	dấu trái qua phải	char
-‏	dấu phải qua trái	char
-■	dấu vuông đen	some
-▪	dấu vuông đen	some
-◾	dấu vuông đen	some
-◦	bun lét ho lô	some
-➔	mũi tên phải	some
-§	phần	all
-°	độ	some
+•	bun lét
+…	ba chấm
+...	ba chấm
+	bun lét
+“	mở ngoặc kép
+”	đóng ngoặc kép
+‘	nháy đơn trái
+’	nháy đơn phải
+–	gạch ngang
+—	gạch nối
+●	bun lét tròn
+¨	dấu tách đôi
+‎	dấu trái qua phải
+‏	dấu phải qua trái
+■	dấu vuông đen
+▪	dấu vuông đen
+◾	dấu vuông đen
+◦	bun lét ho lô
+➔	mũi tên phải
+§	phần
+°	độ
 «	mở ngoặc vuông kép
 »	đóng ngoặc vuông kép
-µ	mai rô	some
-¹	số một in trên	some
-²	số hai in trên	some
-³	số ba in trên	some
-®	đã được đăng ký	some
-™	Thương hiệu	some
-©	bản quyền	some
-±	cộng hoặc trừ	some
-×	lần	some
-÷	chia cho	some
-←	mũi tên trái	some
-↑	mũi tên lên	some
-→	mũi tên phải	some
-↓	mũi tên xuống	some
-✓	dấu kiểm	some
-✔	dấu kiểm	some
+µ	mai rô
+¹	số một in trên
+²	số hai in trên
+³	số ba in trên
+®	đã được đăng ký
+™	Thương hiệu
+©	bản quyền
+±	cộng hoặc trừ
+×	lần
+÷	chia cho
+←	mũi tên trái
+↑	mũi tên lên
+→	mũi tên phải
+↓	mũi tên xuống
+✓	dấu kiểm
+✔	dấu kiểm
 
 #Mathematical Operators U+2200 to U+220F
-
-∀	cho tất cả 	none
-∁	Bù	none
-∂	Đạo hàm cục bộ	none
-∃	có tồn	none
-∄	Không có tồn	none
-∅	tập rỗng	none
-∆	số gia	none
-∇	NABLA	none
-∈	Thuộc	none
-∉	Không thuộc	none
-∊	phần tử thuộc	none
-∋	Tập hợp con của	none
-∌	Không phải tập hợp con của	none
-∍	Tập hợp con nhỏ của	none
-∎	kết quả của sự chứng minh	none
-∏	Tích	none
-
-# Miscellaneous Mathematical Operators
+∀	cho tất cả 
+∁	Bù
+∂	Đạo hàm cục bộ
+∃	có tồn
+∄	Không có tồn
+∅	tập rỗng
+∆	số gia
+∇	NABLA
+∈	Thuộc
+∉	Không thuộc
+∊	phần tử thuộc
+∋	Tập hợp con của
+∌	Không phải tập hợp con của
+∍	Tập hợp con nhỏ của
+∎	kết quả của sự chứng minh
+∏	Tích
 
 # Miscellaneous Mathematical Operators
-∑	Tổng	none
-√	Căn bậc hai	none
-∛	Căn bậc ba	none
-∜	Căn bậc bốn	none
-∝	Tỷ lệ	none
-∞	Vô cực	none
-∟	góc vuông	none
-∠	góc	none
-∥	song song với	none
-∦	không song song với	none
-∧	log và	none
-∨	log hoặc	none
-∩	giao	none
-∪	hợp	none
-∫	tích phân	none
-∴	kết luận	none
-∵	vì	none
-∶	Tỉ suất	none
-∷	Tỉ lệ	none
-≤	Nhỏ hơn hoặc bằng	none
-≥	Lớn hơn hoặc bằng	none
-⊂	Tập con của	none
-⊃	Tập cha của	none
-⊆	Tập con bằng của	none
-⊇	Tập cha bằng của	none
+∑	Tổng
+√	Căn bậc hai
+∛	Căn bậc ba
+∜	Căn bậc bốn
+∝	Tỷ lệ
+∞	Vô cực
+∟	góc vuông
+∠	góc
+∥	song song với
+∦	không song song với
+∧	log và
+∨	log hoặc
+∩	giao
+∪	hợp
+∫	tích phân
+∴	kết luận
+∵	vì
+∶	Tỉ suất
+∷	Tỉ lệ
+≤	Nhỏ hơn hoặc bằng
+≥	Lớn hơn hoặc bằng
+⊂	Tập con của
+⊃	Tập cha của
+⊆	Tập con bằng của
+⊇	Tập cha bằng của
 
 # Vulgur Fractions U+2150 to U+215E
-⅐	Một phần bảy	none
-⅑	Một phần chín	none
-⅒	Một phần mười	none
-⅓	Một phần ba	none
-⅔	Hai phần ba	none
-⅕	Một phần năm	none
-⅖	Hai phần năm	none
-⅗	Ba phần tư	none
-⅘	Bốn phần năm	none
-⅙	Một phần sáu	none
-⅚	Năm phần sáu	none
-⅛	Một phần tám	none
-⅜	Ba phần tám		none
-⅝	Năm phần tám	none
-⅞	Bảy phần tám	none
+⅐	Một phần bảy
+⅑	Một phần chín
+⅒	Một phần mười
+⅓	Một phần ba
+⅔	Hai phần ba
+⅕	Một phần năm
+⅖	Hai phần năm
+⅗	Ba phần tư
+⅘	Bốn phần năm
+⅙	Một phần sáu
+⅚	Năm phần sáu
+⅛	Một phần tám
+⅜	Ba phần tám
+⅝	Năm phần tám
+⅞	Bảy phần tám

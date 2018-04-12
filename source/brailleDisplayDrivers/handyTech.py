@@ -20,7 +20,6 @@ from globalCommands import SCRCAT_BRAILLE
 from logHandler import log
 
 
-TIMEOUT = 0.2
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
 
@@ -61,7 +60,7 @@ BLUETOOTH_NAMES = {
 	"Active Braille AB",
 	"Active Star AS",
 	"Basic Braille BB",
-	"Braille Star BS",
+	"Braille Star 40 BS",
 	"Braille Wave BW",
 	"Easy Braille EBR",
 }
@@ -485,6 +484,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: The name of a series of braille displays.
 	description = _("Handy Tech braille displays")
 	isThreadSafe = True
+	receivesAckPackets = True
+	timeout = 0.2
 
 	@classmethod
 	def check(cls):
@@ -543,8 +544,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
 		self._brailleInput = False
-		self._pendingCells = []
-		self._awaitingACK = False
 		self._hidSerialBuffer = ""
 
 		if port == "auto":
@@ -566,7 +565,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						self._dev.write(HT_HID_RPT_InCommand + HT_HID_CMD_FlushBuffers)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY,
-						timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
+						timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -574,7 +573,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self.sendPacket(HT_PKT_RESET)
 			for _i in xrange(3):
 				# An expected response hasn't arrived yet, so wait for it.
-				self._dev.waitForRead(TIMEOUT)
+				self._dev.waitForRead(self.timeout)
 				if self.numCells and self._model:
 					break
 
@@ -642,13 +641,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# Any further releases are just the rest of the keys in the combination
 		# being released, so they should be ignored.
 		self._ignoreKeyReleases = True
-
-	def _handleAck(self):
-		if not self._awaitingACK:
-			return
-		self._awaitingACK = False
-		if self._pendingCells:
-			self.display(self._pendingCells)
 
 	# pylint: disable=R0912
 	# Pylint complains about many branches, might be worth refactoring
@@ -761,13 +753,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 
 	def display(self, cells):
-		if not self._awaitingACK:
-			# cells will already be padded up to numCells.
-			self._model.display(cells)
-			self._awaitingACK = True
-			self._pendingCells = []
-		else:
-			self._pendingCells = cells
+		# cells will already be padded up to numCells.
+		self._model.display(cells)
 
 	scriptCategory = SCRCAT_BRAILLE
 
@@ -789,7 +776,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		'br(handytech):rightSpace+b1+b3+b4': 'toggleBrailleInput',
 		'br(handytech.easybraille):left+b1+b3+b4': 'toggleBrailleInput',
 		'br(handytech.easybraille):right+b1+b3+b4': 'toggleBrailleInput',
-		'bk:space+dot1+dot2+dot7': 'toggleBrailleInput',
+		'br(handytech):space+dot1+dot2+dot7': 'toggleBrailleInput',
 	}
 
 	gestureMap = inputCore.GlobalGestureMap({
@@ -849,19 +836,24 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, model, keys, isBrailleInput=False):
 		super(InputGesture, self).__init__()
-		self.model = model.genericName
+		self.model = model.genericName.replace(" ","")
 		self.keys = set(keys)
 
 		self.keyNames = names = []
+		if isBrailleInput:
+			self.dots = self._calculateDots()
 		for key in keys:
-			if isBrailleInput:
-				self.dots = self._calculateDots()
-				if key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille)):
-					self.space = True
-			if KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
+			if isBrailleInput and (
+				key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model,EasyBraille))
+			):
+				self.space = True
+				names.append("space")
+			elif isBrailleInput and key in KEY_DOTS:
+				names.append("dot%d"%KEY_DOTS[key])
+			elif KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
 				self.routingIndex = key - KEY_ROUTING
 				names.append("routing")
-			elif not isBrailleInput:
+			else:
 				try:
 					names.append(model.keys[key])
 				except KeyError:

@@ -2,11 +2,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V.
+#Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger
 
 import os
 import wx
 import core
+import config
 import languageHandler
 import gui
 from logHandler import log
@@ -200,17 +201,17 @@ class AddonsDialog(wx.Dialog):
 			return _("remove")
 		# Need to do this here, as 'isDisabled' overrides other flags.
 		elif addon.isPendingDisable:
-			# Translators: The status shown for an addon when its disabled.
-			return _("disable")
+			# Translators: The status shown for an addon when it requires a restart to become disabled
+			return _("Disabled after restart")
 		elif addon.isPendingEnable:
-			# Translators: The status shown for an addon when its enabled.
-			return _("enable")
+			# Translators: The status shown for an addon when it requires a restart to become enabled
+			return _("Enabled after restart")
 		elif globalVars.appArgs.disableAddons or addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-			return _("suspended")
+			return _("disabled")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
-			return _("running")
+			return _("enabled")
 
 	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
@@ -308,6 +309,14 @@ Description: {description}
 
 	@classmethod
 	def handleRemoteAddonInstall(cls, addonPath):
+		# Add-ons cannot be installed into a Windows store version of NVDA
+		if config.isAppX:
+			# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app 
+			gui.messageBox(_("Add-ons cannot be installed in the Windows Store version of NVDA"), 
+				# Translators: The title of a dialog presented when an error occurs.
+				_("Error"),
+				wx.OK | wx.ICON_ERROR)
+			return
 		closeAfter = AddonsDialog._instance is None
 		dialog = AddonsDialog(gui.mainFrame)
 		dialog.installAddon(addonPath, closeAfter=closeAfter)

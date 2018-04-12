@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V.
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V., Zahari Yurukov
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -163,11 +162,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 """
 	log.debug("Core starting")
 
-	try:
-		# Windows >= Vista
-		ctypes.windll.user32.SetProcessDPIAware()
-	except AttributeError:
-		pass
+	ctypes.windll.user32.SetProcessDPIAware()
 
 	import config
 	if not globalVars.appArgs.configPath:
@@ -226,8 +221,13 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
 	app = App(redirect=False)
-	# We do support QueryEndSession events, but we don't want to do anything for them.
-	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
+	# We support queryEndSession events, but in general don't do anything for them.
+	# However, when running as a Windows Store application, we do want to request to be restarted for updates
+	def onQueryEndSession(evt):
+		if config.isAppX:
+			# Automatically restart NVDA on Windows Store update
+			ctypes.windll.kernel32.RegisterApplicationRestart(None,0)
+	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 	def onEndSession(evt):
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
