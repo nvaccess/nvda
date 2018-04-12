@@ -2,11 +2,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-# Copyright (C) 2011-2017 NV access Limited, Rui Batista, Joseph Lee
+# Copyright (C) 2011-2018 NV access Limited, Rui Batista, Joseph Lee
 
 """ Braille Display driver for the BrailleNote notetakers in terminal mode.
 USB, serial and bluetooth communications are supported.
 QWERTY keyboard input using basic terminal mode (no PC keyboard emulation) and scroll wheel are supported.
+See Brailliant B module for BrailleNote Touch support routines.
 """
 from collections import OrderedDict
 import itertools
@@ -116,10 +117,10 @@ _qtKeys= {
 	186:"semi",
 	187:"equals",
 	188:"comma",
-	189:"hyphen",
-	190:"period",
+	189:"dash",
+	190:"dot",
 	191:"slash",
-	192:"graav",
+	192:"grave",
 	219:"leftBracket",
 	220:"backslash",
 	221:"rightBracket",
