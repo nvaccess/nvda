@@ -8,6 +8,7 @@
 """Manages NVDA configuration.
 The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
 In addition, this module provides three actions: profile switch notifier, an action to be performed when NVDA saves settings, and action to be performed when NVDA is asked to reload configuration from disk or reset settings to factory defaults.
+For the latter two actions, one can perform actions prior to and/or after they take place.
 """ 
 
 import globalVars
@@ -47,8 +48,10 @@ conf = None
 #: Handlers are called with no arguments.
 configProfileSwitched = extensionPoints.Action()
 #: Notifies when NVDA is saving current configuration.
+#: Handlers can listen to "pre" or "post" action to perform tasks prior to or after NVDA's own configuration is saved.
 #: Handlers are called with no arguments.
-configSaved = extensionPoints.Action()
+configPreSave = extensionPoints.Action()
+configPostSave = extensionPoints.Action()
 #: Notifies when configuration is reloaded from disk or factory defaults are applied.
 #: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
 configReset = extensionPoints.Action()
@@ -499,6 +502,8 @@ class ConfigManager(object):
 	def save(self):
 		"""Save all modified profiles and the base configuration to disk.
 		"""
+		# #7598: give others a chance to either save settings early or terminate tasks.
+		configPreSave.notify()
 		if not self._shouldWriteProfile:
 			log.info("Not writing profile, either --secure or --launcher args present")
 			return
@@ -513,7 +518,7 @@ class ConfigManager(object):
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
-		configSaved.notify()
+		configPostSave.notify()
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
