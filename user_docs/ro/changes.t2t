@@ -5,7 +5,6 @@ Ce este nou în NVDA
 
 = 2018.2 =
 
-
 == Noi Funcționalități ==
 - lățimea și lungimea celulelor tabelului sunt acum raportată atât vocal, cât și în braille. (#2642)
 - Comenzile de navigare prin tabel ale NVDA-ului sunt suportate acum în Google Docs ( cu modul braille activat). (#7946)
@@ -90,6 +89,7 @@ Caracteristicile principale ale acestei versiuni includ suport pentru diagramele
 - În ieșirile de vorbire și braille, stările controalelor nu vor fi întotdeauna raportate în aceeași ordine, indiferent dacă sunt pozitive sau negative. (#7076)
 - În aplicații precum Windows 10 Mail, NVDA nu va mai eșua să anunțe caracterele șterse la apăsarea tastei backspace. (#7456)
 - Toate tastele de pe afișajele Hims Braille Sense Polaris funcționează așa cum era de așteptat. (#7865)
+- NVDA nu mai eșuează să pornească în Windows 7, cu mesajul despre un dll intern pentru api-ms, atunci când a fost instalată o anumită versiune a lui VIsual Studio 2007 de către o altă aplicație. (#7975)
 
 
 == Modificări pentru Dezvoltatori ==
@@ -161,7 +161,7 @@ Vă rugăm să rețineți faptul că această versiune nu mai suportă Windows X
 
 
 == Modificări pentru dezvoltatori ==
-- "scons tests" nu verifică dacă string-urile ce pot fi traduse au comentariile traducătorului. Puteți rula asta singur cu "scons checkPot". (#7492)
+- acum, "scons tests" verifică dacă string-urile ce pot fi traduse au comentariile traducătorului. Puteți rula asta singur cu "scons checkPot". (#7492)
 - Acum există un nou modul de extensie care oferă un framework generic pentru a activa extensibilitatea codului la punctele specifice din el. Acest lucru permite părților interesate să se înregistreze pentru a fi notificate atunci când are loc o acțiune (extensionPoints.Action), să modifice un anumit tip de date (extensionPoints.Filter) sau să participe la luarea unei decizii atunci când se va face ceva (extensionPoints.Decider). (#3393)
 - Acum vă puteți înregistra pentru a fi notificat atunci când configurarea profilului se comută prin acțiunea config.configProfileSwitched. (#3393)
 - Gesturile afișajului braille care simulează modificatoare de taste ale tastaturii sistemului (cum ar fi control și alt) pot fi combinate acum cu alte taste ale tastaturii simulate fără definiție explicită. (#6213) 
