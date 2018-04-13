@@ -122,6 +122,7 @@ espeakLib=env.SharedLibrary(
 		"setlengths.c",
 		"spect.c",
 		"speech.c",
+		"ssml.c",
 		"synthdata.c",
 		"synthesize.c",
 		"synth_mbrola.c", # provides symbols used by synthesize.obj, voices.obj, and wavegen.obj
@@ -156,11 +157,6 @@ env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspat
 #Compile all dictionaries
 missingDicts=['zhy', ] #'mt','tn','tt']
 dictSourcePath=espeakRepo.Dir('dictsource').abspath
-# Remove emoji files before compiling dictionaries as currently many of these simply crash eSpeak at runtime
-emojiGlob = os.path.join(espeakRepo.abspath,'dictsource','*_emoji')
-for f in glob(emojiGlob):
-	print("Removing emoji file: %s"%f)
-	os.remove(f)
 for f in env.Glob(os.path.join(dictSourcePath,'*_rules')):
 	lang=f.name.split('_')[0]
 	if lang in missingDicts: continue
