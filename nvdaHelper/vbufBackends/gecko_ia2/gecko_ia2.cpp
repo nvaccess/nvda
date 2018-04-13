@@ -549,7 +549,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		|| (role == ROLE_SYSTEM_TEXT && !isEditable) 
 		|| role == IA2_ROLE_HEADING 
 		|| role == ROLE_SYSTEM_PAGETAB 
-		|| role == ROLE_SYSTEM_BUTTONMENU;
+		|| role == ROLE_SYSTEM_BUTTONMENU
+		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
 	// Whether this node has a visible label somewhere else in the tree
 	const bool labelVisible = canDetectLabelVisibility // Not all browsers support getting a node's labelledBy node
 		&& nameIsExplicit && name && name[0] //this node must actually have an explicit name, and not be just an empty string

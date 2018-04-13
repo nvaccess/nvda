@@ -3,17 +3,105 @@
 
 %!includeconf: ../changes.t2tconf
 
- 2018.1 =
+= 2018.2 =
+
+== Novas Características ==
+- Agora anúnciase o rango de filas e columnas para celdas de táboas  en voz e braille. (#2642)
+- Agora sopórtanse as ordes de navegación de táboas de NVDA en Google Docs (co modo Braille habilitado). (#7946)
+- Capacidade para ler e navegar táboas en Kindle for PC. (#7977)
+- Soporte para as pantallas BrailleNote touch y Brailliant BI 14 a través tanto do USB coma do bluetooth. (#6524)
+- No Windows 10 Fall Creators Update e posteriores, o NVDA pode anunciar notificacións dende aplicacións como a Calculadora e a Windows Store. (#8045)
+- Novas táboas de transcripcción braille: Lithuano 8 pontos, ucranio, Mongol grado 2. (#7839)
+- Engadido un script para anunciar información de formato para o texto baixo unha celda braille específica. (#7106)
+- Ao se actualizar o NVDA, agora é posible retrasar a instalación da actualización a un momento posterior da túa elección. (#4263) 
+
+
+== Cambios ==
+- Cambiouse a columna de estado no administrador de complementos para indicar se o complemento está habilitado ou deshabilitado ademais de en execución ou suspendido. (#7929)
+- Actualizado o transcriptor braille liblouis a 3.5.0. (#7839)
+- A táboa braille lituana renomeouse a Lituano 6 pontos para evitar confusións coa nova táboa de 8 pontos. (#7839)
+- As táboas Francés (Canadá) grao 1 e grao 2 borráronse. No seu lugar, utilizaranse as táboas Francés (unificado) 6 pontos e Grao 2 respectivamente. (#7839)
+- Os sensores secundarios das pantallas braille Alva BC6, EuroBraille e Papenmeier agora anuncian información de formato para o texto baixo a celda braille dese sensor. (#7106)
+
+
+== Correción de fallos ==
+- O NVDA xa non falla ao ler controis enfocados na pantalla de inicio de sesión da conta de Microsoft en Configuración despois de introducir un enderezo de correo. (#7997)
+- O NVDA xa non falla ao ler a páxina cando se retrocede a unha páxina anterior en Microsoft Edge. (#7997)
+- O NVDA xa non anunciará incorrectamente o carácter final dun PIN de inicio de sesión de windows 10 segundo a máquina se desbloquee. (#7908)
+- As etiquetas das caixas de verificación e dos botóns de opción en Chrome e Firefox xa non se anuncian dúas veces cando se tabule ou se use a navegación rápida en modo exploración. (#7960)
+- Manéxase aria-current cun valor de false como false en lugares de true (#7892).
+- O controlador do sintetizador Windows Onecore Voices xa non falla ao se cargar se a voz configurada se desinstalou. (#7999)
+- Cambiar voces no controlador do sintetizador Windows Onecore Voices agora é moito máis rápido. (#7999)
+- Arranxada a malformación da saída braille para varias táboas braille, incluindo signos en maiúsculas no braille danés contraído de 8 pontos. (#7526, #7693)
+- O NVDA agora pode anunciar máis tipos de viñetas no Microsoft Word. (#6778)
+- Ao se premer o script anunciar información xa non move incorrectamente a posición de revisión e polo tanto ao premelo varias veces xa non da resultados diferentes. (#7869)
+
+
+== Cambios para Desenvolvedores ==
+- A información para desenvolvedores para obxectos UIA agora contén unha listaxe dos patróns UIA dispoñibles. (#5712)
+- Os módulos de aplicación agora poden forzar certas ventás para usar sempre UIA implementando o método isGoodUIAWindow. (#7961)
+- A bandeira booleana oculta "outputPass1Only" na seción braille da configuración borrouse de novo. Liblouis xa non soporta pasar 1 só na saída. (#7839)
+
+
+= 2018.1.1 =
+Esta é unha versión especial do NVDA que soluciona un problema no controlador do sintetizador Onecore Windows Speech, que facía que falara cun ton e velocidade máis altos en Windows 10 Redstone 4 (1803). (#8082)  
+
+
+= 2018.1 =
+O subliñable desta versión inclúe o soporte para gráficos en Microsoft word e PowerPoint, o soporte para pantallas braille novas incluíndo as Eurobraille e o conversor de protocolo de Optelec, mellorado o soporte para as pantallas braille Hims e Optelec, melloras de rendemento para Mozilla Firefox 58 e posteriores, e moitho máis.
+
+== Novas Características ==
+- Agora é posible interactuar con gráficos en Microsoft Word e Microsoft PowerPoint, similar ao soporte existente para gráficos en Microsoft Excel. (#7046)
+ - En Microsoft Word: cando se estea en modo exploración, pon o cursor nun gráfico integrado e preme intro para interactuar con el.
+ - En Microsoft Powerpoint cando se edite unha diapositiva: tabula a un obxecto gráfico, e preme intro ou espazo para interactuar co gráfico.
+ - Para deter a interación cun gráfico, preme escape.
+- Nova lingua: Kyrgyz.
+- Engadido o soporte para VitalSource Bookshelf. (#7155)
+- Engadido o soporte para o protocolo conversor Optelec , un dispositivo que che permite usar as pantallas Braille Voyager e Satellite usando o protocolo de comunicación das ALVA BC6. (#6731)
+- Agora é posible usar a entrada braille cunha pantalla braille ALVA 640 Comfort. (#7733) 
+ - A funcionalidade de entrada braille do NVDA pode usarse tanto con éstas coma con outras pantallas BC6 co firmware 3.0.0 e anterior.
+- Soporte inicial para Google Sheets co modo Braille habilitado. (#7935)
+- Soporte para pantallas braille Eurobraille Esys, Esytime e Iris. (#7488)
+
+
+== Cambios ==
+- reemplazáronse os controladores de pantallas braille HIMS Braille Sense/Braille EDGE/Smart Beetle e Hims Sync por un único controlador. O novo controlador activarase automáticamente para os antigos usuarios do controlador syncBraille. (#7459) 
+- Algunhas teclas, especialmente as teclas de desprazamento, reasignáronse para seguir as convencións usadas polos productos de Hims. Consulta a guía do usuario para máis detalles.
+- Ao se escrebir co teclado en pantalla a través da interación tactil, por defecto agora debes facer dobre tap en cada tecla do mesmo xeito no que activarías calquera outro control. (#7309)
+ - Para usar o modo de "escritura tactil" existente onde chega con quitar o dedo da tecla para activala, habilita esta opción no novo diálogo Opcións de Interación Tactil que se atopa no menú Preferencias. (#7309)
+- Xa non é necesario que o braille sega explícitamente ao foco ou á revisión, xa que esto ocorrirá automáticamente por omisión. (#2385) 
+ - Ten en conta que o seguemento automático á revisión só ocorirá ao se usar un cursor de revisión ou orden de navegación de obxectos. O desprazamento non activará este novo comportamento.
+
 
 == Corrección de Fallos ==
 - As mensaxes explorables como amosar o formato actual ao se premer NVDA+f dúas veces rápidamente, xa non fallan cando o NVDA se instala nunha ruta con caracteres non ASCII. (#7474)
 - O foco agora restáurase unha vez máis correctamente cando se volta ao Spotify dende outra aplicación. (#7689)
-- O NVDA xa non falla ao se actualizar en sistemas co Control de Aceso de Cartafols habilitado (dispoñible na actualización Windows 10 Fall Creators). (#7696)
+- na actualización Windows 10 Fall Creators, NVDA xa non falla ao se actualizar cando o acceso controlado ao cartafol está habilitado dende Windows Defender Security Center. (#7696)
+- A deteción das teclas de desprazamento nas pantallas Hims Smart Beetle xa non é pouco fiable. (#6086)
+- Unha lixeira mellora no rendemento ao se procesar grandes cantidades de contido en Mozilla Firefox 58 e posterior. (#7719)
+- En Microsoft Outlook, ler correos electrónicos que conteñan táboas xa non causa erros. (#6827)
+- Os xestos das pantallas braille que emulan as teclas modificadoras do teclado do sistema agora poden combinarse tamén con outras teclas emuladas do teclado do sistema se uno ou máis dos xestos involucrados son específicos do modelo. (#7783)
+- En Mozilla Firefox, o modo exploración agora funciona correctamente en ventás emerxentes creadas por extensións como LastPass e bitwarden. (#7809)
+- O NVDA xa non se bloquea ás veces en cada cambio do foco se o Firefox ou o Chrome deixaron de responder debido a unha conxelación ou un colgue. (#7818)
+- En clientes de twitter como Chicken Nugget, o NVDA xa non ignorará os derradeiros 20 caracteres de tuits con 280 caracteres ao lelos. (#7828)
+- O NVDA agora usa a lingua correcta ao anunciar os símbolos cando se selecione texto. (#7687)
+- En versións recentes de Office 365, é de novo posible navegar gráficos de Excel usando as teclas de frechas. (#7046)
+- En saídas de voz e braille, os estados dos controis agora sempre se anuncian no mesmo orden, sen importar se son positivos ou negativos. Arranxos #7076
+- En aplicacións coma o Mail do Windows 10, NVDA xa non fallará ao anunciar os caracteres borrados cando se prema retroceso. (#7456)
+- Agora todas as teclas nas pantallas Hims Braille Sense Polaris funcionan como se espera. (#7865)
+- O NVDA xa non falla ao arrancar en Windows 7 queixándose acerca dunha dll api ms interna, cando unha versión particular do Visual Studio 2017 redistributable se instalara por outra aplicación. (#7975)
 
 
 == Cambios para Desenvolvedores ==
 - Engadida unha bandeira booleana oculta á seción braille na configuración: "outputPass1Only". (#7301, #7693, #7702) 
  - Esta bandeira está predeterminada a true. Se é false, usaranse as regras liblouis multi pass para a saída braille.
+- Engadiuse un novo diccionario (braille.RENAMED_DRIVERS) para permitir unha transición sen  problemas aos usuarios que utilizan controladores que foran substituidos por outros. (#7459)
+- Actualizado o paquete comtypes a 1.1.3. (#7831)
+- Implementado un sistema xenérico en braille.BrailleDisplayDriver para tratar coas pantallas que envían paquetes de confirmación/acuse de recibo. Consulta o controlador das pantallas braille handyTech como un exemplo. (#7590, #7721)
+- Pódese usar unha nova variable "isAppX" no módulo config para detectar se o NVDA se está a executar coma unha aplicación Windows Desktop Bridge Store. (#7851)
+- Para implementacións de documento coma NVDAObjects ou browseMode que teñan un textInfo, agora hai unha nova clase documentBase.documentWithTableNavigation que pode herdarse para obter scripts de navegación estándar de táboa. Por favor consulta esta clase para ver que métodos helper deben proporcionarse para a túa implementación para que funcione a navegación de táboa. (#7849)
+- O ficheiro por lotes scons agora manéxase mellor cando Python 3 tamén está instalado, facendo o uso do lanzador para lanzar específicamente a python 2.7 de 32 bit. (#7541)
+- hwIo.Hid agora toma un parámetro adicional exclusivo, o que por omisión é True. Se se configura a False, permítese a outras aplicacións comunicarse cun dispositivo mentres estea conectado ao NVDA. (#7859)
 
 
 == 2017.4 =

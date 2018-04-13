@@ -3,6 +3,62 @@ Novità in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+Le caratteristiche principali di questa versione riguardano la gestione dei grafici in Microsoft Word e Powerpoint, il supporto a display braille quali Eurobraille e Optelec protocol converter, migliorato il supporto ai modelli Hims e Optelec, prestazioni decisamente più performanti in Firefox58 e versioni successive, e molto altro ancora.
+
+== Novità ==
+- Ora è possibile interagire con i grafici in Microsoft Word e Microsoft PowerPoint, similmente a come accade già per i grafici in Microsoft Excel. (#7046)
+ - In Microsoft Word: Quando ci si trova in modalità navigazione, posizionare il cursore su un grafico e premere invio per interagire con esso.
+ - In Microsoft PowerPoint mentre si modifica una diapositiva: premere tab fino a trovare un grafico, dopodiché premere invio o barra spazio per interagire con esso.
+ - Per terminare l'interazione con un grafico, premere escape.
+- Nuova lingua: Kyrgyz.
+- Aggiunto il supporto per VitalSource Bookshelf. (#7155)
+- Aggiunto il supporto per il convertitore di protocollo Optelec, un dispositivo che permette di utilizzare Braille Voyager e Alva Satellite tramite il protocollo di comunnicazione ALVA BC6. (#6731)
+- Ora è possibile utilizzare l'immissione braille anche con il display ALVA 640 Comfort. (#7733) 
+ - La funzionalità di immissione braille di NVDA può essere usata sia con questi modelli sia con altri display BC6 con  firmware 3.0.0 e superiore.
+- Supporto preliminare per Google Fogli con la modalità braille abilitata. (#7935)
+- Supporto per le barre Eurobraille Esys, Esytime e Iris. (#7488)
+
+
+== Cambiamenti ==
+- Ora esiste un unico driver per i Display Braille della Hims (Braille Sense/Braille EDGE/Smart Beetle e Sync Braille). Il nuovo driver sarà automaticamente attivato per tutti, compresi utenti Sync Braille che in precedenza ne usavano uno di diverso. (#7459) 
+ - Alcuni tasti, soprattutto quelli di scorrimento, sono stati riassegnati per adeguarsi alle convenzioni standard di HIMS. Si veda il manuale utente per ulteriori dettagli.
+- Durante la digitazione con una tastiera touch, ora l'impostazione predefinita è quella di dover effettuare un doppio tap per ciascuna lettera, così come per gli altri controlli. (#7309)
+ - Per fare in modo che le lettere vengano inserite non appena si solleva il dito, è necessario modificare la relativa opzione presente nelle impostazioni di interazione al tocco nel menu preferenze.
+- Non è più necessario selezionare manualmente se il braille debba seguire il focus o il cursore di controllo, in quanto ora viene gestito tutto automaticamente. (#2385) 
+ - Si noti che questa funzione automatica si attiva solo quando vengono usati comandi di navigazione ad oggetti o di gestione del cursore di controllo, non è quindi sufficiente premere un tasto di scorrimento sul display braille.
+
+
+== Bug Corretti ==
+- I messaggi di NVDA che consentono un'esplorazione con le frecce, per esempio quando si preme due volte NVDA-f per ottenere informazioni sulla formattazione, non presentano più problemi quando lo screen reader è installato in un percorso contenente caratteri non ascii. (#7474)
+- Il focus viene ripristinato correttamente quando si passa da una qualsiasi applicazione a Spotify. (#7689)
+- In Windows 10 Fall Creaters Update, NVDA non presenta più errori di aggiornamento quando è abilitata la funzione di accesso protetto alle cartelle in Windows Defender Security Center. (#7696)
+- La funzione di rilevamento dei tasti di scorrimento nel display braille Hims Smart Beetle ora funziona correttamente. (#6086)
+- Migliorate leggermente le prestazioni in presenza di grandi quantità di contenuti da gestire in Mozilla Firefox 58 e successivi. (#7719)
+- In Microsoft Outlook, sistemati gli errori in lettura di email contenenti tabelle. (#6827)
+- Migliorata la gestione del braille nella finestra gesti e tasti di immissione. (#7783)
+- In Mozilla Firefox, la modalità navigazione opera correttamente anche nei pop-up creati da estensioni quali LastPass e bitwarden. (#7809)
+- NVDA non va più in crash e non si blocca ad ogni cambiamento di focus nel caso in cui Firefox o Chrome smettono di funzionare. (#7818)
+- Nei client Twitter come Chicken Nugget, NVDA non ignorerà più gli ultimi 20 caratteri su 280 durante la lettura dei tweet. (#7828)
+- NVDA ora utilizza la lingua corretta  nella lettura dei simboli quando il testo è selezionato. (#7687)
+- Nelle versioni più recenti di Office 365, è di nuovo possibile esplorare i grafici Excel utilizzando i tasti freccia. (#7046)
+- Sistemato un problema di sincronizzazione braille/sintesi vocale nell'annunciare informazioni di controllo. (#7076)
+- In app quali Windows 10 Mail, NVDA non avrà più problemi nel leggere i caratteri eliminati quando si preme backspace. (#7456)
+- Tutti i tasti del display braillesense Polaris prodotto da Hims funzionano correttamente. (#7865)
+
+
+== Cambiamenti per sviluppatori (in inglese) ==
+- Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
+ - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
+- A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
+- Updated comtypes package to 1.1.3. (#7831)
+- Implemented a generic system in braille.BrailleDisplayDriver to deal with displays which send confirmation/acknowledgement packets. See the handyTech braille display driver as an example. (#7590, #7721)
+- A new "isAppX" variable in the config module can be used to detect if NVDA is running as a Windows Desktop Bridge Store app. (#7851)
+- For document implementations such as NVDAObjects or browseMode that have a textInfo, there is now a new documentBase.documentWithTableNavigation class that can be inherited from to gain standard table navigation scripts. Please refer to this class to see which helper methods must be provided by your implementation for table navigation to work. (#7849)
+- The scons batch file now better handles when  Python 3 is also installed, making use of the launcher to specifically launch python 2.7 32 bit. (#7541)
+- hwIo.Hid now takes an additional parameter exclusive, which defaults to True. If set to False, other applications are allowed to communicate with a device while it is connected to NVDA. (#7859)
+
+
 = 2017.4 =
 Le principali migliorie di questa versione riguardano un supporto molto più completo alle pagine web contenenti app o finestre di dialogo al proprio interno, una gestione migliore delle etichette dei campi raggruppati in modalità navigazione, supporto a nuove tecnologie presenti in Windows10 come Windows Defender Application Guard e Windows 10 con processori ARM64, lettura automatica del cambio di orientamento dello schermo e anche dello stato di carica della batteria.
 Si prega di fare attenzione al fatto che questa versione di NVDA non supporta più Windows XP o Windows Vista. Il requisito minimo per NVDA è ora windows 7 con Service Pack 1.
