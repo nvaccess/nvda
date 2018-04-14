@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModules/audacity.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NVDA Contributors <https://www.nvaccess.org/>
+#Copyright (C) 2006-2018 NV Access Limited, Robert Hänggi
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
