@@ -700,7 +700,7 @@ Note que a conversão só tem em conta a palavra Braille que está a ser escrita
 Por exemplo, se estiver a usar uma tabela Braille em que os números necessitem do sinal de número, e pressionar Backspace para se mover para o fim de um número, terá de introduzir o sinal de número e o número desejado, para que seja correctamente introduzido o número pretendido.
 
 %kc:beginInclude
-Pressionando o ponto 7 apagará a última célula Braille ou caractere introduzido.
+Pressionando o ponto 7 apagará a última célula Braille ou caracter introduzido.
 Pressionando o  ponto 8 converte o Braille abreviado e pressiona a tecla Enter.
 Pressionando o pontos 7 + 8 converte o Braille abreviado, mas sem introduzir um espaço ou simular a tecla Enter.
 %kc:endInclude
@@ -867,7 +867,7 @@ As páginas são viradas automaticamente quando move o cursor ou usa leitura con
 Pode mudar manualmente para a página seguinte com Page Down ou para a anterior com Page Up.
 %kc:endInclude
 
-A navegação por caractere é suportada para links e gráficos, mas apenas na página actual.
+A navegação por caracter é suportada para links e gráficos, mas apenas na página actual.
 A navegação por link também inclui as notas de rodapé.
 
 O NVDA proporciona um suporte inicial  para leitura e navegação interactiva de conteúdo matemático para livros com conteúdo matemático acessível.
@@ -933,7 +933,7 @@ Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA p
 
 ==== Mostrar opções de saída ao sair do NVDA ====[GeneralSettingsShowExitOptions]
 Esta opção é uma caixa de verificação que lhe permite escolher se pretende ou não que apareça um diálogo, quando fechar o NVDA, questionando o que deseja fazer.
-Quando marcada, um diálogo aparecerá ao tentar fechar o NVDA, a perguntar se deseja sair, reiniciar ou reiniciar com os extras desactivados.
+Quando marcada, um diálogo aparecerá ao tentar fechar o NVDA, a perguntar se deseja sair, reiniciar, reiniciar com os extras desactivados, reiniciar com o nível de registo definido para Depuração ou instalar actualização, se existir alguma por instalar.
 Quando desmarcada, o NVDA sairá imediatamente
 
 ==== Tocar sons ao iniciar e sair do NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Esta opção só está disponível nas cópias instaladas do NVDA.
 ==== Verificar automaticamente actualizações para o NVDA ====[GeneralSettingsCheckForUpdates]
 Se esta opção estiver activa, o NVDA irá verificar automaticamente se existem versões mais actuais do programa, e informá-lo-á, quando uma actualização estiver disponível.
 Poderá também verificar, manualmente, por actualizações, seleccionando "Verificar actualização...", no menu ajuda do NVDA.
+
+==== Anunciar actualização pendente no arranque ====[GeneralSettingsNotifyPendingUpdates]
+Se esta opção estiver activa,, e  se houver uma actualização pendente para instalação, o NVDA informará, ao arrancar, a sua existência e oferecerá uma opção para a instalar.
+Também poderá proceder à instalação, manualmente, através do menu de saída do NVDA, se activado, pelo menu do NVDA ou ao proceder à verificação de actualizações pela opção Ajuda do menu do NVDA.
 
 +++ Selecção de Sintetizador (NVDA+Ctrl+S) +++[SynthesizerSelection]
 O diálogo Sintetizador, pode ser aberto pelo item "Sintetizador..." no menu Preferências e permite-lhe seleccionar qual o sintetizador que o NVDA utilizará para falar.
@@ -1742,23 +1746,24 @@ Se o NVDA estiver instalado, e a ser executado, no seu sistema, poderá abrir o 
 Caso contrário, guarde o pacote do extra e siga as instruções abaixo.
 
 Para instalar um extra que obteve previamente, pressione o botão instalar.
-Isto permitir-lhe-á procurar por um pacote de extras para o NVDA (ficheiro .nvda-addon) algures, no seu computador ou numa rede.
-Ao pressionar abrir, iniciar-se-á o processo de instalação.
+Isto permite-lhe procurar por um pacote de extras para o NVDA (ficheiro .nvda-addon) algures, no seu computador ou numa rede.
+Ao pressionar abrir, inicia-se o processo de instalação.
 
-Quando um extra está a ser instalado, o NVDA perguntar-lhe-á se deseja realmente instalá-lo.
+Quando um extra está a ser instalado, o NVDA pergunta-lhe se deseja realmente instalá-lo.
 Tendo em conta que a funcionalidade dos extras não é restrita no NVDA, o que em teoria pode incluir aceder a dados pessoais ou mesmo a todo o sistema, se o NVDA for uma cópia instalada, é muito importante instalar apenas extras de fontes de confiança.
 Uma vez o extra instalado, o NVDA terá que ser reiniciado, para que o extra possa ser executado.
 Até que o faça, o estado "instalar" será mostrado para esse extra, na lista.
 
-Para remover um extra, seleccione-o na lista e pressione o botão remover.
+Para remover um extra, seleccione-o na lista e pressione o botão "Remover".
 O NVDA perguntar-lhe-á se deseja realmente fazê-lo.
 Tal como na instalação, o NVDA terá que ser reiniciado, para que o extra seja totalmente removido.
 Até que o faça, o estado "remover" será mostrado para esse extra.
 
-Para desactivar um Extra, pressione o botão Desactivar.
-Para activar um Extra previamente desactivado, pressione o botão Activar.
-Pode desactivar um Extra se o seu estado indicar Em execução ou Activado, ou activar um Extra se o seu estado for Suspenso ou Desactivado. 
-Cada vez que pressionar o botão Activar/Desactivar, o estado do Extra é alterado para reflectir o que acontecerá quando o NVDA reiniciar.
+Para desactivar um Extra, pressione o botão "Desactivar".
+Para activar um Extra previamente desactivado, pressione o botão "Activar".
+Pode desactivar um Extra se o seu estado indicar "Activado", ou activar um Extra se o seu estado for "Desactivado".
+Cada vez que pressionar o botão "Activar"/"Desactivar", o estado do Extra é alterado para reflectir o que acontecerá quando o NVDA reiniciar.
+Se o extra estiver activado, o seu estado passará a "Desactivado após reinício". Se o extra estiver desactivado, o seu estado passará a "Activado após reinício".
 Tal como quando instala ou desinstala um Extra, tem de reiniciar o NVDA para que as alterações surtam efeito.
 
 O gestor tem também um botão fechar para que o gestor seja fechado.
@@ -1919,6 +1924,7 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 | Mover a linha braille para a linha seguinte | t4 |
 | Deslocar a linha braille para a frente | t5 ou etouch3 |
 | Encaminhar para a célula braille | routing |
+| Anunciar formatação do caracter da célula Braille | secondary routing |
 | Alternar simulação de teclado HID | t1+spEnter |
 | mover para a primeira linha em revisão | t1+t2 |
 | mover para a última linha em revisão | t4+t5 |
@@ -2072,13 +2078,16 @@ Por favor consulte a documentação desta linha braille para obter a descrição
 | Leitura contínua | B6 |
 %kc:endInclude
 
-++ HumanWare séries Brailliant BI e B ++[HumanWareBrailliant]
-A série de linhas braille Brailliant BI e B da [HumanWare http://www.humanware.com/], incluindo the as 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
-Se as ligar via USB, usando o protocolo Humaware, deverá instalar previamente os drivers fornecidos pelo fabricante.
+++ HumanWare séries Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
+A série de linhas braille Brailliant BI e B da [HumanWare http://www.humanware.com/], incluindo as BI 14, BI 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
+Se as ligar via USB, usando o protocolo Humanware, deverá instalar previamente os drivers fornecidos pelo fabricante.
 Os drivers USB não serão necessários se utilizar o protocolo OpenBraille.
 
-Seguem-se as associações de teclas para esta linha braille com o NVDA.
+O BrailleNote Touch também é suportado, não necessitando de drivers para ser utilizado.
+
+Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
++++ Comandos para todos os modelos +++
 %kc:beginInclude
 || Nome | Tecla de atalho |
 | Deslocar a linha braille para trás | left |
@@ -2091,23 +2100,41 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 | Tecla seta baixo | espaço+ponto 4 |
 | Tecla seta esquerda | espaço+ponto 3 |
 | Tecla seta direita | espaço+ponto 6 |
-| Menu do NVDA | c1+c3+c4+c5 (command n) |
 | Tecla shift+tab | espaço+ponto 1+ponto 3 |
 | Tecla tab | espaço+ponto 4+ponto 6 |
 | Tecla alt | espaço+ponto 1+ponto 3+ponto 4 (espaço+m) |
 | Tecla escape | espaço+ponto 1+ponto 5 (espaço+e) |
 | Tecla enter | ponto 8 |
-| Teclas windows+d (Minimizar todas as aplicações) | c1+c4+c5 (command d) |
 | Tecla windows | espaço+ponto 3+ponto 4 |
 | Teclas alt+tab | espaço+ponto 2+ponto 3+ponto 4+ponto 5 (espaço+t) |
+| Menu do NVDA | Espaço + ponto 1+ponto 3+ponto 4+ponto 5 (Espaço+n) |
+| Teclas windows+d (Minimizar todas as aplicações) | Espaço + ponto 1+ponto 4+ponto 5 (Espaço+d) |
+| Leitura contínua | Espaço + ponto 1+ponto 2+ponto 3+ponto 4+ponto 5+ponto 6 |
+%kc:endInclude
+
++++ Comandos para Brailliant BI 32, BI 40 e B 80 +++ 
+%kc:beginInclude
+|| Nome | Tecla de atalho |
+| Menu do NVDA | c1+c3+c4+c5 (command n) |
+| Teclas windows+d (Minimizar todas as aplicações) | c1+c4+c5 (command d) |
 | Leitura contínua | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
++++ Comandos para Brailliant BI 14 +++
+%kc:beginInclude
+|| Nome | Tecla de atalho |
+| Tecla seta cima | joystick up |
+| Tecla seta baixo | joystick down |
+| Tecla seta esquerda | joystick left |
+| Tecla seta direita | joystick right |
+| Tecla enter | joystick action |
+%kc:endInclude
+
 ++ HIMS: Séries Braille Sense, Braille EDGE, Smart Beetle e Sync Braille ++[Hims]
-O NVDA suporta as linhas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
+O NVDA suporta as linhas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth.
 Se ligar a linha via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
 Pode fazer o download dos drivers de http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
- 
+
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
@@ -2252,7 +2279,7 @@ Seguem-se as associações de comandos da Papenmeier para o NVDA:
 | Move para o primeiro objecto contido | dn2 |
 | Move para o objecto anterior | left2 |
 | Move para o objecto seguinte | right2 |
-| Anuncia a formatação do texto | Linha de encaminhamento superior |
+| Anunciar formatação do caracter da célula Braille | Linha de encaminhamento superior |
 %kc:endInclude
 
 O modelo Trio tem 4 teclas adicionais, situadas à frente do teclado Braille.
@@ -2326,7 +2353,7 @@ Dispositivos com EAB
 | Move para o primeiro objecto contido | dn2 |
 | Move para o objecto anterior | left2 |
 | Move para o objecto seguinte | right2 |
-| Anuncia a formatação do texto | Linha de encaminhamento superior |
+| Anuncia a formatação do caracter da célula Braille | Linha de encaminhamento superior |
 
 BRAILLEX Tiny:
 || Nome | Tecla de atalho |
@@ -2341,7 +2368,7 @@ BRAILLEX Tiny:
 | Move para o primeiro objecto contido | r1+dn |
 | Move para o objecto anterior | r1+left |
 | Move para o objecto seguinte | r1+right |
-| Anuncia a formatação do texto | reportf |
+| Anuncia a formatação do caracter da célula Braille | Linha de encaminhamento superior |
 | Anuncia o título | l1+up |
 | Anuncia a barra de estado | l2+down |
 
@@ -2358,7 +2385,7 @@ BRAILLEX 2D Screen:
 | Move para o primeiro objecto contido | dn2 |
 | Move para o objecto anterior | left2 |
 | Move para o objecto seguinte | right2 |
-| Anuncia a formatação do texto | reportf |
+| Anuncia a formatação do caracter da célula Braille | Linha de encaminhamento superior |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
@@ -2369,6 +2396,8 @@ Os seguintes modelos são suportados:
 - BrailleNote MPower (Ligação por porta Sére e bluetooth)
 - BrailleNote Apex (Ligação por USB e bluetooth)
 -
+
+Para o BrailleNote Touch, veja a secção [HumanWare séries Brailliant BI/B / BrailleNote Touch HumanWareBrailliant].
 
 Se o seu dispositivo suporta mais de um tipo de ligação, ao ligar o BrailleNote ao NVDA, deve configurar o braille terminal port nas opções de braille terminal.
 Por favor, consulte os detalhes no manual do BrailleNote.
@@ -2471,15 +2500,16 @@ Por favor consulte a documentação destas linhas Braille para obter a descriç�
 | Mover a linha Braille para trás | switch1-6left, l1 |
 | Mover a linha Braille para a frente | switch1-6Right, l8 |
 | Mover para o foco actual | switch1-6Left+switch1-6Right, l1+l8 |
-| Encaminhar para a célula Braille | routing, doubleRouting|
+| Encaminhar para a célula Braille | routing |
+| Anunciar a formatação do caracter da célula Braille | Linha de encaminhamento superior |
 | Mover a linha braille para a linha anterior em revisão | joystick1Up |
 | Mover a linha braille para a linha seguinte em revisão | joystick1Down |
-| Mover a linha braille para o caractere anterior em revisão | joystick1Left |
-| Mover a linha braille para o caractere seguinte em revisão | joystick1Right |
+| Mover a linha braille para o caracter anterior em revisão | joystick1Left |
+| Mover a linha braille para o caracter seguinte em revisão | joystick1Right |
 | Mudar para o modo de revisão anterior | joystick1Left+joystick1Up |
 | Mudar para o modo de revisão seguinte | joystick1Right+joystick1Down |
-| Erase the last entered braille cell or character | backSpace |
-| Translate any braille input and press the enter key | backSpace+space |
+| Apagar a última célula Braille ou caracter introduzido | backSpace |
+| Converter a introdução Braille e pressionar a tecla enter | backSpace+space |
 | Tecla Insert | dot3+dot5+space, l7 |
 | Tecla Delete | dot3+dot6+space |
 | Tecla Home | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
