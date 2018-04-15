@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
 
 """Keyboard support"""
 
@@ -33,6 +33,7 @@ ignoreInjected=False
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
 VK_WIN = "windows"
+VK_NVDA = "NVDA"
 
 #: Keys which have been trapped by NVDA and should not be passed to the OS.
 trappedKeys=set()
@@ -73,6 +74,16 @@ def isNVDAModifierKey(vkCode,extended):
 		return True
 	else:
 		return False
+
+def getNVDAModifierKeys():
+	keys=[]
+	if config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["insert"])
+	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["numpadinsert"])
+	if config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["capslock"])
+	return keys
 
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
@@ -508,6 +519,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		@rtype: L{KeyboardInputGesture}
 		"""
 		keyNames = name.split("+")
+		# Normalize the key order by sorting them alphabetically, similar to L{inputCore.normalizeGestureIdentifier}.
+		keyNames.sort()
 		keys = []
 		for keyName in keyNames:
 			if keyName == "plus":
@@ -516,6 +529,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
 				ext = False
+			elif keyName.lower() == VK_NVDA.lower():
+				vk, ext = getNVDAModifierKeys()[0]
 			elif len(keyName) == 1:
 				ext = False
 				requiredMods, vk = winUser.VkKeyScanEx(keyName, getInputHkl())
@@ -527,15 +542,36 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					keys.append((winUser.VK_MENU, False))
 				# Not sure whether we need to support the Hankaku modifier (& 8).
 			else:
-				vk, ext = vkCodes.byName[keyName.lower()]
-				if ext is None:
-					ext = False
+				try:
+					vk, ext = vkCodes.byName[keyName.lower()]
+				except KeyError:
+					# A KeyError means that a supplied key name is unknown in the vkCodes.byName dictionary,
+					# which should in fact be treated as a ValueError in the context of this function.
+					raise ValueError("Unknown key: %r"%keyName)
+				else:
+					if ext is None:
+						ext = False
 			keys.append((vk, ext))
 
-		if not keys:
-			raise ValueError
+		assert keys
+		modifiers = set(
+			(vk, ext) for vk,ext in keys if isNVDAModifierKey(vk, ext) or vk in cls.NORMAL_MODIFIER_KEYS
+		)
+		nonModifiers = set(keys) - modifiers
 
-		return cls(keys[:-1], vk, 0, ext)
+		if len(nonModifiers)>1:
+			raise ValueError("Invalid key sequence: %r, multiple non-modifier keys are unsupported"%name)
+		elif not nonModifiers:
+			# All provided keys are modifiers.
+			# Use the last one as main key of this gesture.
+			vk, ext = keys.pop()
+			keys = set(keys)
+		else:
+			# The non-modifier should always be the main key of a gesture.
+			vk, ext = nonModifiers.pop()
+			keys = modifiers
+
+		return cls(keys, vk, 0, ext)
 
 	RE_IDENTIFIER = re.compile(r"^kb(?:\((.+?)\))?:(.*)$")
 	@classmethod
@@ -576,7 +612,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else:
 				# The main key must be last, so handle that outside the loop.
 				main = label
-		names.append(main)
+		if main is not None:
+			# If there is no main key, this gesture identifier only contains modifiers.
+			names.append(main)
 		return dispSource, "+".join(names)
 
 inputCore.registerGestureSource("kb", KeyboardInputGesture)

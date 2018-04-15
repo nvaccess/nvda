@@ -99,16 +99,16 @@ class TestDisplayTextForGestureIdentifier(unittest.TestCase):
 	def test_regex(self):
 		regex = braille.BrailleDisplayGesture.ID_PARTS_REGEX
 		self.assertEqual(
-			regex.search('br(noBraille.noModel):noKey1+noKey2').groups(),
-			('noBraille', '.noModel', 'noModel', 'noKey1+noKey2')
+			regex.match('br(noBraille.noModel):noKey1+noKey2').groups(),
+			('noBraille', 'noModel', 'noKey1+noKey2')
 		)
 		self.assertEqual(
-			regex.search('br(noBraille):noKey1+noKey2').groups(),
-			('noBraille', None, None, 'noKey1+noKey2')
+			regex.match('br(noBraille):noKey1+noKey2').groups(),
+			('noBraille', None, 'noKey1+noKey2')
 		)
 		# Also try a string which doesn't match the pattern
 		self.assertEqual(
-			regex.search('br[noBraille.noModel]:noKey1+noKey2'),
+			regex.match('br[noBraille.noModel]:noKey1+noKey2'),
 			None
 		)
 

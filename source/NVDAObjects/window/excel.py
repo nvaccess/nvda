@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import contextlib
 from comtypes import COMError
 import comtypes.automation
 import wx
@@ -588,6 +589,26 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
 
+	@contextlib.contextmanager 
+	def _disableScreenUpdatingForContext(self):
+		"""
+		A context manager that disables Excel's screen updating while it exists.
+		When an Excel spreadsheet either contains comments or dropdowns, all object model calls seem to redraw the screen. This causes extreme performance degradation.
+		Thus it is useful to disable screen updating for batches of object model calls to increase performance.
+		This context manager is also safe to be used within itself as it tracks its existance on the appModule.
+		"""
+		if getattr(self.appModule,'_inDisableExcelScreenUpdatingForContext',False):
+			yield
+			return
+		self.appModule._inDisableExcelScreenUpdatingForContext=True
+		try:
+			app=self.excelWindowObject.application
+			app.screenUpdating=False
+			yield
+			app.screenUpdating=True
+		finally:
+			self.appModule._inDisableExcelScreenUpdatingForContext=False
+
 	@staticmethod
 	def excelWindowObjectFromWindow(windowHandle):
 		try:
@@ -595,6 +616,11 @@ class ExcelBase(Window):
 		except (COMError,WindowsError):
 			return None
 		return comtypes.client.dynamic.Dispatch(pDispatch)
+
+	def event_gainFocus(self):
+		# Disable Excel's screen updating during spreadsheet focus events to speed up data collection.
+		with self._disableScreenUpdatingForContext():
+			super(ExcelBase,self).event_gainFocus()
 
 	@staticmethod
 	def getCellAddress(cell, external=False,format=xlA1):
@@ -879,27 +905,45 @@ class ExcelWorksheet(ExcelBase):
 		return states
 
 	def script_changeSelection(self,gesture):
-		oldSelection=api.getFocusObject()
-		gesture.send()
-		import eventHandler
-		import time
-		newSelection=None
-		curTime=startTime=time.time()
-		while (curTime-startTime)<=0.15:
-			if scriptHandler.isScriptWaiting():
-				# Prevent lag if keys are pressed rapidly
-				return
-			if eventHandler.isPendingEvents('gainFocus'):
-				return
-			newSelection=self._getSelection()
-			if newSelection and newSelection!=oldSelection:
-				break
-			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.015)
-			curTime=time.time()
-		if newSelection:
-			if oldSelection.parent==newSelection.parent:
+		# Detect if this script is being repeated a lot (E.g. held down)
+		repeated=scriptHandler.getLastScriptRepeatCount()>=2
+		if repeated and scriptHandler.isScriptWaiting():
+			# This script is being pressed a lot in quick succession and there are more coming.
+			# Just send the gesture and return to not cause a lag.
+			gesture.send()
+			return
+		# Disable Excel's screen updating for the duration of this script to improve performance
+		with self._disableScreenUpdatingForContext():
+			# Fetch the current Excel selection
+			oldSelection=api.getFocusObject()
+			# Pass the key press to Excel
+			gesture.send()
+			newSelection=None
+			curTime=startTime=time.time()
+			# Keep fetching the selection and sleeping until the selection changes 
+			# Provide a longer loop timeout if this script is repeated in quick succession so that Excel has time to catch up.
+			timeout=0.25 if repeated else 0.1
+			while (curTime-startTime)<=timeout:
+				if eventHandler.isPendingEvents('gainFocus'):
+					# The focus moved somewhere else -- stop this script.
+					return
+				if not repeated:
+					# Fetch the current selection
+					newSelection=self._getSelection()
+					if newSelection!=oldSelection:
+						# The selection has changed, therefore exit the loop.
+						break
+				# Selection has not yet changed,  so sleep for a bit.
+				time.sleep(0.015)
+				curTime=time.time()
+			# The selection changed or the loop timed out 
+			if not newSelection:
+				newSelection=self._getSelection()
+			if oldSelection and oldSelection.parent==newSelection.parent:
+				# The new and old selection seem to have the same parent (e.g. the same worksheet).
+				# Ensure the new selection  and old selection have the same instance of that parent so that existing caching can be made use of. 
 				newSelection.parent=oldSelection.parent
+			# Fire a focus event for the new selection
 			eventHandler.executeEvent('gainFocus',newSelection)
 	script_changeSelection.canPropagate=True
 
