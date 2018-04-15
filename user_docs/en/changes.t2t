@@ -14,6 +14,8 @@ What's New in NVDA
 - New braille translation tables: Lithuanian 8 dot, Ukrainian, Mongolian grade 2. (#7839)
 - Added a script to report formatting information for the text under a specific braille cell. (#7106)
 - When updating NVDA, it is now possible to postpone the installation of the update to a later moment of choice. (#4263) 
+- You can now toggle control, shift, alt, windows and NVDA from your braille keyboard and combine these modifiers with braille input (e.g. press control+s). (#7306) 
+ - You can assign these new modifier toggles using the commands found under Emulated system keyboard keys in the Input gestures dialog.
 
 
 == Changes ==
@@ -22,6 +24,7 @@ What's New in NVDA
 - The Lithuanian braille table has been renamed to Lithuanian 6 dot to avoid confusion with the new 8 dot table. (#7839)
 - The French (Canada) grade 1 and grade 2 tables have been removed. Instead, the French (unified) 6 dot computer braille and Grade 2 tables will be used respectively. (#7839)
 - The secondary routing buttons on Alva BC6, EuroBraille and Papenmeier braille displays now report formatting information for the text under the braille cell of that button. (#7106)
+- Contracted braille input tables will automatically fall back to uncontracted mode in non-editable cases (i.e. controls where there is no cursor or in browse mode). (#7306)
 
 
 == Bug Fixes ==
@@ -35,6 +38,7 @@ What's New in NVDA
 - Fixed malformed braille output for several braille tables, including capital signs in 8 dot contracted Danish braille. (#7526, #7693)
 - NVDA can now report more bullet types in Microsoft Word. (#6778)
 - Pressing the report formatting script no longer incorrectly moves the reviewPosition and therefore pressing it multiple times no longer gives different results. (#7869)
+- Braille input no longer allows you to use contracted braille in cases where it is not supported (i.e. whole words will no longer be sent to the system outside text content and in browse mode). (#7306)
 
 
 == Changes for developers ==
