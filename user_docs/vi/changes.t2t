@@ -1,46 +1,53 @@
-Có Gì Mới trong NVDA
+Có Gì Mới cho NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2018.1 =
-
+Một số tính năng nổi bật trong bản phát hành này là hỗ trợ sơ đồ cho Microsoft word vànd PowerPoint, hỗ trợ màn hình nổi mới là Eurobraille và bộ chuyển giao thức Optelec, hỗ trợ thêm cho màn hình nổi của Hims và Optelec, cải thiện hoạt động với Mozilla Firefox 58 và bản cao hơn, và nhiều tính năng mới khác.
 
 == Tính Năng Mới ==
-- It is now possible to interact with charts in Microsoft Word and Microsoft PowerPoint, similar to the existing support for charts in Microsoft Excel. (#7046)
- - In Microsoft Word:  When in browse mode, cursor to an embedded chart and press enter to interact with it.
- - In Microsoft PowerPoint when editing a slide: tab to a chart object, and press enter or space to interact with the chart.
- - To stop interacting with a chart, press escape.
-- New language: Kyrgyz.
+- Đã có thể tương tác với các biểu đồ trong Microsoft Word và Microsoft PowerPoint, giống như hỗ trợ hiện tại cho Microsoft Excel. (#7046)
+ - Ở chế độ duyệt trong Microsoft Word, chuyển con trỏ đến biểu đồ nhúng và nhấn enter để tương tác. 
+ - Khi sửa slide trong Microsoft PowerPoint: tab đến đối tượng biểu đồ, nhấn enter hoặc khoảng trắng để tương tác.
+ - Nhấn esc để thoát.
+- Ngôn gnu74 mới: Kyrgyz.
+- Hỗ trợ cho VitalSource Bookshelf. (#7155)
+- Hỗ trợ cho bộ chuyển giao thức Optelec, một thiết bị cho phép sử dụng Braille Voyager và Satellite bằng giao thức giao tiếp ALVA BC6. (#6731)
+- Có thể nhập liệu chữ nổi với màn hình ALVA 640 Comfort. (#7733) 
+ - Chức năng nhập chữ liệu của NVDA đã có thể sử dụng với các màn hình BC6 chạy firmware 3.0.0 và cao hơn.
+- Hỗ trợ cơ bản cho Google Sheets ở chế độ chữ nổi. (#7935)
+- Hỗ trợ màn hình nổi Eurobraille Esys, Esytime và Iris. (#7488)
 
 
-== Changes ==
-- The HIMS Braille Sense/Braille EDGE/Smart Beetle and Hims Sync Braille display drivers have been replaced by one driver. The new driver will automatically be activated for former syncBraille driver users. (#7459) 
- - Some keys , notably scroll keys, have been reassigned to follow the conventions used by Hims products. Consult the user guide for more details.
-- When typing with the on-screen keyboard via touch interaction, by default you now need to double tap each key the same way you would activate any other control. (#7309)
- - To use the existing "touch typing" mode where simply lifting your finger off the key is enough to activate it, Enable this option in the new Touch Interaction settings dialog found in the Preferences menu.
-- It is no longer necessary to explicitly tether braille to focus or review, as this will happen automatically by default. (#2385) 
- - Note that automatic tethering to review will only occur when using a review cursor or object navigation command. Scrolling will not activate this new behavior.
+== Thay Đổi ==
+- Đã thay thế các driver cho HIMS Braille Sense/Braille EDGE/Smart Beetle và Hims Sync thành một driver. Driver mới sẽ tự động kích hoạt cho người dùng driver syncBraille cũ. (#7459) 
+ - Một vài phím như phím cuộn đã được gán lại theo quy tắc của màn hình nổi Hims. Xem tài liệu hướng dẫn để biết thêm chi tiết.
+- Khi nhập liệu với bàn phím on-screen qua tương tác cảm ứng, bạn cần phải chạm đôi để kích hoạt phím như với các điều khiển. (#7309)
+ - Để sử dụng chế độ nhập liệu cảm ứng như hiện tại với một chạm, hãy bật tùy chọn này trong hộp thoại thiết lập tương tác cảm ứng trong thực đơn tùy chọn.
+- Không còn cần thiết chọn chế độ đưa con trỏ nổi theo focus hay con trỏ duyệt, vì mặc định nó sẽ tự động thay động.(#2385) 
+ - Lưu ý, tự động chuyển qua chế độ đi theo con trỏ duyệt chỉ khi con trỏ duyệt kích hoạt hoặc dùng lệnh điều hướng đối tượng được thực hiện. Khi cuộn sẽ không tự động chuyển.
 
 
-== Bug Fixes ==
-- Browseable messages such as showing current formatting when pressing NVDA+f twice quickly no longer fails when NVDA is installed on a path with non-ASCII characters. (#7474)
-- Focus is now once again restored correctly when returning to Spotify from another application. (#7689)
-- In Windows 10 Fall Creaters Update, NVDA no longer fails to update when Controlled Folder Access is enabled from Windows Defender Security Center. (#7696)
-- Detection of scroll keys on Hims Smart Beetle displays is no longer unreliable. (#6086)
-- A slight performance improvement when rendering large amounts of content in Mozilla Firefox 58 and later. (#7719)
-- In Microsoft Outlook, reading emails containing tables no longer causes errors. (#6827)
-- Braille display gestures that emulate system keyboard key modifiers can now also be combined with other emulated system keyboard keys if one or more of the involved gestures are model specific. (#7783)
-- In Mozilla Firefox, browse mode now works correctly in pop-ups created by extensions such as LastPass and bitwarden. (#7809)
-- NVDA no longer sometimes freezes on every focus change if Firefox or Chrome have stopped responding such as due to a freeze or crash. (#7818)
-- In twitter clients such as Chicken Nugget, NVDA will no longer ignore the last 20 characters of 280 character tweets when reading them. (#7828)
-- NVDA now uses the correct language when announcing symbols when text is selected. (#7687)
-- In recent versions of Office 365, it is again possible to navigate Excel charts using the arrow keys. (#7046)
--  In speech and braille output, control states will now always be reported in the same order, regardless whether they are positive or negative. Fixes #7076
-- In apps such as Windows 10 Mail, NVDA will no longer fail to announce deleted characters when pressing backspace. (#7456)
+== Sửa Lỗi ==
+- Các thông báo có thể duyệt khi nhấn NVDA+f hai lần đã không còn bị lỗi khi cài NVDA dưới đường dẫn có chứa ký tự ngoài mã ascii. (#7474)
+- Focus trở về Spotify từ ứng dụng khác. (#7689)
+- Ở Windows 10 Fall Creaters Update, NVDA hết bị lỗi cập nhật khi Controlled Folder Access được bật trong Windows Defender Security Center. (#7696)
+- Nhận dạng phím cuộn trên màn hình Hims Smart Beetle isplays đã ổn định. (#6086)
+- Cải thiện một phần nhỏ khả năng hoạt động với Firefox 58 trở lên khi tải tài liệu có nội dung lớn. (#7719)
+- Trong Microsoft Outlook, không còn gặp lỗi khi đọc email có các bảng. (#6827)
+- Các phím tắt màn hình nổi đã có thể mô phỏng với các phím bổ trợ của hệ thống. (#7783)
+- Trong n Mozilla Firefox, chế độ duyệt đã hoạt động chính xác hơn khi có cửa sổ pop-up bở các tiện ích mở rộng, ví dụ như LastPass và bitwarden. (#7809)
+- NVDA không còn treo mỗi khi thay đổi focus trong trường hợp Firefox hoặc Chrome không phản hồi/bị treo. (#7818)
+- Ở các trình twitter như Chicken Nugget, NVDA không còn bỏ qua 20 ký tự cuối trong dãy 255 ký tự. (#7828)
+- NVDA đã đọc các ký hiệu đúng với ngôn ngữ khi văn bản được chọn. (#7687)
+- Ở những phiên bản gần đây của Office 365, có thể duyệt các biểu đồ với phím mũi tên. (#7046)
+- In Ở phần xuất chữ nổi và giọng đọc, control states sẽ thông báo cùng thứ tự. (#7076)
+- Trong những ứng dụng như Windows 10 Mail, NVDA đã đọc đúng ký tự được xóa khi nhấn xóa lùi. (#7456)
+- Tất cả các phím trên màn hình the Hims Braille Sense Polaris đã hoạt động như mong muốn. (#7865)
 
 
-== Changes for developers ==
+== Thay Đổi cho Nhà Phát Triển ==
 - Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
  - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
 - A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
@@ -48,6 +55,8 @@ Có Gì Mới trong NVDA
 - Implemented a generic system in braille.BrailleDisplayDriver to deal with displays which send confirmation/acknowledgement packets. See the handyTech braille display driver as an example. (#7590, #7721)
 - A new "isAppX" variable in the config module can be used to detect if NVDA is running as a Windows Desktop Bridge Store app. (#7851)
 - For document implementations such as NVDAObjects or browseMode that have a textInfo, there is now a new documentBase.documentWithTableNavigation class that can be inherited from to gain standard table navigation scripts. Please refer to this class to see which helper methods must be provided by your implementation for table navigation to work. (#7849)
+- The scons batch file now better handles when  Python 3 is also installed, making use of the launcher to specifically launch python 2.7 32 bit. (#7541)
+- hwIo.Hid now takes an additional parameter exclusive, which defaults to True. If set to False, other applications are allowed to communicate with a device while it is connected to NVDA. (#7859)
 
 
 = 2017.4 =
@@ -79,41 +88,41 @@ Lưu ý, từ phiên bản NVDA này trở đi, sẽ không còn hỗ trợ cho 
 - NVDA đã thông báo tên các nhóm biểu mẫu khi di chuyển nhanh đến đó trong chế độ duyệt với Firefox và Chrome. (#3321)
 - Ở chế độ duyệt, phím tắt di chuyển nhanh đến đối tượng nhúng (o và shift+o) cũng sẽ bao gồm các đối tượng audio, video cũng như những thành phần là hộp thoại và ứng dụng có các vai trò aria. (#7239)
 - Đã cập nhật lên bản Espeak-ng 1.49.2, sửa một số vấn đề của bản build trước đó. (#7385, #7583)
-- On the third activation of the 'read status bar' command, its contents is copied to the clipboard. (#1785)
-- When assigning gestures to keys on a Baum display, you can limit them to the model of the braille display in use (e.g. VarioUltra or Pronto). (#7517)
-- The hotkey for the filter field in the elements list in browse mode has changed from alt+f to alt+e. (#7569)
-- An unbound command has been added for browse mode to toggle the inclusion of layout tables on the fly. You can find this command in the Browse mode category of the Input Gestures dialog. (#7634)
-- Upgraded liblouis braille translator to 3.3.0. (#7565)
-- The hotkey for the regular expression radio button in the dictionary dialog has changed from alt+r to alt+e. (#6782)
-- Voice dictionary files are now versioned and have been moved to the 'speechDicts/voiceDicts.v1' directory. (#7592)
-- Versioned files (user configuration, voice dictionaries) modifications are no longer saved when NVDA is run from the launcher. (#7688)
-- The Braillino, Bookworm and Modular (with old firmware) braille displays from Handy Tech are no longer supported out of the box. Install the Handy Tech Universal Driver and NVDA add-on to use these displays. (#7590)
+- Nếu thực hiện lệnh đọc thanh trạng thái 3 lần sẽ chép nội dung trên thanh lên bộ nhớ tạm. (#1785)
+- Khi gán cử chỉ cho màn hình Baum, bạn có thể giới hạn mô đen màn hình nổi được sử dụng, ví dụ như VarioUltra hoặc Pronto). (#7517)
+- Đã thay đổi phím tắt chuyển đến ô lọc của danh sách thành phần ở chế độ duyệt. (#7569)
+- Lệnh gỡ gán (unbound) đã được thêm cho chế độ duyệt, giúp bật tắt phần tùy chỉnh tạm thời cho bảng biểu trình bày. Có thể tìm thấy trong phân loại chế độ duyệt của cửa sổ quản lý cử chỉ. (#7634)
+- Nâng cấp trình dịch liblouis braille lêno 3.3.0. (#7565)
+- Đã đổi phím tắt cho nút radio chọn biểu thức thông thường trong hộp thoại từ điển. (#6782)
+- Tập tin từ điển giọng đọc đã được đặt phiên bản và chuyển qua thư mục 'speechDicts/voiceDicts.v1'. (#7592)
+- Khi chạy NVDA từ trình khởi động, NVDA sẽ không lưu các thay đổi của tập tin được đánh phiên bản như cấu hình người dùng và từ điển giọng đọc. (#7688)
+- Không còn hỗ trợ Braillino, Bookworm và Modular của Handy Tech dùng firmware cũ. Hãy cài driver Universial của Handy Tech và add-on của NVDA để tiếp tục sử dụng. (#7590)
 
 
-== Bug Fixes ==
-- Links are now indicated in braille in applications such as Microsoft Word. (#6780)
-- NVDA no longer becomes noticeably slower when many tabs are open in either Firefox or Chrome web browsers. (#3138)
-- Cursor routing for the MDV Lilli Braille display no longer incorrectly moves one braille cell ahead of where it should be. (#7469)
-- In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
-- Braille displays are now updated when typing Arabic characters in a left-aligned WordPad document. (#511)
-- Accessible labels for controls in Mozilla Firefox are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
-- On windows 10 Creaters Update, NVDA can again access Firefox after a restart of NVDA. (#7269)
-- When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
-- It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
-- The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
-- When using a content recognition command (e.g. NVDA+r), NVDA now reports an error message instead of nothing if the navigator object has disappeared. (#7567)
-- Backward scrolling functionality has been fixed for Freedom Scientific braille displays containing a left bumper bar. (#7713)
+== Sửa Lỗi ==
+- Đã báo chữ nổi cho liên kết trong các ứng dụng như Microsoft Word. (#6780)
+- NVDA không còn chậm khi mở nhiều tab với Firefox và Chrome. (#3138)
+- Chức năng đưa con trỏ cho màn hình nổi MDV Lilli không còn lỗi đi trước một ô so với ô cần có focus. (#7469)
+- Trong tài liệu MSHTML hoặc Internet Explorer, đã hỗ trợ thuộc tính bắt buộc (require) của HTML5 để báo trạng thái của các trường biểu mẫu.  (#7321)
+- Màn hình nổi đã cặp nhật khi gõ ký tự Arobic với Wordpad theo lề trái. (#511)
+- Những nhãn điều khiển tiếp cận trong Firefox đã đọc ở chế độ duyệt, cho dù nội dung của nó có bị ẩn đi. (#4773)
+- Trên windows 10 Creaters Update, NVDA có thể truy xuất Firefox sau khi khởi động lại NVDA. (#7269)
+- Khi khởi động lại NVDA mà Firefox đang có focus, nó vẫn sẽ nằm ở chế độ duyệt, cho dù bạn có thể phải nhấn alt+tab đi và trở lại cửa sổ Firefox. (#5758)
+- Đã có thể truy cập nội dung toán trên Google Chrome cho dù không cần cài Firefox.  (#7308)
+- Hệ điều hành hay những ứng dụng khác chạy ổn định hơn ngay sau khi cài đặt NVDA nhưng trước lúc khởi động lại. Điều này được so với những bản cài trước đây. (#7563)
+- Khi sử dụng chức năng nhận dạng nội dung, NVDA sẽ thông báo lỗi nếu đối tượng điều hướng bị mất. (#7567)
+- Chức năng cuộn trở lại của màn hình nổi Freedom Scientific đã hoạt động. (#7713)
 
 
-== Changes for Developers ==
-- "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
-- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
-- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
-- Braille display gestures that emulate system keyboard key modifiers (such as control and alt) can now be combined with other emulated system keyboard keys without explicit definition. (#6213) 
- - For example, if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
-- The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
- - See the baum driver as an example for this new functionality.
-- NVDA is now compiled with Visual Studio 2017 and the Windows 10 SDK. (#7568)
+== Thay Đổi cho Nhà Phát Triển ==
+- "scons tests" sẽ kiểm tra những chuỗi dịch có chú thích của người dịch không. Bạn có thể chạy độc lập với "scons checkPot". (#7492)
+- Có mô đun extensionPoints mới cung cấp framework để bật khả năng mở rộng mã tại điểm cụ thể của mã. Điều này giúp các chương trình khác muốn đăng ký để được thông báo khi có action xuất hiện (extensionPoints.Action), để chỉnh sửa các loại dữ liệu (extensionPoints.Filter) hoặc tham gia quá trình quyết định một việc sẽ được hoàn tất (extensionPoints.Decider). (#3393)
+- Đã có thể đăng ký thông báo khi thay đổi hồ sơ cấu hình với config.configProfileSwitched Action. (#3393)
+- Các cư chỉ/phím tắt của màn hình nổi đã có thể mô phỏng các phím bổ trợ của hệ thống (như control và alt) mà không cần phải định nghĩa riêng. (#6213) 
+ - Ví dụ: nếu trên màn hình nổi bạn có gán một phím với alt và một phím với mũi tên xuống, thì có thể nhấn alt+mũi tên xuống.
+- Lớp braille.BrailleDisplayGesture đã có thêm thuộc tính model. Nếu khai báo, khi nhấn sẽ tạo ra thêm phím. Điều này giúp người dùng gán phím tắt cho cụ thể dòng màn hình nổi nào đó. 
+ - Xem thêm driver baum để biết thêm tính năng này.
+- NVDA hiện nay được biên dịch với Visual Studio 2017 và Windows 10 SDK. (#7568)
 
 
 = 2017.3 =

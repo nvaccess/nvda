@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-09 14:17+1000\n"
-"PO-Revision-Date: 2018-02-09 09:05+0100\n"
+"POT-Creation-Date: 2018-04-06 00:10+1000\n"
+"PO-Revision-Date: 2018-04-06 18:18+0100\n"
 "Last-Translator: zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -532,17 +532,29 @@ msgstr "{number} od {total}"
 msgid "lv %s"
 msgstr "lv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "r{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "r{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -638,22 +650,22 @@ msgstr "Danska osmotočkasta kompjutorska brajica"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 1"
-msgstr "danski šestotočkasti puno pismo"
+msgstr "Danski šestotočkasti puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 1"
-msgstr "danski osmotočkasti puno pismo"
+msgstr "Danski osmotočkasti puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 2"
-msgstr "danski šestotočkasti kratkopis"
+msgstr "Danski šestotočkasti kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
-msgstr "danski osmotočkasti kratkopis"
+msgstr "Danski osmotočkasti kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -683,7 +695,7 @@ msgstr "Grčki (Grčka)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "Britanski engleski 8 točkasta kompjutorska brajica"
+msgstr "Engleski (velika britanija) osmotočkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -743,12 +755,12 @@ msgstr "Estonski osnovno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
-msgstr "Etiopski puno pismo"
+msgstr "Amharski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Persian 8 dot computer braille"
-msgstr "Farsi osmotočkasta kompjutorska brajica"
+msgstr "Perzijska osmotočkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -768,27 +780,17 @@ msgstr "Finski 8-točkasta kompjutorska brajica"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
-msgstr "Francuski (jedinstveni) 6-točkasta kompjutorska brajica"
+msgstr "Francusko jedinstveno puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 8 dot computer braille"
-msgstr "Francuski (jedinstveni) 8-točkasta kompjutorska brajica"
+msgstr "Unificirana francuska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
-msgstr "Francuski (jedinstven) kratkopis"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "Francuski (Kanada) puno pismo"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "Francuski (Kanada) kratkopis"
+msgid "French (unified) grade 2"
+msgstr "Unificirani francuski kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -803,7 +805,7 @@ msgstr "Irski kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Gujarati grade 1"
-msgstr "gudžaratski puno pismo"
+msgstr "Gudžaratski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -858,12 +860,12 @@ msgstr "Talijanski 8 točkasta kompjutorska brajica"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kannada grade 1"
-msgstr "Kanadapki jezik puno pismo"
+msgstr "Kanadaški jezik puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 1 (2006)"
-msgstr "korejsko puno pismo (2006)"
+msgstr "Korejsko puno pismo (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -887,8 +889,13 @@ msgstr "Kašmirski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "Litavski"
+msgid "Lithuanian 8 dot"
+msgstr "Litavska kompjuterska brajica"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "Litavsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -907,8 +914,13 @@ msgstr "Manipuri Puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "Mongolski"
+msgid "Mongolian grade 1"
+msgstr "Mongolski puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "Mongolski kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -948,7 +960,7 @@ msgstr "Norveški kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian grade 3"
-msgstr "Norveški napredni kratkopis"
+msgstr "Norveški reformirani kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -963,7 +975,7 @@ msgstr "Oriya puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Polish 8 dot computer braille"
-msgstr "poljska kompjutorska brajica"
+msgstr "Poljska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -989,6 +1001,11 @@ msgstr "Portugalski kratkopis"
 #. braille settings dialog.
 msgid "Punjabi grade 1"
 msgstr "Pendžapski puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Romanian"
+msgstr "Rumunjski"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1044,6 +1061,11 @@ msgstr "Telugu puno pismo"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "Turski 8 točkasta brajica"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "Ukrajinski"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4173,6 +4195,10 @@ msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
 "Usmjerava kursor prema ovoj brajičnoj ćeliji ili aktivira objekt ispod nje"
 
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "Izvještava o oblikovanju teksta ispod ove brajične ćelije"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "Premiješta brajični prikaz na prethodni redak"
@@ -4394,7 +4420,7 @@ msgstr "backspace"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "caps lock"
+msgstr "Velika slova"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
@@ -5824,10 +5850,22 @@ msgstr "odabir uklonjen"
 msgid "row %s"
 msgstr "red %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "do %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "stupac %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "do retka {row} stupca {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6334,14 +6372,22 @@ msgid "Error checking for update."
 msgstr "Greška prilikom provjere ažuriranja."
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Greška"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "NVDA ažuriranje"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr "NVDA inačica {version} je preuzeta, te očekuje na instalaciju."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6353,9 +6399,15 @@ msgstr "Dostupna je NVDA inačica {version}."
 msgid "No update available."
 msgstr "Nema dostupnog ažuriranja."
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "Preuzmi i &instaliraj ažuriranje"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "&instaliraj NVDA {version}"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "Ponovno &preuzmi ažuriranje"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6370,6 +6422,23 @@ msgstr "Podsjeti me &kasnije"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Zatvori"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "NVDA inačica {version} spremna je za instalaciju.\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "&Instaliraj ažuriranje"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "&Odgodi ažuriranje"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "Nemoguće je odgoditi ažuriranje."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6386,15 +6455,6 @@ msgstr "Preuzimanje"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "Greška prilikom preuzimanja ažuriranja."
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "Ažuriranje je preuzeto. Isto će sada biti instalirano."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "Instaliraj ažuriranje"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7136,8 +7196,8 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B series"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "HumanWare Brailliant BI/B serije / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7198,10 +7258,6 @@ msgstr "Bez brajice"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX noviji modeli"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "Usmjeri na i izvijesti o oblikovanju"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7533,6 +7589,14 @@ msgstr "Upišite trenutnu konfiguraciju u datoteku nvda.ini"
 msgid "Donate"
 msgstr "Donirajte"
 
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "Instaliraj &ažuriranje na čekanju"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Izvršava instalaciju prethodno preuzetog ažuriranja NVDA."
+
 msgid "E&xit"
 msgstr "I&zlaz"
 
@@ -7640,6 +7704,10 @@ msgstr "Ponovno pokreni sa isključenim dodacima"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "Ponovno pokreni sa načinom zapisa debug"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Instaliraj ažuriranje na čekanju"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7786,21 +7854,21 @@ msgstr "instaliraj"
 msgid "remove"
 msgstr "ukloni"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "onemogući"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "onemogućeno poslije ponovnog pokretanja"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "omogući"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Omogućeno poslije ponovnog pokretanja"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "suspendiran"
+msgid "disabled"
+msgstr "Onemogućeno"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "izvršava se"
+msgid "enabled"
+msgstr "Omogućeno"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8299,6 +8367,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "Automatski provjeri dostupnost &ažuriranja za NVDA"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "prilikom pokretanja, Obavijesti o ažuriranjima na &čekanju"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -10678,6 +10751,36 @@ msgstr "Dvostruki prored"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 prored"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "Francuski (Kanada) puno pismo"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "Francuski (Kanada) kratkopis"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongolski"
+
+#~ msgid "Download and &install update"
+#~ msgstr "Preuzmi i &instaliraj ažuriranje"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "Ažuriranje je preuzeto. Isto će sada biti instalirano."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "Usmjeri na i izvijesti o oblikovanju"
+
+#~ msgid "r%s"
+#~ msgstr "r%s"
+
+#~ msgid "c%s"
+#~ msgstr "c%s"
+
+#~ msgid "suspended"
+#~ msgstr "suspendiran"
+
+#~ msgid "running"
+#~ msgstr "izvršava se"
 
 #~ msgid "ALVA BC640/680 series"
 #~ msgstr "ALVA BC640/680 series"

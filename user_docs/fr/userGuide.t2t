@@ -1734,7 +1734,7 @@ Ces paquets sont fournis par la communauté et contiennent du code qui peut ajou
 
 Le gestionnaire de modules complémentaires contient une liste affichant tous les modules complémentaires actuellement installés dans votre configuration utilisateur de NVDA.
 Un nom de paquet, la version et l'auteur sont affichés pour chaque module complémentaire, et des informations supplémentaires telles qu'une description et une URL peuvent être affichées en sélectionnant le module complémentaire et en activant le bouton "À propos" du module complémentaire...
-Si une aide est disponible pour le module sélectionné, vous pouvez y accéder en pressant le bouton "Aide du module complémentaire".
+Si une aide est disponible pour le module sélectionné, vous pouvez y accéder en appuyant sur le bouton "Aide du module complémentaire".
 
 Pour télécharger des modules complémentaires mis à disposition par la communauté, cliquez sur le bouton "Obtenir des modules complémentaires".
 Ce bouton ouvre la [page des modules complémentaires NVDA https://addons.nvda-project.org/].
@@ -1757,8 +1757,9 @@ Jusqu'au redémarrage, ce module aura le statut Supprimé dans la liste.
 
 Pour désactiver un module, pressez le bouton désactiver.
 Pour activer un module précédemment désactivé, pressez le bouton activer.
-Vous pouvez désactiver un module si le statut du module indique qu'il est en cours d'exécution ou activé, ou l'activer si le module est suspendu ou désactivé.
-Pour chaque appui sur le bouton Activer/Désactiver, le statut du module change pour indiquer ce qui arrivera au redémarrage de NVDA.
+Vous pouvez désactiver un module si le statut du module indique qu'il est en cours d'exécution ou activé, ou l'activer si le module est désactivé.
+Pour chaque appui sur le bouton Activer/Désactiver, le statut du module change pour indiquer ce qui arrivera quand NVDA redémarrera.
+Si le module a été précédemment désactivé, son statut affichera "activé après redémarrage". Si le module a été précédemment "Activé", son statut affichera "désactivé après redémarrage"
 Comme lorsque vous installez ou supprimez un module, vous devez redémarrer NVDA pour que les changements prennent effet.
 
 Le gestionnaire a également un bouton "Fermer" pour fermer le dialogue.
@@ -2072,13 +2073,16 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Dire tout | B6 |
 %kc:endInclude
 
-++ HumanWare Séries Brailliant BI/B ++[HumanWareBrailliant]
-Les terminaux des séries Brailliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 32, BI40 et B 80 sont supportés quand ils sont connectés via USB ou Bluetooth.
+++ HumanWare Séries Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
+Les terminaux des séries Brailliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 14, BI 32, BI 40 et B 80 sont supportés quand ils sont connectés via USB ou Bluetooth.
 S'ils sont connectés en USB avec le protocole réglé sur HumanWare, vous devez d'abord installer le pilote USB fourni par le constructeur.
 Les pilotes USB ne sont pas nécessaires si le protocole est réglé sur OpenBraille.
+Le BrailleNote Touch est également prise en charge et ne nécessite pas de pilotes à installer.
 
-Voici les assignations de touches pour ce terminal sous NVDA.
+Voici les assignations de touches pour Brailliant BI/B et BrailleNote touch sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
++++ Assignations des touches pour tous les modèles +++
+
 %kc:beginInclude
 || Nom | Touche |
 | Défilement arrière de l'affichage | gauche |

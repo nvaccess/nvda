@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -152,6 +152,7 @@ class MainFrame(wx.Frame):
 		x = width / 2
 		y = height / 2
 		winUser.setCursorPos(x, y)
+		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
@@ -199,6 +200,19 @@ class MainFrame(wx.Frame):
 	def onTemporaryDictionaryCommand(self,evt):
 		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
+
+	def onExecuteUpdateCommand(self, evt):
+		if updateCheck and updateCheck.isPendingUpdate():
+			updateCheck.executeUpdate()
+
+	def evaluateUpdatePendingUpdateMenuItemCommand(self):
+		try:
+			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.installPendingUpdateMenuItem)
+		except:
+			log.debug("Error while removing  pending update menu item", exc_info=True)
+			pass
+		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
+			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
 
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
@@ -261,7 +275,7 @@ class MainFrame(wx.Frame):
 
 	def onCheckForUpdateCommand(self, evt):
 		updateCheck.UpdateChecker().check()
-		
+
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
@@ -474,11 +488,17 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label for the menu item to save current settings.
 			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
-		if not globalVars.appArgs.secure:
 			self.menu.AppendSeparator()
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
+			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
+			item = self.installPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
+				# Translators: The label for the menu item to run a pending update.
+				_("Install pending &update"),
+				# Translators: The description for the menu item to run a pending update.
+				_("Execute a previously downloaded NVDA update"))
+			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
@@ -773,14 +793,18 @@ class ExitDialog(wx.Dialog):
 		# Translators: The label for actions list in the Exit dialog.
 		labelText=_("What would you like to &do?")
 		self.actions = [
-		# Translators: An option in the combo box to choose exit action.
-		_("Exit"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart with add-ons disabled"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart with debug logging enabled")]
+			# Translators: An option in the combo box to choose exit action.
+			_("Exit"),
+			# Translators: An option in the combo box to choose exit action.
+			_("Restart"),
+			# Translators: An option in the combo box to choose exit action.
+			_("Restart with add-ons disabled"),
+			# Translators: An option in the combo box to choose exit action.
+			_("Restart with debug logging enabled")
+		]
+		if updateCheck and updateCheck.isPendingUpdate():
+			# Translators: An option in the combo box to choose exit action.
+			self.actions.append(_("Install pending update"))
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
@@ -805,6 +829,9 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,disableAddons=True)
 		elif action == 3:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
+		elif action == 4:
+			if updateCheck:
+				updateCheck.executeUpdate()
 		self.Destroy()
 
 	def onCancel(self, evt):

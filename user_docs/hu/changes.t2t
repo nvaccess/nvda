@@ -3,6 +3,50 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+Ebben a kiadásban: Diagramok támogatása a Microsoft wordben és a PowerPointban, új támogatott braille kijelzők, többek közt Eurobraille és az Optelec protocol converter, fejlesztett támogatás a Hims és Optelec braille kijelzőkhöz, fejlesztések a Mozilla Firefox 58 és újabb verzióinak használatához, és még sok más.
+
+== Újdonságok ==
+- A Microsoft Excel után most már a Wordben és a PowerPointban is kezelhetők a diagramok. (#7046)
+ - Microsoft Word:  böngészőmódban navigáljon egy beágyazott diagramra, az Enter bbillentyűvel aktiválhatja, azután kezelheti.
+ - Microsoft PowerPoint: Diaszerkesztés közben navigáljon egy diagramobjektumra, az Enter vagy a szóköz billentyűvel aktiválhatja.
+ - A diagramról kilépni az Esc gomb lenyomásával lehet.
+- Új nyelv: Kirgiz.
+- VitalSource Bookshelf támogatása. (#7155)
+- Támogatás az Optelec protocol converterhez, ami lehetővé teszi a Braille Voyager és Satellite kijelzők használatát az ALVA BC6 kommunikációs protokol segítségével. (#6731)
+- Már az ALVA 640 Comfort braille kijelzővel is támogatott a braille-bevitel. (#7733) 
+ - A többi BC6 kijelzővel is elérhetők az NVDA braille-beviteli szolgáltatásai. Ehhez firmware 3.0.0 vagy újabb verzió szükséges.
+- Kezdeti támogatás a Google Táblázatokhoz, ahol a Braille mód engedélyezett. (#7935)
+- Új támogatott braille kijelzők: Eurobraille Esys, Esytime és Iris. (#7488)
+
+
+== Változások ==
+- A HIMS Braille Sense/Braille EDGE/Smart Beetle és Hims Sync Braille kijelzők drivereit lecserélték egy új közös driverre. Az új driver automatikusan aktiválódik a korábbi syncBraille driver felhasználók számára. (#7459) 
+ - Néhány gomb hozzárendelését, főként a görgető gombokat, a Hims termékekben megszokottakhoz alakították. Részletekért keresse fel a felhasználói útmutató megfelelő szakaszát.
+- Érintőmódban a képernyő-billentyűzettel történő bevitelhez alapértelmezés szerint duplakoppintásra van szükség, pontosan úgy, ahogy más vezérlőelemek aktiválásához. Pl. az a-betű beviteléhez duplán kell koppintani a képernyő-billentyűzet a-gombján. (#7309)
+ - Egy másik beviteli mód is rendelkezésre áll, az úgynevezett Érintéses bevitel. Ezesetben nem kell duplán koppintani a képernyő-billentyűzet gombjain a bevitelhez, a megfelelő gomb aktiválásához elég felemelni róla az ujját. Ez az opció az érintőmód menüpontban az Érintéses bevitel jelölőnégyzet bejelölésével aktiválható az NVDA Beállítások menüjéből.
+- Braille kijelzők: Már nem szükséges megszabni, hogy a braille az aktív elemet, vagy az áttekintő kurzort kövesse, alapértelmezés szerint a program automatikusan határozza meg, hogy épp melyiket követi. Ezzel együtt a korábbi beállítás is alkalmazható. (#2385) 
+ - Az áttekintő kurzor automatikus követése csak valamelyik áttekintő parancs használatakor történhet, a görgetés nem aktiválja ezt az új viselkedést.
+
+
+== Hibajavítások ==
+- A böngészőmódú üzenetek, mint a formátuminformációk (NVDA+f kétszeri lenyomás) már nem működnek hibásan, ha az NVDA-t nem ASCII karaktereket tartalmazó elérési úttal telepíti. (#7474)
+- Spotify: A program ismét megjegyzi a rendszerkurzor helyét, így ugyanoda térhetünk vissza más alkalmazásokból. (#7689)
+- Windows 10 Fall Creaters Update: Az NVDA már gond nélkül frissül, abban az esetben is, amikor a Windows Defender biztonsági központban a Mappákhoz való hozzáférés szabályozása opció engedélyezve van. (#7696)
+- Hims Smart Beetle kijelzők: A görgetőgombok észlelése már az elvártak szerint működik. (#6086)
+- Mozilla Firefox 58 és újabb verziói: Kicsit javult a nagyméretű tartalmak kezelése. (#7719)
+- Microsoft Outlook: A táblázatokat tartalmazó üzenetek olvasása már nem okoz hibát. (#6827)
+- Braille kijelzők: a rendszerbillentyűzet módosítóbillentyűit emuláló beviteli parancsok már kombinálhatók más emulált billentyűkkel, akkor is ha az érintett beviteli parancsok közül egy vagy több modellspecifikus. (#7783)
+- Mozilla Firefox: a böngészőmód már helyesen működik bizonyos bővítményekhez kapcsolódó felugró ablakokon. Ilyenek a LastPass és a bitwarden. (#7809)
+- Firefox és Chrome: A fókusz váltása közben az NVDA már nem fagy le olyan esetekben,amikor a böngésző valamilyen okból nem válaszol. (#7818)
+- Twitter kliensek, mint pl. a Chicken Nugget: az NVDA már nem hagyja figyelmen kívül a 280 karakteres tweetek utolsó 20 karakterét olvasás közben. (#7828)
+- Szöveg kijelölésekor az NVDA már a megfelelő nyelvet használja a szimbólumok bejelentésére. (#7687)
+- Office 365 legfrissebb verziói: az Exceles diagramokon ismét navigálhatunk a nyílbillentyűkkel. (#7046)
+- Beszéd és braille visszajelzés esetén egyaránt azonos sorrendben jelenti be a program a vezérlők állapotinformációit függetlenül attól, hogy azok bejelöltek vagy sem. (#7076)
+- Windows 10 alkalmazásokban, mint pl a Posta, az NVDA az elvártaknak megfelelően jelenti be a törölt karaktereket backspace használatakor. (#7456)
+- Hims Braille Sense Polaris kijelzők: már minden gomb az elvártak szerint működik. (#7865)
+
+
 = 2017.4 =
 
 Ennek a kiadásnak a főbb újdonságai: sok hibajavítás és bővítés a webes technológiák támogatásában, beleértve a webes párbeszédpanelek böngésző módú használatát alapértelmezett beállításként, a mezők címkézésének megbízhatóbb bejelentését, új windows 10-es technológiák támogatását, mint a Windows Defender Application Guard, valamint az ARM-64-en futó windows 10 támogatását, ideértve a képernyő tájolásának automatikus meghatározását és az akkumulátor állapotának bejelentését. Vegyük figyelembe, hogy az NVDA jelen verziójától kezdve nem támogatja a Windows Xp-t vagy a Windows Vistát. Az NVDA használatához minimum Windows 7 service pack 1 szükséges.

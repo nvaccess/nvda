@@ -533,7 +533,10 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).treeInterceptorClass
 
 	def _get_isCurrent(self):
-		return self.HTMLAttributes["aria-current"]
+		isCurrent = self.HTMLAttributes["aria-current"]
+		if isCurrent == "false":
+			isCurrent = None
+		return isCurrent
 
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
