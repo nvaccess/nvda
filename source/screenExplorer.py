@@ -1,6 +1,6 @@
 #screenExplorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2012-2018 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -57,7 +57,7 @@ def playObjectCoordinates(obj):
 	y = t+(h/2)
 	screenWidth, screenHeight = api.getDesktopObject().location[-2:]
 	try:
-		playLocationCoordinates(x, y, screenWidth, screenHeight)
+		playLocationCoordinates(x, y, screenWidth, screenHeight, detectBrightness=False)
 	except AttributeError:
 		pass
 
