@@ -78,6 +78,7 @@ class JAB_OOTableCell(JAB):
 			return 0
 
 class SymphonyTextInfo(IA2TextTextInfo):
+	useUniscribe=False
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		obj = self.obj
@@ -183,7 +184,8 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 	def _getWordOffsets(self, offset):
 		# #8065: At least in LibreOffice, the word offsets returned by IA2TextTextInfo do not match reality.
-		# The LibreOffice implementation much more closely matches the OffsetsTextInfo implementation to fetch word offsets.
+		# As long as uniscribe is disabled, The LibreOffice implementation much more closely matches
+		# the OffsetsTextInfo implementation to fetch word offsets
 		return super(IA2TextTextInfo, self)._getWordOffsets(offset)
 
 	def _getLineOffsets(self, offset):
