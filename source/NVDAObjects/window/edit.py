@@ -193,7 +193,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 		else:
 			p=(x-left)+((y-top)<<16)
-			offset=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
+			offset=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)&0xffff
 		return offset
 
 	def _getCharFormat(self,offset):
