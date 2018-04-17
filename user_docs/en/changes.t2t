@@ -8,12 +8,12 @@ What's New in NVDA
 == New Features ==
 - row and column span for table cells is now reported in speech and braille. (#2642)
 - NVDA table navigation commands are now supported in Google Docs (with Braille mode enabled). (#7946)
-- The ability to read and navigate tables in Kindle for PC. (#7977)
-- Support for the BrailleNote touch and Brailliant BI 14 braille displays via both USB and bluetooth. (#6524)
-- In Windows 10 Fall Creators Update and later, NVDA can announce notifications from apps such as Calculator and Windows Store. (#8045)
+- Added ability to read and navigate tables in Kindle for PC. (#7977)
+- Support for HumanWare BrailleNote touch and Brailliant BI 14 braille displays via both USB and bluetooth. (#6524)
+- In Windows 10 Fall Creators Update and later, NVDA can announce notifications from apps such as Calculator and Windows Store. (#7984)
 - New braille translation tables: Lithuanian 8 dot, Ukrainian, Mongolian grade 2. (#7839)
 - Added a script to report formatting information for the text under a specific braille cell. (#7106)
-- When updating NVDA, it is now possible to postpone the installation of the update to a later moment of choice. (#4263) 
+- When updating NVDA, it is now possible to postpone the installation of the update to a later moment. (#4263) 
 - New languages: Mongolian, Swiss German.
 - You can now toggle control, shift, alt, windows and NVDA from your braille keyboard and combine these modifiers with braille input (e.g. press control+s). (#7306) 
  - You can assign these new modifier toggles using the commands found under Emulated system keyboard keys in the Input gestures dialog.
@@ -33,9 +33,9 @@ What's New in NVDA
 - NVDA no longer fails to read the page when going back to a previous page in Microsoft Edge. (#7997)
 - NVDA will no longer incorrectly announce the final character of a windows 10 sign-in PIN as the machine unlocks. (#7908)
 - Labels of checkboxes and radio buttons in Chrome and Firefox are no longer reported twice when tabbing or using quick navigation in Browse mode. (#7960)
-- Handle aria-current with a value of false as false instead of true (#7892).
-- The Windows Onecore Voices synth driver no longer fails to load if the configured voice has been uninstalled. (#7999)
-- Changing voices in the Windows Onecore Voices synth driver is now a lot faster. (#7999)
+- aria-current with a value of false will be announced as "false" instead of "true". (#7892).
+- Windows OneCore Voices no longer fails to load if the configured voice has been uninstalled. (#7553)
+- Changing voices in the Windows OneCore Voices is now a lot faster. (#7999)
 - Fixed malformed braille output for several braille tables, including capital signs in 8 dot contracted Danish braille. (#7526, #7693)
 - NVDA can now report more bullet types in Microsoft Word. (#6778)
 - Pressing the report formatting script no longer incorrectly moves the reviewPosition and therefore pressing it multiple times no longer gives different results. (#7869)
