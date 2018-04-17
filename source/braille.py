@@ -2210,43 +2210,58 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	def _get_script(self):
 		# Overrides L{inputCore.InputGesture._get_script} to support modifier keys.
+		# Also processes modifiers held by braille input.
+		# Import late to avoid circular import.
+		import brailleInput
+		gestureKeys = set(self.keyNames)
+		gestureModifiers = brailleInput.handler.currentModifiers.copy()
 		script=scriptHandler.findScript(self)
 		if script:
-			self.script = script
-			return self.script
-		# No script for this gesture has been found, so process this gesture for possible modifiers. 
+			scriptName = script.__name__
+			if not (gestureModifiers and scriptName.startswith("script_kb:")):
+				self.script = script
+				return self.script
+		# Either no script for this gesture has been found, or braille input is holding modifiers.
+		# Process this gesture for possible modifiers if it consists of more than one key.
 		# For example, if L{self.id} is 'key1+key2',
 		# key1 is bound to 'kb:control' and key2 to 'kb:tab',
 		# this gesture should execute 'kb:control+tab'.
-		# Combining modifiers with braille input (#7306) is not yet supported.
-		gestureKeys = set(self.keyNames)
-		gestureModifiers = set()
-		for keys, modifiers in handler.display._getModifierGestures(self.model):
-			if keys<gestureKeys:
-				gestureModifiers |= modifiers
-				gestureKeys -= keys
+		# Combining emulated modifiers with braille input (#7306) is not yet supported.
+		if len(gestureKeys)>1:
+			for keys, modifiers in handler.display._getModifierGestures(self.model):
+				if keys<gestureKeys:
+					gestureModifiers |= modifiers
+					gestureKeys -= keys
 		if not gestureModifiers:
-			# No modifier assignments found in this gesture.
 			return None
-		# Find a script for L{gestureKeys}.
-		id = "+".join(gestureKeys)
-		fakeGestureIds = [u"br({source}):{id}".format(source=self.source, id=id),]
-		if self.model:
-			fakeGestureIds.insert(0,u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
-		scriptNames = []
-		globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
-		for globalMap in globalMaps:
-			for fakeGestureId in fakeGestureIds:
-				scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId.lower()) if scriptName.startswith("kb"))
-		if not scriptNames:
-			# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
+		if gestureKeys != set(self.keyNames):
+			# Find a script for L{gestureKeys}.
+			id = "+".join(gestureKeys)
+			fakeGestureIds = [u"br({source}):{id}".format(source=self.source, id=id),]
+			if self.model:
+				fakeGestureIds.insert(0,u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
+			scriptNames = []
+			globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
+			for globalMap in globalMaps:
+				for fakeGestureId in fakeGestureIds:
+					scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId.lower()) if scriptName.startswith("kb"))
+			if not scriptNames:
+				# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
+				return None
+			# We can't bother about multiple scripts for a gesture, we will just use the first one
+			combinedScriptName = "kb:{modifiers}+{keys}".format(
+				modifiers="+".join(gestureModifiers),
+				keys=scriptNames[0].split(":")[1]
+			)
+		elif script and scriptName:
+			combinedScriptName = "kb:{modifiers}+{keys}".format(
+				modifiers="+".join(gestureModifiers),
+				keys=scriptName.split(":")[1]
+			)
+		else:
 			return None
-		# We can't bother about multiple scripts for a gesture, we will just use the first one
-		scriptName = "kb:{modifiers}+{keys}".format(
-			modifiers="+".join(gestureModifiers),
-			keys=scriptNames[0].split(":")[1]
-		)
-		self.script = scriptHandler._makeKbEmulateScript(scriptName)
+		self.script = scriptHandler._makeKbEmulateScript(combinedScriptName)
+		brailleInput.handler.currentModifiers.clear()
 		return self.script
 
 	def _get_keyNames(self):
