@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Ethan Holliger
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
 
 import time
 import itertools
@@ -1279,7 +1279,7 @@ class GlobalCommands(ScriptableObject):
 	script_sayAll.__doc__ = _("Reads from the system caret up to the end of the text, moving the caret as it goes")
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
-	def script_reportFormatting(self,gesture):
+	def _reportFormattingHelper(self, info, browseable=False):
 		formatConfig={
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
@@ -1290,7 +1290,6 @@ class GlobalCommands(ScriptableObject):
 			"reportBorderStyle":True,"reportBorderColor":True,
 		}
 		textList=[]
-		info=api.getReviewPosition()
 
 		# First, fetch indentation.
 		line=info.copy()
@@ -1299,14 +1298,14 @@ class GlobalCommands(ScriptableObject):
 		if indentation:
 			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
 		
+		info=info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
 		for field in info.getTextWithFields(formatConfig):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 
-		repeats=scriptHandler.getLastScriptRepeatCount()
-		if repeats==0:
+		if not browseable:
 			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
 			if text:
 				textList.append(text)
@@ -1317,7 +1316,7 @@ class GlobalCommands(ScriptableObject):
 				return
 				
 			ui.message(" ".join(textList))
-		elif repeats==1:
+		else:
 			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
 			if text:
 				textList.append(text)
@@ -1328,7 +1327,15 @@ class GlobalCommands(ScriptableObject):
 				return
 
 			# Translators: title for formatting information dialog.
-			ui.browseableMessage(("\n".join(textList) ) , _("Formatting"))
+			ui.browseableMessage("\n".join(textList), _("Formatting"))
+
+	def script_reportFormatting(self,gesture):
+		info=api.getReviewPosition()
+		repeats=scriptHandler.getLastScriptRepeatCount()
+		if repeats==0:
+			self._reportFormattingHelper(info,False)
+		elif repeats==1:
+			self._reportFormattingHelper(info,True)
 	# Translators: Input help mode message for report formatting command.
 	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document. If pressed twice, presents the information in browse mode")
 	script_reportFormatting.category=SCRCAT_TEXTREVIEW
@@ -1907,6 +1914,17 @@ class GlobalCommands(ScriptableObject):
 	script_braille_routeTo.__doc__ = _("Routes the cursor to or activates the object under this braille cell")
 	script_braille_routeTo.category=SCRCAT_BRAILLE
 
+	def script_braille_reportFormatting(self, gesture):
+		info = braille.handler.getTextInfoForWindowPos(gesture.routingIndex)
+		if info is None:
+			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
+			ui.message(_("No formatting information"))
+			return
+		self._reportFormattingHelper(info, False)
+	# Translators: Input help mode message for Braille report formatting command.
+	script_braille_reportFormatting.__doc__ = _("Reports formatting info for the text under this braille cell")
+	script_braille_reportFormatting.category=SCRCAT_BRAILLE
+
 	def script_braille_previousLine(self, gesture):
 		if braille.handler.buffer.regions: 
 			braille.handler.buffer.regions[-1].previousLine(start=True)
@@ -1969,6 +1987,41 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for a braille command.
 	script_braille_translate.__doc__= _("Translates any braille input")
 	script_braille_translate.category=SCRCAT_BRAILLE
+
+	def script_braille_toggleShift(self, gesture):
+		brailleInput.handler.toggleModifier("shift")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleShift.__doc__= _("Virtually toggles the shift key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleShift.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleShift.bypassInputHelp = True
+
+	def script_braille_toggleControl(self, gesture):
+		brailleInput.handler.toggleModifier("control")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleControl.__doc__= _("Virtually toggles the control key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleControl.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleControl.bypassInputHelp = True
+
+	def script_braille_toggleAlt(self, gesture):
+		brailleInput.handler.toggleModifier("alt")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleAlt.__doc__= _("Virtually toggles the alt key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleAlt.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleAlt.bypassInputHelp = True
+
+	def script_braille_toggleWindows(self, gesture):
+		brailleInput.handler.toggleModifier("leftWindows")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleAlt.__doc__= _("Virtually toggles the left windows key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleAlt.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleAlt.bypassInputHelp = True
+
+	def script_braille_toggleNVDAKey(self, gesture):
+		brailleInput.handler.toggleModifier("NVDA")
+	# Translators: Input help mode message for a braille command.
+	script_braille_toggleNVDAKey.__doc__= _("Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input")
+	script_braille_toggleNVDAKey.category=inputCore.SCRCAT_KBEMU
+	script_braille_toggleNVDAKey.bypassInputHelp = True
 
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler

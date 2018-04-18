@@ -933,7 +933,7 @@ Esta opción é unha caixa de verificación que, cando se marca, di ao NVDA que 
 
 ==== Amosar opcións de saída ao saír do NVDA ====[GeneralSettingsShowExitOptions]
 Esta opción é unha caixa de verificación que che permite escoller se aparece ou non un diálogo ao saír do NVDA que che pregunta sobre que acción queres lebar a cabo.
-Cando se marque, aparecerá un diálogo ao intentar saír do NVDA preguntándoche se queres saír, reiniciar ou reiniciar cos complementos deshabilitados.
+Cando se marque, aparecerá un diálogo ao intentar saír do NVDA preguntándoche se queres saír, reiniciar, reiniciar cos complementos deshabilitados ou instalar actualizacións pendentes se as hai.
 Cando se desmarque, o NVDA sairá inmediatamente.
 
 ==== Reproducir sons ao iniciar ou saír do NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Esta opción só está dispoñible para copias instaladas do NVDA.
 ==== Procurar actualizacións para NVDA automáticamente ====[GeneralSettingsCheckForUpdates]
 Se esto está activado, NVDA procurará automáticamente versións actualizadas e informarache cando unha actualización estea dispoñible.
 Tamén podes procurar actualizacións manualmente seleccionando Procurar Actualizacións baixo o menú Axuda no menú NVDA.
+
+==== Notificar actualizacións pendentes ao comezar ====[GeneralSettingsNotifyPendingUpdates]
+Se esto está habilitado, o NVDA informarache cando hai unha actualización pendente ao comezar, ofrecéndoche a posibilidade de instalala.
+Tamén podes instalar manualmente a actualización pendente dende o diálogo Saír do NVDA (se está habilitado), dende o menú NVDA, ou ao se realizar unha nova procura dende o menú Axuda.
 
 +++ Selección de sintetizador +++[SynthesizerSelection]
 O diálogo Sintetizadores, que se atopa En "Sintetizadores..." no menú Preferencias, permíteche seleccionar que sintetizador debería utilizar NVDA para falar.
@@ -1742,7 +1746,7 @@ Se NVDA está instalado e executándose no teu sistema, podes abrir directamente
 Pola contra, garda o paquete de complemento e segue as instruccións máis abaixo.
 
 Para instalar un complemento que conseguiches previamente, preme o botón Instalar.
- Esto permitirache buscar un paquete de complemento (ficheiro .nvda-addon) en algún lugar do teu computador ou nunha rede.
+Esto permitirache buscar un paquete de complemento (ficheiro .nvda-addon) en algún lugar do teu computador ou nunha rede.
 Unha vez premas Abrir, o proceso de instalación comezará.
 
 Cando un complemento se vai a instalar, NVDA primeiro pedirache que confirmes que realmente desexas instalalo.
@@ -1759,6 +1763,7 @@ Para deshabilitar un complemento, preme o botón deshabilitar.
 Para habilitar un comnplemento anteriormente deshabilitado, preme o botón habilitar.
 Podes deshabilitar un complemento se o seu estado indica que está en execución ou habilitado, ou habilitalo se o complemento está suspendido ou deshabilitado.
 Para cada pulsación do botón habilitar/deshabilitar, o estado do complemento cambia para indicar que ocurrirá ao reiniciar NVDA.
+Se o complemento foi deshabilitado anteriormente, amosarase un estado "habilitado despois de reiniciar". Se o complemento foi anteriormente "Habilitado", amosarase un estado "deshabilitado despois de reiniciar"
 Ao igual que cando instalas ou eliminas complementos, tes que reiniciar o NVDA para que os cambios teñan efecto.
 
 O administrador tamén ten un botón Pechar para pechar o diálogo.
@@ -1919,6 +1924,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Mover a pantalla braille á a liña seguinte | t4 |
 | Desprazar pantalla braille cara adiante | t5 ou etouch3 |
 | Guiar á celda braille | sensor |
+| Anunciar formato de texto baixo a celda braille | sensores secundarios |
 | Conmutar a simulación de teclado HID | t1+spEnter |
 | Mover á liña superior en revisión | t1+t2 |
 | Mover á liña inferior en revisión | t4+t5 |
@@ -2072,13 +2078,16 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Ler todo | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant Series BI/B ++[HumanWareBrailliant]
-As pantallas braille Brailliant series BI e B de [HumanWare http://www.humanware.com/], incluíndo BI 32, BI 40 e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
+++ HumanWare Brailliant Series BI/B / BrailleNote Touch  ++[HumanWareBrailliant]
+As pantallas braille Brailliant series BI e B de [HumanWare http://www.humanware.com/], incluíndo BI 14, BI 32, BI 40 e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
 Se a conectas a través de USB co protocolo configurado a HumanWare, primeiro debes instalar os controladores USB proporcionados polo fabricante.
 Non se requiren os controladores USB se o protocolo se configura a OpenBraille.
 
-Seguidamente van as asignacións de teclas para esta pantalla co NVDA.
+Tamén se soporta a BrailleNote Touch, e non require instalar ningún controlador.
+
+Seguidamente van as asignacións de teclas para as pantallas Brailliant BI/B e BrailleNote touch co NVDA.
 Por favor consulta a documentación da pantalla para descripcións de onde poden atoparse estas teclas.
++++ Asignacións de teclas para todos os modelos +++
 %kc:beginInclude
 || Nome | Tecla |
 | Desprazar pantalla braille cara atrás | esquerda |
@@ -2091,16 +2100,34 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | tecla frecha abaixo | espazo+ponto4 |
 | tecla frecha esquerda | espazo+ponto3 |
 | tecla frecha dereita | espazo+ponto6 |
-| Menú NVDA | c1+c3+c4+c5 (comando n) |
 | tecla shift+tab | espazo+ponto1+ponto3 |
 | tecla tab | espazo+ponto4+ponto6 |
 | tecla alt | espazo+ponto1+ponto3+ponto4 (espazo+m) |
 | tecla escape | espazo+ponto1+ponto5 (espazo+e) |
 | tecla intro | ponto8 |
-| tecla windows+d (minimizar todas as aplicacións) | c1+c4+c5 (comando d) |
 | tecla windows | espazo+ponto3+ponto4 |
 | tecla alt+tab | espazo+ponto2+ponto3+ponto4+ponto5 (espazo+t) |
+| Menú NVDA | espazo+ponto1+ponto3+ponto4+ponto5 (espazo+n) |
+| tecla windows+d (minimizar todas las aplicaciones) | espacio+punto1+punto4+punto5 (espacio+d) |
+| Ler todo | espazo+ponto1+ponto2+ponto3+ponto4+ponto5+ponto6 |
+%kc:endInclude
+
++++ Asignacións de teclas para Brailliant BI 32, BI 40 e B 80 +++ 
+%kc:beginInclude
+|| Nome | Tecla |
+| Menú NVDA | c1+c3+c4+c5 (comando n) |
+| tecla windows+d (minimizar todas as aplicacións) | c1+c4+c5 (comando d) |
 | Ler todo | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Asignacións de teclas para Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Nome | Tecla |
+| tecla frecha arriba | joystick arriba |
+| tecla frecha abaixo | joystick abaixo |
+| tecla frecha esquerda | joystick esquerda |
+| tecla frecha dereita | joystick dereita |
+| tecla intro | accionar joystick |
 %kc:endInclude
 
 ++ Series das HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
@@ -2252,7 +2279,7 @@ Seguidamente van as asignacións de ordes da Papenmeier para o NVDA:
 | Mover ao primeiro obxecto contido | dn2 |
 | Mover ao obxecto anterior | dereita2 |
 | Mover ao seguinte obxecto | esquerda2 |
-| Anunciar formato de texto | fila de sensores superior |
+| Anunciar formato de texto baixo a celda braille | fila de sensores superior |
 %kc:endInclude
 
 O modelo Trio ten catro teclas adicionais que están diante do teclado braille.
@@ -2326,7 +2353,7 @@ Dispositivos co EAB:
 | Moverse ao primeiro obxecto contido | dn2 |
 | Moverse ao seguinte obxecto | left2 |
 | Moverse ao obxecto anterior | right2 |
-| Anunciar formato de texto | Upper routing strip |
+| Anunciar formato de texto baixo a celda braille | Upper routing strip |
 
 BRAILLEX Tiny:
 || Nome | Tecla |
@@ -2341,7 +2368,7 @@ BRAILLEX Tiny:
 | Moverse ao primeiro obxecto contido | r1+dn |
 | Moverse ao obxecto anterior | r1+left |
 | Moverse ao seguinte obxecto | r1+right |
-| Anunciar formato de texto | reportf |
+| Anunciar formato de texto baixo a celda braille | sensores superior |
 | Anunciar título | l1+arriba |
 | Anunciar barra de estado | l2+abaixo |
 
@@ -2350,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Anunciar carácter actual en revisión | l1 |
 | Activar navegador de obxectos actual | l2 |
 | Activar ou desactivar seguemento do braille | r2 |
-| Anunciar formato de texto | reportf |
+| Anunciar formato de texto baixo a celda braille | sensores superior |
 | Mover pantalla braille á liña anterior| up |
 | Desprazar pantalla braille atrás | left |
 | Desprazar pantalla braille adiante | right |
@@ -2369,6 +2396,8 @@ Sopórtanse os seguintes modelos:
 - BrailleNote MPower (Conexións serie e bluetooth)
 - BrailleNote Apex (Conexións USB e Bluetooth)
 -
+
+Para o BrailleNote Touch, por favor consulta a seción [series das Brailliant BI / BrailleNote Touch HumanWareBrailliant].
 
 Se o teu dispositivo soporta máis dun tipo de conexión, cando conectes o teu BrailleNote ao NVDA, debes configurar o porto da terminal braille nas opcións de terminal braille.
 Por favor consulta o manual do BrailleNote para detalles.
@@ -2471,7 +2500,8 @@ Por favor consulta a documentación da pantalla para descripcións de onde se po
 | Desprazar pantalla braille cara atrás | switch1-6Esquerda, l1 |
 | Desprazar pantalla braille cara adiante | switch1-6Dereita, l8 |
 | Mover ao foco actual | switch1-6Esquerda+switch1-6Dereita, l1+l8 |
-| Enrutar á celda braille | sensores, double sensor |
+| Enrutar á celda braille | sensores |
+| Anunciar formato de texto baixo a celda braille | dobreSensor |
 | Mover á liña anterior en revisión | joystick1Arriba |
 | Mover á liña seguinte en revisión | joystick1Abaixo |
 | Mover ao carácter anterior en revisión | joystick1Eszquerda |

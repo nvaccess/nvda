@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Joseph Lee, Mohammad Suliman
+#Copyright (C) 2009-2018 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V.
 
 """Support for UI Automation (UIA) controls."""
 
@@ -31,6 +31,7 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
 import time
+import ui
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -268,7 +269,12 @@ class UIATextInfo(textInfos.TextInfo):
 	def __init__(self,obj,position,_rangeObj=None):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
-			self._rangeObj=_rangeObj.clone()
+			try:
+				self._rangeObj=_rangeObj.clone()
+			except COMError:
+				# IUIAutomationTextRange::clone can sometimes fail, such as in UWP account login screens
+				log.debugWarning("Could not clone range",exc_info=True)
+				raise RuntimeError("Could not clone range")
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			try:
 				sel=self.obj.UIATextPattern.GetSelection()
@@ -283,7 +289,11 @@ class UIATextInfo(textInfos.TextInfo):
 		elif isinstance(position,UIATextInfo): #bookmark
 			self._rangeObj=position._rangeObj
 		elif position==textInfos.POSITION_FIRST:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			try:
+				self._rangeObj=self.obj.UIATextPattern.documentRange
+			except COMError:
+				# Error: first position not supported by the UIA text pattern.
+				raise RuntimeError
 			self.collapse()
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
@@ -564,7 +574,11 @@ class UIATextInfo(textInfos.TextInfo):
 					continue
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
-				childRange=documentTextPattern.rangeFromChild(childElement)
+				try:
+					childRange=documentTextPattern.rangeFromChild(childElement)
+				except COMError as e:
+					log.debug("rangeFromChild failed with %s"%e)
+					childRange=None
 				if not childRange:
 					log.debug("NULL childRange. Skipping")
 					continue
@@ -712,7 +726,10 @@ class UIA(Window):
 			return
 		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
 		for ID in IDs:
-			cacheRequest.addProperty(ID)
+			try:
+				cacheRequest.addProperty(ID)
+			except COMError:
+				log.debug("Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"%ID)
 		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
 		for ID in IDs:
 			elementCache[ID]=cacheElement
@@ -964,6 +981,21 @@ class UIA(Window):
 		except Exception as e:
 			ret="Exception: %s"%e
 		info.append("UIA className: %s"%ret)
+		patternsAvailable = []
+		patternAvailableConsts = dict(
+			(const, name) for name, const in UIAHandler.__dict__.iteritems()
+			if name.startswith("UIA_Is") and name.endswith("PatternAvailablePropertyId")
+		)
+		self._prefetchUIACacheForPropertyIDs(list(patternAvailableConsts))
+		for const, name in patternAvailableConsts.iteritems():
+			try:
+				res = self._getUIACacheablePropertyValue(const)
+			except COMError:
+				res = False
+			if res:
+				# Every name has the same format, so the string indexes can be safely hardcoded here.
+				patternsAvailable.append(name[6:-19])
+		info.append("UIA patterns available: %s"%", ".join(patternsAvailable))
 		return info
 
 	def _get_name(self):
@@ -1367,6 +1399,19 @@ class UIA(Window):
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
 		# Ideally, we wouldn't use getBrailleTextForProperties directly.
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
+	def event_UIA_notification(self, notificationKind=None, notificationProcessing=None, displayString=None, activityId=None):
+		"""
+		Introduced in Windows 10 Fall Creators Update (build 16299).
+		This base implementation announces all notifications from the UIA element.
+		Unlike other events, the text to be announced is not the name of the object, and parameters control how the incoming notification should be processed.
+		Subclasses can override this event and can react to notification processing instructions.
+		"""
+		# Do not announce notifications from background apps.
+		if self.appModule != api.getFocusObject().appModule:
+			return
+		if displayString:
+			ui.message(displayString)
 
 class TreeviewItem(UIA):
 
