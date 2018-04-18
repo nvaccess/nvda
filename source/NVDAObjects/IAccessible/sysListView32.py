@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Robert Hänggi
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -22,6 +22,7 @@ from . import IAccessible, List
 from ..window import Window
 import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
+from displayModel import DisplayModelTextInfo
 import config
 
 #Window messages
@@ -333,7 +334,20 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return buffer.value if buffer else None
 
 	def _getColumnContent(self, column):
-		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+		targetColumn = self.parent._columnOrderArray[column - 1]
+		try:
+			return self._getColumnContentRaw(targetColumn)
+		except ArgumentError:
+			# In case that a 64-bit pointer to the text had been  returned /rjh
+			disp = DisplayModelTextInfo(self, 'all')
+			x,y,w,h = self._getColumnLocation(column)
+			start = disp._getClosestOffsetFromPoint(x,y)
+			end = disp._getClosestOffsetFromPoint(x+w,y+h)
+			# Include the whole word, even if it is white space /rjh
+			wordAtEnd = disp._getWordOffsets(end)
+			if end != wordAtEnd[0]: 
+				end = wordAtEnd[1]
+			return disp.text[start:end].strip()
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
