@@ -23,6 +23,7 @@ from ..window import Window
 import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 from displayModel import DisplayModelTextInfo
+from textInfos import Rect
 import config
 
 #Window messages
@@ -338,16 +339,11 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		try:
 			return self._getColumnContentRaw(targetColumn)
 		except ArgumentError:
-			# In case that a 64-bit pointer to the text had been  returned /rjh
-			disp = DisplayModelTextInfo(self, 'all')
-			x,y,w,h = self._getColumnLocation(column)
-			start = disp._getClosestOffsetFromPoint(x,y)
-			end = disp._getClosestOffsetFromPoint(x+w,y+h)
-			# Include the whole word, even if it is white space /rjh
-			wordAtEnd = disp._getWordOffsets(end)
-			if end != wordAtEnd[0]: 
-				end = wordAtEnd[1]
-			return disp.text[start:end].strip()
+			# #8175: 64-bit addresses can not be accessed directly,
+			# therefore, return the display text within the column rectangle for this item
+			left,top,width,height = self._getColumnLocation(column)
+			disp = DisplayModelTextInfo(self, Rect(left, top, left+width, top+height))
+			return disp.text.strip()
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
