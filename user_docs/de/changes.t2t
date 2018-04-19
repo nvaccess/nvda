@@ -10,23 +10,36 @@ Was ist neu in NVDA
 - Die Tabellennavigationsbefehle funktionieren jetzt auch in Google Docs-Dokumenten mit aktiviertem Braille-Modus. (#7946)
 - Unterstützung für Tabellen in Kindle für Pc (#7977)
 - Unterstützung für die Braillezeilenmodelle BrailleNote touch und Brailliant BI 14 via USB und bluetooth. (#6524)
-
+- In Windows 10 Fall Creators Update und neuer kann NVDA nun Benachrichtigungen von Apps wie etwa dem Rechner oder dem Windows-Store ausgeben. (#8045)
+ - Neue Braille-Übersetzungstabellen: litauisch 8-Punkt, Ukrainisch, Mongolische Kurzschrift. (#7839)
+ - Es wurde ein Script hinzugefügt, das die Ausgabe von Formatierungsinformationen des Textes unter einem bestimmten Braillemodul erlaubt. (#7106)
+- Bei der Aktualisierung von NVDA auf eine neue Version ist es nun möglich, die Instalation der Aktualisierung auf einen gewünschten Zeitpunkt zu vertagen. (#4263) 
+ 
 
 == Änderungen ==
 - Die Spalte Status im Dialogfeld Erweiterungen verwalten zeigt den Status als «aktiviert» Bzw. «deaktiviert» an; nicht mehr als «wird ausgeführt» Bzw. «stillgelegt». (#7929)
-
+-  liblouis wurde auf 3.5.0 aktualisiert. (#7839)
+- Die Litauische Braille-Übersetzungstabelle wurde auf Litauisch 6-Punkt umbenannt, um Verwechslungen mit der neuen 8-Punkt-Tabelle zu vermeiden. (#7839)
+- Die kanadisch französischen Braille-Übersetzungstabellen für Kurz- und Vollschrift wurden entfernt, stattdessen werden die vereinheitlichten 6-Punkt-Computerbraille und Kurzschrift-Tabellen verwendet. (#7839)
+- Die sekundären Routingtasten auf Alva BC6-, EuroBraille- und Papenmeier-Braillezeilen zeigen nun Formatierungsinformationen für den Text unter dem Braillemodul dieser Taste an. (# 7106)
 
 == Fehlerkorrekturen ==
 - Das Auslesen des Anmeldebildschirms für das Microsoft-Konto funktioniert nun auch ordnungsgemäß, nachdem Sie eine E-Mail-Adresse eingegeben haben. (#7997)
 - Das Auslesen von Webseiten in Microsoft Edge funktioniert nun auch dann noch, wenn Sie eine Seite zurückgesprungen sind. (#7997)
-- NVDA gibt nun nicht mehr die letzte Ziffer der Pin beim Entsprerren des Rechners im Klartext aus. (#7908)
+- NVDA gibt nun nicht mehr die letzte Ziffer der Pin beim Entsperren des Rechners im Klartext aus. (#7908)
 - Beim Navigieren durch Webseiten mit Tab oder mit den Schnellnavigationsbefehlen werden Beschriftungen für Auswahlschalter Bzw. Kontrollkästchen nicht mehr doppelt ausgegeben. (#7960)
 - Aria-Current wird auch dann korrekt ausgewertet, wenn es auf False gesetzt ist. (#7892).
+- Das Laden des Onecore-Sprachausgabentreibers schlägt nicht mehr fehl, wenn die eingestellte Stimme deinstalliert wurde. (#7999)
+- Das Ändern der Stimmen im Onecore-Treiber ist jetzt viel schneller. (#7999)
+- Behebung fehlerhafter Braille-Ausgabe für mehrere Braille-Tabellen, einschließlich Großbuchstaben in Dänischer 8-Punkt-Kurzschrift. (# 7526, # 7693)
+- NVDA kann jetzt  mehr Aufzähltypen in Microsoft word ausgeben. (#6778)
+- Bei der Ausgabe der Formatierungsinformationen wird der Cursor nicht mehr fälschlicherweise verschoben, d.h. wenn Sie sie mehrmals abrufen, führt dies nicht mehr zu verschiedenen Ergebnissen. (#7869)
 
 
 == Änderungen für Entwickler ==
 - Die Entwicklerinfo für UIA-Objekte enthält nun eine Liste aller unterstützten Muster. (#5712)
 - Sie können nun die Verwendung von UIA innerhalb Ihres Anwendungsmoduls erzwingen, indem Sie die Methode isGoodUIAWindow implementieren. (#7961)
+- Die Bool'sche Einstellung "outputPass1Only" im Abschnitt Braille in der Konfiguration wurde wieder entfernt, da Liblouis diese Funktion nicht mehr unterstützt. (#7839)
 
 
 = 2018.1 =
