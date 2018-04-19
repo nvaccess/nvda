@@ -524,8 +524,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether this is the root node.
 	bool isRoot = ID == this->rootID;
 	// Whether this is an embedded application.
+	// either it is an embedded object, or
+	// it is an application or dialog that is not the root node,
+	// But if a dialog, it must be also modal
 		bool isEmbeddedApp = role == IA2_ROLE_EMBEDDED_OBJECT
-			|| (!isRoot && (role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG));
+			|| (!isRoot && (role == ROLE_SYSTEM_APPLICATION || (role == ROLE_SYSTEM_DIALOG && states&IA2_STATE_MODAL)));
 	// Whether this node is interactive.
 	// Certain objects are never interactive, even if other checks are true.
 	bool isNeverInteractive = parentNode->isHidden||(!isEditable && (isRoot || role == ROLE_SYSTEM_DOCUMENT || role == IA2_ROLE_INTERNAL_FRAME));

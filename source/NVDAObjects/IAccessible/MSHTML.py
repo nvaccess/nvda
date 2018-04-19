@@ -770,6 +770,9 @@ class MSHTML(IAccessible):
 		ariaInvalid=self.HTMLAttributes['aria-invalid']
 		if ariaInvalid=="true":
 			states.add(controlTypes.STATE_INVALID_ENTRY)
+		ariaModal=self.HTMLAttributes['aria-modal']
+		if ariaModal=="true":
+			states.add(controlTypes.STATE_MODAL)
 		ariaGrabbed=self.HTMLAttributes['aria-grabbed']
 		if ariaGrabbed=="true":
 			states.add(controlTypes.STATE_DRAGGING)
