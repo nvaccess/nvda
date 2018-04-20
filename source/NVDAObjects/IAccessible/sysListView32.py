@@ -22,6 +22,7 @@ from . import IAccessible, List
 from ..window import Window
 import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
+from logHandler import log
 from displayModel import DisplayModelTextInfo
 from textInfos import Rect
 import config
@@ -274,6 +275,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 			self.LVCOLUMN = LVCOLUMN
 
 	description = None
+	_lastWindowWithoutContentRawSupport = 0
 
 	def _get_value(self):
 		value=super(ListItemWithoutColumnSupport,self)._get_description()
@@ -328,6 +330,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 					winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
 					buffer=create_unicode_buffer(len)
 					winKernel.readProcessMemory(processHandle,item.pszText,buffer,sizeof(buffer),None)
+			except ArgumentError as e:
+				log.debugWarning("%r,\nCan't retrieve item text, switching to display text instead" % e)
+				type(self)._lastWindowWithoutContentRawSupport = self.windowHandle
+				buffer = None
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
 		finally:
@@ -335,15 +341,17 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return buffer.value if buffer else None
 
 	def _getColumnContent(self, column):
-		targetColumn = self.parent._columnOrderArray[column - 1]
-		try:
-			return self._getColumnContentRaw(targetColumn)
-		except ArgumentError:
+		res = None
+		if self._lastWindowWithoutContentRawSupport != self.windowHandle:
+			targetColumn = self.parent._columnOrderArray[column - 1]
+			res = self._getColumnContentRaw(targetColumn)
+		if res is None:
 			# #8175: 64-bit addresses can not be accessed directly,
 			# therefore, return the display text within the column rectangle for this item
 			left,top,width,height = self._getColumnLocation(column)
 			disp = DisplayModelTextInfo(self, Rect(left, top, left+width, top+height))
-			return disp.text.strip()
+			res = disp.text.strip()
+		return res
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
