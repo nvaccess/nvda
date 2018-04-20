@@ -933,7 +933,7 @@ C'est une case à cocher qui, une fois cochée, indique à NVDA de sauvegarder a
 
 ==== Afficher les options d'arrêt avant de quitter NVDA ====[GeneralSettingsShowExitOptions]
 Cette option est une case à cocher vous permettant d'indiquer si un dialogue vous demandant quelle action effectuer doit s'afficher quand vous quittez NVDA.
-Quand elle est cochée, un dialogue apparaît lorsque vous voulez quitter NVDA, vous demandant si vous voulez quitter, redémarrer ou redémarrer sans modules complémentaires.
+Quand elle est cochée, un dialogue apparaît lorsque vous voulez quitter NVDA, vous demandant si vous voulez quitter, redémarrer, redémarrer sans modules complémentaires ou installer des mises à jour en attente s'il y en a.
 Quand elle n'est pas cochée, NVDA s'arrête immédiatement.
 
 ==== Jouer des sons au démarrage ou à l'arrêt de NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Cette option n'existe que dans les versions installées de NVDA.
 ==== Vérifier automatiquement les mises à jour de NVDA ====[GeneralSettingsCheckForUpdates]
 Si activé, NVDA recherchera automatiquement la dernière version de NVDA et vous informera si une mise à jour est disponible.
 Vous pouvez également vérifier manuellement les mises à jour en sélectionnant "Recherche d'une Mise à Jour..." dans le menu "Aide" du menu NVDA.
+
+==== Avertir des mises à jour en attente au démarrage ====[GeneralSettingsNotifyPendingUpdates]
+Si ceci est activé, NVDA vous informera quand il y a une mise à jour en attente au démarrage, et vous offrira la possibilité de l'installer.
+Vous pouvez aussi installer manuellement la mise à jour en attente depuis le dialogue de sortie de NVDA (si activé), depuis le menu NVDA, ou quand vous exécutez une vérification depuis le menu Aide.
 
 +++ Choix du synthétiseur (NVDA+contrôle+s) +++[SynthesizerSelection]
 Le dialogue "Synthétiseur", situé sous "Synthétiseur" dans le menu "Préférences", permet de choisir le synthétiseur de parole qui sera utilisé par NVDA.
@@ -1864,7 +1868,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Choix de la fonction de la roulette magique droite | Appui sur la roulette magique droite |
 | Retour arrière en utilisant la roulette magique droite | roulette magique droite vers le haut |
 | Avancer en utilisant la roulette magique droite | roulette magique droite vers le bas |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
 | touche maj+tab | barreEspacebraille+point1+point2 |
 | touche tab | barreEspacebraille+point4+point5 |
 | touche flèche haut | barreEspacebraille+point1 |
@@ -1919,7 +1923,8 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Aller au focus courant | t3 |
 | Amener l'affichage braille à la ligne suivante | t4 |
 | Défilement avant de l'affichage braille | t5 ou etouch3 |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
+| Annoncer la mise en forme du texte sous la cellule braille | routage secondaire |
 | Activer/désactiver la simulation de clavier HID | t1+spEnter |
 | Aller à la première ligne en mode revue | t1+t2 |
 | Aller à la dernière ligne en mode revue | t4+t5 |
@@ -1966,7 +1971,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Défilement avant de l'affichage braille | right, down, b6 |
 | Amener l'affichage braille à la ligne précédente | b4 |
 | Amener l'affichage braille à la ligne suivante | b5 |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
 | Touche maj+tab | esc, touche triple action gauche haut+bas |
 | Touche alt | b2+b4+b5 |
 | Touche échap | b4+b6 |
@@ -2028,7 +2033,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Défilement avant affichage braille | d5 |
 | Amener l'affichage sur la ligne précédente | d1 |
 | Amener l'affichage sur la ligne suivante | d3 |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
 
 Pour les terminaux possédant un joystick:
 || Nom | Touche |
@@ -2051,7 +2056,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Défilement avant de l'affichage | K3 |
 | Ligne précédente | B2 |
 | Ligne suivante | B5 |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
 | Bascule braille suit | K2 |
 | Dire tout | B6 |
 %kc:endInclude
@@ -2068,7 +2073,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Défilement avant de l'affichage | K3 |
 | Ligne précédente | B2 |
 | Ligne suivante | B5 |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
 | Bascule braille suit | K2 |
 | Dire tout | B6 |
 %kc:endInclude
@@ -2077,34 +2082,52 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 Les terminaux des séries Brailliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 14, BI 32, BI 40 et B 80 sont supportés quand ils sont connectés via USB ou Bluetooth.
 S'ils sont connectés en USB avec le protocole réglé sur HumanWare, vous devez d'abord installer le pilote USB fourni par le constructeur.
 Les pilotes USB ne sont pas nécessaires si le protocole est réglé sur OpenBraille.
+
 Le BrailleNote Touch est également prise en charge et ne nécessite pas de pilotes à installer.
 
 Voici les assignations de touches pour Brailliant BI/B et BrailleNote touch sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 +++ Assignations des touches pour tous les modèles +++
-
 %kc:beginInclude
 || Nom | Touche |
 | Défilement arrière de l'affichage | gauche |
 | Défilement avant de l'affichage | droite |
 | Ligne précédente | haut |
 | Ligne suivante | bas |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
 | Bascule d'attachement du braille | haut+bas |
 | Touche flèche haut | espace+point1 |
 | Touche flèche bas | espace+point4 |
 | Touche flèche gauche | espace+point3 |
 | Touche flèche droite | espace+point6 |
-| Menu NVDA | c1+c3+c4+c5 (commande n) |
 | Touche maj+tab | espace+point1+point3 |
 | Touche tab | espace+point4+point6 |
 | Touche alt | espace+point1+point3+point4 (espace+m) |
 | Touche échap | espace+point1+point5 (espace+e) |
 | Touche entrer | point8 |
-| Touche Windows+d (minimiser toutes les applications) | c1+c4+c5 (commande d) |
 | Touche Windows | espace+point3+point4 |
 | Touche alt+tab | Espace+point2+point3+point4+point5 (espace+t) |
+| Menu NVDA | c1+c3+c4+c5 (commande n) |
+| Touche Windows+d (minimiser toutes les applications) | c1+c4+c5 (commande d) |
 | Dire tout | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Assignations de touches pour les Brailliant BI 32, BI 40 and B 80 +++ 
+%kc:beginInclude
+|| Name | Key |
+| Menu NVDA | c1+c3+c4+c5 (commande n) |
+| Touche windows+d (minimiser toutes les applications) | c1+c4+c5 (commande d) |
+| Dire tout | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Assignations de touches pour le Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Name | Key |
+| touche flèche haut | joystick vers le haut |
+| touche flèche bas | joystick vers le bas |
+| touche flèche gauche | joystick vers la gauche |
+| touche flèche droit | joystick vers la droite |
+| touche entrer | joystick action |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
@@ -2116,7 +2139,7 @@ Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 %kc:beginInclude
 || Nom | Touche |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
 | Défilement arrière de l'affichage braille | défilementHautDeGauche, défilementHautDeDroite, défilementDeGauche |
 | Défilement avant de l'affichage braille | défilementBasDeGauche, défilementBasDeDroite, défilementDeDroite |
 | Amener l'affichage à la ligne précédente | défilementHautDeGauche+défilementHautDeDroite |
@@ -2246,7 +2269,7 @@ Voici les commandes assignées pour les afficheurs Papenmeier dans NVDA :
 | Défilement avant de l'affichage braille | right |
 | Déplacer l'afficheur braille à la ligne précédente | up |
 | Déplacer le braille à la ligne suivante | dn |
-| Aller à la cellule braille | routing |
+| Aller à la cellule braille | routage |
 | Lire le caractère sous le curseur de revue | l1 |
 | Activer l'objet courant du navigateur | l2 |
 | Bascule braille suit | r2 |
@@ -2256,7 +2279,7 @@ Voici les commandes assignées pour les afficheurs Papenmeier dans NVDA :
 | Aller à l'objet enfant | dn2 |
 | Aller à l'objet précédent | left2 |
 | Aller à l'objet suivant | right2 |
-| Lire les informations de mise en forme | rangée de routines du haut |
+| Annoncer l'information de mise en forme du texte sous la cellule braille | rangée de routines du haut |
 %kc:endInclude
 
 Le modèle Trio à quatre touches additionnelles en face du clavier braille.
@@ -2321,7 +2344,7 @@ Périphériques avec EAB :
 | Défilement affichage braille avant | right |
 | Déplacer l'affichage braille vers la ligne précédente | up |
 | Déplacer l'affichage braille vers la ligne suivante | down |
-| Joindre à la cellule braille | routing |
+| Joindre à la cellule braille | routage |
 | Annoncer le caractère courant sous la revue | l1 |
 | Activer l'objet courant du navigateur | l2 |
 | Dire titre | l1up |
@@ -2330,9 +2353,9 @@ Périphériques avec EAB :
 | Aller au premier objet contenu | dn2 |
 | Aller à l'objet suivant | right2 |
 | Aller à l'objet précédant | left2 |
-| Annoncer la mise en forme du texte | routines haut |
+| Annoncer l'information de mise en forme du texte sous la cellule braille | rangée de routines du haut |
 
-brailleX Tiny :
+BRAILLEX Tiny :
 || Nom | Touche |
 | Annoncer le caractère sous le curseur de revue | l1 |
 | Activer l'objet sous le navigateur | l2 |
@@ -2345,7 +2368,7 @@ brailleX Tiny :
 | Aller au premier objet contenu | r1+dn |
 | Aller à l'objet précédent | r1+left |
 | Aller à l'objet suivant | r1+right |
-| Annoncer la mise en forme | reportf |
+| Annoncer l'information de mise en forme du texte sous la cellule braille | rangée de routines du haut |
 | Annoncer le titre | l1+up |
 | Annoncer la barre d'état | l2+down |
 
@@ -2354,7 +2377,7 @@ brailleX 2D Screen:
 | Annoncer le caractère sous le curseur de revue | l1 |
 | Activer l'objet sous le navigateur | l2 |
 | Basculer le suivi du braille | r2 |
-| Annoncer la mise en forme | reportf |
+| Annoncer l'information de mise en forme du texte sous la cellule braille | rangée de routines du haut |
 | Déplacer le braille à la ligne précédente | up |
 | Défiler le braille vers l'arrière | left |
 | Défiler le braille vers l'avant | right |
@@ -2374,6 +2397,8 @@ Les modèles suivants sont supportés :
 - BrailleNote Apex (connexion Bluetooth et USB)
 -
 
+Pour le BrailleNote Touch, Veuillez vous référer à la section [Séries Brailliant BI / BrailleNote Touch HumanWareBrailliant].
+
 Si votre périphérique supporte plusieurs types de connexion, en connectant votre BrailleNote à NVDA, vous devrez définir le port dans les options de votre afficheur braille.
 Lisez le manuel de votre BrailleNote pour plus de détails.
 Dans NVDA, vous devrez également configurer le port dans les paramètres braille.
@@ -2391,7 +2416,7 @@ Consultez la documentation de votre BrailleNote pour savoir où se situent ces t
 | Défilement affichage braille avant | Avant |
 | Déplacer l'affichage braille vers la ligne précédente | Précédent |
 | Déplacer l'affichage braille vers la ligne suivante | Suivant |
-| Joindre à la cellule braille | routing |
+| Joindre à la cellule braille | routage |
 | Basculer le suivi de l'affichage braille | Précédent+Suivant |
 | Touche Flèche haute | Espace+Point 1 |
 | Touche Flèche basse | Espace+Point 4 |
@@ -2433,7 +2458,7 @@ Veuillez consulter [la documentation EcoBraille ftp://ftp.once.es/pub/utt/biblio
 | Défilement braille avant | T4 |
 | Amener l'afficheur braille à la ligne précédente | T1 |
 | Amener l'afficheur braille à la ligne suivante | T5 |
-| Aller à la cellule braille | Routing |
+| Aller à la cellule braille | Routage |
 | Activer l'objet navigateur courant | T3 |
 | Passer au mode de revue suivant | F1 |
 | Aller à l'objet contenant | F2 |
@@ -2475,7 +2500,8 @@ Veuillez consulter la documentation du terminal pour connaître la position de c
 | Défilement arrière | molette1-6Gauche, l1 |
 | Défilement avant | molette1-6Droite, l8 |
 | Aller au focus courant | molette1-6Gauche+molette1-6Droite, l1+l8 |
-| Aller à la cellule braille | routage, doubleRoutage|
+| Aller à la cellule braille | routage|
+| Annoncer l'information de mise en forme du texte sous la cellule braille | doubleRoutage |
 | Aller à la ligne précédente en mode revue | joystick1Haut |
 | Aller à la ligne suivante en mode revue | joystick1Bas |
 | Aller au caractère précédent en mode revue | joystick1Gauche |
@@ -2620,5 +2646,3 @@ Les valeurs suivantes peuvent être définies dans ces clés de registre :
 Si vous avez besoin d'informations complémentaires ou d'aide concernant l'utilisation de NVDA, veuillez visiter le site NVDA à NVDA_URL.
 Sur ce site, vous pourrez trouver des informations complémentaires telles que des listes de discussion spécialisées et d'autres ressources communautaires pour vous aider à utiliser NVDA.
 Ce site fournit également des informations concernant le développement de NVDA.
-
-
