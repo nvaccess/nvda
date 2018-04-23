@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-16 00:10+1000\n"
-"PO-Revision-Date: 2018-03-16 02:02+0800\n"
+"POT-Creation-Date: 2018-03-30 00:10+1000\n"
+"PO-Revision-Date: 2018-04-05 12:27+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -786,18 +786,8 @@ msgstr "Французский стандартный восьмиточечны
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
-msgstr "Французский стандартный (вторая ступень)"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "Французский (Канада) (первая ступень)"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "Французский (Канада) (вторая ступень)"
+msgid "French (unified) grade 2"
+msgstr "Унифицированный французский (вторая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -896,8 +886,13 @@ msgstr "Кашмирский (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "Литовский"
+msgid "Lithuanian 8 dot"
+msgstr "Литовский восьмиточечный"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "Литовский шеститочечный"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -916,8 +911,13 @@ msgstr "Манипури (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "Монгольский"
+msgid "Mongolian grade 1"
+msgstr "Монгольский (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "Монгольский (вторая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1001,6 +1001,11 @@ msgstr "Панджаби (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "Румынский"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "Русский компьютерный брайль"
 
@@ -1053,6 +1058,11 @@ msgstr "Телугу (первая ступень)"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "Турецкий (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "Украинский"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4171,6 +4181,10 @@ msgstr "Прокручивает брайлевскую строку впере�
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Перемещает курсор или активирует объект под брайлевской ячейкой"
 
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "Сообщает форматирование текста под этой брайлевской ячейкой"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "перемещает брайлевское отображение на предыдущую строку"
@@ -6368,14 +6382,22 @@ msgid "Error checking for update."
 msgstr "Ошибка при проверке наличия обновлений."
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Ошибка"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "Обновление NVDA"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr "NVDA {version} загружена и ожидает установки."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6387,9 +6409,15 @@ msgstr "Доступна NVDA {version}."
 msgid "No update available."
 msgstr "Нет доступных обновлений."
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "Загрузить и &установить обновление"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "&Установить NVDA {version}"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "&Повторно загрузить обновление"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6404,6 +6432,23 @@ msgstr "Напомнить &позже"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Закрыть"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "NVDA {version} готова к установке.\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "&Установить обновление"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "&Отложить обновление"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "Не удалось отложить обновление."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6420,15 +6465,6 @@ msgstr "Загрузка"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "Ошибка при загрузке обновления."
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "Обновление загружено и сейчас будет установлено."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "Установка обновления"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6509,11 +6545,11 @@ msgstr ""
 "{copyright}\n"
 "\n"
 "{name} распространяется на условиях лицензии GNU General Public License "
-"(Version 2). Вы можете свободно распространять и/или изменять это програмное "
-"обеспечение только при условии соблюдения лицензии и предоставлении "
-"исходного кода всем желающим. Это в равной степени относится к оригинальной "
-"версии этого програмного обеспечения, его измененным копиям, а также его "
-"производным\n"
+"(Version 2). Вы можете свободно распространять и/или изменять это "
+"программное обеспечение только при условии соблюдения лицензии и "
+"предоставлении исходного кода всем желающим. Это в равной степени относится "
+"к оригинальной версии этого программного обеспечения, его измененным копиям, "
+"а также его производным\n"
 "Подробнее смотрите лицензию в меню \"Справка\".\n"
 "Она также может быть получена онлайн: http://www.gnu.org/licenses/old-"
 "licenses/gpl-2.0.html\n"
@@ -7238,10 +7274,6 @@ msgstr "Нет брайля"
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Новые модели Papenmeier BRAILLEX"
 
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "Перемещается к указанному месту и объявляет форматирование"
-
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
 msgstr "Устаревшие модели Papenmeier BRAILLEX"
@@ -7570,6 +7602,14 @@ msgstr "Записать текущую конфигурацию в nvda.ini"
 msgid "Donate"
 msgstr "Пожертвования"
 
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "Установить &отложенное обновление"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Выполняет установку ранее загруженного обновления NVDA"
+
 msgid "E&xit"
 msgstr "В&ыход"
 
@@ -7675,6 +7715,10 @@ msgstr "Перезагрузить с отключёнными дополнен�
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "Перезагрузить с журналом на уровне отладки"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Установить отложенное обновление"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8336,7 +8380,12 @@ msgstr ""
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "&Автоматически проверять наличие обновления NVDA"
+msgstr "&Автоматически проверять наличие обновлений NVDA"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "Сообщать об &отложенных обновлениях при запуске NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -10735,6 +10784,24 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "Французский (Канада) (первая ступень)"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "Французский (Канада) (вторая ступень)"
+
+#~ msgid "Mongolian"
+#~ msgstr "Монгольский"
+
+#~ msgid "Download and &install update"
+#~ msgstr "Загрузить и &установить обновление"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "Обновление загружено и сейчас будет установлено."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "Перемещается к указанному месту и объявляет форматирование"
 
 #~ msgid "r%s"
 #~ msgstr "стр%s"

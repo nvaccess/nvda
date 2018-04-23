@@ -933,7 +933,7 @@ Jos tämä valintaruutu on valittuna, nykyiset asetukset tallennetaan, kun NVDA 
 
 ==== Näytä sulkemisvaihtoehdot ====[GeneralSettingsShowExitOptions]
 Tällä valintaruudulla voit määrittää, tuleeko NVDA:ta suljettaessa näkyviin valintaikkuna, jossa kysytään suoritettavaa toimintoa.
-Kun tämä asetus on käytössä, NVDA:ta suljettaessa tulee näkyviin valintaikkuna, jossa kysytään, haluatko sulkea, käynnistää uudelleen vai käynnistää uudelleen poistaen lisäosat käytöstä.
+Kun tämä asetus on käytössä, NVDA:ta suljettaessa tulee näkyviin valintaikkuna, jossa kysytään, haluatko sulkea, käynnistää uudelleen, käynnistää uudelleen poistaen lisäosat käytöstä vai asentaa odottavat päivitykset (mikäli sellaisia on).
 Kun asetus ei ole käytössä, NVDA sulkeutuu heti.
 
 ==== Toista ääni käynnistettäessä ja suljettaessa ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Tämä painike on käytettävissä vain NVDA:n asennetuissa versioissa.
 ==== Tarkista päivitykset automaattisesti ====[GeneralSettingsCheckForUpdates]
 Jos tämä asetus on käytössä, NVDA etsii automaattisesti uusia versioita ja ilmoittaa, kun päivitys on saatavilla.
 Päivitysten manuaalinen tarkistaminen on myös mahdollista valitsemalla Tarkista päivitykset -vaihtoehto NVDA-valikosta Ohje-valikon alta.
+
+==== Ilmoita käynnistettäessä odottavasta päivityksestä ====[GeneralSettingsNotifyPendingUpdates]
+Jos tämä on valittuna, NVDA ilmoittaa käynnistyessään odottavasta päivityksestä ja tarjoaa mahdollisuutta sen asentamiseen.
+Voit asentaa päivityksen myös manuaalisesti Sulje NVDA -valintaikkunasta (mikäli se on käytössä), NVDA-valikosta tai suorittaessasi uuden päivitystarkistuksen Ohje-valikosta.
 
 +++ Puhesyntetisaattorin valitseminen (NVDA+Ctrl+S) +++[SynthesizerSelection]
 Syntetisaattori-valintaikkunassa, joka löytyy Asetukset-valikosta kohdasta "Syntetisaattori...", voidaan valita, mitä puhesyntetisaattoria NVDA käyttää.
@@ -1911,7 +1915,7 @@ Tämä tarkoittaa, että oletusarvoisesti NVDA:n pistekirjoituksen syöttöjärj
 HID-näppäimistöemulointi on mahdollista poistaa käytöstä syötekomennolla ALVA-näytöissä, joissa on viimeisin laiteohjelmisto.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
 | Vieritä taaksepäin | t1 tai etouch1 |
@@ -1920,6 +1924,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä seuraavalle riville | t4 |
 | Vieritä eteenpäin | t5 tai etouch3 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Ilmoita muotoilutiedot pistesolusta | toissijainen kosketuskohdistinnäppäin |
 | HID-näppäimistöemulointi käyttöön/pois käytöstä | t1+spEnter |
 | Siirrä ylimmälle riville | t1+t2 |
 | Siirrä alimmalle riville | t4+t5 |
@@ -2274,17 +2279,17 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
 | Siirrä edelliseen objektiin | left2 |
 | Siirrä seuraavaan objektiin | right2 |
-| Lue tekstin muotoilutiedot | ylärivin kosketuskohdistinnäppäimet |
+| Ilmoita tekstin muotoilutiedot pistesolusta | ylärivin kosketuskohdistinnäppäimet |
 %kc:endInclude
 
 Trio-mallissa on neljä lisänäppäintä, jotka ovat pistenäppäimistön edessä.
-Ne ovat vasemmalta oikealle järjestyksessä:
+Ne ovat järjestyksessä vasemmalta oikealle:
 - vasen peukalonäppäin (lt)
 - välilyönti
 - välilyönti
 - oikea peukalonäppäin (rt)
 -
-Oikea peukalonäppäin ei ole tällä hetkellä käytössä.
+Oikea peukalonäppäin ei ole toistaiseksi käytössä.
 Molemmat sisemmät näppäimet on määritelty välilyönniksi.
 
 || Nimi | Näppäinkomento |
@@ -2348,7 +2353,7 @@ Laitteet, joissa on EAB:
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
 | Siirrä seuraavaan objektiin | right2 |
 | Siirrä edelliseen objektiin | left2 |
-| Lue tekstin muotoilutiedot | Ylärivin kosketuskohdistinnäppäimet |
+| Ilmoita tekstin muotoilutiedot pistesolusta | Ylärivin kosketuskohdistinnäppäimet |
 
 BRAILLEX Tiny:
 || Nimi | Näppäinkomento |
@@ -2363,7 +2368,7 @@ BRAILLEX Tiny:
 | Siirrä ensimmäiseen sisältöobjektiin | r1+dn |
 | Siirrä edelliseen objektiin | r1+left |
 | Siirrä seuraavaan objektiin | r1+right |
-| Lue tekstin muotoilutiedot | reportf |
+| Lue tekstin muotoilutiedot pistesolusta | ylärivin kosketuskohdistinnäppäimet |
 | Lue ikkunan nimi | l1+up |
 | Lue tilarivi | l2+down |
 
@@ -2372,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
 | Vaihda Pistenäyttö seuraa -asetusta | r2 |
-| Lue tekstin muotoilutiedot | reportf |
+| Lue tekstin muotoilutiedot pistesolusta | ylärivin kosketuskohdistinnäppäimet |
 | Siirrä edelliselle riville | up |
 | Vieritä taaksepäin | left |
 | Vieritä eteenpäin | right |
@@ -2489,13 +2494,14 @@ Iris- ja Esys-näytöissä on 10-näppäiminen pistekirjoitusnäppäimistö.
 Kahdesta Väli-näppäimen tavoin sijoitellusta näppäimestä vasemmanpuoleinen vastaa Askelpalautinta ja oikea Väli-näppäintä.
 
 Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso kuvaukset näppäinten paikoista näytön käyttöohjeesta.
+Katso kuvaukset näppäinten paikoista laitteen käyttöohjeesta.
 %kc:beginInclude
 || Nimi | Näppäin |
 | Vieritä taaksepäin | switch1-6left, l1 |
 | Vieritä eteenpäin | switch1-6Right, l8 |
 | Siirrä nykyiseen kohdistukseen | switch1-6Left+switch1-6Right, l1+l8 |
-| Siirrä pistesoluun | routing, doubleRouting|
+| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Lue tekstin muotoilutiedot pistesolusta | doubleRouting |
 | Siirrä edelliselle riville tarkastelutilassa | joystick1Up |
 | Siirrä seuraavalle riville tarkastelutilassa | joystick1Down |
 | Siirrä edelliseen merkkiin tarkastelutilassa | joystick1Left |
