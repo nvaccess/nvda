@@ -44,6 +44,9 @@ class Mozilla(ia2Web.Ia2Web):
 			states.add(controlTypes.STATE_CHECKABLE)
 		if self.IA2Attributes.get("hidden") == "true":
 			states.add(controlTypes.STATE_INVISIBLE)
+		labelFor = self.labelFor
+		if labelFor and controlTypes.STATE_EDITABLE in labelFor.states:
+			states.add("NVDA_labelForField")
 		return states
 
 	def _get_presentationType(self):

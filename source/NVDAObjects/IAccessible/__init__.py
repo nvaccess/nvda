@@ -1326,11 +1326,21 @@ the NVDAObject for IAccessible
 				pass
 		return None
 
+	def _get_allIA2AccessibleRelations(self):
+		return list(
+			IAccessible(
+				IAccessibleObject=IAccessibleHandler.normalizeIAccessible(rel.target(0)),
+				IAccessibleChildID=0)
+			for rel in self._IA2Relations)
+
 	def _get_flowsTo(self):
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_TO)
 
 	def _get_flowsFrom(self):
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
+
+	def _get_labelFor(self):
+		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_LABEL_FOR)
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):

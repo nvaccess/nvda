@@ -13,7 +13,6 @@ import winUser
 import IAccessibleHandler
 import oleacc
 from logHandler import log
-import textInfos
 from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
@@ -48,7 +47,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
 			states.add(controlTypes.STATE_HASLONGDESC)
 		if "IAccessibleAction_click" in attrs:
-			states.add(controlTypes.STATE_CLICKABLE)
+			labelFor = self.obj.currentNVDAObject.labelFor
+			if labelFor and controlTypes.STATE_EDITABLE not in labelFor.states:
+				states.add(controlTypes.STATE_CLICKABLE)
 		grabbed = attrs.get("IAccessible2::attribute_grabbed")
 		if grabbed == "false":
 			states.add(controlTypes.STATE_DRAGGABLE)
