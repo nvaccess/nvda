@@ -71,7 +71,7 @@ class Model(AutoPropertyObject):
 			0x08<<8: "f3",
 			0x10<<8: "f4",
 			0x20<<8: "leftSideScroll",
-			0x40<<8: "rightSideScroll"
+			0x40<<8: "rightSideScroll",
 		})
 
 class BrailleSense(Model):
