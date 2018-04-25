@@ -155,6 +155,7 @@ class AutoFreeBSTR(BSTR):
 	_needsfree=True
 
 class List(List):
+	_shouldEnableColumnContentRaw = True
 
 	def getListGroupInfo(self,groupIndex):
 		header=AutoFreeBSTR()
@@ -275,7 +276,6 @@ class ListItemWithoutColumnSupport(IAccessible):
 			self.LVCOLUMN = LVCOLUMN
 
 	description = None
-	_lastWindowWithoutContentRawSupport = 0
 
 	def _get_value(self):
 		value=super(ListItemWithoutColumnSupport,self)._get_description()
@@ -332,7 +332,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 					winKernel.readProcessMemory(processHandle,item.pszText,buffer,sizeof(buffer),None)
 			except ArgumentError as e:
 				log.debugWarning("%r,\nCan't retrieve item text, switching to display text instead" % e)
-				type(self)._lastWindowWithoutContentRawSupport = self.windowHandle
+				self.parent._shouldEnableColumnContentRaw = False
 				buffer = None
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
@@ -342,7 +342,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnContent(self, column):
 		res = None
-		if self._lastWindowWithoutContentRawSupport != self.windowHandle:
+		if self.parent._shouldEnableColumnContentRaw:
 			targetColumn = self.parent._columnOrderArray[column - 1]
 			res = self._getColumnContentRaw(targetColumn)
 		if res is None:
