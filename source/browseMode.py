@@ -247,7 +247,17 @@ class TextInfoQuickNavItem(QuickNavItem):
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 	disableAutoPassThrough = False
-	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
+
+	def _isApplicationObject(self,obj):
+		"""
+		Checks whether the given object in this browseMode treeInterceptor is an application (I.e. although the root of the object is represented in the treeInterceptor, its content is not).
+		I.e. an application or modal dialog.
+		"""
+		if obj.role==controlTypes.ROLE_APPLICATION:
+			return True
+		elif obj.role==controlTypes.ROLE_DIALOG and controlTypes.STATE_MODAL in obj.states:
+			return True
+		return False
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
@@ -458,7 +468,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			obj.setFocus()
 			self.passThrough = True
 			reportPassThrough(self)
-		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT or obj.role in self.APPLICATION_ROLES:
+		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT or self._isApplicationObject(obj):
 			obj.setFocus()
 			speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
 		else:
@@ -1228,7 +1238,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		return obj.role not in self.APPLICATION_ROLES and obj.isFocusable and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
+		return not self._isApplicationObject(obj) and obj.isFocusable and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
 
 	def script_activateLongDesc(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -1511,7 +1521,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We found a cached result.
 				return doResult(inApp)
 			objs.append(obj)
-			if obj.role in self.APPLICATION_ROLES:
+			if self._isApplicationObject(obj):
 				return doResult(True)
 			# Cache container.
 			container = obj.container

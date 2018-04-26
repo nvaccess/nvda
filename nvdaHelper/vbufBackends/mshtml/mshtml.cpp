@@ -492,6 +492,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"aria-atomic",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-current",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-placeholder",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-modal",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	pHTMLAttributeCollection2->Release();
 }
 
@@ -874,6 +875,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		language=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	}
 
+	bool isModal=(tempIter=attribsMap.find(L"HTMLAttrib::aria-modal"))!=attribsMap.end()&&tempIter->second==L"true";
+
 	// get parent's formatState
 	unsigned int formatState=0;
 	if(parentNode) {
@@ -1128,7 +1131,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	} else if(nodeName.compare(L"BR")==0) {
 		LOG_DEBUG(L"node is a br tag, adding a line feed as its text.");
 		contentString=L"\n";
-	} else if((!isRoot&&(IARole==ROLE_SYSTEM_APPLICATION||IARole==ROLE_SYSTEM_DIALOG))
+	} else if((!isRoot&&(IARole==ROLE_SYSTEM_APPLICATION||(isModal&&IARole==ROLE_SYSTEM_DIALOG)))
 		||IARole==ROLE_SYSTEM_OUTLINE
 		||nodeName.compare(L"MATH")==0
 	) {

@@ -668,6 +668,10 @@ class WebDialog(NVDAObject):
 	"""
 
 	def _get_shouldCreateTreeInterceptor(self):
-		if self.parent.treeInterceptor:
-			return True
-		return False
+		if controlTypes.STATE_MODAL not in self.states:
+			# Non-modal dialogs should not get a treeInterceptor by default 
+			return False
+		elif not self.parent.treeInterceptor:
+			# Dialogs not part of an existing treeInterceptor should not get  their own treeInterceptor by default.
+			return False
+		return True
