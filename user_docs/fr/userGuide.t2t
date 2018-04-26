@@ -104,7 +104,7 @@ Le dialogue d'installation qui s'affichera vous demandera de confirmer l'install
 Cliquer sur le bouton "Continuer" installera NVDA.
 Deux options détaillées ci-dessous sont disponibles dans ce dialogue.
 Dès que l'installation sera terminée, un message s'affichera vous signalant la fin de l'installation.
-Cliquer sur "OK" démarrera la version nouvellement installée.
+Cliquer sur "OK" lancera la version nouvellement installée.
 
 +++ Utiliser NVDA sur l'écran de connexion à Windows +++[StartAtWindowsLogon]
 Cette option vous permet de choisir si NVDA doit ou non démarrer automatiquement quand vous êtes sur l'écran de connexion, avant que vous ayez saisi un mot de passe.
@@ -932,7 +932,7 @@ Appuyez sur "OK" et NVDA redémarrera.
 C'est une case à cocher qui, une fois cochée, indique à NVDA de sauvegarder automatiquement la configuration courante lorsqu'on arrête NVDA.
 
 ==== Afficher les options d'arrêt avant de quitter NVDA ====[GeneralSettingsShowExitOptions]
-Cette option est une case à cocher vous permettant d'indiquer si un dialogue vous demandant quelle action effectuer doit s'afficher quand vous quittez NVDA.
+Cette option est une case à cocher qui vous permet de décider si un dialogue doit s'afficher ou non lorsque vous quittez NVDA, pour demander quelle action vous souhaitez effectuer.
 Quand elle est cochée, un dialogue apparaît lorsque vous voulez quitter NVDA, vous demandant si vous voulez quitter, redémarrer, redémarrer sans modules complémentaires ou installer des mises à jour en attente s'il y en a.
 Quand elle n'est pas cochée, NVDA s'arrête immédiatement.
 
@@ -2112,9 +2112,9 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Dire tout | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-+++ Assignations de touches pour les Brailliant BI 32, BI 40 and B 80 +++ 
++++ Assignations de touches pour les Brailliant BI 32, BI 40 et B 80 +++ 
 %kc:beginInclude
-|| Name | Key |
+|| Nom | Touche |
 | Menu NVDA | c1+c3+c4+c5 (commande n) |
 | Touche windows+d (minimiser toutes les applications) | c1+c4+c5 (commande d) |
 | Dire tout | c1+c2+c3+c4+c5+c6 |
@@ -2122,7 +2122,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 +++ Assignations de touches pour le Brailliant BI 14 +++ 
 %kc:beginInclude
-|| Name | Key |
+|| Nom | Touche |
 | touche flèche haut | joystick vers le haut |
 | touche flèche bas | joystick vers le bas |
 | touche flèche gauche | joystick vers la gauche |
