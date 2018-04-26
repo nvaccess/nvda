@@ -14,6 +14,8 @@ Traduzido pela Equipa portuguesa do NVDA
 - Novas tabelas de conversão Braille: Lituano 8 pontos, Ucraniano, Mongol grau 2. (#7839)
 - Introduzido um comando para anunciar as informações de formatação do caracter numa célula Braille. (#7106)
 - Ao actualizar o NVDA, já é possível adiar a instalação da versão descarregada para um momento mais opurtuno. (#4263) 
+- Pode agora manter pressionadas, virtualmente, as teclas control, shift, alt, windows e NVDA, a partir do teclado da linha Braille e combinar esses modificadores com letras escritas no teclado Braille, (por exemplo, pressionar Control+s). (#7306) 
+ - Pode associar estas funcionalidades a comandos através da opção Definir comandos, Simulação de teclas do sistema.
 
 
 == Alterações ==
@@ -23,6 +25,7 @@ Traduzido pela Equipa portuguesa do NVDA
 - A tabela Braille Lituano foi renomeada para Lituano 6 pontos, para evitar confusão com a nova tabela de 8 pontos. (#7839)
 - As tabelas Braille Francês (Canadá) grau 1 e grau 2 foram removidas. Passam a ser usadas Francês (unificado) braille de computador de 6 pontos e Grau 2, respectivamente. (#7839)
 - Os botões da  linha secundária de routing das linhas Braille Alva BC6, EuroBraille e Papenmeier passam a anunciar a informação de formatação do caracter respectivo. (#7106)
+- As tabelas de conversão Braille contraído passarão automaticamente para Braille não contraído quando não se está num campo de edição, como controlos onde não haja cursor ou em modo de navegação. (#7306)
 
 
 == Correções ==
@@ -36,6 +39,7 @@ Traduzido pela Equipa portuguesa do NVDA
 - Corrigidos erros na saída Braille em diversas tabelas Braille, incluindo o sinal de maiúsculas em dinamarquês de 8 pontos. (#7526, #7693)
 - O NVDA passa a anunciar mais tipos de bullets no Microsoft Word. (#6778)
 - Ao pressionar o comando para anúncio de informações de formatação, a posição de revisão já não é alterada, e por isso já não são fornecidas falsas informações ao pressionar o comando mais de uma vez. (#7869)
+- A escrita em Braille já não permite Braille contraído onde não seja suportado, ou seja, as palavras completas só serão enviadas ao sistema em áreas editáveis. (#7306)
 
 
 == Alterações para Desenvolvedores ==

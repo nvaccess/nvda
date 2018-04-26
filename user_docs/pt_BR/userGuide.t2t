@@ -149,16 +149,16 @@ Logo que o software iniciar, ouvirá primeiramente um conjunto de tons ascendent
 Dependendo da rapidez do seu computador, ou se executa este leitor de telas através de um dispositivo USB ou de outra mídia mais lenta, poderá demorar alguns instantes para iniciar.
 Se estiver demorando muito tempo para iniciar, você ouvirá "carregando o NVDA. Por favor aguarde..."
 
-Se não ouvir nada disso, ou escutar um som de erro do Windows, ou um conjunto de sons decrescente, isto quer dizer que o NVDA tem um erro, e possivelmente precisará comunicar a falha aos programadores.
+Se não ouvir nada disso, ou escutar um som de erro do Windows, ou um conjunto de sons decrescente, isto quer dizer que o NVDA tem um erro, e possivelmente precisará comunicar a falha ""[reportar um bug]"" aos desenvolvedores.
 Por favor acesse a Página do NVDA para saber como deve proceder.
 
 +++ Diálogo de Boas-vindas +++[WelcomeDialog]
-Quando este leitor de telas iniciar pela primeira vez, ser-lhe-á apresentada uma caixa de diálogo que lhe fornece alguma informação básica sobre a tecla modificadora do NVDA e também sobre seu menu.
+Quando este leitor de telas iniciar pela primeira vez, você será recebido por uma caixa de diálogo que lhe fornece alguma informação básica sobre a tecla modificadora do NVDA e também sobre seu menu.
 (Por favor veja as seções seguintes sobre estes tópicos.)
 A caixa de diálogo também contém uma caixa de combinação e três caixas de seleção.
 A caixa de combinação permite selecionar o esquema ""[layout]"" do teclado.
 A primeira caixa de seleção permite-lhe controlar se o NVDA utilizará o capslock como uma de suas teclas modificadoras.
-A segunda especifica se o NVDA deve iniciar automaticamente após seu logon no Windows e está disponível apenas para cópias instaladas do NVDA.
+A segunda especifica se o NVDA deve iniciar automaticamente depois de você efetuar o login no Windows e está disponível apenas para cópias instaladas do NVDA.
 A terceira permite configurar se este diálogo de boas vindas aparecerá sempre que o NVDA for iniciado.
 
 ++ Sobre os Comandos De Teclado Do NVDA ++[AboutNVDAKeyboardCommands]
@@ -186,7 +186,7 @@ Enquanto o NVDA estiver sendo executado, todas as entradas de toque passarão di
 Com efeito, as ações que podem ser executadas normalmente sem o NVDA não funcionarão.
 
 +++ Explorando a Tela +++[ExploringTheScreen]
-A ação mais básica que você pode executar com a tela de toque visa anunciar o controle ou texto a qualquer ponto da tela.
+A ação mais básica que você pode executar com a tela de toque é anunciar o controle ou texto em qualquer ponto da tela.
 Para fazer isso, ponha um dedo em qualquer parte da tela.
 Você também pode manter seu dedo na tela e movê-lo em volta para ler outros controles e textos por onde ele se move.
 
@@ -196,29 +196,32 @@ A seguir estão algumas instruções sobre como executar os vários gestos de to
 
 ==== Toques ====
 Tocar na tela rapidamente com um ou mais dedos.
+
 Tocar uma vez com 1 dedo é conhecido simplesmente como um toque.
 Tocando com 2 dedos de uma vez consiste num toque com 2 dedos e assim por diante.
 
 Se o mesmo toque for repetido uma ou mais vezes em rápida sucessão, o NVDA irá tratá-lo como um gesto multitoque.
-Tocando duas vezes, resulta num duplo toque.
-Ao Tocar 3 vezes, caracterizará um triplo toque e assim sucessivamente.
-Obviamente, esses gestos multitoque também reconhecem quantos dedos estão sendo usados, pelo que é possível haver gestos como um triplo toque com 2 dedos, um toque com 4 dedos, etc.
+Tocando duas vezes, resulta num toque duplo.
+Ao Tocar 3 vezes, caracterizará um toque triplo e assim sucessivamente.
+Obviamente, esses gestos multitoque também reconhecem quantos dedos estão sendo usados, pelo que é possível haver gestos como um toque triplo com 2 dedos, um toque com 4 dedos, etc.
 
 ==== Varreduras ====
-Execute um movimento de varredura com seus dedos ao longo da tela.
+Passe rapidamente o dedo pela tela.
+
 Existem 4 gestos de varredura possíveis, relativos à direção: varredura para a esquerda, varredura para a direita, varredura para cima e varredura para baixo.
+
 Exatamente como no caso dos toques, é possível usar mais de um dedo para executar os gestos.
 Deste modo, gestos tais como varredura para cima com 2 dedos e varredura para a esquerda com 4 dedos são todos possíveis.
 
 +++ Modos de Toques +++[TouchModes]
-Pela razão de existirem muito mais comandos para o NVDA que gestos de toques possíveis, este leitor de telas possui diferentes modos de toques entre os quais você pode alternar, tornando possíveis disponibilizar determinadas combinações de comandos.
+Pela razão de existir muito mais comandos do NVDA do que possíveis gestos de toque, o NVDA tem vários modos de toque que você pode alternar entre os quais disponibilizam certos subconjuntos  de comandos.
 Os dois modos são o modo de texto e o modo de objeto.
-Certos comandos do NVDA presentes neste documento podem conter um modo de toque listado entre colchetes após o gesto de toque.
+Certos comandos do NVDA presentes neste documento podem conter um modo de toque listado entre parênteses após o gesto de toque.
 Por exemplo, varredura para cima (modo de texto) significa que o comando será executado se você executar uma varredura para cima, mas apenas estando no modo de texto.
 Caso o comando não possua um modo listado, este então funcionará em qualquer modo.
 
 %kc:beginInclude
-Para alternar entre os modos de toques, execute um toque com 3 dedos.
+Para alternar entre os modos de toque, execute um toque com 3 dedos.
 %kc:endInclude 
 
 +++ Teclado tátil +++[TouchKeyboard]
@@ -236,13 +239,13 @@ Muitos dos comandos do NVDA são mencionados ao longo deste guia do usuário, ma
 Para ativar a ajuda de entrada, pressione NVDA+1.
 Para a desativar, pressione novamente NVDA+1.
 Enquanto estiver na ajuda de entrada, ao executar qualquer gesto de entrada (como pressionar uma tecla ou executar um gesto de toque) o NVDA anunciará o que faz (se lhe houver alguma ação associada).
-O atual comando não executará sua função enquanto o modo ajuda de entrada estiver ativado.
+Os comandos reais não serão executados no modo de ajuda de entrada.
 
 ++ O Menu do NVDA ++[TheNVDAMenu]
 O Menu do NVDA permite-lhe controlar suas opções, ir à ajuda, salvar/restaurar sua configuração, alterar os dicionários de voz, acessar ferramentas adicionais e sair do NVDA. 
 
-Com o mesmo em execução, você tem a possibilidade de acessar seu menu a partir de qualquer lugar do Windows pressionando NVDA+N no teclado ou executando um duplo toque com dois dedos caso esteja numa tela de toque.
-Também é possível acessá-lo através da área de notificação do Windows.
+Para acessar o menu do NVDA de qualquer lugar do Windows enquanto o NVDA estiver em execução, pressione NVDA+n no teclado ou toque duas vezes com dois dedos na tela de toque.
+Também é possível acessá-lo através da área de notificação do Windows ""[bandeja do sistema]"".
 Basta clicar com o botão direito no ícone do NVDA que lá se encontra ou mova-se para a área de notificação com a tecla do logotipo do Windows+B, desloque-se com a Seta Abaixo até ao ícone deste leitor de tela e pressione a Tecla de Aplicações que se encontra em muitos teclados antes do Control direito.
 Quando o menu se abrir, pode usar as setas direcionais para navegar pelo mesmo e ativar um item com a tecla Enter. 
 
@@ -2563,8 +2566,11 @@ Por favor, consulte a documentação da linha para descrições de onde essas te
 | tecla capsLock | ponto7+backspace, ponto8+backspace |
 | tecla numLock | ponto3+backspace, ponto6+backspace |
 | tecla shift | ponto7+espaço, l4 |
-| tecla control | ponto7+ponto8+espaço, ponto1+ponto7+ponto8+espaço, ponto4+ponto7+ponto8+espaço, l5 |
-| tecla alt | ponto8+espaço, ponto1+ponto8+espaço, ponto4+ponto8+espaço, l6 |
+| Alternar tecla shift | ponto1+ponto7+espaço, ponto4+ponto7+espaço |
+| tecla control | ponto7+ponto8+espaço, l5 |
+| Alternar tecla control | ponto1+ponto7+ponto8+espaço, ponto4+ponto7+ponto8+espaço |
+| tecla alt | ponto8+espaço, l6 |
+| Alternar tecla alt | ponto1+ponto8+espaço, ponto4+ponto8+espaço |
 | Alternar simulação de entrada de teclado HID | esytime):l1+joystick1Baixo, esytime):l8+joystick1Baixo |
 %kc:endInclude
 
@@ -2654,4 +2660,4 @@ Este site também fornece informações e recursos sobre o desenvolvimento do NV
 
 ""[Para"" conhecer todas as novidades, mudanças e correções introduzidas, consulte o arquivo das novidades que pode ser encontrado no submenu ajuda do menu ""NVDA.]""
 
-""[Você"" pode igualmente obter informações e tirar dúvidas sobre o NVDA na lista de discussão do nvda em português. Para se inscrever nesta lista, envie um e-mail em branco e sem assunto para o endereço: [nvdaemportugues+subscribe@googlegroups.com""]."" nvdaemportugues%2Bsubscribe@googlegroups.com]
+""[Você"" pode igualmente obter informações e tirar dúvidas sobre o NVDA na lista de discussão do nvda em português. Envie um e-mail em branco e sem assunto para o endereço [nvdaemportugues+subscribe@googlegroups.com nvdaemportugues%2Bsubscribe@googlegroups.com] para se inscrever nesta ""lista.]""

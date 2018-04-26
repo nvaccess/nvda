@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-13 00:10+1000\n"
+"POT-Creation-Date: 2018-04-20 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Karl Eick <hozosch@web.de>\n"
 "Language-Team: \n"
@@ -577,6 +577,20 @@ msgstr "an NVDA-Cursor"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automatisch"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Nicht unterstützte Eingabe"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} losgelassen"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} gedrückt"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -1657,7 +1671,7 @@ msgstr "Keine ausführliche Beschreibung."
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 msgid "Shows the long description at this position if one is found."
-msgstr "Zeigt die ausführliche Beschreibung, fals diese vorhanden ist."
+msgstr "Zeigt die ausführliche Beschreibung, falls diese vorhanden ist."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
@@ -4241,6 +4255,46 @@ msgstr ""
 msgid "Translates any braille input"
 msgstr "Übersetzt eine Braille-Eingabe"
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Schaltet virtuell die Umschalttaste um, um eine Tastenkombination mit "
+"Braille-Eingabe zu emulieren"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Schaltet virtuell die Steuerungstaste um, um eine Tastenkombination mit "
+"Braille-Eingabe zu emulieren"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Schaltet virtuell die Alt-Taste um, um eine Tastenkombination mit Braille-"
+"Eingabe zu emulieren"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Schaltet virtuell die linke Windows-Taste um, um eine Tastenkombination mit "
+"Braille-Eingabe zu emulieren"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Schaltet virtuell die NVDA-Taste um, um eine Tastenkombination mit Braille-"
+"Eingabe zu emulieren"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Plugins wurden neu geladen"
@@ -6657,7 +6711,7 @@ msgstr "Es wird gerade kein Titel wiedergegeben."
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
-"Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, fals einer "
+"Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, falls einer "
 "abgespielt wird."
 
 #. Translators: Describes a command.

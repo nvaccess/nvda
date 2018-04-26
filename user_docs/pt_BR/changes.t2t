@@ -15,6 +15,8 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana, e Tiago Melo 
 - Novas tabelas de transcrição braille: lituano de 8 pontos, ucraniano, mongol grau 2. (#7839)
 - Adicionado um script para anunciar informações de formatação do texto em uma célula braille específica. (#7106)
 - Ao atualizar o NVDA, agora é possível postergar a instalação da atualização para um momento posterior de sua preferência. (#4263)
+- Agora você pode alternar control, shift, alt, windows e NVDA a partir do seu teclado braille e combinar esses modificadores com a entrada ""[digitação]"" braille (por exemplo, pressionar control+s). (#7306)
+ - Você pode atribuir esses novos modificadores de alternância usando os comandos encontrados em Teclas emuladas do teclado de sistema na caixa de diálogo Gestos para entrada.
 
 
 == Alterações ==
@@ -23,6 +25,7 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana, e Tiago Melo 
 - A tabela de braille Lituano foi renomeado para Lituano de 6 pontos para evitar confusão com a nova tabela de 8 pontos. (#7839)
 - As tabelas em Francês (Canadá) grau 1 e 2 foram removidas. Em vez disso, as tabelas braille em francês (unificado) de 6 pontos para computador e a Grau 2 serão usadas respectivamente. (#7839)
 - Os botões secundários de rolagem nas linhas braille Alva BC6, EuroBraille e Papenmeier agora anunciam informações de formatação para o texto sob a célula braille desse botão. (#7106)
+- As tabelas de entrada braille abreviadas retornarão automaticamente ao modo não abreviado em casos não editáveis (isto é, controles onde não há cursor ou no modo de navegação). (#7306)
 
 
 == Correção de Falhas ==
@@ -36,6 +39,7 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana, e Tiago Melo 
 - Corrigida a saída de braille malformado para várias tabelas braille, incluindo sinais de maiúsculas em braille dinamarquês abreviado de 8 pontos. (#7526, #7693)
 - NVDA agora pode reportar mais tipos de marcadores no Microsoft Word. (#6778)
 - Pressionando o script para anunciar formatação não move mais o reviewPosition ""[posição da exploração]"" incorretamente e, portanto, pressionando-o várias vezes não dá mais resultados diferentes. (#7869)
+- A entrada braille não permite mais o uso do braille abreviado nos casos em que ele não é suportado (ou seja, palavras inteiras não serão mais enviadas para o sistema fora de conteúdo textual e no modo de navegação). (#7306)
 
 
 == Alterações Específicas para Desenvolvedores ==
