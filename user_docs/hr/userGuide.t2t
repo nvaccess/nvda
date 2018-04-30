@@ -25,7 +25,7 @@ Glavne značajke uključuju:
 - podršku za mnoge brajične retke, uključujući unos kompjutorske brajice za brajične retke koji posjeduju brajičnu tipkovnicu
 - mogućnost pokretanja sa USB memorijskih stickova u cjelosti ili drugih prijenosnih medija bez potrebe instalacije samog čitača zaslona
 - govorni instalacijski program koji je jednostavan za korištenje
-- preveden na 51 jezika
+- preveden na 52 jezika
 - podršku za moderne Windows operativne sustave u 32 i 64 bitnim inačicama
 - mogućnost pokretanja na Windows zaslonu za prijavu i ostalim sigurnosnim zaslonima
 - Izgovaranje kontrola i teksta, pri korištenju dodirnih gesti
@@ -35,7 +35,7 @@ Glavne značajke uključuju:
 
 ++ Internacionalizacija ++[Internationalization]
 Vrlo je važno da ljudi bilo gdje u svijetu, bez obzira na jezik kojim govore, imaju jednak pristup tehnologijama.
-Osim engleskog, NVDA je preveden na 51 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, korejski, litavski, Makedonski, burmanski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
+Osim engleskog, NVDA je preveden na 52 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, kirgizki, korejski, litavski, Makedonski, burmanski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
 
 ++ Podrška Za Sintetizatore Govora ++[SpeechSynthesizerSupport]
 Osim podrške za mnoge jezike, NVDA može omogućiti korisniku čitanje sadržaja na bilo kojem jeziku, sve dok korisnik ima sintetizator govora za taj određeni jezik.
@@ -339,8 +339,10 @@ Objekt koji se trenutno pregledava naziva se objektom navigatora.
 Jednom kad se nađete na objektu, možete pregledati njegov sadržaj koristeći [prečace za pregled teksta #ReviewingText], kad ste u [načinu pregleda objekta #ObjectReview].
 Podrazumjeva se da se navigator objekta pokreće jednako kao i fokus sustava, ali se takvo ponašanje može uključiti ili isključiti.
 
-Imajte na umu da brajica prati [fokus #SystemFocus] i [kursor #SystemCaret] više nego objektnu navigaciju i pregled teksta.
-Ako umjesto toga želite da brajica prati pregled teksta i objektnu navigaciju, trebat ćete [podesiti brajicu usmjerenu na #BrailleTether] pregled.
+Imajte na umu, da brajica podrazumijevano prati [fokus #SystemFocus] i [kursor #SystemCaret] isto kao i pregled teksta i objektnu navigaciju.
+ako želite da brajica prati fokus i kursor, trebate [konfigurirati brajicu da prati #BrailleTether] fokus.
+U tom slučaju, brajica neće pratiti objektnu navigaciju i pregled teksta.
+Ako umjesto toga želite da brajica prati pregled teksta i objektnu navigaciju, trebate [konfigurati brajicu usmjerenu na #BrailleTether] pregled.
 
 Da biste se kretali po objektima, koristite sljedeće prečace:
 
@@ -931,7 +933,7 @@ Ova je opcija potvrdni okvir koji, kad je odabran, sprema konfiguraciju pri izla
 
 ==== Prikaži opcije za isključivanje kad se NVDA isključuje ====[GeneralSettingsShowExitOptions]
 Ova je opcija potvrdni okvir koji vam omogućuje odabir prikazivanja ili ne prikazivanja dijaloškog okvira u kojem vas se pita koju akciju želite izvesti.
-Kad je odabran, pri pokušaju isključivanja NVDA prikazat će se dijaloški okvir u kojem će vas pitati želite li isključiti, ponovno pokrenuti ili ponovno pokrenuti NVDA bez omogućenih dodataka.
+Kad je odabran, pri pokušaju isključivanja NVDA prikazat će se dijaloški okvir u kojem će vas pitati želite li isključiti, ponovno pokrenuti, ponovno pokrenuti NVDA bez omogućenih dodataka, ili instalirati ažuriran na čekanju ako ih ima.
 Kad nije odabran ovaj potvrdni okvir, NVDA će se odmah isključiti.
 
 ==== Reproduciraj zvukove kad se NVDA uključuje ili isključuje ====[GeneralSettingsPlaySounds]
@@ -957,7 +959,11 @@ Ova je opcija dostupna samo u instaliranim inačicama NVDA.
 
 ==== Automatski provjeri postojanje nove verzije NVDA ====[GeneralSettingsCheckForUpdates]
 Ako je ova opcija uključena, NVDA će automatski provjeriti za nadogradnje i obavjestiti vas da je nadogradnja dostupna.
-Također, možete ručno provjeriti ima li nova inačica kad odaberete provjeri postojanje nadogradnje u podizborniku pomoć u NVDA izborniku.
+Također, možete ručno provjeriti postoji li nova inačica kad odaberete provjeri postojanje nadogradnje u podizborniku pomoć u NVDA izborniku.
+
+==== Izvjesti o nadogradnjama na čekanju prilikom pokretanja ====[GeneralSettingsNotifyPendingUpdates]
+Ako je ova opcija omogućena, NVDA će vas informirati ako postoji nadogradnja na čekanju kada se isti ponovno pokrene, te će vam ponuditi mogućnost da sto instalirate.
+Također, Možete ručno instalirati ažuriranje na čekanju iz dijaloškog okvira izlaz (ako je to omogućeno),  Iz NVDA izbornika, ili ako ponovno provjeravate nadogradnju iz izbornika pomć.
 
 +++ Odabir govorne jedinice (NVDA+control+s) +++[SynthesizerSelection]
 Dijaloški okvir govorna jedinica, kojeg možete pronaći pod opcijom "govorna jedinica..." u izborniku postavke, omogućuje vam odabir sintetizatora govora kojeg će NVDA koristiti za govorni izlaz.
@@ -1142,10 +1148,12 @@ Kad se upiše brojčana vrijednost 0, ove se poruke uopće neće prikazivati na 
 Ova opcija omogućuje neograničeno prikazivanje poruka, koje šalje NVDA na brajičnom retku.
 
 %kc:setting
-==== Brajica usmjerena na ====[BrailleTether]
+==== usmjerenje brajice ====[BrailleTether]
 Prečac: NVDA+kontrol+t
 
-Ova opcija omogućuje odabir brajičnog praćenja fokusa ili brajičnog praćenja objekta navigatora/preglednog kursor.
+Ova opcija odlučuje hoće li biti praćen fokus sustava, objekt navigatora/kursor pregleda, ili oboje.
+Kada je opcija "automatski" označena, NVDA će podrazumjevano pratiti sustavni pregled i fokus.
+U tom slučaju kada se pozicija preglednog kursora i/ili objektne navigacije promjeni pod utjecajem korisnikove interakcije, NVDA će se preusmjeriti privremeno na pregled, sve dok se fokus ili pregled ne promijeni.
 
 ==== Čitaj po odlomku ====[BrailleSettingsReadByParagraph]
 Ako je ova opcija omogućena, tekst na brajičnom retku bit će prikazan odlomak po odlomak umjesto redak po redak.
@@ -1751,10 +1759,11 @@ NVDA će vas pitati želite li to doista.
 Kao i kod instalacije, NVDA mora ponovno biti pokrenut da bi dodatak bio potpuno uklonjen.
 Sve dok to ne učinite, status "uklanjanje" će se prikazivati za taj dodatak na popisu.
 
-Da biste uklonili dodatak, pritisnite gumb "Ukloni".
-Da biste omogućili dodatak koji je prije bio omogućen, pritisnite gumb "omogući".
-Možete onemogučiti dodatak ako status dodatka pokazuje "pokrenut", ili omogućen,, ili ga onemogućite ako je dodatak suspendiran ili omogućen.
+Kako biste onemogućili dodatak, pritisnite gumb Onemogući..
+Kako biste   mnemogućili prethodno onemogućen dodatak, pritisnite gumb omogući.
+Možete onemogućiti dodatak, ako je status dodatka omogućen,, ili ga možete omogućiti ako je onemogućen.
 Pri svakom pritisku na gumb omogući-onemogući, stanje dodatka se mijenja kako bi pokazivalo na akciju koja će se izvršiti pri ponovnom pokretanju nvda.
+Ako je dodatak prethodno onemogućen, prikazat će se stanje "omogućeno poslije ponovnog pokretanja". ako je dodatak prethodno omogućen, prikazat će se status, onemogućeno poslije ponovnog pokretanja
 Kao i prilikom uklanjanja i-ili deinstalacije dodataka, trebate ponovno pokrenuti nvda, kako bi vaše izmjene stupile na snagu.
 
 Upravitelj također ima gumb zatvori da biste zatvorili dijaloški okvir.
@@ -1830,14 +1839,6 @@ Za više informacija molimo posjetite Audiologic web stranicu na www.audiologic.
 
 Ova govorna jedinica ne podržava [funkcionalnost slovkanja #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer za NVDA ++[Vocalizer]
-Nuance Vocalizer je komercijalna, visokokvalitetna govorna jedinica koju je razvila tvrtka Nuance Communications, Inc. i specijalno pakiran za NVDA od strane Tiflotecnia, Lda.
-Sadrži preko 50 mogućih glasova za instalaciju koji govore preko 30 jezika.
-Svi su glasovi i komponente pakirani kao NVDA dodaci, što omogućuje potpuno korištenje u prijenosnim inačicama NVDA.
-
-Za više informacija o Nuance Vocalizer za nvda i o načinima na koje ga možete kupiti posjetite web stranicu na adresi [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Postotak od prodaje se donira NV-access da bi se podržao daljnji razvoj NVDA čitača ekrana.
-
 + Podržani brajični retci +[SupportedBrailleDisplays]
 Ovo poglavlje sadrži informacije o brajičnim retcima koje podržava NVDA.
 
@@ -1900,13 +1901,18 @@ Samo za Focus 80:
 | Pomakni brajični redakza redak u naprijed | lijeviBumperBarDolje, desniBumperBarDolje |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec Alva 6 serije/pretvornik protokola ++[OptelecALVA]
 ALVA BC640 i BC680 brajični retci firme [Optelec http://www.optelec.com/] podržani su kada se spajaju putem USB ili bluetooth veze.
+U drugom slučaju, možete spojiti stariji Optelec brajični redak , kao što je braille voyager, koristeći pretvornik protokola kojeg dostavlja Optelec.
 Ne trebate imati specijalne upravljačke programe da biste koristili ove brajične retke.
 Samo spojite brajični redak i podesite NVDA za njegovo korištenje.
 
-Iako ovi brajični retci posjeduju brajičnu tipkovnicu, oni upravljaju prijevodom "brajice u tekst" iz samih sebe.
-Dakle, postavka ulazna brajična tablica nije bitna.
+Upozorenje: NVDA može biti u nemogučnosti koristiti ALVA BC6 brajični redak, kada je isti spojen koristeći ALVA Bluetooth dodatak.
+Ako ste uparivali vaš brajični redak koristeći taj dodatak, a NVDA ga nije prepoznao, preporučujemo uparivanje brajičnog redka koristeći standardne bluetoot postavke operativnog sustava. .
+
+Upozorenje: iako neki od ovih brajičnih redaka imaju tipkovnicu, isti podrazumjevano rukuju brajičnim prijevodom interno, tj. hardverski.
+To znači, da se podrazumijevano ne koristi NVDA sustav unosa (odnosno, postavka ulazne brajučne tablice nema nikakvog utjecaja).
+Za ALV'Ine redke na kojima je instaliran posljednji firmware, sada je moguće onemogučiti tu simulaciju tipkovnice, koristeći tipkovnički prečac.
 
 Sljede prečaci dodjeljeni za ovaj brajični redak za korištenje sa NVDA.
 Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis i smještaj tipaka na brajičnom retku.
@@ -1918,6 +1924,8 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis 
 | Premjesti brajični redak na slijedeći redak | t4 |
 | Pomakni brajični redak u naprijed za redak | t5 ili etouch 3|
 | Prebaci na brajičnu ćeliju | routing |
+| Izvjesti o oblikovanju teksta pod brajičnom ćelijom | secondary routing |
+| Uključi/isključi simulaciju tipkovnice | t1+spEnter |
 | premjesti se na najgornji redak u pregledu | t1+t2 |
 | premjesti se na posljednji redak u pregledu | t4+t5 |
 | prebaci brajicu usmjerenu na | t1+t3 |
@@ -1931,17 +1939,19 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis 
 | strelicaDolje | spDown |
 | strelicaLijevo | spLeft |
 | strelicaDesno | spRight |
-| enter | spEnter |
+| enter | spEnter, enter|
 | izgovori datum i vrijeme | sp1+sp2 |
 | NVDA Izbornik | sp1+sp3 |
 | windows+d (minimiziraj sve aplikacije) | sp1+sp4 |
 | windows+b tipka (fokusiranje područja obavjesti) | sp3+sp4 |
-| windows tipka | sp2+sp3 |
+| windows tipka | sp2+sp3, windows |
 | alt+tab | sp2+sp4 |
 | ctrl+home | t3+spUp |
 | control+end | t3+spDown |
 | home | t3+spLeft |
 | end | t3+spRight |
+| alt | alt |
+| ctrl | control |
 %kc:endInclude
 
 ++ Handy Tech brajični retci ++[HandyTech]
@@ -2068,13 +2078,16 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste saznali smje�
 | Reci sve | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Serije ++[HumanWareBrailliant]
-Brailliant BI i B serije brajičnih redaka tvrtke [HumanWare http://www.humanware.com/], uključujući BI 32, BI 40 i B 80, su podržani kad su spojeni putem USB ili Bluetooth veze.
+++ HumanWare Brailliant BI/B Serije / BrailleNote Touch  ++[HumanWareBrailliant]
+Brailliant BI i B serije brajični retci tvrtke [HumanWare http://www.humanware.com/], uključujući the BI 14, BI 32, BI 40 i B 80, su podržani kada su spojeni putem USB ili bluetooth veze.
 Ako brajični redak spajate putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
 USB upravljački programi nisu potrebni ako  je protokol postavljen na OpenBraille.
 
-Sljede tipkovnički prečaci za ove brajične retke za korištenje uz pomoć NVDA.
+BrailleNote Touch je također podržan, i nisu potrebni dodatni upravljački programi.
+
+Slijede tipkovnički prečaci za Brailliant BI/B i BrailleNote touch brajične retke za NVDA.
 Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali opise tipaka i njihov raspored.
++++ dodijele prečaca za sve modele +++
 %kc:beginInclude
 || Naziv | Prečac |
 | Pomakni brajični redak u natrag | Lijevo |
@@ -2087,19 +2100,37 @@ Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali
 | strelicaDolje | razmak+točkica4 |
 | strelicaLijevo | razmak+točkica3 |
 | strelicaDesno | razmak+točkica6 |
-| NVDA Izbornik | c1+c3+c4+c5 (komanda n) |
 | shift+tab | razmak+točkica1+točkica3 |
 | tab | razmak+točkica4+točkica6 |
 | alt | razmak+točkica1+točkica3+točkica4 (razmak+m) |
 | escape | razmak+točkica1+točkica5 (razmak+e) |
 | enter | točkica8 |
-| windows+d (minimiziraj sve aplikacije) | c1+c4+c5 (komanda d) |
 | windows tipka | razmak+točkica3+točkica4 |
 | alt+tab | razmak+točkica2+točkica3+točkica4+točkica5 (razmak+t) |
+| NVDA Izbornik | razmaknica+točkica1+točkica3+točkica4+točkica5 (razmaknica+n) |
+| windows+d tipka (minimizira sve aplikacije | razmaknica+točkice1+točkica4+točkica5 (razmaknica+d) |
+| Reci sve | razmak+točkica1+točkica2+točkica3+točkica4+točkica5+točkica6 |
+%kc:endInclude
+
++++ dodijeljeni prečaci za Brailliant BI 32, BI 40 and B 80 +++ 
+%kc:beginInclude
+|| Naziv | Prečac |
+| NVDA Izbornik | c1+c3+c4+c5 (command n) |
+| windows+d tipka (minimizira sve programe) | c1+c4+c5 (command d) |
 | Reci sve | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serije ++
++++ Dodijeljeni prečaci za Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Naziv | Prečac |
+| strelica gore | joystick up |
+| strelica dolje | joystick down |
+| strelica lijevo | joystick left |
+| Strelica desno | joystick right |
+| enter | joystick action |
+%kc:endInclude
+
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serije ++[Hims]
 NVDA podržava Braille Sense, Braille EDGE, Smart Beetle i Sync Braille brajične retke tvrtke [Hims http://www.hims-inc.com/] kada su spojeni preko USB ili bluetooth veze. 
 Ako redak spajate preko USB priključka, trebat ćete instalirati USB upravljačke programe tvrtke HIMS na vaš sustav.
 Možete ih preuyeti ovdje: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2248,7 +2279,7 @@ Ovo su Papenmeier prečaci dodijeljeni za korištenje sa NVDA:
 | Premjesti se na prvi sadržani objekt | dn2 |
 | Prebaci se na prethodni objekt | left2 |
 | Prebaci se na slijedeći objekt | right2 |
-| Izvjesti o oblikovanju teksta | Gornji red routing tipki |
+| izvjesti o oblikovanju teksta pod brajičnom ćelijom | Gornji red routing tipki |
 %kc:endInclude
 
 Trio model ima četiri dodatne tipke koje se nalaze na prednjoj strani brajične tipkovnice.
@@ -2322,7 +2353,7 @@ Uređaji koji imaju EAB:
 | Premjesti se na prvi sadržani objekt | dn2 |
 | Premjesti se na slijedeći objekt | right2 |
 | Prebaci se na prethodni objekt | left2 |
-| Izvjesti o oblikovanju teksta | gornji red routing tipki |
+| Izvjesti o oblikovanju teksta pod brajičnom ćelijom | gornji red routing tipki |
 
 BRAILLEX Tiny:
 || Naziv | Prečac |
@@ -2337,7 +2368,7 @@ BRAILLEX Tiny:
 | Prebaci se na prvi sadržani objekt | r1+dn |
 | Prebaci se na prvi objekt | r1+left |
 | Prebaci se na slijedeći objekt | r1+right |
-| Izvjesti o oblikovanju teksta | reportf |
+| Izvijesti o oblikovanju teksta pod brajičnom ćelijom | upper routing strip |
 | Izgovori naslov | l1+gore |
 | izgovori statusnu traku | l2+dolje |
 
@@ -2346,7 +2377,7 @@ BRAILLEX 2D Screen:
 | izgovori trenutni znak u pregledu | l1 |
 | Aktiviraj trenutni objekt navigacije | l2 |
 | Prebacuj brajicu povezanu na | r2 |
-| Izvijesti o oblikovanju teksta | reportf |
+| Izvijesti o oblikovanju teksta ispod brajične ćelije | upper routing strip |
 | Premjesti brajični redak na prethodni redak | up |
 | Pomakni brajični redak u natrag | left |
 | Prebaci brajični redak u naprijed | right |
@@ -2365,6 +2396,8 @@ Sljedeći modeli su podržani:
 - BrailleNote MPower (Serijska i Bluetooth veza)
 - BrailleNote Apex (USB i bluetooth veza)
 -
+
+Za BrailleNote Touch, molimo pogledajte poglavlje [Brailliant BI serije / BrailleNote Touch HumanWareBrailliant].
 
 Ako vaš uređaj podržava više od jedne vrste veze, kada spajate vaš BrailleNote za korištenje sa NVDA, morate postaviti priključak brajičnog terminala u postavkama brajičnog terminala.
 Za više informacija, molimo pogledajte korisničke upute za BrailleNote elektroničku bilježnicu.
@@ -2448,6 +2481,90 @@ Zbog toga, te kako bi se zadržala kompatibilnost sa drugim čitačima ekrana na
 || Naziv | Prečac |
 | prebaci brajični redak u natrag | numeričkiMinus |
 | prebaci brajični redak u naprijed | numeričkiPlus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
+Esys, Esytime и Iris brajični retci tvrtke [Eurobraille http://www.eurobraille.fr/] podržavaju NVDA čitač ekrana.
+Esys i Esytime-Evo podržani su, kada su spojeni putem USB ili Bluetooth veze.
+Stariji Esytime uređaji podržavaju samo USB vezu.
+Iris brajični retci mogu se koristiti, ako su spojeni preko Serijskog priključka.
+Dakle, poslije izbora ovog uređaja trebate označiti priključak na koji je spojen.
+
+Iris i Esys retci imaju brajičnu tipkovnicu sa deset tipaka.
+Dvije tipke koje izgledaju kao razmaknica, lijeva služi kao backspace dok desna služi kao razmaknica.
+
+Slijede prečaci dodijeljeni ovom brajičnom retku za korištenje s NVDA.
+Molimo pogledajte uputstvo za upotrebu vašeg brajičnog retka, kako biste doznali gdje se nalaze te tipke.
+%kc:beginInclude
+|| naziv | tipka |
+| prebaci brajični redak u nazad | switch1-6left, l1 |
+| prebaci brajični redak u naprijed | switch1-6Right, l8 |
+| premjesti na trenutni fokus | switch1-6Left+switch1-6Right, l1+l8 |
+| premjesti se na brajičnu ćeliju | routing |
+| Izvijesti o oblikovanju teksta pod brajičnom ćelijom | doubleRouting |
+| premjesti na prethodni redak u pregledu | joystick1Up |
+| premjesti na sljedeći redak u pregledu | joystick1Down |
+| Premjesti na prethodni znak u retku | joystick1Left |
+| Premjesti na sljedeći znak u pregledu | joystick1Right |
+| Prebaci se na prethodni pregledni način | joystick1Left+joystick1Up |
+| prebaci se na sljedeći pregledni način | joystick1Right+joystick1Down |
+| Izbriši prethodni znak u retku | backSpace |
+| prevodi unešeni tekst i pritišće enter | backSpace+space |
+| insert | točkica3+točkica5+space, l7 |
+| delete | točkica3+točkica6+space |
+| home | točkica1+točkica2+točkica3+space, joystick2Left+joystick2Up |
+| end | točkica4+točkica5+točkica6+space, joystick2Right+joystick2Down |
+| StrelicaLijevo | točkica2+space, joystick2Left, leftArrow |
+| Strelicadesno | točkica5+space, joystick2Right, rightArrow |
+| Strelicagore | točkica1+space, joystick2Up, upArrow |
+| StrelicaDolje | točkica6+space, joystick2Down, downArrow |
+| enter | joystick2Center |
+| pageUp | točkica1+točkica3+space |
+| pageDown | točkica4+točkica6+space |
+| numerički1 | točkica1+točkica6+backspace |
+| numerički2 | točkica1+točkica2+točkica6+backspace |
+| numerički3 | točkica1+točkica4+točkica6+backspace |
+| numerički4 | točkica1+točkica4+točkica5+točkica6+backspace |
+| numerički5 | točkica1+točkica5+točkica6+backspace |
+| numerički6 | točkica1+točkica2+točkica4+točkica6+backspace |
+| numerički7 | točkica1+točkica2+točkica4+točkica5+točkica6+backspace |
+| numerički8 | točkica1+točkica2+točkica5+točkica6+backspace |
+| numerički9 | točkica2+točkica4+točkica6+backspace |
+| numeričkiInsert | točkica3+točkica4+točkica5+točkica6+backspace |
+| Numerički decimalni zarez | točkica2+backspace |
+| Numerički podjeljeno | točkica3+točkica4+backspace |
+| Numerički množenje | točkica3+točkica5+backspace |
+| numeričkiMinus | točkica3+točkica6+backspace |
+| numeričkiPlus | točkica2+točkica3+točkica5+backspace |
+| numeričkiEnter | točkica3+točkica4+točkica5+backspace |
+| escape | točkica1+točkica2+točkica4+točkica5+space, l2 |
+| tab | točkica2+točkica5+točkica6+space, l3 |
+| shift+tab | točkica2+točkica3+točkica5+space |
+| printScreen | točkica1+točkica3+točkica4+točkica6+space |
+| pause | točkica1+točkica4+space |
+| aplikacijska tipka | točkica5+točkica6+backspace |
+| f1 | točkica1+backspace |
+| f2 | točkica1+točkica2+backspace |
+| f3 | točkica1+točkica4+backspace |
+| f4 | točkica1+točkica4+točkica5+backspace |
+| f5 | točkica1+točkica5+backspace |
+| f6 | točkica1+točkica2+točkica4+backspace |
+| f7 | točkica1+točkica2+točkica4+točkica5+backspace |
+| f8 | točkica1+točkica2+točkica5+backspace |
+| f9 | točkica2+točkica4+backspace |
+| f10 | točkica2+točkica4+točkica5+backspace |
+| f11 | točkica1+točkica3+backspace |
+| f12 | točkica1+točkica2+točkica3+backspace |
+| windows | točkica1+točkica2+točkica3+točkica4+backspace |
+| capsLock | točkica7+backspace, točkica8+backspace |
+| numLock | točkica3+backspace, točkica6+backspace |
+| shift | točkica7+space, l4 |
+| Uključi/isključi shift | točkica1+točkica7+razmak, točkica4+točkica7+razmaknica |
+| ctrl | točkica7+točkica8+razmaknica, l5 |
+| Uključi/isključi ctrl | točkica1+točkica7+točkica8+razmaknica, točkica4+točkica7+točkica8+razmaknica |
+| alt | točkica8+razmaknica, l6 |
+| uključi/isključi alt | točkica1+točkica8+razmaknica, točkica4+točkica8+razmaknica |
+| Uključi/isključi simulaciju HID tipkovnice | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

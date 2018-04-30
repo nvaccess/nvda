@@ -2,9 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2015 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited
+#Copyright (C) 2012-2017 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited, Davy Kager
 #Author: Tobias Platen (nvda@lists.thm.de)
-#minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com> and James Teh
+#minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 
 import time
 import itertools
@@ -472,12 +472,6 @@ connection could not be established"""
 			if(self._dev!=None): self._dev.close()
 			self._dev=None
 
-	def script_upperRouting(self, gesture):
-		globalCommands.commands.script_braille_routeTo(gesture)
-		wx.CallLater(50, scriptHandler.executeScript, globalCommands.commands.script_reportFormatting, gesture)
-
-	script_upperRouting.__doc__ = _("Route to and report formatting")
-
 	#global gestures
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
@@ -486,6 +480,7 @@ connection could not be established"""
 			"braille_previousLine": ("br(papenmeier):up",),
 			"braille_nextLine": ("br(papenmeier):dn",),
 			"braille_routeTo": ("br(papenmeier):route",),
+			"braille_reportFormatting": ("br(papenmeier):upperRouting",),
 
 			"braille_toggleTether": ("br(papenmeier):r2",),
 			"review_currentCharacter": ("br(papenmeier):l1",),
@@ -509,10 +504,6 @@ connection could not be established"""
 			"kb:rightArrow": ("br(papenmeier):space+d4",),
 		}
 	})
-
-	__gestures = {
-	 "br(papenmeier):upperRouting": "upperRouting",
-	}
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	"""Input gesture for papenmeier displays"""

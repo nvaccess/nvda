@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 00:10+1000\n"
-"PO-Revision-Date: 2018-01-05 13:59+0200\n"
+"POT-Creation-Date: 2018-04-20 00:10+1000\n"
+"PO-Revision-Date: 2018-04-20 11:10+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -87,6 +87,24 @@ msgstr "Tuntematon syöttömenetelmä"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "Kirjoitus- ja kielioppivirhe: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Kirjoitusvirhe: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "Kielioppivirhe: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -511,17 +529,29 @@ msgstr "{number} / {total}"
 msgid "lv %s"
 msgstr "ts %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "r{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "r{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "s{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "s%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "s{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -529,9 +559,36 @@ msgstr "s%s"
 msgid "%s end"
 msgstr "%s lop"
 
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automaattisesti"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "kohdistusta"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "tarkastelukohdistinta"
+
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automaattinen"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Syötettä ei tueta"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} vapautettu"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} painettu"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -743,18 +800,8 @@ msgstr "ranska (yhdenmukaistettu), 8 pisteen tietokonemerkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+msgid "French (unified) grade 2"
 msgstr "ranska (yhdenmukaistettu), taso 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "ranska (Kanada), taso 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "ranska (Kanada), taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -853,8 +900,13 @@ msgstr "kashmiri, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "liettua"
+msgid "Lithuanian 8 dot"
+msgstr "liettua, 8 pisteen merkistö"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "liettua, 6 pisteen merkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -873,8 +925,13 @@ msgstr "manipuri, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "mongoli"
+msgid "Mongolian grade 1"
+msgstr "mongoli, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "mongoli, taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -958,6 +1015,11 @@ msgstr "punjabi, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "romania"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "venäläinen tietokonemerkistö"
 
@@ -1010,6 +1072,11 @@ msgstr "telugu, taso 1"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "turkki, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "ukraina"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1623,47 +1690,6 @@ msgstr "Alareuna"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, loppuun."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Ei taulukon solussa"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Taulukon reuna"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "Siirtää seuraavalle taulukon riville"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "Siirtää edelliselle taulukon riville"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "Siirtää seuraavaan taulukon sarakkeeseen"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "Siirtää edelliseen taulukon sarakkeeseen"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "Asettelutaulukot pois"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "Asettelutaulukot käytössä"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr ""
-"Ottaa käyttöön tai poistaa käytöstä asettelutaulukoiden ilmaisemisen "
-"selaustilassa."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2795,6 +2821,47 @@ msgstr "Ei valintaa"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "Kopioitu leikepöydälle"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Ei taulukon solussa"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Taulukon reuna"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "Siirtää seuraavalle taulukon riville"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "Siirtää edelliselle taulukon riville"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "Siirtää seuraavaan taulukon sarakkeeseen"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "Siirtää edelliseen taulukon sarakkeeseen"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Asettelutaulukot pois"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Asettelutaulukot käytössä"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Ottaa käyttöön tai poistaa käytöstä asettelutaulukoiden ilmaisemisen "
+"selaustilassa."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -4024,18 +4091,10 @@ msgstr ""
 "Ottaa käyttöön tai poistaa käytöstä puheentarkastelun, kelluvan ikkunan, "
 "jonka avulla voit tarkastella NVDA:n tällä hetkellä puhumaa tekstiä."
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "tarkastelukohdistinta"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "kohdistusta"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
+msgid "Braille tethered %s"
 msgstr "Pistenäyttö seuraa %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -4155,6 +4214,10 @@ msgstr ""
 "Siirtää kohdistimen tämän pistesolun alla olevan objektin kohdalle tai avaa "
 "sen."
 
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "Ilmoittaa tässä pistesolussa olevan tekstin muotoilutiedot."
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "Siirtää pistenäytön edelliselle riville."
@@ -4183,6 +4246,46 @@ msgstr ""
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Kääntää minkä tahansa pistekirjoitussyötteen."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti Vaihto-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Vaihtaa virtuaalisesti Ctrl-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti Alt-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Vaihtaa virtuaalisesti vasemman Windows-näppäimen tilaa pikanäppäimen "
+"emuloimiseksi pistekirjoitusta syötettäessä"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti NVDA-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -5807,10 +5910,22 @@ msgstr "Valinta peruttu"
 msgid "row %s"
 msgstr "rivi %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "jakaantunut %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sarake %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "jakaantunut rivi {row} sarake {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6132,6 +6247,14 @@ msgstr "kirjoitusvirhe"
 msgid "out of spelling error"
 msgstr "kirjoitusvirheen loppu"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "Kielioppivirhe"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "kielioppivirheen loppu"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "taulukon loppu"
@@ -6309,14 +6432,22 @@ msgid "Error checking for update."
 msgstr "Virhe tarkistettaessa päivitystä."
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Virhe"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "NVDA:n päivitys"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr "NVDA {version} on ladattu ja odottaa asentamista."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6328,9 +6459,15 @@ msgstr "Versio {version} on saatavilla."
 msgid "No update available."
 msgstr "Ei päivitystä saatavilla."
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "Lataa ja &asenna päivitys"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "&Asenna NVDA {version}"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "&Lataa päivitys uudelleen"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6345,6 +6482,23 @@ msgstr "Muistuta &myöhemmin"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Sulje"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "NVDA {version} on valmiina asennettavaksi.\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "&Asenna päivitys"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "&Lykkää päivitystä"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "Päivitystä ei voi lykätä."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6361,15 +6515,6 @@ msgstr "Ladataan"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "Virhe ladattaessa päivitystä."
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "Päivitys ladattu. Seuraavaksi se asennetaan."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "Asenna päivitys"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7072,8 +7217,29 @@ msgid "off"
 msgstr "Uudelleentoisto pois"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "Alva BC640/680"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6/protokollamuunnin"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Bluetooth-sarjaportti: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "HID-näppäimistöemulointia ei tueta"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "HID-näppäimistöemulointi käytössä"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "HID-näppäimistöemulointi pois käytöstä"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "Ottaa HID-näppäimistöemuloinnin käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7086,19 +7252,31 @@ msgstr "Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
-msgstr "Sarja: {portName}"
+msgstr "Sarjaportti: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "HumanWare Brailliant BI/B / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Eurobraille Esys/Esytime/Iris"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "HID-näppäimistöemulointi ei ole käytettävissä."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Ottaa HID-näppäimistöemuloinnin käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7143,10 +7321,6 @@ msgstr "Ei pistenäyttöä"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX (uudet mallit)"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "Siirrä pistesoluun ja lue muotoilut."
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7475,6 +7649,14 @@ msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
 msgid "Donate"
 msgstr "Lahjoita"
 
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "Asenna odottava &päivitys"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Suorita aiemmin ladattu NVDA-päivitys"
+
 msgid "E&xit"
 msgstr "&Sulje"
 
@@ -7579,6 +7761,10 @@ msgstr "Käynnistä uudelleen ja poista lisäosat käytöstä"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "Käynnistä uudelleen ja ota käyttöön virheenkorjaus-lokitaso"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Asenna odottava päivitys"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7725,20 +7911,20 @@ msgstr "asenna"
 msgid "remove"
 msgstr "poista"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "poista käytöstä"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "ei käytössä uudelleenkäynnistyksen jälkeen"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "ota käyttöön"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "käytössä uudelleenkäynnistyksen jälkeen"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
+msgid "disabled"
 msgstr "ei käytössä"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
+msgid "enabled"
 msgstr "käytössä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
@@ -8229,6 +8415,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "Tarkista &päivitykset automaattisesti"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "Ilmoita käynnistettäessä &odottavasta päivityksestä"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8970,8 +9161,8 @@ msgid "Show &messages indefinitely"
 msgstr "Näytä il&moitukset pysyvästi"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "Pist&enäyttö seuraa:"
+msgid "Tether B&raille:"
+msgstr "Pistenäyttö s&euraa:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9159,8 +9350,135 @@ msgstr "RGB: punainen {rgb.red}, vihreä {rgb.green}, sininen {rgb.blue}"
 msgid "%s items"
 msgstr "%s kohdetta"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Otsikoita ei voi määrittää. Ota käyttöön taulukon otsikoiden lukeminen "
+"dokumenttien muotoiluasetuksista"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Määritä rivi {rowNumber} ja sarake {columnNumber} sarakeotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty sarakeotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu sarakeotsikoista"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Riviä {rowNumber} ja saraketta {columnNumber} ei löydy sarakeotsikoista"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Tämä solu määritetään kerran painettaessa ensimmäiseksi sarakeotsikoksi sen "
+"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
+"painaminen nollaa solun nykyisen sarakeotsikon."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Määritä rivi {rowNumber} ja sarake {columnNumber} riviotsikoiden alkukohdaksi"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty riviotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu riviotsikoista"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy riviotsikoista"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Tämä solu määritetään kerran painettaessa ensimmäiseksi riviotsikoksi sen "
+"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
+"painaminen nollaa solun nykyisen riviotsikon."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "Ei kommentteja"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "Ei taulukossa"
+
 msgid "invoke"
 msgstr "avaa"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Selitteet"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "V&irheet"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "Lisäys: {text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "Poisto: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "Jäljitetty muutos: {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Kommentti: {comment}, muokkaaja: {author}, päivämäärä: {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "{comment}, muokkaaja: {author}, päivämäärä: {date}"
 
 msgid "Desktop"
 msgstr "Työpöytä"
@@ -9639,7 +9957,7 @@ msgstr "Tässä kaaviossa on yhteensä %d sarjaa"
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #, python-brace-format
 msgid "series {number} {name}"
-msgstr "sarja {number} {name}"
+msgstr "sarja {number}: {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
@@ -9654,7 +9972,7 @@ msgstr "Kaavioelementit"
 #. For example, this might report "foo series 1 of 2"
 #, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "sarja {seriesName} {seriesIndex} / {seriesCount}"
+msgstr "Sarja {seriesIndex} / {seriesCount}: {seriesName}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
 #, python-brace-format
@@ -9687,7 +10005,7 @@ msgstr "{categoryAxisTitle} {categoryAxisData}: "
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "Category {categoryAxisData}: "
-msgstr "Luokka {categoryAxisData}: "
+msgstr "Luokka: {categoryAxisData}, "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
@@ -9700,7 +10018,7 @@ msgstr "{valueAxisTitle} {valueAxisData}"
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 #, python-brace-format
 msgid "value {valueAxisData}"
-msgstr "arvo {valueAxisData}"
+msgstr "arvo: {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
@@ -9998,17 +10316,6 @@ msgstr "&Laskentataulukot"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "väliltä {start} ja {end}"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Otsikoita ei voi määrittää. Ota käyttöön taulukon otsikoiden lukeminen "
-"dokumenttien muotoiluasetuksista"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -10335,12 +10642,6 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "Kirjoitusvirhe: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10376,74 +10677,6 @@ msgstr "%.1f riviä"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Taulukon kuvaus"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Määritä rivi {rowNumber} ja sarake {columnNumber} sarakeotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty sarakeotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu sarakeotsikoista"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"Riviä {rowNumber} ja saraketta {columnNumber} ei löydy sarakeotsikoista"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"Tämä solu määritetään kerran painettaessa ensimmäiseksi sarakeotsikoksi sen "
-"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
-"painaminen nollaa solun nykyisen sarakeotsikon."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Määritä rivi {rowNumber} ja sarake {columnNumber} riviotsikoiden alkukohdaksi"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty riviotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu riviotsikoista"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy riviotsikoista"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"Tämä solu määritetään kerran painettaessa ensimmäiseksi riviotsikoksi sen "
-"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
-"painaminen nollaa solun nykyisen riviotsikon."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10556,14 +10789,6 @@ msgstr "{offset:.3g} pistettä"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picaa"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "Ei kommentteja"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista."
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "Yksinkertainen riviväli"
@@ -10576,20 +10801,47 @@ msgstr "Kaksinkertainen riviväli"
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "Ei taulukossa"
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "ranska (Kanada), taso 1"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&Selitteet"
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "ranska (Kanada), taso 2"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "V&irheet"
+#~ msgid "Mongolian"
+#~ msgstr "mongoli"
+
+#~ msgid "Download and &install update"
+#~ msgstr "Lataa ja &asenna päivitys"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "Päivitys ladattu. Seuraavaksi se asennetaan."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "Siirrä pistesoluun ja lue muotoilut."
+
+#~ msgid "r%s"
+#~ msgstr "r%s"
+
+#~ msgid "c%s"
+#~ msgstr "s%s"
+
+#~ msgid "suspended"
+#~ msgstr "ei käytössä"
+
+#~ msgid "running"
+#~ msgstr "käytössä"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "Alva BC640/680"
+
+#~ msgid "review"
+#~ msgstr "tarkastelukohdistinta"
+
+#~ msgid "focus"
+#~ msgstr "kohdistusta"
+
+#~ msgid "B&raille tethered to:"
+#~ msgstr "Pist&enäyttö seuraa:"
 
 #~ msgid "Not defined"
 #~ msgstr "ei määritetty"

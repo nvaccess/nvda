@@ -3,6 +3,55 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.1 =
+Hoogtepunten in deze versie zijn ondersteuning voor grafieken in Microsoft Word en PowerPoint, toegevoegde ondersteuning voor brailleleesregels waaronder Eurobraille en de  Optelec protocol converter, verbeterde ondersteuning voor Hims en Optelec brailleleesregels, prestatieverbeteringen voor Mozilla Firefox 58 en nieuwer, en nog veel meer.
+
+== Nieuwe Functies ==
+- Het is nu mogelijk om te werken met grafieken in Microsoft Word en Microsoft PowerPoint op een vergelijkbare manier als in Microsoft Excel. (#7046)
+ - In Microsoft Word: navigeer in bladermodus naar een ingebedde grafiek en druk op enter om interactie met deze grafiek te starten.
+ - In Microsoft PowerPoint tijdens het bewerken van een dia: tab naar een grafiekobject en druk op enter of spatie voor interactie met de grafiek.
+ - OM de interactie met een grafiek af te breken, druk op escape.
+- Nieuwe taal: Kirgizisch.
+- Ondersteuning toegevoegd voor VitalSource Bookshelf. (#7155)
+- Ondersteuning toegevoegd voor de Optelec protocol converter, een apparaat dat iemand in staat stelt om een Braille Voyager of Satellite leesregel aan te sturen via het ALVA BC6 communicatieprotocol. (#6731)
+- Het is nu mogelijk om braille-invoer te gebruiken met een ALVA 640 Comfort brailleleesregel. (#7733) 
+ - De braille-invoerfunctionaliteit van NVDA kan gebruikt worden met deze en andere BC6 leesregelsmet firmware 3.0.0 en nieuwer.
+- Vroege ondersteuning toegevoegd voor Google Sheets met de braille-modus ingeschakeld. (#7935)
+- Ondersteuning voor Eurobraille Esys, Esytime en Iris brailleleesregels. (#7488)
+
+
+== Veranderingen ==
+- De drivers voor HIMS Braille Sense/Braille EDGE/Smart Beetle en Hims Sync Braille leesregels zijn vervangen door één driver. De nieuwe driver wordt automatisch geactiveerd voor voormalige  syncBraille driver gebruikers. (#7459) 
+ - Sommige toetsen, met name de scrolltoetsen, zijn opnieuw toegewezen om beter aan te sluiten bij hoe deze toetsen gebruikt worden binnen producten van Hims. Raadpleeg de gebruikershandleiding voor meer details.
+- Bij het typen op een schermtoetsenbord via aanraakinteractie is het nu standaard zo dat u dubbel moet tikken op een toets om deze te activeren, op de zelfde manier waarop u een ander element zou activeren. (#7309)
+ - Om de bestaande modus ("direct typen met aanraken") te gebruiken waarbij het simpelweg optillen van uw vinger genoeg is om de toets te activeren, moet u deze optie inschakelen in  het nieuwe instellingenvenster aanraakinteractie in het optiesmenu.
+- Het is niet langer nodig om braille expliciet te koppelen aan de focus of de leescursor, aangezien dit vanaf nu standaard automatisch gebeurd. (#2385) 
+ - Houd er rekening mee  dat het koppelen aan de leescursor alleen gebeurt bij het gebruik van een commando voor het bedienen van de leescursor of objectnavigatie. Scrollen activeert dit nieuwe gedrag dus niet.
+
+
+== Opgeloste Problemen ==
+- Het tonen van meldingen in de bladermodus, zoals het bekijken van opmaakinformatie door middel van het twee keer snel indrukken van NVDA+f, gaat niet langer verkeerd wanneer NVDA geïnstalleerd is in een map waarvan de naam niet-ASCII-tekens bevat. (#7474)
+- De focus wordt opnieuw correct hersteld  bij het terugkeren naar Spotify vanuit een andere applicatie. (#7689)
+- In de Windows 10 Fall Creaters Update gaat het bijwerken van NVDA niet langer verkeerd wanneer Beheerde maptoegang is ingeschakeld vanuit het Windows Defender beveiligingscentrum. (#7696)
+- Het detecteren van de scrolltoetsen van Hims Smart Beetle leesregels is niet langer onbetrouwbaar. (#6086)
+- Een lichte prestatieverbetering bij het weergeven van grote hoeveelheden inhoud in Mozilla Firefox 58 en nieuwer. (#7719)
+- In Microsoft Outlook veroorzaakt het lezen van tabellen niet langer fouten. (#6827)
+- Invoerhandelingen van brailleleesregels die modifier-toetsen emuleren, kunnen nu ook gecombineerd worden met andere geëmuleerde systeemtoetsen wanneer één van de invoerhandelingen specifiek is voor een bepaald model leesregel. (#7783)
+- Bladermodus in Mozilla Firefox werkt nu naar behoren in pop-ups die getoond worden door extensies als LastPass en bitwarden. (#7809)
+- NVDA loopt niet langer vast bij iedere focuswijziging wanneer Firefox of Chrome niet meer reageert, bijvoorbeeld vanwege een bevriezingsprobleem of vastloper. (#7818)
+- In Twitter-clients zoals Chicken Nugget zal NVDA de laatste 20 karakters niet langer negeren bij het lezen van tweets met  280 karakters. (#7828)
+- NVDA gebruikt nu de juiste taal voor het melden van symbolen bij het selecteren van tekst. (#7687)
+- In recente versies van Office 365 is het opnieuw mogelijk om door Excel-grafieken te navigeren met de pijltjestoetsen. (#7046)
+- In spraak- en braille-uitvoer worden de diverse statusindicatoren nu altijd in de zelfde volgorde getoond, ongeacht of ze positief of negatief zijn. (#7076)
+- In apps zoals Windows 10 Mail heeft NVDA bij het gebruik van backspace niet langer problemen met het melden van verwijderde karakters. (#7456)
+- Alle toetsen op de Hims Braille Sense Polaris leesregels werken nu zoals verwacht. (#7865)
+- NVDA heeft niet langer problemen met starten onder bepaalde versies van Windows 7 vanwege een foutmelding over een interne  api-ms dll. Opstartproblemen konden zich voordoen  wanneer een bepaalde versie van de Visual Studio 2017 redistributables geÏnstalleerd was door een andere applicatie. (#7975) 
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2017.4 =
 Hoogtepunten in deze versie zijn sterk verbeterde ondersteuning voor het web zoals standaard bladermodus voor dialoogvensters binnen websites, beter melden van labels van gegroepeerde velden in bladermodus, ondersteuning voor nieuwe Windows 10 technologieën zoals Windows Defender Application Guard en Windows 10 met ARM64, en automatisch melden van schermstand en batterijstatus.  
 Let op: deze versie van NVDA ondersteunt Windows XP en Windows Vista niet meer. De minimumvereiste voor NVDA is nu windows 7 met Service Pack 1.
