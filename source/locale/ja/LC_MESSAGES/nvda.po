@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 00:10+1000\n"
-"PO-Revision-Date: 2018-04-05 17:32+0900\n"
+"POT-Creation-Date: 2018-04-20 00:10+1000\n"
+"PO-Revision-Date: 2018-04-20 14:43+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -576,6 +576,20 @@ msgstr "レビュー"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "自動設定"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "サポートされていない入力"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} 押されていません"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} 押されています"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -4156,6 +4170,36 @@ msgstr "点字入力を変換して enter キーを押す"
 msgid "Translates any braille input"
 msgstr "点字入力の変換"
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "点字入力でシフトキーを押したり離したりする操作をエミュレート"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr "点字入力でコントロールキーを押したり離したりする操作をエミュレート"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "点字入力でオルトキーを押す操作をエミュレート"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr "点字入力でWindowsキーを押す操作をエミュレート"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "点字入力でNVDAキーを押したり離したりする操作をエミュレート"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "プラグインを再度読み込みました"
@@ -7084,7 +7128,7 @@ msgstr "Bluetooth シリアルポート: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
-msgstr "HID キーボード シミュレーションの切替に対応していません"
+msgstr "HID キーボード シミュレーションの切り替えに対応していません"
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
@@ -7096,7 +7140,7 @@ msgstr "HID キーボード シミュレーション無効"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggles HID keyboard simulation"
-msgstr "HID キーボード シミュレーションの切替"
+msgstr "HID キーボード シミュレーションの切り替え"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7133,7 +7177,7 @@ msgstr "HID キーボード シミュレーションは利用できません"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggle HID keyboard simulation"
-msgstr "HID キーボード シミュレーション"
+msgstr "HID キーボード シミュレーションの切り替え"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 00:10+1000\n"
-"PO-Revision-Date: 2018-03-30 11:02+0200\n"
+"POT-Creation-Date: 2018-04-20 00:10+1000\n"
+"PO-Revision-Date: 2018-04-20 11:10+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -575,6 +575,20 @@ msgstr "tarkastelukohdistinta"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automaattinen"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Syötettä ei tueta"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} vapautettu"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} painettu"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -4232,6 +4246,46 @@ msgstr ""
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Kääntää minkä tahansa pistekirjoitussyötteen."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti Vaihto-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Vaihtaa virtuaalisesti Ctrl-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti Alt-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Vaihtaa virtuaalisesti vasemman Windows-näppäimen tilaa pikanäppäimen "
+"emuloimiseksi pistekirjoitusta syötettäessä"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti NVDA-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
