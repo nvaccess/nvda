@@ -511,7 +511,6 @@ the NVDAObject for IAccessible
 				pDoc=None
 			if pDoc:
 				self._ITextDocumentObject=pDoc
-				self.useITextDocumentSupport=True
 				self.editAPIVersion=2
 				from NVDAObjects.window.edit import Edit
 				clsList.append(Edit)
