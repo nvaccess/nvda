@@ -32,7 +32,6 @@ import speechViewer
 import winUser
 import api
 import guiHelper
-import touchHandler
 import winVersion
 
 try:
@@ -185,8 +184,14 @@ class MainFrame(wx.Frame):
 		try:
 			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceError:
-			# Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+			# Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+			# (example: when trying to open keyboard settings when general settings dialog is open).
 			messageBox(_("An NVDA settings dialog is already open. Please close it first."),_("Error"),style=wx.OK | wx.ICON_ERROR)
+		except MultiCategorySettingsDialog.CategoryUnavailableError:
+			# Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+			# (example: when trying to open touch interaction settings on an unsupported system).
+			messageBox(_("The settings panel you tried to open is unavailable on this system."),_("Error"),style=wx.OK | wx.ICON_ERROR)
+
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
@@ -224,44 +229,50 @@ class MainFrame(wx.Frame):
 		else:
 			wx.GetApp().ExitMainLoop()
 
+	def onNVDASettingsCommand(self,evt):
+		self._popupSettingsDialog(NVDASettingsDialog)
+
 	def onGeneralSettingsCommand(self,evt):
-		self._popupSettingsDialog(GeneralSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
 
-	def onSynthesizerCommand(self,evt):
-		self._popupSettingsDialog(SynthesizerDialog)
+	def onSelectSynthesizerCommand(self,evt):
+		self._popupSettingsDialog(SynthesizerSelectionDialog)
 
-	def onVoiceCommand(self,evt):
-		self._popupSettingsDialog(VoiceSettingsDialog)
+	def onSpeechSettingsCommand(self,evt):
+		self._popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
 
-	def onBrailleCommand(self,evt):
-		self._popupSettingsDialog(BrailleSettingsDialog)
+	def onSelectBrailleDisplayCommand(self,evt):
+		self._popupSettingsDialog(BrailleDisplaySelectionDialog)
+
+	def onBrailleSettingsCommand(self,evt):
+		self._popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
 
 	def onKeyboardSettingsCommand(self,evt):
-		self._popupSettingsDialog(KeyboardSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
 	def onMouseSettingsCommand(self,evt):
-		self._popupSettingsDialog(MouseSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
 
 	def onTouchInteractionCommand(self,evt):
-		self._popupSettingsDialog(TouchInteractionDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, TouchInteractionPanel)
 
 	def onReviewCursorCommand(self,evt):
-		self._popupSettingsDialog(ReviewCursorDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
 
 	def onInputCompositionCommand(self,evt):
-		self._popupSettingsDialog(InputCompositionDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
 
 	def onObjectPresentationCommand(self,evt):
-		self._popupSettingsDialog(ObjectPresentationDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
 
 	def onBrowseModeCommand(self,evt):
-		self._popupSettingsDialog(BrowseModeDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
 
 	def onDocumentFormattingCommand(self,evt):
-		self._popupSettingsDialog(DocumentFormattingDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
 	def onUwpOcrCommand(self, evt):
-		self._popupSettingsDialog(UwpOcrDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
 	def onSpeechSymbolsCommand(self, evt):
 		self._popupSettingsDialog(SpeechSymbolsDialog)
@@ -372,50 +383,12 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 		self.menu=wx.Menu()
 		menu_preferences=self.preferencesMenu=wx.Menu()
-		# Translators: The label for the menu item to open general Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&General settings..."),_("General settings"))
-		self.Bind(wx.EVT_MENU, frame.onGeneralSettingsCommand, item)
-		# Translators: The label for the menu item to open Synthesizer settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_("Change the synthesizer to be used"))
-		self.Bind(wx.EVT_MENU, frame.onSynthesizerCommand, item)
-		# Translators: The label for the menu item to open Voice Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume to use"))
-		self.Bind(wx.EVT_MENU, frame.onVoiceCommand, item)
-		# Translators: The label for the menu item to open Braille Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("B&raille settings..."))
-		self.Bind(wx.EVT_MENU, frame.onBrailleCommand, item)
-		# Translators: The label for the menu item to open Keyboard Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
-		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
-		# Translators: The label for the menu item to open Mouse Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
-		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
-		# Touch handler might not be ready, so check if touch interaction is even supported.
-		if touchHandler.touchSupported():
-			# Translators: The label for the menu item to open Touch Interaction dialog.
-			item = menu_preferences.Append(wx.ID_ANY, _("&Touch interaction..."),
-				# Translators: tooltip for touch interaction settings item.
-				_("Change how NVDA interacts with the touchscreen"))
-			self.Bind(wx.EVT_MENU, frame.onTouchInteractionCommand, item)
-		# Translators: The label for the menu item to open Review Cursor dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
-		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
-		# Translators: The label for the menu item to open Input Composition Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Input composition settings..."),_("Configure how NVDA reports input composition and candidate selection for certain languages")) 
-		self.Bind(wx.EVT_MENU, frame.onInputCompositionCommand, item)
-		# Translators: The label for the menu item to open Object Presentation dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
-		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
-		# Translators: The label for the menu item to open Browse Mode settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 
-		self.Bind(wx.EVT_MENU, frame.onBrowseModeCommand, item)
-		# Translators: The label for the menu item to open Document Formatting settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change settings of document properties")) 
-		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
-		if winVersion.isUwpOcrAvailable():
-			# Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-			item = menu_preferences.Append(wx.ID_ANY, _("&Windows 10 OCR..."))
-			self.Bind(wx.EVT_MENU, frame.onUwpOcrCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,
+			# Translators: The label for the menu item to open NVDA Settings dialog.
+			_("&Settings..."),
+			# Translators: The description for the menu item to open NVDA Settings dialog.
+			_("NVDA settings"))
+		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Default speech dictionary dialog.
@@ -948,3 +921,6 @@ def shouldConfigProfileTriggersBeSuspended():
 		if window.IsShown() and getattr(window, "shouldSuspendConfigProfileTriggers", False):
 			return True
 	return False
+
+def _isDebug():
+	return config.conf["debugLog"]["gui"]
