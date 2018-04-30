@@ -549,11 +549,11 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 		if(driver._baud==1):#brxcom
 			if(keys>255 and keys<512):
-				self.routingIndex = keys-256-driver._voffset
+				self.index = keys-256-driver._voffset
 				self.id = "route"
 				return None
 			elif(keys>511 and keys <786):
-				self.routingIndex = keys-512-driver._voffset
+				self.index = keys-512-driver._voffset
 				self.id="upperRouting"
 				return None
 			else:
@@ -569,7 +569,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 		if(len(decodedkeys)==1 and decodedkeys[0]>=32 and decodedkeys[0]<32+driver.numCells*2):
 			#routing keys
-			self.routingIndex = (decodedkeys[0]-32)/2
+			self.index = (decodedkeys[0]-32)/2
 			self.id = "route"
 			if(decodedkeys[0] % 2 == 1):
 				self.id="upperRouting"

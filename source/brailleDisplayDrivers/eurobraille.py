@@ -619,7 +619,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				if groupKeysDown & 0x100:
 					names.append("backSpace")
 			if group == EB_KEY_INTERACTIVE: # Routing
-				self.routingIndex = (groupKeysDown & 0x3f)-1
+				self.index = (groupKeysDown & 0x3f)-1
 				names.append("doubleRouting" if groupKeysDown>>8 ==ord(EB_KEY_INTERACTIVE_DOUBLE_CLICK) else "routing")
 			if group == EB_KEY_COMMAND:
 				for key, keyName in display.keys.iteritems():

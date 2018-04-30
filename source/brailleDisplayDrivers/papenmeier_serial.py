@@ -260,10 +260,10 @@ class InputGesture(braille.BrailleDisplayGesture):
 			self.id = driver._lastkey
 			return
 		if(pressed==1 and keyindex>=0):
-			self.routingIndex = keyindex-driver._offsetHorizontal
+			self.index = keyindex-driver._offsetHorizontal
 			self.id = "route"
 			if(keyindex>255):
-				self.routingIndex -= 256
+				self.Index -= 256
 				self.id = "upperRouting"
 		elif(pressed == 0):
 			k = brl_keyname(keyindex, driver)

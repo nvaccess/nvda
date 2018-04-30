@@ -440,10 +440,10 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			if group == ALVA_CR_GROUP:
 				if number & ALVA_2ND_CR_MASK:
 					names.append("secondRouting")
-					self.routingIndex = number & ~ALVA_2ND_CR_MASK
+					self.index = number & ~ALVA_2ND_CR_MASK
 				else:
 					names.append("routing")
-					self.routingIndex = number
+					self.index = number
 			else:
 				try:
 					names.append(ALVA_KEYS[group][number])

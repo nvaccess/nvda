@@ -346,11 +346,11 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			if group == BAUM_ROUTING_KEYS:
 				for index in xrange(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):
-						self.routingIndex = index
+						self.index = index
 						names.append("routing")
 						break
 			elif group == BAUM_ROUTING_KEY:
-				self.routingIndex = groupKeysDown - 1
+				self.index = groupKeysDown - 1
 				names.append("routing")
 			else:
 				for index, name in enumerate(KEY_NAMES[group]):

@@ -336,7 +336,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 					self.space = False
 			if key >= FIRST_ROUTING_KEY:
 				names.append("routing")
-				self.routingIndex = key - FIRST_ROUTING_KEY
+				self.index = key - FIRST_ROUTING_KEY
 			else:
 				try:
 					names.append(KEY_NAMES[key])

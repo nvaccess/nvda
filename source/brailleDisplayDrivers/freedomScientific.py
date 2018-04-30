@@ -296,10 +296,10 @@ class RoutingGesture(InputGesture):
 
 	def __init__(self,routingIndex,topRow=False):
 		if topRow:
-			self.id="topRouting%d"%(routingIndex+1)
+			self.id="topRouting"
 		else:
 			self.id="routing"
-			self.routingIndex=routingIndex
+		self.index=routingIndex
 		super(RoutingGesture,self).__init__()
 
 class WizWheelGesture(InputGesture):
