@@ -173,7 +173,9 @@ def _speak(text):
 	global isSpeaking
 	uniqueID=c_int()
 	isSpeaking = True
-	flags = espeakCHARS_WCHAR | espeakSSML | espeakPHONEMES
+	# eSpeak can only process compound emojis  when using a UTF8 encoding
+	text=text.encode('utf8',errors='ignore')
+	flags = espeakCHARS_UTF8 | espeakSSML | espeakPHONEMES
 	return espeakDLL.espeak_Synth(text,0,0,0,0,flags,byref(uniqueID),0)
 
 def speak(text):
