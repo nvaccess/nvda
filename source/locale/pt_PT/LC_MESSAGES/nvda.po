@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-06 00:10+1000\n"
+"POT-Creation-Date: 2018-04-20 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -575,6 +575,20 @@ msgstr "Cursor de Revisão"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automático"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Introdução não suportada"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} libertada"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, fuzzy, python-brace-format
+msgid "{modifier} pressed"
+msgstr "não pressionado"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -2534,7 +2548,7 @@ msgstr "só de leitura"
 
 #. Translators: This is presented when a tree view or submenu item is expanded.
 msgid "expanded"
-msgstr "espandido"
+msgstr "expandido"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 msgid "collapsed"
@@ -4121,7 +4135,7 @@ msgstr "Cursor Braille %s"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
-msgstr "Alterna entre as dormas do cursor Braille"
+msgstr "Alterna entre as formas do cursor Braille"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4230,6 +4244,46 @@ msgstr "Converte o Braille abreviado e pressiona a tecla Enter"
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Converte o Braille abreviado"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Pressiona virtualmente a tecla Shift para simular uma sequência de teclas "
+"com a linha Braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Pressiona virtualmente a tecla Control para simular uma sequência de teclas "
+"com a linha Braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Pressiona virtualmente a tecla Alt para simular uma sequência de teclas com "
+"a linha Braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Pressiona virtualmente a tecla Windows esquerda para simular uma sequência "
+"de teclas com a linha Braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Pressiona virtualmente a tecla NVDA para simular uma sequência de teclas com "
+"a linha Braille"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -6178,7 +6232,7 @@ msgstr "Sem indentação da primeira linha"
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
 msgid "line spacing %s"
-msgstr "Espaçamento de %s "
+msgstr "Espaçamento %s "
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -7860,19 +7914,19 @@ msgstr "a remover"
 
 #. Translators: The status shown for an addon when it requires a restart to become disabled
 msgid "Disabled after restart"
-msgstr "Desactivada após reinício"
+msgstr "Desactivado após reinício"
 
 #. Translators: The status shown for an addon when it requires a restart to become enabled
 msgid "Enabled after restart"
-msgstr "Activada após reinício"
+msgstr "Activado após reinício"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 msgid "disabled"
-msgstr "Desactivada"
+msgstr "Desactivado"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "enabled"
-msgstr "Activada"
+msgstr "Activado"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -9897,15 +9951,15 @@ msgstr "Etiqueta de dados"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Error Bars"
-msgstr "Barras de erro"
+msgstr "Barra de erros"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "X Error Bars"
-msgstr "Barras de erros X"
+msgstr "Barra de erros X"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Y Error Bars"
-msgstr "Barras de erros Y"
+msgstr "Barra de erros Y"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Shape"
@@ -10765,15 +10819,15 @@ msgstr "{offset:.3g} picas"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
-msgstr "espaçamento simples de linhas"
+msgstr "espaçamento simples"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
 msgid "Double line spacing"
-msgstr "espaçamento duplo de linhas"
+msgstr "espaçamento duplo"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
-msgstr "espaçamento de 1,5 linhas"
+msgstr "espaçamento  1,5 linhas"
 
 #~ msgid "French (Canada) grade 1"
 #~ msgstr "Francês (Canadá) grau 1"

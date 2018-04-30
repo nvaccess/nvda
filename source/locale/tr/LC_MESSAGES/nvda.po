@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 00:10+1000\n"
-"PO-Revision-Date: 2018-03-30 10:33+0300\n"
+"POT-Creation-Date: 2018-04-20 00:10+1000\n"
+"PO-Revision-Date: 2018-04-20 10:52+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -574,6 +574,20 @@ msgstr "inceleme imleci"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Otomatik"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Desteklenmeyen giriş"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} bırakıldı"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} basıldı"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -4183,6 +4197,46 @@ msgstr "Herhangi Braille girişini çevirir ve enter tuşuna basar"
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Braille girişini çevirir"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Braille girişi ile yapılan bir klavye kısayolunu taklit için sanal olarak "
+"shift tuşunu değiştirir"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Braille girişi ile yapılan bir klavye kısayolunu taklit için sanal olarak "
+"kontrol tuşunu değiştirir"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Braille girişi ile yapılan bir klavye kısayolunu taklit için sanal olarak "
+"alt tuşunu değiştirir"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Braille girişi ile yapılan bir klavye kısayolunu taklit için sanal olarak "
+"sol windows tuşunu değiştirir"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Braille girişi ile yapılan bir klavye kısayolunu taklit için sanal olarak "
+"NVDA tuşunu değiştirir"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
