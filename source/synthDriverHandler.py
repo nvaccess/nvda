@@ -10,6 +10,7 @@ import os
 import pkgutil
 import config
 import baseObject
+import winVersion
 import globalVars
 from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
@@ -91,7 +92,8 @@ def setSynth(name,isFallback=False):
 		_curSynth=None
 		return True
 	if name=='auto':
-		name='espeak'
+		# Default to OneCore on Windows 10 and above, and eSpeak on previous Operating Systems
+		name='oneCore' if winVersion.winVersion.major>=10 else 'espeak'
 	if _curSynth:
 		_curSynth.cancel()
 		_curSynth.terminate()
