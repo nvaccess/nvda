@@ -688,7 +688,7 @@ def speakTypedCharacters(ch):
 	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
 		speakSpelling(realChar)
 
-def speakPreviousWord(wordSeparator):
+def speakPreviousWord(wordSeparator=None):
 	global curWordChars
 	bufferedWord = "".join(curWordChars)
 	typingIsProtected = api.isTypingProtected()
@@ -699,8 +699,6 @@ def speakPreviousWord(wordSeparator):
 		curWordChars = []
 		return
 	try:
-		# self might be a descendant of the text control; e.g. Symphony.
-		# We want to deal with the entire text, so use the caret object.
 		obj = api.getCaretObject()
 		# The caret object can be an NVDAObject or a TreeInterceptor.
 		# Editable caret cases inherrit from EditableText.
@@ -713,7 +711,7 @@ def speakPreviousWord(wordSeparator):
 			curWordChars.append(wordSeparator)
 			return 
 	except (RuntimeError, LookupError):
-		log.debug("Couldn't rely on TextInfo for word echo", exc_info=True)
+		log.error("Couldn't rely on TextInfo for word echo", exc_info=True)
 		word = bufferedWord
 	except:
 		# Focus probably moved.
