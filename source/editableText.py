@@ -144,6 +144,13 @@ class EditableText(TextContainerObject,ScriptableObject):
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
 
 	def script_caret_newLine(self,gesture):
+		# 8065: We want to rely on text info to speak the word
+		# that has been typed before pressing enter.
+		# Therefore, speak the typed character/word before executing the actual gesture.
+		speech.speakTypedCharacters(unichr(gesture.vkCode))
+		# speech.speakTypedCharacters will be executed by event_typedCharacter as well.
+		# Therefore, suppress speaking of the next typed character
+		speech._suppressSpeakTypedCharacters(1)
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
