@@ -960,7 +960,7 @@ class StringDriverSettingChanger(DriverSettingChanger):
 class DriverSettingsMixin(object):
 	"""
 	Mixin class that provides support for driver specific gui settings.
-	Subclasses should set L{self.driver} when initializing.
+	Derived classes should implement L{driver}.
 	"""
 
 	def __init__(self, *args, **kwargs):

@@ -101,6 +101,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	description = _("Optelec ALVA 6 series/protocol converter")
 	isThreadSafe = True
 	timeout = 0.2
+	supportedSettings = (
+		braille.BrailleDisplayDriver.HIDInputSetting(),
+	)
 
 	@classmethod
 	def check(cls):

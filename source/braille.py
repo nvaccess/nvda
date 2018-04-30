@@ -2151,6 +2151,15 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		# Translators: Label for a setting in braille settings dialog.
 		return driverHandler.BooleanDriverSetting("brailleInput",_("Braille inp&ut"))
 
+	@classmethod
+	def HIDInputSetting(cls):
+		"""Factory function for creating HID input setting."""
+		# Translators: Label for a setting in braille settings dialog.
+		return driverHandler.BooleanDriverSetting(
+			"hidKeyboardInput",
+			_("&HID keyboard input simulation")
+		)
+
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
