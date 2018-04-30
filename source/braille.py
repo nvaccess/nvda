@@ -2207,7 +2207,10 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			name = brailleInput.BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
-		return self.id
+		id = self.id
+		if self.index is not None:
+			id = "%s %d" % (id, self.index+1)
+		return id
 
 	def _get_scriptableObject(self):
 		display = handler.display
