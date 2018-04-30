@@ -12,7 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 
 #include <sstream>
 #include <vector>
@@ -21,183 +21,42 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <oleacc.h>
 #include <common/xml.h>
 #include <common/log.h>
+#include <boost/optional.hpp>
 #include "nvdaHelperRemote.h"
 #include "nvdaInProcUtils.h"
 #include "nvdaInProcUtils.h"
+#include <remote/WinWord/Constants.h>
+#include <remote/WinWord/Fields.h>
 #include "winword.h"
 
 using namespace std;
 
-#define wdDISPID_STYLES_ITEM 0
-#define wdDISPID_DOCUMENT_STYLES 22
-#define wdDISPID_DOCUMENT_RANGE 2000
-#define wdDISPID_WINDOW_DOCUMENT 2
-#define wdDISPID_WINDOW_APPLICATION 1000
-#define wdDISPID_WINDOW_SELECTION 4
-#define wdDISPID_APPLICATION_SCREENUPDATING 26
-#define wdDISPID_SELECTION_RANGE 400
-#define wdDISPID_SELECTION_SETRANGE 100
-#define wdDISPID_SELECTION_STARTISACTIVE 404
-#define wdDISPID_SELECTION_STARTOF 107
-#define wdDISPID_SELECTION_ENDOF 108
-#define wdDISPID_RANGE_INRANGE 126
-#define wdDISPID_RANGE_DUPLICATE 6
-#define wdDISPID_RANGE_REVISIONS 150
-#define wdDISPID_REVISIONS_ITEM 0
-#define wdDISPID_REVISION_TYPE 4
-#define wdDISPID_RANGE_STORYTYPE 7
-#define wdDISPID_RANGE_MOVE 109
-#define wdDISPID_RANGE_MOVEEND 111
-#define wdDISPID_RANGE_COLLAPSE 101
-#define wdDISPID_RANGE_TEXT 0
-#define wdDISPID_RANGE_EXPAND 129
-#define wdDISPID_RANGE_SELECT 65535
-#define wdDISPID_RANGE_SETRANGE 100
-#define wdDISPID_RANGE_START 3
-#define wdDISPID_RANGE_END 4
-#define wdDISPID_RANGE_INFORMATION 313
-#define wdDISPID_RANGE_STYLE 151
-#define wdDISPID_RANGE_LANGUAGEID 153
-#define wdDISPID_RANGE_DUPLICATE 6
-#define wdDISPID_RANGE_FORMFIELDS 65
-#define wdDISPID_RANGE_CONTENTCONTROLS 424
-#define wdDISPID_FORMFIELDS_ITEM 0
-#define wdDISPID_FORMFIELD_RANGE 17
-#define wdDISPID_FORMFIELD_TYPE 0
-#define wdDISPID_FORMFIELD_RESULT 10
-#define wdDISPID_FORMFIELD_STATUSTEXT 8
-#define wdDISPID_CONTENTCONTROLS_ITEM 0
-#define wdDISPID_CONTENTCONTROL_RANGE 1
-#define wdDISPID_CONTENTCONTROL_TYPE 5
-#define wdDISPID_CONTENTCONTROL_CHECKED 28
-#define wdDISPID_CONTENTCONTROL_TITLE 12
-#define wdDISPID_STYLE_NAMELOCAL 0
-#define wdDISPID_STYLE_PARENT 1002
-#define wdDISPID_RANGE_SPELLINGERRORS 316
-#define wdDISPID_SPELLINGERRORS_ITEM 0
-#define wdDISPID_SPELLINGERRORS_COUNT 1
-#define wdDISPID_RANGE_APPLICATION 1000
-#define wdDISPID_APPLICATION_ISSANDBOX 492
+// See https://github.com/nvaccess/nvda/wiki/Using-COM-with-NVDA-and-Microsoft-Word
+constexpr int formatConfig_reportFontName = 0x1;
+constexpr int formatConfig_reportFontSize = 0x2;
+constexpr int formatConfig_reportFontAttributes = 0x4;
+constexpr int formatConfig_reportColor = 0x8;
+constexpr int formatConfig_reportAlignment = 0x10;
+constexpr int formatConfig_reportStyle = 0x20;
+constexpr int formatConfig_reportSpellingErrors = 0x40;
+constexpr int formatConfig_reportPage = 0x80;
+constexpr int formatConfig_reportLineNumber = 0x100;
+constexpr int formatConfig_reportTables = 0x200;
+constexpr int formatConfig_reportLists = 0x400;
+constexpr int formatConfig_reportLinks = 0x800;
+constexpr int formatConfig_reportComments = 0x1000;
+constexpr int formatConfig_reportHeadings = 0x2000;
+constexpr int formatConfig_reportLanguage = 0x4000;
+constexpr int formatConfig_reportRevisions = 0x8000;
+constexpr int formatConfig_reportParagraphIndentation = 0x10000;
+constexpr int formatConfig_includeLayoutTables = 0x20000;
+constexpr int formatConfig_reportLineSpacing = 0x40000;
 
-#define wdDISPID_RANGE_FONT 5
-#define wdDISPID_FONT_COLOR 159
-#define wdDISPID_FONT_BOLD 130
-#define wdDISPID_FONT_ITALIC 131
-#define wdDISPID_FONT_UNDERLINE 140
-#define wdDISPID_FONT_STRIKETHROUGH 135
-#define wdDISPID_FONT_DOUBLESTRIKETHROUGH 136
-#define wdDISPID_FONT_NAME 142
-#define wdDISPID_FONT_SIZE 141
-#define wdDISPID_FONT_SUBSCRIPT 138
-#define wdDISPID_FONT_SUPERSCRIPT 139
-#define wdDISPID_RANGE_PARAGRAPHFORMAT 1102
-#define wdDISPID_PARAGRAPHFORMAT_ALIGNMENT 101
-#define wdDISPID_PARAGRAPHFORMAT_LINESPACING 109
-#define wdDISPID_PARAGRAPHFORMAT_LINESPACINGRULE 110
+constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor);
+constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
 
-#define wdDISPID_RANGE_LISTFORMAT 68
-#define wdDISPID_LISTFORMAT_LISTSTRING 75
-#define wdDISPID_RANGE_PARAGRAPHS 59
-#define wdDISPID_PARAGRAPHS_ITEM 0
-#define wdDISPID_PARAGRAPH_RANGE 0
-#define wdDISPID_PARAGRAPH_STYLE 100
-#define wdDISPID_PARAGRAPH_OUTLINELEVEL 202
-#define wdDISPID_RANGE_FOOTNOTES 54
-#define wdDISPID_FOOTNOTES_ITEM 0
-#define wdDISPID_FOOTNOTES_COUNT 2
-#define wdDISPID_FOOTNOTE_INDEX 6
-#define wdDISPID_RANGE_ENDNOTES 55
-#define wdDISPID_ENDNOTES_ITEM 0
-#define wdDISPID_ENDNOTES_COUNT 2
-#define wdDISPID_ENDNOTE_INDEX 6
-#define wdDISPID_RANGE_INLINESHAPES 319
-#define wdDISPID_INLINESHAPES_COUNT 1
-#define wdDISPID_INLINESHAPES_ITEM 0 
-#define wdDISPID_INLINESHAPE_OLEFORMAT 5
-#define wdDISPID_INLINESHAPE_TYPE 6
-#define wdDISPID_INLINESHAPE_ALTERNATIVETEXT 131
-#define wdDISPID_INLINESHAPE_TITLE 158
-#define wdDISPID_RANGE_HYPERLINKS 156
-#define wdDISPID_HYPERLINKS_COUNT 1
-#define wdDISPID_RANGE_COMMENTS 56
-#define wdDISPID_COMMENTS_COUNT 2
-#define wdDISPID_COMMENTS_ITEM 0
-#define wdDISPID_COMMENT_SCOPE 1005
-#define wdDISPID_RANGE_TABLES 50
-#define wdDISPID_TABLES_ITEM 0
-#define wdDISPID_TABLE_NESTINGLEVEL 108
-#define wdDISPID_TABLE_RANGE 0
-#define wdDISPID_TABLE_TITLE 209
-#define wdDISPID_TABLE_DESCR 210
-#define wdDISPID_TABLE_BORDERS 1100
-#define wdDISPID_BORDERS_ENABLE 2
-#define wdDISPID_RANGE_CELLS 57
-#define wdDISPID_CELLS_ITEM 0
-#define wdDISPID_CELL_RANGE 0
-#define wdDISPID_CELL_ROWINDEX 4
-#define wdDISPID_CELL_COLUMNINDEX 5
-#define wdDISPID_TABLE_COLUMNS 100
-#define wdDISPID_COLUMNS_COUNT 2
-#define wdDISPID_TABLE_ROWS 101
-#define wdDISPID_ROWS_COUNT 2
-#define wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT 106
-#define wdDISPID_PARAGRAPHFORMAT_LEFTINDENT 107
-#define wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT 108
-#define wdDISPID_OLEFORMAT_PROGID 22
-
-#define wdCommentsStory 4
-
-#define wdCharacter 1
-#define wdWord 2
-#define wdParagraph 4
-#define wdLine 5
-#define wdCharacterFormatting 13
-
-#define wdCollapseEnd 0
-#define wdCollapseStart 1
-
-#define wdActiveEndAdjustedPageNumber 1
-#define wdFirstCharacterLineNumber 10
-#define wdWithInTable 12
-#define wdStartOfRangeRowNumber 13
-#define wdMaximumNumberOfRows 15
-#define wdStartOfRangeColumnNumber 16
-#define wdMaximumNumberOfColumns 18
-
-#define wdAlignParagraphLeft 0
-#define wdAlignParagraphCenter 1
-#define wdAlignParagraphRight 2
-#define wdAlignParagraphJustify 3
-#define wdLanguageNone 0  //&H0
-#define wdNoProofing 1024  //&H400
-#define wdLanguageUnknown 9999999
-
-#define wdInlineShapeEmbeddedOLEObject 1
-#define wdInlineShapePicture 3
-#define wdInlineShapeLinkedPicture 4
-
-#define formatConfig_reportFontName 1
-#define formatConfig_reportFontSize 2
-#define formatConfig_reportFontAttributes 4
-#define formatConfig_reportColor 8
-#define formatConfig_reportAlignment 16
-#define formatConfig_reportStyle 32
-#define formatConfig_reportSpellingErrors 64
-#define formatConfig_reportPage 128
-#define formatConfig_reportLineNumber 256
-#define formatConfig_reportTables 512
-#define formatConfig_reportLists 1024
-#define formatConfig_reportLinks 2048
-#define formatConfig_reportComments 4096
-#define formatConfig_reportHeadings 8192
-#define formatConfig_reportLanguage 16384
-#define formatConfig_reportRevisions 32768
-#define formatConfig_reportParagraphIndentation 65536
-#define formatConfig_includeLayoutTables 131072
- #define formatConfig_reportLineSpacing 262144
- 
-#define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
-#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables)
+constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
+constexpr wchar_t COLUMN_BREAK_VALUE = L'\x0e';
 
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -236,7 +95,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	//Move the selection to the given range
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 	//Expand the selection to the line
-	// #3421: Expand and or extending selection cannot be used due to MS Word bugs on the last line in a table cell, or the first/last line of a table of contents, selecting would select the entire object.  
+	// #3421: Expand and or extending selection cannot be used due to MS Word bugs on the last line in a table cell, or the first/last line of a table of contents, selecting would select the entire object.
 	// Therefore do it in two steps
 	bool lineError=false;
 	if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_STARTOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0)!=S_OK) {
@@ -249,7 +108,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 			_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
 		}
 		// the endOf method has a bug where IPAtEndOfLine gets stuck as true on wrapped lines
-		// So reset the selection to the start of the document to force it to False 
+		// So reset the selection to the start of the document to force it to False
 		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",0,0);
 	}
 	// Fall back to the older expand if there was an error getting line bounds
@@ -258,7 +117,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
 		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
 		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
-	} 
+	}
 	if(args->lineStart>=args->lineEnd) {
 		args->lineStart=args->offset;
 		args->lineEnd=args->offset+1;
@@ -271,12 +130,8 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
-BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, int& chunkEnd) {
-	IDispatchPtr pDispatchRange2=NULL;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_DUPLICATE,VT_DISPATCH,&pDispatchRange2)!=S_OK||!pDispatchRange2) {
-		return false;
-	}
-	_com_dispatch_raw_method(pDispatchRange2,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph,1);
+BOOL generateFormFieldXML(IDispatch* pDispatchRange, IDispatchPtr pDispatchRangeExpandedToParagraph, wostringstream& XMLStream, int& chunkEnd) {
+	IDispatchPtr pDispatchRange2=pDispatchRangeExpandedToParagraph;
 	BOOL foundFormField=false;
 	IDispatchPtr pDispatchFormFields=NULL;
 	_com_dispatch_raw_propget(pDispatchRange2,wdDISPID_RANGE_FORMFIELDS,VT_DISPATCH,&pDispatchFormFields);
@@ -452,16 +307,19 @@ int getRevisionType(IDispatch* pDispatchOrigRange) {
 	return revisionType;
 }
 
-int getHyperlinkCount(IDispatch* pDispatchRange) {
-	IDispatchPtr pDispatchHyperlinks=NULL;
-	int count=0;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_HYPERLINKS,VT_DISPATCH,&pDispatchHyperlinks)!=S_OK||!pDispatchHyperlinks) {
-		return 0;
+IDispatchPtr CreateExpandedDuplicate(IDispatch* pDispatchRange, const int expandTo) {
+	IDispatchPtr pDispatchRangeDup = nullptr;
+	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_DUPLICATE, VT_DISPATCH, &pDispatchRangeDup);
+	if( res != S_OK || !pDispatchRangeDup ) {
+		LOG_DEBUGWARNING(L"error duplicating the range.");
 	}
-	if(_com_dispatch_raw_propget(pDispatchHyperlinks,wdDISPID_HYPERLINKS_COUNT,VT_I4,&count)!=S_OK||count<=0) {
-		return 0;
+	else {
+		res = _com_dispatch_raw_method( pDispatchRangeDup, wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003", expandTo);
+		if( res != S_OK || !pDispatchRangeDup ) {
+			LOG_DEBUGWARNING(L"error expanding the range");
+		}
 	}
-	return count;
+	return pDispatchRangeDup;
 }
 
 bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& commentVector) {
@@ -688,9 +546,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 		}
 	}
-	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)>0) {
-		formatAttribsStream<<L"link=\"1\" ";
-	}
 	if(formatConfig&formatConfig_reportRevisions) {
 		long revisionType=getRevisionType(pDispatchRange);
 		formatAttribsStream<<L"wdRevisionType=\""<<revisionType<<L"\" ";
@@ -743,7 +598,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				}
 			}
 		}
-	} 
+	}
 	if (formatConfig&formatConfig_reportLanguage) {
 		int languageId = 0;
 		if (_com_dispatch_raw_propget(pDispatchRange,	wdDISPID_RANGE_LANGUAGEID, VT_I4, &languageId)==S_OK) {
@@ -762,7 +617,7 @@ inline int getInlineShapesCount(IDispatch* pDispatchRange) {
 	}
 	if(_com_dispatch_raw_propget(pDispatchShapes,wdDISPID_INLINESHAPES_COUNT,VT_I4,&count)!=S_OK||count<=0) {
 		return 0;
-	} 
+	}
 	return count;
 }
 
@@ -773,9 +628,13 @@ inline int getInlineShapesCount(IDispatch* pDispatchRange) {
 inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostringstream& XMLStream) {
 	IDispatchPtr pDispatchShapes=NULL;
 	IDispatchPtr pDispatchShape=NULL;
+	IDispatchPtr pDispatchChart=NULL;
+	IDispatchPtr pDispatchChartTitle=NULL;
 	int count=0;
 	int shapeType=0;
 	BSTR altText=NULL;
+	BOOL shapeHasChart=false;
+	BOOL chartHasTitle=false;
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_INLINESHAPES,VT_DISPATCH,&pDispatchShapes)!=S_OK||!pDispatchShapes) {
 		return 0;
 	}
@@ -802,7 +661,8 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 		}
 		SysFreeString(altText);
 	}
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\"";
+	altText=NULL;
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":(shapeType==wdInlineShapeChart?L"chart":L"object"))<<L"\" value=\""<<altTextStr<<L"\"";
 	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
 		XMLStream<<L" shapeoffset=\""<<offset<<L"\"";
 		IDispatchPtr pOLEFormat=NULL;
@@ -837,6 +697,275 @@ inline bool generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream
 	}
 	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(footnote?L"footnote":L"endnote")<<L"\" value=\""<<index<<L"\">";
 	return true;
+}
+
+std::experimental::optional<int> getSectionBreakType(IDispatchPtr pDispatchRange ) {
+	// The following case should handle where we have the page break character ('0x0c') shown with '|p|'
+	//	first section|p|
+	//	second section.
+	// range.Sections[1].pageSetup.SectionStart tells you how the section started, so we need to know
+	// the next sections start type to report what kind of break this is. To do this we need to expand
+	// the range, get the section start type, remove the page break character, and insert an attribute
+	// for the break type.
+	IDispatchPtr pDispatchRangeDup = nullptr;
+	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_DUPLICATE, VT_DISPATCH, &pDispatchRangeDup);
+	if( res != S_OK || !pDispatchRangeDup ) {
+		LOG_DEBUGWARNING(L"error duplicating the range.");
+		return {};
+	}
+
+	// we assume that we are 1 character away from the next section, this should be the value for PAGE_BREAK_VALUE ("0x0c")
+	const int unitsToMove = 1;
+	int unitsMoved=-1;
+	res = _com_dispatch_raw_method(pDispatchRangeDup,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacter,unitsToMove);
+	if( res !=S_OK || unitsMoved<=0 || !pDispatchRangeDup) {
+		LOG_DEBUGWARNING(L"error moving the end of the range");
+		return {};
+	}
+
+	IDispatchPtr pDispatchSections = nullptr;
+	res = _com_dispatch_raw_propget( pDispatchRangeDup, wdDISPID_RANGE_SECTIONS, VT_DISPATCH, &pDispatchSections);
+	if( res != S_OK || !pDispatchSections ) {
+		LOG_DEBUGWARNING(L"error getting sections from range");
+		return {};
+	}
+
+	int count = -1;
+	res = _com_dispatch_raw_propget( pDispatchSections, wdDISPID_SECTIONS_COUNT, VT_I4, &count);
+	if( res != S_OK || count != 2 ) {
+		LOG_DEBUGWARNING(L"error getting section count. There should be exactly 2 sections, count: " << count);
+		return {};
+	}
+
+	// we make the assumption that the second section will always be the one we want. We also assume that the section
+	// count was 1 before expanding the range.
+	const int sectionToGet = 2;
+	IDispatchPtr pDispatchItem = nullptr;
+	res = _com_dispatch_raw_method( pDispatchSections, wdDISPID_SECTIONS_ITEM, DISPATCH_METHOD, VT_DISPATCH, &pDispatchItem, L"\x0003", sectionToGet);
+	if( res != S_OK || !pDispatchItem){
+		LOG_DEBUGWARNING(L"error getting section item");
+		return {};
+	}
+
+	IDispatchPtr pDispatchPageSetup = nullptr;
+	res = _com_dispatch_raw_propget( pDispatchItem, wdDISPID_SECTION_PAGESETUP,  VT_DISPATCH, &pDispatchPageSetup);
+	if( res != S_OK || !pDispatchPageSetup){
+		LOG_DEBUGWARNING(L"error getting pageSetup");
+		return {};
+	}
+
+	int type = -1;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_SECTIONSTART, VT_I4, &type);
+	if( res != S_OK || type < 0){
+		LOG_DEBUGWARNING(L"error getting section start");
+		return {};
+	}
+
+	LOG_DEBUG(L"Got section break type: " << type);
+	return type;
+}
+
+std::experimental::optional<float>
+getStartOfRangeDistanceFromEdgeOfDocument(IDispatchPtr pDispatchRange) {
+	float rangePos = -1.0f;
+	auto res = _com_dispatch_raw_method( pDispatchRange, wdDISPID_RANGE_INFORMATION,
+		DISPATCH_PROPERTYGET, VT_R4, &rangePos, L"\x0003", wdHorizontalPositionRelativeToPage);
+		if( S_OK != res && rangePos < 0) {
+			LOG_ERROR(L"error getting wdHorizontalPositionRelativeToPage."
+				<< " res: " << res
+				<< " rangePos: " << rangePos);
+			return {};
+		}
+	return rangePos;
+}
+
+std::experimental::optional< std::pair<float, float> >
+calculatePreAndPostColumnOffsets(IDispatchPtr pDispatchPageSetup) {
+	float leftMargin = -1.0f;
+	auto res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_LEFTMARGIN,
+		VT_R4, &leftMargin);
+	if( res != S_OK || leftMargin <0){
+		LOG_ERROR(L"error getting leftMargin. res: "<< res
+			<< " leftMargin: " << leftMargin);
+		return {};
+	}
+
+	float rightMargin = -1.0f;
+	// right margin necessary to validate that the full width of the document has been
+	// taken into account.
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_RIGHTMARGIN,
+		VT_R4, &rightMargin);
+	if( res != S_OK || rightMargin <0){
+		LOG_ERROR(L"error getting rightMargin. res: "<< res
+			<< " rightMargin: " << rightMargin);
+		return {};
+	}
+
+	float gutter = -1.0f;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_GUTTER,
+		VT_R4, &gutter);
+	if( res != S_OK || gutter <0){
+		LOG_ERROR(L"error getting gutter. res: "<< res
+			<< " gutter: " << gutter);
+		return {};
+	}
+
+	int gutterPos = -1;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_GUTTERPOS,
+		VT_R4, &gutterPos);
+	if( res != S_OK || gutterPos <0){
+		LOG_ERROR(L"error getting gutterPos. res: "<< res
+			<< " gutterPos: " << gutterPos);
+		return {};
+	}
+
+	int mirrorMargins = wdUndefined;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_MIRRORMARGINS,
+		VT_R4, &mirrorMargins);
+	if( res != S_OK || mirrorMargins == wdUndefined){
+		LOG_ERROR(L"error getting mirrorMargins. res: "<< res
+			<< " mirrorMargins: " << mirrorMargins);
+		return {};
+	}
+
+	// We do not handle mirror margins being set since the gutter alternates between the
+	// left and the right making it unclear which side to add it to.
+	if( mirrorMargins != FALSE) {
+		LOG_DEBUGWARNING(L"Unable to calculate the start and \
+ end margins due to mirror margins being enabled.");
+		return {};
+	}
+
+	switch (gutterPos) {
+		case wdGutterPosLeft:
+			return std::make_pair(gutter + leftMargin, rightMargin);
+		case wdGutterPosRight:
+			return std::make_pair(leftMargin, rightMargin + gutter);
+		default:
+			return std::make_pair(leftMargin, rightMargin);
+	}
+}
+
+void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstream& xmlStream) {
+	// 1. Get the count of columns, its important we do this first so that in the event that
+	// calculating the column we are in fails, we are still able to report the overall count
+	IDispatchPtr pDispatchPageSetup = nullptr;
+	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_PAGESETUP,
+		VT_DISPATCH, &pDispatchPageSetup);
+	if( res != S_OK || !pDispatchPageSetup){
+		LOG_ERROR(L"error getting pageSetup. res: "<< res);
+		return;
+	}
+
+	// Get columns collection
+	IDispatchPtr pDispatchTextColumns = nullptr;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_TEXTCOLUMNS,
+		VT_DISPATCH, &pDispatchTextColumns);
+	if( res != S_OK || !pDispatchTextColumns){
+		LOG_ERROR(L"error getting textColumns. res: "<< res);
+		return;
+	}
+
+	// Count of columns
+	int count = -1;
+	res = _com_dispatch_raw_propget( pDispatchTextColumns, wdDISPID_TEXTCOLUMNS_COUNT,
+		VT_I4, &count);
+	if( res != S_OK || count < 0){
+		LOG_DEBUG(L"Unable to get textColumn count. We may be in a 'comment'. res: "<< res
+			<< " count: " << count);
+		return;
+	}
+	xmlStream <<L"text-column-count=\"" << count << "\" ";
+
+	// 2. Get the start position (IN POINTS) of the range. This is relative to the start
+	// of the document.
+	auto rangeStart = getStartOfRangeDistanceFromEdgeOfDocument(pDispatchRange);
+	if(!rangeStart) {
+		return;
+	}
+
+	// 3. Get the offsets that come before and after the columns, this is a combination
+	// of left margin, gutter and right margin.
+	auto prePostColumnOffsets = calculatePreAndPostColumnOffsets(pDispatchPageSetup);
+	if(!prePostColumnOffsets){
+		return;
+	}
+
+	// 4. Iterate through the columns, look for the final column where the range start
+	// position is greater or equal to the start position of the column
+	const float rangePos = *rangeStart;
+	float colStartPos = prePostColumnOffsets->first;
+	// assumption: the textcolumn furthest right is last in the collection
+	const int lastItemNumber = count;
+	int columnNumber = 0;
+	for(int itemNumber = 1; itemNumber <= lastItemNumber && S_OK == res; ++itemNumber){
+		LOG_DEBUG(L"ItemNumber: " << itemNumber
+			<< " rangePos: " << rangePos
+			<< " colStartPos: " << colStartPos);
+
+		constexpr float COL_START_TOLERENCE_POINTS = 1.0f;
+		if (rangePos - colStartPos + COL_START_TOLERENCE_POINTS > 0){
+			columnNumber = itemNumber;
+		}
+		IDispatchPtr pDispatchTextColumnItem = nullptr;
+		res = _com_dispatch_raw_method( pDispatchTextColumns, wdDISPID_TEXTCOLUMNS_ITEM,
+			DISPATCH_METHOD, VT_DISPATCH, &pDispatchTextColumnItem, L"\x0003", itemNumber);
+		if( res != S_OK || !pDispatchTextColumnItem){
+			LOG_ERROR(L"error getting textColumn item number: "<< itemNumber
+				<< " res: "<< res);
+			return;
+		}
+
+		float columnWidth = -1.0f;
+		res = _com_dispatch_raw_propget( pDispatchTextColumnItem, wdDISPID_TEXTCOLUMN_WIDTH,
+			VT_R4, &columnWidth);
+		if( res != S_OK || columnWidth < 0){
+			LOG_ERROR(L"error getting textColumn width for item number: "<< itemNumber
+				<< " res: "<< res << " columnWidth: " << columnWidth);
+			return;
+		} else {
+			colStartPos += columnWidth;
+		}
+
+		float spaceAfterColumn = -1.0f;
+		// the spaceAfter property is only valid between columns
+		if( itemNumber < lastItemNumber ) {
+			res = _com_dispatch_raw_propget( pDispatchTextColumnItem, wdDISPID_TEXTCOLUMN_SPACEAFTER,
+				VT_R4, &spaceAfterColumn);
+			if( res != S_OK || spaceAfterColumn < 0){
+				LOG_ERROR(L"error getting textColumn spaceAfterColumn"
+					<< "for item number: "<< itemNumber
+					<< " res: "<< res
+					<< " spaceAfterColumn: " << columnWidth);
+				return;
+			} else {
+				colStartPos += spaceAfterColumn;
+			}
+		}
+	}
+	xmlStream <<L"text-column-number=\"" << columnNumber << "\" ";
+
+	// Finally, double check that we calculated the full width of the document
+	float pageWidth = -1.0f;
+	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_PAGEWIDTH,
+		VT_R4, &pageWidth);
+	if( res != S_OK || pageWidth <0){
+		LOG_ERROR(L"error getting pageWidth. res: "<< res << " pageWidth: " << pageWidth);
+		return;
+	}
+
+	colStartPos += prePostColumnOffsets->second;
+
+	// validation that some margin, gutter or offset was not missed.
+	// This does not check that they were added in the right order, only
+	// that they were added at all.
+	constexpr int PAGE_WIDTH_TOLERENCE_POINTS = 1;
+	if( std::abs(pageWidth - colStartPos) > PAGE_WIDTH_TOLERENCE_POINTS ) {
+		LOG_ERROR(L"pageWidth does not equal the calculated page"
+			<< " width. Some margin or offset me be missed, this may mean"
+			<< " that some column numbers reported were incorrect."
+			<< " pageWidth: " << pageWidth << " colStartPos: " << colStartPos);
+	}
 }
 
 UINT wm_winword_getTextInRange=0;
@@ -880,9 +1009,14 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//Collapse the range
 	int initialFormatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
-	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)==0) {
+
+	IDispatchPtr paragraphRange = CreateExpandedDuplicate(pDispatchRange, wdParagraph);
+	WinWord::Fields currentFields(paragraphRange);
+
+	if((formatConfig&formatConfig_reportLinks) && false == currentFields.hasLinks() ) {
 		formatConfig&=~formatConfig_reportLinks;
 	}
+
 	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory)) {
 		formatConfig&=~formatConfig_reportComments;
 	}
@@ -918,6 +1052,27 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		neededClosingControlTagCount+=generateHeadingXML(pDispatchParagraph,pDispatchParagraphRange,args->startOffset,args->endOffset,XMLStream);
 	}
 	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
+	{	//scope for shouldReportLinks
+		const auto shouldReportLinks = (initialFormatConfig&formatConfig_reportLinks);
+		if( shouldReportLinks && currentFields.hasLinks(chunkStartOffset, chunkEndOffset) ) {
+			initialFormatAttribsStream<<L"link=\"1\" ";
+		}
+	}
+
+	const auto shouldReportSections = (initialFormatConfig&formatConfig_reportPage);
+	if(shouldReportSections) {
+		int sectionNumber = -1;
+		auto res = _com_dispatch_raw_method( pDispatchRange, wdDISPID_RANGE_INFORMATION, DISPATCH_PROPERTYGET, VT_I4, &sectionNumber, L"\x0003", wdActiveEndSectionNumber);
+		if( S_OK == res && sectionNumber >= 0) {
+			initialFormatAttribsStream << L"section-number=\""<<sectionNumber << "\" ";
+		}
+		else
+		{
+			LOG_DEBUGWARNING("Error getting the current section number. Res: "<< res <<" SectionNumber: " << sectionNumber);
+		}
+		detectAndGenerateColumnFormatXML(pDispatchRange, initialFormatAttribsStream);
+	}
+
 	bool firstLoop=true;
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
@@ -925,7 +1080,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		int curDisabledFormatConfig=0;
 		//generated form field xml if in a form field
 		//Also automatically extends the range and chunkEndOffset to the end of the field
-		BOOL isFormField=generateFormFieldXML(pDispatchRange,XMLStream,chunkEndOffset);
+		const bool isFormField = TRUE == generateFormFieldXML(pDispatchRange,paragraphRange,XMLStream,chunkEndOffset);
 		if(!isFormField) {
 			//Move the end by word
 			if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK||unitsMoved<=0) {
@@ -933,6 +1088,12 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 		}
+		const auto pageNumFieldEndIndexOptional = currentFields.getEndOfPageNumberFieldAtIndex(chunkEndOffset);
+		if(pageNumFieldEndIndexOptional){
+			chunkEndOffset = *pageNumFieldEndIndexOptional;
+			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,chunkEndOffset);
+		}
+
 		//Make sure  that the end is not past the requested end after the move
 		if(chunkEndOffset>(args->endOffset)) {
 			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
@@ -948,6 +1109,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if(text) {
 			int noteCharOffset=-1;
 			bool isNoteChar=false;
+			std::experimental::optional<int> pageBreakCharIndex;
+			std::experimental::optional<int> columnBreakCharIndex;
 			if(!isFormField) {
 				//Force a new chunk before and after control+b (note characters)
 				for(int i=0;text[i]!=L'\0';++i) {
@@ -959,6 +1122,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 						text[i]=L'\0';
 						//Collecting revision info does not work on cell delimiters
 						curDisabledFormatConfig|=formatConfig_reportRevisions;
+					} else if( text[i] == PAGE_BREAK_VALUE) { // page break
+						pageBreakCharIndex = i;
+					} else if( text[i] == COLUMN_BREAK_VALUE) { // column break
+						columnBreakCharIndex = i;
 					}
 				}
 				isNoteChar=(noteCharOffset==0);
@@ -988,7 +1155,29 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
-			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig&(~curDisabledFormatConfig),XMLStream);
+
+			{	// scope for xmlAttribsFormatConfig
+				const auto xmlAttribsFormatConfig = formatConfig&(~curDisabledFormatConfig);
+
+				if( pageBreakCharIndex ){
+					auto type = getSectionBreakType(pDispatchRange);
+					if(type){
+						text[*pageBreakCharIndex] = '\0';
+						XMLStream << L"section-break=\"" << *type << "\" ";
+					}
+				}
+				if (columnBreakCharIndex){
+					text[*columnBreakCharIndex] = '\0';
+					XMLStream << L"column-break=\"" << 1 << "\" ";
+				}
+
+				generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,xmlAttribsFormatConfig,XMLStream);
+				const auto shouldReportLinks = (xmlAttribsFormatConfig&formatConfig_reportLinks);
+				if( shouldReportLinks && currentFields.hasLinks(chunkStartOffset, chunkEndOffset) ) {
+					XMLStream<<L"link=\"1\" ";
+				}
+			}
+
 			for(vector<pair<long,long>>::iterator i=errorVector.begin();i!=errorVector.end();++i) {
 				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
 					XMLStream<<L" invalid-spelling=\"1\" ";
@@ -1098,7 +1287,7 @@ error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, cons
 	return RPC_S_OK;
 }
 
-error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const unsigned long windowHandle, const int startOffset, const int endOffset, const long formatConfig, BSTR* text) { 
+error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const unsigned long windowHandle, const int startOffset, const int endOffset, const long formatConfig, BSTR* text) {
 	winword_getTextInRange_args args={startOffset,endOffset,formatConfig,NULL};
 	SendMessage((HWND)UlongToHandle(windowHandle),wm_winword_getTextInRange,(WPARAM)&args,0);
 	*text=args.text;

@@ -1,6 +1,6 @@
 #appModules/outlook.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NVDA Contributors <http://www.nvaccess.org/>
+#Copyright (C) 2006-2018 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -24,10 +24,43 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor
+from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
-from NVDAObjects.behaviors import RowWithFakeNavigation
+from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
+
+#: When in a list view, the message classes which should not be announced for an item.
+#: For these, it should be safe to assume that their names consist of only one word.
+silentMessageClasses = [
+	"IPM.Appointment",
+	"IPM.Contact",
+	"IPM.Note", # The class for a message
+]
+
+#: The number of seconds in a day, used to make all day appointments and selections less verbose.
+#: Type: float
+SECONDS_PER_DAY = 86400.0
+
+oleFlagIconLabels={
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	1:_("purple flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	2:_("Orange flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	3:_("Green flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	4:_("Yellow flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	5:_("Blue flag"),
+	# Translators: a flag for a Microsoft Outlook message
+	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+	6:_("Red flag"),
+}
 
 importanceLabels={
 	# Translators: for a high importance email
@@ -64,6 +97,12 @@ def getSentMessageString(obj):
 	return ", ".join(nameList)
 
 class AppModule(appModuleHandler.AppModule):
+
+	def __init__(self,*args,**kwargs):
+		super(AppModule,self).__init__(*args,**kwargs)
+		# Explicitly allow gainFocus events for the window class that hosts the active Outlook DatePicker cell
+		# This object gets focus but its window does not conform to our GUI thread info window checks
+		eventHandler.requestEvents("gainFocus",processId=self.processID,windowClassName="rctrl_renwnd32")
 
 	_hasTriedoutlookAppSwitch=False
 
@@ -132,13 +171,24 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0,UIAGridRow)
 		if not isinstance(obj,IAccessible):
 			return
+		# Outlook uses dialogs for many forms such as appointment / meeting creation. In these cases, there is no sane dialog caption that can be calculated as the dialog inly contains controls.
+		# Therefore remove the Dialog behavior for these imbedded dialog forms so as to not announce junk as the caption
+		if Dialog in clsList:
+			parentWindow=winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT)
+			if parentWindow and winUser.getClassName(parentWindow)=="AfxWndW":
+				clsList.remove(Dialog)
 		if WordDocument in clsList:
 			clsList.insert(0,OutlookWordDocument)
 		role=obj.role
 		windowClassName=obj.windowClassName
 		states=obj.states
 		controlID=obj.windowControlID
-		if windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
+		# Support the date picker in Outlook Meeting / Appointment creation forms 
+		if controlID==4352 and role==controlTypes.ROLE_BUTTON:
+			clsList.insert(0,DatePickerButton)
+		elif role==controlTypes.ROLE_TABLECELL and windowClassName=="rctrl_renwnd32":
+			clsList.insert(0,DatePickerCell)
+		elif windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
 			clsList.insert(0,REListBox20W_CheckBox)
 		elif role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
 			clsList.insert(0,AutoCompleteListItem)
@@ -311,15 +361,21 @@ class CalendarView(IAccessible):
 	_lastStartDate=None
 
 	def _generateTimeRangeText(self,startTime,endTime):
-		startText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, startTime, None)
-		endText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, endTime, None)
+		startText=winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, startTime, None)
+		endText=winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, endTime, None)
 		startDate=startTime.date()
 		endDate=endTime.date()
 		if not CalendarView._lastStartDate or startDate!=CalendarView._lastStartDate or endDate!=startDate: 
-			startText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None),startText)
-		if endDate!=startDate:
-			endText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
+			startDateText=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None)
+			startText="%s %s"%(startDateText,startText)
 		CalendarView._lastStartDate=startDate
+		if endDate!=startDate:
+			if ((startTime.hour, startTime.minute, startTime.second) == (0, 0, 0) and
+				(endDate - startDate).total_seconds()==SECONDS_PER_DAY
+			):
+				# Translators: a message reporting the date of a all day Outlook calendar entry
+				return _("{date} (all day)").format(date=startDateText)
+			endText="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
 		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
 
@@ -354,8 +410,8 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
-				startLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
-				endLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
+				startLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
+				endLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
 				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
 				i=e.currentFolder.items
 				i.sort('[Start]')
@@ -389,8 +445,16 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				unread=selection.unread
 			except COMError:
 				unread=False
-			# Translators: when an email is unread
-			if unread: textList.append(_("unread"))
+			try:
+				messageClass=selection.messageClass
+			except COMError:
+				messageClass=None
+			try:
+				flagIcon=selection.flagIcon
+			except COMError:
+				flagIcon=0
+			flagIconLabel=oleFlagIconLabels.get(flagIcon)
+			if flagIconLabel: textList.append(flagIconLabel)
 			try:
 				attachmentCount=selection.attachments.count
 			except COMError:
@@ -403,26 +467,41 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				importance=1
 			importanceLabel=importanceLabels.get(importance)
 			if importanceLabel: textList.append(importanceLabel)
-			try:
-				messageClass=selection.messageClass
-			except COMError:
-				messageClass=None
-			if messageClass=="IPM.Schedule.Meeting.Request":
-				# Translators: the email is a meeting request
-				textList.append(_("meeting request"))
+			if self.appModule.outlookVersion<15:
+				# Translators: when an email is unread
+				if unread: textList.append(_("unread"))
+				if messageClass=="IPM.Schedule.Meeting.Request":
+					# Translators: the email is a meeting request
+					textList.append(_("meeting request"))
+			elif messageClass is not None:
+				# Replied or forwarded state for this message is available from the object's value.
+				# We must parse this value correctly, as it may contain redundant information, such as the message class and read value.
+				# We only expose the unread state, and message class for non-messages.
+				# The several states are localized and separated by a space.
+				# Example output: 'Meeting request Replied Read'
+				valueParts = self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId).split(" ")
+				valueCount = len(valueParts)
+				# The last valuePart indicates whether the message is read or unread.
+				# Do not expose the read state
+				lastPart = valueCount if unread else valueCount-1
+				# The first valuePart is the type of the selection, e.g. Message, Contact.
+				# We can safely assume that the classes in silentMessageClasses are one word.
+				# For messages other than regular mail messages (e.g. meeting request), the message class is relevant.
+				firstPart = max(1, valueCount-2) if messageClass in silentMessageClasses else 0
+				textList.extend(valueParts[firstPart:lastPart])
 		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
 		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		if not cachedChildren:
+			# There are no children
+			# This is unexpected here.
+			log.debugWarning("Unable to get relevant children for UIAGridRow", stack_info=True)
+			return super(UIAGridRow, self).name
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
-			# #6219: Outlook 2016 started exposing the draft column as a text node.
-			# Users reportedly find this extremely annoying.
-			# Thus we filter it out.
-			if self.appModule.outlookVersion>=16 and e.cachedClassName=="DraftFlagField":
-				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
 			if name and config.conf['documentFormatting']['reportTableHeaders']:
@@ -440,7 +519,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			else:
 				text=name
 			if text:
-				text=text+u","
+				text+=u","
 				textList.append(text)
 		return " ".join(textList)
 
@@ -468,8 +547,18 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
 
+class MailViewerTextInfoForTreeInterceptor(WordDocumentTextInfo):
+
+	def _get_shouldIncludeLayoutTables(self):
+		return config.conf['documentFormatting']['includeLayoutTables']
+
+class MailViewerTreeInterceptorTextInfo(BrowseModeWordDocumentTextInfo):
+	InnerTextInfoClass=MailViewerTextInfoForTreeInterceptor
+
 class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 	"""A BrowseMode treeInterceptor specifically for readonly emails, where tab and shift+tab are safe and we know will not edit the document."""
+
+	TextInfo=MailViewerTreeInterceptorTextInfo
 
 	def script_tab(self,gesture):
 		bookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
@@ -513,3 +602,17 @@ class OutlookWordDocument(WordDocument):
 		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
 
 	ignoreEditorRevisions=True
+	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
+
+class DatePickerButton(IAccessible):
+	# Value is a duplicate of name so get rid of it
+	value=None
+
+class DatePickerCell(IAccessible):
+	# Value is a duplicate of name so get rid of it
+	value=None
+
+	# Focus events are always on this object with the exact same event parameters
+	# Therefore we cannot safely filter out duplicates
+	def isDuplicateIAccessibleEvent(self,obj):
+		return False

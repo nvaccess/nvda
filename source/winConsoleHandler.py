@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
 
 import wx
 import winUser
@@ -61,7 +61,7 @@ def connectConsole(obj):
 	try:
 		wincon.AttachConsole(processID)
 	except WindowsError as e:
-		log.debugWarning("Could not attach console: %s"%e)
+		log.debugWarning("Could not attach console: %r"%e)
 		return False
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,True)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
@@ -137,8 +137,8 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 	# This avoids an extra core cycle.
 	consoleObject.event_textChange()
 	if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
-		x=winUser.LOWORD(objectID)
-		y=winUser.HIWORD(objectID)
+		x=winUser.GET_X_LPARAM(objectID)
+		y=winUser.GET_Y_LPARAM(objectID)
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		if x<consoleScreenBufferInfo.dwCursorPosition.x and (y==consoleScreenBufferInfo.dwCursorPosition.y or y==consoleScreenBufferInfo.dwCursorPosition.y+1):  
 			eventHandler.queueEvent("typedCharacter",consoleObject,ch=unichr(winUser.LOWORD(childID)))

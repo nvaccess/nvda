@@ -119,6 +119,9 @@ def disableAddonsIfAny():
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
+	if config.isAppX:
+		log.info("Add-ons not supported when running as a Windows Store application")
+		return
 	loadState()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
@@ -291,11 +294,17 @@ class Addon(object):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			state["pendingEnableSet"].add(self.name)
-			state["pendingDisableSet"].discard(self.name)
+			if self.name in state["pendingDisableSet"]:
+				# Undoing a pending disable.
+				state["pendingDisableSet"].discard(self.name)
+			else:
+				state["pendingEnableSet"].add(self.name)
 		else:
-			state["pendingDisableSet"].add(self.name)
-			state["pendingEnableSet"].discard(self.name)
+			if self.name in state["pendingEnableSet"]:
+				# Undoing a pending enable.
+				state["pendingEnableSet"].discard(self.name)
+			else:
+				state["pendingDisableSet"].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		saveState()
 

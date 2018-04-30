@@ -1,0 +1,203 @@
+﻿# locale/lt/symbols.dic
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (c) 2011-2012 NVDA Contributors
+# This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'“‘”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'“‘”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'“‘”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])[\.,](?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	taškas	all	always	# . sakinio gale
+! sentence ending	šauktukas	all	always	# ! sakinio gale
+? sentence ending	klaustukas	all	always	# ? sakinio gale
+; phrase ending	kabliataškis	most	always	# ; frazės gale
+: phrase ending	dvitaškis	most	always	# : frazės gale
+decimal point		none	always	# trupmenos skirtukas
+in-word '	apostrofas	all	norep	# ' žodyje
+negative number	minus	none	norep	# neigiamas skaičius
+
+# Whitespace
+\0	nulinis baitas	char	# nulinis baitas U+0000
+\t	tabuliavimas	all	# tabuliavimas U+0009
+\n	kita eilutė	char	# eilutės patraukimas U+000A
+\f	kitas puslapis	none	# kitas puslapis U+000C
+\r	eilutės pabaiga	char	# grįžimas į eilutės pradžią U+000D
+ 	tarpas	char	# paprastasis tarpas
+ 	tarpas	char	# jungiamasis tarpas
+
+# Standard punctuation/symbols
+!	šauktukas	all	norep
+"	stačios kabutės	most	norep
+\#	grotelės	some
+$	doleris	all	norep
+£	svaras	all	norep
+€	euras	all	norep
+¢	centas	all	norep
+¥	jena	all	norep
+₹	rupija	some	norep
+%	procentai	some
+&	ampersendas	some
+'	apostrofas	all
+(	kairys skliaustas	most	always
+)	dešinys skliaustas	most	always
+*	žvaigždutė	some
++	plius	some
+,	kablelis	all	always
+# hyphen should be sent when not replaced, in order to have ordinal numbers pronounced correctly, for example.
+-	brūkšnelis	most	norep
+.	taškas	some	norep
+/	dešininis pasviręs brūkšnys	some
+:	dvitaškis	most	norep
+;	kabliataškis	most	norep
+<	mažiau	some
+>	daugiau	some
+=	lygu	some
+?	klaustukas	all	norep
+@	eta	some
+[	kairys laužtinis	most
+]	dešinys laužtinis	most
+\\	kairinis pasviręs	most
+^	stogelis	most
+_	pabraukimas	most
+`	gravis	most
+{	kairys riestinis	most
+}	dešinys riestinis	most
+|	status brūkšnys	most
+~	tildė	most
+´	akūtas	most
+
+# Other characters
+¦	pertrauktas status brūkšnys	most
+•	punktas	some
+…	daugtaškis	all	always
+...	daugtaškis	all	always
+	punktas	some
+„	atidaromos kabutės	most	norep
+“	uždaromos kabutės	most	norep
+’	figūrinis apostrofas	most	norep
+–	brūkšnys	most	always
+—	ilgas brūkšnys	most	always
+¬	neigimas	most
+●	skritulys	most
+¨	du taškai viršuje	most
+‎	žymė iš kairės į dešinę	char
+‏	žymė iš dešinės į kairę	char
+■	kvadratas	some
+▪	kvadratas	some
+◾	kvadratas	some
+◦	tuščiaviduris punktas	some
+➔	rodyklė dešinėn	some
+§	paragrafas	all
+¶	pastraipos pabaiga	some
+°	laipsniai	some
+′	štrichas	some
+″	dvigubas štrichas	some
+«	dvigubos kairinės laužtinės kabutės
+»	dvigubos dešininės laužtinės kabutės
+‹	kairinė laužtinė kabutė
+›	dešininė laužtinė kabutė
+µ	mikro	some
+¹	viršutinis indeksas 1	some
+²	viršutinis indeksas 2	some
+³	viršutinis indeksas 3	some
+⁴	viršutinis indeksas 4	some
+⁵	viršutinis indeksas 5	some
+⁶	viršutinis indeksas 6	some
+⁷	viršutinis indeksas 7	some
+⁸	viršutinis indeksas 8	some
+⁹	viršutinis indeksas 9	some
+⁰	viršutinis indeksas 0	some
+®	registruota	some
+™	prekės ženklas	some
+©	autoriaus teisės	some
+℗	garso įrašo autoriaus teisės	some
+−	minus	some
+±	plius-minus	some
+×	dauginti	some
+÷	dalinti iš	some
+←	rodyklė kairėn	some
+↑	rodyklė aukštyn	some
+→	rodyklė dešinėn	some
+↓	rodyklė žemyn	some
+✓	varnelė	some
+✔	varnelė	some
+
+#Mathematical Operators U+2200 to U+220F
+∀	Kiekvienam 	none
+∁	Papildinys	none
+∂	dalinė išvestinė	none
+∃	egzistuoja	none
+∄	neegzistuoja	none
+∅	TUŠČIA AIBĖ 	none
+∆	POKYTIS	none
+∇	NABLA	none
+∈	PRIKLAUSO	none
+∉	NEPRIKLAUSO	none
+∊	MAŽAS PRIKLAUSO	none
+∋	TURI ELEMENTĄ	none
+∌	NETURI ELEMENTO	none
+∍	MAŽAS TURI ELEMENTĄ	none
+∎	ĮRODYMO PABAIGA	none
+∏	N-MATĖ SANDAUGA	none
+
+# Miscellaneous Mathematical Operators
+∑	N-MATĖ SUMA	none
+√	KVADRATINĖ ŠAKNIS	none
+∛	KUBINĖ ŠAKNIS	none
+∜	KETVIRTOJO LAIPSNIO ŠAKNIS	none
+∝	PROPORCINGA	none
+∞	BEGALYBĖ	none
+∟	STATUSIS KAMPAS	none
+∠	KAMPAS	none
+∥	LYGIAGRETU	none
+∦	NELYGIAGRETU	none
+∧	LOGINIS IR	none
+∨	LOGINIS ARBA	none
+∩	SANKIRTA	none
+∪	SĄJUNGA	none
+∫	INTEGRALAS	none
+∴	IŠ TO SEKA	none
+∵	TAI SEKA IŠ	none
+∶	SANTYKIS	none
+∷	PROPORCIJA	none
+≤	MAŽIAU ARBA LYGU	none
+≥	DAUGIAU ARBA LYGU	none
+⊂	GRIEŽTASIS POAIBIS	none
+⊃	GRIEŽTASIS VIRŠAIBIS	none
+⊆	POAIBIS	none
+⊇	VIRŠAIBIS	none
+
+# Vulgar fractions U+00BC to U+00BE and U+2150 to U+215E
+¼	viena ketvirtoji	none
+½	viena antroji	none
+¾	trys ketvirtosios	none
+⅐	viena septintoji	none
+⅑	viena devintoji	none
+⅒	viena dešimtoji	none
+⅓	viena trečioji	none
+⅔	dvi trečiosios	none
+⅕	viena penktoji	none
+⅖	dvi penktosios	none
+⅗	trys penktosios	none
+⅘	keturios penktosios	none
+⅙	viena šeštoji	none
+⅚	penkios šeštosios	none
+⅛	viena aštuntoji	none
+⅜	trys aštuntosios	none
+⅝	penkios aštuntosios	none
+⅞	septynios aštuntosios	none
+

@@ -71,6 +71,7 @@ class HTMLAttribCache(object):
 	def __init__(self,HTMLNode):
 		self.HTMLNode=HTMLNode
 		self.cache={}
+		self.containsCache={}
 
 	def __getitem__(self,item):
 		try:
@@ -84,9 +85,23 @@ class HTMLAttribCache(object):
 		self.cache[item]=value
 		return value
 
+	def __contains__(self,item):
+		try:
+			return self.containsCache[item]
+		except LookupError:
+			pass
+		contains=item in self.cache
+		if not contains:
+			try:
+				contains=self.HTMLNode.hasAttribute(item)
+			except (COMError,NameError):
+				pass
+		self.containsCache[item]=contains
+		return contains
+
 nodeNamesToNVDARoles={
 	"FRAME":controlTypes.ROLE_FRAME,
-	"IFRAME":controlTypes.ROLE_FRAME,
+	"IFRAME":controlTypes.ROLE_INTERNALFRAME,
 	"FRAMESET":controlTypes.ROLE_DOCUMENT,
 	"BODY":controlTypes.ROLE_DOCUMENT,
 	"TH":controlTypes.ROLE_TABLECELL,
@@ -169,6 +184,12 @@ def locateHTMLElementByID(document,ID):
 			try:
 				element=document.all.item(ID)
 			except:
+				element=None
+		if element is None: #getElementsByName doesn't return element with specified ID in IE11 (#5784)
+			try:
+				element=document.getElementByID(ID)
+			except COMError as e:
+				log.debugWarning("document.getElementByID failed with COMError %s"%e)
 				element=None
 	except COMError as e:
 		log.debugWarning("document.getElementsByName failed with COMError %s"%e)
@@ -511,8 +532,17 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
+	def _get_isCurrent(self):
+		isCurrent = self.HTMLAttributes["aria-current"]
+		if isCurrent == "false":
+			isCurrent = None
+		return isCurrent
+
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
+
+	def _get_placeholder(self):
+		return self.HTMLAttributes["aria-placeholder"]
 
 	def __init__(self,HTMLNode=None,IAccessibleObject=None,IAccessibleChildID=None,**kwargs):
 		self.HTMLNodeHasAncestorIAccessible=False
@@ -723,8 +753,9 @@ class MSHTML(IAccessible):
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
 			states.add(state)
+		htmlRequired='required' in self.HTMLAttributes
 		ariaRequired=self.HTMLAttributes['aria-required']
-		if ariaRequired=="true":
+		if htmlRequired or ariaRequired=="true":
 			states.add(controlTypes.STATE_REQUIRED)
 		ariaSelected=self.HTMLAttributes['aria-selected']
 		if ariaSelected=="true":
@@ -975,6 +1006,10 @@ class MSHTML(IAccessible):
 			return ti.getControlFieldForNVDAObject(self)["language"]
 		except LookupError:
 			return None
+
+	def event_liveRegionChange(self):
+		# MSHTML live regions are currently handled with custom code in-process
+		pass
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.

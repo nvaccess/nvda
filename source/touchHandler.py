@@ -2,7 +2,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
+#Copyright (C) 2012-2017 NV Access Limited, Joseph Lee, Babbage B.V.
+
+"""handles touchscreen interaction (Windows 8 and later).
+Used to provide input gestures for touchscreens, touch modes and other support facilities.
+In order to use touch features, NVDA must be installed on a touchscreen computer running Windows 8 and later.
+"""
 
 import wx
 import threading
@@ -30,6 +35,7 @@ touchModeLabels={
 	"object":_("object mode"),
 }
 
+SM_MAXIMUMTOUCHES=95
 HWND_MESSAGE=-3
 
 WM_QUIT=18
@@ -149,7 +155,7 @@ class TouchInputGesture(inputCore.InputGesture):
 		self.x=tracker.x
 		self.y=tracker.y
 
-	def _get__rawIdentifiers(self):
+	def _get_identifiers(self):
 		IDs=[]
 		for includeHeldFingers in ([True,False] if self.preheldTracker else [False]):
 			ID=""
@@ -160,21 +166,10 @@ class TouchInputGesture(inputCore.InputGesture):
 			if self.tracker.actionCount>1:
 				ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
 			ID+=self.tracker.action
-			IDs.append("TS(%s):%s"%(self.mode,ID))
+			# "ts" is the gesture identifier source prefix for "touch screen".
+			IDs.append("ts(%s):%s"%(self.mode,ID))
 			IDs.append("ts:%s"%ID)
 		return IDs
-
-	def _get_logIdentifier(self):
-		return self._rawIdentifiers[0]
-
-	def _get_identifiers(self):
-		identifiers=[]
-		for identifier in self._rawIdentifiers:
-			t,i=identifier.split(':')
-			# Force the ID in to Python set order so they are always comparable
-			i="+".join(set(i.split("+")))
-			identifiers.append("%s:%s"%(t.lower(),i.lower()))
-		return identifiers
 
 	RE_IDENTIFIER = re.compile(r"^ts(?:\((.+?)\))?:(.*)$")
 
@@ -257,8 +252,8 @@ class TouchHandler(threading.Thread):
 		if msg>=_WM_POINTER_FIRST and msg<=_WM_POINTER_LAST:
 			flags=winUser.HIWORD(wParam)
 			touching=(flags&POINTER_MESSAGE_FLAG_INRANGE) and (flags&POINTER_MESSAGE_FLAG_FIRSTBUTTON)
-			x=winUser.LOWORD(lParam)
-			y=winUser.HIWORD(lParam)
+			x=winUser.GET_X_LPARAM(lParam)
+			y=winUser.GET_Y_LPARAM(lParam)
 			ID=winUser.LOWORD(wParam)
 			if touching:
 				self.trackerManager.update(ID,x,y,False)
@@ -301,20 +296,27 @@ class TouchHandler(threading.Thread):
 
 handler=None
 
-def initialize():
-	global handler
+def touchSupported():
+	"""Returns if the system and current NVDA session supports touchscreen interaction.
+	"""
 	if not config.isInstalledCopy():
 		log.debugWarning("Touch only supported on installed copies")
-		raise NotImplementedError
+		return False
 	if (winVersion.winVersion.major*10+winVersion.winVersion.minor)<62:
 		log.debugWarning("Touch only supported on Windows 8 and higher")
-		raise NotImplementedError
-	maxTouches=windll.user32.GetSystemMetrics(95) #maximum touches
+		return False
+	maxTouches=windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
 	if maxTouches<=0:
 		log.debugWarning("No touch devices found")
+		return False
+	return True
+
+def initialize():
+	global handler
+	if not touchSupported():
 		raise NotImplementedError
 	handler=TouchHandler()
-	log.debug("Touch support initialized. maximum touch inputs: %d"%maxTouches) 
+	log.debug("Touch support initialized. maximum touch inputs: %d"%windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES))
 
 def terminate():
 	global handler

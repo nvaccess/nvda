@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Joseph Lee
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -19,31 +19,6 @@ import wx
 import imp
 
 MAIN_MANIFEST_EXTRA = r"""
-<file name="brailleDisplayDrivers\handyTech\HtBrailleDriverServer.dll">
-	<comClass
-		description="HtBrailleDriver Class"
-		clsid="{209445BA-92ED-4AB2-83EC-F24ACEE77EE0}"
-		threadingModel="Apartment"
-		progid="HtBrailleDriverServer.HtBrailleDriver"
-		tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
-</file>
-<file name="brailleDisplayDrivers\handyTech\HtBrailleDriverServer.tlb">
-	<typelib tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}"
-		version="1.0"
-		helpdir="" />
-</file>
-<comInterfaceExternalProxyStub
-	name="IHtBrailleDriverSink"
-	iid="{EF551F82-1C7E-421F-963D-D9D03548785A}"
-	proxyStubClsid32="{00020420-0000-0000-C000-000000000046}"
-	baseInterface="{00000000-0000-0000-C000-000000000046}"
-	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
-<comInterfaceExternalProxyStub
-	name="IHtBrailleDriver"
-	iid="{43A71F9B-58EE-42D4-B58E-0F9FBA28D995}"
-	proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
-	baseInterface="{00000000-0000-0000-C000-000000000046}"
-	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
 <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
 	<application>
 		<!-- Windows Vista -->
@@ -114,7 +89,7 @@ class py2exe(build_exe.py2exe):
 
 	def build_manifest(self, target, template):
 		mfest, rid = build_exe.py2exe.build_manifest(self, target, template)
-		if getattr(target, "script", None) == "nvda.pyw":
+		if getattr(target, "script", "").endswith(".pyw"):
 			# This is one of the main application executables.
 			mfest = mfest[:mfest.rindex("</assembly>")]
 			mfest += MAIN_MANIFEST_EXTRA + "</assembly>"
@@ -171,7 +146,7 @@ setup(
 			"dest_base":"nvda_noUIAccess",
 			"uac_info": ("asInvoker", False),
 			"icon_resources":[(1,"images/nvda.ico")],
-			"version":"0.0.0.0",
+			"version":"%s.%s.%s.%s"%(version_year,version_major,version_minor,version_build),
 			"description":"NVDA application",
 			"product_version":version,
 			"copyright":copyright,
@@ -181,7 +156,7 @@ setup(
 		{
 			"script": "nvda_slave.pyw",
 			"icon_resources": [(1,"images/nvda.ico")],
-			"version": "0.0.0.0",
+			"version":"%s.%s.%s.%s"%(version_year,version_major,version_minor,version_build),
 			"description": name,
 			"product_version": version,
 			"copyright": copyright,
@@ -192,41 +167,32 @@ setup(
 			# uiAccess will be enabled at runtime if appropriate.
 			"uac_info": ("asInvoker", False),
 			"icon_resources": [(1,"images/nvda.ico")],
-			"version": "0.0.0.0",
+			"version":"%s.%s.%s.%s"%(version_year,version_major,version_minor,version_build),
 			"description": "NVDA Ease of Access proxy",
 			"product_version": version,
 			"copyright": copyright,
 			"company_name": publisher,
 		},
 	],
-	service=[{
-		"modules": ["nvda_service"],
-		"icon_resources": [(1, "images/nvda.ico")],
-		"version": "0.0.0.0",
-		"description": "NVDA service",
-		"product_version": version,
-		"copyright": copyright,
-		"company_name": publisher,
-		"uac_info": ("requireAdministrator", False),
-		"cmdline_style": "pywin32",
-	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
 		"excludes": ["Tkinter",
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
 		# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
-		# Explicitly include it so we don't break some add-ons.
-		"includes": ["nvdaBuiltin", "bisect"],
+		# Also, the service executable used win32api, which some add-ons use for various purposes.
+		# Explicitly include them so we don't break some add-ons.
+		"includes": ["nvdaBuiltin", "bisect", "win32api"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
-		("lib", glob("lib/*.dll")),
-		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe")),
+		("lib/%s"%version, glob("lib/*.dll")),
+		("lib64/%s"%version, glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*")),
+		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
 		(".", ['message.html' ])
 	] + (
 		getLocaleDataFiles()

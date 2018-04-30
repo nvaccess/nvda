@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2013 NV Access Limited
+#Copyright (C) 2010-2018 NV Access Limited, Bram Duvigneau
 
 import winUser
 import textInfos
@@ -17,6 +17,7 @@ from NVDAObjects import behaviors
 import api
 import config
 import review
+from logHandler import log
 
 class CompoundTextInfo(textInfos.TextInfo):
 
@@ -41,7 +42,9 @@ class CompoundTextInfo(textInfos.TextInfo):
 			# Aside from being pointless, we don't want a collapsed end object, as this will cause bogus control fields to be emitted.
 			try:
 				self._end, self._endObj = self._findNextContent(self._endObj, moveBack=True)
-				self._end.move(textInfos.UNIT_OFFSET, 1)
+				# _end is now on the last character, but we want it collapsed after this.
+				self._end.move(textInfos.UNIT_OFFSET, 1, endPoint="end")
+				self._end.collapse(end=True)
 			except LookupError:
 				pass
 
@@ -139,7 +142,6 @@ class CompoundTextInfo(textInfos.TextInfo):
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_FOCUSED)
 		field["states"] = states
-		field["name"] = obj.name
 		field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
@@ -150,9 +152,24 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
+			# Row/column span is not supported by all implementations (e.g. LibreOffice)
+			try:
+				field['table-rowsspanned']=obj.rowSpan
+			except NotImplementedError:
+				log.debug("Row span not supported")
+				pass
+			try:
+				field['table-columnsspanned']=obj.columnSpan
+			except NotImplementedError:
+				log.debug("Column span not supported")
+				pass
 		return field
 
 	def __eq__(self, other):
+		if self is other:
+			return True
+		if type(self) is not type(other):
+			return False
 		return self._start == other._start and self._startObj == other._startObj and self._end == other._end and self._endObj == other._endObj
 
 	def __ne__(self, other):
@@ -259,7 +276,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 						embedIndex += 1
 					field = ti.obj.getChild(embedIndex)
 					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
-					controlField["alwaysReportName"] = True
+					controlField["content"] = field.name
 					fields.extend((textInfos.FieldCommand("controlStart", controlField),
 						u"\uFFFC",
 						textInfos.FieldCommand("controlEnd", None)))

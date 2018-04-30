@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2014 NV Access Limited
+#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 
 import threading
 import queueHandler
@@ -16,6 +16,7 @@ from logHandler import log
 import globalPluginHandler
 import config
 import winUser
+import extensionPoints
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -95,7 +96,15 @@ class _EventExecuter(object):
 
 	def next(self):
 		func, args = next(self._gen)
-		return func(*args, **self.kwargs)
+		try:
+			return func(*args, **self.kwargs)
+		except TypeError:
+			log.warning("Could not execute function {func} defined in {module} module due to unsupported kwargs: {kwargs}".format(
+				func=func.__name__,
+				module=func.__module__ or "unknown",
+				kwargs=self.kwargs
+			), exc_info=True)
+			return extensionPoints.callWithSupportedKwargs(func, *args, **self.kwargs)
 
 	def gen(self, eventName, obj):
 		funcName = "event_%s" % eventName
@@ -170,7 +179,7 @@ def doPreGainFocus(obj,sleepMode=False):
 		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
 			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
- 
+
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
 	if (not obj.treeInterceptor or not obj.treeInterceptor.isAlive or obj.treeInterceptor.shouldPrepare) and (obj==focusObject or obj in api.getFocusAncestors()):
@@ -255,6 +264,13 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	if windowHandle == winUser.getDesktopWindow():
 		# #5595: Events for the cursor get mapped to the desktop window.
 		return True
+
+	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window.
+	# However, it does look like they are always  equal to or descendants of the "active" window of the input thread. 
+	if wClass.startswith('Windows.UI.Core'):
+		gi=winUser.getGUIThreadInfo(0)
+		if winUser.isDescendantWindow(gi.hwndActive,windowHandle):
+			return True
 
 	fg = winUser.getForegroundWindow()
 	if wClass == "NetUIHWND" and winUser.getClassName(fg) == "Net UI Tool Window Layered":

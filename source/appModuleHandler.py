@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -108,7 +108,8 @@ def getAppModuleFromProcessID(processID):
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			appName=getAppNameFromProcessID(processID)
+			# #5323: Certain executables contain dots as part of their file names.
+			appName=getAppNameFromProcessID(processID).replace(".","_")
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")
@@ -177,9 +178,22 @@ def fetchAppModule(processID,appName):
 def reloadAppModules():
 	"""Reloads running appModules.
 	especially, it clears the cache of running appModules and deletes them from sys.modules.
-	Each appModule will be reloaded immediately as a reaction on a first event coming from the process.
+	Each appModule will then be reloaded immediately.
 	"""
 	global appModules
+	state = []
+	for mod in runningTable.itervalues():
+		state.append({key: getattr(mod, key) for key in ("processID",
+			# #2892: We must save nvdaHelperRemote handles, as we can't reinitialize without a foreground/focus event.
+			# Also, if there is an active context handle such as a loaded buffer,
+			# nvdaHelperRemote can't reinit until that handle dies.
+			"helperLocalBindingHandle", "_inprocRegistrationHandle",
+			# #5380: We must save config profile triggers so they can be cleaned up correctly.
+			# Otherwise, they'll remain active forever.
+			"_configProfileTrigger",
+		) if hasattr(mod, key)})
+		# #2892: Don't disconnect from nvdaHelperRemote during termination.
+		mod._helperPreventDisconnect = True
 	terminate()
 	del appModules
 	mods=[k for k,v in sys.modules.iteritems() if k.startswith("appModules") and v is not None]
@@ -187,6 +201,20 @@ def reloadAppModules():
 		del sys.modules[mod]
 	import appModules
 	initialize()
+	for entry in state:
+		pid = entry.pop("processID")
+		mod = getAppModuleFromProcessID(pid)
+		mod.__dict__.update(entry)
+	# The appModule property for existing NVDAObjects will now be None, since their AppModule died.
+	# Force focus, navigator, etc. objects to re-fetch,
+	# since NVDA depends on the appModule property for these.
+	for obj in itertools.chain((api.getFocusObject(), api.getNavigatorObject()), api.getFocusAncestors()):
+		try:
+			del obj._appModuleRef
+		except AttributeError:
+			continue
+		# Fetch and cache right away; the process could die any time.
+		obj.appModule
 
 def initialize():
 	"""Initializes the appModule subsystem. 
@@ -303,10 +331,7 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		if winVersion.winVersion.major > 5:
-			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
-		else:
-			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
+		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
 
@@ -316,16 +341,10 @@ class AppModule(baseObject.ScriptableObject):
 		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
-		# Choose the right function to use to get the executable file name
-		if winVersion.winVersion.major > 5:
-			# For Windows Vista and higher, use QueryFullProcessImageName function
-			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
-		else:
-			GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
 		# Create the buffer to get the executable name
 		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
-		if not GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.byref(length)):
+		if not ctypes.windll.Kernel32.QueryFullProcessImageNameW(self.processHandle, 0, exeFileName, ctypes.byref(length)):
 			raise ctypes.WinError()
 		fileName = exeFileName.value
 		# Get size needed for buffer (0 if no info)
@@ -380,6 +399,8 @@ class AppModule(baseObject.ScriptableObject):
 		Subclasses should call the superclass method first.
 		"""
 		winKernel.closeHandle(self.processHandle)
+		if getattr(self, "_helperPreventDisconnect", False):
+			return
 		if self._inprocRegistrationHandle:
 			ctypes.windll.rpcrt4.RpcSsDestroyClientContext(ctypes.byref(self._inprocRegistrationHandle))
 		if self.helperLocalBindingHandle:
@@ -402,7 +423,7 @@ class AppModule(baseObject.ScriptableObject):
 		"""Whether the underlying process is a 64 bit process.
 		@rtype: bool
 		"""
-		if os.environ.get("PROCESSOR_ARCHITEW6432") != "AMD64":
+		if os.environ.get("PROCESSOR_ARCHITEW6432") not in ("AMD64","ARM64"):
 			# This is 32 bit Windows.
 			self.is64BitProcess = False
 			return False
@@ -413,9 +434,21 @@ class AppModule(baseObject.ScriptableObject):
 		self.is64BitProcess = not res
 		return self.is64BitProcess
 
+	def isGoodUIAWindow(self,hwnd):
+		"""
+		returns C{True} if the UIA implementation of the given window must be used, regardless whether native or not.
+		This function is the counterpart of and takes precedence over L{isBadUIAWindow}.
+		If both functions return C{False}, the decision of whether to use UIA for the window is left to core.
+		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
+		"""
+		return False
+
 	def isBadUIAWindow(self,hwnd):
 		"""
-		returns true if the UIA implementation of the given window must be ignored due to it being broken in some way.
+		returns C{True} if the UIA implementation of the given window must be ignored due to it being broken in some way.
+		This function is the counterpart of L{isGoodUIAWindow}.
+		When both functions return C{True}, L{isGoodUIAWindow} takes precedence.
+		If both functions return C{False}, the decision of whether to use UIA for the window is left to core.
 		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
 		"""
 		return False

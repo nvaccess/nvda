@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
 
 from copy import deepcopy
 import os
@@ -22,6 +22,7 @@ _audioOutputDevice=None
 
 def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
+	config.configProfileSwitched.register(handleConfigProfileSwitch)
 
 def changeVoice(synth, voice):
 	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).
@@ -67,6 +68,22 @@ def getSynthList():
 def getSynth():
 	return _curSynth
 
+def getSynthInstance(name):
+	newSynth=_getSynthDriver(name)()
+	if config.conf["speech"].isSet(name):
+		newSynth.loadSettings()
+	else:
+		# Create the new section.
+		config.conf["speech"][name]={}
+		if newSynth.isSupported("voice"):
+			voice=newSynth.voice
+		else:
+			voice=None
+		# We need to call changeVoice here so that required initialisation can be performed.
+		changeVoice(newSynth,voice)
+		newSynth.saveSettings() #save defaults
+	return newSynth
+
 def setSynth(name,isFallback=False):
 	global _curSynth,_audioOutputDevice
 	if name is None: 
@@ -83,20 +100,7 @@ def setSynth(name,isFallback=False):
 	else:
 		prevSynthName = None
 	try:
-		newSynth=_getSynthDriver(name)()
-		if config.conf["speech"].isSet(name):
-			newSynth.loadSettings()
-		else:
-			# Create the new section.
-			config.conf["speech"][name]={}
-			if newSynth.isSupported("voice"):
-				voice=newSynth.voice
-			else:
-				voice=None
-			# We need to call changeVoice here so that required initialisation can be performed.
-			changeVoice(newSynth,voice)
-			newSynth.saveSettings() #save defaults
-		_curSynth=newSynth
+		_curSynth=getSynthInstance(name)
 		_audioOutputDevice=config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"]=name
@@ -139,8 +143,6 @@ class SynthSetting(object):
 		"""
 		self.name=name
 		self.displayNameWithAccelerator=displayNameWithAccelerator
-		#: @deprecated: Use L{displaynameWithAccelerator} and L{displayName} instead.
-		self.i18nName=displayNameWithAccelerator
 		if not displayName:
 			# Strip accelerator from displayNameWithAccelerator.
 			displayName=displayNameWithAccelerator.replace("&","")

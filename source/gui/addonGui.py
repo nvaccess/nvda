@@ -2,11 +2,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2016 NV Access Limited, Beqa Gozalishvili, Joseph Lee
+#Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger
 
 import os
 import wx
 import core
+import config
 import languageHandler
 import gui
 from logHandler import log
@@ -60,7 +61,7 @@ class AddonsDialog(wx.Dialog):
 		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
 		entryButtonsSizer.Add(self.helpButton)
 		# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-		self.enableDisableButton=wx.Button(self,label=_("Disable add-on"))
+		self.enableDisableButton=wx.Button(self,label=_("&Disable add-on"))
 		self.enableDisableButton.Disable()
 		self.enableDisableButton.Bind(wx.EVT_BUTTON,self.onEnableDisable)
 		entryButtonsSizer.Add(self.enableDisableButton)
@@ -84,7 +85,7 @@ class AddonsDialog(wx.Dialog):
 		# Translators: The label of a button to close the Addons dialog.
 		closeButton = wx.Button(self, label=_("&Close"), id=wx.ID_CLOSE)
 		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER)
+		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER|wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
 		mainSizer.Fit(self)
@@ -129,12 +130,26 @@ class AddonsDialog(wx.Dialog):
 					prevAddon=addon
 					break
 			if prevAddon:
-				# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-				if gui.messageBox(_("A version of this add-on is already installed. Would you like to update it?"),
-				# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
-				_("Add-on Installation"),
-				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
-					return
+				summary=bundle.manifest["summary"]
+				curVersion=prevAddon.manifest["version"]
+				newVersion=bundle.manifest["version"]
+				if gui.messageBox(
+					# Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
+					_("You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?").format(
+						summary=summary,
+						newVersion=newVersion
+					)
+					if curVersion==newVersion else 
+					# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+					_("A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?").format(
+						summary=summary,
+						curVersion=curVersion,
+						newVersion=newVersion
+					),
+					# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
+					_("Add-on Installation"),
+					wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
+						return
 				prevAddon.requestRemove()
 			progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 			# Translators: The title of the dialog presented while an Addon is being installed.
@@ -186,17 +201,17 @@ class AddonsDialog(wx.Dialog):
 			return _("remove")
 		# Need to do this here, as 'isDisabled' overrides other flags.
 		elif addon.isPendingDisable:
-			# Translators: The status shown for an addon when its disabled.
-			return _("disable")
+			# Translators: The status shown for an addon when it requires a restart to become disabled
+			return _("Disabled after restart")
 		elif addon.isPendingEnable:
-			# Translators: The status shown for an addon when its enabled.
-			return _("enable")
+			# Translators: The status shown for an addon when it requires a restart to become enabled
+			return _("Enabled after restart")
 		elif globalVars.appArgs.disableAddons or addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-			return _("suspended")
+			return _("disabled")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
-			return _("running")
+			return _("enabled")
 
 	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
@@ -227,7 +242,7 @@ class AddonsDialog(wx.Dialog):
 		# #3090: Change toggle button label to indicate action to be taken if clicked.
 		if addon is not None:
 			# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-			self.enableDisableButton.SetLabel(_("Enable add-on") if not self._shouldDisable(addon) else _("Disable add-on"))
+			self.enableDisableButton.SetLabel(_("&Enable add-on") if not self._shouldDisable(addon) else _("&Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove)
@@ -282,7 +297,7 @@ Description: {description}
 		shouldDisable = self._shouldDisable(addon)
 		# Counterintuitive, but makes sense when context is taken into account.
 		addon.enable(not shouldDisable)
-		self.enableDisableButton.SetLabel(_("Enable add-on") if shouldDisable else _("Disable add-on"))
+		self.enableDisableButton.SetLabel(_("&Enable add-on") if shouldDisable else _("&Disable add-on"))
 		self.refreshAddonsList(activeIndex=index)
 
 	def onGetAddonsClick(self,evt):
@@ -294,6 +309,14 @@ Description: {description}
 
 	@classmethod
 	def handleRemoteAddonInstall(cls, addonPath):
+		# Add-ons cannot be installed into a Windows store version of NVDA
+		if config.isAppX:
+			# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app 
+			gui.messageBox(_("Add-ons cannot be installed in the Windows Store version of NVDA"), 
+				# Translators: The title of a dialog presented when an error occurs.
+				_("Error"),
+				wx.OK | wx.ICON_ERROR)
+			return
 		closeAfter = AddonsDialog._instance is None
 		dialog = AddonsDialog(gui.mainFrame)
 		dialog.installAddon(addonPath, closeAfter=closeAfter)

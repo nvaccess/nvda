@@ -19,7 +19,7 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 			return winConsoleHandler.WinConsoleTextInfo
 		return super(WinConsole,self).TextInfo
 
-	def event_becomeNavigatorObject(self):
+	def event_becomeNavigatorObject(self, isFocus=False):
 		if winConsoleHandler.consoleObject is not self:
 			if winConsoleHandler.consoleObject:
 				winConsoleHandler.disconnectConsole()
@@ -28,7 +28,7 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 				# The user is returning to the focus object with object navigation.
 				# The focused console should always be monitored if possible.
 				self.startMonitoring()
-		super(WinConsole,self).event_becomeNavigatorObject()
+		super(WinConsole,self).event_becomeNavigatorObject(isFocus=isFocus)
 
 	def event_gainFocus(self):
 		if winConsoleHandler.consoleObject is not self:

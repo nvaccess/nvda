@@ -1,6 +1,6 @@
 #appModules/nvda.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2011 NV Access Inc
+#Copyright (C) 2008-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -10,11 +10,53 @@ import controlTypes
 import versionInfo
 from NVDAObjects.IAccessible import IAccessible
 import gui
+import speech
+import braille
 import config
+from logHandler import log
 
 nvdaMenuIaIdentity = None
 
+class NvdaDialog(IAccessible):
+	"""Fix to ensure NVDA message dialogs get reported when they pop up.
+	"""
+
+	def _get_presentationType(self):
+		presType = super(NvdaDialog, self).presentationType
+		# Sometimes, NVDA message dialogs briefly report the invisible state
+		# after they're focused.
+		# This causes them to be treated as unavailable and they are thus not reported.
+		# If this dialog is in the foreground, treat it as content.
+		if presType == self.presType_unavailable and self == api.getForegroundObject():
+			return self.presType_content
+		return presType
+
+class NvdaSettingsCategoryPanel(IAccessible):
+	# The configuration profile that has been previously edited.
+	# This ought to be a class property.
+	oldProfile = None
+
+	def event_nameChange(self):
+		if self in api.getFocusAncestors():
+			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
+		braille.handler.handleUpdate(self)
+		self.handlePossibleProfileSwitch()
+
+	@classmethod
+	def handlePossibleProfileSwitch(cls):
+		from gui.settingsDialogs import NvdaSettingsDialogActiveConfigProfile as newProfile
+		if (cls.oldProfile and newProfile and newProfile != cls.oldProfile):
+			# Translators: A message announcing what configuration profile is currently being edited.
+			speech.speakMessage(_("Editing profile {profile}").format(profile=newProfile))
+		cls.oldProfile = newProfile
+
 class AppModule(appModuleHandler.AppModule):
+
+	def event_appModule_gainFocus(self):
+		NvdaSettingsCategoryPanel.handlePossibleProfileSwitch()
+
+	def event_appModule_loseFocus(self):
+		NvdaSettingsCategoryPanel.oldProfile = None
 
 	def isNvdaMenu(self, obj):
 		global nvdaMenuIaIdentity
@@ -27,6 +69,15 @@ class AppModule(appModuleHandler.AppModule):
 		# nvdaMenuIaIdentity is True, so the next menu we encounter is the NVDA menu.
 		if obj.role == controlTypes.ROLE_POPUPMENU:
 			nvdaMenuIaIdentity = obj.IAccessibleIdentity
+			return True
+		return False
+
+	def isNvdaSettingsCategoryPanel(self, obj):
+		controlId = obj.windowControlID
+		from gui.settingsDialogs import NvdaSettingsCategoryPanelId
+		if not isinstance(obj, IAccessible):
+			return False
+		if controlId == NvdaSettingsCategoryPanelId:
 			return True
 		return False
 
@@ -48,3 +99,9 @@ class AppModule(appModuleHandler.AppModule):
 		if not gui.shouldConfigProfileTriggersBeSuspended():
 			config.conf.resumeProfileTriggers()
 		nextHandler()
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.windowClassName == "#32770" and obj.role == controlTypes.ROLE_DIALOG:
+			clsList.insert(0, NvdaDialog)
+		if self.isNvdaSettingsCategoryPanel(obj):
+			clsList.insert(0, NvdaSettingsCategoryPanel)

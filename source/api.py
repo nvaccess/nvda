@@ -107,9 +107,13 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		container=tempObj.container
 		tempObj.container=container # Cache the parent.
 		tempObj=container
-	newAppModules=[o.appModule for o in ancestors if o and o.appModule]
 	#Remove the final new ancestor as this will be the new focus object
 	del ancestors[-1]
+	# #5467: Ensure that the appModule of the real focus is included in the newAppModule list for profile switching
+	# Rather than an original focus ancestor which happened to match the new focus.
+	newAppModules=[o.appModule for o in ancestors if o and o.appModule]
+	if obj.appModule:
+		newAppModules.append(obj.appModule)
 	try:
 		treeInterceptorHandler.cleanup()
 	except watchdog.CallCancelled:
@@ -145,6 +149,7 @@ def getFocusDifferenceLevel():
 	return globalVars.focusDifferenceLevel
 
 def getFocusAncestors():
+	"""An array of NVDAObjects that are all parents of the object which currently has focus"""
 	return globalVars.focusAncestors
 
 def getMouseObject():
@@ -173,14 +178,22 @@ def getReviewPosition():
 		globalVars.reviewPosition,globalVars.reviewPositionObj=review.getPositionForCurrentMode(obj)
 		return globalVars.reviewPosition
 
-def setReviewPosition(reviewPosition,clearNavigatorObject=True):
-	"""Sets a TextInfo instance as the review position. if clearNavigatorObject is true, It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
+def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False):
+	"""Sets a TextInfo instance as the review position.
+	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
+		In that case, the next time the navigator object is asked for it fetches it from the review position.
+	@type clearNavigatorObject: bool
+	@param isCaret: Whether the review position is changed due to caret following.
+	@type isCaret: bool
 	"""
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
-	import braille
-	braille.handler.handleReviewMove()
+	# When the review cursor follows the caret and braille is auto tethered to review,
+	# we should not update braille with the new review position as a tether to focus is due.
+	if braille.handler.shouldAutoTether and isCaret:
+		return
+	braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
 
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
@@ -224,7 +237,7 @@ def setNavigatorObject(obj,isFocus=False):
 		if isFocus:
 			globalVars.reviewPosition=obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
 			globalVars.reviewPositionObj=globalVars.reviewPosition
-	eventHandler.executeEvent("becomeNavigatorObject",obj)
+	eventHandler.executeEvent("becomeNavigatorObject",obj,isFocus=isFocus)
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
@@ -232,7 +245,7 @@ def isTypingProtected():
 @rtype: boolean
 """
 	focusObject=getFocusObject()
-	if focusObject and (controlTypes.STATE_PROTECTED in focusObject.states or focusObject.role==controlTypes.ROLE_PASSWORDEDIT):
+	if focusObject and focusObject.isProtected:
 		return True
 	else:
 		return False

@@ -2,6 +2,7 @@ import os
 import sys
 import _winreg
 import msvcrt
+import versionInfo
 import winKernel
 import config
 
@@ -16,6 +17,13 @@ import globalVars
 from logHandler import log
 import time
 import globalVars
+
+versionedLibPath='lib'
+versionedLib64Path='lib64'
+if getattr(sys,'frozen',None):
+	# Not running from source. Libraries are in a version-specific directory
+	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
+	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)
 
 _remoteLib=None
 _remoteLoader64=None
@@ -259,7 +267,7 @@ JapaneseInputConversionModeMessages= {
 } 
 
 def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
-	import speech
+	import ui
 	textList=[]
 	if newFlags!=oldFlags and lcid&0xff==0x11: #Japanese
 		msg=JapaneseInputConversionModeMessages.get(newFlags)
@@ -275,7 +283,7 @@ def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
 			if newOn!=oldOn: 
 				textList.append(msgs[0] if newOn else msgs[1])
 	if len(textList)>0:
-		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage," ".join(textList))
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message," ".join(textList))
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_ulong)
 def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags,lcid):
@@ -393,7 +401,7 @@ class RemoteLoader64(object):
 		# Therefore, explicitly specify our own process token, which causes them to be inherited.
 		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 		try:
-			winKernel.CreateProcessAsUser(token, None, u"lib64/nvdaHelperRemoteLoader.exe", None, None, True, None, None, None, si, pi)
+			winKernel.CreateProcessAsUser(token, None, os.path.join(versionedLib64Path,u"nvdaHelperRemoteLoader.exe"), None, None, True, None, None, None, si, pi)
 			# We don't need the thread handle.
 			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess
@@ -417,7 +425,7 @@ class RemoteLoader64(object):
 
 def initialize():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep,VBuf_getTextInRange
-	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
+	localLib=cdll.LoadLibrary(os.path.join(versionedLibPath,'nvdaHelperLocal.dll'))
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
@@ -444,12 +452,16 @@ def initialize():
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
 	generateBeep.restype=c_int
+	# The rest of this function (to do with injection only applies if NVDA is not running as a Windows store application)
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
+	if config.isAppX:
+		log.info("Remote injection disabled due to running as a  Windows Store Application")
+		return
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h=windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
+	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,u"nvdaHelperRemote.dll")),0,0x8)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
@@ -465,15 +477,36 @@ def initialize():
 
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
-	if not _remoteLib.uninstallIA2Support():
-		log.debugWarning("Error uninstalling IA2 support")
-	if _remoteLib.injection_terminate() == 0:
-		raise RuntimeError("Error terminating NVDAHelperRemote")
-	_remoteLib=None
-	if _remoteLoader64:
-		_remoteLoader64.terminate()
-		_remoteLoader64=None
+	if not config.isAppX:
+		if not _remoteLib.uninstallIA2Support():
+			log.debugWarning("Error uninstalling IA2 support")
+		if _remoteLib.injection_terminate() == 0:
+			raise RuntimeError("Error terminating NVDAHelperRemote")
+		_remoteLib=None
+		if _remoteLoader64:
+			_remoteLoader64.terminate()
+			_remoteLoader64=None
 	generateBeep=None
 	VBuf_getTextInRange=None
 	localLib.nvdaHelperLocal_terminate()
 	localLib=None
+
+LOCAL_WIN10_DLL_PATH = os.path.join(versionedLibPath,"nvdaHelperLocalWin10.dll")
+def getHelperLocalWin10Dll():
+	"""Get a ctypes WinDLL instance for the nvdaHelperLocalWin10 dll.
+	This is a C++/CX dll used to provide access to certain UWP functionality.
+	"""
+	return windll[LOCAL_WIN10_DLL_PATH]
+
+def bstrReturn(address):
+	"""Handle a BSTR returned from a ctypes function call.
+	This includes freeing the memory.
+	This is needed for nvdaHelperLocalWin10 functions which return a BSTR.
+	"""
+	# comtypes.BSTR.from_address seems to cause a crash for some reason. Not sure why.
+	# Just access the string ourselves.
+	# This will terminate at a null character, even though BSTR allows nulls.
+	# We're only using this for normal, null-terminated strings anyway.
+	val = wstring_at(address)
+	windll.oleaut32.SysFreeString(address)
+	return val
