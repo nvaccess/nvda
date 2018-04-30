@@ -30,8 +30,8 @@ What's New in NVDA
 - The secondary routing buttons on Alva BC6, EuroBraille and Papenmeier braille displays now report formatting information for the text under the braille cell of that button. (#7106)
 - Contracted braille input tables will automatically fall back to uncontracted mode in non-editable cases (i.e. controls where there is no cursor or in browse mode). (#7306)
 - NVDA is now less verbose when an appointment or time slot in the Outlook calendar covers an entire day. (#7949)
-- All of NVDA's Preferences can now be found in one settings dialog under NVDA Menu -> Preferences -> Settings, rather than scattered through many dialogs. (#7302)
- 
+- All of NVDA's Preferences can now be found in one settings dialog under NVDA Menu -> Preferences -> Settings, rather than scattered throughout many dialogs. (#577)
+
 
 == Bug Fixes ==
 - NVDA no longer fails to read focused controls in the Microsoft Account sign-in screen in Settings after entering an email address. (#7997)
@@ -49,7 +49,7 @@ What's New in NVDA
 - On Windows 8 and later, NVDA will no longer announce "unknown" when opening quick link menu )Windows+X) and selecting items from this menu. (#8137)
 - Model specific gestures to buttons on Hims displays are now working as advertised in the user guide. (#8096)
 - NVDA will now try to correct system COM registration issues causing programs such as Firefox and Internet Explorer to become inaccessible and report "Unknown" by NVDA. (#2807)
-- Work around a bug in task manager causing NVDA to not allow users to access the contents of specific details about processes. (#8147)
+- Worked around a bug in Task Manager causing NVDA to not allow users to access the contents of specific details about processes. (#8147)
 
 
 == Changes for developers ==
