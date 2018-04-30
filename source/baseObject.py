@@ -1,6 +1,6 @@
 #baseObject.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited
+#Copyright (C) 2007-2018 NV Access Limited, Christopher Toth, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -128,17 +128,12 @@ class AutoPropertyObject(object):
 		for instance in cls.__instances.keys():
 			instance.invalidateCache()
 
-class GestureCollector(AutoPropertyType):
+class ScriptableType(AutoPropertyType):
 	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
 
 	def __new__(meta, name, bases, dct):
 		gestures = {}
-		cls = super(GestureCollector, meta).__new__(meta, name, bases, dct)
-		for i in reversed(cls.__mro__):
-			try:
-				gestures.update(getattr(i, "_%s__gestures" % i.__name__))
-			except AttributeError:
-				pass
+		cls = super(ScriptableType, meta).__new__(meta, name, bases, dct)
 		for name, script in dct.iteritems():
 			if not name.startswith('script_'):
 				continue
@@ -164,14 +159,18 @@ class ScriptableObject(AutoPropertyObject):
 	@type scriptCategory: basestring
 	"""
 
-	__metaclass__ = GestureCollector
+	__metaclass__ = ScriptableType
 
 	def __init__(self):
 		#: Maps input gestures to script functions.
 		#: @type: dict
 		self._gestureMap = {}
 		# Bind gestures specified on the class.
-		self.bindGestures(self._gestures)
+		for cls in reversed(self.__class__.__mro__):
+			try:
+				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+			except AttributeError:
+				pass
 		super(ScriptableObject, self).__init__()
 
 	def bindGesture(self, gestureIdentifier, scriptName):
