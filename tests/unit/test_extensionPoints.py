@@ -49,15 +49,15 @@ class TestBoundMethodWeakref(unittest.TestCase):
 
 class TestCallWithSupportedKwargs(unittest.TestCase):
 	"""
-	Tests to ensure that the correct parameters/kwargs are passed through to the handler method.
+	Tests to ensure that the correct parameters/**kwargs are passed through to the handler method.
 	There are a few combinations of what the handler takes:
-	- self for member function handlers
+	- self for instance method handlers
 	- no params
 	- params with default values
 	- params without default values
-	- kwargs only
-	- params with default values and kwargs
-	- params without default values and kwargs
+	- **kwargs only
+	- params with default values and **kwargs
+	- params without default values and **kwargs
 	What is given to `callWithSupportedKwargs`:
 	- keyword args that match the handler params
 	- positional args that match the handler params
@@ -65,10 +65,21 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 	- missing args that the handler DOES expect
 	"""
 
-	def test_memberHandlerTakesKwargs_givenKwargs(self):
-		"""Test to ensure that a member handler gets the correct arguments, including implicit "self"
-		Handler takes kwargs.
-		callWithSupportedKwargs given kwargs.
+	def test_unboundInstanceMethodHandler_exceptionRaised(self):
+		"""Test to ensure that unhandled callable types (unbound instance methods) are caught and an exception is raised.
+		"""
+		class handlerClass():
+			def handlerMethod(self):
+				pass
+
+		unboundInstanceMethod = handlerClass.handlerMethod
+		with self.assertRaises(TypeError):
+			extensionPoints.callWithSupportedKwargs(unboundInstanceMethod)
+
+	def test_instanceMethodHandlerTakesKwargs_givenKwargs(self):
+		"""Test to ensure that a instance method handler gets the correct arguments, including implicit "self"
+		Handler takes **kwargs.
+		callWithSupportedKwargs given key word arguments.
 		Handler should get all values.
 		"""
 		calledKwargs = {}
@@ -81,10 +92,10 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		extensionPoints.callWithSupportedKwargs(h.handlerMethod, a='a value', b='b value')
 		self.assertEqual(calledKwargs, {'a': 'a value', 'b': 'b value'})
 
-	def test_memberHandlerTakesParamsAndKwargs_givenKwargs(self):
-		"""Test to ensure that a member handler gets the correct arguments, including implicit "self"
-		Handler takes a parameter and kwargs.
-		callWithSupportedKwargs given kwargs.
+	def test_instanceMethodHandlerTakesParamsAndKwargs_givenKwargs(self):
+		"""Test to ensure that a instance method handler gets the correct arguments, including implicit "self"
+		Handler takes a parameter and **kwargs.
+		callWithSupportedKwargs given key word arguments.
 		Handler should get all values.
 		"""
 		calledKwargs = {}
@@ -98,9 +109,9 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		extensionPoints.callWithSupportedKwargs(h.handlerMethod, a='a value', b='b value')
 		self.assertEqual(calledKwargs, {'a': 'a value', 'b': 'b value'})
 
-	def test_memberHandlerTakesParamsAndKwargs_givenPositional(self):
-		"""Test to ensure that a member handler gets the correct arguments, including implicit "self"
-		Handler takes parameter and kwargs.
+	def test_instanceMethodHandlerTakesParamsAndKwargs_givenPositional(self):
+		"""Test to ensure that a instanceMethod handler gets the correct arguments, including implicit "self"
+		Handler takes parameter and key word arguments.
 		callWithSupportedKwargs given a positional.
 		Handler should get positional.
 		"""
@@ -115,9 +126,9 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		extensionPoints.callWithSupportedKwargs(h.handlerMethod, 'a value')
 		self.assertEqual(calledKwargs, {'a': 'a value'})
 
-	def test_memberHandlerTakesParams_givenPositional(self):
-		"""Test to ensure that a member handler gets the correct arguments, including implicit "self"
-		Handler takes parameter.
+	def test_instanceMethodHandlerTakesParams_givenPositional(self):
+		"""Test to ensure that a instance method handler gets the correct arguments, including implicit "self"
+		Handler takes a parameter.
 		callWithSupportedKwargs given a positional.
 		Handler should get positional.
 		"""
@@ -131,10 +142,10 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		extensionPoints.callWithSupportedKwargs(h.handlerMethod, 'a value')
 		self.assertEqual(calledKwargs, {'a': 'a value'})
 
-	def test_memberHandlerTakesParams_givenKwargs(self):
-		"""Test to ensure that a member handler gets the correct arguments, including implicit "self"
-		Handler takes parameter.
-		callWithSupportedKwargs given a keyword arg.
+	def test_instanceMethodHandlerTakesParams_givenMatchingNameKwarg(self):
+		"""Test to ensure that a instance method handler gets the correct arguments, including implicit "self"
+		Handler takes a parameter.
+		callWithSupportedKwargs given a keyword arg with a matching name.
 		Handler should get kwarg.
 		"""
 		calledKwargs = {}
@@ -147,10 +158,10 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		extensionPoints.callWithSupportedKwargs(h.handlerMethod, a='a value')
 		self.assertEqual(calledKwargs, {'a': 'a value'})
 
-	def test_handlerTakesNoParams_noKwargsGiven_handlerIsCalled(self):
-		"""Essentially another veration of `test_handlerParamsMatchKwargsGiven_valuePassedIn` test
+	def test_handlerTakesNoParams_noArgsGiven_handlerIsCalled(self):
+		"""Essentially another variation of `test_handlerParamsMatchKwargsGiven_valuePassedIn` test
 		The handler function expects no params.
-		callWithSupportedKwargs is given no kwargs.
+		callWithSupportedKwargs is given no arguments.
 		Expectation: handler is still called.
 		"""
 		called = []
@@ -159,12 +170,12 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		extensionPoints.callWithSupportedKwargs(handler)
 		self.assertEqual(called, [True])
 
-	def test_handlerTakesNoParams_someKwargsGiven_handlerIsCalled(self):
+	def test_handlerTakesNoParams_kwargsGiven_handlerIsCalled(self):
 		""" Tests that if the kwargs given are surplus to requirements the handler is still called. This test ensures
 		that the functionality to be able to extend extension points exists. New arguments can be added without breaking
 		backwards compatibility.
 		The handler function expects no params.
-		callWithSupportedKwargs is given some kwargs.
+		callWithSupportedKwargs is given some keyword args.
 		Expectation: The handler is expected to be called, no args given.
 		"""
 		called = []
@@ -176,8 +187,8 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 	def test_handlerTakesParamWithDefault_kwargsGivenMatch_valuePassedIn(self):
 		""" Basic test for callWithSupportedKwargs function.
 		Handler expects a single parameter, with a default provided.
-		callWithSupportedKwargs is called with a single kwarg that matches.
-		Expectaion: handler called with parameter value equal to kwargs given to callWithSupportedKwargs.
+		callWithSupportedKwargs is called with a single keyword argument that matches the name of the handler param.
+		Expectation: handler called with parameter value equal to the keyword args given to callWithSupportedKwargs.
 		"""
 		gotParams = {}
 		def handler(a=None):
@@ -188,7 +199,7 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 	def test_handlerTakesParamWithDefault_noKwargsGiven_handlerIsCalled(self):
 		""" Tests that when there are default values for the handler param, then it is truly optional.
 		The handler function takes a param with a default value set.
-		callWithSupportedKwargs is not given any kwargs.
+		callWithSupportedKwargs is not given any arguments
 		Expectation: the handler is expected to be called.
 		"""
 		gotParams = {}
@@ -198,10 +209,10 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		self.assertEqual(gotParams, {'a': 'default a value'})
 
 	def test_handlerTakesParamWithoutDefault_kwargsMatch_handlerIsCalled(self):
-		""" Tests that when there are not default values for the handler param, then matching kwargs are given.
+		""" Tests that when there are not default values for the handler param, then matching keyword arguments are given.
 		The handler function takes a param with no default value set.
-		callWithSupportedKwargs is given kwargs that match the expected param names.
-		Expectation: the handler is expected to be called with the kwargs value.
+		callWithSupportedKwargs is given a keyword arg that match the expected param name.
+		Expectation: the handler is expected to be called with the keyword argument value.
 		"""
 		gotParams = {}
 		def handler(a):
@@ -222,27 +233,27 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 	def test_handlerTakesParamWithoutDefault_kwargsDoNotMatch_exceptionRaised(self):
 		""" Tests that handlers that when a handler expects params which are not provided, then the function is not called.
 		The handler function takes a param with no default value set.
-		callWithSupportedKwargs is given kwargs that don't match the expected param names.
+		callWithSupportedKwargs is given keyword arguments that don't match the expected param names.
 		Expectation: an exception is raised.
 		"""
 		gotParams = {}
 		def handler(a):
 			gotParams['a'] = a
-		with self.assertRaises(Exception):
+		with self.assertRaises(TypeError):
 			extensionPoints.callWithSupportedKwargs(handler, b='b value')
 
 
 	def test_handlerTakesTwoParamsWithoutDefaults_NotEnoughPositionalsGiven_exceptionRaised(self):
 		""" Tests that handlers that when a handler expects params which are not provided, then the function is not called.
 		The handler function takes a param with no default value set.
-		callWithSupportedKwargs is given kwargs that don't match the expected param names.
+		callWithSupportedKwargs is given keyword arguments that don't match the expected param names.
 		Expectation: an exception is raised.
 		"""
 		gotParams = {}
 		def handler(a, b):
 			gotParams['a'] = a
 			gotParams['b'] = b
-		with self.assertRaises(Exception):
+		with self.assertRaises(TypeError):
 			extensionPoints.callWithSupportedKwargs(handler, "a value") # "b value" not provided
 
 	def test_handlerTakesOnlyKwargs_kwargsGiven_handlerReceivesKwargs(self):
@@ -267,10 +278,10 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		self.assertEqual(gotKwargs, {'c': 'c value'})
 
 	def test_handlerTakesParamsWithDefaultAndKwargs_otherKwargsGiven_handlerGetsOtherKwargsAndDefaultValues(self):
-		"""Test that **kwargs is still passed in when params aren't provided.
-		Handler has default vales for params, and takes kwargs.
-		callWithSupportedKwargs is called only with non-matching kwargs.
-		Expected: handler is called, non-matching kwargs are passed to handler
+		"""Test that extra keyword args is still passed in when params aren't provided.
+		Handler has default values for params, and takes **kwargs.
+		callWithSupportedKwargs is called only with non-matching keyword arguments.
+		Expected: handler is called, non-matching keyword arguments are passed to handler
 		"""
 		gotParams = {}
 		gotKwargs = {}
@@ -283,9 +294,11 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		self.assertEqual(gotKwargs, {'c': 'c value'})
 
 	def test_handlerParamsChangeOrder_KwargsGiven_correctArgValuesReceived(self):
-		""" Test that kwargs given to `callWithSupportedKwargs` forwarded to handlers as kwargs.
-		Note: Positionals passed to callWithSupportedKwargs will be position dependent, thus handlers with differing order
-		may be called with incorrect argument order.
+		""" Test that the order of params for handlers does not matter if keyword arguments are used with
+		`callWithSupportedKwargs`
+		Note: Positionals passed to `callWithSupportedKwargs` will be position dependent, thus handlers with differing order
+		may be called with incorrect argument order, it is recommended to use keyword arguments when calling
+		`callWithSupportedKwargs`
 		"""
 		calledKwargsAB = {}
 		def handlerAB(a, b):
@@ -321,6 +334,11 @@ class TestHandlerRegistrar(unittest.TestCase):
 		self.reg.register(inst.method)
 		actual = list(self.reg.handlers)
 		self.assertEqual(actual, [inst.method])
+
+	def test_registerUnboundInstanceMethod_raisesException(self):
+		unboundInstMethod = ExampleClass.method
+		with self.assertRaises(TypeError):
+			self.reg.register(unboundInstMethod)
 
 	def test_unregisterFunc(self):
 		self.reg.register(exampleFunc)
@@ -407,8 +425,8 @@ class TestAction(unittest.TestCase):
 		self.action.notify()
 		self.assertEqual(called, [handler1, handler2])
 
-	def test_memberHandler(self):
-		""" Test that a member function is called as expected
+	def test_instanceMethodHandler(self):
+		""" Test that a instance method function is called as expected
 		"""
 		calledKwargs = {}
 		class handlerClass():
@@ -443,6 +461,38 @@ class TestAction(unittest.TestCase):
 		self.action.notify()
 		self.assertEqual(called, [handler2])
 
+	def test_handlerAcceptsKwargs(self):
+		""" Test that a handler that accepts **kwargs receives all arguments
+		"""
+		calledKwargs = {}
+		def handler(**kwargs):
+			calledKwargs.update(kwargs)
+
+		self.action.register(handler)
+		self.action.notify(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithoutDefault(self):
+		""" Test that a handler that accepts params without a default receives arguments
+		"""
+		calledKwargs = {}
+		def handler(a):
+			calledKwargs["a"] = a
+
+		self.action.register(handler)
+		self.action.notify(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithDefault(self):
+		""" Test that a handler that accepts params with a default receives arguments
+		"""
+		calledKwargs = {}
+		def handler(a=0):
+			calledKwargs["a"] = a
+
+		self.action.register(handler)
+		self.action.notify(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
 
 class TestFilter(unittest.TestCase):
 
@@ -470,14 +520,14 @@ class TestFilter(unittest.TestCase):
 		filtered = self.filter.apply(0)
 		self.assertEqual(filtered, 2)
 
-	def test_memberHandler(self):
-		""" Test that a member function is called as expected
+	def test_instanceMethodHandler(self):
+		""" Test that a instance method function is called as expected
 		"""
 		calledKwargs = {}
 		class handlerClass():
 			def handlerMethod(self, a):
 				calledKwargs['a'] = a
-				return 'member value'
+				return 'instance method value'
 
 		h = handlerClass()
 		self.filter.register(h.handlerMethod)
@@ -511,6 +561,45 @@ class TestFilter(unittest.TestCase):
 		filtered = self.filter.apply(0)
 		self.assertEqual(filtered, 2)
 
+	def test_handlerAcceptsKwargs(self):
+		""" Test that a handler that accepts **kwargs receives all arguments
+		"""
+		calledKwargs = {}
+
+		def handler(value, **kwargs):
+			calledKwargs['value'] = value
+			calledKwargs.update(kwargs)
+
+		self.filter.register(handler)
+		self.filter.apply("some value", a=1)
+		self.assertEqual(calledKwargs, {"value": "some value", "a": 1})
+
+	def test_handlerParamsWithoutDefault(self):
+		""" Test that a handler that accepts params without a default receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(value, a):
+			calledKwargs['value'] = value
+			calledKwargs["a"] = a
+
+		self.filter.register(handler)
+		self.filter.apply("some value", a=1)
+		self.assertEqual(calledKwargs, {"value": "some value", "a": 1})
+
+	def test_handlerParamsWithDefault(self):
+		""" Test that a handler that accepts params with a default receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(value, a=0):
+			calledKwargs['value'] = value
+			calledKwargs["a"] = a
+
+		self.filter.register(handler)
+		self.filter.apply("some value", a=1)
+		self.assertEqual(calledKwargs, {"value": "some value", "a": 1})
+
 class TestDecider(unittest.TestCase):
 
 	def setUp(self):
@@ -534,8 +623,8 @@ class TestDecider(unittest.TestCase):
 		decision = self.decider.decide()
 		self.assertEqual(decision, True)
 
-	def test_memberHandler(self):
-		""" Test that a member function is called as expected
+	def test_instanceMethodHandler(self):
+		""" Test that a instance method function is called as expected
 		"""
 		calledKwargs = {}
 		class handlerClass():
@@ -588,3 +677,39 @@ class TestDecider(unittest.TestCase):
 		self.decider.register(handler2)
 		decision = self.decider.decide()
 		self.assertEqual(decision, False)
+
+	def test_handlerAcceptsKwargs(self):
+		""" Test that a handler that accepts **kwargs receives all arguments
+		"""
+		calledKwargs = {}
+
+		def handler(**kwargs):
+			calledKwargs.update(kwargs)
+
+		self.decider.register(handler)
+		self.decider.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithoutDefault(self):
+		""" Test that a handler that accepts params without a default receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(a):
+			calledKwargs["a"] = a
+
+		self.decider.register(handler)
+		self.decider.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithDefault(self):
+		""" Test that a handler that accepts params with a default receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(a=0):
+			calledKwargs["a"] = a
+
+		self.decider.register(handler)
+		self.decider.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})

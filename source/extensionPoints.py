@@ -81,11 +81,13 @@ class HandlerRegistrar(object):
 		self._handlers = collections.OrderedDict()
 
 	def register(self, handler):
-		"""You can register functions, member functions or lambdas. However the object must be kept alive
-			by your code otherwise it will be de-registered. This is due to the use of weak references. This is especially
-			relevant to lambdas.
+		"""You can register functions, bound instance methods, class methods, static methods or lambdas.
+		However, the callable must be kept alive by your code otherwise it will be de-registered. This is due to the use
+		of weak references. This is especially relevant when using lambdas.
 		"""
 		if hasattr(handler, "__self__"):
+			if not handler.__self__:
+				raise TypeError("Registering unbound instance methods not supported.")
 			weak = BoundMethodWeakref(handler, self.unregister)
 		else:
 			weak = AnnotatableWeakref(handler, self.unregister)
@@ -125,8 +127,18 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 	Instead of raising a TypeError, myFunc will simply be called like this:
 		myFunc(a=1, b=2)
 
-	The `func` function arguments do not need to have default values, and can take kwargs to capture all arguments.
+	func be any callable that is not an unbound method. EG:
+	- Bound instance methods
+	- class methods
+	- static methods
+	- functions
+	- lambdas
+
+	The `func` function arguments do not need to have default values, and can take **kwargs to capture all arguments.
 	See tests/unit/test_extensionPoints.py:TestCallWithSupportedKwargs for examples.
+
+	While `callWithSupportedKwargs` does support positional arguments (*args), usage is strongly discouraged due to the
+	risk of parameter order differences causing bugs.
 
 	An exception is raised if:
 	- the number of positional arguments given can not be received by `func`.
@@ -134,22 +146,24 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 	"""
 	spec = inspect.getargspec(func)
 
-	# Ensure that we can provide all arguments without defaults expected by the handler are provided.
-	# `defaults` is a tuple of default argument values or None if there are no default arguments;
-	# if this tuple has n elements, they correspond to the last n elements listed in args.
-	numExpectedArgsWithDefaults = len(spec.defaults) if spec.defaults else 0
+	# some handlers are instance/class methods, discard "self"/"cls" because it is typically passed implicitly.
+	if inspect.ismethod(func):
+		spec.args.pop(0)  # remove "self"/"cls" for instance methods
+		if not hasattr(func, "__self__"):
+			raise TypeError("Unbound instance methods are not handled.")
 
-	# some handlers are member functions, discard "self" because it is passed implicitly.
-	try:
-		spec.args.remove("self")
-	except ValueError:
-		pass
-
+	# Ensure that the positional args provided by the caller of `callWithSupportedKwargs` actually have a place to go.
+	# Unfortunately, positional args can not be matched on name (keyword) to the names of the params in the handler,
+	# and so calling `callWithSupportedKwargs` is at risk of causing bugs if parameter order differs.
 	numExpectedArgs = len(spec.args)
 	numGivenPositionalArgs = len(args)
 	if numGivenPositionalArgs > numExpectedArgs:
-		raise Exception("Expected to be able to pass {} positional arguments.".format(numGivenPositionalArgs))
+		raise TypeError("Expected to be able to pass {} positional arguments.".format(numGivenPositionalArgs))
 
+	# Ensure that all arguments without defaults which are expected by the handler were provided.
+	# `defaults` is a tuple of default argument values or None if there are no default arguments;
+	# if this tuple has N elements, they correspond to the last N elements listed in args.
+	numExpectedArgsWithDefaults = len(spec.defaults) if spec.defaults else 0
 	if not spec.defaults or numExpectedArgsWithDefaults != numExpectedArgs:
 		# get the names of the args without defaults, skipping the N positional args given to `callWithSupportedKwargs`
 		# positionals are required for the Filter extension point.
@@ -159,7 +173,7 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 		for arg in specArgs:
 			# and ensure they are in the kwargs list
 			if arg not in givenKwargsKeys:
-				raise Exception("Parameter required for handler not provided: {}".format(arg))
+				raise TypeError("Parameter required for handler not provided: {}".format(arg))
 
 	if spec.keywords:
 		# func has a catch-all for kwargs (**kwargs) so we do not need to filter to just the supported args.
@@ -180,7 +194,7 @@ class Action(HandlerRegistrar):
 	>>> somethingHappened = extensionPoints.Action()
 
 	Interested parties then register to be notified about this action, see
-	c@{HandleRegistrar.register} docstring for details of the type of handlers that can be
+	L{HandleRegistrar.register} docstring for details of the type of handlers that can be
 	registered:
 
 	>>> def onSomethingHappened(someArg=None):
@@ -212,7 +226,9 @@ class Filter(HandlerRegistrar):
 
 	>>> messageFilter = extensionPoints.Filter()
 
-	Interested parties then register to filter the data:
+	Interested parties then register to filter the data, see
+	L{HandleRegistrar.register} docstring for details of the type of handlers that can be
+	registered:
 
 	>>> def filterMessage(message, someArg=None):
 	... 	return message + " which has been filtered."
@@ -253,7 +269,9 @@ class Decider(HandlerRegistrar):
 
 	>>> doSomething = extensionPoints.Decider()
 
-	Interested parties then register to participate in the decision:
+	Interested parties then register to participate in the decision, see
+	L{HandleRegistrar.register} docstring for details of the type of handlers that can be
+	registered:
 
 	>>> def shouldDoSomething(someArg=None):
 	... 	return False
