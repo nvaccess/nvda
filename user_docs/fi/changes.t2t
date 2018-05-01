@@ -14,6 +14,8 @@
 - Uusia pistetaulukkoja: liettualainen 8 pisteen merkistö, ukrainalainen, mongolilainen taso 2. (#7839)
 - Lisätty komento määrätyssä pistesolussa olevan tekstin muotoilutietojen ilmoittamiseen. (#7106)
 - Päivityksen asentamista on nyt mahdollista lykätä myöhemmäksi NVDA:ta päivitettäessä. (#4263) 
+- You can now toggle control, shift, alt, windows and NVDA from your braille keyboard and combine these modifiers with braille input (e.g. press control+s). (#7306) 
+ - You can assign these new modifier toggles using the commands found under Emulated system keyboard keys in the Input gestures dialog.
 
 
 == Muutokset ==
@@ -22,6 +24,7 @@
 - Liettualaisen pistetaulukon uusi nimi on nyt "liettua, 6 pisteen merkistö", jotta vältetään sekaannus uuden 8 pisteen taulukon kanssa. (#7839)
 - Kanadanranskalaiset tason 1 ja 2 taulukot on poistettu. Niiden asemesta käytetään ranskalaista yhdenmukaistettua 6 pisteen tietokonemerkistön ja tason 2 taulukoita. (#7839)
 - Alva BC6-, EuroBraille- ja Papenmeier-pistenäyttöjen toissijaiset kosketuskohdistinnäppäimet ilmoittavat nyt pistesolussa olevan tekstin muotoilutiedot. (#7106)
+- Lyhennepistekirjoituksen syöttötaulukot vaihtavat automaattisesti takaisin lyhentämättömään tilaan ei-muokattavissa paikoissa (ts. säätimissä, joissa ei ole kohdistinta, tai selaustilassa). (#7306)
 
 
 == Korjatut ohjelmavirheet ==
@@ -35,6 +38,7 @@
 - Korjattu väärin muotoiltu pistekirjoituksen tulostus useista pistetaulukoista, mukaan lukien isojen kirjainten merkit tanskalaisessa 8 pisteen lyhennekirjoituksessa. (#7526, #7693)
 - NVDA voi nyt puhua Microsoft Wordissa useammantyyppisiä luettelomerkkejä. (#6778)
 - Lue muotoilutiedot -komennon painaminen ei enää siirrä virheellisesti tarkastelukohtaa, ja näin ollen useasti painaminen ei myöskään anna enää eri tuloksia. (#7869)
+- Pistekirjoituksen syöttö ei enää salli lyhennepistekirjoitusta paikoissa, joissa sitä ei tueta (ts. kokonaisia sanoja ei enää lähetetä järjestelmälle muualla kuin tekstisisällössä ja selaustilassa). (#7306)
 
 
 = 2018.1.1 =

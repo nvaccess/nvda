@@ -11,9 +11,11 @@ Ce este nou în NVDA
 - Abilitatea de a citi și de a naviga prin tabelele  din Kindle pentru PC. (#7977)
 - A fost introdus suportul prin USB și Bluetooth pentru display-urile braille BrailleNote Touch și Brailliant BI 14. (#6524)
 - În Windows 10 Fall Creators Update și mai nou, NVDA poate anunța notificări de la aplicații precum Calculator și Windows Store. (#8045)
-- Noi tabele de traducere braille: lituaniană 8 puncte, ucraineană, mongolă grad 2. (#7839)
+- Noi tabele de traducere braille: lituaniană 8 puncte, ucraineană, română, mongolă grad 2. (#7839)
 - S-a adăugat un script pentru raportarea informațiilor de formatare pentru un text de sub o celulă braille specifică. (#7106)
 - La actualizarea NVDA, puteți să amânați instalarea noii versiuni și s-o realizați mai târziu. (#4263)
+- Acum, puteți comuta la control, shift, alt, windows și NVDA de la tastatura dumneavoastră braille și le puteți combina cu intrarea braille (e.x. apăsați control+s). (#7306) 
+ - puteți să le atribuiți utilizând comenzile găsite sub tastele tastaturii simulate din dialogul gesturilor de intrare.
 
 
 == Modificări ==
@@ -22,6 +24,7 @@ Ce este nou în NVDA
 - Tabelul braille lituanian a fost redenumit în lituaniană 6 puncte pentru a se evita confuzia cu noul tabel în 8 puncte. (#7839)
 - Tabelele franceză (Canada) grad 1 și 2 au fost șterse. În schimb, se vor utiliza tabelele franceze (unificate) braille pentru calculator în 6 puncte, respectiv tabelele de gradul 2. (#7839)
 - Butoannele secundare de deplasare de pe afișajele Alva BC6, EuroBraille și Papenmeier raportează acum informații de formatare pentru un text de sub o celulă braille de-a acelui buton. (#7106)
+- Tabelele braille de intrare abreviate vor reveni automat la modul neabreviat în cazurile needitabile (e.x. controalele în care nu există niciun cursor sau în modul de navigare). (#7306)
 
 
 == Rezolvări Defecte ==
@@ -35,6 +38,7 @@ Ce este nou în NVDA
 - S-a reparat ieșirea braille malformată pentru câteva tabele braille, incluzând majusculele din tabelul danez abreviat în 8 puncte. (#7526, #7693)
 - Acum, NVDA poate să raporteze mai multe tipuri de buline în Microsoft Word. (#6778)
 - Apăsarea pe scriptul de raportare a formatării nu mai deplasează incorect poziția de examinare, iar prin urmare, apăsarea lui în mod repetat nu mai dă rezultate diferite. (#7869)
+- Intrarea braille nu vă va mai permite să folosiți braille-ul în cazurile în care nu mai este suportat (e.x. cuvintele întregi nu vor mai fi trimise către sistem în afara conținutului textului și în modul de navigare). (#7306)
 
 
 == Modificări pentru Dezvoltatori ==

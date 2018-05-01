@@ -2273,16 +2273,16 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	#: Compiled regular expression to match an identifier including an optional model name
 	#: The model name should be an alphanumeric string without spaces.
 	#: @type: RegexObject
-	ID_PARTS_REGEX = re.compile(r"br\((\w+)(\.(\w+))?\):([\w+]+)", re.U)
+	ID_PARTS_REGEX = re.compile(r"br\((\w+)(?:\.(\w+))?\):([\w+]+)", re.U)
 
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
-		idParts = cls.ID_PARTS_REGEX.search(identifier)
+		idParts = cls.ID_PARTS_REGEX.match(identifier)
 		if not idParts:
 			log.error("Invalid braille gesture identifier: %s"%identifier)
 			return handler.display.description, "malformed:%s"%identifier
-		modelName = idParts.group(3)
-		key = idParts.group(4)
+		modelName = idParts.group(2)
+		key = idParts.group(3)
 		if modelName: # The identifier contains a model name
 			return handler.display.description, "{modelName}: {key}".format(
 				modelName=modelName, key=key

@@ -14,6 +14,8 @@
 - Novas táboas de transcripcción braille: Lithuano 8 pontos, ucranio, Mongol grado 2. (#7839)
 - Engadido un script para anunciar información de formato para o texto baixo unha celda braille específica. (#7106)
 - Ao se actualizar o NVDA, agora é posible retrasar a instalación da actualización a un momento posterior da túa elección. (#4263) 
+- Agora podes conmutar control, shift, alt, windows e NVDA dende o teu teclado braille e combinar estos modificadores coa entrada braille (ex.: premer control+s). (#7306) 
+ - Podes asignar estas novas conmutacións de modificadores usando a orde que se atopa en Teclas de sistema emuladas no diálogo Xestos de Entrada.
 
 
 == Cambios ==
@@ -22,6 +24,7 @@
 - A táboa braille lituana renomeouse a Lituano 6 pontos para evitar confusións coa nova táboa de 8 pontos. (#7839)
 - As táboas Francés (Canadá) grao 1 e grao 2 borráronse. No seu lugar, utilizaranse as táboas Francés (unificado) 6 pontos e Grao 2 respectivamente. (#7839)
 - Os sensores secundarios das pantallas braille Alva BC6, EuroBraille e Papenmeier agora anuncian información de formato para o texto baixo a celda braille dese sensor. (#7106)
+- As táboas de entrada de braille contraído voltarán automáticamente a modo non contraído nos casos non editables (é dicir, controis onde non hai cursor ou en modo exploración). (#7306)
 
 
 == Correción de fallos ==
@@ -35,6 +38,7 @@
 - Arranxada a malformación da saída braille para varias táboas braille, incluindo signos en maiúsculas no braille danés contraído de 8 pontos. (#7526, #7693)
 - O NVDA agora pode anunciar máis tipos de viñetas no Microsoft Word. (#6778)
 - Ao se premer o script anunciar información xa non move incorrectamente a posición de revisión e polo tanto ao premelo varias veces xa non da resultados diferentes. (#7869)
+- A entrada braille xa non che permitirá usar braille contraído nos casos onde non estea soportado (é dicir, xa non se enviarán palabras enteiras ao sistema fora do contido de texto e en modo exploración). (#7306)
 
 
 == Cambios para Desenvolvedores ==
