@@ -579,9 +579,21 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	def _get_rowSpan(self):
+		"""The number of rows spanned by this cell.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
 	def _get_rowHeaderText(self):
 		"""The text of the row headers for this cell.
 		@rtype: str
+		"""
+		raise NotImplementedError
+
+	def _get_columnSpan(self):
+		"""The number of columns spanned by this cell.
+		@rtype: int
 		"""
 		raise NotImplementedError
 
@@ -642,15 +654,6 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 			if role == controlTypes.ROLE_TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout
 			if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and (not config.conf["documentFormatting"]["reportTables"] or not config.conf["documentFormatting"]["reportTableCellCoords"]):
-				return self.presType_layout
-		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
-			try:
-				table=self.table
-			except NotImplementedError:
-				table=None
-			if table:
-				# This is part of a real table, so the cells will report row/column information.
-				# Therefore, this object is just for layout.
 				return self.presType_layout
 		return self.presType_content
 
@@ -775,7 +778,14 @@ Tries to force this object to take the focus.
 		@return: True if this object is protected (hides its input for passwords), or false otherwise
 		@rtype: boolean
 		"""
-		return False
+		# Objects with the protected state, or with a role of passWordEdit should always be protected.
+		isProtected=(controlTypes.STATE_PROTECTED in self.states or self.role==controlTypes.ROLE_PASSWORDEDIT)
+		# #7908: If this object is currently protected, keep it protected for the rest of its lifetime.
+		# The most likely reason it would lose its protected state is because the object is dying.
+		# In this case it is much more secure to assume it is still protected, thus the end of PIN codes will not be accidentally reported. 
+		if isProtected:
+			self.isProtected=isProtected
+		return isProtected
 
 	def _get_indexInParent(self):
 		"""The index of this object in its parent object.
@@ -821,10 +831,10 @@ Tries to force this object to take the focus.
 
 	def _get_isCurrent(self):
 		"""Gets the value that indicates whether this object is the current element in a set of related 
-		elements. This maps to aria-current. Normally returns False. If this object is current
-		it will return one of the following values: True, "page", "step", "location", "date", "time"
+		elements. This maps to aria-current. Normally returns None. If this object is current
+		it will return one of the following values: "true", "page", "step", "location", "date", "time"
 		"""
-		return False
+		return None
 
 	def _get_shouldAcceptShowHideCaretEvent(self):
 		"""Some objects/applications send show/hide caret events when we don't expect it, such as when the cursor is blinking.

@@ -1,4 +1,4 @@
-NVDA NVDA_VERSION Používateľská príručka
+sNVDA NVDA_VERSION Používateľská príručka
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -7,14 +7,14 @@ NVDA NVDA_VERSION Používateľská príručka
 = Obsah =[toc]
 %%toc
 
-+ Úvod +
++ Úvod +[Introduction]
 Vitajte v NVDA!
 
 NonVisual Desktop Access (NVDA) je voľne šíriteľný open-source čítač obrazovky pre operačný systém Windows.
 Pomocou hlasového a hmatového výstupu umožňuje nevidiacim a zrakovo postihnutým používateľom pristupovať k PC so systémom Windows za rovnakú cenu ako vidiacim osobám.
 Vývoj NVDA zastrešuje organizácia [NV Access https://www.nvaccess.org/], za pomoci príspevkov od členov komunity.
 
-++ Všeobecné vlastnosti ++
+++ Všeobecné vlastnosti ++[GeneralFeatures]
 NVDA umožňuje nevidiacim a zrakovo postihnutým prístup a interakciu s operačným systémom Windows a množstvom ďalších voliteľných aplikácií.
 
 Najvýznamnejšie prednosti programu:
@@ -22,35 +22,36 @@ Najvýznamnejšie prednosti programu:
 - Vstavaný hlasový výstup, ktorý podporuje viac než 80 jazykov
 - Oznamovanie informácií o formátovaní ako napríklad názov a veľkosť písma, štýl textu a pravopisné chyby
 - Automatické oznamovanie textu pod kurzorom myši a voliteľné akustické oznamovanie pozície kurzora myši
-- Podpora množstva braillovských zobrazovačov vrátane písania na riadkoch, ktoré podporujú vstup pomocou 8-bodového počítačového kódu
+- Podpora množstva braillovských zobrazovačov vrátane písania na riadkoch, ktoré majú braillovskú klávesnicu
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
-- Preložený do 51 jazykov
+- Preložený do 52 jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
+- Oznamovanie prvkov a textu pri práci s dotykovou obrazovkou
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
 - Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
 - Podpora pre prostredie príkazového riadku Windows a konzolové aplikácie
 -
 
-++ Medzinárodná podpora ++
+++ Medzinárodná podpora ++[Internationalization]
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 51 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Barmčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Kannada, Katalánčina, Kolumbijská španielčina, Kórejčina, Litovčina, Macedónčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 52 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Barmčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Kannada, Katalánčina, Kyrgyz, Kolumbijská španielčina, Kórejčina, Litovčina, Macedónčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
 
-++ Podpora hlasového výstupu ++
+++ Podpora hlasového výstupu ++[SpeechSynthesizerSupport]
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
 
 NVDA je distribuovaný s viacjazyčným voľne šíriteľným/Open-Source hlasovým výstupom [eSpeak NG https://github.com/espeak-ng/espeak-ng].
 
 Informácie o ďalších hlasových výstupoch, ktoré NVDA podporuje môžete nájsť v časti [Podporované hlasové výstupy #SupportedSpeechSynths].
 
-++ Podpora braillovských zobrazovačov ++
+++ Podpora braillovských zobrazovačov ++[BrailleSupport]
 Pre používateľov, ktorí vlastnia braillovský zobrazovač - ľudovo nazývaný tiež braillovský riadok, NVDA umožňuje výstup v braillovom písme.
 NVDA tiež podporuje zápis textu v Brailovom plnopise alebo skratkopise cez braillovský riadok.
 Prosím pozrite si časť [Podporované braillovské zobrazovače #SupportedBrailleDisplays] pre informácie o podporovaných zariadeniach.
 
 NVDA podporuje rôzne kódové tabuľky umožňujúce tak čítať braillový výstup vo viacerých jazykoch. V mnohých prípadoch existujú tabuľky pre plnopis aj skratkopis prípadne počítačový kód.
 
-++ Licencia a autorské práva ++
+++ Licencia a autorské práva ++[LicenseAndCopyright]
 NVDA je chránený autorskými právami Copyright NVDA_COPYRIGHT_YEARS Tím NVDA.
 
 Distribúcia NVDA je možná pod licenciou GNU General Public License 2.0.
@@ -58,7 +59,7 @@ Tento produkt môžete voľne šíriť a meniť rôznym spôsobom, podmienkou v�
 Týka sa to oboch pôvodných, aj upravených kópií daného software.
 Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
 
-+ Systémové požiadavky +
++ Systémové požiadavky +[SystemRequirements]
 - NVDA spustíte v 32 aj 64 bitových verziách systémov Windows 7, 8, 8.1, 10 a tiež v serverových edíciách Windows od verzie 2008 R2..
 - Vo Windows 7 musí byť nainštalovaný Service Pack 2 alebo novší.
  - V systémoch Windows Server 2008 R2 	musí byť nainštalovaný Service Pack 1 alebo novší.
@@ -67,7 +68,7 @@ Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) http:
 - Mali by ste mať aspoň 90 MB voľného miesta na disku
 -
 
-+ Získanie a inštalácia programu NVDA +
++ Získanie a inštalácia programu NVDA +[GettingAndSettingUpNVDA]
 Ak ešte nemáte kópiu NVDA, môžete si ju stiahnuť z web stránky: [www.nvaccess.org NVDA_URL].
 
 Vstúpte do sekcie download, kde nájdete priamy odkaz na stiahnutie najnovšej verzie.
@@ -86,16 +87,16 @@ Spúšťanie skutočnej prenosnej verzie z média len na čítanie nie je zatia�
 
 V úvodnom dialógu môžete tiež aktivovať tlačidlo Ponechať spustenú dočasnú kópiu. Toto sa môže zísť, ak NVDA niekomu ukazujete. Spúšťanie NVDA takýmto spôsobom pri bežnom používaní je však zdĺhavé.
 
-++ obmedzenia pre prenosnú verziu a dočasnú kópiu ++
+++ obmedzenia pre prenosnú verziu a dočasnú kópiu ++[PortableAndTemporaryCopyRestrictions]
 Okrem toho, že nie je možné automaticky spustiť NVDA počas prihlásenia alebo po ňom, má prenosná verzia a dočasná kópia NVDA tieto obmedzenia:
 - Nemožnosť pracovať s aplikáciami, ktoré bežia správami administrátora, ak spustená verzia NVDA tiež nemá práva administrátora (čo sa však neodporúča).
 - Nemožnosť čítať obrazovku na prepnutie užívateľského účtu (UAC) pri pokuse spustiť aplikáciu s právami administrátora.
-- Nefunguje používanie dotykovej klávesnice v systéme Windows 8 a novších.
+- Nefunguje používanie dotykovej obrazovky v systéme Windows 8 a novších.
 - Nie je možné využívať režim prehliadania a čítanie napísaných znakov vo Windows Store v systéme Windows od verzie 8.
 - V systémoch windows 8 a novších nie je možné využívať automatickéstíšenie.
 -
 
-++ Inštalácia NVDA ++
+++ Inštalácia NVDA ++[InstallingNVDA]
 Ak ste si stiahli NVDA a chcete ho nainštalovať, aktivujte tlačidlo Nainštalovať NVDA na úvodnej obrazovke.
 Ak ste úvodnú obrazovku zatvorili alebo chcete NVDA inštalovať z prenosnej verzie, aktivujte položku Nainštalovať NVDA z podmenu nástroje v ponuke NVDA.
 
@@ -105,20 +106,20 @@ Počas inštalácie máte niekoľko možností, ktoré sú opísané v nasleduj�
 Po úspešnom nainštalovaní sa zobrazí okno so správou, ktoré môžete zatvoriť stlačením tlačidla OK.
 Po zatvorení okna sa NVDA reštartuje.
 
-+++ Spúšťať NVDA pri zobrazení prihlasovacej obrazovky +++
++++ Spúšťať NVDA pri zobrazení prihlasovacej obrazovky +++[StartAtWindowsLogon]
 Umožňuje nastaviť, či sa má NVDA automaticky spustiť pri zobrazení prihlasovacej obrazovky, teda ešte pred tým, ako zadáte svoje heslo.
 toto zahŕňa aj obrazovky UAC a iné zabezpečené obrazovky.
 
-+++ Vytvoriť odkaz na pracovnej ploche so skratkou ctrl+alt+n +++
++++ Vytvoriť odkaz na pracovnej ploche so skratkou ctrl+alt+n +++[CreateDesktopShortcut]
 Môžete sa rozhodnúť, či chcete, aby sa pri inštalácii NVDA vytvoril odkaz na pracovnej ploche.
 Ak sa rozhodnete vytvoriť odkaz, inštalátor automaticky tomuto odkazu priradí skratku ctrl+alt+n. Touto skratkou budete môcť NVDA kedykoľvek spustiť.
 
-+++ Skopírovať nastavenia s prenosnej verzie do profilu aktuálne prihláseného používateľa +++
++++ Skopírovať nastavenia s prenosnej verzie do profilu aktuálne prihláseného používateľa +++[CopyPortableConfigurationToCurrentUserAccount]
 Ak začiarknete túto voľbu, pri inštalácii sa skopírujú aktuálne nastavenia NVDA do profilu aktuálne prihláseného používateľa.
 Nastavenia nebudú skopírované do iných používateľských účtov v systéme a nebudú sa používať ani pri prihlasovacej obrazovke a iných zabezpečených obrazovkách.
 Táto voľba je dostupná len ak inštalujete NVDA z prenosnej verzie. Voľba sa nezobrazí, ak inštalujete NVDA priamo zo súboru z webovej stránky NVDA.
 
-++ Vytvorenie prenosnej verzie ++
+++ Vytvorenie prenosnej verzie ++[CreatingAPortableCopy]
 Ak vytvárate prenosnú verziu priamo so súboru so stránky NVDA, aktivujte tlačidlo Vytvoriť prenosnú verziu.
 Ak ste zatvorili úvodnú obrazovku, alebo máte spustenú inštalačnú verziu NVDA, v ponuke NVDA v podmenu nástroje aktivujte položku Vytvoriť prenosnú verziu.
 
@@ -130,9 +131,9 @@ Vytvorenie prenosnej verzie potvrdíte stlačením tlačidla Pokračovať.
 Po úspešnom skopírovaní súborov sa zobrazí správa, ktorá vás informuje o úspešnosti operácie.
 Dialóg zatvorte aktivovaním tlačidla OK.
 
-+ Začíname pracovať s NVDA +
++ Začíname pracovať s NVDA +[GettingStartedWithNVDA]
 
-++ Spustenie NVDA ++
+++ Spustenie NVDA ++[LaunchingNVDA]
 Ak už máte nainštalovaný NVDA podľa pokynov inštalátora, spustiť NVDA je veľmi jednoduché. Stačí stlačiť klávesovú skratku Ctrl+Alt+N, alebo vybrať položku NVDA zo skupiny NVDA z menu štart/programy.
 Tiež môžete NVDA spustiť napísaním "NVDA" do okna Spustiť v ponuke štart.
 Pomocou [parametrov príkazového riadka #CommandLineOptions] môžete reštartovať NVDA (-r), Ukončiť NVDA (-q), zakázať doplnky (--disable-addons) a podobne.
@@ -150,6 +151,7 @@ Ak spúšťanie trvá príliš dlho, NVDA oznámi, "Spúšťanie programu NVDA, 
 Ak sa neobjaví nič z uvedeného, alebo sa objaví chyba ohlásená zvukom Windows, prípadne rad klesajúcich tónov, znamená to, že NVDA má problém pri spúšťaní a túto chybu by ste mali ohlásiť tvorcom programu.
 Informácie o tom, ako chybu ohlásiť nájdete na stránkach NVDA.
 
++++ Dialóg Vitajte v NVDA +++[WelcomeDialog]
 Keď sa NVDA spustí prvý krát, objaví sa uvítacie okno informujúce o použití tzv. klávesu NVDA a základné informácie o ponuke NVDA.
 Viac podrobností si môžete prečítať v nasledujúcich odsekoch.
 Ďalej toto okno obsahuje jeden zoznamový rámik a tri začiarkavacie políčka.
@@ -158,9 +160,9 @@ Prvé začiarkávacie políčko umožní zvoliť, či chcete používať capsloc
 Druhé začiarkávacie pole rozhoduje o tom, či sa má NVDA spúšťať po prihlásení do systému Windows a je prístupné len v nainštalovanej verzii NVDA.
 Tretie začiarkavacie políčko umožňuje nastaviť, či sa uvítacie okno má zobraziť po každom štarte NVDA.
 
-++ Klávesové skratky ++
+++ Klávesové skratky ++[AboutNVDAKeyboardCommands]
 
-+++ Klávesový modifikátor NVDA +++
++++ Klávesový modifikátor NVDA +++[TheNVDAModifierKey]
 Väčšina klávesových príkazov NVDA je kombináciou zvláštneho klávesu nazývaného kláves NVDA s inými klávesmi.
 Výnimkou sú príkazy na navigáciu  v desktop rozložení pomocou prezeracieho kurzora, keďže tu sa používajú číslice na vypnutom  numerickom bloku bez klávesu NVDA. Existujú však aj ďalšie výnimky.
 
@@ -169,7 +171,7 @@ Predvolené nastavenia majú ako kláves NVDA nastavený insert aj numerický in
 
 Ak si želáte vykonať pôvodnú funkcionalitu klávesu, ktorý Ste nastavili ako kláves NVDA (napr. prepnúť stav veľkých písmen pomocou klávesu capslock) stlačte kláves NVDA 2 krát rýchlo za sebou.
 
-+++ Rozloženia klávesnice +++
++++ Rozloženia klávesnice +++[KeyboardLayouts]
 NVDA má dve sady  klávesových príkazov, teda tzv. rozloženia: rozloženie pre stolné počítače a pre prenosné (laptop) počítače.
 Predvolene je NVDA nastavený na rozloženie desktop. Je možné to zmeniť v dialógu nastavenia klávesnice v ponuke NVDA.
 
@@ -177,17 +179,17 @@ Rozloženie pre stolné počítače sa spolieha na klávesy z numerického bloku
 Aj keď väčšina prenosných počítačov nemá fyzický numerický blok, na mnohých notebookoch je možné emulovať klávesy numerického bloku pridržaním klávesu fn a stláčaním písmen a číslic v pravej časti klávesnice (7, 8, 9, u, i, o, j, k, l, atď).
 Ak toto Váš notebook nepodporuje, alebo nie je možné vypnúť tlačidlo numlock, môžete použiť rozloženie nazvané laptop.
 
-++ Dotykové gestá NVDA ++
-Ak používate NVDA na zariadení vybavenom dotykovou obrazovkou a máte nainštalovaný operačný systém Windows 8 alebo novší, môžete NVDA ovládať tiež priamo použitím dotykovej obrazovky.
+++ Dotykové gestá NVDA ++[NVDATouchGestures]
+Ak používate NVDA na zariadení vybavenom dotykovou obrazovkou a máte nainštalovaný operačný systém Windows 8 alebo novší, môžete NVDA ovládať tiež priamo cez dotykové gestá.
 Počas behu NVDA bude každý vstup z dotykovej obrazovky presmerovaný programu NVDA.
 Z tohto dôvodu nie je v takejto situácii možné štandardným spôsobom vykonávať pomocou dotykovej obrazovky akcie, ktoré je možné vykonávať bez spusteného programu NVDA.
 
-+++ Skúmanie obrazovky +++
++++ Skúmanie obrazovky +++[ExploringTheScreen]
 Základná akcia, ktorú môžete spustiť dotykom na obrazovku je oznámenie objektu zobrazeného v akomkoľvek bode obrazovky.
 Položením jedného prsta kdekoľvek na obrazovku spustíte túto akciu.
 Môžete tiež nechať prst pritlačený k obrazovke a postupným posúvaním po ploche obrazovky si nechať vyčítať prvky, cez ktoré Váš prst prechádza spolu s ich textom 
 
-+++ Dotykové gestá +++
++++ Dotykové gestá +++[TouchGestures]
 V ďalšom texte tejto príručky sa vyskytnú zoznamy príkazov NVDA, ktoré okrem štandardných klávesových skratiek budú obsahovať tzv. dotykové gestá, vykonávané pomocou dotykovej obrazovky.
 Nasledujú jednoduché inštrukcie, ktoré majú za cieľ vysvetliť ako vykonávať dotykové gestá pomocou dotykovej obrazovky tak, aby Ste na základe ich použitia dokázali vyvolať príkazy NVDA k týmto gestám priradené.
 
@@ -210,7 +212,7 @@ Sú štyri možnosti švihnutia na základe smeru pohybu: švihnutie vľavo, vpr
 Rovnako ako pri vykonávaní klepnutí je možné švihať viacerými prstami.
 Znamená to, že sú k dispozícii rôzne gestá ako napríklad švihnutie hore dvoma prstami, švihnutie vľavo štyrmi prstami a podobne.
 
-+++ Režim dotyku +++
++++ Režim dotyku +++[TouchModes]
 K dispozícii je nepochybne väčšie množstvo príkazov NVDA než dostupných gest, ktoré je možné vykonať pomocou dotykovej obrazovky. Znamená to, že NVDA používa niekoľko tzv. režimov dotyku, medzi ktorými je možné prepínať a podľa aktívneho režimu dotyku sú aj dostupné konkrétne podmnožiny príkazov NVDA.
 Zatiaľ sú k dispozícii textový režim a objektový režim.
 Niektoré príkazy ďalej v tomto dokumente môžu mať preto za názvom gesta uvedený v zátvorke jeden z týchto režimov.
@@ -221,7 +223,16 @@ Ak príkaz za názvom gesta nemá uvedený názov režimu dotyku, bude tento pr�
 Prepínať režimy dotyku je možné klepnutím troma prstami.
 %kc:endInclude
 
-++ Režim nápovedy vstupu ++
++++ dotyková klávesnica +++[TouchKeyboard]
+Dotyková klávesnica sa používa na zadávanie textu a príkazov cez dotykovú obrazovku.
+ak ste v editačnom poli, dotykovú klávesnicu si zobrazíte dvojitým poklepaním na ikonu klávesnice.
+Pri používaní tabletov, ako napríklad Microsoft Surface Pro, sa klávesnica zobrazí vždy, keď je odpojená fyzická klávesnica.
+Dotykovú klávesnicu skryjete opätovným dvojitým poklepaním na ikonu klávesnice, alebo opustením editačného poľa.
+
+ak už máte zobrazenú dotykovú klávesnicu, klávesy nájdete pohybom prsta (zvyčajne sa nachádzajú na spodku obrazovky). Medzi klávesmi sa presúvajte pohybom jedného prsta.
+Keď nájdete požadovaný kláves, uvoľnite prst, alebo na mieste dvakrát poklepte. (Toto závisí od nastavenia v dialógu [Dotyková obrazovka #TouchInteraction].
+
+++ Režim nápovedy vstupu ++[InputHelpMode]
 Táto príručka obsahuje mnoho príkazov NVDA, no veľmi jednoduchý spôsob, ako ich preskúmať je použitie režimu nápovedy vstupu.
 
 Nápovedu vstupu spustíte stlačením kombinácie NVDA+1.
@@ -229,7 +240,7 @@ Pre zrušenie nápovedy opäť stlačte NVDA+1.
 Počas spustenej tejto nápovedy môžete ľubovoľne stláčať klávesové skratky a vykonávať gestá na dotykovej obrazovke a NVDA vám povie viac o ich funkcii ak je k práve vykonanému príkazu nejaká funkcia vôbec priradená.
 Príkazy nebudú aktívne vykonávané, budete počuť len patričné informácie k popisu funkcie.
 
-++ Ponuka NVDA ++
+++ Ponuka NVDA ++[TheNVDAMenu]
 Ponuka NVDA umožňuje meniť nastavenia, čítať pomocníka, načítať a uložiť konfiguráciu, editovať rečové slovníky, pristupovať k ďalším nástrojom a ukončiť NVDA.
 
 Pre vstup do ponuky NVDA odkiaľkoľvek zo systému Windows počas behu NVDA stlačte na klávesnici NVDA+N alebo dva krát klepnite dvoma prstami na dotykovú obrazovku.
@@ -237,7 +248,7 @@ Túto istú ponuku môžete tiež vyvolať aktivovaním kontextovej ponuky pre i
 Na prechod do oznamovacej oblasti môžete použiť klávesovú kombináciu Windows+b, potom nalistovať požadovanú ikonu a menu zobraziť klávesom aplikácie (druý kláves v pravo od medzerníka na väčšine klávesníc).
 Po zobrazení ponuky programu môžete použiť šípky na pohyb po položkách, klávesom enter aktivujete aktuálnu položku.
 
-++ Všeobecné príkazy NVDA ++
+++ Všeobecné príkazy NVDA ++[BasicNVDACommands]
 %kc:beginInclude
 || Názov | Klávesová skratka pre desktop | klávesová skratka pre Laptop | Dotykové gesto | Popis |
 | Zastaviť reč | ctrl | ctrl | Klepnutie dvoma prstami | Okamžite zastaví reč |
@@ -250,7 +261,7 @@ Po zobrazení ponuky programu môžete použiť šípky na pohyb po položkách,
 | Prepnúť režim spánku | NVDA+shift+s  | NVDA+shift+z | Nie je | Režim spánku deaktivuje všetky klávesové skratky a hlasový a braillový výstup. Toto je užitočné pre aplikácie, ktoré sami poskytujú niektorý z takýchto druhov výstupu. |
 %kc:endInclude
 
-++ Oznamovanie systémových informácii ++
+++ Oznamovanie systémových informácii ++[ReportingSystemInformation]
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
 | Čas a dátum | NVDA+f12 | Oznámi čas; stlačené 2 krát rýchlo po sebe oznámi dátum. |
@@ -258,7 +269,7 @@ Po zobrazení ponuky programu môžete použiť šípky na pohyb po položkách,
 | Oznámiť text v schránke Windows | NVDA+c | Ak je v schránke Windows text, NVDA ho oznámi. |
 %kc:endInclude
 
-+ Pohyb v NVDA +
++ Pohyb v NVDA +[NavigatingWithNVDA]
 NVDA umožňuje používateľovi rôzne spôsoby navigácie vrátane klasickej interakcie a prezerania.
 
 ++ Objekty ++[Objects]
@@ -328,8 +339,10 @@ Objekt, ktorý si práve týmto spôsobom prezeráte je nazývaný navigačný o
 Po zameraní objektu je možné [prezerať text objektu #ReviewingText] ak sa nachádzate v [prezeraní objektov #ObjectReview].
 Ak presuniete fokus na iný objekt, zmení sa aj objekt ktorý prezeráte, avšak toto je možné vypnúť a zapnúť podľa potreby.
 
-Pozor: Text na braillovskom riadku sleduje predvolene [systémový fokus #SystemFocus] a [systémový kurzor #SystemCaret].
-Ak by Ste radšej chceli, aby sa text zobrazovaný na braillovskom riadku prispôsoboval objektovej navigácii a prezeraciemu kurzoru, môžete nastaviť [zviazanie braillovského kurzoru #BrailleTether].
+Pozor: Text na braillovskom riadku sleduje predvolene spolu [systémový fokus #SystemFocus] a [systémový kurzor #SystemCaret].
+Ak by Ste radšej chceli, aby sa text zobrazovaný na braillovskom riadku prispôsoboval fokusu, môžete nastaviť [zviazanie braillovského kurzoru #BrailleTether] na fokus.
+V takom prípade braillovský kurzor nebude sledovať objektovú navigáciu a prezerací kurzor.
+Ak chcete, aby braillovský kurzor sledoval objektovú navigáciu a prezerací kurzor, musíte nastaviť [braillovský kurzor zviazaný s #BrailleTether] prezeracím kurzorom.
 
 Pre pohyb po objektoch použite nasledujúce príkazy:
 
@@ -424,7 +437,7 @@ Pri pohybe prezeracím kurzorom sa navigačný objekt presunie na objekt nájden
 
 Všimnite si, že NVDA nedokáže rozpoznať text v niektorých nových aplikáciách, čo je spôsobené technikami vykresľovania, ktoré zatiaľ nie sú podporované.
 
-++ Pohyb myšou ++
+++ Pohyb myšou ++[NavigatingWithTheMouse]
 Počas posúvania myšou, v predvolenom nastavení NVDA oznamuje text, ktorým prechádza kurzor myši.
 Na niektorých miestach dokáže NVDA oznámiť celý odsek, inde len aktuálny riadok.
 
@@ -478,8 +491,7 @@ Nakoniec je možné režim fokusu vynútiť, v takom prípade ostane aktívny, a
 | Otvoriť dlhý popis | NVDA+d | Otvorí nové okno s popisom pre prvok, ak ho zameraný prvok obsahuje. |
 %kc:endInclude
 
-
-++ Príkazy rýchlej navigácie ++
+++ Príkazy rýchlej navigácie ++[SingleLetterNavigation]
 V režime prehliadania NVDA podporuje jednoznakové príkazy pre rýchlejší pohyb po prvkoch v dokumente.
 Niektoré príkazy však nemusia byť dostupné vo všetkých typoch dokumentov.
 
@@ -513,15 +525,15 @@ Rýchly prechod na začiatok alebo koniec skupín prvkov, ako napríklad zoznamo
 || Názov | Klávesová skratka | popis |
 | Prejdi na začiatok skupiny prvkov | shift+čiarka | Presunie fokus na začiatok skupiny prvkov (zoznam, tabuľka a podobne) podľa aktuálneho prvku |
 | prejdi za skupinu prvkov | čiarka | Presunie fokus za skupinu prvkov (zoznam, tabuľka a podobne) podľa aktuálneho prvku |
-
 %kc:endInclude
+
 Niektoré aplikácie, ako Gmail, Twitter a Facebook používajú písmená ako klávesové skratky.
 ak ich chcete používať a súčasne chcete čítať text pomocou kurzora, môžete dočasne vypnúť rýchlu navigáciu v režime prehliadania.
 %kc:beginInclude
 Na zapnutie a vypnutie rýchlej navigácie v režime prehliadania, použite skratku NVDA+shift+medzera.
  %kc:endInclude
 
-++ Zoznam prvkov ++
+++ Zoznam prvkov ++[ElementsList]
 Dialóg zoznam prvkov zobrazuje zoznam rôznych  typov prvkov v závislosti od toho, v akej aplikácii tento dialóg otvoríte.
 napríklad v internetových prehliadačoch zobrazuje  zoznam odkazov, nadpisov, formulárových prvkov, tlačidiel alebo zoznam oblastí dokumentu.
 Pomocou výberového políčka je možné sa prepínať medzi jednotlivými typmi obsahu.
@@ -532,7 +544,7 @@ Tlačidlami prejsť na alebo aktivovať vykonávame akcie pre prvky vybraté v z
 | Zoznam prvkov v režime prehliadania | NVDA+f7 | Zobrazí dialóg so zoznamom   prvkov aktuálneho dokumentu |
 %kc:endInclude
 
-++ Vnorené objekty ++
+++ Vnorené objekty ++[ImbeddedObjects]
 Moderné webové stránky môžu byť obohatené o prvky Adobe Flash, Oracle Java a HTML5, ale aj o dialógy či aplikácie.
 Ak sa tieto nachádzajú v dokumente, NVDA oznámi "vnorený objekt", "aplikácia", alebo "dialóg".
 medzi týmito prvkami sa môžete pohybovať skratkami rýchlej  navigácie O a shift+O.
@@ -561,7 +573,7 @@ Toto však zatiaľ nie je oficiálny štandard, preto neexistuje software, ktor�
 NVDA automaticky prečíta matematický  obsah počas čítania dokumentu.
 Ak používate braillovský riadok, matematický obsah sa zobrazí aj na braillovskom riadku.
 
-++ Interakcia s matematickým obsahom ++
+++ Interakcia s matematickým obsahom ++[InteractiveNavigation]
 Ak na prácu s počítačom používate len hlasový výstup, pravdepodobne si budete chcieť matematický obsah čítať po častiach.
 
 V režime prehliadania to môžete docieliť tak, že sa presuniete na matematický príklad a stlačíte enter.
@@ -583,14 +595,14 @@ Zoznam klávesových skratiek nájdete v [návode k programu MathPlayer https://
 
 Ak príklad dočítate a chcete sa vrátiť, stlačte Escape.
 
-+ Braille +
++ Braille +[Braille]
 Ak máte Braillovský riadok, NVDA môže informácie zorbazovať priamo na braillovskom riadku.
 Ak váš riadok podporuje písanie cez klávesnicu, môžete ho použiť na písanie textu v plnopise alebo skratkopise.
 
 Informácie o podporovaných riadkoch nájdete v časti [Podporované braillovské zobrazovače #SupportedBrailleDisplays].
 Všetky nastavenia týkajúce sa braillovských riadkov a tabuliek nájdete v časti [Nastavenia Braillu #BrailleSettings].
 
-++ Skratky pre prvky, oblasti stránky a typy stavov v braillovskom zobrazení ++
+++ Skratky pre prvky, oblasti stránky a typy stavov v braillovskom zobrazení ++[BrailleAbbreviations]
 Aby sa na braillovský riadok dostalo čo najviac informácií, pre prvky, oblasti stránky a stavy sa používajú tieto skratky.
 
 || skratka | typ prvku |
@@ -678,9 +690,9 @@ Pre oblasti stránky sa používajú tieto skratky:
 | hľad | vyhľadávanie |
 | obl | oblasť |
 
-++ Braillovský zápis ++
+++ Braillovský zápis ++[BrailleInput]
 NVDA podporuje písanie textu cez klávesnicu braillovského riadka v plnopise i skratkopise.
-Prekladovú tabuľku, ktorá sa použije na preklad textu, môžete určiť v nastaveniach čítania textu nastavením [Vstupnej tabuľky#BrailleInputTable].
+Prekladovú tabuľku, ktorá sa použije na preklad textu, môžete určiť v nastaveniach čítania textu nastavením [Vstupnej tabuľky #BrailleSettingsInputTable].
 
 Keď píšete v plnopise, text sa vkladá okamžite.
 Ak píšete v skratkopise, text sa preloží a vloží po stlačení medzeri alebo klávesu enter na konci slova.
@@ -693,7 +705,7 @@ Bod 8 preloží zadaný text a stlačí kláves Enter.
 Body 7+8: preloží zadaný text, ale nevloží medzeru ani nový riadok.
 %kc:endInclude
 
-+Optické rozpoznávanie textu+
++Optické rozpoznávanie textu+[ContentRecognition]
 Ak nie sú k dispozícii užitočné textové informácie, je možné použiť nástroje na optické  rozpoznávanie textu z obrázka.
 NVDA dokáže rozpoznávať text z obrázka pomocou optického rozpoznávania (OCR) vstavaného v operačnom systéme Windows 10.
 Ďalšie spôsoby rozpoznávania textu môžu byť integrované pomocou doplnkov.
@@ -718,12 +730,12 @@ Doplnkové jazyky pre rozpoznávanie (Napríklad Češtinu) nainštalujete z men
 rozpoznanie textu v aktuálnom navigačnom objekte vyvoláte skratkou NVDA+R.
 %kc:endInclude
 
-+ Vylepšenia pre aplikácie +
++ Vylepšenia pre aplikácie +[ApplicationSpecificFeatures]
 NVDA pre niektoré aplikácie implementuje svoje vlastné príkazy, čím buď umožňuje ľahšie vykonávať niektoré úlohy, alebo sprístupňuje časti aplikácií, ktoré nie sú inak prístupné používateľom odkázaným na čítač obrazovky.
 
-++ Microsoft Word ++
+++ Microsoft Word ++[MicrosoftWord]
 
-+++ Automatické  čítanie hlavičiek stĺpcov a riadkov +++
++++ Automatické  čítanie hlavičiek stĺpcov a riadkov +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA vám môže automaticky oznamovať  hlavičky riadkov a stĺpcov pri čítaní tabuliek v programe MS Word.
 Najprv Musíte mať začiarknuté "Oznamovať hlavičky riadkov / stĺpcov tabuľky" v nastaveniach čítania textu.
 Následne musíte určiť, ktorý riadok alebo stĺpec má NVDA považovať za hlavičku.
@@ -736,28 +748,28 @@ Keď sa nastavíte na prvý riadok alebo stĺpec a chcete ho nastaviť ako hlavi
 Tieto nastavenia sa natrvalo uložia do dokumentu tak, aby im porozumeli aj iné čítače obrazovky (napríklad JAWS).
 Ak  neskôr dokument otvorí používateľ, ktorý používa iný čítač obrazovky, bude mať už správne nastavené hlavičky v tabuľkách.
 
-+++ Režim prehliadania v programe Microsoft Word +++
++++ Režim prehliadania v programe Microsoft Word +++[BrowseModeInMicrosoftWord]
 Podobne ako na internete, aj v programe MS Word môžete aktivovať režim prehliadania. V režime prehliadania potom funguje rýchla navigácia a zoznam prvkov.
 %kc:beginInclude
 Režim prehliadania v programe Microsoft Word zapnete a vypnete skratkou NVDA+medzera.
 %kc:endInclude
 Viac informácií nájdete v kapitole  [Režim prehliadania #BrowseMode].
 
-++++ Zoznam prvkov ++++
+++++ Zoznam prvkov ++++[WordElementsList]
 %kc:beginInclude
 Ak máte aktívny režim prehliadania v programe Microsoft Word, zoznam prvkov vyvoláte skratkou NVDA+F7.
 %kc:endInclude
 V zozname prvkov môžete prezerať nadpisy, odkazy, komentáre a revízie dokumentu a tiež  chyby (v súčasnosti len pravopisné).
 
-+++ Čítanie komentárov +++
++++ Čítanie komentárov +++[WordReportingComments]
 %kc:beginInclude
 Ak si chcete prečítať komentár, na ktorom je systémový fokus, stlačte NVDA+alt+c.
 %kc:endInclude
 Všetky komentáre spolu s revíziami si môžete prezerať aj v zozname prvkov, ak vyberiete ako prvok komentáre a zmeny.
 
-++ Microsoft Excel ++
+++ Microsoft Excel ++[MicrosoftExcel]
 
-+++ Automatické  čítanie hlavičiek stĺpcov a riadkov +++
++++ Automatické  čítanie hlavičiek stĺpcov a riadkov +++[ExcelAutomaticColumnAndRowHeaderReading]
 NVDA vám môže automaticky oznamovať  hlavičky riadkov a stĺpcov pri čítaní  tabuliek v programe MS Excel.
 Najprv Musíte mať začiarknuté "Oznamovať hlavičky riadkov / stĺpcov tabuľky" v nastaveniach čítania textu.
 Následne musíte určiť, ktorý riadok alebo stĺpec má NVDA považovať za hlavičku.
@@ -770,7 +782,7 @@ Keď sa nastavíte na prvý riadok alebo stĺpec a chcete ho nastaviť ako hlavi
 Tieto nastavenia sa natrvalo uložia do dokumentu tak, aby im porozumeli aj iné čítače obrazovky (napríklad JAWS).
 Ak  neskôr dokument otvorí používateľ, ktorý používa iný čítač obrazovky, bude mať už správne nastavené hlavičky v tabuľkách.
 
-+++ Zoznam prvkov +++
++++ Zoznam prvkov +++[ExcelElementsList]
 Podobne ako na internete, aj v programe MS Excel môžete používať zoznam prvkov a takto sa dostať k viacerým informáciám.
 %kc:beginInclude
 Zoznam prvkov v programe MS Excel vyvoláte skratkou NVDA+F7.
@@ -792,31 +804,31 @@ pre každý prvok formulára sa zobrazuje alternatívny text a tiež súradnice 
 Do požadovaného poľa sa presuniete klávesom enter, alebo aktivovaním tlačidla "prejsť na".
 -
 
-+++ Čítanie komentárov +++
++++ Čítanie komentárov +++[ExcelReportingComments]
 %kc:beginInclude
 Ak si chcete prečítať komentár pre aktuálnu bunku, stlačte NVDA+alt+c.
 %kc:endInclude
 Všetky komentáre  v aktuálnom hárku si môžete prezerať aj v zozname prvkov.
 
-+++ Čítanie chránených buniek +++
++++ Čítanie chránených buniek +++[ExcelReadingProtectedCells]
 Ak je dokument programu MS Excel chránený, môžete mať problém prečítať niektoré bunky, ktoré sú chránené proti úpravám.
 %kc:beginInclude
 Ak si chcete prezerať aj chránené bunky, najprv aktivujte režim prehliadania skratkou NVDA+medzera. Následne použite na prezeranie tabuľky štandardné príkazy (napríklad šípky).
 %kc:endInclude
 
-+++ formuláre +++
++++ formuláre +++[ExcelFormFields]
 V zošite programu MS Excel sa môžu nachádzať formuláre.
 dostanete sa k nim cez zoznam prvkov, alebo skratkami rýchlej navigácie f a shift+f.
 Aj v tomto prípade aktivujete režim fokusu medzerou alebo klávesom enter. V tomto režime môžete napríklad vyplniť editačné pole.
 pre viac informácii o práci v režime prehliadania a o skratkách rýchlej navigácie pozrite časť [Režim prehliadania #BrowseMode].
 
-++ Microsoft PowerPoint ++
+++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || Názov | Klávesová skratka | popis |
 | Zobraziť alebo skryť poznámky | ctrl+shift+s | keď máte spustenú prezentáciu, tento príkaz prepína medzi poznámkami pre aktuálnu snímku a obsahom aktuálnej snímky. Skratka má vplyv len na to, čo NVDA číta a nie na samotné zobrazenie snímky na obrazovke. |
 %kc:endInclude
 
-++ foobar2000 ++
+++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
 | Oznámiť zostávajúci čas | ctrl+shift+r | V prípade, že je práve prehrávaná skladba, oznámi zostávajúci čas. |
@@ -824,27 +836,27 @@ pre viac informácii o práci v režime prehliadania a o skratkách rýchlej nav
 
 Všimnite si: Klávesová skratka pre oznámenie zostávajúceho času funguje len ak máte vo Foobare nastavené predvolené zobrazenie stavového riadka.
 
-++ Miranda IM ++
+++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
 | Oznámiť poslednú správu | NVDA+ctrl+1-4 | Oznámi jednu z posledných správ. napr. NVDA+ctrl+2 oznámi predposlednú správu. |
 %kc:endInclude
 
-++ Poedit ++
+++ Poedit ++[Poedit]
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
 | Oznámiť okno komentáre | ctrl+shift+c | Oznamuje komentáre z okna komentár. |
 | Oznámiť poznámky pre prekladateľov | ctrl+shift+a | Oznamuje poznámky pre prekladateľov. |
 %kc:endInclude
 
-++ Skype ++
+++ Skype ++[Skype]
 %kc:beginInclude
 V okne konverzácie:
 || Názov | Klávesová skratka | Popis |
 | prečítaj správu | NVDA+ctrl+1-0 | prečíta a presunie kurzor na jednu z posledných správ v závislosti od toho, aké číslo stlačíte. Napríklad NVDA+ctrl+2 prečíta predposlednú správu v konverzácii. |
 %kc:endInclude
 
-++ Kindle pre PC ++
+++ Kindle pre PC ++[Kindle]
 NVDA podporuje čítanie a prácu s knihami v aplikácii amazon Kindle pre PC.
 Funkcia je však dostupná len pre knihy, ktoré majú atribút "Screen Reader: Supported". Toto si môžete overiť v detailoch konkrétnej knihy.
 
@@ -861,7 +873,7 @@ Skratka na prechod medzi odkazmi prechádza aj medzi poznámkami pod čiarou.
 NVDA poskytuje základnú podporu pre čítanie matematiky a navigáciu v matematickom obsahu.
 Podrobnosti nájdete v časti [Čítanie matematického obsahu #ReadingMath].
 
-+++ výber textu +++
++++ výber textu +++[KindleTextSelection]
 Kindle umožňuje vykonávať rôzne operácie s práve vybratým textom. Môžete si vyhľadať definíciu v slovníku, pridať poznámku alebo zvýraznenie, skopírovať text do schránky alebo ho vyhľadať na internete.
 najprv vyberte text pomocou shiftu v kombinácii so šípkami.
 %kc:beginInclude
@@ -869,7 +881,7 @@ Keď vyberiete text, zobrazte si možnosti stlačením klávesy aplikácie alebo
 %kc:endInclude
 Ak nevyberiete žiadny text, zobrazia sa možnosti pre slovo pod kurzorom.
 
-+++ Používateľské poznámky +++
++++ Používateľské poznámky +++[KindleUserNotes]
 K slovu alebo k pasáži v texte môžete pridať poznámku.
 Aby ste mohli pridať poznámku, označte text a otvorte kontextové menu spôsobom opísaným vyššie.
 V menu vyberte položku pridať poznámku.
@@ -883,7 +895,7 @@ Poznámku upravíte alebo zmažete nasledujúcim spôsobom:
 + Vyberte položku upraviť poznámku.
 +
 
-++ Azardi ++
+++ Azardi ++[Azardi]
 %kc:beginInclude
 V tabuľke s knihami:
 || Názov | Klávesová skratka | Popis |
@@ -891,9 +903,9 @@ V tabuľke s knihami:
 | kontextová ponuka | kláves aplikácie (kontextové menu) | Otvorí kontextové menu pre vybratú knihu. |
 %kc:endInclude
 
-+ Konfigurácia NVDA +
++ Konfigurácia NVDA +[ConfiguringNVDA]
 
-++ Ponuka možnosti ++
+++ Ponuka možnosti ++[preferences]
 %kc:settingsSection: || Názov | Klávesová skratka pre desktop | Klávesová skratka pre laptop | Popis |
 Väčšinu nastavení NVDA je možné prepínať v dialógových oknách z podmenu Možnosti v ponuke NVDA.
 Vo všetkých dialógoch nastavení môžete akceptovať vykonané zmeny stlačením tlačidla OK.
@@ -903,11 +915,11 @@ Na prepínanie niektorých volieb existujú tiež globálne klávesové skratky,
 Niektoré dialógy nemajú vlastné skratky (klávesové skratky, dotykové príkazy a podobne).
 Ak chcete cez skratky pristupovať k takýmto dialógom, musíte si definovať vlastné skratky v dialógu [Klávesové skratky #InputGestures].
 
-+++ Všeobecné nastavenia (NVDA+ctrl+g) +++
++++ Všeobecné nastavenia (NVDA+ctrl+g) +++[GeneralSettings]
 Toto okno s nastaveniami nájdeme v možnostiach NVDA.
 Obsahuje tieto funkcie:
 
-==== Jazyk ====
+==== Jazyk ====[GeneralSettingsLanguage]
 Je to zoznam, kde je možné vybrať jazyk, ktorý NVDA bude používať a v ňom zobrazovať všetky hlásenia.
 Nachádza sa tu mnoho jazykov a poslednou položkou zoznamu je Jazyk systému.
 Táto posledná voľba hovorí NVDA, aby používal jazyk, v ktorom sú zobrazované dialógy Windows.
@@ -916,45 +928,45 @@ Ak sa jazyk zmení, NVDA potrebuje reštart.
 NVDA sa bude pýtať, či sa má automaticky reštartovať, ak sa jazyk zmení.
 Na reštartovanie stlačte tlačidlo OK.
 
-==== Uložiť nastavenia pri ukončení ====
+==== Uložiť nastavenia pri ukončení ====[GeneralSettingsSaveConfig]
 Začiarkavacie políčko, ktoré ak začiarknete, bude NVDA pri ukončení automaticky ukladať svoje nastavenia.
 
-==== Pri ukončení NVDA zobraziť dialóg s možnosťami ====
+==== Pri ukončení NVDA zobraziť dialóg s možnosťami ====[GeneralSettingsShowExitOptions]
 toto začiarkávacie pole určuje, či sa pri ukončení NVDA zobrazí dialóg, v ktorom môžete vybrať akciu.
 Ak je začiarknuté, pri ukončení NVDA sa zobrazí dialóg, v ktorom môžete vybrať, či chcete NVDA ukončiť, reštartovať, alebo reštartovať a zakázať doplnky.
 Ak toto pole nie je začiarknuté, NVDA sa ukončí okamžite.
 
-==== prehrať zvuk pri spustení a ukončení NVDA ====
+==== prehrať zvuk pri spustení a ukončení NVDA ====[GeneralSettingsPlaySounds]
 začiarkávacie pole. Ak začiarknete, NVDA pri spustení  a pred ukončením prehrá zvuk.
 
-==== Úroveň záznamu ====
+==== Úroveň záznamu ====[GeneralSettingsLogLevel]
 Zoznamový rámik, ktorý umožňuje používateľovi zvoliť, aké množstvo dát má NVDA  zaznamenať počas svojho vlastného behu.
 Všeobecne sa používateľ týmto nastavením nemusí zaoberať.
 No ak chcete tvorcom programu poskytnúť informácie o chybových hláseniach, je dobré nastaviť túto voľbu na vyššiu úroveň.
 
-==== Automaticky spustiť NVDA po prihlásení do Windows ====
+==== Automaticky spustiť NVDA po prihlásení do Windows ====[GeneralSettingsStartAfterLogOn]
 Ak je táto voľba zaškrtnutá, NVDA sa spustí hneď ako sa prihlásite do Windows.
 Táto voľba je dostupná len po nainštalovaní NVDA a nemôže byť použitá pri spustenej prenosnej verzii.
 
-==== Spúšťať NVDA pri zobrazení prihlasovacej obrazovky (vyžaduje administrátorské práva) ====
+==== Spúšťať NVDA pri zobrazení prihlasovacej obrazovky (vyžaduje administrátorské práva) ====[GeneralSettingsStartOnLogOnScreen]
 Ak sa do Windows prihlasujete zadaním vášho prihlasovacieho mena a hesla, zaškrtnutím tejto voľby zaistíte, aby sa NVDA spustil už pri zobrazení práve spomínanej obrazovky.
 Táto voľba je dostupná len po nainštalovaní NVDA a nemôže byť použitá pri spustenej prenosnej verzii.
 
-==== použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách (vyžaduje administrátorské práva) ====
+==== použiť aktuálne nastavenia NVDA na prihlasovacej a zabezpečených obrazovkách (vyžaduje administrátorské práva) ====[GeneralSettingsCopySettings]
 Po stlačení tohto tlačidla NVDA skopíruje aktuálne nastavenia do systémového priečinka, aby mohli byť tieto nastavenia použité v prípade, ak je NVDA spustený na prihlasovacej obrazovke alebo iných zabezpečených obrazovkách.
 Ak sa chcete uistiť, že budú správne prekopírované všetky nastavenia, môžete uložiť nastavenia stlačením Ctrl+NVDA+c, alebo použitím voľby z ponuky NVDA.
 Táto voľba je dostupná len po nainštalovaní NVDA a nemôže byť použitá pri spustenej prenosnej verzii.
 
-==== Kontrolovať dostupnosť novej verzie NVDA ====
+==== Kontrolovať dostupnosť novej verzie NVDA ====[GeneralSettingsCheckForUpdates]
 Ak je začiarknuté, NVDA bude automaticky kontrolovať dostupnosť novej verzie a ak novú verziu nájde, upozorní vás na to.
 Aktualizácie môžete skontrolovať ručne aktivovaním položky skontrolovať aktualizácie v menu pomocník v ponuke NVDA.
 
-+++ Výber hlasového výstupu (NVDA+ctrl+s) +++
++++ Výber hlasového výstupu (NVDA+ctrl+s) +++[SynthesizerSelection]
 Položka hlasový výstup sa nachádza v možnostiach programu a umožňuje vybrať, ktorý hlasový výstup bude NVDA používať.
 Keď máte vybratý hlasový výstup, stlačte tlačidlo OK a NVDA zvolený hlasový výstup načíta.
 Ak sa počas nahrávania hlasového výstupu vyskytne problém, NVDA na chybu upozorní a vráti sa k doteraz používanému hlasovému výstupu.
 
-==== Hlasový výstup ====
+==== Hlasový výstup ====[SynthesizerSelectionSynthesizer]
 V tomto zoznamovom rámiku môžete nastaviť hlasový výstup, ktorý bude NVDA používať na syntézu reči.
 
 Zoznam podporovaných hlasových výstupov získate v časti [Podporované hlasové výstupy #SupportedSpeechSynths].
@@ -962,11 +974,11 @@ Zoznam podporovaných hlasových výstupov získate v časti [Podporované hlaso
 V tomto zozname vždy nájdete aj jednu špeciálnu položku bez reči, čo umožní prevádzku NVDA úplne bez hlasového výstupu.
 Toto môže byť užitočné pre niekoho, kto chce používať NVDA len s braillovským výstupom alebo to môže byť užitočné vidiacim vývojárom, ktorí plánujú používať zobrazovač reči.
 
-==== Výstupné zariadenie ====
+==== Výstupné zariadenie ====[SynthesizerSelectionOutputDevice]
 Toto nastavenie umožňuje vybrať zvukovú kartu, cez ktorú bude rozprávať hlasový výstup.
 
 %kc:setting
-==== Režim automatického stíšenia zvuku ====
+==== Režim automatického stíšenia zvuku ====[SynthesizerSelectionDuckingMode]
 Klávesová skratka: NVDA+Shift+D
 
 od verzie Windows 8 môžete určiť, či má NVDA stišovať zvuk ostatných aplikácií, keď rozpráva, alebo konštantne stíšiť zvuk z aplikácií, keď NVDA spustíte.
@@ -984,66 +996,66 @@ Pre rýchlejšiu alternatívu, ktorá umožňuje meniť parametre hlasu odkiaľk
 
 Toto dialógové okno obsahuje nasledujúce prvky:
 
-==== Hlas ====
+==== Hlas ====[VoiceSettingsVoice]
 Ide o zoznam obsahujúci všetky dostupné hlasy aktuálneho hlasového výstupu.
 Za pomoci šípok môžete tento zoznam prehliadať a vypočuť si všetky hlasy.
 Hornou a ľavou šípkou sa presuniete na predchádzajúci hlas, dolnou a pravou šípkou sa môžete presunúť na nasledujúci hlas.
 
-==== Variant ====
+==== Variant ====[VoiceSettingsVariant]
 Ak používate hlasový výstup eSpeak NG, toto je zoznamový rámik, ktorý nastavuje variant hlasu.
 Varianty hlasu výstupu eSpeak NG môžeme chápať takmer ako ďalšie hlasy, pretože dodávajú hlasu úplne iné vlastnosti.
 Niektoré varianty budú znieť ako mužský, iné ako ženský hlas a niektoré dokonca úplne inak.
 
-==== Tempo ====
+==== Tempo ====[VoiceSettingsRate]
 Je to posuvník od nula po sto, ktorým nastavíte rýchlosť reči.
 Nula znamená najpomalšie tempo reči a sto najrýchlejšie.
 
-==== Výška ====
+==== Výška ====[VoiceSettingsPitch]
 Posuvník, ktorým nastavíte výšku od nula po sto.
 Nula je najnižší tón a sto najvyšší tón reči.
 
-==== Hlasitosť ====
+==== Hlasitosť ====[VoiceSettingsVolume]
 Posuvník, ktorým v rozmedzí od nula po sto nastavíte hlasitosť hlasu od najtichšieho po najhlasnejší.
 
-==== Intonácia ====
+==== Intonácia ====[VoiceSettingsInflection]
 Posuvník, ktorého hodnota hovorí hlasovému výstupu do akej miery má byť intonácia uplatnená smerom na hor i smerom na dol. V súčasnosti intonáciu podporuje len hlasový výstup eSpeak NG.
 
-==== Automaticky prepínať jazyk ====
+==== Automaticky prepínať jazyk ====[VoiceSettingsLanguageSwitching]
 Ak je začiarknuté, NVDA bude automaticky počas čítania meniť jazyk. Jazyk určí podľa jazykových značiek v texte.
 Predvolene je toto začiarknuté.
 Automatické prepínanie jazyka momentálne podporuje len hlasový výstup eSpeak NG.
 
-==== Automaticky prepínať dialekt ====
+==== Automaticky prepínať dialekt ====[VoiceSettingsDialectSwitching]
 Ak je začiarknuté automaticky prepínať jazyk, toto umožňuje zmeny aj dialektu jazyka hlasového výstupu.
 Napríklad ak budete anglickým hlasom čítať  v jazyku Angličtina - spojené štáty a NVDA narazí na značku pre zmenu dialektu  na  Angličtina - Veľká Británia, hlasový výstup sa prepne na správny dialekt.
 Predvolene toto nie je začiarknuté.
 
 %kc:setting
-==== Úroveň interpunkcie ====
+==== Úroveň interpunkcie ====[VoiceSettingsSymbolLevel]
 Klávesová skratka: NVDA+p
 
 Môžete nastaviť, či má NVDA slovne  oznamovať interpunkčné znamienka a symboly.
 Ak je toto napríklad nastavené na všetko, všetky symboly budú vyslovované ako slová.
 Nastavenie interpunkcie ovplyvňuje prejav NVDA pre všetky hlasové výstupy.
 
-==== pri spracovaní textu sa riadiť jazykom hlasového výstupu ====
+==== pri spracovaní textu sa riadiť jazykom hlasového výstupu ====[VoiceSettingsTrust]
 táto možnosť je predvolene začiarknutá a hovorí NVDA, že pri spracovaní textu sa má riadiť jazykom konkrétneho hlasu.
 Ak vám NVDA pri použití konkrétneho hlasu alebo hlasového výstupu nesprávne číta interpunkciu, odčiarknite túto možnosť, aby boli uprednostnené globálne nastavenia NVDA.
 
-==== Zmeniť výšku hlasu pri čítaní veľkých písmen v percentách ====
+==== Zmeniť výšku hlasu pri čítaní veľkých písmen v percentách ====[VoiceSettingsCapPitchChange]
 Do tohto editačného poľa je možné napísať hodnotu v percentách, ako sa zmení výška hlasu pri čítaní veľkých písmen.
 Záporné čísla znižujú a kladné čísla zvyšujú výšku hlasu.
 Ak si neželáte pri vyslovovaní veľkých písmen meniť výšku hlasu vložte do tohto poľa číslo 0.
 
-==== Vysloviť "veľké" pred prečítaním veľkého písmena ====
+==== Vysloviť "veľké" pred prečítaním veľkého písmena ====[VoiceSettingsSayCapBefore]
 Začiarkávacie políčko, ktoré nastaví NVDA tak, aby čítal slovo "veľké" vždy pred veľkým písmenom pri čítaní po znakoch.
 NVDA normálne pri takomto písmene zvýši hlas, ale niektoré hlasové výstupy majú so zmenou výšky problém, a v takýchto prípadoch je užitočná táto voľba.
 
-==== Pípať pred hláskovaním veľkých písmen ====
+==== Pípať pred hláskovaním veľkých písmen ====[VoiceSettingsBeepForCaps]
 Ak je toto začiarkavacie políčko začiarknuté, NVDA krátko zapípa vždy, keď sa pri hláskovaní objaví veľké písmeno.
 Tak ako voľba sprístupňujúca hovorenie veľké pri veľkých písmenách, je táto voľba dôležitá pri hlasoch, ktoré sami nemôžu meniť svoju výšku pri veľkých písmenách.
 
-==== Hláskovanie riadi hlasový výstup (ak je podporované) ====[VoiceSpellingFunctionality]
+==== Hláskovanie riadi hlasový výstup (ak je podporované) ====[VoiceSettingsUseSpelling]
 Existujú slová pozostávajúce len z jediného znaku. Výslovnosť tohto znaku sa líši od kontextu, napr. pri vyslovovaní jediného znaku sa obyčajne znak hláskuje a pri čítaní slova sa len prečíta.
 V slovenčine je príkladom takéhoto znaku písmeno k, ktoré znie ako "k" ak je použité ako predložka, ale "ká" ak je hláskované samostatne.
 Táto možnosť umožňuje na základe použitého hlasového výstupu rozlišovať medzi týmito dvoma možnosťami, ak to hlasový výstup podporuje.
@@ -1066,7 +1078,7 @@ Ak chcete zmeniť niektoré vlastnosti reči bez nutnosti otvárať dialóg nast
 +++ Nastavenia braillu +++[BrailleSettings]
 Dialóg nastavenia braillu je dostupný z ponuky Možnosti.
 
-==== Braillovský riadok ====
+==== Braillovský riadok ====[BrailleSettingsDisplay]
 Prvý prvok dialógu Nastavenia braillu je nazvaný Braillovský riadok.
 V zozname budú vždy zobrazené možnosti podľa toho, aké ovládače braillovských zariadení máte nainštalované v systéme.
 Medzi jednotlivými voľbami je možné sa pohybovať použitím kurzorových klávesov.
@@ -1075,7 +1087,7 @@ Medzi jednotlivými voľbami je možné sa pohybovať použitím kurzorových kl
 
 Prosím, prečítajte si tiež [Podporované braillovské zobrazovače #SupportedBrailleDisplays] pre získanie viac informácií o podporovaných zariadeniach.
 
-==== Port ====
+==== Port ====[BrailleSettingsPort]
 Táto možnosť, ak je dostupná, určuje, aký port sa použije pri komunikácii s vybratým braillovským zobrazovačom.
 V zozname si môžete vybrať jednu z možností pre váš braillovský zobrazovač.
 
@@ -1087,13 +1099,13 @@ Táto možnosť nie je dostupná, ak zvolený riadok podporuje len automatický 
 
 Pre podrobnejšie informácie si pozrite časť [Podporované braillovské zobrazovače #SupportedBrailleDisplays].
 
-==== Výstupná prekladová tabuľka ====
+==== Výstupná prekladová tabuľka ====[BrailleSettingsOutputTable]
 Ďalšou voľbou je výstupná prekladová tabuľka.
 Tu nájdete tabuľky pre rôzne jazyky a kodifikácie braillovho písma.
 Vybratá tabuľka sa použije na správne zobrazenie textu na braillovskom zobrazovači.
 Medzi tabuľkami sa môžete pohybovať šípkami.
 
-==== Vstupná prekladová tabuľka ====[BrailleInputTable]
+==== Vstupná prekladová tabuľka ====[BrailleSettingsInputTable]
 Podobne ako v prvom prípade, aj tu môžete vybrať prekladovú tabuľku.
 Táto však bude použitá na správne interpretovanie znakov, ktoré zadávate na braillovskom zobrazovači.
 Konkrétnu tabuľku vyberte šípkami.
@@ -1101,50 +1113,52 @@ Konkrétnu tabuľku vyberte šípkami.
 Zdôrazňujeme, že táto možnosť je užitočná len ak váš riadok má braillovskú klávesnicu a ak je táto funkcia podporovaná ovládačom príslušného riadku.
 Ak má braillovský riadok klávesnicu, ale zadávanie textu nie je podporované, upozorňujeme na to v časti [Podporované braillovské zobrazovače #SupportedBrailleDisplays].
 
-==== Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom ====
+==== Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom ====[BrailleSettingsExpandToComputerBraille]
 Toto začiarkavacie políčko umožní zobrazovať aktuálne slovo v počítačovom braillovom písme, čo v mnohých jazykoch zodpovedá plnopisu. Je to užitočné, ak nechceme aplikovať pravidlá skratkopisu tabuľky vybratej v poli Prekladová tabuľka.
 
-==== Zobraziť kurzor ====
+==== Zobraziť kurzor ====[BrailleSettingsShowCursor]
 Tu môžete určiť, či chcete alebo nechcete zobrazovať braillovský kurzor.
 toto sa týka systémového kurzora a tiež prezeracieho kurzora. Toto nastavenie neovplyvňuje zobrazenie vybratého textu.
 
-==== Blikajúci kurzor ====
+==== Blikajúci kurzor ====[BrailleSettingsBlinkCursor]
 Umožňuje aktivovať blikajúci kurzor na braillovskom riadku.
 Ak nezačiarknete túto možnosť, kurzor bude stále zobrazený.
 Táto možnosť neovplyvňuje zobrazenie vybratého textu. Označenie sa zobrazuje ako body 7+8 bez blikania.
 
-==== Rýchlosť blikania kurzora (ms)====
+==== Rýchlosť blikania kurzora (ms)====[BrailleSettingsBlinkRate]
 Ide o číselnú hodnotu, ktorá určuje frekvenciu blikania kurzora braillovského zobrazovača v milisekundách.
 
-==== Tvar kurzora fokusu ====
+==== Tvar kurzora fokusu ====[BrailleSettingsCursorShapeForFocus]
 toto nastavenie určuje tvar kurzora (teda kombináciu bodov), ktoré sa zobrazujú, ak je braillovský kurzor zviazaný so systémovým kurzorom.
 Neovplyvňuje však zobrazenie vybratého textu.
 
-==== Tvar prezeracieho  kurzora ====
+==== Tvar prezeracieho  kurzora ====[BrailleSettingsCursorShapeForReview]
 toto nastavenie určuje tvar kurzora (teda kombináciu bodov), ktoré sa zobrazujú, ak je braillovský kurzor zviazaný s prezeracím kurzorom.
 Neovplyvňuje však zobrazenie vybratého textu.
 
-==== Zobrazovať správy (sek) ====
+==== Zobrazovať správy (sek) ====[BrailleSettingsMessageTimeout]
 Táto numerická hodnota určuje ako dlho majú na riadku byť zobrazované správy NVDA.
 Nastavením hodnoty na 0 úplne vypnete zobrazovanie týchto správ.
 
-==== zobraziť správy bez obmedzenia ====
+==== zobraziť správy bez obmedzenia ====[BrailleSettingsNoMessageTimeout]
 Ak začiarknete túto možnosť, správy budú na riadku zobrazené bez časového obmedzenia.
 
 %kc:setting
 ==== Braillovský kurzor zviazaný s ====[BrailleTether]
 Klávesová skratka: NVDA+ctrl+t
 
-Táto voľba umožňuje nastaviť či bude braillovský kurzor sledovať systémový kurzor, alebo či bude braillovský kurzor sledovať prezerací kurzor navigačného objektu.
+Táto voľba umožňuje nastaviť či bude braillovský kurzor sledovať systémový kurzor, alebo či bude braillovský kurzor sledovať prezerací kurzor navigačného objektu, alebo oboje.
+Ak nastavíte možnosť "automaticky", NVDA bude sledovať textový a systémový kurzor.
+Ak sa v tomto prípade presuniete na iný objekt, alebo pohnete prezeracím kurzorom, NVDA zviaže braillovský kurzor s prezeracím kurzorom až do momentu, keď sa zmení fokus.
 
-==== Čítať po odsekoch ====
+==== Čítať po odsekoch ====[BrailleSettingsReadByParagraph]
 Ak je to začiarknuté, text v brailly bude zobrazený po odsekoch namiesto predvoleného zobrazenia po riadkoch.
 Tiež príkazy na prechod na nasledujúci alebo predchádzajúci riadok v brailly budú posúvať po odsekoch.
 Znamená to, že nie je nutné posúvať riadok na konci každého riadku, aj ak sa tam vojde väčšie množstvo textu.
 Toto umožní plynulé čítanie väčšieho množstva textu.
 Predvolene je to odčiarknuté.
 
-==== zabrániť deleniu slov keď je to možné ====
+==== zabrániť deleniu slov keď je to možné ====[BrailleSettingsWordWrap]
 Ak je začiarknuté, slovo, ktoré je dlhé a nezmestí sa na riadok, nebude rozdelené.
 Namiesto toho ostane na konci riadka voľné miesto.
 Celé slovo bude presunuté na nasledujúci riadok.
@@ -1156,7 +1170,7 @@ Zvyšok slova bude až na ďalšom riadku.
 
 Začiarknutím tejto možnosti docielite plynulejšie čítanie, na druhej strane budete musieť riadok posúvať častejšie.
 
-==== prezentácia kontextu ====
+==== prezentácia kontextu ====[BrailleSettingsFocusContextPresentation]
 toto nastavenie určuje, aké kontextové informácie sa zobrazia na riadku pri objekte, ktorý má fokus.
 Kontextové informácie môžu informovať o hierarchii objektov.
 Ak napríklad presuniete fokus na položku v zozname, táto položka je súčasťou zoznamu.
@@ -1182,20 +1196,20 @@ ak si chcete prečítať celú kontextovú informáciu (že ste v zozname a tent
 
 Ak chcete toto nastavenie meniť kedykoľvek z klávesnice, môžete si k nemu priradiť klávesovú skratku v dialógu [Klávesové skratky  #InputGestures].
 
-+++ Nastavenia klávesnice (NVDA+ctrl+k) +++
++++ Nastavenia klávesnice (NVDA+ctrl+k) +++[KeyboardSettings]
 Toto nastavenie nájdeme v možnostiach programu NVDA, pod položkou nastavenia klávesnice.
 Obsahuje nasledujúce voľby:
 
-==== Rozloženie klávesnice ====
+==== Rozloženie klávesnice ====[KeyboardSettingsLayout]
 Tento zoznamový rámik nám umožňuje vybrať, aký typ klávesnice chceme používať. Či pôjde o verziu pre desktop/stolné PC, alebo laptop/pre prenosné počítače/notebooky.
 
-==== Používať Capslock ako kláves NVDA ====
+==== Používať Capslock ako kláves NVDA ====[KeyboardSettingsCapsModifier]
 Ak je toto políčko začiarknuté, NVDA bude tento kláves využívať ako svoj modifikačný kláves, v kombinácii s ktorým sa zadávajú takmer všetky klávesové príkazy NVDA.
 
-==== Používať insert ako kláves NVDA ====
+==== Používať insert ako kláves NVDA ====[KeyboardSettingsExtendedInsert]
 Ak je toto políčko začiarknuté, rozšírený insert Taktiež môže byť využitý ako NVDA kláves. Nájdete ho v blízkosti kláves home, End a kurzorových šípok.
 
-==== Používať numerický insert ako kláves NVDA ====
+==== Používať numerický insert ako kláves NVDA ====[KeyboardSettingsNumpadInsert]
 Ak je toto políčko začiarknuté, numerický Insert môže byť použitý ako NVDA kláves.
 
 Ak nevyberiete žiadny kláves ako kláves NVDA, je ťažké vykonávať väčšinu príkazov NVDA.
@@ -1203,42 +1217,42 @@ preto ak zatvoríte dialóg tlačidlom OK a nevybrali ste žiadny kláves NVDA, 
 Potom sa vrátite naspäť do dialógu s nastaveniami klávesnice, kde musíte vybrať aspoň jeden kláves NVDA, aby ste mohli dialóg zatvoriť a uložiť nastavenia.
 
 %kc:setting
-==== Čítať napísané znaky ====
+==== Čítať napísané znaky ====[KeyboardSettingsSpeakTypedCharacters]
 Klávesová skratka: NVDA+2
 
 Ak je zapnuté, NVDA bude oznamovať všetky napísané znaky.
 
 %kc:setting
-==== Čítať po slovách ====
+==== Čítať po slovách ====[KeyboardSettingsSpeakTypedWords]
 Klávesová skratka: NVDA+3
 
 Ak je zapnuté, NVDA bude čítať pri písaní text po slovách.
 
-==== prerušiť reč pri písaní ====
+==== prerušiť reč pri písaní ====[KeyboardSettingsSpeechInteruptForCharacters]
 Ak je zapnuté, NVDA prestane hovoriť hneď, ako začnete písať. Predvolene je táto možnosť začiarknutá.
 
-==== Prerušiť reč klávesom Enter ====
+==== Prerušiť reč klávesom Enter ====[KeyboardSettingsSpeechInteruptForEnter]
 Ak je začiarknuté, NVDA prestane hovoriť hneď, ako stlačíte kláves enter. Táto voľba je predvolene zapnutá.
 
-==== Povoliť rýchlu navigáciu počas plynulého čítania ====
+==== Povoliť rýchlu navigáciu počas plynulého čítania ====[KeyboardSettingsSkimReading]
 Ak je začiarknuté, niektoré príkazy neprerušia plynulé čítanie, ale len presunú kurzor a plynulé čítanie bude pokračovať od daného miesta. Takýmito príkazmi sú napríklad rýchla navigácia v režime prehliadania a pohyb po riadkoch a odsekoch.
 
-==== Pípať pri písaní malých písmen ak je zapnutý capslock ====
+==== Pípať pri písaní malých písmen ak je zapnutý capslock ====[VoiceSettingsBeepLowercase]
 Ak je to zapnuté, pri písaní so zapnutým capslockom budete počuť upozornenie v podobe krátkeho pípnutia, ak je pridržaný aj kláves shift.
 Všeobecne sa písanie s preraďovačom pri zapnutom capslocku nepoužíva a vo väčšine prípadov to znamená, že Ste si neuvedomili, že je kláves capslock zapnutý.
 Je teda vhodné byť na túto skutočnosť upozornený.
 
 %kc:setting
-==== Čítať príkazové skratky ====
+==== Čítať príkazové skratky ====[KeyboardSettingsSpeakCommandKeys]
 Klávesová skratka: NVDA+4
 
 Ak je zapnuté, NVDA bude čítať klávesové skratky použité ako príkazy, teda nie samotné znaky. Do tejto funkcie spadajú kombinácie znakov a klávesov napr. s klávesom ctrl.
 
-==== oznamovať počas písania zvukom pravopisné chyby ====
+==== oznamovať počas písania zvukom pravopisné chyby ====[KeyboardSettingsAlertForSpellingErrors]
 ak začiarknete túto možnosť, NVDA vás zvukom upozorní, ak pri písaní urobíte pravopisnú chybu.
 táto možnosť je dostupná len vtedy, ak si začiarknete oznamovanie pravopisných chýb v [nastaveniach čítania textu #DocumentFormattingSettings]
 
-==== Spracovať vstup z externých programov ====
+==== Spracovať vstup z externých programov ====[KeyboardSettingsHandleKeys]
 Táto možnosť určuje, či bude NVDA spracúvať vstupy z aplikácií, akými sú klávesnica na obrazovke, alebo program prevodu reči na text.
 predvolene je možnosť začiarknutá. Niektorí používatelia ju môžu chcieť vypnúť, aby nedochádzalo k nesprávnemu zápisu znakov vo vietnamčine cez program Unikey.
 
@@ -1246,85 +1260,93 @@ predvolene je možnosť začiarknutá. Niektorí používatelia ju môžu chcie�
 Toto dialógové okno nájdeme v možnostiach programu NVDA.
 Dialóg obsahuje nasledujúce prvky:
 
-==== Oznamovať zmeny tvaru kurzora myši ====
+==== Oznamovať zmeny tvaru kurzora myši ====[MouseSettingsShape]
 Začiarkávacie políčko ktoré ak začiarknete, NVDA bude oznamovať zmenu tvaru kurzora myši vždy, keď sa tvar kurzora zmení.
 Zmena tvaru kurzora myši vo Windows signalizuje napríklad také informácie, ako je načítavanie, či editovateľnosť nejakého poľa.
 
 %kc:setting
-==== Povoliť sledovanie kurzora myši ====
+==== Povoliť sledovanie kurzora myši ====[MouseSettingsTracking]
 Klávesová skratka: NVDA+n
 
 Ak je možnosť povolená, NVDA bude oznamovať text cez ktorý prechádza kurzor myši. Takto môžete nájsť položky na obrazovke za pomoci myši a nemusíte použiť objektovú navigáciu.
 
-==== Jednotka oznamovania pri zameraní textu ====
+==== Jednotka oznamovania pri zameraní textu ====[MouseSettingsTextUnit]
 Ak je začiarknutá voľba Oznamovať text pod kurzorom myši, toto nastavenie určuje aké množstvo textu bude oznamované.
 Je možno vyberať z: znak, slovo, riadok alebo odsek.
 
-==== Oznamovať typ prvku pri zameraní kurzorom myši ====
+==== Oznamovať typ prvku pri zameraní kurzorom myši ====[MouseSettingsRole]
 Ak je toto začiarkavacie políčko začiarknuté, NVDA bude oznamovať typ objektu pri prechode myšou cez tento objekt.
 
-==== Signalizovať polohu myši počas posúvania ====
+==== Signalizovať polohu myši počas posúvania ====[MouseSettingsAudio]
 Po začiarknutí tohto políčka bude NVDA prechod po objektoch indikovať zvukom. Používateľ tak bude vedieť, kde sa myš práve nachádza.
 Čím bližšie ste k hornému okraju obrazovky, tým vyšší je tón a naopak, tón klesá, ak sa posúvate myšou k dolnej časti obrazovky.
 Ak myš posuniete doľava na obrazovke, pípanie sa bude ozývať z ľavého reproduktora, ak sa budete myšou posúvať smerom doprava na obrazovke, aj zvuk pípania pôjde čoraz viac z pravého reproduktora. Aby ste mohli sledovať tento rozdiel, budete potrebovať dva správne rozmiestnené reproduktory alebo slúchadlá.
 
-==== Úroveň jasu ovplyvňuje hlasitosť signalizácie ====
+==== Úroveň jasu ovplyvňuje hlasitosť signalizácie ====[MouseSettingsBrightness]
 Začiarknutie tohto políčka znamená, že hlasitosť signalizácie je riadená tým aká je úroveň jasu na mieste obrazovky kadiaľ prechádza kurzor myši. Toto funguje len ak začiarknete možnosť "signalizovať polohu myši počas posúvania".
 Táto  voľba je predvolene vypnutá.
 
-+++ Prezerací kurzor a objektová navigácia +++
++++ Dotyková obrazovka +++[TouchInteraction]
+Tento dialóg je dostupný len v počítačoch s operačným systémom Windows od verzie 8. Môžete tu nastaviť, ako sa NVDA bude správať pri používaní dotykovej obrazovky.
+
+==== Písať okamžite po dotyku ====[TouchTypingMode]
+Určuje, akú metódu použijete pri písaní na dotykovej klávesnici.
+Ak toto políčko začiarknete, na klávesnici stačí nájsť požadovaný znak a uvolľniť prst. Znak sa okamžite zapíše.
+Ak políčko odčiarknete, po nájdení znaku je potrebné dvakrát poklepať na klávesnicu a až potom sa znak napíše.
+
++++ Prezerací kurzor a objektová navigácia +++[ReviewCursorSettings]
 Prístupné z ponuky možnosti Prezerací kurzor a objektová navigácia...
 Toto dialógové okno obsahuje tieto voľby:
 
 %kc:setting
-==== Sledovať systémový fokus ====
+==== Sledovať systémový fokus ====[ReviewCursorFollowFocus]
 Klávesová skratka: NVDA+7
 
 Ak je táto voľba zapnutá, prezerací kurzor bude vždy pri zmene ukazovať na objekt, ktorý má systémový fokus.
 
 %kc:setting
-==== Sledovať systémový kurzor ====
+==== Sledovať systémový kurzor ====[ReviewCursorFollowCaret]
 Klávesová skratka: NVDA+6
 
 Ak je táto voľba zapnutá, prezerací kurzor sa vždy pri zmene posunie na miesto, na ktoré ukazuje systémový kurzor.
 
-==== Sledovať kurzor myši ====
+==== Sledovať kurzor myši ====[ReviewCursorFollowMouse]
 Ak je táto voľba zapnutá, prezerací kurzor bude pri posúvaní sledovať kurzor myši.
 
-==== Jednoduchý režim objektovej navigácie ====
+==== Jednoduchý režim objektovej navigácie ====[ReviewCursorSimple]
 Ak je táto voľba zapnutá, NVDA bude filtrovať stromovú hierarchiu objektovej navigácie a vynechá objekty, ktoré nie sú pre vás dôležité. Sú to objekty, ktoré nie sú viditeľné alebo objekty, ktoré dopĺňajú vzhľad.
 
 jednoduchý režim môžete zapínať a vypínať aj klávesovou skratkou. Stačí, ak ju definujete v dialógu [Klávesové skratky #InputGestures].
 
-+++ Nastavenia prezentácie objektov (NVDA+ctrl+o) +++
++++ Nastavenia prezentácie objektov (NVDA+ctrl+o) +++[ObjectPresentationSettings]
 Túto voľbu nájdeme v možnostiach programu NVDA.
 Toto dialógové okno obsahuje:
 
-==== Oznamovať kontextovú nápovedu ====
+==== Oznamovať kontextovú nápovedu ====[ObjectPresentationReportToolTips]
 Začiarkávacie políčko, ktoré ak je začiarknuté, NVDA bude oznamovať kontextovú nápovedu.
 Mnoho programov zobrazuje krátke texty, ak sa na ne postavíme kurzorom myši, alebo ak na ne presunieme fokus.
 
-==== Oznamovať bublinkovú nápovedu ====
+==== Oznamovať bublinkovú nápovedu ====[ObjectPresentationReportBalloons]
 Ak je začiarknuté, NVDA bude oznamovať bublinkovú nápovedu.
 Bublinková nápoveda je podobná ako kontextová nápoveda, ale bublinky sú väčšie, a sú viazané viac ku systémovým informáciám, ako napríklad odpojenie sieťového kábla, či ohlásenie výstrah k bezpečnosti systému.
 
-==== Oznamovať skratkové klávesy objektov ====
+==== Oznamovať skratkové klávesy objektov ====[ObjectPresentationShortcutKeys]
 Ak je toto začiarkavacie políčko začiarknuté, NVDA bude oznamovať klávesové skratky, ktoré sú viazané ku rôznym príkazom a objektom.
 Napríklad: menu súbor má skratku Alt +S, takže súčasťou popisu objektu pri ohlásení bude aj jeho klávesová skratka.
 
-==== Oznamovať pozíciu objektu ====
+==== Oznamovať pozíciu objektu ====[ObjectPresentationPositionInfo]
 Táto voľba umožňuje prispôsobenie čítania informácií o pozícii objektu v prípade získania fokusu alebo zamerania objektovou navigáciou. Je to napr. informácia o položke zoznamu (1 z 10) a pod.
 
-==== Odhadnúť pozíciu objektu ak nie je dostupná ====
+==== Odhadnúť pozíciu objektu ak nie je dostupná ====[ObjectPresentationGuessPositionInfo]
 Ak je zapnuté oznamovanie pozícii objektu, táto voľba umožňuje NVDA odhadnúť pozíciu aktuálne zameraného objektu ak informácia o pozícii nie je štandardne dostupná.
 
 Ak je toto začiarknuté, NVDA bude oznamovať informácie o pozícii pre viacej prvkov, napr. položky v ponukách a panely nástrojov, aj keď tieto informácie nemusia vždy byť dostatočne presné.
  
-==== Oznamovať popisky objektov ====
+==== Oznamovať popisky objektov ====[ObjectPresentationReportDescriptions]
 Odčiarknite toto políčko, ak si myslíte, že vás popisy objektov obťažujú.
 
 %kc:setting
-==== Oznamovanie aktualizácie indikátora priebehu ====
+==== Oznamovanie aktualizácie indikátora priebehu ====[ObjectPresentationProgressBarOutput]
 Klávesová skratka: NVDA+u
 
 Táto voľba nastavuje ako bude NVDA oznamovať zmenu počas aktualizácie indikátora priebehu.
@@ -1336,76 +1358,76 @@ Momentálne sú dostupné tieto možnosti:
 - Čítať a pípať: Táto voľba je kombináciou dvoch predchádzajúcich. NVDA zároveň pípa aj oznamuje aktualizáciu indikátora priebehu hlasom.
 -
 
-==== Oznamovať aktualizáciu indikátorov priebehu na pozadí ====
+==== Oznamovať aktualizáciu indikátorov priebehu na pozadí ====[ObjectPresentationReportBackgroundProgressBars]
 Ak je táto voľba začiarknutá, NVDA bude sledovať aj priebeh takých indikátorov, ktoré nie sú zobrazené v okne v popredí.
 Znamená to, že ak minimalizujete okno, v ktorom je zobrazený indikátor priebehu, môžete robiť niečo úplne iné, zatiaľ čo NVDA naďalej oznamuje aktualizáciu tohto priebehu.
 
 %kc:setting
-==== Oznamovať dynamicky menený obsah ====
+==== Oznamovať dynamicky menený obsah ====[ObjectPresentationReportDynamicContent]
 Klávesová skratka: NVDA+5
 
 Prepína automatické oznamovanie obsahu v niektorých objektoch ako sú napríklad terminály alebo prichádzajúci text v chatovacích programoch.
 
-====Upozorňovať zvukom na automatické návrhy  ====
+====Upozorňovať zvukom na automatické návrhy  ====[ObjectPresentationSuggestionSounds]
 Zapína a vypína oznamovanie v situáciách, keď sa zobrazia automatické návrhy. Ak je toto zapnuté, pri zobrazení automatických návrhov sa ozve zvuk.
 Automatické návrhy sú položky, ktoré sa zobrazia na základe toho, čo napíšete do editačného poľa.
 Ak napríklad napíšete text do poľa hľadať v ponuke štart v systéme Windows Vista a novších, systém zobrazí návrhy toho, čo dokáže vyhľadať.
 NVDA môže rozpoznať takýto zoznam návrhov v editačných poliach na vyhľadávanie v rôznych aplikáciách v systéme Windows 10 a upozorniť naň.
 Zoznam s automatickými návrhmi sa zatvorí, keď opustíte editačné pole a NVDA vás na to tiež v mnohých prípadoch dokáže upozorniť.
 
-+++ Nastavenia vstupu +++
++++ Nastavenia vstupu +++[InputCompositionSettings]
 Toto nastavenie nájdeme v možnostiach programu NVDA, pod názvom Nastavenia vstupu.
 Môžete tu nastaviť odozvu pri písaní ázijských znakov, ak je použitá textová služba alebo IME.
 Je dôležité si uvedomiť, že v závislosti od konkrétnych textových služieb sú dostupné rôzne vlastnosti pri vkladaní znakov s rôznymi spôsobmi sprístupnenia poskytovaných informácií. Preto je veľmi pravdepodobné, že bude potrebné tieto zmeny prispôsobiť tak, aby Ste s použitím konkrétnej textovej služby dosahovali čo najlepšie skúsenosti pri písaní.
 
-==== Automaticky oznamovať všetky návrhy ====
+==== Automaticky oznamovať všetky návrhy ====[InputCompositionReportAllCandidates]
 Táto možnosť je predvolene začiarknutá. Určuje, či budú oznamované všetky návrhy, ak sa zobrazí alebo zmení zoznam návrhov.
 Toto je užitočné pri písaní v piktografických písmach, ako napríklad chinese New ChangJie, alebo Boshiami. Budete počuť návrhy a zvolenú možnosť vyberiete zadaním konkrétneho čísla.
 Pri používaní fonetického písma, ako napríklad Chinese New Phonetic, je lepšie túto možnosť odčiarknuť. Všetky znaky totiž znejú rovnako a musíte si zoznam prehliadať šípkami, aby ste získali podrobnejšiu informáciu o vybratom znaku.
 
-==== Oznamovať vybratý návrh ====
+==== Oznamovať vybratý návrh ====[InputCompositionAnnounceSelectedCandidate]
 Táto predvolene začiarknutá voľba umožňuje nastaviť automatické oznamovanie ak sa na obrazovke objaví zoznam návrhov alebo ak dôjde ku zmene v tomto zozname.
 Pre textové služby, kde je možné v zozname návrhov vybrať položku pomocou kurzorových klávesov napr. chinese new phonetic je povolenie tohto nastavenia nevyhnutné, ale s inými službami bude písanie efektívnejšie ak bude toto nastavenie vypnuté.
 Ak bude aj toto nastavenie vypnuté, prezerací kurzor bude vždy automaticky ukazovať na vybratý návrh, čo umožní rýchle čítanie pomocou objektovej navigácie a prezeracieho kurzora.
 
-==== Oznamovať popis pre znaky v zozname návrhov ====
+==== Oznamovať popis pre znaky v zozname návrhov ====[InputCompositionCandidateIncludesShortCharacterDescription]
 Táto predvolene začiarknutá možnosť umožňuje nastaviť, či má NVDA pre každý znak v zozname návrhov prečítať krátky popis či už pri výbere návrhu alebo aj pri jeho automatickom prečítaní hneď ako sa objaví zoznam návrhov.
 Pre niektoré miestne nastavenia napr. čínštinu táto voľba nemá vplyv na oznamovanie rozšírených popisov pre znaky v zozname návrhu.
 Táto možnosť je užitočná pre textové služby, ktoré sa používajú pri zapisovaní japončiny a kórejčiny.
 
-==== Oznamovať zmeny predbežného návrhu ====
+==== Oznamovať zmeny predbežného návrhu ====[InputCompositionReadingStringChanges]
 Pri niektorých službách sa používa tzv. predbežný návrh Sú to napríklad Chinese New Phonetic a New ChangJie.
 Môžete nastaviť, či má NVDA oznamovať nové znaky, ktoré sa objavia v tomto návrhu.
 Táto možnosť je predvolene začiarknutá.
 Niektoré staršie textové služby napr. Chinese ChangJie môžu namiesto predbežného návrhu meniť priamo skladaný reťazec, v takom prípade si pozrite nasledujúce nastavenie.
 
-==== Oznamovať zmeny v práve skladanom reťazci ====
+==== Oznamovať zmeny v práve skladanom reťazci ====[InputCompositionCompositionStringChanges]
 Potom, čo z údajov v predbežnom návrhu vznikne správny piktografický symbol, ešte pred vložením do samotného dokumentu textové služby vložia tento symbol k ostatným symbolom do tzv. skladaného reťazca.
 Toto nastavuje, či NVDA bude oznamovať nové znaky, ktoré sa objavia v skladanom reťazci.
 Táto možnosť je predvolene začiarknutá.
 
-+++ Režim prehliadania (NVDA+CTRL+b) +++
++++ Režim prehliadania (NVDA+CTRL+b) +++[BrowseModeSettings]
 Toto nastavenie nájdeme v možnostiach programu NVDA, pod názvom režim prehliadania.
 
 Toto dialógové okno Obsahuje nasledovné nastavenia:
 
-==== Maximálny počet znakov na riadku ====
+==== Maximálny počet znakov na riadku ====[BrowseModeSettingsMaxLength]
 V tomto editačnom poli nastavíte počet znakov na jeden riadok v režime prehliadania.
 
-==== Maximálny počet riadkov na jednej stránke ====
+==== Maximálny počet riadkov na jednej stránke ====[BrowseModeSettingsPageLines]
 Toto nastavenie určuje o koľko riadkov sa má NVDA posunúť pri pohybe po stlačení page up a page down v režime prehliadania.
 
 %kc:setting
-==== Zachovať vzhľad ako na obrazovke ====
+==== Zachovať vzhľad ako na obrazovke ====[BrowseModeSettingsScreenLayout]
 Klávesová skratka: NVDA+v
 
 Umožňuje nastaviť zalamovanie obsahu dokumentu v režime prehliadania. Ak je táto voľba zapnutá, všetky prvky budú zobrazené tak, ako sú rozmiestnené na obrazovke. Naopak ak je toto vypnuté, odkazy a tiež ďalšie prvky budú zobrazené na samostatnom riadku.
 
-==== Automaticky spustiť plynulé čítanie po načítaní stránky ====
+==== Automaticky spustiť plynulé čítanie po načítaní stránky ====[BrowseModeSettingsAutoSayAll]
 Toto začiarkavacie políčko prepína automatické plynulé čítanie po načítaní stránky v režime prehliadania.
 Predvolene je začiarknuté.
 
-==== Oznamovať tabuľky formujúce vzhľad ====
+==== Oznamovať tabuľky formujúce vzhľad ====[BrowseModeSettingsIncludeLayoutTables]
 Táto voľba rozhoduje o tom, ako NVDA spracuje tabuľky určené výhradne na formovanie vzhľadu dokumentu.
 Ak voľbu začiarknete, NVDA tieto tabuľky spracuje štandardne podľa [nastavení čítania textu #DocumentFormattingSettings] a budete ich môcť nájsť pomocou rýchlej navigácie.
 Ak voľbu odčiarknete, NVDA ich nebude hlásiť ako tabuľky a nebudú sa dať nájsť pomocou rýchlej navigácie.
@@ -1414,21 +1436,21 @@ Táto možnosť je v predvolenom nastavení vypnutá.
 
 Ak chcete toto nastavenie meniť odkiaľkoľvek, môžete si nastaviť samostatnú skratku v dialógu [Klávesové skratky  #InputGestures].
 
-==== Ohlásenie podrobných nastavení prvkov ====
+==== Ohlásenie podrobných nastavení prvkov ====[BrowseModeLinksAndHeadings]
 Môžete rozhodnúť, či bude NVDA oznamovať odkazy, nadpisy, tabuľky a podobne. Pozrite si časť [Nastavenia čítania textu #DocumentFormattingSettings].
 
-==== Automaticky aktivovať režim fokusu pri zmene fokusu ====
+==== Automaticky aktivovať režim fokusu pri zmene fokusu ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Táto možnosť umožňuje automatické zapínanie režimu fokusu v prípade, že sa zmení systémový fokus.
 Napríklad ak pri prehliadaní web stránky použijete kláves tab a fokus získa editačné pole, automaticky sa zapne režim fokusu.
 
-==== Automaticky aktivovať režim fokusu pri pohybe kurzorom ====
+==== Automaticky aktivovať režim fokusu pri pohybe kurzorom ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Po zapnutí tejto voľby NVDA dokáže automaticky zapínať a vypínať režim fokusu pri čítaní v režime prehliadania.
 Toto platí pre klávesy rýchlej navigácie ako aj pre navigáciu po riadkoch, slovách či iných jednotkách. Napríklad ak sa po riadkoch posúvate po stránke a zameriate týmto spôsobom editačné pole, automaticky sa aktivuje režim fokusu. Ak budete v navigácii pokračovať, režim  fokusu sa automaticky vypne a budete môcť pokračovať v navigácii.
 
-==== Režim prehliadania a režim fokusu oznamovať zvukom ====
+==== Režim prehliadania a režim fokusu oznamovať zvukom ====[BrowseModeSettingsPassThroughAudioIndication]
 Ak je táto voľba začiarknutá, NVDA bude namiesto oznamovania prepínania režimu prehliadania a režimu fokusu prehrávať zvuky špeciálne priradené k týmto akciám.
 
-==== Ignorovať skratky mimo rýchlej navigácie ====
+==== Ignorovať skratky mimo rýchlej navigácie ====[BrowseModeSettingsTrapNonCommandGestures]
 Táto možnosť je predvolene začiarknutá a spôsobuje, že skratky, ktoré sa nepoužívajú v rýchlej navigácii, nebudú posielané do aktívnej aplikácie.
 Ak napríklad stlačíte písmeno j v dokumente programu MS Word, toto sa pri začiarknutom poli nenapíše do aktívneho dokumentu, ani nebude poslané do aplikácie MS Word ako klávesová skratka.
 
@@ -1477,14 +1499,14 @@ Takto môžete nastaviť:
 
 Ak chcete tieto nastavenia meniť bez nutnosti otvárať dialóg s nastaveniami, môžete si nastaviť  klávesové príkazy   v dialógu [Klávesové skratky #InputGestures].
 
-==== Oznamovať zmeny formátovania pri pohybe kurzorom ====
+==== Oznamovať zmeny formátovania pri pohybe kurzorom ====[DocumentFormattingDetectFormatAfterCursor]
 Ak je zapnuté, NVDA sa pokúsi nájsť zmeny formátovania v celom riadku a počas čítania ich všetky oznámi. Toto  môže do určitej miery spomaliť odozvu.
 
 Predvolene NVDA deteguje formátovacie možnosti na mieste systémového / prezeracieho kurzora a voliteľne môže detegovať formátovacie možnosti v celom aktuálnom riadku ak to nespôsobí príliš veľké spomalenie.
 
 Túto voľbu odporúčame použiť, keď kontrolujete dokumenty v aplikáciách ako Wordpad a formátovanie je pre vás dôležité.
 
-==== odsadenie riadka ====
+==== odsadenie riadka ====[DocumentFormattingSettingsLineIndentation]
 určuje, ako budú oznamované medzeri na začiatku riadka.
 Môžete si vybrať zo štyroch možností:
 
@@ -1498,10 +1520,10 @@ Tón sa zvyšuje pri každej medzere, pri každom tabulátore sa zvyšuje štvor
 +++ rozpoznávanie textu OCR +++
 Tento dialóg nájdete v ponuke možnosti v menu  NVDA. Môžete v ňom nastaviť parametre pre rozpoznávanie textu pomocou rozhrania [Windows 10 OCR #Win10Ocr].
 
-==== jazyk rozpoznávania ====
+==== jazyk rozpoznávania ====[Win10OcrSettingsRecognitionLanguage]
 V tomto zozname môžete vybrať jazyk, ktorý sa bude používať na rozpoznávanie textu.
 
-+++ Rečové slovníky +++
++++ Rečové slovníky +++[SpeechDictionaries]
 Ponuka Rečové slovníky (vnorená v ponuke Možnosti) obsahuje dialógy, v ktorých môžete nastaviť ako bude NVDA vyslovovať konkrétne slová alebo frázy.
 Existujú 3 typy rečových slovníkov.
 Sú to:
@@ -1584,7 +1606,7 @@ Ak chcete skratku odstrániť, vyberte ju v strome a stlačte tlačidlo odstrán
 
 Keď skončíte, stlačte tlačidlo OK, ktorým nastavenia uložíte, alebo tlačidlo Zrušiť, ktorým dialóg zatvoríte bez uloženia zmien.
 
-++ Uloženie a opätovné načítanie konfigurácie ++
+++ Uloženie a opätovné načítanie konfigurácie ++[SavingAndReloading]
 NVDA automaticky ukladá vaše nastavenia.
 Automatické ukladanie nastavení pri ukončení je možné nastaviť v dialógu Všeobecné nastavenia v podmenu Možnosti.
 Nastavenia môžete ručne uložiť potvrdením položky Uložiť nastavenia z ponuky NVDA.
@@ -1599,7 +1621,7 @@ Užitočné môžu byť tiež nasledujúce klávesové skratky:
 | Návrat k uloženým nastaveniam | NVDA+ctrl+r | NVDA+ctrl+r | Obnoví nastavenia z času, čo Ste naposledy konfiguráciu uložili. Stlačené trikrát obnoví predvolené nastavenia. |
 %kc:endInclude
 
-++ Konfiguračné profily ++
+++ Konfiguračné profily ++[ConfigurationProfiles]
 Niekedy môžete potrebovať rôzne nastavenia pre rôzne situácie.
 Môžete napríklad chcieť počuť odsadenie textu pri úpravách, alebo informácie o formátovaní pri korektúre.
 NVDA vám umožňuje urobiť takéto nastavenia pomocou konfiguračných profilov.
@@ -1610,7 +1632,7 @@ Zmeniť môžete všetky nastavenia okrem všeobecných nastavení, lebo tie sa 
 Konfiguračné profily môžete aktivovať ručne.
 Môžu ich však aktivovať aj rôzne udalosti, ako napríklad prepnutie sa do určitej aplikácie.
 
-+++ Základné nastavenie +++
++++ Základné nastavenie +++[ProfilesBasicManagement]
 Do nastavení profilov sa dostanete z menu NVDA, aktivovaním položky Konfiguračné profily.
 Na otvorenie dialógu môžete tiež použiť klávesovú skratku:
 %kc:beginInclude
@@ -1626,7 +1648,7 @@ Ak chcete profil premenovať, alebo odstrániť, aktivujte príslušné tlačidl
 
 Tlačidlom zavrieť zatvoríte dialóg.
 
-+++ Vytvorenie profilu +++
++++ Vytvorenie profilu +++[ProfilesCreating]
 Aby ste vytvorili nový profil, aktivujte tlačidlo nový.
 
 V dialógu, ktorý sa zobrazí, môžete zadať názov vášho profilu.
@@ -1659,7 +1681,7 @@ Môžete tiež vybrať možnosť "(normálna konfigurácia)", ak nechcete použi
 
 Tlačidlom zatvoriť sa vrátite do dialógu konfiguračné profily.
 
-+++ upravenie Profilu +++
++++ upravenie Profilu +++[ConfigProfileEditing]
 Ak ste ručne aktivovali nejaký profil, všetky nastavenia, ktoré zmeníte, sa uložia do tohto profilu.
 V opačnom prípade sa nastavenia uložia do profilu, ktorý bol aktivovaný poslednou udalosťou.
 Ak ste si napríklad zviazali profil s poznámkovým blokom a budete v okne poznámkového bloku, všetky zmeny sa uložia do profilu pre poznámkový blok.
@@ -1667,12 +1689,12 @@ Ak nemáte aktívny žiadny profil, ani nie je žiadny profil aktivovaný udalos
 
 Ak chcete upraviť profil pre plynulé čítanie, musíte ho [ručne aktivovať #ConfigProfileManual].
 
-+++ Dočasné vypnutie udalostí +++
++++ Dočasné vypnutie udalostí +++[ConfigProfileDisablingTriggers]
 Niekedy môže byť užitočné vypnúť všetky udalosti naraz.
 Môžete napríklad chcieť upraviť aktívny profil alebo normálne nastavenia bez toho, aby sa vám nechtiac spustil profil vyvolaný nejakou udalosťou.
 toto docielite začiarknutím možnosti dočasne zakázať všetky udalosti v dialógu konfiguračné profily.
 
-++ Umiestnenie súborov s nastaveniami ++
+++ Umiestnenie súborov s nastaveniami ++[LocationOfConfigurationFiles]
 Prenosné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a braillovských výstupov v podpriečinku userConfig v priečinku NVDA.
 
 Nainštalované verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a braillovských výstupov v špecifickom priečinku NVDA v používateľskom profile Windows.
@@ -1683,15 +1705,15 @@ Nastavenia, ktoré sa použijú v prípadoch, keď NVDA beží na prihlasovacej 
 Normálne nie je potrebné do tohto priečinka zasahovať.
 Ak chcete zmeniť konfiguráciu NVDA pre prihlasovaciu obrazovku, nakonfigurujte NVDA podľa vašich predstáv kým ste prihlásení do Windows. Následne uložte nastavenia a potom pomocou tlačidla v dialógu Všeobecné nastavenia skopírujte vaše nastavenia na prihlasovaciu obrazovku.
 
-+ Ďalšie nástroje +
++ Ďalšie nástroje +[ExtraTools]
 
-++ Zobraziť log ++
+++ Zobraziť log ++[LogViewer]
 Zobrazovač logu, ktorý je možné spustiť z podmenu nástroje, dokáže zobraziť všetok zápis do súboru log, ktorý sa zaznamenal od posledného štartu NVDA.
 
 Okrem čítania obsahu, je možné obsah logu uložiť do súboru, či obnoviť obsah, aby obsahoval aj záznamy zapísané po otvorení okna zobrazovač logu.
 Tieto možnosti sú dostupné z aplikačnej ponuky okna zobrazovač logu.
 
-++ Zobrazovač reči ++
+++ Zobrazovač reči ++[SpeechViewer]
 Pre vidiacich vývojárov software alebo pre ľudí, ktorí predstavujú NVDA vidiacim záujemcom, existuje plávajúce okno, ktoré zobrazuje všetok text, čo NVDA posiela hlasovému výstupu.
 
 Zobrazovač reči je možné aktivovať začiarknutím rovnomennej položky v podmenu nástroje.
@@ -1706,7 +1728,7 @@ Pozastaviť zobrazovanie aktuálneho textu (napr. užitočné pre kopírovanie) 
 
 Ak potrebujete Zobrazovač reči spúšťať z hociktorého miesta, môžete mu priradiť  skratku v dialógu [Klávesové skratky #InputGestures].
 
-++ Správca doplnkov ++
+++ Správca doplnkov ++[AddonsManager]
 Správcu doplnkov nájdete v podmenu nástroje. Umožňuje vám inštalovať, odinštalovať, povoliť a zakázať doplnky.
 Tieto doplnky vytvárajú používatelia NVDA. Doplnky môžu meniť alebo dopĺňať funkcie NVDA a takisto dopĺňať podporu pre hlasové syntetizéry a braillovské riadky.
 
@@ -1748,18 +1770,18 @@ Najlepšie je tieto súbory odstrániť a nahradiť ich skutočnými doplnkami h
 
 Ak chcete okno  Správcu doplnkov aktivovať z hociktorého miesta, môžete mu priradiť  skratku v dialógu [Klávesové skratky #InputGestures].
 
-++ Python konzola ++
+++ Python konzola ++[PythonConsole]
 Python konzola programu NVDA, dostupná z podmenu nástroje, je nástroj pre vývojárov, ktorý umožňuje kontrolovať správnosť behu NVDA, zisťovať stav vnútorných premenných NVDA a tiež skúmať hierarchiu prístupnosti aplikácií.
 Viac informácií je dostupných v príručke pre vývojárov, ktorú nájdete na stránke NVDA v časti [vývoj (anglicky) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
-++ Načítať pluginy ++
+++ Načítať pluginy ++[ReloadPlugins]
 Po aktivovaní tejto položky NVDA znovu načíta pluginy a aplikačné moduly bez nutnosti reštartu. Môže byť užitočné pre vývojárov.
 
 + Podporované hlasové výstupy +[SupportedSpeechSynths]
 Táto časť obsahuje informácie o hlasových výstupoch, ktoré môžete používať s NVDA.
 Zoznam niektorých konkrétnych hlasových výstupov, ktoré je možné používať s NVDA nájdete v časti [Hlasové výstupy (anglicky)  https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
-++ eSpeak NG++
+++ eSpeak NG++[eSpeakNG]
 Hlasový výstup [eSpeak NG https://github.com/espeak-ng/espeak-ng] je priamo zabudovaný do NVDA a nie je závislý na iných špeciálnych ovládačoch alebo iných komponentoch, ktoré by bolo potrebné doinštalovať.
 NVDA sa predvolene spúšťa s hlasovým výstupom eSpeak NG.
 Tento hlas by mal pracovať na každom systéme, kde beží NVDA, čo znamená, že NVDA môžete spúšťať na ľubovoľnom počítači dokonca aj z USB kľúča alebo iného prenosného média.
@@ -1769,19 +1791,19 @@ eSpeak NG pozostáva z viacej než 43 hlasov pre rôzne jazyky.
 
 Existuje tiež množstvo variantov, ktorými je možné zmeniť vlastnosti zvuku aktuálneho hlasu.
 
-++ Microsoft Speech API verzia 4 (SAPI 4) ++
+++ Microsoft Speech API verzia 4 (SAPI 4) ++[SAPI4]
 SAPI 4 je starší štandard vyvinutý v spoločnosti Microsoft, ktorý slúži na obsluhu softwarových hlasových výstupov v systéme Windows.
 NVDA stále podporuje tento hlasový výstup.
 Spoločnosť Microsoft však už ukončila podporu pre SAPI4 a potrebné komponenty viac neponúka na svojej webovej stránke.
 
 Po použití ovládača hlasových výstupov SAPI 4 bude( zoznam hlasov( prístupný z [dialógu Nastavenia hlasu #VoiceSettings] alebo v [kruhu nastavení hlasového výstupu #SynthSettingsRing]) obsahovať všetky SAPI 4 hlasy nainštalované v systéme.
 
-++ Microsoft Speech API verzia 5 (SAPI 5) ++
+++ Microsoft Speech API verzia 5 (SAPI 5) ++[SAPI5]
 SAPI 5 je štandard vyvinutý v spoločnosti Microsoft, ktorý slúži na obsluhu softwarových hlasových výstupov v systéme Windows.
 Množstvo hlasových výstupov kompatibilných s týmto štandardom je možné kúpiť alebo stiahnuť zadarmo od rôznych dodávateľov alebo z rôznych webových stránok, ale v systéme už pravdepodobne máte aspoň jeden SAPI 5 kompatibilný hlas nainštalovaný.
 Po použití ovládača hlasových výstupov SAPI 5 bude zoznam hlasov (prístupný z [dialógu Nastavenia hlasu #VoiceSettings] alebo v [kruhu nastavení hlasového výstupu #SynthSettingsRing]) obsahovať všetky SAPI 5 hlasy nainštalované v systéme.
 
-++ Microsoft Speech Platform ++
+++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
 Platforma Microsoft Speech poskytuje TTS služby pre rôzne jazyky. Štandardne sa tieto hlasy používajú pri vývoji serverových TTS aplikácií.
 Tieto hlasy je možné použiť aj s NVDA.
 
@@ -1794,7 +1816,7 @@ Aby Ste mohli používať tieto hlasy, je potrebné nainštalovať dva komponent
  -
 -
 
-++ Hlasy OneCore ++
+++ Hlasy OneCore ++[OneCore]
 Operačný systém windows 10 obsahuje hlasy označené ako "one core" alebo "mobile".
 hlasy sú dostupné pre mnoho jazykov (vrátane Slovenčiny a Češtiny) a často majú lepšiu odozvu ako hlasy v rozhraní Sapi5.
 
@@ -1805,25 +1827,17 @@ Taktiež rýchlosť, ktorú nastavíte v nastaveniach reči v systéme Windows, 
 tieto problémy zatiaľ nie je možné vyriešiť na strane NVDA.
 Dúfame, že budú vyriešené v niektorej z nasledujúcich aktualizácii windows.
 
-++ Audiologic Tts3 ++
+++ Audiologic Tts3 ++[Audiologic]
 Toto je komerčný hlasový výstup, ktorý hovorí len talianskym hlasom.
 Hlasový výstup musí byť nainštalovaný v systéme, aby ho bolo možné používať s NVDA.
 Pre získanie viac informácií môžete navštíviť domovskú stránku Audiologic www.audiologic.it.
 
-Tento hlasový výstup nepodporuje [riadenie hláskovania #VoiceSpellingFunctionality].
-
-++ Nuance Vocalizer pre NVDA ++
-Nuance Vocalizer je komerčný a vysoko-kvalitný hlas vyvíjaný spoločnosťou Nuance Communications, Inc., a prispôsobený pre NVDA spoločnosťou Tiflotecnia, Lda.
-obsahuje viac ako 50 hlasov pre približne 36 jazykov (vrátane slovenčiny a češtiny).
-Všetky ovládače a hlasy sú pripravené ako doplnky, takže ich môžete používať aj v prenosnej verzii NVDA.
-
-Viac informácií o hlasoch a možnosti ich kúpy získate na stránke [www.vocalizer-NVDA.com http://www.vocalizer-NVDA.com/].
-Časť z predaja tohto produktu je venovaná organizácii NV Access na vývoj NVDA.
+Tento hlasový výstup nepodporuje [riadenie hláskovania #VoiceSettingsUseSpellingFunctionality].
 
 + Podporované braillovské zobrazovače +[SupportedBrailleDisplays]
 Táto sekcia obsahuje informácie o braillovských zobrazovačoch, ktoré môžete používať s NVDA.
 
-++ Riadky Focus/PAC Mate od spoločnosti Freedom Scientific ++
+++ Riadky Focus/PAC Mate od spoločnosti Freedom Scientific ++[FreedomScientificFocus]
 Podporované sú všetky braillovské riadky Focus a PAC Mate od spoločnosti [Freedom Scientific http://www.freedomscientific.com/], ktoré sú k počítaču pripojené cez USB alebo bluetooth.
 Pre správnu funkčnosť musíte mať v systéme nainštalované ovládače braillovských riadkov Freedom scientific.
 Ak ich ešte nemáte, môžete ich stiahnuť zo stránky http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
@@ -1882,13 +1896,18 @@ Len pre riadok Focus 80:
 | Posunúť riadok vpred | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++
+++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
 Podporované sú oba zobrazovače od [Optelec http://www.optelec.com/] pripojené cez USB a bluetooth, aj ALVA BC640 aj BC680.
+ak máte starší riadok, napríklad Braille Voyager, môžete ho pripojiť pomocou rozhrania protocol converter od Optelec.
 Na ich používanie nie je potrebné inštalovať žiadne ovládače.
 Stačí zapojiť riadok a nastaviť NVDA na jeho používanie.
 
-Tieto riadky umožňujú písanie pomocou vstavanej braillovskej klávesnice, avšak používajú vlastné nastavenie vstupnej prekladovej tabuľky.
-Nastavenie vstupnej prekladovej tabuľky v NVDA preto nemá na vstup z braillovskej klávesnice tohto typu riadku žiadny vplyv.
+Upozorňujeme, že v niektorých prípadoch NVDA nedokáže správne identifikovať riadok ALVA BC6. Toto sa stáva vtedy, ak ste na spárovanie zariadenia cez Bluetooth použili ALVA Bluetooth utility.
+problém vyriešite tak, že riadok spárujete cez štandardné rozhranie bluetooth v systéme Windows.
+
+Upozorňujeme, že Tieto riadky umožňujú písanie pomocou vstavanej braillovskej klávesnice, avšak používajú vlastné nastavenie vstupnej prekladovej tabuľky.
+Nastavenie vstupnej prekladovej tabuľky v NVDA preto nemá na vstup z braillovskej klávesnice tohto typu riadku v predvolenom nastavení žiadny vplyv.
+Ak používate riadok s najnovším firmwérom, je možné vypnúť simuláciu HID klávesnice. Klávesovú skratku na vypnutie a zapnutie HID klávesnice nastavíte v dialógu klávesové skratky.
 
 Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
@@ -1900,7 +1919,8 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | nasledujúci riadok | t4 |
 | posunúť riadok vpred | t5 alebo etouch3 |
 | Prejsť na znak v brailly | smerové tlačidlá |
-| presujúť na prvý riadok v režime prezerania | t1+t2 |
+| Prepnúť simuláciu HID klávesnice | t1+spEnter |
+| presunúť na prvý riadok v režime prezerania | t1+t2 |
 | Presunúť na posledný riadok v režime prezerania | t4+t5 |
 | prepnúť funkciu braillovský kurzor zviazaný s | t1+t3 |
 | oznámiť názov okna | etouch2 |
@@ -1913,20 +1933,22 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | šípka dolu | spDown |
 | šípka vľavo | spLeft |
 | šípka vpravo | spRight |
-| enter | spEnter |
+| enter | spEnter, Enter |
 | oznámiť dátum a čas | sp1+sp2 |
 | ponuka NVDA | sp1+sp3 |
 | klávesová skratka windows+d (minimalizovať všetky aplikácie) | sp1+sp4 |
 | windows+b (prechod na systémovú lištu) | sp3+sp4 |
-| kláves windows | sp2+sp3 |
+| kláves windows | sp2+sp3, Windows|
 | klávesová skratka alt+tab | sp2+sp4 |
 | ctrl+home | t3+spUp |
 | ctrl+end | t3+spDown |
 | home | t3+spLeft |
 | end | t3+spRight |
+| alt | alt |
+| ctrl | ctrl |
 %kc:endInclude
 
-++ Zobrazovače od spoločnosti Handy Tech ++
+++ Zobrazovače od spoločnosti Handy Tech ++[HandyTech]
 NVDA podporuje väčšinu  zobrazovačov od spoločnosti [Handy Tech http://www.handytech.de/], ak sú pripojené k počítaču cez USB, sériový port alebob  bluetooth.
 Pre niektoré staršie USB riadky je potrebné do systému nainštalovať USB ovládače Handy Tech.
 
@@ -1960,7 +1982,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Prepnúť braillovský vstup | medzera+b1+b3+b4 (medzera a veľké písmeno B) |
 %kc:endInclude
 
-++ MDV Lilli ++
+++ MDV Lilli ++[MDVLilli]
 Riadok Lilli od [MDV http://www.mdvbologna.it/] je plne podporovaný.
 Na jeho používanie nie je potrebné inštalovať žiadne ovládače.
 Stačí zapojiť riadok a nastaviť NVDA na jeho používanie.
@@ -1980,7 +2002,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Zobrazovače Baum/Humanware/APHp/Orbit  ++
+++ Zobrazovače Baum/Humanware/APHp/Orbit  ++[Baum]
 Podporované sú niektoré riadky od [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] a [Orbit http://www.orbitresearch.com/] pripojené cez USB,  bluetooth alebo sériový port.
 Toto zahŕňa:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
@@ -2016,7 +2038,7 @@ Pre zobrazovače, ktoré majú džojstik:
 | kláves enter | select |
 %kc:endInclude
 
-++ hedo ProfiLine USB ++
+++ hedo ProfiLine USB ++[HedoProfiLine]
 Hedo ProfiLine USB od [hedo Reha-Technik http://www.hedo.de/] sú plne podporované.
 Pred použitím je potrebné nainštalovať USB ovládače od výrobcu.
 
@@ -2033,7 +2055,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Plynulé čítanie | B6 |
 %kc:endInclude
 
-++ hedo MobilLine USB ++
+++ hedo MobilLine USB ++[HedoMobilLine]
 HedoMobilLine USB od [hedo Reha-Technik http://www.hedo.de/] sú plne podporované.
 Pred použitím je potrebné nainštalovať USB ovládače od výrobcu.
 
@@ -2050,7 +2072,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Plynulé čítanie | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B ++
+++ HumanWare Brailliant BI/B ++[HumanWareBrailliant]
 Riadky Brailliant BI and B od [HumanWare http://www.humanware.com/], zahŕňajú BI 32, BI 40 a B 80, sú podporované pripojené cez USB alebo bluetooth.
 Ak máte riadok pripojený cez USB a protokol nastavený na HumanWare, je potrebné nainštalovať ovládač dodaný od výrobcu.
 ovládače nebudete potrebovať, ak nastavíte protokol na OpenBraille.
@@ -2081,79 +2103,79 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Plynulé čítanie | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle ++
-NVDA podporuje riadky Braille Sense, Smart Beetle a Braille EDGE od spoločnosti [Hims http://www.hims-inc.com/]. Je potrebné ich pripájať cez USB alebo bluetooth rozhranie.
-Ak máte riadok pripojený cez USB, je potrebné nainštalovať ovládač dodávaný HIMS.
-Ovládače si môžete stiahnuť zo stránky: http://www.himsintl.com/?c=2/13&uid=2319
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
+NVDA podporuje riadky Braille Sense, Smart Beetle, Sync Braille a Braille EDGE od spoločnosti [Hims http://www.hims-inc.com/]. Je potrebné ich pripájať cez USB alebo bluetooth rozhranie.
+Ak máte riadok pripojený cez USB, je potrebné nainštalovať ovládač dodávaný spoločnosťou HIMS.
+Ovládače si môžete stiahnuť zo stránky: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie rozmiestnenia klávesov.
 %kc:beginInclude
 || Názov | Klávesová skratka |
-| Posunúť riadok späť | left side scroll down |
-| Posunúť riadok vpred | right side scroll down |
-| Predchádzajúci riadok | left side scroll up |
-| Nasledujúci riadok | right side scroll up |
-| Prejsť na znak v brailly | smerové tlačidlá |
+| Posunúť riadok späť | leftSideScrollUp, rightSideScrollUp, leftSideScroll |
+| Posunúť riadok vpred | leftSideScrollDown, rightSideScrollDown, rightSideScroll |
+| Predchádzajúci riadok | leftSideScrollUp+rightSideScrollUp |
+| Nasledujúci riadok | leftSideScrollDown+rightSideScrollDown |
+| Prezerací kurzor na predchádzajúci riadok| rightSideUpArrow |
+| Prezerací kurzor na nasledujúci riadok| rightSideDownArrow |
+| Prezerací kurzor na predchádzajúci znak| rightSideLeftArrow |
+| Prezerací kurzor na nasledujúci znak| rightSideRightArrow |
+| Presunúť na fokus| leftSideScrollUp+leftSideScrollDown, rightSideScrollUp+rightSideScrollDown, leftSideScroll+rightSideScroll |
+| ctrl | smartbeetle:f1, brailleedge:f3 |
+| windows | f7, smartbeetle:f2 |
+| alt | body 134+medzera, f2, smartbeetle:f3, brailleedge:f4 |
+| shift | f5 |
+| insert | body 24+medzera, f6 |
+| Kontextové menu | body 1+2+3+4+medzera, f8 |
+| capsLock | body 136+medzera |
+| tab | body 45+medzera, f3, brailleedge:f2 |
+| shift+alt+tab | f2+f3+f1 |
+| alt+tab | f2+f3 |
 | shift+tab | bod1+bod2+medzera |
-| alt | bod1+bod3+bod4+medzera |
-| escape | bod1+bod5+medzera |
-| tab | bod4+bod5+medzera |
-| šípka hore | bod1+medzera |
-| šípka dole | bod4+medzera |
-| capsLock | bod1+bod3+bod6+medzera |
-| shift+alt+tab | advance2+advance3+advance1 |
-| alt+tab | advance2+advance3 |
 | end | bod4+bod6+medzera |
 | ctrl+end | bod4+bod5+bod6+medzera |
-| home | bod1+bod3+medzera |
+| home | bod1+bod3+medzera, smartbeetle:f4  |
 | ctrl+home | bod1+bod2+bod3+medzera |
-| ľavá šípka | bod3+medzera |
-| ctrl+shift+ľavá šípka | bod2+bod8+medzera+advance1 |
+| alt+f4 | body 1356+medzera |
+| šípka vľavo | bod 3+medzera, leftSideLeftArrow |
+| ctrl+shift+šípka vľavo| body2+8+medzera+f1 |
 | ctrl+ľavá šípka | bod2+medzera |
-| shift+alt+ľavá šípka | bod2+bod7+advance1 |
+| shift+alt+ľavá šípka | bod2+bod7+F1 |
 | alt+ľavá šípka | bod2+bod7 |
-| pravá šípka | bod6+medzera |
-| ctrl+shift+pravá šípka | bod5+bod8+medzera+advance1 |
+| šípka vpravo | bod 6+medzera, leftSideRightArrow |
+| ctrl+shift+šľípka vpravo| body 58+medzera+f1 |
 | ctrl+pravá šípka | bod5+medzera |
-| shift+alt+pravá šípka | bod5+bod7+advance1 |
+| shift+alt+pravá šípka | bod5+bod7+F1 |
 | alt+pravá šípka | bod5+bod7 |
 | page up | bod1+bod2+bod6+medzera |
 | ctrl+page up | bod1+bod2+bod6+bod8+medzera |
 | ctrl+shift+šípka hore | bod2+bod3+bod8+medzera+advance1 |
-| ctrl+šípka hore | bod2+bod3+medzera |
-| shift+alt+šípka hore | bod2+bod3+bod7+advance1 |
+| šípka hore | bod 1+medzera, leftSideUpArrow |
+| ctrl+shift+šípka hore | body2+3+8+medzera+f1 |
+ | ctrl+šípka hore | body 23+medzera |
+| shift+alt+šípka hore | bod2+bod3+bod7+F1 |
 | alt+šípka hore | bod2+bod3+bod7 |
 | shift+šípka hore | left side scroll down  +medzera |
 | pageDown | bod3+bod4+bod5+medzera |
 | ctrl+pagedown | bod3+bod4+bod5+bod8+medzera |
-| ctrl+shift+šípka dolu | bod5+bod6+bod8+medzera+advance1 |
+| šípka dole | bot 4+medzera, leftSideDownArrow |
+| ctrl+shift+šípka dole | body 5+6+8+medzera+f1 |
 | ctrl+šípka dolu | bod5+bod6+medzera |
-| shift+alt+šípka dolu | bod5+bod6+bod7+advance1 |
+| shift+alt+šípka dolu | bod5+bod6+bod7+F11 |
 | alt+šípka dolu | bod5+bod6+bod7 |
 | shift+šípka dolu | right side scroll down  +medzera |
-| delete | bod1+bod3+bod5+medzera |
+| escape | body 1+5+medzera, f4, brailleedge:f1 |
+| delete key | body 135+medzera, body 145+medzera |
 | f1 | bod1+bod2+bod5+medzera |
 | f3 | bod1+bod2+bod4+bod8 |
-| f4 | bod7+advance3 |
-| windows+b | bod1+bod2+advance1 |
-| windows+d | bod1+bod4+bod5+advance1 |
+| f4 | bod7+f3 |
+| windows+b | body 12+f1 |
+| windows+d | body 145+f1 |
+| ctrl+insert| smartbeetle:f1+rightSideScroll |
+| alt+insert | smartbeetle:f3+rightSideScroll |
 %kc:endInclude
 
-++ HIMS SyncBraille ++
-NVDA podporuje riadok SyncBraille od spoločnosti [HIMS http://www.hims-inc.com/].
-Ak máte riadok pripojený cez USB, je potrebné nainštalovať ovládač dodávaný HIMS.
-
-Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
-Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie rozmiestnenia klávesov.
-%kc:beginInclude
-|| Názov | Klávesová skratka |
-| Posunúť riadok späť | left side scroll down  |
-| Posunúť riadok vpred | right side scroll down |
-| Prejsť na znak v brailly | Smerové tlačidlá |
-%kc:endInclude
-
-++ Braillovské riadky od spoločnosti Seika ++
+++ Braillovské riadky od spoločnosti Seika ++[Seika]
 Podporované sú 40-znakové verzie 3, 4 a 5 a takisto 80-znakový riadok Seika80 od spoločnosti [Nippon Telesoft http://www.nippontelesoft.com/].
 Viac informácii o týchto riadkoch nájdete na stránke http://www.seika-braille.com/.
 Aby ste mohli riadky používať, nainštalujte USB ovládač dodávaný so zariadením.
@@ -2175,7 +2197,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie
 | prejsť na znak v braily | smerové tlačidlá |
 %kc:endInclude
 
-++ Nové modely riadkov Papenmeier BRAILLEX ++
+++ Nové modely riadkov Papenmeier BRAILLEX ++[Papenmeier]
 Podporované sú tieto braillovské riadky:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
@@ -2256,7 +2278,7 @@ Obe stredné tlačidlá sa používajú ako medzera.
 | tab | medzera s bodmi 3 7 |
 %kc:endInclude 
 
-++ Staršie modely Papenmeier Braille BRAILLEX ++
+++ Staršie modely Papenmeier Braille BRAILLEX ++[PapenmeierOld]
 Podporované sú tieto braillovské riadky:
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen+-
@@ -2339,7 +2361,7 @@ BRAILLEX 2D Screen:
 | Predchádzajúci objekt | right2 |
 %kc:endInclude
 
-++ HumanWare BrailleNote ++
+++ HumanWare BrailleNote ++[HumanWareBrailleNote]
 NVDA podporuje zápisníky BrailleNote od [Humanware http://www.humanware.com], ak sú nastavené do režimu pre príjem príkazov z čítača obrazovky.
 Podporované sú tieto typy:
 - BrailleNote Classic (len cez sériový port)
@@ -2387,7 +2409,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Nápoveda vstupu | medzera+body 2,3, 6 (medzera+znížené h) |
 %kc:endInclude
 
-++ Zobrazovače EcoBraille ++
+++ Zobrazovače EcoBraille ++[EcoBraille]
 NVDA podporuje zobrazovače EcoBraille od spoločnosti [ONCE http://www.once.es/].
 Podporované sú tieto riadky:
 - EcoBraille 20
@@ -2422,7 +2444,7 @@ Pre popis a umiestnenie tlačidiel si prosím pozrite [Návod k zobrazovačom Ec
 | Prepnúť nastavenie braillovský kurzor zviazaný s | A |
 %kc:endInclude
 
-++ SuperBraille ++
+++ SuperBraille ++[SuperBraille]
 Braillovský riadok SuperBraille, populárny hlavne v Tajvane, je možné pripojiť cez USB alebo sériový port.
 Tento riadok nemá žiadne tlačidlá a preto sa na prácu s ním používa klávesnica počítača.
 Aby bolo možné zaisťiť prácu s riadkom a tiež kompatibilitu s inými čítačmi obrazovky v Tajvane, sú k dispozícii tieto klávesové skratky.
@@ -2432,7 +2454,87 @@ Aby bolo možné zaisťiť prácu s riadkom a tiež kompatibilitu s inými čít
 | Posunúť zobrazenie vpred | plus na numerickej klávesnici | 
 %kc:endInclude
 
-++ BRLTTY ++
+++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+NVDA podporuje riadky Esys, Esytime a Iris od spoločnosti [Eurobraille http://www.eurobraille.fr/].
+Zariadenia Esys a Esytime-Evo sú podporované cez rozhranie USB a Bluetooth.
+Staršie riadky Esytime je možné používať len cez rozhranie USB.
+Riadky Iris môžete používať len cez sériový port.
+V týchto prípadoch je potrebné určiť ovládač a potom konkrétny port, do ktorého je riadok zapojený. Všetko nastavíte v nastaveniach braillu.
+
+Riadky Iris a Esys majú klávesnicu s desiatimi tlačidlami.
+Tlačidlo, ktoré vyzerá ako medzera, funguje nasledovne: Ľavá časť tlačidla funguje ako kláves backspace, pravá ako medzera.
+
+Nasleduje zoznam klávesových príkazov.
+Pre popis a umiestnenie tlačidiel si prosím pozrite návod k vášmu riadku.
+%kc:beginInclude
+|| názov | Klávesová skratka |
+| Posunúť zobrazenie dozadu | switch1-6left, l1 |
+| Posunúť zobrazenie vpred | switch1-6Right, l8 |
+| Presunúť zobrazenie na fokus | switch1-6Left+switch1-6Right, l1+l8 |
+| Presunúť na znak v brailly | routing, doubleRouting|
+| Presunúť prezerací kurzor na predchádzajúci riadok | joystick1Up |
+| Presunúť prezerací kurzor na nasledujúci riadok| joystick1Down |
+| Presunúť prezerací kurzor na predchádzajúci znak | joystick1Left |
+| Presunúť prezerací kurzor na nasledujúci znak | joystick1Right |
+| Prepnúť na predchádzajúci režim prezerania | joystick1Left+joystick1Up |
+| Prepnúť na nasledujúci režim prezerania | joystick1Right+joystick1Down |
+| Vymazať naposledy napísaný znak | backSpace |
+| Preložiť aktuálne zadaný braillovský reťazec a odoslať kláves enter| backSpace+space |
+| insert | body 35+medzera, l7 |
+| delete | body 36+medzera |
+| home  | body 123+medzera, joystick2Left+joystick2Up |
+| end | body 456+medzera, joystick2Right+joystick2Down |
+| šípka v ľavo| bod 2+medzera, joystick2Left, leftArrow |
+| šípka vpravo | bod 5+medzera, joystick2Right, rightArrow |
+| šípka hore| bod 1+medzera, joystick2Up, upArrow |
+| šípka dole | bod 6+medzera, joystick2Down, downArrow |
+| enter | joystick2Center |
+| pageUp | body 13+medzera |
+| pageDown | body 46+medzera |
+| numerická 1 | body 16+backspace |
+| numerická 2| body 126+backspace |
+| numerická 3 | body 146+backspace |
+| numerická 4 | body 1456+backspace |
+| nnumerická 5| body 156+backspace |
+| numerická 6 | body 1245+backspace |
+| numerická 7 | body 12456+backspace |
+| numerická 8 | body 1256+backspace |
+| numerická 9| body 246+backspace |
+| numerický insert | body 3456+backspace |
+| numerická desatinná čiarka | bod 2+backspace |
+| numerické deleno | body 34+backspace |
+| numerické krát | body 35+backspace |
+| numerické mínus | body 36+backspace |
+| numerické plus | body 235+backspace |
+| numerický enter | body 345+backspace |
+| escape | body 1245+medzera, l2 |
+| tab | body 256+medzera, l3 |
+| shift+tab | body 235+medzera |
+| printScreen | body 1346+medzera |
+| pauza | body 14+medzera |
+| kontextové menu | body 56+backspace |
+| f1 | bod 1+backspace |
+| f2 | body 12+backspace |
+| f3 | body 14+backspace |
+| f4 | body 145+backspace |
+| f5 | body 15+backspace |
+| f6 | body 124+backspace |
+| f7 | body 1245+backspace |
+| f8 | body 125+backspace |
+| f9 | body 24+backspace |
+| f10 | body 245+backspace |
+| f11 | body 13+backspace |
+| f12 | body 123+backspace |
+| windows | body 1234+backspace |
+| capsLock | bod 7+backspace, bod 8+backspace|
+| numLock | bod 3+backspace, bod 6+backspace |
+| shift | bod 7+medzera, l4 |
+| ctrl | body 78+medzera, body 178+medzera, body 478+medzera, l5 |
+| alt | bod 8+medzera, body 18+medzera, body 48+medzera, l6 |
+| Prepnúť simuláciu HID klávesnice| esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+%kc:endInclude
+
+++ BRLTTY ++[BRLTTY]
 [BRLTTY http://www.brltty.com/] je osobitný program, prostredníctvom ktorého je možné použiť množstvo ďalších braillovských zobrazovačov.
 Na používanie ovládača braillovských riadkov BRLTTY je potrebné nainštalovať [BRLTTY pre Windows http://www.brltty.com/download.html].
 Mali by ste si stiahnuť najnovšiu inštalačnú verziu, ktorá bude pomenovaná napríklad brltty-win-4.2-2.exe.
@@ -2452,7 +2554,7 @@ Prosím prečítajte si [dokumentáciu skratiek  brltty http://mielke.cc/brltty/
 | Prejsť na znak v brailly | route (bring cursor to character) |
 %kc:endInclude
 
-+ Pre pokročilých +
++ Pre pokročilých +[AdvancedTopics]
 
 ++ parametre príkazového riadka ++[CommandLineOptions]
 NVDA dokáže pri spustení spracovať parametre, ktoré ovplyvnia jeho činnosť.
@@ -2510,7 +2612,7 @@ V súčasnosti je možné upraviť tieto hodnoty:
 | configInLocalAppData | DWORD | 0 (predvolená hodnota) =vypnuté, 1 =zapnuté | Ak je zapnuté, ukladá konfigurácaiu data do lokálneho používateľského adresára a nie do priečinka roaming. |
 | serviceDebug | DWORD | 0 (predvolené) =vypnuté, 1 =zapnuté | Ak je povolené, vypne bezpečný  režim na prihlasovacích a zabezpečených obrazovkách. Vďaka tomu je potom možné používať na týchto miestach Python konzolu aj zobrazovač logu. Toto nastavenie však predstavuje vysoké bezpečnostné ryziko. |
 
-+ Ako získať viac informácií +
++ Ako získať viac informácií +[FurtherInformation]
 Ak hľadáte ďalšie informácie o NVDA, o jeho vývoji, alebo hľadáte pomoc, navštívte stránku projektu na adrese NVDA_URL.
 Na tejto stránke môžete tiež nájsť e-mailové konferencie a odkazy na ďalšie komunitné projekty a stránky o NVDA.
 Môžete tu tiež nájsť informácie o vývoji, zdrojové kódy a iné súvisiace materiály.

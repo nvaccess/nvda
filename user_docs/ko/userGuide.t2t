@@ -25,7 +25,7 @@ NVDA는 [NV Access https://www.nvaccess.org/]와 커뮤니티의 후원을 받�
 - 다양한 점자 디스플레이 지원 (디스플레이가 점자 키보드를 탑제한 경우 텍스트 입력도 가능)
 - 컴퓨터에 설치하지 않아도 USB 드라이브나 다른 휴대용 미디어에서 NVDA를 완벽하게 실행 가능
 - 손쉽게 사용할 수 있는 말하는 설치 과정
-- 51개국 언어로 번역됨
+- 52개국 언어로 번역됨
 - 최신 윈도우 (32 비트 및 64 비트) 버전 지원
 - 윈도우 로그온과 다른 보안 스크린에서도 실행 가능
 - 터치 명령을 사용하여 컨트롤 및 텍스트 읽기 가능
@@ -35,7 +35,7 @@ NVDA는 [NV Access https://www.nvaccess.org/]와 커뮤니티의 후원을 받�
 
 ++ 국제화 ++[Internationalization]
 중요한 것은 세계 어느 곳에 사는 사람이라도 사용하는 언어와 관계없이 기술에 대한 접근이 평등해야 한다는 것입니다.
-현재 NVDA는 한국어와 영어 외에 다음 언어들로 번역되어 출시되고 있습니다: 갈리시아어, 그리스어, 그루지아어, 네덜란드어, 네팔어, 노르웨이어, 덴마크어, 독일어, 러시아어, 루마니아어, 리투아니아어, 마세도니아어, 미얀마어, 베트남어, 불가리아어, 세르비아어, 슬로바키아어, 슬로베니아어, 스웨덴어, 스페인어(스페인 및 콜롬비아), 아이슬란드어, 아라곤어, 아라비아어, 알바니아어, 아일랜드어, 아프리카어, 에디오피아어, 우크라이나어, 이탈리아어, 일본어, 중국어 (간체 및 번체), 체코어, 카탈로니아어, 칸나다어, 크로아티아어, 타밀어, 태국어, 터키어, 파르시어, 펀자브어, 폴란드어, 포루투갈어 (브라질 및 포루투갈), 프랑스어, 필란드어, 헝가리어, 헤브라이어, 힌디어 등 50개 언어를 지원합니다.
+현재 NVDA는 한국어와 영어 외에 다음 언어들로 번역되어 출시되고 있습니다: 갈리시아어, 그리스어, 그루지아어, 네덜란드어, 네팔어, 노르웨이어, 덴마크어, 독일어, 러시아어, 루마니아어, 리투아니아어, 마세도니아어, 미얀마어, 베트남어, 불가리아어, 세르비아어, 슬로바키아어, 슬로베니아어, 스웨덴어, 스페인어(스페인 및 콜롬비아), 아이슬란드어, 아라곤어, 아라비아어, 알바니아어, 아일랜드어, 아프리카어, 에디오피아어, 우크라이나어, 이탈리아어, 일본어, 중국어 (간체 및 번체), 체코어, 카탈로니아어, 칸나다어, 크로아티아어, 키르기즈스탄어, 타밀어, 태국어, 터키어, 파르시어, 펀자브어, 폴란드어, 포루투갈어 (브라질 및 포루투갈), 프랑스어, 필란드어, 헝가리어, 헤브라이어, 힌디어 등 50개 언어를 지원합니다.
 
 ++ 음성 엔진 지원 ++[SpeechSynthesizerSupport]
 NVDA 프로그램 메세지와 인터페이스를 여러 언어로 제공하는 것 외에, NVDA는 사용자들이 가지고 있는 음성 엔진에 따라서 컨텐츠를 어떠한 언어로도 읽을 수 있게 합니다.
@@ -339,8 +339,10 @@ NVDA는 시스템 케럿과 관련하여 다음과 같은 단축키를 제공합
 [객체 탐색 모드 mode #ObjectReview]를 사용하여 특정 객체를 탐색할때 [텍스트 리뷰 단축키 #ReviewingText]를 사용하여 그 객체의 내용을 확인할 수 있습니다.
 초기값으로 탐색 객체는 시스템 포커스를 따라서 이동합니다만 이러한 동작은 온/오프로 토글할 수 있습니다.
 
-주의: 점자는 초기값으로 객체 탐색이나 텍스트 리뷰를 따르지 않고 [포커스 #SystemFocus]와 [케럿 #SystemCaret]을 따릅니다.
-만약 점자가 포커스와 케럿 대신 객체 탐색과 텍스트 리뷰를 따르게 하고 싶으면 [점자 표시 전환(braille to be tethered) #BrailleTether]을 리뷰로 설정하세요.
+주의: 점자는 초기값으로  [포커스 #SystemFocus]와 [케럿 #SystemCaret] 및 객체 탐색과 텍스트 리뷰를 동시에 따릅니다.
+만약 점자를 통해 포커스와 케럿 관련 정보를 탐색하려면 [ 점자 연계 커서를 #BrailleTether] 포커스로 설정하세요.
+이때 점자는 객체 탐색과 텍스트 리뷰를 따르지 않습니다.
+객체 탐색과 텍스트 리뷰를 따르게 하고 싶으면 [ 점자 연계 커서를 #BrailleTether] 리뷰로 설정하세요.
 
 객체 탐색을 하려면 다음 단축키들을 사용하세요.
 
@@ -521,8 +523,8 @@ NVDA에서는 브라우즈 모드를 사용하여 웹 페이지처럼 복잡한 
 -
 목록이나 표처럼 여러 항목(하위 요소)을 지닌 요소의 처음과 끝으로 이동하려면:
 || 이름 | 키 | 설명 |
-| 특정 요소의 맨 앞으로 이동 | shift+comma | 케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 앞으로 이동합니다. |
-| 특정 요소의 맨 끝으로 이동 | comma | 케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 끝으로 이동합니다. |
+| 컨테이너 요소의 맨 앞으로 이동 | shift+comma | 케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 앞으로 이동합니다. |
+| 컨테이너 요소의 맨 끝으로 이동 | comma | 케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 끝으로 이동합니다. |
 %kc:endInclude
 
 Gmail, Twitter, Facebook과 같은 웹 앱에서 가끔 첫 글자를 핫키로 사용합니다.
@@ -600,7 +602,7 @@ MathType가 설치되어 있어야 함. 임시 버전을 사용하셔도 됩니�
 NVDA가 지원하는 점자 디스플레이에 대한 정보는 [지원하는 점자 디스플레이 #SupportedBrailleDisplays] 섹션을 참조하세요.
 점자 관련 설정에 대해서는 [점자 설정 대화상자 #BrailleSettings] 섹션을 참조하세요.
 
-++ 컨트롤, 상태 및 랜드마크 표시용 점자 기호 목록 ++
+++ 컨트롤, 상태 및 랜드마크 표시용 점자 기호 목록 ++[BrailleAbbreviations]
 점자 디스플레이에 최대한의 정보를 보여줄 수 있도록 컨트롤, 상태 및 랜드마크 정보를 다음과 같이 표기하였습니다.
 
 || 점자 기호 | 컨트롤 |
@@ -688,7 +690,7 @@ NVDA가 지원하는 점자 디스플레이에 대한 정보는 [지원하는 �
 | srch | search |
 | rgn | region |
 
-++ 점자 입력 ++
+++ 점자 입력 ++[BrailleInput]
 점자 키보드를 사용하여 정자 및 약자 점자 입력이 가능합니다.
 점자 설정 대화상자에 있는 [점자 입력 표기법 #BrailleInputTable] 설정을 통해 텍스트 입력시 사용될 점자 코드를 선택할 수 있습니다.
 
@@ -731,7 +733,7 @@ NVDA가 지원하는 점자 디스플레이에 대한 정보는 [지원하는 �
 + 응용프로그램별 NVDA 기능 +[ApplicationSpecificFeatures]
 NVDA는 몇몇 프로그램에서 특정 작업을 좀 더 쉽게 수행하도록 또는 스크린 리더 사용자들에게 달리 접근할 방법이 없는 특정한 기능을 사용할 수 있도록 별도의 기능을 제공합니다.
 
-++ Microsoft Word ++
+++ Microsoft Word ++[MicrosoftWord]
 
 +++ 행/열 머릿말 자동으로 알리기 +++
 마이크로소프트 워드에서 표 셀 단위로 이동시 행 및 열 머릿말 내용을 자동으로 알릴 수 있습니다.
@@ -765,7 +767,7 @@ NVDA는 몇몇 프로그램에서 특정 작업을 좀 더 쉽게 수행하도�
 %kc:endInclude
 요소 목록에서 주석을 선택시 문서내 주석 및 track 변경을 볼 수 있습니다.
 
-++ Microsoft Excel ++
+++ Microsoft Excel ++[MicrosoftExcel]
 
 +++ 행/열 머릿말 자동으로 알리기 +++
 마이크로소프트 엑셀에서 셀로 이동시 행 및 열 머릿말 내용을 자동으로 알릴 수 있습니다.
@@ -820,13 +822,13 @@ Sheet의 이름을 변경하려면 sheet를 선택한 후 f2를 누르세요.
 필드 형식에 따라 브라우즈 모드를 사용하여 접근후 엔터를 누르거나 포커스 모드로 전환하여 필드를 접근할 수 있습니다.
 브라우즈 모드 및 첫 글자 명령에 대해서는 [부라우즈 모드 섹션 #BrowseMode].을 참조하세요.
 
-++ Microsoft PowerPoint ++
+++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || 이름 | 키 | 설명 |
 | 스피커 노트 읽기 설정 | control+shift+s | 슬라이드쇼가 진행될때 NvDA가 슬라이드 내용 또는 스피커 노트를 읽을것인지를 설정합니다 (스크린 텍스트와 상관 없음). | 
 %kc:endInclude
 
-++ foobar2000 ++
+++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || 이름 | 키 | 설명 |
 | 남은 시간 알림 | control+shift+r | 재생중인 트랙의 남은 시간을 알립니다. |
@@ -834,27 +836,27 @@ Sheet의 이름을 변경하려면 sheet를 선택한 후 f2를 누르세요.
 
 주의: 남은 시간 알림 기능은 Foobar의 상태 표시줄이 기본 형식으로 설정되어 있을때만 유효합니다.
 
-++ Miranda IM ++
+++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
 || 이름 | 키 | 설명 |
 | 최근 메시지 알림 | NVDA+control+1-4 | 숫자키 조합에 따라서 최근 메시지 중 하나를 읽습니다. 예) NVDA+control+2를 누르면 두 번째 최근 메시지를 읽습니다. |
 %kc:endInclude
 
-++ Poedit ++
+++ Poedit ++[Poedit]
 %kc:beginInclude
 || 이름 | 키 | 설명 |
 | 주석창 읽기 | control+shift+c | 주석창에 있는 주석을 읽습니다. |
 | 자동 주석 읽기 | control+shift+a | 자동 주석창에 있는 주석을 읽습니다. |
 %kc:endInclude
 
-++ Skype ++
+++ Skype ++[Skype]
 %kc:beginInclude
 메시지를 주고받을때:
 || 이름 | 명령 | 설명 |
 | 메시지 확인 | NVDA+control+1-0 | 이전 메시지를 출력 및 리뷰 커서를 메시지로 옮깁니다(예: Control+NVDA+2를 눌러 두번째 최신 메시지 확인). |
 %kc:endInclude
 
-++ Kindle for PC ++
+++ Kindle for PC ++[Kindle]
 Amazon Kindle PC 버전과 NVDA를 사용하여 독서 및 책 탐색이 가능합니다.
 본 기능은 "Screen Reader: Supported"이 설정된 Kindle 책(책 세부 내용 참고 바람)에서 사용할 수 있습니다.
 
@@ -893,7 +895,7 @@ Kindle 사용 시 책 내용을 선택한 후 여러 액션을 취할 수 있습
 + 노트 편집을 선택합니다.
 +
 
-++ Azardi ++
+++ Azardi ++[Azardi]
 %kc:beginInclude
 책 표 탐색중:
 || 이름 | 명령 | 설명 |
@@ -1142,12 +1144,14 @@ NVDA가 지원하는 점자 디스플레이에 관한 더 상세한 정보를 �
 본 옵션을 선택하면 NVDA 메시지는 점자디스플레이에 영구적(명령 입력 전까지)으로 표시됩니다.
 
 %kc:setting
-==== 점자 연계 커서 (Braille Tethered to) ====[BrailleTether]
+==== 점자 연계 커서 (Tether braille) ====[BrailleTether]
 단축키: NVDA+control+t
 
-이 옵션에서는 점자 디스플레이가 시스템 포커스 또는 탐색 객체/리뷰 커서를 따라갈 것인지를 선택할 수 있습니다.
+이 옵션에서는 점자 디스플레이가 시스템 포커스, 탐색 객체/리뷰 커서, 또는 둘 다 따라갈 것인지를 선택할 수 있습니다.
+"자동 연계"를 선택하면 시스템 포커스나 케럿이 변경시 점자 커서가 변경됩니다.
+만약 객체 탐색 또는 리뷰 커서 명령을 사용하면 점자는 새 객체나 리뷰 커서 위치에 위치하며 시스템 포커스나 케럿이 변경시 점자는 다시 포커스나 케럿을 따라가게 됩니다.
 
-==== 문단 단위로 읽기 ====
+==== 문단 단위로 읽기 ====[BrailleSettingsReadByParagraph]
 이 옵션이 선택되면 점자는 줄 단위 대신 문단 단위로 출력됩니다.
 따라서 다음 혹은 이전 줄 명령도 문단 단위로 이동합니다.
 이 옵션은 많은 양의 텍스트를 빨리 읽을 때 편리합니다.
@@ -1230,16 +1234,16 @@ capslock 키를 NVDA 키로 사용하려면 이 체크박스를 선택하십시�
 ==== 엔터키 입력시 음성 정지 ====
 이 옵션을 선택하면 엔터키를 누를때마다 음성이 정지됩니다. 기본으로 이 옵션은 선택되어 있습니다.
 
-==== 모두 읽기 사용시 건너뛰어 읽기 사용 ====
+==== 모두 읽기 사용시 건너뛰어 읽기 사용 ====[KeyboardSettingsSkimReading]
 이 옵션이 선택되면 모두 읽기 도중 다음이나 이전  줄, 문단 또는 웹 요소로 이동하여도 모두 읽기가 정지되지 않습니다.
- 
-==== caps lock이 켜져 있을때 소문자 입력시 경고음 출력 ====
+
+==== caps lock이 켜져 있을때 소문자 입력시 경고음 출력 ====[KeyboardSettingsBeepLowercase]
 이 옵션이 선택된 후 만약 capslock이 켜져 있고 쉬프트와 동시에 글자키가 입력되었다면 경고 비프음이 출력됩니다.
 일반적으로 capslock이 켜져 있고 쉬프트와 동시에 글자키가 입력된 경우는 의도적으로 발생하지 않으며 capslock이 켜져있다는 사실을 자각하지 못한데서 기인합니다.
 그러므로 이것을 경고하는 것은 매ㅜ 유익할 수 있습니다.
 
 %kc:setting
-==== 기능키 알림 ====
+==== 기능키 알림 ====[KeyboardSettingsSpeakCommandKeys]
 단축키: NVDA+4
 
 이 옵션이 선택되면 NVDA는 키보드에서 입력된 모든 기능키를 읽어줍니다. 여기에는 키 조합도 포함됩니다. 예를 들면 컨트롤 키와 다른 글자를 함께 누르는 것입니다.
@@ -1338,7 +1342,7 @@ NVDA가 마우스의 움직임에 따라서 텍스트를 읽도록 설정된 경
 
 이 옵션을 선택할 때, NVDA는 메뉴나 툴바 등 더 많은 컨트롤들의 위치정보를 알려 줄 것입니다. 그러나 이 정보는 약간 부정확할 수도 있습니다.
 
-==== 객체 설명 알림 ====
+==== 객체 설명 알림 ====[ObjectPresentationReportDescriptions]
 객체에 딸려 있는 설명이 필요없다면 이 체크박스를 해제하세요.
 
 %kc:setting
@@ -1402,7 +1406,7 @@ NVDA가 마우스의 움직임에 따라서 텍스트를 읽도록 설정된 경
 기본으로 이 설정은 선택되어 있습니다.
 
 
-+++ 브라우즈 모드 설정 (NVDA+control+b) +++
++++ 브라우즈 모드 설정 (NVDA+control+b) +++[BrowseModeSettings]
 이 대화상자는 설정 메뉴의 브라우즈 모드 설정에 있습니다.
 
 이 대화상자는 다음의 옵션을 포함합니다.
@@ -1432,8 +1436,8 @@ NVDA가 마우스의 움직임에 따라서 텍스트를 읽도록 설정된 경
 
 본 옵션을 어느곳에서나 토글하려면 [단춧키 설정 대화상자 #InputGestures]를 통해 토글 명령을 설정하세요.
 
-==== 링크나 헤딩 같은 필드 읽기 설정하기 ====
-링크, 헤딩, 표처럼 탐색할 때 읽게 되는 필드를 설정하려면 [문서 서식 설정 대화상자 #DocumentFormattingSettings]에서 옵션을 참조하세요.
+==== 링크나 헤딩 같은 요소 읽기 설정하기 ====[BrowseModeLinksAndHeadings]
+링크, 헤딩, 표처럼 탐색할 때 읽게 되는 요소를 설정하려면 [문서 서식 설정 대화상자 #DocumentFormattingSettings]에서 옵션을 참조하세요.
 
 ==== 포커스 이동에 따른 자동 포커스 모드 전환 ====
 이 옵션은 포커스가 변경될 때 포커스 모드로 전환될 수 있게 합니다.
@@ -1830,14 +1834,6 @@ NVDA에서 이 음성 엔진을 사용하려면 반드시 시스템에 설치해
 
 이 음성 엔진은 [spelling functionality #VoiceSpellingFunctionality]을 지원하지 않습니다.
 
-++ Nuance 보컬라이저 ++
-Nuance 보컬라이저는 뉴언스에서 개발하고 Tiflotecnia에서 NVDA용 페키지로 개발한 상용 고음질 음성 엔진입니다.
-한번의 설치로 30개 언어, 50여개 보이스를 사용할 수 있습니다.
-음성 엔진 파일과 보이스들은 추가 기능 페키지로 되어 있어 NVDA 휴대용 버전에서도 설치 및 사용이 가능합니다.
-
-더 자세한 정보 및 구입 방법에 대해서는 [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/] 사이트를 방문하시기 바랍니다.
-음성 엔진 구입시 일정 금액은 NVDA 개발 후원금으로 NV Access에 송금됩니다.
-
 + 지원하는 점자 디스플레이들 +[SupportedBrailleDisplays]
 이 섹션에서는 NVDA와 점자 디스플레이 기능키에 대한 정보를 수록합니다.
 
@@ -1900,13 +1896,18 @@ Focus 80에만 해당:
 %kc:endInclude
 
 
-++ Optelec ALVA BC640/680 ++
+++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
 [Optelec http://www.optelec.com/]에서 출시한 Alva BC640 및 BC680을 USB나 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.
+또한 Braille Voyager와 같은 구형 디스플레이를 Optelec 프로토컬 컨버터와 연결하여 사용할 수 있습니다.
 별도의 점자 디스플레이 드라이버 설치는 않하셔도 됩니다.
 다만 디스플레이를 연결한 후 NVDA를 이 디스플레이를 사용하도록 설정하십시요.
 
-이 디스플레이는 점자 키보드를 탑제하고 있지만 디스플레이 자체에서 점자 입력을 지원하고 있습니다.
-그럼으로 NVDA의 점자 입력 표기법 설정을 무시하셔도 됩니다.
+주의: 만약 ALVA 블루투스 도구를 사용하여 ALVA BC6 디스플레이와 연결하였다면 NVDA에서 본 디스플레이를 사용할 수 없습니다.
+이때 윈도우에서 제공하는 블루투스 설정을 사용하여 본 디스플레이와 연결한 후 사용하여야 합니다.
+
+기본적으로 본 디스플레이는 점자 키보드를 탑제하고 있지만 디스플레이 자체에서 점자 입력을 지원하고 있습니다.
+이 경우 NVDA의 점자 입력 표기법 설정을 무시하셔도 됩니다.
+그러나 최신 ALVA 디스플레이 펌웨어 버전을 사용하면 핫키를 통해 HID keyboard simulation 기능을 끄고 사용할 수 있습니다.
 
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
@@ -1918,6 +1919,7 @@ Focus 80에만 해당:
 | 점자 디스플레이를 다음 줄로 이동 | t4 |
 | 점자 디스플레이 앞으로 스크롤 | t5/etouch3 |
 | 점자 셀로 이동 | routing |
+| HID keyboard simulation 기능 토글 | t1+spEnter |
 | 리뷰에서 맨 윗 줄로 이동 | t1+t2 |
 | 리뷰에서 맨 아래 줄로 이동 | t4+t5 |
 | 점자 연계 커서 | t1+t3 |
@@ -1931,20 +1933,22 @@ Focus 80에만 해당:
 | 아래쪽 방향키 | spDown |
 | 왼쪽 방향키 | spLeft |
 | 오른쪽 방향키 | spRight |
-| enter key | spEnter |
+| enter key | spEnter, enter|
 | 날자와 시각 확인 | sp1+sp2 |
 | NVDA 메뉴 | sp1+sp3 |
 | windows+d (모든 창 최소화) | sp1+sp4 |
 | windows+b 키 (알림 영역으로 포커스 옮김) | sp3+sp4 |
-| windows 키 | sp2+sp3 |
+| windows 키 | sp2+sp3, windows |
 | alt+tab 키  | sp2+sp4 |
 | control+home 키 | t3+spUp |
 | control+end 키 | t3+spDown |
 | home 키 | t3+spLeft |
 | end 키 | t3+spRight |
+| alt 키 | alt |
+| control 키 | control |
 %kc:endInclude
 
-++ Handy Tech ++
+++ Handy Tech ++[HandyTech]
 [Handy Tech http://www.handytech.de/]에서 출시한 거의 모든 디스플레이 모델을 USB, 시리얼 또는 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.
 만약 예전 USB 디스플레이를 사용하신다면 별도의 드라이버를 설치하십시요.
 
@@ -2099,7 +2103,7 @@ NVDA에서는  [hedo Reha-Technik http://www.hedo.de/] 에서 출시한 hedo Mob
 %kc:endInclude
 
 
-++ HIMS 한소네/브레일 엣지/스마트 비틀/싱크브레일 ++
+++ HIMS 한소네/브레일 엣지/스마트 비틀/싱크브레일 ++[Hims]
 [Hims http://www.hims-inc.com/]에서 출시한 한소네, 브레일 엣지, 스마트 비틀 및 싱크브레일을 USB나 블루투스로 연결하여 NVDA와 연동시킬 수 있습니다.
 만약 USB로 연결하려면 힘스에서 보급한 USB 드라이버를 설치하고 사용하십시요.
 http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip에 접속하여 본 드라이버를 다운받으십시오.
@@ -2449,6 +2453,86 @@ NVDA 점자 설정 대화상자에서 본 디스플레이가 연결된 시리얼
 | 점자 디스플레이 뒤로 스크롤 | numpadMinus |
 | 점자 디스플레이 앞으로 스크롤 | numpadPlus |
 %kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+[Eurobraille http://www.eurobraille.fr/]에서 출시한 Esys, Esytime 및 Iris를 NVDA와 연동하여 사용할 수 있습니다.
+Esys와 Esytime-Evo 디스플레이는 USB 및 블루투스 연결을 지원합니다.
+구형 Esytime 디스플레이는 USB만을 진원합니다.
+Iris 디스플레이는 시리얼 포트 연결을 지원합니다(디스플레이 선택시 포트도 선택하여야 함).
+
+Iris 및 Esys 디스플레이는 10개 키로 된 점자 키보드를 탑제하고 있습니다.
+스페이스바처럼 생긴 두개의 키 중 왼쪽은 백스페이스, 오른쪽은 스페이스키입니다.
+
+다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
+각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
+%kc:beginInclude
+|| 이름 | 키 |
+| 점자 디스플레이 뒤로 스크롤 | switch1-6left, l1 |
+| 점자 디스플레이 앞으로 스크롤 | switch1-6Right, l8 |
+| 포커스된 객체로 이동 | switch1-6Left+switch1-6Right, l1+l8 |
+| 점자 셀로 이동 | routing, doubleRouting|
+| Move to previous line in review | joystick1Up |
+| Move to next line in review | joystick1Down |
+| Move to previous character in review | joystick1Left |
+| Move to next character in review | joystick1Right |
+| Switch to previous review mode | joystick1Left+joystick1Up |
+| Switch to next review mode | joystick1Right+joystick1Down |
+| Erase the last entered braille cell or character | backSpace |
+| Translate any braille input and press the enter key | backSpace+space |
+| insert key | dot3+dot5+space, l7 |
+| delete key | dot3+dot6+space |
+| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
+| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
+| leftArrow key | dot2+space, joystick2Left, leftArrow |
+| rightArrow key | dot5+space, joystick2Right, rightArrow |
+| upArrow key | dot1+space, joystick2Up, upArrow |
+| downArrow key | dot6+space, joystick2Down, downArrow |
+| enter key | joystick2Center |
+| pageUp key | dot1+dot3+space |
+| pageDown key | dot4+dot6+space |
+| numpad1 key | dot1+dot6+backspace |
+| numpad2 key | dot1+dot2+dot6+backspace |
+| numpad3 key | dot1+dot4+dot6+backspace |
+| numpad4 key | dot1+dot4+dot5+dot6+backspace |
+| numpad5 key | dot1+dot5+dot6+backspace |
+| numpad6 key | dot1+dot2+dot4+dot6+backspace |
+| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
+| numpad8 key | dot1+dot2+dot5+dot6+backspace |
+| numpad9 key | dot2+dot4+dot6+backspace |
+| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
+| numpadDecimal key | dot2+backspace |
+| numpadDivide key | dot3+dot4+backspace |
+| numpadMultiply key | dot3+dot5+backspace |
+| numpadMinus key | dot3+dot6+backspace |
+| numpadPlus key | dot2+dot3+dot5+backspace |
+| numpadEnter key | dot3+dot4+dot5+backspace |
+| escape key | dot1+dot2+dot4+dot5+space, l2 |
+| tab key | dot2+dot5+dot6+space, l3 |
+| shift+tab key | dot2+dot3+dot5+space |
+| printScreen key | dot1+dot3+dot4+dot6+space |
+| pause key | dot1+dot4+space |
+| applications key | dot5+dot6+backspace |
+| f1 key | dot1+backspace |
+| f2 key | dot1+dot2+backspace |
+| f3 key | dot1+dot4+backspace |
+| f4 key | dot1+dot4+dot5+backspace |
+| f5 key | dot1+dot5+backspace |
+| f6 key | dot1+dot2+dot4+backspace |
+| f7 key | dot1+dot2+dot4+dot5+backspace |
+| f8 key | dot1+dot2+dot5+backspace |
+| f9 key | dot2+dot4+backspace |
+| f10 key | dot2+dot4+dot5+backspace |
+| f11 key | dot1+dot3+backspace |
+| f12 key | dot1+dot2+dot3+backspace |
+| windows key | dot1+dot2+dot3+dot4+backspace |
+| capsLock key | dot7+backspace, dot8+backspace |
+| numLock key | dot3+backspace, dot6+backspace |
+| shift key | dot7+space, l4 |
+| control key | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
+| alt key | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
+| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+%kc:endInclude
+
 
 ++ BRLTTY ++
 외부 프로그램인 [BRLTTY http://www.brltty.com/]을 사용하여 다른 점자 디스플레이를 사용할 수 있습니다.
