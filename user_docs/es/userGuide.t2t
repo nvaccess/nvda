@@ -25,16 +25,17 @@ Lo más reseñable incluye:
 - Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a 51 idiomas
+- Traducido a 52 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
+- Anunciado de controles y texto mientras se utilizan gestos táctiles
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
 - Soporte para el símbolo del sistema de Windows y aplicaciones de consola
 -
 
 ++ Internacionalización ++[Internationalization]
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a 51 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
+Actualmente NVDA ha sido traducido a 52 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Birmano, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Kannada, Kirguistaní, Lituano, Nepalí, Noruego, Macedonio, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++[SpeechSynthesizerSupport]
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -338,8 +339,10 @@ El objeto actualmente en revisión se llama navegador de objetos.
 Una vez que navegues a un objeto, puedes revisar su contenido utilizando las [órdenes de revisión de texto #ReviewingText] mientras se esté en [modo revisión de objetos #ObjectReview].
 De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema aunque este comportamiento puede activarse y desactivarse.
 
-Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
-Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
+Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor #SystemCaret] así como por omisión a la navegación de objetos y a la revisión de texto.
+Si quieres que siga sólo al foco y al cursor, necesitas [configurar que el braille siga al  #BrailleTether] foco.
+En este caso, el braille no seguirá a la navegación de objetos y a la revisión de texto.
+Si quieres que el braille siga a la navegación de objetos y a la revisión de texto en su lugar, necesitas [configurar que el braille siga a la #BrailleTether] revisión.
 
 Para navegar por objetos, utiliza las siguientes órdenes:
 
@@ -488,7 +491,6 @@ Además, puedes forzar manualmente el modo foco, después permanecerá efectivo 
 | abrir descripción larga | NVDA+d | Abre una ventana nueva conteniendo una descripción larga para el elemento sobre el que esté si tiene una. | 
 %kc:endInclude
 
-
 ++ Navegación con una Sola Letra ++[SingleLetterNavigation]
 Mientras se esté en modo exploración, para una navegación más rápida NVDA también proporciona teclas de un solo carácter para saltar a ciertos campos en el documento.
 Ten en cuenta que no todas estas órdenes se soportan en cada tipo de documento.
@@ -523,8 +525,8 @@ Para moverte al comienzo o final de elementos contenedores tales como listas y t
 || Nombre | Tecla | Descripción |
 | Mover al comienzo de un contenedor | shift+coma | Se mueve al comienzo del contenedor (lista, tabla etc) donde esté situado el cursor |
 | Mover al final del contenedor | coma | Se mueve al final del contenedor (lista, tabla etc) donde esté situado el cursor |
-
 %kc:endInclude
+
 Algunas aplicaciones web tales como Gmail, Twitter y Facebook utilizan letras solas como atajos de teclado.
 Si quieres utilizar éstas aún serás capaz de utilizar las teclas de cursor para leer en modo exploración, puedes desactivar temporalmente  las teclas de navegación con una sola letra de NVDA.
 %kc:beginInclude
@@ -931,7 +933,7 @@ Esta opción es una casilla de verificación que, cuando se marca, dice a NVDA q
 
 ==== Mostrar opciones de salida al salir de NVDA ====[GeneralSettingsShowExitOptions]
 Esta opción es una casilla de verificación que te permite elegir si aparece o no un diálogo al salir de NVDA que te pregunta sobre qué acción quieres llebar a cabo.
-Cuando se marque, aparecerá un diálogo al intentar salir de NVDA preguntándote si quieres salir, reiniciar o reiniciar con los complementos deshabilitados.
+Cuando se marque, aparecerá un diálogo al intentar salir de NVDA preguntándote si quieres salir, reiniciar, reiniciar con los complementos deshabilitados o instalar actualizaciones pendientes si las hay.
 Cuando se desmarque, NVDA saldrá inmediatamente.
 
 ==== Reproducir sonidos al iniciar o salir de NVDA ====[GeneralSettingsPlaySounds]
@@ -958,6 +960,10 @@ Esta opción sólo está disponible para copias instaladas de NVDA.
 ==== Buscar actualizaciones para NVDA automáticamente ====[GeneralSettingsCheckForUpdates]
 Si esto está activado, NVDA buscará automáticamente versiones actualizadas y te informará cuando una actualización esté disponible.
 También puedes buscar actualizaciones manualmente seleccionando Buscar Actualizaciones bajo el menú Ayuda en el menú NVDA.
+
+==== Notificar actualizaciones pendientes al arrancar ====[GeneralSettingsNotifyPendingUpdates]
+Si esto está habilitado, NVDA te informará cuando haya una actualización pendiente al arrancar, ofreciéndote la posibilidad de instalarla.
+También puedes instalar manualmente la actualización pendiente desde el diálogo Salir de NVDA (si está habilitado), desde el menú NVDA, o al realizar una nueva búsqueda desde el menú Ayuda.
 
 +++ Selección de sintetizador (NVDA+control+s) +++[SynthesizerSelection]
 El diálogo Sintetizadores, que se encuentra en "Sintetizadores..." en el menú Preferencias, te permite seleccionar qué sintetizador debería utilizar NVDA para hablar.
@@ -1142,10 +1148,12 @@ Especifycando 0 se deshabilita el mostrado de estos mensajes completamente.
 Esta opción permite a los mensajes de NVDA mostrarse en la pantalla braille indefinidamente.
 
 %kc:setting
-==== El Braille sigue a ====[BrailleTether]
+==== Braille Sigue ====[BrailleTether]
 Tecla: NVDA+control+t
 
-Esta opción te permite elegir si la pantalla braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión.
+Esta opción te permite elegir si la pantalla braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión, o a ambos.
+Cuando se seleccione "automáticamente", NVDA seguirá al foco y al cursor del sistema por omisión.
+En este caso, cuando se cambie la posición del navegador de objetos o del cursor de revisión mediante una interacción explícita del usuario, NVDA seguirá a la revisión temporalmente, hasta que el foco o el cursor cambie.
 
 ==== Leer por Párrafo ====[BrailleSettingsReadByParagraph]
 Si está activado, el braille se mostrará por párrafos en lugar de por líneas.
@@ -1233,13 +1241,13 @@ Si está activada, esta opción causará que la voz se interrumpa cada vez que s
 ==== Permitir lectura superficial en Verbalizar Todo ====[KeyboardSettingsSkimReading]
 Si está activada, ciertas órdenes de navegación (tales como la navegación rápida en modo exploración o el movimiento por líneas o por párrafos) no detienen  Verbalizar Todo, en su lugar Verbalizar Todo salta  a la nueva posición y continúa leyendo.
 
-==== Pitar si se Teclean Letras Minúsculas Cuando BloqMayus está Activado ====[VoiceSettingsBeepLowercase]
+==== Pitar si se Teclean Letras Minúsculas Cuando BloqMayus está Activado ====[KeyboardSettingsBeepLowercase]
 Cuando está activada, se escuchará un pitido de aviso si se escribe una letra con la tecla shift mientras BloqMayus está activada.
 Generalmente, escribir letras en mayúsculas con BloqMayus es inintencionado y normalmente es debido a no revisar que el BloqMayus esté activado.
 Por lo tanto, puede ser bastante útil ser avisado acerca de esto.
 
 %kc:setting
-==== Verbalizar teclas de órdenes ====[VoiceSettingsSpeakCommandKeys]
+==== Verbalizar teclas de órdenes ====[KeyboardSettingsSpeakCommandKeys]
 Tecla: NVDA+4
 
 Cuando está marcada significa que NVDA anunciará todas las teclas que no sean caracteres al escribirlas en el teclado. Esto incluye combinaciones de teclas tales como control más cualquier otra letra. 
@@ -1330,7 +1338,7 @@ Los globos de ayuda son como pequeños consejos, pero normalmente son más grand
 Cuando esta casilla de verificación está verificada, NVDA incluirá la tecla de atajo que esté asociada con cierto objeto o control cuando sea anunciado. 
 Por ejemplo el menú Archivo en una barra de menú podrá tener una tecla de atajo Alt+a.
 
-==== Anunciar Información de la Posición del Objeto ====[ObjectPresentationPositionInfo]
+==== Anunciar Información de la Posición del Objeto ====[ObjectPresentationReportDescriptions]
 Esta opción te permite elegir dónde deseas tener una posición del objeto anunciada (ej.: 1 de 4) cuando te mueves al objeto con el foco o el navegador de objetos.
 
 ==== Deducir la información de Posición del Objeto cuando no esté disponible ====[ObjectPresentationGuessPositionInfo]
@@ -1432,7 +1440,7 @@ Esta opción está desactivada de forma predeterminada.
 
 Para conmutar la inclusión de tablas de diseño desde cualquier lugar, por favor asigna un gesto personalizado utilizando el diálogo `[Gestos de entrada #InputGestures].
 
-==== Configurando el anunciado de campos tales como enlaces y encabezados ====
+==== Configurando el anunciado de campos tales como enlaces y encabezados ====[BrowseModeLinksAndHeadings]
 Por favor encuentra las nuevas opciones en el [diálogo Opciones de Formato de documento #DocumentFormattingSettings]. 
 
 ==== Modo de foco automático para cambios del foco ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
@@ -1755,6 +1763,7 @@ Para deshabilitar un complemento, pulsa el botón deshabilitar.
 Para habilitar un comnplemento anteriormente deshabilitado, pulsa el botón habilitar.
 Puedes deshabilitar un complemento si su estado indica que está en ejecución o habilitado, o habilitarlo si el complemento está suspendido o deshabilitado.
 Para cada pulsación del botón habilitar/deshabilitar, el estado del complemento cambia para indicar qué ocurrirá al reiniciar NVDA.
+Si el complemento fue deshabilitado anteriormente, se mostrará un estado "habilitado después de reiniciar". Si el complemento fue anteriormente "Habilitado", se mostrará un estado "deshabilitado después de reiniciar"
 Al igual que cuando instalas o eliminas complementos, tienes que reiniciar NVDA para que los cambios tengan efecto.
 
 El administrador también tiene un botón Cerrar para cerrar el diálogo.
@@ -1830,14 +1839,6 @@ Para más información, por favor visita el sitio Web de Audiologic en www.audio
 
 Este sintetizador no soporta la [funcionalidad de deletreo #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer para NVDA ++[Vocalizer]
-Nuance Vocalizer es un sintetizador de voz commercial y de alta calidad desarrollado por Nuance Communications, Inc., y empaquetado especialmente para NVDA por Tiflotecnia, Lda.
-Contiene más de 50 voces diferentes que puedes instalar, hablando en más de 30 idiomas.
-Todos los componentes y voces del sintetizador se agrupan en paquetes de complemento, los cuales permiten su uso completo en copias portables de NVDA.
-
-Puedes obtener más información acerca de Nuance Vocalizer para NVDA y de cómo comprarlo, en su sitio web en [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Un porcentaje de las ventas de este producto se dona a NV Access, para financiar el desarrollo del Lector de Pantalla  NVDA.
-
 + Pantallas Braille Soportadas +[SupportedBrailleDisplays]
 Esta sección contiene información acerca de las pantallas braille soportadas por NVDA.
 
@@ -1900,13 +1901,18 @@ Sólo para la Focus 80:
 | Desplazar pantalla braille adelante | barra frontal izquierda abajo, barra frontal derecha abajo |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Series de la Optelec ALVA 6/conversor de protocolo ++[OptelecALVA]
 Ambas pantallas ALVA BC640 y BC680 de [Optelec http://www.optelec.com/] están soportadas.
+Alternativamente, puedes conectar una pantalla antigua de Optelec, tal como una Braille Voyager, utilizando un conversor de protocolo suministrado por Optelec.
 No necesitas instalar ningún controlador en especial para utilizar estas pantallas.
 Sólo enchufa la pantalla y configura NVDA para utilizarla.
 
-Dado que estas pantallas tienen un teclado braille, manejarán la transcripción de braille a texto por sí mismas.
-Por lo tanto, la configuración de la tabla de entrada braille de NVDA es irrelevante.
+Nota: NVDA podría no ser capaz de usar una pantalla ALVA BC6 con Bluetooth cuando se empareja utilizando la utilidad ALVA Bluetooth.
+Cuando hayas emparejado tu dispositivo usando su utilidad y NVDA no pueda detectarlo, te recomendamos enparejar tu pantalla ALVA de la forma ordinaria utilizando las opciones de Bluetooth de Windows.
+
+Nota: dado que algunas de estas pantallas tienen un teclado braille, manejan la transcripción de braille a texto por sí mismas por omisión.
+Esto significa que el sistema de entrada braille de NVDA no se está utilizando en una situación predeterminada (es decir, la tabla de entrada braille configurada no tiene efecto).
+Para pantallas ALVA con firmware reciente, es posible deshabilitar esta simulación de teclado HID utilizando un gesto de entrada.
 
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
@@ -1918,6 +1924,8 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Mover la pantalla braille a la línea siguiente | t4 |
 | Desplazar pantalla braille hacia adelante | t5 o etouch3 |
 | Guiar a la celda braille | sensor |
+| Anunciar formato de texto bajo la celda braille | sensores secundarios |
+| Conmutar la simulación de teclado HID | t1+spEnter |
 | Mover a la línea superior en revisión | t1+t2 |
 | Mover a la línea inferior en revisión | t4+t5 |
 | Conmutar el seguimiento braille | t1+t3 |
@@ -1931,17 +1939,19 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | tecla flecha abajo | spDown |
 | tecla flecha izquierda | spLeft |
 | tecla flecha derecha | spRight |
-| tecla intro | spEnter |
+| tecla intro | spEnter, intro |
 | Anunciar fecha/hora | sp1+sp2 |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas las aplicaciones) | sp1+sp4 |
 | Tecla windows+b (enfocar la bandeja del sistema) | sp3+sp4 |
-| tecla windows | sp2+sp3 |
+| tecla windows | sp2+sp3, windows |
 | tecla alt+tab | sp2+sp4 |
 | tecla control+inicio | t3+spArriba |
 | tecla control+fin | t3+spAbajo |
 | tecla inicio | t3+spIzquierda |
 | tecla fin | t3+spDerecha |
+| tecla alt | alt |
+| tecla control | control |
 %kc:endInclude
 
 ++ Pantallas Handy Tech ++[HandyTech]
@@ -2068,13 +2078,16 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | Leer todo | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant Series BI/B ++[HumanWareBrailliant]
-Las pantallas braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluyendo BI 32, BI 40 y B 80, están soportadas cuando se conectan a través del USB o bluetooth.
+++ Series de la HumanWare Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
+Las pantallas braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluyendo BI 14, BI 32, BI 40 y B 80, están soportadas cuando se conectan a través del USB o bluetooth.
 Si la conectas a través de USB con el protocolo configurado a HumanWare, primero debes instalar los controladores USB proporcionados por el fabricante.
 Los controladores USB no se requieren si el protocolo se configura a OpenBraille.
 
-Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+También se soporta la BrailleNote Touch, y no requiere instalar ningún controlador.
+
+Seguidamente van las asignaciones de teclas para las pantallas Brailliant BI/B y BrailleNote touch con NVDA.
 Por favor conhsulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
++++ Asignaciones de teclas para todos los modelos +++
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar pantalla braille hacia atrás | izquierda |
@@ -2087,19 +2100,37 @@ Por favor conhsulta la documentación de la pantalla para descripciones de dónd
 | tecla flecha abajo | espacio+punto4 |
 | tecla flecha izquierda | espacio+punto3 |
 | tecla flecha derecha | espacio+punto6 |
-| Menú NVDA | c1+c3+c4+c5 (comando n) |
 | tecla shift+tab | espacio+punto1+punto3 |
 | tecla tab | espacio+punto4+punto6 |
 | tecla alt | espacio+punto1+punto3+punto4 (espacio+m) |
 | tecla escape | espacio+punto1+punto5 (espacio+e) |
 | tecla intro | punto8 |
-| tecla windows+d (minimizar todas las aplicaciones) | c1+c4+c5 (comando d) |
 | tecla windows | espacio+punto3+punto4 |
 | tecla alt+tab | espacio+punto2+punto3+punto4+punto5 (espacio+t) |
+| Menú NVDA | espacio+punto1+punto3+punto4+punto5 (espacio+n) |
+| tecla windows+d (minimizar todas las aplicaciones) | espacio+punto1+punto4+punto5 (espacio+d) |
+| Leer todo | espacio+punto1+punto2+punto3+punto4+punto5+punto6 |
+%kc:endInclude
+
++++ Asignaciones de teclas para Brailliant BI 32, BI 40 y B 80 +++ 
+%kc:beginInclude
+|| Nombre | Tecla |
+| Menú NVDA | c1+c3+c4+c5 (comando n) |
+| tecla windows+d (minimizar todas las aplicaciones) | c1+c4+c5 (comando d) |
 | Leer todo | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
++++ Asignaciones de teclas para Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Nombre | Tecla |
+| tecla flecha arriba | joystick arriba |
+| tecla flecha abajo | joystick abajo |
+| tecla flecha izquierda | joystick izquierda |
+| tecla flecha derecha | joystick derecha |
+| tecla intro | accionar joystick |
+%kc:endInclude
+
+++ Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 NVDA soporta las pantallas Braille Sense, Braille EDGE, Smart Beetle y Sync Braille de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
 Puedes descargarlos de aquí: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2248,7 +2279,7 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 | Mover al primer objeto contenido | dn2 |
 | Mover al objeto anterior | derecha2 |
 | Mover al siguiente objeto | izquierda2 |
-| Anunciar formato de texto | fila de sensores superior |
+| Anunciar formato de texto bajo la celda braille | fila de sensores superior |
 %kc:endInclude
 
 El modelo Trio tiene cuatro teclas adicionales que están delante del teclado braille.
@@ -2322,7 +2353,7 @@ Dispositivos con EAB:
 | Moverse al primer objeto contenido | dn2 |
 | Moverse al siguiente objeto | left2 |
 | Moverse al objeto anterior | right2 |
-| Anunciar formato de texto | Upper routing strip |
+| Anunciar formato de texto bajo la celda braille | Upper routing strip |
 
 BRAILLEX Tiny:
 || Nombre | Tecla |
@@ -2337,7 +2368,7 @@ BRAILLEX Tiny:
 | Moverse al primer objeto contenido | r1+dn |
 | Moverse al objeto anterior | r1+left |
 | Moverse al siguiente objeto | r1+right |
-| Anunciar formato de texto | reportf |
+| Anunciar formato de texto bajo la celda braille | sensores superiores |
 | Anunciar título | l1+arriba |
 | Anunciar barra de estado | l2+abajo |
 
@@ -2346,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Anunciar carácter actual en revisión | l1 |
 | Activar navegador de objetos actual | l2 |
 | Activar o desactivar seguimiento de braille | r2 |
-| Anunciar formato de texto | reportf |
+| Anunciar formato de texto bajo la celda braille | sensores superior |
 | Mover pantalla braille a la línea anterior| up |
 | Desplazar pantalla braille atrás | left |
 | Desplazar pantalla braille adelante | right |
@@ -2365,6 +2396,8 @@ Se soportan los siguientes modelos:
 - BrailleNote MPower (Conexiones serie y bluetooth)
 - BrailleNote Apex (Conexiones USB y Bluetooth)
 -
+
+Para el BrailleNote Touch, por favor consulta la sección [series de las Brailliant BI / BrailleNote Touch HumanWareBrailliant].
 
 Si tu dispositivo soporta más de un tipo de conexión, cuando conectes tu BrailleNote a NVDA, debes configurar el puerto de la terminal braille en las opciones de terminal braille.
 Por favor consulta el manual del BrailleNote para detalles.
@@ -2448,6 +2481,90 @@ Debido a esto, y para mantener compatibilidad con otros lectores de pantalla en 
 || Nombre | Tecla |
 | Desplazar atrás pantalla braille | Menos teclado numérico |
 | Desplazar adelante pantalla braille | Más teclado numérico | 
+%kc:endInclude
+
+++ Pantallas Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+Se soportan por NVDA las pantallas Esys, Esytime e Iris de [Eurobraille http://www.eurobraille.fr/].
+Los dispositivos Esys y Esytime-Evo se soportan cuando se conecten a través de USB o bluetooth.
+Los dispositivos Esytime antiguos sólo soportan USB.
+Las pantallas Iris sólo se pueden conectar a través de un puerto serie.
+Por lo tanto, para estas pantallas, deberías seleccionar el puerto al cual se conecta después de haber elegido este controlador en el diálogo Opciones de Braille.
+
+Las pantallas Iris y Esys tienen un teclado braille con 10 teclas.
+De las dos teclas colocadas como barra espaciadora, la tecla de la izquierda se corresponde con la tecla retroceso y la tecla derecha con la barra espaciadora.
+
+Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
+Por favor consulta la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar pantalla braille hacia atrás | switch1-6Izquierda, l1 |
+| Desplazar pantalla braille hacia adelante | switch1-6Derecha, l8 |
+| Mover al foco actual | switch1-6Izquierda+switch1-6Derecha, l1+l8 |
+| Enrutar a la celda braille | sensores |
+| Anunciar formato de texto bajo la celda braille | dobleSensor |
+| Mover a la línea anterior en revisión | joystick1Arriba |
+| Mover a la siguiente línea en revisión | joystick1Abajo |
+| Mover al carácter anterior en revisión | joystick1Izquierda |
+| Mover al carácter siguiente en revisión | joystick1Derecha |
+| Cambiar al modo de revisión anterior | joystick1Izquierda+joystick1Arriba |
+| Cambiar al siguiente modo de revisión | joystick1Derecha+joystick1Abajo |
+| Eliminar la última celda braille o carácter introducido | retroceso |
+| Transcribir cualquier entrada braille y pulsar la tecla intro | retroceso+espacio |
+| tecla insert | punto3+punto5+espacio, l7 |
+| tecla suprimir | punto3+punto6+espacio |
+| tecla inicio | punto1+punto2+punto3+espacio, joystick2Izquierda+joystick2Arriba |
+| tecla fin | punto4+punto5+punto6+espacio, joystick2Derecha+joystick2Abajo |
+| tecla flecha izquierda | punto2+espacio, joystick2Izquierda, flecha izquierda |
+| tecla flecha derecha | punto5+espacio, joystick2Derecha, flecha derecha |
+| tecla flecha arriba  | punto1+espacio, joystick2Arriba, flecha arriba |
+| tecla flecha abajo  | punto6+espacio, joystick2Abajo, flecha abajo |
+| tecla intro | joystick2Centro |
+| tecla RePág | punto1+punto3+espacio |
+| tecla AvPág | punto4+punto6+espacio |
+| tecla 1 numérico | punto1+punto6+retroceso |
+| tecla 2 numérico | punto1+punto2+punto6+retroceso |
+| tecla 3 numérico | punto1+punto4+punto6+retroceso |
+| tecla 4 numérico | punto1+punto4+punto5+punto6+retroceso |
+| tecla 5 numérico | punto1+punto5+punto6+retroceso |
+| tecla 6 numérico | punto1+punto2+punto4+punto6+retroceso |
+| tecla 7 numérico | punto1+punto2+punto4+punto5+punto6+retroceso |
+| tecla 8 numérico | punto1+punto2+punto5+punto6+retroceso |
+| tecla 9 numérico | punto2+punto4+punto6+retroceso |
+| tecla Insert numérico | punto3+punto4+punto5+punto6+retroceso |
+| tecla punto numérico | punto2+retroceso |
+| tecla dividir numérico | punto3+punto4+retroceso |
+| tecla multiplicar numérico | punto3+punto5+retroceso |
+| tecla menos numérico | punto3+punto6+retroceso |
+| tecla más numérico | punto2+punto3+punto5+retroceso |
+| tecla intro numérico | punto3+punto4+punto5+retroceso |
+| tecla escape | punto1+punto2+punto4+punto5+espacio, l2 |
+| tecla tab | punto2+punto5+punto6+espacio, l3 |
+| tecla shift+tab | punto2+punto3+punto5+espacio |
+| tecla imprimir pantalla | punto1+punto3+punto4+punto6+espacio |
+| tecla pausa | punto1+punto4+espacio |
+| tecla aplicaciones | punto5+punto6+retroceso |
+| tecla f1 | punto1+retroceso |
+| tecla f2 | punto1+punto2+retroceso |
+| tecla f3 | punto1+punto4+retroceso |
+| tecla f4 | punto1+punto4+punto5+retroceso |
+| tecla f5 | punto1+punto5+retroceso |
+| tecla f6 | punto1+punto2+punto4+retroceso |
+| tecla f7 | punto1+punto2+punto4+punto5+retroceso |
+| tecla f8 | punto1+punto2+punto5+retroceso |
+| tecla f9 | punto2+punto4+retroceso |
+| tecla f10 | punto2+punto4+punto5+retroceso |
+| tecla f11 | punto1+punto3+retroceso |
+| tecla f12 | punto1+punto2+punto3+retroceso |
+| tecla windows | punto1+punto2+punto3+punto4+retroceso |
+| tecla bloqMayus | punto7+retroceso, punto8+retroceso |
+| tecla BloqNum | punto3+retroceso, punto6+retroceso |
+| tecla shift | punto7+espacio, l4 |
+| Conmutar tecla shift | punto1+punto7+espacio, punto4+punto7+espacio |
+| tecla control | punto7+punto8+espacio, l5 |
+| Conmutar tecla control | punto1+punto7+punto8+espacio, punto4+punto7+punto8+espacio |
+| Tecla alt | punto8+espacio, l6 |
+| Conmutar tecla alt | punto1+punto8+espacio, punto4+punto8+espacio |
+| Conmutar simulación de entrada de teclado HID | esytime):l1+joystick1Abajo, esytime):l8+joystick1Abajo |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

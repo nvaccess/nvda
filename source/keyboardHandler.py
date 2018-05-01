@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
 
 """Keyboard support"""
 
@@ -33,6 +33,7 @@ ignoreInjected=False
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
 VK_WIN = "windows"
+VK_NVDA = "NVDA"
 
 #: Keys which have been trapped by NVDA and should not be passed to the OS.
 trappedKeys=set()
@@ -73,6 +74,16 @@ def isNVDAModifierKey(vkCode,extended):
 		return True
 	else:
 		return False
+
+def getNVDAModifierKeys():
+	keys=[]
+	if config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["insert"])
+	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["numpadinsert"])
+	if config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["capslock"])
+	return keys
 
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
@@ -516,6 +527,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
 				ext = False
+			elif keyName.lower() == VK_NVDA.lower():
+				vk, ext = getNVDAModifierKeys()[0]
 			elif len(keyName) == 1:
 				ext = False
 				requiredMods, vk = winUser.VkKeyScanEx(keyName, getInputHkl())
