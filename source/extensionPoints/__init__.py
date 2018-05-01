@@ -57,7 +57,7 @@ class Filter(HandlerRegistrar):
 	>>> messageFilter = extensionPoints.Filter()
 
 	Interested parties then register to filter the data, see
-	L{HandleRegistrar.register} docstring for details of the type of handlers that can be
+	L{register} docstring for details of the type of handlers that can be
 	registered:
 
 	>>> def filterMessage(message, someArg=None):
@@ -65,7 +65,7 @@ class Filter(HandlerRegistrar):
 	...
 	>>> messageFilter.register(filterMessage)
 
-	When filtering is desired, all registered handlers are called to filter the data, see L{callWithSupportedKwarg}
+	When filtering is desired, all registered handlers are called to filter the data, see L{util.callWithSupportedKwargs}
 	for how args passed to notify are mapped to the handler:
 
 	>>> messageFilter.apply("This is a message", someArg=42)
@@ -101,7 +101,7 @@ class Decider(HandlerRegistrar):
 	>>> doSomething = extensionPoints.Decider()
 
 	Interested parties then register to participate in the decision, see
-	L{HandleRegistrar.register} docstring for details of the type of handlers that can be
+	L{register} docstring for details of the type of handlers that can be
 	registered:
 
 	>>> def shouldDoSomething(someArg=None):
@@ -110,7 +110,7 @@ class Decider(HandlerRegistrar):
 	>>> doSomething.register(shouldDoSomething)
 
 	When the decision is to be made, registered handlers are called until
-	a handler returns False, see L{callWithSupportedKwarg}
+	a handler returns False, see L{util.callWithSupportedKwargs}
 	for how args passed to notify are mapped to the handler:
 
 	>>> doSomething.decide(someArg=42)

@@ -119,28 +119,29 @@ class HandlerRegistrar(object):
 def callWithSupportedKwargs(func, *args, **kwargs):
 	"""Call a function with only the keyword arguments it supports.
 	For example, if myFunc is defined as:
-		def myFunc(a=None, b=None):
+	C{def myFunc(a=None, b=None):}
 	and you call:
-		callWithSupportedKwargs(myFunc, a=1, b=2, c=3)
+	C{callWithSupportedKwargs(myFunc, a=1, b=2, c=3)}
 	Instead of raising a TypeError, myFunc will simply be called like this:
-		myFunc(a=1, b=2)
+	C{myFunc(a=1, b=2)}
 
-	func be any callable that is not an unbound method. EG:
-	- Bound instance methods
-	- class methods
-	- static methods
-	- functions
-	- lambdas
-
-	The `func` function arguments do not need to have default values, and can take **kwargs to capture all arguments.
-	See tests/unit/test_extensionPoints.py:TestCallWithSupportedKwargs for examples.
-
-	While `callWithSupportedKwargs` does support positional arguments (*args), usage is strongly discouraged due to the
+	While C{callWithSupportedKwargs} does support positional arguments (C{*args}), usage is strongly discouraged due to the
 	risk of parameter order differences causing bugs.
 
-	An exception is raised if:
-	- the number of positional arguments given can not be received by `func`.
-	- parameters required (parameters declared with no default value) by `func` are not supplied.
+	@param func: can be any callable that is not an unbound method. EG:
+		- Bound instance methods
+		- class methods
+		- static methods
+		- functions
+		- lambdas
+
+		The arguments for the supplied callable, C{func}, do not need to have default values, and can take C{**kwargs} to
+		capture all arguments.
+		See C{tests/unit/test_extensionPoints.py:TestCallWithSupportedKwargs} for examples.
+
+		An exception is raised if:
+			- the number of positional arguments given can not be received by C{func}.
+			- parameters required (parameters declared with no default value) by C{func} are not supplied.
 	"""
 	spec = inspect.getargspec(func)
 
