@@ -30,6 +30,8 @@ import ctypes.wintypes
 import ssl
 import wx
 import languageHandler
+import speech
+import braille
 import gui
 from gui import guiHelper
 from logHandler import log
@@ -71,6 +73,8 @@ def checkForUpdate(auto=False):
 	@rtype: dict
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
+	synthDriver=speech.getSynth()
+	brailleDisplay=braille.handler.display if braille.handler else None
 	params = {
 		"autoCheck": auto,
 		"version": versionInfo.version,
@@ -79,6 +83,8 @@ def checkForUpdate(auto=False):
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 		"language": languageHandler.getLanguage(),
 		"installed": config.isInstalledCopy(),
+		"synthDriver":synthDriver.name if synthDriver else None,
+		"brailleDisplay":brailleDisplay.name if brailleDisplay else None,
 	}
 	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
 	try:
