@@ -342,7 +342,8 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnContent(self, column):
 		res = None
-		if self.parent._shouldEnableColumnContentRaw:
+		# use getattr for the (unlikely) case that the parent isn't a syslistview32-type  list 
+		if getattr(self.parent, "_shouldEnableColumnContentRaw", True):
 			targetColumn = self.parent._columnOrderArray[column - 1]
 			res = self._getColumnContentRaw(targetColumn)
 		if res is None:
