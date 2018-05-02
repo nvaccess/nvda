@@ -8,8 +8,8 @@ Quoi de Neuf dans NVDA
 == Nouvelles Fonctionnalités ==
 - La taille des lignes et colonnes des cellules de tableau est maintenant signalée vocalement et en braille. (#2642)
 - Les commandes de navigation dans les tableaux de NVDA sont maintenant supportées sous Google Docs (avec le mode Braille activé). (#7946)
-- Sous Kindle for PC, il est maintenant possible de lire et naviguer dans les tableaux. (#7977)
-- Support des terminaux BrailleNote touch et Brailliant BI 14  via USB et bluetooth. (#6524)
+- Sous Kindle for PC, il est maintenant possible de lire et de naviguer dans les tableaux. (#7977)
+- Support des terminaux BrailleNote Touch et Brailliant BI 14  via USB et bluetooth. (#6524)
 - Sous Windows 10 Fall Creators Update et au-delà, NVDA peut annoncer les notifications d'applications telles que la Calculatrice et le Windows Store. (#8045)
 - Nouvelles tables de conversion braille : Lithuanien 8 points, Ukrainien, Mongol abrégé. (#7839)
 - Ajout d'un script pour annoncer l'information de mise en forme pour le texte sous une cellule braille spécifique. (#7106)
@@ -30,9 +30,9 @@ Quoi de Neuf dans NVDA
 - Au déverrouillage de la machine, NVDA n'annonce plus incorrectement le dernier caractère du code PIN de connexion sous windows 10 . (#7908)
 - Sous Chrome ou firefox, l'étiquette des cases à cocher et des boutons radio n'est plus annoncée deux fois quand on tabule où qu'on utilise les touches de navigation rapide en mode navigation. (#7960)
 - Prise en compte de aria-current avec une valeur de false comme faux au lieu de vrai (#7892).
-- le synthétiseur Windows Onecore Voices n'échoue plus au chargement si la voix configurée a été désinstallée. (#7999)
-- Le changement de voix dans le synthétiseur Windows Onecore Voices est maintenant beaucoup plus rapide. (#7999)
-- Correction de caractères brailles mal formés pour plusieurs tables braille, incluant les majuscules pour le danois abrégé 8 points. (#7526, #7693)
+- Le synthétiseur Windows Onecore Voices n'échoue plus au chargement si la voix configurée a été désinstallée. (#7999)
+- Le changement de voix du synthétiseur Windows Onecore Voices est maintenant beaucoup plus rapide. (#7999)
+- Correction de caractères braille mal formés pour plusieurs tables braille, incluant les majuscules pour le danois abrégé 8 points. (#7526, #7693)
 - NVDA peut maintenant annoncer plus de types de puces sous Microsoft Word. (#6778)
 - Le déclenchement du script d'annonce de l'information de mise en forme ne modifie plus par erreur la position de revue, ainsi plusieurs activations successives ne donne plus des résultats différents. (#7869)
 
@@ -163,7 +163,7 @@ Veuillez noter que cette version de NVDA ne supporte plus Windows XP et Windows 
 - Il y a maintenant un nouveau module extensionPoints qui fournit une infrastructure générique pour permettre des extensions de code à certains points spécifique dans le code. Cela permet aux parties intéressées de s'enregistrer pour être notifiées quand une action se produit (extensionPoints.Action), pour modifier un type particulier de données (extensionPoints.Filter) ou pour participer à la décision pour savoir si quelque chose doit être fait (extensionPoints.Decider). (#3393)
 - Vous pouvez maintenant vous enregistrer pour être averti lors d'un changement de profil de configuration via l'Action config.configProfileSwitched. (#3393)
 - Les gestes pour afficheur braille qui émulent des modificateurs de touches du clavier du système (comme contrôle et alt) peuvent maintenant être combinées avec d'autres touches émulées sans définition explicite. (#6213) 
- - Par exemple: si vous avez sur votre afficheur une touche affectée à la touche alt et une autre à flècheBas, la combinaison de ces touches résultera en émulation de alt+flècheBas.
+ - Par exemple : si vous avez sur votre afficheur une touche affectée à la touche alt et une autre à flècheBas, la combinaison de ces touches résultera en émulation de alt+flècheBas.
 - La classe braille.BrailleDisplayGesture possède maintenant une propriété model. si elle est fournie, l'appui d'une touche générera un identificateur additionnel de geste spécifique au modèle de terminal. Cela permet à l'utilisateur d'affecter des gestes commande spécifiques limités à un modèle de terminal. 
  - Pour un exemple de cette nouvelle fonctionnalité, regardez le pilote Baum.
 - NVDA est maintenant compilé avec Visual Studio 2017 et le SDK Windows 10. (#7568)
