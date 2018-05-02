@@ -141,7 +141,7 @@ class ScriptableType(AutoPropertyType):
 			if hasattr(script, 'gestures'):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName
-		cls._gestures = gestures
+		cls._scriptDecoratorGestures = gestures
 		return cls
 
 class ScriptableObject(AutoPropertyObject):
@@ -171,6 +171,9 @@ class ScriptableObject(AutoPropertyObject):
 				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
 			except AttributeError:
 				pass
+		# Bind gestures specified on decorated scripts.
+		# This does not include the gestures that are added when creating a DynamicNVDAObjectType.
+		self.bindGestures(self._scriptDecoratorGestures)
 		super(ScriptableObject, self).__init__()
 
 	def bindGesture(self, gestureIdentifier, scriptName):

@@ -231,7 +231,7 @@ def isCurrentScript(scriptFunc):
 		return False
 	return givenFunc==realFunc
 
-def script(description="", category=None, gesture=None, gestures=None):
+def script(description="", category=None, gesture=None, gestures=None, canPropagate=False):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
 	@param description: A short translatable description of the script to be used in the gesture editor, etc.
@@ -241,7 +241,9 @@ def script(description="", category=None, gesture=None, gestures=None):
 	@param gesture: A gesture associated with this script
 	@type gesture: string
 	@param gestures: A list of gestures associated with this script
-@type gestures: list(string)
+	@type gestures: list(string)
+	@param canPropagate: Whether this script should also apply for focus ancestors.
+	@type canPropagate: bool
 	"""
 	if gestures is None:
 		gestures = []
@@ -253,6 +255,7 @@ def script(description="", category=None, gesture=None, gestures=None):
 			gestures.append(gesture)
 		if gestures:
 			decoratedScript.gestures = gestures
+		decoratedScript.canPropagate = canPropagate
 		return decoratedScript
 	return script_decorator
 
