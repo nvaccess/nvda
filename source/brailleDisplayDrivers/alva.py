@@ -434,6 +434,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"kb:end": ("br(alva):t3+spRight",),
 			"kb:alt": ("br(alva):alt",),
 			"kb:control": ("br(alva):control",),
+			# Force disable key combinations that trigger internal functionality.
+			None: (
+				"br(alva):sp2+sp3+spUp",
+				"br(alva):sp2+sp3+spDown",
+				"br(alva):sp2+sp3+spLeft",
+				"br(alva):sp2+sp3+spRight",
+				"br(alva):sp2+sp3+spEnter",
+				"br(alva):dot1+dot3+dot4+space",
+				"br(alva):dot1+dot3+dot4+dot5+space",
+			),
 		}
 	})
 
