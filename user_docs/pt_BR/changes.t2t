@@ -17,6 +17,8 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana, e Tiago Melo 
 - Ao atualizar o NVDA, agora é possível postergar a instalação da atualização para um momento posterior de sua preferência. (#4263)
 - Agora você pode alternar control, shift, alt, windows e NVDA a partir do seu teclado braille e combinar esses modificadores com a entrada ""[digitação]"" braille (por exemplo, pressionar control+s). (#7306)
  - Você pode atribuir esses novos modificadores de alternância usando os comandos encontrados em Teclas emuladas do teclado de sistema na caixa de diálogo Gestos para entrada.
+- Suporte restaurado para linhas Handy Tech Braillino e Modular (com firmware antigo). (#8016)
+- Data e hora dos dispositivos Handy Tech suportados (como Active Braille e Active Star) serão automaticamente sincronizadas pelo NVDA quando estiverem fora de sincronia por mais de cinco segundos. (#8016)
 
 
 == Alterações ==
@@ -40,6 +42,10 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana, e Tiago Melo 
 - NVDA agora pode reportar mais tipos de marcadores no Microsoft Word. (#6778)
 - Pressionando o script para anunciar formatação não move mais o reviewPosition ""[posição da exploração]"" incorretamente e, portanto, pressionando-o várias vezes não dá mais resultados diferentes. (#7869)
 - A entrada braille não permite mais o uso do braille abreviado nos casos em que ele não é suportado (ou seja, palavras inteiras não serão mais enviadas para o sistema fora de conteúdo textual e no modo de navegação). (#7306)
+- Corrigido problemas de estabilidade de conexão para as linhas Handy Tech Easy Braille e Braille Wave. (#8016)
+- Em Windows 8 e posteriores, o NVDA deixará de anunciar "desconhecido" ao abrir o menu de links rápidos (Windows+X) e selecionar itens deste menu. (#8137)
+- Modelos de gestos específicos para botões nas linhas Hims estão funcionando como publicado no guia do usuário. (#8096)
+- O NVDA tentará agora corrigir os problemas de registro do sistema COM que fazem com que programas como o Firefox e o Internet Explorer fiquem inacessíveis e comunique "Desconhecido" pelo NVDA. (#2807)
 
 
 == Alterações Específicas para Desenvolvedores ==

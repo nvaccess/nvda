@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 00:10+1000\n"
-"PO-Revision-Date: 2018-04-19 21:15+0100\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
+"PO-Revision-Date: 2018-05-01 22:07+0100\n"
 "Last-Translator: Iván Novegil <ivan.novegil.cancelas@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -3038,25 +3038,25 @@ msgstr "Sin opciones"
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr ""
-"Incrementa la opción actualmente activa en el brupo de opciones del "
+"Incrementa la opción actualmente activa en el anillo de opciones del "
 "sintetizador"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr ""
-"Decrementa la opción actualmente activa en el brupo de opciones del "
+"Decrementa la opción actualmente activa en el anillo de opciones del "
 "sintetizador"
 
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
-"Se mueve a la siguiente opción disponible en el grupo de opciones del "
+"Se mueve a la siguiente opción disponible en el anillo de opciones del "
 "sintetizador"
 
 #. Translators: Input help mode message for previous synth setting command.
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr ""
-"Se mueve a la opción anterior disponible en el grupo de opciones del "
+"Se mueve a la opción anterior disponible en el anillo de opciones del "
 "sintetizador"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
@@ -4725,7 +4725,7 @@ msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
-msgstr "Sobremesa"
+msgstr "Escritorio"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "laptop"
@@ -4755,7 +4755,7 @@ msgstr "teclado %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 msgid "keyboard, all layouts"
-msgstr "teclado, todas las distribuciones"
+msgstr "teclado, todas las disposiciones"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -7420,6 +7420,41 @@ msgstr "Diccionario temporal"
 msgid "About NVDA"
 msgstr "Acerca de NVDA"
 
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"Estás a punto de ejecutar la herramienta COM Registration Fixing. Esta "
+"herramienta tratará de corregir los problemas comunes del sistema que "
+"impiden que NVDA pueda acceder al contenido de muchos programas incluyendo a "
+"Firefox e Internet Explorer. Esta herramienta debe realizar cambios en el "
+"Registro del Sistema y por lo tanto requiere de acceso de administrador. "
+"¿estás seguro de que deseas proceder?"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Aviso"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "Herramienta COM Registration Fixing"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr ""
+"Porfavor espera mientras NVDA intenta corregir los registros COM del sistema."
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Se completó la herramienta COM Registration Fixing"
+
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
 msgstr "Opciones &Generales..."
@@ -7586,6 +7621,10 @@ msgstr "Crear copia portable..."
 msgid "&Install NVDA..."
 msgstr "&Instalar NVDA..."
 
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Ejecutar la herramienta COM Registration Fixing..."
+
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
 msgstr "Recargar &plugins"
@@ -7723,7 +7762,7 @@ msgstr "&Utilizar BloqueoMayúsculas como tecla modificadora de NVDA"
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Iniciar NVDA &automáticamente después de autentificarse en Windows"
+msgstr "Iniciar NVDA &automáticamente después de iniciar sesión en Windows"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -8139,11 +8178,6 @@ msgstr ""
 "de ese perfil y se asociará con este.\n"
 "¿Estás seguro de querer continuar?"
 
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Aviso"
-
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
@@ -8253,7 +8287,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "Utilizar NVDA en la pantalla de &autentificación de Windows"
+msgstr "Utilizar NVDA en la pantalla de &inicio de sesión de Windows"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -8429,7 +8463,7 @@ msgstr "Nivel de mensajes guardados en el &Registro"
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
-"Utilizar NVDA en la ventana de autentificación de Windows (requiere "
+"Utilizar NVDA en la ventana de inicio de sesión de Windows (requiere "
 "privilegios de administrador)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
@@ -8437,8 +8471,8 @@ msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Utilizar opciones actualmente guardadas en la autentificación (logon) y "
-"otras pantallas seguras (requiere privilegios de administrador)"
+"Utilizar opciones actualmente guardadas en el inicio de sesión y otras "
+"pantallas seguras (requiere privilegios de administrador)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"

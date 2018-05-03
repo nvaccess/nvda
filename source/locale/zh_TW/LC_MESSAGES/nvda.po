@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-13 00:10+1000\n"
-"PO-Revision-Date: 2018-04-16 15:57+0800\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
+"PO-Revision-Date: 2018-05-02 10:43+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -578,6 +578,20 @@ msgstr "檢閱游標"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "自動偵測"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "不支援的輸入"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} 發布"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} 已按下"
 
 # 為使整個點顯器按鍵的幫助模式中報讀文字一致，此條目不被翻譯，以半形空格替代。
 #. Translators: Used when reporting braille dots to the user.
@@ -4133,6 +4147,36 @@ msgstr "轉譯任何的點字輸入並按Enter鍵"
 msgid "Translates any braille input"
 msgstr "轉譯任何的點字輸入"
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "模擬以點字輸入按下或放開shift鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr "模擬以點字輸入按下或放開control鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "模擬以點字輸入按下或放開alt鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr "模擬以點字輸入按下或放開windows鍵"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "模擬以點字輸入按下或放開NVDA鍵"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "已重新載入外掛程式"
@@ -7228,6 +7272,37 @@ msgstr "暫存字庫"
 msgid "About NVDA"
 msgstr "關於 NVDA"
 
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"即將執行COM註冊修復工具。 該工具將嘗試修復常見的系統問題，而這些問題會阻擋"
+"NVDA存取內容，包括Firefox和Internet Explorer。該工具必須對系統登錄檔進行更"
+"改，因此需要管理員權限，你確定想繼續嗎？"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "警告"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "COM註冊修復工具"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "NVDA正在修復系統的COM註冊，請稍候。"
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "COM註冊修復工具完成"
+
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
 msgstr "一般設定 (&G)..."
@@ -7384,6 +7459,10 @@ msgstr "建立可攜式版 (&C)..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "安裝 NVDA (&I)..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "執行COM註冊修復工具..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7921,11 +8000,6 @@ msgstr ""
 "這個觸發器已經和另一個設定檔建立關連。如要繼續，將會移除原有關連並和這個設定"
 "檔建立新的關連。\n"
 "您確定要繼續嗎？"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "警告"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."

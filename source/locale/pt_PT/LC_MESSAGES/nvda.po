@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 00:10+1000\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -586,9 +586,9 @@ msgid "{modifier} released"
 msgstr "{modifier} libertada"
 
 #. Translators: Reported when a braille input modifier is pressed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{modifier} pressed"
-msgstr "não pressionado"
+msgstr "{modifier} pressionado"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -5406,7 +5406,7 @@ msgstr ""
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr ""
+msgstr "Callout with border, diagonal straight line and accent bar"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7403,6 +7403,41 @@ msgstr "Dicionário temporário"
 msgid "About NVDA"
 msgstr "Acerca do NVDA"
 
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"Está prestes a executar a Ferramenta de correcção de registo de DLLs. Esta "
+"ferramenta tentará resolver problemas comuns do sistema que impedem o NVDA "
+"de aceder ao conteúdo de vários programas, incluindo Firefox e Internet "
+"Explorer. Esta ferramenta fará alterações ao registo do Windows, e por isso "
+"requer privilégios de administrador. Tem a certeza que deseja continuar?"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Alerta"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "Ferramenta de correcção de registo de DLLs"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr ""
+"Por favor, aguarde enquanto o NVDA tenta corrigir os problemas de registo de "
+"DLLs do sistema."
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Ferramenta de correcção de registo de DLLs completa."
+
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
 msgstr "Definições &gerais..."
@@ -7571,6 +7606,10 @@ msgstr "Criar cópia &portátil..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Instalar o NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Executar a Ferramenta de correcção de registo de DLLs..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -8122,11 +8161,6 @@ msgstr ""
 "Este accionador está já associado a outro Perfil. Se continuar, será "
 "removido desse Perfil e será associado ao Perfil actual.\n"
 "Tem a certeza que quer continuar?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Alerta"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
