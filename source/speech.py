@@ -700,35 +700,37 @@ def speakPreviousWord(wordSeparator=None):
 		return
 	try:
 		obj = api.getCaretObject()
-		# The caret object can be an NVDAObject or a TreeInterceptor.
-		# Editable caret cases inherrit from EditableText.
-		from editableText import EditableText
-		if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj,"states",()):
-			curWordChars = []
-			return
-		info = obj.makeTextInfo(textInfos.POSITION_CARET)
-		# Mozilla Gecko is known to be laggy, which sometimes results into the word before the last word being reported.
-		from NVDAObjects.IAccessible.ia2TextMozilla import MozillaCompoundTextInfo
-		if isinstance(info, MozillaCompoundTextInfo):
-			bookmark=info.bookmark
-			caretMoved,newInfo=obj._hasCaretMoved(bookmark, retryInterval=0.005, timeout=0.015, origWord=bufferedWord)
-			if newInfo:
-				info = newInfo
-		if not info.findWordBeforeCaret(wordSeparator):
-			curWordChars.append(wordSeparator)
-			return 
-	except (RuntimeError, LookupError):
-		log.debugWarning("Couldn't rely on TextInfo for word echo", exc_info=True)
 	except:
-		# Focus probably moved.
-		log.debugWarning("Error fetching previous word before caret", exc_info=True)
-	else:
-		# Sometimes (as observed in Firefox), findWordBeforeCaret moves to the wrong word.
-		# Checking whether the buffer is part of the TextInfo is far from perfect, but works in most cases.
-		if bufferedWord in info.text:
-			word = info.text
+		# No caret object, nothing to report
+		return
+	# The caret object can be an NVDAObject or a TreeInterceptor.
+	# Editable caret cases inherrit from EditableText.
+	from editableText import EditableText
+	if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj,"states",()):
+		curWordChars = []
+		return
+	for attempt in xrange(3):
+		if attempt > 0: # Not the first attempt
+			time.sleep(0.05)
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_CARET)
+			if not info.findWordBeforeCaret(wordSeparator):
+				curWordChars.append(wordSeparator)
+				return 
+		except (RuntimeError, LookupError):
+			log.debugWarning("Couldn't rely on TextInfo for word echo", exc_info=True)
+			break
+		except:
+			# Focus probably moved.
+			log.debugWarning("Error fetching previous word before caret", exc_info=True)
+			break
 		else:
-			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r"%(bufferedWord, info.text))
+			# Sometimes (as observed in Firefox), findWordBeforeCaret moves to the wrong word.
+			# Checking whether the buffer is part of the TextInfo is far from perfect, but works in most cases.
+			if bufferedWord in info.text:
+				word = info.text
+				break
+			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r after attempt %d"%(bufferedWord, info.text, attempt+1))
 	curWordChars = []
 	if log.isEnabledFor(log.IO):
 		log.io("typed word: %s"%word)
