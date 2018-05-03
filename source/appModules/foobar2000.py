@@ -49,15 +49,15 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			playingTimes = statusBarContents.split("|")[4].split("/")
 			return playingTimes[0], playingTimes[1]
-		except IndexError:
-			return None
+		except:
+			return (None, None)
 
 	def getElapsedAndTotalIfPlaying(self):
-		times = self.getElapsedAndTotal()
-		if not times:
+		elapsedTime, totalTime = self.getElapsedAndTotal()
+		if elapsedTime is None and totalTime is None:
 			# Translators: Reported when no track is playing in Foobar 2000.
 			ui.message(_("No track playing"))
-		return times
+		return elapsedTime, totalTime
 
 	def script_reportRemainingTime(self,gesture):
 		elapsedTime, totalTime = self.getElapsedAndTotalIfPlaying()
