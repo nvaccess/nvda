@@ -16,6 +16,8 @@ Ce este nou în NVDA
 - La actualizarea NVDA, puteți să amânați instalarea noii versiuni și s-o realizați mai târziu. (#4263)
 - Acum, puteți comuta la control, shift, alt, windows și NVDA de la tastatura dumneavoastră braille și le puteți combina cu intrarea braille (e.x. apăsați control+s). (#7306) 
  - puteți să le atribuiți utilizând comenzile găsite sub tastele tastaturii simulate din dialogul gesturilor de intrare.
+- S-a restaurat suportul pentru afișajele braille Handy Tech Braillino și Modular (cu firmware vechi). (#8016)
+- Acum, data și ora pentru dispozitivele Handy Tech suportate (cum ar fi Active Braille și Active Star) vor fi sincronizate automat de NVDA atunci când nu se sincronizează mai mult de cinci secunde. (#8016)
 
 
 == Modificări ==
@@ -39,6 +41,10 @@ Ce este nou în NVDA
 - Acum, NVDA poate să raporteze mai multe tipuri de buline în Microsoft Word. (#6778)
 - Apăsarea pe scriptul de raportare a formatării nu mai deplasează incorect poziția de examinare, iar prin urmare, apăsarea lui în mod repetat nu mai dă rezultate diferite. (#7869)
 - Intrarea braille nu vă va mai permite să folosiți braille-ul în cazurile în care nu mai este suportat (e.x. cuvintele întregi nu vor mai fi trimise către sistem în afara conținutului textului și în modul de navigare). (#7306)
+- S-au rezolvat problemele de stabilitate a conexiunii pentru afișajele Handy Tech Easy Braille și Braille Wave. (#8016)
+- Pe Windows 8 sau mai nou, NVDA nu va mai spune „necunoscut” la deschiderea meniului de legătură rapidă )Windows+X) și la selectarea elementelor din acest meniu. (#8137)
+- Gesturile specifice modelului  cu butoanele de pe afișajele Hims lucrează acum ca anunțate în ghidul de utilizare. (#8096)
+- Acum, NVDA va încerca să corecteze probleme de sistem ale înregistrării COM care fac ca programe precum Firefox și Internet Explorer să devină inaccesibile, iar el să raporteze „necunoscut”. (#2807)
 
 
 == Modificări pentru Dezvoltatori ==

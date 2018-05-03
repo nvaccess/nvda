@@ -16,6 +16,8 @@
 - Ao se actualizar o NVDA, agora é posible retrasar a instalación da actualización a un momento posterior da túa elección. (#4263) 
 - Agora podes conmutar control, shift, alt, windows e NVDA dende o teu teclado braille e combinar estos modificadores coa entrada braille (ex.: premer control+s). (#7306) 
  - Podes asignar estas novas conmutacións de modificadores usando a orde que se atopa en Teclas de sistema emuladas no diálogo Xestos de Entrada.
+- Restaurado o soporte para pantallas Handy Tech Braillino e Modular (co firmware vello). (#8016)
+- Agora sincronizaranse automáticamente co NVDA a data e a hora para os dispositivos Handy Tech soportados (como Active Braille e Active Star) cando estean desincronizados máis de cinco segundos. (#8016)
 
 
 == Cambios ==
@@ -39,6 +41,10 @@
 - O NVDA agora pode anunciar máis tipos de viñetas no Microsoft Word. (#6778)
 - Ao se premer o script anunciar información xa non move incorrectamente a posición de revisión e polo tanto ao premelo varias veces xa non da resultados diferentes. (#7869)
 - A entrada braille xa non che permitirá usar braille contraído nos casos onde non estea soportado (é dicir, xa non se enviarán palabras enteiras ao sistema fora do contido de texto e en modo exploración). (#7306)
+- Arranxados problemas de estabilidade da conexión para as pantallas braille Handy Tech Easy Braille e Braille Wave. (#8016)
+- En Windows 8 e posterior, o NVDA xa non anunciará "descoñecido" ao abrir o menú rápido de enlaces (Windows+X) e ao selecionar elementos deste menú. (#8137)
+- Os xestos específicos do modelo para botóns nas pantallas Hims agora funcionan como se anuncia na Guía do Usuario. (#8096)
+- O NVDA tentará agora arranxar os problemas de rexistro COM do sistema que causan que programas coma Firefox e Internet Explorer se volten inaccesibles e anuncien "Descoñecido" polo NVDA. (#2807).
 
 
 == Cambios para Desenvolvedores ==

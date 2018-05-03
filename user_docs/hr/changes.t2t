@@ -16,13 +16,15 @@
 - Prilikom nadograđivanja NVDA, sada je moguće odgoditi instalaciju nadogradnje za kasnije vrijeme po vašem izboru. (#4263) 
 - Sada možete uključivati ili isključivati control, shift, alt, windows i NVDA tipke sa vaše brajične tipkovnice te ih je moguće kombinirati uz brajični ulaz (e.g. press control+s). (#7306) 
  - Možete dodijeliti te modifikatore  koje možete pronaći u kategoriji emulirane tipke sustava u dijaloškom okviru ulazne geste.
+- Vraćena podrška za Handy Tech Braillino i Modular brajične retke (sa starim firmwareom). (#8016)
+- Datum i vrijeme za podržane Handy Techove uređaje (poput Active Braille i Active Star) će biti automatski sinkronizirano kada nije sinkronizirano više od 5 sekundi. (#8016)
 
 
 == Izmjene ==
 - Stupac statusa je promijenjen tako da će pokazivati je li dodatak omogućen ili onemogućen puno bolje od prijašnjeg obavještenja pokrenut ili suspendiran. (#7929)
 - Nadograđen liblouis brajični prevoditelj na inačicu 3.5.0. (#7839)
 - Preimenovana je Litavska brajična tablica te sada se zove litavska šestotočkasta, kako bi se izbjegla zbrka sa litavskom osmotočkastom tablicom. (#7839)
-- Kadadske francuske brajične tablice su sada uklonjene. Sada će se umjesto kanadskih tablica, koristiti šestotočkasta, te unificirani francuski kratkopis. (#7839)
+- Kanadske francuske brajične tablice su sada uklonjene. Sada će se umjesto kanadskih tablica, koristiti šestotočkasta, te unificirani francuski kratkopis. (#7839)
 - Sekundarne routing tipke na Alva BC6, EuroBraille i Papenmeier brajičnim retcima sada izvještavaju o formatiranju teksta pritiskom na routing tipku nad brajičnom ćelijom. (#7106)
 - Kratkopisne brajične ulazne tablice vratit će se u punopisni način u slučajevima, kada nije moguće uređivati tekst (npr. pri kontrolama gdje kursor ne postoji ili u načinu pregleda). (#7306)
 
@@ -39,6 +41,10 @@
 - NVDA sada može izgovarati više vrsta znakova za nabrajanje u Microsoft Wordu. (#6778)
 - Pritiskom prečaca za izvještavanje formatiranja više ne premještava reviewPosition te također kada se pritisne više puta, ne nosi neželjene rezultate. (#7869)
 - Brajični ulaz više ne dozvoljava korištenje kratkopisa u slučajevima u kojima isti nije podržan (NPR. cijele riječi neće biti poslane u sustav izvan tekstualnog sadržaja te u načinu pregleda). (#7306)
+- Ispravljene nestabilnosti u povezivanju za Handy Tech Easy Braille i Braille Wave brajične retke. (#8016)
+- U Windowsima 8 i novijim, NVDA više neće izgovarati "nepoznato" prilikom otvaranja izbornika brzog povezivanja )Windows+X) i označavanju stavaka iz tog izbornika. (#8137)
+- Specifične geste za modele Na Himsovim retcima sada rade oako, kako su opisane u korisničkom priručniku. (#8096)
+- NVDA će sada pokušati ispraviti greške povezane sa sistemskom COM registracijom koje su prouzrokovale da Internet explorer i firefox postanu nepristupačni, pri tom izgovarajući "nepoznato". (#2807)
 
 
 == Izmjene za razvojne programere ==
