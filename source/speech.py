@@ -690,7 +690,7 @@ def speakTypedCharacters(ch):
 
 def speakPreviousWord(wordSeparator=None):
 	global curWordChars
-	bufferedWord = "".join(curWordChars)
+	word = bufferedWord = "".join(curWordChars)
 	typingIsProtected = api.isTypingProtected()
 	reportSpellingError = config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"]
 	if not (log.isEnabledFor(log.IO) or (
@@ -707,24 +707,28 @@ def speakPreviousWord(wordSeparator=None):
 			curWordChars = []
 			return
 		info = obj.makeTextInfo(textInfos.POSITION_CARET)
+		# Mozilla Gecko is known to be laggy, which sometimes results into the word before the last word being reported.
+		from NVDAObjects.IAccessible.ia2TextMozilla import MozillaCompoundTextInfo
+		if isinstance(info, MozillaCompoundTextInfo):
+			bookmark=info.bookmark
+			caretMoved,newInfo=obj._hasCaretMoved(bookmark, retryInterval=0.005, timeout=0.015, origWord=bufferedWord)
+			if newInfo:
+				info = newInfo
 		if not info.findWordBeforeCaret(wordSeparator):
 			curWordChars.append(wordSeparator)
 			return 
 	except (RuntimeError, LookupError):
-		log.error("Couldn't rely on TextInfo for word echo", exc_info=True)
-		word = bufferedWord
+		log.debugWarning("Couldn't rely on TextInfo for word echo", exc_info=True)
 	except:
 		# Focus probably moved.
 		log.debugWarning("Error fetching previous word before caret", exc_info=True)
-		word = bufferedWord
 	else:
-		# Sometimes (as observed in in Firefox), findWordBeforeCaret moves to the wrong word.
+		# Sometimes (as observed in Firefox), findWordBeforeCaret moves to the wrong word.
 		# Checking whether the buffer is part of the TextInfo is far from perfect, but works in most cases.
 		if bufferedWord in info.text:
 			word = info.text
 		else:
 			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r"%(bufferedWord, info.text))
-			word = bufferedWord
 	curWordChars = []
 	if log.isEnabledFor(log.IO):
 		log.io("typed word: %s"%word)
