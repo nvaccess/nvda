@@ -527,8 +527,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		# Normalize the key order by sorting them alphabetically, similar to L{inputCore.normalizeGestureIdentifier}.
 		keyNames.sort()
 		keys = []
-		mainVk = None
-		mainExt = None
 		for keyName in keyNames:
 			if keyName == "plus":
 				# A key name can't include "+" except as a separator.
@@ -559,15 +557,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					if ext is None:
 						ext = False
 			keys.append((vk, ext))
-			if not cls._isModifier(vk, ext):
-				if mainVk is not None or mainExt is not None:
-					raise ValueError("Invalid key name sequence with multiple main keys: %s" % name)
-				else:
-					mainVk, mainExt = vk, ext
 
-		assert keys
 		modifiers = set(
-			(vk, ext) for vk,ext in keys if isNVDAModifierKey(vk, ext) or vk in cls.NORMAL_MODIFIER_KEYS
+			(vk, ext) for vk,ext in keys if cls._isModifier(vk, ext)
 		)
 		nonModifiers = set(keys) - modifiers
 
