@@ -933,7 +933,7 @@ Una casella di controllo che se attivata permette a NVDA di salvare automaticame
 
 ==== Mostra opzioni all'uscita di NVDA ====[GeneralSettingsShowExitOptions]
 Una casella di controllo che permette di decidere se, alla chiusura di NVDA, debbano comparire opzioni aggiuntive per decidere come chiudere il programma.
-Se attivata, quando si cerca di chiudere NVDA apparirà una finestra di dialogo che chiederà se riavviare lo screen reader, riavviarlo senza componenti aggiuntivi o semplicemente chiuderlo.
+Se attivata, quando si cerca di chiudere NVDA apparirà una finestra di dialogo che chiederà se uscire, riavviare lo screen reader, riavviarlo senza componenti aggiuntivi o installare gli aggiornamenti in sospeso.
 Se non la si attiva, NVDA uscirà immediatamente.
 
 ==== Riproduci un suono all'avvio o all'uscita di NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Questa opzione è disponibile soltanto nelle versioni Installer.
 ==== Controlla automaticamente la presenza di aggiornamenti di NVDA ====[GeneralSettingsCheckForUpdates]
 Se attivata, NVDA controllerà automaticamente la presenza di nuove versioni e notificherà l'utente della loro disponibilità.
 è anche possibile controllare manualmente, selezionando la voce controllo presenza aggiornamenti, situata all'interno del menu aiuto.
+
+==== Notifica aggiornamenti in sospeso all'avvio ====[GeneralSettingsNotifyPendingUpdates]
+Se la funzione è attivata, NVDA avviserà l'utente nel caso vi sia un aggiornamento in sospeso all'avvio, dando la possibilità di effettuare l'installazione.
+è anche possibile installare l'aggiornamento in sospeso manualmente dalla finestra di uscita di NVDA (se attivata), dal menu di NVDA, o quando si esegue un nuovo controllo dal menu aiuto..
 
 +++ Selezionare il sintetizzatore (NVDA+control+s) +++[SynthesizerSelection]
 La finestra di dialogo inerente il sintetizzatore, che si trova sotto il menu preferenze, sintetizzatore, permette di scegliere con quale sintesi vocale NVDA dovrà parlare.
@@ -1920,6 +1924,7 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Sposta il Display Braille alla riga successiva | t4 |
 | Scorrimento Display Braille avanti | t5 o etouch3 |
 | Portare cursore sulla cella braille  | routing |
+| Mostra informazioni di formattazione testo sulla cella braille | cursor routing secondario |
 | Alterna simulazione tastiera HID | t1+spEnter |
 | spostarsi all'inizio della riga in modalità in linea | t1+t2 |
 | Spostarsi alla fine della riga in modalità in linea | t4+t5 |
@@ -2273,7 +2278,7 @@ Seguono i comandi per i Display Papenmeier associati con NVDA:
 | Spostarsi al primo oggetto contenuto | dn2 |
 | Spostarsi all'oggetto precedente | left2 |
 | Spostarsi all'oggetto successivo  | right2 |
-| Annuncia formattazione testo | Riga cursor routing superiore |
+| Mostra formattazione testo sulle celle braille | Riga cursor routing superiore |
 %kc:endInclude
 
 I modelli Trio dispongono di ulteriori quattro tasti aggiuntivi presenti sulla parte frontale della tastiera braille.
@@ -2347,7 +2352,7 @@ Dispositivi con EAB
 | Spostarsi al primo oggetto contenuto | dn2 |
 | Spostarsi all'oggetto precedente | left2 |
 | Spostarsi all'oggetto successivo  | right2 |
-| Annuncia formattazione testo | Riga cursor routing superiore |
+| Mostra formattazione testo sulle celle braille | Riga cursor routing superiore |
 
 BRAILLEX Tiny:
 || Nome | Tasto |
@@ -2478,7 +2483,7 @@ A causa di ciò, e per mantenere una buona compatibilità con altri screen reade
 %kc:endInclude
 
 ++ Display Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-I display Esys, Esytime e Iris propuntoti da [Eurobraille http://www.eurobraille.fr/] sono supportati da NVDA.
+I display Esys, Esytime e Iris prodotti da [Eurobraille http://www.eurobraille.fr/] sono supportati da NVDA.
 I dispositivi Esys e Esytime-Evo sono supportati quando connessi via USB o bluetooth.
 I dispositivi Esytime più vecchi invece sono gestiti solo tramite USB.
 Le barre Iris infine possono essere connesse soltanto tramite porta seriale.
@@ -2494,7 +2499,8 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Scorri display braille indietro | switch1-6sinistro, l1 |
 | Scorri display braille avanti | switch1-6Destro, l8 |
 | Vai al focus attuale | switch1-6Sinistro+switch1-6Destro, l1+l8 |
-| Route to braille cell | routing, doubleRouting|
+| Route to braille cell | cursor routing |
+| Mostra informazioni di formattazione sulle celle braille | doppio cursor routing |
 | Vai alla riga precedente in modalità revisione | joystick1Su |
 | Vai alla riga successiva in modalità revisione | joystick1Giù |
 | Vai al carattere precedente in modalità revisione | joystick1Sinistro |
@@ -2518,7 +2524,7 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Tasto 2 del tastierino numerico | punto1+punto2+punto6+backspace |
 | Tasto 3 del tastierino numerico | punto1+punto4+punto6+backspace |
 | Tasto 4 del tastierino numerico | punto1+punto4+punto5+punto6+backspace |
-| %asto 5 del tastierino numerico | punto1+punto5+punto6+backspace |
+| Tasto 5 del tastierino numerico | punto1+punto5+punto6+backspace |
 | Tasto 6 del tastierino numerico | punto1+punto2+punto4+punto6+backspace |
 | Tasto 7 del tastierino numerico | punto1+punto2+punto4+punto5+punto6+backspace |
 | Tasto 8 del tastierino numerico | punto1+punto2+punto5+punto6+backspace |
@@ -2552,8 +2558,11 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Tasto BloccaMaiuscole | punto7+backspace, punto8+backspace |
 | Tasto numLock | punto3+backspace, punto6+backspace |
 | Tasto shift | punto7+spazio, l4 |
-| Tasto control | punto7+punto8+spazio, punto1+punto7+punto8+spazio, punto4+punto7+punto8+spazio, l5 |
-| Tasto alt | punto8+spazio, punto1+punto8+spazio, punto4+punto8+spazio, l6 |
+| Alterna tasto shift | punto1+punto7+spazio, punto4+punto7+spazio |
+| tasto control | punto7+punto8+spazio, l5 |
+| Alterna tasto control | dot1+dot7+dot8+space, dot4+dot7+dot8+space |
+| Tasto alt | punto8+spazio, l6 |
+| Alterna tasto alt | punto1+punto8+spazio, punto4+punto8+spazio |
 | Alterna simulazione tastiera HID | esytime):l1+joystick1Giù, esytime):l8+joystick1Giù |
 %kc:endInclude
 
