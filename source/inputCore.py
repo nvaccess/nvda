@@ -281,7 +281,7 @@ class GlobalGestureMap(object):
 			for script, gestures in location.iteritems():
 				if script == "None":
 					script = None
-				elif script.startswith("kb:"):
+				if script and script.startswith("kb:"):
 					# Normalize identifiers for keyboard emulation scripts before adding them to the map.
 					try:
 						script = normalizeGestureIdentifier(script)

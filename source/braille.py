@@ -2257,16 +2257,16 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 					inputCore.normalizeGestureIdentifier(u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
 				)
 			scriptNames = []
-			# Global maps should be processed in least  to most important order.
+			# We can't bother about multiple scripts for a gesture, we will just use the first one
+			# Therefore, global maps should be processed in most to least important order.
 			# The user gesture map could override assignments in the display gesture map.
-			globalMaps = [handler.display.gestureMap, inputCore.manager.userGestureMap, ]
+			globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
 			for globalMap in globalMaps:
 				for fakeGestureId in fakeGestureIds:
 					scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId) if scriptName is None or scriptName.startswith("kb"))
 			if not scriptNames:
 				# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
 				return None
-			# We can't bother about multiple scripts for a gesture, we will just use the first one
 			scriptName = scriptNames[0]
 		if not scriptName:
 			return None

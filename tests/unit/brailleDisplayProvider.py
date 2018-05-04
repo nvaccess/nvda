@@ -22,6 +22,7 @@ class BrailleDisplayDriver(brailleDisplayDrivers.noBraille.BrailleDisplayDriver)
 		"globalCommands.GlobalCommands": {
 			"kb:control": ("br(noBraille):fakeControl",),
 			"kb:alt": ("br(noBraille):fakeAlt",),
+			"kb:shift": ("br(noBraille):fakeShift",),
 			"kb:escape": ("br(noBraille):fakeEscape",),
 			"kb:tab": ("br(noBraille):fakeTab",),
 			"kb:upArrow": ("br(noBraille):fakeUp",),
@@ -36,7 +37,7 @@ class BrailleDisplayDriver(brailleDisplayDrivers.noBraille.BrailleDisplayDriver)
 			"kb:control+home": ("br(noBraille):fakeShift+fakeUp",),
 			"kb:control+end": ("br(noBraille):fakeShift+fakeDown",),
 			"kb:home": ("br(noBraille):fakeShift+fakeLeft",),
-			"kb:end": ("br(noBraille):fakeSHift+fakeRight",),
+			"kb:end": ("br(noBraille):fakeShift+fakeRight",),
 		}
 	})
 
