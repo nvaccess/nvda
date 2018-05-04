@@ -127,7 +127,10 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			except AttributeError:
 				pass
 			# Bind gestures specified on decorated scripts for this class.
-			obj.bindGestures(cls._scriptDecoratorGestures)
+			try:
+				obj.bindGestures(cls._scriptDecoratorGestures)
+			except AttributeError:
+				pass
 
 		# Allow app modules to make minor tweaks to the instance.
 		if appModule and hasattr(appModule,"event_NVDAObject_init"):
