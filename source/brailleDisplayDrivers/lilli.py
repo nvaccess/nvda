@@ -114,4 +114,4 @@ class InputGesture(braille.BrailleDisplayGesture):
 		super(InputGesture, self).__init__()
 		self.id = command
 		if (command == LILLI_KEYS[65]):
-			self.routingIndex = argument
+			self.index = argument

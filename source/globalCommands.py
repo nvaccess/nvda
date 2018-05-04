@@ -1914,13 +1914,13 @@ class GlobalCommands(ScriptableObject):
 	script_braille_scrollForward.category=SCRCAT_BRAILLE
 
 	def script_braille_routeTo(self, gesture):
-		braille.handler.routeTo(gesture.routingIndex)
+		braille.handler.routeTo(gesture.index)
 	# Translators: Input help mode message for a braille command.
 	script_braille_routeTo.__doc__ = _("Routes the cursor to or activates the object under this braille cell")
 	script_braille_routeTo.category=SCRCAT_BRAILLE
 
 	def script_braille_reportFormatting(self, gesture):
-		info = braille.handler.getTextInfoForWindowPos(gesture.routingIndex)
+		info = braille.handler.getTextInfoForWindowPos(gesture.index)
 		if info is None:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 			ui.message(_("No formatting information"))

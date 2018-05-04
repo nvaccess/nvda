@@ -943,7 +943,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			elif isBrailleInput and key in KEY_DOTS:
 				names.append("dot%d"%KEY_DOTS[key])
 			elif KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
-				self.routingIndex = key - KEY_ROUTING
+				self.index = key - KEY_ROUTING
 				names.append("routing")
 			else:
 				try:

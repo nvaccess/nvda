@@ -108,4 +108,4 @@ class InputGesture(braille.BrailleDisplayGesture):
 		super(InputGesture, self).__init__()
 		self.id = BRLAPI_CMD_KEYS[command]
 		if command == brlapi.KEY_CMD_ROUTE:
-			self.routingIndex = argument
+			self.index = argument

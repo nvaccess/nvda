@@ -267,6 +267,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			names.update(_dotNames[1 << i] for i in xrange(8)
 					if (1 << i) & dots)
 		elif routing is not None:
-			self.routingIndex = routing
+			self.index = routing
 			names.add('routing')
 		self.id = "+".join(names)

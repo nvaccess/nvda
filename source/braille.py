@@ -2148,7 +2148,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
 	Optionally, L{model} can be provided to facilitate model specific gestures.
-	L{routingIndex} should be provided for routing buttons.
+	L{index} should be provided for routing buttons or other gestures that have an index.
 	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
 	"""
@@ -2180,9 +2180,16 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		raise NotImplementedError
 
-	#: The index of the routing key or C{None} if this is not a routing key.
-	#: @type: int
-	routingIndex = None
+	def _get_index(self):
+		"""@returns: The index (e.g. of a routing key). C{None} if this gesture has no index.
+		@rtype: int
+		"""
+		# L{routingINdex} is deprecated, but we provide backwards compatibility.
+		if getattr(self, "routingINdex", None) is not None:
+			log.debugWarning("Using deprecated routingIndex property for input gesture, "
+				"change or update your braille display driver to use index instead")
+			return self.routingIndex
+		return None
 
 	def _get_identifiers(self):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id)]
@@ -2200,7 +2207,10 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			name = brailleInput.BrailleInputGesture._get_displayName(self)
 			if name:
 				return name
-		return self.id
+		id = self.id
+		if self.index is not None:
+			id = "%s %d" % (id, self.index+1)
+		return id
 
 	def _get_scriptableObject(self):
 		display = handler.display
