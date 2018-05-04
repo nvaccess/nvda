@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -30,6 +30,9 @@ import winKernel
 import extensionPoints
 import profileUpgrader
 from .configSpec import confspec
+
+#: True if NVDA is running as a Windows Store Desktop Bridge application
+isAppX=False
 
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
@@ -98,7 +101,14 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	Most callers will want the C{globalVars.appArgs.configPath variable} instead.
 	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
-	if installedUserConfigPath and (isInstalledCopy() or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+		if isAppX:
+			# NVDA is running as a Windows Store application.
+			# Although Windows will redirect %APPDATA% to a user directory specific to the Windows Store application,
+			# It also makes existing %APPDATA% files available here. 
+			# We cannot share NVDA user config directories  with other copies of NVDA as their config may be using add-ons
+			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
+			installedUserConfigPath+='_appx'
 		return installedUserConfigPath
 	return u'.\\userConfig\\'
 
@@ -120,7 +130,10 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("addons", "appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins","profiles"):
+	subdirs=["speechDicts","profiles"]
+	if not isAppX:
+		subdirs.extend(["addons", "appModules","brailleDisplayDrivers","synthDrivers","globalPlugins"])
+	for subdir in subdirs:
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
@@ -237,6 +250,11 @@ def _setSystemConfig(fromPath):
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
+			# Do not copy executables to the system configuration, as this may cause security risks.
+			# This will also exclude pending updates.
+			if f.endswith(".exe"):
+				log.debug("Ignored file %s while copying current user configuration to system configuration"%f)
+				continue
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(curDestDir,f)
 			installer.tryCopyFile(sourceFilePath,destFilePath)
@@ -272,7 +290,7 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
 	@type subdir: str
 	"""
-	if globalVars.appArgs.disableAddons:
+	if isAppX or globalVars.appArgs.disableAddons:
 		return
 	if not subdir:
 		subdir = module.__name__

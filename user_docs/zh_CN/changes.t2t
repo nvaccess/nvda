@@ -3,6 +3,167 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+== 新功能 ==
+- 现在用语音和盲文报告表格单元格的行和列跨度。 (#2642)
+- Google文档现已支持NVDA表格导航命令（启用盲文模式）。 (#7946)
+- 在Kindle上阅读和导航表格的能力。 (#7977)
+- 通过USB和蓝牙支持BrailleNote touch和Brailliant BI 14盲文显示器。 (#6524)
+- 在Windows 10 Fall Creators Update及更高版本中，NVDA可以报告来自应用程序（例如Calculator和Windows Store）的通知。 (#8045)
+- 新盲文表：立陶宛8点，乌克兰语，蒙古语2级。 (#7839)
+- 添加了一个脚本来报告特定盲文单元下文本的格式信息。 (#7106)
+- 现在更新NVDA可以自由选择使用立即更新，稍后提示更新，立即安装，三种更新模式进行更新安装操作. (#4263) 
+- 您现在可以从盲文键盘切换控制，移位，替代，窗口和NVDA，并将这些修饰符与盲文输入（例如按下控制键+ s）进行组合。 (#7306) 
+ - 您可以使用输入手势对话框中仿真系统键盘键下的命令来分配这些新的修改器切换。
+- 恢复对Handy Tech Braillino和Modular（带有旧固件）的盲文显示器的支持。 (#8016)
+- 支持的Handy Tech设备（如Active Braille和Active Star）的日期和时间现在会在NVDA超过五秒钟不同步时自动同步。 (#8016)
+
+
+== 更改 ==
+- NVDA 插件管理器中的状态列已更改，以提示插件是启用还是禁用，而不是运行或挂起。 (#7929)
+- 更新 liblouis 盲文 翻译器到3.5.0. (#7839)
+- 立陶宛盲文表已更名为立陶宛6点，以避免与新的8点立陶宛盲文混淆。 (#7839)
+- 法国（加拿大）1级和2级表已被删除。相反，将分别使用法语（统一）6点计算机盲文和2级盲文表。 (#7839)
+- Alva BC6，EuroBraille和Papenmeier盲文显示器上的次要路由按钮现在报告该按钮的盲文单元下文本的格式信息。 (#7106)
+- 在不可编辑的情况下（即没有光标或浏览模式的控件），缩小盲文输入表将自动回退到未收缩模式。 (#7306)
+
+
+== bug修复 ==
+- 输入电子邮件地址后，NVDA不再无法在设置中的Microsoft帐户登录屏幕中阅读集中控件。 (#7997)
+- 返回到Microsoft Edge中的上一页时，NVDA不再无法读取页面。 (#7997)
+- 随着机器解锁，NVDA将不再错误地宣布Windows 10登录PIN的最终字符。 (#7908)
+- Chrome和Firefox中复选框和单选按钮的标签在选项卡或在浏览模式下使用快速导航时不再报告两次。 (#7960)
+- 将咏叹调目前的值设为虚假而不是真（ (#7892).
+- 如果配置的语音已被卸载，则Windows Onecore语音合成器驱动程序不再无法加载。 (#7999)
+- 改变Windows Onecore Voices合成器驱动程序中的声音现在速度要快得多。 (#7999)
+- 修复了多个盲文桌面的格式错误盲文输出，包括8点缩写丹麦盲文的大写签名。 (#7526, #7693)
+- NVDA现在可以在Microsoft Word中报告更多的子弹类型。 (#6778)
+- 按报告格式化脚本不再错误地移动reviewPosition并因此多次按下它不再给出不同的结果。 (#7869)
+- 盲文输入不再允许您在不受支持的情况下使用缩写盲文（即，整个单词将不再在文本内容和浏览模式之外发送到系统）。 (#7306)
+- 修复Handy Tech简易盲文和盲文波显示器的固定连接稳定性问题。 (#8016)
+- 在Windows 8和更高版本中，打开快速链接菜单时，NVDA将不再宣布“未知”）Windows + X）并从此菜单中选择项目。 (#8137)
+- Hims显示器上按钮的模型特定手势现在按照用户指南中的说明进行操作。 (#8096)
+- NVDA现在将尝试纠正导致Firefox和Internet Explorer等程序无法访问的系统COM注册问题，并通过NVDA报告“未知”。 (#2807)
+
+
+== 开发者更改 ==
+- The developer info for UIA objects now contains a list of the UIA patterns available. (#5712)
+- App modules can now force certain windows to always use UIA by implementing the isGoodUIAWindow method. (#7961)
+- The hidden boolean flag "outputPass1Only" in the braille section of the configuration has again been removed. Liblouis no longer supports pass 1 only output. (#7839)
+
+
+= 2018.1.1 =
+这是NVDA的一个特别版本，它解决了Onecore Windows语音合成器驱动程序中的一个错误，这使得它在Windows 10 Redstone 4（1803）中以更高的音调和速度朗读。 (#8082)  
+
+
+= 2018.1 =
+此版本的亮点包括支持Microsoft word和PowerPoint中的图表，支持新的盲文显示，包括Eurobraille和Optelec协议转换器，改进对Hims和Optelec盲文显示器的支持，Mozilla Firefox 58及更高版本的性能改进等等。
+
+== 新功能 ==
+- 现在可以与Microsoft Word和Microsoft PowerPoint中的图表进行互动，类似于Microsoft Excel中对图表的现有支持。 (#7046)
+ - 在Microsoft Word中：当处于浏览模式时，将光标移至嵌入的图表并按下回车键以与其交互。
+ - 在Microsoft PowerPoint中将幻灯片：选项卡编辑到图表对象时，并按下输入或空格与图表进行交互。
+ - 要停止与图表交互，请按转义键。
+- 新的语言：吉尔吉斯语。
+- 增加了对VitalSource书架的支持。 (#7155)
+- 增加了对Optelec协议转换器的支持，该转换器允许使用ALVA BC6通信协议使用Braille Voyager和Satellite显示器。 (#6731)
+- 现在可以使用带ALVA 640 Comfort盲文显示器的盲文输入。 (#7733) 
+ - NVDA的盲文输入功能可用于这些以及固件3.0.0及以上版本的其他BC6显示器。
+- 早期支持启用盲文模式的Google表格。 (#7935)
+- 支持Eurobraille Esys，Esytime和Iris盲文显示器。 (#7488)
+
+
+== 更改 ==
+- HIMS Braille Sense / Braille EDGE / Smart Beetle和Hims Sync盲文显示器驱动器已被一名司机所取代。新的驱动程序将自动为以前的syncBraille驱动程序用户激活。 (#7459) 
+ - 有些键，特别是滚动键，已被重新分配以遵循Hims产品使用的惯例。请参阅用户指南了解更多详情。
+- 通过触摸交互使用屏幕键盘进行打字时，默认情况下，您现在需要按照与激活其他任何控件相同的方式来敲击每个按键。 (#7309)
+ - 要使用现有的“触摸打字”模式，只需将手指从键上抬起即可将其激活，在“首选项”菜单中的新触摸交互设置对话框中启用该选项。
+- 不再需要明确地将盲文连接到焦点或审查，因为这会默认自动发生。 (#2385) 
+ - 请注意，只有在使用审阅光标或对象导航命令时才会进行自动复审。滚动不会激活这种新行为。
+
+
+== bug修复 ==
+- 当NVDA安装在具有非ASCII字符的路径上时，可快速按NVDA + f两次快速显示当前格式的可浏览消息不再失败。 (#7474)
+- 当从另一个应用程序返回Spotify时，焦点现在再次正确恢复。 (#7689)
+- 在Windows 10 Fall Creaters更新中，从Windows Defender安全中心启用受控文件夹访问时，NVDA不会再报错。 (#7696)
+- Hims Smart Beetle显示器上滚动键的检测不再不可靠。 (#6086)
+- 在Mozilla Firefox 58及更高版本中渲染大量内容时，性能略有改善。 (#7719)
+- 在Microsoft Outlook中，阅读包含表格的电子邮件不会再导致报错。 (#6827)
+- 如果一个或多个涉及的手势是特定于模型的，则盲文显示器手势模拟系统键盘键修改器现在也可以与其他仿真系统键盘键组合。 (#7783)
+- 在Mozilla Firefox中，浏览模式现在可以在由LastPass和bitwarden等扩展创建的弹出窗口中正常工作。 (#7809)
+- 如果Firefox或Chrome停止响应（例如由于冻结或崩溃），NVDA不再有时会冻结每次焦点更改。 (#7818)
+- 在鸡块等Twitter客户端，NVDA在阅读时不会忽略280个字符推文的最后20个字符。 (#7828)
+- NVDA现在在选择文本时通知符号时使用正确的语言。 (#7687)
+- 在最新版本的Office 365中，可以使用上下箭头键再Excel图表中进行导航。 (#7046)
+- 在语音和盲文输出中，控制状态现在总是以相同的顺序报告，无论它们是正面还是负面。 (#7076)
+- 在Windows 10 Mail等应用程序中，NVDA在按退格键时不会再报读删除字符。 (#7456)
+- Hims Braille Sense Polaris显示器上的所有按键现在都按预期工作。 (#7865)
+- NVDA no longer fails to start on Windows 7 complaining about an internal api-ms dll, when a particular version of the Visual Studio 2017 redistributables have been installed by another application. (#7975)
+
+
+== 开发者更改 ==
+- Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
+ - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
+- A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
+- Updated comtypes package to 1.1.3. (#7831)
+- Implemented a generic system in braille.BrailleDisplayDriver to deal with displays which send confirmation/acknowledgement packets. See the handyTech braille display driver as an example. (#7590, #7721)
+- A new "isAppX" variable in the config module can be used to detect if NVDA is running as a Windows Desktop Bridge Store app. (#7851)
+- For document implementations such as NVDAObjects or browseMode that have a textInfo, there is now a new documentBase.documentWithTableNavigation class that can be inherited from to gain standard table navigation scripts. Please refer to this class to see which helper methods must be provided by your implementation for table navigation to work. (#7849)
+- The scons batch file now better handles when  Python 3 is also installed, making use of the launcher to specifically launch python 2.7 32 bit. (#7541)
+- hwIo.Hid now takes an additional parameter exclusive, which defaults to True. If set to False, other applications are allowed to communicate with a device while it is connected to NVDA. (#7859)
+
+
+= 2017.4 =
+此版本的亮点包括许多Web支持的修复和功能增强，包括在Web对话框中的浏览模式支持，更好地朗读表单区元素标签，支持Windows Defender Application Guard和Windows 10 ARM x64等新的Windows 10技术，且可自动朗读屏幕方向和电池状态。
+请注意，此版本的NVDA不再支持Windows XP或Windows Vista。现在，NVDA的最低系统要求是Windows 7 Service Pack 1。
+
+
+== 新功能 ==
+  - 在浏览模式下，可以使用容器跳转快捷键（或shift +，）来在路标的开始点和结束点之间跳转。（＃5482）
+  - 在Firefox，Chrome和Internet Explorer中，编辑框和表单区的快速导航键现在包含可编辑的富文本容器（如contentEditable）。（＃5534）
+  - 在Web浏览器中，元素列表现在可以列出表单区和按钮（＃588）
+  - 初步支持运行在arm64架构的windows10。（＃7508）
+  - 通过math accessible，支持在Kindo电子书中提供的数学内容的阅读和可交互式浏览。（＃7536）
+  - 增加了对Azardi电子书阅读器的支持。（＃5848）
+  - 插件更新时朗读插件版本信息。（＃5324）
+  - 增加了新的命令行参数来创建NVDA的便携副本。（＃6329）
+  - 支持嵌入到Windows Defender Application Guard的Microsoft Edge浏览器（＃7600）
+  - 如果在笔记本电脑或平板电脑上运行的时候，NVDA现在将提示充电器何时连接/断开连接，以及屏幕方向是否改变。（＃4574，＃4612）
+  - 新的语言：马其顿语。
+  - 新的盲文翻译表：克罗地亚语1级点字，越南语1级点字（＃7518，＃7565）
+  - 增加了对Handy Tech的Actilino盲文显示器的支持。（＃7590）
+  - 支持Handy Tech盲文点显器的盲文输入。（＃7590）
+
+
+== 更改 ==
+  -  NVDA支持的最低操作系统现在是Windows 7 Service Pack 1或Windows Server 2008 R2 Service Pack 1。（＃7546）
+  -  Firefox和Chrome浏览器中的Web对话框现在自动使用浏览模式，除非对话框嵌入到了Web应用程序里（＃4493）
+  - 在浏览模式下，使用快速导航命令进行切换和移动时不再提示跳出容器（如列表和表格等），从而使导航更高效。（＃2591）
+  - 在Firefox和Chrome的浏览模式下，通过快速导航或Tab键切换时，表单区域组的名称将被读出。（＃3321）
+  - 在浏览模式下，嵌入式对象（o和shift + o）的快速导航命令现在包括音频和视频元素以及具有咏叹调角色应用程序和对话框的元素（＃7239）
+  -  Espeak-ng已经更新到1.49.2，解决了一些生成发布版本时产生的问题。（＃7385，＃7583）
+  - 连按三次“读取状态栏”命令，其内容将被复制到剪贴板。（＃1785）
+  - 将手势分配给Baum点显器按键时，可以将其限制为正在使用的·点显器型号（例如VarioUltra或Pronto）（＃7517）
+  - 浏览模式中，元素列表中过滤器编辑框的热键已经从alt + f变成了alt + e。（＃7569）
+  - 为浏览模式添加了一个未绑定的命令，以实时切换包含的布局表格。（＃7634）
+- 升级liblouis盲文翻译到3.3.0。（＃7565）
+  - “字典”对话框中正则表达式单选按钮的热键已经从alt + r变成了alt + e。（＃6782）
+  - 语音词典文件现在已经过版本控制，并已被移到“speechDicts / voiceDicts.v1”目录。（＃7592）
+  - 当使用启动器运行NVDA时，不再保存版本文件的配置修改（如用户配置，语音词典）。（＃7688）
+-  Handy Tech生产的Braillino，Bookworm和Modular（带旧固件）盲文显示器不再支持开箱即用。  - 请安装  Handy Tech通用驱动器和NVDA插件来使用这些点显器。（＃7590） 
+
+
+== 开发者更改 ==
+- "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
+- There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
+- You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
+- Braille display gestures that emulate system keyboard key modifiers (such as control and alt) can now be combined with other emulated system keyboard keys without explicit definition. (#6213) 
+ - For example, if you have a key on your display bound to the alt key and another display key to downArrow, combining these keys will result in the emulation of alt+downArrow.
+- The braille.BrailleDisplayGesture class now has an extra model property. If provided, pressing a key will generate an additional, model specific gesture identifier. This allows a user to bind gestures limited to a specific braille display model. 
+ - See the baum driver as an example for this new functionality.
+- NVDA is now compiled with Visual Studio 2017 and the Windows 10 SDK. (#7568)
+
 
 = 2017.3 =
 此版本的亮点包括缩写盲文输入支持，Windows 10上可用的新Windows OneCore语音支持，Windows 10 内置 OCR支持，以及盲文和网络的许多重大改进。
