@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Joseph Lee
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -19,31 +19,6 @@ import wx
 import imp
 
 MAIN_MANIFEST_EXTRA = r"""
-<file name="brailleDisplayDrivers\handyTech\HtBrailleDriverServer.dll">
-	<comClass
-		description="HtBrailleDriver Class"
-		clsid="{209445BA-92ED-4AB2-83EC-F24ACEE77EE0}"
-		threadingModel="Apartment"
-		progid="HtBrailleDriverServer.HtBrailleDriver"
-		tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
-</file>
-<file name="brailleDisplayDrivers\handyTech\HtBrailleDriverServer.tlb">
-	<typelib tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}"
-		version="1.0"
-		helpdir="" />
-</file>
-<comInterfaceExternalProxyStub
-	name="IHtBrailleDriverSink"
-	iid="{EF551F82-1C7E-421F-963D-D9D03548785A}"
-	proxyStubClsid32="{00020420-0000-0000-C000-000000000046}"
-	baseInterface="{00000000-0000-0000-C000-000000000046}"
-	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
-<comInterfaceExternalProxyStub
-	name="IHtBrailleDriver"
-	iid="{43A71F9B-58EE-42D4-B58E-0F9FBA28D995}"
-	proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
-	baseInterface="{00000000-0000-0000-C000-000000000046}"
-	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
 <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
 	<application>
 		<!-- Windows Vista -->
@@ -114,7 +89,7 @@ class py2exe(build_exe.py2exe):
 
 	def build_manifest(self, target, template):
 		mfest, rid = build_exe.py2exe.build_manifest(self, target, template)
-		if getattr(target, "script", None) == "nvda.pyw":
+		if getattr(target, "script", "").endswith(".pyw"):
 			# This is one of the main application executables.
 			mfest = mfest[:mfest.rindex("</assembly>")]
 			mfest += MAIN_MANIFEST_EXTRA + "</assembly>"
@@ -217,6 +192,7 @@ setup(
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*")),
+		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
 		(".", ['message.html' ])
 	] + (
 		getLocaleDataFiles()

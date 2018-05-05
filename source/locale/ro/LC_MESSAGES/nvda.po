@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 00:10+1000\n"
-"PO-Revision-Date: 2018-03-30 22:57+0300\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
+"PO-Revision-Date: 2018-04-28 20:42+0300\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -575,6 +575,20 @@ msgstr "a examina"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automat"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Intrare nesuportată"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} lansat"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} apăsat"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -4242,6 +4256,46 @@ msgstr "Traduce orice intrare braille și apasă tasta enter"
 msgid "Translates any braille input"
 msgstr "Traduce orice intrare braille"
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Comută virtual la shift pentru a simula o combinație de taste cu intrarea "
+"braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Comută virtual la control pentru a simula o combinație de taste cu intrarea "
+"braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Comută virtual la alt pentru a simula o combinație de taste cu intrarea "
+"braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Comută virtual la windows stânga pentru a simula o combinație de taste cu "
+"intrarea braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Comută virtual la NVDA pentru a simula o combinație de taste cu intrarea "
+"braille"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Extensii plug-in reîncărcate"
@@ -7365,6 +7419,42 @@ msgstr "Dicționar temporar"
 msgid "About NVDA"
 msgstr "Despre NVDA"
 
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"Sunteți pe punctul de a rula instrumentul de remediere a înregistrării COM. "
+"Această unealtă va încerca să remedieze probleme comune de  sistem care "
+"împiedică NVDA să acceseze conținut din multe programe, inclusiv din Firefox "
+"și Internet Explorer. Acest instrument trebuie să facă modificări în "
+"regiștrii sistemului și, prin urmare, necesită acces administrativ. Sunteți "
+"sigur că doriți să continuați?"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Avertisment"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "Instrument de remediere a înregistrării COM"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr ""
+"Vă rugăm să așteptați cât timp NVDA încearcă să remedieze înregistrările COM "
+"ale sistemului dumneavoastră."
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Instrument de remediere a înregistrării COM complet"
+
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
 msgstr "Setări &generale..."
@@ -7532,6 +7622,10 @@ msgstr "Creează copie portabilă..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Instalează NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Rulează instrumentul de remediere a înregistrării COM..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -8082,11 +8176,6 @@ msgstr ""
 "Acest declanșator este deja asociat cu un alt profil. Dacă veți continua, va "
 "fi înlăturat de la profilul respectiv și va fi asociat acestuia.\n"
 "Sigur vreți să continuați?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Avertisment"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."

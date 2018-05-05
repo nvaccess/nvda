@@ -5,16 +5,19 @@ Ce este nou în NVDA
 
 = 2018.2 =
 
-
 == Noi Funcționalități ==
 - lățimea și lungimea celulelor tabelului sunt acum raportată atât vocal, cât și în braille. (#2642)
 - Comenzile de navigare prin tabel ale NVDA-ului sunt suportate acum în Google Docs ( cu modul braille activat). (#7946)
 - Abilitatea de a citi și de a naviga prin tabelele  din Kindle pentru PC. (#7977)
 - A fost introdus suportul prin USB și Bluetooth pentru display-urile braille BrailleNote Touch și Brailliant BI 14. (#6524)
 - În Windows 10 Fall Creators Update și mai nou, NVDA poate anunța notificări de la aplicații precum Calculator și Windows Store. (#8045)
-- Noi tabele de traducere braille: lituaniană 8 puncte, ucraineană, mongolă grad 2. (#7839)
+- Noi tabele de traducere braille: lituaniană 8 puncte, ucraineană, română, mongolă grad 2. (#7839)
 - S-a adăugat un script pentru raportarea informațiilor de formatare pentru un text de sub o celulă braille specifică. (#7106)
 - La actualizarea NVDA, puteți să amânați instalarea noii versiuni și s-o realizați mai târziu. (#4263)
+- Acum, puteți comuta la control, shift, alt, windows și NVDA de la tastatura dumneavoastră braille și le puteți combina cu intrarea braille (e.x. apăsați control+s). (#7306) 
+ - puteți să le atribuiți utilizând comenzile găsite sub tastele tastaturii simulate din dialogul gesturilor de intrare.
+- S-a restaurat suportul pentru afișajele braille Handy Tech Braillino și Modular (cu firmware vechi). (#8016)
+- Acum, data și ora pentru dispozitivele Handy Tech suportate (cum ar fi Active Braille și Active Star) vor fi sincronizate automat de NVDA atunci când nu se sincronizează mai mult de cinci secunde. (#8016)
 
 
 == Modificări ==
@@ -23,6 +26,7 @@ Ce este nou în NVDA
 - Tabelul braille lituanian a fost redenumit în lituaniană 6 puncte pentru a se evita confuzia cu noul tabel în 8 puncte. (#7839)
 - Tabelele franceză (Canada) grad 1 și 2 au fost șterse. În schimb, se vor utiliza tabelele franceze (unificate) braille pentru calculator în 6 puncte, respectiv tabelele de gradul 2. (#7839)
 - Butoannele secundare de deplasare de pe afișajele Alva BC6, EuroBraille și Papenmeier raportează acum informații de formatare pentru un text de sub o celulă braille de-a acelui buton. (#7106)
+- Tabelele braille de intrare abreviate vor reveni automat la modul neabreviat în cazurile needitabile (e.x. controalele în care nu există niciun cursor sau în modul de navigare). (#7306)
 
 
 == Rezolvări Defecte ==
@@ -36,6 +40,11 @@ Ce este nou în NVDA
 - S-a reparat ieșirea braille malformată pentru câteva tabele braille, incluzând majusculele din tabelul danez abreviat în 8 puncte. (#7526, #7693)
 - Acum, NVDA poate să raporteze mai multe tipuri de buline în Microsoft Word. (#6778)
 - Apăsarea pe scriptul de raportare a formatării nu mai deplasează incorect poziția de examinare, iar prin urmare, apăsarea lui în mod repetat nu mai dă rezultate diferite. (#7869)
+- Intrarea braille nu vă va mai permite să folosiți braille-ul în cazurile în care nu mai este suportat (e.x. cuvintele întregi nu vor mai fi trimise către sistem în afara conținutului textului și în modul de navigare). (#7306)
+- S-au rezolvat problemele de stabilitate a conexiunii pentru afișajele Handy Tech Easy Braille și Braille Wave. (#8016)
+- Pe Windows 8 sau mai nou, NVDA nu va mai spune „necunoscut” la deschiderea meniului de legătură rapidă )Windows+X) și la selectarea elementelor din acest meniu. (#8137)
+- Gesturile specifice modelului  cu butoanele de pe afișajele Hims lucrează acum ca anunțate în ghidul de utilizare. (#8096)
+- Acum, NVDA va încerca să corecteze probleme de sistem ale înregistrării COM care fac ca programe precum Firefox și Internet Explorer să devină inaccesibile, iar el să raporteze „necunoscut”. (#2807)
 
 
 == Modificări pentru Dezvoltatori ==
@@ -90,6 +99,7 @@ Caracteristicile principale ale acestei versiuni includ suport pentru diagramele
 - În ieșirile de vorbire și braille, stările controalelor nu vor fi întotdeauna raportate în aceeași ordine, indiferent dacă sunt pozitive sau negative. (#7076)
 - În aplicații precum Windows 10 Mail, NVDA nu va mai eșua să anunțe caracterele șterse la apăsarea tastei backspace. (#7456)
 - Toate tastele de pe afișajele Hims Braille Sense Polaris funcționează așa cum era de așteptat. (#7865)
+- NVDA nu mai eșuează să pornească în Windows 7, cu mesajul despre un dll intern pentru api-ms, atunci când a fost instalată o anumită versiune a lui VIsual Studio 2007 de către o altă aplicație. (#7975)
 
 
 == Modificări pentru Dezvoltatori ==
@@ -161,7 +171,7 @@ Vă rugăm să rețineți faptul că această versiune nu mai suportă Windows X
 
 
 == Modificări pentru dezvoltatori ==
-- "scons tests" nu verifică dacă string-urile ce pot fi traduse au comentariile traducătorului. Puteți rula asta singur cu "scons checkPot". (#7492)
+- acum, "scons tests" verifică dacă string-urile ce pot fi traduse au comentariile traducătorului. Puteți rula asta singur cu "scons checkPot". (#7492)
 - Acum există un nou modul de extensie care oferă un framework generic pentru a activa extensibilitatea codului la punctele specifice din el. Acest lucru permite părților interesate să se înregistreze pentru a fi notificate atunci când are loc o acțiune (extensionPoints.Action), să modifice un anumit tip de date (extensionPoints.Filter) sau să participe la luarea unei decizii atunci când se va face ceva (extensionPoints.Decider). (#3393)
 - Acum vă puteți înregistra pentru a fi notificat atunci când configurarea profilului se comută prin acțiunea config.configProfileSwitched. (#3393)
 - Gesturile afișajului braille care simulează modificatoare de taste ale tastaturii sistemului (cum ar fi control și alt) pot fi combinate acum cu alte taste ale tastaturii simulate fără definiție explicită. (#6213) 

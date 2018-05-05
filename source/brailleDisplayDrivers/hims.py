@@ -707,7 +707,8 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 
 	def __init__(self, model, keys):
 		super(KeyInputGesture, self).__init__()
-		self.model=model.name
+		# Model identifiers should not contain spaces.
+		self.model=model.name.replace(" ", "")
 		self.keys = keys
 		self.keyNames = names = set()
 		isBrailleInput = True
