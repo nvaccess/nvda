@@ -211,13 +211,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"review_activate": ("br(papenmeier_serial):l2",),
 			"reportFormatting": ("br(papenmeier_serial):reportf",),
 
-			"navigatorObject_previous": ("br(papenmeier_serial):left2", "br(papenmeier_serial):r1,left"),
-			"navigatorObject_next": ("br(papenmeier_serial):right2", "br(papenmeier_serial):r1,right"),
-			"navigatorObject_parent": ("br(papenmeier_serial):up2", "br(papenmeier_serial):r1,up"),
-			"navigatorObject_firstChild": ("br(papenmeier_serial):dn2", "br(papenmeier_serial):r1,dn"),
+			"navigatorObject_previous": ("br(papenmeier_serial):left2", "br(papenmeier_serial):r1+left"),
+			"navigatorObject_next": ("br(papenmeier_serial):right2", "br(papenmeier_serial):r1+right"),
+			"navigatorObject_parent": ("br(papenmeier_serial):up2", "br(papenmeier_serial):r1+up"),
+			"navigatorObject_firstChild": ("br(papenmeier_serial):dn2", "br(papenmeier_serial):r1+dn"),
 
-			"title": ("br(papenmeier_serial):l1,up",),
-			"reportStatusLine": ("br(papenmeier_serial):l2,dn",),
+			"title": ("br(papenmeier_serial):l1+up",),
+			"reportStatusLine": ("br(papenmeier_serial):l2+dn",),
 		}
 	})
 

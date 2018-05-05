@@ -491,8 +491,8 @@ connection could not be established"""
 			"navigatorObject_parent": ("br(papenmeier):up2",),
 			"navigatorObject_firstChild": ("br(papenmeier):dn2",),
 
-			"title": ("br(papenmeier):l1,up",),
-			"reportStatusLine": ("br(papenmeier):l2,dn",),
+			"title": ("br(papenmeier):l1+up",),
+			"reportStatusLine": ("br(papenmeier):l2+dn",),
 			"kb:alt": ("br(papenmeier):lt+d3",),
 			"kb:control": ("br(papenmeier):lt+d2",),
 			"kb:escape": ("br(papenmeier):space+d7",),

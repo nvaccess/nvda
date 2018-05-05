@@ -4,13 +4,15 @@
 #See the file COPYING for more details.
 #Copyright (C) 2018 NV Access Limited, Babbage B.V.
 
-"""Provider for fake braille displays and braille display/input gestures.
+"""Provider for fake braille displays, braille display/input gestures and fake initialization of built-in drivers.
 """
 
 import braille
 import brailleInput
 import inputCore
 import brailleDisplayDrivers.noBraille
+from contextlib import contextmanager
+from baseObject import ScriptableObject
 
 class BrailleDisplayDriver(brailleDisplayDrivers.noBraille.BrailleDisplayDriver):
 	"""A dummy braille display driver based on L{brailleDisplayDrivers.noBraille.BrailleDisplayDriver}.
@@ -42,10 +44,10 @@ class BrailleDisplayDriver(brailleDisplayDrivers.noBraille.BrailleDisplayDriver)
 	})
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
-	source = BrailleDisplayDriver.name
 
-	def __init__(self, model, keys, brailleInput=False):
+	def __init__(self, source, model, keys, brailleInput=False):
 		super(InputGesture, self).__init__()
+		self.source = source
 		self.model = model
 		self.keyNames = names = []
 		dots = 0
@@ -67,3 +69,30 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 	def _get_id(self):
 		"""Magic property to allow l{self.keyNames} manipulation after construction."""
 		return "+".join(self.keyNames)
+
+def activateDummyDisplayDriver():
+	"""Activates the dummy braille display driver."""
+	braille.handler.display = BrailleDisplayDriver()
+	braille.handler.displaySize = BrailleDisplayDriver.numCells
+	braille.handler.enabled = True
+
+@contextmanager
+def fakeInitializedDisplayDriver(driver):
+	"""A context manager that does the following:
+		* It sets the current braille display driver on the braille handler to a built-in driver, without initializing it.
+		* It executes a desired piece of code.
+		* It resets the braille handler to the dummy driver.
+	This context manager should be used to test braille display gesture maps,
+	as the scriptHandler only queries the gesture map of the active display.
+	Braille output will be ignored.
+	"""
+	braille.handler.display = driver.__new__(driver)
+	if issubclass(driver, ScriptableObject):
+		# Initialize the scriptable part of the display driver.
+		ScriptableObject.__init__(braille.handler.display)
+	# The cell count is unimportant, there just ought to be some cells.
+	braille.handler.displaySize = BrailleDisplayDriver.numCells
+	braille.handler.display.display = lambda cells: None
+	braille.handler.enabled = True
+	yield
+	activateDummyDisplayDriver()

@@ -76,10 +76,8 @@ import braille
 braille.initialize()
 import brailleInput
 brailleInput.initialize()
-from .brailleDisplayProvider import BrailleDisplayDriver as dummyBrl
-braille.handler.display = dummyBrl()
-braille.handler.displaySize = dummyBrl.numCells
-braille.handler.enabled = True
+from .brailleDisplayProvider import activateDummyDisplayDriver
+activateDummyDisplayDriver()
 # The input manager needs to be initialized to query the user gesture map
 import inputCore
 inputCore.initialize()

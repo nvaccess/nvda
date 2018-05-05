@@ -2222,8 +2222,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		# Also processes modifiers held by braille input.
 		# Import late to avoid circular import.
 		import brailleInput
-		# Input gestures are normalized in the gesture map.
-		# Therefore, we ought to convert the kgesture key names to lower case before processing.
+		# Input gestures are normalized in gesture maps.
+		# Therefore, if we look for possible modifiers in a gesture, we ought to convert the key names to lower case.
 		keyNames = [name.lower() for name in self.keyNames]
 		gestureKeys = set(keyNames)
 		gestureModifiers = brailleInput.handler.currentModifiers.copy()

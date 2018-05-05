@@ -9,34 +9,55 @@
 
 import unittest
 import braille
-from brailleDisplayProvider import InputGesture
+from brailleDisplayProvider import *
 import inputCore
+import globalCommands
 
-def gestureToScriptTestHelper(unit, keys, expectedScriptName, model=None, brailleInput=False):
+def gestureToScriptTestHelper(
+	unit, keys, expectedScriptName, model=None, brailleInput=False, source=BrailleDisplayDriver.name):
 	"""
 	Helper function to ease the execution of single tests.
 	It takes the same parameters as a L{brailleDisplayProvider.InputGesture}
 	as well as the expected script name.
 	It asserts whether the expected and actual script names are equal.
 	"""
-	gesture = InputGesture(model, keys, brailleInput)
+	gesture = InputGesture(source, model, keys, brailleInput)
 	script = gesture.script
 	scriptName = None if not script else script.__name__[7:]
-	return unit.assertEqual(scriptName, expectedScriptName)
+	return unit.assertEqual(
+		scriptName, expectedScriptName,
+		msg="Expected script {expected} for {id}, but bound to {actual}".format(
+			expected=expectedScriptName, id=gesture.normalizedIdentifiers[0], actual=scriptName
+		)
+	)
 
-class TestGestureMap(unittest.TestCase):
+class TestGestureMaps(unittest.TestCase):
 	"""Tests the integrity of braille display driver gesture maps."""
 
-	def test_identifiers(self):
-		"""Checks whether all defined braille display gestures contain valid braille display key identifiers."""
+	def test_scriptAssignments(self):
+		"""Checks whether all defined braille display gestures are assigned to their expected scripts.
+		This also involves testing the validity of gesture identifiers.
+		"""
 		for name, description in braille.getDisplayList(excludeNegativeChecks=False):
-			driver=braille._getDisplayDriver(name)
-			gmap=driver.gestureMap
+			driver = braille._getDisplayDriver(name)
+			gmap = driver.gestureMap
 			if not gmap:
 				continue
-			for cls, gesture, scriptName in gmap.getScriptsForAllGestures():
-				if gesture.startswith("br"):
-					self.assertRegexpMatches(gesture, braille.BrailleDisplayGesture.ID_PARTS_REGEX)
+
+			with fakeInitializedDisplayDriver(driver):
+				for cls, gesture, scriptName in gmap.getScriptsForAllGestures():
+					if cls is not globalCommands.GlobalCommands or not gesture.startswith("br"):
+						continue
+					# Make sure the gesture matches the regular expression (i.e. check the identifier validity).
+					gestureMatch = braille.BrailleDisplayGesture.ID_PARTS_REGEX.match(gesture)
+					self.assertIsNotNone(gestureMatch)
+					driverName, model, id = gestureMatch.groups()
+					# The driver name in the gesture identifier is in lower case.
+					# It should match the name of the driver for which the gesture map is investigated.
+					self.assertEqual(driverName, name.lower())
+					keys = id.split("+")
+					print(scriptName)
+					gestureToScriptTestHelper(self, keys, scriptName, model=model, source=name)
 
 class TestCombinedEmulatedKeys(unittest.TestCase):
 	"""Tests combining of emulated system keyboard keys."""
