@@ -231,7 +231,15 @@ def isCurrentScript(scriptFunc):
 		return False
 	return givenFunc==realFunc
 
-def script(description="", category=None, gesture=None, gestures=None, canPropagate=False):
+def script(
+	description="",
+	category=None,
+	gesture=None,
+	gestures=None,
+	canPropagate=False,
+	bypassInputHelp=False,
+	resumeSayAllMode=None
+):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
 	@param description: A short translatable description of the script to be used in the gesture editor, etc.
@@ -242,8 +250,13 @@ def script(description="", category=None, gesture=None, gestures=None, canPropag
 	@type gesture: string
 	@param gestures: A list of gestures associated with this script
 	@type gestures: list(string)
-	@param canPropagate: Whether this script should also apply for focus ancestors.
+	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
 	@type canPropagate: bool
+	@param bypassInputHelp: Whether this script should run when input help is active.
+	@type bypassInputHelp: bool
+	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
+		One of the C{sayAllHandler.CURSOR_*} constants.
+	@type resumeSayAllMode: int
 	"""
 	if gestures is None:
 		gestures = []
@@ -256,7 +269,9 @@ def script(description="", category=None, gesture=None, gestures=None, canPropag
 		if gestures:
 			decoratedScript.gestures = gestures
 		decoratedScript.canPropagate = canPropagate
+		decoratedScript.bypassInputHelp = bypassInputHelp
+		if resumeSayAllMode is not None:
+			decoratedScript.resumeSayAllMode = resumeSayAllMode
 		return decoratedScript
 	return script_decorator
-
 
