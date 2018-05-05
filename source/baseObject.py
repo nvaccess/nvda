@@ -131,10 +131,10 @@ class AutoPropertyObject(object):
 class ScriptableType(AutoPropertyType):
 	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
 
-	def __new__(meta, name, bases, dct):
+	def __new__(meta, name, bases, dict):
 		gestures = {}
-		cls = super(ScriptableType, meta).__new__(meta, name, bases, dct)
-		for name, script in dct.iteritems():
+		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
+		for name, script in dict.iteritems():
 			if not name.startswith('script_'):
 				continue
 			scriptName = name[7:]

@@ -1,4 +1,4 @@
-#tests/unit/test_braille.py
+#tests/unit/test_baseObject.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
