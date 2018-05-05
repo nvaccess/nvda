@@ -16,6 +16,8 @@ What's New in NVDA
 - When updating NVDA, it is now possible to postpone the installation of the update to a later moment of choice. (#4263) 
 - You can now toggle control, shift, alt, windows and NVDA from your braille keyboard and combine these modifiers with braille input (e.g. press control+s). (#7306) 
  - You can assign these new modifier toggles using the commands found under Emulated system keyboard keys in the Input gestures dialog.
+- Restored support for Handy Tech Braillino and Modular (with old firmware) displays. (#8016)
+- Date and time for supported Handy Tech devices (such as Active Braille and Active Star) will now automatically be synchronized by NVDA when out of sync more than five seconds. (#8016)
 
 
 == Changes ==
@@ -39,6 +41,10 @@ What's New in NVDA
 - NVDA can now report more bullet types in Microsoft Word. (#6778)
 - Pressing the report formatting script no longer incorrectly moves the reviewPosition and therefore pressing it multiple times no longer gives different results. (#7869)
 - Braille input no longer allows you to use contracted braille in cases where it is not supported (i.e. whole words will no longer be sent to the system outside text content and in browse mode). (#7306)
+- Fixed connection stability issues for Handy Tech Easy Braille and Braille Wave displays. (#8016)
+- On Windows 8 and later, NVDA will no longer announce "unknown" when opening quick link menu )Windows+X) and selecting items from this menu. (#8137)
+- Model specific gestures to buttons on Hims displays are now working as advertised in the user guide. (#8096)
+- NVDA will now try to correct system COM registration issues causing programs such as Firefox and Internet Explorer to become inaccessible and report "Unknown" by NVDA. (#2807)
 
 
 == Changes for developers ==

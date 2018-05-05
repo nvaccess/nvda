@@ -31,6 +31,7 @@ What's New in NVDA
 - Contracted braille input tables will automatically fall back to uncontracted mode in non-editable cases (i.e. controls where there is no cursor or in browse mode). (#7306)
 - NVDA is now less verbose when an appointment or time slot in the Outlook calendar covers an entire day. (#7949)
 - All of NVDA's Preferences can now be found in one settings dialog under NVDA Menu -> Preferences -> Settings, rather than scattered throughout many dialogs. (#577)
+- The default speech synthesizer when running on Windows 10 is now oneCore speech rather than eSpeak. (#8176)
 
 
 == Bug Fixes ==
@@ -50,6 +51,7 @@ What's New in NVDA
 - Model specific gestures to buttons on Hims displays are now working as advertised in the user guide. (#8096)
 - NVDA will now try to correct system COM registration issues causing programs such as Firefox and Internet Explorer to become inaccessible and report "Unknown" by NVDA. (#2807)
 - Worked around a bug in Task Manager causing NVDA to not allow users to access the contents of specific details about processes. (#8147)
+- Newer Microsoft SAPI5 voices no longer lag at the end of speech, making it much more efficient to navigate with these voices. (#8174)
 
 
 == Changes for developers ==

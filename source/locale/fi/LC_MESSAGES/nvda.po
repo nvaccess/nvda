@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 00:10+1000\n"
-"PO-Revision-Date: 2018-04-20 11:10+0200\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
+"PO-Revision-Date: 2018-04-26 22:06+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -7406,6 +7406,39 @@ msgstr "Tilapäissanasto"
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
 
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"Olet suorittamassa COM-rekisteröinnin korjaustyökalua. Tämä työkalu yrittää "
+"korjata yleisiä järjestelmäongelmia, jotka estävät NVDA:ta käsittelemästä "
+"sisältöä useissa ohjelmissa, kuten Firefoxissa ja Internet Explorerissa. "
+"Työkalun on tehtävä muutoksia Windowsin rekisteriin, mikä edellyttää "
+"järjestelmänvalvojan oikeuksia. Haluatko varmasti jatkaa?"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Varoitus"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "COM-rekisteröinnin korjaustyökalu"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "Odota, kun NVDA yrittää korjata järjestelmäsi COM-rekisteröintejä."
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "COM-rekisteröinnin korjaustyökalu suoritettu"
+
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
 msgstr "&Yleiset..."
@@ -7571,6 +7604,10 @@ msgstr "Luo &massamuistiversio..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Asenna NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Suorita COM-rekisteröinnin korjaustyökalu..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -8120,11 +8157,6 @@ msgstr ""
 "Tämä käynnistin on jo liitetty toiseen profiiliin. Jos jatkat, olemassa "
 "oleva liitos poistetaan ja käynnistin liitetään tähän profiiliin.\n"
 "Haluatko varmasti jatkaa?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Varoitus"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."

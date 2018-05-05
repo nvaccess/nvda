@@ -688,7 +688,6 @@ class GlobalCommands(ScriptableObject):
 	script_cycleSpeechSymbolLevel.category=SCRCAT_SPEECH
 
 	def script_moveMouseToNavigatorObject(self,gesture):
-		obj=api.getNavigatorObject() 
 		try:
 			p=api.getReviewPosition().pointAtStart
 		except (NotImplementedError, LookupError):
@@ -698,7 +697,7 @@ class GlobalCommands(ScriptableObject):
 			y=p.y
 		else:
 			try:
-				(left,top,width,height)=obj.location
+				(left,top,width,height)=api.getNavigatorObject().location
 			except:
 				# Translators: Reported when the object has no location for the mouse to move to it.
 				ui.message(_("Object has no location"))

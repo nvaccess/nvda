@@ -10,10 +10,14 @@ Quoi de Neuf dans NVDA
 - Les commandes de navigation dans les tableaux de NVDA sont maintenant supportées sous Google Docs (avec le mode Braille activé). (#7946)
 - Sous Kindle for PC, il est maintenant possible de lire et de naviguer dans les tableaux. (#7977)
 - Support des terminaux BrailleNote Touch et Brailliant BI 14  via USB et bluetooth. (#6524)
-- Sous Windows 10 Fall Creators Update et au-delà, NVDA peut annoncer les notifications d'applications telles que la Calculatrice et le Windows Store. (#8045)
+- Sous Windows 10 Fall Creators Update et au-delà, NVDA peut annoncer les notifications d'applications telles que la Calculatrice ou le Windows Store. (#8045)
 - Nouvelles tables de conversion braille : Lithuanien 8 points, Ukrainien, Mongol abrégé. (#7839)
 - Ajout d'un script pour annoncer l'information de mise en forme pour le texte sous une cellule braille spécifique. (#7106)
 - Lors d'une mise à jour de NVDA, il est maintenant possible de reporter l'installation à un moment de son choix. (#4263) 
+- Vous pouvez maintenant utiliser contrôle, majuscule, alt, windows et NVDA depuis votre clavier braille et combiner ces modifieurs avec la saisie braille (ex : presser contrôle+s). (#7306) 
+ - Vous pouvez assigner ces nouveaux modificateurs en utilisant les commandes qui se trouvent dans Touches émulées du clavier du système dans le dialogue Gestes de commandes.
+- Retour du support des terminaux braille Handy Tech Braillino et Modular (avec l'ancien micrologiciel) displays. (#8016)
+- La date et l'heure pour les terminaux Handy Tech supportés (comme Active Braille et Active Star) seront automatiquement synchronisés par NVDA en cas de désynchronisation de plus de 5 secondes. (#8016)
 
 
 == Changements ==
@@ -22,6 +26,7 @@ Quoi de Neuf dans NVDA
 - La table braille lithuanienne a été renommée en  Lithuanien 6 points pour éviter  la confusion avec la nouvelle table 8 points. (#7839)
 - Les tables Français (Canada) intégral et abrégé  ont été supprimées. Elles sont remplacées par Français (unifié) braille littéraire 6 points  et Français (unifié) abrégé respectivement. (#7839)
 - Les boutons secondaires de routage sur les terminaux braille Alva BC6, EuroBraille et Papenmeier annoncent maintenant l'information de mise en forme pour le texte sous la cellule braille correspondant au bouton. (#7106)
+- Les tables de saisie braille abrégé retourneront automatiquement en mode intégral dans les champs non-éditables (ex : Les contrôles où il n'y a pas de curseur ou en mode navigation). (#7306)
 
 
 == Corrections de Bogues ==
@@ -35,6 +40,11 @@ Quoi de Neuf dans NVDA
 - Correction de caractères braille mal formés pour plusieurs tables braille, incluant les majuscules pour le danois abrégé 8 points. (#7526, #7693)
 - NVDA peut maintenant annoncer plus de types de puces sous Microsoft Word. (#6778)
 - Le déclenchement du script d'annonce de l'information de mise en forme ne modifie plus par erreur la position de revue, ainsi plusieurs activations successives ne donne plus des résultats différents. (#7869)
+- La saisie braille ne permet plus d'utiliser l'abrégé dans les cas où il n'est pas supporté (ex : des mots entiers ne seront plus envoyés au système hors des zones éditables ou en mode navigation). (#7306)
+- Correction des problèmes de stabilité de connexion pour les terminaux Handy Tech Easy Braille et Braille Wave . (#8016)
+- Sous Windows 8 et au-delà, NVDA n'annoncera plus "inconnu" à l'ouverture du menu de liens rapides (Windows+X) et à la sélection d'un élément de ce menu. (#8137)
+- Sur les terminaux Hims, les boutons de commandes spécifiques à chaque modèle fonctionnent maintenant comme indiqué dans le manuel. (#8096)
+- NVDA essaiera maintenant de coriger les problèmes d'Inscription COM du système qui font que certains programmes comme Firefox et Internet Explorer deviennent  inaccessibles par NVDA et annoncent "Inconnu". (#2807)
 
 
 == Changements pour les développeurs ==
