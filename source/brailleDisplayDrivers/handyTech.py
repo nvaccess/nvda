@@ -661,10 +661,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		try:
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
+			# We must sleep before closing the  connection as not doing this can leave the display in a bad state where it can not be re-initialized.
+			# This has been observed for Easy Braille displays.
+			time.sleep(self.timeout)
 			# Make sure the device gets closed.
-			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
-			# We must sleep after closing, as it sometimes takes some time for the device to disconnect.
+			# We also must sleep after closing, as it sometimes takes some time for the device to disconnect.
+			# This has been observed for Active Braille displays.
 			time.sleep(self.timeout)
 
 	def _get_atc(self):
