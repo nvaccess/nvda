@@ -10,6 +10,8 @@ import speech
 import controlTypes
 import ui
 
+currIndex = 0
+allIndex = 0
 oldActivePannel=0
 x64trigger = 0
 
@@ -53,10 +55,14 @@ class TCList(IAccessible):
 
 	def reportFocus(self):
 		if self.name:
+			currIndex = self.IAccessibleChildID
+			allIndex = len(self.parent.children)
+			indexString = (" %s of %s" % (currIndex, allIndex))
 			speakList=[]
 			if controlTypes.STATE_SELECTED in self.states:
 				speakList.append(controlTypes.stateLabels[controlTypes.STATE_SELECTED])
 			speakList.append(self.name.split("\\")[-1])
+			speakList.append(indexString)
 			speech.speakMessage(" ".join(speakList))
 		else:
 			super(TCList,self).reportFocus()
