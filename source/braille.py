@@ -309,7 +309,7 @@ def getDisplayList(excludeNegativeChecks=True):
 		if name.startswith('_'):
 			continue
 		try:
-			display = _getDisplayDriver(name, caseSensitive=True)
+			display = _getDisplayDriver(name)
 		except:
 			log.error("Error while importing braille display driver %s" % name,
 				exc_info=True)
@@ -2288,16 +2288,20 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
 		# Translators: Displayed when the source driver of a braille display gesture is unknown.
-		unknownDisplayDescription = _("Unknown braille display driver")
+		unknownDisplayDescription = _("Unknown braille display")
 		idParts = cls.ID_PARTS_REGEX.match(identifier)
 		if not idParts:
 			log.error("Invalid braille gesture identifier: %s"%identifier)
 			return unknownDisplayDescription, "malformed:%s"%identifier
 		source, modelName, key = idParts.groups()
-		try:
-			description = _getDisplayDriver(source, caseSensitive=False).description
-		except ImportError:
-			description = unknownDisplayDescription
+		# Optimisation: Do not try to get the braille display class if this identifier belongs to the current driver.
+		if braille.handler.display.name.lower() == source.lower():
+			description = braille.handler.display.description
+		else:
+			try:
+				description = _getDisplayDriver(source, caseSensitive=False).description
+			except ImportError:
+				description = unknownDisplayDescription
 		if modelName: # The identifier contains a model name
 			return description, "{modelName}: {key}".format(
 				modelName=modelName, key=key
