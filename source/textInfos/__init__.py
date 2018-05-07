@@ -433,6 +433,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 			if self.move(UNIT_CHARACTER, -1) == 0:
 				raise LookupError("No word before word separator or CRLF")
 			self.expand(UNIT_WORD)
+		elif self.text.isspace():
+			# There is only space, which is not considered a word.
+			# For example, this can occur in Notepad++ when auto indentation is on.
+			raise LookupError("Word before caret contains only spaces")
 		return True
 
 	def _get_NVDAObjectAtStart(self):
