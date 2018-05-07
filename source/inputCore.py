@@ -177,6 +177,16 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	@classmethod
+	def fromIdentifier(cls, identifier):
+		"""Create an instance given a gesture identifier.
+		@param identifier: The gesture identifier.
+		@type identifier: str
+		@return: A gesture for the specified identifier.
+		@rtype: L{InputGesture}
+		"""
+		raise NotImplementedError
+
 class GlobalGestureMap(object):
 	"""Maps gestures to scripts anywhere in NVDA.
 	This is used to allow users and locales to bind gestures in addition to those bound by individual scriptable objects.

@@ -2304,4 +2304,22 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		else:
 			return handler.display.description, key
 
+	@classmethod
+	def fromIdentifier(cls, identifier):
+		idParts = cls.ID_PARTS_REGEX.match(identifier)
+		if not idParts:
+			raise ValueError("Invalid braille gesture identifier: %s"%identifier)
+		identifierSource = idParts.group(1).lower()
+		try:
+			clsSource = cls.source.lower()
+		except NotImplementedError:
+			clsSource = None
+		if clsSource and clsSource != identifierSource:
+			raise ValueError("Braille gesture identifier %r is not of source %s" % (identifier, cls.source))
+		gesture = cls.__new__(cls)
+		gesture.model = idParts.group(2)
+		gesture.id = idParts.group(3)
+		BrailleDisplayGesture.__init__(gesture)
+		return gesture
+
 inputCore.registerGestureSource("br", BrailleDisplayGesture)

@@ -577,6 +577,12 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		return cls(keys, vk, 0, ext)
 
+	@classmethod
+	def fromIdentifier(cls, identifier):
+		if not identifier.startswith("kb"):
+			raise ValueError("Invalid keyboard gesture identifier: %s"%identifier)
+		return cls.fromName(identifier.split(":")[1])
+
 	RE_IDENTIFIER = re.compile(r"^kb(?:\((.+?)\))?:(.*)$")
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
