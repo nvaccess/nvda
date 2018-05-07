@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-06 00:10+1000\n"
-"PO-Revision-Date: 2018-04-06 18:18+0100\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
+"PO-Revision-Date: 2018-04-30 10:01+0100\n"
 "Last-Translator: zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -578,6 +578,20 @@ msgstr "na pregled"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automatski"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Nepodržani unos"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} otpušten"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} pritisnut"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -4227,6 +4241,46 @@ msgstr "Prevodi bilo koji brajični unos i pritišće enter"
 msgid "Translates any braille input"
 msgstr "Prevodi brajični unos"
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Virtualno uključuje i isključuje shift kako bi se oponašao prečac sa "
+"tipkovnice u brajičnom ulazu"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Virtualno uključuje i isključuje control kako bi se oponašao prečac sa "
+"tipkovnice u brajičnom ulazu"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Virtualno uključuje i isključuje alt kako bi se oponašao prečac sa "
+"tipkovnice u brajičnom ulazu"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Virtualno uključuje i isključuje windows tipku kako bi se oponašao prečac sa "
+"tipkovnice u brajičnom ulazu"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Virtualno uključuje i isključuje nvda modifikatorsku tipku kako bi se "
+"oponašao prečac sa tipkovnice u brajičnom ulazu"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Dodaci su iznova učitani"
@@ -7237,7 +7291,7 @@ msgstr "Brajični ulaz je uključen"
 
 #. Translators: message when braille input is disabled
 msgid "Braille input disabled"
-msgstr "brajični ulaz je uključen"
+msgstr "brajični ulaz je isključen"
 
 #. Translators: description of the script to toggle braille input
 msgid "Toggle braille input"
@@ -7342,6 +7396,39 @@ msgstr "Trenutan riječnik"
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "O programu NVDA"
+
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"Upravo pokrećete alat za popravak com registracijskih grešaka. Ovaj alat "
+"popravlja opće probleme u sustavu, koji onemogućavaju interakciju u nekim "
+"programima uključujući Firefox i Internet explorer. Ovaj će alat napraviti "
+"izmjene u registru sustava, stoga zahtjeva administratorska prava. Jeste li "
+"sigurni da želite nastaviti?"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Upozorenje"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "Alat za ispravljanje grešaka pri COM registraciji"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "Molimo pričekajte dok NVDA popravi greške u vašim COM registracijama."
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Alat za popravljanje grešaka pri com registraciji je završio s radom"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
@@ -7511,6 +7598,10 @@ msgstr "Stvori prijenosnu kopiju..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Instaliraj NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Pokreni alat za popravak grešaka pri com registraciji..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -8062,11 +8153,6 @@ msgstr ""
 "Ovaj izazov je već povezan sa drugim profilom. Ako nastavite, isti će biti "
 "uklonjen iz tog profila i povezan s ovim.\n"
 "Jeste li sigurni da želite nastaviti?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Upozorenje"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."

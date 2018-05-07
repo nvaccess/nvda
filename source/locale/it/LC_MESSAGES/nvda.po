@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 00:10+1000\n"
-"PO-Revision-Date: 2018-03-30 09:47+0200\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
+"PO-Revision-Date: 2018-05-02 10:22+0200\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -573,6 +573,20 @@ msgstr "cursore di controllo"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automatica"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Immissione non supportata"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} rilasciato"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} premuto"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -4233,6 +4247,51 @@ msgstr "Elabora tutto il braille inserito e aggiunge il tasto invio"
 msgid "Translates any braille input"
 msgstr "Elabora il braille inserito"
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"simula la pressione del tasto shift per ottenere combinazioni di tasti dalla "
+"tastiera braille (Premere una volta per attivare e un'altra per disattivare "
+"il tasto)"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"simula la pressione del tasto control per ottenere combinazioni di tasti "
+"dalla tastiera braille (Premere una volta per attivare e un'altra per "
+"disattivare il tasto)"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"simula la pressione del tasto alt per ottenere combinazioni di tasti dalla "
+"tastiera braille (Premere una volta per attivare e un'altra per disattivare "
+"il tasto)"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"simula la pressione del tasto Windows di sinistra per ottenere combinazioni "
+"di tasti dalla tastiera braille (Premere una volta per attivare e un'altra "
+"per disattivare il tasto)"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"simula la pressione del tasto NVDA per ottenere combinazioni di tasti dalla "
+"tastiera braille (Premere una volta per attivare e un'altra per disattivare "
+"il tasto)"
+
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Plugin ricaricati"
@@ -7353,6 +7412,42 @@ msgstr "Dizionario temporaneo"
 msgid "About NVDA"
 msgstr "Informazioni su NVDA"
 
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"Si sta per eseguire l'utility risoluzione registrazioni com di sistema. "
+"Questa operazione tenterà di risolvere alcuni problemi di sistema molto "
+"comuni che impediscono a NVDA di accedere al contenuto di molti programmi "
+"quali Firefox e Internet Explorer. Questa utility esegue delle modifiche al "
+"registro di sistema e perciò sono necessari i diritti di amministratore. Si "
+"desidera procedere?"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Avviso"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "utility risoluzione registrazioni com di sistema"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr ""
+"Si prega di attendere mentre NVDA tenta di risolvere le registrazioni com di "
+"sistema."
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "utility risoluzione registrazioni com di sistema completa"
+
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
 msgstr "Impostazioni &generali..."
@@ -7519,6 +7614,10 @@ msgstr "Crea copia portable..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Installa NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Esegui utility risoluzione registrazioni com di sistema..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -8076,11 +8175,6 @@ msgstr ""
 "Questo evento è già associato con un altro profilo. Se si continua, sarà "
 "rimosso da quel profilo e associato con questo.\n"
 "Si è sicuri di voler continuare?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Avviso"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."

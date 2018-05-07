@@ -281,7 +281,7 @@ Der Systemfokus, auch bekannt als Fokus, ist dasjenige [Objekt #Objects], das di
 Ein Beispiel: Wenn Sie einen Text in einem Eingabefeld eingeben, wird dieses fokussiert.
 
 Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der Systemfokus verschoben wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab zum Wechseln zwischen Elementen in einem Dialogfeld, Alt oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur navigation innerhalb eines Menüs sowie alt+tab zum Wechseln zwischen laufenden Anwendungen
-Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld etc), Wert (zum Beispiel der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (zum Beispiel «1 von 5» in einer Liste oder «1 von 1 Ebene 0» in einer Baumansicht), den Status des objekts (zum Beispiel aktiviert, hervorgehoben, ausgewählt etc).
+Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld etc), Wert (zum Beispiel der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (zum Beispiel "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des objekts (zum Beispiel aktiviert, hervorgehoben, ausgewählt etc).
 
 Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 %kc:beginInclude
@@ -961,7 +961,7 @@ Diese Option ist nur in der installierten Version verfügbar!
 Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
 Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe-Menü wählen.
 
-+==== Beim Start von NVDA &ausstehende Aktualisierungen melden ====[GeneralSettingsNotifyPendingUpdates]
+==== Beim Start von NVDA &ausstehende Aktualisierungen melden ====[GeneralSettingsNotifyPendingUpdates]
 Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, falls eine Aktualisierung aussteht und Ihnen die Möglichkeit geben, diese zu installieren. 
 Sie können die ausstehende Aktualisierung auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Aktualisierungen aus dem Hilfe-Menü installieren
 
@@ -1771,7 +1771,7 @@ Wenn Sie diesen Schalter zu einem Zeitpunkt drücken, zu dem Erweiterungen insta
 
 In früheren NVDA-Versionen war es möglich, den Funktionsumfang durch Plug-ins, Anwendungsmodule oder Treiber zu erweitern, indem diese in das benutzerspezifische Konfigurationsverzeichnis kopiert wurden. 
 Auch wenn NVDA solche Module immer noch lädt, werden diese nicht im Erweiterungs-Manager angezeigt. 
-Es ist daher zu empfehlen, derartig «untergeschobene» Dateien zu entfernen und eine passende Erweiterung zu installieren, sofern verfügbar.
+Es ist daher zu empfehlen, derartig "untergeschobene" Dateien zu entfernen und eine passende Erweiterung zu installieren, sofern verfügbar.
 
 Um denDialog Erweiterungen verwalten per Tastenkombination aufrufen zu können, müssen Sie diesem eine Tastenkombination zuweisen. Verwenden Sie hierzu den [Dialog Eingaben #InputGestures]
 
@@ -2559,8 +2559,11 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 | Großschreibtaste | Punkt7+Rücktaste, Punkt8+Rücktaste |
 | Nummernblock-Taste | Punkt3+Rücktaste, Punkt6+Rücktaste |
 | Umschalt-Taste | Punkt7+Leertaste, l4 |
-| Steuerung-Taste | Punkte7+8+Leertaste, Punkte1+7+8+Leertaste, Punkte4+7+8+Leertaste, l5 |
-| Alt-Taste | Punkt8+Leertaste, Punkte1+8+Leertaste, Punkte4+8+Leertaste, l6 |
+| Umschalt-taste gedrückt halten | Punkte1+7+Leertaste, Punkte4+7+Leertaste |
+| Steuerung-Taste | Punkte7+8+Leertaste, l5 |
+| Steuerung-Taste gedrückt halten | Punkte1+7+8+Leertaste, Punkt4+7+8+Leertaste |
+| Alt-Taste | Punkt8+Leertaste, l6 |
+| Alt-Taste gedrückt halten | Punkte1+8+Leertaste, Punkte4+8+Leertaste, l6 |
 | HID-TastaturSimulation ein- oder ausschalten | esytime):l1+joystick1nach unten, esytime):l8+joystick1nach unten |
 %kc:endInclude
 

@@ -277,12 +277,12 @@ class SynthDriver(SynthDriver):
 		try:
 			hkey = _winreg.OpenKey(rootKey, subkey)
 		except WindowsError as e:
-			log.debugWarning("Could not open registry key %s, %s" % (ID, e))
+			log.debugWarning("Could not open registry key %s, %r" % (ID, e))
 			return False
 		try:
 			langDataPath = _winreg.QueryValueEx(hkey, 'langDataPath')
 		except WindowsError as e:
-			log.debugWarning("Could not open registry value 'langDataPath', %s" % e)
+			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
 		if not langDataPath or not isinstance(langDataPath[0], basestring):
 			log.debugWarning("Invalid langDataPath value")
@@ -293,7 +293,7 @@ class SynthDriver(SynthDriver):
 		try:
 			voicePath = _winreg.QueryValueEx(hkey, 'voicePath')
 		except WindowsError as e:
-			log.debugWarning("Could not open registry value 'langDataPath', %s" % e)
+			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
 		if not voicePath or not isinstance(voicePath[0],basestring):
 			log.debugWarning("Invalid voicePath value")

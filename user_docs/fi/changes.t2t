@@ -13,7 +13,11 @@
 - NVDA voi puhua sovellusten (esim. Laskin ja Kauppa) ilmoitukset Windows 10:n Fall Creators -päivityksessä ja uudemmissa. (#8045)
 - Uusia pistetaulukkoja: liettualainen 8 pisteen merkistö, ukrainalainen, mongolilainen taso 2. (#7839)
 - Lisätty komento määrätyssä pistesolussa olevan tekstin muotoilutietojen ilmoittamiseen. (#7106)
-- Päivityksen asentamista on nyt mahdollista lykätä myöhemmäksi NVDA:ta päivitettäessä. (#4263) 
+- NVDA-päivityksen asentamista on nyt mahdollista lykätä myöhemmäksi. (#4263) 
+- Voit nyt vaihtaa Ctrl-, Vaihto-, Alt-, Windows- ja NVDA-näppäinten tilaa pistekirjoitusnäppäimistöltä sekä käyttää niitä yhdessä pistekirjoitussyötteen kanssa (esim. painaa Ctrl+S). (#7306) 
+ - Näiden tilanvaihtonäppäinten uudelleenmäärittäminen on mahdollista Syötekomennot-valintaikkunan Emuloidut näppäimet -kategorian alta löytyviä komentoja käyttäen.
+- Palautettu tuki Handy Techin Braillino- sekä Modular (vanha laiteohjelmisto) -pistenäytöille. (#8016)
+- Päivämäärää ja aikaa tukevat Handy Tech -laitteet (kuten Active Braille ja Active Star) synkronoidaan nyt automaattisesti NVDA:n toimesta, kun ero järjestelmän kelloon on enemmän kuin viisi sekuntia. (#8016)
 
 
 == Muutokset ==
@@ -22,6 +26,7 @@
 - Liettualaisen pistetaulukon uusi nimi on nyt "liettua, 6 pisteen merkistö", jotta vältetään sekaannus uuden 8 pisteen taulukon kanssa. (#7839)
 - Kanadanranskalaiset tason 1 ja 2 taulukot on poistettu. Niiden asemesta käytetään ranskalaista yhdenmukaistettua 6 pisteen tietokonemerkistön ja tason 2 taulukoita. (#7839)
 - Alva BC6-, EuroBraille- ja Papenmeier-pistenäyttöjen toissijaiset kosketuskohdistinnäppäimet ilmoittavat nyt pistesolussa olevan tekstin muotoilutiedot. (#7106)
+- Lyhennepistekirjoituksen syöttötaulukot vaihtavat automaattisesti takaisin lyhentämättömään tilaan ei-muokattavissa paikoissa (ts. säätimissä, joissa ei ole kohdistinta, tai selaustilassa). (#7306)
 
 
 == Korjatut ohjelmavirheet ==
@@ -35,6 +40,11 @@
 - Korjattu väärin muotoiltu pistekirjoituksen tulostus useista pistetaulukoista, mukaan lukien isojen kirjainten merkit tanskalaisessa 8 pisteen lyhennekirjoituksessa. (#7526, #7693)
 - NVDA voi nyt puhua Microsoft Wordissa useammantyyppisiä luettelomerkkejä. (#6778)
 - Lue muotoilutiedot -komennon painaminen ei enää siirrä virheellisesti tarkastelukohtaa, ja näin ollen useasti painaminen ei myöskään anna enää eri tuloksia. (#7869)
+- Pistekirjoituksen syöttö ei enää salli lyhennepistekirjoitusta paikoissa, joissa sitä ei tueta (ts. kokonaisia sanoja ei enää lähetetä järjestelmälle muualla kuin tekstisisällössä ja selaustilassa). (#7306)
+- Korjattu Handy Techin Easy Braille- ja Braille Wave -pistenäyttöjen yhteyden vakauteen liittyviä ongelmia. (#8016)
+- NVDA ei enää ilmoita Windows 8:ssa ja uudemmissa  "tuntematon" pikalinkkivalikkoa (Windows+X) avattaessa ja valittaessa sen kohteita. (#8137)
+- HIMS-pistenäyttöjen mallikohtaiset painikkeiden syötekomennot toimivat nyt kuten käyttöohjeessa ilmoitetaan. (#8096)
+- NVDA yrittää nyt korjata järjestelmän COM-rekisteröinnin ongelmia, jotka aiheuttavat ohjelmien (kuten Firefox ja Internet Explorer) muuttumista esteellisiksi sekä NVDA:n "tuntematon"-ilmoituksia. (#2807)
 
 
 = 2018.1.1 =
