@@ -54,7 +54,7 @@ configPreSave = extensionPoints.Action()
 configPostSave = extensionPoints.Action()
 #: Notifies when configuration is reloaded from disk or factory defaults are applied.
 #: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
-configReset = extensionPoints.Action()
+configPostReset = extensionPoints.Action()
 
 def initialize():
 	global conf
