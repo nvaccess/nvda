@@ -2309,14 +2309,19 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		idParts = cls.ID_PARTS_REGEX.match(identifier)
 		if not idParts:
 			raise ValueError("Invalid braille gesture identifier: %s"%identifier)
-		identifierSource = idParts.group(1).lower()
+		identifierSource = idParts.group(1)
 		try:
-			clsSource = cls.source.lower()
+			source = cls.source
 		except NotImplementedError:
-			clsSource = None
-		if clsSource and clsSource != identifierSource:
-			raise ValueError("Braille gesture identifier %r is not of source %s" % (identifier, cls.source))
+			source = None
+		if isinstance(source, str) and clsSource.lower() != identifierSource.lower():
+			raise ValueError("Braille gesture identifier %r is not of source %s" % (identifier, source))
+		else:
+			# This class has no source we can work with.
+			# Use the source from the identifier.
+			source = idParts.group(1)
 		gesture = cls.__new__(cls)
+		gesture.source = source
 		gesture.model = idParts.group(2)
 		gesture.id = idParts.group(3)
 		BrailleDisplayGesture.__init__(gesture)

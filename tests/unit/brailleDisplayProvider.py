@@ -43,33 +43,6 @@ class BrailleDisplayDriver(brailleDisplayDrivers.noBraille.BrailleDisplayDriver)
 		}
 	})
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
-
-	def __init__(self, source, model, keys, brailleInput=False):
-		super(InputGesture, self).__init__()
-		self.source = source
-		self.model = model
-		self.keyNames = names = []
-		dots = 0
-		space = False
-		for key in keys:
-			names.append(key)
-
-			# Braille input
-			if brailleInput:
-				# Fake input keys look like "fakeInput1" for dot 1
-				if key.startswith("fakeInput"):
-					if key.endswith("Space"):
-						space = True
-					else:
-						dots |= 1 << int(key[-1])
-				else:
-					brailleInput = False
-
-	def _get_id(self):
-		"""Magic property to allow l{self.keyNames} manipulation after construction."""
-		return "+".join(self.keyNames)
-
 def activateDummyDisplayDriver():
 	"""Activates the dummy braille display driver."""
 	braille.handler.display = BrailleDisplayDriver()
