@@ -19,6 +19,7 @@ What's New in NVDA
 - Restored support for Handy Tech Braillino and Modular (with old firmware) displays. (#8016)
 - Date and time for supported Handy Tech devices (such as Active Braille and Active Star) will now automatically be synchronized by NVDA when out of sync more than five seconds. (#8016)
 - In Microsoft Outlook message lists, NVDA now reports if a message has been replied to or forwarded. (#6911)
+- An input gesture can be assigned to temporarily disable all configuration profile triggers. (#4935)
 
 
 == Changes ==
@@ -51,6 +52,7 @@ What's New in NVDA
 - NVDA will now try to correct system COM registration issues causing programs such as Firefox and Internet Explorer to become inaccessible and report "Unknown" by NVDA. (#2807)
 - Work around a bug in task manager causing NVDA to not allow users to access the contents of specific details about processes. (#8147)
 - Newer Microsoft SAPI5 voices no longer lag at the end of speech, making it much more efficient to navigate with these voices. (#8174)
+- NVDA no longer reports (LTR and RTL marks) in Braille or per-character speech when accessing the clock in recent versions of Windows. (#5729)
 
 
 == Changes for developers ==

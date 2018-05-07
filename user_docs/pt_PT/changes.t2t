@@ -16,6 +16,8 @@ Traduzido pela Equipa portuguesa do NVDA
 - Ao actualizar o NVDA, já é possível adiar a instalação da versão descarregada para um momento mais opurtuno. (#4263) 
 - Pode agora manter pressionadas, virtualmente, as teclas control, shift, alt, windows e NVDA, a partir do teclado da linha Braille e combinar esses modificadores com letras escritas no teclado Braille, (por exemplo, pressionar Control+s). (#7306) 
  - Pode associar estas funcionalidades a comandos através da opção Definir comandos, Simulação de teclas do sistema.
+- Reposto o suporte para as linhas Braille Braillino e Modular da HandyTech com firmware antigo. (#8016)
+- Nos dispositivos HandyTech suportados, como Active Braille e Active Star, a data e hora serão automaticamente sincronizadas pelo NVDA, sempre que a diferença for superior a cinco segundos. (#8016)
 
 
 == Alterações ==
@@ -40,6 +42,11 @@ Traduzido pela Equipa portuguesa do NVDA
 - O NVDA passa a anunciar mais tipos de bullets no Microsoft Word. (#6778)
 - Ao pressionar o comando para anúncio de informações de formatação, a posição de revisão já não é alterada, e por isso já não são fornecidas falsas informações ao pressionar o comando mais de uma vez. (#7869)
 - A escrita em Braille já não permite Braille contraído onde não seja suportado, ou seja, as palavras completas só serão enviadas ao sistema em áreas editáveis. (#7306)
+- Corrigidos problemas de estabilidade nas ligações das linhas Braille HandyTech Easy Braille e Braille Wave. (#8016)
+- Em Windows 8 ou superior, o NVDA já não anunciará "Desconhecido" ao abrir  o menu rápido )Windows+X) e ao seleccionar itens desse menu. (#8137)
+
+- Os comandos específicos de modelos relativos aos botões das linhas Braille da HIMS já funcionam como referido no respectibo manual. (#8096)
+- O NVDA passa a tentar corrigir os problemas de registo de DLLs do sistema, causadores de programas como o Firefox e Internet Explorer ficarem parcialmente inacessíveis, causando o anúncio de "Desconhecido" pelo NVDA. (#2807)
 
 
 == Alterações para Desenvolvedores ==

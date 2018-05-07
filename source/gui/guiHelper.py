@@ -17,7 +17,7 @@ class myDialog(class wx.Dialog):
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 
-		sHelper = guiHelper.SizerHelper( wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper( wx.VERTICAL)
 
 		filterElement = guiHelper.LabeledControlHelper(dialog, "Filter:", wx.TextCtrl)
 		symbols = wx.ListCtrl()
@@ -105,6 +105,7 @@ def associateElements( firstElement, secondElement):
 			wx.StaticText and (wx.Choice, wx.TextCtrl or wx.Button) - Horizontal layout
 			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
 			wx.Button and wx.CheckBox - Horizontal layout
+			wx.TextCtrl and wx.Button - Horizontal layout
 	"""
 	if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
 		raise NotImplementedError("AssociateElements has no implementation for ButtonHelper elements")
