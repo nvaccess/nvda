@@ -33,6 +33,7 @@ from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
 import scriptHandler
+from locationHelper import RectLTRB
 from NVDAObjects.window._msOfficeChart import OfficeChart
 
 # Window classes where PowerPoint's object model should be used 
@@ -738,9 +739,7 @@ class Shape(PpObject):
 		top=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop)
 		right=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointLeft+pointWidth)
 		bottom=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop+pointHeight)
-		width=right-left
-		height=bottom-top
-		return (left,top,width,height)
+		return RectLTRB(left,top,right,bottom).toLTWH()
 
 	def _get_ppShapeType(self):
 		"""Fetches and caches the type of this shape."""

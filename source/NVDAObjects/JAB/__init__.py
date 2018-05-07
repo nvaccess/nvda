@@ -9,6 +9,7 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
 from .. import InvalidNVDAObject
+from locationHelper import RectLTWH
 
 JABRolesToNVDARoles={
 	"alert":controlTypes.ROLE_DIALOG,
@@ -301,7 +302,7 @@ class JAB(Window):
 		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.description)
 
 	def _get_location(self):
-		return (self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
+		return RectLTWH(self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
 
 	def _get_hasFocus(self):
 		if controlTypes.STATE_FOCUSED in self.states:
