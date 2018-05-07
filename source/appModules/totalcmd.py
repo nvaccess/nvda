@@ -56,7 +56,7 @@ class TCList(IAccessible):
 	def reportFocus(self):
 		if self.name:
 			currIndex = self.IAccessibleChildID
-			allIndex = len(self.parent.children)
+			allIndex = self.parent.childCount
 			indexString = (" %s of %s" % (currIndex, allIndex))
 			speakList=[]
 			if controlTypes.STATE_SELECTED in self.states:
