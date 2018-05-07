@@ -33,7 +33,7 @@ RPC_E_DISCONNECTED = -2147417848
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
 
 def isPathExternalToNVDA(path):
-	""" Checks if the given path is external to NVDA (I.e. not pointing to build-in code). """
+	""" Checks if the given path is external to NVDA (I.e. not pointing to built-in code). """
 	if path[0] != "<" and os.path.isabs(path) and not path.startswith(sys.path[0] + "\\"):
 		# This module is external because:
 		# the code comes from a file (fn doesn't begin with "<");

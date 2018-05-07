@@ -978,15 +978,15 @@ The following information is always sent:
 ==== Allow the NVDA project to gather NVDA usage statistics ====[GeneralSettingsGatherUsageStats]
 If this is enabled, NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system and country of origin.
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
-A part from the mandatory information required to check for updates, the following extra infomation is also currently sent:
+Apart from the mandatory information required to check for updates, the following extra infomation is also currently sent:
 - NVDA interface language
 - Whether this copy of NVDA is portable or installed
 - Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
 - Name of the current Braille display in use (including the name of the add-on the driver comes from)
-- The current output braille table (if Braille is in use)
+- The current output Braille table (if Braille is in use)
 
 
-This information greatly   aides NV Access to prioritize future development of NVDA.
+This information greatly aides NV Access to prioritize future development of NVDA.
 
 ==== Notify for pending updates on startup ====[GeneralSettingsNotifyPendingUpdates]
 If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.

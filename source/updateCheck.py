@@ -107,6 +107,8 @@ def checkForUpdate(auto=False):
 	if auto and allowUsageStats:
 		synthDriverClass=speech.getSynth().__class__
 		brailleDisplayClass=braille.handler.display.__class__ if braille.handler else None
+		# Following are parameters sent purely for stats gathering.
+		#  If new parameters are added here, they must be documented in the userGuide for transparency.
 		extraParams={
 			"language": languageHandler.getLanguage(),
 			"installed": config.isInstalledCopy(),
