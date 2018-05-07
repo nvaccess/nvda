@@ -2287,17 +2287,22 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
+		# Translators: Displayed when the source driver of a braille display gesture is unknown.
+		unknownDisplayDescription = _("Unknown braille display driver")
 		idParts = cls.ID_PARTS_REGEX.match(identifier)
 		if not idParts:
 			log.error("Invalid braille gesture identifier: %s"%identifier)
-			return handler.display.description, "malformed:%s"%identifier
-		modelName = idParts.group(2)
-		key = idParts.group(3)
+			return unknownDisplayDescription, "malformed:%s"%identifier
+		source, modelName, key = idParts.groups()
+		try:
+			description = _getDisplayDriver(source, caseSensitive=False).description
+		except ImportError:
+			description = unknownDisplayDescription
 		if modelName: # The identifier contains a model name
-			return handler.display.description, "{modelName}: {key}".format(
+			return description, "{modelName}: {key}".format(
 				modelName=modelName, key=key
 			)
 		else:
-			return handler.display.description, key
+			return description, key
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
