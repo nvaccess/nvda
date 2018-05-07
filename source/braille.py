@@ -305,8 +305,18 @@ def NVDAObjectHasUsefulText(obj):
 		# Let the NVDAObject choose if the text should be presented
 		return obj._hasNavigableText
 
-def _getDisplayDriver(name):
-	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+def _getDisplayDriver(moduleName, caseSensitive=True):
+	try:
+		return __import__("brailleDisplayDrivers.%s" % moduleName, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+	except ImportError as initialException:
+		if caseSensitive:
+			raise initialException
+		for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
+			if name.startswith('_') or name.lower() != moduleName.lower():
+				continue
+			return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+		else:
+			raise initialException
 
 def getDisplayList(excludeNegativeChecks=True):
 	"""Gets a list of available display driver names with their descriptions.
@@ -322,7 +332,7 @@ def getDisplayList(excludeNegativeChecks=True):
 		if name.startswith('_'):
 			continue
 		try:
-			display = _getDisplayDriver(name)
+			display = _getDisplayDriver(name, ignoreCase=False)
 		except:
 			log.error("Error while importing braille display driver %s" % name,
 				exc_info=True)
