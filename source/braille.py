@@ -309,7 +309,7 @@ def getDisplayList(excludeNegativeChecks=True):
 		if name.startswith('_'):
 			continue
 		try:
-			display = _getDisplayDriver(name, ignoreCase=False)
+			display = _getDisplayDriver(name, caseSensitive=True)
 		except:
 			log.error("Error while importing braille display driver %s" % name,
 				exc_info=True)
