@@ -35,7 +35,8 @@ void mixWaveFile(unsigned int maxNumSamples, sample* sampleBuf) {
 			signed char c=wdata.mix_wavefile[wdata.mix_wavefile_ix+wdata.mix_wavefile_offset];
 			val+=(c*256);
 		} else {
-			val=(signed char)wdata.mix_wavefile[wdata.mix_wavefile_ix+wdata.mix_wavefile_offset]*wdata.mix_wave_scale;
+			auto scaledVal=wdata.mix_wavefile[wdata.mix_wavefile_ix+wdata.mix_wavefile_offset]*wdata.mix_wave_scale;
+			val=static_cast<signed char>(scaledVal);
 		}
 		val*=(wdata.amplitude_v/1024.0);
 		val=(val*wdata.mix_wave_amp)/40;
@@ -48,6 +49,8 @@ void mixWaveFile(unsigned int maxNumSamples, sample* sampleBuf) {
 }
 
 bool isKlattFrameFollowing() {
+	// eSpeak implements its command queue with a circular buffer.
+	// Thus to walk it, we start from the head, walking to the tail, which may wrap around to the beginning of the buffer as it is circular.
 	for(int i=(wcmdq_head+1)%N_WCMDQ;i!=wcmdq_tail;i=(i+1)%N_WCMDQ) {
 		int cmd=wcmdq[i][0];
 		if(cmd==WCMD_PAUSE||cmd==WCMD_WAVE) {
@@ -61,8 +64,13 @@ bool isKlattFrameFollowing() {
 }
 
 void fillSpeechPlayerFrame(frame_t * eFrame, speechPlayer_frame_t* spFrame) {
-	spFrame->voicePitch=(wdata.pitch)/4096;
+	// eSpeak stores pitch in 4096ths of a hz. Specifically comments in voice.h  mentions pitch<<12.
+	// SpeechPlayer deals with floating point values  of hz.
+	spFrame->voicePitch=(wdata.pitch)/4096.0;
+	// eSpeak stores voicing amplitude with 64 representing 100% according to comments in voice.h.
+	// speechPlayer uses floating point value of 1 as 100%.
 	spFrame->voiceAmplitude=(wvoice->voicing)/64.0;
+	// All of eSpeak's relative formant frequency ratio values are stored with 256 representing 100% according to comments in voice.h. 
 	spFrame->cf1=(eFrame->ffreq[1]*wvoice->freq[1]/256.0)+wvoice->freqadd[1];
 	spFrame->cf2=(eFrame->ffreq[2]*wvoice->freq[2]/256.0)+wvoice->freqadd[2];
 	spFrame->cf3=(eFrame->ffreq[3]*wvoice->freq[3]/256.0)+wvoice->freqadd[3];
@@ -129,7 +137,6 @@ int Wavegen_Klatt2(int length, int resume, frame_t *fr1, frame_t *fr2){
 			speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,minFadeLength/2,minFadeLength/2,-1,false);
 			spFrame2.outputGain=0;
 			speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,minFadeLength/2,minFadeLength/2,-1,false);
-			//speechPlayer_queueFrame(speechPlayerHandle,nullptr,1,1,-1,false);
 		}
 	}
 	unsigned int maxLength=(out_end-out_ptr)/sizeof(sample);
