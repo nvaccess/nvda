@@ -95,19 +95,26 @@ def checkForUpdate(auto=False):
 	@rtype: dict
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
-	synthDriverClass=speech.getSynth().__class__
-	brailleDisplayClass=braille.handler.display.__class__ if braille.handler else None
+	allowUsageStats=config.conf["update"]['allowUsageStats']
 	params = {
 		"autoCheck": auto,
+		"allowUsageStats":allowUsageStats,
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
 		"osVersion": winVersion.winVersionText,
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
-		"language": languageHandler.getLanguage(),
-		"installed": config.isInstalledCopy(),
-		"synthDriver":getQualifiedDriverClassNameForStats(synthDriverClass) if synthDriverClass else None,
-		"brailleDisplay":getQualifiedDriverClassNameForStats(brailleDisplayClass) if brailleDisplayClass else None,
 	}
+	if auto and allowUsageStats:
+		synthDriverClass=speech.getSynth().__class__
+		brailleDisplayClass=braille.handler.display.__class__ if braille.handler else None
+		extraParams={
+			"language": languageHandler.getLanguage(),
+			"installed": config.isInstalledCopy(),
+			"synthDriver":getQualifiedDriverClassNameForStats(synthDriverClass) if synthDriverClass else None,
+			"brailleDisplay":getQualifiedDriverClassNameForStats(brailleDisplayClass) if brailleDisplayClass else None,
+			"outputBrailleTable":config.conf['braille']['translationTable'] if brailleDisplayClass else None,
+		}
+		params.update(extraParams)
 	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
 	try:
 		res = urllib.urlopen(url)
