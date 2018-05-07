@@ -4,11 +4,15 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.htmlimport appModuleHandler
 
 import calendar
+import collections
 import time
 
 import api
 import appModuleHandler
 import ui
+
+# A named tuple for holding the elapsed and total playing times from Foobar2000's status bar
+statusBarTimes = collections.namedtuple('StatusBarTimes', ['elapsed', 'total'])
 
 def getParsingFormat(interval):
 	"""Attempts to find a suitable parsing format string for a HH:MM:SS, MM:SS or SS -style time interval."""
@@ -44,20 +48,21 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def getElapsedAndTotal(self):
-		if not self.statusBar: return None
+		empty = statusBarTimes(None, None)
+		if not self.statusBar: return empty
 		statusBarContents = self.statusBar.firstChild.name
 		try:
 			playingTimes = statusBarContents.split("|")[4].split("/")
-			return playingTimes[0], playingTimes[1]
-		except:
-			return (None, None)
+			return statusBarTimes(playingTimes[0], playingTimes[1])
+		except IndexError:
+			return empty
 
 	def getElapsedAndTotalIfPlaying(self):
-		elapsedTime, totalTime = self.getElapsedAndTotal()
-		if elapsedTime is None and totalTime is None:
+		elapsedAndTotalTime = self.getElapsedAndTotal()
+		if elapsedAndTotalTime.elapsed is None and elapsedAndTotalTime.total is None:
 			# Translators: Reported when no track is playing in Foobar 2000.
 			ui.message(_("No track playing"))
-		return elapsedTime, totalTime
+		return elapsedAndTotalTime
 
 	def script_reportRemainingTime(self,gesture):
 		elapsedTime, totalTime = self.getElapsedAndTotalIfPlaying()
