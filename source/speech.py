@@ -725,9 +725,10 @@ def speakPreviousWord(wordSeparator=None):
 			log.debugWarning("Error fetching previous word before caret", exc_info=True)
 			break
 		else:
-			# Sometimes (as observed in Firefox), findWordBeforeCaret moves to the wrong word.
-			# Checking whether the buffer is part of the TextInfo is far from perfect, but works in most cases.
-			if bufferedWord in info.text:
+			# #8065: Sometimes (as observed in Firefox), findWordBeforeCaret moves to the wrong word.
+			# Additionally, the TextInfo may contain one or more characters after the caret.
+			# Checking whether the stripped TextInfo text ends with the buffer is far from perfect, but works in most cases.
+			if info.text.rstrip().endswith(bufferedWord):
 				word = info.text
 				break
 			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r after attempt %d"%(bufferedWord, info.text, attempt+1))
