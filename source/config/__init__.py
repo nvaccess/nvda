@@ -503,7 +503,7 @@ class ConfigManager(object):
 		"""Save all modified profiles and the base configuration to disk.
 		"""
 		# #7598: give others a chance to either save settings early or terminate tasks.
-		configPreSave.notify()
+		preConfigSave.notify()
 		if not self._shouldWriteProfile:
 			log.info("Not writing profile, either --secure or --launcher args present")
 			return
@@ -518,7 +518,7 @@ class ConfigManager(object):
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
-		configPostSave.notify()
+		postConfigSave.notify()
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
@@ -530,7 +530,7 @@ class ConfigManager(object):
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
-		configReset.notify(factoryDefaults=factoryDefaults)
+		postConfigReset.notify(factoryDefaults=factoryDefaults)
 
 	def createProfile(self, name):
 		"""Create a profile.
