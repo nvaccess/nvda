@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-09 14:17+1000\n"
-"PO-Revision-Date: 2018-02-09 16:23+0900\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
+"PO-Revision-Date: 2018-04-28 10:33+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -530,17 +530,29 @@ msgstr "{number}の{total}"
 msgid "lv %s"
 msgstr "レベル %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "r{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "%s ギョー"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "r{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "%s 列"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -564,6 +576,20 @@ msgstr "レビュー"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "自動設定"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "サポートされていない入力"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} 押されていません"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} 押されています"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -775,18 +801,8 @@ msgstr "フランス語統一8点コンピューター点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+msgid "French (unified) grade 2"
 msgstr "フランス語統一2級点字"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "カナダフランス語1級点字"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "カナダフランス語2級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -885,8 +901,13 @@ msgstr "カシミール語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "リトアニア語"
+msgid "Lithuanian 8 dot"
+msgstr "リトアニア語8点点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "リトアニア語6点点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -905,8 +926,13 @@ msgstr "マニプリ語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "モンゴル語点字"
+msgid "Mongolian grade 1"
+msgstr "モンゴル語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "モンゴル語2級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -990,6 +1016,11 @@ msgstr "パンジャブ語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "ルーマニア語"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "ロシア語コンピューター点字"
 
@@ -1042,6 +1073,11 @@ msgstr "テルグ語1級点字"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "トルコ語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "ウクライナ語"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4102,6 +4138,10 @@ msgstr "点字表示を次にスクロール"
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "カーソル移動または点字セルの位置のオブジェクトのアクション実行"
 
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "点字セルの位置のテキストの書式を報告"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "点字表示を前の行に移動"
@@ -4129,6 +4169,36 @@ msgstr "点字入力を変換して enter キーを押す"
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "点字入力の変換"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "点字入力でシフトキーを押したり離したりする操作をエミュレート"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr "点字入力でコントロールキーを押したり離したりする操作をエミュレート"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "点字入力でオルトキーを押す操作をエミュレート"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr "点字入力でWindowsキーを押す操作をエミュレート"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "点字入力でNVDAキーを押したり離したりする操作をエミュレート"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -5747,10 +5817,22 @@ msgstr "選択項目削除"
 msgid "row %s"
 msgstr "%s行"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "%sまで"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "%s列"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "{row}行{column}列まで"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6257,14 +6339,23 @@ msgid "Error checking for update."
 msgstr "更新をチェック中にエラーが発生しました。"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "エラー"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "NVDAを更新"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr ""
+"NVDA {version} をダウンロードしましたが、まだインストールしていません。"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6276,9 +6367,15 @@ msgstr "NVDAバージョン{version}が利用可能です。"
 msgid "No update available."
 msgstr "更新はありません。"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "更新をダウンロードしてインストール(&I)"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "NVDA {version} のインストール(&I)"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "更新をもう一度ダウンロードする(&D)"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6293,6 +6390,25 @@ msgstr "後で通知(&L)"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "閉じる(&C)"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr ""
+"NVDAバージョン {version} をインストールできます。\n"
+"  \n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "更新を実行(&I)"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "更新をあとで行う(&P)"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "更新ファイルを保存できません"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6309,15 +6425,6 @@ msgstr "ダウンロード中"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "更新のダウンロード中にエラーが発生しました。"
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "更新はダウンロードされました。続けてインストールされます。"
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "更新をインストール"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7021,7 +7128,7 @@ msgstr "Bluetooth シリアルポート: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
-msgstr "HID キーボード シミュレーションの切替に対応していません"
+msgstr "HID キーボード シミュレーションの切り替えに対応していません"
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
@@ -7033,7 +7140,7 @@ msgstr "HID キーボード シミュレーション無効"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggles HID keyboard simulation"
-msgstr "HID キーボード シミュレーションの切替"
+msgstr "HID キーボード シミュレーションの切り替え"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7053,8 +7160,8 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWareブレイルノート"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare社のBrailliant BI/Bシリーズ"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "HumanWare社のBrailliant BI/Bシリーズ / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7070,7 +7177,7 @@ msgstr "HID キーボード シミュレーションは利用できません"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggle HID keyboard simulation"
-msgstr "HID キーボード シミュレーション"
+msgstr "HID キーボード シミュレーションの切り替え"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7115,10 +7222,6 @@ msgstr "点字なし"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier ブレイレックスの新型機種"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "タッチカーソルと書式の報告"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7203,6 +7306,37 @@ msgstr "一時辞書"
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "NVDAについて"
+
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"COM 登録の修復を行います。このツールは Firefox や Internet Explorer などのア"
+"プリで NVDA が正常に利用できなくなる問題の解決を試みます。システムのレジスト"
+"リを変更するために、管理者権限が必要です。続行しますか？"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "警告"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "COM 登録修復ツール"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "COM 登録が修復されるまでお待ちください。"
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "COM 登録の修復完了"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
@@ -7362,6 +7496,10 @@ msgstr "ポータブル版の作成(&C)..."
 msgid "&Install NVDA..."
 msgstr "NVDAのインストール(&I)..."
 
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "COM 登録の修復を実行..."
+
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
 msgstr "プラグインの再読み込み(&R)"
@@ -7438,6 +7576,14 @@ msgstr "設定情報を保存する"
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "寄付(&D)"
+
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "保留中の更新を実行(&U)"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "ダウンロードした NVDA への更新"
 
 msgid "E&xit"
 msgstr "終了(&X)"
@@ -7540,6 +7686,10 @@ msgstr "アドオンを無効化して再起動"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "デバッグログを有効化して再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "保留中の更新を実行"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7685,21 +7835,21 @@ msgstr "インストール"
 msgid "remove"
 msgstr "削除"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "無効"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "再起動後に無効"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "有効"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "再起動後に有効"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "保留中"
+msgid "disabled"
+msgstr "無効"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "実行中"
+msgid "enabled"
+msgstr "有効"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -7893,11 +8043,6 @@ msgstr ""
 "このトリガーはすでに別のプロファイルと関連付けされています。継続を選ぶと既存"
 "の関連付けが削除され、このプロファイルと関連付けされます。\n"
 "継続しますか？"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "警告"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8189,6 +8334,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "NVDAの更新を自動的に確認(&U)"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "保留中の NVDA の更新を起動時に通知(&P)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""

@@ -66,7 +66,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
-	outputPass1Only = boolean(default=true)
 
 	# Braille display driver settings
 	[[__many__]]
@@ -189,6 +188,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [update]
 	autoCheck = boolean(default=true)
+	startupNotification = boolean(default=true)
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)
@@ -200,6 +200,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [debugLog]
 	hwIo = boolean(default=false)
 	audioDucking = boolean(default=false)
+	gui = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")

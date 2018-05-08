@@ -933,7 +933,7 @@ Una casella di controllo che se attivata permette a NVDA di salvare automaticame
 
 ==== Mostra opzioni all'uscita di NVDA ====[GeneralSettingsShowExitOptions]
 Una casella di controllo che permette di decidere se, alla chiusura di NVDA, debbano comparire opzioni aggiuntive per decidere come chiudere il programma.
-Se attivata, quando si cerca di chiudere NVDA apparirà una finestra di dialogo che chiederà se riavviare lo screen reader, riavviarlo senza componenti aggiuntivi o semplicemente chiuderlo.
+Se attivata, quando si cerca di chiudere NVDA apparirà una finestra di dialogo che chiederà se uscire, riavviare lo screen reader, riavviarlo senza componenti aggiuntivi o installare gli aggiornamenti in sospeso.
 Se non la si attiva, NVDA uscirà immediatamente.
 
 ==== Riproduci un suono all'avvio o all'uscita di NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Questa opzione è disponibile soltanto nelle versioni Installer.
 ==== Controlla automaticamente la presenza di aggiornamenti di NVDA ====[GeneralSettingsCheckForUpdates]
 Se attivata, NVDA controllerà automaticamente la presenza di nuove versioni e notificherà l'utente della loro disponibilità.
 è anche possibile controllare manualmente, selezionando la voce controllo presenza aggiornamenti, situata all'interno del menu aiuto.
+
+==== Notifica aggiornamenti in sospeso all'avvio ====[GeneralSettingsNotifyPendingUpdates]
+Se la funzione è attivata, NVDA avviserà l'utente nel caso vi sia un aggiornamento in sospeso all'avvio, dando la possibilità di effettuare l'installazione.
+è anche possibile installare l'aggiornamento in sospeso manualmente dalla finestra di uscita di NVDA (se attivata), dal menu di NVDA, o quando si esegue un nuovo controllo dal menu aiuto..
 
 +++ Selezionare il sintetizzatore (NVDA+control+s) +++[SynthesizerSelection]
 La finestra di dialogo inerente il sintetizzatore, che si trova sotto il menu preferenze, sintetizzatore, permette di scegliere con quale sintesi vocale NVDA dovrà parlare.
@@ -1755,10 +1759,11 @@ NVDA chiederà se si è sicuri di voler disinstallare il pachetto.
 Come per l'installazione, lo screen reader deve essere riavviato per consentire la piena rimozione del componente aggiuntivo.
 Fino a quando non verrà effettuata tale operazione, accanto al componente aggiuntivo vi sarà la parola "Rimuovi".
 
-Per disattivare un componente aggiuntivo, premere il pulsante disabilita.
-Per riattivare un componente aggiuntivo disattivato in precedenza, servirsi del pulsante abilita.
-è possibile disattivare un componente aggiuntivo solo se lo stato dell'addon viene indicato come "in esecuzione" o "abilitato", mentre è possibile attivarlo solo se lo stato corrisponde a "sospeso" o "disabilitato".
+Per disattivare un componente aggiuntivo, premere il pulsante "disabilita".
+Per riattivare un componente aggiuntivo disattivato in precedenza, servirsi del pulsante "abilita".
+è possibile disattivare un componente aggiuntivo solo se lo stato dell'addon viene indicato come "abilitato", mentre è possibile attivarlo solo se lo stato corrisponde a "disabilitato".
 Per ciascuna pressione del pulsante abilita/disabilita, lo stato del componente aggiuntivo viene modificato per indicare ciò che accadrà al successivo riavvio di NVDA.
+Se il componente aggiuntivo è stato disabilitato in precedenza, lo stato mostrerà "abilitato dopo il riavvio". Se il componente aggiuntivo è stato in precedenza "Abilitato", lo stato visualizzerà "disabilitato dopo il riavvio".
 Esattamente come accade durante l'installazione o la disinstallazione di un componente aggiuntivo, NVDA ha bisogno di essere riavviato affinché le modifiche abbiano effetto.
 
 Il gestore dispone anche del pulsante chiudi, per chiudere la finestra di dialogo.
@@ -1919,6 +1924,7 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Sposta il Display Braille alla riga successiva | t4 |
 | Scorrimento Display Braille avanti | t5 o etouch3 |
 | Portare cursore sulla cella braille  | routing |
+| Mostra informazioni di formattazione testo sulla cella braille | cursor routing secondario |
 | Alterna simulazione tastiera HID | t1+spEnter |
 | spostarsi all'inizio della riga in modalità in linea | t1+t2 |
 | Spostarsi alla fine della riga in modalità in linea | t4+t5 |
@@ -2072,13 +2078,15 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Dire tutto | B6 |
 %kc:endInclude
  
-++ HumanWare Brailliant BI/B Series ++[HumanWareBrailliant]
-Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare http://www.humanware.com/], comprese BI 32, BI 40 e B 80, sono supportate quando connesse tramite USB o Bluetooth.
+++ HumanWare Brailliant BI/B Series / BrailleNote Touch ++[HumanWareBrailliant]
+Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare http://www.humanware.com/], comprese BI 14, BI 32, BI 40 e B 80, sono supportate quando connesse tramite USB o Bluetooth.
 In caso di connessione tramite USB con protocollo impostato su Humanware, è necessario prima installare i driver sviluppati dal produttore.
 Non è richiesto alcun driver USB invece nel caso in cui il protocollo sia impostato su OpenBraille.
 
-Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
+è supportato anche il BrailleNote Touch, e non richiede l'installazione di alcun driver.
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per queste rigghe braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
++++ Assegnazione tasti per tutti i modelli +++
 %kc:beginInclude
 || Nome | Tasto |
 | Scorri Display Braille indietro | Sinistra |
@@ -2091,16 +2099,34 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Tasto Freccia giù | spazio+Punto4 |
 | Tasto Freccia Sinistra | spazio+punto3 |
 | Tasto Freccia Destra | spazio+punto6 |
-| NVDA Menu | c1+c3+c4+c5 (command n) |
 | shift+Tasto tab | spazio+punto1+punto3 |
 | Tasto tab | spazio+punto4+punto6 |
 | Tasto alt | spazio+punto1+punto3+punto4 (spazio+m) |
 | Tasto esc | spazio+punto1+punto5 (spazio+e) |
 | Tasto Invio | punto8 |
-| Tasto windows+d (Riduci a icona tutte le applicazioni) | c1+c4+c5 (command d) |
 | Tasto windows | spazio+punto3+punto4 |
 | Tasto alt+tab | spazio+punto2+punto3+punto4+punto5 (spazio+t) |
-| Dire Tutto | c1+c2+c3+c4+c5+c6 |
+| Menu NVDA | spazio+punto1+punto3+punto4+punto5 (spazio+n) |
+| Tasti windows+d (Riduce a icona tutte le applicazioni) | spazio+punto1+punto4+punto5 (spazio+d) |
+| Dire Tutto | punto1+punto2+punto3+punto4+punto5+punto6 |
+%kc:endInclude
+
++++ Assegnazione tasti per Brailliant BI 32, BI 40 e B 80 +++ 
+%kc:beginInclude
+|| Nome | Tasto |
+| Menu NVDA | c1+c3+c4+c5 (command n) |
+| Tasti Windows+d (riduce a icona tutte le applicazioni) | c1+c4+c5 (command d) |
+| Dire tutto | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+ 
++++ Assegnazione tasti per Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Nome | Tasto |
+| Freccia su | joystick su |
+| Freccia giù | joystick giù |
+| Freccia sinistra | joystick sinistra |
+| Freccia destra | joystick destra |
+| Tasto invio | joystick action |
 %kc:endInclude
 
 ++ HIMS serie Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
@@ -2252,7 +2278,7 @@ Seguono i comandi per i Display Papenmeier associati con NVDA:
 | Spostarsi al primo oggetto contenuto | dn2 |
 | Spostarsi all'oggetto precedente | left2 |
 | Spostarsi all'oggetto successivo  | right2 |
-| Annuncia formattazione testo | Riga cursor routing superiore |
+| Mostra formattazione testo sulle celle braille | Riga cursor routing superiore |
 %kc:endInclude
 
 I modelli Trio dispongono di ulteriori quattro tasti aggiuntivi presenti sulla parte frontale della tastiera braille.
@@ -2326,7 +2352,7 @@ Dispositivi con EAB
 | Spostarsi al primo oggetto contenuto | dn2 |
 | Spostarsi all'oggetto precedente | left2 |
 | Spostarsi all'oggetto successivo  | right2 |
-| Annuncia formattazione testo | Riga cursor routing superiore |
+| Mostra formattazione testo sulle celle braille | Riga cursor routing superiore |
 
 BRAILLEX Tiny:
 || Nome | Tasto |
@@ -2369,6 +2395,8 @@ Sono supportati i seguenti modelli:
 - BrailleNote MPower (connessione seriale e bluetooth)
 - BrailleNote Apex (connessione USB e Bluetooth)
 -
+
+Per il BrailleNote Touch, si prega di fare riferimento alla [sezione Brailliant BI Series / BrailleNote Touch HumanWareBrailliant].
 
 Se il proprio dispositivo supporta più di un tipo di connessione, quando si connette il Braillenote a NVDA, è necessario impostare  la porta nelle opzioni terminale braille del Braillenote.
 Si prega di consultare il manuale del Braillenote per maggiori informazioni.
@@ -2455,7 +2483,7 @@ A causa di ciò, e per mantenere una buona compatibilità con altri screen reade
 %kc:endInclude
 
 ++ Display Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-I display Esys, Esytime e Iris propuntoti da [Eurobraille http://www.eurobraille.fr/] sono supportati da NVDA.
+I display Esys, Esytime e Iris prodotti da [Eurobraille http://www.eurobraille.fr/] sono supportati da NVDA.
 I dispositivi Esys e Esytime-Evo sono supportati quando connessi via USB o bluetooth.
 I dispositivi Esytime più vecchi invece sono gestiti solo tramite USB.
 Le barre Iris infine possono essere connesse soltanto tramite porta seriale.
@@ -2471,7 +2499,8 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Scorri display braille indietro | switch1-6sinistro, l1 |
 | Scorri display braille avanti | switch1-6Destro, l8 |
 | Vai al focus attuale | switch1-6Sinistro+switch1-6Destro, l1+l8 |
-| Route to braille cell | routing, doubleRouting|
+| Route to braille cell | cursor routing |
+| Mostra informazioni di formattazione sulle celle braille | doppio cursor routing |
 | Vai alla riga precedente in modalità revisione | joystick1Su |
 | Vai alla riga successiva in modalità revisione | joystick1Giù |
 | Vai al carattere precedente in modalità revisione | joystick1Sinistro |
@@ -2495,7 +2524,7 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Tasto 2 del tastierino numerico | punto1+punto2+punto6+backspace |
 | Tasto 3 del tastierino numerico | punto1+punto4+punto6+backspace |
 | Tasto 4 del tastierino numerico | punto1+punto4+punto5+punto6+backspace |
-| %asto 5 del tastierino numerico | punto1+punto5+punto6+backspace |
+| Tasto 5 del tastierino numerico | punto1+punto5+punto6+backspace |
 | Tasto 6 del tastierino numerico | punto1+punto2+punto4+punto6+backspace |
 | Tasto 7 del tastierino numerico | punto1+punto2+punto4+punto5+punto6+backspace |
 | Tasto 8 del tastierino numerico | punto1+punto2+punto5+punto6+backspace |
@@ -2529,8 +2558,11 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Tasto BloccaMaiuscole | punto7+backspace, punto8+backspace |
 | Tasto numLock | punto3+backspace, punto6+backspace |
 | Tasto shift | punto7+spazio, l4 |
-| Tasto control | punto7+punto8+spazio, punto1+punto7+punto8+spazio, punto4+punto7+punto8+spazio, l5 |
-| Tasto alt | punto8+spazio, punto1+punto8+spazio, punto4+punto8+spazio, l6 |
+| Alterna tasto shift | punto1+punto7+spazio, punto4+punto7+spazio |
+| tasto control | punto7+punto8+spazio, l5 |
+| Alterna tasto control | dot1+dot7+dot8+space, dot4+dot7+dot8+space |
+| Tasto alt | punto8+spazio, l6 |
+| Alterna tasto alt | punto1+punto8+spazio, punto4+punto8+spazio |
 | Alterna simulazione tastiera HID | esytime):l1+joystick1Giù, esytime):l8+joystick1Giù |
 %kc:endInclude
 

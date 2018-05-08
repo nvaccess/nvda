@@ -305,7 +305,10 @@ class Gecko_ia2(VirtualBuffer):
 		docHandle = self.rootDocHandle
 		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
 		try:
-			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			try:
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			except AttributeError:
+				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
 			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			if cell.IA2Attributes.get('hidden'):
 				raise LookupError("Found hidden cell") 

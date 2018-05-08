@@ -935,7 +935,7 @@ Als u een vinkje plaatst in het selectievakje zal de huidige configuratie automa
 
 ==== Toon afsluitopties bij het afsluiten van NVDA ====[GeneralSettingsShowExitOptions]
 Als u het selectievakje aanvinkt, verschijnt er bij het beëindigen van NVDA een dialoogvenster met afsluitopties. 
-U hebt de keuze uit Afsluiten, Herstarten of Herstarten zonder Add-ons.
+U hebt de keuze uit Afsluiten, Herstarten, Herstarten zonder Add-ons of Installeren van eventueel beschikbare updates.
 
 ==== Geluid bij starten of afsluiten NVDA ====[GeneralSettingsPlaySounds]
 Als u een vinkje plaatst in dit selectievakje zal NVDA bij het opstarten of afsluiten geluid afspelen.
@@ -961,6 +961,10 @@ Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet v
 ==== Automatisch controleren op NVDA updates ====[GeneralSettingsCheckForUpdates]
 Als dit selectievakje is aangevinkt zal NVDA automatisch controleren of er bijgewerkte versies van NVDA beschikbaar zijn en dit laten weten als dit het geval is.
 Handmatig controleren of er een update beschikbaar is, kan ook. Ga dan naar: “Op update controleren” onder Help in het NVDA Menu.
+
+==== Beschikbare Updates bij opstarten melden  ====[GeneralSettingsNotifyPendingUpdates]
+Als deze optie is ingeschakeld zal NVDA u laten weten wanneer er een update beschikbaar is bij het starten van het programma, waarbij u de mogelijkheid wordt geboden deze te installeren.
+Een beschikbare update kan ook handmatig worden geïnstalleerd vanuit  het dialoogvenster 'NVDA Afsluiten'(mits deze optie ingeschakeld is) of vanuit  het NVDA-menu, door op updates te controleren via het Help-menu.
 
 +++ Synthesizerkeuze (NVDA+control+s) +++[SynthesizerSelection]
 Om een synthesizer te kiezen die door NVDA wordt gebruikt voor spraakuitvoer gaat u in het NVDA-menu naar “Opties” en vervolgens naar “Synthesizer”.
@@ -1757,8 +1761,9 @@ Zolang dit niet gebeurt, wordt voor die Add-on als status "Verwijderen" weergege
 
 Om een add-on uit te schakelen drukt u op de knop ' Add-on Uitschakelen' 
 Om een eerder uitgeschakelde add-on in te schakelen drukt u op de knop 'Add-on Inschakelen'
-U kunt een add-on uitschakelen als de status van de add-on als werkend of ingeschakeld wordt aangemerkt. Een add-on kan worden ingeschakeld indien de status wordt omschreven als 'opgeschort'of 'uitgeschakeld'.
+U kunt een add-on uitschakelen als de status van de add-on als werkend of ingeschakeld wordt aangemerkt. Een add-on kan worden ingeschakeld indien de status wordt omschreven als 'uitgeschakeld'.
 Telkens wanneer de knop 'In- / Uitschakelen'wordt ingedrukt geeft de statusvermelding van de add-on de wijziging te zien die geldt na herstart van NVDA.
+Als een add-on eerder werd uitgeschakeld, zal 'ingeschakeld (werkend) na een herstart' als  status worden vermeld.  Als een add-on eerder werd'ingeschakeld (werkend)', zal"uitgeschakeld na een herstart' als  status worden vermeld.
 Evenals bij het installeren en verwijderen van add-ons, moet u NVDA opnieuw starten om de wijzigingen door te voeren.
 
 Door op de knop "Sluiten" te drukken wordt het dialoogvenster "Add-ons Beheren" gesloten.
@@ -1921,6 +1926,7 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | Brailleregel naar volgende regel brengen | t4 |
 | Brailleregel vooruit scrollen | t5 of etouch3 |
 | Naar braillecel gaan| Routing |
+| tekstopmaakg onder braillecel melden | secondaire routing |
 | HID-toetsenbordsimulatie in- of uitschakelen | t1+spEnter |
 | Naar bovenste regel verplaatsen in leesmodus | t1+t2 |
 | Naar onderste regel verplaatsen in leesmodus | t4+t5 |
@@ -2074,13 +2080,16 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | alles lezen | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B-Serie ++[HumanWareBrailliant]
-De brailleleesregels uit de serie BI en B van  [HumanWare http://www.humanware.de/], waaronder  de BI 32, BI 40 en de B 80, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
+++ HumanWare Brailliant BI/B Serie / BrailleNote Touch ++[HumanWareBrailliant]
+De brailleleesregels uit de serie BI en B van  [HumanWare http://www.humanware.com/]], waaronder  de BI 14, BI 32, BI 40 en B 80,, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
 Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
 USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
 
-Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
+De BrailleNote Touch wordt ook ondersteund en hiervoor hoeven geen drivers te worden geïnstalleerd.
+
+Bij gebruik van de Brailliant BI/B en de BrailleNote touch  met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
++++Toegewezen toetsen die  gelden voor  Alle modellen +++
 %kc:beginInclude
 || Naam | Toets |
 | Brailleregel terugscrollen | Links |
@@ -2093,16 +2102,34 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | Toets Pijl omlaag | Spatiebalk+Punt4 |
 | Toets Pijl links | Spatiebalk+Punt3 |
 | Toets Pijl rechts | Spatiebalk+Punt6 |
-| NVDA-menu | c1+c3+c4+c5 (commando n) |
 | Shift+Tab-toets | Spatiebalk+Punt1+Punt3 |
 | Tab-Toets | Spatiebalk+Punt4+Punt6 |
 | Alt-Toets | Spatiebalk+Punt1+Punt3+Punt4 (spatiebalk+m) |
 | Escape-toets | Spatiebalk+Punt1+Punt5 (spatiebalk+e) |
 | Enter-toets | Punt8 |
-| Windows-toets+d (alle toepassingen minimaliseren) | c1+c4+c5 (commando d) |
 | Windows-toets | Spatiebalk+Punt3+Punt4 |
 | Alt+Tabtoets | Spatiebalk+Punt2+Punt3+Punt4+Punt5 (spatiebalk+t) |
-| Alles lezen | c1+c2+c3+c4+c5+c6 |
+| NVDA Menu | spatie+punt1+punt3+punt4+punt5 (spatie+n) |
+| windows+d toets (alle toepassingen minimaliseren) | spatie+punt1+punt4+punt5 (spatie+d) |
+| alles lezen | spatie+punt1+punt2+punt3+punt4+punt5+punt6 |
+%kc:endInclude
+
++++ Toegewezen toetsen  voor de Brailliant BI 32, BI 40 en B 80 +++ 
+%kc:beginInclude
+|| Naam | toets |
+| NVDA Menu | c1+c3+c4+c5 (commando n) |
+| windows+d toets (alle toepassingen minimaliseren) | c1+c4+c5 (commanod d) |
+ |Alles lezen | c1+c2+c3+c4+c5+c6 |
+ %kc:endInclude
+ 
++++ Toegewezen toetsen voor de Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Naam | Toets |
+| Pijl Omhoog | joystick naar boven |
+| Pijl Omlaag | joystick naar beneden |
+| Pijl Links | joystick naar links |
+| Pijl Rechts | joystick naar rechts |
+| Enter-toets | joystick actie |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serie ++[Hims]
@@ -2254,7 +2281,7 @@ De volgende toetscommando's zijn voor Papenmeier-Brailleleesregels beschikbaar:
 | Navigatorobject één niveau naar beneden verplaatsen | omlaag2 |
 | Navigatorobject naar volgende Object verplaatsen | links2 |
 | Navigatorobject naar voorafgaand object verplaatsen | rechts2 |
-| Documentopmaak weergeven | bovenste rij routingtoetsen ||
+| Tekstopmaak weergeven onder braillecel | bovenste rij routingtoetsen ||
 %kc:endInclude
 
 De Braillex Trio heeft vierr extra toetsen die zich voor het brailletoetsenbord bevinden.
@@ -2329,7 +2356,7 @@ Toestellen met EAB:
 | Navigatorobject één niveau naar beneden verplaatsen | omlaag2 |
 | Navigatorobject naar volgende Object verplaatsen | rechts2 |
 | Navigatorobject naar voorafgaand object verplaatsen | links2 |
-| Documentopmaak weergeven | bovenste rij routingtoetsen | 
+| Tekstopmaak onder braillecel weergeven | bovenste rij routingtoetsen | 
 
 BRAILLEX Tiny:
 || Naam | Toets |
@@ -2343,7 +2370,7 @@ BRAILLEX Tiny:
 | Navigatorobject één niveau naar beneden verplaatsen | r1+dn |
 | Navigatorobject naar voorafgaand Object verplaatsen | r1+left |
 | Navigatorobject naar volgende Object verplaatsen | r1+right |
-| Documentopmaak weergeven | reportf |
+| Tekstopmaak onder braillecel weergeven | Bovenste routingstrip |
 | Titelweergeven | l1+omhoog |
 | Statusbalk weergeven | l2+omlaag |
 
@@ -2471,7 +2498,8 @@ Hieronder volgen de toetscommando's voor deze leesregels met NVDA. Raadpleeg de 
 | Leesregel terugscrollen | schakelknop1-6Links, l1 |
 | Leesregel vooruitscrollen | schakelknop1-6Rechts, l8 |
 | Naar huidige focus gaan | schakelknop1-6inkst+schakelknop1-6Rechts, l1+l8 |
-| Naar braillcel springen | routing, dubbelRouting|
+| Naar braillcel springen | routing |
+| tekstopmaakg onder braillecel weergeven | Dubbelrouting |
 | Naar vorige regel gaan in leesmodus | joystick1Omhoog |
 | Naar volgende regel gaan in leesmodus | joystick1Omlaag |
 | Naar vorig teken gaan in leesmodus | joystick1Links |
@@ -2529,8 +2557,11 @@ Hieronder volgen de toetscommando's voor deze leesregels met NVDA. Raadpleeg de 
 | capsLock-toets | punt7+backspace, dot8+backspace |
 | numLock-toets | punt3+backspace, dot6+backspace |
 | shift-toets | punt7+spatie, l4 |
-| control-toets | punt7+punt8+spatie, punt1+punt7+punt8+spatie, punt4+punt7+punt8+spatie, l5 |
-| alt-toets | punt8+spatie, punt1+punt8+spatie, punt4+punt8+spatie, l6 |
+| Schakelen met shift-toets | punt1+punt7+spatie, punt4+punt7+spatie |
+| control-toets | punt7+punt8+spatie, l5 |
+| Schakelen met control-toets | punt1+punt7+punt8+spatie, punt4+punt7+punt8+spatie |
+| alt-toets | punt8+spatie, l6 |
+| Schakelen met alt-toets | punt1+punt8+spatie, punt4+punt8+spatie |
 | HID-toetsenbordinvoersimulatie Aan/Uit | esytime):l1+joystick1Omlaag, esytime):l8+joystick1Omlaag |
 %kc:endInclude
 

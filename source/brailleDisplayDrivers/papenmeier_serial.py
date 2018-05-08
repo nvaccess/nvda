@@ -2,9 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2013 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited
+#Copyright (C) 2012-2017 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited, Davy Kager
 #Author: Tobias Platen (nvda@lists.thm.de)
-#minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com> and James Teh
+#minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 #used braille port selection code from braillenote driver
 
 from collections import OrderedDict
@@ -150,13 +150,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
 		self._keyCheckTimer.Start(KEY_CHECK_INTERVAL)
 
-	def script_upperRouting(self, gesture):
-		globalCommands.commands.script_braille_routeTo(gesture)
-		wx.CallLater(50, scriptHandler.executeScript, globalCommands.commands.script_reportFormatting, gesture)
-
-	# Translators: Describes action of routing buttons on a braille display.
-	script_upperRouting.__doc__ = _("Route to and report formatting")
-
 	def terminate(self):
 		"""free resources"""
 		super(BrailleDisplayDriver, self).terminate()
@@ -211,6 +204,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"braille_previousLine": ("br(papenmeier_serial):up",),
 			"braille_nextLine": ("br(papenmeier_serial):dn",),
 			"braille_routeTo": ("br(papenmeier_serial):route",),
+			"braille_reportFormatting": ("br(papenmeier_serial):upperRouting",),
 
 			"braille_toggleTether": ("br(papenmeier_serial):r2",),
 			"review_currentCharacter": ("br(papenmeier_serial):l1",),
@@ -226,10 +220,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"reportStatusLine": ("br(papenmeier_serial):l2,dn",),
 		}
 	})
-
-	__gestures = {
-		"br(papenmeier_serial):upperRouting": "upperRouting",
-	}
 
 def brl_keyname2(keys):
 	"""returns keyname for key index on displays with eab"""
