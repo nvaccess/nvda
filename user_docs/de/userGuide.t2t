@@ -281,7 +281,7 @@ Der Systemfokus, auch bekannt als Fokus, ist dasjenige [Objekt #Objects], das di
 Ein Beispiel: Wenn Sie einen Text in einem Eingabefeld eingeben, wird dieses fokussiert.
 
 Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der Systemfokus verschoben wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab zum Wechseln zwischen Elementen in einem Dialogfeld, Alt oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur navigation innerhalb eines Menüs sowie alt+tab zum Wechseln zwischen laufenden Anwendungen
-Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld etc), Wert (zum Beispiel der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (zum Beispiel «1 von 5» in einer Liste oder «1 von 1 Ebene 0» in einer Baumansicht), den Status des objekts (zum Beispiel aktiviert, hervorgehoben, ausgewählt etc).
+Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld etc), Wert (zum Beispiel der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (zum Beispiel "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des objekts (zum Beispiel aktiviert, hervorgehoben, ausgewählt etc).
 
 Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 %kc:beginInclude
@@ -933,7 +933,7 @@ Diese Option ist ein Kontrollfeld, wenn aktiviert, speichert NVDA jedes Mal beim
 
 ==== Optionen zum Beenden von NVDA anzeigen ====[GeneralSettingsShowExitOptions]
 Mit diesem Kontrollkästchen legen Sie fest, ob beim Beenden von NVDA ein Dialog angezeigt wird. Hier können Sie verschiedne Aktionen auslösen.
-Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialog bestimmen, ob Sie NVDA beenden, neu starten oder mit deaktivierten Erweiterungen neu starten möchten.
+Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialog bestimmen, ob Sie NVDA beenden, neu starten, mit deaktivierten Erweiterungen neu starten oder eine ausstehende Aktualisierung installieren möchten.
 Wenn das Kontrollkästchen nicht aktiviert ist, wird NVDA sofort beendet.
 
 ==== Klänge abspielen, wenn NVDA gestartet oder beendet wird ====[GeneralSettingsPlaySounds]
@@ -959,7 +959,11 @@ Diese Option ist nur in der installierten Version verfügbar!
 
 ==== Automatisch nach Aktualisierungen suchen ====[GeneralSettingsCheckForUpdates]
 Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
-Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe| -machenenü wählen.
+Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe-Menü wählen.
+
+==== Beim Start von NVDA &ausstehende Aktualisierungen melden ====[GeneralSettingsNotifyPendingUpdates]
+Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, falls eine Aktualisierung aussteht und Ihnen die Möglichkeit geben, diese zu installieren. 
+Sie können die ausstehende Aktualisierung auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Aktualisierungen aus dem Hilfe-Menü installieren
 
 +++ Sprachausgabe (NVDA+Steuerung+S) +++[SynthesizerSelection]
 Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden soll.
@@ -1767,7 +1771,7 @@ Wenn Sie diesen Schalter zu einem Zeitpunkt drücken, zu dem Erweiterungen insta
 
 In früheren NVDA-Versionen war es möglich, den Funktionsumfang durch Plug-ins, Anwendungsmodule oder Treiber zu erweitern, indem diese in das benutzerspezifische Konfigurationsverzeichnis kopiert wurden. 
 Auch wenn NVDA solche Module immer noch lädt, werden diese nicht im Erweiterungs-Manager angezeigt. 
-Es ist daher zu empfehlen, derartig «untergeschobene» Dateien zu entfernen und eine passende Erweiterung zu installieren, sofern verfügbar.
+Es ist daher zu empfehlen, derartig "untergeschobene" Dateien zu entfernen und eine passende Erweiterung zu installieren, sofern verfügbar.
 
 Um denDialog Erweiterungen verwalten per Tastenkombination aufrufen zu können, müssen Sie diesem eine Tastenkombination zuweisen. Verwenden Sie hierzu den [Dialog Eingaben #InputGestures]
 
@@ -1920,6 +1924,7 @@ Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 | Braillezeile zur nächsten Zeile ziehen | T4 |
 | Braillezeile weiterscrollen | T5 oder etouch3 |
 | Zum aktuellen Modul auf der Brailezeile springen | Routing |
+| Textformatierung am aktuellen Modul ausgeben | obere Routing |
 | HID-Tastatursimulation ein- oder ausschalten | t1+spEingabe |
 | NVDA-Cursor zur ersten Zeile bewegen | t1+t2 |
 | NVDA-Cursor zur letzten Zeile bewegen | t4+t5 |
@@ -2274,7 +2279,7 @@ Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen in Kombination mi
 | Bewegt das Navigator-Objekt zum ersten beinhaltenden Objekt | Ab2 |
 | Bewegt das Navigator-Objekt zum nächsten Objekt | Rechts2 |
 | Bewegt das Navigator-Objekt zum vorherigen Objekt | Links2 |
-| Liest Formatierungsinformationen an der Cursorposition in einen Dokument vor | Obere Routingreihe |
+| Textformatierung am aktuellen Modul ausgeben | Obere Routingreihe |
 %kc:endInclude
 
 Die Braillex Trio besitzt vor der BrailleTastatur noch vier zusätzliche Tasten.
@@ -2348,7 +2353,7 @@ Geräte mit Navigationsleiste
 | Zum ersten untergeordneten Objekt springen | Ab2 |
 | Zum vorherigen objekt bewegen | Links2 |
 | Zum nächsten Objekt bewegen | Rechts2 |
-| Textformatierungen ausgeben | Obere Routingreihe |
+| Textformatierung am Modul ausgeben | Obere Routingreihe |
 
 BRAILLEX Tiny
 || Name | Taste |
@@ -2363,7 +2368,7 @@ BRAILLEX Tiny
 | Zum ersten untergeordneten Objekt bewegen | R1+Ab |
 | Zum vorherigen Objekt bewegen | R1+Links |
 | Zum nächsten Objekt bewegen | R1+Rechts |
-| Textformatierungen angeben | Attribut |
+| Textformatierung am Modul  ausgeben | obere Routing-Reihe |
 | Titelzeile der aktuellen Anwendung anzeigen | L1+Auf |
 | Statuszeile anzeigen | L2+Ab |
 
@@ -2372,7 +2377,7 @@ BRAILLEX 2D Screen
 | Aktuelles Zeichen am NVDA-Cursor ausgeben | L1 |
 | Aktuelles Navigator-Objekt aktivieren | L2 |
 | Kopplung der Braillezeile konfigurieren | R2 |
-| Textformatierungen angeben | ReportF |
+| Textformatierung am Braille-Modul ausgeben | obere Routing-Reihe |
 | Braillezeile zur vorherigen Zeile bewegen | Auf |
 | Braillezeile zurückscrollen | Links |
 | Braillezeile vorwärtsscrollen | Rechts |
@@ -2495,7 +2500,8 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 | Rückwärts scrollen | Wechsel1-6links, l1 |
 | Vorwärts scrollen | Wechsel1-6Rechts, l8 |
 | zum aktuellen Fokus ziehen | Wechsel1-6Links+Wechsel1-6Rechts, l1+l8 |
-| Cursor zur Breillezelle ziehen | routing, doppelRouting|
+| Cursor zur Braillezelle ziehen | routing |
+| Textformatierung an der Braillezelle ausgeben | Doppel-Routing |
 | NVDA-Cursor zur vorherigen zeile ziehen | Joystick1nach oben |
 | NVDA-Cursor zur nächsten Zeile ziehen | joystick1nach unten |
 | NVDA-Cursor zum vorherigen Zeichen ziehen | joystick1Links |
@@ -2553,8 +2559,11 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 | Großschreibtaste | Punkt7+Rücktaste, Punkt8+Rücktaste |
 | Nummernblock-Taste | Punkt3+Rücktaste, Punkt6+Rücktaste |
 | Umschalt-Taste | Punkt7+Leertaste, l4 |
-| Steuerung-Taste | Punkte7+8+Leertaste, Punkte1+7+8+Leertaste, Punkte4+7+8+Leertaste, l5 |
-| Alt-Taste | Punkt8+Leertaste, Punkte1+8+Leertaste, Punkte4+8+Leertaste, l6 |
+| Umschalt-taste gedrückt halten | Punkte1+7+Leertaste, Punkte4+7+Leertaste |
+| Steuerung-Taste | Punkte7+8+Leertaste, l5 |
+| Steuerung-Taste gedrückt halten | Punkte1+7+8+Leertaste, Punkt4+7+8+Leertaste |
+| Alt-Taste | Punkt8+Leertaste, l6 |
+| Alt-Taste gedrückt halten | Punkte1+8+Leertaste, Punkte4+8+Leertaste, l6 |
 | HID-TastaturSimulation ein- oder ausschalten | esytime):l1+joystick1nach unten, esytime):l8+joystick1nach unten |
 %kc:endInclude
 

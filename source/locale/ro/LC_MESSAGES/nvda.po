@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-16 00:10+1000\n"
-"PO-Revision-Date: 2018-03-18 21:26+0200\n"
+"POT-Creation-Date: 2018-04-27 00:10+1000\n"
+"PO-Revision-Date: 2018-04-28 20:42+0300\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -576,6 +576,20 @@ msgstr "a examina"
 msgid "Automatic"
 msgstr "Automat"
 
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Intrare nesuportată"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} lansat"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} apăsat"
+
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
 msgid "dot"
@@ -786,18 +800,8 @@ msgstr "Franceză (unificată) , braille în 8 puncte pentru calculator"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+msgid "French (unified) grade 2"
 msgstr "Franceză (unificată) grad 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "Franceză (Canada) grad 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "Franceză (Canada) grad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -896,8 +900,13 @@ msgstr "Kashmiri grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "lituaniană"
+msgid "Lithuanian 8 dot"
+msgstr "lituaniană 8 puncte"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "lituaniană 6 puncte"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -916,8 +925,13 @@ msgstr "Manipuri grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "Mongol"
+msgid "Mongolian grade 1"
+msgstr "Mongolă grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "Mongolă grad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1001,6 +1015,11 @@ msgstr "Punjabă grad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "Română"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "Braille rusesc pentru cod mașină"
 
@@ -1053,6 +1072,11 @@ msgstr "Telugu grade 1"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "Turcă grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "Ucraineană"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4200,6 +4224,10 @@ msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
 "Dirijează cursorul la, sau activează obiectul de sub celula braille curentă"
 
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "Raportează informațiile pentru textul de sub această celulă braille"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "Mută afișajul braille la linia anterioară"
@@ -4227,6 +4255,46 @@ msgstr "Traduce orice intrare braille și apasă tasta enter"
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Traduce orice intrare braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Comută virtual la shift pentru a simula o combinație de taste cu intrarea "
+"braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Comută virtual la control pentru a simula o combinație de taste cu intrarea "
+"braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Comută virtual la alt pentru a simula o combinație de taste cu intrarea "
+"braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Comută virtual la windows stânga pentru a simula o combinație de taste cu "
+"intrarea braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Comută virtual la NVDA pentru a simula o combinație de taste cu intrarea "
+"braille"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -6378,14 +6446,22 @@ msgid "Error checking for update."
 msgstr "Eroare la căutarea actualizărilor"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Eroare"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "Actualizare NVDA"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr "Versiunea NVDA {version} a fost descărcată și așteaptă instalarea."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6397,9 +6473,15 @@ msgstr "Versiunea {version} pentru NVDA este disponibilă"
 msgid "No update available."
 msgstr "Actualizare indisponibilă"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "Descarcă și &instalează actualizarea"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "Instalea&ză NVDA {version}"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "&reDescarcă actualizarea"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6414,6 +6496,23 @@ msgstr "Amintește-mi mai &târziu"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "În&chide"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "Versiunea {version} pentru NVDA este gata să fie instalată.\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "I&nstalează Actualizarea"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "Am&ână actualizarea"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "Nu se poate amâna actualizarea."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6430,15 +6529,6 @@ msgstr "Se descarcă"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "Eroare la descărcarea actualizării."
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "Actualizare descărcată. Acum va fi instalată."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "Instalează Actualizarea"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7243,10 +7333,6 @@ msgstr "Fără braille"
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Modele recente Papenmeier BRAILLEX"
 
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "Transferă la și anunță formatul"
-
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
 msgstr "Modele mai vechi Papenmeier BRAILLEX"
@@ -7332,6 +7418,42 @@ msgstr "Dicționar temporar"
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "Despre NVDA"
+
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"Sunteți pe punctul de a rula instrumentul de remediere a înregistrării COM. "
+"Această unealtă va încerca să remedieze probleme comune de  sistem care "
+"împiedică NVDA să acceseze conținut din multe programe, inclusiv din Firefox "
+"și Internet Explorer. Acest instrument trebuie să facă modificări în "
+"regiștrii sistemului și, prin urmare, necesită acces administrativ. Sunteți "
+"sigur că doriți să continuați?"
+
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Avertisment"
+
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "Instrument de remediere a înregistrării COM"
+
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr ""
+"Vă rugăm să așteptați cât timp NVDA încearcă să remedieze înregistrările COM "
+"ale sistemului dumneavoastră."
+
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Instrument de remediere a înregistrării COM complet"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
@@ -7501,6 +7623,10 @@ msgstr "Creează copie portabilă..."
 msgid "&Install NVDA..."
 msgstr "&Instalează NVDA..."
 
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Rulează instrumentul de remediere a înregistrării COM..."
+
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
 msgstr "Reîncarcă extensii plug-in"
@@ -7577,6 +7703,14 @@ msgstr "Scrie configurarea curentă în nvda.ini"
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "Donează"
+
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "Instalează Actualizarea &în așteptare"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Execută o actualizare NVDA descărcată anterior"
 
 msgid "E&xit"
 msgstr "Ieșir&e"
@@ -7682,6 +7816,10 @@ msgstr "Repornire cu suplimentele dezactivate"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "Repornire cu diagnosticarea activată"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Instalează Actualizarea în așteptare"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8039,11 +8177,6 @@ msgstr ""
 "fi înlăturat de la profilul respectiv și va fi asociat acestuia.\n"
 "Sigur vreți să continuați?"
 
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Avertisment"
-
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
@@ -8343,6 +8476,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "&Verifică automat existența actualizărilor NVDA"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "Notific&ă actualizarea în așteptare la pornire"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -10741,6 +10879,24 @@ msgstr "Spațiere de două linii"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Spațiere de 1.5 linii"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "Franceză (Canada) grad 1"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "Franceză (Canada) grad 2"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongol"
+
+#~ msgid "Download and &install update"
+#~ msgstr "Descarcă și &instalează actualizarea"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "Actualizare descărcată. Acum va fi instalată."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "Transferă la și anunță formatul"
 
 #~ msgid "r%s"
 #~ msgstr "r%s"

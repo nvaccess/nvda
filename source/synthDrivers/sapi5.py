@@ -23,6 +23,12 @@ import config
 import nvwave
 from logHandler import log
 
+# SPAudioState enumeration
+SPAS_CLOSED=0
+SPAS_STOP=1
+SPAS_PAUSE=2
+SPAS_RUN=3
+
 class FunctionHooker(object):
 
 	def __init__(self,targetDll,importDll,funcName,newFunction):
@@ -89,6 +95,8 @@ class SynthDriver(SynthDriver):
 			return True
 		except:
 			return False
+
+	ttsAudioStream=None #: Holds the ISPAudio interface for the current voice, to aid in stopping and pausing audio
 
 	def __init__(self,_defaultVoiceToken=None):
 		"""
@@ -167,6 +175,12 @@ class SynthDriver(SynthDriver):
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
+		from comInterfaces.SpeechLib import ISpAudio
+		try:
+			self.ttsAudioStream=self.tts.audioOutputStream.QueryInterface(ISpAudio)
+		except COMError:
+			log.debugWarning("SAPI5 voice does not support ISPAudio") 
+			self.ttsAudioStream=None
 
 	def _set_voice(self,value):
 		tokens = self._getVoiceTokens()
@@ -298,9 +312,14 @@ class SynthDriver(SynthDriver):
 		self.tts.Speak(text, flags)
 
 	def cancel(self):
-		#if self.tts.Status.RunningState == 2:
+		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
+		# Therefore  instruct the underlying audio interface to stop first, before interupting and purging any remaining speech.
+		if self.ttsAudioStream:
+			self.ttsAudioStream.setState(SPAS_STOP,0)
 		self.tts.Speak(None, 1|constants.SVSFPurgeBeforeSpeak)
 
 	def pause(self,switch):
-		if switch:
-			self.cancel()
+		# SAPI5's default means of pausing in most cases is either extrmemely slow (e.g. takes more than half a second) or does not work at all.
+		# Therefore instruct the underlying audio interface to pause instead.
+		if self.ttsAudioStream:
+			self.ttsAudioStream.setState(SPAS_PAUSE if switch else SPAS_RUN,0)

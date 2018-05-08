@@ -8,20 +8,34 @@ Nyheder i NVDA
 == Nye Funktioner ==
 - NVDA rapporterer nu hvor mange kolonner og rækker en tabel omfatter med tale og punkt. (#2642)
 - Kommandoer til tabelnavigation kan nu benyttes i Google Docs (med braille-tilstand slået til). (#7946)
- - Det er muligt at navigere rundt i tabeller i Kindle for PC. (#7977)
- - Understøtter BrailleNote touch og Brailliant BI 14 punktdisplays via både USB og bluetooth. (#6524)
-
+- Det er muligt at navigere rundt i tabeller i Kindle for PC. (#7977)
+- Understøtter BrailleNote touch og Brailliant BI 14 punktdisplays via både USB og bluetooth. (#6524)
+- NVDA kan nu annoncere notifikationer fra apps som Lommeregner og Windows Store. (#8045)
+- Nye punkttabeller: Litauisk ottepunkt, ukrainsk, mongolsk Niveau 2. (#7839)
+- Tilføjede et script, der kan rapportere tekstformatering under den aktuelle punktcelle. (#7106)
+- Det er nu muligt at udskyde installationen af NVDA til et mere bekvemt tidspunkt. (#4263)
+ 
  
 == Ændringer ==
 - Statuskolonnen i dialogen for styring af tilføjelsespakker vil nu indikere om pakken er aktiveret eller deaktiveret, hvor den før viste om pakken var i gang eller stoppet. (#7929)
+- Opdaterede liblouis Braille Translator til 3.5.0. (#7839)
+- Den litauiske punktoversættelsestabel er blevet omdøbt til litauisk sekspunkt for at undgå forvirring, da vi nu har en tabel til litauisk ottepunkt. (#7839)
+- Det fransk (Canada) niveau 1 og niveau 2 punkttabeller er blevet erstattet med Fransk (Unified) og Fransk (Niveau 2). (#7839)
+- De sekundære markørsammenføringsknapper på Alva BC6, EuroBraille og Papenmeier punktdisplays
+ rapporterer nu tekstformateringen under den aktuelle punktcelle. (#7106)
+
  
- 
-== Fejlrettelser ==
+ == Fejlrettelser ==
 - NVDA har ikke længere problemer med at læse kontroller, når du befinder dig i indstillingerne du skal benytte for at logge ind på din Microsoft-konto, hvis du har indtastet en email-adresse. (#7997)
 - NVDA vil ikke længere fejle ved oplæsning af en side, når du bevæger dig til den forrige side i Microsoft Edge. (#7997)
 - NVDA vil ikke længere ukorrekt meddele det endelige tegn, når du logger på ved brug af en PIN-kode i Windows 10. (#7908)
 - Mærker på tjekbokse og radioknapper i Chrome og Firefox annonceres ikke længere to gange, når der bruges bogstavnavigation eller tab-tasten benyttes. (#7960)
 - Håndter aria-current med en værdi false som false i stedet for true (#7892).
+- Talesyntesen for stemmerne Windows OneCore vil ikke længere være ude af stand til at indlæse, hvis en konfigureret stemme tilhørende den pågældende syntese er blevet fjernet. (#7999)
+- Det er nu hurtigere at skifte imellem stemmer, når Windows OneCore benyttes. (#7999)
+- Rettede ukorrekt punktoutput for flere punkttabeller, herunder store bogstaver i ottepunkt forkortet dansk punkt. (#7526, #7693)
+- NVDA kan nu rapportere flere typer af punkter i Microsoft Word. (#6778)
+- Udførelse af scriptet til rapportering af tekstformatering vil ikke længere have uventede resultater og flytte læsepositionen. (#7869)
 
 
 == Ændringer for udviklere ==

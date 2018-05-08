@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-57432f4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-05 00:10+1000\n"
-"PO-Revision-Date: 2018-01-11 12:04+0100\n"
+"POT-Creation-Date: 2018-04-06 00:10+1000\n"
+"PO-Revision-Date: 2018-04-07 23:06+0100\n"
 "Last-Translator: Kristijan Lazarev <kristijan.lazarev@gmail.com>\n"
 "Language-Team: мк <LL@li.org>\n"
 "Language: mk\n"
@@ -87,6 +87,24 @@ msgstr "непознат начин на внес"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "граматика и правопис: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "правописно: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "граматичка погрешка: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -511,23 +529,48 @@ msgstr "{number} од {total}"
 msgid "lv %s"
 msgstr "lv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr ""
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr ""
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr ""
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr ""
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
 msgstr "%s end"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "автоматски"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "На фокус"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "На преглед"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -743,18 +786,8 @@ msgstr "Француско унифицирано 8точковно компју
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
-msgstr "француски унифициран II степен"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "француски (канада) I степен"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "француски (канада) II степен"
+msgid "French (unified) grade 2"
+msgstr "Единствен француски втор степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -853,8 +886,13 @@ msgstr "кашмирски II степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "литвански"
+msgid "Lithuanian 8 dot"
+msgstr "Литвански 8-точковен"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "Лутвански 8-точковен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -873,8 +911,13 @@ msgstr "манипуријански I степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "монголски"
+msgid "Mongolian grade 1"
+msgstr "МОнголски прв степен"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "Монголски втор степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -958,6 +1001,11 @@ msgstr "панџаби I степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "Румунски"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "руско компјутерско брајово писмо"
 
@@ -1010,6 +1058,11 @@ msgstr "талугу I степен"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "турски I степен"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "Украински"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1626,45 +1679,6 @@ msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Те носи после контејнерот со елементи, на пример после некоја листа или "
 "табела"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "неси во поле од ниедна табела"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "крај на табелата"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "те носи на следниот ред од табелата"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "те носи на предходниот ред од табелата"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "те носи на следната колона од табелата"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "те носи на предходната колона од табелата"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "табели на изглед се исклучени"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "табелите на изглед се вклучени"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "вклучени и исклучени табели на изглед"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2797,6 +2811,45 @@ msgstr "нема ништо обележано"
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
 msgstr "копирано е во клипбордот"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "неси во поле од ниедна табела"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "крај на табелата"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "те носи на следниот ред од табелата"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "те носи на предходниот ред од табелата"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "те носи на следната колона од табелата"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "те носи на предходната колона од табелата"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "табели на изглед се исклучени"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "табелите на изглед се вклучени"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "вклучени и исклучени табели на изглед"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -4049,19 +4102,11 @@ msgstr ""
 "го вклучува и исклучува нвда наблјудувачот на изговореното, прозорче на кое "
 "се прикажува целиот текст што нвда го изговара во моментот."
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "преглед"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "фокус"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
-msgstr "брајовото е поставено на %s"
+msgid "Braille tethered %s"
+msgstr "брајовото писмо е поставено на %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -4179,6 +4224,11 @@ msgstr "го скрола брајовиот дисплеј нанапрет"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
+msgstr "го носи курсорот до или го активира објектот под оваа келија"
+
+#. Translators: Input help mode message for Braille report formatting command.
+#, fuzzy
+msgid "Reports formatting info for the text under this braille cell"
 msgstr "го носи курсорот до или го активира објектот под оваа келија"
 
 #. Translators: Input help mode message for a braille command.
@@ -5843,10 +5893,22 @@ msgstr "обележаноста е отстранета"
 msgid "row %s"
 msgstr "ред %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, fuzzy, python-format
+msgid "through %s"
+msgstr "подвлечено"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "колона %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, fuzzy, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "со {rowCount} редици и {columnCount} колони"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6168,6 +6230,14 @@ msgstr "грешка при пишување"
 msgid "out of spelling error"
 msgstr "надвор од грешката при пишување"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "граматичка погрешка"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "надвор од грешката при пишување"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "надвор од табелата"
@@ -6345,14 +6415,22 @@ msgid "Error checking for update."
 msgstr "се појави грешка при правењето проверка за нови ажурирања"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Грешка"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "надградба на НВДА"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr ""
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6364,9 +6442,16 @@ msgstr "Новата верзија {version} веќе е достапна за 
 msgid "No update available."
 msgstr "Нема достапни ажурирања"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "Превземи и &инсталирај го ажурирањето"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, fuzzy, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "Инсталирање на НВДА"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+#, fuzzy
+msgid "Re-&download update"
+msgstr "&Преземи го ажурирањето"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6381,6 +6466,26 @@ msgstr "Потсети ме &подоцна"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Затвори"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, fuzzy, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "Новата верзија {version} веќе е достапна за НВДА."
+
+#. Translators: The label of a button to install an NVDA update.
+#, fuzzy
+msgid "&Install update"
+msgstr "инсталирај го ажурирањето"
+
+#. Translators: The label of a button to postpone an NVDA update.
+#, fuzzy
+msgid "&Postpone update"
+msgstr "&Преземи го ажурирањето"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+#, fuzzy
+msgid "Unable to postpone update."
+msgstr "неможе да се копира"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6397,15 +6502,6 @@ msgstr "се презема"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "грешка при преземање на ажурирањето"
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "ажурирањето е преземено. Сега истото ќе биде инсталирано."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "инсталирај го ажурирањето"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7106,8 +7202,30 @@ msgid "off"
 msgstr "исклучено"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "Сериите ALVA BC640/680"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6 серии/protocol converter"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Bluetooth серијски: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+#, fuzzy
+msgid "Setting HID keyboard simulation not supported"
+msgstr "нема поддршка за математичка интеракција"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr ""
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr ""
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7127,12 +7245,26 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "Сериите HumanWare Brailliant BI/B"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "HumanWare Brailliant BI/B серии / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Брајовите дисплеи EcoБраилле"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Eurobraille Esys/Esytime/Iris Брајови редови"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+#, fuzzy
+msgid "HID keyboard input simulation is unavailable."
+msgstr "Новата верзија {version} веќе е достапна за НВДА."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+#, fuzzy
+msgid "Toggle HID keyboard simulation"
+msgstr "нема поддршка за математичка интеракција"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7177,12 +7309,6 @@ msgstr "без брајово писмо"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Поновите модели од Papenmeier BRAILLEX"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr ""
-"го поставува курсорот на одредено место од дисплејот и го изговора "
-"обликувањето на текстот од тоа место"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7516,6 +7642,15 @@ msgstr "Запиши ја моменталната конфигурација в
 msgid "Donate"
 msgstr "донирај"
 
+#. Translators: The label for the menu item to run a pending update.
+#, fuzzy
+msgid "Install pending &update"
+msgstr "инсталирај го ажурирањето"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr ""
+
 msgid "E&xit"
 msgstr "&Излези"
 
@@ -7621,6 +7756,11 @@ msgstr "рестартирај го со исклучени додатоци"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "рестартирај го со вклучен debug logging"
+
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Install pending update"
+msgstr "инсталирај го ажурирањето"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7768,21 +7908,23 @@ msgstr "инсталиран"
 msgid "remove"
 msgstr "избришан"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "исклучен"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr ""
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "вклучен"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr ""
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "суспендиран"
+#, fuzzy
+msgid "disabled"
+msgstr "исклучен"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "активен"
+#, fuzzy
+msgid "enabled"
+msgstr "вклучен"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8288,6 +8430,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "автоматски проверувај дали има  &нови ажурирања за НВДА"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr ""
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -9039,8 +9186,9 @@ msgid "Show &messages indefinitely"
 msgstr "вечно прикажувај ги &пораките"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "&брајовото писмо е поставено на:"
+#, fuzzy
+msgid "Tether B&raille:"
+msgstr "SuperBraille"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9227,8 +9375,146 @@ msgstr "RGB црвена {rgb.red}, зелена {rgb.green}, сина {rgb.blue
 msgid "%s items"
 msgstr "%s елементи"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Неможе да се поставуваат заглавја. За да можеш да го правиш тоа, те молиме "
+"вклучи го соопштувањето на заглавјата на табелите во нагодувањата за "
+"обликување на документите."
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"постави ги редот {rowNumber} и колоната {columnNumber} како почеток на "
+"заглавјата од колоната"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"редот {rowNumber} и колоната {columnNumber} веќе се поставени како почеток "
+"на заглавјето на колоната"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"редот {rowNumber} и колоната {columnNumber} се избришани од заглавјата на "
+"колони"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"не можам да го најдам редот {rowNumber} ни колоната {columnNumber}  во "
+"заглавијата на колони"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"со претискање еднаш, ова поле ќе се постави како почеток на заглавјето во "
+"колоната за сите полиња кон десно и надолу во оваа табела. Додека со "
+"претискање двапати, од ова поле ќе се отстрани заглавјето на колоната."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"постави ги редот {rowNumber} и колоната {columnNumber} како почеток на "
+"заглавјата од редот"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"редот {rowNumber} и колоната {columnNumber} веќе се поставени како почеток "
+"на заглавјето на редот"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"редот {rowNumber} и колоната {columnNumber} се избришани од заглавјата на "
+"редови"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"не можам да го најдам редот {rowNumber} ни колоната {columnNumber}  во "
+"заглавијата на редови"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"со претискање еднаш, ова поле ќе се постави како почеток на заглавјето во "
+"редицата за сите полиња кон десно и надолу во оваа табела. Додека со "
+"претискање двапати, од ова поле ќе се отстрани заглавјето на редицата."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "нема коментари"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+"го изговара текстот од коментарот на она место каде што се наоѓа системскиот "
+"курсор"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "Не си во табела"
+
 msgid "invoke"
 msgstr "повикај"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&анотации"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "&Грешки"
+
+#. Translators: The label shown for an insertion change
+#, fuzzy, python-brace-format
+msgid "insertion: {text}"
+msgstr "правописно: {text}"
+
+#. Translators: The label shown for a deletion change
+#, fuzzy, python-brace-format
+msgid "deletion: {text}"
+msgstr "правописно: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "следена измена: {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "comment: {text} од {author} на {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "comment: {text} од {author} на {date}"
 
 msgid "Desktop"
 msgstr "работна површина"
@@ -10073,18 +10359,6 @@ msgid "{start} through {end}"
 msgstr "{start} до {end}"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Неможе да се поставуваат заглавја. За да можеш да го правиш тоа, те молиме "
-"вклучи го соопштувањето на заглавјата на табелите во нагодувањата за "
-"обликување на документите."
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "постави го {address} како почеток на заглавјата на колоните"
@@ -10410,12 +10684,6 @@ msgstr "comment: {text} од {author} на {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} од {author} на {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "правописно: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10451,82 +10719,6 @@ msgstr "%.1f редови"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "опис на табела"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"постави ги редот {rowNumber} и колоната {columnNumber} како почеток на "
-"заглавјата од колоната"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"редот {rowNumber} и колоната {columnNumber} веќе се поставени како почеток "
-"на заглавјето на колоната"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr ""
-"редот {rowNumber} и колоната {columnNumber} се избришани од заглавјата на "
-"колони"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"не можам да го најдам редот {rowNumber} ни колоната {columnNumber}  во "
-"заглавијата на колони"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"со претискање еднаш, ова поле ќе се постави како почеток на заглавјето во "
-"колоната за сите полиња кон десно и надолу во оваа табела. Додека со "
-"претискање двапати, од ова поле ќе се отстрани заглавјето на колоната."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"постави ги редот {rowNumber} и колоната {columnNumber} како почеток на "
-"заглавјата од редот"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"редот {rowNumber} и колоната {columnNumber} веќе се поставени како почеток "
-"на заглавјето на редот"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
-"редот {rowNumber} и колоната {columnNumber} се избришани од заглавјата на "
-"редови"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-"не можам да го најдам редот {rowNumber} ни колоната {columnNumber}  во "
-"заглавијата на редови"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"со претискање еднаш, ова поле ќе се постави како почеток на заглавјето во "
-"редицата за сите полиња кон десно и надолу во оваа табела. Додека со "
-"претискање двапати, од ова поле ќе се отстрани заглавјето на редицата."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10639,16 +10831,6 @@ msgstr "{offset:.3g} точки"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} пики"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "нема коментари"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr ""
-"го изговара текстот од коментарот на она место каде што се наоѓа системскиот "
-"курсор"
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "еднолинијски prored"
@@ -10661,20 +10843,49 @@ msgstr "дволинијски prored"
 msgid "1.5 line spacing"
 msgstr "1.5линијски проред"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "Не си во табела"
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "француски (канада) I степен"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&анотации"
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "француски (канада) II степен"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "&Грешки"
+#~ msgid "Mongolian"
+#~ msgstr "монголски"
+
+#~ msgid "Download and &install update"
+#~ msgstr "Превземи и &инсталирај го ажурирањето"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "ажурирањето е преземено. Сега истото ќе биде инсталирано."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr ""
+#~ "го поставува курсорот на одредено место од дисплејот и го изговора "
+#~ "обликувањето на текстот од тоа место"
+
+#~ msgid "r%s"
+#~ msgstr "r%s"
+
+#~ msgid "c%s"
+#~ msgstr "c%s"
+
+#~ msgid "suspended"
+#~ msgstr "суспендиран"
+
+#~ msgid "running"
+#~ msgstr "активен"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "Сериите ALVA BC640/680"
+
+#~ msgid "review"
+#~ msgstr "преглед"
+
+#~ msgid "focus"
+#~ msgstr "фокус"
+
+#~ msgid "B&raille tethered to:"
+#~ msgstr "&брајовото писмо е поставено на:"
 
 #~ msgid "Not defined"
 #~ msgstr "нее дефинирано"
