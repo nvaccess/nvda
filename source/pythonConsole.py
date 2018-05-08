@@ -309,8 +309,7 @@ class ConsoleUI(wx.Frame):
 		if not insert:
 			return
 		self.inputCtrl.SetValue(self.inputCtrl.GetValue() + insert)
-		if not config.conf["keyboard"]["speakTypedWords"]:
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
+		queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
 		self.inputCtrl.SetInsertionPointEnd()
 
 	def onInputChar(self, evt):
