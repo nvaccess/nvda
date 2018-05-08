@@ -46,15 +46,15 @@ conf = None
 #: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
 #: Handlers are called with no arguments.
-configProfileSwitched = extensionPoints.Action()
+postConfigProfileSwitch = extensionPoints.Action()
 #: Notifies when NVDA is saving current configuration.
 #: Handlers can listen to "pre" or "post" action to perform tasks prior to or after NVDA's own configuration is saved.
 #: Handlers are called with no arguments.
-configPreSave = extensionPoints.Action()
-configPostSave = extensionPoints.Action()
+preConfigSave = extensionPoints.Action()
+postConfigSave = extensionPoints.Action()
 #: Notifies when configuration is reloaded from disk or factory defaults are applied.
 #: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
-configPostReset = extensionPoints.Action()
+postConfigReset = extensionPoints.Action()
 
 def initialize():
 	global conf
@@ -365,7 +365,7 @@ class ConfigManager(object):
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		configProfileSwitched.notify()
+		postConfigProfileSwitch.notify()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
