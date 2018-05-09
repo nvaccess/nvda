@@ -52,6 +52,9 @@ class NvdaSettingsCategoryPanel(IAccessible):
 
 class AppModule(appModuleHandler.AppModule):
 
+	def event_appModule_loseFocus(self):
+		NvdaSettingsCategoryPanel.oldProfile = None
+
 	def isNvdaMenu(self, obj):
 		global nvdaMenuIaIdentity
 		if not isinstance(obj, IAccessible):
