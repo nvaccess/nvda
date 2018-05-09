@@ -104,6 +104,7 @@ class SettingsDialog(wx.Dialog):
 			startTime = time.time()
 		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
 		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
+		self.hasApply = hasApplyButton
 
 		# the wx.Window must be constructed before we can get the handle.
 		import windowUtils
@@ -115,22 +116,44 @@ class SettingsDialog(wx.Dialog):
 
 		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
 		self.mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-		buttonFlags = wx.OK|wx.CANCEL|(wx.APPLY if hasApplyButton else 0)
+
+		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+		buttonSizer.addButton(self, label=_("OK"), id=wx.ID_OK)
+		# Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+		buttonSizer.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		if hasApplyButton:
+			# Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+			buttonSizer.addButton(self, label=_("Apply"), id=wx.ID_APPLY)
+
 		self.mainSizer.Add(
-			self.CreateButtonSizer(flags=buttonFlags),
+			buttonSizer.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL|wx.ALIGN_RIGHT
+			flag=wx.ALL | wx.ALIGN_RIGHT
 		)
+
 		self.mainSizer.Fit(self)
 		self.SetSizer(self.mainSizer)
 
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
-		self.Bind(wx.EVT_BUTTON,self.onApply,id=wx.ID_APPLY)
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
+		self.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnOk_ctrlSTriggersOnApply)
+
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
+
+	def _enterTriggersOnOk_ctrlSTriggersOnApply(self, evt):
+		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
+		pressed. Cancel behavior is built into wx"""
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onOk(evt)
+		elif self.hasApply and evt.UnicodeKey == ord(u'S') and evt.controlDown:
+			self.onApply(evt)
+		else:
+			evt.Skip()
 
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
@@ -724,7 +747,8 @@ class SpeechSettingsPanel(SettingsPanel):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the synthesizer on the speech panel.
 		synthLabel = _("&Synthesizer")
-		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=synthLabel), wx.HORIZONTAL))
+		synthBox = wx.StaticBox(self, label=synthLabel)
+		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(synthBox, wx.HORIZONTAL))
 		settingsSizerHelper.addItem(synthGroup)
 
 		# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
@@ -734,6 +758,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		# display here.
 		synthDesc = getSynth().description
 		self.synthNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), value=synthDesc, style=wx.TE_READONLY)
+		self.synthNameCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeSynth)
 
 		# Translators: This is the label for the button used to change synthesizer,
 		# it appears in the context of a synthesizer group on the speech settings panel.
@@ -748,6 +773,12 @@ class SpeechSettingsPanel(SettingsPanel):
 
 		self.voicePanel = VoiceSettingsPanel(self)
 		settingsSizerHelper.addItem(self.voicePanel)
+
+	def _enterTriggersOnChangeSynth(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onChangeSynth(evt)
+		else:
+			evt.Skip()
 
 	def onChangeSynth(self, evt):
 		changeSynth = SynthesizerSelectionDialog(self, multiInstanceAllowed=True)
@@ -2019,7 +2050,9 @@ class BrailleSettingsPanel(SettingsPanel):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the braille display on the braille panel.
 		displayLabel = _("Braille &display")
-		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=displayLabel), wx.HORIZONTAL))
+
+		displayBox = wx.StaticBox(self, label=displayLabel)
+		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(displayBox, wx.HORIZONTAL))
 		settingsSizerHelper.addItem(displayGroup)
 		
 		displayDesc = braille.handler.display.description
@@ -2033,10 +2066,17 @@ class BrailleSettingsPanel(SettingsPanel):
 				changeDisplayBtn
 			)
 		)
+		self.displayNameCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeDisplay)
 		changeDisplayBtn.Bind(wx.EVT_BUTTON,self.onChangeDisplay)
 
 		self.brailleSubPanel = BrailleSettingsSubPanel(self)
 		settingsSizerHelper.addItem(self.brailleSubPanel)
+
+	def _enterTriggersOnChangeDisplay(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onChangeDisplay(evt)
+		else:
+			evt.Skip()
 
 	def onChangeDisplay(self, evt):
 		changeDisplay = BrailleDisplaySelectionDialog(self, multiInstanceAllowed=True)
