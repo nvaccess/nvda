@@ -52,12 +52,6 @@ class NvdaSettingsCategoryPanel(IAccessible):
 
 class AppModule(appModuleHandler.AppModule):
 
-	def event_appModule_gainFocus(self):
-		NvdaSettingsCategoryPanel.handlePossibleProfileSwitch()
-
-	def event_appModule_loseFocus(self):
-		NvdaSettingsCategoryPanel.oldProfile = None
-
 	def isNvdaMenu(self, obj):
 		global nvdaMenuIaIdentity
 		if not isinstance(obj, IAccessible):
@@ -98,6 +92,8 @@ class AppModule(appModuleHandler.AppModule):
 	def event_foreground         (self, obj, nextHandler):
 		if not gui.shouldConfigProfileTriggersBeSuspended():
 			config.conf.resumeProfileTriggers()
+		else:
+			NvdaSettingsCategoryPanel.handlePossibleProfileSwitch()
 		nextHandler()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
