@@ -305,6 +305,10 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		if not obj:
+			# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
+			# There is nothing we can do with these.
+			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
 	def _isUIAWindowHelper(self,hwnd):
