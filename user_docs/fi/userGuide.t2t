@@ -173,7 +173,7 @@ Mikäli haluat jonkin NVDA-näppäimistä  toimivan samalla tavalla kuin silloin
 
 +++ Näppäimistöasettelut +++[KeyboardLayouts]
 NVDA:n mukana tulee tällä hetkellä kaksi erilaista näppäinkomentojen määritystä, joita kutsutaan näppäimistöasetteluiksi: pöytäkoneille ja kannettaville tarkoitettu.
-NVDA käyttää oletusarvoisesti pöytäkoneiden näppäimistöasettelua, mutta voit vaihtaa kannettaville tarkoitettuun asetteluun Näppäimistöasetukset-valintaikkunassa, joka löytyy NVDA-valikon Asetukset-alavalikosta.
+NVDA käyttää oletusarvoisesti pöytäkoneiden näppäimistöasettelua, mutta voit vaihtaa kannettaville tarkoitettuun asetteluun Näppäimistö-kategoriasta [NVDA:n asetukset #NVDASettings] -valintaikkunasta, joka löytyy NVDA-valikon Asetukset-alavalikosta.
 
 Pöytäkoneiden näppäimistöasettelussa käytetään runsaasti numeronäppäimistön näppäimiä (Numlockin on oltava pois käytöstä).
 Vaikka useimmissa kannettavissa tietokoneissa ei olekaan fyysistä numeronäppäimistöä, niin joissakin sellaista voidaan kuitenkin jäljitellä pitämällä FN-näppäintä alhaalla ja painamalla kirjaimia ja numeroita näppäimistön oikeanpuoleisesta osasta (7, 8, 9, u, i, o, j, k, l jne).
@@ -230,7 +230,7 @@ Kosketusnäppäimistö on aina käytettävissä tableteissa, kuten Microsoft Sur
 Piilota kosketusnäppäimistö kaksoisnapauttamalla kosketusnäppäimistökuvaketta tai siirtymällä pois muokkauskentästä.
 
 Kun kosketusnäppäimistö on aktiivisena, etsi haluamasi näppäimet siirtämällä sormi kosketusnäppäimistön sijaintipaikkaan (tyypillisesti näytön alareunassa), ja liiku sitten näppäimistössä yhdellä sormella.
-Kun löydät näppäimen, jota haluat painaa, kaksoisnapauta sitä tai nosta sormi näytöltä, riippuen [Kosketusvuorovaikutuksen asetukset -valintaikkunasta #TouchInteraction] valituista asetuksista.
+Kun löydät haluamasi näppäimen, kaksoisnapauta sitä tai nosta sormi näytöltä, riippuen NVDA:n asetusten [Kosketusvuorovaikutus-kategoriassa #TouchInteraction] valituista asetuksista.
 
 ++ Syöteohjetila ++[InputHelpMode]
 Tässä käyttöoppaassa mainitaan useita näppäinkomentoja ja kosketuseleitä, mutta helpoin tapa tutkia niitä kaikkia on käyttää syöteohjetta.
@@ -449,7 +449,7 @@ Mitä ylempänä hiiri on ruudulla, sitä korkeampia äänimerkit ovat.
 Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (mikäli käytössä on stereokaiuttimet tai kuulokkeet).
 
 Nämä lisäominaisuudet eivät ole oletusarvoisesti käytössä.
-Voit ottaa ne tarvittaessa käyttöön [Hiiriasetukset #MouseSettings]-valintaikkunasta, joka löytyy NVDA:n Asetukset-valikosta.
+Voit ottaa ne halutessasi käyttöön [Hiiren asetukset #MouseSettings] -kategoriasta [NVDA:n asetukset #NVDASettings] -valintaikkunasta, joka löytyy NVDA:n Asetukset-valikosta.
 
 Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kosketuslevyä, on NVDA:ssa joitakin hiiren käyttöön tarkoitettuja näppäinkomentoja:
 %kc:beginInclude
@@ -600,7 +600,7 @@ Mikäli sinulla on pistenäyttö, NVDA voi antaa palautteen pistekirjoituksella.
 Jos käyttämässäsi näytössä on Perkins-tyylinen näppäimistö, voit lisäksi syöttää lyhenne- ja tavallista pistekirjoitusta.
 
 Katso tietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
-Voit määrittää pistekirjoitusasetukset [Pistekirjoitusasetukset-valintaikkunasta. #BrailleSettings]
+Voit määrittää pistekirjoituksen asetukset [Pistekirjoitus-kategoriasta #BrailleSettings] [NVDA:n asetukset #NVDASettings] -valintaikkunasta.
 
 ++ Säädintyyppien ja -tilojen sekä kiintopisteiden lyhenteet ++[BrailleAbbreviations]
 Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa sekä kiintopisteitä.
@@ -692,7 +692,7 @@ Kiintopisteille on määritetty seuraavat lyhenteet:
 
 ++ Pistekirjoituksen syöttäminen ++[BrailleInput]
 NVDA tukee sekä tavallisen että lyhennepistekirjoituksen syöttämistä pistekirjoitusnäppäimistöllä.
-Käännöstaulukon, jota käytetään pistekirjoituksen kääntämiseen tekstiksi, voit valita Pistekirjoitusasetukset-valintaikkunan [Syöttötaulukko #BrailleSettingsInputTable]-asetusta käyttäen.
+Käännöstaulukon, jota käytetään pistekirjoituksen kääntämiseen tekstiksi, voit valita [NVDA:n asetukset #NVDASettings] -valintaikkunan Pistekirjoitus-kategorian [Syöttötaulukko #BrailleSettingsInputTable]-asetusta käyttäen.
 
 Kun käytetään tavallista pistekirjoitusta, teksti syötetään heti sitä kirjoitettaessa.
 Lyhennekirjoitusta käytettäessä teksti syötetään painaessasi sanan lopussa Välilyöntiä tai Enteriä.
@@ -723,7 +723,7 @@ Escin painaminen hylkää tunnistuksen tulokset.
 Windows 10 sisältää tekstintunnistuksen useille kielille.
 NVDA voi käyttää sitä kuvissa olevan tekstin tai esteellisten sovellusten tunnistamiseen.
 
-Voit määrittää tekstintunnistuksessa käytettävän kielen [Tekstintunnistus (Windows 10) #Win10OcrSettings] -asetusvalintaikkunasta.
+Voit määrittää tekstintunnistuksessa käytettävän kielen [NVDA:n asetukset #NVDASettings] -valintaikkunan [Tekstintunnistus (Windows 10) -kategoriasta #Win10OcrSettings].
 Lisäkieliä voidaan asentaa avaamalla Käynnistä-valikko, valitsemalla Asetukset -> Aika ja kieli -> Alue ja kieli, ja valitsemalla sitten Lisää kieli.
 
 %kc:beginInclude
@@ -737,7 +737,7 @@ NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien hel
 
 +++ Sarake- ja riviotsikoiden automaattinen lukeminen +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA voi ilmoittaa automaattisesti asianmukaiset rivi- ja sarakeotsikot Microsoft Wordissa taulukoissa liikuttaessa.
-Tämä edellyttää, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön NVDA:n Dokumenttien muotoiluasetukset -valintaikkunasta.
+Tämä edellyttää ensinnäkin, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön Dokumenttien muotoiluasetuksista [NVDA:n asetukset #NVDASettings] -valintaikkunasta.
 Toiseksi NVDA:n on tiedettävä, mikä rivi tai sarake sisältää otsikoita kulloisessakin taulukossa.
 Kun olet siirtynyt ensimmäiseen soluun otsikoita sisältävässä sarakkeessa tai rivissä, käytä jotakin seuraavista komennoista:
 %kc:beginInclude
@@ -771,7 +771,7 @@ Kaikki dokumentin kommentit muiden jäljitettävien muutosten ohella voidaan my�
 
 +++ Sarake- ja riviotsikoiden automaattinen lukeminen +++[ExcelAutomaticColumnAndRowHeaderReading]
 NVDA voi lukea automaattisesti asianmukaiset rivi- ja sarakeotsikot Excel-laskentataulukoissa liikuttaessa.
-Tämä edellyttää, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön NVDA:n Dokumenttien muotoiluasetukset -valintaikkunasta.
+Tämä edellyttää ensinnäkin, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön Dokumenttien muotoiluasetuksista [NVDA:n asetukset #NVDASettings] -valintaikkunasta.
 Toiseksi NVDA:n on tiedettävä, mikä rivi tai sarake sisältää otsikoita.
 Kun olet siirtynyt ensimmäiseen soluun otsikoita sisältävässä sarakkeessa tai rivissä, käytä jotakin seuraavista komennoista:
 %kc:beginInclude
@@ -904,28 +904,36 @@ Lisättyjen kirjojen taulukkonäkymässä:
 %kc:endInclude
 
 + NVDA:n asetusten määrittäminen +[ConfiguringNVDA]
-
-++ Asetukset ++[preferences]
-%kc:settingsSection: || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-Useimpia NVDA:n asetuksia voidaan muuttaa valintaikkunoista, joihin päästään NVDA-valikon Asetukset-alavalikosta.
-Tehdyt muutokset hyväksytään kaikissa asetusvalintaikkunoissa painamalla OK-painiketta.
-Muutokset perutaan painamalla Peruuta-painiketta tai Esc-näppäintä.
+Useimpia asetuksia voidaan muuttaa valintaikkunoista, joihin pääsee NVDA-valikon Asetukset-alavalikosta.
+Hyväksy valintaikkunoissa tekemäsi muutokset painamalla OK-painiketta.
+Peru muutokset painamalla Peruuta-painiketta tai Esc-näppäintä.
 Joitakin asetuksia voidaan muuttaa myös pikanäppäimillä, jotka on lueteltu alla olevissa kappaleissa.
 
-HUOM: Kaikkiin asetusvalintaikkunoihin ei oletusarvoisesti ole mahdollista päästä syötekomennoilla (näppäinkomennoilla, kosketuseleillä jne).
-Mikäli haluat päästä valintaikkunoihin, joilla ei ole omia pikanäppäimiä, käytä [Syötekomennot-valintaikkunaa #InputGestures] lisätäksesi niille omia syötekomentoja.
+++ NVDA:n asetukset ++[NVDASettings]
+%kc:settingsSection: || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+NVDA:n asetukset -valintaikkuna sisältää useita asetuksia, joita on mahdollista muuttaa.
+Tässä valintaikkunassa on lista, jossa on valittavissa useita asetuskategorioita.
+Kun valitset kategorian, useita siihen liittyviä asetuksia näytetään.
+Asetukset voidaan ottaa käyttöön painamalla Käytä-painiketta, jolloin valintaikkuna pysyy avoimena.
+Paina OK-painiketta, mikäli haluat tallentaa asetukset ja sulkea valintaikkunan.
 
-+++ Yleiset asetukset (NVDA+Ctrl+G) +++[GeneralSettings]
-Yleiset asetukset -valintaikkuna löytyy Asetukset-valikosta.
-Se sisältää seuraavat asetukset:
+Joillakin asetuskategorioilla on oma pikanäppäin.
+Mikäli sitä painetaan, NVDA:n asetukset -valintaikkuna avataan kyseisen kategorian kohdalta.
+Kaikkiin kategorioihin ei oletusarvoisesti pääse näppäinkomennoilla.
+Mikäli haluat päästä kategorioihin, joilla ei ole omia pikanäppäimiä, käytä [Syötekomennot-valintaikkunaa #InputGestures] lisätäksesi niille syötekomennon, kuten näppäinkomennon tai kosketuseleen.
+
+Eri asetuskategoriat on kuvailtu alla.
+ 
++++ Yleiset (NVDA+Ctrl+G) +++[GeneralSettings]
+Yleiset-kategoria sisältää seuraavat asetukset:
 
 ==== Kieli ====[GeneralSettingsLanguage]
 Tämä on yhdistelmäruutu, josta voidaan valita kieli, jolla NVDA:n käyttöliittymä ja ilmoitukset näytetään.
 Kieliä on useita.
 Oletusarvoisesti on valittuna vaihtoehto "Windows", mikä tarkoittaa, että NVDA käyttää Windowsin maakohtaisissa asetuksissa määritettyä kieltä.
 
-HUOM: NVDA on käynnistettävä uudelleen kieltä vaihdettaessa.
-Jos kieltä vaihdetaan, NVDA kysyy, käynnistetäänkö se uudelleen.
+Huom: NVDA on käynnistettävä uudelleen kieltä vaihdettaessa.
+Jos vaihdat kieltä ja tallennat tekemäsi muutoksen, NVDA kysyy, haluatko käynnistää sen uudelleen.
 Hyväksy painamalla OK.
 
 ==== Tallenna asetukset suljettaessa ====[GeneralSettingsSaveConfig]
@@ -965,24 +973,105 @@ Päivitysten manuaalinen tarkistaminen on myös mahdollista valitsemalla Tarkist
 Jos tämä on valittuna, NVDA ilmoittaa käynnistyessään odottavasta päivityksestä ja tarjoaa mahdollisuutta sen asentamiseen.
 Voit asentaa päivityksen myös manuaalisesti Sulje NVDA -valintaikkunasta (mikäli se on käytössä), NVDA-valikosta tai suorittaessasi uuden päivitystarkistuksen Ohje-valikosta.
 
-+++ Puhesyntetisaattorin valitseminen (NVDA+Ctrl+S) +++[SynthesizerSelection]
-Syntetisaattori-valintaikkunassa, joka löytyy Asetukset-valikosta kohdasta "Syntetisaattori...", voidaan valita, mitä puhesyntetisaattoria NVDA käyttää.
-Kun haluttu puhesyntetisaattori on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
-Jos syntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näytetään, eikä käytettävää syntetisaattoria vaihdeta.
++++ Puheasetukset (NVDA+Ctrl+V) +++[SpeechSettings]
+Puhe-kategoria sisältää asetuksia, joilla voit muuttaa sekä puhesyntetisaattoria että sitä, miltä puhe kuulostaa.
 
-==== Syntetisaattori ====[SynthesizerSelectionSynthesizer]
-Tästä yhdistelmäruudusta voidaan valita, mitä puhesyntetisaattoria NVDA käyttää puheen tuottamiseen.
+Saadaksesi tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa, katso [Syntetisaattorin asetusrengas #SynthSettingsRing] -kappaletta.
 
-Luettelo NVDA:n tukemista puhesyntetisaattoreista on [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleessa.
+Tämä kategoria sisältää seuraavat asetukset:
 
-Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
-Tästä voi olla hyötyä henkilölle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää puheentarkastelutoimintoa.
- 
-==== Äänilaite ====[SynthesizerSelectionOutputDevice]
-Tästä voit valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
+==== Vaihda syntetisaattoria ====[SpeechSettingsChange]
+Ensimmäinen Puhe-asetuskategorian vaihtoehto on Vaihda...-painike. Tämä painike avaa [Valitse syntetisaattori #SelectSynthesizer] -valintaikkunan, josta voit valita käytettävän puhesyntetisaattorin ja äänilaitteen.
+Tämä valintaikkuna avautuu NVDA:n asetukset -valintaikkunan päälle.
+Valitse syntetisaattori -valintaikkunassa muutettujen asetusten tallentaminen tai hylkääminen palauttaa takaisin NVDA:n asetukset -valintaikkunaan.
+
+==== Puheääni ====[SpeechSettingsVoice]
+Puheääni-vaihtoehto on yhdistelmäruutu, jossa on luettelo kaikista käytössä olevan syntetisaattorin äänistä.
+Voit selata vaihtoehtoja nuolinäppäimillä.
+Nuoli vasemmalle ja Nuoli ylös siirtävät ylöspäin luettelossa, kun taas Nuoli oikealle ja Nuoli alas siirtävät alas.
+
+==== Muunnelma ====[SpeechSettingsVariant]
+Jos käytät NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman.
+Muunnelmat ovat ikään kuin puheääniä, koska jokainen niistä antaa äänille hieman eri määreitä.
+Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
+
+==== Nopeus ====[SpeechSettingsRate]
+Tällä liukusäätimellä voit muuttaa puheen nopeutta.
+Arvot 0 - 100 ovat mahdollisia (0=hitain ja 100=nopein).
+
+==== Korkeus ====[SpeechSettingsPitch]
+Tällä liukusäätimellä voit muuttaa puheen korkeutta.
+Arvot 0 - 100 ovat mahdollisia (0=matalin ja 100=korkein).
+
+==== Voimakkuus ====[SpeechSettingsVolume]
+Tällä liukusäätimellä voit muuttaa puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
+
+==== Sävy ====[SpeechSettingsInflection]
+Tällä liukusäätimellä voit muuttaa puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak NG on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
+
+==== Vaihda kieltä automaattisesti ====[VoiceSettingsLanguageSwitching]
+Tällä valintaruudulla voit vaikuttaa siihen, vaihtaako NVDA puhesyntetisaattorin kieltä automaattisesti, jos luettavan tekstin kieli on määritelty asianmukaisesti.
+Asetus on oletusarvoisesti käytössä.
+Tällä hetkellä vain eSpeak NG -syntetisaattori tukee automaattista kielen vaihtamista.
+
+==== Vaihda murretta automaattisesti ====[SpeechSettingsDialectSwitching]
+Tällä valintaruudulla voit määrittää, vaihdetaanko pelkän kielen lisäksi myös murretta.
+Jos esim. amerikanenglantia puhuvalla äänellä luetaan  dokumenttia, jonka kielimäärityksen mukaan osa tekstistä on englanninenglantia, silloin tämän asetuksen ollessa käytössä syntetisaattori vaihtaa aksenttiaan.
+Asetus ei ole oletusarvoisesti käytössä.
 
 %kc:setting
-==== Äänenvoimakkuuden hiljennys ====[SynthesizerSelectionDuckingMode]
+==== Välimerkki- ja symbolitaso ====[SpeechSettingsSymbolLevel]
+Pikanäppäin: NVDA+P
+
+Tästä voit valita sanoina luettavien välimerkkien ja muiden symboleiden määrän.
+Esimerkiksi kun tasoksi on valittu kaikki, niin kaikki merkit luetaan sanoina.
+Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
+
+==== Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsTrust]
+Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symboleiden puhumiseen.
+Jos huomaat, että välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai ääntä käytettäessä, voit halutessasi poistaa tämän asetuksen käytöstä pakottaaksesi NVDA:n käyttämään yleistä kieliasetusta.
+
+==== Äänenkorkeuden muutos prosentteina isoille kirjaimille ====[SpeechSettingsCapPitchChange]
+Tähän muokkauskenttään voit syöttää prosenttiluvun, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
+Negatiivinen arvo laskee ja positiivinen nostaa äänenkorkeutta.
+Mikäli et halua äänenkorkeuden muuttuvan, aseta arvoksi 0.
+
+==== Ilmaise isot kirjaimet sanalla "iso" ====[SpeechSettingsSayCapBefore]
+Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista yksittäisenä merkkinä puhuttua isoa kirjainta (kuten esim. tavattaessa).
+Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin puhesyntetisaattorit eivät ehkä tue sitä kunnolla, joten tälle asetukselle voi olla käyttöä.
+
+==== Ilmaise isot kirjaimet äänimerkillä ====[SpeechSettingsBeepForCaps]
+Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun iso kirjain luetaan.
+Kuten Ilmaise isot kirjaimet sanalla "iso" -asetus, tämäkin on käyttökelpoinen puhesyntetisaattoreilla, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
+
+==== Käytä tavaustoimintoa (jos mahdollista) ====[SpeechSettingsUseSpelling]
+Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
+Esimerkiksi englanninkielessä "a" on sekä kirjain että sana, mutta se lausutaan kussakin tilanteessa eri tavalla.
+Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee toimintoa.
+Useimmat syntetisaattorit tukevat asetusta.
+
+Tämä asetus tulisi tavallisesti ottaa käyttöön.
+Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska ominaisuutta ei ole toteutettu niissä kunnolla.
+Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
+
++++ Valitse syntetisaattori (NVDA+Ctrl+S) +++[SelectSynthesizer]
+Syntetisaattori-valintaikkunassa, joka voidaan avata painamalla Muuta...-painiketta NVDA:n asetukset -valintaikkunan Puhe-kategoriassa, voit valita, mitä syntetisaattoria NVDA käyttää.
+Kun olet valinnut haluamasi syntetisaattorin, NVDA ottaa sen käyttöön painettuasi OK-painiketta.
+Jos syntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näytetään, eikä käytettävää syntetisaattoria vaihdeta.
+
+==== Syntetisaattori ====[SelectSynthesizerSynthesizer]
+Tästä yhdistelmäruudusta voit valita, mitä puhesyntetisaattoria NVDA käyttää puheen tuottamiseen.
+
+Katso luettelo NVDA:n tukemista syntetisaattoreista [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleesta.
+
+Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
+Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta vain pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää puheentarkastelutoimintoa.
+
+==== Äänilaite ====[SelectSynthesizerOutputDevice]
+Tästä voit valita, mitä äänikorttia NVDA:ssa valittuna oleva puhesyntetisaattori käyttää.
+
+%kc:setting
+==== Äänenvoimakkuuden hiljennys ====[SelectSynthesizerDuckingMode]
 Näppäinkomento: NVDA+Vaihto+D
 
 Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä valita, hiljentääkö NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
@@ -994,83 +1083,8 @@ Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä va
 Tämä asetus on käytettävissä vain NVDA:n asennetussa versiossa.
 Massamuisti- ja väliaikaisversiot eivät tue äänenvoimakkuuden hiljennystä.
 
-+++ Puheäänen asetukset (NVDA+Ctrl+V) +++[VoiceSettings]
-Puheäänen asetukset -valintaikkuna, joka avataan Asetukset-valikosta kohdasta "Puheääni...", sisältää asetuksia, joilla voidaan vaikuttaa siihen, miltä puhe kuulostaa.
-Saadaksesi tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa, katso [Syntetisaattorin asetusrengas #SynthSettingsRing] -kappaletta.
-
-Valintaikkuna sisältää seuraavat asetukset:
-
-==== Puheääni ====[VoiceSettingsVoice]
-Tässä valintaikkunassa on ensimmäisenä yhdistelmäruutu, jossa on luettelo kaikista käytössä olevan syntetisaattorin puheäänistä.
-Vaihtoehtoja voidaan selata nuolinäppäimillä.
-Nuoli vasemmalle ja Nuoli ylös siirtävät ylöspäin luettelossa, kun taas Nuoli oikealle ja Nuoli alas siirtävät alas.
-
-==== Muunnelma ====[VoiceSettingsVariant]
-Jos käytät NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman.
-Muunnelmat ovat ikään kuin puheääniä, koska jokainen niistä antaa puheäänille hieman eri määreitä.
-Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
-
-==== Nopeus ====[VoiceSettingsRate]
-Tällä liukusäätimellä voit muuttaa puheen nopeutta.
-Arvot 0 - 100 ovat mahdollisia (0=hitain ja 100=nopein).
-
-==== Korkeus ====[VoiceSettingsPitch]
-Tällä liukusäätimellä voit muuttaa puheen korkeutta.
-Arvot 0 - 100 ovat mahdollisia (0=matalin ja 100=korkein).
-
-==== Voimakkuus ====[VoiceSettingsVolume]
-Tällä liukusäätimellä voit muuttaa puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
-
-==== Sävy ====[VoiceSettingsInflection]
-Tällä liukusäätimellä voit muuttaa puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak NG on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
-
-==== Vaihda kieltä automaattisesti (jos mahdollista) ====[VoiceSettingsLanguageSwitching]
-Tällä valintaruudulla voit vaikuttaa siihen, vaihtaako NVDA puhesyntetisaattorin kieltä automaattisesti, jos luettavan tekstin kieli on määritelty asianmukaisesti.
-Asetus on oletusarvoisesti käytössä.
-Tällä hetkellä vain eSpeak NG -syntetisaattori tukee automaattista kielen vaihtamista.
-
-==== Vaihda murretta automaattisesti (jos mahdollista) ====[VoiceSettingsDialectSwitching]
-Tällä valintaruudulla voit määrittää, vaihdetaanko pelkän kielen lisäksi myös murretta.
-Jos esim. amerikanenglantia puhuvalla äänellä luetaan  dokumenttia, jonka kielimäärityksen mukaan osa tekstistä on englanninenglantia, silloin tämän asetuksen ollessa käytössä syntetisaattori vaihtaa aksenttiaan.
-Asetus ei ole oletusarvoisesti käytössä.
-
-%kc:setting
-==== Välimerkki- ja symbolitaso ====[VoiceSettingsSymbolLevel]
-Pikanäppäin: NVDA+P
-
-Tästä voit valita sanoina luettavien välimerkkien ja muiden symboleiden määrän.
-Esimerkiksi kun tasoksi on valittu kaikki, niin kaikki merkit luetaan sanoina.
-Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
-
-==== Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä ====[VoiceSettingsTrust]
-Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symboleiden puhumiseen.
-Jos huomaat, että välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai puheääntä käytettäessä, voit halutessasi poistaa tämän asetuksen käytöstä pakottaaksesi NVDA:n käyttämään yleistä kieliasetusta.
-
-==== Äänenkorkeuden muutos prosentteina isoille kirjaimille ====[VoiceSettingsCapPitchChange]
-Tähän muokkauskenttään voidaan syöttää prosenttiluku, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
-Negatiivinen arvo laskee ja positiivinen nostaa äänenkorkeutta.
-Mikäli äänenkorkeuden ei haluta muuttuvan, on arvoksi asetettava 0.
-
-==== Ilmaise isot kirjaimet sanalla "iso" ====[VoiceSettingsSayCapBefore]
-Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista yksittäisenä merkkinä puhuttua isoa kirjainta (kuten esim. tavattaessa).
-Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin puhesyntetisaattorit eivät ehkä tue sitä kunnolla, joten tälle asetukselle voi olla käyttöä.
-
-==== Ilmaise isot kirjaimet äänimerkillä ====[VoiceSettingsBeepForCaps]
-Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun iso kirjain luetaan.
-Kuten Sano iso ennen isoja kirjaimia -asetus, tämäkin on käyttökelpoinen puhesyntetisaattoreilla, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
-
-==== Käytä tavaustoimintoa (jos mahdollista) ====[VoiceSettingsUseSpelling]
-Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
-Esimerkiksi englanninkielessä "a" on sekä kirjain että sana, mutta se lausutaan kussakin tilanteessa eri tavalla.
-Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee toimintoa.
-Useimmat syntetisaattorit tukevat asetusta.
-
-Tämä asetus tulisi tavallisesti ottaa käyttöön.
-Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska ominaisuutta ei ole toteutettu niissä kunnolla.
-Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
-
 +++ Syntetisaattorin asetusrengas +++[SynthSettingsRing]
-NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voit siirtyä missä tahansa yleisimpien puheasetusten välillä, jos haluat muuttaa niitä nopeasti menemättä Puheäänen asetukset -valintaikkunaan:
+NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voit siirtyä missä tahansa yleisimpien puheasetusten välillä, mikäli haluat muuttaa niitä nopeasti menemättä NVDA:n asetukset -valintaikkunan Puhe-kategoriaan:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Siirrä seuraavaan syntetisaattorin asetukseen | NVDA+Ctrl+Nuoli oikealle | NVDA+Vaihto+Ctrl+Nuoli oikealle | Siirtää nykyisen puheasetuksen jälkeen seuraavana käytettävissä olevaan asetukseen, siirtyen viimeisen jälkeen takaisin ensimmäiseen. |
@@ -1079,45 +1093,30 @@ NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voit siirtyä missä taha
 | Pienennä nykyistä syntetisaattorin asetusta | NVDA+Ctrl+Nuoli alas | NVDA+Vaihto+Ctrl+Nuoli alas | Pienentää valittua puheasetusta, esim. vähentää nopeutta, valitsee edellisen puheäänen tai vähentää äänenvoimakkuutta. |
 %kc:endInclude
 
-+++ Pistekirjoitusasetukset +++[BrailleSettings]
-Pistekirjoitusasetukset-valintaikkuna voidaan avata valitsemalla Asetukset-valikosta "Pistekirjoitus..."-vaihtoehto.
++++ Pistekirjoitus +++[BrailleSettings]
+NVDA-asetukset -valintaikkunan Pistekirjoitus-kategoria sisältää vaihtoehtoja, joilla voit muuttaa useita pistekirjoituksen syöttö- ja tulostusasetuksia.
+Seuraavat vaihtoehdot ovat käytettävissä:
 
-==== Pistenäyttö ====[BrailleSettingsDisplay]
-Pistekirjoitusasetukset-valintaikkunassa on ensimmäisenä "Pistenäyttö"-yhdistelmäruutu.
-Siinä on useita vaihtoehtoja riippuen käytettävissä olevista pistenäyttöajureista.
-Vaihtoehtojen välillä liikutaan nuolinäppäimillä.
-
-"Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
-
-Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta lisätietoja tuetuista pistenäytöistä.
-
-==== Portti ====[BrailleSettingsPort]
-Tällä asetuksella voidaan, jos se on käytettävissä, valita, mitä porttia tai yhteystyyppiä käytetään valitun pistenäytön kanssa kommunikointiin.
-Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot käyttämällesi pistenäytölle.
-
-NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti järjestelmän käytettävissä olevia USB- ja bluetooth-laitteita tutkimalla.
-Joillekin pistenäytöille voidaan kuitenkin itse valita käytettävä portti.
-Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä "sarjaportti", mikäli pistenäyttö tukee sarjaporttiin liittämistä.
-
-Tämä vaihtoehto ei ole käytettävissä, jos pistenäyttö tukee vain automaattista portintunnistusta.
-
-Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta lisätietoja pistenäyttösi tukemista kommunikointityypeistä ja käytettävissä olevista porteista.
+==== Vaihda pistenäyttöä ====[BrailleSettingsChange]
+NVDA:n asetukset -valintaikkunan Pistekirjoitus-kategorian Vaihda...-painike avaa [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunan, josta voit valita käytettävän pistenäytön.
+Tämä valintaikkuna avautuu NVDA:n asetukset -valintaikkunan päälle.
+Valitse pistenäyttö -valintaikkunassa muutettujen asetusten tallentaminen tai hylkääminen palauttaa takaisin NVDA:n asetukset -valintaikkunaan.
 
 ==== Tulostustaulukko ====[BrailleSettingsOutputTable]
-Seuraavana tässä valintaikkunassa on "Tulostustaulukko"-yhdistelmäruutu.
+Tämän kategorian seuraava vaihtoehto on "Tulostustaulukko"-yhdistelmäruutu.
 Se sisältää pistetaulukoita eri kielille ja pistekirjoitusstandardeille sekä -tasoille.
 Valittua taulukkoa käytetään tekstin kääntämiseen pistenäytöllä näytettäväksi pistekirjoitukseksi.
-Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
+Voit liikkua vaihtoehtojen välillä nuolinäppäimillä.
 
 ==== Syöttötaulukko ====[BrailleSettingsInputTable]
 Edellistä vaihtoehtoa täydentää Syöttötaulukko-yhdistelmäruutu.
 Valittua taulukkoa käytetään pistenäytön Perkins-tyylisellä pistenäppäimistöllä syötetyn pistekirjoituksen kääntämiseen tekstiksi.
-Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
+Voit liikkua vaihtoehtojen välillä nuolinäppäimillä.
 
-Huomaa, että tästä vaihtoehdosta on hyötyä vain, jos pistenäytössä on Perkins-tyylinen -näppäimistö ja mikäli näytön ajuri tukee tätä ominaisuutta.
+Huom: Tästä vaihtoehdosta on hyötyä vain, jos pistenäytössä on Perkins-tyylinen -näppäimistö ja mikäli näytön ajuri tukee tätä ominaisuutta.
 Mikäli pistenäppäimistön sisältävä pistenäyttö ei tue syöttöä, siitä huomautetaan [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
 
-	==== Laajenna kohdistimen kohdalla oleva sana ====[BrailleSettingsExpandToComputerBraille]
+==== Laajenna kohdistimen kohdalla oleva sana ====[BrailleSettingsExpandToComputerBraille]
 Kun tämä asetus on käytössä, kohdistimen alla oleva sana näytetääntavallisella tietokonemerkistöllä.
 
 ==== Näytä kohdistin ====[BrailleSettingsShowCursor]
@@ -1200,12 +1199,36 @@ Voit lukea kontekstin (ts. että olet luettelossa ja että se on osa valintaikku
 
 Vaihda Kohdistuskontekstin näyttäminen -asetusta mistä tahansa liittämällä siihen oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 
-+++ Näppäimistöasetukset (NVDA+Ctrl+K) +++[KeyboardSettings]
-Tämä valintaikkuna löytyy Asetukset-valikon "Näppäimistö..." -kohdasta.
-Se sisältää seuraavat asetukset:
++++ Valitse pistenäyttö (NVDA+Ctrl+A) +++[SelectBrailleDisplay]
+Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla Vaihda...-painiketta NVDA:n asetukset -valintaikkunan Pistekirjoitus-kategoriassa, voit valita, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
+Kun olet valinnut haluamasi pistenäytön, NVDA ottaa sen käyttöön painettuasi OK-painiketta.
+Mikäli näytön ajurin lataamisessa ilmenee virheitä, NVDA ilmoittaa siitä, eikä mahdollisesti käytössä olevaa pistenäyttöä vaihdeta.
+
+==== Pistenäyttö ====[SelectBrailleDisplayDisplay]
+Tämä yhdistelmäruutu sisältää useita vaihtoehtoja riippuen järjestelmääsi asennetuista pistenäyttöajureista.
+Liiku vaihtoehtojen välillä nuolinäppäimillä.
+
+"Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
+
+Katso lisätietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
+
++==== Portti ====[SelectBrailleDisplayPort]
+Tällä asetuksella voit, mikäli se on käytettävissä, valita, mitä porttia tai yhteystyyppiä valitsemasi pistenäytön kanssa käytetään.
+Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot käyttämällesi pistenäytölle.
+
+NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti skannaamalla järjestelmän käytettävissä olevia USB- ja bluetooth-laitteita.
+Joillekin pistenäytöille voidaan kuitenkin itse valita käytettävä portti.
+Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä "sarjaportti", mikäli pistenäyttö tukee sarjaporttiin liittämistä.
+
+Tämä vaihtoehto ei ole käytettävissä, jos pistenäyttö tukee vain automaattista portintunnistusta.
+
+Katso lisätietoja pistenäyttösi tukemista kommunikointityypeistä ja käytettävissä olevista porteista [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
+
++++ Näppäimistö (NVDA+Ctrl+K) +++[KeyboardSettings]
+Tämä asetuskategoria sisältää seuraavat vaihtoehdot:
 
 ==== Näppäimistöasettelu ====[KeyboardSettingsLayout]
-Tästä yhdistelmäruudusta voidaan valita, mitä näppäimistöasettelua NVDA käyttää. Tällä hetkellä käytettävissä olevat kaksi vaihtoehtoaovat Pöytäkone ja Kannettava.
+Tästä yhdistelmäruudusta voit valita, mitä näppäimistöasettelua NVDA käyttää. Tällä hetkellä käytettävissä olevat kaksi vaihtoehtoaovat Pöytäkone ja Kannettava.
 
 ==== Käytä Capslockia NVDA-näppäimenä ====[KeyboardSettingsCapsModifier]
 Jos tämä valintaruutu on valittuna, Capslock-näppäintä voidaan käyttää NVDA-näppäimenä.
@@ -1217,7 +1240,7 @@ Jos tämä valintaruutu on valittuna, laajennettua Insert-näppäintä (löytyy 
 Jos tämä valintaruutu on valittuna, numeronäppäimistön Insertiä voidaan käyttää NVDA-näppäimenä.
 
 Jos NVDA-näppäimeksi ei ole valittu mitään, tiettyjen NVDA-komentojen käyttäminen voi olla mahdotonta.
-Tämän vuoksi Näppäimistöasetukset-valintaikkuna näyttää virheilmoituksen, mikäli kaikki näppäimet ovat valitsematta OK-painiketta painettaessa.
+Tämän vuoksi NVDA:n asetukset -valintaikkuna näyttää virheilmoituksen, mikäli näppäimiä ei ole valittuna OK-painiketta painettaessa.
 Kun virheilmoitus on kuitattu, vähintään yksi näppäin on valittava ennen kuin tehdyt muutokset voidaan hyväksyä ja valintaikkuna sulkea asianmukaisesti OK-painiketta painamalla.
 
 %kc:setting
@@ -1254,15 +1277,14 @@ Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painetut näppäimet, jo
 
 ==== Ilmaise kirjoitusvirheet kirjoitettaessa toistamalla ääni ====[KeyboardSettingsAlertForSpellingErrors]
 Tämän asetuksen ollessa käytössä toistetaan lyhyt summeriääni, kun kirjoittamassasi sanassa on kirjoitusvirhe.
-Asetus on käytettävissä vain, jos kirjoitusvirheiden ilmaiseminen on otettu käyttöön NVDA:n [Dokumenttien muotoiluasetukset #DocumentFormattingSettings] -valintaikkunasta.
+Asetus on käytettävissä vain, jos kirjoitusvirheiden ilmaiseminen on otettu käyttöön NVDA:n asetukset -valintaikkunan [Dokumenttien muotoilu -kategoriasta #DocumentFormattingSettings].
 
 ==== Käsittele muiden sovellusten näppäinpainallukset ====[KeyboardSettingsHandleKeys]
 Tällä asetuksella käyttäjä voi säätää, käsitteleekö NVDA sellaisten sovellusten kuin näyttönäppäimistöjen ja puheentunnistusohjelmistojen tuottamat näppäinpainallukset. 
 Asetus on oletusarvoisesti käytössä, vaikka tietyt käyttäjät (esim. vietnaminkielistä tekstiä Unikey-kirjoitusohjelmistolla kirjoittavat) saattavat haluta poistaa sen käytöstä, sillä se aiheuttaa väärien nmerkkien syöttämistä.
 
-+++ Hiiriasetukset (NVDA+Ctrl+M) +++[MouseSettings]
-Hiiriasetukset-valintaikkuna löytyy Asetukset-valikon "Hiiri..." -kohdasta.
-Se sisältää seuraavat asetukset:
++++ Hiiri (NVDA+Ctrl+M) +++[MouseSettings]
+NVDA:n asetukset -valintaikkunan Hiiri-kategoria sisältää seuraavat asetukset:
 
 ==== Ilmoita hiirikohdistimen muodon muutokset ====[MouseSettingsShape]
 Kun tämä valintaruutu on valittuna, NVDA ilmoittaa joka kerta, kun hiiriosoittimen muoto muuttuu.
@@ -1290,17 +1312,16 @@ Mitä enemmän vasemmalla tai oikealla hiiri on, sitä enemmän vasemmalta tai o
 Jos Ilmaise hiiren koordinaatit äänimerkeillä -asetus on käytössä, tämän valintaruudun valitseminen tarkoittaa, että äänikoordinaattien voimakkuutta säädetään sen mukaan, miten kirkas ruutu on hiirikohdistimen alla.
 Tämä asetus ei ole oletusarvoisesti käytössä.
 
-+++ Kosketusvuorovaikutuksen asetukset +++[TouchInteraction]
-Tästä valintaikkunasta, joka on käytettävissä vain tietokoneissa, joissa on Windows 8 tai uudempi käyttöjärjestelmä sekä kosketusominaisuuksia, voidaan määrittää, miten NVDA on vuorovaikutuksessa kosketusnäyttöjen kanssa.
++++ Kosketuksen vuorovaikutus +++[TouchInteraction]
+Tästä asetuskategoriasta, joka on käytettävissä vain tietokoneissa, joissa on Windows 8 tai uudempi käyttöjärjestelmä sekä kosketusominaisuuksia, voit määrittää, miten NVDA on vuorovaikutuksessa kosketusnäyttöjen kanssa.
 
 ==== Kosketuskirjoitustila ====[TouchTypingMode]
 Tällä valintaruudulla voit määrittää menetelmän, jota haluat käyttää kirjoittaessasi tekstiä kosketusnäppäimistöllä.
 Kun valintaruutu on valittuna, voit painaa haluamaasi näppäintä etsimällä sen näppäimistöltä ja nostamalla sormen näytöltä.
 Mikäli valintaruutu ei ole valittuna, näppäintä on painettava kaksoisnapauttamalla sitä.
 
-+++ Tarkastelukohdistimen asetukset +++[ReviewCursorSettings]
-Löytyy Asetukset-valikon kohdasta "Tarkastelukohdistin...".
-Tämä valintaikkuna sisältää seuraavat asetukset:
++++ Tarkastelukohdistin +++[ReviewCursorSettings]
+Tämä kategoria sisältää seuraavat asetukset:
 
 %kc:setting
 ==== Seuraa järjestelmän kohdistusta ====[ReviewCursorFollowFocus]
@@ -1322,9 +1343,8 @@ Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellai
 
 Ota yksinkertainen tarkastelutila käyttöön tai poista se käytöstä mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 
-+++ Objektien lukuasetukset (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
-Tämä valintaikkuna löytyy Asetukset-valikosta kohdasta "Objektien lukeminen...".
-Se sisältää seuraavat asetukset:
++++ Objektien lukeminen (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
+Tämä kategoria sisältää seuraavat asetukset:
 
 ==== Lue työkaluvihjeet ====[ObjectPresentationReportToolTips]
 Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden tullessa näkyviin.
@@ -1357,9 +1377,9 @@ Tämä asetus määrittää, miten NVDA ilmaisee edistymispalkkien päivittymise
 
 Seuraavat vaihtoehdot ovat käytettävissä:
 - Pois: Edistymispalkkeja ei lueta.
-- Lue: Edistymispalkit luetaan prosentteina. Joka kerta kun edistymispalkki muuttuu, NVDA lukee sen uuden arvon.
+- Puhu: Edistymispalkit puhutaan prosentteina. Joka kerta kun edistymispalkki muuttuu, NVDA puhuu sen uuden arvon.
 - Anna äänimerkki: NVDA antaa äänimerkin joka kerta edistymispalkin muuttuessa. Mitä korkeampi äänimerkki, sitä lähempänä loppua edistymispalkki on.
-- Anna äänimerkki ja lue: NVDA sekä antaa äänimerkin että lukee edistymispalkin arvon.
+- Puhu ja anna äänimerkki: NVDA sekä antaa äänimerkin että puhuu edistymispalkin arvon.
 -
 
 ==== Ilmaise taustalla olevat edistymispalkit ====[ObjectPresentationReportBackgroundProgressBars]
@@ -1379,10 +1399,9 @@ Kun esim. kirjoitat Windows Vistan ja uudemman Käynnistä-valikon hakukenttää
 Joissakin muokkauskentissä, kuten  useissa Windows 10:n sovellusten hakukentissä, NVDA voi ilmoittaa kirjoittaessasi ehdotusluettelon ilmestymisestä.
 Automaattisten ehdotusten luettelo sulkeutuu siirryttyäsi pois muokkauskentästä, ja NVDA voi joissakin kentissä ilmoittaa siitä.
 
-+++ Syöttömenetelmän asetukset +++[InputCompositionSettings]
-Syöttömenetelmän asetukset -valintaikkuna löytyy Asetukset-valikosta.
-Tästä valintaikkunasta voidaan säätää, mitä NVDA ilmoittaa aasialaisten kielten merkkejä kirjoitettaessa, esim. IME- tai Tekstipalvelu-syöttömenetelmillä.
-Huomaa, että koska syöttömenetelmät poikkeavat toisistaan suuresti ominaisuuksiltaan ja tiedonvälitystavoiltaan, nämä asetukset on todennäköisesti tarpeen määrittää eri tavalla kullekin menetelmälle tehokkaimman kirjoituskokemuksen saamiseksi.
++++ Syöttömenetelmä +++[InputCompositionSettings]
+Tästä asetuskategoriasta voit säätää, miten NVDA ilmoittaa aasialaisten kielten merkit niitä syötettäessä, esim. IME- tai Tekstipalvelu-syöttömenetelmillä.
+Huomaa, että koska syöttömenetelmät poikkeavat toisistaan suuresti ominaisuuksiltaan ja tiedonvälitystavoiltaan, nämä asetukset on todennäköisesti tarpeen määrittää eri tavalla kullekin menetelmälle tehokkaimman kirjoituskokemuksen varmistamiseksi.
 
 ==== Lue kaikki ehdotukset automaattisesti ====[InputCompositionReportAllCandidates]
 Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, luetaanko kaikki näkyvissä olevat ehdotukset automaattisesti niiden luettelon tullessa näkyviin tai sen sivua vaihdettaessa.
@@ -1410,10 +1429,8 @@ Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymb
 Tällä asetuksella voidaan valita, lukeeko NVDA uudet symbolit niiden tullessa näkyviin merkkiyhdistelmässä.
 Asetus on oletusarvoisesti käytössä.
 
-+++ Selaustilan asetukset (NVDA+Ctrl+B) +++[BrowseModeSettings]
-Selaustilan asetukset -valintaikkuna löytyy Asetukset-valikon "Selaustila..." -kohdasta.
-
-Valintaikkuna sisältää seuraavat asetukset:
++++ Selaustila (NVDA+Ctrl+B) +++[BrowseModeSettings]
+Tämä kategoria sisältää seuraavat asetukset:
 
 ==== Merkkien enimmäismäärä rivillä ====[BrowseModeSettingsMaxLength]
 Tämä asettaa selaustilan rivin enimmäispituuden merkkeinä.
@@ -1425,7 +1442,7 @@ Tämä asettaa rivimäärän, joka selaustilassa siirrytään painettaessa Page 
 ==== Käytä ruutuasettelua ====[BrowseModeSettingsScreenLayout]
 Pikanäppäin: NVDA+V
 
-Tällä asetuksella voidaan määrittää, sijoitetaanko sellainen sisältö kuten linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään. Jos asetus on käytössä, kentät jätetään sellaisiksi kuin ne ruudulla näytetään, jos asetus poistetaan käytöstä, kentät sijoitetaan omille riveilleen.
+Tällä asetuksella voit määrittää, sijoitetaanko sellainen sisältö kuten linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään. Jos asetus on käytössä, kentät jätetään sellaisiksi kuin ne ruudulla näytetään, jos asetus poistetaan käytöstä, kentät sijoitetaan omille riveilleen.
 
 ==== Lue sivu automaattisesti sen avauduttua ====[BrowseModeSettingsAutoSayAll]
 Tämä asetus määrittää, luetaanko sivu selaustilassa automaattisesti sen avauduttua.
@@ -1441,7 +1458,7 @@ Asetus on oletusarvoisesti poissa käytöstä.
 Ota asettelutaulukoiden ilmaiseminen käyttöön tai poista se käytöstä mistä tahansa määrittämällä syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 
 ==== Elementtien ilmaisemisen määrittäminen ====[BrowseModeLinksAndHeadings]
-Katso [Dokumenttien muotoiluasetukset -valintaikkunassa #DocumentFormattingSettings] olevia asetuksia määrittääksesi ilmaistavat elementit, kuten linkit, otsikot ja taulukot.
+Katso [NVDA:n asetukset #NVDASettings] -valintaikkunan [Dokumenttien muotoilu -kategoriassa #DocumentFormattingSettings]  olevia asetuksia määrittääksesi ilmaistavat elementit, kuten linkit, otsikot ja taulukot.
   
 ==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön, jos kohdistus muuttuu.
@@ -1456,12 +1473,10 @@ Jos tämä asetus on käytössä, NVDA toistaa äänimerkin vaihtaessaan selaus-
 
 ==== Estä muiden kuin syötekomentojen pääsy dokumenttiin ====[BrowseModeSettingsTrapNonCommandGestures]
 Tällä oletusarvoisesti käytössä olevalla asetuksella voit valita, estetäänkö syötekomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan dokumenttiin.
-Esimerkiksi, jos asetuksen ollessa käytössä painetaan j-kirjainta, sen tulostuminen dokumenttiin estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva komento.
+Esimerkiksi, jos asetuksen ollessa käytössä painat J-kirjainta, sen tulostuminen dokumenttiin estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva komento.
 
-+++ Dokumenttien muotoiluasetukset (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
-Tämä valintaikkuna löytyy Asetukset-valikon "Dokumenttien muotoilu..." -kohdasta.
-
-Useimmilla tämän valintaikkunan valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat automaattisesti kuulla liikuttaessasi kohdistinta dokumenteissa.
++++ Dokumenttien muotoilu (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
+Useimmilla tämän kategorian valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat automaattisesti kuulla siirtäessäsi kohdistinta dokumenteissa.
 Jos esimerkiksi valitset Lue fontti -valintaruudun, joka kerta, kun siirryt nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemmasta, NVDA kertoo fontin nimen.
 
 Dokumentin muotoiluasetukset on järjestetty ryhmiin.
@@ -1498,8 +1513,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
  - Kehykset
  - Napsautettavat kohteet
  -
- -
-
+-
 
 Voit ottaa nämä asetukset käyttöön tai poistaa ne käytöstä mistä tahansa Määrittämällä niille omat syötekomennot [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
 
@@ -1522,10 +1536,13 @@ Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 -
 
 +++ Windows 10:n tekstintunnistusasetukset +++[Win10OcrSettings]
-Tästä valintaikkunasta, johon pääsee NVDA:n Asetukset-valikon kohdasta "Tekstintunnistus (Windows 10)", voit määrittää [Windows 10:n tekstintunnistusasetukset. #Win10Ocr]
+Tästä kategoriasta voit määrittää [Windows 10:n tekstintunnistuksen asetukset. #Win10Ocr]
 
 ==== Tunnistuksen kieli ====[Win10OcrSettingsRecognitionLanguage]
 Tästä yhdistelmäruudusta voit valita tekstintunnistuksessa käytettävän kielen.
+
+++ Sekalaiset asetukset ++[MiscSettings]
+[NVDA:n asetukset #NVDASettings] -valintaikkunan lisäksi NVDA-valikosta löytyvä Asetukset-alavalikko sisältää myös useita muita kohteita, jotka on kuvailtu alla.
 
 +++ Puhesanastot +++[SpeechDictionaries]
 Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita, joista voidaan muuttaa tapaa, jolla NVDA lausuu tietyt sanat tai ilmaisut.
@@ -1565,7 +1582,7 @@ Sääntölausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetist�
 Tässä valintaikkunassa voit muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
 
 Kieli, jonka symboleiden puhumista muokataan, näytetään valintaikkunan otsikossa.
-Huom: Tässä noudatetaan  [Puheäänen asetukset -valintaikkunan #VoiceSettings] "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä" -asetusta, ts. kun asetus on käytössä, puheäänen kieltä käytetään NVDA:n kielen sijaan.
+Huom: Tässä noudatetaan [NVDA:n asetukset #NVDASettings] -valintaqikkunan [Puhe-kategorian #SpeechSettings] "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä" -asetusta, ts. kun asetus on käytössä, puheäänen kieltä käytetään NVDA:n käyttämän kielen asemesta.
 
 Symbolia muutetaan valitsemalla se Symbolit-luettelosta.
 
@@ -1596,7 +1613,7 @@ Tässä valintaikkunassa voit mukauttaa NVDA-komennoissa käytettäviä syöteko
 Vain sellaiset komennot näytetään, jotka ovat käytettävissä valintaikkunaa avattaessa.
 Jos esim. haluat mukauttaa selaustilaan liittyviä komentoja, sinun on avattava Syötekomennot-valintaikkuna selaustilassa ollessasi.
 
-Tämän valintaikkunan puunäkymässä näytetään kaikki käytettävissä olevat NVDA-komennot omiin luokkiinsa ryhmiteltyinä.
+Tämän valintaikkunan puunäkymässä näytetään kaikki käytettävissä olevat NVDA-komennot omiin kategorioihinsa ryhmiteltyinä.
 Voit suodattaa komentoja kirjoittamalla Suodata-muokkauskenttään komennon nimestä yhden tai useamman sanan missä tahansa järjestyksessä.
 Kaikki komentoon liitetyt syötekomennot näytetään kyseisen komennon alapuolella.
 
@@ -1626,12 +1643,12 @@ Seuraavista näppäinkomennoista voi myös olla hyötyä:
 %kc:endInclude
 
 ++ Asetusprofiilit ++[ConfigurationProfiles]
-Voit joskus tarvita eri asetuksia eri tilanteissa.
+Saatat joskus tarvita eri asetuksia eri tilanteissa.
 Saatat esimerkiksi haluta, että sisennysten lukeminen on käytössä tekstiä muokattaessa tai että fonttimääreiden lukeminen on käytössä dokumenttia oikoluettaessa.
 Tämä on mahdollista NVDA:n asetusprofiileja käyttäen.
 
 Asetusprofiili sisältää vain ne asetukset, joita profiilia muokattaessa muutetaan.
-Useimpia asetuksia voidaan muuttaa asetusprofiileissa, paitsi Yleiset asetukset -valintaikkunassa olevia, joita käytetään kaikkialla.
+Useimpia asetuksia voidaan muuttaa asetusprofiileissa, paitsi [NVDA:n asetukset #NVDASettings] -valintaikkunan Yleiset-kategoriassa olevia, joita käytetään kaikkialla.
 
 Asetusprofiilit voidaan ottaa käyttöön manuaalisesti.
 Ne voidaan ottaa käyttöön myös automaattisesti käynnistimien avulla, kuten tiettyyn sovellukseen siirryttäessä.
@@ -1707,7 +1724,7 @@ Asennetun NVDA:n asetushakemistoon päästään valitsemalla Käynnistä-valikos
 
 Kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa käytettävät asetukset tallennetaan NVDA:n asennushakemistossa olevaan systemConfig-hakemistoon.
 Näihin ei tulisi yleensä koskea.
-Muuttaaksesi sitä, miten NVDA on määritelty kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa, muuta ensin asetukset haluamiksesi kun olet kirjautuneena Windowsiin, ja kopioi ne sitten kirjautumisikkunassa käytettäväksi painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
+Muuttaaksesi sitä, miten NVDA on määritelty kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa, muuta ensin asetukset haluamiksesi kun olet kirjautuneena Windowsiin, ja kopioi ne sitten kirjautumisikkunassa käytettäviksi painamalla [NVDA:n asetukset #NVDASettings] -valintaikkunan Yleiset-kategoriassa olevaa painiketta.
 
 + Lisätyökalut +[ExtraTools]
 
@@ -1801,12 +1818,12 @@ SAPI4 on Microsoftin vanha ohjelmistopuhesyntetisaattoreiden standardi.
 NVDA tukee tätä edelleen käyttäjillä, joilla on jo SAPI 4 -syntetisaattoreita asennettuna.
 Microsoft ei kuitenkaan enää tue tätä, eikä tarvittavia komponentteja ole enää saatavilla.
 
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo (valitaan [Puheäänen asetukset -valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo, johon pääsee [NVDA:n asetukset #NVDASettings] -valintaikkunan [Puhe-kategoriasta #SpeechSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing], sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
 
 ++ Microsoft Speech API versio 5 (SAPI 5) ++[SAPI5]
 SAPI 5 on Microsoftin standardi ohjelmistopuhesyntetisaattoreille.
 Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta. Tietokoneellasi on myös luultavasti esiasennettuna vähintään yksi SAPI 5 -puheääni.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo (valitaan [Puheäänen asetukset -valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo, johon pääsee [NVDA:n asetukset #NVDASettings] -valintaikkunan [Puhe-kategoriasta #SpeechSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing], sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
 Microsoft Speech Platform tarjoaa useille kielille puheääniä, joita käytetään tavallisesti palvelinpohjaisten puhesovellusten kehittämiseeen.
@@ -1837,7 +1854,7 @@ Tämä on kaupallinen italiankielinen puhesyntetisaattori.
 Se on asennettava tietokoneelle, jotta sitä voidaan käyttää NVDA:lla.
 Katso lisätietoja Audiologicin verkkosivustolta osoitteesta www.audiologic.it.
 
-Tämä syntetisaattori ei tue [tavaustoimintoa #VoiceSettingsUseSpelling].
+Tämä syntetisaattori ei tue [tavaustoimintoa #SpeechSettingsUseSpelling].
 
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
@@ -2312,7 +2329,7 @@ Seuraavia pistenäyttöjä tuetaan:
 -
 
 Huomaa, että nämä pistenäytöt voidaan liittää vain sarjaportin kautta.
-Tämän vuoksi portti, johon laite on liitetty, tulee valita sen jälkeen, kun pistenäytön ajuri on valittu Pistekirjoitusasetukset-valintaikkunasta.
+Tämän vuoksi portti, johon laite on liitetty, tulee valita sen jälkeen, kun pistenäytön ajuri on valittu [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
 Sitä voidaan liikuttaa neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
@@ -2401,7 +2418,7 @@ Katso BrailleNote Touchin näppäinkomennot [Brailliant BI/B / BrailleNote Touch
 
 Käytettävä portti on määritettävä pistenäytön omista asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
 Katso lisätietoja BrailleNoten käsikirjasta.
-Portin määrittäminen voi olla tarpeen myös NVDA:n Pistekirjoitusasetukset-valintaikkunassa.
+Portin määrittäminen voi olla tarpeen myös NVDA:n [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunassa.
 Mikäli laite on kytketty USB:llä tai bluetoothilla, voidaan portiksi määrittää käytettävissä olevista vaihtoehdoista riippuen "Automaattinen", "USB" tai "Bluetooth".
 Jos liitäntänä käytetään sarjaporttia (tai USB-sarjaporttisovitinta) tai jos mikään edellisistä vaihtoehdoista ei ole käytettävissä, on käytettävä yhteysportti valittava sarjaporttiluettelosta.
 
@@ -2447,7 +2464,7 @@ Seuraavia malleja tuetaan:
 - EcoBraille Plus
 -
 
-Voit määrittää näytön käyttämän sarjaportin NVDA:n Pistekirjoitusasetukset-valintaikkunasta.
+Voit määrittää näytön käyttämän sarjaportin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Seuraavassa on näiden pistenäyttöjen näppäinmääritykset.
 Katso [EcoBraillen käyttöohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] kuvaukset näppäinten paikoista.
@@ -2488,7 +2505,7 @@ NVDA tukee [Eurobraillen http://www.eurobraille.fr/] Esys-, Esytime- ja Iris-pis
 Esys- ja Esytime-Evo-laitteiden kytkemiseen voidaan käyttää USB-liitäntää tai bluetooth-yhteyttä.
 Vanhemmat Esytime-näytöt tukevat vain USB:tä.
 Iris-mallit voidaan kytkeä vain sarjaportin kautta.
-Siksi näiden näyttöjen käyttämä portti kannattaa valita sen jälkeen, kun olet valinnut tämän ajurin Pistekirjoituksen asetukset -valintaikkunasta.
+Siksi näiden näyttöjen käyttämä portti tulee valita sen jälkeen, kun olet valinnut tämän ajurin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Iris- ja Esys-näytöissä on 10-näppäiminen pistekirjoitusnäppäimistö.
 Kahdesta Väli-näppäimen tavoin sijoitellusta näppäimestä vasemmanpuoleinen vastaa Askelpalautinta ja oikea Väli-näppäintä.
