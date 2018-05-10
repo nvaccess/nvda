@@ -18,6 +18,7 @@ What's New in NVDA
  - You can assign these new modifier toggles using the commands found under Emulated system keyboard keys in the Input gestures dialog.
 - Restored support for Handy Tech Braillino and Modular (with old firmware) displays. (#8016)
 - Date and time for supported Handy Tech devices (such as Active Braille and Active Star) will now automatically be synchronized by NVDA when out of sync more than five seconds. (#8016)
+- In Microsoft Outlook message lists, NVDA now reports if a message has been replied to or forwarded. (#6911)
 
 
 == Changes ==
@@ -27,6 +28,9 @@ What's New in NVDA
 - The French (Canada) grade 1 and grade 2 tables have been removed. Instead, the French (unified) 6 dot computer braille and Grade 2 tables will be used respectively. (#7839)
 - The secondary routing buttons on Alva BC6, EuroBraille and Papenmeier braille displays now report formatting information for the text under the braille cell of that button. (#7106)
 - Contracted braille input tables will automatically fall back to uncontracted mode in non-editable cases (i.e. controls where there is no cursor or in browse mode). (#7306)
+- NVDA is now less verbose when an appointment or time slot in the Outlook calendar covers an entire day. (#7949)
+- All of NVDA's Preferences can now be found in one settings dialog under NVDA Menu -> Preferences -> Settings, rather than scattered through many dialogs. (#7302)
+- The default speech synthesizer when running on Windows 10 is now oneCore speech rather than eSpeak. (#8176)
 
 
 == Bug Fixes ==
@@ -45,6 +49,8 @@ What's New in NVDA
 - On Windows 8 and later, NVDA will no longer announce "unknown" when opening quick link menu )Windows+X) and selecting items from this menu. (#8137)
 - Model specific gestures to buttons on Hims displays are now working as advertised in the user guide. (#8096)
 - NVDA will now try to correct system COM registration issues causing programs such as Firefox and Internet Explorer to become inaccessible and report "Unknown" by NVDA. (#2807)
+- Work around a bug in task manager causing NVDA to not allow users to access the contents of specific details about processes. (#8147)
+- Newer Microsoft SAPI5 voices no longer lag at the end of speech, making it much more efficient to navigate with these voices. (#8174)
 
 
 == Changes for developers ==
