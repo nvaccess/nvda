@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 00:10+1000\n"
+"POT-Creation-Date: 2018-05-04 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -579,6 +579,20 @@ msgstr "Na pregled"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "automatski"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Unos nije podržan"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} otpušten"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} pritisnut"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -1584,14 +1598,14 @@ msgstr "Nema prethodne greške"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr "Lin&kovi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr "&Zaglavlja"
 
@@ -1608,7 +1622,7 @@ msgstr "&Dugmići"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "&Regioni"
 
@@ -2864,10 +2878,12 @@ msgid "System caret"
 msgstr "Sistemski kursor"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "Miš"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "Govor"
 
@@ -2876,6 +2892,7 @@ msgid "Configuration"
 msgstr "Podešavanja"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Brajev"
 
@@ -2943,7 +2960,7 @@ msgid "Sleep mode on"
 msgstr "Režim spavanja uključen"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
+msgid "Toggles sleep mode on and off for the active application."
 msgstr "Uključuje i isključuje režim spavanja za trenutnu aplikaciju."
 
 #. Translators: Input help mode message for report current line command.
@@ -3429,7 +3446,7 @@ msgstr ""
 "Prelazi na sledeći režim pregleda (npr. objekat, dokument ili ekran) i "
 "postavlja lokaciju za pregled na mesto navigacionog objekta"
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "Ne postoji sledeći režim pregleda"
 
@@ -3467,7 +3484,7 @@ msgstr "%s kopirano u privremenu memoriju"
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
-"information, and pressing three times Copies name and value of this  object "
+"information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
 "Prijavljuje trenutni navigacioni objekat. Ako pritisnete dvaput sricaće ovu "
@@ -3959,49 +3976,53 @@ msgstr ""
 "Izgovara ime datoteke aktivne aplikacije zajedno sa imenom trenutno učitanog "
 "modula"
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
-msgstr "Prikazuje NVDA dijalog za opšta podešavanja"
+#. Translators: Input help mode message for go to general settings command.
+msgid "Shows NVDA's general settings"
+msgstr "Prikazuje opšta podešavanja programa NVDA"
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanje sintetizatora"
+#. Translators: Input help mode message for go to select synthesizer command.
+msgid "Shows the NVDA synthesizer selection dialog"
+msgstr "Prikazuje NVDA dijalog za izbor sintetizatora"
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
-msgstr "Prikazuje NVDA dijalog za glasovna podešavanja"
+#. Translators: Input help mode message for go to speech settings command.
+msgid "Shows NVDA's speech settings"
+msgstr "Prikazuje podešavanja govora programa NVDA"
 
-#. Translators: Input help mode message for go to braille settings dialog command.
-msgid "Shows the NVDA braille settings dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanja brajevog reda"
+#. Translators: Input help mode message for go to select braille display command.
+msgid "Shows the NVDA braille display selection dialog"
+msgstr "Prikazuje NVDA dijalog za izbor brajevog reda"
 
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanje tastature"
+#. Translators: Input help mode message for go to braille settings command.
+msgid "Shows NVDA's braille settings"
+msgstr "Prikazuje podešavanja brajevog reda programa NVDA"
 
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanje miša"
+#. Translators: Input help mode message for go to keyboard settings command.
+msgid "Shows NVDA's keyboard settings"
+msgstr "Prikazuje podešavanja tastature programa NVDA"
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
-msgid "Shows the NVDA review cursor settings dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanja preglednog kursora"
+#. Translators: Input help mode message for go to mouse settings command.
+msgid "Shows NVDA's mouse settings"
+msgstr "Prikazuje podešavanja miša programa NVDA"
 
-#. Translators: Input help mode message for go to input composition dialog.
-msgid "Shows the NVDA input composition settings dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanje unosa"
+#. Translators: Input help mode message for go to review cursor settings command.
+msgid "Shows NVDA's review cursor settings"
+msgstr "Prikazuje podešavanja preglednog kursora programa NVDA"
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanje predstavljanja objekata"
+#. Translators: Input help mode message for go to input composition settings command.
+msgid "Shows NVDA's input composition settings"
+msgstr "Prikazuje podešavanja ulaznog sastava programa NVDA"
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanje režima pretraživanja"
+#. Translators: Input help mode message for go to object presentation settings command.
+msgid "Shows NVDA's object presentation settings"
+msgstr "Prikazuje podešavanja predstavljanja objekata programa NVDA"
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Prikazuje NVDA dijalog za podešavanje formatiranja dokumenta"
+#. Translators: Input help mode message for go to browse mode settings command.
+msgid "Shows NVDA's browse mode settings"
+msgstr "Prikazuje podešavanja režima pretraživanja programa NVDA"
+
+#. Translators: Input help mode message for go to document formatting settings command.
+msgid "Shows NVDA's document formatting settings"
+msgstr "Prikazuje podešavanja formatiranja dokumenata programa NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
@@ -4215,6 +4236,46 @@ msgstr "Prevodi brajev unos i pritiska taster enter"
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Prevodi brajev unos"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Virtuelno uključuje i isključuje taster šift za emulaciju tastaturne prečice "
+"putem brajevog unosa"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Virtuelno uključuje i isključuje taster kontrol za emulaciju tastaturne "
+"prečice putem brajevog unosa"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Virtuelno uključuje i isključuje taster alt za emulaciju tastaturne prečice "
+"putem brajevog unosa"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Virtuelno uključuje i isključuje taster levi Windows za emulaciju tastaturne "
+"prečice putem brajevog unosa"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Virtuelno uključuje i isključuje taster NVDA za emulaciju tastaturne prečice "
+"putem brajevog unosa"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -6719,6 +6780,11 @@ msgstr "BCC:"
 msgid "unread"
 msgstr "nepročitano"
 
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
+msgstr "Uređivanje profila {profile}"
+
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "purple flag"
@@ -6779,6 +6845,11 @@ msgstr "poslato: %s"
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "Čekanje na outlook..."
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
+msgstr "{date} (svi dani)"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7308,11 +7379,19 @@ msgstr ""
 "Nije moguće sačuvati podešavanja, verovatno je sistem datoteka samo za "
 "čitanje"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
 "Drugi dijalog sa podešavanjima za NVDA je već otvoren. Molimo da prvo "
 "zatvorite taj dijalog."
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr ""
+"Panel sa podešavanjima koji ste pokušali da otvorite nije dostupan na ovom "
+"sistemu."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7331,99 +7410,48 @@ msgstr "Privremeni rečnik"
 msgid "About NVDA"
 msgstr "O NVDA"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "&Opšta podešavanja..."
-
-msgid "General settings"
-msgstr "Opšta podešavanja"
-
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&Sintetizator..."
-
-msgid "Change the synthesizer to be used"
-msgstr "Izmenite sintetizator koji će se koristiti"
-
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
-msgstr "&Glasovna podešavanja..."
-
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "Izaberite glas, brzinu, visinu i jačinu zvuka koje ćete koristiti"
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "Podešavanja &brajevog reda"
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "Podešavanja &tastature..."
-
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
 msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
 msgstr ""
-"Podesite raspored tastature, izgovaranje ukucanih znakova, reči i komandnih "
-"tastera"
+"Upravo pokrećete alatku COM Registration Fixing. Ova alatka pokušava da "
+"popravi česte sistemske probleme koji sprečavaju pristup programu NVDA "
+"programima kao što su Firefox i Internet Explorer. Ova alatka mora izvršiti "
+"promene u sistemskom registru i zbog toga zahteva administratorske "
+"privilegije. Da li ste sigurni da želite da nastavite?"
 
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "Podešavanja &miša..."
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Upozorenje"
 
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr "Promenite izveštavanje o oblicima pokazivača i objektima ispod miša"
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "COM Registration Fixing alatka"
 
-#. Translators: The label for the menu item to open Touch Interaction dialog.
-msgid "&Touch interaction..."
-msgstr "Interakcija sa ekranom osetljivim na dodir..."
-
-#. Translators: tooltip for touch interaction settings item.
-msgid "Change how NVDA interacts with the touchscreen"
-msgstr "Promenite interakciju programa NVDA sa ekranom osetljivim na dodir"
-
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "Pregledni &kursor..."
-
-msgid "Configure how and when the review cursor moves"
-msgstr "Podesi kako i kada se pregledni kursor pomera"
-
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "Podešavanja &ulaznog sastava..."
-
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr ""
-"Podesite kako će NVDA izveštavati o ulaznom sastavu i odabranim kandidatima "
-"za određene jezike"
+"Molimo sačekajte dok NVDA pokuša da popravi vaše sistemske greške u COM "
+"registracijama."
 
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "Predstavljanje &objekata..."
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "COM Registration Fixing alatka je završena"
 
-msgid "Change reporting of objects"
-msgstr "Promeni obaveštavanje o objektima"
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+msgid "&Settings..."
+msgstr "&Podešavanja..."
 
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "&Režim pretraživanja..."
-
-msgid "Change virtual buffers specific settings"
-msgstr "Promeni posebna podešavanja virtuelnih bafera"
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "&Formatiranje dokumenta..."
-
-msgid "Change settings of document properties"
-msgstr "Promeni podešavanja osobina dokumenta"
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "&Windows 10 OCR..."
-msgstr "&Windows 10 OCR..."
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+msgid "NVDA settings"
+msgstr "NVDA podešavanja"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7497,6 +7525,10 @@ msgstr "Napravi prenosnu kopiju..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Instaliraj NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Pokreni COM Registration Fixing alatku..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7623,7 +7655,7 @@ msgstr "Opcije"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "&Raspored tastature:"
 
@@ -8045,11 +8077,6 @@ msgstr ""
 "iz tog profila i pridružen ovom.\n"
 "Da li ste sigurni da želite da nastavite?"
 
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Upozorenje"
-
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
@@ -8286,9 +8313,18 @@ msgstr "Sačuvaj kao"
 msgid "Error saving log: %s"
 msgstr "Greška pri čuvanju dnevnika: %s"
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
-msgstr "Opšta podešavanja"
+#. Translators: The label for the list of categories in a multi category settings dialog.
+msgid "&Categories:"
+msgstr "&Kategorije:"
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr "%s kategorija podešavanja"
+
+#. Translators: This is the label for the general settings panel.
+msgid "General"
+msgstr "Opšta"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8409,9 +8445,20 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "Promena jezičkih podešavanja"
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
-msgstr "Sintetizator"
+#. Translators: A label for the synthesizer on the speech panel.
+msgid "&Synthesizer"
+msgstr "&Sintetizator"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr "&Promeni"
+
+#. Translators: This is the label for the synthesizer selection dialog
+msgid "Select Synthesizer"
+msgstr "Izaberi sintetizator"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8425,7 +8472,7 @@ msgstr "&Sintetizator:"
 msgid "Output &device:"
 msgstr "&Izlazni uređaj:"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr "režim stišavanja &pozadinskih zvukova"
 
@@ -8439,27 +8486,27 @@ msgstr "Nije moguće učitati %s sintetizator."
 msgid "Synthesizer Error"
 msgstr "Greška sintetizatora"
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "Glasovna podešavanja"
+#. Translators: This is the label for the voice settings panel.
+msgid "Voice"
+msgstr "Glas"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr "Automatska promena jezika (kada je podržana )"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "automatska promena dijalekta (kada je podržana)"
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "&Nivo izgovora znakova interpunkcije/simbola"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Koristi jezik glasa za obradu znakova i simbola"
 
@@ -8468,81 +8515,81 @@ msgid "Capital pitch change percentage"
 msgstr "Procenat promene visine za velika slova"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr "Izgovori reč &veliko pre velikog slova"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "&Pišti za velika slova"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Iskoristi funkciju &sricanja ako je podržana"
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "Podešavanja tastature"
+#. Translators: This is the label for the keyboard settings panel.
+msgid "Keyboard"
+msgstr "Tastatura"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Koristite caps lock kao NVDA taster"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Koristi numerički insert kao NVDA taster"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Koristi prošireni insert kao NVDA taster"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr "&Izgovaraj ukucane znakove"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr "Izgovaraj ukucane &reči"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr "Prekid u izgovoru ukucanih znakova"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr "Prekid izgovora za taster Enter"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr "Dozvoli &površno čitanje u Izgovori sve režimu"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Pišti ako se kucaju mala slova kada je uključen taster za velika slova"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr "Izgovaraj &komandne tastere"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr "&reprodukuj zvukove za greške u pravopisu u toku pisanja"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr "Kontroliši tastere iz drugih &aplikacija"
 
@@ -8550,94 +8597,90 @@ msgstr "Kontroliši tastere iz drugih &aplikacija"
 msgid "At least one key must be used as the NVDA key."
 msgstr "Barem jedan taster mora da se koristi kao NVDA taster"
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "Podešavanja miša"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr "Izveštavaj o promenama oblika &miša"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "Omogući &praćenje miša"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr "Rezolucija &jedinice teksta"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr "Prijavi funkciju kada miš uđe u &objekat"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr "Re&produkuj zvučne koordinate kada se miš pomera"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "Osvetljenje kontroliše &jačinu zvučnih koordinata"
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "Podešavanja preglednog kursora"
+#. Translators: This is the label for the review cursor settings panel.
+msgid "Review Cursor"
+msgstr "Pregledni kursor"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "Prati sistemski &fokus"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr "Prati sistemski &kursor"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "Prati kursor &miša"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "Jednostavan režim pregleda"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
-msgstr "Podešavanja ulaznog sastava"
+#. Translators: This is the label for the Input Composition settings panel.
+msgid "Input Composition"
+msgstr "Ulazni sastav"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr "Automatski izvesti o svim dostupnim &kandidatima"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr "Najavi &izabranog kandidata"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr "Uvek uključi kratak &opis slova kada se objavljuju kandidati"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr "Prijavi izmene u nizu karaktera koji se &čita"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr "Prijavi &promene u nizu karaktera sastava"
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Predstavljanje objekata"
 
@@ -8660,109 +8703,109 @@ msgid "Speak and beep"
 msgstr "Izgovaraj i pišti"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr "Prijavi opise &alata"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &help balloons"
 msgstr "Prijavi &balone za pomoć"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr "Prijavi prečice sa &tastature za objekte"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr "&Prijavi informacije o poziciji objekta"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr "Pogodi poziciju &objekta kada nije dostupna"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr "Prijavi opis obje&kta"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "&Informacije o traci napredovanja:"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr "Obaveštavaj o pozadinskim trakama napredovanja"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "Obaveštavaj o dinamičkim promenama &sadržaja"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "Reprodukuj zvukove kada se &automatski predlozi pojave"
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
 msgstr "Režim pretraživanja"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr "&Maksimalan broj znakova u jednom redu"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr "&Broj redova po stranici"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr "&Koristi izgled ekrana (kada je podržan)"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr "&Automatski Izgovori sve režim kada se učita stranica"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr "Uključi t&abele za izgled"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr "Automatski režim fokusiranja za promene fokusa"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr "Automatski režim fokusiranja za pomeranje kursora"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "Zvučna potvrda za režime fokusiranja i pretraživanja"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "&Spreči sve prečice koje nisu komande da dođu u susret sa dokumentom"
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Formatiranje dokumenta"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
@@ -8771,72 +8814,72 @@ msgstr ""
 "prijavljivati"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr "Fontovi"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Font name"
 msgstr "&ime fonta"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font &size"
 msgstr "&veličina fonta"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font attri&butes"
 msgstr "atri&buti fonta"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "&Naglašavanja"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "&Stilovi"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr "&Boje"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Document information"
 msgstr "Informacije dokumenta"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Co&mments"
 msgstr "&Komentari"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "ure&đivačke izmene"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Spelling e&rrors"
 msgstr "&greške u pravopisu"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr "Strane i odvajanja"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr "S&trane"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Line &numbers"
 msgstr "broj red&ova"
 
@@ -8847,7 +8890,7 @@ msgstr "Prijavi uv&lačenje reda:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Off"
 msgstr "Isključeno"
 
@@ -8864,88 +8907,97 @@ msgstr "Tonovi"
 msgid "Both  Speech and Tones"
 msgstr "Govor i tonovi"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "uvlačenje pa&susa"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "&Odvajanje redova"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Alignment"
 msgstr "&poravnanje"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Table information"
 msgstr "Informacije o tabelama"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Tables"
 msgstr "&Tabele"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Row/column h&eaders"
 msgstr "&Zaglavlja kolona/redova"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "ko&ordinati ćelija u tabeli"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Styles"
 msgstr "Stilovi"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr "Boje i stilovi"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell borders:"
 msgstr "Granice ćelija"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Elements"
 msgstr "Elementi"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Liste"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Block &quotes"
 msgstr "&citati"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "&Okviri"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Clickable"
 msgstr "&Klikabilnost"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Najavi promene u formatiranju posle kursora (može izazvati usporen rad)"
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+msgid "Touch Interaction"
+msgstr "Interakcija sa ekranom osetljivim na dodir"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr "Režim pisanja na ekranu ose&tljivom na dodir"
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
 msgstr "Windows 10 OCR"
 
@@ -9037,9 +9089,13 @@ msgstr "&Uredi"
 msgid "Add Dictionary Entry"
 msgstr "Dodaj unos u rečnik"
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr "Brajeva podešavanja"
+#. Translators: A label for the braille display on the braille panel.
+msgid "Braille &display"
+msgstr "Brajev re&d"
+
+#. Translators: This is the label for the braille display selection dialog.
+msgid "Select Braille Display"
+msgstr "Izaberi brajev red"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9048,6 +9104,13 @@ msgstr "Brajev &red:"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "&Port:"
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr "Nije moguće učitati %s brajev red."
+
+msgid "Braille Display Error"
+msgstr "Greška brajevog reda"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9105,12 +9168,13 @@ msgstr "&Izbegavaj razdvajanje reči kada je moguće"
 msgid "Focus context presentation:"
 msgstr "Predstavljanje sadržaja fokusa: "
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Nije moguće učitati %s brajev red."
+#. Translators: This is the label for the NVDA settings dialog.
+msgid "NVDA"
+msgstr "NVDA"
 
-msgid "Braille Display Error"
-msgstr "Greška brajevog reda"
+#. Translators: The profile name for normal configuration
+msgid "normal configuration"
+msgstr "Globalna podešavanja"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9189,15 +9253,6 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
 "Greška pri čuvanju korisnički definisanih komandi- verovatno je sistem "
 "datoteka samo za čitanje."
-
-#. Translators: This is the label for the touch interaction settings dialog.
-msgid "Touch Interaction"
-msgstr "Interakcija sa ekranom osetljivim na dodir"
-
-#. Translators: This is the label for a checkbox in the
-#. touch interaction settings dialog.
-msgid "&Touch typing mode"
-msgstr "Režim pisanja na ekranu ose&tljivom na dodir"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10730,6 +10785,98 @@ msgstr "odvajanje više redova "
 msgid "1.5 line spacing"
 msgstr "1.5 odvajanje redova"
 
+#~ msgid "Shows the NVDA voice settings dialog"
+#~ msgstr "Prikazuje NVDA dijalog za glasovna podešavanja"
+
+#~ msgid "&General settings..."
+#~ msgstr "&Opšta podešavanja..."
+
+#~ msgid "&Synthesizer..."
+#~ msgstr "&Sintetizator..."
+
+#~ msgid "Change the synthesizer to be used"
+#~ msgstr "Izmenite sintetizator koji će se koristiti"
+
+#~ msgid "Choose the voice, rate, pitch and volume to use"
+#~ msgstr "Izaberite glas, brzinu, visinu i jačinu zvuka koje ćete koristiti"
+
+#~ msgid "B&raille settings..."
+#~ msgstr "Podešavanja &brajevog reda"
+
+#~ msgid "&Keyboard settings..."
+#~ msgstr "Podešavanja &tastature..."
+
+#~ msgid ""
+#~ "Configure keyboard layout, speaking of typed characters, words or command "
+#~ "keys"
+#~ msgstr ""
+#~ "Podesite raspored tastature, izgovaranje ukucanih znakova, reči i "
+#~ "komandnih tastera"
+
+#~ msgid "&Mouse settings..."
+#~ msgstr "Podešavanja &miša..."
+
+#~ msgid "Change reporting of mouse shape and object under mouse"
+#~ msgstr "Promenite izveštavanje o oblicima pokazivača i objektima ispod miša"
+
+#~ msgid "&Touch interaction..."
+#~ msgstr "Interakcija sa ekranom osetljivim na dodir..."
+
+#~ msgid "Change how NVDA interacts with the touchscreen"
+#~ msgstr "Promenite interakciju programa NVDA sa ekranom osetljivim na dodir"
+
+#~ msgid "Configure how and when the review cursor moves"
+#~ msgstr "Podesi kako i kada se pregledni kursor pomera"
+
+#~ msgid "&Input composition settings..."
+#~ msgstr "Podešavanja &ulaznog sastava..."
+
+#~ msgid ""
+#~ "Configure how NVDA reports input composition and candidate selection for "
+#~ "certain languages"
+#~ msgstr ""
+#~ "Podesite kako će NVDA izveštavati o ulaznom sastavu i odabranim "
+#~ "kandidatima za određene jezike"
+
+#~ msgid "&Object presentation..."
+#~ msgstr "Predstavljanje &objekata..."
+
+#~ msgid "Change reporting of objects"
+#~ msgstr "Promeni obaveštavanje o objektima"
+
+#~ msgid "&Browse mode..."
+#~ msgstr "&Režim pretraživanja..."
+
+#~ msgid "Change virtual buffers specific settings"
+#~ msgstr "Promeni posebna podešavanja virtuelnih bafera"
+
+#~ msgid "Document &formatting..."
+#~ msgstr "&Formatiranje dokumenta..."
+
+#~ msgid "Change settings of document properties"
+#~ msgstr "Promeni podešavanja osobina dokumenta"
+
+#~ msgid "&Windows 10 OCR..."
+#~ msgstr "&Windows 10 OCR..."
+
+#~ msgid "General Settings"
+#~ msgstr "Opšta podešavanja"
+
+#~ msgid "Voice Settings"
+#~ msgstr "Glasovna podešavanja"
+
+#~ msgid "Keyboard Settings"
+#~ msgstr "Podešavanja tastature"
+
+#~ msgid "Mouse Settings"
+#~ msgstr "Podešavanja miša"
+
+#~ msgid "Review Cursor Settings"
+#~ msgstr "Podešavanja preglednog kursora"
+
+#~ msgid "Braille Settings"
+#~ msgstr "Brajeva podešavanja"
+
 #~ msgid "French (Canada) grade 1"
 #~ msgstr "francuski kanadski stepen 1"
 
@@ -10774,9 +10921,6 @@ msgstr "1.5 odvajanje redova"
 
 #~ msgid "Not defined"
 #~ msgstr "Nije definisano"
-
-#~ msgid "Category"
-#~ msgstr "Kategorija"
 
 #~ msgid "Value"
 #~ msgstr "Vrednost"
