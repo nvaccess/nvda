@@ -18,6 +18,7 @@
  - Podes asignar estas novas conmutacións de modificadores usando a orde que se atopa en Teclas de sistema emuladas no diálogo Xestos de Entrada.
 - Restaurado o soporte para pantallas Handy Tech Braillino e Modular (co firmware vello). (#8016)
 - Agora sincronizaranse automáticamente co NVDA a data e a hora para os dispositivos Handy Tech soportados (como Active Braille e Active Star) cando estean desincronizados máis de cinco segundos. (#8016)
+- Nas listaxes de mensaxes do Microsoft Outlook, o NVDA agora informa de se unha mensaxe foi respostada ou reenviada. (#6911)
 
 
 == Cambios ==
@@ -27,6 +28,9 @@
 - As táboas Francés (Canadá) grao 1 e grao 2 borráronse. No seu lugar, utilizaranse as táboas Francés (unificado) 6 pontos e Grao 2 respectivamente. (#7839)
 - Os sensores secundarios das pantallas braille Alva BC6, EuroBraille e Papenmeier agora anuncian información de formato para o texto baixo a celda braille dese sensor. (#7106)
 - As táboas de entrada de braille contraído voltarán automáticamente a modo non contraído nos casos non editables (é dicir, controis onde non hai cursor ou en modo exploración). (#7306)
+- O NVDA agora fala menos no calendario de Outlook cando unha cita ou unha franxa temporal cubre un día enteiro. (#7949)
+- Agora pódense atopar todas as preferencias do NVDA nun único diálogo de opcións no menú NVDA -> Preferencias -> Opcións, en lugar de dispersarse en moitos diálogos. (#7302)
+- O sintetizador de voz predeterminado ao se executar en Windows 10 agora é oneCore speech en lugar do eSpeak. (#8176)
 
 
 == Correción de fallos ==
@@ -45,6 +49,8 @@
 - En Windows 8 e posterior, o NVDA xa non anunciará "descoñecido" ao abrir o menú rápido de enlaces (Windows+X) e ao selecionar elementos deste menú. (#8137)
 - Os xestos específicos do modelo para botóns nas pantallas Hims agora funcionan como se anuncia na Guía do Usuario. (#8096)
 - O NVDA tentará agora arranxar os problemas de rexistro COM do sistema que causan que programas coma Firefox e Internet Explorer se volten inaccesibles e anuncien "Descoñecido" polo NVDA. (#2807).
+- Traballouse na solución dun fallo no administrador de tarefas facendo que o NVDA non permita aos usuarios acesar aos contidos de detalles específicos sobre os procesos. (#8147)
+- As voces máis novas do Microsoft SAPI5 xa non retrasan ao rematar a fala, o que fai que sexa moito máis doado navegar con estas voces. (#8174)
 
 
 == Cambios para Desenvolvedores ==

@@ -18,6 +18,7 @@
  - Možete dodijeliti te modifikatore  koje možete pronaći u kategoriji emulirane tipke sustava u dijaloškom okviru ulazne geste.
 - Vraćena podrška za Handy Tech Braillino i Modular brajične retke (sa starim firmwareom). (#8016)
 - Datum i vrijeme za podržane Handy Techove uređaje (poput Active Braille i Active Star) će biti automatski sinkronizirano kada nije sinkronizirano više od 5 sekundi. (#8016)
+- NVDA sada izvještava o odgovorenosti ili proslijeđenosti poruke u Microsoft outlooku. (#6911)
 
 
 == Izmjene ==
@@ -27,6 +28,9 @@
 - Kanadske francuske brajične tablice su sada uklonjene. Sada će se umjesto kanadskih tablica, koristiti šestotočkasta, te unificirani francuski kratkopis. (#7839)
 - Sekundarne routing tipke na Alva BC6, EuroBraille i Papenmeier brajičnim retcima sada izvještavaju o formatiranju teksta pritiskom na routing tipku nad brajičnom ćelijom. (#7106)
 - Kratkopisne brajične ulazne tablice vratit će se u punopisni način u slučajevima, kada nije moguće uređivati tekst (npr. pri kontrolama gdje kursor ne postoji ili u načinu pregleda). (#7306)
+- NVDA je sada manje pričljiv kada kalendarski termin pokriva cijeli dan. (#7949)
+- Sve postavke NVDA sada se nalaze u jednom dijaloškom okviru postavke u istoimenom podizborniku, što znači da dijalozi više nisu raspršeni. (#7302)
+- Podrazumijevani sintetizator govora sada je one core, bolje nego espeak. (#8176)
 
 
 == ispravke grešaka ==
@@ -45,6 +49,8 @@
 - U Windowsima 8 i novijim, NVDA više neće izgovarati "nepoznato" prilikom otvaranja izbornika brzog povezivanja )Windows+X) i označavanju stavaka iz tog izbornika. (#8137)
 - Specifične geste za modele Na Himsovim retcima sada rade oako, kako su opisane u korisničkom priručniku. (#8096)
 - NVDA će sada pokušati ispraviti greške povezane sa sistemskom COM registracijom koje su prouzrokovale da Internet explorer i firefox postanu nepristupačni, pri tom izgovarajući "nepoznato". (#2807)
+- Ispravljena greška u upravitelju zadataka, koja je onemogućavala prikaz detaljnog prikaza zadataka. (#8147)
+- Noviji Microsoft sapi5 glasovi više ne zaostaju na kraju izgovorene riječi, što ih čini brzim pri kretanju. (#8174)
 
 
 == Izmjene za razvojne programere ==
