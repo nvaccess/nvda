@@ -62,18 +62,7 @@ def doStartupDialogs():
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
 	if not config.conf['update']['askedAllowUsageStats']:
-		import wx
-		res=gui.messageBox(
-			# Translators: A message asking the user if they want to allow usage stats gathering
-			_("In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA. "
-				"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. " 
-				"No spoken or braille content will be ever sent to NV Access.  Please refer to the User Guide for a current list of all data collected.\n"
-				"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"),
-			# Translators: The title of the dialog asking if usage data can be collected 
-			_("NVDA  Usage Data Collection"),
-			wx.YES_NO | wx.ICON_QUESTION)
-		config.conf['update']['allowUsageStats']=bool(res==wx.YES)
-		config.conf['update']['askedAllowUsageStats']=True
+		gui.AskAllowUsageStatsDialog.run()
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
