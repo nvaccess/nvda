@@ -18,6 +18,7 @@
  - Puedes asignar estas nuevas conmutaciones de modificadores utilizando la orden que se encuentra en Teclas de sistema emuladas en el diálogo Gestos de Entrada.
 - Restaurado el soporte para pantallas Handy Tech Braillino y Modular (con  el firmware antiguo). (#8016)
 - Ahora se sincronizarán automáticamente con NVDA la fecha y la hora para los dispositivos Handy Tech soportados (tal como Active Braille y Active Star) cuando estén desincronizados más de cinco segundos. (#8016)
+- En las listas de mensajes de Microsoft Outlook, NVDA ahora informa de si un mensaje ha sido respondido o reenviado. (#6911)
 
 
 == Cambios ==
@@ -27,6 +28,9 @@
 - Las tablas Francés (Canadá) grado 1 y grado 2 se han eliminado. En su lugar, se utilizarán las tablas Francés (unificado) 6 puntos y Grado 2 respectivamente. (#7839)
 - Los sensores secundarios de las pantallas braille Alva BC6, EuroBraille y Papenmeier ahora anuncian información de formato para el texto bajo la celda braille de ese sensor. (#7106)
 - Las tablas de entrada de braille contraído volverán automáticamente a modo no contraído  en casos no editables (es decir, controles donde no haya cursor o en modo exploración). (#7306)
+- NVDA ahora habla menos en el calendario de Outlook cuando una cita o una franja temporal cubre un día entero. (#7949)
+- Ahora se pueden encontrar todas las preferencias de NVDA en un único diálogo de opciones en el menú NVDA -> Preferencias -> Opciones, en lugar de dispersarse en muchos diálogos. (#7302)
+- El sintetizador de voz predeterminado al ejecutarse en Windows 10 ahora es oneCore speech rather en lugar de eSpeak. (#8176)
 
 
 == Corrección de fallos ==
@@ -45,6 +49,8 @@
 - En Windows 8 y posterior, NVDA ya no anunciará "desconocido" al abrir el menú rápido de enlaces (Windows+X) y al seleccionar elementos de este menú. (#8137)
 - Los gestos específicos del modelo para botones en las pantallas Hims ahora funcionan tal y como se anuncia en la Guía del Usuario. (#8096)
 - NVDA intentará ahora corregir los problemas de registro COM del sistema que causan que programas como Firefox e Internet Explorer se vuelvan inaccesibles y anuncien "Desconocido" por NVDA. (#2807).
+- Se trabajó en la solución de un fallo en el administrador de tareas haciendo que NVDA no permita a los usuarios acceder a los contenidos de detalles específicos sobre los procesos. (#8147)
+- Las voces más nuevas de Microsoft SAPI5 ya no retrasan al final de la verbalización, lo que hace que sea mucho más eficiente navegar con estas voces. (#8174)
 
 
 == Cambios para Desarrolladores ==
