@@ -30,6 +30,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
+import core
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
 
@@ -1829,9 +1830,21 @@ class IENotificationBar(Dialog,IAccessible):
 				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
 			child=child.simpleNext
 
+class Desktop(IAccessible):
+	"""
+	An IAccessible overlay class for the Desktop (root of all windows on the system).
+	Note that IAccessible is not usually used for the Desktop at all, except for Desktop name Changes.
+	"""
+
+	def event_nameChange(self):
+		# Instruct eventHandler to detect and handle a possible desktop name change, if it has not already.
+		# It is slightly delayed just in case a focus event is already going to occur, which will handle the name change itself.
+		core.callLater(250,eventHandler.handlePossibleDesktopNameChange)
+
 ###class mappings
 
 _staticMap={
+	("#32769",oleacc.ROLE_SYSTEM_CLIENT):"Desktop",
 	("ReBarWindow32",oleacc.ROLE_SYSTEM_CLIENT):"ReBarWindow32Client",
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	("msctls_statusbar32",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
