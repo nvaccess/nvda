@@ -18,6 +18,7 @@ Ce este nou în NVDA
  - puteți să le atribuiți utilizând comenzile găsite sub tastele tastaturii simulate din dialogul gesturilor de intrare.
 - S-a restaurat suportul pentru afișajele braille Handy Tech Braillino și Modular (cu firmware vechi). (#8016)
 - Acum, data și ora pentru dispozitivele Handy Tech suportate (cum ar fi Active Braille și Active Star) vor fi sincronizate automat de NVDA atunci când nu se sincronizează mai mult de cinci secunde. (#8016)
+- În listele de mesaje din Microsoft Outlook, NVDA raportează acum dacă s-a răspuns la un mesaj sau dacă mesajul s-a trimis. (#6911)
 
 
 == Modificări ==
@@ -27,6 +28,9 @@ Ce este nou în NVDA
 - Tabelele franceză (Canada) grad 1 și 2 au fost șterse. În schimb, se vor utiliza tabelele franceze (unificate) braille pentru calculator în 6 puncte, respectiv tabelele de gradul 2. (#7839)
 - Butoannele secundare de deplasare de pe afișajele Alva BC6, EuroBraille și Papenmeier raportează acum informații de formatare pentru un text de sub o celulă braille de-a acelui buton. (#7106)
 - Tabelele braille de intrare abreviate vor reveni automat la modul neabreviat în cazurile needitabile (e.x. controalele în care nu există niciun cursor sau în modul de navigare). (#7306)
+- Acum, NVDA este mai puțin vorbăreț atunci când o întâlnire sau un interval de timp din calendarul Outlook acoperă o zi întreagă. (#7949)
+- Toate preferințele NVDA pot fi găsite acum laolaltă într-un dialog de setări din meniul NVDA -> Preferințe -> Setări, ne mai fiind împrăștiate  în multe dialoguri. (#7302)
+- Dacă se rulează Windows 10, sintetizatorul implicit este vorbirea OneCore, nu Espeak. (#8176)
 
 
 == Rezolvări Defecte ==
@@ -45,6 +49,8 @@ Ce este nou în NVDA
 - Pe Windows 8 sau mai nou, NVDA nu va mai spune „necunoscut” la deschiderea meniului de legătură rapidă )Windows+X) și la selectarea elementelor din acest meniu. (#8137)
 - Gesturile specifice modelului  cu butoanele de pe afișajele Hims lucrează acum ca anunțate în ghidul de utilizare. (#8096)
 - Acum, NVDA va încerca să corecteze probleme de sistem ale înregistrării COM care fac ca programe precum Firefox și Internet Explorer să devină inaccesibile, iar el să raporteze „necunoscut”. (#2807)
+- se lucrează la o eroare din managerul de activități care face  ca NVDA să nu le permită utilizatorilor să acceseze conținuturile detaliilor specifice despre procese. (#8147)
+- Vocile mai noi Microsoft SAPI5 nu mai au întârziere la sfârșitul vorbirii, acest lucru făcând navigarea cu ele mult mai eficientă. (#8174)
 
 
 == Modificări pentru Dezvoltatori ==
