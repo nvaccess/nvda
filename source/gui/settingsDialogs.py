@@ -138,14 +138,14 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
-		self.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnOk_ctrlSTriggersOnApply)
+		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
 
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
-	def _enterTriggersOnOk_ctrlSTriggersOnApply(self, evt):
+	def _enterActivatesOk_ctrlSActivatesApply(self, evt):
 		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
 		pressed. Cancel behavior is built into wx"""
 		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
