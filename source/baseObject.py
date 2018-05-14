@@ -132,8 +132,8 @@ class ScriptableType(AutoPropertyType):
 	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
 
 	def __new__(meta, name, bases, dict):
-		gestures = {}
 		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
+		gestures = getattr(cls, "_%s__gestures" % cls.__name__, {})
 		for name, script in dict.iteritems():
 			if not name.startswith('script_'):
 				continue
@@ -141,7 +141,7 @@ class ScriptableType(AutoPropertyType):
 			if hasattr(script, 'gestures'):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName
-		cls._scriptDecoratorGestures = gestures
+		setattr(cls, "_%s__gestures" % cls.__name__, gestures)
 		return cls
 
 class ScriptableObject(AutoPropertyObject):
