@@ -166,7 +166,7 @@ class ScriptableObject(AutoPropertyObject):
 		#: @type: dict
 		self._gestureMap = {}
 		# Bind gestures specified on the class.
-		# This includes scripts specified on decorated scripts.
+		# This includes gestures specified on decorated scripts.
 		# This does not include the gestures that are added when creating a DynamicNVDAObjectType.
 		for cls in reversed(self.__class__.__mro__):
 			try:

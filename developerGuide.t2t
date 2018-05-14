@@ -280,9 +280,10 @@ Next, it defines a class called GlobalPlugin, which is inherited from globalPlug
 
 Inside this class, it defines 1 or more events, scripts or gesture bindings.
 In this example, it defines a script method that performs the version announcement.
-The script function from the scriptHandler module is used to assign the NVDA+shift+v shortcut to this script.
+The script decorator from the scriptHandler module is used to assign the NVDA+shift+v shortcut to this script.
 However, the details of the script and its binding are not important for the purposes of this example.
 The most important part is the class itself.
+More information about scripts and the script decorator can be found in the [Defining script properties #DefiningScriptProperties] section of this guide.
 
 As with other examples in this guide, remember to delete the created Global Plugin when finished testing and then restart NVDA or reload plugins, so that original functionality is restored.
 
@@ -379,18 +380,7 @@ The order for gesture binding lookup is:
 - Global Commands (built in commands like quitting NVDA, object navigation commands, etc.)
 -
 
-You should also specify a description for the script which describes the command for users.
-For example, this is reported to users when in Input Help mode and shown in the Input Gestures dialog.
-The script will not appear in the Input Gestures dialog unless you specify a description.
-
-You can also specify a category for a script so that it can be grouped with other similar scripts.
-For example, a script in a global plugin which adds browse mode quick navigation keys may be categorized under the "Browse mode" category.
-The category can be set for individual scripts, but you can also set the "scriptCategory" attribute on the plugin class, which will be used for scripts which do not specify a category.
-There are constants for common categories prefixed with SCRCAT_ in the inputCore and globalCommands modules.
-The script will be listed under the specified category in the Input Gestures dialog.
-If no category is specified, the script will be categorized under "Miscellaneous".
-
-+++ Defining script properties +++
++++ Defining script properties +++[DefiningScriptProperties]
 For NVDA 2018.3 and above, the recommended way to set script properties is by means of the so called script decorator.
 In short, a decorator is a function that modifies the behavior of a particular function.
 The script decorator modifies the script in such a way that it will be properly bound to the desired gestures.
@@ -401,7 +391,7 @@ In order for you to use the script decorator, you will have to import it from th
 from scriptHandler import script
 ```
 
-After that, just above your script definition, add the script decorator, providing it the desired arguments:
+After that, just above your script definition, add the script decorator, providing it the desired arguments. For example:
 ```
 --- start ---
 	@script(
@@ -414,14 +404,19 @@ After that, just above your script definition, add the script decorator, providi
 --- end ---
 ```
 
-After this, your script will be listed in the input gestures dialog under the "Miscellaneous" category.
+In this example, your script will be listed in the input gestures dialog under the "Miscellaneous" category.
 It will have the description "Speaks the date and time", and will be bound to the "NVDA+shift+t" and "NVDA+alt+r" key combinations on the keyboard.
 
 The following keyword arguments can be used when applying the script decorator:
-- description: A short, translatable string containing a description of the script.
-  This description will be shown in the input gestures dialog.
-- category: The category of the script displayed in the input gestures dialog.
-  This is either a string, or one of the SCRCAT__ constants.
+- description: A short, translatable string which describes the command for users.
+  This is reported to users when in Input Help mode and shown in the input gestures dialog.
+  The script will not appear in the Input Gestures dialog unless you specify a description.
+- category: The category of the script in order for it to be grouped with other similar scripts.
+  For example, a script in a global plugin which adds browse mode quick navigation keys may be categorized under the "Browse mode" category.
+  The category can be set for individual scripts, but you can also set the "scriptCategory" attribute on the plugin class, which will be used for scripts which do not specify a category.
+  There are constants for common categories prefixed with SCRCAT_ in the inputCore and globalCommands modules, which can also be specified.
+  The script will be listed under the specified category in the Input Gestures dialog.
+  If no category is specified, the script will be categorized under "Miscellaneous".
 - gesture: A string containing a single gesture associated with this script, e.g. "kb:NVDA+shift+r".
 - gestures: A string list of multiple gestures associated with this script, e.g. ["kb:NVDA+shift+r", "kb:NVDA+alt+t"].
   When both gesture and gestures are specified, they are combined.
