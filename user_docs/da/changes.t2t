@@ -14,8 +14,14 @@ Nyheder i NVDA
 - Nye punkttabeller: Litauisk ottepunkt, ukrainsk, mongolsk Niveau 2. (#7839)
 - Tilføjede et script, der kan rapportere tekstformatering under den aktuelle punktcelle. (#7106)
 - Det er nu muligt at udskyde installationen af NVDA til et mere bekvemt tidspunkt. (#4263)
- 
- 
+- Du kan nu benytte kommandotasterne CTRL, Skift, Alt, Windows og NVDA fra dit punkttastatur og kombinere disse kommandotaster med punktindtastning (f.eks. trykke CTRL+S.) (#7306) 
+ - Du kan tildele disse kommandotaster ved brug af kommandoerne, der er at finde under emulerede tastaturtryk i dialogen for inputbevægelser.
+- Gendannede understøttelse for Handy Tech Braillino og Modular (med gammel firmware) displays. (#8016)
+(#8016)
+- Dato og tid for understøttede Handy Tech-enheder (herunder Active Braille og Active Star) vil nu blive automatisk synkroniseret ved hjælp af NVDA, hvis tiden er mere end 5 sekunder bagud. (#8016)
+- I lister over beskeder i Microsoft Outlook vil NVDA nu rapportere hvis en besked er blevet videresendt eller besvaret. (#6911)
+
+
 == Ændringer ==
 - Statuskolonnen i dialogen for styring af tilføjelsespakker vil nu indikere om pakken er aktiveret eller deaktiveret, hvor den før viste om pakken var i gang eller stoppet. (#7929)
 - Opdaterede liblouis Braille Translator til 3.5.0. (#7839)
@@ -23,9 +29,13 @@ Nyheder i NVDA
 - Det fransk (Canada) niveau 1 og niveau 2 punkttabeller er blevet erstattet med Fransk (Unified) og Fransk (Niveau 2). (#7839)
 - De sekundære markørsammenføringsknapper på Alva BC6, EuroBraille og Papenmeier punktdisplays
  rapporterer nu tekstformateringen under den aktuelle punktcelle. (#7106)
+- Forkortede punkttabeller vil nu automatisk falde tilbage til forkortet tilstand, hvis du befinder dig på et uredigerbart kontrolelement (f.eks. kontroller hvor der ikke befinder sig en markør eller i gennemsynstilstand). (#7306)
+- NVDA er nu mindre snaksaglig, når en aftale eller en tid i Outlook-kalenderen dækker hele dagen. (#7949)
+- Alle NVDAs indstillinger kan nu findes i en enkelt indstillingsdialog under NVDA>Indstillinger>Indstillinger. (#7302)
+- Standardsyntesen for NVDA, når du kører Windows 10, vil nu være Windows OneCore i stedet for eSpeak. (#8176)
 
- 
- == Fejlrettelser ==
+
+== Fejlrettelser ==
 - NVDA har ikke længere problemer med at læse kontroller, når du befinder dig i indstillingerne du skal benytte for at logge ind på din Microsoft-konto, hvis du har indtastet en email-adresse. (#7997)
 - NVDA vil ikke længere fejle ved oplæsning af en side, når du bevæger dig til den forrige side i Microsoft Edge. (#7997)
 - NVDA vil ikke længere ukorrekt meddele det endelige tegn, når du logger på ved brug af en PIN-kode i Windows 10. (#7908)
@@ -36,6 +46,13 @@ Nyheder i NVDA
 - Rettede ukorrekt punktoutput for flere punkttabeller, herunder store bogstaver i ottepunkt forkortet dansk punkt. (#7526, #7693)
 - NVDA kan nu rapportere flere typer af punkter i Microsoft Word. (#6778)
 - Udførelse af scriptet til rapportering af tekstformatering vil ikke længere have uventede resultater og flytte læsepositionen. (#7869)
+- Punktindtastning vil ikke længere lade dig benytte forkortet punktskrift hvor det ikke er tilladt (f.eks. hele ord vil ikke længere blive sendt til systemet udenfor tekstindhold og i gennemsynstilstand). (#7306)
+- Rettede forbindelsesproblemer med Handy Tech Easy Braille og Braille Wave displays. (#8016)
+- I Windows 8 og nyere, vil NVDA ikke længere annoncere "Ukendt", når du åbner et menupunkt fra en hurtiglink-menu (Windows+X). (#8137)
+- Modelspecifikke kommandoer til knapper på Hims-punktdisplays virker nu som forventet ifølge brugervejledningen. (#8096)
+- NVDA vil nu forsøge at rette system COM registration-problemer, der kan gøre programmer som Firefox og Internet Explorer utilgængelige og rapportere "Ukendt". (#2807)
+- Løsning på en fejl i joblisten der gjorde, at man ikke kunne benytte NVDA til at få bestemte detaljer for en proces oplyst. (#8147)
+- Nyere Microsoft SAPI5-stemmer er ikke længere forsinkede når de er færdig med at tale. Dette gør disse stemmer mere effektive under navigering. (#8174)
 
 
 == Ændringer for udviklere ==
