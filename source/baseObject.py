@@ -137,7 +137,7 @@ class ScriptableType(AutoPropertyType):
 		for name, script in dict.iteritems():
 			if not name.startswith('script_'):
 				continue
-			scriptName = name[7:]
+			scriptName = name[len("script_")]
 			if hasattr(script, 'gestures'):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName

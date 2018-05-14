@@ -418,19 +418,22 @@ After this, your script will be listed in the input gestures dialog under the "M
 It will have the description "Speaks the date and time", and will be bound to the "NVDA+shift+t" and "NVDA+alt+r" key combinations on the keyboard.
 
 The following keyword arguments can be used when applying the script decorator:
-- description: A short, translatable description of the script to be used in the input gestures dialog.
+- description: A short, translatable string containing a description of the script.
+  This description will be shown in the input gestures dialog.
 - category: The category of the script displayed in the input gestures dialog.
-- gesture: A single gesture associated with this script, e.g. "kb:NVDA+shift+r".
-- gestures: A list of multiple gestures associated with this script, e.g. ["kb:NVDA+shift+r", "kb:NVDA+alt+t"].
-  When both gesture and gestures are specified, they add up together.
-- canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
+  This is either a string, or one of the SCRCAT__ constants.
+- gesture: A string containing a single gesture associated with this script, e.g. "kb:NVDA+shift+r".
+- gestures: A string list of multiple gestures associated with this script, e.g. ["kb:NVDA+shift+r", "kb:NVDA+alt+t"].
+  When both gesture and gestures are specified, they are combined.
+  Either gesture, or any item in gestures can be used to trigger the script.
+- canPropagate: A boolean indicating whether this script should also apply when it belongs to a focus ancestor object.
   For example, this can be used when you want to specify a script on a particular foreground object, or another object in the focus ancestry which is not the current focus object.
   This option defaults to False.
-- bypassInputHelp: Whether this script should run when input help is active.
+- bypassInputHelp: A boolean indicating whether this script should run when input help is active.
   This option defaults to False.
 -
 
-Though  the script decorator makes the script definition process a lot more easier, there are more ways of binding gestures and setting script properties.
+Though the script decorator makes the script definition process a lot easier, there are more ways of binding gestures and setting script properties.
 For example, a special "__gestures" Python dictionary can be defined as a class variable on an App Module, Global Plugin or NVDA Object.
 This dictionary should contain gesture identifier strings pointing to the name of the requested script, without the "script_" prefix.
 You can also specify a description of the script in the function's docstring.
