@@ -24,3 +24,4 @@ class NVDAObjectWithRole(PlaceholderNVDAObject):
 
 	def _get_name(self):
 		return controlTypes.roleLabels.get(self.role,controlTypes.ROLE_UNKNOWN)
+
