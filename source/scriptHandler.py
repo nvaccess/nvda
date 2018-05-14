@@ -246,7 +246,7 @@ def script(
 	@type description: string 
 	@param category: The category of the script displayed in the gesture editor.
 	@type category: string
-	@param gesture: A gesture associated with this script
+	@param gesture: A gesture associated with this script.
 	@type gesture: string
 	@param gestures: A list of gestures associated with this script
 	@type gestures: list(string)
