@@ -926,7 +926,7 @@ def _isDebug():
 	return config.conf["debugLog"]["gui"]
 
 class AskAllowUsageStatsDialog(wx.Dialog):
-	"""A dialog asking if the user whishes to allow NVDA usage stats to be collected by NV Access."""
+	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog asking if usage data can be collected 
@@ -935,20 +935,17 @@ class AskAllowUsageStatsDialog(wx.Dialog):
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		# Translators: A message asking the user if they want to allow usage stats gathering
-		message=_("In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA. "
+		message=_("In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n\n"
 			"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. " 
-			"No spoken or braille content will be ever sent to NV Access.  Please refer to the User Guide for a current list of all data collected.\n"
+			"No spoken or braille content will be ever sent to NV Access.  Please refer to the User Guide for a current list of all data collected.\n\n"
 			"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?")
-		sHelper.addItem(wx.StaticText(self, label=message))
+		sText=sHelper.addItem(wx.StaticText(self, label=message))
+		# the wx.Window must be constructed before we can get the handle.
+		import windowUtils
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		sText.Wrap(self.scaleFactor*600) # 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-
-		remindMeButtonID=wx.NewId()
-		# Translators: The label of a button to remind the user later about performing some action.
-		remindMeButton = bHelper.addButton(self, remindMeButtonID, label=_("Remind me &later"))
-		remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
-		remindMeButton.SetFocus()
-		self.EscapeId=remindMeButtonID
 
 		# Translators: The label of a Yes button in a dialog 
 		yesButton = bHelper.addButton(self, wx.ID_YES, label=_("&Yes"))
@@ -957,6 +954,11 @@ class AskAllowUsageStatsDialog(wx.Dialog):
 		# Translators: The label of a No button in a dialog 
 		noButton = bHelper.addButton(self, wx.ID_NO, label=_("&No"))
 		noButton.Bind(wx.EVT_BUTTON, self.onNoButton)
+
+		# Translators: The label of a button to remind the user later about performing some action.
+		remindMeButton = bHelper.addButton(self, wx.ID_CANCEL, label=_("Remind me &later"))
+		remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
+		remindMeButton.SetFocus()
 
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
@@ -967,21 +969,14 @@ class AskAllowUsageStatsDialog(wx.Dialog):
 		log.debug("Usage stats gathering has been allowed")
 		config.conf['update']['askedAllowUsageStats']=True
 		config.conf['update']['allowUsageStats']=True
-		self.Destroy()
+		self.EndModal(wx.ID_YES)
 
 	def onNoButton(self,evt):
 		log.debug("Usage stats gathering has been disallowed")
 		config.conf['update']['askedAllowUsageStats']=True
 		config.conf['update']['allowUsageStats']=False
-		self.Destroy()
+		self.EndModal(wx.ID_NO)
 
 	def onLaterButton(self,evt):
 		log.debug("Usage stats gathering question has been deferred")
 		evt.Skip()
-
-	@classmethod
-	def run(self):
-		d=self(mainFrame)
-		mainFrame.prePopup()
-		d.Show()
-		mainFrame.postPopup()
