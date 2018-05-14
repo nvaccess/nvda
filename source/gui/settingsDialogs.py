@@ -148,10 +148,10 @@ class SettingsDialog(wx.Dialog):
 	def _enterTriggersOnOk_ctrlSTriggersOnApply(self, evt):
 		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
 		pressed. Cancel behavior is built into wx"""
-		if evt.KeyCode == wx.WXK_RETURN:
-			self.onOk(evt)
+		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
 		elif self.hasApply and evt.UnicodeKey == ord(u'S') and evt.controlDown:
-			self.onApply(evt)
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_APPLY))
 		else:
 			evt.Skip()
 
@@ -507,7 +507,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				self.currentCategory.SetFocus()
 		elif listHadFocus and key == wx.WXK_RETURN:
 			# The list control captures the return key, but we want it to save the settings.
-			self.onOk(evt)
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
 		else:
 			evt.Skip()
 
