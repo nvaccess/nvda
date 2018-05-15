@@ -147,7 +147,11 @@ class SettingsDialog(wx.Dialog):
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt):
 		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
-		pressed. Cancel behavior is built into wx"""
+		pressed. Cancel behavior is built into wx.
+		Pressing enter will also close the dialog when a list has focus
+		(e.g. the list of symbols in the symbol pronunciation dialog).
+		Without this custom handler, enter would propagate to the list control (wx ticket #3725).
+		"""
 		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
 			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
 		elif self.hasApply and evt.UnicodeKey == ord(u'S') and evt.controlDown:
