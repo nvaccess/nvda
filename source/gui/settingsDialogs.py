@@ -138,20 +138,24 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
-		self.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnOk_ctrlSTriggersOnApply)
+		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
 
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
-	def _enterTriggersOnOk_ctrlSTriggersOnApply(self, evt):
+	def _enterActivatesOk_ctrlSActivatesApply(self, evt):
 		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
-		pressed. Cancel behavior is built into wx"""
-		if evt.KeyCode == wx.WXK_RETURN:
-			self.onOk(evt)
+		pressed. Cancel behavior is built into wx.
+		Pressing enter will also close the dialog when a list has focus
+		(e.g. the list of symbols in the symbol pronunciation dialog).
+		Without this custom handler, enter would propagate to the list control (wx ticket #3725).
+		"""
+		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
 		elif self.hasApply and evt.UnicodeKey == ord(u'S') and evt.controlDown:
-			self.onApply(evt)
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_APPLY))
 		else:
 			evt.Skip()
 
@@ -505,9 +509,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			self.catListCtrl.Focus(newIndex)
 			if not listHadFocus and self.currentCategory:
 				self.currentCategory.SetFocus()
-		elif listHadFocus and key == wx.WXK_RETURN:
-			# The list control captures the return key, but we want it to save the settings.
-			self.onOk(evt)
 		else:
 			evt.Skip()
 
@@ -1959,7 +1960,6 @@ class DictionaryDialog(SettingsDialog):
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
 		self.editingIndex=-1
-		self.dictList.Bind(wx.EVT_CHAR, self.onListChar)
 
 		bHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
 		addButtonID=wx.NewId()
@@ -1980,16 +1980,6 @@ class DictionaryDialog(SettingsDialog):
 
 	def postInit(self):
 		self.dictList.SetFocus()
-
-	def onListChar(self, evt):
-		if evt.KeyCode == wx.WXK_RETURN:
-			# The enter key should be propagated to the dialog and thus activate the default button,
-			# but this is broken (wx ticket #3725).
-			# Therefore, we must catch the enter key here.
-			# Activate the OK button.
-			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-		else:
-			evt.Skip()
 
 	def onCancel(self,evt):
 		globalVars.speechDictionaryProcessing=True
@@ -2487,7 +2477,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
-		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
@@ -2575,16 +2564,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.levelList.Enable()
 		self.preserveList.Enable()
 		evt.Skip()
-
-	def onListChar(self, evt):
-		if evt.KeyCode == wx.WXK_RETURN:
-			# The enter key should be propagated to the dialog and thus activate the default button,
-			# but this is broken (wx ticket #3725).
-			# Therefore, we must catch the enter key here.
-			# Activate the OK button.
-			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-		else:
-			evt.Skip()
 
 	def OnAddClick(self, evt):
 		with AddSymbolDialog(self) as entryDialog:
