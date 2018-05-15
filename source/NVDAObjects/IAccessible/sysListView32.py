@@ -26,7 +26,6 @@ from logHandler import log
 from displayModel import DisplayModelTextInfo
 from textInfos import Rect
 import config
-from locationHelper import toRectLTWH
 
 #Window messages
 LVM_FIRST=0x1000
@@ -313,7 +312,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
 		windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
 		windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
-		return toRectLTWH(localRect)
+		return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
 
 	def _getColumnLocation(self,column):
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
