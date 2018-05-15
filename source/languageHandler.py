@@ -1,8 +1,12 @@
 #languageHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2016 NV access Limited, Joseph Lee
+#Copyright (C) 2007-2018 NV access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
+"""Language and localization support.
+This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
+"""
 
 import __builtin__
 import os
@@ -94,29 +98,34 @@ def getLanguageDescription(language):
 		}.get(language,None)
 	return desc
 
-def getAvailableLanguages():
+def getAvailableLanguages(presentational=False):
 	"""generates a list of locale names, plus their full localized language and country names.
+	@param presentational: whether this is meant to be shown alphabetically by language description
+	@type presentational: bool
 	@rtype: list of tuples
 	"""
 	#Make a list of all the locales found in NVDA's locale dir
-	l=[x for x in os.listdir('locale') if not x.startswith('.')]
-	l=[x for x in l if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
+	locales = [x for x in os.listdir('locale') if not x.startswith('.')]
+	locales = [x for x in locales if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
 	#Make sure that en (english) is in the list as it may not have any locale files, but is default
-	if 'en' not in l:
-		l.append('en')
-		l.sort()
+	if 'en' not in locales:
+		locales.append('en')
+		locales.sort()
 	#For each locale, ask Windows for its human readable display name
-	d=[]
-	for i in l:
-		desc=getLanguageDescription(i)
-		label="%s, %s"%(desc,i) if desc else i
-		d.append(label)
+	displayNames = []
+	for entry in locales:
+		desc=getLanguageDescription(entry)
+		displayNames.append("%s, %s"%(desc,entry) if desc else entry)
+	#Prepare a zipped view of language codes and descriptions.
+	# #7284: especially for sorting by description.
+	langs = zip(locales,displayNames)
+	if presentational:
+		langs.sort(key=lambda lang: lang[1])
 	#include a 'user default, windows' language, which just represents the default language for this user account
-	l.append("Windows")
-	# Translators: the label for the Windows default NVDA interface language.
-	d.append(_("User default"))
-	#return a zipped up version of both the lists (a list with tuples of locale,label)
-	return zip(l,d)
+	langs.append(("Windows",
+		# Translators: the label for the Windows default NVDA interface language.
+		_("User default")))
+	return langs
 
 def makePgettext(translations):
 	"""Obtaina  pgettext function for use with a gettext translations instance.
@@ -145,7 +154,7 @@ def getWindowsLanguage():
 	try:
 		localeName=locale.windows_locale[windowsLCID]
 	except KeyError:
-		# #4203: some locale identifiers from Windows 8 don't exist in Python's list.
+		# #4203: some locale identifiers from Windows 8 do not exist in Python's list.
 		# Therefore use windows' own function to get the locale name.
 		# Eventually this should probably be used all the time.
 		bufSize=32
