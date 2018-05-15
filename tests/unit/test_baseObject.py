@@ -15,17 +15,17 @@ class NVDAObjectWithDecoratedScript(PlaceholderNVDAObject):
 	"""An object with a decorated script."""
 
 	@script(gestures=["kb:a"])
-	def script_a(self, gesture):
+	def script_alpha(self, gesture):
 		return
 
 class NVDAObjectWithGesturesDictionary(PlaceholderNVDAObject):
 	"""An object with a script that is bound to a gesture in a L{__gestures} dictionary."""
 
-	def script_b(self, gesture):
+	def script_bravo(self, gesture):
 		return
 
 	__gestures = {
-		"kb:b": "b"
+		"kb:b": "bravo"
 	}
 
 class NVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
@@ -34,14 +34,14 @@ class NVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
 	"""
 
 	@script(gestures=["kb:c"])
-	def script_c(self, gesture):
+	def script_charlie(self, gesture):
 		return
 
-	def script_d(self, gesture):
+	def script_delta(self, gesture):
 		return
 
 	__gestures = {
-		"kb:d": "d",
+		"kb:d": "delta",
 	}
 
 class SubclassedNVDAObjectWithDecoratedScriptAndGesturesDictionary(
@@ -52,14 +52,14 @@ class SubclassedNVDAObjectWithDecoratedScriptAndGesturesDictionary(
 	"""An object with decorated scripts and L{__gestures} dictionaries, based on subclassing."""
 
 	@script(gestures=["kb:e"])
-	def script_e(self, gesture):
+	def script_echo(self, gesture):
 		return
 
-	def script_f(self, gesture):
+	def script_foxtrot(self, gesture):
 		return
 
 	__gestures = {
-		"kb:f": "f",
+		"kb:f": "foxtrot",
 	}
 
 class DynamicNVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
@@ -74,14 +74,14 @@ class DynamicNVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAO
 		])
 
 	@script(gestures=["kb:g"])
-	def script_g(self, gesture):
+	def script_golf(self, gesture):
 		return
 
-	def script_h(self, gesture):
+	def script_hotel(self, gesture):
 		return
 
 	__gestures = {
-		"kb:h": "h",
+		"kb:h": "hotel",
 	}
 
 class TestScriptableObject(unittest.TestCase):

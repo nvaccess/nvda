@@ -134,10 +134,11 @@ class ScriptableType(AutoPropertyType):
 	def __new__(meta, name, bases, dict):
 		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
 		gestures = getattr(cls, "_%s__gestures" % cls.__name__, {})
+		# Python 3 incompatible.
 		for name, script in dict.iteritems():
 			if not name.startswith('script_'):
 				continue
-			scriptName = name[len("script_")]
+			scriptName = name[len("script_"):]
 			if hasattr(script, 'gestures'):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName
