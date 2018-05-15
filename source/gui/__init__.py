@@ -979,4 +979,6 @@ class AskAllowUsageStatsDialog(wx.Dialog):
 
 	def onLaterButton(self,evt):
 		log.debug("Usage stats gathering question has been deferred")
+		# evt.Skip() is called since wx.ID_CANCEL is used as the ID for the Ask Later button, 
+		# wx automatically ends the modal itself.
 		evt.Skip()
