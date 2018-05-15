@@ -32,6 +32,16 @@ RPC_E_CALL_REJECTED = -2147418111
 RPC_E_DISCONNECTED = -2147417848
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
 
+def isPathExternalToNVDA(path):
+	""" Checks if the given path is external to NVDA (I.e. not pointing to built-in code). """
+	if path[0] != "<" and os.path.isabs(path) and not path.startswith(sys.path[0] + "\\"):
+		# This module is external because:
+		# the code comes from a file (fn doesn't begin with "<");
+		# it has an absolute file path (code bundled in binary builds reports relative paths); and
+		# it is not part of NVDA's Python code (not beneath sys.path[0]).
+		return True
+	return False
+
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
 	@param f: the frame object to use
@@ -40,11 +50,7 @@ def getCodePath(f):
 	@rtype: string
 	"""
 	fn=f.f_code.co_filename
-	if fn[0] != "<" and os.path.isabs(fn) and not fn.startswith(sys.path[0] + "\\"):
-		# This module is external because:
-		# the code comes from a file (fn doesn't begin with "<");
-		# it has an absolute file path (code bundled in binary builds reports relative paths); and
-		# it is not part of NVDA's Python code (not beneath sys.path[0]).
+	if isPathExternalToNVDA(fn):
 		path="external:"
 	else:
 		path=""
