@@ -22,6 +22,7 @@ import win32clipboard
 import win32con
 import eventHandler
 import braille
+import vision
 import watchdog
 import appModuleHandler
 
@@ -178,22 +179,30 @@ def getReviewPosition():
 		globalVars.reviewPosition,globalVars.reviewPositionObj=review.getPositionForCurrentMode(obj)
 		return globalVars.reviewPosition
 
-def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False):
+def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False,isMouse=False):
 	"""Sets a TextInfo instance as the review position.
 	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
 		In that case, the next time the navigator object is asked for it fetches it from the review position.
 	@type clearNavigatorObject: bool
 	@param isCaret: Whether the review position is changed due to caret following.
 	@type isCaret: bool
+	@param isMouse: Whether the review position is changed due to mouse following.
+	@type isMouse: bool
 	"""
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
 	# When the review cursor follows the caret and braille is auto tethered to review,
 	# we should not update braille with the new review position as a tether to focus is due.
-	if braille.handler.shouldAutoTether and isCaret:
-		return
-	braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
+	if not (braille.handler.shouldAutoTether and isCaret):
+		braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
+	if isCaret:
+		visionContext = vision.CONTEXT_CARET
+	elif isMouse:
+		visionContext = vision.CONTEXT_MOUSE
+	else:
+		visionContext = vision.CONTEXT_REVIEW
+	vision.handler.handleReviewMove(context=visionContext)
 
 def getNavigatorObject():
 	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 

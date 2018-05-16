@@ -26,6 +26,7 @@ import controlTypes
 import appModuleHandler
 import treeInterceptorHandler
 import braille
+import vision
 import globalPluginHandler
 import brailleInput
 
@@ -924,6 +925,7 @@ Tries to force this object to take the focus.
 		else:
 			speechWasCanceled=False
 		self._mouseEntered=True
+		vision.handler.handleMouseMove(self, x, y)
 		try:
 			info=self.makeTextInfo(textInfos.Point(x,y))
 		except NotImplementedError:
@@ -931,7 +933,7 @@ Tries to force this object to take the focus.
 		except LookupError:
 			return
 		if config.conf["reviewCursor"]["followMouse"]:
-			api.setReviewPosition(info)
+			api.setReviewPosition(info, isCaret=True)
 		info.expand(info.unit_mouseChunk)
 		oldInfo=getattr(self,'_lastMouseTextInfoObject',None)
 		self._lastMouseTextInfoObject=info
@@ -951,6 +953,7 @@ Tries to force this object to take the focus.
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self,states=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self)
 
 	def event_focusEntered(self):
 		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
@@ -966,6 +969,7 @@ This code is executed if a gain focus event is received by this object.
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
 		brailleInput.handler.handleGainFocus(self)
+		vision.handler.handleGainFocus(self)
 
 	def event_foreground(self):
 		"""Called when the foreground window changes.
@@ -973,6 +977,7 @@ This code is executed if a gain focus event is received by this object.
 		L{event_focusEntered} or L{event_gainFocus} will be called for this object, so this method should not speak/braille the object, etc.
 		"""
 		speech.cancelSpeech()
+		vision.handler.handleForeground(self)
 
 	def event_becomeNavigatorObject(self, isFocus=False):
 		"""Called when this object becomes the navigator object.
@@ -981,29 +986,34 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		# When the navigator object follows the focus and braille is auto tethered to review,
 		# we should not update braille with the new review position as a tether to focus is due.
-		if braille.handler.shouldAutoTether and isFocus:
-			return
-		braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
+		if not (braille.handler.shouldAutoTether and isFocus):
+			braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
+		visionContext = vision.CONTEXT_FOCUS if isFocus else vision.CONTEXT_NAVIGATOR
+		vision.handler.handleReviewMove(context=visionContext)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, value=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self)
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self)
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self)
 
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
 			brailleInput.handler.handleCaretMove(self)
+			vision.handler.handleCaretMove(self)
 			review.handleCaretMove(self)
 
 	def _get_flatReviewPosition(self):

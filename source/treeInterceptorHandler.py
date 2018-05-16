@@ -12,6 +12,7 @@ import review
 import textInfos
 import config
 import braille
+import vision
 
 runningTable=set()
 
@@ -118,7 +119,9 @@ class TreeInterceptor(baseObject.ScriptableObject):
 						# if focus is in this treeInterceptor and review mode is document, turning on passThrough should force object review
 						review.setCurrentMode('object')
 					api.setNavigatorObject(focusObj, isFocus=True)
-			braille.handler.handleGainFocus(api.getFocusObject())
+			focusObj = api.getFocusObject()
+			braille.handler.handleGainFocus(focusObj)
+			vision.handler.handleGainFocus(focusObj)
 		else:
 			obj=api.getNavigatorObject()
 			if config.conf['reviewCursor']['followCaret'] and self is obj.treeInterceptor: 
@@ -126,6 +129,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 					# if navigator object is in this treeInterceptor and the review mode is object, then turning off passThrough should force document review 
 					review.setCurrentMode('document',True)
 			braille.handler.handleGainFocus(self)
+			vision.handler.handleGainFocus(self)
 
 	_cache_shouldPrepare=True
 	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).

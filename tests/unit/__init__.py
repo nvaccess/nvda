@@ -70,7 +70,9 @@ languageHandler.setLanguage("en")
 # NVDAObjects need appModuleHandler to be initialized.
 import appModuleHandler
 appModuleHandler.initialize()
-# Anything which notifies of cursor updates requires braille to be initialized.
+# Anything which notifies of cursor updates requires braille and vision to be initialized.
+import vision
+vision.initialize()
 import braille
 # Disable auto detection of braille displays when unit testing.
 config.conf['braille']['display'] = "noBraille"

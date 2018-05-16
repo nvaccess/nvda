@@ -71,6 +71,17 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[__many__]]
 		port = string(default="")
 
+# Vision enhancement provider settings
+[vision]
+	magnifier = string(default=None)
+	highlighter = string(default=None)
+	colorEnhancer = string(default=None)
+
+	[[NVDAHighlighter]]
+		highlightFocus = boolean(default=true)
+		highlightCaret = boolean(default=true)
+		highlightNavigatorObj = boolean(default=true)
+
 # Presentation settings
 [presentation]
 		reportKeyboardShortcuts = boolean(default=true)

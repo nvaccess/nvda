@@ -86,6 +86,7 @@ WS_HSCROLL=0x100000
 WS_VSCROLL=0x200000
 WS_CAPTION=0xC00000
 WS_EX_TOPMOST=0x00000008
+WS_EX_LAYERED = 0x80000
 BS_GROUPBOX=7
 ES_MULTILINE=4
 LBS_OWNERDRAWFIXED=0x0010
@@ -115,6 +116,9 @@ GWL_EXSTYLE=-20
 GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
+# SetLayeredWindowAttributes
+LWA_ALPHA = 2
+LWA_COLORKEY = 1
 #Window messages
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
@@ -318,6 +322,20 @@ RDW_UPDATENOW = 0x0100
 QS_ALLINPUT = 0x04ff
 MWMO_ALERTABLE = 0x0002
 
+# GetSystemMetrics constants
+# The width of the screen of the primary display monitor, in pixels.
+SM_CXSCREEN = 0
+# The height of the screen of the primary display monitor, in pixels.
+SM_CYSCREEN = 1
+# The coordinates for the left side of the virtual screen.
+SM_XVIRTUALSCREEN = 76
+# The coordinates for the top of the virtual screen.
+SM_YVIRTUALSCREEN = 77
+# The width of the virtual screen, in pixels.
+SM_CXVIRTUALSCREEN = 78
+# The height of the virtual screen, in pixels.
+SM_CYVIRTUALSCREEN = 79
+
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
 
@@ -487,6 +505,15 @@ def getGUIThreadInfo(threadID):
 
 def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
+
+def getExtendedWindowStyle(hwnd):
+	return user32.GetWindowLongW(hwnd,GWL_EXSTYLE)
+
+def setExtendedWindowStyle(hwnd, exstyle):
+	return user32.SetWindowLongW(hwnd,GWL_EXSTYLE, exstyle)
+
+def SetLayeredWindowAttributes(hwnd, key, alpha, flags):
+	return user32.SetLayeredWindowAttributes(hwnd, key, alpha, flags)
 
 def getPreviousWindow(hwnd):
 	try:

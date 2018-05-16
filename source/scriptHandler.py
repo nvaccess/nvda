@@ -17,7 +17,9 @@ from logHandler import log
 import inputCore
 import globalPluginHandler
 import braille
+import vision
 import keyLabels
+import baseObject
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
@@ -114,6 +116,13 @@ def findScript(gesture):
 		func = _getObjScript(obj, gesture, globalMapScripts)
 		if func and getattr(func, 'canPropagate', False):
 			return func
+
+	# Vision enhancement provider level
+	for provider in vision.handler.initializedProviders:
+		if isinstance(provider, baseObject.ScriptableObject):
+			func = _getObjScript(provider, gesture, globalMapScripts)
+			if func:
+				return func
 
 	# Global commands.
 	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)

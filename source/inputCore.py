@@ -585,6 +585,12 @@ class _AllGestureMappingsRetriever(object):
 		if app:
 			self.addObj(app)
 
+		# Vision enhancement providers
+		import vision
+		for provider in vision.handler.initializedProviders:
+			if isinstance(provider, baseObject.ScriptableObject):
+				self.addObj(provider)
+
 		# Tree interceptor.
 		ti = obj.treeInterceptor
 		if ti:
