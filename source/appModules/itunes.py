@@ -39,6 +39,8 @@ class AppModule(appModuleHandler.AppModule):
 				obj.presentationType = obj.presType_layout
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if not isinstance(obj,NVDAObjects.IAccessible.IAccessible):
+			return
 		windowClassName=obj.windowClassName
 		role=obj.role
 		if windowClassName in ('iTunesList','iTunesSources','iTunesTrackList') and role in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM):
