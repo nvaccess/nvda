@@ -30,3 +30,9 @@ def send_quit_NVDA_keys():
     Sends Caps+q
     """
     pyautogui.hotkey('capslock', 'q')
+
+def send_enter_key():
+    """
+    Sends ENTER
+    """
+    pyautogui.hotkey('enter')

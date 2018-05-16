@@ -8,10 +8,12 @@ Library       sendKey.py
 *** Test Cases ***
 
 Can Start NVDA
-    ${nvdaHandle} =  Start Process  python nvda.pyw --debug-logging  cwd=source  shell=true
+    ${nvdaHandle} =  Start Process  pythonw nvda.pyw --debug-logging  cwd=source  shell=true
     Process Should Be Running  ${nvdaHandle}
     sleep  5
     send quit NVDA keys
+    sleep  1
+    send enter key
     ${nvdaResult} =  Wait For Process  ${nvdaHandle}
     Should Be Equal  ${nvdaResult.stdout}  Hello, world!
 
