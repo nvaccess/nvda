@@ -857,8 +857,6 @@ class ExcelWorksheet(ExcelBase):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
 		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
-		for gesture in self.__changeSelectionGestures:
-			self.bindGesture(gesture, "changeSelection")
 
 	def _get_name(self):
 		return self.excelWorksheetObject.name
@@ -878,32 +876,7 @@ class ExcelWorksheet(ExcelBase):
 			states.add(controlTypes.STATE_PROTECTED)
 		return states
 
-	def script_changeSelection(self,gesture):
-		oldSelection=api.getFocusObject()
-		gesture.send()
-		import eventHandler
-		import time
-		newSelection=None
-		curTime=startTime=time.time()
-		while (curTime-startTime)<=0.15:
-			if scriptHandler.isScriptWaiting():
-				# Prevent lag if keys are pressed rapidly
-				return
-			if eventHandler.isPendingEvents('gainFocus'):
-				return
-			newSelection=self._getSelection()
-			if newSelection and newSelection!=oldSelection:
-				break
-			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.015)
-			curTime=time.time()
-		if newSelection:
-			if oldSelection.parent==newSelection.parent:
-				newSelection.parent=oldSelection.parent
-			eventHandler.executeEvent('gainFocus',newSelection)
-	script_changeSelection.canPropagate=True
-
-	__changeSelectionGestures = (
+	@scriptHandler.script(gestures=(
 		"kb:tab",
 		"kb:shift+tab",
 		"kb:enter",
@@ -948,7 +921,30 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+a",
 		"kb:control+v",
 		"kb:shift+f11",
-	)
+	), canPropagate=True)
+	def script_changeSelection(self,gesture):
+		oldSelection=api.getFocusObject()
+		gesture.send()
+		import eventHandler
+		import time
+		newSelection=None
+		curTime=startTime=time.time()
+		while (curTime-startTime)<=0.15:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			if eventHandler.isPendingEvents('gainFocus'):
+				return
+			newSelection=self._getSelection()
+			if newSelection and newSelection!=oldSelection:
+				break
+			api.processPendingEvents(processEventQueue=False)
+			time.sleep(0.015)
+			curTime=time.time()
+		if newSelection:
+			if oldSelection.parent==newSelection.parent:
+				newSelection.parent=oldSelection.parent
+			eventHandler.executeEvent('gainFocus',newSelection)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 

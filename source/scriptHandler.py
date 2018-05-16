@@ -231,3 +231,62 @@ def isCurrentScript(scriptFunc):
 		return False
 	return givenFunc==realFunc
 
+def script(
+	description="",
+	category=None,
+	gesture=None,
+	gestures=None,
+	canPropagate=False,
+	bypassInputHelp=False,
+	resumeSayAllMode=None
+):
+	"""Define metadata for a script.
+	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
+	It can only decorate methods which name start swith "script_"
+	@param description: A short translatable description of the script to be used in the gesture editor, etc.
+	@type description: string 
+	@param category: The category of the script displayed in the gesture editor.
+	@type category: string
+	@param gesture: A gesture associated with this script.
+	@type gesture: string
+	@param gestures: A list of gestures associated with this script
+	@type gestures: list(string)
+	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
+	@type canPropagate: bool
+	@param bypassInputHelp: Whether this script should run when input help is active.
+	@type bypassInputHelp: bool
+	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
+		One of the C{sayAllHandler.CURSOR_*} constants.
+	@type resumeSayAllMode: int
+	"""
+	if gestures is None:
+		gestures = []
+	def script_decorator(decoratedScript):
+		# Scripts are unbound instance methods in python 2 and functions in python 3.
+		# Therefore, we use inspect.isroutine to check whether a script is either a function or instance method.
+		if not inspect.isroutine(decoratedScript):
+			log.warning(
+				"Using the script decorator is unsupported for %r" % decoratedScript,
+				stack_info=True
+			)
+			return decoratedScript
+		if not decoratedScript.__name__.startswith("script_"):
+			log.warning(
+				"Can't apply  script decorator to %r which name does not start with 'script_'" % decoratedScript.__name__,
+				stack_info=True
+			)
+			return decoratedScript
+		decoratedScript.__doc__ = description
+		if category is not None:
+			decoratedScript.category = category
+		if gesture is not None:
+			gestures.append(gesture)
+		if gestures:
+			decoratedScript.gestures = gestures
+		decoratedScript.canPropagate = canPropagate
+		decoratedScript.bypassInputHelp = bypassInputHelp
+		if resumeSayAllMode is not None:
+			decoratedScript.resumeSayAllMode = resumeSayAllMode
+		return decoratedScript
+	return script_decorator
+
