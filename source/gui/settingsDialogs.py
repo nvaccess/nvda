@@ -633,16 +633,16 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering  
-			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
-			item.Value=config.conf["update"]["allowUsageStats"]
-			if globalVars.appArgs.secure:
-				item.Disable()
-			settingsSizerHelper.addItem(item)
 			# Translators: The label of a checkbox in general settings to toggle startup notifications
 			# for a pending NVDA update.
 			item=self.notifyForPendingUpdateCheckBox=wx.CheckBox(self,label=_("Notify for &pending update on startup"))
 			item.Value=config.conf["update"]["startupNotification"]
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizerHelper.addItem(item)
+			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering  
+			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
+			item.Value=config.conf["update"]["allowUsageStats"]
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
