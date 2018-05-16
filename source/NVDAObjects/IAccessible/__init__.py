@@ -79,8 +79,12 @@ def normalizeIA2TextFormatField(formatField):
 		invalid=formatField.pop("invalid")
 	except KeyError:
 		invalid=None
-	if invalid and invalid.lower()=="spelling":
-		formatField["invalid-spelling"]=True
+	if invalid:
+		invalid=invalid.lower()
+		if invalid=="spelling":
+			formatField["invalid-spelling"]=True
+		elif invalid=="grammar":
+			formatField["invalid-grammar"]=True
 	color=formatField.get('color')
 	if color:
 		try:
