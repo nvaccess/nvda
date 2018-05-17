@@ -3,8 +3,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Bram Duvigneau, Leonard de Ruijter (Babbage B.V.), Felix Grützmacher (Handy Tech Elektronik GmbH)
-"Braille display driver for Handy Tech braille displays"
+#Copyright (C) 2008-2018 NV Access Limited, Bram Duvigneau, Leonard de Ruijter (Babbage B.V.), Felix Grützmacher (Handy Tech Elektronik GmbH)
+
+"""
+Braille display driver for Handy Tech braille displays.
+"""
+
 from collections import OrderedDict
 from cStringIO import StringIO
 import serial # pylint: disable=E0401
@@ -18,7 +22,8 @@ import ui
 from baseObject import ScriptableObject, AutoPropertyObject
 from globalCommands import SCRCAT_BRAILLE
 from logHandler import log
-
+import time
+import datetime
 
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
@@ -61,34 +66,36 @@ BLUETOOTH_NAMES = {
 	"Active Star AS",
 	"Basic Braille BB",
 	"Braille Star 40 BS",
+	"Braillino BL",
 	"Braille Wave BW",
 	"Easy Braille EBR",
 }
 
 # Model identifiers
 # pylint: disable=C0103
-MODEL_BRAILLE_WAVE = "\x05"
-MODEL_MODULAR_EVOLUTION_64 = "\x36"
-MODEL_MODULAR_EVOLUTION_88 = "\x38"
-MODEL_MODULAR_CONNECT_88 = "\x3A"
-MODEL_EASY_BRAILLE = "\x44"
-MODEL_ACTIVE_BRAILLE = "\x54"
-MODEL_CONNECT_BRAILLE_40 = "\x55"
-MODEL_ACTILINO = "\x61"
-MODEL_ACTIVE_STAR_40 = "\x64"
-MODEL_BASIC_BRAILLE_16 = "\x81"
-MODEL_BASIC_BRAILLE_20 = "\x82"
-MODEL_BASIC_BRAILLE_32 = "\x83"
-MODEL_BASIC_BRAILLE_40 = "\x84"
-MODEL_BASIC_BRAILLE_48 = "\x8A"
-MODEL_BASIC_BRAILLE_64 = "\x86"
-MODEL_BASIC_BRAILLE_80 = "\x87"
-MODEL_BASIC_BRAILLE_160 = "\x8B"
-MODEL_BRAILLE_STAR_40 = "\x74"
-MODEL_BRAILLE_STAR_80 = "\x78"
-MODEL_MODULAR_20 = "\x80"
-MODEL_MODULAR_80 = "\x88"
-MODEL_MODULAR_40 = "\x89"
+MODEL_BRAILLE_WAVE = b"\x05"
+MODEL_MODULAR_EVOLUTION_64 = b"\x36"
+MODEL_MODULAR_EVOLUTION_88 = b"\x38"
+MODEL_MODULAR_CONNECT_88 = b"\x3A"
+MODEL_EASY_BRAILLE = b"\x44"
+MODEL_ACTIVE_BRAILLE = b"\x54"
+MODEL_CONNECT_BRAILLE_40 = b"\x55"
+MODEL_ACTILINO = b"\x61"
+MODEL_ACTIVE_STAR_40 = b"\x64"
+MODEL_BASIC_BRAILLE_16 = b"\x81"
+MODEL_BASIC_BRAILLE_20 = b"\x82"
+MODEL_BASIC_BRAILLE_32 = b"\x83"
+MODEL_BASIC_BRAILLE_40 = b"\x84"
+MODEL_BASIC_BRAILLE_48 = b"\x8A"
+MODEL_BASIC_BRAILLE_64 = b"\x86"
+MODEL_BASIC_BRAILLE_80 = b"\x87"
+MODEL_BASIC_BRAILLE_160 = b"\x8B"
+MODEL_BRAILLINO = b"\x72"
+MODEL_BRAILLE_STAR_40 = b"\x74"
+MODEL_BRAILLE_STAR_80 = b"\x78"
+MODEL_MODULAR_20 = b"\x80"
+MODEL_MODULAR_80 = b"\x88"
+MODEL_MODULAR_40 = b"\x89"
 
 # Key constants
 KEY_B1 = 0x03
@@ -104,7 +111,7 @@ KEY_RIGHT = 0x08
 KEY_LEFT_SPACE = 0x10
 KEY_RIGHT_SPACE = 0x18
 KEY_ROUTING = 0x20
-KEY_RELEASE = 0x80
+KEY_RELEASE_MASK = 0x80
 
 # Braille dot mapping
 KEY_DOTS = {
@@ -211,19 +218,72 @@ class Model(AutoPropertyObject):
 		"""Display cells on the braille display
 
 		This is the modern protocol, which uses an extended packet to send braille
-		cells. Some very old displays use an older, simpler protocol
-		which is currently not implemented in this driver.
+		cells. Some displays use an older, simpler protocol. See OldProtocolMixin.
 		"""
 		self._display.sendExtendedPacket(HT_EXTPKT_BRAILLE,
 			"".join(chr(cell) for cell in cells))
 
+class OldProtocolMixin(object):
+	"Mixin for displays using an older protocol to send braille cells and handle input"
+
+	def display(self, cells):
+		"""Write cells to the display according to the old protocol
+
+		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
+		followed by the cells. No model ID or lenghth are included.
+		"""
+		self._display.sendPacket(HT_PKT_BRAILLE, b"".join(chr(cell) for cell in cells))
+
 
 class AtcMixin(object):
+	"""Support for displays with Active Tactile Control (ATC)"""
 
 	def postInit(self):
 		super(AtcMixin, self).postInit()
 		log.debug("Enabling ATC")
-		self._display.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, True)		
+		self._display.atc = True
+
+
+class TimeSyncMixin(object):
+	"""Functionality for displays that support time synchronization."""
+
+	def postInit(self):
+		super(TimeSyncMixin, self).postInit()
+		log.debug("Request current display time")
+		self._display.sendExtendedPacket(HT_EXTPKT_GET_RTC)
+
+	def handleTime(self, timeStr):
+		ords = map(ord, timeStr)
+		try:
+			displayDateTime = datetime.datetime(
+				year=ords[0] << 8 | ords[1],
+				month=ords[2],
+				day=ords[3],
+				hour=ords[4],
+				minute=ords[5],
+				second=ords[6]
+			)
+		except ValueError:
+			log.debugWarning("Invalid time/date of Handy Tech display: %r"%timeStr)
+			return
+		localDateTime = datetime.datetime.today()
+		if abs((displayDateTime - localDateTime).total_seconds()) >= 5:
+			log.debugWarning("Display time out of sync: %s"%displayDateTime.isoformat())
+			self.syncTime(localDateTime)
+		else:
+			log.debug("Time in sync. Display time %s"%displayDateTime.isoformat())
+
+	def syncTime(self, dt):
+		log.debug("Synchronizing braille display date and time...")
+		# Setting the time uses a swapped byte order for the year.
+		timeList = [
+			dt.year & 0xFF, dt.year >> 8,
+			dt.month, dt.day,
+			dt.hour, dt.minute, dt.second
+		]
+		timeStr = b"".join(map(chr, timeList))
+		self._display.sendExtendedPacket(HT_EXTPKT_SET_RTC, timeStr)
+
 
 class TripleActionKeysMixin(AutoPropertyObject):
 	"""Triple action keys
@@ -317,38 +377,45 @@ class ModularEvolution64(ModularEvolution):
 	numCells = 64
 
 
-class EasyBraille(Model):
+class EasyBraille(OldProtocolMixin, Model):
 	deviceId = MODEL_EASY_BRAILLE
 	numCells = 40
 	genericName = name = "Easy Braille"
 
-class ActiveBraille(AtcMixin, TripleActionKeysMixin, Model):
+
+class ActiveBraille(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'
 
 
-class ConnectBraille40(TripleActionKeysMixin, Model):
+class ConnectBraille40(TimeSyncMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_CONNECT_BRAILLE_40
 	numCells = 40
 	genericName = "Connect Braille"
 	name = "Connect Braille 40"
 
 
-class Actilino(AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
+class Actilino(TimeSyncMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTILINO
 	numCells = 16
 	genericName = name = "Actilino"
 
 
-class ActiveStar40(AtcMixin, TripleActionKeysMixin, Model):
+class ActiveStar40(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_STAR_40
 	numCells = 40
 	name = "Active Star 40"
 	genericName = "Active Star"
 
 
-class BrailleWave(Model):
+class Braillino(TripleActionKeysMixin, OldProtocolMixin, Model):
+	deviceId = MODEL_BRAILLINO
+	numCells = 20
+	genericName = name = 'Braillino'
+
+
+class BrailleWave(OldProtocolMixin, Model):
 	deviceId = MODEL_BRAILLE_WAVE
 	numCells = 40
 	genericName = name = "Braille Wave"
@@ -403,7 +470,7 @@ class BrailleStar80(BrailleStar):
 	numCells = 80
 
 
-class Modular(StatusCellMixin, TripleActionKeysMixin, Model):
+class Modular(StatusCellMixin, TripleActionKeysMixin, OldProtocolMixin, Model):
 	genericName = "Modular"
 
 	def _get_name(self):
@@ -444,40 +511,40 @@ MODELS = {
 
 
 # Packet types
-HT_PKT_BRAILLE = "\x01"
-HT_PKT_EXTENDED = "\x79"
-HT_PKT_NAK = "\x7D"
-HT_PKT_ACK = "\x7E"
-HT_PKT_OK = "\xFE"
-HT_PKT_RESET = "\xFF"
+HT_PKT_BRAILLE = b"\x01"
+HT_PKT_EXTENDED = b"\x79"
+HT_PKT_NAK = b"\x7D"
+HT_PKT_ACK = b"\x7E"
+HT_PKT_OK = b"\xFE"
+HT_PKT_RESET = b"\xFF"
 HT_EXTPKT_BRAILLE = HT_PKT_BRAILLE
-HT_EXTPKT_KEY = "\x04"
-HT_EXTPKT_CONFIRMATION = "\x07"
-HT_EXTPKT_SCANCODE = "\x09"
-HT_EXTPKT_PING = "\x19"
-HT_EXTPKT_SERIAL_NUMBER = "\x41"
-HT_EXTPKT_SET_RTC = "\x44"
-HT_EXTPKT_GET_RTC = "\x45"
-HT_EXTPKT_BLUETOOTH_PIN = "\x47"
-HT_EXTPKT_SET_ATC_MODE = "\x50"
-HT_EXTPKT_SET_ATC_SENSITIVITY = "\x51"
-HT_EXTPKT_ATC_INFO = "\x52"
-HT_EXTPKT_SET_ATC_SENSITIVITY_2 = "\x53"
-HT_EXTPKT_GET_ATC_SENSITIVITY_2 = "\x54"
-HT_EXTPKT_READING_POSITION = "\x55"
-HT_EXTPKT_SET_FIRMNESS = "\x60"
-HT_EXTPKT_GET_FIRMNESS = "\x61"
-HT_EXTPKT_GET_PROTOCOL_PROPERTIES = "\xC1"
-HT_EXTPKT_GET_FIRMWARE_VERSION = "\xC2"
+HT_EXTPKT_KEY = b"\x04"
+HT_EXTPKT_CONFIRMATION = b"\x07"
+HT_EXTPKT_SCANCODE = b"\x09"
+HT_EXTPKT_PING = b"\x19"
+HT_EXTPKT_SERIAL_NUMBER = b"\x41"
+HT_EXTPKT_SET_RTC = b"\x44"
+HT_EXTPKT_GET_RTC = b"\x45"
+HT_EXTPKT_BLUETOOTH_PIN = b"\x47"
+HT_EXTPKT_SET_ATC_MODE = b"\x50"
+HT_EXTPKT_SET_ATC_SENSITIVITY = b"\x51"
+HT_EXTPKT_ATC_INFO = b"\x52"
+HT_EXTPKT_SET_ATC_SENSITIVITY_2 = b"\x53"
+HT_EXTPKT_GET_ATC_SENSITIVITY_2 = b"\x54"
+HT_EXTPKT_READING_POSITION = b"\x55"
+HT_EXTPKT_SET_FIRMNESS = b"\x60"
+HT_EXTPKT_GET_FIRMNESS = b"\x61"
+HT_EXTPKT_GET_PROTOCOL_PROPERTIES = b"\xC1"
+HT_EXTPKT_GET_FIRMWARE_VERSION = b"\xC2"
 
 # HID specific constants
-HT_HID_RPT_OutData = "\x01" # receive data from device
-HT_HID_RPT_InData = "\x02" # send data to device
-HT_HID_RPT_InCommand = "\xFB" # run USB-HID firmware command
-HT_HID_RPT_OutVersion = "\xFC" # get version of USB-HID firmware
-HT_HID_RPT_OutBaud = "\xFD" # get baud rate of serial connection
-HT_HID_RPT_InBaud = "\xFE" # set baud rate of serial connection
-HT_HID_CMD_FlushBuffers = "\x01" # flush input and output buffers
+HT_HID_RPT_OutData = b"\x01" # receive data from device
+HT_HID_RPT_InData = b"\x02" # send data to device
+HT_HID_RPT_InCommand = b"\xFB" # run USB-HID firmware command
+HT_HID_RPT_OutVersion = b"\xFC" # get version of USB-HID firmware
+HT_HID_RPT_OutBaud = b"\xFD" # get baud rate of serial connection
+HT_HID_RPT_InBaud = b"\xFE" # set baud rate of serial connection
+HT_HID_CMD_FlushBuffers = b"\x01" # flush input and output buffers
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	name = "handyTech"
@@ -543,8 +610,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._model = None
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
-		self._brailleInput = False
-		self._hidSerialBuffer = ""
+		self.brailleInput = False
+		self._hidSerialBuffer = b""
+		self._atc = False
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
@@ -556,16 +624,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self.isHid = portType.startswith("USB HID")
 			self.isHidSerial = portType == "USB HID serial converter"
 			try:
-				if self.isHid:
-					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
-					if self.isHidSerial:
-						# This is either the standalone HID adapter cable for older displays,
-						# or an older display with a HID - serial adapter built in
-						# Send a flush to open the serial channel
-						self._dev.write(HT_HID_RPT_InCommand + HT_HID_CMD_FlushBuffers)
+				if self.isHidSerial:
+					# This is either the standalone HID adapter cable for older displays,
+					# or an older display with a HID - serial adapter built in
+					self._dev = hwIo.Hid(port, onReceive=self._hidSerialOnReceive)
+					# Send a flush to open the serial channel
+					self._dev.write(HT_HID_RPT_InCommand + HT_HID_CMD_FlushBuffers)
+				elif self.isHid:
+					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY,
-						timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
+						timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._serialOnReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -595,12 +664,25 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
+			# We must sleep after closing, as it sometimes takes some time for the device to disconnect.
+			time.sleep(self.timeout)
+
+	def _get_atc(self):
+		return self._atc
+
+	def _set_atc(self, state):
+		if self._atc is state:
+			return
+		if isinstance(self._model,AtcMixin):
+			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, state)
+		else:
+			log.debugWarning("Changing ATC setting for unsupported device %s"%self._model.name)
+		# Regardless whether this setting is supported or not, we want to safe its state.
+		self._atc = state
 
 	def sendPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
-		if self._model:
-			data = self._model.deviceId + data
 		if self.isHid:
 			self._sendHidPacket(packetType+data)
 		else:
@@ -609,25 +691,24 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def sendExtendedPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
-		packet = "{length}{extType}{data}\x16".format(
+		packet = b"{length}{extType}{data}\x16".format(
 			extType=packetType, data=data,
 			length=chr(len(data) + len(packetType))
 		)
+		if self._model:
+			packet = self._model.deviceId + packet
 		self.sendPacket(HT_PKT_EXTENDED, packet)
 
 	def _sendHidPacket(self, packet):
 		assert self.isHid
 		maxBlockSize = self._dev._writeSize-3
 		# When the packet length exceeds C{writeSize}, the packet is split up into several packets.
-		# These packets are of size C{blockSize}.
 		# They contain C{HT_HID_RPT_InData}, the length of the data block,
 		# the data block itself and a terminating null character.
-		bytesRemaining = packet
-		while bytesRemaining:
-			blockSize = min(maxBlockSize, len(bytesRemaining))
-			hidPacket = HT_HID_RPT_InData + chr(blockSize) + bytesRemaining[:blockSize] + "\x00"
+		for offset in xrange(0, len(packet), maxBlockSize):
+			block = packet[offset:offset+maxBlockSize]
+			hidPacket = HT_HID_RPT_InData + chr(len(block)) + block + b"\x00"
 			self._dev.write(hidPacket)
-			bytesRemaining = bytesRemaining[blockSize:]
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -635,90 +716,92 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# The first key released executes the key combination.
 		try:
 			inputCore.manager.executeGesture(
-				InputGesture(self._model, self._keysDown, self._brailleInput))
+				InputGesture(self._model, self._keysDown, self.brailleInput))
 		except inputCore.NoInputGestureAction:
 			pass
 		# Any further releases are just the rest of the keys in the combination
 		# being released, so they should be ignored.
 		self._ignoreKeyReleases = True
 
+
 	# pylint: disable=R0912
 	# Pylint complains about many branches, might be worth refactoring
-	def _onReceive(self, data):
-		if self.isHidSerial:
-			# The HID serial converter seems to wrap one or two bytes into a single HID packet
-			hidLength = ord(data[1])
-			self._hidSerialBuffer+=data[2:(2+hidLength)]
+	def _hidOnReceive(self, data):
+		# data contains the entire packet.
+		stream = StringIO(data)
+		htPacketType = data[2]
+		# Skip the header, so reading the stream will only give the rest of the data
+		stream.seek(3)
+		self._handleInputStream(htPacketType, stream)
+
+	def _hidSerialOnReceive(self, data):
+		# The HID serial converter wraps one or two bytes into a single HID packet
+		hidLength = ord(data[1])
+		self._hidSerialBuffer+=data[2:(2+hidLength)]
+		self._processHidSerialBuffer()
+
+	def _processHidSerialBuffer(self):
+		while self._hidSerialBuffer:
 			currentBufferLength=len(self._hidSerialBuffer)
-			# We only support the extended packet based protocol
-			# Thus, the only non-extended packet we expect is the device identification, which is of type HT_PKT_OK and two bytes in size
-			serPacketType = self._hidSerialBuffer[0]
-			if serPacketType!=HT_PKT_EXTENDED:
-				if currentBufferLength>2:
-					stream = StringIO(self._hidSerialBuffer[:2])
-					self._hidSerialBuffer = self._hidSerialBuffer[2:]
-				elif currentBufferLength==2:
-					stream = StringIO(self._hidSerialBuffer)
-					self._hidSerialBuffer = ""
+			htPacketType = self._hidSerialBuffer[0]
+			if htPacketType!=HT_PKT_EXTENDED:
+				packetLength = 2 if htPacketType==HT_PKT_OK else 1
+				if currentBufferLength>=packetLength:
+					stream = StringIO(self._hidSerialBuffer[:packetLength])
+					self._hidSerialBuffer = self._hidSerialBuffer[packetLength:]
 				else:
 					# The packet is not yet complete
 					return
-			# Extended packets are at least 5 bytes in size.
-			elif serPacketType==HT_PKT_EXTENDED and currentBufferLength>=5:
+			elif htPacketType==HT_PKT_EXTENDED and currentBufferLength>=5:
 				# Check whether our packet is complete
+				# Extended packets are at least 5 bytes in size.
 				# The second byte is the model, the third byte is the data length, excluding the terminator
 				packet_length = ord(self._hidSerialBuffer[2])+4
 				if len(self._hidSerialBuffer)<packet_length:
 					# The packet is not yet complete
 					return
-				# We have a complete packet, but it must be isolated from another packet that could have landed in the buffer
-				if len(self._hidSerialBuffer)>packet_length:
-					stream = StringIO(self._hidSerialBuffer[:packet_length])
-					self._hidSerialBuffer = self._hidSerialBuffer[packet_length:]
-				else:
-					assert self._hidSerialBuffer.endswith("\x16")	# Extended packets are terminated with \x16
-					stream = StringIO(self._hidSerialBuffer)
-					self._hidSerialBuffer = ""
+				# We have a complete packet.
+				# We also isolate it from another packet that could have landed in the buffer,
+				stream = StringIO(self._hidSerialBuffer[:packet_length])
+				self._hidSerialBuffer = self._hidSerialBuffer[packet_length:]
+				if len(self._hidSerialBuffer)==packet_length:
+					assert self._hidSerialBuffer.endswith("\x16"), "Extended packet termionator expected"
 			else:
 				# The packet is not yet complete
 				return
 			stream.seek(1)
-		elif self.isHid:
-			# data contains the entire packet.
-			stream = StringIO(data)
-			serPacketType = data[2]
-			# Skip the header, so reading the stream will only give the rest of the data
-			stream.seek(3)
-		else:
-			serPacketType = data
-			# data only contained the packet type. Read the rest from the device.
-			stream = self._dev
+			self._handleInputStream(htPacketType, stream)
 
-		modelId = stream.read(1)
-		if not self._model:
-			if not modelId in MODELS:
-				log.debugWarning("Unknown model: %r" % modelId)
-				raise RuntimeError(
-					"The model with ID %r is not supported by this driver" % modelId)
-			self._model = MODELS.get(modelId)(self)
-			self.numCells = self._model.numCells
-		elif self._model.deviceId != modelId:
-			# Somehow the model ID of this display changed, probably another display 
-			# plugged in the same (already open) serial port.
-			self.terminate()
+	def _serialOnReceive(self, data):
+		self._handleInputStream(data, self._dev)
 
-		if serPacketType==HT_PKT_OK:
+	def _handleInputStream(self, htPacketType, stream):
+		if htPacketType in (HT_PKT_OK, HT_PKT_EXTENDED):
+			modelId = stream.read(1)
+			if not self._model:
+				if not modelId in MODELS:
+					log.debugWarning("Unknown model: %r" % modelId)
+					raise RuntimeError(
+						"The model with ID %r is not supported by this driver" % modelId)
+				self._model = MODELS.get(modelId)(self)
+				self.numCells = self._model.numCells
+			elif self._model.deviceId != modelId:
+				# Somehow the model ID of this display changed, probably another display 
+				# plugged in the same (already open) serial port.
+				self.terminate()
+
+		if htPacketType==HT_PKT_OK:
 			pass
-		elif serPacketType == HT_PKT_ACK:
+		elif htPacketType == HT_PKT_ACK:
 			# This is unexpected, but we need to make sure that we handle old style ack
 			self._handleAck()
-		elif serPacketType == HT_PKT_NAK:
+		elif htPacketType == HT_PKT_NAK:
 			log.debugWarning("NAK received!")
-		elif serPacketType == HT_PKT_EXTENDED:
+		elif htPacketType == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
 			packet = stream.read(packet_length)
 			terminator = stream.read(1)
-			assert terminator == "\x16"	# Extended packets are terminated with \x16
+			assert terminator == b"\x16"	# Extended packets are terminated with \x16
 			extPacketType = packet[0]
 			if extPacketType == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command.
@@ -727,29 +810,38 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				elif packet[1] == HT_PKT_NAK:
 					log.debugWarning("NAK received!")
 			elif extPacketType == HT_EXTPKT_KEY:
-				key = ord(packet[1])
-				release = (key & KEY_RELEASE) != 0
-				if release:
-					key = key ^ KEY_RELEASE
-					self._handleKeyRelease()
-					self._keysDown.discard(key)
-				else:
-					# Press.
-					# This begins a new key combination.
-					self._ignoreKeyReleases = False
-					self._keysDown.add(key)
+				self._handleInput(ord(packet[1]))
 			elif extPacketType == HT_EXTPKT_ATC_INFO:
 				# Ignore ATC packets for now
 				pass
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				pass
+			elif extPacketType == HT_EXTPKT_GET_RTC and isinstance(self._model, TimeSyncMixin):
+				self._model.handleTime(packet[1:])
 			else:
 				# Unknown extended packet, log it
 				log.debugWarning("Unhandled extended packet of type %r: %r" %
 					(extPacketType, packet))
 		else:
-			# Unknown packet type, log it
-			log.debugWarning("Unhandled packet of type %r" % serPacketType)
+			serPacketOrd = ord(htPacketType)
+			if isinstance(self._model, OldProtocolMixin) and serPacketOrd&~KEY_RELEASE_MASK < HT_PKT_EXTENDED:
+				self._handleInput(serPacketOrd)
+			else:
+				# Unknown packet type, log it
+				log.debugWarning("Unhandled packet of type %r" % htPacketType)
+
+
+	def _handleInput(self, key):
+		release = (key & KEY_RELEASE_MASK) != 0
+		if release:
+			key ^= KEY_RELEASE_MASK
+			self._handleKeyRelease()
+			self._keysDown.discard(key)
+		else:
+			# Press.
+			# This begins a new key combination.
+			self._ignoreKeyReleases = False
+			self._keysDown.add(key)
 
 
 	def display(self, cells):
@@ -759,8 +851,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	scriptCategory = SCRCAT_BRAILLE
 
 	def script_toggleBrailleInput(self, _gesture):
-		self._brailleInput = not self._brailleInput
-		if self._brailleInput:
+		self.brailleInput = not self.brailleInput
+		if self.brailleInput:
 			# Translators: message when braille input is enabled
 			ui.message(_('Braille input enabled'))
 		else:

@@ -25,7 +25,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen näytöissä, joissa on pistenäppäimistö
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset 52 kielelle
+- Käännökset 54 kielelle
 - Tuki uusille Windows-käyttöjärjestelmille, sekä 32- että 64-bittiset versiot mukaan lukien
 - Mahdollisuus käyttää Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa
 - Säätimien ja tekstin puhuminen kosketuseleitä käytettäessä
@@ -35,7 +35,7 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ++ Kansainvälisyys ++[Internationalization]
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on käännetty englannin lisäksi seuraaville 52 kielelle: afrikaans, albania, amhara, arabia, aragonia, brasilianportugali, bulgaria, burma, espanja, farsi, galego, georgia, heprea, hindi, hollanti, iiri, islanti, italia, japani, kannada, katalaani, kirgiisi, kolumbianespanja, korea, kreikka, kroatia, liettua, makedonia, mandariinikiina, nepali, norja, perinteinen kiina, portugali, punjabi, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, sloveeni, suomi, tamili, tanska, thai, tšekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on käännetty englannin lisäksi seuraaville 54 kielelle: afrikaans, albania, amhara, arabia, aragonia, bulgaria, burma, espanja (Espanja ja Kolumbia), farsi, galego, georgia, heprea, hindi, hollanti, iiri, islanti, italia, japani, kannada, katalaani, kiina (mandariini ja perinteinen), kirgiisi, korea, kreikka, kroatia, liettua, makedonia, mongoli, nepali, norja, portugali (Brasilia ja Portugali), punjabi, puola, ranska, romania, ruotsi, saksa (Saksa ja Sveitsi), serbia, slovakki, sloveeni, suomi, tamili, tanska, thai, tšekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++[SpeechSynthesizerSupport]
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -173,7 +173,7 @@ Mikäli haluat jonkin NVDA-näppäimistä  toimivan samalla tavalla kuin silloin
 
 +++ Näppäimistöasettelut +++[KeyboardLayouts]
 NVDA:n mukana tulee tällä hetkellä kaksi erilaista näppäinkomentojen määritystä, joita kutsutaan näppäimistöasetteluiksi: pöytäkoneille ja kannettaville tarkoitettu.
-NVDA käyttää oletusarvoisesti pöytäkoneiden näppäimistöasettelua, mutta voit vaihtaa kannettaville tarkoitettuun asetteluun Näppäimistöasetukset-valintaikkunassa, joka löytyy NVDA-valikon Asetukset-alavalikosta.
+NVDA käyttää oletusarvoisesti pöytäkoneiden näppäimistöasettelua, mutta voit vaihtaa kannettaville tarkoitettuun asetteluun Näppäimistö-kategoriasta [NVDA:n asetukset #NVDASettings] -valintaikkunasta, joka löytyy NVDA-valikon Asetukset-alavalikosta.
 
 Pöytäkoneiden näppäimistöasettelussa käytetään runsaasti numeronäppäimistön näppäimiä (Numlockin on oltava pois käytöstä).
 Vaikka useimmissa kannettavissa tietokoneissa ei olekaan fyysistä numeronäppäimistöä, niin joissakin sellaista voidaan kuitenkin jäljitellä pitämällä FN-näppäintä alhaalla ja painamalla kirjaimia ja numeroita näppäimistön oikeanpuoleisesta osasta (7, 8, 9, u, i, o, j, k, l jne).
@@ -230,7 +230,7 @@ Kosketusnäppäimistö on aina käytettävissä tableteissa, kuten Microsoft Sur
 Piilota kosketusnäppäimistö kaksoisnapauttamalla kosketusnäppäimistökuvaketta tai siirtymällä pois muokkauskentästä.
 
 Kun kosketusnäppäimistö on aktiivisena, etsi haluamasi näppäimet siirtämällä sormi kosketusnäppäimistön sijaintipaikkaan (tyypillisesti näytön alareunassa), ja liiku sitten näppäimistössä yhdellä sormella.
-Kun löydät näppäimen, jota haluat painaa, kaksoisnapauta sitä tai nosta sormi näytöltä, riippuen [Kosketusvuorovaikutuksen asetukset -valintaikkunasta #TouchInteraction] valituista asetuksista.
+Kun löydät haluamasi näppäimen, kaksoisnapauta sitä tai nosta sormi näytöltä, riippuen NVDA:n asetusten [Kosketusvuorovaikutus-kategoriassa #TouchInteraction] valituista asetuksista.
 
 ++ Syöteohjetila ++[InputHelpMode]
 Tässä käyttöoppaassa mainitaan useita näppäinkomentoja ja kosketuseleitä, mutta helpoin tapa tutkia niitä kaikkia on käyttää syöteohjetta.
@@ -252,20 +252,20 @@ Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valit
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
 | Keskeytä puhe | Ctrl | Ctrl | Napautus kahdella sormella | Keskeyttää puheen välittömästi. |
-| Tauota puhe | Shift | Shift | Ei mitään | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, johon jäätiin (mikäli käytössä oleva puhesyntetisaattori tukee puheen tauottamista). |
+| Tauota puhe | Vaihto | Vaihto | Ei mitään | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, johon jäätiin (mikäli käytössä oleva puhesyntetisaattori tukee puheen tauottamista). |
 | NVDA-valikko | NVDA+N | NVDA+N | Kaksoisnapautus kahdella sormella | Avaa NVDA-valikon, josta voit säätää asetuksia, käyttää työkaluja ja lukea ohjetta jne. |
 | Vaihda puhetilaa | NVDA+S | NVDA+S | Ei mitään | Vaihtaa puhetilojen "puhe käytössä", "äänimerkit" ja "ei puhetta" välillä. |
 | Ota syöteohjetila käyttöön tai poista se käytöstä | NVDA+1 | NVDA+1 | Ei mitään | Tässä tilassa minkä tahansa näppäimen painaminen kertoo kyseisen näppäimen nimen ja kaikki siihen määritellyt NVDA-komennot. |
 | Sulje NVDA | NVDA+Q | NVDA+Q | Ei mitään | Sulkee NVDA:n. |
 | Ohita seuraava näppäinpainallus | NVDA+F2 | NVDA+F2 | Ei mitään | Välittää seuraavan näppäinpainalluksen suoraan aktiiviselle sovellukselle suorittamatta sen mahdollista NVDA-komentoa. |
-| Ota lepotila käyttöön tai poista se käytöstä | NVDA+Shift+S | NVDA+Shift+Z | Ei mitään | Lepotila poistaa käytöstä kaikki NVDA:n komennot sekä puheen ja pistekirjoituksen tuottamisen nykyisessä sovelluksessa. Tästä on eniten hyötyä sovelluksissa, joissa on  omat puhe- tai ruudunlukutoimintonsa. Lepotila poistetaan käytöstä painamalla uudelleen tätä näppäinyhdistelmää. |
+| Ota lepotila käyttöön tai poista se käytöstä | NVDA+Vaihto+S | NVDA+Vaihto+Z | Ei mitään | Lepotila poistaa käytöstä kaikki NVDA:n komennot sekä puheen ja pistekirjoituksen tuottamisen nykyisessä sovelluksessa. Tästä on eniten hyötyä sovelluksissa, joissa on  omat puhe- tai ruudunlukutoimintonsa. Lepotila poistetaan käytöstä painamalla uudelleen tätä näppäinyhdistelmää. |
 %kc:endInclude
 
 ++ Järjestelmätietojen lukeminen ++[ReportingSystemInformation]
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
 | Lue päiväys/aika | NVDA+F12 | Lukee kerran painettaessa kellonajan, kahdesti painettaessa päiväyksen. |
-| Lue akun tila | NVDA+Shift+B | Lukee akun tilan, ts. onko verkkovirta käytössä, tai kertoo nykyisen varauksen tason prosentteina. |
+| Lue akun tila | NVDA+Vaihto+B | Lukee akun tilan, ts. onko verkkovirta käytössä, tai kertoo nykyisen varauksen tason prosentteina. |
 | Lue leikepöydällä oleva teksti | NVDA+C | Lukee leikepöydällä mahdollisesti olevan tekstin. |
 %kc:endInclude
 
@@ -280,7 +280,7 @@ Objekti on yksittäinen kohde, kuten tekstikatkelma, painike, valintaruutu, liuk
 Järjestelmäkohdistus, tunnetaan myös yksinkertaisesti kohdistuksena, on [objekti #Objects], joka vastaanottaa näppäimistön näppäinpainallukset.
 Jos esimerkiksi kirjoitetaan muokattavaan tekstikenttään, kohdistus on kyseisessä kentässä.
 
-Yleisin tapa liikkua NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten Sarkain ja Shift+Sarkain eteen- ja taaksepäin säädinten välillä liikkumiseen, painamalla Alt valikkoriville siirtymiseen, käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+Sarkain avointen sovellusten välillä siirtymiseen.
+Yleisin tapa liikkua NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten Sarkain ja Vaihto+Sarkain eteen- ja taaksepäin säädinten välillä liikkumiseen, painamalla Alt valikkoriville siirtymiseen, käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+Sarkain avointen sovellusten välillä siirtymiseen.
 Näin tehtäessä NVDA kertoo tietoja objektista, jossa kohdistus on, kuten nimen, tyypin, tilan, arvon, kuvauksen, pikanäppäimen ja sijainnin.
 
 Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
@@ -289,7 +289,7 @@ Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 | Lue nykyinen kohdistus | NVDA+Sarkain | NVDA+Sarkain | Kertoo nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
 | Lue ikkunan nimi | NVDA+T | NVDA+T | Lukee aktiivisen ikkunan nimen. Kahdesti painettaessa nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle. |
 | Lue aktiivinen ikkuna | NVDA+B | NVDA+B | Lukee kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa). |
-| Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa ne kopioidaan leikepöydälle. |
+| Lue tilarivi | NVDA+End | NVDA+Vaihto+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa ne kopioidaan leikepöydälle. |
 %kc:endInclude
 
 ++ Järjestelmäkohdistimella liikkuminen ++[SystemCaret]
@@ -304,7 +304,7 @@ NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Jatkuva luku | NVDA+Nuoli alas | NVDA+A | Alkaa lukea järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä. |
 | Lue nykyinen rivi | NVDA+Nuoli ylös | NVDA+L | Lukee järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
-| Lue valittu teksti | NVDA+Shift+Nuoli ylös | NVDA+Shift+S | Lukee kaiken valittuna olevan tekstin. |
+| Lue valittu teksti | NVDA+Vaihto+Nuoli ylös | NVDA+Vaihto+S | Lukee kaiken valittuna olevan tekstin. |
 | Seuraava virke | Alt+Nuoli alas | Alt+Nuoli alas | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 | Edellinen virke | Alt+Nuoli ylös | Alt+Nuoli ylös | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 
@@ -348,14 +348,14 @@ Käytä seuraavia komentoja objekteittain liikkumiseen:
 
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
-| Lue nykyinen objekti | NVDA+numeronäppäimistön 5 | NVDA+Shift+O | Ei mitään | Lukee nykyisen navigointiobjektin. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa objektin nimi ja arvo kopioidaan leikepöydälle. |
-| Siirrä säilöobjektiin | NVDA+numeronäppäimistön 8 | NVDA+Shift+Nuoli ylös | Pyyhkäisy ylös (objektitila) | Siirtää objektiin, joka sisältää nykyisen navigointiobjektin. |
-| Siirrä edelliseen objektiin | NVDA+numeronäppäimistön 4 | NVDA+Shift+Nuoli vasemmalle | Pyyhkäisy vasemmalle (objektitila) | Siirtää nykyistä navigointiobjektia edeltävään objektiin. |
-| Siirrä seuraavaan objektiin | NVDA+numeronäppäimistön 6 | NVDA+Shift+Nuoli oikealle | Pyyhkäisy oikealle (objektitila) | Siirtää nykyisen navigointiobjektin jälkeiseen objektiin. |
-| Siirrä ensimmäiseen sisältöobjektiin | NVDA+numeronäppäimistön 2 | NVDA+Shift+Nuoli alas | Pyyhkäisy alas (objektitila) | Siirtää ensimmäiseen navigointiobjektin sisällä olevaan objektiin. |
+| Lue nykyinen objekti | NVDA+numeronäppäimistön 5 | NVDA+Vaihto+O | Ei mitään | Lukee nykyisen navigointiobjektin. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa objektin nimi ja arvo kopioidaan leikepöydälle. |
+| Siirrä säilöobjektiin | NVDA+numeronäppäimistön 8 | NVDA+Vaihto+Nuoli ylös | Pyyhkäisy ylös (objektitila) | Siirtää objektiin, joka sisältää nykyisen navigointiobjektin. |
+| Siirrä edelliseen objektiin | NVDA+numeronäppäimistön 4 | NVDA+Vaihto+Nuoli vasemmalle | Pyyhkäisy vasemmalle (objektitila) | Siirtää nykyistä navigointiobjektia edeltävään objektiin. |
+| Siirrä seuraavaan objektiin | NVDA+numeronäppäimistön 6 | NVDA+Vaihto+Nuoli oikealle | Pyyhkäisy oikealle (objektitila) | Siirtää nykyisen navigointiobjektin jälkeiseen objektiin. |
+| Siirrä ensimmäiseen sisältöobjektiin | NVDA+numeronäppäimistön 2 | NVDA+Vaihto+Nuoli alas | Pyyhkäisy alas (objektitila) | Siirtää ensimmäiseen navigointiobjektin sisällä olevaan objektiin. |
 | Siirrä aktiiviseen objektiin | NVDA+numeronäppäimistön miinus | NVDA+Askelpalautin | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
 | Aktivoi nykyinen navigointiobjekti | NVDA+numeronäppäimistön Enter | NVDA+Enter | Kaksoisnapautus | Aktivoi nykyisen navigointiobjektin (vastaa hiiren napsauttamista tai välilyönnin painamista, kun järjestelmän kohdistus on siinä). |
-| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | NVDA+Shift+numeronäppäimistön miinus | NVDA+Shift+Askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen  tarkastelukohdistimen kohdalle. |
+| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | NVDA+Vaihto+numeronäppäimistön miinus | NVDA+Vaihto+Askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen  tarkastelukohdistimen kohdalle. |
 | Lue tarkastelukohdistimen sijainti | NVDA+numeronäppäimistön Delete | NVDA+Delete | Ei mitään | Kertoo tietoja tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijainnista. Näitä tietoja voivat olla esim. prosenttimäärä dokumentista, etäisyys sivun reunasta tai tarkka sijainti ruudulla. Kahdesti painettaessa kerrotaan lisätietoja. |
 %kc:endInclude
 
@@ -376,20 +376,20 @@ Jos kuitenkin haluat pistenäytön seuraavan objektinavigointia ja tekstintarkas
 Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
-| Siirrä ylimmälle riville | Shift+numeronäppäimistön 7 | NVDA+Ctrl+Home | none | Siirtää tarkastelukohdistimen tekstin ylimmälle riville. |
+| Siirrä ylimmälle riville | Vaihto+numeronäppäimistön 7 | NVDA+Ctrl+Home | none | Siirtää tarkastelukohdistimen tekstin ylimmälle riville. |
 | Siirrä edelliselle riville | Numeronäppäimistön 7 | NVDA+Nuoli ylös | Pyyhkäisy ylös (tekstitila) | Siirtää tarkastelukohdistimen tekstin edelliselle riville. |
-| Lue nykyinen rivi | Numeronäppäimistön 8 | NVDA+Shift+piste | Ei mitään | Lukee nykyisen rivin, jolla tarkastelukohdistin on tekstissä. Kahdesti painettaessa rivi tavataan ja kolmesti painettaessa se tavataan merkkikuvauksia käyttäen. |
+| Lue nykyinen rivi | Numeronäppäimistön 8 | NVDA+Vaihto+piste | Ei mitään | Lukee tekstin nykyisen rivin, jolla tarkastelukohdistin on. Kahdesti painettaessa rivi tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
 | Siirrä seuraavalle riville | Numeronäppäimistön 9 | NVDA+Nuoli alas | Pyyhkäisy alas (tekstitila) | Siirtää tarkastelukohdistimen tekstin seuraavalle riville. |
-| Siirrä alimmalle riville | Shift+numeronäppäimistön 9 | NVDA+Ctrl+End | Ei mitään | Siirtää tarkastelukohdistimen tekstin alimmalle riville. |
+| Siirrä alimmalle riville | Vaihto+numeronäppäimistön 9 | NVDA+Ctrl+End | Ei mitään | Siirtää tarkastelukohdistimen tekstin alimmalle riville. |
 | Siirrä edelliseen sanaan | Numeronäppäimistön 4 | NVDA+Ctrl+Nuoli vasemmalle | Pyyhkäisy vasemmalle kahdella sormella (tekstitila) | Siirtää tarkastelukohdistimen tekstissä edellisen sanan kohdalle. |
-| Lue nykyinen sana | Numeronäppäimistön 5 | NVDA+Ctrl+piste | Ei mitään | Lukee sanan, jonka kohdalla tarkastelukohdistin on tekstissä. Kahdesti painettaessa sana tavataan ja kolmesti painettaessa se tavataan merkkikuvauksia käyttäen. |
+| Lue nykyinen sana | Numeronäppäimistön 5 | NVDA+Ctrl+piste | Ei mitään | Lukee tekstin sanan, jonka kohdalla tarkastelukohdistin on. Kahdesti painettaessa sana tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
 | Siirrä seuraavaan sanaan | Numeronäppäimistön 6 | NVDA+Ctrl+Nuoli oikealle | Pyyhkäisy oikealle kahdella sormella (tekstitila) | Siirtää tarkastelukohdistimen tekstissä seuraavan sanan kohdalle. |
-| Siirrä rivin alkuun | Shift+numeronäppäimistön 1 | NVDA+Home | Ei mitään | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin alkuun. |
+| Siirrä rivin alkuun | Vaihto+numeronäppäimistön 1 | NVDA+Home | Ei mitään | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin alkuun. |
 | Siirrä edelliseen merkkiin | Numeronäppäimistön 1 | NVDA+Nuoli vasemmalle | Pyyhkäisy vasemmalle (tekstitila) | Siirtää tarkastelukohdistimen tekstissä seuraavan merkin kohdalle nykyisellä rivillä. |
-| Lue nykyinen merkki | Numeronäppäimistön 2 | NVDA+piste | Ei mitään | Lukee nykyisen merkin riviltä, jonka kohdalla tarkastelukohdistin on tekstissä. Kahdesti painettaessa luetaan merkin kuvaus tai esimerkki sen käytöstä. Kolmesti painettaessa luetaan merkin numeerinen arvo desimaaleina ja heksadesimaaleina. |
+| Lue nykyinen merkki | Numeronäppäimistön 2 | NVDA+piste | Ei mitään | Lukee nykyisen merkin riviltä, jonka kohdalla tarkastelukohdistin on tekstissä. Kahdesti painettaessa luetaan merkin kuvaus tai esimerkki sen käytöstä. Kolmesti painettaessa luetaan sen numeerinen arvo desimaaleina ja heksadesimaaleina. |
 | Siirrä seuraavaan merkkiin | Numeronäppäimistön 3 | NVDA+Nuoli oikealle | Pyyhkäisy oikealle (tekstitila) | Siirtää tarkastelukohdistimen tekstissä seuraavan merkin kohdalle nykyisellä rivillä. |
-| Siirrä rivin loppuun | Shift+numeronäppäimistön 3 | NVDA+End | Ei mitään | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin loppuun. |
-| Jatkuva luku | Numeronäppäimistön plus | NVDA+Shift+A | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta alkaen siirtäen samalla sitä. |
+| Siirrä rivin loppuun | Vaihto+numeronäppäimistön 3 | NVDA+End | Ei mitään | Siirtää tarkastelukohdistimen tekstissä nykyisen rivin loppuun. |
+| Jatkuva luku | Numeronäppäimistön plus | NVDA+Vaihto+A | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta alkaen siirtäen samalla sitä. |
 | Valitse ja kopioi tarkastelukohdistimesta | NVDA+F9 | NVDA+F9 | Ei mitään | Aloittaa tekstin valitsemisen ja  kopioinnin tarkastelukohdistimen nykyisestä kohdasta. Varsinaista kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, missä tekstilohkon loppu on. |
 | Valitse ja kopioi tarkastelukohdistimeen | NVDA+F10 | NVDA+F10 | Ei mitään | Valitsee ensimmäisellä painalluksella aiemmin asetetusta tekstilohkon alkukohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Toisen kerran painettaessa teksti kopioidaan leikepöydälle. |
 | Lue tekstin muotoilutiedot | NVDA+F | NVDA+F | Ei mitään | Lukee tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa näyttää tiedot selaustilassa. |
@@ -449,17 +449,17 @@ Mitä ylempänä hiiri on ruudulla, sitä korkeampia äänimerkit ovat.
 Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (mikäli käytössä on stereokaiuttimet tai kuulokkeet).
 
 Nämä lisäominaisuudet eivät ole oletusarvoisesti käytössä.
-Voit ottaa ne tarvittaessa käyttöön [Hiiriasetukset #MouseSettings]-valintaikkunasta, joka löytyy NVDA:n Asetukset-valikosta.
+Voit ottaa ne halutessasi käyttöön [Hiiren asetukset #MouseSettings] -kategoriasta [Asetukset #NVDASettings]-valintaikkunasta, joka löytyy NVDA:n Asetukset-valikosta.
 
 Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kosketuslevyä, on NVDA:ssa joitakin hiiren käyttöön tarkoitettuja näppäinkomentoja:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Vasemman hiiripainikkeen napsautus | Numeronäppäimistön kautta | NVDA+Ö | Napsauttaa kerran hiiren vasenta painiketta. Kaksoisnapsautus tehdään painamalla tätä näppäinkomentoa kaksi kertaa nopeasti peräkkäin. |
-| Vasemman hiiripainikkeen lukitus | Shift+numeronäppäimistön kautta | NVDA+Ctrl+Ö | Lukitsee vasemman hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä näppäinkomentoa vasemman painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
+| Vasemman hiiripainikkeen lukitus | Vaihto+numeronäppäimistön kautta | NVDA+Ctrl+Ö | Lukitsee vasemman hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä näppäinkomentoa vasemman painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
 | Oikean hiiripainikkeen napsautus | Numeronäppäimistön tähti | NVDA+Ä | Napsauttaa kerran hiiren oikeaa painiketta. |
-| Oikean hiiripainikkeen lukitus | Shift+numeronäppäimistön tähti | NVDA+Ctrl+Ä | Lukitsee oikean hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä komentoa oikean painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
-| Siirrä hiiri nykyiseen navigointiobjektiin | NVDA+numeronäppäimistön kautta | NVDA+Shift+M | Siirtää hiiren nykyisen navigointiobjektin ja tarkastelukohdistimen sijaintiin. |
-| Siirrä hiiren alla olevaan objektiin | NVDA+numeronäppäimistön tähti | NVDA+Shift+N | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
+| Oikean hiiripainikkeen lukitus | Vaihto+numeronäppäimistön tähti | NVDA+Ctrl+Ä | Lukitsee oikean hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä komentoa oikean painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
+| Siirrä hiiri nykyiseen navigointiobjektiin | NVDA+numeronäppäimistön kautta | NVDA+Vaihto+M | Siirtää hiiren nykyisen navigointiobjektin ja tarkastelukohdistimen sijaintiin. |
+| Siirrä hiiren alla olevaan objektiin | NVDA+numeronäppäimistön tähti | NVDA+Vaihto+N | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
 %kc:endInclude
 
 + Selaustila +[BrowseMode]
@@ -487,7 +487,7 @@ Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin s
 | Päivitä selaustiladokumentti | NVDA+F5 | Lataa uudelleen nykyisen dokumentin sisällön. (Hyödyllistä, jos sivulta vaikuttaa puuttuvan jotakin. Komento ei ole käytettävissä Microsoft Wordissa tai Outlookissa.) |
 | Etsi | NVDA+Ctrl+F | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä dokumentista. |
 | Etsi seuraava | NVDA+F3 | Etsii dokumentista aiemmin haetun tekstin seuraavan esiintymän. |
-| Etsi edellinen | NVDA+Shift+F3 | Etsii dokumentista aiemmin haetun tekstin edellisen esiintymän. |
+| Etsi edellinen | NVDA+Vaihto+F3 | Etsii dokumentista aiemmin haetun tekstin edellisen esiintymän. |
 | Avaa pitkä kuvaus | NVDA+D | Avaa kohdalla olevan elementin mahdollisen pitkän kuvauksen uuteen ikkunaan. | 
 %kc:endInclude
 
@@ -496,7 +496,7 @@ NVDA:ssa on selaustilaa käytettäessä liikkumisen nopeuttamiseksi myös pikase
 HUOM: Kaikkia komentoja ei tueta joissakin dokumenttityypeissä.
 
 %kc:beginInclude
-Sellaisinaan nämä komennot siirtävät seuraavan ja Shift-näppäimen kanssa painettuna edellisen elementin kohdalle:
+Sellaisinaan nämä komennot siirtävät seuraavan ja Vaihto-näppäimen kanssa painettuna edellisen elementin kohdalle:
 - h: otsikko
 - l: luettelo
 - i: luettelokohde
@@ -523,14 +523,14 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja Shift-näppäimen kanssa p
 -
 Säilöelementtien, kuten luetteloiden ja taulukoiden alkuun tai loppuun siirtymiseen:
 || Nimi | Näppäinkomento | Kuvaus |
-| Siirrä säilöelementin alkuun | Shift+pilkku | Siirtää sen säilöelementin alkuun, jossa kohdistin on (luettelo, taulukko jne). |
+| Siirrä säilöelementin alkuun | Vaihto+pilkku | Siirtää sen säilöelementin alkuun, jossa kohdistin on (luettelo, taulukko jne). |
 | Siirrä säilöelementin loppuun | pilkku | Siirtää sen säilöelementin loppuun, jossa kohdistin on (luettelo, taulukko jne). |
 %kc:endInclude
 
 Joissakin uusissa verkkopohjaisissa sovelluksissa, kuten Gmail, Twitter ja Facebook, käytetään yksikirjaimisia pikanäppäimiä.
 Mikäli haluat samaan aikaan käyttää sekä niitä että nuolinäppäimiä selaustilassa lukemiseen, voit poistaa tilapäisesti käytöstä NVDA:n pikaselausnäppäimet.
 %kc:beginInclude
-Ota pikaselausnäppäimet käyttöön tai poista ne käytöstä nykyisessä dokumentissa painamalla NVDA+Shift+Väli.
+Ota pikaselausnäppäimet käyttöön tai poista ne käytöstä nykyisessä dokumentissa painamalla NVDA+Vaihto+Väli.
 %kc:endInclude
 
 ++ Elementtilista ++[ElementsList]
@@ -547,7 +547,7 @@ Kun haluttu kohde on valittu, sen kohdalle voidaan siirtyä tai se voidaan avata
 ++ Upotetut objektit ++[ImbeddedObjects]
 Sivut voivat sisältää monipuolista sisältöä, joka käyttää sellaisia teknologioita kuin Flash, Java, HTML5, kuten myös sovelluksia ja valintaikkunoita.
 Kun selaustilassa tullaan niiden kohdalle, NVDA ilmoittaa "upotettu objekti", "sovellus" tai "valintaikkuna".
-Niihin voidaan siirtyä nopeasti käyttäen upotettuihin objekteihin siirtäviä pikaselausnäppäimiä O ja Shift+O.
+Niihin voidaan siirtyä nopeasti käyttäen upotettuihin objekteihin siirtäviä pikaselausnäppäimiä O ja Vaihto+O.
 Näiden objektien kanssa voidaan olla vuorovaikutuksessa painamalla Enteriä niiden kohdalla.
 Jos objekti on saavutettava, siinä voidaan liikkua sarkaimella ja olla sen kanssa vuorovaikutuksessa kuten missä tahansa muussakin sovelluksessa.
 Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin sisältävälle sivulle:
@@ -600,7 +600,7 @@ Mikäli sinulla on pistenäyttö, NVDA voi antaa palautteen pistekirjoituksella.
 Jos käyttämässäsi näytössä on Perkins-tyylinen näppäimistö, voit lisäksi syöttää lyhenne- ja tavallista pistekirjoitusta.
 
 Katso tietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
-Voit määrittää pistekirjoitusasetukset [Pistekirjoitusasetukset-valintaikkunasta. #BrailleSettings]
+Voit määrittää pistekirjoituksen asetukset [Pistekirjoitus-kategoriasta #BrailleSettings] [Asetukset #NVDASettings]-valintaikkunasta.
 
 ++ Säädintyyppien ja -tilojen sekä kiintopisteiden lyhenteet ++[BrailleAbbreviations]
 Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa sekä kiintopisteitä.
@@ -692,7 +692,7 @@ Kiintopisteille on määritetty seuraavat lyhenteet:
 
 ++ Pistekirjoituksen syöttäminen ++[BrailleInput]
 NVDA tukee sekä tavallisen että lyhennepistekirjoituksen syöttämistä pistekirjoitusnäppäimistöllä.
-Käännöstaulukon, jota käytetään pistekirjoituksen kääntämiseen tekstiksi, voit valita Pistekirjoitusasetukset-valintaikkunan [Syöttötaulukko #BrailleSettingsInputTable]-asetusta käyttäen.
+Käännöstaulukon, jota käytetään pistekirjoituksen kääntämiseen tekstiksi, voit valita [Asetukset #NVDASettings]-valintaikkunan Pistekirjoitus-kategorian [Syöttötaulukko #BrailleSettingsInputTable]-asetusta käyttäen.
 
 Kun käytetään tavallista pistekirjoitusta, teksti syötetään heti sitä kirjoitettaessa.
 Lyhennekirjoitusta käytettäessä teksti syötetään painaessasi sanan lopussa Välilyöntiä tai Enteriä.
@@ -723,7 +723,7 @@ Escin painaminen hylkää tunnistuksen tulokset.
 Windows 10 sisältää tekstintunnistuksen useille kielille.
 NVDA voi käyttää sitä kuvissa olevan tekstin tai esteellisten sovellusten tunnistamiseen.
 
-Voit määrittää tekstintunnistuksessa käytettävän kielen [Tekstintunnistus (Windows 10) #Win10OcrSettings] -asetusvalintaikkunasta.
+Voit määrittää tekstintunnistuksessa käytettävän kielen [Asetukset #NVDASettings]-valintaikkunan [Tekstintunnistus (Windows 10) -kategoriasta #Win10OcrSettings].
 Lisäkieliä voidaan asentaa avaamalla Käynnistä-valikko, valitsemalla Asetukset -> Aika ja kieli -> Alue ja kieli, ja valitsemalla sitten Lisää kieli.
 
 %kc:beginInclude
@@ -737,13 +737,13 @@ NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien hel
 
 +++ Sarake- ja riviotsikoiden automaattinen lukeminen +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA voi ilmoittaa automaattisesti asianmukaiset rivi- ja sarakeotsikot Microsoft Wordissa taulukoissa liikuttaessa.
-Tämä edellyttää, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön NVDA:n Dokumenttien muotoiluasetukset -valintaikkunasta.
+Tämä edellyttää ensinnäkin, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön Dokumenttien muotoiluasetuksista [Asetukset #NVDASettings]-valintaikkunasta.
 Toiseksi NVDA:n on tiedettävä, mikä rivi tai sarake sisältää otsikoita kulloisessakin taulukossa.
 Kun olet siirtynyt ensimmäiseen soluun otsikoita sisältävässä sarakkeessa tai rivissä, käytä jotakin seuraavista komennoista:
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Määritä sarakeotsikot | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu rivillä, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
-| Määritä riviotsikot | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu sarakkeessa, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen oikealla puolella. Kahdesti painaminen nollaa tämän asetuksen. |
+| Määritä sarakeotsikot | NVDA+Vaihto+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu rivillä, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
+| Määritä riviotsikot | NVDA+Vaihto+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu sarakkeessa, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen oikealla puolella. Kahdesti painaminen nollaa tämän asetuksen. |
 %kc:endInclude
 Asetukset tallennetaan dokumentin kirjanmerkkeinä, jotka ovat yhteensopivia myös muiden ruudunlukuohjelmien, kuten JAWSin, kanssa.
 Tämä tarkoittaa, että rivi- ja sarakeotsikot on jo valmiiksi määritelty muiden ruudunlukuohjelmien käyttäjille, jotka avaavat kyseisen dokumentin.
@@ -771,13 +771,13 @@ Kaikki dokumentin kommentit muiden jäljitettävien muutosten ohella voidaan my�
 
 +++ Sarake- ja riviotsikoiden automaattinen lukeminen +++[ExcelAutomaticColumnAndRowHeaderReading]
 NVDA voi lukea automaattisesti asianmukaiset rivi- ja sarakeotsikot Excel-laskentataulukoissa liikuttaessa.
-Tämä edellyttää, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön NVDA:n Dokumenttien muotoiluasetukset -valintaikkunasta.
+Tämä edellyttää ensinnäkin, että Lue taulukon rivi- ja sarakeotsikot -asetus on otettu käyttöön Dokumenttien muotoiluasetuksista [Asetukset #NVDASettings]-valintaikkunasta.
 Toiseksi NVDA:n on tiedettävä, mikä rivi tai sarake sisältää otsikoita.
 Kun olet siirtynyt ensimmäiseen soluun otsikoita sisältävässä sarakkeessa tai rivissä, käytä jotakin seuraavista komennoista:
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Määritä sarakeotsikot | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu rivillä, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
-| Määritä riviotsikot | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu sarakkeessa, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen oikealla puolella. Kahdesti painaminen nollaa tämän asetuksen. |
+| Määritä sarakeotsikot | NVDA+Vaihto+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu rivillä, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
+| Määritä riviotsikot | NVDA+Vaihto+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu sarakkeessa, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen oikealla puolella. Kahdesti painaminen nollaa tämän asetuksen. |
 %kc:endInclude
 Asetukset tallennetaan työkirjaan nimettyinä alueina, jotka ovat yhteensopivia myös muiden ruudunlukuohjelmien, kuten JAWSin, kanssa.
 Tämä tarkoittaa, että rivi- ja sarakeotsikot on jo valmiiksi määritelty muiden ruudunlukuohjelmien käyttäjille, jotka avaavat kyseisen työkirjan.
@@ -818,20 +818,20 @@ Lukittuihin soluihin siirtyminen on mahdollista selaustilassa, joka otetaan käy
 
 +++ Lomakekentät +++[ExcelFormFields]
 Excelin laskentataulukot voivat sisältää lomakekenttiä.
-Pääset niihin elementtilistaa tai pikaselausnäppäimiä F ja Shift+F käyttäen.
+Pääset niihin elementtilistaa tai pikaselausnäppäimiä F ja Vaihto+F käyttäen.
 Kun siirryt selaustilassa lomakekentän kohdalle, voit säätimestä riippuen joko aktivoida sen tai vaihtaa vuorovaikutustilaan painamalla Enteriä tai välilyöntiä ollaksesi vuorovaikutuksessa sen kanssa.
 Saat lisätietoja selaustilasta ja pikaselausnäppäimistä [Selaustila #BrowseMode]-kappaleesta.
 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Muuta esittäjän muistiinpanojen lukemista | Ctrl+Shift+S | Tämä komento vaihtaa esittäjän muistiinpanojen ja dian sisällön lukemisen välillä meneillään olevassa diaesityksessä oltaessa. Asetus ei vaikuta siihen, mitä näytöllä näkyy, vaan pelkästään siihen, mitä NVDA lukee. | 
+| Muuta esittäjän muistiinpanojen lukemista | Ctrl+Vaihto+S | Tämä komento vaihtaa esittäjän muistiinpanojen ja dian sisällön lukemisen välillä meneillään olevassa diaesityksessä oltaessa. Asetus ei vaikuta siihen, mitä näytöllä näkyy, vaan pelkästään siihen, mitä NVDA lukee. | 
 %kc:endInclude
 
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Lue jäljellä oleva aika | Ctrl+Shift+R | Lukee nykyisen kappaleen jäljellä olevan ajan. |
+| Lue jäljellä oleva aika | Ctrl+Vaihto+R | Lukee nykyisen kappaleen jäljellä olevan ajan. |
 %kc:endInclude
 
 Huom: Lue jäljellä oleva aika -komento toimii vain foobar2000:n tilarivin muotoilun oletusmerkkijonolla.
@@ -845,8 +845,8 @@ Huom: Lue jäljellä oleva aika -komento toimii vain foobar2000:n tilarivin muot
 ++ Poedit ++[Poedit]
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Lue kommentti-ikkuna | Ctrl+Shift+C | Lukee kaikki kommentti-ikkunassa olevat kommentit. |
-| Lue huomautukset kääntäjille | Ctrl+Shift+A | Lukee kääntäjille tarkoitetut huomautukset. |
+| Lue kommentti-ikkuna | Ctrl+Vaihto+C | Lukee kaikki kommentti-ikkunassa olevat kommentit. |
+| Lue huomautukset kääntäjille | Ctrl+Vaihto+A | Lukee kääntäjille tarkoitetut huomautukset. |
 %kc:endInclude
 
 ++ Skype ++[Skype]
@@ -875,9 +875,9 @@ Katso lisätietoja [Matemaattisen sisällön lukeminen #ReadingMath] -kappaleest
 
 +++ Tekstin valitseminen +++[KindleTextSelection]
 Voit suorittaa Kindlessä valitulle tekstille eri toimintoja, mukaan lukien sanastomääritelmän hakeminen, huomautusten ja korostusten lisääminen, leikepöydälle kopioiminen sekä verkosta etsiminen.
-Tämä tehdään valitsemalla ensin tekstiä kuten normaalistikin selaustilassa, esim. Shift- ja nuolinäppäimiä käyttäen.
+Tämä tehdään valitsemalla ensin tekstiä kuten tavallisesti selaustilassa, esim. Vaihto- ja nuolinäppäimiä käyttäen.
 %kc:beginInclude
-Kun olet valinnut tekstin, paina sovellusnäppäintä tai Shift+F10 näyttääksesi valinnan käsittelyyn käytettävissä olevat vaihtoehdot.
+Kun olet valinnut tekstin, paina sovellusnäppäintä tai Vaihto+F10 näyttääksesi valinnan käsittelyyn käytettävissä olevat vaihtoehdot.
 %kc:endInclude
 Mikäli tekstiä ei ole valittuna, vaihtoehdot näytetään kohdistimen kohdalla olevalle sanalle.
 
@@ -903,20 +903,31 @@ Lisättyjen kirjojen taulukkonäkymässä:
 | Pikavalikko | Sovellusnäppäin | Avaa pikavalikon valitulle kirjalle. |
 %kc:endInclude
 
-+ NVDA:n asetusten määrittäminen +[ConfiguringNVDA]
++ Asetusten määrittäminen +[ConfiguringNVDA]
+Useimpia asetuksia voidaan muuttaa valintaikkunoista, joihin pääsee NVDA-valikon Asetukset-alavalikosta.
+Monet näistä asetuksista löytyvät usean kategorian [Asetukset-valintaikkunasta #NVDASettings].
+Hyväksy valintaikkunoissa tekemäsi muutokset painamalla OK-painiketta.
+Peru muutokset painamalla Peruuta-painiketta tai Esc-näppäintä.
+Asetukset tulevat voimaan tietyissä valintaikkunoissa välittömästi painamalla Käytä-painiketta, eikä valintaikkunaa tarvitse sulkea.
+Joitakin asetuksia on mahdollista muuttaa myös pikanäppäimillä, jotka on lueteltu alla olevissa kappaleissa.
 
-++ Asetukset ++[preferences]
+++ Asetukset ++[NVDASettings]
 %kc:settingsSection: || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-Useimpia NVDA:n asetuksia voidaan muuttaa valintaikkunoista, joihin päästään NVDA-valikon Asetukset-alavalikosta.
-Tehdyt muutokset hyväksytään kaikissa asetusvalintaikkunoissa painamalla OK-painiketta.
-Muutokset perutaan painamalla Peruuta-painiketta tai Esc-näppäintä.
-Joitakin asetuksia voidaan muuttaa myös pikanäppäimillä, jotka on lueteltu alla olevissa kappaleissa.
+Asetukset-valintaikkuna sisältää useita asetuksia, joita on mahdollista muuttaa.
+Tässä valintaikkunassa on lista, jossa on valittavissa useita asetuskategorioita.
+Kun valitset kategorian, useita siihen liittyviä asetuksia näytetään.
+Asetukset voidaan ottaa käyttöön painamalla Käytä-painiketta, jolloin valintaikkuna pysyy avoimena.
+Paina OK-painiketta, jos haluat tallentaa asetukset ja sulkea valintaikkunan.
 
-HUOM: Kaikkiin asetusvalintaikkunoihin ei oletusarvoisesti ole mahdollista päästä syötekomennoilla (näppäinkomennoilla, kosketuseleillä jne).
-Mikäli haluat päästä valintaikkunoihin, joilla ei ole omia pikanäppäimiä, käytä [Syötekomennot-valintaikkunaa #InputGestures] lisätäksesi niille omia syötekomentoja.
+Joillakin asetuskategorioilla on oma pikanäppäin.
+Kun sitä painetaan, Asetukset-valintaikkuna avataan kyseisen kategorian kohdalta.
+Kaikkiin kategorioihin ei oletusarvoisesti pääse näppäinkomennoilla.
+Jos haluat päästä kategorioihin, joilla ei ole omia pikanäppäimiä, käytä [Syötekomennot-valintaikkunaa #InputGestures] lisätäksesi niille syötekomennon, kuten näppäinkomennon tai kosketuseleen.
 
-+++ Yleiset asetukset (NVDA+Ctrl+G) +++[GeneralSettings]
-Yleiset asetukset -valintaikkuna löytyy Asetukset-valikosta.
+Valintaikkunan asetuskategoriat on kuvailtu alla.
+ 
++++ Yleiset (NVDA+Ctrl+G) +++[GeneralSettings]
+Yleiset-kategoriassa määritetään NVDA:n yleinen toiminta, kuten käyttöliittymän kieli ja automaattinen päivitysten tarkistus.
 Se sisältää seuraavat asetukset:
 
 ==== Kieli ====[GeneralSettingsLanguage]
@@ -924,8 +935,8 @@ Tämä on yhdistelmäruutu, josta voidaan valita kieli, jolla NVDA:n käyttölii
 Kieliä on useita.
 Oletusarvoisesti on valittuna vaihtoehto "Windows", mikä tarkoittaa, että NVDA käyttää Windowsin maakohtaisissa asetuksissa määritettyä kieltä.
 
-HUOM: NVDA on käynnistettävä uudelleen kieltä vaihdettaessa.
-Jos kieltä vaihdetaan, NVDA kysyy, käynnistetäänkö se uudelleen.
+Huom: NVDA on käynnistettävä uudelleen kieltä vaihdettaessa.
+Jos vaihdat kieltä ja tallennat tekemäsi muutoksen, NVDA kysyy, haluatko käynnistää sen uudelleen.
 Hyväksy painamalla OK.
 
 ==== Tallenna asetukset suljettaessa ====[GeneralSettingsSaveConfig]
@@ -965,25 +976,105 @@ Päivitysten manuaalinen tarkistaminen on myös mahdollista valitsemalla Tarkist
 Jos tämä on valittuna, NVDA ilmoittaa käynnistyessään odottavasta päivityksestä ja tarjoaa mahdollisuutta sen asentamiseen.
 Voit asentaa päivityksen myös manuaalisesti Sulje NVDA -valintaikkunasta (mikäli se on käytössä), NVDA-valikosta tai suorittaessasi uuden päivitystarkistuksen Ohje-valikosta.
 
-+++ Puhesyntetisaattorin valitseminen (NVDA+Ctrl+S) +++[SynthesizerSelection]
-Syntetisaattori-valintaikkunassa, joka löytyy Asetukset-valikosta kohdasta "Syntetisaattori...", voidaan valita, mitä puhesyntetisaattoria NVDA käyttää.
-Kun haluttu puhesyntetisaattori on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
-Jos syntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näytetään, eikä käytettävää syntetisaattoria vaihdeta.
++++ Puhe (NVDA+Ctrl+V) +++[SpeechSettings]
+Puhe-kategoria sisältää asetuksia, joilla voit muuttaa sekä käytettävää puhesyntetisaattoria että sen puheäänen ominaisuuksia.
+Katso tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa [Syntetisaattorin asetusrengas #SynthSettingsRing] -kappaleesta.
 
-==== Syntetisaattori ====[SynthesizerSelectionSynthesizer]
-Tästä yhdistelmäruudusta voidaan valita, mitä puhesyntetisaattoria NVDA käyttää puheen tuottamiseen.
+Tämä kategoria sisältää seuraavat asetukset:
 
-Luettelo NVDA:n tukemista puhesyntetisaattoreista on [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleessa.
+==== Muuta syntetisaattoria ====[SpeechSettingsChange]
+Ensimmäinen Puhe-asetuskategorian vaihtoehto on Muuta...-painike. Tämä painike avaa [Valitse syntetisaattori #SelectSynthesizer] -valintaikkunan, josta voit valita käytettävän puhesyntetisaattorin ja äänilaitteen.
+Tämä valintaikkuna avautuu Asetukset-valintaikkunan päälle.
+Valitse syntetisaattori -valintaikkunassa muutettujen asetusten tallentaminen tai hylkääminen palauttaa takaisin Asetukset-valintaikkunaan.
 
-Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
-Tästä voi olla hyötyä henkilölle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää puheentarkastelutoimintoa.
- 
-==== Äänilaite ====[SynthesizerSelectionOutputDevice]
-Tästä voit valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
+==== Puheääni ====[SpeechSettingsVoice]
+Puheääni-vaihtoehto on yhdistelmäruutu, jossa on luettelo kaikista käytössä olevan syntetisaattorin äänistä.
+Voit selata vaihtoehtoja nuolinäppäimillä.
+Nuoli vasemmalle ja Nuoli ylös siirtävät ylöspäin luettelossa, kun taas Nuoli oikealle ja Nuoli alas siirtävät alas.
+
+==== Muunnelma ====[SpeechSettingsVariant]
+Jos käytät NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman.
+Muunnelmat ovat ikään kuin puheääniä, koska jokainen niistä antaa äänille hieman eri määreitä.
+Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
+
+==== Nopeus ====[SpeechSettingsRate]
+Tällä liukusäätimellä voit muuttaa puheen nopeutta.
+Arvot 0 - 100 ovat mahdollisia (0=hitain ja 100=nopein).
+
+==== Korkeus ====[SpeechSettingsPitch]
+Tällä liukusäätimellä voit muuttaa puheen korkeutta.
+Arvot 0 - 100 ovat mahdollisia (0=matalin ja 100=korkein).
+
+==== Voimakkuus ====[SpeechSettingsVolume]
+Tällä liukusäätimellä voit muuttaa puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
+
+==== Sävy ====[SpeechSettingsInflection]
+Tällä liukusäätimellä voit muuttaa puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak NG on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
+
+==== Vaihda kieltä automaattisesti ====[VoiceSettingsLanguageSwitching]
+Tällä valintaruudulla voit vaikuttaa siihen, vaihtaako NVDA puhesyntetisaattorin kieltä automaattisesti, jos luettavan tekstin kieli on määritelty asianmukaisesti.
+Asetus on oletusarvoisesti käytössä.
+Tällä hetkellä vain eSpeak NG -syntetisaattori tukee automaattista kielen vaihtamista.
+
+==== Vaihda murretta automaattisesti ====[SpeechSettingsDialectSwitching]
+Tällä valintaruudulla voit määrittää, vaihdetaanko pelkän kielen lisäksi myös murretta.
+Jos esim. amerikanenglantia puhuvalla äänellä luetaan  dokumenttia, jonka kielimäärityksen mukaan osa tekstistä on englanninenglantia, silloin tämän asetuksen ollessa käytössä syntetisaattori vaihtaa aksenttiaan.
+Asetus ei ole oletusarvoisesti käytössä.
 
 %kc:setting
-==== Äänenvoimakkuuden hiljennys ====[SynthesizerSelectionDuckingMode]
-Näppäinkomento: NVDA+Shift+D
+==== Välimerkki- ja symbolitaso ====[SpeechSettingsSymbolLevel]
+Pikanäppäin: NVDA+P
+
+Tästä voit valita sanoina luettavien välimerkkien ja muiden symboleiden määrän.
+Esimerkiksi kun tasoksi on valittu kaikki, niin kaikki merkit luetaan sanoina.
+Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
+
+==== Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsTrust]
+Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symboleiden puhumiseen.
+Jos huomaat, että välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai ääntä käytettäessä, voit halutessasi poistaa tämän asetuksen käytöstä pakottaaksesi NVDA:n käyttämään yleistä kieliasetusta.
+
+==== Äänenkorkeuden muutos prosentteina isoille kirjaimille ====[SpeechSettingsCapPitchChange]
+Tähän muokkauskenttään voit syöttää prosenttiluvun, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
+Negatiivinen arvo laskee ja positiivinen nostaa äänenkorkeutta.
+Mikäli et halua äänenkorkeuden muuttuvan, aseta arvoksi 0.
+
+==== Ilmaise isot kirjaimet sanalla "iso" ====[SpeechSettingsSayCapBefore]
+Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista yksittäisenä merkkinä puhuttua isoa kirjainta (kuten esim. tavattaessa).
+Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin puhesyntetisaattorit eivät ehkä tue sitä kunnolla, joten tälle asetukselle voi olla käyttöä.
+
+==== Ilmaise isot kirjaimet äänimerkillä ====[SpeechSettingsBeepForCaps]
+Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun iso kirjain luetaan.
+Kuten Ilmaise isot kirjaimet sanalla "iso" -asetus, tämäkin on käyttökelpoinen puhesyntetisaattoreilla, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
+
+==== Käytä tavaustoimintoa (jos mahdollista) ====[SpeechSettingsUseSpelling]
+Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
+Esimerkiksi englanninkielessä "a" on sekä kirjain että sana, mutta se lausutaan kussakin tilanteessa eri tavalla.
+Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee toimintoa.
+Useimmat syntetisaattorit tukevat asetusta.
+
+Tämä asetus tulisi tavallisesti ottaa käyttöön.
+Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska ominaisuutta ei ole toteutettu niissä kunnolla.
+Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
+
++++ Valitse syntetisaattori (NVDA+Ctrl+S) +++[SelectSynthesizer]
+Syntetisaattori-valintaikkunassa, joka voidaan avata painamalla Muuta...-painiketta Asetukset-valintaikkunan Puhe-kategoriassa, voit valita, mitä syntetisaattoria NVDA käyttää.
+Kun olet valinnut haluamasi syntetisaattorin, NVDA ottaa sen käyttöön painettuasi OK-painiketta.
+Jos syntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näytetään, eikä käytettävää syntetisaattoria vaihdeta.
+
+==== Syntetisaattori ====[SelectSynthesizerSynthesizer]
+Tästä yhdistelmäruudusta voit valita, mitä puhesyntetisaattoria NVDA käyttää puheen tuottamiseen.
+
+Katso luettelo NVDA:n tukemista syntetisaattoreista [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleesta.
+
+Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
+Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta vain pistenäytön avulla, tai näkeville kehittäjille, jotka käyttävät pelkkää puheentarkastelutoimintoa.
+
+==== Äänilaite ====[SelectSynthesizerOutputDevice]
+Tästä voit valita, mitä äänikorttia NVDA:ssa valittuna oleva puhesyntetisaattori käyttää.
+
+%kc:setting
+==== Äänenvoimakkuuden hiljennys ====[SelectSynthesizerDuckingMode]
+Näppäinkomento: NVDA+Vaihto+D
 
 Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä valita, hiljentääkö NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
 - Ei käytössä: NVDA ei koskaan hiljennä muiden sovellusten äänenvoimakkuutta.
@@ -994,130 +1085,40 @@ Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä va
 Tämä asetus on käytettävissä vain NVDA:n asennetussa versiossa.
 Massamuisti- ja väliaikaisversiot eivät tue äänenvoimakkuuden hiljennystä.
 
-+++ Puheäänen asetukset (NVDA+Ctrl+V) +++[VoiceSettings]
-Puheäänen asetukset -valintaikkuna, joka avataan Asetukset-valikosta kohdasta "Puheääni...", sisältää asetuksia, joilla voidaan vaikuttaa siihen, miltä puhe kuulostaa.
-Saadaksesi tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa, katso [Syntetisaattorin asetusrengas #SynthSettingsRing] -kappaletta.
-
-Valintaikkuna sisältää seuraavat asetukset:
-
-==== Puheääni ====[VoiceSettingsVoice]
-Tässä valintaikkunassa on ensimmäisenä yhdistelmäruutu, jossa on luettelo kaikista käytössä olevan syntetisaattorin puheäänistä.
-Vaihtoehtoja voidaan selata nuolinäppäimillä.
-Nuoli vasemmalle ja Nuoli ylös siirtävät ylöspäin luettelossa, kun taas Nuoli oikealle ja Nuoli alas siirtävät alas.
-
-==== Muunnelma ====[VoiceSettingsVariant]
-Jos käytät NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman.
-Muunnelmat ovat ikään kuin puheääniä, koska jokainen niistä antaa puheäänille hieman eri määreitä.
-Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
-
-==== Nopeus ====[VoiceSettingsRate]
-Tällä liukusäätimellä voit muuttaa puheen nopeutta.
-Arvot 0 - 100 ovat mahdollisia (0=hitain ja 100=nopein).
-
-==== Korkeus ====[VoiceSettingsPitch]
-Tällä liukusäätimellä voit muuttaa puheen korkeutta.
-Arvot 0 - 100 ovat mahdollisia (0=matalin ja 100=korkein).
-
-==== Voimakkuus ====[VoiceSettingsVolume]
-Tällä liukusäätimellä voit muuttaa puheen voimakkuutta. Arvot 0 - 100 ovat mahdollisia (0=hiljaisin ja 100=voimakkain).
-
-==== Sävy ====[VoiceSettingsInflection]
-Tällä liukusäätimellä voit muuttaa puhesyntetisaattorin äänensävyä (korkeuden nousuja ja laskuja). ESpeak NG on tällä hetkellä ainoa syntetisaattori, joka tukee tätä asetusta.
-
-==== Vaihda kieltä automaattisesti (jos mahdollista) ====[VoiceSettingsLanguageSwitching]
-Tällä valintaruudulla voit vaikuttaa siihen, vaihtaako NVDA puhesyntetisaattorin kieltä automaattisesti, jos luettavan tekstin kieli on määritelty asianmukaisesti.
-Asetus on oletusarvoisesti käytössä.
-Tällä hetkellä vain eSpeak NG -syntetisaattori tukee automaattista kielen vaihtamista.
-
-==== Vaihda murretta automaattisesti (jos mahdollista) ====[VoiceSettingsDialectSwitching]
-Tällä valintaruudulla voit määrittää, vaihdetaanko pelkän kielen lisäksi myös murretta.
-Jos esim. amerikanenglantia puhuvalla äänellä luetaan  dokumenttia, jonka kielimäärityksen mukaan osa tekstistä on englanninenglantia, silloin tämän asetuksen ollessa käytössä syntetisaattori vaihtaa aksenttiaan.
-Asetus ei ole oletusarvoisesti käytössä.
-
-%kc:setting
-==== Välimerkki- ja symbolitaso ====[VoiceSettingsSymbolLevel]
-Pikanäppäin: NVDA+P
-
-Tästä voit valita sanoina luettavien välimerkkien ja muiden symboleiden määrän.
-Esimerkiksi kun tasoksi on valittu kaikki, niin kaikki merkit luetaan sanoina.
-Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
-
-==== Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä ====[VoiceSettingsTrust]
-Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symboleiden puhumiseen.
-Jos huomaat, että välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai puheääntä käytettäessä, voit halutessasi poistaa tämän asetuksen käytöstä pakottaaksesi NVDA:n käyttämään yleistä kieliasetusta.
-
-==== Äänenkorkeuden muutos prosentteina isoille kirjaimille ====[VoiceSettingsCapPitchChange]
-Tähän muokkauskenttään voidaan syöttää prosenttiluku, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
-Negatiivinen arvo laskee ja positiivinen nostaa äänenkorkeutta.
-Mikäli äänenkorkeuden ei haluta muuttuvan, on arvoksi asetettava 0.
-
-==== Ilmaise isot kirjaimet sanalla "iso" ====[VoiceSettingsSayCapBefore]
-Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista yksittäisenä merkkinä puhuttua isoa kirjainta (kuten esim. tavattaessa).
-Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin puhesyntetisaattorit eivät ehkä tue sitä kunnolla, joten tälle asetukselle voi olla käyttöä.
-
-==== Ilmaise isot kirjaimet äänimerkillä ====[VoiceSettingsBeepForCaps]
-Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun iso kirjain luetaan.
-Kuten Sano iso ennen isoja kirjaimia -asetus, tämäkin on käyttökelpoinen puhesyntetisaattoreilla, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
-
-==== Käytä tavaustoimintoa (jos mahdollista) ====[VoiceSettingsUseSpelling]
-Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
-Esimerkiksi englanninkielessä "a" on sekä kirjain että sana, mutta se lausutaan kussakin tilanteessa eri tavalla.
-Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee toimintoa.
-Useimmat syntetisaattorit tukevat asetusta.
-
-Tämä asetus tulisi tavallisesti ottaa käyttöön.
-Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska ominaisuutta ei ole toteutettu niissä kunnolla.
-Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
-
 +++ Syntetisaattorin asetusrengas +++[SynthSettingsRing]
-NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voit siirtyä missä tahansa yleisimpien puheasetusten välillä, jos haluat muuttaa niitä nopeasti menemättä Puheäänen asetukset -valintaikkunaan:
+NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voit siirtyä missä tahansa yleisimpien puheasetusten välillä, mikäli haluat muuttaa niitä nopeasti menemättä Asetukset-valintaikkunan Puhe-kategoriaan:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-| Siirrä seuraavaan syntetisaattorin asetukseen | NVDA+Ctrl+Nuoli oikealle | NVDA+Shift+Ctrl+Nuoli oikealle | Siirtää nykyisen puheasetuksen jälkeen seuraavana käytettävissä olevaan asetukseen, siirtyen viimeisen jälkeen takaisin ensimmäiseen. |
-| Siirrä edelliseen syntetisaattorin asetukseen | NVDA+Ctrl+Nuoli vasemmalle | NVDA+Shift+Ctrl+Nuoli vasemmalle | Siirtää nykyistä puheasetusta edeltävään käytettävissä olevaan asetukseen, siirtyen ensimmäisen jälkeen takaisin viimeiseen. |
-| Suurenna nykyistä syntetisaattorin asetusta | NVDA+Ctrl+Nuoli ylös | NVDA+Shift+Ctrl+Nuoli ylös | Suurentaa valittua puheasetusta, esim. lisää nopeutta, valitsee seuraavan puheäänen tai lisää äänenvoimakkuutta. |
-| Pienennä nykyistä syntetisaattorin asetusta | NVDA+Ctrl+Nuoli alas | NVDA+Shift+Ctrl+Nuoli alas | Pienentää valittua puheasetusta, esim. vähentää nopeutta, valitsee edellisen puheäänen tai vähentää äänenvoimakkuutta. |
+| Siirrä seuraavaan syntetisaattorin asetukseen | NVDA+Ctrl+Nuoli oikealle | NVDA+Vaihto+Ctrl+Nuoli oikealle | Siirtää nykyisen puheasetuksen jälkeen seuraavana käytettävissä olevaan asetukseen, siirtyen viimeisen jälkeen takaisin ensimmäiseen. |
+| Siirrä edelliseen syntetisaattorin asetukseen | NVDA+Ctrl+Nuoli vasemmalle | NVDA+Vaihto+Ctrl+Nuoli vasemmalle | Siirtää nykyistä puheasetusta edeltävään käytettävissä olevaan asetukseen, siirtyen ensimmäisen jälkeen takaisin viimeiseen. |
+| Suurenna nykyistä syntetisaattorin asetusta | NVDA+Ctrl+Nuoli ylös | NVDA+Vaihto+Ctrl+Nuoli ylös | Suurentaa valittua puheasetusta, esim. lisää nopeutta, valitsee seuraavan puheäänen tai lisää äänenvoimakkuutta. |
+| Pienennä nykyistä syntetisaattorin asetusta | NVDA+Ctrl+Nuoli alas | NVDA+Vaihto+Ctrl+Nuoli alas | Pienentää valittua puheasetusta, esim. vähentää nopeutta, valitsee edellisen puheäänen tai vähentää äänenvoimakkuutta. |
 %kc:endInclude
 
-+++ Pistekirjoitusasetukset +++[BrailleSettings]
-Pistekirjoitusasetukset-valintaikkuna voidaan avata valitsemalla Asetukset-valikosta "Pistekirjoitus..."-vaihtoehto.
++++ Pistekirjoitus +++[BrailleSettings]
+Pistekirjoitus-kategoria sisältää vaihtoehtoja, joilla voit muuttaa useita pistekirjoituksen syöttö- ja tulostusasetuksia.
+Seuraavat vaihtoehdot ovat käytettävissä:
 
-==== Pistenäyttö ====[BrailleSettingsDisplay]
-Pistekirjoitusasetukset-valintaikkunassa on ensimmäisenä "Pistenäyttö"-yhdistelmäruutu.
-Siinä on useita vaihtoehtoja riippuen käytettävissä olevista pistenäyttöajureista.
-Vaihtoehtojen välillä liikutaan nuolinäppäimillä.
-
-"Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
-
-Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta lisätietoja tuetuista pistenäytöistä.
-
-==== Portti ====[BrailleSettingsPort]
-Tällä asetuksella voidaan, jos se on käytettävissä, valita, mitä porttia tai yhteystyyppiä käytetään valitun pistenäytön kanssa kommunikointiin.
-Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot käyttämällesi pistenäytölle.
-
-NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti järjestelmän käytettävissä olevia USB- ja bluetooth-laitteita tutkimalla.
-Joillekin pistenäytöille voidaan kuitenkin itse valita käytettävä portti.
-Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä "sarjaportti", mikäli pistenäyttö tukee sarjaporttiin liittämistä.
-
-Tämä vaihtoehto ei ole käytettävissä, jos pistenäyttö tukee vain automaattista portintunnistusta.
-
-Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta lisätietoja pistenäyttösi tukemista kommunikointityypeistä ja käytettävissä olevista porteista.
+==== Muuta pistenäyttöä ====[BrailleSettingsChange]
+Asetukset-valintaikkunan Pistekirjoitus-kategorian Muuta...-painike avaa [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunan, josta voit valita käytettävän pistenäytön.
+Tämä valintaikkuna avautuu Asetukset-valintaikkunan päälle.
+Valitse pistenäyttö -valintaikkunassa muutettujen asetusten tallentaminen tai hylkääminen palauttaa takaisin Asetukset-valintaikkunaan.
 
 ==== Tulostustaulukko ====[BrailleSettingsOutputTable]
-Seuraavana tässä valintaikkunassa on "Tulostustaulukko"-yhdistelmäruutu.
+Tämän kategorian seuraava vaihtoehto on "Tulostustaulukko"-yhdistelmäruutu.
 Se sisältää pistetaulukoita eri kielille ja pistekirjoitusstandardeille sekä -tasoille.
 Valittua taulukkoa käytetään tekstin kääntämiseen pistenäytöllä näytettäväksi pistekirjoitukseksi.
-Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
+Voit liikkua vaihtoehtojen välillä nuolinäppäimillä.
 
 ==== Syöttötaulukko ====[BrailleSettingsInputTable]
 Edellistä vaihtoehtoa täydentää Syöttötaulukko-yhdistelmäruutu.
 Valittua taulukkoa käytetään pistenäytön Perkins-tyylisellä pistenäppäimistöllä syötetyn pistekirjoituksen kääntämiseen tekstiksi.
-Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
+Voit liikkua vaihtoehtojen välillä nuolinäppäimillä.
 
-Huomaa, että tästä vaihtoehdosta on hyötyä vain, jos pistenäytössä on Perkins-tyylinen -näppäimistö ja mikäli näytön ajuri tukee tätä ominaisuutta.
+Huom: Tästä vaihtoehdosta on hyötyä vain, jos pistenäytössä on Perkins-tyylinen -näppäimistö ja mikäli näytön ajuri tukee tätä ominaisuutta.
 Mikäli pistenäppäimistön sisältävä pistenäyttö ei tue syöttöä, siitä huomautetaan [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
 
-	==== Laajenna kohdistimen kohdalla oleva sana ====[BrailleSettingsExpandToComputerBraille]
+==== Laajenna kohdistimen kohdalla oleva sana ====[BrailleSettingsExpandToComputerBraille]
 Kun tämä asetus on käytössä, kohdistimen alla oleva sana näytetääntavallisella tietokonemerkistöllä.
 
 ==== Näytä kohdistin ====[BrailleSettingsShowCursor]
@@ -1200,12 +1201,37 @@ Voit lukea kontekstin (ts. että olet luettelossa ja että se on osa valintaikku
 
 Vaihda Kohdistuskontekstin näyttäminen -asetusta mistä tahansa liittämällä siihen oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 
-+++ Näppäimistöasetukset (NVDA+Ctrl+K) +++[KeyboardSettings]
-Tämä valintaikkuna löytyy Asetukset-valikon "Näppäimistö..." -kohdasta.
-Se sisältää seuraavat asetukset:
++++ Valitse pistenäyttö (NVDA+Ctrl+A) +++[SelectBrailleDisplay]
+Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla Muuta...-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, voit valita, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
+Kun olet valinnut haluamasi pistenäytön, NVDA ottaa sen käyttöön painettuasi OK-painiketta.
+Mikäli näytön ajurin lataamisessa ilmenee virheitä, NVDA ilmoittaa siitä, eikä mahdollisesti käytössä olevaa pistenäyttöä vaihdeta.
+
+==== Pistenäyttö ====[SelectBrailleDisplayDisplay]
+Tämä yhdistelmäruutu sisältää useita vaihtoehtoja riippuen järjestelmääsi asennetuista pistenäyttöajureista.
+Liiku vaihtoehtojen välillä nuolinäppäimillä.
+
+"Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
+
+Katso lisätietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
+
++==== Portti ====[SelectBrailleDisplayPort]
+Tällä asetuksella voit, mikäli se on käytettävissä, valita, mitä porttia tai yhteystyyppiä valitsemasi pistenäytön kanssa käytetään.
+Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot käyttämällesi pistenäytölle.
+
+NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti skannaamalla järjestelmän käytettävissä olevia USB- ja bluetooth-laitteita.
+Joillekin pistenäytöille voidaan kuitenkin itse valita käytettävä portti.
+Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä "sarjaportti", mikäli pistenäyttö tukee sarjaporttiin liittämistä.
+
+Tämä vaihtoehto ei ole käytettävissä, jos pistenäyttö tukee vain automaattista portintunnistusta.
+
+Katso lisätietoja pistenäyttösi tukemista kommunikointityypeistä ja käytettävissä olevista porteista [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
+
++++ Näppäimistö (NVDA+Ctrl+K) +++[KeyboardSettings]
+Näppäimistö-kategoria sisältää asetuksia, jotka määrittävät, miten NVDA käyttäytyy kirjoittaessasi ja käyttäessäsi näppäimistöä muilla tavoin.
+Kategoria sisältää seuraavat asetukset:
 
 ==== Näppäimistöasettelu ====[KeyboardSettingsLayout]
-Tästä yhdistelmäruudusta voidaan valita, mitä näppäimistöasettelua NVDA käyttää. Tällä hetkellä käytettävissä olevat kaksi vaihtoehtoaovat Pöytäkone ja Kannettava.
+Tästä yhdistelmäruudusta voit valita, mitä näppäimistöasettelua NVDA käyttää. Tällä hetkellä käytettävissä olevat kaksi vaihtoehtoaovat Pöytäkone ja Kannettava.
 
 ==== Käytä Capslockia NVDA-näppäimenä ====[KeyboardSettingsCapsModifier]
 Jos tämä valintaruutu on valittuna, Capslock-näppäintä voidaan käyttää NVDA-näppäimenä.
@@ -1217,7 +1243,7 @@ Jos tämä valintaruutu on valittuna, laajennettua Insert-näppäintä (löytyy 
 Jos tämä valintaruutu on valittuna, numeronäppäimistön Insertiä voidaan käyttää NVDA-näppäimenä.
 
 Jos NVDA-näppäimeksi ei ole valittu mitään, tiettyjen NVDA-komentojen käyttäminen voi olla mahdotonta.
-Tämän vuoksi Näppäimistöasetukset-valintaikkuna näyttää virheilmoituksen, mikäli kaikki näppäimet ovat valitsematta OK-painiketta painettaessa.
+Tämän vuoksi Asetukset-valintaikkuna näyttää virheilmoituksen, mikäli näppäimiä ei ole valittuna OK-painiketta painettaessa.
 Kun virheilmoitus on kuitattu, vähintään yksi näppäin on valittava ennen kuin tehdyt muutokset voidaan hyväksyä ja valintaikkuna sulkea asianmukaisesti OK-painiketta painamalla.
 
 %kc:setting
@@ -1242,8 +1268,8 @@ Jos tämä valintaruutu on valittuna, puhe keskeytetään joka kerta Enter-näpp
 Jos tämä asetus on käytössä, tietyt navigointikomennot (kuten selaustilan pikaselaus tai riveittäin/kappaleittain liikkuminen) eivät keskeytä Jatkuva luku -toimintoa, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
 
 ==== Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä ====[KeyboardSettingsBeepLowercase]
-Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Shift-näppäin pohjassa kuuluu varoitusäänimerkki, Jos Caps Lock on päällä.
-Shift-näppäin pohjassa kirjoittaminen Caps Lockin ollessa päällä on yleensä tahatonta ja johtuu tavallisesti siitä, ettei sen tajua olevan käytössä.
+Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Vaihto-näppäin pohjassa kuuluu varoitusäänimerkki, Jos Caps Lock on päällä.
+Vaihto-näppäin pohjassa kirjoittaminen Caps Lockin ollessa päällä on yleensä tahatonta ja johtuu tavallisesti siitä, ettei sen tajua olevan käytössä.
 Tämän vuoksi siitä varoittaminen voi olla varsin hyödyllistä.
 
 %kc:setting
@@ -1254,15 +1280,15 @@ Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painetut näppäimet, jo
 
 ==== Ilmaise kirjoitusvirheet kirjoitettaessa toistamalla ääni ====[KeyboardSettingsAlertForSpellingErrors]
 Tämän asetuksen ollessa käytössä toistetaan lyhyt summeriääni, kun kirjoittamassasi sanassa on kirjoitusvirhe.
-Asetus on käytettävissä vain, jos kirjoitusvirheiden ilmaiseminen on otettu käyttöön NVDA:n [Dokumenttien muotoiluasetukset #DocumentFormattingSettings] -valintaikkunasta.
+Asetus on käytettävissä vain, jos kirjoitusvirheiden ilmaiseminen on otettu käyttöön Asetukset-valintaikkunan [Dokumenttien muotoilu -kategoriasta #DocumentFormattingSettings].
 
 ==== Käsittele muiden sovellusten näppäinpainallukset ====[KeyboardSettingsHandleKeys]
 Tällä asetuksella käyttäjä voi säätää, käsitteleekö NVDA sellaisten sovellusten kuin näyttönäppäimistöjen ja puheentunnistusohjelmistojen tuottamat näppäinpainallukset. 
 Asetus on oletusarvoisesti käytössä, vaikka tietyt käyttäjät (esim. vietnaminkielistä tekstiä Unikey-kirjoitusohjelmistolla kirjoittavat) saattavat haluta poistaa sen käytöstä, sillä se aiheuttaa väärien nmerkkien syöttämistä.
 
-+++ Hiiriasetukset (NVDA+Ctrl+M) +++[MouseSettings]
-Hiiriasetukset-valintaikkuna löytyy Asetukset-valikon "Hiiri..." -kohdasta.
-Se sisältää seuraavat asetukset:
++++ Hiiri (NVDA+Ctrl+M) +++[MouseSettings]
+Hiiri-kategoriassa NVDA:n voi määrittää seuraamaan hiirtä, ilmaisemaan hiiren koordinaatit äänimerkeillä sekä muuttaa muita hiiren käyttöön liittyviä asetuksia.
+Tämä kategoria sisältää seuraavat asetukset:
 
 ==== Ilmoita hiirikohdistimen muodon muutokset ====[MouseSettingsShape]
 Kun tämä valintaruutu on valittuna, NVDA ilmoittaa joka kerta, kun hiiriosoittimen muoto muuttuu.
@@ -1290,17 +1316,18 @@ Mitä enemmän vasemmalla tai oikealla hiiri on, sitä enemmän vasemmalta tai o
 Jos Ilmaise hiiren koordinaatit äänimerkeillä -asetus on käytössä, tämän valintaruudun valitseminen tarkoittaa, että äänikoordinaattien voimakkuutta säädetään sen mukaan, miten kirkas ruutu on hiirikohdistimen alla.
 Tämä asetus ei ole oletusarvoisesti käytössä.
 
-+++ Kosketusvuorovaikutuksen asetukset +++[TouchInteraction]
-Tästä valintaikkunasta, joka on käytettävissä vain tietokoneissa, joissa on Windows 8 tai uudempi käyttöjärjestelmä sekä kosketusominaisuuksia, voidaan määrittää, miten NVDA on vuorovaikutuksessa kosketusnäyttöjen kanssa.
++++ Kosketuksen vuorovaikutus +++[TouchInteraction]
+Tästä asetuskategoriasta, joka on käytettävissä vain tietokoneissa, joissa on Windows 8 tai uudempi käyttöjärjestelmä sekä kosketusominaisuuksia, voit määrittää, miten NVDA on vuorovaikutuksessa kosketusnäyttöjen kanssa.
+Kategoriassa on seuraavat asetukset:
 
 ==== Kosketuskirjoitustila ====[TouchTypingMode]
 Tällä valintaruudulla voit määrittää menetelmän, jota haluat käyttää kirjoittaessasi tekstiä kosketusnäppäimistöllä.
 Kun valintaruutu on valittuna, voit painaa haluamaasi näppäintä etsimällä sen näppäimistöltä ja nostamalla sormen näytöltä.
 Mikäli valintaruutu ei ole valittuna, näppäintä on painettava kaksoisnapauttamalla sitä.
 
-+++ Tarkastelukohdistimen asetukset +++[ReviewCursorSettings]
-Löytyy Asetukset-valikon kohdasta "Tarkastelukohdistin...".
-Tämä valintaikkuna sisältää seuraavat asetukset:
++++ Tarkastelukohdistin +++[ReviewCursorSettings]
+Tarkastelukohdistin-kategoriaa käytetään NVDA:n tarkastelukohdistimen toimintaan vaikuttavien asetusten määrittämiseen.
+Kategoria sisältää seuraavat asetukset:
 
 %kc:setting
 ==== Seuraa järjestelmän kohdistusta ====[ReviewCursorFollowFocus]
@@ -1322,9 +1349,9 @@ Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellai
 
 Ota yksinkertainen tarkastelutila käyttöön tai poista se käytöstä mistä tahansa määrittämällä sille oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 
-+++ Objektien lukuasetukset (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
-Tämä valintaikkuna löytyy Asetukset-valikosta kohdasta "Objektien lukeminen...".
-Se sisältää seuraavat asetukset:
++++ Objektien lukeminen (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
+Objektien lukeminen -kategoriaa käytetään määrittämään, kuinka paljon säädinten tietoja, kuten kuvaus, sijaintitiedot jne., NVDA lukee.
+Kategoria sisältää seuraavat asetukset:
 
 ==== Lue työkaluvihjeet ====[ObjectPresentationReportToolTips]
 Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden tullessa näkyviin.
@@ -1357,9 +1384,9 @@ Tämä asetus määrittää, miten NVDA ilmaisee edistymispalkkien päivittymise
 
 Seuraavat vaihtoehdot ovat käytettävissä:
 - Pois: Edistymispalkkeja ei lueta.
-- Lue: Edistymispalkit luetaan prosentteina. Joka kerta kun edistymispalkki muuttuu, NVDA lukee sen uuden arvon.
+- Puhu: Edistymispalkit puhutaan prosentteina. Joka kerta kun edistymispalkki muuttuu, NVDA puhuu sen uuden arvon.
 - Anna äänimerkki: NVDA antaa äänimerkin joka kerta edistymispalkin muuttuessa. Mitä korkeampi äänimerkki, sitä lähempänä loppua edistymispalkki on.
-- Anna äänimerkki ja lue: NVDA sekä antaa äänimerkin että lukee edistymispalkin arvon.
+- Puhu ja anna äänimerkki: NVDA sekä antaa äänimerkin että puhuu edistymispalkin arvon.
 -
 
 ==== Ilmaise taustalla olevat edistymispalkit ====[ObjectPresentationReportBackgroundProgressBars]
@@ -1379,10 +1406,9 @@ Kun esim. kirjoitat Windows Vistan ja uudemman Käynnistä-valikon hakukenttää
 Joissakin muokkauskentissä, kuten  useissa Windows 10:n sovellusten hakukentissä, NVDA voi ilmoittaa kirjoittaessasi ehdotusluettelon ilmestymisestä.
 Automaattisten ehdotusten luettelo sulkeutuu siirryttyäsi pois muokkauskentästä, ja NVDA voi joissakin kentissä ilmoittaa siitä.
 
-+++ Syöttömenetelmän asetukset +++[InputCompositionSettings]
-Syöttömenetelmän asetukset -valintaikkuna löytyy Asetukset-valikosta.
-Tästä valintaikkunasta voidaan säätää, mitä NVDA ilmoittaa aasialaisten kielten merkkejä kirjoitettaessa, esim. IME- tai Tekstipalvelu-syöttömenetelmillä.
-Huomaa, että koska syöttömenetelmät poikkeavat toisistaan suuresti ominaisuuksiltaan ja tiedonvälitystavoiltaan, nämä asetukset on todennäköisesti tarpeen määrittää eri tavalla kullekin menetelmälle tehokkaimman kirjoituskokemuksen saamiseksi.
++++ Syöttömenetelmä +++[InputCompositionSettings]
+Syöttömenetelmä-kategoriasta voit säätää, miten NVDA ilmoittaa aasialaisten kielten merkit niitä syötettäessä, esim. IME- tai Tekstipalvelu-syöttömenetelmiä käytettäessä.
+Huomaa, että koska syöttömenetelmät poikkeavat toisistaan suuresti ominaisuuksiltaan ja tiedonvälitystavoiltaan, nämä asetukset on todennäköisesti tarpeen määrittää eri tavalla kullekin menetelmälle tehokkaimman kirjoituskokemuksen varmistamiseksi.
 
 ==== Lue kaikki ehdotukset automaattisesti ====[InputCompositionReportAllCandidates]
 Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, luetaanko kaikki näkyvissä olevat ehdotukset automaattisesti niiden luettelon tullessa näkyviin tai sen sivua vaihdettaessa.
@@ -1410,10 +1436,9 @@ Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymb
 Tällä asetuksella voidaan valita, lukeeko NVDA uudet symbolit niiden tullessa näkyviin merkkiyhdistelmässä.
 Asetus on oletusarvoisesti käytössä.
 
-+++ Selaustilan asetukset (NVDA+Ctrl+B) +++[BrowseModeSettings]
-Selaustilan asetukset -valintaikkuna löytyy Asetukset-valikon "Selaustila..." -kohdasta.
-
-Valintaikkuna sisältää seuraavat asetukset:
++++ Selaustila (NVDA+Ctrl+B) +++[BrowseModeSettings]
+Selaustila-kategoriaa käytetään määrittämään NVDA:n toimintaa lukiessasi ja liikkuessasi monisisältöisissä dokumenteissa, kuten verkkosivuilla.
+Kategoria sisältää seuraavat asetukset:
 
 ==== Merkkien enimmäismäärä rivillä ====[BrowseModeSettingsMaxLength]
 Tämä asettaa selaustilan rivin enimmäispituuden merkkeinä.
@@ -1425,7 +1450,7 @@ Tämä asettaa rivimäärän, joka selaustilassa siirrytään painettaessa Page 
 ==== Käytä ruutuasettelua ====[BrowseModeSettingsScreenLayout]
 Pikanäppäin: NVDA+V
 
-Tällä asetuksella voidaan määrittää, sijoitetaanko sellainen sisältö kuten linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään. Jos asetus on käytössä, kentät jätetään sellaisiksi kuin ne ruudulla näytetään, jos asetus poistetaan käytöstä, kentät sijoitetaan omille riveilleen.
+Tällä asetuksella voit määrittää, sijoitetaanko sellainen sisältö kuten linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään. Jos asetus on käytössä, kentät jätetään sellaisiksi kuin ne ruudulla näytetään, jos asetus poistetaan käytöstä, kentät sijoitetaan omille riveilleen.
 
 ==== Lue sivu automaattisesti sen avauduttua ====[BrowseModeSettingsAutoSayAll]
 Tämä asetus määrittää, luetaanko sivu selaustilassa automaattisesti sen avauduttua.
@@ -1441,7 +1466,7 @@ Asetus on oletusarvoisesti poissa käytöstä.
 Ota asettelutaulukoiden ilmaiseminen käyttöön tai poista se käytöstä mistä tahansa määrittämällä syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
 
 ==== Elementtien ilmaisemisen määrittäminen ====[BrowseModeLinksAndHeadings]
-Katso [Dokumenttien muotoiluasetukset -valintaikkunassa #DocumentFormattingSettings] olevia asetuksia määrittääksesi ilmaistavat elementit, kuten linkit, otsikot ja taulukot.
+Katso [Asetukset #NVDASettings]-valintaikkunan [Dokumenttien muotoilu -kategoriassa #DocumentFormattingSettings]  olevia asetuksia määrittääksesi ilmaistavat elementit, kuten linkit, otsikot ja taulukot.
   
 ==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön, jos kohdistus muuttuu.
@@ -1456,12 +1481,10 @@ Jos tämä asetus on käytössä, NVDA toistaa äänimerkin vaihtaessaan selaus-
 
 ==== Estä muiden kuin syötekomentojen pääsy dokumenttiin ====[BrowseModeSettingsTrapNonCommandGestures]
 Tällä oletusarvoisesti käytössä olevalla asetuksella voit valita, estetäänkö syötekomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan dokumenttiin.
-Esimerkiksi, jos asetuksen ollessa käytössä painetaan j-kirjainta, sen tulostuminen dokumenttiin estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva komento.
+Esimerkiksi, jos asetuksen ollessa käytössä painat J-kirjainta, sen tulostuminen dokumenttiin estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva komento.
 
-+++ Dokumenttien muotoiluasetukset (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
-Tämä valintaikkuna löytyy Asetukset-valikon "Dokumenttien muotoilu..." -kohdasta.
-
-Useimmilla tämän valintaikkunan valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat automaattisesti kuulla liikuttaessasi kohdistinta dokumenteissa.
++++ Dokumenttien muotoilu (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
+Useimmilla tämän kategorian valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat automaattisesti kuulla siirtäessäsi kohdistinta dokumenteissa.
 Jos esimerkiksi valitset Lue fontti -valintaruudun, joka kerta, kun siirryt nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemmasta, NVDA kertoo fontin nimen.
 
 Dokumentin muotoiluasetukset on järjestetty ryhmiin.
@@ -1498,8 +1521,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
  - Kehykset
  - Napsautettavat kohteet
  -
- -
-
+-
 
 Voit ottaa nämä asetukset käyttöön tai poistaa ne käytöstä mistä tahansa Määrittämällä niille omat syötekomennot [Syötekomennot-valintaikkunaa käyttäen. #InputGestures]
 
@@ -1522,10 +1544,14 @@ Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 -
 
 +++ Windows 10:n tekstintunnistusasetukset +++[Win10OcrSettings]
-Tästä valintaikkunasta, johon pääsee NVDA:n Asetukset-valikon kohdasta "Tekstintunnistus (Windows 10)", voit määrittää [Windows 10:n tekstintunnistusasetukset. #Win10Ocr]
+Tämän kategorian asetuksilla voit määrittää [Windows 10:n tekstintunnistuksen #Win10Ocr] toimintaa.
+Kategoria sisältää seuraavat asetukset:
 
 ==== Tunnistuksen kieli ====[Win10OcrSettingsRecognitionLanguage]
 Tästä yhdistelmäruudusta voit valita tekstintunnistuksessa käytettävän kielen.
+
+++ Sekalaiset asetukset ++[MiscSettings]
+[Asetukset #NVDASettings]-valintaikkunan lisäksi NVDA-valikosta löytyvä Asetukset-alavalikko sisältää myös useita muita kohteita, jotka on kuvailtu alla.
 
 +++ Puhesanastot +++[SpeechDictionaries]
 Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita, joista voidaan muuttaa tapaa, jolla NVDA lausuu tietyt sanat tai ilmaisut.
@@ -1565,7 +1591,7 @@ Sääntölausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetist�
 Tässä valintaikkunassa voit muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
 
 Kieli, jonka symboleiden puhumista muokataan, näytetään valintaikkunan otsikossa.
-Huom: Tässä noudatetaan  [Puheäänen asetukset -valintaikkunan #VoiceSettings] "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä" -asetusta, ts. kun asetus on käytössä, puheäänen kieltä käytetään NVDA:n kielen sijaan.
+Huom: Tässä noudatetaan [Asetukset #NVDASettings]-valintaqikkunan [Puhe-kategorian #SpeechSettings] "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä" -asetusta, ts. kun asetus on käytössä, puheäänen kieltä käytetään NVDA:n käyttämän kielen asemesta.
 
 Symbolia muutetaan valitsemalla se Symbolit-luettelosta.
 
@@ -1596,7 +1622,7 @@ Tässä valintaikkunassa voit mukauttaa NVDA-komennoissa käytettäviä syöteko
 Vain sellaiset komennot näytetään, jotka ovat käytettävissä valintaikkunaa avattaessa.
 Jos esim. haluat mukauttaa selaustilaan liittyviä komentoja, sinun on avattava Syötekomennot-valintaikkuna selaustilassa ollessasi.
 
-Tämän valintaikkunan puunäkymässä näytetään kaikki käytettävissä olevat NVDA-komennot omiin luokkiinsa ryhmiteltyinä.
+Tämän valintaikkunan puunäkymässä näytetään kaikki käytettävissä olevat NVDA-komennot omiin kategorioihinsa ryhmiteltyinä.
 Voit suodattaa komentoja kirjoittamalla Suodata-muokkauskenttään komennon nimestä yhden tai useamman sanan missä tahansa järjestyksessä.
 Kaikki komentoon liitetyt syötekomennot näytetään kyseisen komennon alapuolella.
 
@@ -1626,12 +1652,12 @@ Seuraavista näppäinkomennoista voi myös olla hyötyä:
 %kc:endInclude
 
 ++ Asetusprofiilit ++[ConfigurationProfiles]
-Voit joskus tarvita eri asetuksia eri tilanteissa.
+Saatat joskus tarvita eri asetuksia eri tilanteissa.
 Saatat esimerkiksi haluta, että sisennysten lukeminen on käytössä tekstiä muokattaessa tai että fonttimääreiden lukeminen on käytössä dokumenttia oikoluettaessa.
 Tämä on mahdollista NVDA:n asetusprofiileja käyttäen.
 
 Asetusprofiili sisältää vain ne asetukset, joita profiilia muokattaessa muutetaan.
-Useimpia asetuksia voidaan muuttaa asetusprofiileissa, paitsi Yleiset asetukset -valintaikkunassa olevia, joita käytetään kaikkialla.
+Useimpia asetuksia voidaan muuttaa asetusprofiileissa, paitsi [Asetukset #NVDASettings]-valintaikkunan Yleiset-kategoriassa olevia, joita käytetään kaikkialla.
 
 Asetusprofiilit voidaan ottaa käyttöön manuaalisesti.
 Ne voidaan ottaa käyttöön myös automaattisesti käynnistimien avulla, kuten tiettyyn sovellukseen siirryttäessä.
@@ -1698,6 +1724,8 @@ Kaikkien käynnistimien käytöstä poistaminen voi joskus olla tarpeen.
 Saatat esimerkiksi haluta muokata manuaalisesti käyttöönotettua profiilia tai tavallisia asetuksiasi ilman, että käynnistimillä käyttöönotettavat profiilit häiritsevät.
 Voit tehdä tämän valitsemalla Asetusprofiilit-valintaikkunassa Poista kaikki käynnistimet käytöstä tilapäisesti -valintaruudun.
 
+Poista käynnistimet käytöstä tai ota ne uudelleen käyttöön mistä tahansa liittämällä asetukseen oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+
 ++ Asetustiedostojen sijainti ++[LocationOfConfigurationFiles]
 NVDA:n massamuistiversio tallentaa kaikki asetukset ja lisäosat hakemistossaan olevaan userConfig-nimiseen alihakemistoon.
 
@@ -1707,7 +1735,7 @@ Asennetun NVDA:n asetushakemistoon päästään valitsemalla Käynnistä-valikos
 
 Kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa käytettävät asetukset tallennetaan NVDA:n asennushakemistossa olevaan systemConfig-hakemistoon.
 Näihin ei tulisi yleensä koskea.
-Muuttaaksesi sitä, miten NVDA on määritelty kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa, muuta ensin asetukset haluamiksesi kun olet kirjautuneena Windowsiin, ja kopioi ne sitten kirjautumisikkunassa käytettäväksi painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
+Muuttaaksesi sitä, miten NVDA on määritelty kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa, muuta ensin asetukset haluamiksesi kun olet kirjautuneena Windowsiin, ja kopioi ne sitten kirjautumisikkunassa käytettäviksi painamalla [Asetukset #NVDASettings]-valintaikkunan Yleiset-kategoriassa olevaa painiketta.
 
 + Lisätyökalut +[ExtraTools]
 
@@ -1801,12 +1829,12 @@ SAPI4 on Microsoftin vanha ohjelmistopuhesyntetisaattoreiden standardi.
 NVDA tukee tätä edelleen käyttäjillä, joilla on jo SAPI 4 -syntetisaattoreita asennettuna.
 Microsoft ei kuitenkaan enää tue tätä, eikä tarvittavia komponentteja ole enää saatavilla.
 
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo (valitaan [Puheäänen asetukset -valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo, johon pääsee [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategoriasta #SpeechSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing], sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
 
 ++ Microsoft Speech API versio 5 (SAPI 5) ++[SAPI5]
 SAPI 5 on Microsoftin standardi ohjelmistopuhesyntetisaattoreille.
 Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta. Tietokoneellasi on myös luultavasti esiasennettuna vähintään yksi SAPI 5 -puheääni.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo (valitaan [Puheäänen asetukset -valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo, johon pääsee [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategoriasta #SpeechSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing], sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
 Microsoft Speech Platform tarjoaa useille kielille puheääniä, joita käytetään tavallisesti palvelinpohjaisten puhesovellusten kehittämiseeen.
@@ -1837,7 +1865,7 @@ Tämä on kaupallinen italiankielinen puhesyntetisaattori.
 Se on asennettava tietokoneelle, jotta sitä voidaan käyttää NVDA:lla.
 Katso lisätietoja Audiologicin verkkosivustolta osoitteesta www.audiologic.it.
 
-Tämä syntetisaattori ei tue [tavaustoimintoa #VoiceSettingsUseSpelling].
+Tämä syntetisaattori ei tue [tavaustoimintoa #SpeechSettingsUseSpelling].
 
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
@@ -1869,26 +1897,26 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä taaksepäin oikeaa säätörullaa käyttäen | oikea säätörulla ylös |
 | Siirrä eteenpäin oikeaa säätörullaa käyttäen | oikea säätörulla alas |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
-| Shift+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 2 |
-| Sarkain-näppäin | välilyönti+pisteet 4 ja 5 |
-| Nuoli ylös -näppäin | välilyönti+piste 1 |
-| Nuoli alas -näppäin | välilyönti+piste 4 |
-| Ctrl+Nuoli vasemmalle -näppäinyhdistelmä | välilyönti+piste 2 |
-| Ctrl+Nuoli oikealle -näppäinyhdistelmä | välilyönti+piste 5 |
-| Nuoli vasemmalle -näppäin | välilyönti+piste 3 |
-| Nuoli oikealle -näppäin | välilyönti+piste 6 |
-| Home-näppäin | välilyönti+pisteet 1 ja 3 |
-| End-näppäin | välilyönti+pisteet 4 ja 6 |
-| Ctrl+Home-näppäinyhdistelmä | välilyönti+pisteet 1, 2 ja 3 |
-| Ctrl+End-näppäinyhdistelmä | välilyönti+pisteet 4, 5 ja 6 |
-| Alt-näppäin | välilyönti+pisteet 1, 3 ja 4 |
-| Alt+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 |
-| Esc-näppäin | välilyönti+pisteet 1 ja 5 |
-| Windows-näppäin | välilyönti+pisteet 2, 4, 5 ja 6 |
-| Välilyöntinäppäin | välilyönti |
-| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | välilyönti+pisteet 1, 2, 3, 4, 5 ja 6 |
-| Lue nykyinen rivi | välilyönti+pisteet 1 ja 4 |
-| NVDA-valikko | välilyönti+pisteet 1, 3, 4 ja 5 |
+| Vaihto+Sarkain-näppäinyhdistelmä | väli+pisteet 1 ja 2 |
+| Sarkain-näppäin | väli+pisteet 4 ja 5 |
+| Nuoli ylös -näppäin | väli+piste 1 |
+| Nuoli alas -näppäin | väli+piste 4 |
+| Ctrl+Nuoli vasemmalle -näppäinyhdistelmä | väli+piste 2 |
+| Ctrl+Nuoli oikealle -näppäinyhdistelmä | väli+piste 5 |
+| Nuoli vasemmalle -näppäin | väli+piste 3 |
+| Nuoli oikealle -näppäin | väli+piste 6 |
+| Home-näppäin | väli+pisteet 1 ja 3 |
+| End-näppäin | väli+pisteet 4 ja 6 |
+| Ctrl+Home-näppäinyhdistelmä | väli+pisteet 1, 2 ja 3 |
+| Ctrl+End-näppäinyhdistelmä | väli+pisteet 4, 5 ja 6 |
+| Alt-näppäin | väli+pisteet 1, 3 ja 4 |
+| Alt+Sarkain-näppäinyhdistelmä | väli+pisteet 2, 3, 4 ja 5 |
+| Esc-näppäin | väli+pisteet 1 ja 5 |
+| Windows-näppäin | väli+pisteet 2, 4, 5 ja 6 |
+| Väli | väli |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | väli+pisteet 1, 2, 3, 4, 5 ja 6 |
+| Lue nykyinen rivi | väli+pisteet 1 ja 4 |
+| NVDA-valikko | väli+pisteet 1, 3, 4 ja 5 |
 
 Uudet Focus-mallit, joissa on keinunäppäimiä (Focus 40, 80 ja Blue):
 || Nimi | Näppäinkomento |
@@ -1931,7 +1959,7 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Vaihda Pistenäyttö seuraa -asetusta | t1+t3 |
 | Lue ikkunan nimi | etouch2 |
 | Lue tilarivi | etouch4 |
-| Shift+Sarkain-näppäinyhdistelmä | sp1 |
+| Vaihto+Sarkain-näppäinyhdistelmä | sp1 |
 | Alt-näppäin | sp2 |
 | Esc-näppäin | sp3 |
 | Sarkain-näppäin | sp4 |
@@ -1972,7 +2000,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä edelliselle riville | b4 |
 | Siirrä seuraavalle riville | b5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
-| Shift+Sarkain-näppäinyhdistelmä | esc, vasen kolmitoimintonäppäin ylös+alas |
+| Vaihto+Sarkain-näppäinyhdistelmä | esc, vasen kolmitoimintonäppäin ylös+alas |
 | Alt-näppäin | b2+b4+b5 |
 | Esc-näppäin | b4+b6 |
 | Sarkain-näppäin | enter, oikea kolmitoimintonäppäin ylös+alas |
@@ -1982,7 +2010,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Nuoli vasemmalle -näppäin | ohjaussauva vasemmalle |
 | Nuoli oikealle -näppäin | ohjaussauva oikealle |
 | NVDA-valikko | b2+b4+b5+b6 |
-| Vaihda Piste näyttö seuraa -asetusta | b2 |
+| Vaihda Pistenäyttö seuraa -asetusta | b2 |
 | Vaihda pistekohdistinta | b1 |
 | Vaihda kohdistuskontekstin näyttämisen asetusta | b7 |
 | Ota pistekirjoituksen syöttö käyttöön tai poista se käytöstä | väli+b1+b3+b4 (väli+iso b) |
@@ -2002,10 +2030,10 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä edelliselle riville | UP |
 | Siirrä seuraavalle riville | DN |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
-| Shift+Sarkain-näppäinyhdistelmä | SLF |
+| Vaihto+Sarkain-näppäinyhdistelmä | SLF |
 | Sarkain-näppäin | SRG |
 | Alt+Sarkain-näppäinyhdistelmä | SDN |
-| Alt+Shift+Sarkain-näppäinyhdistelmä | SUP |
+| Alt+Vaihto+Sarkain-näppäinyhdistelmä | SUP |
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit ++[Baum]
@@ -2096,17 +2124,17 @@ Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
 | Siirrä seuraavalle riville | alas |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | ylös+alas |
-| Nuoli ylös -näppäin | välilyönti+piste 1 |
-| Nuoli alas -näppäin | välilyönti+piste 4 |
-| Nuoli vasemmalle -näppäin | välilyönti+piste 3 |
-| Nuoli oikealle -näppäin | välilyönti+piste 6 |
-| Shift+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 3 |
-| Sarkain-näppäin | välilyönti+pisteet 4 ja 6 |
-| Alt-näppäin | välilyönti+pisteet 1, 3 ja 4 (välilyönti+m) |
-| Esc-näppäin | välilyönti+pisteet 1 ja 5 (välilyönti+e) |
+| Nuoli ylös -näppäin | väli+piste 1 |
+| Nuoli alas -näppäin | väli+piste 4 |
+| Nuoli vasemmalle -näppäin | väli+piste 3 |
+| Nuoli oikealle -näppäin | väli+piste 6 |
+| Vaihto+Sarkain-näppäinyhdistelmä | väli+pisteet 1 ja 3 |
+| Sarkain-näppäin | väli+pisteet 4 ja 6 |
+| Alt-näppäin | väli+pisteet 1, 3 ja 4 (väli+m) |
+| Esc-näppäin | väli+pisteet 1 ja 5 (väli+e) |
 | Enter-näppäin | piste 8 |
-| Windows-näppäin | välilyönti+pisteet 3 ja 4 |
-| Alt+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 (välilyönti+t) |
+| Windows-näppäin | väli+pisteet 3 ja 4 |
+| Alt+Sarkain-näppäinyhdistelmä | väli+pisteet 2, 3, 4 ja 5 (väli+t) |
 | NVDA-valikko | väli+pisteet 1, 3, 4 ja 5 (väli+n) |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | väli+pisteet 1, 4 ja 5 (väli+d) |
 | Jatkuva luku | väli+pisteet 1, 2, 3, 4, 5 ja 6 |
@@ -2152,48 +2180,48 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Ctrl-näppäin | smartbeetle: f1, Braille EDGE: f3 |
 | Windows-näppäin | f7, Smart Beetle: f2 |
 | Alt-näppäin | pisteet 1, 3 ja 4+väli, f2, Smart Beetle: f3, Braille EDGE: f4 |
-| Shift-näppäin | f5 |
+| Vaihto-näppäin | f5 |
 | Insert-näppäin | pisteet 2 ja 4+väli, f6 |
 | Sovellusnäppäin | pisteet 1, 2, 3 ja 4+väli, f8 |
 | Caps Lock -näppäin | pisteet 1, 3 ja 6+väli |
 | Sarkain-näppäin | pisteet 4 ja 5+väli, f3, Braille EDGE: f2 |
-| Shift+Alt+Sarkain-näppäinyhdistelmä | f2+f3+f1 |
+| Vaihto+Alt+Sarkain-näppäinyhdistelmä | f2+f3+f1 |
 | Alt+Sarkain-näppäinyhdistelmä | f2+f3 |
-| Shift+Sarkain-näppäinyhdistelmä | pisteet 1 ja 2+välilyönti |
-| End-näppäin | pisteet 4 ja 6+välilyönti |
+| Vaihto+Sarkain-näppäinyhdistelmä | pisteet 1 ja 2+väli |
+| End-näppäin | pisteet 4 ja 6+väli |
 | Ctrl+End-näppäinyhdistelmä | pisteet 4, 5 ja 6+väli |
 | Home-näppäin | pisteet 1 ja 3+väli, Smart Beetle: f4 |
-| Ctrl+Home-näppäinyhdistelmä | pisteet 1, 2 ja 3+välilyönti |
+| Ctrl+Home-näppäinyhdistelmä | pisteet 1, 2 ja 3+väli |
 | Alt+F4-näppäinyhdistelmä | pisteet 1, 3, 5 ja 6+väli |
 | Nuoli vasemmalle -näppäin | piste 3+väli, vasemmanpuoleinen nuoli vasemmalle |
-| Ctrl+Shift+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 8+väli+f1 |
-| Ctrl+Nuoli vasemmalle -näppäinyhdistelmä | piste 2+välilyönti |
-| Shift+Alt+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 7+f1 |
+| Ctrl+Vaihto+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 8+väli+f1 |
+| Ctrl+Nuoli vasemmalle -näppäinyhdistelmä | piste 2+väli |
+| Vaihto+Alt+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 7+f1 |
 | Alt+Nuoli vasemmalle -näppäinyhdistelmä | pisteet 2 ja 7 |
 | Nuoli oikealle -näppäin | piste 6+väli, vasemmanpuoleinen nuoli oikealle |
-| Ctrl+Shift+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 8+väli+f1 |
-| Ctrl+Nuoli oikealle -näppäinyhdistelmä | piste 5+välilyönti |
-| Shift+Alt+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 7+f1 |
+| Ctrl+Vaihto+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 8+väli+f1 |
+| Ctrl+Nuoli oikealle -näppäinyhdistelmä | piste 5+väli |
+| Vaihto+Alt+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 7+f1 |
 | Alt+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 7 |
-| Page up -näppäin | pisteet 1, 2 ja 6+välilyönti |
-| Ctrl+Page up -näppäinyhdistelmä | pisteet 1, 2, 6 ja 8+välilyönti |
+| Page up -näppäin | pisteet 1, 2 ja 6+väli |
+| Ctrl+Page up -näppäinyhdistelmä | pisteet 1, 2, 6 ja 8+väli |
 | Nuoli ylös -näppäin | piste 1+väli, vasemmanpuoleinen nuoli ylös |
-| Ctrl+Shift+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 8+väli+f1 |
-| Ctrl+Nuoli ylös -näppäinyhdistelmä | pisteet 2 ja 3+välilyönti |
-| Shift+Alt+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 7+f1 |
+| Ctrl+Vaihto+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 8+väli+f1 |
+| Ctrl+Nuoli ylös -näppäinyhdistelmä | pisteet 2 ja 3+väli |
+| Vaihto+Alt+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 7+f1 |
 | Alt+Nuoli ylös -näppäinyhdistelmä | pisteet 2, 3 ja 7 |
-| Shift+Nuoli ylös -näppäinyhdistelmä | vasemmanpuoleinen vieritä alas+väli |
-| Page down -näppäin | pisteet 3, 4 ja 5+välilyönti |
+| Vaihto+Nuoli ylös -näppäinyhdistelmä | vasemmanpuoleinen vieritä alas+väli |
+| Page down -näppäin | pisteet 3, 4 ja 5+väli |
 | Ctrl+Page down -näppäinyhdistelmä | pisteet 3, 4, 5 ja 8+väli |
 | Nuoli alas -näppäin | piste 4+väli, vasemmanpuoleinen nuoli alas |
-| Ctrl+Shift+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 8+väli+f1 |
-| Ctrl+Nuoli alas -näppäinyhdistelmä | pisteet 5 ja 6+välilyönti |
-| Shift+Alt+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 7+f1 |
+| Ctrl+Vaihto+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 8+väli+f1 |
+| Ctrl+Nuoli alas -näppäinyhdistelmä | pisteet 5 ja 6+väli |
+| Vaihto+Alt+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 7+f1 |
 | Alt+Nuoli alas -näppäinyhdistelmä | pisteet 5, 6 ja 7 |
-| Shift+Nuoli alas -näppäinyhdistelmä | väli+oikeanpuoleinen vieritä alas |
+| Vaihto+Nuoli alas -näppäinyhdistelmä | väli+oikeanpuoleinen vieritä alas |
 | Esc-näppäin | pisteet 1 ja 5+väli, f4, Braille EDGE: f1 |
 | Delete-näppäin | pisteet 1, 3 ja 5+väli, pisteet 1, 4 ja 5+väli |
-| F1-näppäin | pisteet 1, 2 ja 5+välilyönti |
+| F1-näppäin | pisteet 1, 2 ja 5+väli |
 | F3-näppäin | pisteet 1, 2, 4 ja 8 |
 | F4-näppäin | piste 7+f3 |
 | Windows+B-näppäinyhdistelmä | pisteet 1 ja 2+f1 |
@@ -2218,7 +2246,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Vaihda Pistenäyttö seuraa -asetusta | b5 |
 | Jatkuva luku | b6 |
 | Sarkain-näppäin | b1 |
-| Shift+Sarkain-näppäinyhdistelmä | b2 |
+| Vaihto+Sarkain-näppäinyhdistelmä | b2 |
 | Alt+Sarkain-näppäinyhdistelmä | b1+b2 |
 | NVDA-valikko | vasen+oikea |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
@@ -2285,8 +2313,8 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 Trio-mallissa on neljä lisänäppäintä, jotka ovat pistenäppäimistön edessä.
 Ne ovat järjestyksessä vasemmalta oikealle:
 - vasen peukalonäppäin (lt)
-- välilyönti
-- välilyönti
+- väli
+- väli
 - oikea peukalonäppäin (rt)
 -
 Oikea peukalonäppäin ei ole toistaiseksi käytössä.
@@ -2294,15 +2322,15 @@ Molemmat sisemmät näppäimet on määritelty välilyönniksi.
 
 || Nimi | Näppäinkomento |
 %kc:beginInclude
-| Esc-näppäin | välilyönti ja piste 7 |
-| Nuoli ylös -näppäin | välilyönti ja piste 2 |
-| Nuoli vasemmalle -näppäin | välilyönti ja piste 1 |
-| Nuoli oikealle -näppäin | välilyönti ja piste 4 |
-| Nuoli alas -näppäin | välilyönti ja piste 5 |
+| Esc-näppäin | väli ja piste 7 |
+| Nuoli ylös -näppäin | väli ja piste 2 |
+| Nuoli vasemmalle -näppäin | väli ja piste 1 |
+| Nuoli oikealle -näppäin | väli ja piste 4 |
+| Nuoli alas -näppäin | väli ja piste 5 |
 | Ctrl-näppäin | lt ja piste 2 |
 | Alt-näppäin | lt ja piste 3 |
-| Ctrl+Esc-näppäinyhdistelmä | välilyönti+pisteet 1, 2, 3, 4, 5 ja 6 |
-| Sarkain-näppäin | välilyönti+pisteet 3 ja 7 |
+| Ctrl+Esc-näppäinyhdistelmä | väli+pisteet 1, 2, 3, 4, 5 ja 6 |
+| Sarkain-näppäin | väli+pisteet 3 ja 7 |
 %kc:endInclude 
 
 ++ Papenmeier BRAILLEX (vanhat mallit) ++[PapenmeierOld]
@@ -2312,7 +2340,7 @@ Seuraavia pistenäyttöjä tuetaan:
 -
 
 Huomaa, että nämä pistenäytöt voidaan liittää vain sarjaportin kautta.
-Tämän vuoksi portti, johon laite on liitetty, tulee valita sen jälkeen, kun pistenäytön ajuri on valittu Pistekirjoitusasetukset-valintaikkunasta.
+Tämän vuoksi portti, johon laite on liitetty, tulee valita sen jälkeen, kun pistenäytön ajuri on valittu [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
 Sitä voidaan liikuttaa neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
@@ -2401,7 +2429,7 @@ Katso BrailleNote Touchin näppäinkomennot [Brailliant BI/B / BrailleNote Touch
 
 Käytettävä portti on määritettävä pistenäytön omista asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
 Katso lisätietoja BrailleNoten käsikirjasta.
-Portin määrittäminen voi olla tarpeen myös NVDA:n Pistekirjoitusasetukset-valintaikkunassa.
+Portin määrittäminen voi olla tarpeen myös NVDA:n [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunassa.
 Mikäli laite on kytketty USB:llä tai bluetoothilla, voidaan portiksi määrittää käytettävissä olevista vaihtoehdoista riippuen "Automaattinen", "USB" tai "Bluetooth".
 Jos liitäntänä käytetään sarjaporttia (tai USB-sarjaporttisovitinta) tai jos mikään edellisistä vaihtoehdoista ei ole käytettävissä, on käytettävä yhteysportti valittava sarjaporttiluettelosta.
 
@@ -2418,24 +2446,24 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 | Siirrä seuraavalle riville | seuraava |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Vaihda Pistenäyttö seuraa -asetusta | edellinen+seuraava |
-| Nuoli ylös -näppäin | välilyönti+piste1 |
-| Nuoli alas -näppäin | välilyönti+piste4 |
-| Nuoli vasemmalle -näppäin | välilyönti+piste3 |
-| Nuoli oikealle -näppäin | välilyönti+piste6 |
-| Page up -näppäin | välilyönti+piste1+piste3 |
-| Page down -näppäin | välilyönti+piste4+piste6 |
-| Home-näppäin | välilyönti+piste1+piste2 |
-| End-näppäin | välilyönti+piste4+piste5 |
-| Ctrl+Home-näppäinyhdistelmä | välilyönti+piste1+piste2+piste3 |
-| Ctrl+End-näppäinyhdistelmä | välilyönti+piste4+piste5+piste6 |
-| Välilyöntinäppäin | välilyönti |
-| Enter-näppäin | välilyönti+piste8 |
-| Askelpalautin-näppäin | välilyönti+piste7 |
-| Sarkain-näppäin | välilyönti+piste2+piste3+piste4+piste5 (välilyönti+t) |
-| Shift+Sarkain-näppäinyhdistelmä | välilyönti+piste1+piste2+piste5+piste6 |
-| Windows-näppäin | välilyönti+piste2+piste4+piste5+piste6 (välilyönti+w) |
-| Alt-näppäin | välilyönti+piste1+piste3+piste4 (välilyönti+m) |
-| Ota syöteohje käyttöön tai poista se käytöstä | välilyönti+piste2+piste3+piste6 (välilyönti+alempi h) |
+| Nuoli ylös -näppäin | väli+piste1 |
+| Nuoli alas -näppäin | väli+piste4 |
+| Nuoli vasemmalle -näppäin | väli+piste3 |
+| Nuoli oikealle -näppäin | väli+piste6 |
+| Page up -näppäin | väli+piste1+piste3 |
+| Page down -näppäin | väli+piste4+piste6 |
+| Home-näppäin | väli+piste1+piste2 |
+| End-näppäin | väli+piste4+piste5 |
+| Ctrl+Home-näppäinyhdistelmä | väli+piste1+piste2+piste3 |
+| Ctrl+End-näppäinyhdistelmä | väli+piste4+piste5+piste6 |
+| Väli | väli |
+| Enter-näppäin | väli+piste8 |
+| Askelpalautin-näppäin | väli+piste7 |
+| Sarkain-näppäin | väli+piste2+piste3+piste4+piste5 (väli+t) |
+| Vaihto+Sarkain-näppäinyhdistelmä | väli+piste1+piste2+piste5+piste6 |
+| Windows-näppäin | väli+piste2+piste4+piste5+piste6 (väli+w) |
+| Alt-näppäin | väli+piste1+piste3+piste4 (väli+m) |
+| Ota syöteohje käyttöön tai poista se käytöstä | väli+piste2+piste3+piste6 (väli+alempi h) |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
@@ -2447,7 +2475,7 @@ Seuraavia malleja tuetaan:
 - EcoBraille Plus
 -
 
-Voit määrittää näytön käyttämän sarjaportin NVDA:n Pistekirjoitusasetukset-valintaikkunasta.
+Voit määrittää näytön käyttämän sarjaportin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Seuraavassa on näiden pistenäyttöjen näppäinmääritykset.
 Katso [EcoBraillen käyttöohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] kuvaukset näppäinten paikoista.
@@ -2488,7 +2516,7 @@ NVDA tukee [Eurobraillen http://www.eurobraille.fr/] Esys-, Esytime- ja Iris-pis
 Esys- ja Esytime-Evo-laitteiden kytkemiseen voidaan käyttää USB-liitäntää tai bluetooth-yhteyttä.
 Vanhemmat Esytime-näytöt tukevat vain USB:tä.
 Iris-mallit voidaan kytkeä vain sarjaportin kautta.
-Siksi näiden näyttöjen käyttämä portti kannattaa valita sen jälkeen, kun olet valinnut tämän ajurin Pistekirjoituksen asetukset -valintaikkunasta.
+Siksi näiden näyttöjen käyttämä portti tulee valita sen jälkeen, kun olet valinnut tämän ajurin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Iris- ja Esys-näytöissä on 10-näppäiminen pistekirjoitusnäppäimistö.
 Kahdesta Väli-näppäimen tavoin sijoitellusta näppäimestä vasemmanpuoleinen vastaa Askelpalautinta ja oikea Väli-näppäintä.
@@ -2510,57 +2538,60 @@ Katso kuvaukset näppäinten paikoista laitteen käyttöohjeesta.
 | Vaihda seuraavaan tarkastelutilaan | joystick1Right+joystick1Down |
 | Poista viimeksi syötetty pistesolu tai merkki | askelpalautin |
 | Käännä mikä tahansa pistekirjoitussyöte ja paina Enter-näppäintä | askelpalautin+väli |
-| Insert-näppäin | piste 3+piste 5+väli, l7 |
-| Delete-näppäin | piste 3+piste 6+väli |
-| Home-näppäin | piste 1+piste 2+piste 3+väli, joystick2Left+joystick2Up |
-| End-näppäin | piste 4+piste 5+piste 6+väli, joystick2Right+joystick2Down |
+| Insert-näppäin | pisteet 3 ja 5+väli, l7 |
+| Delete-näppäin | pisteet 3 ja 6+väli |
+| Home-näppäin | pisteet 1, 2 ja 3+väli, joystick2Left+joystick2Up |
+| End-näppäin | pisteet 4, 5 ja 6+väli, joystick2Right+joystick2Down |
 | Nuoli vasemmalle -näppäin | piste 2+väli, joystick2Left, nuoli vasemmalle |
 | Nuoli oikealle -näppäin | piste 5+väli, joystick2Right, nuoli oikealle |
 | Nuoli ylös -näppäin | piste 1+väli, joystick2Up, nuoli ylös |
 | Nuoli alas -näppäin | piste 6+väli, joystick2Down, nuoli alas |
 | Enter-näppäin | joystick2Center |
-| Page up -näppäin | piste 1+piste 3+väli |
-| Page down -näppäin | piste 4+piste 6+väli |
-| Numeronäppäimistön 1 | piste 1+piste 6+askelpalautin |
-| Numeronäppäimistön 2 | piste 1+piste 2+piste 6+askelpalautin |
-| Numeronäppäimistön 3 | piste 1+piste 4+piste 6+askelpalautin |
-| Numeronäppäimistön 4 | piste 1+piste 4+piste 5+piste 6+askelpalautin |
-| Numeronäppäimistön 5 | piste 1+piste 5+piste 6+askelpalautin |
-| Numeronäppäimistön 6 | piste 1+piste 2+piste 4+piste 6+askelpalautin |
-| Numeronäppäimistön 7 | piste 1+piste 2+piste 4+piste 5+piste 6+askelpalautin |
-| Numeronäppäimistön 8 | piste 1+piste 2+piste 5+piste 6+askelpalautin |
-| Numeronäppäimistön 9 | piste 2+piste 4+piste 6+askelpalautin |
-| Numeronäppäimistön Insert -näppäin | piste 3+piste 4+piste 5+piste 6+askelpalautin |
+| Page up -näppäin | pisteet 1 ja 3+väli |
+| Page down -näppäin | pisteet 4 ja 6+väli |
+| Numeronäppäimistön 1 | pisteet 1 ja 6+askelpalautin |
+| Numeronäppäimistön 2 | pisteet 1, 2 ja 6+askelpalautin |
+| Numeronäppäimistön 3 | pisteet 1, 4 ja 6+askelpalautin |
+| Numeronäppäimistön 4 | pisteet 1, 4, 5 ja 6+askelpalautin |
+| Numeronäppäimistön 5 | pisteet 1, 5 ja 6+askelpalautin |
+| Numeronäppäimistön 6 | pisteet 1, 2, 4 ja 6+askelpalautin |
+| Numeronäppäimistön 7 | pisteet 1, 2, 4, 5 ja 6+askelpalautin |
+| Numeronäppäimistön 8 | pisteet 1, 2, 5 ja 6+askelpalautin |
+| Numeronäppäimistön 9 | pisteet 2, 4 ja 6+askelpalautin |
+| Numeronäppäimistön Insert-näppäin | pisteet 3, 4, 5 ja 6+askelpalautin |
 | Numeronäppäimistön pilkku | piste 2+askelpalautin |
-| Numeronäppäimistön / | piste 3+piste 4+askelpalautin |
-| Numeronäppäimistön * | piste 3+piste 5+askelpalautin |
-| Numeronäppäimistön miinus | piste 3+piste 6+askelpalautin |
-| Numeronäppäimistön plus | piste 2+piste 3+piste 5+askelpalautin |
-| Numeronäppäimistön Enter -näppäin | piste 3+piste 4+piste 5+askelpalautin |
-| Esc-näppäin | piste 1+piste 2+piste 4+piste 5+väli, l2 |
-| Sarkain-näppäin | piste 2+piste 5+piste 6+väli, l3 |
-| Vaihto+Sarkain-näppäinyhdistelmä | piste 2+piste 3+piste 5+väli |
-| Print Screen -näppäin | piste 1+piste 3+piste 4+piste 6+väli |
-| Pause-näppäin | piste 1+piste 4+väli |
-| Sovellusnäppäin | piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön / | pisteet 3 ja 4+askelpalautin |
+| Numeronäppäimistön * | pisteet 3 ja 5+askelpalautin |
+| Numeronäppäimistön miinus | pisteet 3 ja 6+askelpalautin |
+| Numeronäppäimistön plus | pisteet 2, 3 ja 5+askelpalautin |
+| Numeronäppäimistön Enter -näppäin | pisteet 3, 4 ja 5+askelpalautin |
+| Esc-näppäin | pisteet 1, 2, 4 ja 5+väli, l2 |
+| Sarkain-näppäin | pisteet 2, 5 ja 6+väli, l3 |
+| Vaihto+Sarkain-näppäinyhdistelmä | pisteet 2, 3 ja 5+väli |
+| Print Screen -näppäin | pisteet 1, 3, 4 ja 6+väli |
+| Pause-näppäin | pisteet 1 ja 4+väli |
+| Sovellusnäppäin | pisteet 5 ja 6+askelpalautin |
 | F1-näppäin | piste 1+askelpalautin |
-| F2-näppäin | piste 1+piste 2+askelpalautin |
-| F3-näppäin | piste 1+piste 4+askelpalautin |
-| F4-näppäin | piste 1+piste 4+piste 5+askelpalautin |
-| F5-näppäin | piste 1+piste 5+askelpalautin |
-| F6-näppäin | piste 1+piste 2+piste 4+askelpalautin |
-| F7-näppäin | piste 1+piste 2+piste 4+piste 5+askelpalautin |
-| F8-näppäin | piste 1+piste 2+piste 5+askelpalautin |
-| F9-näppäin | piste 2+piste 4+askelpalautin |
-| F10-näppäin | piste 2+piste 4+piste 5+askelpalautin |
-| F11-näppäin | piste 1+piste 3+askelpalautin |
-| F12-näppäin | piste 1+piste 2+piste 3+askelpalautin |
-| Windows-näppäin | piste 1+piste 2+piste 3+piste 4+askelpalautin |
+| F2-näppäin | piste 1 ja 2+askelpalautin |
+| F3-näppäin | piste 1 ja 4+askelpalautin |
+| F4-näppäin | pisteet 1, 4 ja 5+askelpalautin |
+| F5-näppäin | pisteet 1 ja 5+askelpalautin |
+| F6-näppäin | pisteet 1, 2 ja 4+askelpalautin |
+| F7-näppäin | pisteet 1, 2, 4 ja 5+askelpalautin |
+| F8-näppäin | pisteet 1, 2 ja 5+askelpalautin |
+| F9-näppäin | pisteet 2 ja 4+askelpalautin |
+| F10-näppäin | pisteet 2, 4 ja 5+askelpalautin |
+| F11-näppäin | pisteet 1 ja 3+askelpalautin |
+| F12-näppäin | pisteet 1, 2 ja 3+askelpalautin |
+| Windows-näppäin | pisteet 1, 2, 3 ja 4+askelpalautin |
 | Caps Lock -näppäin | piste 7+askelpalautin, piste 8+askelpalautin |
 | Num Lock -näppäin | piste 3+askelpalautin, piste 6+askelpalautin |
 | Vaihto-näppäin | piste 7+väli, l4 |
-| Ctrl-näppäin | piste 7+piste 8+väli, piste 1+piste 7+piste 8+väli, piste 4+piste 7+piste 8+väli, l5 |
-| Alt-näppäin | piste 8+väli, piste 1+piste 8+väli, piste 4+piste 8+väli, l6 |
+| Ota Vaihto-näppäin käyttöön tai poista se käytöstä | dot1+dot7+space, dot4+dot7+space |
+| Ctrl-näppäin | pisteet 7 ja 8+väli, l5 |
+| Ota Ctrl-näppäin käyttöön tai poista se käytöstä | pisteet 1, 7 ja 8+väli, pisteet 4, 7 ja 8+väli |
+| Alt-näppäin | piste 8+väli, l6 |
+| Ota Alt-näppäin käyttöön tai poista se käytöstä | pisteet 1 ja 8+väli, pisteet 4 ja 8+väli |
 | Ota HID-näppäimistösyötteen emulointi käyttöön tai poista se käytöstä | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 

@@ -1,4 +1,4 @@
-VDA NVDA_VERSION Uporabniški Vodič
+NVDA NVDA_VERSION Uporabniški Vodič
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -25,7 +25,7 @@ Glavni poudarki so:
 - Podpora za precejšnje število brajevih vrstic vključno s podporo vnosa v brajici za vrstice, ki vsebujejo brajevo tipkovnico
 - Možno uporabljati preko USB ključka ali drugega prenosljivega medija brez potrebe po namestitvi v računalnik
 - Govorna podpora ob namestitvi v sistem
-- Prevedeno v 52 jezikov
+- Prevedeno v 54 jezikov
 - Podpora za aktualne Windows operacijske sisteme tako 32-bitne kot 64-bitne
 - Možno poganjati na Windows prijavnem zaslonu in drugih "varnih" namizjih
 - Naznanjanje kontrolnikov in besedila med uporabo kretenj dotika
@@ -35,7 +35,7 @@ Glavni poudarki so:
 
 ++ Internacionalizacija ++[Internationalization]
 Pomembno je, da imajo ljudje, ne glede na to, kateri jezik govorijo, enak dostop do tehnologije.
-Poleg Angleščine, je NVDA prevedena v 52 jezikov vključno z: Afrikanščino, Albanščino, Amhariščino, Arabščino, Aragonščino, Bolgarščino, Brazilsko Portugalščino, Burmanščino, Češčino, Danščino, Finščino, Francoščino, Galicijščino, Grščino, Gruzinščino, Hebrejščino, Hindujščino, Hrvaščino, Islandščino, Irščino, Italijanščino, Japonščino, jezik Kannada, Katalonščino, Kirgizijščino, Korejščino, Letonščino, Madžarščino, Makedonščino, Nepalščino, Nemščino, Nizozemščino, Norveščino, Perziščino, Poljščino, Portugalščino, Punjabi, Romunščino, Ruščino, Slovaščino, Slovenščino, Srbščino, Španščino, Španščino (Kolumbija), Švedščino, Tamilščino, Tajščino, Tradicionalno in Poenostavljeno Kitajščino, Turščino, Ukrajinščino in Vietnamščino.
+Poleg Angleščine, je NVDA prevedena v 54 jezikov vključno z: Afrikanščino, Albanščino, Amhariščino, Arabščino, Aragonščino, Bolgarščino, Burmanščino, Češčino, Danščino, Finščino, Francoščino, Galicijščino, Grščino, Gruzinščino, Hebrejščino, Hindujščino, Hrvaščino, Islandščino, Irščino, Italijanščino, Japonščino, jezik Kannada, Katalonščino, Kirgizijščino, Kitajščino (poenostavljeno in tradicionalno) Korejščino, Letonščino, Madžarščino, Makedonščino, Nepalščino, Nemščino (Nemčija in Švica), Nizozemščino, Norveščino, Perziščino, Poljščino, Portugalščino (Brazilija in Portugalska), Punjabi, Romunščino, Ruščino, Slovaščino, Slovenščino, Srbščino, Španščino (Kolumbija in Španija), Švedščino, Tamilščino, Tajščino, Turščino, Ukrajinščino in Vietnamščino.
 
 ++ Podpora Govorni sintezi ++[SpeechSynthesizerSupport]
 Ločeno od podajanja sporočil in vmesnika v naštetih jezikih, NVDA omogoča uporabnici/ku, da bere vsebino v kateremkoli jeziku tako dolgo, dokler ima na računalniku nameščeno govorno sintezo za izbran jezik.
@@ -173,7 +173,7 @@ Privzeto velja, da sta tako številski kot Glavni Insert prikrojevalni NVDA tipk
 
 +++ Postavitve Tipkovnice +++[KeyboardLayouts]
 Trenutno NVDA prihaja z dvema paketoma tipkovničnih ukazov, ki jih poznamo pod pojmom postavitev tipkovnice, kjer obstaja postavitev za običajne tipkovnice (s številskim delom) in postavitev za prenosnike.
-Privzeto je NVDA nastavljena tako, da uporablja običajno postavitev tipk. Vedno pa lahko zamenjate postavitev tipk v Nastavitvah Tipkovnice, ki jih najdete pod Nastavitvami v NVDA meniju.
+Privzeto je NVDA nastavljena tako, da uporablja običajno postavitev tipk. Vedno pa lahko zamenjate postavitev tipk v zvrsti Tipkovnica v pogovornem oknu [Nastavitve NVDA #NVDASettings], ki jo najdete pod Izbirami v NVDA meniju.
 
 Običajna postavitev se močno zanaša na številski del tipkovnice, kjer je Numlock izključen.
 Čeprav večina prenosnikov nima fizičnega številskega dela, nekateri prenosniki lahko tega oponašajo tako, da držite tipko FN in pritiskate črke in številke na desnem delu tipkovnice (7, 8, 9, u, i, o, j, k, l, itn).
@@ -230,7 +230,7 @@ Na tablicah, kot je Microsoft Surface Pro, je tipkovnica na dotik vedno na voljo
 Ko boste želeli, da tipkovnica na dotik izgine, izvedite dvojni tap na ikoni tipkovnice na dotik ali se pomaknite izven polja za urejanje.
 
 Ko je tipkovnica na dotik dejavna, za lociranje tipk na tipkovnici na dotik pomaknite vaš prst na mesto, kjer je postavljena tipkovnica na dotik (običajno na dnu ekrana), potem pa pomikajte en prst naokoli po tipkovnici.
-Ko boste našli tipko, ki jo želite pritisniti, izvedite dvojni tap nad tipko ali dvignite prst, odvisno od izbranih možnosti v pogovornem oknu [Nastavitev Interakcije z Dotikom #TouchInteraction].
+Ko boste našli tipko, ki jo želite pritisniti, izvedite dvojni tap nad tipko ali dvignite prst, odvisno od izbranih možnosti v zvrsti [Nastavitev Interakcije z Dotikom #TouchInteraction].
 
 ++ Delovanje Pomoči za Vnose ++[InputHelpMode]
 Veliko NVDA ukazov je opisanih skozi ta uporabniški vodič, vendar je še lažja pot za raziskovanje teh ukazov ta, da se vključi delovanje pomoči za vnose.
@@ -280,7 +280,7 @@ Predmet je samostojna postavka, kot je del besedila, gumb, izbirnik, drsnik, sez
 Sistemsko žarišče poznano tudi kot žarišče (fokus) je [predmet #Objects], ki sprejema vnose iz tipkovnice.
 Na primer, če tipkate v vnosno polje za urejanje besedila, je to vnosno polje v žarišču.
 
-Najbolj običajne poti krmiljenja po oknih z NVDA je preprost premik sistemskega žarišča z uporabo standardnih tipkovničnih ukazov kot so tab in shift+ tab za premik naprej in nazaj med kontrolniki, pritisk tipke alt za postavitev v menijsko vrstico, puščice za premik v menijih in uporaba  alt+tab za premikanje med trenutnimi odprtimi aplikacijami. 
+Najbolj običajne poti krmiljenja po oknih z NVDA so preprost premik sistemskega žarišča z uporabo standardnih tipkovničnih ukazov, kot so tab in shift+ tab za premik naprej in nazaj med kontrolniki, pritisk tipke alt za postavitev v menijsko vrstico, puščice za premik v menijih in uporaba  alt+tab za premikanje med trenutnimi odprtimi aplikacijami. 
 Ko to izvajate, vam NVDA sporoča informacije o predmetu v žarišču, kot je njegovo ime, tip, vrednost, stanje, opis, bližnjična tipka in informacija o položaju.
 
 Tu je nekaj ukazov, ki so uporabni pri krmiljenju sistemskega žarišča:
@@ -339,10 +339,10 @@ Predmet, ki ga pravkar pregledujete, nosi ime predmet krmiljenja.
 Ko se enkrat premaknete na predmet, njegovo vsebino lahko pregledujete z uporabo [ukazov za pregled besedila #ReviewingText] medtem, ko ste v [Delovanju pregleda predmeta #ObjectReview].
 Privzeto vedenje je nastavljeno tako, da sistemsko žarišče potuje vzdolž predmeta krmiljenja, to stikalo pa lahko vključite ali izključite.
 
-Pomnite, da braj privzeto sledi tako [žarišču #SystemFocus] in [kazalki #SystemCaret] tako dobro kot krmiljenju predmeta in pregledu besedila, kot je privzeto.
-Če želite, da sledi samo žarišču in kazalki, morate [braj omejiti  #BrailleTether] na žarišče.
-V tem primeru braj ne bo sledil krmiljenju predmeta in pregledu besedila.
-Če želite, da namesto tega braj sledi krmiljenju predmeta in pregledu besedila, morate [braj omejiti #BrailleTether] na pregledovanje.
+Pomnite, da brajica privzeto sledi tako [žarišču #SystemFocus] in [kazalki #SystemCaret] tako dobro kot krmiljenju predmeta in pregledu besedila, kot je privzeto.
+Če želite, da sledi samo žarišču in kazalki, morate [brajico omejiti  #BrailleTether] na žarišče.
+V tem primeru brajica ne bo sledil krmiljenju predmeta in pregledu besedila.
+Če želite, da namesto tega brajica sledi krmiljenju predmeta in pregledu besedila, morate [brajico omejiti #BrailleTether] na pregledovanje.
 
 Za pomik po predmetih, uporabite naslednje ukaze:
 
@@ -370,8 +370,8 @@ Ko premikate pregledno utripalko, vam sistemska kazalka ne sledi vzdolž besedil
 Kakorkoli, privzeto pregledna utripalka sledi sistemski kazalki vzdolž njene poti.
 Ta možnost se lahko izključi ali vključi.
 
-Opozarjamo, da braj privzeto sledi [žarišču #SystemFocus] in [kazalki #SystemCaret], namesto predmetu krmiljenja in pregledu besedila.
-Če želite, da vseeno sledi predmetu krmiljenja in pregledu besedila, morate [nastaviti, na kaj naj se braj omeji #BrailleTether].
+Opozarjamo, da brajica privzeto sledi [žarišču #SystemFocus] in [kazalki #SystemCaret], namesto predmetu krmiljenja in pregledu besedila.
+Če želite, da vseeno sledi predmetu krmiljenja in pregledu besedila, morate [nastaviti, na kaj naj se brajica omeji #BrailleTether].
 
 Za pregled besedila so na voljo naslednji ukazi:
 %kc:beginInclude
@@ -449,7 +449,7 @@ Višje, ko je miška na zaslonu, višji je zvok piska.
 Bolj levo, ko je miška na zaslonu, bolj levo se bo slišal pisk ob predpostavki, da imate stereo zvočnike ali slušalke.
 
 Te dodatne značilnosti NVDA so privzeto izključene.
-Če želite uporabljati te prednosti, jih lahko nastavite v pogovornem oknu [Nastavitve miške #MouseSettings], ki se nahaja v meniju NVDA Nastavitev.
+Če želite uporabljati te prednosti, jih lahko nastavite v zvrsti [Nastavitve miške #MouseSettings], ki se nahaja v [Nastavitvah NVDA #NVDASettings] v meniju NVDA Izbir.
 
 Čeprav se mora za delo z miško uporabljati fizična miška ali drsna ploščica, ima NVDA nekaj tipkovničnih ukazov, ki se nanašajo na delo z miško:
 %kc:beginInclude
@@ -600,7 +600,7 @@ Ko se boste želeli vrniti v dokument, preprosto pritisnite tipko Escape.
 In če je na vaši vrstici tipkovnica v Perkinsovem slogu, lahko tudi vnašate normalno in skrajšano brajico.
 
 Prosimo, oglejte si razdelek [Podprtih Brajevih Vrstic #SupportedBrailleDisplays] za več informacij o podprtih brajevih vrsticah.
-Brajico lahko nastavite v [pogovornem oknu Nastavitev Braja #BrailleSettings].
+Brajico lahko nastavite v [zvrsti Brajica #BrailleSettings]  pogovornega okna [Nastavitve NVDA #NVDASettings].
 
 ++ Brajeve okrajšave mejnikov, stanja in tipov kontrolnika ++[BrailleAbbreviations]
 Zaradi posredovanja največjega možnega števila informacij na brajevo vrstico naenkrat, so v NVDA definirane okrajšave za indikacijo različnih tipov kontrolnikov in njihovih stanj, tako kot mejnikov.
@@ -619,11 +619,11 @@ Zaradi posredovanja največjega možnega števila informacij na brajevo vrstico 
 | dok | dokument |
 | pub | polje za urejanje besedila |
 | gslpub | urejanje gesla |
-| embedded | vdelano |
-| zopm | končna opomba |
-| popm | opomba pod črto |
+| vdelano | vdelano |
+| zopmb | končna opomba |
+| popmb | opomba pod črto |
 | gra | grafika |
-| rvsk | razvrščanje v skupino |
+| rsk | razvrščanje v skupino |
 | nN | naslov na nivoju n, npr. n1, n2. |
 | pmč | oblaček pomoči |
 | mjn | mejnik |
@@ -692,7 +692,7 @@ Na koncu so definirane še sledeče okrajšave za mejnike:
 
 ++ Brajev Vnos ++[BrailleInput]
 NVDA podpira tako skrajšano brajevo vnašanje kot normalno prek brajeve tipkovnice.
-Tabelo za prevod brajice v normalno besedilo določite z izborom tabele s spustnega seznama [Tabel za vnos znakov #BrailleSettingsInputTable]  v Nastavitvah Braja.
+Tabelo za prevod brajice v normalno besedilo lahko določite z izborom tabele s spustnega seznama [Tabel za vnos znakov #BrailleSettingsInputTable]  v zvrsti Brajica pogovornega okna [Nastavitve NVDA #NVDASettings].
 
 Ko se uporablja normalen vnos, se besedilo prevede takoj, ko je natipkano.
 Ko se uporablja skrajšan vnos, se besedilo prevede na koncu besede po pritisku tipke enter ali preslednice.
@@ -723,7 +723,7 @@ Pritisk tipke escape zavrže rezultat prepoznave.
 Sistem Windows 10 vključuje možnost prepoznave za številne jezike.
 To lahko uporabi NVDA, da lahko prepozna besedilo s slik ali nedostopnih programov.
 
-Jezik, ki se bo uporabil za prepoznavo besedila, lahko nastavite v pogovornem oknu nastavitev za [Windows 10 OCR #Win10OcrSettings].
+Jezik, ki se bo uporabil za prepoznavo besedila, lahko nastavite v [zvrsti Windows 10 OCR #Win10OcrSettings] pogovornega okna [Nastavitve NVDA #NVDASettings].
 Dodatni jeziki se lahko namestijo tako, da odprete Začetni meni, izberete Nastavitve, nato Ura in jezik -> Regija in jezik in potem izberete Dodaj jezik.
 
 %kc:beginInclude
@@ -737,7 +737,7 @@ NVDA vsebuje posebej prirejene zmožnosti za nekatere programe, da omogoči laž
 
 +++ Samodejno prebiranje Glav Vrstic in Stolpcev +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA lahko samodejno naznanja ustrezne glave vrstic in stolpcev, ko se pomikate po tabelah v Microsoft Wordu.
-Za uporabo te zmožnosti mora biti izbrana zmožnost Sporočanja Glav Vrstic in Stolpcev v Tabelah v NVDA pogovornem oknu Oblikovanja Dokumentov.
+Ob tem je predpogoj, da je izbrana zmožnost Sporočanja Glav Vrstic in Stolpcev v Tabelah v NVDA nastavitvah Oblikovanje Dokumentov, ki se nahajajo v pogovornem oknu [Nastavitve NVDA #NVDASettings].
 Prav tako mora NVDA vedeti, katera vrstica ali stolpec vsebuje glavo ali čelo tabele.
 Po pomiku v prvo celico stolpca ali vrstice z glavo, uporabite naslednje ukaze:
 %kc:beginInclude
@@ -771,7 +771,7 @@ Vsi komentarji v dokumentu se lahko vzporedno z ostalimi sledenji spremembam raz
 
 +++ Samodejno prebiranje Glav Vrstic in Stolpcev +++[ExcelAutomaticColumnAndRowHeaderReading]
 NVDA lahko samodejno naznanja ustrezne glave stolpcev in vrstic medtem, ko se premikate po Excelovih preglednicah.
-Za uporabo te zmožnosti, mora biti izbrana zmožnost Sporočanja Glav Vrstic in Stolpcev v Tabelah v NVDA pogovornem oknu Oblikovanja Dokumentov.
+Ob tem je predpogoj, da je izbrana zmožnost Sporočanja Glav Vrstic in Stolpcev v Tabelah v NVDA nastavitvah Oblikovanja Dokumentov, ki se nahajajo v pogovornem oknu [Nastavitve NVDA #NVDASettings].
 Prav tako mora NVDA vedeti, katera vrstica ali stolpec vsebuje glavo ali čelo tabele.
 Po pomiku v prvo celico stolpca ali vrstice z glavo, uporabite naslednje ukaze:
 %kc:beginInclude
@@ -903,21 +903,32 @@ Ko ste v tabelaričnem pogledu dodanih knjig:
 | Kontekstni meni | applications | Odpre kontekstni meni za izbrano knjigo. |
 %kc:endInclude
 
-+ Nastavljanje NVDA +[ConfiguringNVDA]
++ Konfiguracija NVDA +[ConfiguringNVDA]
+Večino konfiguracije se lahko opravi v pogovornih oknih, ki so dostopna prek podmenija Izbire v meniju NVDA.
+Večje število teh nastavitev se lahko najde v mnogostranskem pogovornem oknu imenovanem [pogovorno okno NVDA Nastavitev #NVDASettings].
+V vseh pogovornih oknih pritisnite gumb V redu za sprejetje vseh sprememb, ki ste jih naredili.
+Za zavrzitev katerekoli spremembe pritisnite gumb Prekliči ali tipko escape.
+V nekaterih pogovornih oknih lahko pritisnete gumb Uporabi, da bodo nastavitve učinkovale nemudoma brez zaprtja pogovornega okna.
+Nekatere nastavitve se lahko spremenijo tudi z uporabo bližnjičnih tipk, ki so razvrščene po relevantnih odsekih spodaj.
 
-++ Nastavitve ++[preferences]
+++ NVDA Nastavitve ++[NVDASettings]
 %kc:settingsSection: || Ime | Običajna razporeditev | razporeditev Prenosnik | Opis |
-Večino nastavitev v NVDA lahko spreminjate skozi pogovorna okna, do katerih dostopate preko Nastavitve "podmeni" menija NVDA.
-V vsakem pogovornem oknu za nastavitve pritisnite gumb V redu, da uveljavite spremembe, ki ste jih naredili.
-Za razveljavitev ali preklic narejenih sprememb pritisnite gumb Prekliči ali tipko Escape.
-Nekaj nastavitev lahko spreminjate preko bližnjičnih tipk. Ustrezne sledijo v sledečih razdelkih.
+Pogovorno okno NVDA Nastavitev vsebuje precej konfiguracijskih parametrov, ki se lahko spreminjajo.
+To pogovorno okno vsebuje seznam nekaj zvrsti nastavitev, med katerimi lahko izbirate.
+Ko boste izbrali zvrst, se bo pokazalo več nastavitev, ki so povezane s to zvrstjo.
+Te nastavitve se lahko uporabijo z uporabo gumba Uporabi in v tem primeru bo pogovorno okno ostalo odprto.
+Če želite shraniti vaše nastavitve in zapreti pogovorno okno NVDA Nastavitev, lahko uporabite gumb V redu.
 
-Opozarjamo, da privzeto niso vsa pogovorna okna dostopna prek kretenj vnosa (bližnjičnih tipk, dotikabilnih gest itd).
-Če želite dostopati do pogovornih oken, ki nimajo določenih bližnjičnih tipk, uporabite [pogovorno okno Kretenj Vnosa, #InputGestures] da boste lahko določili bližnjico takemu pogovornemu oknu.
+Nekaj zvrsti nastavitev ima dodeljene bližnjične tipke.
+Če jih pritisnete, bodo te bližnjične tipke odprle pogovorno okno NVDA Nastavitev v tej nadrobni zvrsti.
+Privzeto niso vse zvrsti dostopne prek tipkovničnih ukazov.
+Če želite dostopati do zvrsti ki nima določenih bližnjičnih tipk, uporabite [pogovorno okno Kretenj Vnosa, #InputGestures] da boste lahko določili bližnjico po meri taki zvrsti, kot je tipkovnični ukaz ali dotikabilna kretnja 
 
-+++ Splošne Nastavitve (NVDA+control+g) +++[GeneralSettings]
-Pogovorno okno Splošnih nastavitev se nahaja v meniju NVDA nastavitev.
-Vsebuje naslednje možnosti:
+Zzvrsti nastavitev, ki se nahajajo v pogovornem oknu NVDA Nastavitev, je orisanih v nadaljevanju.
+
++++ Splošno (NVDA+control+g) +++[GeneralSettings]
+Zvrst Splošno iz pogovornega okna NVDA Nastavitev postavlja vedenje NVDA v celoti, kot je jezik vmesnika in ali naj ali ne NVDA samodejno preverja, če obstajajo posodobitve.
+Ta zvrst vsebuje naslednje možnosti:
 
 ==== Jezik ====[GeneralSettingsLanguage]
 To je spustni seznam, kjer izbirate jezik, v katerem naj se prikazuje NVDA uporabniški vmesnik in sporočila.
@@ -925,7 +936,7 @@ Na voljo je veliko jezikov, privzeto pa NVDA upošteva sistemski jezik "Windows"
 Možnost Privzeto pove NVDA, da naj uporabi jezik operacijskega sistema, ki je trenutno nastavljen.
 
 Za uveljavitev spremembe jezika, morate NVDA znova zagnati.
-NVDA vas bo vprašala, če jo želite ponovno zagnati, v primeru, da spremenite nastavitev.
+NVDA vas bo vprašala, če jo želite ponovno zagnati, v primeru, da spremenite nastavitev in jo shranite.
 Pritisnite V redu in NVDA se bo ponovno naložila.
 
 ==== Shrani konfiguracijo ob izhodu ====[GeneralSettingsSaveConfig]
@@ -965,24 +976,104 @@ Lahko pa obstoj posodobitev preverite tudi ročno z ukazom Preveri, če obstaja 
 Če je to izbrano, vas bo NVDA imformirala, ko je ob zagonu na voljo čakajoča posodobitev in vam ponudila možnost, da jo namestite.
 Lahko pa tudi ročno namestite čakajočo posodobitev prek pogovornega okna za izhod iz NVDA (če je omogočeno), iz menija NVDA ali, ko boste izvedli novo preverbo iz menija Pomoči.
 
-+++ Izbira Sinteze (NVDA+control+s) +++[SynthesizerSelection]
-Pogovorno okno Sinteze, ki se nahaja v NVDA nastavitvah pod Sinteza..., vam omogoča izbiro, s katero govorno sintezo naj NVDA govori.
++++ Nastavitve Govora (NVDA+control+v) +++[SpeechSettings]
+Zvrst Govor, ki se nahaja v pogovornem oknu NVDA Nastavitev, vsebuje možnosti, ki vam omogočajo spreminjanje govorne sinteze kot tudi značilnosti glasu izbrane sinteze.
+Obstaja pa tudi še hitrejša pot za spreminjanje nastavitev glasu od kjerkoli. Prosimo, oglejte si razdelek [Krog Nastavitev Sinteze #SynthSettingsRing].
+
+Zvrst Nastavitev Govora vsebuje naslednje možnosti:
+
+==== Zamenjaj Sintezo ====[SpeechSettingsChange]
+Prva možnost v zvrsti Nastavitev Govora je gumb Spremeni... Ta gumb vzpostavi pogovorno okno [Izberi Sintezo #SelectSynthesizer], ki vam omogoča izbiro dejavne govorne sinteze in izhodne naprave.
+To pogovorno okno se odpre nad pogovornim oknom Nastavitev NVDA.
+Shranitev ali zavrzitev nastavitev v pogovornem oknu Izbire Sinteze vas bo vrnila v pogovorno okno NVDA Nastavitev.
+
+==== Glas ====[SpeechSettingsVoice]
+Možnost Glas je spustni seznam z vsemi glasovi, ki pripadajo izbrani govorni sintezi in jih imate nameščene na računalniku.
+Lahko uporabljate puščice za poslušanje različnih izbir.
+Puščici gor in levo vas pomikata navzgor po seznamu ter puščici dol in desno navzdol po seznamu.
+
+==== Oseba ====[SpeechSettingsVariant]
+Če uporabljate govorno sintezo Espeak NG, ki je vključena v namestitveni paket NVDA, ta spustni seznam omogoči izbiro, s kakšno barvo glasu bi Espeak moral delovati.
+Osebe sinteze ESpeak NG so kot glasovi, saj vsebujejo različne karakteristike glede na značilnosti osnovne postavitve.
+Nekatere osebe zvenijo kot moški, druge kot ženske in tretje kot "žabe".
+
+==== Hitrost ====[SpeechSettingsRate]
+Ta možnost omogoča spreminjanje hitrosti govora vašega glasu.
+Deluje preko drsnika od 0 do 100, kjer 0 pomeni najpočasnejšo govorico in 100 najhitrejšo.
+
+==== Višina ====[SpeechSettingsPitch]
+Ta možnost vam omogoča spreminjanje vešine trenutnega glasu.
+Deluje preko drsnika od 0 do 100, kjer 0 pomeni najnižji ton in 100 najvišji.
+
+==== Glasnost ====[SpeechSettingsVolume]
+To je drsnik od 0 do 100, kjer je 0 najtišje govorjenje in 100 najglasnejše.
+
+==== Glasovna modulacija ====[SpeechSettingsInflection]
+Ta možnost je v obliki drsnika od 0 do 100, kjer 0 pomeni najmanjšo možno modulacijo (spreminjanje višine med govorom) in 100 najvišjo možno modulacijo. Trenutno to možnost podpira samo ESpeak NG.
+
+==== Samodejna menjava Jezika ====[SpeechSettingsLanguageSwitching]
+Ta izbirnik vklaplja stikalo samodejne zamenjave jezika govorne sinteze med branjem, če je v besedilu, ki ga prebirate, jezikovna zastavica, ki označuje jezik besedila.
+Ta možnost je privzeto vključena.
+Trenutno samodejno menjavo jezika podpira samo ESpeak NG.
+
+==== Samodejna menjava Narečja ====[SpeechSettingsDialectSwitching]
+Ta možnost omogoča, če je izbrana, da sinteza menja tudi narečje, ne samo jezika.
+To pomeni sledeče, da bo govorna sinteza dokument prebrala z britanskim naglasom, čeprav je prednastavljen jezik Ameriška Angleščina. Vse to seveda zavisi od zastavic, s katerimi je opremljen dokument.
+Ta možnost je privzeto izključena.
+
+%kc:setting
+==== Nivo Naglaševanja/Simbolov ====[SpeechSettingsSymbolLevel]
+Tipka: NVDA+p
+
+To vam omogoča izbiro vrednosti naglaševanja in izgovorjave drugih simbolov, ki morajo biti brani kot besede.
+Ko je vrednost v tem spustnem meniju nastavljena na vse, potem se bodo vsi simboli brali z besedami.
+Ta možnost vpliva na vse sinteze in ne samo na tisto, ki je trenutno v uporabi.
+
+==== Zaupaj jeziku osebe med obdelovanjem simbolov in znakov ====[SpeechSettingsTrust]
+Ta možnost, ki je privzeto vključena, pove NVDA, naj se pri obdelovanju znakov in simbolov zanaša na jezik osebe (slovar govorne sinteze preglasi slovar vgrajen v NVDA).
+Če ugotovite, da NVDA napačno izgovarja posamezno ločilo v nekem jeziku ob nastavitvi glasu ali govorne sinteze v celoti, potem lahko to možnost izključite, da NVDA vsilite uporabo globalnih jezikovnih nastavitev.
+
+==== Sprememba višine glasu ob velikih črkah v odstotkih ====[SpeechSettingsCapPitchChange]
+To vnosno polje omogoča vnos vrednosti razlike v tonu glasu, za katero se bo glas zvišal, ko bo sinteza izgovarjala veliko črko.
+Ta vrednost je v odstotkih, kjer negativna vrednost zniža odstotke od osnove in pozitivna vrednost te zviša.
+Če želite, da se višine ne spreminja, vnesite 0.
+
+==== Reci "velika" pred velikimi črkami ====[SpeechSettingsSayCapBefore]
+Ta nastavitev je izbirnik in ko je izbran, pove NVDA, naj pred velikimi črkami reče "velika", ko črke izgovarja posamezno kot je črkovanje.
+Običajno NVDA zviša ton govorne sinteze ob velikih črkah, toda nekatere sinteze tega ne podpirajo dovolj dobro tako, da bi znala biti ta možnost koristna.
+
+==== Oddaj zvočni signal ob velikih črkah ====[SpeechSettingsBeepForCaps]
+Če je ta izbirnik izbran, bo NVDA oddala kratek pisk vedno, ko bo zaznala veliki znak.
+Podobno kot pri funkciji izgovori "velika" pred velikimi črkami, je ta funkcija uporabna pri govornih sintezah, ki višanja glasu ne podpirajo za velike črke.
+
+==== Uporabljaj funkcijo črkovanja, če je podprta ====[SpeechSettingsUseSpelling]
+Nekatere besede sestavlja samo ena črka, toda njihova izgovorjava je različna glede na to ali se znak izgovarja kot samostojna enota (kot pri črkovanju) ali izgovorjavi besede.
+Na primer v Angleščini je "a" tako znak kot beseda. Ker je tako, se to tudi različno izgovarja.
+Ta možnost omogoča govorni sintezi ločevanje med tema dvema dogodkoma, če to govorna sinteza podpira.
+Večina sintez to podpira.
+
+Ta možnost bi običajno morala biti omogočena.
+Kakorkoli, v nekatere govorne sinteze, ki uporabljajo tehnologijo Microsoft speech API, niso te funkcije pravilno vgradili v sistem in se tako obnašajo tuje, ko je ta možnost vključena.
+Če imate težave pri izgovorjavi posameznih znakov, poskusite z izklopom te možnosti.
+
++++ Izbira Sinteze (NVDA+control+s) +++[SelectSynthesizer]
+Pogovorno okno Sinteze, ki se lahko odpre prek sprožitve Gumba Spremeni..., v zvrsti Govor pogovornega okna Nvda Nastavitev, vam omogoča izbiro, s katero govorno sintezo naj NVDA govori.
 Ko izberete sintezo, pritisnite V redu in NVDA bo naložila izbrano sintezo.
 Če pri nalaganju pride do napake, vas bo NVDA o tem obvestila in nadaljevala z uporabo prej izbrane sinteze.
 
-==== Sinteza ====[SynthesizerSelectionSynthesizer]
+==== Sinteza ====[SelectSynthesizerSynthesizer]
 Ta možnost vam omogoča izbiro sinteze, s katero želite, da NVDA govori.
 
-Seznam podprtih govornih sintez se nahaja na razdelku [Podprte govorne sinteze #SupportedSpeechSynths], prosimo, oglejte si ga.
+Seznam podprtih govornih sintez se nahaja v razdelku [Podprte govorne sinteze #SupportedSpeechSynths], prosimo, oglejte si ga.
 
 Posebna postavka, ki se bo vedno prikazala, je "Brez govora", z izbiro katere NVDA ne govori več.
-To je uporabno za tiste, ki želijo NVDA uporabljati samo z brajem ali za videčega razvijalca, ki bo uporabljal samo pregledovalnik govora.
+To je uporabno za tiste, ki želijo NVDA uporabljati samo z brajico ali za videčega razvijalca, ki bo uporabljal samo pregledovalnik govora.
 
-==== Izhodna naprava ====[SynthesizerSelectionOutputDevice]
+==== Izhodna naprava ====[SelectSynthesizerOutputDevice]
 Ta možnost vam omogoča izbiro zvočne kartice, preko katere naj NVDA napoti zvok govorne sinteze.
 
 %kc:setting
-==== Delovanje Stišanja Zvokov ====[SynthesizerSelectionDuckingMode]
+==== Delovanje Stišanja Zvokov ====[SelectSynthesizerDuckingMode]
 Tipka: NVDA+shift+d
 
 V sistemu Windows 8 in novejših vam ta možnost omogoča, da NVDA zniža glasnost ostalih zvokov, ko NVDA govori ali stalno, ko NVDA teče.
@@ -994,83 +1085,8 @@ V sistemu Windows 8 in novejših vam ta možnost omogoča, da NVDA zniža glasno
 Ta možnost je na voljo samo takrat, ko je NVDA nameščena v sistemu.
 Stišanja zvokov v prenosljivi in začasni kopiji NVDA ni mogoče podpreti.
 
-+++ Nastavitve Glasu(NVDA+control+v) +++[VoiceSettings]
-Pogovorno okno Nastavitev Glasu, ki se nahaja v meniju Nastavitve, vsebuje možnosti, ki vam omogočajo spreminjanje zvoka govora.
-Obstaja pa tudi še hitrejša pot za spreminjanje nastavitev glasu od kjerkoli ; prosimo, oglejte si razdelek [Krog Nastavitev Sinteze #SynthSettingsRing].
-
-Pogovorno okno Nastavitev Glasu vsebuje naslednje možnosti:
-
-==== Glas ====[VoiceSettingsVoice]
-Prva možnost, ki se vam v tem pogovornem oknu pokaže, je spustni seznam z vsemi glasovi, ki pripadajo izbrani govorni sintezi in jih imate nameščene na računalniku.
-Lahko uporabljate puščice za poslušanje različnih izbir.
-Puščici gor in levo vas pomikata navzgor po seznamu ter puščici dol in desno navzdol po seznamu.
-
-==== Oseba ====[VoiceSettingsVariant]
-Če uporabljate govorno sintezo Espeak NG, ki je vključena v namestitveni paket NVDA, ta spustni seznam omogoči izbiro, s kakšno barvo glasu bi Espeak moral delovati.
-Osebe sinteze ESpeak NG so kot glasovi, saj vsebujejo različne karakteristike glede na značilnosti osnovne postavitve.
-Nekatere osebe zvenijo kot moški, druge kot ženske in tretje kot "žabe".
-
-==== Hitrost ====[VoiceSettingsRate]
-Ta možnost omogoča spreminjanje hitrosti govora vašega glasu.
-Deluje preko drsnika od 0 do 100, kjer 0 pomeni najpočasnejšo govorico in 100 najhitrejšo.
-
-==== Višina ====[VoiceSettingsPitch]
-Ta možnost vam omogoča spreminjanje vešine trenutnega glasu.
-Deluje preko drsnika od 0 do 100, kjer 0 pomeni najnižji ton in 100 najvišji.
-
-==== Glasnost ====[VoiceSettingsVolume]
-To je drsnik od 0 do 100, kjer je 0 najtišje govorjenje in 100 najglasnejše.
-
-==== Glasovna modulacija ====[VoiceSettingsInflection]
-Ta možnost je v obliki drsnika od 0 do 100, kjer 0 pomeni najmanjšo možno modulacijo (spreminjanje višine med govorom) in 100 najvišjo možno modulacijo. Trenutno to možnost podpira samo ESpeak NG.
-
-==== Samodejna menjava Jezika ====[VoiceSettingsLanguageSwitching]
-Ta izbirnik vklaplja stikalo samodejne zamenjave jezika govorne sinteze med branjem, če je v besedilu, ki ga prebirate, jezikovna zastavica, ki označuje jezik besedila.
-Ta možnost je privzeto vključena.
-Trenutno samodejno menjavo jezika podpira samo ESpeak NG.
-
-==== Samodejna menjava Narečja ====[VoiceSettingsDialectSwitching]
-Ta možnost omogoča, če je izbrana, da sinteza menja tudi narečje, ne samo jezika.
-To pomeni sledeče, da bo govorna sinteza dokument prebrala z britanskim naglasom, čeprav je prednastavljen jezik Ameriška Angleščina. Vse to seveda zavisi od zastavic, s katerimi je opremljen dokument.
-Ta možnost je privzeto izključena.
-
-%kc:setting
-==== Nivo Naglaševanja/Simbolov ====[VoiceSettingsSymbolLevel]
-Tipka: NVDA+p
-
-To vam omogoča izbiro vrednosti naglaševanja in izgovorjave drugih simbolov, ki morajo biti brani kot besede.
-Ko je vrednost v tem spustnem meniju nastavljena na vse, potem se bodo vsi simboli brali z besedami.
-Ta možnost vpliva na vse sinteze in ne samo na tisto, ki je trenutno v uporabi.
-
-==== Zaupaj jeziku osebe med obdelovanjem simbolov in znakov ====[VoiceSettingsTrust]
-Ta možnost, ki je privzeto vključena, pove NVDA, naj se pri obdelovanju znakov in simbolov zanaša na jezik osebe (slovar govorne sinteze preglasi slovar vgrajen v NVDA).
-Če ugotovite, da NVDA napačno izgovarja posamezno ločilo v nekem jeziku ob nastavitvi glasu ali govorne sinteze v celoti, potem lahko to možnost izključite, da NVDA vsilite uporabo globalnih jezikovnih nastavitev.
-
-==== Sprememba višine glasu ob velikih črkah v odstotkih ====[VoiceSettingsCapPitchChange]
-To vnosno polje omogoča vnos vrednosti razlike v tonu glasu, za katero se bo glas zvišal, ko bo sinteza izgovarjala veliko črko.
-Ta vrednost je v odstotkih, kjer negativna vrednost zniža odstotke od osnove in pozitivna vrednost te zviša.
-Če želite, da se višine ne spreminja, vnesite 0.
-
-==== Reci "velika" pred velikimi črkami ====[VoiceSettingsSayCapBefore]
-Ta nastavitev je izbirnik in ko je izbran, pove NVDA, naj pred velikimi črkami reče "velika", ko črke izgovarja posamezno kot je črkovanje.
-Običajno NVDA zviša ton govorne sinteze ob velikih črkah, toda nekatere sinteze tega ne podpirajo dovolj dobro tako, da bi znala biti ta možnost koristna.
-
-==== Oddaj zvočni signal ob velikih črkah ====[VoiceSettingsBeepForCaps]
-Če je ta izbirnik izbran, bo NVDA oddala kratek pisk vedno, ko bo zaznala veliki znak.
-Podobno kot pri funkciji izgovori "velika" pred velikimi črkami, je ta funkcija uporabna pri govornih sintezah, ki višanja glasu ne podpirajo za velike črke.
-
-==== Uporabljaj funkcijo črkovanja, če je podprta ====[VoiceSettingsUseSpelling]
-Nekatere besede sestavlja samo ena črka, toda njihova izgovorjava je različna glede na to ali se znak izgovarja kot samostojna enota (kot pri črkovanju) ali izgovorjavi besede.
-Na primer v Angleščini je "a" tako znak kot beseda. Ker je tako, se to tudi različno izgovarja.
-Ta možnost omogoča govorni sintezi ločevanje med tema dvema dogodkoma, če to govorna sinteza podpira.
-Večina sintez to podpira.
-
-Ta možnost bi običajno morala biti omogočena.
-Kakorkoli, v nekatere govorne sinteze, ki uporabljajo tehnologijo Microsoft speech API, niso te funkcije pravilno vgradili v sistem in se tako obnašajo tuje, ko je ta možnost vključena.
-Če imate težave pri izgovorjavi posameznih znakov, poskusite z izklopom te možnosti.
-
 +++ Krog nastavitev sinteze +++[SynthSettingsRing]
-Če želite hitro spreminjati nekatere govorne nastavitve brez, da bi morali v pogovorno okno nastavitev glasu v NVDA, imate na voljo nekaj NVDA ukazov, ki vam omogočajo spreminjanje najbolj uporabnih nastavitev od kjerkoli, ko je NVDA vključena:
+Če želite hitro spreminjati nekatere govorne nastavitve brez, da bi morali odpreti zvrst Nastavitev Govora v pogovornem oknu NVDA Nastavitev, imate na voljo nekaj NVDA ukazov, ki vam omogočajo spreminjanje najbolj uporabnih nastavitev od kjerkoli, ko je NVDA vključena:
 %kc:beginInclude
 || Ime | Običajna razporeditev | razporeditev Prenosnik | Opis |
 | Pomik na naslednjo nastavitev glasu | NVDA+control+Puščica desno | NVDA+shift+control+Puščica desno | Se pomakne na naslednjo nastavitev govora na voljo za trenutno, s preskokom na prvo, če smo na zadnji |
@@ -1079,32 +1095,17 @@ Kakorkoli, v nekatere govorne sinteze, ki uporabljajo tehnologijo Microsoft spee
 | Pomanjša trenutno glasovno nastavitev | NVDA+control+Puščica dol | NVDA+shift+control+Puščica dol | Pomanjša vrednost govorne nastavitve, kjer trenutno stojite. Npr. pomanjša hitrost, se premakne na predhodni glas ali zniža glasnost |
 %kc:endInclude
 
-+++ Nastavitve Braja +++[BrailleSettings]
-Do pogovornega okna Nastavitve Braja lahko dostopate preko menija Nastavitve in izberete možnost Nastavitve Braja.
++++ Nastavitve Brajice +++[BrailleSettings]
+Zvrst Brajica v pogovornem oknu NVDA Nastavitev vsebuje možnosti, ki vam omogočajo spremembo večih vidikov prikaza v brajici in vnosa v njej.
+Ta zvrst vsebuje naslednje možnosti:
 
-==== Brajeva Vrstica ====[BrailleSettingsDisplay]
-Prva možnost, ki se vam bo prikazala, ko odprete pogovorno okno nastavitev Braja, je možnost v spustnem seznamu "Brajeva Vrstica".
-Predstavljene vam bodo izbrane možnosti, odvisno od tega, katere brajeve gonilnike imate nameščene na vašem sistemu.
-Med temi možnostmi se premikate s puščicami.
-
-Brez braja pomeni, da ne uporabljate brajice.
-
-Prosimo, glejte razdelek [Podprte Brajeve Vrstice #SupportedBrailleDisplays] za več informacij o podprtih brajevih vrsticah.
-
-==== Vrata ====[BrailleSettingsPort]
-Ta možnost, če je na voljo, omogoča izbiro vrat ali tip povezave, ki se bo uporabljala za komunikacijo z brajevo vrstico, ki ste jo izbrali.
-To je spustni seznam, ki vsebuje mogoče možnosti za vašo brajevo vrstico.
-
-Privzeto NVDA izbere samodejno zaznavo vrat, kar pomeni, da bo povezava z brajevo napravo vzpostavljena samodejno z iskanjem USB in bluetooth naprav na vašem sistemu.
-Kakorkoli, za nekatere brajeve vrstice boste verjetno morali sami jasno določiti, katera vrata naj se uporabljajo.
-Možnosti, ki so na voljo, so "Samodejno", (kar pove NVDA naj uporabi privzeto proceduro samodejne izbire), "USB", "Bluetooth" in običajna serijska vrata, če vaša brajeva vrstica podpira ta tip komunikacije.
-
-Ta možnost ni na voljo, če vaša brajeva vrstica podpira samo samodejno izbiro vrat.
-
-Priporočamo ogled dokumentacije za vašo brajevo vrstico v razdelku [Podprte Brajeve Vrstice #SupportedBrailleDisplays] za preverbo več podrobnosti o podprtih tipih komunikacije in vratih, ki so na voljo.
+==== Zamenjaj brajevo vrstico ====[BrailleSettingsChange]
+Gumb Spremeni... v zvrsti Brajica v pogovornem oknu NVDA Nastavitev vzpostavi pogovorno okno [Izberi Brajevo Vrstico #SelectBrailleDisplay], ki vam omogoča izbiro dejavne brajeve vrstice.
+To pogovorno okno se odpre nad pogovornim oknom NVDA Nastavitev.
+Shranitev ali zavrzitev nastavitev v pogovornem oknu Izbire Brajeve Vrstice vas bo vrnila nazaj v pogovorno okno NVDA Nastavitev.
 
 ==== Tabela za Prikaz ====[BrailleSettingsOutputTable]
-Naslednja možnost, na katero boste naleteli v tem pogovornem oknu, je spustni seznam tabel za prikaz.
+Naslednja možnost, na katero boste naleteli v tej zvrsti, je spustni seznam tabel za prikaz.
 V tem spustnem seznamu boste našli brajeve tabele za različne jezike, brajeve standarde in krajšave.
 Tabela, ki jo izberete, se uporablja za prenos besedila v brajico za prikaz na vaši brajevi vrstici.
 Med tabelami v seznamu se premikate s puščicami.
@@ -1145,10 +1146,10 @@ Ta možnost je številčno polje, ki nadzira, koliko dolgo bodo sporočila NVDA 
 Nastavitev tega polja na 0 onemogoči prikaz teh sporočil.
 
 ==== Kaži Sporočila v Nedogled ====[BrailleSettingsNoMessageTimeout]
-Ta možnost omogoča sporočilom NVDA, da bodo prikazana na brajevi vrstici, toliko časa, dokler jih ne boste ročno zavrgli v obliki drugega sporočila, s premikom žarišča ipd.
+Ta možnost omogoča sporočilom NVDA, da bodo prikazana na brajevi vrstici, toliko časa, dokler jih ne boste ročno zavrgli v obliki drugega sporočila s premikom žarišča ipd.
 
 %%fixMe %kc:setting
-==== Navezava Braja ====[BrailleTether]
+==== Navezava Brajice ====[BrailleTether]
 Tipka: NVDA+control+t
 
 Ta možnost vam omogoča, da določite, ali naj brajeva vrstica sledi sistemskemu žarišču, predmetu krmiljenja/pregledni utripalki, ali obema.
@@ -1200,9 +1201,34 @@ Kko boste želeli prebrati kontekst, (npr., da ste na seznamu in da je ta seznam
 
 Za preklop žarišča informacije o kontekstu od kjerkoli, prosimo, določite vašo izbrano kretnjo z uporabo [pogovornega okna Kretenj Vnosa #InputGestures].
 
-+++ Nastavitve Tipkovnice (NVDA+control+k) +++[KeyboardSettings]
-To pogovorno okno se nahaja v nastavitvah pod "Nastavitve tipkovnice...".
-Vsebuje naslednje možnosti:
++++ Izberi Brajevo Vrstico (NVDA+control+a) +++[SelectBrailleDisplay]
+Pogovorno okno Izbire Brajeve Vrstice, ki se lahko odpre prek sprožitve gumba Spremeni... v zvrsti Brajica pogovornega okna NVDA Nastavitev, vam omogoča izbiro vrstice, ki jo mora NVDA uporabljati  za prikaz brajice.
+Ko ste enkrat izbrali vašo željeno brajevo vrstico, lahko pritisnete gumb V redu in NVDA bo potem naložila izbrano vrstico.
+Če se pojavi napaka pri poskusu naložitve gonilnika brajeve vrstice, vas bo NVDA o tem obvestila s sporočilom ter nadaljevala z uporabo prejšnje vrstice, če se je uporabljala.
+
+==== Brajeva Vrstica ====[SelectBrailleDisplayDisplay]
+Ta spustni seznam vam predstavlja več možnosti, ki so odvisne od tega, kateri gonilniki brajevih vrstic so na voljo v vašem sistemu.
+Med temi možnostmi se premikate s puščicami.
+
+Brez brajice pomeni, da ne uporabljate brajice.
+
+Prosimo, glejte razdelek [Podprte Brajeve Vrstice #SupportedBrailleDisplays] za več informacij o podprtih brajevih vrsticah.
+
+==== Vrata ====[SelectBrailleDisplayPort]
+Ta možnost, če je na voljo, omogoča izbiro vrat ali tip povezave, ki se bo uporabljala za komunikacijo z brajevo vrstico, ki ste jo izbrali.
+To je spustni seznam, ki vsebuje mogoče možnosti za vašo brajevo vrstico.
+
+Privzeto NVDA izbere samodejno zaznavo vrat, kar pomeni, da bo povezava z brajevo napravo vzpostavljena samodejno z iskanjem USB in bluetooth naprav na vašem sistemu.
+Kakorkoli, za nekatere brajeve vrstice boste verjetno morali sami jasno določiti, katera vrata naj se uporabljajo.
+Možnosti, ki so na voljo, so "Samodejno", (kar pove NVDA naj uporabi privzeto proceduro samodejne izbire), "USB", "Bluetooth" in običajna serijska vrata, če vaša brajeva vrstica podpira ta tip komunikacije.
+
+Ta možnost ni na voljo, če vaša brajeva vrstica podpira samo samodejno izbiro vrat.
+
+Priporočamo ogled dokumentacije za vašo brajevo vrstico v razdelku [Podprte Brajeve Vrstice #SupportedBrailleDisplays] za preverbo več podrobnosti o podprtih tipih komunikacije in vratih, ki so na voljo.
+
++++ Tipkovnica (NVDA+control+k) +++[KeyboardSettings]
+Zvrst Tipkovnica v pogovornem oknu NVDA Nastavitev vsebuje možnosti, ki določajo, kako se obnaša NVDA, ko uporabljate in tipkate na tipkovnico.
+Ta zvrst nastavitev vsebuje naslednje možnosti:
 
 ==== Razporeditev tipk ====[KeyboardSettingsLayout]
 Na tem spustnem seznamu se nahajajo razporeditve tipk, po katerih mora delati NVDA. Izbirate lahko med večimi razporeditvami. Trenutno sta na voljo razporeditvi "Običajna" in Prenosnik.
@@ -1217,7 +1243,7 @@ Na tem spustnem seznamu se nahajajo razporeditve tipk, po katerih mora delati NV
 Če je ta izbirnik izbran, se lahko insert na številskem delu tipkovnice uporablja kot NVDA prikrojevalna tipka.
 
 Če nobena tipka ni izbrana kot NVDA prikrojevalna tipka, potem se ne mora izvesti cela kopica ukazov nad NVDA.
-Zaradi tega bo pogovorno okno nastavitev tipkovnice prikazalo sporočilo o napaki, če ob pritisku gumba V redu ne bo izbrana nobena tipka.
+Zaradi tega bo pogovorno okno NVDA Nastavitev prikazalo sporočilo o napaki, če ob pritisku gumba V redu ne bo izbrana nobena tipka.
 Po odstranitvi sporočila o napaki, morate izbrati vsaj eno tipko, da se pogovorno okno po pritisku gumba V redu, pravilno zapre.
 
 %%fixMe: %kc:setting
@@ -1254,15 +1280,15 @@ Ko je to omogočeno, NVDA naznani vse pritiske na tipkovnici, ki niso nujno pove
 
 ==== Oddaj zvok ob napaki v črkovanju med tipkanjem ====[KeyboardSettingsAlertForSpellingErrors]
 Ko bo ta možnost vključena, bo NVDA predvajala kratek praskajoč zvok ob besedi, pri kateri bo zaznana napaka črkovanja.
-Ta možnost bo na voljo samo takrat, ko bo Sporočanje napak v črkovanju omogočeno v NVDA pogovornem oknu [Nastavitev Oblikovanja Dokumentov. #DocumentFormattingSettings]
+Ta možnost bo na voljo samo takrat, ko bo Sporočanje napak črkovanja omogočeno v [Nastavitvah Oblikovanja Dokumentov #DocumentFormattingSettings], ki se nahajajo v pogovornem oknu NVDA Nastavitev.
 
 ==== Obravnavaj pritiske tipk s strani drugih programov ====[KeyboardSettingsHandleKeys]
 Ta možnost omogoča uporabniku, nadzor nad tem, kako NVDA obravnava pritiske tipk, ki jih prožijo drugi programi, kot so tipkovnice na zaslonu ali programi za prepoznavo govora. Če je možnost vključena, potem to vpliva na delovanje NVDA.
 Ta možnost je ob namestitvi NVDA privzeto vključena, toda nekateri uporabniki jo bodo morda morali izključiti. Taki so uporabniki, ki tipkajo v Vietnamščini, saj ta možnost povzroča napačne vnose v programu Unikey typing.
 
-+++ Nastavitve Miške (NVDA+control+m) +++[MouseSettings]
-Pogovorno okno nastavitev miške se nahaja v meniju Nastavitve pod "Nastavitve miške...".
-Vsebuje naslednje možnosti:
++++ Miška (NVDA+control+m) +++[MouseSettings]
+Zvrst Miška v pogovornem oknu NVDA Nastavitev dovoljuje NVDA, da sledi miško, igra miškine koordinate s piski in določa druge možnosti za miško.
+Ta zvrst vsebuje naslednje možnosti:
 
 ==== Poročaj o Spremembi Oblike Miške ====[MouseSettingsShape]
 Je izbirnik in ko je izbran, bo NVDA naznanila spremembo oblike miškinega kazalca vedno, ko se bo ta spremenila.
@@ -1290,17 +1316,18 @@ Bolj, kot je miška na levi ali desni strani zaslona, bolj izrazit bo zvok na le
 Če je možnost "Zaigraj avdio koordinate, ko se miška premika" izbrana, potem to pomeni, da se jakost zvoka piskov nadzira. Jakost zvoka je odvisna od svetlosti zaslona pod miškinim kazalcem.
 Ta nastavitev je privzeto izključena.
 
-+++ Nastavitve Interakcije z Dotikom +++[TouchInteraction]
-To pogovorno okno, ki je na voljo samo na računalnikih, kjer tečejo Windows 8 ali novejši in z zaznavami dotika, vam omogoča nastaviti, kako seNVDA obnaša na zaslonih na dotik.
++++ Interakcija z Dotikom +++[TouchInteraction]
+Ta zvrst nastavitev, ki je na voljo samo na računalnikih, kjer tečejo Windows 8 ali novejši in z zaznavami dotika, vam omogoča nastaviti, kako seNVDA obnaša na zaslonih na dotik.
+Ta zvrst vsebuje naslednje možnosti:
 
 ==== Delovanje tipkanja z dotikom ====[TouchTypingMode]
 Ta izbirnik vam omogoča, da določite metodo, ki jo želite uporabljati, ko boste vnašali besedilo z uporabo tipkovnice na dotik.
 Če je ta izbirnik izbran, se bo tipka na tipkovnici na dotik pritisnila, ko boste to tipko locirali in potem prst dvignili.
 Če izbirnik ni izbran, boste morali izvesti dvojni tap na tipki s tipkovnice na dotik, da jo boste pritisnili.
 
-+++ Nastavitve Pregledne Utripalke +++[ReviewCursorSettings]
-Pogovorno okno se nahaja v nastavitvah NVDA v "Pregledna Utripalka...".
-To pogovorno okno vsebuje sledeče možnosti:
++++ Pregledna Utripalka +++[ReviewCursorSettings]
+Zvrst Pregledna Utripalka v pogovornem oknu NVDA Nastavitev se uporablja za nastavitev vedenja pregledne utripalke NVDA.
+Ta zvrst vsebuje sledeče možnosti:
 
 %kc:setting
 ==== Sledi Sistemskemu Žarišču ====[ReviewCursorFollowFocus]
@@ -1322,9 +1349,9 @@ Ko boste možnost vključili, bo NVDA izvedla filtracijo v hierarhiji predmetov,
 
 Za preklapljanje delovanja enostavnega pregleda od kjerkoli, prosimo, določite kretnjo po meri z uporabo [pogovornega okna Kretenj Vnosa #InputGestures].
 
-+++ Nastavitve Predstavitve Predmeta (NVDA+control+o) +++[ObjectPresentationSettings]
-Te nastavitve se nahajajo v meniju nastavitev NVDA v meniju "Predstavitev predmeta...".
-To pogovorno okno vsebuje naslednje možnosti:
++++ Predstavitev Predmeta (NVDA+control+o) +++[ObjectPresentationSettings]
+Zvrst Predstavitev Predmeta v pogovornem oknu NVDA Nastavitev se uporablja za določitev, koliko informacij vam bo NVDA predstavila o kontrolnikih, kot je opis, informacija o položaju in tako naprej.
+Ta zvrst nastavitev vsebuje naslednje možnosti:
 
 ==== Sporočaj Zaslonske Namige ====[ObjectPresentationReportToolTips]
 To je izbirnik, ki NVDA sporoča, naj pove, kaj vsebujejo zaslonski namigi, ko je izbran.
@@ -1379,9 +1406,8 @@ Na primer, ko vnašate besedilo v iskalno polje v začetnem meniju sistema Windo
 V nekaterih poljih za urejanje, kot so iskalna polja v različnih Windows 10 aplikacijah, vas lahko NVDA obvesti, da se je prikazal seznam predlogov med tem, ko ste vnašali besedilo.
 Seznam samodejnih predlogov bo izginil, ko se boste enkrat premaknili iz polja za urejanje in za nekatera polja, vas lahko NVDA obvesti o tem, ko se to zgodi.
 
-+++ Nastavitve za Vnos Večznakovnih Znakov +++[InputCompositionSettings]
-Pogovorno okno nastavitev vnosa večznakovnih znakov lahko najdete v meniju nastavitev.
-To pogovorno okno omogoča nadzor nad načinom poročanja NVDA o vnosu azijskih znakov kot na primer z IME ali s storitvijo metod vnosa besedila.
++++ Vnos Večznakovnih Znakov +++[InputCompositionSettings]
+Zvrst Vnos Večznakovnih Znakov vam omogoča nadzor nad načinom poročanja NVDA o vnosu azijskih znakov kot na primer z IME ali s storitvijo metod vnosa besedila.
 Opozarjamo, da zaradi tega, ker se metode vnosa zelo razlikujejo po značilnostih na voljo in kako prenašajo informacije, je zelo verjetno, da bo potrebno nastaviti te možnosti drugače za vsako metodo za najboljšo izkušnjo tipkanja.
 
 ==== Samodejno sporoči vse kandidate na voljo ====[InputCompositionReportAllCandidates]
@@ -1410,10 +1436,9 @@ Po branju ali, ko so bili predskladenjski podatki združeni v ustrezen slikovni 
 Ta možnost vam omogoča izbiro ali mora NVDA poročati o novih simbolih, ko se pojavijo v skladnji niza.
 Ta možnost je privzeto vključena.
 
-+++ Nastavitve Brskalniškega Delovanja (NVDA+control+b) +++[BrowseModeSettings]
-Pogovorno okno nastavitev brskalniškega delovanja lahko najdete v nastavitvah pod "Brskalniško delovanje...".
-
-Pogovorno okno vsebuje naslednje možnosti:
++++ Brskalniško Delovanje (NVDA+control+b) +++[BrowseModeSettings]
+Zvrst Brskalniško Delovanje v pogovornem oknu NVDA Nastavitev se uporablja za nastavitev vedenja NVDA, ko prebirate in se premikate po kompleksnih dokumentih, kot so spletne strani.
+Ta zvrst vsebuje naslednje možnosti:
 
 ==== Največje Število Znakov na Eno Vrstico ====[BrowseModeSettingsMaxLength]
 To polje določa največjo možno dolžino vrstice v brskalniškem delovanju (v znakih).
@@ -1441,7 +1466,7 @@ Ta možnost je privzeto izključena.
 Za preklapljanje vključitve tabel namenjenih oblikovanju od kjerkoli, prosimo, določite kretnjo po meri z uporabo [pogovornega okna Kretenj Vnosa #InputGestures].
 
 ==== Nastavljanje poročanja o poljih, kot so povezave in naslovi ====[BrowseModeLinksAndHeadings]
-Prosimo, oglejte si možnosti v [pogovornem oknu Nastavitev Oblikovanja Dokumentov #DocumentFormattingSettings] za nastavljanje poročanja o elementih ob navigaciji, kot so povezave, naslovi in tabele.
+Prosimo, oglejte si možnosti v [zvrsti Oblikovanja Dokumentov #DocumentFormattingSettings], ki je del pogovornega okna [NVDA Nastavitev #NVDASettings] za nastavljanje poročanja o elementih ob navigaciji, kot so povezave, naslovi in tabele.
 
 ==== Samodejno delovanje žarišča ob spremembah žarišča ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Ta možnost omogoča klic delovanja žarišča, če se žarišče spremeni.
@@ -1458,10 +1483,8 @@ Na primer, ko se premikate s puščicami po spletni strani in vstopite na polje 
 Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali naj kretnje (pritiski tipk), ki niso ukazi NVDA, niti to niso splošni ukazi, ne vplivajo na dokument.
 Na primer, v primeru, ko je možnost vključena, pritisk črke j ne bo vplival na dokument, čeprav to niti ni ukaz NVDA, niti ni to splošen ukaz v programu.
 
-+++ Nastavitve Oblikovanja Dokumentov (NVDA+control+d) +++[DocumentFormattingSettings]
-To pogovorno okno se nahaja v meniju Nastavitev pod "Oblikovanje Dokumentov...".
-
-Večina izbirnikov v tem pogovornem oknu določa, kako poročati o tipih oblikovanja, ko se z utripalko sprehajate po dokumentih.
++++ Oblikovanje Dokumentov (NVDA+control+d) +++[DocumentFormattingSettings]
+Večina izbirnikov v tej zvrsti določa, kako poročati o tipih oblikovanja, ko se z utripalko sprehajate po dokumentih.
 Na primer, ko izberete izbirnik ime pisave, bo vedno, ko se boste premaknili na besedilo z drugačno pisavo od prejšnje, NVDA sporočila ime pisave v uporabi.
 
 Možnosti oblikovanja dokumenta so razvrščene v skupine.
@@ -1500,7 +1523,6 @@ V NVDA lahko nastavite poročanje za:
  -
 -
 
- 
 Za preklapljanje stanja teh nastavitev od kjerkoli, prosimo, dodelite lastne kretnje vnosa prek [pogovornega okna Kretenj Vnosa. #InputGestures]
 
 ==== Sporočaj spremembe oblikovanja za utripalko ====[DocumentFormattingDetectFormatAfterCursor]
@@ -1521,11 +1543,15 @@ Višina tona se bo spreminjala z vsakim presledkom, medtem, ko bo tabulator zvi�
 - Govora in Tonov: Ta možnost vključi obe prej opisani metodi.
 -
 
-+++ Nastavitve Windows 10 OCR +++[Win10OcrSettings] 
-Do tega pogovornega okna lahko dostopate prek glavnega menija NVDA za Nastavitve in ta vam omogoča nastaviti [Prepoznavo (OCR) v Windows 10 #Win10Ocr].
++++ Nastavitve Windows 10 OCR +++[Win10OcrSettings]
+Nastavitve v tej zvrsti vam omogočajo nastaviti [Prepoznavo (OCR) v Windows 10 #Win10Ocr].
+Ta zvrst vsebuje naslednje možnosti:
 
 ==== Jezik prepoznave ====[Win10OcrSettingsRecognitionLanguage]
 Ta spustni seznam vam omogoča izbiro jezika, ki se bo uporabil za prepoznavo besedila.
+
+++ Raznotere Nastavitve ++[MiscSettings]
+Razen pogovornega okna [NVDA Nastavitev #NVDASettings], podmeni Izbire menija NVDA vsebuje več drugih postavk, ki so orisane v nadaljevanju.
 
 +++ Slovarji govora +++[SpeechDictionaries]
 Meni slovarjev govora, ki se nahaja v Nastavitvah, vsebuje pogovorna okna, ki vam omogočajo upravljanje, kako NVDA izgovarja različne besede ali fraze.
@@ -1565,7 +1591,7 @@ Regularnih izrazov ta uporabniški vodič ne pokriva, ker obstaja precej vodiče
 To pogovorno okno vam omogoča menjavo zgovornosti, kar pomeni, kdaj se določen simbol izgovori. Lahko pa določite tudi, kaj naj se izgovori namesto imena simbola.
 
 Jezik, čigar izgovorjavo se trenutna ureja, je prikazan v naslovu pogovornega okna.
-Opozarjamo, da se to pogovorno okno zanaša na "Zaupaj jeziku osebe za procesiranje simbolov in znakov", možnost, ki se nahaja v [pogovornem oknu Nastavitev Glasu #VoiceSettings]; tako NVDA uporablja jezik osebe namesto globalne nastavitve za jezik, ko to možnost omogočite.
+Opozarjamo, da se to pogovorno okno zanaša na "Zaupaj jeziku osebe za procesiranje simbolov in znakov", možnost, ki se nahaja v [zvrsti Nastavitev Govora #SpeechSettings] pogovornega okna [NVDA Nastavitev #NVDASettings]; tako NVDA uporablja jezik osebe namesto globalne nastavitve za jezik, ko to možnost omogočite.
 
 Za menjavo simbola, ga najprej izberite s seznama simbolov.
 
@@ -1631,7 +1657,7 @@ Na primer, da želite, da NVDA poroča o zamikih (imate to možnost vključeno) 
 To vam NVDA omogoča skozi uporabo Profilov Konfiguracije.
 
 Profil konfiguracije vsebuje samo tiste nastavitve, ki so se spremenile med tem, ko je bil profil v urejanju.
-V profilih konfiguracije se lahko spremenijo skoraj vse nastavitve razen tistih pod Splošnimi nastavitvami, ki vplivajo na delovanje NVDA v celoti.
+V profilih konfiguracije se lahko spremenijo skoraj vse nastavitve razen tistih v zvrsti  Splošno v pogovornem oknu [NVDA Nastavitev #NVDASettings], ki vplivajo na delovanje NVDA v celoti.
 
 Profili konfiguracije se lahko aktivirajo ročno.
 Lahko pa se aktivirajo tudi samodejno glede na prožilec. Prožilec je lahko prehod v izbrano ačlikacijo.
@@ -1698,6 +1724,8 @@ Včasih je uporabno, če lahko začasno onemogočimo vse prožilce.
 Tak primer se pojavi, ko želite urejati profil, ki se aktivira ročno ali Normalno konfiguracijo brez motenj profilov na prožilcu.
 To storite s potrditvijo izbirnika Začasno onemogoči vse prožilce v pogovornem oknu Konfiguracije profilov.
 
+Za preklop stikala na onemogočitev prožilcev od kjerkoli, prosimo, določite kretnjo po meri z uporabo [pogovornega okna Kretenj Vnosa #InputGestures].
+
 ++ Mesta datotek z Nastavitvami ++[LocationOfConfigurationFiles]
 Prenosljive različice NVDA hranijo vse nastavitve in dodatke v imeniku z imenom userConfig, ki se nahaja v imeniku NVDA.
 
@@ -1707,7 +1735,7 @@ V imenik z vašimi nastavitvami v nameščeni različici NVDA lahko vstopite tak
 
 Nastavitve NVDA, ko deluje na prijavnem ali NUR zaslonih, se hranijo v imeniku systemConfig v namestitvenem imeniku NVDA.
 Običajno se teh nastavitev ne bi smelo dotikati.
-Za spremembo delovanja NVDA na prijavnem/NUR zaslonih nastavite NVDA, kot želite, da deluje medtem, ko ste prijavljeni v Okna, shranite to konfiguracijo in potem pritisnite gumb "Uporabljaj trenutno shranjene nastavitve na prijavnem zaslonu in drugih "varnih" namizjih" v splošnih nastavitvah za NVDA.
+Za spremembo delovanja NVDA na prijavnem/NUR zaslonih nastavite NVDA, kot želite, da deluje medtem, ko ste prijavljeni v Okna, shranite to konfiguracijo in potem pritisnite gumb "Uporabljaj trenutno shranjene nastavitve na prijavnem zaslonu in drugih "varnih" namizjih" v zvrsti Splošno pogovornega okna [NVDA Nastavitev #NVDASettings].
 
 + Dodatna Orodja +[ExtraTools]
 
@@ -1801,12 +1829,12 @@ SAPI 4 je starejši Microsoftov standard za programske govorne sinteze.
 NVDA še vedno podpira to možnost, če imajo uporabniki sinteze temelječe na SAPI 4, že nameščene.
 Toda Microsoft te možnosti ne podpira več in tudi potrebnih komponent Microsoft ne ponuja več.
 
-Ko boste uporabljali take sinteze z NVDA, bodo prikazani vsi možni glasovi (dostopni v [pogovornem oknu Nastavitev Glasu #VoiceSettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]), iz vseh SAPI 4 pogonov, ki so se našli v vašem sistemu.
+Ko boste uporabljali take sinteze z NVDA, bodo prikazani vsi možni glasovi (dostopni v [zvrsti  Govor #SpeechSettings] pogovornega okna [NVDA Nastavitev #NVDASettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]), iz vseh SAPI 4 pogonov, ki so se našli v vašem sistemu.
 
 ++ Microsoft Speech API različice 5 (SAPI 5) ++[SAPI5]
 SAPI 5 je trenuten Microsoftov standard za programske govorne sinteze.
 Veliko govornih sintez, ki je združljivih s tem standardom, je na voljo brezplačno za posedovanje ali prenos prek različnih družb ali spletnih mest, čeprav bo vaš sistem verjetno že imel prednameščeno vsaj eno tako sintezo.
-Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogovornega okna Nastavitev glasu #VoiceSettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]) iz vseh pogonov, ki jih je NVDA našla na vašem sistemu.
+Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [zvrsti Govor #SpeechSettings] pogovornega okna [NVDA Nastavitev #NVDASettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]) iz vseh pogonov, ki jih je NVDA našla na vašem sistemu.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
 Microsoft Speech Platform (Microsoftova govorna platforma) oskrbuje glasove za precejšnje število jezikov, ki se običajno uporabljajo tekom razvoja govornih aplikacij, ki temeljijo na strežniški podpori.
@@ -1837,7 +1865,7 @@ To je plačljiva govorna sinteza namenjena predvsem za italijanski jezik
 Govorna sinteza mora v sistemu že biti nameščena, če jo želite uporabljati z NVDA.
 Za več informacij, prosimo, obiščite spletno mesto Audiologic na www.audiologic.it.
 
-Ta govorna sinteza ne podpira  [funkcije črkovanja #VoiceSettingsUseSpelling].
+Ta govorna sinteza ne podpira  [funkcije črkovanja #SpeechSettingsUseSpelling].
 
 + Podprte Brajeve Vrstice +[SupportedBrailleDisplays]
 Ta razdelek vsebuje informacije o brajevih vrsticah, ki jih podpira NVDA.
@@ -1902,7 +1930,7 @@ Samo za Focus 80:
 %kc:endInclude
 
 ++ Optelec ALVA serija 6/protocol converter ++[OptelecALVA]
-Tako ALVA BC640 kot BC680 brajeva vrstica iz [podjetja Optelec http://www.optelec.com/] sta podprti, ko se na računalnik priključita prek USB ali bluetooth povezave.
+Tako brajeva vrstica ALVA BC640 kot BC680 iz [podjetja Optelec http://www.optelec.com/] sta podprti, ko se na računalnik priključita prek USB ali bluetooth povezave.
 Namesto teh lahko priključite starejšo vrstico znamke Optelec, kot je Braille Voyager z uporabo protocol converterja, ki ga je dobavil Optelec.
 Za uporabo teh vrstic ne potrebujete nobenih posebnih gonilnikov, ki bi morali biti nameščeni v sistem.
 Potrebno je samo, da se vrstica priključi in nastavi NVDA.
@@ -1989,7 +2017,7 @@ Prosimo, glejte dokumentacijo vrstice, da boste vedeli, kje senahaja katera tipk
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-Lilli brajeva vrstica na voljo s [MDV http://www.mdvbologna.it/] je podprta.
+Brajeva vrstica Lilli na voljo z [MDV http://www.mdvbologna.it/] je podprta.
 Za uporabo te vrstice vam ni potrebno namestiti posebnih gonilnikov.
 Potrebno je samo vrstico priključiti in konfigurirati NVDA.
 
@@ -2233,7 +2261,7 @@ Podprte so naslednje Brajeve vrstice:
 -
 
 Če je bil BrxCom nameščen, bo NVDA BrxCom uporabila.
-BrxCom je orodje, ki omogoča neodvisno uporabo tipkovnice brajeve vrstice, od bralnika zaslona.
+BrxCom je orodje, ki omogoča neodvisno uporabo tipkovnice brajeve vrstice od bralnika zaslona.
 Nova različica orodja BrxCom, ki dela z NVDA, bo kmalu na voljo prek njegovega izdelovalca Papenmeier.
 Vnašanje prek tipkovnice je mogoče z vrsticami Trio in BRAILLEX Live.
 
@@ -2312,7 +2340,7 @@ Podprte so naslednje Brajeve vrstice:
 -
 
 Opozarjamo, da te vrstice lahko priključite samo prek serijskih vrat.
-Torej morate vrata, na katera je vrstica priključena, določiti, ko izberete vrstico v Nastavitvah Braja.
+Torej morate vrata, na katera je vrstica priključena, določiti potem, ko ste izbrali ta gonilnik v pogovornem oknu [Izberi Brajevo Vrstico #SelectBrailleDisplay].
 
 Nekaj teh vrstic ima lahko dostopni trak (v Angleščini Easy Access Bar - EAB), ki omogoča hitro in intuitivno izvajanje operacij.
 Trak se lahko premakne v štiri smeri in vsaka smer ima v splošnem dve stikali.
@@ -2401,7 +2429,7 @@ Za BrailleNote Touch glejte odsek [Brailliant BI Series / BrailleNote Touch #Hum
 
 Če vaša naprava podpira več vrst povezave, ko vašo beležnico BrailleNote priključujete v NVDA, boste morali določiti vrata brajevega terminala v možnosteh brajevega terminala.
 Prosimo, podrobnosti preverite v priročniku za uporabo, ki ste ga prejeli zraven vaše beležnice BrailleNote.
-Verjetno boste morali vrata določiti tudi v meniju NVDA v pogovornem oknu Nastavetve Braja.
+Verjetno boste morali vrata določiti tudi v meniju NVDA v pogovornem oknu [Izberi Brajevo Vrstico #SelectBrailleDisplay].
 Če beležnico priključujete prek vrat USB ali protokola Blootooth, lahko vrata nastavite na "Samodejno", "USB" ali "Bluetooth"; vse je odvisno od izbir, ki so na voljo.
 Če se priključujete prek starih serijskih vrat, (ali uporabljate pretvornik USB v Serijska vrata) ali nič od tega, morate obvezno določiti komunikacijska vrata za uporabo is seznama strojnih vrat.
 
@@ -2417,7 +2445,7 @@ Prosimo, preverite dokumentacijo naprave, da boste vedeli, kje se posamezna tipk
 | Pomakni brajevo vrstico v predhodno vrstico | previous |
 | Pomakni brajevo vrstico v naslednjo vrstico | next |
 | Usmeri na brajevo celico | routing |
-| Preklapljanje navezovanja braja | previous+next |
+| Preklapljanje navezovanja brajice | previous+next |
 | tipka Puščica Gor | space+dot1 |
 | tipka Puščica Dol | space+dot4 |
 | tipka Puščica Levo | space+dot3 |
@@ -2447,7 +2475,7 @@ Podprti so naslednji modeli:
 - EcoBraille Plus
 -
 
-Serijska vrata, prek katerih je vrstica priključena v sistem, lahko izberete v nastavitvah NVDA, v pogovornem oknu Nastavitev Braja.
+Serijska vrata, prek katerih je vrstica priključena v sistem, v NVDA lahko izberete v pogovornem oknu [Izberi Brajevo Vrstico #SelectBrailleDisplay.
 
 Sledijo ukazi v NVDA s posameznimi tipkami z vrstice.
 Prosimo, poglejte [EcoBraille dokumentacijo ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] za podrobnosti o položaju posamezne tipke.
@@ -2470,7 +2498,7 @@ Prosimo, poglejte [EcoBraille dokumentacijo ftp://ftp.once.es/pub/utt/bibliotecn
 | Pomakni se na prvi predmet znotraj vsebine | F8 |
 | Pomakni sistemsko žarišče ali kazalko na trenutni položaj v pregledu | F9 |
 | Sporoči položaj pregledne utripalke | F0 |
-| Stikalo navezovanja braja na | A |
+| Stikalo navezovanja brajice na | A |
 %kc:endInclude
 
 ++ SuperBraille ++[SuperBraille]
@@ -2488,7 +2516,7 @@ Vrstice Esys, Esytime in Iris iz [Eurobraille http://www.eurobraille.fr/] so pod
 Naprave Esys in Esytime-Evo so podprte, ko so priključene prek USB ali bluetooth.
 Starejše naprave Esytime podpirajo samo USB.
 Vrstice Iris se lahko priključijo samo prek serijskih vrat.
-Zaradi tega morate za te vrstice določiti vrata, preko katerih je priključena vrstica, ko ste izbrali ta gonilnik v pogovornem oknu Nastavitev Braja.
+Zaradi tega morate za te vrstice določiti vrata, preko katerih je priključena vrstica, ko ste izbrali ta gonilnik v pogovornem oknu Nastavitev Brajice.
 
 Iris in Esys vrstice imajo brajevo tipkovnico z 10 tipkami.
 Od dveh tipk, ki sta postavljeni kot preslednica, leva tipka odgovarja tipki backspace in desna tipka preslednici.
@@ -2559,8 +2587,11 @@ Prosimo, oglejte si dokumentacijo vrstic za opis točne lokacije, kjer lahko pos
 | tipka capsLock | dot7+backspace, dot8+backspace |
 | tipka numLock | dot3+backspace, dot6+backspace |
 | tipka shift | dot7+space, l4 |
-| tipka control | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
-| tipka alt | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
+| Preklop tipke shift | dot1+dot7+space, dot4+dot7+space |
+| tipka control | dot7+dot8+space, l5 |
+| Preklop tipke control | dot1+dot7+dot8+space, dot4+dot7+dot8+space |
+| tipka alt | dot8+space, l6 |
+| Preklop tipke alt key | dot1+dot8+space, dot4+dot8+space |
 | StikaloHID simulacija vnosa prek tipkovnice | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 

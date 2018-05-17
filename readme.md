@@ -55,7 +55,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following dependencies are included in Git submodules:
 
-* [comtypes](https://github.com/enthought/comtypes), version 1.1.3
+* [comtypes](https://github.com/enthought/comtypes), version 1.1.4
 * [wxPython](http://www.wxpython.org/), version 3.0.2.0
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 37121600
@@ -73,8 +73,6 @@ For reference, the following dependencies are included in Git submodules:
 * brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
-* [Handy Tech Braille SDK, version 1.4.2.0](ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip)
-* Updated Handy Tech sbsupport.dll and dealers.dat received on 2014-09-09
 * [pyserial](http://pypi.python.org/pypi/pyserial), version 2.7
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-09 14:17+1000\n"
+"POT-Creation-Date: 2018-04-20 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
@@ -556,17 +556,29 @@ msgstr "{number} de {total}"
 msgid "lv %s"
 msgstr "nivell %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "f{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "f%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "f{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -576,9 +588,8 @@ msgstr "%s fi"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
-#, fuzzy
 msgid "automatically"
-msgstr "automàtic"
+msgstr "automàticament"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to focus.
 msgid "to focus"
@@ -591,6 +602,20 @@ msgstr "per revisar"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automàtic"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Entrada no suportada"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} disponible"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, fuzzy, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} no premut"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -803,18 +828,8 @@ msgstr "Braille d'ordinador francès (unificat) de 8 punts "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
-msgstr "Francès (unificat) grau 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "Francès (Canadà) grau 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "Francès (Canadà) grau 2"
+msgid "French (unified) grade 2"
+msgstr "francès (unificat) grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -913,8 +928,13 @@ msgstr "Caixmiri grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "Lituà"
+msgid "Lithuanian 8 dot"
+msgstr "Lituà 8 punts"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "Lituà 6 punts"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -933,8 +953,13 @@ msgstr "Manipuri grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "Mongol"
+msgid "Mongolian grade 1"
+msgstr "mongol grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "mongol grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1018,6 +1043,11 @@ msgstr "Panjabi grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "romanès"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "Braille d'ordinador rus per a codi d'ordinador"
 
@@ -1070,6 +1100,11 @@ msgstr "Telegu grau 1"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "Turc grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "ucraïnès"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4221,6 +4256,12 @@ msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
 "Guia el cursor a la cel·la braille o activa l'objecte sota aquesta cel•la"
 
+#. Translators: Input help mode message for Braille report formatting command.
+#, fuzzy
+msgid "Reports formatting info for the text under this braille cell"
+msgstr ""
+"Guia el cursor a la cel·la braille o activa l'objecte sota aquesta cel•la"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "Mou ell terminal braille a la línia anterior"
@@ -4248,6 +4289,46 @@ msgstr "Tradueix qualsevol entrada braille i prem la tecla retorn"
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Tradueix qualsevol entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Activa i desactiva virtualment la tecla maj per emular una drecera de teclat "
+"amb l'entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Activa i desactiva virtualment la tecla ctrl per emular una drecera de "
+"teclat amb l'entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Activa i desactiva virtualment la tecla alt per emular una drecera de teclat "
+"amb l'entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Activa i desactiva virtualment la tecla Windows de l'esquerra per emular una "
+"drecera de teclat amb l'entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Activa i desactiva virtualment la tecla NVDA per emular una drecera de "
+"teclat amb l'entrada braille"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -5878,10 +5959,22 @@ msgstr "selecció eliminada"
 msgid "row %s"
 msgstr "fila %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "mitjançant %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "columna %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, fuzzy, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "amb {row} files i {column} columnes"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6389,14 +6482,24 @@ msgid "Error checking for update."
 msgstr "Error en comprovar si hi ha actualitzacions."
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Error"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "Actualització de NVDA"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr ""
+"La versió {version} del NVDA s'ha descarregat i està pendent d'instal·lar-"
+"se. "
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6408,9 +6511,15 @@ msgstr "Versió {version} de NVDA disponible."
 msgid "No update available."
 msgstr "Cap actualització disponible."
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "Descarrega i &instal·la l'actualització"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "Instal·la NVDA {version}"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "Torna a &descarregar l'actualització"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6425,6 +6534,23 @@ msgstr "Recorda-m'ho més &tard"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Tanca"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "La versió {version} de NVDA està preparada per instal·lar-se.\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "&Instal·la l'actualització"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "&Posposa l'actualització"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "No es pot posposar l'actualització"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6441,15 +6567,6 @@ msgstr "Descàrrega en curs"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "S'ha produït un error en descarregar l'actualització."
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "Actualització descarregada. A continuació s'instal·larà."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "Instal·la l'actualització"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7191,8 +7308,8 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "sèries HumanWare Brailliant BI/B"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "sèries HumanWare Brailliant BI/B / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7254,10 +7371,6 @@ msgstr "Sense braille"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Models més actuals de Papenmeier BRAILLEX"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "Salta a i informa del format"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7587,6 +7700,14 @@ msgstr "Escriu la configuració actual al fitxer nvda.ini"
 msgid "Donate"
 msgstr "Fes una donació"
 
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "Instal·la l'actualització &pendent"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Executa una actualització del NVDA descarregada anteriorment"
+
 msgid "E&xit"
 msgstr "S&urt"
 
@@ -7692,6 +7813,10 @@ msgstr "Reinicia amb els complements desactivats"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "Reinicia amb el mode de depuració activat"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Instal·la l'actualització pendent"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7838,21 +7963,21 @@ msgstr "instal·la"
 msgid "remove"
 msgstr "elimina"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "desactiva"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "Desactivat després de reiniciar"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "activa"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Activat després de reiniciar"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "suspès"
+msgid "disabled"
+msgstr "desactivat"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "en execució"
+msgid "enabled"
+msgstr "activat"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8347,6 +8472,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "Comprova automàticament si hi ha &actualitzacions per a NVDA"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "Notifica les actualitzacions &pendents en l'inici"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -10760,6 +10890,36 @@ msgstr "Doble interlineat"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "interlineat de 1.5"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "Francès (Canadà) grau 1"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "Francès (Canadà) grau 2"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongol"
+
+#~ msgid "Download and &install update"
+#~ msgstr "Descarrega i &instal·la l'actualització"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "Actualització descarregada. A continuació s'instal·larà."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "Salta a i informa del format"
+
+#~ msgid "r%s"
+#~ msgstr "f%s"
+
+#~ msgid "c%s"
+#~ msgstr "c%s"
+
+#~ msgid "suspended"
+#~ msgstr "suspès"
+
+#~ msgid "running"
+#~ msgstr "en execució"
 
 #~ msgid "ALVA BC640/680 series"
 #~ msgstr "sèries ALVA BC640/680 "
