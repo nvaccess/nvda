@@ -4,21 +4,25 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.2 =
+Les points forts de cette version incluent la prise en charge des tableaux dans Kindle pour PC, le support des terminaux Braille Humanware BrailleNote Touch et BI14, des améliorations apportées aux synthétiseurs vocaux OneCore et Sapi5, des améliorations dans Microsoft Outlook et bien plus encore.
+
 
 == Nouvelles Fonctionnalités ==
 - La taille des lignes et colonnes des cellules de tableau est maintenant signalée vocalement et en braille. (#2642)
 - Les commandes de navigation dans les tableaux de NVDA sont maintenant supportées sous Google Docs (avec le mode Braille activé). (#7946)
-- Sous Kindle for PC, il est maintenant possible de lire et de naviguer dans les tableaux. (#7977)
-- Support des terminaux BrailleNote Touch et Brailliant BI 14  via USB et bluetooth. (#6524)
-- Sous Windows 10 Fall Creators Update et au-delà, NVDA peut annoncer les notifications d'applications telles que la Calculatrice ou le Windows Store. (#8045)
+- Ajout de la possibilité de lire les tableau et d'y naviguer sous Kindle for PC. (#7977)
+- Support des terminaux Braille BrailleNote Touch et Brailliant BI 14 de HumanWare via USB et Bluetooth. (#6524)
+- Sous Windows 10 Fall Creators Update et au-delà, NVDA peut annoncer les notifications des applications telles que la Calculatrice et le Windows Store. (#7984)
 - Nouvelles tables de conversion braille : Lithuanien 8 points, Ukrainien, Mongol abrégé. (#7839)
 - Ajout d'un script pour annoncer l'information de mise en forme pour le texte sous une cellule braille spécifique. (#7106)
-- Lors d'une mise à jour de NVDA, il est maintenant possible de reporter l'installation à un moment de son choix. (#4263) 
-- Vous pouvez maintenant utiliser contrôle, majuscule, alt, windows et NVDA depuis votre clavier braille et combiner ces modifieurs avec la saisie braille (ex : presser contrôle+s). (#7306) 
+- Lors d'une mise à jour de NVDA, il est désormais possible de reporter l'installation de la mise à jour à un moment ultérieur. (#4263)
+- Nouvelles langues : mongol, suisse allemand.
+- Vous pouvez maintenant utiliser contrôle, majuscule, alt, windows et NVDA depuis votre clavier braille et combiner ces modifieurs avec la saisie braille (ex : presser contrôle+s). (#7306)
  - Vous pouvez assigner ces nouveaux modificateurs en utilisant les commandes qui se trouvent dans Touches émulées du clavier du système dans le dialogue Gestes de commandes.
-- Retour du support des terminaux braille Handy Tech Braillino et Modular (avec l'ancien micrologiciel) displays. (#8016)
+- Retour du support des terminaux braille Handy Tech Braillino et Modular (ceux équipés de l'ancien micrologiciel). (#8016)
 - La date et l'heure pour les terminaux Handy Tech supportés (comme Active Braille et Active Star) seront automatiquement synchronisés par NVDA en cas de désynchronisation de plus de 5 secondes. (#8016)
 - Dans les listes de messages de Microsoft Outlook, NVDA signale désormais si un message a été répondu ou transféré. (#6911)
+- Un geste de commande peut être assigné pour désactiver temporairement tous les déclencheurs des profils de configuration. (#4935)
 
 
 == Changements ==
@@ -29,6 +33,8 @@ Quoi de Neuf dans NVDA
 - Les boutons secondaires de routage sur les terminaux braille Alva BC6, EuroBraille et Papenmeier annoncent maintenant l'information de mise en forme pour le texte sous la cellule braille correspondant au bouton. (#7106)
 - Les tables de saisie braille abrégé retourneront automatiquement en mode intégral dans les champs non-éditables (ex : Les contrôles où il n'y a pas de curseur ou en mode navigation). (#7306)
 - NVDA est maintenant moins verbeux lorsqu'un rendez-vous ou un créneau horaire dans le calendrier Outlook couvre un jour entier. (#7949)
+- Toutes les préférences de NVDA se trouvent maintenant dans un dialogue de configuration sous le Menu NVDA -> Préférences -> Paramètres, plutôt que dispersées dans de nombreux dialogues. (#577)
+- La synthèse vocale par défaut sous Windows 10 est maintenant oneCore Speech plutôt qu'eSpeak. (#8176)
 
 
 == Corrections de Bogues ==
@@ -36,9 +42,9 @@ Quoi de Neuf dans NVDA
 - NVDA n'échoue plus à lire la page après le retour à la page précédente sous Microsoft Edge. (#7997)
 - Au déverrouillage de la machine, NVDA n'annonce plus incorrectement le dernier caractère du code PIN de connexion sous windows 10 . (#7908)
 - Sous Chrome ou firefox, l'étiquette des cases à cocher et des boutons radio n'est plus annoncée deux fois quand on tabule où qu'on utilise les touches de navigation rapide en mode navigation. (#7960)
-- Prise en compte de aria-current avec une valeur de false comme faux au lieu de vrai (#7892).
-- Le synthétiseur Windows Onecore Voices n'échoue plus au chargement si la voix configurée a été désinstallée. (#7999)
-- Le changement de voix du synthétiseur Windows Onecore Voices est maintenant beaucoup plus rapide. (#7999)
+- Un aria-current avec une valeur false sera annoncé comme false au lieu de true (#7892).
+- Le pilote du synthétiseur Windows OneCore Voices n'échoue plus au chargement si la voix configurée a été désinstallée. (#7553)
+- Le changement de voix du pilote du synthétiseur Windows OneCore Voices est maintenant beaucoup plus rapide. ()#7999)
 - Correction de caractères braille mal formés pour plusieurs tables braille, incluant les majuscules pour le danois abrégé 8 points. (#7526, #7693)
 - NVDA peut maintenant annoncer plus de types de puces sous Microsoft Word. (#6778)
 - Le déclenchement du script d'annonce de l'information de mise en forme ne modifie plus par erreur la position de revue, ainsi plusieurs activations successives ne donne plus des résultats différents. (#7869)
@@ -47,7 +53,11 @@ Quoi de Neuf dans NVDA
 - Sous Windows 8 et au-delà, NVDA n'annoncera plus "inconnu" à l'ouverture du menu de liens rapides (Windows+X) et à la sélection d'un élément de ce menu. (#8137)
 - Sur les terminaux Hims, les boutons de commandes spécifiques à chaque modèle fonctionnent maintenant comme indiqué dans le manuel. (#8096)
 - NVDA essaiera maintenant de coriger les problèmes d'Inscription COM du système qui font que certains programmes comme Firefox et Internet Explorer deviennent  inaccessibles par NVDA et annoncent "Inconnu". (#2807)
-- Contournement d'un bogue du gestionnaire des tâches qui faisait que NVDA empêchait les utilisateurs d'accéder au contenu des détails spécifiques aux processus. (#8147)
+- Contournement d'un bogue dans le gestionnaire des tâches empêchant NVDA de permettre aux utilisateurs d'accéder au contenu des détails spécifiques aux processus. (#8147)
+- Les nouvelles voix Microsoft SAPI5 n'accusent plus de retard en fin d'énoncé, ce qui rend beaucoup plus efficace la navigation avec ces voix. (#8174)
+- NVDA ne signale plus (marques LTR et RTL) ni en Braille ni quand on se déplace vocalement par caractère, lors de l'accès à l'horloge dans les versions récentes de Windows. (#5729)
+- La détection des touches de défilement sur les afficheurs Hims Smart Beetle est à nouveau plus fiable. (#6086)
+- Dans certains contrôles de texte, surtout dans les applications Delphi, les informations fournies lors de l'édition et la navigation sont maintenant beaucoup plus fiables. (#636, #8102)
 
 
 == Changements pour les développeurs ==

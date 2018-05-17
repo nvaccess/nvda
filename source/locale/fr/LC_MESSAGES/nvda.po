@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 00:10+1000\n"
-"PO-Revision-Date: 2018-05-03 16:52+0200\n"
-"Last-Translator: Patrick ZAJDA <patrick@zajda.fr>\n"
+"POT-Creation-Date: 2018-05-14 08:42+1000\n"
+"PO-Revision-Date: 2018-05-17 10:15+0200\n"
+"Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -4343,6 +4343,22 @@ msgstr ""
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Afficher le dialogue de configuration des profils de NVDA"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Déclencheurs des profils de configuration désactivés"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Déclencheurs des profils de configuration activés"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Activer/désactiver tous les profils de configuration. La désactivation "
+"demeure effective jusqu'au redémarrage de NVDA."
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -8344,6 +8360,18 @@ msgstr "Enregistrer Sous"
 msgid "Error saving log: %s"
 msgstr "Erreur de sauvegarde du journal %s"
 
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "OK"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Annuler"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Appliquer"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Catégories :"
@@ -8391,13 +8419,13 @@ msgstr "&Jouer des sons au démarrage ou à l'arrêt de NVDA"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
-msgstr "Niveau de &journalisation :"
+msgstr "&Niveau de journalisation :"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
-"Utiliser NVDA sur l'écran de connexion à Windows (nécessite des privilèges "
+"&Utiliser NVDA sur l'écran de connexion à Windows (nécessite des privilèges "
 "administrateur)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
@@ -8405,17 +8433,17 @@ msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Utiliser les paramètres NVDA actuellement sauvegardés pour l'écran de "
+"U&tiliser les paramètres NVDA actuellement sauvegardés pour l'écran de "
 "connexion à Windows (nécessite des privilèges administrateur)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "Vérifier automatiquement les &mises à jour de NVDA"
+msgstr "&Vérifier automatiquement les mises à jour de NVDA"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
-msgstr "Avertir d'une mise à jour en &attente au démarrage"
+msgstr "Au démarrage, avertir d'une &mise à jour en attente"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8487,7 +8515,7 @@ msgstr "&Synthétiseur"
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
 msgid "C&hange..."
-msgstr "C&hanger..."
+msgstr "&Changer..."
 
 #. Translators: This is the label for the synthesizer selection dialog
 msgid "Select Synthesizer"
@@ -8749,23 +8777,22 @@ msgstr "Annoncer les &suggestions"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report &help balloons"
-msgstr "Annoncer les bulles d'&aide"
+msgstr "Annoncer les &bulles d'aide"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report object shortcut &keys"
-msgstr "Annoncer les &raccourcis clavier des objets"
+msgstr "Annoncer les raccourcis &clavier des objets"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report object &position information"
-msgstr "Annoncer le r&ang de l'objet dans une liste"
+msgstr "Annoncer le &rang de l'objet dans une liste"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
-msgstr ""
-"Deviner l'information de &position de l'objet quand elle n'est pas disponible"
+msgstr "Deviner le r&ang de l'objet quand l'information n'est pas disponible"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -8790,7 +8817,7 @@ msgstr "Annoncer les changements dynamiques de &contenu"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
-msgstr "Jouer un son quand les &auto-suggestions apparaissent"
+msgstr "&Jouer un son quand les auto-suggestions apparaissent"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
@@ -8824,17 +8851,17 @@ msgstr "Inclure les tables de &visualisation"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
-msgstr "Mode formulaire automatique lors des changements de focus"
+msgstr "Mode formulaire automatique lors des changements de &focus"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
-msgstr "Mode formulaire automatique lors des déplacements du curseur"
+msgstr "Mode formulaire automatique lors des déplacements du &curseur"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
-msgstr "Indication audio du mode formulaire ou navigation"
+msgstr "Indication &audio du mode formulaire ou navigation"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -8878,7 +8905,7 @@ msgstr "&Attributs de la police"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "E&mphasis"
-msgstr "en e&mphase"
+msgstr "E&mphase"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -8997,7 +9024,7 @@ msgstr "Couleurs et Styles"
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Cell borders:"
-msgstr "Bordures de cellule"
+msgstr "&Bordures de cellule"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -9173,7 +9200,7 @@ msgstr "&Montrer le curseur"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
 msgid "Blink cursor"
-msgstr "Curseur clignotant"
+msgstr "&Curseur clignotant"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -9209,7 +9236,7 @@ msgstr "Ne pas couper les &mots quand c'est possible"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr "Afficher le contexte du focus"
+msgstr "Afficher le &contexte du focus"
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA"
