@@ -25,7 +25,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 52 dile çevrilmiş oluşu
+- 54 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Dokunmatik hareketlerle metin ve kontrollerin bildirimi
@@ -35,7 +35,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Yerel Dil Desteği ++[Internationalization]
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 51 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Kırgızca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Makedonca, Nepal dili, Norveççe, Pencap dili, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanı sıra, NVDA aşağıda belirtilen 54 dile de çevrilmiştir. Afrikaca, Almanca (Almanya ve İsviçre), Amharca, Aragonca, Arapça, Arnavutça, Bulgarca, Birmanya dili, Çekce, Danimarka dili, Dutch, Farsça, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İrlanda Dili, İtalyanca, İzlanda dili, Japonca, Kannada, Katalanca, Kırgızca, Korece, Kolombiya İspanyolcası, Lehçe, Litfanca, Macarca, Makedonca, Moğolca, Nepal dili, Norveççe, Pencap dili, Portekizce (Brazilya ve Portekiz), Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++[SpeechSynthesizerSupport]
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -905,8 +905,10 @@ When in the table view of added books:
 
 + NVDA'yı Yapılandırma +[ConfiguringNVDA]
 Birçok NVDA ayarı NVDA menüsü içindeki tercihler alt menüsünden erişilebilen iletişim kutuları kullanılarak değiştirilebilmektedir.
+Bu ayarların çoğu çoklu sekme sayfası olarak gösterilen [NVDA Ayarlar iletişim kutusu #NVDASettings] içerisinde bulunabilir.
 Tüm NVDA iletişim kutularında yaptığınız değişiklikleri onaylamak için tamam tuşuna basın.
 herhangi bir değişikliği iptal etmek için, iptal tuşuna ya da eskeyp tuşuna basın.
+Bazı iletişim kutuları  için, iletişim kutusunu kapatmadan yapılan değişikliğin etkin olmasını isterseniz Uygula düğmesine basabilirsiniz.
 Bazı ayarlar kısayol tuşlarıyla da değiştirilebilmektedir. bu tuşlar ilgili olan aşağıdaki bölümlerinde listelenmiştir.
 
 ++ NVDA Ayarları ++[NVDASettings]
@@ -918,14 +920,15 @@ Ayarlarla ilgili değişiklikleri iletişim kutusunu kapatmadan kaydetmek için 
 Değişiklikleri kaydedip iletişim kutusunu kapatmak içinse tamam düğmesine basabilirsiniz.
 
 Bazı kategorilerle ilgili iletişim kutusunu açmak için daha önce atanmış kısayol tuşlarını kullanabilirsiniz.
-Söz konusu kısayol tuşlarına bastığınızda, NVDA ayarlar iletişim kutusu ilgili kategori etkin şekilde açılacaktır.
+Söz konusu kısayol tuşlarına bastığınızda, NVDA ayarlar iletişim kutusu ilgili kategori sekme sayfası etkin şekilde açılacaktır.
 Varsayılan olarak tüm kategoriler için kısayol tuşu belirlenmemiştir.
 Daha önce atanmış kısayol tuşu bulunmayan kategorilere kısayol tuşu ya da dokunma hareketiyle ulaşmak isterseniz, [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanın.
 
 NVDA Ayarları iletişim kutusu altındaki ayar kategorileri aşağıda verilmektedir.
 
 +++ Genel (NVDA+kontrol+g) +++[GeneralSettings]
-Genel kategorisi altında aşağıdaki seçenekler mevcuttur:
+NVDA Ayarları iletişim kutusundaki Genel kategorisi, arayüz dili, güncelleme kontrolünün otomatik yapılıp yapılmayacağı gibi NVDA'nın genel davranışını belirleyen ayarlarla ilgilidir.
+Bu kategori altında aşağıdaki seçenekler mevcuttur:
 
 ==== Dil ====[GeneralSettingsLanguage]
 NVDA arayüzü ve mesajlarının gösterileceği dilin seçildiği bir seçim kutusudur.
@@ -975,7 +978,6 @@ NVDA kapatılırken çıkış seçenekleri gösteriliyorsa, buradan manuel olara
 
 +++ Konuşma Ayarları (NVDA+kontrol+v) +++[SpeechSettings]
 NVDA Ayarları iletişim kutusundaki konuşma kategorisi, konuşmacı ve  sesle ilgili parametreleri değiştirmenizi sağlayan seçenekler içerir.
-
 Konuşma parametrelerini istenen her yerden değiştirebileceğiniz daha hızlı bir alternatif için, lütfen [Hızlı Sentezleyici Ayarları #SynthSettingsRing] bölümüne bakın.
  
 Ses ayarları iletişim kutusunda şu seçenekler bulunmaktadır:
@@ -1205,8 +1207,7 @@ Braile ekranı seçip tamam düğmesine bastığınızda NVDA ilgili braille ekr
 Braille ekran sürücülerinin yüklenmesi ile ilgili sorun oluşursa NVDA bildirimde bulunur ve önceki braille ekran kullanılmaya devam edilir.
 
 ==== Braille Ekran ====[SelectBrailleDisplayDisplay]
-Braille ayarlarındaki ilk seçenek "Braille Ekran" diyen bir seçim kutusudur.
-Sisteminizde hangi braille sürücülerin yüklü olduğuna bağlı olarak, size çeşitli seçenekler sunulacaktır.
+Bu seçim kutusunda, sisteminizde hangi braille sürücülerin yüklü olduğuna bağlı olarak, size çeşitli seçenekler sunulacaktır.
 Bu seçenekler arasında yön tuşlarınızı kullanarak dolaşın.
 
 "Braille Yok", braille kullanmadığınız anlamına gelir.
@@ -1226,7 +1227,8 @@ Bu bölüm braille ekranınız yalnızca otomatik port belirlemeyi destekliyorsa
 Desteklenen bağlantı tipleri ve mevcut portlar için daha fazla detaya ulaşmak için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünde Braille ekranınızın dokümantasyonuna baş vurabilirsiniz.
 
 +++ Klavye (NVDA+kontrol+k) +++[KeyboardSettings]
-Klavye kategorisinde aşağıdaki seçenekler mevcuttur:
+NVDA Ayarları iletişim kutusundaki Klavye kategorisi, klavye kullanırken NVDA'nın nasıl davranacağıyla ilgili seçenekleri içerir.
+Bu kategoride aşağıdaki seçenekler mevcuttur:
 
 ==== Klavye Düzeni ====[KeyboardSettingsLayout]
 Bu seçim kutusu, NVDA'nın hangi tür klavye düzenini kullanacağını seçmenizi sağlar. Şu an itibariyle NVDA ile gelen 2 düzen masaüstü ve dizüstü düzenleridir.
@@ -1285,7 +1287,8 @@ Bu seçenek kullanıcının ekran klavyeleri ve konuşma tanıma uygulamaları g
 Bu seçenek varsayılan olarak etkindir, bazı kullanıcılar bunu kapatmak isteyebilir, örneğin Vietnamca yazmak için Unikey yazma programı kullananlar.
 
 +++ Fare (NVDA+kontrol+m) +++[MouseSettings]
-Fare kategorisinde aşağıdaki seçenekler mevcuttur:
+NVDA Ayarları iletişim kutusundaki Fare kategorisi, NVDA'nın fare hareketlerini takip etmesini, fare koordinatlarına dayanarak kullanıcıyı sesli olarak bilgilendirmesini ve diğer fare seçenekleriyle ilgili değişiklikler yapılmasını sağlar.
+Bu kategoride aşağıdaki seçenekler mevcuttur:
 
 ==== Fare Şekil Değişikliğini Bildir ====[MouseSettingsShape]
 Bu onay kutusu işaretlendiğinde, fare işaretleyicisinin şekli her değiştiğinde NVDA bunu bildirecektir.
@@ -1315,6 +1318,7 @@ yani seçili bir bölgede ses daha yüksek çıkar. Bu, varsayılan olarak işar
 
 +++ Dokunmatik Etkileşim +++[TouchInteraction]
 Yalnızca dokunmatik ekranlı ve windows 8 ve sonraki işletim sistemlerinde bulunan Bu ayar kategorisi, NVDA'nın dokunmatik ekranlarla nasıl etkileşeceğini yapılandırmanızı sağlar.
+Bu kategori aşağıdaki seçenekleri içerir:
 
 ==== Dokunarak yazma kipi ====[TouchTypingMode]
 Bu onay kutusu dokunmatik ekrandan giriş yapma yönteminizi belirlemenize olanak tanır.
@@ -1322,7 +1326,8 @@ Onay kutusu işaretli ise, dokunmatik klavyede bir tuşu bulduktan sonra, parma�
 İşaretli değilse, tuşa basmak için ekrana çift dokunmanız gerekir.
 
 +++ İnceleme İmleci +++[ReviewCursorSettings]
-İnceleme imleci kategorisinde aşağıdaki seçenekler mevcuttur:
+NVDA Ayarları iletişim kutusundaki İnceleme İmleci kategorisi, NVDA'nın inceleme imleci davranışını konfigüre etmek için kullanılır.
+Bu kategoride aşağıdaki seçenekler mevcuttur:
 
 %kc:setting
 ==== Sistem Odağını Takip et ====[ReviewCursorFollowFocus]
@@ -1345,6 +1350,7 @@ Etkinleştirildiğinde, görünmez nesneler ve sadece düzenleme amacıyla kulla
 Herhangi bir yerde basit inceleme kipini açıp kapatmak için, lütfen [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak bir özel hareket atayın.
 
 +++ Nesne Sunumu (NVDA+kontrol+o) +++[ObjectPresentationSettings]
+NVDA Ayarları iletişim kutusundaki Nesne Sunumu kategorisi, açıklama, konum bilgisi vb, NVDA'nın kontrollerle ilgili ne kadar bilgi sunacağının belirlenmesi için kullanılır.
 Nesne sunumu kategorisinde aşağıdaki seçenekler mevcuttur:
 
 ==== İpuçlarını (baloncukları) bildir ====[ObjectPresentationReportToolTips]
@@ -1431,6 +1437,7 @@ This option allows you to choose whether or not NVDA should report new symbols a
 Bu seçenek varsayılan olarak açıktır.
 
 +++ Tarama Kipi (NVDA+kontrol+b) +++[BrowseModeSettings]
+NVDA Ayarları iletişim kutusundaki Tarama Kipi  kategorisi, web sayfaları gibi karmaşık belgeleri okurken ya da dolaşırken NVDA'nın nasıl davranacağını belirlemek için kullanılır.
 Tarama kipi kategorisinde aşağıdaki seçenekler mevcuttur:
 
 ==== Satır Başına Düşen Maksimum Karakter sayısı ====[BrowseModeSettingsMaxLength]
@@ -1538,6 +1545,7 @@ Satır girintilerinin bildirimi seçim kutusunda dört seçenek bulunmaktadır.
 
 +++ Windows 10 OCR Ayarları +++[Win10OcrSettings]
 Bu kategori altındaki seçenekler [Windows 10 OCR ayarlarını #Win10Ocr] yapılandırmanızı sağlar.
+Kategori aşağıdaki seçenekleri içerir:
 
 ==== Tanıma dili ====[Win10OcrSettingsRecognitionLanguage]
 Bu seçim kutusu metin tanıma için kullanılacak dili seçmek içindir.
@@ -1715,6 +1723,8 @@ Tümünü oku tetikleyicisiyle ilişkili profili düzenlemek isterseniz, bu prof
 Bazen, tüm tetikleyicileri geçici olarak devre dışı bırakmak yararlıdır.
 Örneğin, manuel olarak etkinleştirdiğiniz bir profili ya da normal konfigürasyonu, herhangi bir tetikleyiciye atanmış bir profilin araya girmesini engelleyerek düzenlemek isteyebilirsiniz.
 Bunu, Konfigürasyon Profilleri iletişim kutusunda bulunan , Tüm tetikliyiceleri geçici olarak devre dışı bırak onay kutusunu işaretleyerek yapabilirsiniz.
+
+Tetikleyicilerin herhangi bir yerdeyken devre dışı bırakılması ya da tekrar etkinleştirilmesi için , [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir kısayol tuşu atayabilirsiniz.
 
 ++ Konfigürasyon Dosyalarının Konumu ++[LocationOfConfigurationFiles]
 NVDA taşınabilir sürümü, tüm ayarları, kişisel uygulama modüllerini ve kişisel sürücüleri NVDA dizininde bulunan ve UserConfig adı verilen dizinde saklamaktadır.
@@ -2123,7 +2133,6 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | alt tuşu | space+dot1+dot3+dot4 (space+m) |
 | escape tuşu | space+dot1+dot5 (space+e) |
 | enter tuşu | dot8 |
-| windows+d tuşu (tüm uygulamaları küçült) | c1+c4+c5 (command d) |
 | windows tuşu | space+dot3+dot4 |
 | alt+tab tuşu | space+dot2+dot3+dot4+dot5 (space+t) |
 | NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
@@ -2415,6 +2424,8 @@ The following models are supported:
 - BrailleNote MPower (Serial and bluetooth connections)
 - BrailleNote Apex (USB and Bluetooth connections)
 -
+
+For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
 
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.
