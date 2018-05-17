@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-17 00:10+1000\n"
-"PO-Revision-Date: 2017-11-16 22:06+0200\n"
+"POT-Creation-Date: 2018-05-14 08:42+1000\n"
+"PO-Revision-Date: 2018-05-16 22:20+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -92,6 +92,24 @@ msgstr "άγνωστη μέθοδος εισόδου"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, fuzzy, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "Ορθογραφικός έλεγχος: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Ορθογραφικός έλεγχος: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "γραμματική: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -500,14 +518,6 @@ msgstr "h%s"
 msgid "vlnk"
 msgstr "με επίσκεψη"
 
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "μη %s"
-
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -524,17 +534,29 @@ msgstr "{number} από {total}"
 msgid "lv %s"
 msgstr "επίπεδο %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "γρ{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "σειρά%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "γρ{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "στ{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "κελί%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "στ{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -542,9 +564,39 @@ msgstr "κελί%s"
 msgid "%s end"
 msgstr "τέλος %s"
 
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+#, fuzzy
+msgid "automatically"
+msgstr "αυτόματο"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+#, fuzzy
+msgid "to focus"
+msgstr "Καμία εστίαση"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+#, fuzzy
+msgid "to review"
+msgstr "Επισκόπηση κειμένου"
+
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Αυτόματο"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Μη υποστηριζόμενη μορφή παραμέτρου εισόδου"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} εκδόθηκε"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, fuzzy, python-brace-format
+msgid "{modifier} pressed"
+msgstr "δεν πατήθηκε"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -756,18 +808,9 @@ msgstr "Γαλλικό (ενοποιημένο) οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+#, fuzzy
+msgid "French (unified) grade 2"
 msgstr "Γαλλικά (ενοποιημένα) βαθμού 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "Γαλλικά (Καναδά) βαθμού 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "Γαλλικά (Καναδά) βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -866,7 +909,14 @@ msgstr "Κασμίρι βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
+#, fuzzy
+msgid "Lithuanian 8 dot"
+msgstr "Λιθουανικά"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Lithuanian 6 dot"
 msgstr "Λιθουανικά"
 
 #. Translators: The name of a braille table displayed in the
@@ -886,8 +936,15 @@ msgstr "Μανίπιουρι βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "Μογγολικά"
+#, fuzzy
+msgid "Mongolian grade 1"
+msgstr "Ουγγρικά βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Mongolian grade 2"
+msgstr "Νορβηγικά βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -971,6 +1028,11 @@ msgstr "Πουντζάμπι βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "Ρουμανικά"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "Ρωσικός braille κώδικας πληροφορικής"
 
@@ -1023,6 +1085,11 @@ msgstr "Τέλουγκου βαθμού 1"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "Τουρκικά βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "Ουκρανικά"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1543,14 +1610,14 @@ msgstr "δεν υπάρχει προηγούμενο σφάλμα"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr "&Σύνδεσμοι"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr "&Επικεφαλίδες"
 
@@ -1567,7 +1634,7 @@ msgstr "&Κουμπιά"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "&Ορόσημα"
 
@@ -1641,48 +1708,6 @@ msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Μετακινείται μετά το τέλος του στοιχείου του υποδοχέα, όπως μια λίστα ή ένας "
 "πίνακας."
-
-# check
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Όχι σε κελί πίνακα"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Όριο πίνακα"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "μετακινείται στην επόμενη γραμμή του πίνακα"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "μετακινείται στην προηγούμενη γραμμή του πίνακα"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "μετακινείται στην επόμενη στήλη του πίνακα"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "μετακινείται στην προηγούμενη στήλη του πίνακα"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables off"
-msgstr "απενεργοποίηση πινάκων διάταξης"
-
-#. Translators: The message announced when toggling the include layout tables browse mode setting.
-msgid "layout tables on"
-msgstr "ενεργοποίηση πινάκων διάταξης"
-
-#. Translators: Input help mode message for include layout tables command.
-msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr ""
-"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
-"συμπερίληψης πινάκων διάταξης στη λειτουργία περιήγησης"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2498,6 +2523,10 @@ msgstr "στοιχείο ελέγχου δείκτη κύλισης"
 msgid "calendar"
 msgstr "ημερολόγιο"
 
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "στοιχείο γραφήματος"
+
 msgid "video"
 msgstr "βίντεο"
 
@@ -2620,7 +2649,7 @@ msgid "dragging"
 msgstr "μεταφορά σε εξέλιξη"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects which support accessible drag and drop.
+#. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
 msgstr "στόχος απόθεσης"
 
@@ -2678,6 +2707,11 @@ msgstr "δεν πατήθηκε"
 msgid "not checked"
 msgstr "μη επιλεγμένο"
 
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "ολοκλήρωση μεταφοράς"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr "τρέχον"
@@ -2701,6 +2735,14 @@ msgstr "τρέχουσα ημερομηνία"
 #. Translators: Presented when a time item is marked as current in a collection of time items
 msgid "current time"
 msgstr "τρέχουσα ώρα"
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "μη %s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2802,6 +2844,48 @@ msgstr "Καμία επιλογή"
 msgid "Copied to clipboard"
 msgstr "Αντιγράφηκε στο πρόχειρο"
 
+# check
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Όχι σε κελί πίνακα"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Όριο πίνακα"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "μετακινείται στην επόμενη γραμμή του πίνακα"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "μετακινείται στην προηγούμενη γραμμή του πίνακα"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "μετακινείται στην επόμενη στήλη του πίνακα"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "μετακινείται στην προηγούμενη στήλη του πίνακα"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "απενεργοποίηση πινάκων διάταξης"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "ενεργοποίηση πινάκων διάταξης"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
+"συμπερίληψης πινάκων διάταξης στη λειτουργία περιήγησης"
+
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
 msgstr "Επισκόπηση κειμένου"
@@ -2815,10 +2899,12 @@ msgid "System caret"
 msgstr "Κέρσορας συστήματος"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "Ποντίκι"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "Εκφώνηση"
 
@@ -2827,6 +2913,7 @@ msgid "Configuration"
 msgstr "Διαμόρφωση"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Braille"
 
@@ -2895,7 +2982,8 @@ msgid "Sleep mode on"
 msgstr "Ενεργοποίηση λειτουργίας ύπνου"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
+#, fuzzy
+msgid "Toggles sleep mode on and off for the active application."
 msgstr ""
 "Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
 "λειτουργίας ύπνου για την ενεργή εφαρμογή."
@@ -3445,7 +3533,7 @@ msgstr ""
 "εγγράφου ή οθόνης) και τοποθετεί τη θέση επισκόπησης στη θέση του "
 "αντικειμένου πλοήγησης"
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "δεν υπάρχει προηγούμενη λειτουργία επισκόπησης"
 
@@ -3484,9 +3572,10 @@ msgid "%s copied to clipboard"
 msgstr "%s αντιγράφηκε στο πρόχειρο"
 
 #. Translators: Input help mode message for report current navigator object command.
+#, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
-"information, and pressing three times Copies name and value of this  object "
+"information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
 "Αναφέρει το τρέχον αντικείμενο πλοήγησης. Πατώντας δύο φορές θα εκφωνήσει "
@@ -3994,54 +4083,70 @@ msgstr ""
 "Εκφωνεί το όνομα του αρχείου της ενεργής εφαρμογής μαζί με το όνομα του "
 "τρέχοντος φορτωμένου appModule"
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
+#. Translators: Input help mode message for go to general settings command.
+#, fuzzy
+msgid "Shows NVDA's general settings"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των γενικών ρυθμίσεων του NVDA"
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
+#. Translators: Input help mode message for go to select synthesizer command.
+#, fuzzy
+msgid "Shows the NVDA synthesizer selection dialog"
 msgstr "Εμφανίζει το παράθυρο διαλόγου του συνθέτη φωνής του NVDA"
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων φωνής του NVDA"
-
-#. Translators: Input help mode message for go to braille settings dialog command.
-msgid "Shows the NVDA braille settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων braille του NVDA"
-
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων πληκτρολογίου του NVDA"
-
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
+#. Translators: Input help mode message for go to speech settings command.
+#, fuzzy
+msgid "Shows NVDA's speech settings"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων ποντικιού του NVDA"
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
-msgid "Shows the NVDA review cursor settings dialog"
+#. Translators: Input help mode message for go to select braille display command.
+#, fuzzy
+msgid "Shows the NVDA braille display selection dialog"
+msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων braille του NVDA"
+
+#. Translators: Input help mode message for go to braille settings command.
+#, fuzzy
+msgid "Shows NVDA's braille settings"
+msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων braille του NVDA"
+
+#. Translators: Input help mode message for go to keyboard settings command.
+#, fuzzy
+msgid "Shows NVDA's keyboard settings"
+msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων πληκτρολογίου του NVDA"
+
+#. Translators: Input help mode message for go to mouse settings command.
+#, fuzzy
+msgid "Shows NVDA's mouse settings"
+msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων ποντικιού του NVDA"
+
+#. Translators: Input help mode message for go to review cursor settings command.
+#, fuzzy
+msgid "Shows NVDA's review cursor settings"
 msgstr ""
 "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων του δρομέα επισκόπησης του NVDA"
 
-#. Translators: Input help mode message for go to input composition dialog.
-msgid "Shows the NVDA input composition settings dialog"
+#. Translators: Input help mode message for go to input composition settings command.
+#, fuzzy
+msgid "Shows NVDA's input composition settings"
 msgstr ""
 "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων της εισόδου κειμένου του NVDA"
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
+#. Translators: Input help mode message for go to object presentation settings command.
+#, fuzzy
+msgid "Shows NVDA's object presentation settings"
 msgstr ""
 "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων του αντικειμένου παρουσίασης "
 "του NVDA"
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
+#. Translators: Input help mode message for go to browse mode settings command.
+#, fuzzy
+msgid "Shows NVDA's browse mode settings"
 msgstr ""
 "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων της λειτουργίας περιήγησης του "
 "NVDA"
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
+#. Translators: Input help mode message for go to document formatting settings command.
+#, fuzzy
+msgid "Shows NVDA's document formatting settings"
 msgstr "Εμφανίζει το παράθυρο διαλόγου της μορφοποίησης εγγράφου του NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
@@ -4107,18 +4212,10 @@ msgstr ""
 "Πραγματοποιεί εναλλαγή του προβολέα εκφώνησης του NVDA, ενός κινούμενου "
 "παραθύρου που σας επιτρέπει να βλέπετε το κείμενο που εκφωνεί το NVDA"
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "επισκόπηση"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "εστίαση"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
-#, python-format
-msgid "Braille tethered to %s"
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
+#, fuzzy, python-format
+msgid "Braille tethered %s"
 msgstr "Η οθόνη braille προσδέθηκε στο %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -4241,6 +4338,13 @@ msgstr ""
 "Δρομολογεί το δρομέα προς ή ενεργοποιεί το αντικείμενο κάτω από αυτό το κελί "
 "braille"
 
+#. Translators: Input help mode message for Braille report formatting command.
+#, fuzzy
+msgid "Reports formatting info for the text under this braille cell"
+msgstr ""
+"Δρομολογεί το δρομέα προς ή ενεργοποιεί το αντικείμενο κάτω από αυτό το κελί "
+"braille"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "Μετακινεί την οθόνη braille στην προηγούμενη γραμμή"
@@ -4268,6 +4372,46 @@ msgstr "Μεταφράζει το περιεχόμενο σε braille και π�
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Μεταφράζει το περιεχόμενο σε braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή του πλήκτρου Shift ώστε να μιμηθεί μια "
+"συντόμευση πληκτρολογίου για είσοδο braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή του πλήκτρου Control ώστε να μιμηθεί μια "
+"συντόμευση πληκτρολογίου για είσοδο braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή του πλήκτρου alt ώστε να μιμηθεί μια "
+"συντόμευση πληκτρολογίου για είσοδο braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή του αριστερού πλήκτρου windows ώστε να "
+"μιμηθεί μια συντόμευση πληκτρολογίου για είσοδο braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Πραγματοποιεί εικονική εναλλαγή του πλήκτρο NVDA ώστε να μιμηθεί μια "
+"συντόμευση πληκτρολογίου για είσοδο braille"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4323,6 +4467,25 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των Προφίλ διαμόρφωσης του NVDA"
+
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+#, fuzzy
+msgid "Configuration profile triggers disabled"
+msgstr "Προφίλ Διαμόρφωσης"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+#, fuzzy
+msgid "Configuration profile triggers enabled"
+msgstr "Προφίλ Διαμόρφωσης"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+#, fuzzy
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Σφάλμα κατά την αποθήκευση του προφίλ διαμόρφωσης - πιθανώς το αρχείο "
+"συστήματος είναι μόνο για ανάγνωση"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -5898,20 +6061,27 @@ msgstr "νέα επιλογή %s"
 msgid "selection removed"
 msgstr "αφαίρεση επιλογής"
 
-#. Translators: Reported when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "ολοκλήρωση μεταφοράς"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
 msgstr "σειρά %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, fuzzy, python-format
+msgid "through %s"
+msgstr "διακριτή διαγραφή"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "στήλη %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, fuzzy, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "με {rowCount} σειρές και {columnCount} στήλες"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6156,6 +6326,34 @@ msgstr "διαμοιρασμένη στοίχιση"
 msgid "align default"
 msgstr "προεπιλεγμένη στοίχιση"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "Κάθετη στοίχιση στην κορυφή"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "Κάθετη στοίχιση στο κέντρο"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "Κάθετη στοίχιση στην τελευταία γραμμή"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "Κάθετη στοίχιση στη γραμμή αναφοράς"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "Κάθετη πλήρης στοίχιση"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "Κάθετη διαμοιρασμένη στοίχιση"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "προεπιλεγμένη κάθετη στοίχιση"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "εσοχή στα αριστερά"
@@ -6188,34 +6386,6 @@ msgstr "Εσοχή πρώτης γραμμής"
 msgid "no first line indent"
 msgstr "Χωρίς εσοχή πρώτης γραμμής"
 
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "Κάθετη στοίχιση στην κορυφή"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "Κάθετη στοίχιση στο κέντρο"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "Κάθετη στοίχιση στην τελευταία γραμμή"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "Κάθετη στοίχιση στη γραμμή αναφοράς"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "Κάθετη πλήρης στοίχιση"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "Κάθετη διαμοιρασμένη στοίχιση"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "προεπιλεγμένη κάθετη στοίχιση"
-
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
 msgid "line spacing %s"
@@ -6231,6 +6401,15 @@ msgstr "ανορθόγραφο"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
+msgstr "εκτός ανορθόγραφου"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "γραμματικό σφάλμα"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+#, fuzzy
+msgid "out of grammar error"
 msgstr "εκτός ανορθόγραφου"
 
 #. Translators: Indicates end of a table.
@@ -6414,14 +6593,23 @@ msgid "Error checking for update."
 msgstr "Σφάλμα κατά τον έλεγχο για ενημερωμένη έκδοση"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Σφάλμα"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "Νέα έκδοση του NVDA"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr ""
+"Έχει γίνει λήψη της έκδοσης {version} του NVDA και εκκρεμεί ή εγκατάσταση. "
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6433,9 +6621,16 @@ msgstr "Η έκδοση {version} του NVDA είναι διαθέσιμη"
 msgid "No update available."
 msgstr "Δεν είναι διαθέσιμη νέα έκδοση"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "Λήψη και &εγκατάσταση ενημερωμένης έκδοσης"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, fuzzy, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "Εγκατάσταση του NVDA"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+#, fuzzy
+msgid "Re-&download update"
+msgstr "&Λήψη ενημερωμένης έκδοσης"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6450,6 +6645,26 @@ msgstr "Υπενθύμιση &αργότερα"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Κλείσιμο"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, fuzzy, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "Η έκδοση {version} του NVDA είναι διαθέσιμη"
+
+#. Translators: The label of a button to install an NVDA update.
+#, fuzzy
+msgid "&Install update"
+msgstr "Εγκατάσταση ενημερωμένης έκδοσης του NVDA"
+
+#. Translators: The label of a button to postpone an NVDA update.
+#, fuzzy
+msgid "&Postpone update"
+msgstr "&Λήψη ενημερωμένης έκδοσης"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+#, fuzzy
+msgid "Unable to postpone update."
+msgstr "Δεν είναι δυνατή η αντιγραφή"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6466,15 +6681,6 @@ msgstr "Λήψη σε εξέλιξη"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "Σφάλμα κατά τη λήψη της ενημερωμένης έκδοσης"
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "Η νέα έκδοση λήφθηκε. Τώρα θα εγκατασταθεί."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "Εγκατάσταση ενημερωμένης έκδοσης του NVDA"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6754,6 +6960,11 @@ msgstr "Κρυφή Κοινοποίηση:"
 msgid "unread"
 msgstr "μη αναγνωσμένο"
 
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
+msgstr "Επεξεργασία προφίλ σε εξέλιξη {profile}"
+
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "purple flag"
@@ -6814,6 +7025,11 @@ msgstr "στάλθηκε: %s"
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "Αναμονή για το outlook..."
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
+msgstr "{date} (all day)"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7178,8 +7394,30 @@ msgid "off"
 msgstr "απενεργοποιημένο"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 series"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6 series/protocol converter"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, fuzzy, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Σειριακή θύρα: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+#, fuzzy
+msgid "Setting HID keyboard simulation not supported"
+msgstr "Δεν υποστηρίζεται η αλληλεπίδραση με μαθηματικά."
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "Ενεργοποιημένη προσομοίωση HID πληκτρολογίου"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "Απενεργοποιημένη προσομοίωση HID πληκτρολογίου"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "Πραγματοποιεί εναλλαγή της προσομοίωσης του HID πληκτρολογίου"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7199,12 +7437,27 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
+#, fuzzy
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
 msgstr "HumanWare Brailliant BI/B series"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Eco Οθόνες Braille"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Eurobraille Esys/Esytime/Iris displays"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+#, fuzzy
+msgid "HID keyboard input simulation is unavailable."
+msgstr "Η έκδοση {version} του NVDA είναι διαθέσιμη"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+#, fuzzy
+msgid "Toggle HID keyboard simulation"
+msgstr "Δεν υποστηρίζεται η αλληλεπίδραση με μαθηματικά."
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7234,6 +7487,11 @@ msgstr "Είσοδος braille απενεργοποιημένη"
 msgid "Toggle braille input"
 msgstr "Εναλλαγή εισόδου braille"
 
+#. Translators: The name of a series of braille displays.
+#, fuzzy
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "Σειρά HIMS Braille Sense/Braille EDGE/Smart Beetle"
+
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
 msgstr "MDV Lilli"
@@ -7245,10 +7503,6 @@ msgstr "Χωρίς braille"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX νεότερα μοντέλα"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "Δρομολόγηση δρομέα και αναφορά μορφοποίησης"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7315,11 +7569,19 @@ msgstr ""
 "Αδυναμία αποθήκευσης της διαμόρφωσης - πιθανώς το αρχείο συστήματος είναι "
 "μόνο για ανάγνωση"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
 "Ένα παράθυρο διαλόγου ρυθμίσεων του NVDA είναι ήδη ανοικτό. Παρακαλώ κλείστε "
 "πρώτα το παράθυρο."
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr ""
+"Ο πίνακας ρυθμίσεων που προσπαθήσατε να ανοίξετε δεν είναι διαθέσιμος σε "
+"αυτό το σύστημα."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7338,93 +7600,52 @@ msgstr "Προσωρινό λεξικό"
 msgid "About NVDA"
 msgstr "Πληροφορίες για το NVDA"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "&Γενικές ρυθμίσεις..."
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
+"Θα τρέξετε το εργαλείο COM Registration Fixing tool. Αυτό το εργαλείο θα "
+"προσπαθήσει να διορθώσει συνήθη προβλήματα συστήματος τα οποία δεν "
+"επιτρέπουν στο NVDA να αποκτήσει πρόσβαση στο περιεχόμενο σε εφαρμογές όπως "
+"το Firefox και ο Internet Explorer. Αυτό το εργαλείο θα πραγματοποιήσει "
+"αλλαγές στο μητρώο συστήματος και γι' αυτό απαιτούνται δικαιώματα "
+"διαχειριστή. Είστε βέβαιοι ότι θέλετε να προχωρήσετε;"
 
-msgid "General settings"
-msgstr "Γενικές ρυθμίσεις"
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Προειδοποίηση"
 
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&Συνθέτης φωνής..."
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "COM Registration Fixing Tool"
 
-msgid "Change the synthesizer to be used"
-msgstr "Αλλαγή συνθέτη φωνής προς χρήση"
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+#, fuzzy
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr ""
+"Παρακαλώ περιμένετε όσο οι ρυθμίσεις αντιγράφονται στη διαμόρφωση του "
+"συστήματος"
 
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Ολοκλήρωση COM Registration Fixing Tool"
+
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+#, fuzzy
+msgid "&Settings..."
 msgstr "&Ρυθμίσεις φωνής..."
 
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "Επιλέξτε τη φωνή, την ταχύτητα, τον τόνο και την ένταση που επιθυμείτε"
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "Ρυθμίσεις B&raille..."
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "&Ρυθμίσεις πληκτρολογίου..."
-
-msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
-msgstr ""
-"Διαμόρφωση της διάταξης του πληκτρολογίου, της εκφώνησης των "
-"πληκτρολογούμενων χαρακτήρων ή λέξεων, και των πλήκτρων εντολών"
-
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "&Ρυθμίσεις ποντικιού..."
-
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr ""
-"Αλλαγή αναφοράς του σχήματος και του αντικειμένου του ποντικιού κάτω από το "
-"ποντίκι"
-
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "&Δρομέας επισκόπησης..."
-
-msgid "Configure how and when the review cursor moves"
-msgstr "Ρύθμιση του πώς και πότε μετακινείται ο δρομέας επισκόπησης"
-
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "&Ρυθμίσεις εισόδου κειμένου..."
-
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
-msgstr ""
-"Ρύθμιση του τρόπου με τον οποίο το NVDA αναφέρει την είσοδο κειμένου και την "
-"επιλογή συμβόλων για ορισμένες γλώσσες"
-
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "&Παρουσίαση αντικειμένου..."
-
-msgid "Change reporting of objects"
-msgstr "Αλλαγή αναφοράς αντικειμένων"
-
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "Λειτουργία &περιήγησης..."
-
-msgid "Change virtual buffers specific settings"
-msgstr "Αλλαγή ειδικών ρυθμίσεων των εικονικών καταχωρητών"
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "Μορφοποίηση &εγγράφου..."
-
-msgid "Change settings of document properties"
-msgstr "Αλλαγή ρυθμίσεων των ιδιοτήτων του εγγράφου"
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "&Windows 10 OCR..."
-msgstr "&Οπτική Αναγνώριση χαρακτήρων στα Windows 10"
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+#, fuzzy
+msgid "NVDA settings"
+msgstr "Δεν υπάρχουν ρυθμίσεις"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7498,6 +7719,10 @@ msgstr "Δημιουργία Φορητού αντιγράφου..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Εγκατάσταση του NVDA"
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Εκτέλεση COM Registration Fixing Tool..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7577,6 +7802,15 @@ msgstr "Εγγραφή της τρέχουσας διαμόρφωσης στο n
 msgid "Donate"
 msgstr "Δωρεά"
 
+#. Translators: The label for the menu item to run a pending update.
+#, fuzzy
+msgid "Install pending &update"
+msgstr "Εγκατάσταση ενημερωμένης έκδοσης του NVDA"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Εκτέλεση μιας προηγούμενης λήψης του NVDA"
+
 msgid "E&xit"
 msgstr "Έ&ξοδος"
 
@@ -7618,7 +7852,7 @@ msgstr "Επιλογές"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "&Διάταξη πληκτρολογίου:"
 
@@ -7683,6 +7917,11 @@ msgstr "Επανεκκίνηση με τα πρόσθετα απενεργοπο
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "Επανεκκίνηση με ενεργοποιημένη την καταγραφή του εντοπισμού σφαλμάτων"
+
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Install pending update"
+msgstr "Εγκατάσταση ενημερωμένης έκδοσης του NVDA"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7830,21 +8069,23 @@ msgstr "εγκατάσταση"
 msgid "remove"
 msgstr "αφαίρεση"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "απενεργοποίηση"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "Απενεργοποίηση μετά από επανεκκίνηση"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "ενεργοποίηση"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Ενεργοποίηση μετά από επανεκκίνηση"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "Σε αναστολή"
+#, fuzzy
+msgid "disabled"
+msgstr "απενεργοποίηση"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "εκτελείται"
+#, fuzzy
+msgid "enabled"
+msgstr "ενεργοποίηση"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -7883,6 +8124,10 @@ msgstr "URL: {url}"
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
 msgstr "Πληροφορίες Πρόσθετου"
+
+#. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
+msgstr ""
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8035,11 +8280,6 @@ msgstr ""
 "Αυτός ο σκανδαλισμός συσχετίζεται ήδη με ένα άλλο προφίλ. Αν συνεχίσετε, θα "
 "αφαιρεθεί από εκείνο το προφίλ και θα συσχετιστεί με αυτό.\n"
 "Είστε βέβαιοι ότι θέλετε να συνεχίσετε;"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Προειδοποίηση"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8286,9 +8526,32 @@ msgstr "Αποθήκευση Ως"
 msgid "Error saving log: %s"
 msgstr "Σφάλμα κατά την αποθήκευση του αρχείου καταγραφής συμβάντων: %s"
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
-msgstr "Γενικές Ρυθμίσεις"
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr ""
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr ""
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr ""
+
+#. Translators: The label for the list of categories in a multi category settings dialog.
+#, fuzzy
+msgid "&Categories:"
+msgstr "Κατηγορία"
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr ""
+
+#. Translators: This is the label for the general settings panel.
+#, fuzzy
+msgid "General"
+msgstr "Γενικές ρυθμίσεις"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8344,6 +8607,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "Αυτόματος έλεγχος για &ενημερωμένες εκδόσεις του NVDA"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr ""
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8407,8 +8675,21 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "Αλλαγή Διαμόρφωσης Γλώσσας"
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
+#. Translators: A label for the synthesizer on the speech panel.
+#, fuzzy
+msgid "&Synthesizer"
+msgstr "&Συνθέτης φωνής:"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr ""
+
+#. Translators: This is the label for the synthesizer selection dialog
+#, fuzzy
+msgid "Select Synthesizer"
 msgstr "Συνθέτης Φωνής"
 
 #. Translators: This is a label for the select
@@ -8423,7 +8704,7 @@ msgstr "&Συνθέτης φωνής:"
 msgid "Output &device:"
 msgstr "&Συσκευή εξόδου:"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr "Λειτουργία &βύθισης ήχου:"
 
@@ -8437,27 +8718,28 @@ msgstr "Δεν ήταν δυνατή η φόρτωση του συνθέτη φ�
 msgid "Synthesizer Error"
 msgstr "Σφάλμα Συνθέτη Φωνής"
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "Ρυθμίσεις Φωνής"
+#. Translators: This is the label for the voice settings panel.
+#, fuzzy
+msgid "Voice"
+msgstr "Φωνή"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr "Αυτόματη εναλλαγή γλώσσας (όταν υποστηρίζεται)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Αυτόματη εναλλαγή διαλέκτου (όταν υποστηρίζεται)"
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "&Επίπεδο στίξης/συμβόλων:"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr ""
 "Αποδοχή της γλώσσας της φωνής κατά την επεξεργασία χαρακτήρων και συμβόλων"
@@ -8467,85 +8749,86 @@ msgid "Capital pitch change percentage"
 msgstr "Ποσοστό μεταβολής τόνου στα κεφαλαία"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr "Αναγγελία &κεφαλαίων"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "&Ήχος μπιπ για τα κεφαλαία"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Χρήση λειτουργίας &εκφώνησης ανά χαρακτήρα αν υποστηρίζεται"
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "Ρυθμίσεις Πληκτρολογίου"
+#. Translators: This is the label for the keyboard settings panel.
+#, fuzzy
+msgid "Keyboard"
+msgstr "πληκτρολόγιο %s"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr ""
 "Χρήση του πλήκτρου κλειδώματος κεφαλαίων (Caps Lock) ως πλήκτρου "
 "τροποποίησης του NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Χρήση του αριθμητικού Insert ως πλήκτρου τροποποίησης του NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Χρήση του Insert ως πλήκτρου τροποποίησης του NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr "Εκφώνηση πληκτρολογούμενων &χαρακτήρων"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr "Εκφώνηση πληκτρολογούμενων &λέξεων"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr "Διακοπή εκφώνησης κατά την πληκτρολόγηση χαρακτήρων"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr "Διακοπή εκφώνησης με το πλήκτρο Enter"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr "Να επιτρέπεται η γρήγορη ανάγνωση στην ανάγνωση όλων"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
 "Ήχος μπιπ σε περίπτωση πληκτρολόγησης πεζών γραμμάτων όταν το πλήκτρο "
 "κλείδωμα κεφαλαίων (Caps Lock) είναι ενεργοποιημένο"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr "Εκφώνηση &πλήκτρων εντολών"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr "Αναπαραγωγή ήχου για ορθογραφικά &σφάλματα κατά την πληκτρολόγηση"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr "Διαχείριση εντολών από άλλες εφαρμογές"
 
@@ -8553,96 +8836,94 @@ msgstr "Διαχείριση εντολών από άλλες εφαρμογές
 msgid "At least one key must be used as the NVDA key."
 msgstr "Τουλάχιστον ένα πλήκτρο πρέπει να χρησιμοποιείται ως πλήκτρο NVDA."
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "Ρυθμίσεις Ποντικιού"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr "Αναφορά αλλαγών &σχήματος ποντικιού"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "Ενεργοποίηση &παρακολούθησης ποντικιού"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr "Ανάλυση &μονάδας κειμένου:"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr "Αναφορά &ρόλου όταν το ποντίκι μπαίνει σε αντικείμενο"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr "&Αναπαραγωγή ηχητικών συντεταγμένων κατά την κίνηση του ποντικιού"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "Έλεγχος της έντασης των ηχητικών συντεταγμένων με τη φωτεινότητα"
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "Ρυθμίσεις Δρομέα Επισκόπησης"
+#. Translators: This is the label for the review cursor settings panel.
+#, fuzzy
+msgid "Review Cursor"
+msgstr "&Δρομέας επισκόπησης..."
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "Παρακολούθηση &εστίασης συστήματος"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr "Παρακολούθηση &Κέρσορα"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "Παρακολούθηση &ποντικιού"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "Λειτουργία απλής επισκόπησης"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
+#. Translators: This is the label for the Input Composition settings panel.
+#, fuzzy
+msgid "Input Composition"
 msgstr "Ρυθμίσεις Εισόδου Κειμένου"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr "Αυτόματη αναφορά όλων των διαθέσιμων &προτεινόμενων χαρακτήρων"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr "Αναγγελία &επιλεγμένου προτεινόμενου χαρακτήρρα"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr ""
 "Να συμπεριλαμβάνεται πάντα η σύντομη &περιγραφή τους, όταν αναγγέλονται οι "
 "προτεινόμενοι χαρακτήρες"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr "Αναφορά αλλαγών στο &εκφωνούμενο κείμενο"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr "Αναφορά αλλαγών στο &συντιθέμενο κείμενο"
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Παρουσίαση Αντικειμένου"
 
@@ -8665,112 +8946,112 @@ msgid "Speak and beep"
 msgstr "Εκφώνηση και ήχος μπιπ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr "Αναφορά &επεξηγήσεων"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &help balloons"
 msgstr "Αναφορά &μπαλονιών βοήθειας"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr "Αναφορά &πλήκτρων συντόμευσης αντικειμένου"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr "Αναφορά πληροφορίας &θέσης αντικειμένου"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr "Εικασία της πληροφορίας &θέσεως αντικειμένου όταν δεν είναι διαθέσιμη"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr "Αναφορά &περιγραφών αντικειμένου"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "Αναπαράσταση &γραμμής προόδου"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr "Αναφορά γραμμών προόδου στο υπόβαθρο"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "Αναφορά αλλαγών δυναμικού &περιεχομένου"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "Αναπαραγωγή ήχου όταν εμφανίζονται αυτοματοποιημένες υποδείξεις"
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
 msgstr "Λειτουργία Περιήγησης"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr "&Μέγιστος αριθμός χαρακτήρων σε μία γραμμή"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr "&Αριθμός γραμμών ανά σελίδα"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr "Χρήση &διάταξης οθόνης (όταν υποστηρίζεται)"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr "Αυτόματη &Ανάγνωση Όλων κατά τη φόρτωση της σελίδας"
 
 # to be checked
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr "Να συμπεριληφθούν πίνακες &διάταξης"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr "Αυτόματη λειτουργία εστίασης κατά τις αλλαγές εστίασης"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr "Λειτουργία αυτόματης εστίασης κατά την κίνηση ττου κέρσορα"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "Ηχητική ένδειξη των λειτουργιών εστίασης και περιήγησης"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr ""
 "&Περιορισμός των χειρονομιών που δεν αφορούν σε εντολές ώστε να μην "
 "επηρεάζεται το έγγραφο"
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Μορφοποίηση Εγγράφου"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
@@ -8779,72 +9060,72 @@ msgstr ""
 "αναφέρει το NVDA."
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr "Γραμματοσειρά"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Font name"
 msgstr "&Όνομα γραμματοσειράς"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font &size"
 msgstr "&Μέγεθος γραμματοσειράς"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font attri&butes"
 msgstr "&Χαρακτηριστικά γραμματοσειράς"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "&Με έμφαση"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "&Στυλ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr "&Χρώματα"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Document information"
 msgstr "Πληροφορίες εγγράφου"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Co&mments"
 msgstr "&Σχόλια"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "&Αναθεωρήσεις συντάκτη"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Spelling e&rrors"
 msgstr "&Ορθογραφικά λάθη"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr "Σελίδες και διάστιχο"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr "&Σελίδες"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Line &numbers"
 msgstr "&Αρίθμηση γραμμών"
 
@@ -8855,7 +9136,7 @@ msgstr "Αναφορά &εσοχής γραμμής: με:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Off"
 msgstr "Απενεργοποιημένη"
 
@@ -8872,90 +9153,100 @@ msgstr "Τόνοι"
 msgid "Both  Speech and Tones"
 msgstr "Εκφώνηση Και Τόνοι"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "Εσοχή &παραγράφου"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "&Διάστιχο γραμμής"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Alignment"
 msgstr "&Στοίχιση"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Table information"
 msgstr "Πληροφορίες πίνακα"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Tables"
 msgstr "&Πίνακες"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Row/column h&eaders"
 msgstr "&Κεφαλίδες γραμμών/στηλών"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "&Συντεταγμένες κελιού"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Styles"
 msgstr "Στυλ"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr "Χρώματα και Στυλ"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell borders:"
 msgstr "Περίγραμμα κελιού"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Elements"
 msgstr "Στοιχεία"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Λίστες"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Block &quotes"
 msgstr "&Παράθεση αποσπασμάτων"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "&Πλαίσια"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Clickable"
 msgstr "&Με δυνατότητα κλικ"
 
 # ?
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Αναφορά αλλαγών στη μορφοποίηση μετά το δρομέα (μπορεί να προκαλέσει "
 "καθυστέρηση)"
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+#, fuzzy
+msgid "Touch Interaction"
+msgstr "Έξοδος από αλληλεπίδραση με μαθηματικά"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr ""
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
 msgstr "Οπτική Αναγνώριση Χαρακτήρων στα Windows 10"
 
@@ -9047,9 +9338,15 @@ msgstr "&Επεξεργασία"
 msgid "Add Dictionary Entry"
 msgstr "Προσθήκη Καταχώρησης στο Λεξικό"
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr "Ρυθμίσεις Braille"
+#. Translators: A label for the braille display on the braille panel.
+#, fuzzy
+msgid "Braille &display"
+msgstr "&Οθόνη Braille:"
+
+#. Translators: This is the label for the braille display selection dialog.
+#, fuzzy
+msgid "Select Braille Display"
+msgstr "Eco Οθόνες Braille"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9058,6 +9355,13 @@ msgstr "&Οθόνη Braille:"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "&Θύρα:"
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr "Δεν ήταν δυνατή η φόρτωση της οθόνης %s."
+
+msgid "Braille Display Error"
+msgstr "Σφάλμα Οθόνης Braille"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9101,8 +9405,9 @@ msgid "Show &messages indefinitely"
 msgstr "Εμφάνιση μηνύματος επ αόριστον"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "Η οθόνη braille προσδέθηκε στο:"
+#, fuzzy
+msgid "Tether B&raille:"
+msgstr "SuperBraille"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9116,12 +9421,15 @@ msgstr "Αποφυγή διαμοιρασμού &λέξεων όταν είνα�
 msgid "Focus context presentation:"
 msgstr "Εστίαση σε περιεχόμενο παρουσίασης"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Δεν ήταν δυνατή η φόρτωση της οθόνης %s."
+#. Translators: This is the label for the NVDA settings dialog.
+#, fuzzy
+msgid "NVDA"
+msgstr "Έξοδος από το NVDA"
 
-msgid "Braille Display Error"
-msgstr "Σφάλμα Οθόνης Braille"
+#. Translators: The profile name for normal configuration
+#, fuzzy
+msgid "normal configuration"
+msgstr "(κανονική διαμόρφωση)"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9282,11 +9590,841 @@ msgstr "RGB κόκκινο {rgb.red}, πράσινο {rgb.green}, μπλε {rgb.
 msgid "%s items"
 msgstr "%s στοιχεία"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Δεν είναι δυνατός ο ορισμός κεφαλίδων. Παρακαλώ να ενεργοποιήσετε τη "
+"λειτουργία αναφοράς κεφαλίδων πίνακα στις Ρυθμίσεις Μορφοποίησης Εγγράφου"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Ορισμός σειράς {rowNumber} στήλης {columnNumber} ως αρχής των κεφαλίδων της "
+"στήλης"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Είδη ορίστηκε η σειρά {rowNumber} στήλη {columnNumber} ως αρχή των κεφαλίδων "
+"στήλης"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Αφαιρέθηκε σειρά {rowNumber} στήλης {columnNumber} από την κεφαλίδα της "
+"στήλης"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Δεν ήταν δυνατή η εύρεση της σειράς {rowNumber} στήλη {columnNumber} στην "
+"κεφαλίδα της στήλης"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Πατώντας μιά φορά θα οριστεί αυτό το κελί ως πρώτη κεφαλίδα της στήλης και "
+"για οποιαδήποτε άλλα κελιά βρήσκονται πιο κάτω ή στα δεξιά αυτού του πίνακα. "
+"Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της στήλης για αυτό το "
+"κελί"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Ορισμός σειράς {rowNumber} στήλης {columnNumber} ως αρχής των κεφαλίδων της "
+"σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Είδη ορίστηκε η σειρά {rowNumber} στήλη {columnNumber} ως αρχή των κεφαλίδων "
+"της σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"Αφαιρέθηκε σειρά {rowNumber} στήλης {columnNumber} από τις κεφαλίδες της "
+"σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Δεν ήταν δυνατή η εύρεση της σειράς {rowNumber} στήλη {columnNumber} στις "
+"κεφαλίδες της σειράς"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Πατώντας μιά φορά θα οριστεί αυτό το κελί ως πρώτη κεφαλίδα της σειράς και "
+"για οποιαδήποτε άλλα κελιά βρήσκονται πιο κάτω ή στα δεξιά αυτού του πίνακα. "
+"Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της σειράς για αυτό το "
+"κελί"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "Χωρίς σχόλια"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Αναφέρει το κείμενο του σχολίου στο σημείο που βρήσκεται ο δρομέας"
+
+# check
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "Εκτός πίνακα"
+
 msgid "invoke"
 msgstr "επίκληση"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Σημειώσεις"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "&Σφάλματα"
+
+#. Translators: The label shown for an insertion change
+#, fuzzy, python-brace-format
+msgid "insertion: {text}"
+msgstr "Ορθογραφικός έλεγχος: {text}"
+
+#. Translators: The label shown for a deletion change
+#, fuzzy, python-brace-format
+msgid "deletion: {text}"
+msgstr "Ορθογραφικός έλεγχος: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr ""
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "σχόλιο: {text} από {author} στις {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "σχόλιο: {text} από {author} στις {date}"
+
 msgid "Desktop"
 msgstr "Επιφάνεια Εργασίας"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "Περιοχή 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "Σωρευμένη Περιοχή 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "Σωρευμένη Περιοχή 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "Ράβδος Τμημάτων 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "Σωρευμένη Ράβδος 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "Σωρευμένη Ράβδος 3D 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "Στήλη 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "Στήλη Τμημάτων 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "Σωρευμένη Στήλη 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "Σωρευμένη Στήλη 3D 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "Γραμμή 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "Πίτα 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "Πίτα Με Απομακρυσμένα Τμήματα 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "Περιοχή"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "Σωρευμένη Περιοχή"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "Ράβδος Τμημάτων"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "Ράβδος Από Πίτα"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "Σωρευμένη Ράβδος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "Σωρευμένη Ράβδος 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "Φυσαλίδα"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "Φυσαλίδα Με Εφέ 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "Στήλη Τμημάτων"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "Σωρευμένη Στήλη"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "Σωρευμένη Στήλη 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "Σύμπλεγμα Κωνικών Ράβδων"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "Σωρευμένη Κωνική Ράβδος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "Σωρευμένη Κωνική Ράβδος 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "Κωνική Στήλη 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "Σύμπλεγμα Κωνικής Στήλης"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "Σωρευμένη Κωνική Στήλη"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "Σωρευμένη Κωνική Στήλη 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "Σύμπλεγμα Κυλινδρικών Ράβδων"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "Σωρευμένη Κυλινδρική Ράβδος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "Σωρευμένη Κυλινδρική Ράβδος 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "Κυλινδρική Στήλη 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "Σωρευμένη Κυλινδρική Στήλη 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "Δακτύλιος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "Δακτύλιος Με Απομακρυσμένα Τμήματα"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "Γραμμή"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "Γραμμή Με Δείκτες"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "Σωρευμένη Γραμμή Με Δείκτες"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "Σωρευμένη Γραμμή Με Δείκτες 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "Σωρευμένη Γραμμή"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "Σωρευμένη Γραμμή 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "Πίτα"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "Πίτα Με Απομακρυσμένα Τμήματα"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "Πίτα Από Πίτα"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "Σύμπλεγμα Πυραμιδικής Ράβδου"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "Σωρευμένη Πυραμιδική Ράβδος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "Σωρευμένη Πυραμιδική Ράβδος 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "Πυραμιδική Στήλη 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "Σύμπλεγμα Πυραμιδικής Στήλης"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "Σωρευμένη Πυραμιδική Στήλη"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "Σωρευμένη Πυραμιδική Στήλη 100 τοις εκατό"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "Αραχνοειδές"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "Αραχνοειδές Με Γέμισμα"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "Αραχνοειδές Με Δείκτες Δεδομένων"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr "Ανώτερη-Κατώτερη-Κλεισίματος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr "Ανοίγματος-Ανώτερη-Κατώτερη-Κλεισίματος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr "Όγκος-Ανώτερη-Κατώτερη-Κλεισίματος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr "Όγκος-Ανοίγματος-Ανώτερη-Κατώτερη-Κλεισίματος"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "Επιφάνεια 3D"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "Επιφάνεια (Προβολή Κορυφής)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "Επιφάνεια (Γραμμικό Περίγραμμα Προβολής Κορυφής)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "Επιφάνεια 3D (Περίγραμμα)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "Διασπορά"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "Διασπορά Με Γραμμές"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "Διασπορά Με Γραμμές Χωρίς Δείκτες Δεδομένων"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "Διασπορά Με Ομαλές Γραμμές"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "Διασπορά Με Ομαλές Γραμμές Χωρίς Δείκτες Δεδομένων"
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "κομμάτι"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "στήλη"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "σημείο δεδομένων"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "στοιχείο"
+
+#. Translators: Message to be spoken to report Series Color
+#, python-brace-format
+msgid "Series color: {colorName} "
+msgstr "Χρώμα σειράς: {colorName} "
+
+# to be checked
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Display Unit Label"
+msgstr "Εμφάνιση Ετικέτας Μονάδας"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Major Gridlines"
+msgstr "Κύριες Γραμμές Πλέγματος"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Minor Gridlines"
+msgstr "Δευτερεύουσες Γραμμές Πλέγματος"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "Συγκεντρωτικό Γράφημα Ζώνης Απόθεσης"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Field Button"
+msgstr "Συγκεντρωτικό Γράφημα Κουμπιού Πεδίου"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Down Bars"
+msgstr "Κάτω Ράβδοι"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Drop Lines"
+msgstr "Γραμμές Ύψους"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Hi Lo Lines"
+msgstr "Ανώτερες Κατώτερες Γραμμές"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Radar Axis Labels"
+msgstr "Ετικέτες Άξονα Αραχνοειδούς"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Series Lines"
+msgstr "Γραμμές Σειρών"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Up Bars"
+msgstr "Άνω Ράβδοι"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Corners"
+msgstr "Γωνίες"
+
+#. Translators: A type of element in a Microsoft Office chart.
+#. Translators: Data Table will be spoken when chart element Data Table is selected
+msgid "Data Table"
+msgstr "Πίνακας Δεδομένων"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Floor"
+msgstr "Δάπεδο"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Nothing"
+msgstr "Τίποτα"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Walls"
+msgstr "Τοίχοι"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Data Label"
+msgstr "Ετικέτα Δεδομένων"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Error Bars"
+msgstr "Γραμμές Σφάλματος"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "X Error Bars"
+msgstr "X Γραμμές Σφάλματος"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Y Error Bars"
+msgstr "Y Γραμμές Σφάλματος"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Shape"
+msgstr "Σχήμα"
+
+#. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "Τίτλος γραφήματος: {chartTitle}, τύπος: {chartType}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "Υπάρχει 1 σειρά σε αυτό το γράφημα"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "Υπάρχουν %d σειρές σε αυτό το γράφημα"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
+msgid "series {number} {name}"
+msgstr "σειρά {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "Δεν έχει οριστεί σειρά"
+
+#. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+#, fuzzy
+msgid "Chart Elements"
+msgstr "Στοιχεία"
+
+#. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+#, python-brace-format
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} σειρά {seriesIndex} από {seriesCount}"
+
+#. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, fuzzy, python-brace-format
+msgid "Slice color: {colorName} "
+msgstr "Χρώμα σειράς: {colorName} "
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
+msgid "no change from point {previousIndex}, "
+msgstr "καμία αλλαγή από σημείο {previousIndex}, "
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "Αυξημένο κατά {incrementValue} από σημείο {previousIndex}, "
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "μειωμένο κατά {decrementValue} από σημείο {previousIndex}, "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "Category {categoryAxisData}: "
+msgstr "Κατηγορία {categoryAxisData}: "
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "value {valueAxisData}"
+msgstr "τιμή {valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+" κλάσμα {fractionValue:.2f} Κομμάτι επί τοις εκατό {pointIndex} από "
+"{pointCount}"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+#, python-brace-format
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} από {pointCount}"
+
+#. Translators: Indicates Primary Category Axis
+#, fuzzy
+msgid "Primary Category Axis"
+msgstr "Πρωτεύον υποσέλιδο"
+
+#. Translators: Indicates Secondary Category Axis
+#, fuzzy
+msgid "Secondary Category Axis"
+msgstr "Κατηγορία {categoryAxisData}: "
+
+#. Translators: Indicates Primary Value Axis
+#, fuzzy
+msgid "Primary Value Axis"
+msgstr "Πρωτεύουσα κεφαλίδα"
+
+#. Translators: Indicates Secondary Value Axis
+#, fuzzy
+msgid "Secondary Value Axis"
+msgstr "Δευτερεύον"
+
+#. Translators: Indicates Primary Series Axis
+#, fuzzy
+msgid "Primary Series Axis"
+msgstr "Πρωτεύον υποσέλιδο"
+
+#. Translators: Indicates Secondary Series Axis
+#, fuzzy
+msgid "Secondary Series Axis"
+msgstr "Δευτερεύον"
+
+#. Translators: the title of a chart axis
+#, fuzzy, python-brace-format
+msgid " title: {axisTitle}"
+msgstr "Τίτλος γραφήματος: {chartTitle}"
+
+#. Translators: Indicates that trendline type is Exponential
+msgid "Exponential"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Linear
+#, fuzzy
+msgid "Linear"
+msgstr "Γραμμή"
+
+#. Translators: Indicates that trendline type is Logarithmic
+msgid "Logarithmic"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Moving Average
+msgid "Moving Average"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Polynomial
+msgid "Polynomial"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Power
+msgid "Power"
+msgstr ""
+
+#. Translators: Substitute superscript two by square for R square value
+#, fuzzy
+msgid " square "
+msgstr " τετραγωνισμένο"
+
+#. Translators: Substitute - by minus in trendline equations.
+#, fuzzy
+msgid " minus "
+msgstr "αριθμητικό πλην"
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid ""
+"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
+"{trendlineLabel} "
+msgstr ""
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
+msgstr ""
+
+#. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
+msgid "Chart title: {chartTitle}"
+msgstr "Τίτλος γραφήματος: {chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Office.
+msgid "Untitled chart"
+msgstr "Γράφημα χωρίς τίτλο"
+
+#. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"Περιοχή γραφήματος, ύψος: {chartAreaHeight}, πλάτος: {chartAreaWidth}, "
+"κορυφή: {chartAreaTop}, αριστερά: {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Office chart.
+msgid "Chart area "
+msgstr "Περιοχή γραφήματος"
+
+#. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"Περιοχή σχεδίασης, εσωτερικό ύψος: {plotAreaInsideHeight:.0f}, εσωτερικό "
+"πλάτος: {plotAreaInsideWidth:.0f}, εσωτερική κορυφή: "
+"{plotAreaInsideTop:.0f}, εσωτερικό αριστερό: {plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Office chart.
+msgid "Plot area "
+msgstr "Περιοχή σχεδίασης "
+
+#. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"Καταχώρηση υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
+
+#. Translators: the legend entry for a chart in Microsoft Office
+#, fuzzy, python-brace-format
+msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
+msgstr " {segmentType} {pointIndex} από {pointCount}"
+
+#. Translators: Details about a legend key for a series in a Microsoft office chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"Κλειδί υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
@@ -9440,17 +10578,6 @@ msgstr "&Φύλλα"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} εως {end}"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Δεν είναι δυνατός ο ορισμός κεφαλίδων. Παρακαλώ να ενεργοποιήσετε τη "
-"λειτουργία αναφοράς κεφαλίδων πίνακα στις Ρυθμίσεις Μορφοποίησης Εγγράφου"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -9666,668 +10793,6 @@ msgstr "{desc} προς τα πάνω δεξιά και προς τα κάτω �
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Area"
-msgstr "Περιοχή 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Area"
-msgstr "Σωρευμένη Περιοχή 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Area"
-msgstr "Σωρευμένη Περιοχή 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Bar"
-msgstr "Ράβδος Τμημάτων 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Bar"
-msgstr "Σωρευμένη Ράβδος 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Bar"
-msgstr "Σωρευμένη Ράβδος 3D 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Column"
-msgstr "Στήλη 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Column"
-msgstr "Στήλη Τμημάτων 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Column"
-msgstr "Σωρευμένη Στήλη 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Column"
-msgstr "Σωρευμένη Στήλη 3D 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Line"
-msgstr "Γραμμή 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Pie"
-msgstr "Πίτα 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded 3D Pie"
-msgstr "Πίτα Με Απομακρυσμένα Τμήματα 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Area"
-msgstr "Περιοχή"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Area"
-msgstr "Σωρευμένη Περιοχή"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Bar"
-msgstr "Ράβδος Τμημάτων"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bar of Pie"
-msgstr "Ράβδος Από Πίτα"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Bar"
-msgstr "Σωρευμένη Ράβδος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Bar"
-msgstr "Σωρευμένη Ράβδος 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble"
-msgstr "Φυσαλίδα"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble with 3D effects"
-msgstr "Φυσαλίδα Με Εφέ 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Column"
-msgstr "Στήλη Τμημάτων"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Column"
-msgstr "Σωρευμένη Στήλη"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Column"
-msgstr "Σωρευμένη Στήλη 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Bar"
-msgstr "Σύμπλεγμα Κωνικών Ράβδων"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Bar"
-msgstr "Σωρευμένη Κωνική Ράβδος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Bar"
-msgstr "Σωρευμένη Κωνική Ράβδος 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cone Column"
-msgstr "Κωνική Στήλη 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Column"
-msgstr "Σύμπλεγμα Κωνικής Στήλης"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Column"
-msgstr "Σωρευμένη Κωνική Στήλη"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Column"
-msgstr "Σωρευμένη Κωνική Στήλη 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cylinder Bar"
-msgstr "Σύμπλεγμα Κυλινδρικών Ράβδων"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cylinder Bar"
-msgstr "Σωρευμένη Κυλινδρική Ράβδος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Bar"
-msgstr "Σωρευμένη Κυλινδρική Ράβδος 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cylinder Column"
-msgstr "Κυλινδρική Στήλη 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Column"
-msgstr "Σωρευμένη Κυλινδρική Στήλη 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Doughnut"
-msgstr "Δακτύλιος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Doughnut"
-msgstr "Δακτύλιος Με Απομακρυσμένα Τμήματα"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line"
-msgstr "Γραμμή"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line with Markers"
-msgstr "Γραμμή Με Δείκτες"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line with Markers"
-msgstr "Σωρευμένη Γραμμή Με Δείκτες"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line with Markers"
-msgstr "Σωρευμένη Γραμμή Με Δείκτες 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line"
-msgstr "Σωρευμένη Γραμμή"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line"
-msgstr "Σωρευμένη Γραμμή 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie"
-msgstr "Πίτα"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Pie"
-msgstr "Πίτα Με Απομακρυσμένα Τμήματα"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie of Pie"
-msgstr "Πίτα Από Πίτα"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Bar"
-msgstr "Σύμπλεγμα Πυραμιδικής Ράβδου"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Bar"
-msgstr "Σωρευμένη Πυραμιδική Ράβδος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Bar"
-msgstr "Σωρευμένη Πυραμιδική Ράβδος 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Pyramid Column"
-msgstr "Πυραμιδική Στήλη 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Column"
-msgstr "Σύμπλεγμα Πυραμιδικής Στήλης"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Column"
-msgstr "Σωρευμένη Πυραμιδική Στήλη"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Column"
-msgstr "Σωρευμένη Πυραμιδική Στήλη 100 τοις εκατό"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar"
-msgstr "Αραχνοειδές"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Filled Radar"
-msgstr "Αραχνοειδές Με Γέμισμα"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar with Data Markers"
-msgstr "Αραχνοειδές Με Δείκτες Δεδομένων"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "High-Low-Close"
-msgstr "Ανώτερη-Κατώτερη-Κλεισίματος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Open-High-Low-Close"
-msgstr "Ανοίγματος-Ανώτερη-Κατώτερη-Κλεισίματος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-High-Low-Close"
-msgstr "Όγκος-Ανώτερη-Κατώτερη-Κλεισίματος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-Open-High-Low-Close"
-msgstr "Όγκος-Ανοίγματος-Ανώτερη-Κατώτερη-Κλεισίματος"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface"
-msgstr "Επιφάνεια 3D"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View)"
-msgstr "Επιφάνεια (Προβολή Κορυφής)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View wireframe)"
-msgstr "Επιφάνεια (Γραμμικό Περίγραμμα Προβολής Κορυφής)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface (wireframe)"
-msgstr "Επιφάνεια 3D (Περίγραμμα)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter"
-msgstr "Διασπορά"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines"
-msgstr "Διασπορά Με Γραμμές"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines and No Data Markers"
-msgstr "Διασπορά Με Γραμμές Χωρίς Δείκτες Δεδομένων"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines"
-msgstr "Διασπορά Με Ομαλές Γραμμές"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "Διασπορά Με Ομαλές Γραμμές Χωρίς Δείκτες Δεδομένων"
-
-#. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
-msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "Τίτλος γραφήματος: {chartTitle}, τύπος: {chartType}"
-
-#. Translators: Reported when there is no title for an axis in a chart.
-msgid "Not defined"
-msgstr "Δεν έχει οριστεί"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The category axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Category"
-msgstr "Κατηγορία"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The value axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Value"
-msgstr "Τιμή"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The series axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Series"
-msgstr "Σειρά"
-
-#. Translators: Message reporting the type and title of an axis in a chart.
-#. For example, this might report "Category axis is month"
-#, python-brace-format
-msgid "{axisName} Axis is {axisTitle}"
-msgstr "{axisName} Άξονας είναι {axisTitle}"
-
-#. Translators: Indicates that there is 1 series in a chart.
-msgid "There is 1 series in this chart"
-msgstr "Υπάρχει 1 σειρά σε αυτό το γράφημα"
-
-#. Translators: Indicates the number of series in a chart where there are multiple series.
-#, python-format
-msgid "There are total %d series in this chart"
-msgstr "Υπάρχουν %d σειρές σε αυτό το γράφημα"
-
-#. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
-msgid "series {number} {name}"
-msgstr "σειρά {number} {name}"
-
-#. Translators: Indicates that there are no series in a chart.
-msgid "No Series defined."
-msgstr "Δεν έχει οριστεί σειρά"
-
-#. Translators: A slice in a pie chart.
-msgid "slice"
-msgstr "κομμάτι"
-
-#. Translators: A column in a column chart.
-msgctxt "chart"
-msgid "column"
-msgstr "στήλη"
-
-#. Translators: A data point in a line chart.
-msgid "data point"
-msgstr "σημείο δεδομένων"
-
-#. Translators: A segment of a chart for charts which don't have a specific name for segments.
-msgid "item"
-msgstr "στοιχείο"
-
-#, python-brace-format
-msgid "Series color: {colorName} "
-msgstr "Χρώμα σειράς: {colorName} "
-
-# to be checked
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Display Unit Label"
-msgstr "Εμφάνιση Ετικέτας Μονάδας"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Major Gridlines"
-msgstr "Κύριες Γραμμές Πλέγματος"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Minor Gridlines"
-msgstr "Δευτερεύουσες Γραμμές Πλέγματος"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Drop Zone"
-msgstr "Συγκεντρωτικό Γράφημα Ζώνης Απόθεσης"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Field Button"
-msgstr "Συγκεντρωτικό Γράφημα Κουμπιού Πεδίου"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Down Bars"
-msgstr "Κάτω Ράβδοι"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Drop Lines"
-msgstr "Γραμμές Ύψους"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Hi Lo Lines"
-msgstr "Ανώτερες Κατώτερες Γραμμές"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Radar Axis Labels"
-msgstr "Ετικέτες Άξονα Αραχνοειδούς"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Series Lines"
-msgstr "Γραμμές Σειρών"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Up Bars"
-msgstr "Άνω Ράβδοι"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Corners"
-msgstr "Γωνίες"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Table"
-msgstr "Πίνακας Δεδομένων"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Floor"
-msgstr "Δάπεδο"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Nothing"
-msgstr "Τίποτα"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Walls"
-msgstr "Τοίχοι"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Label"
-msgstr "Ετικέτα Δεδομένων"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Error Bars"
-msgstr "Γραμμές Σφάλματος"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "X Error Bars"
-msgstr "X Γραμμές Σφάλματος"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Y Error Bars"
-msgstr "Y Γραμμές Σφάλματος"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Shape"
-msgstr "Σχήμα"
-
-#. Translators: Details about a series in a chart.
-#. For example, this might report "foo series 1 of 2"
-#, python-brace-format
-msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "{seriesName} σειρά {seriesIndex} από {seriesCount}"
-
-#. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
-msgid "no change from point {previousIndex}, "
-msgstr "καμία αλλαγή από σημείο {previousIndex}, "
-
-#. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "Αυξημένο κατά {incrementValue} από σημείο {previousIndex}, "
-
-#. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
-msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "μειωμένο κατά {decrementValue} από σημείο {previousIndex}, "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}: "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "Category {categoryAxisData}: "
-msgstr "Κατηγορία {categoryAxisData}: "
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{valueAxisTitle} {valueAxisData}"
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "value {valueAxisData}"
-msgstr "τιμή {valueAxisData}"
-
-#. Translators: Details about a slice of a pie chart.
-#. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
-msgid ""
-" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
-" κλάσμα {fractionValue:.2f} Κομμάτι επί τοις εκατό {pointIndex} από "
-"{pointCount}"
-
-#. Translators: Details about a segment of a chart.
-#. For example, this might report "column 1 of 5"
-#, python-brace-format
-msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} από {pointCount}"
-
-#. Translators: The primary axis group in a Microsoft Excel chart.
-msgid "Primary"
-msgstr "Πρωτεύον"
-
-#. Translators: The secondary axis group in a Microsoft Excel chart.
-msgid "Secondary"
-msgstr "Δευτερεύον"
-
-#. Translators: Details about an axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr ""
-"Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}, τίτλος: {axisTitle}"
-
-#. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}"
-
-#. Translators: Indicates a chart axis title in Microsoft Excel.
-msgid "Chart axis title"
-msgstr "Τίτλος άξονα γραφήματος"
-
-#. Translators: Indicates a trendline in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "trendline"
-msgstr "γραμμή τάσης"
-
-#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-msgid " squared "
-msgstr " τετραγωνισμένο"
-
-#. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
-msgid "Chart title: {chartTitle}"
-msgstr "Τίτλος γραφήματος: {chartTitle}"
-
-#. Translators: Indicates an untitled chart in Microsoft Excel.
-msgid "Untitled chart"
-msgstr "Γράφημα χωρίς τίτλο"
-
-#. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
-"{chartAreaTop}, left: {chartAreaLeft}"
-msgstr ""
-"Περιοχή γραφήματος, ύψος: {chartAreaHeight}, πλάτος: {chartAreaWidth}, "
-"κορυφή: {chartAreaTop}, αριστερά: {chartAreaLeft}"
-
-#. Translators: Indicates the chart area of a Microsoft Excel chart.
-msgid "Chart area "
-msgstr "Περιοχή γραφήματος"
-
-#. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
-"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
-"{plotAreaInsideLeft:.0f}"
-msgstr ""
-"Περιοχή σχεδίασης, εσωτερικό ύψος: {plotAreaInsideHeight:.0f}, εσωτερικό "
-"πλάτος: {plotAreaInsideWidth:.0f}, εσωτερική κορυφή: "
-"{plotAreaInsideTop:.0f}, εσωτερικό αριστερό: {plotAreaInsideLeft:.0f}"
-
-#. Translators: Indicates the plot area of a Microsoft Excel chart.
-msgid "Plot area "
-msgstr "Περιοχή σχεδίασης "
-
-#. Translators: Indicates the legend in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend"
-msgstr "Υπόμνημα"
-
-#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
-msgid "No legend"
-msgstr "Χωρίς υπόμνημα"
-
-#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
-msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
-"Καταχώρηση υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
-
-#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend key for series Temperature 1 of 2"
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
-msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
-"Κλειδί υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
-
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "εισαγωγή"
@@ -10444,12 +10909,6 @@ msgstr "σχόλιο: {text} από {author} στις {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} από {author} στις {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "Ορθογραφικός έλεγχος: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10485,84 +10944,6 @@ msgstr "%.1f γραμμές"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Περιγραφή πίνακα"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Ορισμός σειράς {rowNumber} στήλης {columnNumber} ως αρχής των κεφαλίδων της "
-"στήλης"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Είδη ορίστηκε η σειρά {rowNumber} στήλη {columnNumber} ως αρχή των κεφαλίδων "
-"στήλης"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr ""
-"Αφαιρέθηκε σειρά {rowNumber} στήλης {columnNumber} από την κεφαλίδα της "
-"στήλης"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"Δεν ήταν δυνατή η εύρεση της σειράς {rowNumber} στήλη {columnNumber} στην "
-"κεφαλίδα της στήλης"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"Πατώντας μιά φορά θα οριστεί αυτό το κελί ως πρώτη κεφαλίδα της στήλης και "
-"για οποιαδήποτε άλλα κελιά βρήσκονται πιο κάτω ή στα δεξιά αυτού του πίνακα. "
-"Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της στήλης για αυτό το "
-"κελί"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Ορισμός σειράς {rowNumber} στήλης {columnNumber} ως αρχής των κεφαλίδων της "
-"σειράς"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Είδη ορίστηκε η σειρά {rowNumber} στήλη {columnNumber} ως αρχή των κεφαλίδων "
-"της σειράς"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
-"Αφαιρέθηκε σειρά {rowNumber} στήλης {columnNumber} από τις κεφαλίδες της "
-"σειράς"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-"Δεν ήταν δυνατή η εύρεση της σειράς {rowNumber} στήλη {columnNumber} στις "
-"κεφαλίδες της σειράς"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"Πατώντας μιά φορά θα οριστεί αυτό το κελί ως πρώτη κεφαλίδα της σειράς και "
-"για οποιαδήποτε άλλα κελιά βρήσκονται πιο κάτω ή στα δεξιά αυτού του πίνακα. "
-"Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της σειράς για αυτό το "
-"κελί"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10675,14 +11056,6 @@ msgstr "{offset:.3g} στιγμές"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} πίκας"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "Χωρίς σχόλια"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "Αναφέρει το κείμενο του σχολίου στο σημείο που βρήσκεται ο δρομέας"
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "Μονό διάστιχο γραμμής"
@@ -10695,29 +11068,178 @@ msgstr "Διπλό διάστιχο γραμμής"
 msgid "1.5 line spacing"
 msgstr "Διάστιχο γραμμής 1.5"
 
-# check
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "Εκτός πίνακα"
+#~ msgid "Shows the NVDA voice settings dialog"
+#~ msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων φωνής του NVDA"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&Σημειώσεις"
+#~ msgid "&General settings..."
+#~ msgstr "&Γενικές ρυθμίσεις..."
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "&Σφάλματα"
+#~ msgid "&Synthesizer..."
+#~ msgstr "&Συνθέτης φωνής..."
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "Σειρά HIMS Braille Sense/Braille EDGE/Smart Beetle"
+#~ msgid "Change the synthesizer to be used"
+#~ msgstr "Αλλαγή συνθέτη φωνής προς χρήση"
 
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "Choose the voice, rate, pitch and volume to use"
+#~ msgstr ""
+#~ "Επιλέξτε τη φωνή, την ταχύτητα, τον τόνο και την ένταση που επιθυμείτε"
+
+#~ msgid "B&raille settings..."
+#~ msgstr "Ρυθμίσεις B&raille..."
+
+#~ msgid "&Keyboard settings..."
+#~ msgstr "&Ρυθμίσεις πληκτρολογίου..."
+
+#~ msgid ""
+#~ "Configure keyboard layout, speaking of typed characters, words or command "
+#~ "keys"
+#~ msgstr ""
+#~ "Διαμόρφωση της διάταξης του πληκτρολογίου, της εκφώνησης των "
+#~ "πληκτρολογούμενων χαρακτήρων ή λέξεων, και των πλήκτρων εντολών"
+
+#~ msgid "&Mouse settings..."
+#~ msgstr "&Ρυθμίσεις ποντικιού..."
+
+#~ msgid "Change reporting of mouse shape and object under mouse"
+#~ msgstr ""
+#~ "Αλλαγή αναφοράς του σχήματος και του αντικειμένου του ποντικιού κάτω από "
+#~ "το ποντίκι"
+
+#, fuzzy
+#~ msgid "&Touch interaction..."
+#~ msgstr "&Λεξικό φωνής..."
+
+#~ msgid "Configure how and when the review cursor moves"
+#~ msgstr "Ρύθμιση του πώς και πότε μετακινείται ο δρομέας επισκόπησης"
+
+#~ msgid "&Input composition settings..."
+#~ msgstr "&Ρυθμίσεις εισόδου κειμένου..."
+
+#~ msgid ""
+#~ "Configure how NVDA reports input composition and candidate selection for "
+#~ "certain languages"
+#~ msgstr ""
+#~ "Ρύθμιση του τρόπου με τον οποίο το NVDA αναφέρει την είσοδο κειμένου και "
+#~ "την επιλογή συμβόλων για ορισμένες γλώσσες"
+
+#~ msgid "&Object presentation..."
+#~ msgstr "&Παρουσίαση αντικειμένου..."
+
+#~ msgid "Change reporting of objects"
+#~ msgstr "Αλλαγή αναφοράς αντικειμένων"
+
+#~ msgid "&Browse mode..."
+#~ msgstr "Λειτουργία &περιήγησης..."
+
+#~ msgid "Change virtual buffers specific settings"
+#~ msgstr "Αλλαγή ειδικών ρυθμίσεων των εικονικών καταχωρητών"
+
+#~ msgid "Document &formatting..."
+#~ msgstr "Μορφοποίηση &εγγράφου..."
+
+#~ msgid "Change settings of document properties"
+#~ msgstr "Αλλαγή ρυθμίσεων των ιδιοτήτων του εγγράφου"
+
+#~ msgid "&Windows 10 OCR..."
+#~ msgstr "&Οπτική Αναγνώριση χαρακτήρων στα Windows 10"
+
+#~ msgid "General Settings"
+#~ msgstr "Γενικές Ρυθμίσεις"
+
+#~ msgid "Voice Settings"
+#~ msgstr "Ρυθμίσεις Φωνής"
+
+#~ msgid "Keyboard Settings"
+#~ msgstr "Ρυθμίσεις Πληκτρολογίου"
+
+#~ msgid "Mouse Settings"
+#~ msgstr "Ρυθμίσεις Ποντικιού"
+
+#~ msgid "Review Cursor Settings"
+#~ msgstr "Ρυθμίσεις Δρομέα Επισκόπησης"
+
+#~ msgid "Braille Settings"
+#~ msgstr "Ρυθμίσεις Braille"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "Γαλλικά (Καναδά) βαθμού 1"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "Γαλλικά (Καναδά) βαθμού 2"
+
+#~ msgid "Mongolian"
+#~ msgstr "Μογγολικά"
+
+#~ msgid "Download and &install update"
+#~ msgstr "Λήψη και &εγκατάσταση ενημερωμένης έκδοσης"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "Η νέα έκδοση λήφθηκε. Τώρα θα εγκατασταθεί."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "Δρομολόγηση δρομέα και αναφορά μορφοποίησης"
+
+#~ msgid "r%s"
+#~ msgstr "σειρά%s"
+
+#~ msgid "c%s"
+#~ msgstr "κελί%s"
+
+#~ msgid "suspended"
+#~ msgstr "Σε αναστολή"
+
+#~ msgid "running"
+#~ msgstr "εκτελείται"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "ALVA BC640/680 series"
+
+#~ msgid "review"
+#~ msgstr "επισκόπηση"
+
+#~ msgid "focus"
+#~ msgstr "εστίαση"
+
+#~ msgid "B&raille tethered to:"
+#~ msgstr "Η οθόνη braille προσδέθηκε στο:"
+
+#~ msgid "Not defined"
+#~ msgstr "Δεν έχει οριστεί"
+
+#~ msgid "Value"
+#~ msgstr "Τιμή"
+
+#~ msgid "Series"
+#~ msgstr "Σειρά"
+
+#~ msgid "{axisName} Axis is {axisTitle}"
+#~ msgstr "{axisName} Άξονας είναι {axisTitle}"
+
+#~ msgid "Primary"
+#~ msgstr "Πρωτεύον"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+#~ msgstr ""
+#~ "Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}, τίτλος: "
+#~ "{axisTitle}"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+#~ msgstr "Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}"
+
+#~ msgid "Chart axis title"
+#~ msgstr "Τίτλος άξονα γραφήματος"
+
+#~ msgid "trendline"
+#~ msgstr "γραμμή τάσης"
+
+#~ msgid "Legend"
+#~ msgstr "Υπόμνημα"
+
+#~ msgid "No legend"
+#~ msgstr "Χωρίς υπόμνημα"
+
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
 
 #~ msgid "Show the Handy Tech driver configuration window."
 #~ msgstr "Εμφάνιση του παραθύρου διαμόρφωσης του οδηγού του Handy Tech."
