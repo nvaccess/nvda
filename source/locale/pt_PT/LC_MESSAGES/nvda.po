@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 00:10+1000\n"
+"POT-Creation-Date: 2018-05-14 08:42+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -4344,6 +4344,22 @@ msgstr ""
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Apresenta o diálogo com os Perfis de Configuração do NVDA"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Accionadores de Perfis de Configuração desactivados."
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Accionadores de Perfis de Configuração activados."
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Alterna entre activar e desactivar todos os accionadores de Perfis de "
+"Configuração. A desactivação manter-se-á até reiniciar o NVDA"
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -7518,7 +7534,7 @@ msgstr "Definir &comandos"
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "&Preferências"
+msgstr "&Opções"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -8341,14 +8357,26 @@ msgstr "Guardar como"
 msgid "Error saving log: %s"
 msgstr "Erro a guardar o registo: %s"
 
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "OK"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Aplicar"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
-msgstr "&Categorias:"
+msgstr "&Secções"
 
 #. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
 #, python-format
 msgid "%s Settings Category"
-msgstr "Categoria %s de configurações"
+msgstr "Secção %s de configurações"
 
 #. Translators: This is the label for the general settings panel.
 msgid "General"
