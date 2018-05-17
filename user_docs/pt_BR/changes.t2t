@@ -6,20 +6,24 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana e Tiago Melo C
 
 = 2018.2 =
 
+Os destaques desta versão incluem Suporte para tabelas no Kindle para PC, suporte para linhas Braille Humanware BrailleNote Touch e BI14, Melhorias nos sintetizadores de fala Onecore e Sapi5, melhorias no Microsoft Outlook e muito mais.
+
 == Novas Características ==
 - O intervalo de linhas e colunas para células de tabelas agora é anunciado em fala e braille. (#2642)
 - Os comandos do NVDA para navegação em tabelas agora são suportados no Google Docs (com o modo braille ativado). (#7946)
-- Capacidade de ler e navegar em tabelas no Kindle para PC. (#7977)
-- Suporte para as linhas braille BrailleNote touch e Brailliant BI 14 via USB e bluetooth. (#6524)
-- No Windows 10 Fall Creators Update e posteriores, o NVDA pode anunciar notificações de aplicativos como a Calculadora e a Windows Store ""[Loja Windows]"". (#8045)
+- Adicionada capacidade de ler e navegar por tabelas no Kindle para PC. (#7977)
+- Suporte para as linhas braille HumanWare BrailleNote touch e Brailliant BI 14 via USB e bluetooth. (#6524)
+- No Windows 10 Fall Creators Update e posteriores, o NVDA pode anunciar notificações de aplicativos como a Calculadora e a Windows Store ""[Loja Windows]"". (#7984)
 - Novas tabelas de transcrição braille: lituano de 8 pontos, ucraniano, mongol grau 2. (#7839)
 - Adicionado um script para anunciar informações de formatação do texto em uma célula braille específica. (#7106)
-- Ao atualizar o NVDA, agora é possível adiar a instalação da atualização para um momento posterior de sua preferência. (#4263)
+- Ao atualizar o NVDA, agora é possível adiar a instalação da atualização para um momento posterior. (#4263)
+- Novos idiomas: Mongol, Suíço-alemão.
 - Agora você pode alternar control, shift, alt, windows e NVDA a partir do seu teclado braille e combinar esses modificadores com a entrada ""[digitação]"" braille (por exemplo, pressionar control+s). (#7306)
  - Você pode atribuir esses novos modificadores de alternância usando os comandos encontrados em Teclas emuladas do teclado de sistema na caixa de diálogo Gestos para entrada.
 - Suporte restaurado para linhas Handy Tech Braillino e Modular (com firmware antigo). (#8016)
 - Data e hora dos dispositivos Handy Tech suportados (como Active Braille e Active Star) serão automaticamente sincronizadas pelo NVDA quando estiverem fora de sincronia por mais de cinco segundos. (#8016)
 - Nas listas de mensagens do Microsoft Outlook, o NVDA agora informa se uma mensagem foi respondida ou encaminhada. (#6911)
+- Um gesto de entrada pode ser atribuído para desativar temporariamente todos os gatilhos de perfil de configuração. (#4935)
 
 
 == Alterações ==
@@ -30,7 +34,7 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana e Tiago Melo C
 - Os botões secundários de rolagem nas linhas braille Alva BC6, EuroBraille e Papenmeier agora anunciam informações de formatação para o texto sob a célula braille desse botão. (#7106)
 - As tabelas de entrada braille abreviadas retornarão automaticamente ao modo não abreviado em casos não editáveis (isto é, em controles onde não há cursor ou no modo de navegação). (#7306)
 - O NVDA agora é menos verboso quando um compromisso ou horário no calendário do Outlook abrange um dia inteiro. (#7949)
-- Todas as Preferências do NVDA agora podem ser encontradas num diálogo de configurações no Menu NVDA -> Preferências -> Configurações, em vez de dispersadas por vários diálogos. (#7302)
+- Todas as Preferências do NVDA agora podem ser encontradas em um diálogo de configurações no Menu NVDA -> Preferências -> Opções, em vez de estarem dispersas em vários diálogos. (#577)
 - O sintetizador de fala padrão quando executado no Windows 10 é agora vozes oneCore em vez de eSpeak. (#8176)
 
 
@@ -39,9 +43,9 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana e Tiago Melo C
 - O NVDA já não deixa de ler a página quando retorna a uma página anterior no Microsoft Edge. (#7997)
 - O NVDA não anunciará de forma incorreta o caractere final de um PIN de login do Windows 10 à medida que a máquina desbloqueia. (#7908)
 - Os rótulos das caixas de verificação e dos botões de opção no Chrome e no Firefox já não são anunciados duas vezes quando teclando tab ou usando a navegação rápida no modo de navegação. (#7960)
-- Manipula aria-current com um valor de falso como falso em vez de verdadeiro (#7892).
-- O driver de sintetizador Vozes Windows Onecore não falha mais ao carregar se a voz configurada foi desinstalada. (#7999)
-- Alterar vozes no driver de sintetizador Vozes Windows Onecore agora é muito mais rápido. (#7999)
+- aria-current com um valor falso será anunciado como "false" ""[falso]"" em vez de "true" ""[verdadeiro]"". (#7892).
+- As Vozes Windows OneCore não falham mais no carregamento se a voz configurada foi desinstalada. (#7553)
+- Alterar vozes nas Vozes Windows OneCore é agora muito mais rápido. (#7999)
 - Corrigida a saída de braille malformado para várias tabelas braille, incluindo sinais de maiúsculas em braille dinamarquês abreviado de 8 pontos. (#7526, #7693)
 - O NVDA agora pode reportar mais tipos de marcadores no Microsoft Word. (#6778)
 - Pressionando o script para anunciar formatação não move mais o reviewPosition ""[posição da exploração]"" incorretamente e, portanto, pressionando-o várias vezes não dá mais resultados diferentes. (#7869)
@@ -50,8 +54,11 @@ Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana e Tiago Melo C
 - No Windows 8 e posteriores, o NVDA deixará de anunciar "desconhecido" ao abrir o menu de links rápidos (Windows+X) e selecionar itens deste menu. (#8137)
 - Modelos de gestos específicos para botões nas linhas Hims estão funcionando como publicado no guia do usuário. (#8096)
 - O NVDA tentará agora corrigir os problemas de registro do sistema COM que fazem com que programas como o Firefox e o Internet Explorer fiquem inacessíveis e comunique "Desconhecido" pelo NVDA. (#2807)
-- A contornar uma falha ""[bug]"" no gerenciador de tarefas que faz com que o NVDA não permita que os usuários acessem o conteúdo de detalhes específicos sobre processos. (#8147)
+- Contornado um bug ""[falha]"" no Gerenciador de Tarefas que fazia com que o NVDA não permitisse que os usuários acessassem o conteúdo de detalhes específicos sobre processos. (#8147)
 - As vozes Microsoft SAPI5 mais recentes não ficam mais atrasadas no final da fala, tornando muito mais eficiente navegar com essas vozes. (#8174)
+- O NVDA não comunica mais (marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"") em Braille ou em fala por caractere ao acessar o relógio em versões recentes do Windows. (#5729)
+- A detecção de teclas de rolagem nas linhas Hims Smart Beetle mais uma vez não é mais desconfiável. (#6086)
+- Em alguns controles de texto, particularmente em aplicativos Delphi, as informações fornecidas sobre edição e navegação são agora muito mais confiáveis. (#636, #8102)
 
 
 == Alterações Específicas para Desenvolvedores ==
