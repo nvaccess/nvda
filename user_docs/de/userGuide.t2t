@@ -25,7 +25,7 @@ Zu den wichtigsten Funktionen gehören:
 - Unterstützung für zahlreiche Braillezeilen (auch mit Eingabe via Braille-Tastatur).
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung durch Sprachausgaben.
-- Übersetzt in rund 52 Sprachen.
+- Übersetzt in rund 54 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für berührungsempfindliche Bildschirme (Touchscreens).
@@ -35,7 +35,7 @@ Zu den wichtigsten Funktionen gehören:
 
 ++ Internationalisierung ++[Internationalization]
 Jeder Mensch auf der Welt sollte den gleichen Zugang zur Information und zu moderner Technologie erhalten, unabängig von seiner Sprache.
-NVDA wurde neben Englisch bislang in 52 weiteren Sprachen übersetzt, darunter sind: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Argonesisch, Portugiesisch (Brasilien), Bulgarisch, Birmanisch, Katalanisch, Spanisch (Kolumbien), Kroatisch, Tschechisch, Dänisch, Niederländisch, Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Deutsch, Hebräisch, Hindi (Nordindien), Ungarisch, Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Kirgisisch, Koreanisch, Litauisch, mazedonisch, Nepalesisch, Norwegisch, Polnisch, Portugiesisch, Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch, Schwedisch, Tamilisch, Thai, Chinesisch (traditionell und vereinfacht), Türkisch, Ukrainisch sowie Vietnamesisch.
+NVDA wurde neben Englisch bislang in 54 weiteren Sprachen übersetzt, darunter sind: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Argonesisch, Bulgarisch, Birmanisch, Chinesisch (traditionell und vereinfacht), Tschechisch, Dänisch, Deutsch (Deutschland), Deutsch (Schweiz), Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch,  Hebräisch, Hindi (Nordindien), Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Katalanisch, Kirgisisch, Koreanisch, Kroatisch, Litauisch, mazedonisch, Mongolisch, Nepalesisch, Niederländisch, Norwegisch, Polnisch, Portugiesisch (Portugal), Portugiesisch (Brasilien), Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slovenisch, Spanisch (Spanien), Spanisch (Kolumbien), Schwedisch, Tamilisch, Thai, Ungarisch,  Türkisch, Ukrainisch sowie Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++[SpeechSynthesizerSupport]
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
@@ -173,7 +173,7 @@ Bei Bedarf können Sie an Stelle der NVDA-Modifikationstaste die Originalfunktio
 
 +++ Die Tastaturschemata +++[KeyboardLayouts]
 NVDA ist derzeit mit zwei Tüpen von Tastenkombinationen (Tastaturschemata) ausgestattet. Es gibt eines für Desktops und eines für Laptops.
-Voreingestellt ist das Tastaturschema Desktop. Sie können natürlich das Schema im NVDA-Einstellungsmenü unter Tastatureinstellungen auch auf Laptop umschalten.
+Voreingestellt ist das Tastaturschema Desktop. Sie können natürlich das Schema im NVDA-Einstellungsdialog unter der Kathegorie [Tastatur #Keyboard] auch auf Laptop umschalten.
 
 Das Desktop-Schema macht ausgiebig vom (ausgeschalteten) Nummernblock gebrauch.
 Obwohl die meisten Laptop-Tastaturen keinen physikalischen Nummernblock haben, kann dieser mit Hilfe der FN-Taste in Kombination mit den Tasten des rechten Tastenfeldes emuliert werden. Dies sind folgende Tasten: 7, 8, 9, u, i, o, j, k, l, etc.).
@@ -227,10 +227,10 @@ Um zwischen den Arbeitsmodi zu wechseln, tippen Sie einmal mit drei Fingern.
 Die Bildschirmtastatur wird auf Touchscreens verwendet, um Text und Befehle einzugeben.
 Wenn ein Eingabefeld fokusiert ist, können Sie die Bildschirmtastatur durch doppeltippen des entsprechenden Symbols am unteren Bildschirmrand aufrufen.
 Bei Tablets wie dem Microsoft Surface Pro ist die Bildschirmtastatur immer verfügbar, wenn die Tastatur nicht verbunden ist.
-Um die Bildschirmtastatur auszublenden, doppeltippen Sie das Bildschirmtastatur-Symbol oder bewegen Sie sichvom Eingabefeld weg.
+Um die Bildschirmtastatur auszublenden, doppeltippen Sie das Bildschirmtastatur-Symbol oder bewegen Sie sich vom Eingabefeld weg.
 
 So finden Sie Tasten bei aktiver Bildschirmtastatur: Bewegen Sie Ihren Finger in den unteren Bildschirmbereich. Hier sollten Sie die Tastatur finden. Nun bewegen Sie einen Finger über die Tastatur. 
-Wenn Sie nun die zu drückende Taste gefunden haben, führen Sie einen Doppeltipp aus, oder heben einfach den Finger an. Das gewünschte verhalten legen Sie im Dialog [Touch-Interaktionseinstellungen #TouchInteraction] fest.
+Wenn Sie nun die zu drückende Taste gefunden haben, führen Sie einen Doppeltipp aus, oder heben einfach den Finger an. Das gewünschte verhalten legen Sie in der Kategorie [Touch-Interaktionen #TouchInteraction] in den Einstellngen fest.
 
 ++ Eingabehilfe ++[InputHelpMode]
 Viele NVDA-Befehle werden in den folgenden Abschnitten des Benutzerhandbuches aufgelistet, können aber allesamt bei eingeschalteter Eingabehilfe abgefragt werden.
@@ -370,7 +370,7 @@ Wenn Sie den NVDA-Cursor bewegen, bewegt sich der System-Cursor nicht mit, sodas
 Wenn Sie jedoch den System-Cursor bewegen, wird er vom NVDA-Cursor verfolgt.
 Diese Kopplung kann ein- und ausgeschaltet werden.
 
-Bedenken Sie, dass die Braillezeile standardmäßig den [System-Fokus #SystemFocus] und den [System-Cursor #SystemCaret] verfolgt, nicht jedoch den Navigator oder den NVDA-Cursor.
+Bedenken Sie, dass die Braillezeile standardmäßig sowohl dem [System-Fokus #SystemFocus] und dem [System-Cursor #SystemCaret] als auch dem NVDA-Cursor folgt.
 Um dies zu ändern, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
 
 Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
@@ -449,7 +449,7 @@ Je näher sich der Mauszeiger am oberen Bildschirmrand befindet, desto höher is
 Richtig ausgerichtete Stereolautsprecher oder Kopfhörer vorausgesetzt, wird der Signalton um so mehr links oder rechts abgespielt, je weiter links oder rechts sich der Mauszeiger bewegt.
 
 Diese zusätzlichen Mausfunktionen sind in NVDA standardmäßig deaktiviert.
-Sie können Sie jedoch in den [Mauseinstellungen #MouseSettings] aktivieren, die Sie im NVDA-Einstellungsmenü finden.
+Sie können Sie jedoch in den [Mauseinstellungen #MouseSettings] aktivieren, die Sie im NVDA-Einstellungsdialog in der Kategorie Mas finden.
 
 Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutzt werden. Folgende Tastenbefehle stehen zur Verfügung:
 %kc:beginInclude
@@ -600,7 +600,7 @@ Wenn Sie eine Braillezeile besitzen, kann NVDA diese verwenden, um Informationen
 Falls Ihre Braillezeile eine Tastatur besitzt, können Sie außerdem Kurz-, Voll- oder Basisschrift eingeben.
 
 Bitte sehen Sie im Abschnitt [unterstützte Braillezeilen #SupportedBrailleDisplays] nach, um zu erfahren, ob Ihre Braillezeile unterstützt wird.
-Verwenden Sie den [Dialog "Braille-Einstellungen" #BrailleSettings], um NVDA an Ihre Braillezeile anzupassen.
+Verwenden Sie die [Kategorie "Braille" #BrailleSettings] im NVDA-Einstellungsdialog, um NVDA an Ihre Braillezeile anzupassen.
 
 ++ Abkürzungen für Steuerelementtypen, Statusanzeigen und Sprungmarken ++[BrailleAbbreviations]
 Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende Abkürzungen für Steuerelementtypen, Statusanzeigen und Sprungmarken festgelegt.
@@ -692,7 +692,7 @@ Die folgenden Abkürzungen werden für Sprungmarken verwendet:
 
 ++ Braille-Eingabe ++[BrailleInput]
 NVDA unterstützt die Eingabe von Kurz-, Voll- und Basisschrift über eine Brailletastatur.
-Verwenden Sie die Einstellung ["Braille-Eingabetabelle" #BrailleInputTable] in den Braille-Einstellungen, um zu bestimmen, welche Übersetzungstabelle Sie verwenden wollen.
+Verwenden Sie die Einstellung ["Braille-Eingabetabelle" #BrailleInputTable] in der Kathegorie Braille-Einstellungen, um zu bestimmen, welche Übersetzungstabelle Sie verwenden wollen.
 
 Wenn Sie Basisschrift eingeben, wird der eingegebene Text unmittelbar nach der Eingabe über die Brailletastatur in das aktuelle Programm eingefügt.
 Wenn Sie Kurz- oder Vollschrift eingeben, wird der Text erst in die aktuelle Anwendung eingefügt, wenn Sie ein Wort mit der Leertaste beenden.
@@ -723,7 +723,7 @@ Drücken Sie Escape, um das Erkennungsergebnis zu schließen.
 windows 10 enthält eine optische Zeichenerkennung für viele Sprachen.
 Sie können diese zeichenerkennung verwenden, um Text aus Grafiken oder unzugänglichen Anwendungen auszulesen.
 
-Sie können die Erkennungssprache einstellen, indem Sie den Dialog [Windows 10-Texterkennung #Win10OcrSettings] in den NVDA-Einstellungen aufrufen.
+Sie können die Erkennungssprache einstellen, indem Sie ddie Kategorie [Windows 10-Texterkennung #Win10OcrSettings] in den NVDA-Einstellungen unter dem Menü "Optione" aufrufen.
 Zusätzliche Sprachen können Sie in den Einstellungen von Windows unter Zeit und Sprache -> Region und Sprache -> Sprache hinzufügen installieren.
 
 %kc:beginInclude
@@ -737,7 +737,7 @@ NVDA stellt für bestimmte Anwendungen zusätzliche Funktionen bereit, um bestim
 
 +++ Automatisches Lesen von Zeilen- und Spaltenüberschriften +++[WordAutomaticColumnAndRowHeaderReading]
 Wenn Sie in Microsoft Word in einer Tabelle navigieren, ist NVDA in der Lage, automatisch die Zeilen- und Spaltenüberschriften zu lesen.
-Hierfür muss die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen aktiviert sein.
+Hierfür muss die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" unter der Kathegorie für Dokumentformatierungen aktiviert sein.
 Zum zweiten muss NVDA die Reihen beziehungsweise Spalten mit den Überschriften kennen. 
 Verwenden Sie einen der folgenden Befehle, nachdem Sie sich in die ehrste Zelle mit der Reihen- beziehungsweise Spaltenüberschrift bewegt haben:
 %kc:beginInclude
@@ -771,7 +771,7 @@ Alle Kommentare des aktuellen Dokuments sind außerdem in der Elementliste aufge
 
 +++ Automatisches Lesen von Zeilen- und Spaltenüberschriften +++[ExcelAutomaticColumnAndRowHeaderReading]
 Wenn Sie in Microsoft Excel in einer Tabelle navigieren, ist NVDA in der Lage, automatisch die Zeilen- und Spaltenüberschriften zu lesen.
-Hierfür muss die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen aktiviert sein.
+Hierfür muss die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" unter der Kathegorie "Dokumentformatierungen" im [Einstellungsdialog #NVDASettings] aktiviert sein.
 Zum zweiten muss NVDA die Reihen beziehungsweise Spalten mit den Überschriften kennen. 
 Verwenden Sie einen der folgenden Befehle, nachdem Sie sich in die ehrste Zelle mit der Reihen- beziehungsweise Spaltenüberschrift bewegt haben:
 %kc:beginInclude
@@ -904,20 +904,31 @@ Wenn sie sich in der Tabellenansicht der hinzugefügten Bücher befinden:
 %kc:endInclude
 
 + NVDA konfigurieren +[ConfiguringNVDA]
-
-++ Das Menü "Einstellungen" ++[preferences]
-%kc:settingsSection: || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
-Die meisten NVDA-Einstellungen können durch Dialoge vorgenommen werden, welche man im NVDA-Menü unter Einstellungen findet.
-In allen Einstellungsdialogen können Sie den "OK"-Schalter drücken, um die Einstellungen zu übernehmen.
+Die meisten NVDA-Einstellungen können über Dialogfelder vorgenommen werden, welche man im Untermanü Anpassen  des NVDA-Menü findet. 
+Viele Einstellungen können in einem mehrseitigen [Dialogfeld #NVDASettings] geändert werden. 
+In allen Einstellungsdialogen können Sie den "OK"-Schalter drücken, um die Einstellungen zu übernehmen und dn Dialog zu schließen.
 Um Einstellungen zu verwerfen, drücken sie den "abbrechen"-Schalter oder die Taste Escape.
+Für manche Einstellungen können Sie auch "Übernehmen" drücken, um weiterhin im Einstellungsdialog zu bleiben.
 Einige Einstellungen können auch durch Kurztasten geändert werden. Diese Kurztasten werden in den entsprechenden Abschnitten aufgelistet.
 
-Beachten Sie, dass standardmäßig nicht alle Einstellungsdialoge mittels Tastenkombination, Berührungsgesten, etc. aufgerufen werden können. 
-Falls Sie Dialoge öffnen wollen, die nicht über zugewiesene Tastenkombinationen verfügen, können Sie den [dialog Eingaben #InputGestures] verwenden, um eigene Tastenkombinationen zuzuweisen.
+++ die Einstellungen ++[settings]
+%kc:settingsSection: || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
+mit Hilfe des Einstellungsdialogs können viele Parameter von NVDA verändert werden.
+In diesem Dialog können Sie aus einer Liste von mehreren kategorien auswählen.
+Sobald sie eine Kategorie ausgewählt haben, werden die passenden Einstellungen angezeigt.
+Wenn Sie den Schalter "übernehmen" verwenden, um die Einstellungen zu speichern, bleibt der Dialog geöffnet.
+Wenn Sie die Einstellungen speichern und den Dialog schließen wollen, verwenden Sie stattdessen den Schalter "ok".
 
-+++ Allgemeine Einstellungen (NVDA+Steuerung+G) +++[GeneralSettings]
-Sie finden die allgemeinen Einstellungen im Menü Einstellungen.
-Dieses Dialogfeld enthält die folgenden Optionen:
+Einige Kategorien besitzen eine Kurztaste für den direkten Aufruf.
+Wenn Sie eine solche Kurztaste drücken, wird der Einstellungsdialog mit der passenden kategorie aufgerufen.
+Beachten Sie, dass standardmäßig nicht alle Einstellungskathegorien mittels Tastenkombination, Berührungsgesten, etc. aufgerufen werden können. 
+Falls Sie Kathegorien oder Dialoge öffnen wollen, die nicht über zugewiesene Tastenkombinationen verfügen, können Sie den [dialog Eingaben #InputGestures] im NVDA-Menü unter "Optionen" verwenden, um eigene Tastenkombinationen zuzuweisen.
+
+Weiter unten finden Sie Erläuterungen zu jeder Kathegorie aus dem NVDA-Einstellungsdialog.
+
++++ Allgemein (NVDA+Steuerung+G) +++[GeneralSettings]
+Hier können allgemeingültige Einstellngen von NVDA vorgenommen werden. Sie können z. B. die Sprache einstellen, in der die meldungen und Dialoge von NVDA angezeigt werden sollen. Sie können auch festlegen, dass regelmäßig geprüft werden soll, ob Aktualisierngen für NVDA verfügbar sind.
+Diese Kategorie enthält die folgenden Optionen:
 
 ==== Sprache ====[GeneralSettingsLanguage]
 In dieser Liste können Sie die Sprache festlegen, in welcher die Benutzeroberfläche und die Meldungen von NVDA ausgegeben werden sollen.
@@ -925,7 +936,7 @@ Standardmäßig ist die Option "Benutzerstandard, Windows" ausgewählt. NVDA ent
 Dies besagt, dass NVDA die Sprache verwendet, welche in Windows eingestellt ist.
 
 Bitte beachten Sie: Um die Sprache zu ändern, muss NVDA neu gestartet werden.
-Wenn Sie die Auswahl ändern, wird NVDA nachfragen, ob Sie es jetzt neu starten wollen.
+Wenn Sie die Auswahl ändern und die Einstellungen speichern, wird NVDA nachfragen, ob Sie es jetzt neu starten wollen.
 Bestätigen sie mit ok, so startet NVDA neu.
 
 ==== Einstellungen beim Beenden speichern ====[GeneralSettingsSaveConfig]
@@ -961,105 +972,81 @@ Diese Option ist nur in der installierten Version verfügbar!
 Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
 Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe-Menü wählen.
 
-==== Beim Start von NVDA &ausstehende Aktualisierungen melden ====[GeneralSettingsNotifyPendingUpdates]
+==== Beim Start von NVDA ausstehende Aktualisierungen melden ====[GeneralSettingsNotifyPendingUpdates]
 Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, falls eine Aktualisierung aussteht und Ihnen die Möglichkeit geben, diese zu installieren. 
 Sie können die ausstehende Aktualisierung auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Aktualisierungen aus dem Hilfe-Menü installieren
 
-+++ Sprachausgabe (NVDA+Steuerung+S) +++[SynthesizerSelection]
-Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden soll.
-Wenn Sie sich für eine Sprachausgabe Ihrer Wahl entschieden haben, klicken Sie auf die Schaltfläche "OK", damit anschließend die gewählte Sprachausgabe von NVDA geladen wird.
-Falls dabei ein Fehler auftritt, wird Ihnen eine Meldung angezeigt und NVDA verwendet wieder die zuvor verwendete Sprachausgabe.
-
-==== Sprachausgabe ====[SynthesizerSelectionSynthesizer]
-Mit dieser Option können Sie die zu verwendende Sprachausgabe in NVDA festlegen.
-
-Für eine Liste aller von NVDA unterstützten Sprachausgaben, lesen Sie bitte weiter im Abschnitt [Unterstützte Sprachausgaben #SupportedSpeechSynths].
-
-Der Eintrag "Keine Sprachausgabe" ist immer in der Liste vorhanden. Mit dessen Hilfeverwenden Sie NVDA ohne Sprachausgabe.
-Dieser ist für diejenigen interessant, die nur mit Braille-Unterstützung arbeiten oder für Entwickler, welche den Sprachbetrachter verwenden.
-
-==== Ausgabegerät ====[SynthesizerSelectionOutputDevice]
-Mit dieser Option können Sie die Soundkarte auswählen, über die NVDA zu hören sein soll, falls Sie mehr als eine gleichzeitig nutzen.
-
-%kc:setting
-==== Lautstärke anderer Audioquellen reduzieren ====[SynthesizerSelectionDuckingMode]
-Tastenkombination: NVDA+Umschalt+d
-
-Unter Windows 8 und neuer legen Sie mit Hilfe dieser Option fest, ob NVDA die Lautstärke anderer Audio-Quellen reduzieren soll.
-- Nie: NVDA wird niemals die Lautstärke anderer Audio-Quellen reduzieren.
-- Beim Sprechen und Abspielen von nVDA-Klängen: NVDA reduziert die Lautstärke anderer Audio-Quelle nur, wenn NVDA spricht oder Klänge abspielt. Dies funktioniert möglicherweise nicht für alle Sprachausgaben.
-- Immer: NVDA reduziert die Lautstärke anderer Audio-Quellen so lange es läuft.
--
-
-Diese Option ist nur in installierten Versionen von NVDA verfügbar.
-In temporären oder portablen Kopien von NVDA wird das Reduzieren der lautstärke anderer Anwendungen nicht unterstützt.
-
-+++ Stimmeneinstellungen (NVDA+Steuerung+V) +++[VoiceSettings]
-Die Stimmeinstellungen, welche Sie im Menü Einstellungen finden, enthalten Optionen, mit deren Hilfe Sie den Klang der Sprache verändern können.
++++ Stimme- und Sprachausgabe (NVDA+Steuerung+V) +++[SpeechSettings]
+Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden und wie sich die Akustik der Stimme anhören soll.
 Für einen schnellen alternativen Weg zum Ändern der Parameter der Sprachausgabe können Sie im Abschnitt [Einstellungsring der Sprachausgabe #SynthSettingsRing] weiterlesen.
 
-Das Dialogfenster für die Stimmeneinstellungen enthält folgende Optionen:
+Die Kathegorie für die Stimmen- und Sprachausgabeneinstellungen enthält folgende Optionen:
 
-==== Stimme ====[VoiceSettingsVoice]
-Die ehrste Option in diesem Dialog ist ein Kombinationsfeld, welches alle installierten Stimmen der gewählten Sprachausgabe enthält.
-Mit Hilfe der Pfeiltasten können Sie sich alle Stimmen anhören.
-Die Pfeiltaste nach links beziehungsweise Pfeiltaste nach oben wechseln zur vorherigen Stimme, die Pfeiltaste nach rechts beziehungsweise Pfeiltaste nach unten zur nächsten Stimme.
+==== Sprachausgabe ändern ====[SpeechSettingsChange]
+Die ehrste Option in dieser Kathegorie ist der Schalter "Ändern". Dieser Schalter öffnet das Dialog zum [Ändern der Sprachausgabe #SelectSynthesizer]. Dort befinden sich alle verfügbaren Sprachausgaben und Ausgabegeräte, über welche die Sprachausgabe wiedergegeben werden kann.
+Dieses Dialog wird zusätzlich zum Einstellungsdialog geöffnet. 
+Wenn der Dialog zum Ändern der Sprachausgabe mit "ok" oder "abbrechen" geschlossen wird, erscheint wieder das NVDA-Einstellungsdialog mit den dazugehörigen Kathegorien.
 
-==== Variante ====[VoiceSettingsVariant]
+==== Stimme ====[SpeechSettingsVoice]
+Die Stimmenoption ist eine Ausklappliste mit allen verfügbaren Stimmen der zuvor ausgewählten Sprachausgabe.
+Mit den Pfeiltasten können Sie sich die Stimmen testweise anhören.
+Die Pfeiltasten nach oben oder nach links verschieben den Fokus nach oben, die Pfeiltasten nach unten oder rechts entsprechend nach unten in der Ausklappliste.
+
+==== Variante ====[SpeechSettingsVariant]
 Wenn Sie die Sprachausgabe eSpeak NG verwenden, die zugleich Bestandteil von NVDA ist, können Sie sich in dieser Auswahlliste für eine Stimmvariante entscheiden.
 Die Varianten von ESpeak NG sind mit Stimmen vergleichbar, weil sie die Eigenschaften von ESpeak NG verändern.
 Einige Varianten hören sich weiblich, männlich oder sogar wie ein Frosch an.
 
-==== Geschwindigkeit ====[VoiceSettingsRate]
+==== Geschwindigkeit ====[SpeechSettingsRate]
 Mit dieser Option können Sie die Sprechgeschwindigkeit der Stimme festlegen.
 Dies ist ein Schieberegler, bei dem die Werte von 0 bis 100 eingestellt werden können, Wobei der Wert "0" sehr langsam und der Wert "100" sehr schnell ist.
 
-==== Stimmhöhe ====[VoiceSettingsPitch]
+==== Stimmhöhe ====[SpeechSettingsPitch]
 Mit dieser Option können Sie die Stimmhöhe der aktuell ausgewählten Stimme festlegen.
 Der Schieberegler reicht von 0 bis 100, wobei der Wert "0" für sehr tief und der Wert "100" für sehr hoch steht.
 
-==== Lautstärke ====[VoiceSettingsVolume]
+==== Lautstärke ====[SpeechSettingsVolume]
 Diese Option ist ein Schieberegler, mit dem Sie den Wert von 0 bis 100 einstellen können. Der Wert "0" steht hier für sehr leise Aussprache und der Wert "100" steht für eine sehr laute Sprechweise.
 
-==== Betonung ====[VoiceSettingsInflection]
+==== Betonung ====[SpeechSettingsInflection]
 Diese Option ist ebenfalls ein Schieberegler, mit dem Sie die Betonung festlegen können. Derzeit ist es nur möglich die Werte mit der eSpeak NG zu verändern.
 
-==== sprache automatisch wechseln (falls unterstützt) ====[VoiceSettingsLanguageSwitching]
+==== sprache automatisch wechseln (falls unterstützt) ====[SpeechSettingsLanguageSwitching]
 Dieses Kontrollfeld erlaubt Ihnen einzustellen, ob NVDA die Sprache der Sprachausgabe automatisch passend zur angegebenen Dokumentsprache einstellen soll.
 Diese Option ist standardmäßig aktiviert.
 Momentan unterstützt lediglich Espeak NG den automatischen Sprachenwechsel.
 
-==== automatisch Dialekt umschalten (falls unterstützt) ====[VoiceSettingsDialectSwitching]
+==== automatisch Dialekt umschalten (falls unterstützt) ====[SpeechSettingsDialectSwitching]
 Wenn der automatische Sprachenwechsel aktiviert ist, können Sie NVDA mit dieser option dazu bringen, nicht nur die eigentliche sprache, sondern auch den Dialekt passend zur Dokumentsprache während des Lesens zu ändern.
 Wenn Sie beispielsweise ein amerikanisch-englisches Dokument lesen, in dem Textpassagen als britisch-englisch ausgewiesen sind, wird NVDA automatisch den Dialekt der sprachausgabe anpassen, sofern diese Option aktiviert ist.
 Diese Option ist standardmäßig deaktiviert.
 
 %kc:setting
-==== Zeichen/Symbolebene ====[VoiceSettingsSymbolLevel]
+==== Zeichen/Symbolebene ====[SpeechSettingsSymbolLevel]
 Tastenkombination: NVDA+P
 
 Hier kann eingestellt werden, ob und wie viele Satz- und Sonderzeichen NVDA als Wort aussprechen soll.
 Wenn hier "alle" ausgewählt ist, spricht NVDA alle Sümbole, als wären diese ausgeschrieben.
 Diese Option gillt für alle Sprachausgaben, nicht nur für die aktuell gewählte.
 
-==== beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen ====[VoiceSettingsTrust]
+==== beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen ====[SpeechSettingsTrust]
 Mit dieser standardmäßig aktivierten Option legen Sie fest, ob beim Sprechen (benennen) von Symbolen und Sonderzeichen immer die Sprache der momentan eingestellten Stimme benutzt werden soll.
 Wenn Sie jedoch der Meinung sind, dass NVDA zum Aussprechen von Sonderzeichen die falsche Sprache benutzt, können Sie die Option deaktivieren und NVDA dazu zwingen, seine eingestellte Dialogsprache zu verwenden.
 
-==== Stimme bei Großbuchstaben anheben in % ====[VoiceSettingsCapPitchChange]
+==== Stimme bei Großbuchstaben anheben in % ====[SpeechSettingsCapPitchChange]
 Dieses Eingabefeld legt fest, wie die Stimmhöhe beim Ansagen von Großbuchstaben verändert werden soll.
 Dieser Wert wird in Prozent angegeben, wobei ein negativer Wert die stimme senkt und ein positiver Wert die Stimme anhebt.
 Um die Funktion abzuschalten, geben sie einen wert von 0 an.
 
-==== Vor Großbuchstaben "Groß" sagen ====[VoiceSettingsSayCapBefore]
+==== Vor Großbuchstaben "Groß" sagen ====[SpeechSettingsSayCapBefore]
 Dieses Kontrollfeld legt fest, ob beim Navigieren im Text oder beim Schreiben von Großbuchstaben das Wort "Groß" vor Großbuchstaben gesagt werden soll.
 Normalerweise hebt NVDA bei Großbuchstaben die Stimme an. Es gibt jedoch Sprachausgaben, die diese Funktion nicht unterstützen. Für solche Fälle wurde diese Option eingeführt.
 
-==== Signaltöne vor Großbuchstaben ====[VoiceSettingsBeepForCaps]
+==== Signaltöne vor Großbuchstaben ====[SpeechSettingsBeepForCaps]
 Dieses Kontrollfeld stellt eine Alternative zur vorherigen Option dar, lediglich mit dem einzigen Unterschied, dass bei Großbuchstaben ein kurzer hoher Signalton ausgegeben wird.
 Diese Option ist hilfreich für die Sprachausgaben, die keine Stimmenveränderungen zulassen.
 
-==== buchstabierfunktion verwenden, falls verfügbar ====[VoiceSettingsUseSpelling]
+==== buchstabierfunktion verwenden, falls verfügbar ====[SpeechSettingsUseSpelling]
 Einige Wörter bestehen aus nur einem einzigen Zeichen. Hierbei unterscheidet sich die aussprache abhängig davon, ob das zeichen als Wort oder als einzelnes Zeichen zum Buchstabieren benutzt wird.
 Ein Beispiel hierfür ist der Buchstabe "a" im englischen, der unterschiedlich ausgesprochen wird, je nach dem, ob tatsächlich der Buchstabe "a" oder das wort "ein/eine" gemeint ist. 
 diese option erlaubt es der Sprachausgabe zwischen diesen beiden Fällen zu unterscheiden, wenn sie dies unterstützt.
@@ -1069,8 +1056,37 @@ Diese Option sollte im allgemeinen aktiviert sein.
 Es gibt jedoch einige Microsoft sapi-sprachausgaben, bei denen dies nicht korrekt implementiert ist und die sich eigenwillig verhalten, wenn diese Option aktiviert ist.
 Wenn sie probleme mit der Aussprache mancher Zeichen haben, versuchen Sie, die Option zu deaktivieren. 
 
++++ Sprachausgabe auswählen (NVDA+STRG+s) +++[SelectSynthesizer]
+Das Dialog, welches durch das Drücken des Schalters "ändern" geöffnet wird, erlaubt Ihnen eine gewünschte Sprachausgabe auszuwählen. Diese wird dann von NVDA dazu genutzt Informationen mittels Sprache zugänglich zu machen.
+NVDA wird die Sprachausgabe verwenden, sobald Sie einen Eintrag ausgewählt und auf "ok" gedrückt haben.
+Wenn ein Fehler auftritt, wird NVDA einen Fehlerton abspielen und die vorherige Sprachausgabe weiterhin verwenden.
+
+==== Sprachausgabe ====[SelectSynthesizerSynthesizer]
+Diese Option legt fest, welche Sprachausgabe beim Verwenden von NVDA wiedergegeben werden soll.
+
+Eine Liste aller  von NVDA unterstützten Sprachausgaben finden Sie im Abschnitt [Unterstützte Sprachausgaben #SupportedSpeechSynths].
+
+In der Liste der verfügbaren Sprachausgaben gibt es auch den Eintrag "Keine Sprachausgabe". Damit wird NVDA stumm gestellt.
+Dies ist beispielsweise für Anwender nützlich, die nur mit einer Braillezeile arbeiten möchten. Aber auch Entwickler können davon profitieren, wenn sie nur den Sprachbetrachter für ihre Tests nutzen möchten.
+
+==== Ausgabegerät ====[SelectSynthesizerOutputDevice]
+Diese Option legt fest, welche Soundkarte von NVDA für die Wiedergabe der Sprachausgabe angesteuert werden soll.
+
+%kc:setting
+==== Systemlautstärke reduzieren ====[SelectSynthesizerDuckingMode]
+Tastenkombination: NVDA+Umschalt+d
+
+In Windows 8 und höher kann diese Option die Systemlautstärke automatisch immer dann reduzieren, wenn NVDA spricht oder die ganze Zeit, wenn NVDA ausgeführt wird.
+- Nie: die Lautstärke anderer Audioquellen wird nicht reduziert. 
+- Beim Sprechen und Wiedergeben von NVDA-Signaltönen: NVDA wird die Lautstärke anderer Audioquellen nur dann redudzieren, wenn es spricht oder Töne ausgibt. Diese Option funktioniert nicht bei allen Sprachausgaben. 
+- Immer: Die Lautstärke anderer Audioquellen wird immer reduziert, solange NVDA ausgeführt wird.
+-
+
+Diese Funktion läuft nur unter installierten Versionen von NVDA.
+Sie wird unter portablen oder temporären Kopien von NVDA nicht unterstützt.
+
 +++ Einstellungsring der Sprachausgabe +++[SynthSettingsRing]
-Wenn Sie rasch durch die verschiedenen Sprachausgabeneinstellungen schalten möchten, ohne zuvor extra in das entsprechende Dialogfeld gehen zu wollen, so gibt es die folgenden Tastenkombinationen in NVDA, die Sie von überall aus benutzen können:
+Wenn Sie rasch durch die verschiedenen Sprachausgabeneinstellungen schalten möchten, ohne zuvor extra in die Kathegorie des Einstellungsdialogs gehen zu wollen, so gibt es die folgenden Tastenkombinationen in NVDA, die Sie von überall aus benutzen können:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
 | Zur nächsten Sprachausgabeneinstellung springen | NVDA+Steuerung+Pfeiltaste nach rechts | NVDA+Steuerung+Umschalt+Pfeiltaste nach rechts | Springt zur nächsten verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; begint von vorne, nach dem letzten Eintrag. |
@@ -1079,32 +1095,17 @@ Wenn Sie rasch durch die verschiedenen Sprachausgabeneinstellungen schalten möc
 | Aktuelle Sprachausgabeneinstellung verringern | NVDA+Steuerung+Pfeiltaste nach unten | NVDA+Steuerung+Umschalt+Pfeiltaste nach unten | Verringert die aktuelle Einstellung (zum Beispiel die Sprechgeschwindigkeit verringern, wählt die vorherige Stimme aus, verringert die Lautstärke). |
 %kc:endInclude
 
-+++ Braille-Einstellungen +++[BrailleSettings]
-Sie finden die Braille-Einstellungen im Menü Einstellungen unter dem Punkt Braille-Einstellungen.
++++ Braille +++[BrailleSettings]
+Die Kathegorie "Braille" in dem Einstellungsdialog von NVDA bietet verschiedene Optionen an, um Aspekte der Braille-Ein- und -Ausgabe einzustellen.
+Folgende Optionen sind enthalten:
 
-==== Braillezeile ====[BrailleSettingsDisplay]
-Die erste Option, wenn Sie in dieses Dialogfeld gelangen, ist die Auswahlliste der verfügbaren Braillezeilen.
-Hier werden Ihnen die zu Verfügung stehenden Auswahlmöglichkeiten aufgelistet, je nach dem, welche Braillezeilen-Treiber auf Ihrem System verfügbar sind.
-Jede dieser ist mit den Pfeiltasten zu erreichen.
-
-Der Eintrag "Keine Braillezeile" bedeutet, dass Sie keine Braillezeile verwenden.
-
-Bitte lesen Sie weiter im Abschnitt [Unterstützte Braillezeilen #SupportedBrailleDisplays] für weitere Informationen.
-
-==== anschluss ====[BrailleSettingsPort]
-Sofern diese Option verfügbar ist, erlaubt sie Ihnen, den Anschluss auszuwählen, über den die gewählte Braillezeile mit Ihrem Rechner kommunizieren soll.
-In diesem Kombinationsfeld werden die möglichen Anschlüsse angezeigt.
-
-Standardmäßig wird NVDA automatisch sämtliche USB-Anschlüsse und Bluetooth-Geräte nach Ihrer Braillezeile absuchen.
-Für manche Braillezeilen können Sie jedoch genau festlegen, wie die Zeile angeschlossen ist.
-Übliche Auswahlmöglichkeiten sind "automatisch" (die oben beschriebene automatische Suche nach dem Anschluss), "Bluetooth" "USB" oder einer der seriellen Anschlüsse, sofern Ihre Braillezeile diese Verbindungsart unterstützt.
-
-Diese Option ist nicht verfügbar, wenn Ihre Braillezeile nur die automatische Suche nach dem Anschluss unterstützt.
-
-Sehen Sie im Abschnitt "[unterstützte Braillezeilen #SupportedBrailleDisplays]" für Informationen darüber nach, welche anschlüsse für Ihre Braillezeile zur Verfügung stehen.
+==== Braillezeile ändern ====[BrailleSettingsChange]
+Mit dem Schalter "ändern..." aus dem Einstellungsdialog unter der Kathegorie Braille wird das Dialog zum [Ändern der Braillezeile #SelectBrailleDisplay] geöffnet. Dort können Sie die aktive Braillezeile ändern.
+Dieses Dialog wird zusätzlich zum Einstellungsdialog geöffnet. 
+Wenn das Dialog zum Ändern der Sprachausgabe mit "ok" oder "abbrechen" geschlossen wird, erscheint wieder das NVDA-Einstellungsdialog mit den dazugehörigen Kathegorien.
 
 ==== Ausgabetabelle ====[BrailleSettingsOutputTable]
-Die nächste Option ist die Auswahlliste der Braille-Tabellen.
+Die nächste Option ist die Auswahlliste der Braille-Ausgabetabellen.
 In diesem Kombinationsfeld finden Sie Brailletabellen für verschiedene Sprachen, Braille-Standards und Kurzschriften.
 Die ausgewählteTabelle wird zur Umwandlung von Text in Braille verwendet, um diesen auf Ihrer Braillezeile darzustellen.
 Zwischen den Braille-Tabellen bewegen Sie sich mit den Pfeiltasten.
@@ -1200,9 +1201,35 @@ Wenn Sie dennoch Kontextinformationen (wie z. B. den Namen der Liste) angezeigt 
 
 Um die Einstellung von überall aus zu ändern, weisen Sie eine Tastenkombination mit Hilfe des Dialogs [Eingaben #InputGestures] zu.
 
-+++ Tastatureinstellungen (NVDA+Steuerung+K) +++[KeyboardSettings]
-Dieses Dialogfeld finden Sie im Menü Einstellungen unter Tastatureinstellungen.
-Dieses Dialogfeld enthält die folgenden Optionen:
++++ Braillezeile auswählen (NVDA+STRG+a) +++[SelectBrailleDisplay]
+Dies ist das Dialog zum Ändern der Brailezeile, welches über den Schalter "ändern..." in der Kathegorie Braille geöffnet wird. Es erlaubt die Braillezeile auszuwählen, die NVDA dazu verwendet, Informationen in Punkschrift anzuzeigen.
+NVDA wird die Braillezeile verwenden, sobald Sie einen Eintrag ausgewählt und auf "ok" gedrückt haben.
+Wenn ein Fehler auftritt, wird NVDA einen Fehlerton abspielen und die vorherige Braillezeile weiterhin verwenden, sofern vorhanden.
+
+==== Braillezeile ====[SelectBrailleDisplayDisplay]
+Dies ist die Auswahlliste der verfügbaren Braillezeilen.
+Hier werden Ihnen die zu Verfügung stehenden Auswahlmöglichkeiten aufgelistet, je nach dem, welche Braillezeilen-Treiber auf Ihrem System verfügbar sind.
+Jede dieser Braillezeile ist mit den Pfeiltasten zu erreichen.
+
+Der Eintrag "Keine Braillezeile" bedeutet, dass Sie keine Braillezeile verwenden.
+
+Bitte lesen Sie weiter im Abschnitt [Unterstützte Braillezeilen #SupportedBrailleDisplays] für weitere Informationen.
+
+==== anschluss ====[SelectBrailleDisplayPort]
+Sofern diese Option verfügbar ist, erlaubt sie Ihnen, den Anschluss auszuwählen, über den die gewählte Braillezeile mit Ihrem Rechner kommunizieren soll.
+In diesem Kombinationsfeld werden die möglichen Anschlüsse angezeigt.
+
+Standardmäßig wird NVDA automatisch sämtliche USB-Anschlüsse und Bluetooth-Geräte nach Ihrer Braillezeile absuchen.
+Für manche Braillezeilen können Sie jedoch genau festlegen, wie die Zeile angeschlossen ist.
+Übliche Auswahlmöglichkeiten sind "automatisch" (die oben beschriebene automatische Suche nach dem Anschluss), "Bluetooth" "USB" oder einer der seriellen Anschlüsse, sofern Ihre Braillezeile diese Verbindungsart unterstützt.
+
+Diese Option ist nicht verfügbar, wenn Ihre Braillezeile nur die automatische Suche nach dem Anschluss unterstützt.
+
+Sehen Sie im Abschnitt "[unterstützte Braillezeilen #SupportedBrailleDisplays]" für Informationen darüber nach, welche anschlüsse für Ihre Braillezeile zur Verfügung stehen.
+
++++ Tastatur (NVDA+Steuerung+K) +++[KeyboardSettings]
+Diese Kathegorie finden Sie unter dem Menü Optionen im Dialog Einstellungen. Sie beeinflusst das Verhalten von NVDA, wenn sie etwas eingeben oder eine Aktion über die Tastatur ausführen.
+Sie enthält die folgenden Optionen:
 
 ==== Tastaturschema ====[KeyboardSettingsLayout]
 In dieser Liste können Sie zwischen dem Schema "Desktop" oder "Laptop" auswählen.
@@ -1211,7 +1238,7 @@ In dieser Liste können Sie zwischen dem Schema "Desktop" oder "Laptop" auswähl
 Wenn dieses Kontrollfeld aktiviert ist, können Sie die Dauergroßschreibtaste als NVDA-Taste verwenden.
 
 ==== Einfügetaste der erweiterten Tastatur als NVDA-Taste verwenden ====[KeyboardSettingsExtendedInsert]
-Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste der erweiterten tastatur als NVDA-Taste verwenden.
+Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste des Nummernblocks als NVDA-Taste verwenden.
 
 ==== Einfügetaste des Nummernblocks als NVDA-Taste verwenden ====[KeyboardSettingsNumpadInsert]
 Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste des Nummernblocks als NVDA-Taste verwenden.
@@ -1254,15 +1281,14 @@ Wenn dieses Kontrollfeld aktiviert ist, gibt NVDA alle Tasten wieder, die nicht 
 
 ==== Klang bei Rechtschreibfehlern während der Eingabe abspielen ====[KeyboardSettingsAlertForSpellingErrors]
 Wenn diese Option aktiviert ist, wird ein kurzer Brummton abgespielt, wenn während der Eingebe Rechtschreibfehler auftreten.
-Diese Option funktioniert nur, wenn in den [Einstellung für Dokumentformatierungen #DocumentFormattingSettings] die Anzeige von Rechtschreibfehlern aktiviert ist.
+Diese Option funktioniert nur, wenn im Einstellungsdialog unter der [Kathegorie für Dokumentformatierungen #DocumentFormattingSettings] die Anzeige von Rechtschreibfehlern aktiviert ist.
 
 ==== Tastendrücke von anderen Anwendungen verarbeiten ====[KeyboardSettingsHandleKeys]
 Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NVDA verarbeitet werden sollen. Hierzu zählen beispielsweise Tastendrücke auf einer Bildschirmtastatur oder per Spracherkennung erkannte Zeichen.
 Diese Option ist zwar standardmäßig aktiviert, dennoch kann es sinnvoll sein, sie in bestimmten Fällen zu deaktivieren. Wenn Sie zum Beispiel mit Hilfe der Software Unikey vietnamesische Zeichen eingeben wollen, kann dies zu falsch erkannten Zeichen führen, wenn die Option eingeschaltet ist.
 
-+++ Mauseinstellungen (NVDA+Steuerung+M) +++[MouseSettings]
-Sie finden diesen Dialog im Menü Einstellungen unter Mauseinstellungen.
-Dieser Dialog enthält die folgenden Optionen:
++++ Maus (NVDA+STRG+m) +++[MouseSettings]
+Die Kathegorie "Maus" in dem Einstellungsdialog bietet Optionen zur Mausverfolgung, zu akustischer Koordinatenanzeige etc. Es sind folgende Optionen enthalten:
 
 ==== Form des Mauszeigers ansagen ====[MouseSettingsShape]
 Dieses Kontrollfeld legt fest, ob NVDA bei Änderung des Mauszeigers die Form mit ansagen soll.
@@ -1290,17 +1316,18 @@ Richtig ausgerichtete Stereolautsprecher oder Kopfhörer vorausgesetzt, wird der
 Wenn die Option "Audiokoordinaten bei Mausbewegungen wiedergeben" und diese Option aktiviert sind, passt NVDA die Lautstärke der Signaltöne an die Helligkeit unter dem Mauszeiger an.
 Diese Option ist standardmäßig deaktiviert.
 
-+++ Touch-Interaktionseinstellungen +++[TouchInteraction]
-Dieser Dialog ist nur auf Computern mit Windows 8 oder neuer verfügbar, sofern dieser ein berührungsempfindlicher Bildschirm (Touchscreen) besitzt. Hier können Sie einstellen, wie NVDA mit Touchscreens interagiert.
++++ Touch-Interaktion +++[TouchInteraction]
+Diese Kathegorie ist nur auf Computern mit Windows 8 oder neuer verfügbar, sofern dieser ein berührungsempfindlicher Bildschirm (Touchscreen) besitzt. Hier können Sie einstellen, wie NVDA mit Touchscreens interagiert. 
+Folgende Optionen sind enthalten:
 
 ==== Touch-Tippmodus ====[TouchTypingMode]
 Dieses Kontrollkästchen legt die Methode fest, die Sie zum Schreiben mit der Bildschirmtastatur verwenden.
-Bei aktiviertem Kontrollkästchen können Sie mit Ihrem Finger eine Taste auf dem Bildschirm suchenund diese loslassen, um diese zu betätigen.
-Bei deaktivierter Option müssen Sie auf der Taste Doppeltippen, um diese zu drücken.
+Bei aktiviertem Kontrollkästchen können Sie mit Ihrem Finger eine Taste auf dem Bildschirm suchenund diese loslassen, um diese zu betätigen (10-Finger-System).
+Bei deaktivierter Option müssen Sie auf der Taste Doppeltippen, um diese zu drücken (2-Finger-System).
 
-+++ Einstellungen des NVDA-Cursors +++[ReviewCursorSettings]
-
-Dieses Dialogfeld enthält die folgenden Optionen:
++++ NVDA-Cursor +++[ReviewCursorSettings]
+Diese Kathegorie beeinflusst das Verhalten des NVDA-Cursors. 
+Folgende Optionen sind enthalten:
 
 %kc:setting
 ==== Systemfokus verfolgen ====[ReviewCursorFollowFocus]
@@ -1322,9 +1349,9 @@ Bei eingeschaltetem Modus filtert NVDA nicht wichtige Objekte aus der Hierarchie
 
 Um den einfachen Darstellungsmodus per Tastenkombination ein- und auszuschalten, können Sie den entsprechenden Befehl an eine Tastenkombination zuweisen. Verwenden Sie hierfür den Dialog [Eingaben #InputGestures].
 
-+++ Einstellungen zur Objektdarstellung (NVDA+Steuerung+O) +++[ObjectPresentationSettings]
-Zu finden im Menü Einstellungen unter Objektpräsentation.
-Dieses Dialogfeld enthält die folgenden Optionen:
++++ Objektdarstellung (NVDA+Steuerung+O) +++[ObjectPresentationSettings]
+Hier kann eingestellt werden, inwieweit NVDA über Position, Beschreibungen von Objekten etc. informieren soll.
+Diese Kathegorie enthält die folgenden Optionen:
 
 ==== Minihilfen (Tooltipps) ansagen ====[ObjectPresentationReportToolTips]
 Wenn diese Option aktiviert ist, liest NVDA bei Erscheinen die Tooltipps vor
@@ -1379,9 +1406,8 @@ Ein Beispiel für ein solches Eingabefeld ist das Suchfeld im Startmenü in Wind
 Weitere Beispiele für Eingabefelder mit Vorschlagslisten sind Suchfelder in diversen Windows-10-Anwendungen.
 Die Vorschlagsliste wird geschlossen, sobald Sie mit dem Fokus das Eingabefeld verlassen. NVDA kann Sie manchmal darüber informieren, sobald dies geschieht.
 
-+++ Einstellungen für Eingabemethoden +++[InputCompositionSettings]
-Sie finden diesen Menüpunkt im Menü Einstellungen.
-Mit diesem Dialog können Sie steuern, wie NVDA die Eingabe von Zeichen asiatischer sprachen wiedergibt. dies betrifft sowohl IME als auch die Textdienste.
++++ Eingabemethoden +++[InputCompositionSettings]
+Mit den Optionen aus dieser Kathegorie können Sie steuern, wie NVDA die Eingabe von Zeichen asiatischer sprachen wiedergibt. dies betrifft sowohl IME als auch die Textdienste.
 Hinweis: Eingabemethoden variieren sehr in der Verfügbarkeit von Funktionen sowie in der Informationsweitergabe. Somit müssen diese Optionen für die jeweils verwendete Eingabemethode festgelegt werden, um die bestmögliche Effizienz beim tippen zu erhalten.
 
 ==== automatisch alle verfügbaren Kandidaten ausgeben ====[InputCompositionReportAllCandidates]
@@ -1410,10 +1436,9 @@ Nachdem die Präcompositionsdaten zu einem gültigen piktografischen Zeichen zus
 Mit dieser Option legen Sie fest, ob NVDA Änderungen an den Symbolen im composition string wiedergeben soll.
 Diese Option ist standardmäßig aktiviert.
 
-+++ Einstellungen für den Lesemodus (NVDA+Steuerung+B) +++BrowseModeSettings]
-Die Einstellungen für den Lesemodus finden Sie im Einstellungsmenü unter "Lesemodus...".
-
-Dieses Dialogfeld enthält die folgenden Optionen:
++++ Lesemodus (NVDA+Steuerung+B) +++BrowseModeSettings]
+Hier kann das Verhalten von NVDA in komplexen Dokumenten wie Webseiten beeinflusst werden.
+Diese Kathegorie enthält die folgenden Optionen:
 
 ==== Anzahl Zeichen pro Zeile ====[BrowseModeSettingsMaxLength]
 Dieses Feld legt die maximale Länge (Zeichen) einer Zeile im Lesemodus fest.
@@ -1441,7 +1466,7 @@ Die Option ist standardmäßig deaktiviert.
 Um die Ausgabe von Layout-Tabellen schnell ein- oder auszuschalten, müssen Sie den Dialog "[Eingaben #InputGestures]" verwenden, um eine Tastenkombination zuzuweisen.
 
 ==== Ansagen für Elemente konfigurieren ====[BrowseModeLinksAndHeadings]
-Bitte beachten Sie die Optionen im Dialog[Einstellungen für die Dokumentformatierungen #DocumentFormattingSettings], um festzulegen, welche Elemente wie Links, Überschriften und Tabellen beim Navigieren angesagt werden sollen.
+Bitte beachten Sie die Optionen in der Kathegorie [Dokumentformatierungen #DocumentFormattingSettings], um festzulegen, welche Elemente wie Links, Überschriften und Tabellen beim Navigieren angesagt werden sollen.
 
 ==== Bei Änderungen des Fokuses automatisch den Fokusmodus einschalten ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
 Diese Option ermöglicht bei Änderungen des Fokuses den Fokusmodus zu aktivieren.
@@ -1458,9 +1483,7 @@ Bei eingeschalteter Option ertönt in NVDA vor der Ansage über die Änderung ei
 Wenn diese Option aktiviert ist, werden Tastenkombinationen, die nicht mit Schnellnavigationsbefehlen belegt sind, direkt an die aktuelle Anwendung weitergereicht, wenn Sie sie innerhalb des Lesemodus benutzen. 
 Wenn die Option aktiviert ist, wird beispielsweise der Buchstabe "j" vom Dokument ferngehalten, da "j" keine Schnellnavigationstaste sowie warscheinlich kein Tastenkürzel im Programm ist. 
 
-+++ Einstellungen für die Dokumentformatierungen (NVDA+Steuerung+d) +++[DocumentFormattingSettings]
-Die Einstellungen zu den Dokumentformatierungen finden Sie im Menü "Einstellungen" oder Sie erreichen sie auch mit der Tastenkombination "NVDA+Steuerung+D".
-
++++ Dokumentformatierungen (NVDA+Steuerung+d) +++[DocumentFormattingSettings]
 Mit den meisten Kontrollfeldern in diesem Dialogfenster steuern Sie die Ansage der Formatierungen, die Sie während des Navigierens in einem Dokument angesagt bekommen möchten.
 Wenn Sie zum Beispiel das Kontrollkästchen ""Schriftartennamen ansagen"" aktivieren und anschließend in einem Text navigieren, wird NVDA jedes mal den Namen der Schriftart ansagen, sobald sich die Schriftart ändert.
 
@@ -1500,7 +1523,6 @@ Konfigurieren können Sie die Meldungen von:
  -
 -
 
-
 Um diese Einstellungen überall ändern zu können, verwenden Sie bitte den [dialog Eingaben #InputGestures] um eigene Tastenkombinationen hinzuzufügen.
 
 ==== Änderungen der Formatierungen hinter dem Cursor ausgeben ====[DocumentFormattingDetectFormatAfterCursor]
@@ -1521,14 +1543,18 @@ Die Einrückung um einen Tabulator entspricht hierbei der Einrückung um vier Le
 - beides: dies ist eine Kombination der beiden obigen Optionen.
 -
 
-+++ Einstellungen für die Windows 10-Texterkennung +++[Win10OcrSettings]
-Diesen Dialog finden Sie in den NVDA-Einstellungen. Er erlaubt die Konfiguration der [Optischen Zeichenerkennung für Windows 10 #Win10Ocr].
++++ Windows 10-Texterkennung +++[Win10OcrSettings]
+Die Optionen dieser Kathegorie erlauben die Konfiguration der [Optischen Zeichenerkennung für Windows 10 #Win10Ocr]. 
+Folgende Optionen sind enthalten:
 
 ==== Erkennungssprache ====[Win10OcrSettingsRecognitionLanguage]
 In diesem Kombinationsfeld können Sie die Sprache festlegen, die für die Zeichenerkennung verwendet werden soll.
 
+++ Verschiedene Optionen ++[MiscSettings]
+Neben dem [Einstellungsdialog #NVDASettings], befinden sich weitere Einträge im NVDA-Menü unter "Optionen". Diese werden weiter unten erläutert.
+
 +++ Aussprachewörterbücher +++[SpeechDictionaries]
-Im Menü Einstellungen finden Sie den Eintrag Aussprachewörterbücher. Dieses Menü enthält Dialoge mit deren Hilfe Sie festlegen können, wie NVDA einzelne Wörter oder Satzteile ausspricht.
+Im Menü Optionen finden Sie den Eintrag Aussprachewörterbücher. Dieses Menü enthält Dialoge mit deren Hilfe Sie festlegen können, wie NVDA einzelne Wörter oder Satzteile ausspricht.
 Derzeit gibt es drei unterschiedliche Formen der Aussprachewörterbücher:
 Diese sind:
 - Standard: Regeln in diesem Wörterbuch haben Einfluss auf alle Aussprachen in NVDA.
@@ -1565,7 +1591,7 @@ Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und 
 In diesem Dialog können Sie die Aussprache von Satz- und Sonderzeichen verändern und festlegen, ab welcher Symbolebene dieses angesagt werden soll. 
 
 Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dialogtitel angezeigt.
-Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus den [Stimmeneinstellungen #VoiceSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der NVDA-Sprache verwendet.
+Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus der Kathegorie [Stimme und Sprachausgabe #SpeechSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der NVDA-Sprache verwendet.
 
 Um die aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste der Symbole aus.
 
@@ -1630,11 +1656,11 @@ Manchmal möchten Sie unterschiedliche Einstellungen in unterschiedlichen Situat
 Zum Korrekturlesen ist es beispielsweise sinnvoll, Einrückungen und Schriftattribute angesagt zu bekommen.
 In NVDA können sie hierfür Konfigurationsprofile verwenden.
 
-Ein Konfigurationsprofil enthält nur die geänderten Einstellungen.
-In Konfigurationsprofilen können die meisten Einstellungen geändert werden. Eine Ausnahme sind die allgemeinen Einstellungen, da diese NVDA generell betreffen.
+Ein Konfigurationsprofil enthält nur die geänderten Einstellungen für das aktuelle Profil.
+In Konfigurationsprofilen können die meisten Einstellungen geändert werden. Eine Ausnahme sind die Einstellungen aus der Kathegorie "Allgemein" im Einstellungsdialog, da diese NVDA generell betreffen.
 
 Konfigurationsprofile können manuell aktiviert werden.
-Außerdem können Sie solche Profile aber auch automatisch aktivieren (beispielsweise beim Wechsel in eine bestimmte Anwendung).
+Außerdem können Sie solche Profile auch automatisch aktivieren (beispielsweise beim Wechsel in eine bestimmte Anwendung).
 
 +++ Grundlegende Verwaltung +++[ProfilesBasicManagement]
 Konfigurationsprofile werden über den Menüpunkt "Konfigurationsprofile" im NVDA-Menü verwaltet. 
@@ -1696,7 +1722,9 @@ Um ein Profil zu bearbeiten, das an den Auslöser "Alles ansagen" gekoppelt ist,
 +++ Auslöser vorübergehend abschalten +++[ConfigProfileDisablingTriggers]
 Manchmal ist es hilfreich, temporär alle Auslöser zu deaktivieren.
 Ein Beispiel: Sie möchten ein manuell aktiviertes Profil bearbeiten oder die Standardkonfiguration bearbeiten, ohne von automatisch aktivierten Profilen gestört zu werden.
-Dies erreichen Sie über die Option "Alle Auslöser temporär deaktivieren" im Dialog Konfigurationsprofile."
+Dies erreichen Sie über die Option "Alle Auslöser temporär deaktivieren" im Dialog "Konfigurationsprofile."
+
+Sie können auch eine Tastenkombination dafür im Dialog [Eingaben #InputGestures] definieren.
 
 ++ Speicherorte für Konfigurationsdateien ++[LocationOfConfigurationFiles]
 In der portablen Version von NVDA werden sämtliche Einstellungen und Erweiterungen im Ordner "userConfig" unterhalb des Stammordners von NVDA abgelegt.
@@ -1799,14 +1827,14 @@ Es gibt auch eine Vielzahl von Varianten, womit der Klang der Stimme geändert w
 ++ Microsoft Speech API Version 4 (SAPI 4.0) ++[SAPI4]
 SAPI 4 ist ein älterer Microsoft-Standard für Softwaresprachausgaben.
 NVDA unterstützt noch die alte Schnittstelle, für all jene, die bereits SAPI 4 Sprachausgaben installiert haben.
-Ferner werden die Treiber hierfür schon lange nicht mehr von Microsoft zum Download angeboten.
+Die Treiber hierfür werden von Microsoft schon lange nicht mehr zum Download angeboten.
 
-Wenn diese Sprachausgabe mit NVDA verwendet wird, finden Sie die Stimmen aller SAPI 4 Engines in den [Stimmeinstellungen #VoiceSettings] oder im [Sprachausgaben-Einstellungsring #SynthSettingsRing].
+Wenn diese Sprachausgabe mit NVDA verwendet wird, finden Sie die Stimmen aller SAPI 4 Engines in der Kathegorie [Stimme und Sprachausgabe #SpeechSettings] oder im [Sprachausgaben-Einstellungsring #SynthSettingsRing].
 
 ++ Microsoft Speech API Version 5 (SAPI 5.x) ++[SAPI5]
 SAPI 5 ist ein Microsoft-Standard für Softwaresprachausgaben.
 Viele Sprachausgaben, die diesem Standard entsprechen, können von verschiedenen Firmen käuflich erworben oder von Internetseiten kostenlos heruntergeladen werden. Ihr System wird wahrscheinlich bereits mindestens eine SAPI5-Stimme vorinstalliert haben.
-Wenn Sie diese Sprachausgaben mit NVDA benutzen möchten, werden im Dialog [Stimmeneinstellung #VoiceSettings] oder dem [Einstellungsring der Sprachausgaben #SynthSettingsRing] alle Stimmen von der SAPI5-Engine aufgelistet, die auf Ihrem System gefunden werden können.
+Wenn Sie diese Sprachausgaben mit NVDA benutzen möchten, werden in der Kathegorie [Stimme und Sprachausgabe #SpeechSettings] oder dem [Einstellungsring der Sprachausgaben #SynthSettingsRing] alle Stimmen von der SAPI5-Engine aufgelistet, die auf Ihrem System gefunden werden können.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
 Die "Microsoft Speech Platform" stellt Stimmen für viele Sprachen zur Verfügung, welche normalerweise in der Entwicklung für serverbasierte Sprachanwendungen zum Einsatz kommen.
@@ -1837,7 +1865,7 @@ Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
 Um sie in NVDA nutzen zu können, müssen Sie die Sprachausgabe auf Ihrem System installiert haben.
 Für weitere Informationenbesuchen Sie bitte die AudioLogic-Website unter http://www.audiologic.it/.
 
-Diese Sprachausgabe unterstützt nichth die [Buchstabierfunktionalität #VoiceSpellingFunctionality].
+Diese Sprachausgabe unterstützt nichth die [Buchstabierfunktionalität #SpeechSettingsUseSpelling].
 
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
@@ -1889,6 +1917,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Win+D (Alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
 | Aktuelle Zeile ausgeben | Leertaste+Punkt1+Punkt4 |
 | NVDA-Menü anzeigen | Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 |
+
 Für neuere Modelle, die Kippschalter besitzen (Focus 40, Focus 80 und Focus Blue) sind folgende Tastenzuweisungen verfügbar:
 || Name | Tastenkombination |
 | Braillezeile zur vorherigen Zeile bewegen | linker Kippschalter oben, rechter Kippschalter oben |
@@ -1899,7 +1928,6 @@ Nur für Focus 80:
 | Braillezeile zurückscrollen | linke Navigationskipptaste oben, rechte Navigationskipptaste oben |
 | Braillezeile weiterscrollen | linke Navigationskipptaste unten, rechte Navigationskipptaste unten |
 %kc:endInclude
-
 
 ++ Optelec ALVA 6 Serie/Protokoll-Converter ++[OptelecALVA]
 Beide Braillezeilen - die BC640 und die BC680 - von [Optelec http://www.optelec.de/] werden via USB und BlueTooth unterstützt.
@@ -2447,7 +2475,7 @@ die folgenden Modelle werden unterstützt:
 - EcoBraille Plus
 -
 
-In den Braille-Einstellungen von NvDA können Sie den Anschluss festlegen, mit dem die Braillezeile verbunden ist.
+In dem Dialog zum Auswählen der Braillezeile aus dem Einstellungsdialog von NVDA können Sie den Anschluss festlegen, mit dem die Braillezeile verbunden ist.
 
 Folgende Tasten(Kombinationen) sind bei Verwendung der Ecobraille-Modelle verfügbar:
 Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] nach, um zu erfahren, wo die entsprechenden Tasten zu finden sind.

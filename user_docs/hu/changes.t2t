@@ -3,6 +3,67 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+Ebben a kiadásban: Táblázatok kezelése a Kindle for PC programban, támogatás a Humanwear BrailleNote Touch és BI14 Braille kijelzőkhöz, fejlesztések a Windows Onecore és a Sapi5 beszédszintetizátorokhoz, fejlesztések a Microsoft Outlook programban, és még sok más.
+
+== Újdonságok ==
+- Az NVDA hangos és Braille visszajelzést ad a táblázatok celláinak sor- és oszlopértékeiről. Egyesített cellák esetén történik pontosabb visszajelzés. (#2642)
+- Google Dokumentumok (engedélyezett Braille móddal): Az NVDA táblázat navigációs parancsai már támogatottak. (#7946)
+- Kindle for PC: Már lehetséges a táblázatokban navigálni. (#7977)
+- Támogatás a HumanWare BrailleNote touch és Brailliant BI 14 braille kijelzőkhöz USB és bluetooth csatlakozással egyaránt. (#6524)
+- Windows 10 Fall Creators Update és újabb kiadások: az NVDA már bejelenti az olyan alkalmazások értesítéseit, mint a Számológép, vagy a Microsoft Store. (#7984)
+- Új braille fordítótáblák: Litván 8 pontos, Ukrán, Mongol Rövidítési fokozat 2. (#7839)
+- Braille: Egy szkript lehetővé teszi formázási információk kinyerését egy meghatározott braille cellában található szövegről. (#7106)
+- Az NVDA frissítési folyamat során az új verzió telepítése elhalasztható egy későbbi időpontra. (#4263) 
+- Új nyelvek: mongol, német (svájci).
+- A Braille billentyűzetről már emulálható a ctrl, shift, alt, windows és az NVDA gomb lenyomása. Ezen módosítógombok már kombinálhatók a braille bevitellel (pl. ctrl+s). (#7306) 
+ - Ezen módosítógombok emulálásához beviteli parancsok rendelhetők a Beviteli parancsok Rendszerbillentyűk lenyomásának emulálása kategóriájában.
+- Helyreállított támogatás a  Handy Tech Braillino és Modular régi firmware-rel rendelkező kijelzőkhöz. (#8016)
+- Támogatott Handy Tech eszközöknél (mint az Active Braille és Active Star) az időt és a dátumot az NVDA 5 másodperc elteltével automatikusan szinkronizálja. (#8016)
+- Microsoft Outlook: Az üzenetlistában az NVDA már jelzi, ha egy üzenetet megválaszoltak, vagy továbbítottak. (#6911)
+- Beviteli parancs rendelhető a konfigurációs profilok feltételeinek ideiglenes kikapcsolásához. (#4935)
+
+
+== Változások ==
+- Bővítménykezelő: Az egyes bővítmények állapotát az NVDA már Engedélyezett és Letiltott jelöléssel illeti, korábban ez fut, és felfüggesztett volt. (#7929)
+- liblouis braille fordító frissült a 3.5.0 verzióra. (#7839)
+- A Litván braille táblát átnevezték  Litván 6 pontosra, hogy elkerüljék az összeütközést az új Litván 8 pontos táblával. (#7839)
+- Braille: Eltávolították  a Francia (kanadai) Rövidítési fokozat 1 és rövidítési fokozat 2 fordítótáblákat. Ezek helyett a Francia (egységesített) 6 pontos számítógépes braille és Rövidítési fokozat 2 fordítótáblák használhatók. (#7839)
+- Alva BC6, EuroBraille és Papenmeier braille kijelzők másodlagos routing gombja formázási információkat jelenít meg a gomb alatt található braille cella szövegéről. (#7106)
+- A rövidírásos braille beviteli táblák automatikusan visszaállnak teljes írásos módba minden olyan esetben,ahol nem lehet szerkesztést végezni (pl. vezérlők,ahol nincs kurzor, vagy böngészőmódban). (#7306)
+- Outlook naptár: Az NVDA már kevésbé bőbeszédű, ha egy találkozó, vagy más bejegyzés egész napra vonatkozik. (#7949)
+- Az NVDA beállításai már egy közös Beállítások párbeszédablakon kaptak helyet. Ezt a párbeszédablakot az NVDA Menü -> Beállítások -> Beállítások menüpont alatt találja. (#577)
+- Windows 10 alatt az alapértelmezett beszédszintetizátor az eSpeak helyett a Windows OneCore lesz. (#8176)
+
+
+== Hibajavítások ==
+- A Windows beállítási ablakában a Microsoft fiókba történő bejelentkezéskor e-mail cím beírása után az NVDA ismét tudja megfelelően kezelni az aktív vezérlőelemeket. (#7997)
+- Microsoft Edge: Az NVDA ismét tudja olvasni az oldalt, amikor visszalépünk az előző oldalra. (#7997)
+- Az NVDA már nem jelenti be kéretlenül a Windows 10 bejelentkezéséhez használt kód utolsó karakterét amikor a gépet feloldja. (#7908)
+- Chrome és Firefox: az NVDA már nem jelenti be kétszer jelőlőnégyzetek és választógombok címkéit, ha a tab billentyűvel, vagy gyorsnavigációval lépkedünk rajtuk. (#7960)
+- Hamis értékkel rendelkező aria-current elemek esetében az NVDA is hamis értéket jelent be, korábbban a hibás működés miatt ilyenkor igaz értéket jelzett. (#7892).
+- A Windows OneCore hangok akkor is betöltődnek, ha a korábban konfigurált hangkaraktert eltávolították. (#7553)
+- Windows OneCore hangok esetén a hangkarakterek váltása sokkal gyorsabb lett. (#7999)
+- Javították a braille kimenetet az olyan különleges karakterek esetében, mint pl. nagybetűs jelek a 8 pontos rövidírásos dán fordítótábla esetén. (#7526, #7693)
+- Microsoft Word: Az NVDA már többféle felsorolásjelet képes bejelenteni. (#6778)
+- A formázási információk lekérdezésére szolgáló szkript már nem mozdítja el az áttekintőkurzort, így ugyanazon a helyen az egymás után többszöri lekérdezés nem okozhat eltérő eredményt. (#7869)
+- A Braille bevitel során a program már nem enged rövidírásos braille fordítótáblákat használni az olyan esetekben,ahol ez nem támogatott. (pl. ahol a rendszer csak cellánként kezeli a bevitelt, és nem veszi figyelembe az egész szavakat, vagy böngészőmódban). (#7306)
+- Handy Tech Easy Braille és Braille Wave kijelzők: Javítottak bizonyos, a kapcsolódás stabilitására kihatással lévő problémákat. (#8016)
+- Windows 8 és újabb verziói: az NVDA már nem jelzi ismeretlenként a Windows gyorsmenüt (Windows+X) sem pedig a menüből kiválasztott menüpontokat. (#8137)
+- Hims kijelzők: a modellspecifikus billentyűparancsok a felhasználói útmutatóban ígérteknek megfelelően működnek. (#8096)
+- Az NVDA már helyre tudja állítani a rendszerkonfigurációját, ezáltal képes javítani olyan hibákat, melyek bizonyos tartalmak pl. Firefox, vagy internet Explorer dokumentumok hozzáférhetőségét ellehetetlenítették. (#2807)
+- Javítottak egy Feladatkezelővel kapcsolatos hibát, mely megakadályozta az NVDA felhasználóit, hogy a folyamatok részletes információihoz hozzáférjenek. (#8147)
+- Az újabb Microsoft SAPI5 hangok már nem késlekednek a beszéd végén, ezáltal hatékonyabbá vált a navigáció ilyen hangok használatával. (#8174)
+- A Windows régebbi verzióiban az NVDA már nem jelent be kéretlen karaktereket a rendszeróra olvasásakor, sem braille, sem karakterenkénti olvasás esetén. (#5729)
+- Hims Smart Beetle kijelzők: a görgetőgombok azonosítása ismét megbízhatóan működik. (#6086)
+- Delphi-alapú alkalmazások esetében a szöveges vezérlők kapcsán a szerkeszthetőségre és a navigációra vonatkozó információk sokkal relevánsabbak. (#636, #8102)
+
+
+= 2018.1.1 =
+Ez egy hibajavító kiadás, mely orvosolja a   Windows Onecore  beszédszintetizátor hibáját. A  legfrissebb Windows 10 Redstone 4 (1803) kiadása esetén a beszédhangok magasabb hangon, és gyorsabb sebességgel beszéltek. (#8082)
+
+
 = 2018.1 =
 Ebben a kiadásban: Diagramok támogatása a Microsoft wordben és a PowerPointban, új támogatott braille kijelzők, többek közt Eurobraille és az Optelec protocol converter, fejlesztett támogatás a Hims és Optelec braille kijelzőkhöz, fejlesztések a Mozilla Firefox 58 és újabb verzióinak használatához, és még sok más.
 
