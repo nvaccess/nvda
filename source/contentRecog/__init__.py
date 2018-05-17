@@ -15,10 +15,13 @@ They are implemented using the L{ContentRecognizer} class.
 
 from collections import namedtuple
 import textInfos.offsets
+from abc import ABCMeta, abstractmethod
 
 class ContentRecognizer(object):
 	"""Implementation of a content recognizer.
 	"""
+
+	__metaclass__ = ABCMeta
 
 	def getResizeFactor(self, width, height):
 		"""Return the factor by which an image must be resized
@@ -32,6 +35,7 @@ class ContentRecognizer(object):
 		"""
 		return 1
 
+	@abstractmethod
 	def recognize(self, pixels, imageInfo, onResult):
 		"""Asynchronously recognize content from an image.
 		This method should not block.
@@ -50,6 +54,7 @@ class ContentRecognizer(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def cancel(self):
 		"""Cancel the recognition in progress (if any).
 		"""
@@ -123,6 +128,9 @@ class RecognitionResult(object):
 	Most implementers should use one of the subclasses provided in this module.
 	"""
 
+	__metaclass__ = ABCMeta
+
+	@abstractmethod
 	def makeTextInfo(self, obj, position):
 		"""Make a TextInfo within the recognition result text at the requested position.
 		@param obj: The object to return for the C{obj} property of the TextInfo.

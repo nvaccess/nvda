@@ -9,31 +9,43 @@
 
 import weakref
 from logHandler import log
+from abc import ABCMeta, abstractproperty
 
 class Getter(object):
 
-	def __init__(self,fget):
+	def __init__(self,fget, abstract=False):
 		self.fget=fget
+		if abstract:
+			if isinstance(fget, classmethod):
+				log.warning("Abstract class properties are not supported.")
+				self._abstract = False
+			else:
+				self._abstract = self.__isabstractmethod__=abstract
 
 	def __get__(self,instance,owner):
-		if not instance:
+		if isinstance(self.fget, classmethod):
+			return self.fget.__get__(instance, owner)()
+		elif not instance:
 			return self
 		return self.fget(instance)
 
 	def setter(self,func):
-		return property(fget=self._func,fset=func)
+		return (abstractproperty if self._abstract else property)(fget=self.fget,fset=func)
 
 	def deleter(self,func):
-		return property(fget=self._func,fdel=func)
+		return (abstractproperty if self._abstract else property)(fget=self.fget,fdel=func)
 
 class CachingGetter(Getter):
 
 	def __get__(self, instance, owner):
-		if not instance:
+		if isinstance(self.fget, classmethod):
+			log.warning("Class properties do not support caching")
+			return self.fget.__get__(instance, owner)()
+		elif not instance:
 			return self
 		return instance._getPropertyViaCache(self.fget)
 
-class AutoPropertyType(type):
+class AutoPropertyType(ABCMeta):
 
 	def __init__(self,name,bases,dict):
 		super(AutoPropertyType,self).__init__(name,bases,dict)
@@ -44,6 +56,10 @@ class AutoPropertyType(type):
 		except KeyError:
 			cacheByDefault=any(getattr(base, "cachePropertiesByDefault", False) for base in bases)
 
+		# Create a set containing properties that are marked as abstract.
+		newAbstractProps=set()
+		# Create a set containing properties that were, but are no longer abstract.
+		oldAbstractProps=set()
 		# given _get_myVal, _set_myVal, and _del_myVal: "myVal" would be output 3 times
 		# use a set comprehension to ensure unique values, "myVal" only needs to occur once.
 		props={x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_')}
@@ -72,20 +88,36 @@ class AutoPropertyType(type):
 				else:
 					cache=cacheByDefault
 
+			abstract=dict.get('_abstract_%s'%x,False)
 			if g and not s and not d:
-				setattr(self,x,(CachingGetter if cache else Getter)(g))
+				attr = (CachingGetter if cache else Getter)(g,abstract)
 			else:
-				setattr(self,x,property(fget=g,fset=s,fdel=d))
+				attr = (abstractproperty if abstract else property)(fget=g,fset=s,fdel=d)
+			if abstract:
+				newAbstractProps.add(x)
+			elif x in self.__abstractmethods__:
+				oldAbstractProps.add(x)
+			setattr(self,x, attr)
+
+		if newAbstractProps or oldAbstractProps:
+			# The __abstractmethods__ set is frozen, therefore we ought to override it.
+			self.__abstractmethods__=(self.__abstractmethods__|newAbstractProps)-oldAbstractProps
 
 class AutoPropertyObject(object):
-	"""A class that dynamicly supports properties, by looking up _get_* and _set_* methods at runtime.
+	"""A class that dynamically supports properties, by looking up _get_*, _set_*, and _del_* methods at runtime.
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).
+	_del_x will make a property x with a deleter that is executed when deleting its value.
 	If there is a _get_x but no _set_x then setting x will override the property completely.
 	Properties can also be cached for the duration of one core pump cycle.
-	This is useful if the same property is likely to be fetched multiple times in one cycle. For example, several NVDAObject properties are fetched by both braille and speech.
-	Setting _cache_x to C{True} specifies that x should be cached. Setting it to C{False} specifies that it should not be cached.
+	This is useful if the same property is likely to be fetched multiple times in one cycle.
+	For example, several NVDAObject properties are fetched by both braille and speech.
+	Setting _cache_x to C{True} specifies that x should be cached.
+	Setting it to C{False} specifies that it should not be cached.
 	If _cache_x is not set, L{cachePropertiesByDefault} is used.
+	Properties can also be made abstract.
+	Setting _abstract_x to C{True} specifies that x should be abstract.
+	Setting it to C{False} specifies that it should not be abstract.
 	"""
 	__metaclass__=AutoPropertyType
 
