@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.2 =
+Novosti u ovoj inačici uključuju Podršku tablica u Kindle za osobna računala, podršku za Humanware Braillenote touch i BI14 Braille brajične retke, unapređenja za OneCore, kao i za sapi5 govorne jedinice, unapređenja u outlooku, i još puno toga.
+
 
 == Nove značajke ==
 - Širina redka i dužina stupca sada se mogu isčitati uz pomić govora i brajice. (#2642)
@@ -14,11 +16,13 @@
 - Nove brajične tablice: litavska osmotočkasta, Ukrajinska, Mongolska sa podrškom engleskog kratkopisa. (#7839)
 - Dodana skripta za izvještavanje o oblikovanju za tekst koji se nalazi ispod određene brajične ćelije. (#7106)
 - Prilikom nadograđivanja NVDA, sada je moguće odgoditi instalaciju nadogradnje za kasnije vrijeme po vašem izboru. (#4263) 
+- Novi jezici: Mongolski, Švicarski njemački.
 - Sada možete uključivati ili isključivati control, shift, alt, windows i NVDA tipke sa vaše brajične tipkovnice te ih je moguće kombinirati uz brajični ulaz (e.g. press control+s). (#7306) 
  - Možete dodijeliti te modifikatore  koje možete pronaći u kategoriji emulirane tipke sustava u dijaloškom okviru ulazne geste.
 - Vraćena podrška za Handy Tech Braillino i Modular brajične retke (sa starim firmwareom). (#8016)
 - Datum i vrijeme za podržane Handy Techove uređaje (poput Active Braille i Active Star) će biti automatski sinkronizirano kada nije sinkronizirano više od 5 sekundi. (#8016)
 - NVDA sada izvještava o odgovorenosti ili proslijeđenosti poruke u Microsoft outlooku. (#6911)
+- Sada se može pridijeliti gesta, koja služi za privremeno omogućavanje svih konfiguracijskih profila. (#4935)
 
 
 == Izmjene ==
@@ -51,6 +55,9 @@
 - NVDA će sada pokušati ispraviti greške povezane sa sistemskom COM registracijom koje su prouzrokovale da Internet explorer i firefox postanu nepristupačni, pri tom izgovarajući "nepoznato". (#2807)
 - Ispravljena greška u upravitelju zadataka, koja je onemogućavala prikaz detaljnog prikaza zadataka. (#8147)
 - Noviji Microsoft sapi5 glasovi više ne zaostaju na kraju izgovorene riječi, što ih čini brzim pri kretanju. (#8174)
+- NVDA više niti ne izgovara, niti ne prikazuje (LTR i RTL znakove) prilikom pristupanja satu u windowsima 10. (#5729)
+- Otkrivanje tipki za pomicanje na Hims Smart Beetle brajičnim retcima sada više nije nepouzdano. (#6086)
+- U nekim tekstnim kontrolama, pogotovo u delphi aplikacijama, informacije koje su dane prilikom uređivanja ili kretanja sada su pouzdanije. (#636, #8102)
 
 
 == Izmjene za razvojne programere ==
