@@ -4,21 +4,24 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.2 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat tuki taulukoille Kindle for PC:ssä, tuki HumanWare BrailleNote Touch- ja BI14-pistenäytöille, parannukset sekä OneCore- että SAPI5-puhesyntetisaattoreihin, parannukset Microsoft Outlookiin sekä paljon muuta.
 
 == Uudet ominaisuudet ==
 - Taulukon solujen rivien ja sarakkeiden jakaantuminen useammalle riville ilmaistaan nyt puheella ja pistekirjoituksella. (#2642)
 - NVDA:n taulukonselauskomentoja tuetaan nyt Google Docsissa pistekirjoitustilan ollessa käytössä. (#7946)
 - Taulukoiden lukeminen ja niissä liikkuminen on nyt mahdollista Kindle for PC:ssä. (#7977)
 - Tuki BrailleNote Touch- ja Brailliant BI 14 -pistenäytöille sekä USB:llä että bluetoothilla liitettäessä. (#6524)
-- NVDA voi puhua sovellusten (esim. Laskin ja Kauppa) ilmoitukset Windows 10:n Fall Creators -päivityksessä ja uudemmissa. (#8045)
+- NVDA voi puhua sovellusten (esim. Laskin ja Kauppa) ilmoitukset Windows 10:n Fall Creators -päivityksessä ja uudemmissa. (#7984)
 - Uusia pistetaulukkoja: liettualainen 8 pisteen merkistö, ukrainalainen, mongolilainen taso 2. (#7839)
 - Lisätty komento määrätyssä pistesolussa olevan tekstin muotoilutietojen ilmoittamiseen. (#7106)
 - NVDA-päivityksen asentamista on nyt mahdollista lykätä myöhemmäksi. (#4263) 
+- Uusia kieliä: mongoli ja sveitsinsaksa.
 - Voit nyt vaihtaa Ctrl-, Vaihto-, Alt-, Windows- ja NVDA-näppäinten tilaa pistekirjoitusnäppäimistöltä sekä käyttää niitä yhdessä pistekirjoitussyötteen kanssa (esim. painaa Ctrl+S). (#7306) 
  - Näiden tilanvaihtonäppäinten uudelleenmäärittäminen on mahdollista Syötekomennot-valintaikkunan Emuloidut näppäimet -kategorian alta löytyviä komentoja käyttäen.
 - Palautettu tuki Handy Techin Braillino- sekä Modular (vanha laiteohjelmisto) -pistenäytöille. (#8016)
 - Päivämäärää ja aikaa tukevat Handy Tech -laitteet (kuten Active Braille ja Active Star) synkronoidaan nyt automaattisesti NVDA:n toimesta, kun ero järjestelmän kelloon on enemmän kuin viisi sekuntia. (#8016)
 - NVDA ilmoittaa nyt Microsoft Outlookin viestiluetteloissa, jos viestiin on vastattu tai jos se on välitetty edelleen. (#6911)
+- Asetusprofiilien tilapäiseen käytöstä poistamiseen on nyt mahdollista määrittää syötekomento. (#4935)
 
 
 == Muutokset ==
@@ -28,8 +31,8 @@
 - Kanadanranskalaiset tason 1 ja 2 taulukot on poistettu. Niiden asemesta käytetään ranskalaista yhdenmukaistettua 6 pisteen tietokonemerkistön ja tason 2 taulukoita. (#7839)
 - Alva BC6-, EuroBraille- ja Papenmeier-pistenäyttöjen toissijaiset kosketuskohdistinnäppäimet ilmoittavat nyt pistesolussa olevan tekstin muotoilutiedot. (#7106)
 - Lyhennepistekirjoituksen syöttötaulukot vaihtavat automaattisesti takaisin lyhentämättömään tilaan ei-muokattavissa paikoissa (ts. säätimissä, joissa ei ole kohdistinta, tai selaustilassa). (#7306)
-- NVDA on nyt vähemmän puhelias Outlookin kalenterissa, kun tapaaminen tai aikaväli käsittää koko päivän. (#7949)
-- Kaikki NVDA:n asetukset löytyvät nyt  yhdestä asetusvalintaikkunasta, johon pääsee kohdasta NVDA-valikko -> Asetukset -> Asetukset, sen sijaan, että ne olisivat ripoteltuina useisiin eri ikkunoihin. (#7302)
+- NVDA:n puheliaisuutta on vähennetty Outlookin kalenterissa, kun tapaaminen tai aikaväli käsittää koko päivän. (#7949)
+- Kaikki NVDA:n asetukset löytyvät nyt  yhdestä asetusvalintaikkunasta, johon pääsee kohdasta NVDA-valikko -> Asetukset -> Asetukset, sen sijaan, että ne olisivat ripoteltuina useisiin eri ikkunoihin. (#577)
 - Oletussyntetisaattori on nyt Windows 10:tä käytettäessä eSpeakin asemesta OneCore. (#8176)
 
 
@@ -38,9 +41,9 @@
 - NVDA lukee nyt asianmukaisesti edellisen sivun palattaessa sille Microsoft Edgessä. (#7997)
 - NVDA ei enää virheellisesti puhu windows 10:n kirjautumisen PIN-koodin viimeistä merkkiä koneen lukitusta avattaessa. (#7908)
 - Valintaruutujen ja -painikkeiden selitteitä ei enää puhuta kahdesti Chromessa ja Firefoxissa selaustilassa Sarkaimella siirryttäessä tai pikaselauskomentoja käytettäessä. (#7960)
-- Aria-current-attribuuttia, jonka arvo on false, käsitellään nyt truen sijaan falsena. (#7892).
-- Windows OneCore -syntetisaattoriajurin lataaminen ei enää epäonnistu, jos käytettävä puheääni on poistettu. (#7999)
-- Windows OneCore -puheäänen vaihtaminen on nyt paljon nopeampaa. (#7999)
+- Aria-current-attribuutti, jonka arvo on false, ilmoitetaan nyt asianmukaisesti falsena truen asemesta. (#7892)
+- Windows OneCore -puheäänten lataaminen ei enää epäonnistu, jos käytettävä puheääni on poistettu. (#7553)
+- Windows OneCore -puheäänten vaihtaminen on nyt paljon nopeampaa. (#7999)
 - Korjattu väärin muotoiltu pistekirjoituksen tulostus useista pistetaulukoista, mukaan lukien isojen kirjainten merkit tanskalaisessa 8 pisteen lyhennekirjoituksessa. (#7526, #7693)
 - NVDA voi nyt puhua Microsoft Wordissa useammantyyppisiä luettelomerkkejä. (#6778)
 - Lue muotoilutiedot -komennon painaminen ei enää siirrä virheellisesti tarkastelukohtaa, ja näin ollen useasti painaminen ei myöskään anna enää eri tuloksia. (#7869)
@@ -51,6 +54,9 @@
 - NVDA yrittää nyt korjata järjestelmän COM-rekisteröinnin ongelmia, jotka aiheuttavat ohjelmien (kuten Firefox ja Internet Explorer) muuttumista esteellisiksi sekä NVDA:n "tuntematon"-ilmoituksia. (#2807)
 - Kierretty Tehtävienhallinnan ongelma, joka esti NVDA:n käyttäjiä lukemasta prosessien yksityiskohtaisia tietoja. (#8147)
 - Uudemmat Microsoft SAPI5 -äänet eivät enää jää jälkeen puheen lopussa, mikä tekee niiden käyttämisestä sujuvampaa. (#8174)
+- NVDA ei enää puhu tai näytä pistenäytöllä vasemmalta oikealle ja oikealta vasemmalle osoittavia nuolimerkkejä käytettäessä kelloa Windowsin uusimmissa versioissa. (#5729)
+- HIMS Smart Beetle -pistenäyttöjen vieritysnäppäinten tunnistaminen is once more no longer unreliable. (#6086)
+- In some text controls, particularly in Delphi applications, the information provided about editing and navigating is now much more reliable. (#636, #8102)
 
 
 = 2018.1.1 =

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 00:10+1000\n"
+"POT-Creation-Date: 2018-05-14 08:42+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: \n"
@@ -4344,6 +4344,22 @@ msgstr ""
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Toont het NVDA dialoogvenster voor configuratieprofielen"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Triggers voor configuratieprofielen uitgeschakeld"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Triggers voor configuratieprofielen ingeschakeld"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Schakelt de werking van triggers voor configuratieprofielen in of uit. Het "
+"uitschakelen heeft effect tot NVDA herstart wordt"
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -8340,6 +8356,18 @@ msgstr "Opslaan Als"
 msgid "Error saving log: %s"
 msgstr "Fout tijdens opslaan van logboek: %s"
 
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "OK"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Annuleren"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Toepassen"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Categorieën:"
@@ -8659,7 +8687,7 @@ msgstr "Schermhelderheid &bepaalt Volume audio-coördinatie"
 
 #. Translators: This is the label for the review cursor settings panel.
 msgid "Review Cursor"
-msgstr "Leescursor..."
+msgstr "Leescursor"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.

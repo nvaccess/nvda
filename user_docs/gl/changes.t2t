@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.2 =
+O subliñable desta versión inclúe o soporte para táboas en Kindle para PC, o soporte para pantallas Humanware BrailleNote Touch e BI14 Braille, melloras para sintetizadores de voz Onecore e Sapi5, melloras en Microsoft Outlook e moito máis.
 
 == Novas Características ==
 - Agora anúnciase o rango de filas e columnas para celdas de táboas  en voz e braille. (#2642)
@@ -13,12 +14,14 @@
 - No Windows 10 Fall Creators Update e posteriores, o NVDA pode anunciar notificacións dende aplicacións como a Calculadora e a Windows Store. (#8045)
 - Novas táboas de transcripcción braille: Lithuano 8 pontos, ucranio, Mongol grado 2. (#7839)
 - Engadido un script para anunciar información de formato para o texto baixo unha celda braille específica. (#7106)
+- Novas linguas: Mongol, Alemán de Suiza.
 - Ao se actualizar o NVDA, agora é posible retrasar a instalación da actualización a un momento posterior da túa elección. (#4263) 
 - Agora podes conmutar control, shift, alt, windows e NVDA dende o teu teclado braille e combinar estos modificadores coa entrada braille (ex.: premer control+s). (#7306) 
  - Podes asignar estas novas conmutacións de modificadores usando a orde que se atopa en Teclas de sistema emuladas no diálogo Xestos de Entrada.
 - Restaurado o soporte para pantallas Handy Tech Braillino e Modular (co firmware vello). (#8016)
 - Agora sincronizaranse automáticamente co NVDA a data e a hora para os dispositivos Handy Tech soportados (como Active Braille e Active Star) cando estean desincronizados máis de cinco segundos. (#8016)
 - Nas listaxes de mensaxes do Microsoft Outlook, o NVDA agora informa de se unha mensaxe foi respostada ou reenviada. (#6911)
+- Pódese asignar un xesto de entrada para desactivar temporalmente todos os disparadores dun perfil de configuración. (#4935)
 
 
 == Cambios ==
@@ -51,6 +54,9 @@
 - O NVDA tentará agora arranxar os problemas de rexistro COM do sistema que causan que programas coma Firefox e Internet Explorer se volten inaccesibles e anuncien "Descoñecido" polo NVDA. (#2807).
 - Traballouse na solución dun fallo no administrador de tarefas facendo que o NVDA non permita aos usuarios acesar aos contidos de detalles específicos sobre os procesos. (#8147)
 - As voces máis novas do Microsoft SAPI5 xa non retrasan ao rematar a fala, o que fai que sexa moito máis doado navegar con estas voces. (#8174)
+- O NVDA xa non anuncia (marcas LTR e  RTL) en Braille ou na fala por caracteres ao acceder ao reloxo en versións recentes do Windows. (#5729)
+- A detección das teclas de desprazamento en pantallas Hims Smart Beetle xa non é pouco fiable. (#6086)
+- Nalgúns controis de texto, particularmente en aplicacións Delphi, a información proporcionada na edición e na navegación agora é moito máis fiable. (#636, #8102)
 
 
 == Cambios para Desenvolvedores ==

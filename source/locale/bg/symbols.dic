@@ -1,10 +1,11 @@
-#locale/bg/symbols.dic
+﻿#locale/bg/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
+
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
@@ -82,7 +83,6 @@ _	долна черта
 •	средна точка
 …	многоточие
 ...	многоточие
-	средна точка
 “	леви кавички
 ”	десни кавички
 ‘	ляво ударение
@@ -97,7 +97,12 @@ _	долна черта
 ▪	малък черен квадрат
 ◾	среден черен квадрат
 ◦	бяла средна точка
-➔	стрелка надясно
+⇒	двойна стрелка надясно
+⇨	бяла стрелка надясно
+➢	сочещ надясно връх на стрела
+❖	черен ромб без бял хикс
+♣	черна трефа
+♦	черен ромб
 §	раздел
 °	градус
 «	лява двойна ъглова скоба

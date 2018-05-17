@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 00:10+1000\n"
-"PO-Revision-Date: 2018-05-03 22:32+0100\n"
+"POT-Creation-Date: 2018-05-14 08:42+1000\n"
+"PO-Revision-Date: 2018-05-17 04:29+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -4345,6 +4345,22 @@ msgstr ""
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Pokaže NVDA pogovorno okno Konfiguracije Profilov"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Prožilci profila konfiguracije onemogočeni"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Prožilci profila konfiguracije omogočeni"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Stikalo izklopa vseh prožilcev profila konfiguracije. Izklop učinkuje, "
+"dokler se NVDA znova ne zažene"
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -7491,7 +7507,7 @@ msgstr "Kretnje v&nosa..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "&Nastavitve"
+msgstr "&Izbire"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -8301,6 +8317,18 @@ msgstr "Shrani Kot"
 msgid "Error saving log: %s"
 msgstr "Napaka pri shranjevanju dnevnika: %s"
 
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "V redu"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Prekliči"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Uporabi"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Zvrsti:"
@@ -8645,7 +8673,7 @@ msgstr "delovanje enostavnega pregleda"
 
 #. Translators: This is the label for the Input Composition settings panel.
 msgid "Input Composition"
-msgstr "Vnos več-znakovnih znakov"
+msgstr "Vnos večznakovnih znakov"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.

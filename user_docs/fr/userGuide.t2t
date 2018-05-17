@@ -25,7 +25,7 @@ Ses points forts sont :
 - La prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
 - La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
 - Un installateur parlant facile à utiliser ;
-- Une traduction dans 52 langues ;
+- Une traduction dans 54 langues ;
 - La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits ;
 - L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés ;
 - L'annonce des contrôles et du texte durant l'utilisation de gestes tactiles
@@ -35,7 +35,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++[Internationalization]
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies.
-Outre l'anglais, NVDA a été traduit en 52 langues : l'afrikaans, l'albanais, l'amharique, l'arabe, l'aragonais, le portugais brésilien, le bulgare, le birman, le catalan, l'espagnol colombien, le croate, le tchèque, le danois, le néerlandais, le persan, le finnois, le français, le galicien, le Géorgien, l'allemand, le grec, l'hébreu, l'inndou, le hongrois, l'islandais, l'irlandais, l'italien, le japonais, le kannada, le coréen, le kirghize, le lituanien, le macédonien, le népalais, le norvégien, le polonais, le portugais, punjabi, le roumain, le russe, le serbe, le slovaque, le slovène, l'espagnol, le suédois, le tamoul, le thaï, le chinois traditionnel et simplifié, le turc, l'ukrainien et le vietnamien.
+Outre l'anglais, NVDA a été traduit en 52 langues : l'afrikaans, l'albanais, l'amharique, l'arabe, l'aragonais, le portugais (Brésilet Portugal), le bulgare, le birman, le catalan, l'espagnol (colombie et Espagne), le croate, le tchèque, le danois, le néerlandais, le persan, le finnois, le français, le galicien, le Géorgien, l'allemand (Allemagne et Suisse), le grec, l'hébreu, l'inndou, le hongrois, l'islandais, l'irlandais, l'italien, le japonais, le kannada, le coréen, le kirghize, le lituanien, le macédonien, le népalais, le norvégien, le polonais, le portugais, punjabi, le roumain, le russe, le serbe, le slovaque, le slovène, l'espagnol, le suédois, le tamoul, le thaï, le chinois traditionnel et simplifié, le turc, l'ukrainien et le vietnamien.
 
 ++ Support des Synthèses Vocales ++[SpeechSynthesizerSupport]
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -905,11 +905,13 @@ Quand vous êtes dans le tableau des livres ajoutés :
 
 + Configurer NVDA +[ConfiguringNVDA]
 La plupart des paramètres de NVDA peuvent être modifiés en utilisant les dialogues accessibles par le sous-menu "Préférences" du menu NVDA.
+Beaucoup de ces paramètres se trouvent dans le dialogue multipage [Paramètres #NVDASettings].
 Dans tous les dialogues, appuyez sur le bouton "OK" pour valider vos modifications.
 Pour annuler les modifications, appuyez sur le bouton "Annuler" ou sur la touche "échap".
+Pour certains dialogues, vous pouvez presser le bouton Appliquer pour que les paramètres prennent effet immédiatement sans fermer le dialogue.
 Certains paramètres peuvent aussi être modifiés en utilisant des raccourcis clavier que vous trouverez dans les sections ci-dessous.
 
-+++ Paramètres de NVDA +++[NVDASettings]
+++ Paramètres de NVDA ++[NVDASettings]
 %kc:settingsSection: || Name | Desktop key | Laptop key | Description |
 Le dialogue Paramètres de NVDA contient beaucoup de paramètres de configuration qui peuvent être modifiés.
 Ce dialogue contient une liste de catégories de paramètres dans laquelle on peut choisir.
@@ -922,10 +924,11 @@ Si on le presse, ce raccourci ouvrira le dialogue Paramètres dans cette catégo
 Par défaut, toutes les catégories ne peuvent pas être atteintes via un raccourci clavier.
 Si vous voulez accéder à une catégorie qui n'a pas de raccourci dédié, utilisez le dialogue [Geste de Commandes #InputGestures] pour ajouter un geste personnalisé tel qu'un raccourci clavier ou un geste tactile pour cette catégorie.
 
-Les différentes catégories de paramètres du dialogue Paramètres sont décrite ci-dessous.
+Les catégories de paramètres du dialogue Paramètres sont décrite ci-dessous.
  
 +++ Général (NVDA+control+g) +++[GeneralSettings]
-La catégorie Général du dialogue Paramètres contient les options suivantes :
+La catégorie Général du dialogue Paramètres définit le comportement global de NVDA tel que la langue de l'interface et la vérification des mises à jour.
+Elle contient les options suivantes :
 
 ==== Langue ====[GeneralSettingsLanguage]
 C'est une liste déroulante qui permet de choisir la langue de l'interface utilisateur et des messages de NVDA.
@@ -974,8 +977,7 @@ Si ceci est activé, NVDA vous informera quand il y a une mise à jour en attent
 Vous pouvez aussi installer manuellement la mise à jour en attente depuis le dialogue de sortie de NVDA (si activé), depuis le menu NVDA, ou quand vous exécutez une vérification depuis le menu Aide.
 
 +++ Parole (NVDA+contrôle+v) +++[VoiceSettings]
-La catégorie "Parole" dans le dialogue Paramètres de NVDA, contient des options vous permettant de changer le synthétiseur vocal ainsi que le son de la voix.
-
+La catégorie "Parole" dans le dialogue Paramètres de NVDA, contient des options vous permettant de changer le synthétiseur vocal ainsi que les caractéristiques de la voix pour le synthétiseur choisi.
 Pour une manière plus rapide de contrôler les paramètres vocaux depuis n'importe où, reportez-vous à la section [boucle des paramètres synthétiseur #SynthSettingsRing].
 
 La catégorie Parole contient les options suivantes :
@@ -1225,7 +1227,8 @@ Cette option ne sera pas disponible si votre afficheur braille supporte seulemen
 Vous devrez consulter la documentation de votre afficheur braille dans la section [Afficheurs braille supportés #SupportedbrailleDisplays] pour plus de détails sur les types de communications supportés et les ports disponibles.
 
 +++ Clavier (NVDA+contrôle+k) +++[KeyboardSettings]
-Cette catégorie de paramètres contient les options suivantes :
+La catégorie Clavier du dialogue Paramètres de NVDA contient des options qui définissent le comportement de NVDA quand vous tapez sur votre clavier.
+Elle contient les options suivantes :
 
 ==== Configuration du clavier ====[KeyboardSettingsLayout]
 Cette liste déroulante vous permet de choisir la configuration de clavier utilisée par NVDA. Actuellement, les deux configurations fournies avec NVDA sont : Desktop (ordinateur de bureau) et Laptop (ordinateur portable).
@@ -1284,7 +1287,8 @@ Cette option permet à l'utilisateur de choisir si les combinaisons de touches g
 Cette option est activée par défaut, mais certains utilisateurs peuvent souhaiter désactiver cette fonction, comme ceux tapant en vietnamien avec le logiciel de dactylographie Unikey, car cela causerait la saisie de caractères incorrects.
 
 +++ Souris (NVDA+contrôle+m) +++[MouseSettings]
-La catégorie Souris du dialogue Paramètres contient les options suivantes :
+La catégorie Souris du dialogue Paramètres de NVDA permet de définir le mode de suivi de la souris par NVDA, de sonoriser les coordonnées de la souris par des bips et de définir d'autres options d'utilisation de la souris.
+Elle contient les options suivantes :
 
 ==== Annoncer les changements de forme de la souris ====[MouseSettingsShape]
 Quand cette case est cochée, NVDA annonce la forme du pointeur souris chaque fois qu'elle change. 
@@ -1314,6 +1318,7 @@ Cette case est décochée par défaut.
 
 +++ Interaction Tactile +++[TouchInteraction]
 Cette catégorie, disponible seulement sur un ordinateur exécutant Windows 8 et au-delà et possédant des capacités tactiles, vous permet de configurer la manière dont NVDA interagit avec l'écran tactile.
+Elle contient les options suivantes :
 
 ==== Mode de frappe tactile ====[TouchTypingMode]
 Cette case à cocher vous permet d'indiquer la méthode que vous désirez utiliser pour saisir du texte avec le clavier tactile.
@@ -1321,7 +1326,8 @@ Quand elle est cochée, quand vous repérez une touche sur le clavier tactile, v
 Quand elle est décochée, vous devez double-taper sur la touche du clavier tactile pour la presser.
 
 +++ Curseur de Revue +++[ReviewCursorSettings]
-cette catégorie contient les options suivantes :
+La catégorie Curseur de Revue du dialogue Paramètres de NVDA sert à configurer le comportement du curseur de revue de NVDA.
+Elle contient les options suivantes :
 
 %kc:setting
 ==== Suivre le focus système ====[ReviewCursorFollowFocus]
@@ -1344,7 +1350,8 @@ Quand l'option est activée, NVDA filtre la hiérarchie des objets que l'on peut
 Pour activer ou désactiver le mode de revue simple depuis n'importe où, veuillez lui assigner un geste de commande personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
 +++ Présentation des Objets (NVDA+contrôle+o) +++[ObjectPresentationSettings]
-Cette catégorie contient les options suivantes :
+La catégorie Présentation des Objets du dialogue Paramètres de NVDA sert à définir la quantité d'informations annoncées par NVDA pour les contrôles tels que leur description, leur position etc.
+Elle contient les options suivantes :
 
 ==== Annoncer les suggestions ====[ObjectPresentationReportToolTips]
 Quand cette case est cochée, NVDA annonce les suggestions à leur apparition. 
@@ -1361,7 +1368,7 @@ Par exemple, le menu "Fichier" d'une barre de menu peut avoir pour raccourci cla
 ==== Annoncer le rang de l'objet dans une liste ====[ObjectPresentationPositionInfo]
 Cette option vous permet de choisir si vous voulez connaître le rang de l'objet dans une liste (ex: 1 sur 4) annoncé quand vous allez sur un objet au moyen du focus ou de la navigation par objet.
 
-==== Deviner le rang de l'objet quand cette information n'est pas disponible ====[ObjectPresentationGuessPositionInfo]
+==== Deviner le rang de l'objet quand  l'information n'est pas disponible ====[ObjectPresentationGuessPositionInfo]
 Si l'annonce du rang de l'objet dans une liste est activée, cette option autorise NVDA à deviner le rang de l'objet si cette information n'est pas disponible pour un objet particulier.
 
 Quand l'option est activée, NVDA annonce le rang pour un plus grand nombre de contrôles tels que les menus et les barres d'outils. Cependant, cette information peut parfois être inexacte.
@@ -1400,8 +1407,8 @@ Pour certains champs d'édition comme le champ de recherche dans diverses applic
 La liste de suggestions se ferme quand vous quittez le champ d'édition, et pour certains champs, NVDA peut vous en avertir quand ça arrive.
 
 +++ Composition de Saisie +++[InputCompositionSettings]
-Cette catégorie de paramètres permet de contrôler comment NVDA annonce la saisie des caractères asiatiques, avec IME ou les services de texte et langue d'entrée.
-Notez que comme les méthodes de saisie varient beaucoup dans les possibilités disponibles et leur rendu d'informations, il peut être utile de refaire cette configuration pour chaque méthode d'entrée afin de bénéficier de la meilleure expérience de saisie.
+La catégorie Composition de la Saisie permet de contrôler comment NVDA annonce la saisie des caractères asiatiques, avec IME ou les services de texte et langue d'entrée.
+Notez que, comme les méthodes de saisie varient considérablement selon les fonctions disponibles et la façon dont elles transmettent l'information, il sera probablement nécessaire de configurer ces options différemment pour chaque méthode de saisie, pour obtenir la meilleure expérience de saisie possible.
 
 ==== Annonce automatique de toutes les suggestions disponibles ====[InputCompositionReportAllCandidates]
 Cette option, activée par défaut, permet de choisir si oui ou non toutes les suggestions visibles doivent être automatiquement rapportées quand une liste de suggestions apparaît ou quand sa page change.
@@ -1430,7 +1437,8 @@ Cette option permet de choisir si oui ou non NVDA doit annoncer tous les symbole
 Cette option est activée par défaut.
 
 +++ Mode Navigation (NVDA+contrôle+b) +++[BrowseModeSettings]
-Cette catégorie comporte les options suivantes :
+La catégorie Mode Navigation du dialogue Paramètres de NVDA sert à configurer le comportement de NVDA quand vous naviguez dans des documents complexes tels que des pages web.
+Elle contient les options suivantes :
 
 ==== Nombre maximum de caractères par ligne ====[BrowseModeSettingsMaxLength]
 Ce champ définit, en nombre de caractères, la longueur maximum d'une ligne en mode navigation.
@@ -1537,6 +1545,7 @@ La hauteur du son montera pour chaque espace, et pour une tabulation, la hauteur
 
 +++ Reconnaissance Optique de Caractères de Windows 10 +++[Win10OcrSettings]
 Les paramètres de cette catégorie vous permettent de configurer la [Reconaissance de Caractères de Windows 10 #Win10Ocr].
+Elle contient les options suivantes :
 
 ==== Langue de Reconnaissance ====[Win10OcrSettingsRecognitionLanguage]
 Cette liste déroulante vous permet de choisir la langue à utiliser pour la reconnaissance de texte.
@@ -1715,6 +1724,8 @@ Parfois, il peut être utile de désactiver temporairement les déclencheurs.
 Par exemple, vous voudrez peut-être modifier un profil activé manuellement ou votre configuration normale sans profils déclenchés interférents.
 Vous pouvez le faire en cochant la case "Désactiver temporairement tous les déclencheurs" dans le dialogue "Profils de configuration".
 
+Pour activer ou désactiver les déclencheurs de n'importe où, veuillez assigner un geste de commande en utilisant le dialogue [Gestes de Commandes #InputGestures].
+
 ++ Emplacement des Fichiers de Configuration ++[LocationOfConfigurationFiles]
 Les versions portables de NVDA enregistrent tous les paramètres et modules complémentaires dans un répertoire nommé "userConfig" situé dans le répertoire de votre copie portable de NVDA.
 
@@ -1823,7 +1834,6 @@ Quand vous utilisez ce synthétiseur avec NVDA, la liste des voix disponibles (a
 ++ Microsoft Speech API Version 5 (SAPI 5) ++[SAPI5]
 SAPI 5 est un standard Microsoft pour les synthétiseurs de parole logiciels.
 Beaucoup de synthétiseurs de parole compatibles avec ce standard peuvent être achetés ou téléchargés gratuitement auprès de différentes sociétés ou sites web, mais il est probable que votre système possède déjà une voix SAPI 5 préinstallée.
-Quand vous utilisez ce synthétiseur avec NVDA, la liste des voix disponibles (accessibles via [le dialogue "Voix" #VoiceSettings], ou [la boucle des paramètres synthétiseur #SynthSettingsRing]) contient toutes les voix de tous les synthétiseurs SAPI 5 installés sur votre système.
 Quand vous utilisez ce synthétiseur avec NVDA, la liste des voix disponibles (accessibles via la catégorie [Parole #SpeechSettings]du dialogue [Paramètres #NVDASettings], ou [la boucle des paramètres synthétiseur #SynthSettingsRing]) contient toutes les voix de tous les synthétiseurs SAPI 5 installés sur votre système.
 
 ++ La Plate-forme Microsoft Speech ++[MicrosoftSpeechPlatform]

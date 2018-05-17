@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 00:10+1000\n"
-"PO-Revision-Date: 2018-05-04 09:44+0200\n"
+"POT-Creation-Date: 2018-05-14 08:42+1000\n"
+"PO-Revision-Date: 2018-05-11 09:49+0200\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -4348,6 +4348,23 @@ msgstr ""
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Mostra la finestra configurazione profili di NVDA"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Eventi dei profili di configurazione disabilitati"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Eventi dei profili di configurazione abilitati"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"abilita o disabilita il cambio automatico del profilo di configurazione in "
+"base a eventi. La disattivazione avrà effetto fino al prossimo riavvio di "
+"NVDA."
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -8358,6 +8375,18 @@ msgstr "Salva con nome"
 msgid "Error saving log: %s"
 msgstr "Errore nel salvataggio del log %s"
 
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "OK"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Annulla"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Applica"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Categorie"
@@ -10724,7 +10753,7 @@ msgstr "Descrizione della tabella"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
-msgstr "Grassetto attivoato"
+msgstr "Grassetto attivato"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold off"
