@@ -14,6 +14,7 @@ import api
 import speech
 import braille
 import ui
+import winVersion
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -47,6 +48,28 @@ class AppModule(appModuleHandler.AppModule):
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
 		# Make sure to announce most recently used emoji first in post-1709 builds.
 		# Fake the announcement by locating 'most recently used" category and calling selected event on this.
-		if obj.childCount == 3:
+		# However, in build 17666 and later, child count is the same for both emoji panel and hardware keyboard candidates list.
+		if winVersion.winVersion.build < 17666 and obj.childCount == 3:
 			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
+		# Support redesigned emoji panel in build 17666 and later.
+		elif obj.childCount == 1:
+			childAutomationID = obj.firstChild.UIAElement.cachedAutomationID
+			if childAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
+				self._emojiPanelOpened = True
+				self.event_UIA_elementSelected(obj.firstChild.firstChild.next.next.firstChild.firstChild, nextHandler)
+		nextHandler()
+
+	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
+	_emojiPanelOpened = False
+
+	def event_nameChange(self, obj, nextHandler):
+		# The word "blank" is kept announced, so suppress this on build 17666 and later.
+		if winVersion.winVersion.build >= 17672:
+			# In build 17672 and later, return immediatley when element selected event on clipboard item was fired just prior to this.
+			if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex" or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList": return
+			if not self._emojiPanelOpened or obj.UIAElement.cachedAutomationID != "TEMPLATE_PART_ExpressionGroupedFullView":
+				speech.cancelSpeech()
+			self._emojiPanelOpened = False
+		if obj.UIAElement.cachedAutomationID not in ("TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex"):
+			ui.message(obj.name)
 		nextHandler()
