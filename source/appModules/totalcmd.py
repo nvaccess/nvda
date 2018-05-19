@@ -13,7 +13,6 @@ import ui
 currIndex = 0
 allIndex = 0
 oldActivePannel=0
-windowName = ""
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -30,7 +29,6 @@ class TCList(IAccessible):
 
 	def event_gainFocus(self):
 		global oldActivePannel
-		global windowName
 		if oldActivePannel !=self.windowControlID:
 			oldActivePannel=self.windowControlID
 			obj=self
@@ -42,10 +40,8 @@ class TCList(IAccessible):
 			try:
 				if obj2.parent.parent.previous.firstChild.role  == 14:
 					ui.message(_("left"))
-					windowName = "left"
 				else:
 					ui.message(_("right"))
-					windowName = "right"
 			except AttributeError:
 				pass
 		super(TCList,self).event_gainFocus()
@@ -63,57 +59,3 @@ class TCList(IAccessible):
 			speech.speakMessage(" ".join(speakList))
 		else:
 			super(TCList,self).reportFocus()
-
-	def script_readActiveTab(self, gesture):
-		try:
-			obj = self.parent.parent.next.next.firstChild.firstChild.firstChild
-			children = obj.children
-			for child in children:
-				if controlTypes.STATE_SELECTED in child.states:
-					infoString = (" %s %s" % (_(windowName), child.name))
-					ui.message(infoString)
-		except AttributeError:
-			pass
-
-		try:
-			obj = self.parent.parent.next.next.next.next.firstChild.firstChild.firstChild
-			children = obj.children
-			for child in children:
-				if controlTypes.STATE_SELECTED in child.states:
-					infoString = (" %s %s" % (_(windowName), child.name))
-					ui.message(infoString)
-		except AttributeError:
-			pass
-		if not children:
-			try:
-				obj = self.parent.parent.next.next.firstChild
-				children = obj.children
-				str2 = ":\\"
-				for child in children:
-					str1 = child.name
-					if child.name:
-						if str1.find(str2) != -1:
-							if windowName == "left":
-								infoString = (" %s %s" % (_(windowName), str1))
-								ui.message(infoString)
-			except AttributeError:
-				pass
-		
-			try:
-				obj = self.parent.parent.next.next.next.next.firstChild
-				children = obj.children
-				str2 = ":\\"
-				for child in children:
-					str1 = child.name
-					if child.name:
-						if str1.find(str2) != -1:
-							infoString = (" %s %s" % (_(windowName), str1))
-							ui.message(infoString)
-			except AttributeError:
-				pass
-
-
-	__gestures = {
-		"kb:ALT+1": "readActiveTab",
-	}
-
