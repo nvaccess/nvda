@@ -13,7 +13,7 @@ import ui
 currIndex = 0
 allIndex = 0
 oldActivePannel=0
-x64trigger = 0
+windowName = ""
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -22,7 +22,6 @@ class AppModule(appModuleHandler.AppModule):
 			if obj.windowClassName in ("LCLListBox", "LCLListBox.UnicodeClass"):
 				clsList.insert(0, TCList)
 		else:
-			x64trigger = 0
 			if obj.windowClassName in ("TMyListBox", "TMyListBox.UnicodeClass"):
 				clsList.insert(0, TCList)
 
@@ -31,26 +30,24 @@ class TCList(IAccessible):
 
 	def event_gainFocus(self):
 		global oldActivePannel
-		global x64trigger
+		global windowName
 		if oldActivePannel !=self.windowControlID:
 			oldActivePannel=self.windowControlID
 			obj=self
+			obj2 = self
 			while obj and obj.parent and obj.parent.windowClassName!="TTOTAL_CMD":
 				obj=obj.parent
-			counter=0
 			while obj and obj.previous and obj.windowClassName!="Window":
 				obj=obj.previous
-				if obj.windowClassName!="TDrivePanel":
-					counter+=1
-				if self.appModule.is64BitProcess:
-					if counter == 3:
-						x64trigger = 1
-			if x64trigger == 1:
-				counter-=1
-			if counter==2:
-				ui.message(_("left"))
-			else:
-				ui.message(_("right"))
+			try:
+				if obj2.parent.parent.previous.firstChild.role  == 14:
+					ui.message(_("left"))
+					windowName = "left"
+				else:
+					ui.message(_("right"))
+					windowName = "right"
+			except AttributeError:
+				pass
 		super(TCList,self).event_gainFocus()
 
 	def reportFocus(self):
@@ -66,3 +63,57 @@ class TCList(IAccessible):
 			speech.speakMessage(" ".join(speakList))
 		else:
 			super(TCList,self).reportFocus()
+
+	def script_readActiveTab(self, gesture):
+		try:
+			obj = self.parent.parent.next.next.firstChild.firstChild.firstChild
+			children = obj.children
+			for child in children:
+				if controlTypes.STATE_SELECTED in child.states:
+					infoString = (" %s %s" % (_(windowName), child.name))
+					ui.message(infoString)
+		except AttributeError:
+			pass
+
+		try:
+			obj = self.parent.parent.next.next.next.next.firstChild.firstChild.firstChild
+			children = obj.children
+			for child in children:
+				if controlTypes.STATE_SELECTED in child.states:
+					infoString = (" %s %s" % (_(windowName), child.name))
+					ui.message(infoString)
+		except AttributeError:
+			pass
+		if not children:
+			try:
+				obj = self.parent.parent.next.next.firstChild
+				children = obj.children
+				str2 = ":\\"
+				for child in children:
+					str1 = child.name
+					if child.name:
+						if str1.find(str2) != -1:
+							if windowName == "left":
+								infoString = (" %s %s" % (_(windowName), str1))
+								ui.message(infoString)
+			except AttributeError:
+				pass
+		
+			try:
+				obj = self.parent.parent.next.next.next.next.firstChild
+				children = obj.children
+				str2 = ":\\"
+				for child in children:
+					str1 = child.name
+					if child.name:
+						if str1.find(str2) != -1:
+							infoString = (" %s %s" % (_(windowName), str1))
+							ui.message(infoString)
+			except AttributeError:
+				pass
+
+
+	__gestures = {
+		"kb:ALT+1": "readActiveTab",
+	}
+
