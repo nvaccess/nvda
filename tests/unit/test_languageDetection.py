@@ -11,6 +11,9 @@ import languageDetection
 from speech import LangChangeCommand
 from unicodeScriptData import scriptRanges
 import config
+import time
+import os
+import codecs
 
 class TestLanguageDetection(unittest.TestCase):
 
@@ -292,3 +295,29 @@ class TestLanguageDetection(unittest.TestCase):
 	def test_unicodeRangesEntryFirstRangeStartGreaterThanZero(self):
 		firstRangeStart = scriptRanges[0][0]
 		self.assertTrue(firstRangeStart >= 0)
+        
+	def checkTimeTakenByDetectLanguage(self,fileName):
+		file = codecs.open(fileName , "r" , encoding="utf-8")
+		timeTakenByAllFunctionCalls = 0
+		numberOfLines = 0
+		textLength = 0
+		for line in file: 
+			beforeDetectLanguage = time.clock()
+			detectedLanguageSequence = languageDetection.detectLanguage( line , "en" )
+			afterDetectLanguage = time.clock()
+			detectLanguageTimeTaken = afterDetectLanguage - beforeDetectLanguage 
+			numberOfLines += 1
+			timeTakenByAllFunctionCalls += detectLanguageTimeTaken 
+			textLength += len(line)
+		file.close()
+		return (timeTakenByAllFunctionCalls , numberOfLines , textLength )
+
+	def test_timeTakenByDetectLanguage(self):
+		sampleTextFile = os.path.dirname(__file__) + "\\SampleText.txt" 
+		config.conf["languageDetection"]["disableScriptDetection"] = False 
+		timeTakenWithDetectionOn , numberOfLines , textLength = self.checkTimeTakenByDetectLanguage(sampleTextFile)
+		config.conf["languageDetection"]["disableScriptDetection"] = True 
+		timeTakenWithDetectionOff , numberOfLines , textLength = self.checkTimeTakenByDetectLanguage(sampleTextFile)
+		config.conf["languageDetection"]["disableScriptDetection"] = False 
+		print("Additional time per line with detection on {} total timeTakenWithDetectionOn {} Total timeTakenWithDetectionOff {} Number of lines {} text length {} ".format((timeTakenWithDetectionOn-timeTakenWithDetectionOff)  / numberOfLines , timeTakenWithDetectionOn , timeTakenWithDetectionOff , numberOfLines , textLength ) )
+		self.assertTrue(timeTakenWithDetectionOn  >= timeTakenWithDetectionOff )

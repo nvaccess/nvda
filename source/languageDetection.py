@@ -201,8 +201,6 @@ def detectLanguage(text, defaultLanguage =None):
 		sequenceWithLanguage.append( text)
 		return sequenceWithLanguage
 
-	import timeit
-	startTime = timeit.default_timer()
 	tempSequence = detectScript(text)
 	scriptCode = ""
 
@@ -236,6 +234,4 @@ def detectLanguage(text, defaultLanguage =None):
 			else:
 				sequenceWithLanguage.append(item)	
 
-	elapsedTime = timeit.default_timer()
-	log.debugWarning("time taken for language detection: {}".format(elapsedTime - startTime) )
 	return sequenceWithLanguage
