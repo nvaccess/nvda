@@ -296,7 +296,7 @@ class SettingsPanel(wx.Panel):
 
 	def onDiscard(self):
 		"""Take action in response to the parent's dialog Cancel button being pressed.
-		Sub-classes should override this method.
+		Sub-classes may override this method.
 		MultiCategorySettingsDialog is responsible for cleaning up the panel when Cancel is pressed.
 		"""
 
