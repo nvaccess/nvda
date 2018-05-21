@@ -174,10 +174,9 @@ class UIProperty(UIA):
 	
 	def _get_value(self):
 		value = super(UIProperty, self).value
-		if value == None:
+		if value is None:
 			return value
-		else:
-			return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 
 class AppModule(appModuleHandler.AppModule):
