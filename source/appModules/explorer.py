@@ -174,6 +174,8 @@ class UIProperty(UIA):
 	
 	def _get_value(self):
 		value = super(UIProperty, self).value
+		if value is None:
+			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 
