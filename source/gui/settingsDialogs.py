@@ -571,7 +571,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		for panel in self.catIdToInstanceMap.itervalues():
-			if not panel.preSave():
+			if panel.preSave() is False:
 				log.warning("Pre save handler for %s blocked saving settings" % panel.__class__.__name__)
 				return
 		for panel in self.catIdToInstanceMap.itervalues():
@@ -589,7 +589,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def onApply(self,evt):
 		for panel in self.catIdToInstanceMap.itervalues():
-			if not panel.preSave():
+			if panel.preSave() is False:
 				log.warning("Pre save handler for %s blocked saving settings" % panel.__class__.__name__)
 				return
 		for panel in self.catIdToInstanceMap.itervalues():
