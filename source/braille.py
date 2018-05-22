@@ -2131,14 +2131,23 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		# Collect all keyboard emulation gestures in a dictionary.
 		# Since the user gesture map will be quieried last,
 		# using a dictionary with gesture as key will filter out all overridden assignments.
-		emuGestureToScriptMap = {gesture: scriptName
-			for globalMap in globalMaps
-			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures()
-			if any(gesture.startswith(prefix.lower()) for prefix in prefixes)
-			and scriptCls is globalCommands.GlobalCommands
-			and (scriptName is None or scriptName.startswith("kb"))
-		}
+		emuGestureToScriptMap = {}
+		for globalMap in globalMaps:
+			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
+				if (
+					# Limit the gestures to those belonging to this braille display driver.
+					any(gesture.startswith(prefix.lower()) for prefix in prefixes)
+					# Emulated system keyboard keys belong to the GlobalPlugins class.
+					and scriptCls is globalCommands.GlobalCommands
+					# A script name could start with "kb:",
+					# but it could also be None in case where an emulated system keyboard key assignment
+					# has been deleted for a particular gesture.
+					and (scriptName is None or scriptName.startswith("kb"))
+				):
+					emuGestureToScriptMap[gesture] = scriptName
 		for gesture, scriptName in emuGestureToScriptMap.iteritems():
+			# emuGestureToScriptMap contains gestures that are either mapped to no script or an emulate script.
+			# Ignore assignments to None, and yield pairs of gestures.
 			if scriptName:
 				emuGesture = keyboardHandler.KeyboardInputGesture.fromName(scriptName.split(":")[1])
 				if emuGesture.isModifier:
@@ -2223,8 +2232,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		# Import late to avoid circular import.
 		import brailleInput
 		# Input gestures are normalized in gesture maps.
-		# Therefore, if we look for possible modifiers in a gesture, we ought to convert the key names to lower case.
-		keyNames = [name.lower() for name in self.keyNames]
+		# Therefore, if we look for possible modifiers in a gesture, we ought to normalize it.
+		normalizedId = inputCore.normalizeGestureIdentifier(self.id, withPrefix=False)
+		keyNames = normalizedId.split("+")
 		gestureKeys = set(keyNames)
 		gestureModifiers = brailleInput.handler.currentModifiers.copy()
 		script=scriptHandler.findScript(self)
@@ -2247,23 +2257,32 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		if not gestureModifiers:
 			return None
 		if gestureKeys != set(keyNames):
-			# Find a script for L{gestureKeys}.
+			# A part of this gesture consists of modifiers (e.g. control)
+			# Find out whether there is a script for the ID without the modifiers.
+			# For example, if L{self.id} is 'key1+key2' and key1 is bound to 'kb:control',
+			# check whether key2 is bound to 'kb:tab'
 			id = "+".join(gestureKeys)
-			fakeGestureIds = [
+			gestureIdsWithoutModifiers = [
+				# Example: br(nobraille):key2
 				inputCore.normalizeGestureIdentifier(u"br({source}):{id}".format(source=self.source, id=id)),
 			]
 			if self.model:
-				fakeGestureIds.insert(0,
+				gestureIdsWithoutModifiers.insert(0,
+					# Example: br(nobraille.nomodel):key2
 					inputCore.normalizeGestureIdentifier(u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id))
 				)
-			scriptNames = []
 			# We can't bother about multiple scripts for a gesture, we will just use the first one
 			# Therefore, global maps should be processed in most to least important order.
 			# The user gesture map could override assignments in the display gesture map.
 			globalMaps = [inputCore.manager.userGestureMap, handler.display.gestureMap]
+			scriptNames = []
 			for globalMap in globalMaps:
-				for fakeGestureId in fakeGestureIds:
-					scriptNames.extend(scriptName for cls, scriptName in globalMap.getScriptsForGesture(fakeGestureId) if scriptName is None or scriptName.startswith("kb"))
+				for gestureIdWithoutModifiers in gestureIdsWithoutModifiers:
+					scriptNames.extend(
+						scriptName for cls, scriptName in globalMap.getScriptsForGesture(gestureIdWithoutModifiers)
+						if scriptName is None
+						or scriptName.startswith("kb")
+					)
 			if not scriptNames:
 				# Gesture contains modifiers, but no keyboard emulate script exists for the gesture without modifiers
 				return None

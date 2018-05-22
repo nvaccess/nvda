@@ -716,22 +716,31 @@ class AllGesturesScriptInfo(object):
 	def className(self):
 		return self.cls.__name__
 
-def normalizeGestureIdentifier(identifier):
+def normalizeGestureIdentifier(identifier, withPrefix=True):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
 	First, the entire identifier is converted to lower case.
 	Then, any items separated by a + sign after the source prefix are considered to be of indeterminate order
 	and are sorted by character.
 	This is done because, for example, "kb:shift+alt+downArrow"
 	must be treated the same as "kb:alt+shift+downarrow".
+	@param withPrefix: Whether the supplied identifier contains a source prefix.
+		Defaults to C{True}.
+	@type withPrefix: bool
 	"""
 	identifier = identifier.lower()
-	prefix, main = identifier.split(":", 1)
+	if not withPrefix:
+		prefix = None
+		main = identifier
+	else:
+		prefix, main = identifier.split(":", 1)
 	main = main.split("+")
 	# The order of the parts doesn't matter as far as the user is concerned,
 	# but we need them to be in a determinate order so they will match other gesture identifiers.
 	# We sort them by character.
 	main.sort()
 	main = "+".join(main)
+	if not prefix:
+		return main
 	return u"{0}:{1}".format(prefix, main)
 
 #: Maps registered source prefix strings to L{InputGesture} classes.
