@@ -223,6 +223,7 @@ class SettingsPanel(wx.Panel):
 		* Optionally, extend L{onPanelActivated} to perform actions after the category has been selected in the list of categories, such as synthesizer or braille display list population.
 		* Optionally, extend L{onPanelDeactivated} to perform actions after the category has been deselected (i.e. another category is selected) in the list of categories.
 		* Optionally, extend one or both of L{onSave} or L{onDiscard} to perform actions in response to the parent dialog's OK or Cancel buttons, respectively.
+		* Optionally, extend one or both of L{preSave} or L{postSave} to perform actions before or after saving, respectively.
 
 	@ivar title: The title of the settings panel, also listed in the list of settings categories.
 	@type title: str
@@ -278,9 +279,24 @@ class SettingsPanel(wx.Panel):
 		"""
 		raise NotImplementedError
 
+	def preSave(self):
+		"""Evaluate whether the current circumstances of this panel
+		allow saving all the settings in a L{MultiCategorySettingsDialog}.
+		Sub-classes may extend this method.
+		@returns: C{True} if pre saving evaluation should continue,
+			C{False} otherwise.
+		@rtype: bool
+		"""
+		return True
+
+	def postSave(self):
+		"""Take action whenever saving settings for all panels in a L{MultiCategorySettingsDialog} succeeded.
+		Sub-classes may extend this method.
+		"""
+
 	def onDiscard(self):
 		"""Take action in response to the parent's dialog Cancel button being pressed.
-		Sub-classes should override this method.
+		Sub-classes may override this method.
 		MultiCategorySettingsDialog is responsible for cleaning up the panel when Cancel is pressed.
 		"""
 
@@ -555,7 +571,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		for panel in self.catIdToInstanceMap.itervalues():
+			if panel.preSave() is False:
+				log.warning("Pre save handler for %s blocked saving settings" % panel.__class__.__name__)
+				return
+		for panel in self.catIdToInstanceMap.itervalues():
 			panel.onSave()
+		for panel in self.catIdToInstanceMap.itervalues():
+			panel.postSave()
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
@@ -567,7 +589,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def onApply(self,evt):
 		for panel in self.catIdToInstanceMap.itervalues():
+			if panel.preSave() is False:
+				log.warning("Pre save handler for %s blocked saving settings" % panel.__class__.__name__)
+				return
+		for panel in self.catIdToInstanceMap.itervalues():
 			panel.onSave()
+		for panel in self.catIdToInstanceMap.itervalues():
+			panel.postSave()
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 class GeneralSettingsPanel(SettingsPanel):
@@ -737,7 +765,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
-		if self.oldLanguage!=newLanguage:
+
+	def postSave(self):
+		if self.oldLanguage!=config.conf["general"]["language"]:
 			if gui.messageBox(
 				# Translators: The message displayed after NVDA interface language has been changed.
 				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
@@ -1242,7 +1272,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.handleInjectedKeysCheckBox=sHelper.addItem(wx.CheckBox(self,label=handleInjectedKeysText))
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
-	def onSave(self):
+	def preSave(self):
 		# #2871: check wether at least one key is the nvda key.
 		if not self.capsAsNVDAModifierCheckBox.IsChecked() and not self.numpadInsertAsNVDAModifierCheckBox.IsChecked() and not self.extendedInsertAsNVDAModifierCheckBox.IsChecked():
 			log.debugWarning("No NVDA key set")
@@ -1251,7 +1281,10 @@ class KeyboardSettingsPanel(SettingsPanel):
 				_("At least one key must be used as the NVDA key."), 
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
-			return
+			return False
+		return super(KeyboardSettingsPanel, self).preSave()
+
+	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
