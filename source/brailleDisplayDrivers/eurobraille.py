@@ -583,14 +583,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"br(eurobraille):dot7+space",
 				"br(eurobraille):l4",
 			),
+			"braille_toggleShift": ("br(eurobraille):dot1+dot7+space", "br(eurobraille):dot4+dot7+space",),
 			"kb:control": (
-				"br(eurobraille):dot7+dot8+space", "br(eurobraille):dot1+dot7+dot8+space", "br(eurobraille):dot4+dot7+dot8+space",
+				"br(eurobraille):dot7+dot8+space",
 				"br(eurobraille):l5",
 			),
+			"braille_toggleControl": ("br(eurobraille):dot1+dot7+dot8+space", "br(eurobraille):dot4+dot7+dot8+space",),
 			"kb:alt": (
-				"br(eurobraille):dot8+space", "br(eurobraille):dot1+dot8+space", "br(eurobraille):dot4+dot8+space",
+				"br(eurobraille):dot8+space",
 				"br(eurobraille):l6",
 			),
+			"braille_toggleAlt": ("br(eurobraille):dot1+dot8+space", "br(eurobraille):dot4+dot8+space",),
 		},
 	})
 

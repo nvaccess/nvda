@@ -3,6 +3,71 @@ Co nowego w NVDA.
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+Najważniejsze zmiany w tej wersji to obsługa tabel w Kindle dla PC, wsparcie linijek brajlowskich Humanware BrailleNote Touch i BI14 Braille, poprawki obsługi głosów mobilnych i syntezatorów Sapi5, poprawki w Microsoft Outlook i wiele więcej.
+
+== Nowości ==
+- Zasięg wierszy i kolumn komórek tabeli jest zgłaszany mową i brajlem. (#2642)
+- Komendy nawigacji po tabelach są obsługiwane w dokumentach Google (z włączonym trybem brajlowskim). (#7946)
+- Możliwość odczytywania tabel i nawigacji wewnątrz nich w Kindle dla PC. (#7977)
+- Obsługa linijek HumanWare BrailleNote touch and Brailliant BI 14 przez USB i bluetooth. (#6524)
+- W aktualizacji Windows 10 Fall Creators Update i nowszych, NVDA może zgłaszać powiadomienia z aplikacji takich jak Kalkulator i Sklep Windows. (#8045)
+- Nowe tablice brajlowskie: litewski 8-punktowy, ukraiński, mongolski stopień 2. (#7839)
+- Dodany skrypt zgłaszający informacje formatowania tekstu pod konkretną komórką brajlowską. (#7106)
+- Można odłożyć na później instalację aktualizacji NVDA po jej pobraniu. (#4263) 
+- Nowe języki: mongolski, szwajcarski niemiecki.
+- Można teraz przełączać control, shift, alt, windows and NVDA z klawiatury brajlowskiej i łączyć te przełączniki z wprowadzaniem brajla (np. nacisnąć control+s). (#7306) 
+ - Można przypisać te przełączniki do klawiszy przy użyciu poleceń w kategorii emulowane klawisze systemowe w oknie zdarzenia wejścia.
+- Przywrócona obsługa linijek brajlowskich Handy Tech Braillino i Modular (ze starym firmware). (#8016)
+- Data i czas obsługiwanych urządzeń Handy Tech (takich jak Active Braille i Active Star) będzie automatycznie synchronizowana przez NVDA , jeśli nastąpi rozsynchronizowanie dłuższe niż 5 sekund. (#8016)
+- Na liście wiadomości Microsoft Outlook, NVDA  zgłasza  czy wiadomość jest odpowiedziana, albo przesłana dalej. (#6911)
+- Można przypisać zdarzenie wejścia dla tymczasowego wyłączenia  wszystkich wyzwalaczy profili konfiguracji. (#4935)
+
+
+== Zmiany ==
+- Kolumna stanu dodatku w zarządzaniu dodatkami określa teraz czy dodatek jest włączony czy wyłączony, a nie jak dawniej - uruchomiony lub wstrzymany. (#7929)
+- Translator brajlowski liblouis zaktualizowany do wersji 3.5.0. (#7839)
+- Litewska tablica brajlowska nazywa się teraz litewska 6-punktowa, dla jednoznacznego odróżnienia od nowej tablicy 8-punktowej. (#7839)
+- Usunięte tablice brajlowskie francuski (kanadyjski) stopień 1 i stopień 2. Zamiast tego, będą używane odpowiednio tablice brajlowskie francuski (ujednolicony) 6-punktowy brajl komputerowy i stopień 2. (#7839)
+- Drugie przyciski routingu w linijkach Alva BC6, EuroBraille i Papenmeier braille teraz zgłaszają informacje formatowania tekstu pod odpowiednią komórką brajlowską powiązaną z naciśniętym przyciskiem. (#7106)
+- Tablice brajlowskie wprowadzania skrótami przełączają się w tryb nieskrótowy w przypadkach nieedycyjnych (tj. kontrolek bez kursora, albo w trybie czytania). (#7306)
+- NVDA jest teraz mniej gadatliwe, gdy spotkanie lub zdarzenie w kalendarzu Outlook zajmuje cały dzień. (#7949)
+- Wszystkie ustawienia NVDA są teraz umieszczone w jednym oknie dialogowym w menu NVDA->Ustawienia->Preferencje, zamiast w wielu oknach. (#7302)
+- Domyślnym syntezatorem dla Windows 10  są teraz głosy mobilne, zamiast eSpeak. (#8176)
+
+
+== Poprawki błędów ==
+- Naprawiony błąd braku odczytu kontrolki z punktem uwagi na ekranie logowania do konta Microsoft w ustawieniach, po wprowadzeniu adresu email. (#7997)
+- Naprawiony odczyt strony gdy nastąpiło przejście z poprzedniej strony w Microsoft Edge. (#7997)
+- Naprawiony problem nieprawidłowego oznajmiania ostatniego znaku PIN logowania windows 10 przy odblokowywaniu urządzenia. (#7908)
+- Etykiety pól wyboru i przycisków opcji w Chrome i Firefox nie są podwójnie odczytywane po użyciu klawisza Tab lub szybkiej nawigacji w trybie czytania. (#7960)
+- Prawidłowa obsługa wartości parametru aria-current. (#7892).
+- Syntezator głosów mobilnych Windows nie przestaje się uruchamiać, gdy ustawiony głos został odinstalowany. (#7999)
+- Zmiana głosu w syntezatorze głosów mobilnych Windows, jest obecnie dużo szybsza. (#7999)
+- Naprawiono nieprawidłową treść brajlowską generowaną dla kilku tablic brajlowskich, włączając w to znaki w 8-punktowym skróconym duńskim brajlu. (#7526, #7693)
+- NVDA zgłasza teraz więcej rodzajów punktorów w Microsoft Word. (#6778)
+- Uruchomienie skryptu zgłaszania formatowania nie powoduje nieprawidłowego przesunięcia kursora przeglądu i w związku z tym uruchomienie polecenia wielokrotnie nie daje od teraz różnych wyników. (#7869)
+- Wprowadzanie brajla nie zezwala na skróty w przypadkach, gdy nie jest to obsługiwane (tj. całe słowa nie będą od teraz wysyłane do systemu poza edycją tekstu i w trybie czytania). (#7306)
+- Naprawione problemy stabilności połączenia dla linijek brajlowskich Handy Tech Easy Braille i Braille Wave. (#8016)
+- W Windows 8 i nowszych, NVDA nie będzie oznajmiać "nieznane" po otwarciu szybkiego menu (Windows+X) i podczas wybierania elementów tego menu. (#8137)
+- Powiązania przycisków ze zdarzeniami wejścia specyficzne dla modelu linijek brajlowskich Hims, działają teraz zgodnie z informacjami w podręczniku użytkownika. (#8096)
+- NVDA próbuje teraz naprawiać problemy rejestracji  system COM powodujące niedostępność programów takich jak Firefox i Internet Explorer, skutkujące odczytywaniem  "nieznane" przez NVDA. (#2807)
+- Obejście błędu w managerze zadań, powodującego brak dostępu użytkownika  do określonych szczegółów dotyczących procesów. (#8147)
+- Nowsze głosy Microsoft SAPI5 nie powodują opóźnień na końcu mowy, co czyni pracę z użyciem tych głosów bardziej efektywną. (#8174)
+- NVDA nie zgłasza od teraz znaczników kierunku tekstu (od prawej do lewej, lub od lewej do prawej) w trybie czytania mową znakami, lub brajlem,  podczas odczytywania zegara w nowszych wersjach Windows . (#5729)
+- Naprawione wykrywanie klawiszy przewijania na linijkach Hims Smart Beetle. (#6086)
+- W niektórych kontrolkach tekstowych, szczególnie w aplikacjach Delphi, informacje o edycji i nawigacji są bardziej wiarygodne. (#636, #8102)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2018.1.1 =
+Specjalne wydanie NVDA w związku z błędem sterownika syntezatora głosów mobilnych Windows, powodującym generowanie wyższej i szybszej mowy w wersji Windows 10 Redstone 4 (1803). (#8082)  
+
+
 = 2018.1 =
 Najważniejsze zmiany w tej wersji to obsługa wykresów w Microsoft word i Powerpoint, nowe obsługiwane monitory brajlowskie: Eurobraille i Optelec protocol converter, poprawiona obsługa monitorów brajlowskich Hims i Optelec, poprawki wydajności przy współpracy z Mozilla Firefox 58 i nowszymi, oraz wiele więcej.
 
@@ -45,6 +110,7 @@ Najważniejsze zmiany w tej wersji to obsługa wykresów w Microsoft word i Powe
 -  w wyjściu brajla i mowy, stany kontrolek będą zawsze zgłaszane w takiej samej kolejności, niezależnie od tego, czy są pozytywne czy negatywne. (#7076)
 - W aplikacjach takich jak Poczta systemu Windows 10, NVDA nie ma od teraz problemów z oznajmianiem znaków kasowanych przy użyciu backspace. (#7456)
 - Wszystkie klawisze na linijce Hims Braille Sense Polaris, działają teraz tak jak powinny. (#7865)
+- Rozwiązany problem uruchamiania NVDA na Windows 7 zgłaszającego wewnętrzny błąd api-ms dll, gdy konkretna wersja Visual Studio 2017 redistributables została zainstalowana przez inną aplikację. (#7975)
 
 
 == Zmiany dla programistów ==
