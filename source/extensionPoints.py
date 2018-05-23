@@ -65,7 +65,8 @@ class HandlerRegistrar(object):
 	"""Base class to Facilitate registration and unregistration of handler functions.
 	The handlers are stored using weak references and are automatically unregistered
 	if the handler dies.
-	Both normal functions and instance methods are supported.
+	Both normal functions, instance methods and lambdas are supported. Ensure to keep lambdas alive by maintaining a
+	reference to them.
 	The handlers are maintained in the order they were registered
 	so that they can be called in a deterministic order across runs.
 	This class doesn't provide any functionality to actually call the handlers.
@@ -80,6 +81,10 @@ class HandlerRegistrar(object):
 		self._handlers = collections.OrderedDict()
 
 	def register(self, handler):
+		"""You can register functions, member functions or lambdas. However the object must be kept alive
+			by your code otherwise it will be de-registered. This is due to the use of weak references. This is especially
+			relevant to lambdas.
+		"""
 		if hasattr(handler, "__self__"):
 			weak = BoundMethodWeakref(handler, self.unregister)
 		else:
@@ -119,16 +124,48 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 		callWithSupportedKwargs(myFunc, a=1, b=2, c=3)
 	Instead of raising a TypeError, myFunc will simply be called like this:
 		myFunc(a=1, b=2)
+
+	The `func` function arguments do not need to have default values, and can take kwargs to capture all arguments.
+	See tests/unit/test_extensionPoints.py:TestCallWithSupportedKwargs for examples.
+
+	An exception is raised if:
+	- the number of positional arguments given can not be received by `func`.
+	- parameters required (parameters declared with no default value) by `func` are not supplied.
 	"""
 	spec = inspect.getargspec(func)
+
+	# Ensure that we can provide all arguments without defaults expected by the handler are provided.
+	# `defaults` is a tuple of default argument values or None if there are no default arguments;
+	# if this tuple has n elements, they correspond to the last n elements listed in args.
+	numExpectedArgsWithDefaults = len(spec.defaults) if spec.defaults else 0
+
+	# some handlers are member functions, discard "self" because it is passed implicitly.
+	try:
+		spec.args.remove("self")
+	except ValueError:
+		pass
+
+	numExpectedArgs = len(spec.args)
+	numGivenPositionalArgs = len(args)
+	if numGivenPositionalArgs > numExpectedArgs:
+		raise Exception("Expected to be able to pass {} positional arguments.".format(numGivenPositionalArgs))
+
+	if not spec.defaults or numExpectedArgsWithDefaults != numExpectedArgs:
+		# get the names of the args without defaults, skipping the N positional args given to `callWithSupportedKwargs`
+		# positionals are required for the Filter extension point.
+		givenKwargsKeys = set(kwargs.keys())
+		firstArgWithDefault = numExpectedArgs - numExpectedArgsWithDefaults
+		specArgs = set(spec.args[numGivenPositionalArgs:firstArgWithDefault])
+		for arg in specArgs:
+			# and ensure they are in the kwargs list
+			if arg not in givenKwargsKeys:
+				raise Exception("Parameter required for handler not provided: {}".format(arg))
+
 	if spec.keywords:
-		# func has a catch-all for kwargs (**kwargs).
+		# func has a catch-all for kwargs (**kwargs) so we do not need to filter to just the supported args.
 		return func(*args, **kwargs)
-	# spec.defaults lists all arguments with defaults (keyword arguments).
-	numKwargs = len(spec.defaults) if spec.defaults else 0
-	# spec.args lists all arguments, first positional, then keyword.
-	firstKwarg = len(spec.args) - numKwargs
-	supportedKwargs = set(spec.args[firstKwarg:])
+
+	supportedKwargs = set(spec.args)
 	for kwarg in kwargs.keys():
 		if kwarg not in supportedKwargs:
 			del kwargs[kwarg]
@@ -142,14 +179,17 @@ class Action(HandlerRegistrar):
 
 	>>> somethingHappened = extensionPoints.Action()
 
-	Interested parties then register to be notified about this action:
+	Interested parties then register to be notified about this action, see
+	c@{HandleRegistrar.register} docstring for details of the type of handlers that can be
+	registered:
 
 	>>> def onSomethingHappened(someArg=None):
 		... 	print(someArg)
 	...
 	>>> somethingHappened.register(onSomethingHappened)
 
-	When the action is performed, register handlers are notified:
+	When the action is performed, register handlers are notified, see C@{callWithSupportedKwarg}
+	for how args passed to notify are mapped to the handler:
 
 	>>> somethingHappened.notify(someArg=42)
 	"""
