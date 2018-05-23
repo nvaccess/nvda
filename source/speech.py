@@ -49,7 +49,9 @@ CHUNK_SEPARATOR = "  "
 oldTreeLevel=None
 oldTableID=None
 oldRowNumber=None
+oldRowSpan=None
 oldColumnNumber=None
+oldColumnSpan=None
 
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini."""
@@ -340,7 +342,7 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		# objects that do not report as having navigableText should not report their text content either
 		not obj._hasNavigableText
 	)
-	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
+	allowProperties={'name':True,'role':True,'roleText':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True,"rowSpan":True,"columnSpan":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -373,6 +375,8 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		# We definitely aren't reporting any table info at all.
 		allowProperties["rowNumber"]=False
 		allowProperties["columnNumber"]=False
+		allowProperties["rowSpan"]=False
+		allowProperties["columnSpan"]=False
 	if shouldReportTextContent:
 		allowProperties['value']=False
 
@@ -977,7 +981,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 			speak(speechSequence)
 
 def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues):
-	global oldTreeLevel, oldTableID, oldRowNumber, oldColumnNumber
+	global oldTreeLevel, oldTableID, oldRowNumber, oldRowSpan, oldColumnNumber, oldColumnSpan
 	textList=[]
 	name=propertyValues.get('name')
 	if name:
@@ -1021,22 +1025,39 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		# Don't update the oldTableID if no tableID was given.
 		if tableID and not sameTable:
 			oldTableID = tableID
-		if rowNumber and (not sameTable or rowNumber != oldRowNumber):
+		rowSpan = propertyValues.get("rowSpan")
+		columnSpan = propertyValues.get("columnSpan")
+		if rowNumber and (not sameTable or rowNumber != oldRowNumber or rowSpan != oldRowSpan):
 			rowHeaderText = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
 			if includeTableCellCoords and not cellCoordsText: 
 				# Translators: Speaks current row number (example output: row 3).
 				textList.append(_("row %s")%rowNumber)
+				if rowSpan>1 and columnSpan<=1:
+					# Translators: Speaks the row span added to the current row number (example output: through 5).
+					textList.append(_("through %s")%(rowNumber+rowSpan-1))
 			oldRowNumber = rowNumber
-		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
+			oldRowSpan = rowSpan
+		if columnNumber and (not sameTable or columnNumber != oldColumnNumber or columnSpan != oldColumnSpan):
 			columnHeaderText = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
 				textList.append(columnHeaderText)
 			if includeTableCellCoords and not cellCoordsText:
 				# Translators: Speaks current column number (example output: column 3).
 				textList.append(_("column %s")%columnNumber)
+				if columnSpan>1 and rowSpan<=1:
+					# Translators: Speaks the column span added to the current column number (example output: through 5).
+					textList.append(_("through %s")%(columnNumber+columnSpan-1))
 			oldColumnNumber = columnNumber
+			oldColumnSpan = columnSpan
+		if includeTableCellCoords and not cellCoordsText and rowSpan>1 and columnSpan>1:
+			# Translators: Speaks the row and column span added to the current row and column numbers
+			#			(example output: through row 5 column 3).
+			textList.append(_("through row {row} column {column}").format(
+				row=rowNumber+rowSpan-1,
+				column=columnNumber+columnSpan-1
+			))
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
@@ -1162,6 +1183,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		getProps = {
 			'rowNumber': attrs.get("table-rownumber"),
 			'columnNumber': attrs.get("table-columnnumber"),
+			'rowSpan': attrs.get("table-rowsspanned"),
+			'columnSpan': attrs.get("table-columnsspanned"),
 			'includeTableCellCoords': reportTableCellCoords
 		}
 		if reportTableHeaders:

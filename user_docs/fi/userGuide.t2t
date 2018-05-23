@@ -933,7 +933,7 @@ Jos tämä valintaruutu on valittuna, nykyiset asetukset tallennetaan, kun NVDA 
 
 ==== Näytä sulkemisvaihtoehdot ====[GeneralSettingsShowExitOptions]
 Tällä valintaruudulla voit määrittää, tuleeko NVDA:ta suljettaessa näkyviin valintaikkuna, jossa kysytään suoritettavaa toimintoa.
-Kun tämä asetus on käytössä, NVDA:ta suljettaessa tulee näkyviin valintaikkuna, jossa kysytään, haluatko sulkea, käynnistää uudelleen vai käynnistää uudelleen poistaen lisäosat käytöstä.
+Kun tämä asetus on käytössä, NVDA:ta suljettaessa tulee näkyviin valintaikkuna, jossa kysytään, haluatko sulkea, käynnistää uudelleen, käynnistää uudelleen poistaen lisäosat käytöstä vai asentaa odottavat päivitykset (mikäli sellaisia on).
 Kun asetus ei ole käytössä, NVDA sulkeutuu heti.
 
 ==== Toista ääni käynnistettäessä ja suljettaessa ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Tämä painike on käytettävissä vain NVDA:n asennetuissa versioissa.
 ==== Tarkista päivitykset automaattisesti ====[GeneralSettingsCheckForUpdates]
 Jos tämä asetus on käytössä, NVDA etsii automaattisesti uusia versioita ja ilmoittaa, kun päivitys on saatavilla.
 Päivitysten manuaalinen tarkistaminen on myös mahdollista valitsemalla Tarkista päivitykset -vaihtoehto NVDA-valikosta Ohje-valikon alta.
+
+==== Ilmoita käynnistettäessä odottavasta päivityksestä ====[GeneralSettingsNotifyPendingUpdates]
+Jos tämä on valittuna, NVDA ilmoittaa käynnistyessään odottavasta päivityksestä ja tarjoaa mahdollisuutta sen asentamiseen.
+Voit asentaa päivityksen myös manuaalisesti Sulje NVDA -valintaikkunasta (mikäli se on käytössä), NVDA-valikosta tai suorittaessasi uuden päivitystarkistuksen Ohje-valikosta.
 
 +++ Puhesyntetisaattorin valitseminen (NVDA+Ctrl+S) +++[SynthesizerSelection]
 Syntetisaattori-valintaikkunassa, joka löytyy Asetukset-valikosta kohdasta "Syntetisaattori...", voidaan valita, mitä puhesyntetisaattoria NVDA käyttää.
@@ -1757,8 +1761,9 @@ Uudelleenkäynnistykseen saakka luettelossa näkyy lisäosan tilana "poista".
 
 Poista lisäosa käytöstä painamalla Poista käytöstä -painiketta.
 Ota aiemmin käytöstä poistettu lisäosa käyttöön painamalla Ota käyttöön -painiketta.
-Voit poistaa lisäosan käytöstä, mikäli sen tilana on käynnissä tai ota käyttöön, tai ottaa käyttöön, mikäli tilana on ei käytössä tai poista käytöstä.
+Voit poistaa lisäosan käytöstä, mikäli sen tilana on "Käytössä" tai ottaa käyttöön, mikäli tilana on "Ei käytössä".
 Jokainen Ota käyttöön/Poista käytöstä -painikkeen painallus muuttaa lisäosan tilaa, joka ilmaisee,  mitä NVDA:n uudelleenkäynnistyessä tapahtuu.
+Jos lisäosa ei ollut aiemmin käytössä, tilana näkyy "käytössä uudelleenkäynnistyksen jälkeen", tai  Jos se oli "käytössä", tilana näkyy "ei käytössä uudelleenkäynnistyksen jälkeen".
 NVDA on käynnistettävä uudelleen, jotta muutokset tulevat voimaan, aivan kuten lisäosia asennettaessa ja poistettaessa.
 
 Valintaikkunassa on myös Sulje-painike, josta lisäosien hallinta voidaan sulkea.
@@ -1834,14 +1839,6 @@ Katso lisätietoja Audiologicin verkkosivustolta osoitteesta www.audiologic.it.
 
 Tämä syntetisaattori ei tue [tavaustoimintoa #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer for NVDA ++[Vocalizer]
-Nuance Vocalizer on Nuance Communications, Inc.:n kehittämä ja Tiflotecnia, Lda:n erityisesti NVDA:ta varten paketoima kaupallinen ja korkealaatuinen puhesyntetisaattori.
-Vocalizeriin sisältyy yli 50 eri puheääntä yli 30 kielellä.
-Kaikki syntetisaattorin osat ja puheäänet toimitetaan lisäosapaketteina, mikä mahdollistaa käytön NVDA:n massamuistiversioissa.
-
-Saat lisätietoja Nuance Vocalizer for NVDA:sta ja sen ostamisesta tuotteen verkkosivustolta osoitteesta [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-Prosenttiosuus tämän tuotteen myynnistä lahjoitetaan NV Accessille NVDA:n jatkokehityksen rahoittamiseen.
-
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
@@ -1904,16 +1901,21 @@ Vain Focus 80:
 | Vieritä eteenpäin | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
-[Optelecin http://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä käytettäessä.
+++ Optelec ALVA 6/protokollamuunnin ++[OptelecALVA]
+[Optelecin http://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan sekä USB-liitäntää että bluetooth-yhteyttä käytettäessä.
+Vaihtoehtoisesti voit liittää vanhemman näytön, kuten Braille Voyagerin, käyttämällä Optelecin toimittamaa protokollamuunninta.
 Niiden käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
-Vaikka näissä pistenäytöissä onkin pistenäppäimistö, ne huolehtivat itse pistekirjoituksen kääntämisestä tekstiksi.
-Tämän vuoksi NVDA:n pistesyöttötaulukkoasetuksella ei ole merkitystä.
+Huom: NVDA ei välttämättä pysty käyttämään ALVA BC6 -näyttöä bluetoothin välityksellä, kun sen ja tietokoneen välinen laitepari on muodostettu ALVA:n bluetooth-apuohjelmalla.
+Kun pariliitos on luotu tätä apuohjelmaa käyttäen ja  NVDA ei tunnista laitettasi, suosittelemme käyttämään laiteparin muodostamiseen Windowsin bluetooth-asetuksia.
+
+Vaikka joissakin näistä pistenäytöistä onkin pistenäppäimistö, ne huolehtivat itse pistekirjoituksen kääntämisestä tekstiksi.
+Tämä tarkoittaa, että oletusarvoisesti NVDA:n pistekirjoituksen syöttöjärjestelmää ei käytetä (ts. pistesyöttötaulukkoasetuksella ei ole vaikutusta).
+HID-näppäimistöemulointi on mahdollista poistaa käytöstä syötekomennolla ALVA-näytöissä, joissa on viimeisin laiteohjelmisto.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
 | Vieritä taaksepäin | t1 tai etouch1 |
@@ -1922,6 +1924,8 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä seuraavalle riville | t4 |
 | Vieritä eteenpäin | t5 tai etouch3 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Ilmoita muotoilutiedot pistesolusta | toissijainen kosketuskohdistinnäppäin |
+| HID-näppäimistöemulointi käyttöön/pois käytöstä | t1+spEnter |
 | Siirrä ylimmälle riville | t1+t2 |
 | Siirrä alimmalle riville | t4+t5 |
 | Vaihda Pistenäyttö seuraa -asetusta | t1+t3 |
@@ -1935,17 +1939,19 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Nuoli alas -näppäin | spDown |
 | Nuoli vasemmalle -näppäin | spLeft |
 | Nuoli oikealle -näppäin | spRight |
-| Enter-näppäin | spEnter |
+| Enter-näppäin | spEnter, enter |
 | Lue päiväys/aika | sp1+sp2 |
 | NVDA-valikko | sp1+sp3 |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | sp1+sp4 |
 | Windows+B-näppäinyhdistelmä (siirrä kohdistus järjestelmätarjottimelle) | sp3+sp4 |
-| Windows-näppäin | sp2+sp3 |
+| Windows-näppäin | sp2+sp3, windows |
 | Alt+Sarkain-näppäinyhdistelmä | sp2+sp4 |
 | Ctrl+Home-näppäinyhdistelmä | t3+spUp |
 | Ctrl+End-näppäinyhdistelmä | t3+spDown |
 | Home-näppäin | t3+spLeft |
 | End-näppäin | t3+spRight |
+| Alt-näppäin | alt |
+| Ctrl-näppäin | control |
 %kc:endInclude
 
 ++ Handy Tech ++[HandyTech]
@@ -2072,13 +2078,16 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Jatkuva luku | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B ++[HumanWareBrailliant]
-[HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä, BI 32, BI 40 ja B 80 mukaan lukien, tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetoothilla.
-Mikäli näyttö yhdistetään USB:n kautta ja kun protokollaksi on määritetty HumanWare, sinun on ensin asennettava valmistajan toimittamat USB-ajurit.
-Jos protokollaksi on määritetty OpenBraille, USB-ajureita ei tarvita.
+++ HumanWare Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
+[HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä tuetaan, BI 14, BI 32, BI 40 ja B 80 mukaan lukien, kun ne liitetään tietokoneeseen USB:llä tai bluetoothilla.
+Mikäli käytetään USB-liitäntää ja protokollaksi on määritetty HumanWare, valmistajan toimittamat ajurit on asennettava ensin.
+OpenBraille-protokollaa käytettäessä ajureita ei tarvita.
 
-Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+Myös BrailleNote Touchia tuetaan, eikä sitä varten tarvitse asentaa ajureita.
+
+Seuraavassa on Brailliant BI/B- ja BrailleNote Touch -näyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
++++ Kaikki mallit +++
 %kc:beginInclude
 || Nimi | Näppäinkomento |
 | Vieritä taaksepäin | vasen |
@@ -2091,25 +2100,43 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Nuoli alas -näppäin | välilyönti+piste 4 |
 | Nuoli vasemmalle -näppäin | välilyönti+piste 3 |
 | Nuoli oikealle -näppäin | välilyönti+piste 6 |
-| NVDA-valikko | c1, c3, c4 ja c5 (komento n) |
 | Shift+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 3 |
 | Sarkain-näppäin | välilyönti+pisteet 4 ja 6 |
 | Alt-näppäin | välilyönti+pisteet 1, 3 ja 4 (välilyönti+m) |
 | Esc-näppäin | välilyönti+pisteet 1 ja 5 (välilyönti+e) |
 | Enter-näppäin | piste 8 |
-| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1, c4 ja c5 (komento d) |
 | Windows-näppäin | välilyönti+pisteet 3 ja 4 |
 | Alt+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 (välilyönti+t) |
+| NVDA-valikko | väli+pisteet 1, 3, 4 ja 5 (väli+n) |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | väli+pisteet 1, 4 ja 5 (väli+d) |
+| Jatkuva luku | väli+pisteet 1, 2, 3, 4, 5 ja 6 |
+%kc:endInclude
+
++++ Brailliant BI 32, BI 40 ja B 80 +++
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| NVDA-valikko | c1, c3, c4 ja c5 (komento n) |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1, c4 ja c5 (komento d) |
 | Jatkuva luku | c1, c2, c3, c4, c5 ja c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++
++++ Brailliant BI 14 +++
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| Nuoli ylös -näppäin | ohjaussauva ylös |
+| Nuoli alas -näppäin | ohjaussauva alas |
+| Vasen nuoli -näppäin | ohjaussauva vasemmalle |
+| Oikea nuoli -näppäin | ohjaussauva oikealle |
+| Enter-näppäin | ohjaussauvan toiminto |
+%kc:endInclude
+
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
 NVDA tukee [HIMSin http://www.hims-inc.com/] Braille Sense-, Braille EDGE-, Smart Beetle- ja Sync Braille -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
 USB-liitäntää käytettäessä tietokoneelle on asennettava HIMSin ajurit.
 Voit ladata ne tältä sivulta: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
 | Siirrä pistesoluun | kosketuskohdistin |
@@ -2252,17 +2279,17 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
 | Siirrä edelliseen objektiin | left2 |
 | Siirrä seuraavaan objektiin | right2 |
-| Lue tekstin muotoilutiedot | ylärivin kosketuskohdistinnäppäimet |
+| Ilmoita tekstin muotoilutiedot pistesolusta | ylärivin kosketuskohdistinnäppäimet |
 %kc:endInclude
 
 Trio-mallissa on neljä lisänäppäintä, jotka ovat pistenäppäimistön edessä.
-Ne ovat vasemmalta oikealle järjestyksessä:
+Ne ovat järjestyksessä vasemmalta oikealle:
 - vasen peukalonäppäin (lt)
 - välilyönti
 - välilyönti
 - oikea peukalonäppäin (rt)
 -
-Oikea peukalonäppäin ei ole tällä hetkellä käytössä.
+Oikea peukalonäppäin ei ole toistaiseksi käytössä.
 Molemmat sisemmät näppäimet on määritelty välilyönniksi.
 
 || Nimi | Näppäinkomento |
@@ -2326,7 +2353,7 @@ Laitteet, joissa on EAB:
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
 | Siirrä seuraavaan objektiin | right2 |
 | Siirrä edelliseen objektiin | left2 |
-| Lue tekstin muotoilutiedot | Ylärivin kosketuskohdistinnäppäimet |
+| Ilmoita tekstin muotoilutiedot pistesolusta | Ylärivin kosketuskohdistinnäppäimet |
 
 BRAILLEX Tiny:
 || Nimi | Näppäinkomento |
@@ -2341,7 +2368,7 @@ BRAILLEX Tiny:
 | Siirrä ensimmäiseen sisältöobjektiin | r1+dn |
 | Siirrä edelliseen objektiin | r1+left |
 | Siirrä seuraavaan objektiin | r1+right |
-| Lue tekstin muotoilutiedot | reportf |
+| Lue tekstin muotoilutiedot pistesolusta | ylärivin kosketuskohdistinnäppäimet |
 | Lue ikkunan nimi | l1+up |
 | Lue tilarivi | l2+down |
 
@@ -2350,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
 | Vaihda Pistenäyttö seuraa -asetusta | r2 |
-| Lue tekstin muotoilutiedot | reportf |
+| Lue tekstin muotoilutiedot pistesolusta | ylärivin kosketuskohdistinnäppäimet |
 | Siirrä edelliselle riville | up |
 | Vieritä taaksepäin | left |
 | Vieritä eteenpäin | right |
@@ -2369,6 +2396,8 @@ Seuraavia malleja tuetaan:
 - BrailleNote MPower (sarjaportti- ja bluetooth-liitännät)
 - BrailleNote Apex (USB- ja bluetooth-liitännät)
 -
+
+Katso BrailleNote Touchin näppäinkomennot [Brailliant BI/B / BrailleNote Touch HumanWareBrailliant] -kappaleesta.
 
 Käytettävä portti on määritettävä pistenäytön omista asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
 Katso lisätietoja BrailleNoten käsikirjasta.
@@ -2452,6 +2481,87 @@ Tämän vuoksi, ja jotta säilytetään yhteensopivuus muiden taiwanilaisten ruu
 || Nimi | Näppäin |
 | Vieritä taaksepäin | Laskinnäppäimistön miinus |
 | Vieritä eteenpäin | Laskinnäppäimistön plus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]
+NVDA tukee [Eurobraillen http://www.eurobraille.fr/] Esys-, Esytime- ja Iris-pistenäyttöjä.
+Esys- ja Esytime-Evo-laitteiden kytkemiseen voidaan käyttää USB-liitäntää tai bluetooth-yhteyttä.
+Vanhemmat Esytime-näytöt tukevat vain USB:tä.
+Iris-mallit voidaan kytkeä vain sarjaportin kautta.
+Siksi näiden näyttöjen käyttämä portti kannattaa valita sen jälkeen, kun olet valinnut tämän ajurin Pistekirjoituksen asetukset -valintaikkunasta.
+
+Iris- ja Esys-näytöissä on 10-näppäiminen pistekirjoitusnäppäimistö.
+Kahdesta Väli-näppäimen tavoin sijoitellusta näppäimestä vasemmanpuoleinen vastaa Askelpalautinta ja oikea Väli-näppäintä.
+
+Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso kuvaukset näppäinten paikoista laitteen käyttöohjeesta.
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä taaksepäin | switch1-6left, l1 |
+| Vieritä eteenpäin | switch1-6Right, l8 |
+| Siirrä nykyiseen kohdistukseen | switch1-6Left+switch1-6Right, l1+l8 |
+| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Lue tekstin muotoilutiedot pistesolusta | doubleRouting |
+| Siirrä edelliselle riville tarkastelutilassa | joystick1Up |
+| Siirrä seuraavalle riville tarkastelutilassa | joystick1Down |
+| Siirrä edelliseen merkkiin tarkastelutilassa | joystick1Left |
+| Siirrä seuraavaan merkkiin tarkastelutilassa | joystick1Right |
+| Vaihda edelliseen tarkastelutilaan | joystick1Left+joystick1Up |
+| Vaihda seuraavaan tarkastelutilaan | joystick1Right+joystick1Down |
+| Poista viimeksi syötetty pistesolu tai merkki | askelpalautin |
+| Käännä mikä tahansa pistekirjoitussyöte ja paina Enter-näppäintä | askelpalautin+väli |
+| Insert-näppäin | piste 3+piste 5+väli, l7 |
+| Delete-näppäin | piste 3+piste 6+väli |
+| Home-näppäin | piste 1+piste 2+piste 3+väli, joystick2Left+joystick2Up |
+| End-näppäin | piste 4+piste 5+piste 6+väli, joystick2Right+joystick2Down |
+| Nuoli vasemmalle -näppäin | piste 2+väli, joystick2Left, nuoli vasemmalle |
+| Nuoli oikealle -näppäin | piste 5+väli, joystick2Right, nuoli oikealle |
+| Nuoli ylös -näppäin | piste 1+väli, joystick2Up, nuoli ylös |
+| Nuoli alas -näppäin | piste 6+väli, joystick2Down, nuoli alas |
+| Enter-näppäin | joystick2Center |
+| Page up -näppäin | piste 1+piste 3+väli |
+| Page down -näppäin | piste 4+piste 6+väli |
+| Numeronäppäimistön 1 | piste 1+piste 6+askelpalautin |
+| Numeronäppäimistön 2 | piste 1+piste 2+piste 6+askelpalautin |
+| Numeronäppäimistön 3 | piste 1+piste 4+piste 6+askelpalautin |
+| Numeronäppäimistön 4 | piste 1+piste 4+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön 5 | piste 1+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön 6 | piste 1+piste 2+piste 4+piste 6+askelpalautin |
+| Numeronäppäimistön 7 | piste 1+piste 2+piste 4+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön 8 | piste 1+piste 2+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön 9 | piste 2+piste 4+piste 6+askelpalautin |
+| Numeronäppäimistön Insert -näppäin | piste 3+piste 4+piste 5+piste 6+askelpalautin |
+| Numeronäppäimistön pilkku | piste 2+askelpalautin |
+| Numeronäppäimistön / | piste 3+piste 4+askelpalautin |
+| Numeronäppäimistön * | piste 3+piste 5+askelpalautin |
+| Numeronäppäimistön miinus | piste 3+piste 6+askelpalautin |
+| Numeronäppäimistön plus | piste 2+piste 3+piste 5+askelpalautin |
+| Numeronäppäimistön Enter -näppäin | piste 3+piste 4+piste 5+askelpalautin |
+| Esc-näppäin | piste 1+piste 2+piste 4+piste 5+väli, l2 |
+| Sarkain-näppäin | piste 2+piste 5+piste 6+väli, l3 |
+| Vaihto+Sarkain-näppäinyhdistelmä | piste 2+piste 3+piste 5+väli |
+| Print Screen -näppäin | piste 1+piste 3+piste 4+piste 6+väli |
+| Pause-näppäin | piste 1+piste 4+väli |
+| Sovellusnäppäin | piste 5+piste 6+askelpalautin |
+| F1-näppäin | piste 1+askelpalautin |
+| F2-näppäin | piste 1+piste 2+askelpalautin |
+| F3-näppäin | piste 1+piste 4+askelpalautin |
+| F4-näppäin | piste 1+piste 4+piste 5+askelpalautin |
+| F5-näppäin | piste 1+piste 5+askelpalautin |
+| F6-näppäin | piste 1+piste 2+piste 4+askelpalautin |
+| F7-näppäin | piste 1+piste 2+piste 4+piste 5+askelpalautin |
+| F8-näppäin | piste 1+piste 2+piste 5+askelpalautin |
+| F9-näppäin | piste 2+piste 4+askelpalautin |
+| F10-näppäin | piste 2+piste 4+piste 5+askelpalautin |
+| F11-näppäin | piste 1+piste 3+askelpalautin |
+| F12-näppäin | piste 1+piste 2+piste 3+askelpalautin |
+| Windows-näppäin | piste 1+piste 2+piste 3+piste 4+askelpalautin |
+| Caps Lock -näppäin | piste 7+askelpalautin, piste 8+askelpalautin |
+| Num Lock -näppäin | piste 3+askelpalautin, piste 6+askelpalautin |
+| Vaihto-näppäin | piste 7+väli, l4 |
+| Ctrl-näppäin | piste 7+piste 8+väli, piste 1+piste 7+piste 8+väli, piste 4+piste 7+piste 8+väli, l5 |
+| Alt-näppäin | piste 8+väli, piste 1+piste 8+väli, piste 4+piste 8+väli, l6 |
+| Ota HID-näppäimistösyötteen emulointi käyttöön tai poista se käytöstä | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]

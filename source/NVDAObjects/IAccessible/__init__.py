@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NVDA Contributors
+#Copyright (C) 2006-2018 NV Access Limited 
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -392,7 +392,7 @@ the NVDAObject for IAccessible
 			clsList.insert(0, FocusableUnfocusableContainer)
 
 		if hasattr(self, "IAccessibleTextObject"):
-			if role==oleacc.ROLE_SYSTEM_TEXT or self.IA2States&IAccessibleHandler.IA2_STATE_EDITABLE:
+			if role==oleacc.ROLE_SYSTEM_TEXT or controlTypes.STATE_EDITABLE in self.states:
 				clsList.append(EditableTextWithAutoSelectDetection)
 
 		# Use window class name and role to search for a class match in our static map.
@@ -608,9 +608,12 @@ the NVDAObject for IAccessible
 		except COMError:
 			pass
 		try:
-			self.IAccessibleTableObject=self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTable)
+			self.IAccessibleTable2Object=self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTable2)
 		except COMError:
-			pass
+			try:
+				self.IAccessibleTableObject=self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTable)
+			except COMError:
+				pass
 		try:
 			self.IAccessibleTextObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleText)
 		except COMError:
@@ -819,6 +822,9 @@ the NVDAObject for IAccessible
 			return states
 		IAccessible2States=self.IA2States
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
+		# Readonly should override editable
+		if controlTypes.STATE_READONLY in states:
+			states.discard(controlTypes.STATE_EDITABLE)
 		try:
 			IA2Attribs=self.IA2Attributes
 		except COMError:
@@ -1046,6 +1052,9 @@ the NVDAObject for IAccessible
 		self.event_stateChange()
 
 	def _get_IA2PhysicalRowNumber(self):
+		tableCell=self._IATableCell
+		if tableCell:
+			return tableCell.rowIndex+1
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
@@ -1070,7 +1079,15 @@ the NVDAObject for IAccessible
 			index=self.IA2PhysicalRowNumber
 		return index
 
+	def _get_rowSpan(self):
+		if self._IATableCell:
+			return self._IATableCell.rowExtent
+		raise NotImplementedError
+
 	def _get_IA2PhysicalColumnNumber(self):
+		tableCell=self._IATableCell
+		if tableCell:
+			return tableCell.columnIndex+1
 		table=self.table
 		if table:
 			if self.IAccessibleTableUsesTableCellIndexAttrib:
@@ -1087,13 +1104,36 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::columnIndex failed", exc_info=True)
 		raise NotImplementedError
 
+	def _get_cellCoordsText(self):
+		colText=self.IA2Attributes.get('coltext')
+		rowText=self.IA2Attributes.get('rowtext')
+		if rowText is None and isinstance(self.parent,IAccessible):
+			rowText=self.parent.IA2Attributes.get('rowtext')
+		if not rowText and not colText:
+			return
+		if not colText:
+			colText=self.columnNumber
+		if not rowText:
+			rowText=self.rowNumber
+		return "%s %s"%(colText,rowText)
+
 	def _get_columnNumber(self):
 		index=self.IA2Attributes.get('colindex')
 		if index is None:
 			index=self.IA2PhysicalColumnNumber
 		return index
 
+	def _get_columnSpan(self):
+		if self._IATableCell:
+			return self._IATableCell.columnExtent
+		raise NotImplementedError
+
 	def _get_IA2PhysicalRowCount(self):
+		if hasattr(self,'IAccessibleTable2Object'):
+			try:
+				return self.IAccessibleTable2Object.nRows
+			except COMError:
+				log.debugWarning("IAccessibleTable2::nRows failed", exc_info=True)
 		if hasattr(self,'IAccessibleTableObject'):
 			try:
 				return self.IAccessibleTableObject.nRows
@@ -1108,6 +1148,11 @@ the NVDAObject for IAccessible
 		return count
 
 	def _get_IA2PhysicalColumnCount(self):
+		if hasattr(self,'IAccessibleTable2Object'):
+			try:
+				return self.IAccessibleTable2Object.nColumns
+			except COMError:
+				log.debugWarning("IAccessibleTable2::nColumns failed", exc_info=True)
 		if hasattr(self,'IAccessibleTableObject'):
 			try:
 				return self.IAccessibleTableObject.nColumns
@@ -1171,10 +1216,10 @@ the NVDAObject for IAccessible
 		if self.IAccessibleTableUsesTableCellIndexAttrib and "table-cell-index" in self.IA2Attributes:
 			checkAncestors=True
 		obj=self.parent
-		while checkAncestors and obj and not hasattr(obj,'IAccessibleTableObject'):
+		while checkAncestors and obj and not hasattr(obj,'IAccessibleTable2Object') and not hasattr(obj,'IAccessibleTableObject'):
 			parent=obj.parent=obj.parent
 			obj=parent
-		if not obj or not hasattr(obj,'IAccessibleTableObject'):
+		if not obj or (not hasattr(obj,'IAccessibleTable2Object') and not hasattr(obj,'IAccessibleTableObject')):
 			return None
 		self._table=obj
 		return obj
@@ -1221,6 +1266,10 @@ the NVDAObject for IAccessible
 			try:
 				info={}
 				info["level"],info["similarItemsInGroup"],info["indexInGroup"]=self.IAccessibleObject.groupPosition
+				# Object's with an IAccessibleTableCell interface should not expose indexInGroup/similarItemsInGroup as the cell's 2d info is much more useful.
+				if self._IATableCell:
+					del info['indexInGroup']
+					del info['similarItemsInGroup']
 				# 0 means not applicable, so remove it.
 				for key, val in info.items():
 					if not val:

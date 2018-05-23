@@ -410,8 +410,8 @@ Review modes are a replacement for the older Flat Review concept found in NVDA.
 The following commands switch between review modes:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
-| switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode |
-| switch to previous review mode | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | switches to the previous available review mode |
+| Switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode |
+| Switch to previous review mode | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | switches to the previous available review mode |
 %kc:endInclude
 
 +++ Object Review +++[ObjectReview]
@@ -933,7 +933,7 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 
 ==== Show exit options when exiting NVDA ====[GeneralSettingsShowExitOptions]
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart or restart with add-ons disabled.
+When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with addons disabled or install pending updates (if any).
 When unchecked, NVDA will exit immediately.
 
 ==== Play sounds when starting or exiting NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ This option is only available for installed copies of NVDA.
 ==== Automatically check for updates to NVDA ====[GeneralSettingsCheckForUpdates]
 If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
 You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
+
+==== Notify for pending updates on startup ====[GeneralSettingsNotifyPendingUpdates]
+If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
+You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
 +++ Synthesizer Selection (NVDA+control+s) +++[SynthesizerSelection]
 The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu, allows you to select which Synthesizer NVDA should use to speak with.
@@ -1755,10 +1759,11 @@ NVDA will ask if you really wish to do this.
 As with installing, NVDA must be restarted for the add-on to be fully  removed.
 Until you do, a status of "remove" will be shown for that add-on in the list.
 
-To disable an add-on, press the disable button.
-To enable a previously disabled add-on, press the enable button.
-You can disable an add-on if the add-on status indicates it is running or enabled, or enable it if the add-on is suspended or disabled.
+To disable an add-on, press the "disable" button.
+To enable a previously disabled add-on, press the "enable" button.
+You can disable an add-on if the add-on status indicates it is  "enabled", or enable it if the add-on is "disabled".
 For each press of the enable/disable button, add-on status changes to indicate what will happen when NVDA restarts.
+If the addon was previously disabled, a status will show "enabled after restart". If the addon was previously "Enabled", a status will show "disabled after restart"
 Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
 
 The manager also has a Close button to close the dialog.
@@ -1834,14 +1839,6 @@ For more information, please visit the Audiologic website at www.audiologic.it.
 
 This synthesizer does not support [spelling functionality #VoiceSettingsUseSpelling].
 
-++ Nuance Vocalizer for NVDA ++[Vocalizer]
-Nuance Vocalizer is a commercial, high quality voice synthesizer developed by Nuance Communications, Inc. and packaged specifically for NVDA by Tiflotecnia, Lda.
-It contains over 50 different voices you can install, speaking over 30 languages.
-All synthesizer components and voices are bundled in add-on packages, which allows for full usage in portable copies of NVDA.
-
-You can get more information about Nuance Vocalizer for NVDA and how to buy it on its website at [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-A percentage of sales of this product is donated to NV Access to fund further development of the NVDA screen reader.
-
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
 
@@ -1904,15 +1901,20 @@ For Focus 80 only:
 | Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
-++ Optelec ALVA BC640/680 ++[OptelecALVA]
+++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
 Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
+Alternatively, you can connect an older Optelec display, such as a Braille Voyager, using a protocol converter supplied by Optelec.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
-While these displays do have a braille keyboard, they handle translation from braille to text themselves.
-Therefore, NVDA's braille input table setting is not relevant.
+Note: NVDA might be unable to use an ALVA BC6 display over Bluetooth when it is paired using the ALVA Bluetooth utility.
+When you have paired your device using this utility and NVDA is unable to detect your device, we recommend you to pair your ALVA display the regular way using the Windows Bluetooth settings.
 
-Following are the key assignments for this display with NVDA.
+Note: while some of these displays do have a braille keyboard, they handle translation from braille to text themselves by default.
+This means that NVDA's braille input system is not in use in the default situation (i.e. the input braille table setting has no effect).
+For ALVA displays with recent firmware, it is possible to disable this HID keyboard simulation using an input gesture.
+
+Following are key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
@@ -1922,6 +1924,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move braille display to next line | t4 |
 | Scroll braille display forward | t5 or etouch3 |
 | Route to braille cell | routing |
+| Report text formatting under braille cell | secondary routing |
+| Toggle HID keyboard simulation | t1+spEnter |
 | Move to top line in review | t1+t2 |
 | Move to bottom line in review | t4+t5 |
 | Toggle braille tethered to | t1+t3 |
@@ -1935,17 +1939,19 @@ Please see the display's documentation for descriptions of where these keys can 
 | downArrow key | spDown |
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
-| enter key | spEnter |
+| enter key | spEnter, enter|
 | Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
 | windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3 |
+| windows key | sp2+sp3, windows |
 | alt+tab key | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
+| alt key | alt |
+| control key | control |
 %kc:endInclude
 
 ++ Handy Tech Displays ++[HandyTech]
@@ -2072,13 +2078,16 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Series ++[HumanWareBrailliant]
-The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+++ HumanWare Brailliant BI/B Series / BrailleNote Touch  ++[HumanWareBrailliant]
+The Brailliant BI and B series of displays  from [HumanWare http://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
-Following are the key assignments for this display with NVDA.
+The BrailleNote Touch is also supported, and does not require any drivers to be installed.
+
+Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
++++ Key assignments for All models +++
 %kc:beginInclude
 || Name | Key |
 | Scroll braille display back | left |
@@ -2091,19 +2100,37 @@ Please see the display's documentation for descriptions of where these keys can 
 | downArrow key | space+dot4 |
 | leftArrow key | space+dot3 |
 | rightArrow key | space+dot6 |
-| NVDA Menu | c1+c3+c4+c5 (command n) |
 | shift+tab key | space+dot1+dot3 |
 | tab key | space+dot4+dot6 |
 | alt key | space+dot1+dot3+dot4 (space+m) |
 | escape key | space+dot1+dot5 (space+e) |
 | enter key | dot8 |
-| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
 | windows key | space+dot3+dot4 |
 | alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (minimize all applications) | space+dot1+dot4+dot5 (space+d) |
+| Say all | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+%kc:endInclude
+
++++ Key assignments for Brailliant BI 32, BI 40 and B 80 +++ 
+%kc:beginInclude
+|| Name | Key |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++
++++ Key assignments for Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Name | Key |
+| up arrow key | joystick up |
+| down arrow key | joystick down |
+| left arrow key | joystick left |
+| right arrow key | joystick right |
+| enter key | joystick action |
+%kc:endInclude
+
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
 You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
@@ -2252,7 +2279,7 @@ Following are the Papenmeier command assignments for NVDA:
 | Move to first contained object | dn2 |
 | Move to previous object | left2 |
 | Move to next object | right2 |
-| Report text formatting | upper routing row |
+| Report text formatting under braille cell | upper routing row |
 %kc:endInclude
 
 The Trio model has four additional keys which are in front of the braille keyboard.
@@ -2326,7 +2353,7 @@ Devices with EAB:
 | Move to first contained object | dn2 |
 | Move to next object | right2 |
 | Move to previous object | left2 |
-| Report text formatting | Upper routing strip |
+| Report text formatting under braille cell | upper routing strip |
 
 BRAILLEX Tiny:
 || Name | Key |
@@ -2341,7 +2368,7 @@ BRAILLEX Tiny:
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
 | Move to next object | r1+right |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Report title | l1+up |
 | Report status bar | l2+down |
 
@@ -2350,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
 | Toggle braille tethered to | r2 |
-| Report text formatting | reportf |
+| Report text formatting under braille cell | upper routing strip |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
 | Scroll braille display forward | right |
@@ -2369,6 +2396,8 @@ The following models are supported:
 - BrailleNote MPower (Serial and bluetooth connections)
 - BrailleNote Apex (USB and Bluetooth connections)
 -
+
+For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
 
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.
@@ -2452,6 +2481,87 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 || Name | Key |
 | Scroll braille display back | numpadMinus |
 | Scroll braille display forward | numpadPlus | 
+%kc:endInclude
+
+++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
+The Esys, Esytime and Iris displays from [Eurobraille http://www.eurobraille.fr/] are supported by NVDA.
+Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
+Older Esytime devices only support USB.
+Iris displays can only be connected via a serial port.
+Therefore, for these displays, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialog.
+
+Iris and Esys displays have a braille keyboard with 10 keys.
+Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
+
+Following are the key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | switch1-6left, l1 |
+| Scroll braille display forward | switch1-6Right, l8 |
+| Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
+| Route to braille cell | routing |
+| Report text formatting under braille cell | doubleRouting |
+| Move to previous line in review | joystick1Up |
+| Move to next line in review | joystick1Down |
+| Move to previous character in review | joystick1Left |
+| Move to next character in review | joystick1Right |
+| Switch to previous review mode | joystick1Left+joystick1Up |
+| Switch to next review mode | joystick1Right+joystick1Down |
+| Erase the last entered braille cell or character | backSpace |
+| Translate any braille input and press the enter key | backSpace+space |
+| insert key | dot3+dot5+space, l7 |
+| delete key | dot3+dot6+space |
+| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
+| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
+| leftArrow key | dot2+space, joystick2Left, leftArrow |
+| rightArrow key | dot5+space, joystick2Right, rightArrow |
+| upArrow key | dot1+space, joystick2Up, upArrow |
+| downArrow key | dot6+space, joystick2Down, downArrow |
+| enter key | joystick2Center |
+| pageUp key | dot1+dot3+space |
+| pageDown key | dot4+dot6+space |
+| numpad1 key | dot1+dot6+backspace |
+| numpad2 key | dot1+dot2+dot6+backspace |
+| numpad3 key | dot1+dot4+dot6+backspace |
+| numpad4 key | dot1+dot4+dot5+dot6+backspace |
+| numpad5 key | dot1+dot5+dot6+backspace |
+| numpad6 key | dot1+dot2+dot4+dot6+backspace |
+| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
+| numpad8 key | dot1+dot2+dot5+dot6+backspace |
+| numpad9 key | dot2+dot4+dot6+backspace |
+| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
+| numpadDecimal key | dot2+backspace |
+| numpadDivide key | dot3+dot4+backspace |
+| numpadMultiply key | dot3+dot5+backspace |
+| numpadMinus key | dot3+dot6+backspace |
+| numpadPlus key | dot2+dot3+dot5+backspace |
+| numpadEnter key | dot3+dot4+dot5+backspace |
+| escape key | dot1+dot2+dot4+dot5+space, l2 |
+| tab key | dot2+dot5+dot6+space, l3 |
+| shift+tab key | dot2+dot3+dot5+space |
+| printScreen key | dot1+dot3+dot4+dot6+space |
+| pause key | dot1+dot4+space |
+| applications key | dot5+dot6+backspace |
+| f1 key | dot1+backspace |
+| f2 key | dot1+dot2+backspace |
+| f3 key | dot1+dot4+backspace |
+| f4 key | dot1+dot4+dot5+backspace |
+| f5 key | dot1+dot5+backspace |
+| f6 key | dot1+dot2+dot4+backspace |
+| f7 key | dot1+dot2+dot4+dot5+backspace |
+| f8 key | dot1+dot2+dot5+backspace |
+| f9 key | dot2+dot4+backspace |
+| f10 key | dot2+dot4+dot5+backspace |
+| f11 key | dot1+dot3+backspace |
+| f12 key | dot1+dot2+dot3+backspace |
+| windows key | dot1+dot2+dot3+dot4+backspace |
+| capsLock key | dot7+backspace, dot8+backspace |
+| numLock key | dot3+backspace, dot6+backspace |
+| shift key | dot7+space, l4 |
+| control key | dot7+dot8+space, dot1+dot7+dot8+space, dot4+dot7+dot8+space, l5 |
+| alt key | dot8+space, dot1+dot8+space, dot4+dot8+space, l6 |
+| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
