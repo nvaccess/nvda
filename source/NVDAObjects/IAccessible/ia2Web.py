@@ -65,6 +65,12 @@ class Ia2Web(IAccessible):
 			states.discard(controlTypes.STATE_EDITABLE)
 		return states
 
+	def _get_roleTextBraille(self):
+		roleText=self.IA2Attributes.get('role-description-braille')
+		if roleText:
+			return roleText
+		return super(Ia2Web,self).roleTextBraille
+
 class Document(Ia2Web):
 	value = None
 
