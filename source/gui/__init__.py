@@ -91,6 +91,7 @@ class MainFrame(wx.Frame):
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
+		self.sysTrayIcon = None
 		self.Bind(wx.EVT_CLOSE, self.onExitCommand)
 		self.sysTrayIcon = SysTrayIcon(self)
 		#: The focus before the last popup or C{None} if unknown.
@@ -114,6 +115,7 @@ class MainFrame(wx.Frame):
 				self.Hide()
 
 	def Destroy(self):
+		import brailleViewer
 		self.sysTrayIcon.Destroy()
 		super(MainFrame, self).Destroy()
 
@@ -301,6 +303,15 @@ class MainFrame(wx.Frame):
 		else:
 			speechViewer.deactivate()
 
+	def onBrailleViewerChangedState(self, created):
+		# its possible for this to be called after the sysTrayIcon is destroyed if we are exiting NVDA
+		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleBrailleViewer:
+			self.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(created)
+
+	def onToggleBrailleViewerCommand(self, evt):
+		import brailleViewer
+		brailleViewer.toggleBrailleViewerTool()
+
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
@@ -420,6 +431,14 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to toggle Speech Viewer.
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
+
+		# Translators: The label for the menu item to toggle Braille Viewer.
+		item=self.menu_tools_toggleBrailleViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Braille viewer"))
+		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
+		import brailleViewer
+		brailleViewer.brailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
+		frame.onBrailleViewerChangedState(created=brailleViewer.isBrailleDisplayCreated())
+
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))

@@ -1128,7 +1128,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			yield RegionWithPositions(region, start, end)
 			start = end
 
-	_cache_rawToBraillePos=True
 	def _get_rawToBraillePos(self):
 		"""@return: a list mapping positions in L{rawText} to positions in L{brailleCells} for the entire buffer.
 		@rtype: [int, ...]
@@ -1138,7 +1137,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			rawToBraillePos.extend(p+regionStart for p in region.rawToBraillePos)
 		return rawToBraillePos
 
-	_cache_brailleToRawPos=True
 	def _get_brailleToRawPos(self):
 		"""@return: a list mapping positions in L{brailleCells} to positions in L{rawText} for the entire buffer.
 		@rtype: [int, ...]
@@ -1514,6 +1512,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
+		self.viewerTool = None
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1528,6 +1527,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkTimer = None
 		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
 		self._tether = config.conf["braille"]["tetherTo"]
+		self._rawText=u""
+		import brailleViewer
+		brailleViewer.brailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1537,6 +1539,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
 		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
+		import brailleViewer
+		brailleViewer.destroyBrailleViewerTool()
 		if self.display:
 			self.display.terminate()
 			self.display = None
@@ -1583,10 +1587,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			kwargs["port"] = port
 		try:
 			newDisplay = _getDisplayDriver(name)
-			if newDisplay == self.display.__class__:
+			oldDisplay = self.display
+			if newDisplay == oldDisplay.__class__:
 				# This is the same driver as was already set, so just re-initialise it.
-				self.display.terminate()
-				newDisplay = self.display
+				oldDisplay.terminate()
+				newDisplay = oldDisplay
 				newDisplay.__init__(**kwargs)
 			else:
 				if newDisplay.isThreadSafe:
@@ -1609,6 +1614,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			log.error("Error initializing display driver", exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
+	
+	def _onBrailleViewerChangedState(self, created):
+		import brailleViewer
+		if not created:
+			self.viewerTool = None
+			self.displaySize = None if not self.display else self.display.numCells
+			self.enabled = bool(self.displaySize)
+		else:
+			self.viewerTool = brailleViewer.getBrailleViewerTool()
+			if self.displaySize and self.displaySize != self.viewerTool.numCells:
+				raise RuntimeError("BrailleViewer and physical display sizes must match")
+			self.displaySize = self.viewerTool.numCells
+			self.enabled = True
+		log.debug("reef braille enabled: {}".format(self.enabled))
 
 	def _updateDisplay(self):
 		if self._cursorBlinkTimer:
@@ -1625,6 +1644,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer.Start(blinkRate)
 
 	def _writeCells(self, cells):
+		if self.viewerTool:
+			self.viewerTool.rawText = self._rawText
+			self.viewerTool.display(cells)
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)
@@ -1660,6 +1682,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def update(self):
 		cells = self.buffer.windowBrailleCells
+		self._rawText = self.buffer.windowRawText
 		if log.isEnabledFor(log.IO):
 			log.io("Braille window dots: %s" % formatCellsForLog(cells))
 		# cells might not be the full length of the display.
