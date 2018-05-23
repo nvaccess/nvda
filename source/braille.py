@@ -455,9 +455,7 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
-	roleText=propertyValues.get('roleTextBraille')
-	if not roleText:
-		roleText = propertyValues.get("roleText")
+	roleText=propertyValues.get('roleText')
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -624,7 +622,9 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	value=field.get('value',None)
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
-
+	roleText=field.get('roleTextBraille')
+	if not roleText:
+		roleText=field.get('roleText')
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
 		# The only item we report for these fields is clickable, if present.
@@ -657,6 +657,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
 			"states": states,"value":value, "current":current, "placeholder":placeholder}
+		props['roleText']=roleText
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -686,7 +687,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
 		return (_("%s end") %
-			getBrailleTextForProperties(role=role))
+			getBrailleTextForProperties(role=role,roleText=roleText))
 
 def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""Generates the braille text for the given format field.
