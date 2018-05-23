@@ -573,14 +573,14 @@ class NVDAObjectRegion(Region):
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
 		text = getBrailleTextForProperties(
-			name=obj.name,
+			name=obj.name_braille,
 			role=role,
 			roleText=obj.roleText,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
-			description=obj.description if presConfig["reportObjectDescriptions"] else None,
+			description=obj.description_braille if presConfig["reportObjectDescriptions"] else None,
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,

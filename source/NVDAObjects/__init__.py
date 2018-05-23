@@ -385,6 +385,11 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 		"""
 		return ""
 
+	def _get_name_braille(self):
+		"""The braille specific name or label of this object (example: the abbreviated text of a button. If
+		there is no braille specific value, the _get_name() text is returned."""
+		return self.name
+
 	def _get_role(self):
 		"""The role or type of control this object represents (example: button, list, dialog).
 		@return: a ROLE_* constant from L{controlTypes}
@@ -411,6 +416,12 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 		@rtype: basestring
 		"""
 		return ""
+
+	def _get_description_braille(self):
+		"""The braille specific description or help text of this object.
+			@rtype: basestring
+			"""
+		return self.description
 
 	def _get_controllerFor(self):
 		"""Retreaves the object/s that this object controls."""

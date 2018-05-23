@@ -36,6 +36,14 @@ class Ia2Web(IAccessible):
 			current = None
 		return current
 
+	def _get_name_braille(self):
+		brailleName = super(Ia2Web, self).name
+		return self.IA2Attributes.get("label-braille", brailleName)
+
+	def _get_description_braille(self):
+		brailleDesc = super(Ia2Web, self).description
+		return self.IA2Attributes.get("description-braille", brailleDesc)
+
 	def _get_placeholder(self):
 		placeholder = self.IA2Attributes.get('placeholder', None)
 		return placeholder
