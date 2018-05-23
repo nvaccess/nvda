@@ -455,7 +455,9 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
-	roleText = propertyValues.get("roleText")
+	roleText=propertyValues.get('roleTextBraille')
+	if not roleText:
+		roleText = propertyValues.get("roleText")
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
@@ -575,7 +577,7 @@ class NVDAObjectRegion(Region):
 		text = getBrailleTextForProperties(
 			name=obj.name,
 			role=role,
-			roleText=obj.roleText,
+			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,

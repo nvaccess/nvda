@@ -400,6 +400,9 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 		"""
 		return None
 
+	def _get_roleTextBraille(self):
+		return self.roleText
+
 	def _get_value(self):
 		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
 		@rtype: basestring
