@@ -47,6 +47,18 @@ class Ia2Web(IAccessible):
 			return False
 		return super(Ia2Web,self).isPresentableFocusAncestor
 
+	def _get_roleText(self):
+		roleText=self.IA2Attributes.get('role-description')
+		if roleText:
+			return roleText
+		return super(Ia2Web,self).roleText
+
+	def _get_roleTextBraille(self):
+		roleText=self.IA2Attributes.get('role-description-braille')
+		if roleText:
+			return roleText
+		return super(Ia2Web,self).roleTextBraille
+
 class Document(Ia2Web):
 	value = None
 

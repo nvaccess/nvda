@@ -1,6 +1,6 @@
 #NVDAObjects/window.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -129,13 +129,18 @@ An NVDAObject for a window
 		if newCls:
 			clsList.append(newCls)
 
-		#If none of the chosen classes seem to support text editing
-		#But there is a caret currently in the window
-		#Then use the displayModelEditableText class to emulate text editing capabilities
+		# If none of the chosen classes seem to support text editing
+		# but there is a caret currently in the window,
+		# check whether this window exposes its content without using the display model.
+		# If not, use the displayModelEditableText class to emulate text editing capabilities
 		if not any(issubclass(cls,EditableText) for cls in clsList):
 			gi=winUser.getGUIThreadInfo(self.windowThreadID)
 			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
-				clsList.append(DisplayModelEditableText)
+				if self.windowTextLineCount:
+					from .edit import UnidentifiedEdit
+					clsList.append(UnidentifiedEdit)
+				else:
+					clsList.append(DisplayModelEditableText)
 
 		clsList.append(Window)
 		super(Window,self).findOverlayClasses(clsList)
@@ -209,6 +214,9 @@ An NVDAObject for a window
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
 		watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value
+
+	def _get_windowTextLineCount(self):
+		return watchdog.cancellableSendMessage(self.windowHandle,winUser.EM_GETLINECOUNT,0,0)
 
 	def _get_processID(self):
 		if hasattr(self,"_processIDThreadID"):
