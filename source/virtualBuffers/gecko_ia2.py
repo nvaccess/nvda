@@ -83,6 +83,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		elif sorted=="other":
 			states.add(controlTypes.STATE_SORTED)
 		roleText=attrs.get("IAccessible2::attribute_roledescription")
+		roleTextBraille=attrs.get("IAccessible2::attribute_role-description-braille")
+		if roleTextBraille:
+			attrs['roleTextBraille']=roleTextBraille
 		if roleText:
 			attrs['roleText']=roleText
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
