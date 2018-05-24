@@ -3,6 +3,67 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+Prednosti tejto verzie zahŕňajú podporu pre čítanie tabuliek v programe Kindle (desktop), podporu pre braillovské riadky Humanwear BrailleNote Touch a BI14, vylepšenú podporu pre hlasy Onecore a SAPI5, opravy pre Microsoft Outlook a oveľa viac.
+
+== Nové vlastnosti ==
+- NVDA odteraz dokáže oznamovať hlasom aj na braillovskom riadku rozsah riadkov a stĺpcov v tabuľkách. (#2642)
+- Skratky pre navigáciu v tabuľkách odteraz fungujú aj v dokumentoch google (vrátane podpory pre braillovské riadky). (#7946)
+- Pridaná podpora pre čítanie tabuliek v aplikácii Kindle (desktop) (#7977)
+- Pridaná podpora pre braillovské riadky HumanWare BrailleNote touch a Brailliant BI 14 cez USB a bluetooth. (#6524)
+- V systéme Windows od aktualizácie Fall creators a novších, dokáže NVDA čítať notifikácie napríklad z aplikácie kalkulačka či Windows Obchod. (#7984)
+- Pridané braillovské tabuľky: Litovčina (8 bodová), Ukrajínčina, Mongolčina skratkopis. (#7839)
+- Pridaná možnosť oznamovania formátovania textu pod braillovským znakom. (#7106)
+- Keď je stiahnutá aktualizácia NVDA, môžete odložiť samotnú inštaláciu novej verzie NVDA. (#4263)
+- NVDA je odteraz lokalizované do mongolčiny a Švajčiarskej Nemčiny.
+- Odteraz je možné na braillovských riadkoch emulovať klávesy ctrl, shift, alt a NVDA a kombinovať ich (napríklad odoslať skratku ctrl+s). (#7306)
+ - Tieto skratky je možné nastaviť v strome emulované klávesy v dialógu Klávesové skratky.
+- Obnovená podpora pre riadky Handy Tech Braillino a Modular so staršým firmwérom. (#8016)
+- Pri podporovaných braillovských riadkoch Handy Tech (napríklad Active Braille a Active Star) sa automaticky synchronizujeaktuálny dátum a čas v prípade, ak je rozdiel viac ako 5 sekúnd.
+- V zozname správ v programe Microsoft Outlook NVDA odteraz oznamuje, či ste na správu odpovedali alebo či bola preposlaná ďalej. (#6911)
+- Odteraz je možné klávesovou skratkou dočasne vypnúť všetky profili. (profili sa aktivujú po najbližšom reštarte a skratku môžete nastaviť v dialógu klávesové skratky). (#4935)
+
+
+== Zmeny ==
+- Upravené zobrazenie stavu doplnku v správcovy doplnkov (len v angličtine). (#7929)
+- Braillovská prekladová Tabuľka liblouis aktualizovaná na verziu 3.5.0. (#7839)
+- Litovská braillovská tabuľka bola premenovaná na litovčina 6 bodov, keďže pribudla aj osembodová tabuľka pre Litovčinu. (#7839)
+- Odstránená Francúzska (kanadská) braillovská tabuľka pre skratkopis a plnopis bola nahradená Francúszkou unifikovanou tabuľkou pre skratkopis a počítačový kód. (#7839)
+- Sekundárne navigačné tlačidlá na riadkoch Alva BC6, EuroBraille a Papenmeier sa odteraz používajú na oznámovanie formátovania pod aktuálnym braillovskýmznakom. (#7106)
+- Ak je nastavená tabuľka pre skratkopis, automaticky sa prepne do plnopisu v prípade, ak je fokus na prvku, ktorý sa nedá editovať (tam, kde nie je viditeľný kurzor alebo v režime prehliadania). (#7306)
+- NVDA v Kalendári v MS Outlook jednoduchšie oznamuje celodenné udalosti. (#7949)
+- Všetky nastavenia NVDA boli presunuté do dialógu možnosti > Nastavenia. (#577)
+- V systéme Windows 10 sa predvolene použije hlas Onecore namiesto eSpeaku. (#8176)
+
+
+== Opravy ==
+- NVDA odteraz dokáže čítať prvky, ktoré majú fokus na prihlasovacej obrazovke účtu microsoft, ak ste už zadali e-mailovú adresu. (#7997)
+- NVDA dokáže správne zobraziť dokument v MS Edge v prípade, ak sa vrátite na predchádzajúcu stránku. (#7997)
+- NVDA viac neprečíta posledný znak pin kódu pri odomikaní v systéme Windows 10. (#7908)
+- Popisy k začiarkávacím poliam a prepínačom nie sú viac v Chrome a Firefoxe čítané dvakrát pri prechádzaní stránky tabulátorom alebo skratkami rýchlej navigácie. (#7960)
+- Prvok aria-current s hodnotou "false" nie je viac oznamovaný ako "pravdivý" ale ako "nepravdivý". (#7892)
+- Načítanie hlasov Onecore nezlyhá v prípade, ak bol nastavený hlas odinštalovaný. (#7553)
+- Zrýchlená zmena hlasu v rozhraní onecore. (#7999)
+- Opravené nesprávne interpretovanie znakov v niektorých braillovských tabuľkách (napríklad nesprávne zobrazovanie veľkých písmen v Dánskom počítačovom 8-bodovom kóde). (#7526, #7693)
+- NVDA odteraz dokáže oznamovať viacero typov odrážok v programe MS Word. (#6778)
+- Skratka na oznámenie formátovania textu nespôsobuje pohyb kurzora a tým pádom teraz NVDA správne oznamuje formátovanie pri opakovanom stlačení skratky. (#7869)
+- Odteraz nie je možné používať skratkopis na miestach, kde nie je podporovaný (napríklad v režime prehliadania nebudú do systému odosielané celé slová). (#7306)
+- Opravené nestabilné pripojenie braillovských riadkov Handy Tech Easy Braille a Braille Wave. (#8016)
+- Pri otvorení menu rýchleho prístupu v systéme Windows 8 a novších (skratka windows+x) NVDA viac nehlási "neznáme" pri otvorení ponuky a pri pohybe kurzora. (#8137)
+- Skratky pre modely braillovských riadkov Hims odteraz fungujú tak, ako sú popísané v používateľskej príručke. (#8096)
+- NVDA odteraz môže opraviť chyby v registroch systému, ktoré spôsobovali nemožnosť čítať dokumenty v režime prehliadania. (#2807)
+- Opravená chyba, ktorá spôsobovala, že v správcovi úloh nebolo možné zistiť niektoré informácie o bežiacich procesoch. (#8147)
+- Novšie SAPI5 hlasy viac nemrznú na konci vyslovenej správy, takže práca pri použití takéhoto hlasu je teraz svižnejjšia. (#8174)
+- NVDA viac nezobrazuje nadbytočné značky na braillovskom riadku alebo pri čítaní po znakoch pri prezeraní systémových hodín na systémovom panely. (#5729)
+- Opäť správne funguje spracovanie scrollovacích kláves na braillovských riadkoch Hims. (#6086)
+- NVDA odteraz presnejšie oznamuje zmeny v niektorých editačných poliach (napríklad v aplikácii Delphy). (#636, #8102)
+
+
+= 2018.1.1 =
+Toto je špeciálna verzia NVDA. Opravená chyba v Onecore hlasoch, ktorá spôsobovala, že hlasy hovorili zrýchlene v aktualizácii Windows 10 Redstone 4 (1803). (#8082)
+
+
 = 2018.1 =
 Prednosti tejto verzie zahŕňajú podporu pre čítanie grafov v programoch MS Word a Powerpoint, pridanú podporu pre Braillovské riadky Eurobraille a Optelec protocol converter, vylepšenú podporu pre Bbraillovské riadky Hims a Optelec, vylepšenú prácu s prehliadačom Mozilla Firefox od verzie 58 a oveľa viac.
 
