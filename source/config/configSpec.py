@@ -28,7 +28,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Speech settings
 [speech]
-	# The synthesiser to use
+	# The synthesizer to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
