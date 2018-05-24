@@ -622,6 +622,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	value=field.get('value',None)
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
+	brailleName = field.get('brailleName', None)
+	useNameAsContent = bool(field.get('useNameAsContent', False)) and bool(brailleName)
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
@@ -654,7 +656,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":current, "placeholder":placeholder}
+			"states": states,
+			"value":value,
+			"current":current,
+			"placeholder":placeholder,
+		}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -663,7 +669,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getBrailleTextForProperties(**props)
-		content = field.get("content")
+		content = field.get("content") if not useNameAsContent else brailleName
 		if content:
 			if text:
 				text += TEXT_SEPARATOR
