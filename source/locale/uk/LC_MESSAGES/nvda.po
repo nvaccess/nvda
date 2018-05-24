@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 00:10+1000\n"
-"PO-Revision-Date: 2018-04-22 11:31+0300\n"
+"POT-Creation-Date: 2018-05-18 00:10+1000\n"
+"PO-Revision-Date: 2018-05-23 11:42+0300\n"
 "Last-Translator: Volodymyr <vlodko@torba.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -582,7 +582,7 @@ msgstr "Непідтримуване введення"
 #. Translators: Reported when a braille input modifier is released.
 #, python-brace-format
 msgid "{modifier} released"
-msgstr ""
+msgstr "{modifier} відпущено"
 
 #. Translators: Reported when a braille input modifier is pressed.
 #, python-brace-format
@@ -1594,14 +1594,14 @@ msgstr "немає попередньої помилки"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr "Посил&ання"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr "&Заголовки"
 
@@ -1618,7 +1618,7 @@ msgstr "&Кнопки"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "Оріє&нтири"
 
@@ -2876,10 +2876,12 @@ msgid "System caret"
 msgstr "Системна каретка"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "Мишка"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "Мовлення"
 
@@ -2888,6 +2890,7 @@ msgid "Configuration"
 msgstr "Конфігурація"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Брайль"
 
@@ -2955,8 +2958,8 @@ msgid "Sleep mode on"
 msgstr "Режим сну увімкнено"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "Перемикає режим сну для активних програм."
+msgid "Toggles sleep mode on and off for the active application."
+msgstr "Вмикає і вимикає режим сну для активних програм."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3442,7 +3445,7 @@ msgstr ""
 "об'єктного перегляду чи режиму перегляду документа і встановлює переглядовий "
 "курсор у позицію об'єктного навігатора"
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "Немає попереднього режиму перегляду"
 
@@ -3481,12 +3484,11 @@ msgstr "%s скопійовано у буфер обміну"
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
-"information, and pressing three times Copies name and value of this  object "
+"information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
 "Промовляє поточний об'єкт. Натисніть двічі для посимвольного читання,та "
-"натисніть тричі для копіювання імені і значення цього об'єкта до буферу "
-"обміну"
+"натисніть тричі для копіювання імені і значення цього об'єкта в буфер обміну"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3972,49 +3974,53 @@ msgstr ""
 "Повідомляє назву  виконуваного файла активного додатка і завантаженого для "
 "нього модуля"
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
+#. Translators: Input help mode message for go to general settings command.
+msgid "Shows NVDA's general settings"
 msgstr "Викликає діалог загальних налаштувань NVDA"
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
-msgstr "Викликає діалог вибору та налаштувань синтезатора NVDA"
+#. Translators: Input help mode message for go to select synthesizer command.
+msgid "Shows the NVDA synthesizer selection dialog"
+msgstr "Викликає діалог вибору синтезатора NVDA"
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
-msgstr "Викликає діалог вибору і налаштувань голосу NVDA"
+#. Translators: Input help mode message for go to speech settings command.
+msgid "Shows NVDA's speech settings"
+msgstr "Викликає діалог налаштувань мовлення NVDA"
 
-#. Translators: Input help mode message for go to braille settings dialog command.
-msgid "Shows the NVDA braille settings dialog"
+#. Translators: Input help mode message for go to select braille display command.
+msgid "Shows the NVDA braille display selection dialog"
+msgstr "Викликає діалог вибору брайлівського  дисплея в NVDA"
+
+#. Translators: Input help mode message for go to braille settings command.
+msgid "Shows NVDA's braille settings"
 msgstr "Викликає діалог налаштувань брайляв  NVDA"
 
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
+#. Translators: Input help mode message for go to keyboard settings command.
+msgid "Shows NVDA's keyboard settings"
 msgstr "Викликає діалог клавіатурних налаштувань NVDA"
 
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
+#. Translators: Input help mode message for go to mouse settings command.
+msgid "Shows NVDA's mouse settings"
 msgstr "Викликає діалог налаштувань мышки NVDA"
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
-msgid "Shows the NVDA review cursor settings dialog"
+#. Translators: Input help mode message for go to review cursor settings command.
+msgid "Shows NVDA's review cursor settings"
 msgstr "Викликає діалог налаштувань переглядового курсора"
 
-#. Translators: Input help mode message for go to input composition dialog.
-msgid "Shows the NVDA input composition settings dialog"
+#. Translators: Input help mode message for go to input composition settings command.
+msgid "Shows NVDA's input composition settings"
 msgstr "Викликає діалог налаштування формування вводу NVDA"
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Викликає діалог налаштувань представлення об'єкта NVDA"
+#. Translators: Input help mode message for go to object presentation settings command.
+msgid "Shows NVDA's object presentation settings"
+msgstr "Викликає діалог налаштувань представлення об'єкта в NVDA"
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
+#. Translators: Input help mode message for go to browse mode settings command.
+msgid "Shows NVDA's browse mode settings"
 msgstr "Показує діалог налаштувань режиму огляду NVDA"
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Викликає діалог налаштувань форматування документа NVDA"
+#. Translators: Input help mode message for go to document formatting settings command.
+msgid "Shows NVDA's document formatting settings"
+msgstr "Викликає діалог налаштувань форматування документа в NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
@@ -4319,6 +4325,22 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Викликає діалог конфігураційних профілів NVDA"
+
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Автоперемикання конфігураційних профілів вимкнено"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Автоперемикання конфігураційних профілів увімкнено"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Дозволяє вимикати всі автоперемикання конфігураційних профілів. Відключення "
+"діятиме до перезавантаження NVDA"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -5900,7 +5922,7 @@ msgstr "Рядок %s"
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
 #, python-format
 msgid "through %s"
-msgstr ""
+msgstr "по %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -5911,7 +5933,7 @@ msgstr "Стовпчик %s"
 #. (example output: through row 5 column 3).
 #, python-brace-format
 msgid "through row {row} column {column}"
-msgstr ""
+msgstr "по  рядок {row} column {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6778,6 +6800,11 @@ msgstr "Прихована копія:"
 msgid "unread"
 msgstr "Непрочитано"
 
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
+msgstr "Редагування профілю {profile}"
+
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "purple flag"
@@ -6838,6 +6865,11 @@ msgstr "Відправлено: %s"
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "Очікування запуску Outlook..."
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
+msgstr "{date} (all day)"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7369,10 +7401,17 @@ msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Не вдалося зберегти конфігурацію. Можливо, файлова система - лише для читання"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
 "Діалог налаштувань NVDA вже відкрито. Будь ласка, спершу закрийте його."
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr ""
+"Панель налаштувань, яку ви намагалися відкрити, недоступна в цій системі."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7391,99 +7430,48 @@ msgstr "Тимчасовий словник"
 msgid "About NVDA"
 msgstr "Про NVDA"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "&Загальні налаштування..."
-
-msgid "General settings"
-msgstr "Загальні налаштування"
-
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&Синтезатор..."
-
-msgid "Change the synthesizer to be used"
-msgstr "Змінити синтезатор, який будете використовувати"
-
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
-msgstr "&Голоси..."
-
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "Вибір голосу, швидкості, висоти та гучності для використання"
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "Н&алаштування брайля..."
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "&Налаштування клавіатури..."
-
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
 msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
 msgstr ""
-"Налаштування розкладки клавіатури, читання символів при введенні, слів та "
-"командних клавіш"
+"Ви маєте намір запустити Інструмент виправлення реєстру COM. Цей інструмент "
+"спробує виправити загальні системні проблеми, які припиняють роботу  NVDA "
+"під час доступу до вмісту у низці додатків, включаючи Firefox та Internet "
+"Explorer. Цей інструмент повинен внести зміни в системний реєстр, тому "
+"потребує адміністративного доступу. Ви впевнені, що хочете продовжити?"
 
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "&Налаштування мишки..."
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Попередження"
 
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr "Зміна читання форми вказівника мишки та об'єктів під вказівником мишки"
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "Інструмент виправлення реєстру COM"
 
-#. Translators: The label for the menu item to open Touch Interaction dialog.
-msgid "&Touch interaction..."
-msgstr "&Взаємодія з сенсорним екраном..."
-
-#. Translators: tooltip for touch interaction settings item.
-msgid "Change how NVDA interacts with the touchscreen"
-msgstr "Змінити взаємодію NVDA з сенсорним екраном"
-
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "Переглядовий &курсор..."
-
-msgid "Configure how and when the review cursor moves"
-msgstr "Налаштувати як і коли пересуватиметься переглядовий курсор"
-
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "&Налаштування формування вводу..."
-
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
+"Зачекайте, будь ласка, поки NVDA намагається виправити проблеми у вашому "
+"реєстрі."
 
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "&Представлення об'єкта..."
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Інструмент виправлення реєстру COM завершено"
 
-msgid "Change reporting of objects"
-msgstr "Зміна читання об'єктів"
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+msgid "&Settings..."
+msgstr "&Налаштування..."
 
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "&Режим огляду..."
-
-msgid "Change virtual buffers specific settings"
-msgstr "Зміна спеціальних налаштувань віртуальних буферів"
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "Форматування &документа"
-
-msgid "Change settings of document properties"
-msgstr "Змінити налаштування властивостей документа"
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "&Windows 10 OCR..."
-msgstr "&Windows 10 OCR..."
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+msgid "NVDA settings"
+msgstr "Налаштування NVDA"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7558,6 +7546,10 @@ msgstr "Створити портабельну копію..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Встановити NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Запуск Інструмента виправлення реєстру COM..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7685,7 +7677,7 @@ msgstr "Параметри"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "&Розкладка клавіатури:"
 
@@ -8106,11 +8098,6 @@ msgstr ""
 "Цей автоперемикач вже асоційований з іншим профілем. Якщо ви продовжите, то "
 "його буде видалено з іншого профіля і асоційовано з поточним. Продовжити?"
 
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Попередження"
-
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
@@ -8349,9 +8336,30 @@ msgstr "Зберегти як"
 msgid "Error saving log: %s"
 msgstr "Помилка збереження журнального файла: %s"
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
-msgstr "Загальні налаштування"
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "Гаразд"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Скасувати"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Застосувати"
+
+#. Translators: The label for the list of categories in a multi category settings dialog.
+msgid "&Categories:"
+msgstr "&Категорії:"
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr "Категорія налаштувань %s"
+
+#. Translators: This is the label for the general settings panel.
+msgid "General"
+msgstr "Загальні"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8473,9 +8481,20 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "Зміна налаштувань мови"
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
-msgstr "Синтезатор"
+#. Translators: A label for the synthesizer on the speech panel.
+msgid "&Synthesizer"
+msgstr "&Синтезатор"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr "З&мінити..."
+
+#. Translators: This is the label for the synthesizer selection dialog
+msgid "Select Synthesizer"
+msgstr "Виберіть синтезатор"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8489,7 +8508,7 @@ msgstr "&Синтезатор:"
 msgid "Output &device:"
 msgstr "Пристрій &виводу"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr "Режим приглушування:"
 
@@ -8503,27 +8522,27 @@ msgstr "Не вдалося завантажити синтезатор %s."
 msgid "Synthesizer Error"
 msgstr "Помилка синтезатора"
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "Налаштування голосу"
+#. Translators: This is the label for the voice settings panel.
+msgid "Voice"
+msgstr "Голос"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr "Автоматично переключатися між мовами (якщо підтримується)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Автоматично переключатися між діалектами (якщо підтримується)"
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "&Рівень символів та пунктуації:"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Довіряти голосу для вибраної мови обробку знаків та символів"
 
@@ -8532,83 +8551,83 @@ msgid "Capital pitch change percentage"
 msgstr "Змінювати висоту голосу для великих букв у відсотках:"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr "Промовляти \"&Велика\" перед великими літерами"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "&Сигнал перед великими літерами"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Використовувати &функцію посимвольного читання, якщо підтримується"
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "Налаштування клавіатури"
+#. Translators: This is the label for the keyboard settings panel.
+msgid "Keyboard"
+msgstr "Клавіатура"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Використовувати CapsLock  як клавішу-модифікатор NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Використовувати Insert на цифровому блоці як клавішу-модифікатор NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Використовувати звичайний Insert як клавішу-модифікатор NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr "Читати &Символи при введенні"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr "Читати &Слова при введенні"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr "Переривати мовлення введенням символів"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr "Переривати мовлення натисненням клавіші Ентер"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr ""
 "Продовжувати неперервне читання навіть після натиснення клавіш швидкої "
 "навігації"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Звуковий сигнал для маленьких літер в режимі Caps Lock"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr "Промовляти &Командні клавіші"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr "Відтворювати звук для &орфографічних помилок під час введення"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr "Опрацьовувати клавіші з інших &програм"
 
@@ -8616,94 +8635,90 @@ msgstr "Опрацьовувати клавіші з інших &програм"
 msgid "At least one key must be used as the NVDA key."
 msgstr "Щонайменше одна клавіша повинна буди клавішею-модифікатором NVDA."
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "Налаштування мишки"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr "Читати зміни &Форми вказівника мишки"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "Увімкнути відстеження &мишки"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr "Роздільна здатність &текстового блоку"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr "Читати &зміну об'єкта при наведенні мишки"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr "&Відтворювати аудіо під час зміни координат мишки"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "&Яскравість впливає на рівень звукового сигнала переміщення мишки"
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "Налаштування переглядового курсора"
+#. Translators: This is the label for the review cursor settings panel.
+msgid "Review Cursor"
+msgstr "Переглядовий курсор"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "Відстежувати системний &фокус"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr "Переміщувати за системною кареткою"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "Переміщувати за &курсором мишки"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "Простий режим перегляду"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
+#. Translators: This is the label for the Input Composition settings panel.
+msgid "Input Composition"
 msgstr "Налаштування формування вводу"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr "Automatically report all available &candidates"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr "Announce &selected candidate"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr "Always include short character &description when announcing candidates"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr "Report changes to the &reading string"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr "Report changes to the &composition string"
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Представлення об'єкта"
 
@@ -8726,110 +8741,110 @@ msgid "Speak and beep"
 msgstr "Мовлення і сигнали"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr "Читати &Підказки"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &help balloons"
 msgstr "Читати &Виринаючі системні повідомлення"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr "Читати &Гарячі клавіші об'єкта"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr "Читати &інформацію про позицію об'єкта"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr "Передбачати позицію об'єкта, коли точна інформація недоступна"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr "читати &опис об'єкта"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "Виведення індикаторів &виконання:"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr "Повідомляти фонові індикатори виконання"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "Повідомляти про зміни &динамічного контенту"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr ""
 "Відтворювати звук, коли з'являються &автоматичні пропозиції під час введення"
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
 msgstr "Режим огляду"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr "&Максимальне число символів у рядку"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr "&Число рядків на сторінці"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr "Використовувати &екранне представлення (якщо підтримується)"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr "Автоматично &промовляти вміст сторінки під час її завантаження"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr "Читати т&абличну розмітку"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr "Автоматичний перехід в режим редагування при зміні фокуса"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr "Автоматичний перехід в режим редагування при переміщенні курсора"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "Відтворювати аудіо при переході між режимами огляду і редагування"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "&Блокувати всі некомандні жести в межах досяжності документа"
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Форматування документа"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
@@ -8837,72 +8852,72 @@ msgstr ""
 "Ці параметри дозволяють обрати, які елементи у документі промовлятиме NVDA."
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr "Шрифт"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Font name"
 msgstr "&Назва шрифта"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font &size"
 msgstr "Розмір &шрифта"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font attri&butes"
 msgstr "Атри&бути шрифта"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "Виділення в тексті"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "Ст&иль"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr "&Кольори"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Document information"
 msgstr "Інформація про документ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Co&mments"
 msgstr "Ко&ментарі"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "&Редакторські ревізії"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Spelling e&rrors"
 msgstr "Орфографічні по&милки"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr "Сторінки та інтервали"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr "&Сторінки"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Line &numbers"
 msgstr "Номери &рядків"
 
@@ -8913,7 +8928,7 @@ msgstr "Промовляти &заглиблення рядка:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Off"
 msgstr "Вимкнено"
 
@@ -8930,89 +8945,98 @@ msgstr "Звукові сигнали"
 msgid "Both  Speech and Tones"
 msgstr "Мовлення та звукові сигнали"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "&Відступ абзаца"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "&Міжрядковий інтервал"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Alignment"
 msgstr "&Вирівнювання"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Table information"
 msgstr "Інформація про ттаблицю"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Tables"
 msgstr "&Таблиці"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Row/column h&eaders"
 msgstr "З&аголовки стовпчиків/рядків"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "Ко&ординати комірки"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Styles"
 msgstr "Стилі"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr "Кольори і стилі"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell borders:"
 msgstr "Рамки комірок:"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Elements"
 msgstr "Елементи"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Списки"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Block &quotes"
 msgstr "&Цитата"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "Фрей&ми"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Clickable"
 msgstr "&Клікабельність"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Промовляти про зміни формату після переміщення курсора (може викликати "
 "відставання)"
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+msgid "Touch Interaction"
+msgstr "Взаємодія з сенсорним екраном"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr "&Режим друку дотиком"
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
 msgstr "Windows 10 OCR"
 
@@ -9104,9 +9128,13 @@ msgstr "&Змінити"
 msgid "Add Dictionary Entry"
 msgstr "Додати словникову статтю"
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr "Налаштування брайля"
+#. Translators: A label for the braille display on the braille panel.
+msgid "Braille &display"
+msgstr "Брайлівський &дисплей"
+
+#. Translators: This is the label for the braille display selection dialog.
+msgid "Select Braille Display"
+msgstr "Виберіть брайлівський дисплей"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9115,6 +9143,13 @@ msgstr "Брайлівський &Дисплей:"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "&Порт:"
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr "Не вдалося завантажити дисплей %s."
+
+msgid "Braille Display Error"
+msgstr "Помилка брайлівського дисплея"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9172,12 +9207,13 @@ msgstr "Уникати розбивання &слів, якщо можливо"
 msgid "Focus context presentation:"
 msgstr "Подання контексту:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Не вдалося завантажити дисплей %s."
+#. Translators: This is the label for the NVDA settings dialog.
+msgid "NVDA"
+msgstr "NVDA"
 
-msgid "Braille Display Error"
-msgstr "Помилка брайлівського дисплея"
+#. Translators: The profile name for normal configuration
+msgid "normal configuration"
+msgstr "нормальна конфігурація"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9256,15 +9292,6 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
 "Не вдалося зберегти користувацькі жести - можливо, файлова система - лише "
 "для читання"
-
-#. Translators: This is the label for the touch interaction settings dialog.
-msgid "Touch Interaction"
-msgstr "Взаємодія з сенсорним екраном"
-
-#. Translators: This is the label for a checkbox in the
-#. touch interaction settings dialog.
-msgid "&Touch typing mode"
-msgstr "&Режим друку дотиком"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10800,6 +10827,99 @@ msgstr "Подвійний міжрядковий інтервал"
 msgid "1.5 line spacing"
 msgstr "Полуторний міжрядковий інтервал"
 
+#~ msgid "Shows the NVDA voice settings dialog"
+#~ msgstr "Викликає діалог вибору і налаштувань голосу NVDA"
+
+#~ msgid "&General settings..."
+#~ msgstr "&Загальні налаштування..."
+
+#~ msgid "&Synthesizer..."
+#~ msgstr "&Синтезатор..."
+
+#~ msgid "Change the synthesizer to be used"
+#~ msgstr "Змінити синтезатор, який будете використовувати"
+
+#~ msgid "Choose the voice, rate, pitch and volume to use"
+#~ msgstr "Вибір голосу, швидкості, висоти та гучності для використання"
+
+#~ msgid "B&raille settings..."
+#~ msgstr "Н&алаштування брайля..."
+
+#~ msgid "&Keyboard settings..."
+#~ msgstr "&Налаштування клавіатури..."
+
+#~ msgid ""
+#~ "Configure keyboard layout, speaking of typed characters, words or command "
+#~ "keys"
+#~ msgstr ""
+#~ "Налаштування розкладки клавіатури, читання символів при введенні, слів та "
+#~ "командних клавіш"
+
+#~ msgid "&Mouse settings..."
+#~ msgstr "&Налаштування мишки..."
+
+#~ msgid "Change reporting of mouse shape and object under mouse"
+#~ msgstr ""
+#~ "Зміна читання форми вказівника мишки та об'єктів під вказівником мишки"
+
+#~ msgid "&Touch interaction..."
+#~ msgstr "&Взаємодія з сенсорним екраном..."
+
+#~ msgid "Change how NVDA interacts with the touchscreen"
+#~ msgstr "Змінити взаємодію NVDA з сенсорним екраном"
+
+#~ msgid "Configure how and when the review cursor moves"
+#~ msgstr "Налаштувати як і коли пересуватиметься переглядовий курсор"
+
+#~ msgid "&Input composition settings..."
+#~ msgstr "&Налаштування формування вводу..."
+
+#~ msgid ""
+#~ "Configure how NVDA reports input composition and candidate selection for "
+#~ "certain languages"
+#~ msgstr ""
+#~ "Configure how NVDA reports input composition and candidate selection for "
+#~ "certain languages"
+
+#~ msgid "&Object presentation..."
+#~ msgstr "&Представлення об'єкта..."
+
+#~ msgid "Change reporting of objects"
+#~ msgstr "Зміна читання об'єктів"
+
+#~ msgid "&Browse mode..."
+#~ msgstr "&Режим огляду..."
+
+#~ msgid "Change virtual buffers specific settings"
+#~ msgstr "Зміна спеціальних налаштувань віртуальних буферів"
+
+#~ msgid "Document &formatting..."
+#~ msgstr "Форматування &документа"
+
+#~ msgid "Change settings of document properties"
+#~ msgstr "Змінити налаштування властивостей документа"
+
+#~ msgid "&Windows 10 OCR..."
+#~ msgstr "&Windows 10 OCR..."
+
+#~ msgid "General Settings"
+#~ msgstr "Загальні налаштування"
+
+#~ msgid "Voice Settings"
+#~ msgstr "Налаштування голосу"
+
+#~ msgid "Keyboard Settings"
+#~ msgstr "Налаштування клавіатури"
+
+#~ msgid "Mouse Settings"
+#~ msgstr "Налаштування мишки"
+
+#~ msgid "Review Cursor Settings"
+#~ msgstr "Налаштування переглядового курсора"
+
+#~ msgid "Braille Settings"
+#~ msgstr "Налаштування брайля"
+
 #~ msgid "French (Canada) grade 1"
 #~ msgstr "French (Canada) grade 1"
 
@@ -10844,9 +10964,6 @@ msgstr "Полуторний міжрядковий інтервал"
 
 #~ msgid "Not defined"
 #~ msgstr "Не знайдено"
-
-#~ msgid "Category"
-#~ msgstr "Категорія"
 
 #~ msgid "Value"
 #~ msgstr "Значення"
