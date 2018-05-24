@@ -13,7 +13,7 @@ Zu den Highlights dieser Version gehören die Unterstützung von Tabellen in Kin
 - Unterstützung für Tabellen in Amazons Kindle für PC (#7977)
 - Unterstützung für die Braillezeilenmodelle BrailleNote touch und Brailliant BI 14 via USB und Bluetooth. (#6524)
 - In Windows 10 Fall Creators Update und neuer kann NVDA nun Benachrichtigungen von Apps wie etwa dem Rechner oder dem Windows-Store ausgeben. (#8045)
-- Neue Braille-Übersetzungstabellen: litauisch 8-Punkt, Ukrainisch, Mongolische Kurzschrift. (#7839)
+- Neue Braille-Übersetzungstabellen: litauisch 8-Punkt, rumänisch 8 Punkt, Ukrainisch, Mongolische Kurzschrift. (#7839)
 - Es wurde ein Skript hinzugefügt, das die Ausgabe von Formatierungsinformationen des Textes unter einem bestimmten Braille-Modul erlaubt. (#7106)
 - Bei der Aktualisierung von NVDA auf eine neue Version ist es nun möglich, die Instalation der Aktualisierung auf einen gewünschten Zeitpunkt zu vertagen. (#4263) 
 - Neue Sprachen: mongolisch, schweizer-deutsch.
@@ -22,23 +22,23 @@ Zu den Highlights dieser Version gehören die Unterstützung von Tabellen in Kin
 - Unterstützung von Handy-Tech-Zeilen wie Braillino und Modular mit älterer firmware wiederhergestellt. (#8016)
 - Datum und Uhrzeit für unterstützte Handy Tech-Geräte (wie Active Braille und Active Star) werden nun automatisch von NVDA synchronisiert, wenn sie länger als fünf Sekunden nicht synchronisiert sind. (#8016)
 - In der Nachrichtenliste in Microsoft Outlook werden weitergeleitete und beantwortete Nachrichten als solche angezeigt. (#6911)
-- Es kann jetzt ein neuer  Befehl im Dialog "Eingaben" zugewiesen werden, um temporär alle Profilauslöser zu deaktivieren. (#4935)
+- Es kann jetzt ein neuer Befehl im Dialog "Eingaben" zugewiesen werden, um temporär alle Profilauslöser zu deaktivieren. (#4935)
 
 
 == Änderungen ==
 - Die Spalte Status im Dialogfeld Erweiterungen verwalten zeigt den Status als "aktiviert" oder "deaktiviert" an; nicht mehr als "wird ausgeführt" oder "stillgelegt". (#7929)
 - Liblouis wurde auf Version 3.5.0 aktualisiert. (#7839)
-- Die Litauische Braille-Übersetzungstabelle wurde auf Litauisch 6-Punkt umbenannt, um Verwechslungen mit der neuen 8-Punkt-Tabelle zu vermeiden. (#7839)
-- Die kanadisch französischen Braille-Übersetzungstabellen für Kurz- und Vollschrift wurden entfernt, stattdessen werden die vereinheitlichten 6-Punkt-Computerbraille und Kurzschrift-Tabellen verwendet. (#7839)
+- Die litauische Braille-Übersetzungstabelle wurde auf Litauisch 6-Punkt umbenannt, um Verwechslungen mit der neuen 8-Punkt-Tabelle zu vermeiden. (#7839)
+- Die kanadisch-französischen Braille-Übersetzungstabellen für Kurz- und Vollschrift wurden entfernt, stattdessen werden die vereinheitlichten 6-Punkt-Computerbraille und Kurzschrift-Tabellen verwendet. (#7839)
 - Die sekundären Routingtasten auf Alva BC6-, EuroBraille- und Papenmeier-Braillezeilen zeigen nun Formatierungsinformationen für den Text unter dem Braillemodul dieser Taste an. (#7106)
 - Beim Eingeben von Kurzschrift fällt NVDA automatisch auf eine Basisschrift-Eingabetabelle zurück, wenn sich der Fokus z. B. im Lesemodus auf einem Steuerelement befindet, das keine Einfügemarke besitzt. (#7306)
 - NVDA zeigt in Outlook weniger ausführliche Informationen an, wenn eine Besprechung oder ein Termin angezeigt wird, der/die einen ganzen Tag umfasst. (#7949)
 - Alle Einstellungen von NVDA werden nun in einem einzigen Dialogfeld unter Optionen -> Einstellungen angezeigt. (#7302)
-- Unter Windows 10 wurde die Standardsprachausgabe auf Windows OneCore geändert. (#8176)
+- Unter Windows 10 wurde die Standardsprachausgabe auf Windows-OneCore geändert. (#8176)
 
 
 == Fehlerkorrekturen ==
-- Das Auslesen des Anmeldebildschirms für das Microsoft-Konto funktioniert nun auch ordnungsgemäß, nachdem Sie eine E-Mail-Adresse eingegeben haben. (#7997)
+- Das Auslesen des Anmeldebildschirms für das Microsoft-Konto funktioniert nun ordnungsgemäß, nachdem Sie eine E-Mail-Adresse eingegeben haben. (#7997)
 - Das Auslesen von Webseiten in Microsoft Edge funktioniert nun auch dann noch, wenn Sie eine Seite zurückgesprungen sind. (#7997)
 - NVDA gibt nun nicht mehr die letzte Ziffer der Pin beim Entsperren des Rechners im Klartext aus. (#7908)
 - Beim Navigieren durch Webseiten mit Tab oder mit den Schnellnavigationsbefehlen werden Beschriftungen für Auswahlschalter oder Kontrollkästchen nicht mehr doppelt ausgegeben. (#7960)
@@ -48,14 +48,14 @@ Zu den Highlights dieser Version gehören die Unterstützung von Tabellen in Kin
 - Behebung fehlerhafter Braille-Ausgabe für mehrere Braille-Tabellen, einschließlich Großbuchstaben in Dänischer 8-Punkt-Kurzschrift. (#7526, #7693)
 - NVDA kann jetzt mehr Aufzählungstypen in Microsoft word ausgeben. (#6778)
 - Bei der Ausgabe der Formatierungsinformationen wird der Cursor nicht mehr fälschlicherweise verschoben, d.h. wenn Sie sie mehrmals abrufen, führt dies nicht mehr zu verschiedenen Ergebnissen. (#7869)
-- Brailleeingabe in Kurzschrift ist nur noch dort möglich, wo sie auch tatsächlich unterstützt wird (z. B. in Eingabefeldern). (#7306)
-- Braillezeilenspezifische Tasten(Kombinationen) für handytech-Zeilen wurden korrigiert. (#8016)
-- NVDA zeigt nicht mehr "unbekannt" an, wenn Sie in Windows 8 oder neuer mit windows+x das "kleine Startmenü" aufrufen. (#8137)
-- Modellspezifische Tasten(Kombinationen) auf Hims-Braillezeilen funktionieren nun wie im handbuch dokumentiert. (#8096)
+- Braille-Eingabe in Kurzschrift ist nur noch dort möglich, wo sie auch tatsächlich unterstützt wird (z. B. in Eingabefeldern). (#7306)
+- Braillezeilenspezifische Tastenkombinationen für handytech-Zeilen wurden korrigiert. (#8016)
+- NVDA zeigt nicht mehr "Unbekannt" an, wenn Sie in Windows 8 oder neuer mit windows+x das "kleine Startmenü" aufrufen. (#8137)
+- Modellspezifische Tastenkombinationen auf Hims-Braillezeilen funktionieren nun wie im handbuch dokumentiert. (#8096)
 - Probleme mit fehlerhaft registrierten COM-Objekten für Firefox und internet Explorer wurden gelöst. (#2807)
 - Probleme mit der Anzeige mancher Details im Taskmanager wurden gelöst. (#8147)
-- neuere Sapi5-Stimmen sollten jetzt schneller reagieren. (#8174)
-- NVDA meldet nicht mehr (LTR- und RTL) Marken in Braille oder Sprache pro Buchstabe, wenn in neueren Windows-Versionen auf die Uhr zugegriffen wird. (#5729)
+- Neuere SAPI5-Stimmen sollten jetzt schneller reagieren. (#8174)
+- NVDA meldet nicht mehr (LTR- und RTL) Marken in Braille oder bei "zeichenweises Lesen", wenn in neueren Windows-Versionen auf die Uhr zugegriffen wird. (#5729)
 - Die Erkennung von Scroll-Tasten auf den Hims Smart Beetle Braillezeilen  ist jetzt  zuverlässiger. (#6086)
 - In einigen Textsteuerelementen, insbesondere in Delphi-Anwendungen, sind die Informationen zum Bearbeiten und Navigieren jetzt viel zuverlässiger. (#636, #8102)
 
@@ -63,11 +63,11 @@ Zu den Highlights dieser Version gehören die Unterstützung von Tabellen in Kin
 == Änderungen für Entwickler ==
 - Die Entwickler-Informationen für UIA-Objekte enthält nun eine Liste aller unterstützten Muster. (#5712)
 - Sie können nun die Verwendung von UIA innerhalb Ihres Anwendungsmoduls erzwingen, indem Sie die Methode isGoodUIAWindow implementieren. (#7961)
-- Die Bool'sche Einstellung "outputPass1Only" im Abschnitt Braille in der Konfiguration wurde wieder entfernt, da Liblouis diese Funktion nicht mehr unterstützt. (#7839)
+- Die bool'sche Einstellung "outputPass1Only" im Abschnitt Braille in der Konfiguration wurde wieder entfernt, da Liblouis diese Funktion nicht mehr unterstützt. (#7839)
 
 
 = 2018.1.1 =
-Dies ist eine spezielle Version von NVDA, die einen Fehler im Onecore Windows Sprachausgabentreiber behebt. Zuvor sprach NVDA unter Windows 10 Redstone 4 (1803) mit höherer Stimme und höherer Geschwindigkeit. (#8082)  
+Dies ist eine spezielle Version von NVDA, die einen Fehler im Windows-OneCore-Sprachausgabentreiber behebt. Zuvor sprach NVDA unter Windows 10 Redstone 4 (1803) mit höherer Stimme und höherer Geschwindigkeit. (#8082)  
 
 
 = 2018.1 =
@@ -157,7 +157,7 @@ Bitte beachten Sie, dass diese Version von NVDA unter Windows XP und Windows Vis
 - Die Schnellnavigationstasten für eingebettete Objekte (O und Umschalt+O) berücksichtigen Audio- und Video-Elemente ebenso wie Web-Anwendungen und Web-Dialoge. (#7239)
 - eSpeak-NG wurde auf Version 1.49.2 aktualisiert, Dadurch werden einige Probleme bei der Produktion von neuen Versionen behoben. (#7385, #7583)
 - Bei dreimaligem Drücken der Tastenkombination zum Lesen der statuszeile wird diese in die Zwischenablage kopiert. (#1785)
-- Beim Zuweisen von NVDA-Befehlen an Baum-Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (zum Beispiel Baum Vario Ultra, Baum Pronto). (#7517)
+- Beim Zuweisen von NVDA-Befehlen an Baum-Braillezeilentasten kann die Zuweisung auf ein bestimmtes Braillezeilenmodell beschränkt werden (z. B. Baum Vario Ultra, Baum Pronto). (#7517)
 - Die Tastenkombination zum direkten Anspringen des Suchfeldes in der Elementliste wurde von alt+f in alt+e geändert. (#7569)
 - Im Dialog Einstellungen / Eingaben gibt es in der Kategorie Lesemodus einen neuen (noch nicht zugewiesenen) Befehl. Mit diesem Befehl können Sie Layout-Tabellen ein- oder ausblenden. (#7634)
 - Liblouis wurde auf Version 3.3.0 aktualisiert. (#7565)
@@ -199,7 +199,7 @@ Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift üb
 == Neue Funktionen ==
 - In den Braille-Einstellungen gibt es eine neue Option, die die dauerhafte Anzeige von Meldungen ermöglicht. (#6669)
 - In der Nachrichtenliste von Microsoft Outlook werden markierte Nachrichten als solche angezeigt. (#6374)
-- In Microsoft PowerPoint wird beim Bearbeiten einer Folie eine Form genau beschrieben, wenn Sie sie bearbeiten (Beispiele sind zum Beispiel Dreieck, Kreis, Video oder Pfeil). Zuvor wurde eine Form lediglich als "Form" angezeigt. (#7111)
+- In Microsoft PowerPoint wird beim Bearbeiten einer Folie eine Form genau beschrieben, wenn Sie sie bearbeiten (Beispiele sind z. B. Dreieck, Kreis, Video oder Pfeil). Zuvor wurde eine Form lediglich als "Form" angezeigt. (#7111)
 - MathML wird jetzt auch in Google Chrome unterstützt. (#7184)
 - NVDA unterstützt jetzt auch die neuen Windows OneCore-Stimmen, die in Windows 10 enthalten sind. Sie können diese Stimmen verwenden, indem Sie Windows OneCore-Stimmen unter Einstellungen --> Sprachausgabe auswählen. (#6159)
 - Die Konfigurationsdateien von NVDA können jetzt auch im lokalen Konfigurationsverzeichnis gespeichert werden. Die betreffende Einstellung wird in der Registrierungsdatenbank von Windows vorgenommen. Weitere Informationen dazu finden Sie im Abschnitt "Systemparameter" im Benutzerhandbuch. (#6812)
@@ -210,7 +210,7 @@ Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift üb
 - Sobald die Vorschlagsliste für ein Suchfeld in Windows 10 erscheint, wird ein Klang abgespielt. (#6241)
 - In Skype für Unternehmen werden Benachrichtigungen, wie ankommende Nachrichten automatisch angezeigt. (#7281)
 - In Skype für Unternehmen werden ankommende Chatnachrichten automatisch vorgelesen, während man sich in einer Unterhaltung befindet. (#7286))
-- In Microsoft Edge werden Benachrichtigungen (zum Beispiel über abgeschlossene Downloads) automatisch angezeigt. (#7281)
+- In Microsoft Edge werden Benachrichtigungen (z. B. über abgeschlossene Downloads) automatisch angezeigt. (#7281)
 - Sie können nun Kurz-, Voll- und Basisschrift über die Brailletastatur einer Braillezeile eingeben. Für weitere Informationen lesen Sie den Abschnitt über Braille-Eingabe in Benutzerhandbuch. (#2439)
 - Mit Hilfe der Brailletabelle Unicode können Sie nun Unicode-Zeichen über die Brailletastatur einer Braillezeile eingeben. (#6449)
 - Die in Taiwan gebräuchliche Braillezeile Superbraille wird nun unterstützt. (#7352)
@@ -246,8 +246,8 @@ Schwerpunkte dieser Version sind u. a. die eingabe von voll- und Kurzschrift üb
 - Das Drücken von "Ende" im Lesemodus in einem lehren Microsoft Word Dokument führt nicht mehr zu einem Laufzeitfehler. (#7009)
 - Der Lesemodus von Microsoft Edge wird auch dann vollständig unterstützt, wenn das angezeigte Dokument die ARIA-Klasse "document" besitzt. (#6998)
 - Im Lesemodus können Sie selbst dann mit Umschalt+Ende den Rest der Zeile markieren, wenn sich der Cursor bereits auf dem letzten Zeichen befindet. (#7157)
-- Wenn ein Dialogfenster eine Fortschrittsanzeige enthält, wird bei Änderungen an der Fortschrittsanzeige auch der Text des Dialogfensters in Braille aktualisiert. Das bedeutet, dass zum Beispiel das Fortschreiten der Zeit zum Herunterladen beim Aktualisieren von NVDA Sie verfolgen können. (#6862)
-- Einige Kombinationsfelder in Windows 10 wie zum Beispiel die Einstellungen für automatische Wiedergabe werden jetzt unterstützt. (#6337).
+- Wenn ein Dialogfenster eine Fortschrittsanzeige enthält, wird bei Änderungen an der Fortschrittsanzeige auch der Text des Dialogfensters in Braille aktualisiert. Das bedeutet, dass z. B. das Fortschreiten der Zeit zum Herunterladen beim Aktualisieren von NVDA Sie verfolgen können. (#6862)
+- Einige Kombinationsfelder in Windows 10 wie z. B. die Einstellungen für automatische Wiedergabe werden jetzt unterstützt. (#6337).
 - Beim Erstellen von Besprechungen und Terminen in Microsoft Outlook werden keine nutzlosen Informationen mehr angezeigt. (#7216)
 - Signaltöne für Fortschrittsbalken mit scheinbar unbegrenztem Wertebereich (wie der Fortschrittsbalken bei der Prüfung auf Aktualisierungen) werden nur noch wiedergegeben, wenn Sie in den Einstellungen für Objektdarstellungen die Signaltöne für Fortschrittsbalken aktiviert haben. (#6759)
 - In Microsoft Excel 2003 und 2007 werden die Zellen wieder angezeigt, wenn Sie in einem Tabellenblatt navigieren. (#7243)

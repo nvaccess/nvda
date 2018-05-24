@@ -5,6 +5,8 @@ Wat is Nieuw in NVDA
 
 = 2018.2 =
 
+Hoogtepunten in deze versie zijn ondersteuning voor tabellen in Kindle voor PC, ondersteuning voor Humanwear BrailleNote Touch en BI14 brailleleesregels, verbeteringen aan zowel Onecore als Sapi5 spraaksynthesizers, verbeteringen in Microsoft Outlook en veel meer.
+
 == Nieuwe Functies ==
 - Samengevougde cellen in rijen en kolommen van tabellen worden nu gemeld in spraak en braille. (#2642)
 - NVDA tabelnavigatiecommando's zijn nu ondersteund in Google Docs (met Braillemodus ingeschakeld). (#7946)
@@ -14,11 +16,13 @@ Wat is Nieuw in NVDA
 - Nieuwe brailletabellen: Litouws 8 punts, Oekraïns, Mongools graad 2. (#7839)
 - Een script toegevoegd om opmaak te melden van de tekst onder een specifieke braillecel. (#7106)
 - Bij het updaten van NVDA is er nu de mogelijkheid om de installatie van de update uit te stellen tot een later gekozen moment. (#4263) 
+- Nieuwe talen: Mongools, Zwitsers Duits.
 - You can now toggle control, shift, alt, windows and NVDA from your braille keyboard and combine these modifiers with braille input (e.g. press control+s). (#7306) 
  - You can assign these new modifier toggles using the commands found under Emulated system keyboard keys in the Input gestures dialog.
 - Herstelde ondersteuning voor de leesregels Handy Tech Braillino en Modular (met oude firmware). (#8016)
 - Datum en tijd voor ondersteunde Handy Tech toestellen (zoals Active Braille en Active Star) worden nu automatisch gesynchroniseerd door NVDA als ze meer dan vijf seconden uit elkaar lopen. (#8016)
 - In berichtelijsten van Microsoft Outlook meldt NVDA nu of een bericht beantwoord of doorgestuurd werd. (#6911)
+- An input gesture can be assigned to temporarily disable all configuration profile triggers. (#4935)
 
 
 == Veranderingen ==
@@ -51,6 +55,9 @@ Wat is Nieuw in NVDA
 - NVDA will now try to correct system COM registration issues causing programs such as Firefox and Internet Explorer to become inaccessible and report "Unknown" by NVDA. (#2807)
 - Work around a bug in task manager causing NVDA to not allow users to access the contents of specific details about processes. (#8147)
 - Newer Microsoft SAPI5 voices no longer lag at the end of speech, making it much more efficient to navigate with these voices. (#8174)
+- NVDA no longer reports (LTR and RTL marks) in Braille or per-character speech when accessing the clock in recent versions of Windows. (#5729)
+- Detection of scroll keys on Hims Smart Beetle displays is once more no longer unreliable. (#6086)
+- In some text controls, particularly in Delphi applications, the information provided about editing and navigating is now much more reliable. (#636, #8102)
 
 
 == Veranderingen voor Ontwikkelaars ==
