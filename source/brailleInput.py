@@ -99,6 +99,8 @@ class BrailleInputHandler(AutoPropertyObject):
 		"""The translation table to use for braille input.
 		@rtype: L{brailleTables.BrailleTable}
 		"""
+		if api.getFocusObject().requiresUnicodeBrailleInput:
+			return brailleTables.getTable('unicode-braille.utb')
 		return self._table
 
 	def _set_table(self, table):
@@ -110,7 +112,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		return focusObj._hasNavigableText and (not focusObj.treeInterceptor or focusObj.treeInterceptor.passThrough)
 
 	def _get_useContractedForCurrentFocus(self):
-		return self._table.contracted and self.currentFocusIsTextObj and not self.currentModifiers
+		return self.table.contracted and self.currentFocusIsTextObj and not self.currentModifiers
 
 	def _translate(self, endWord):
 		"""Translate buffered braille up to the cursor.
@@ -128,10 +130,10 @@ class BrailleInputHandler(AutoPropertyObject):
 		pos = self.untranslatedStart + self.untranslatedCursorPos
 		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
-		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
+		if (not self.currentFocusIsTextObj or self.currentModifiers) and self.table.contracted:
 			mode |=  louis.partialTrans
 		self.bufferText = louis.backTranslate(
-			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
+			[os.path.join(brailleTables.TABLES_DIR, self.table.fileName),
 			"braille-patterns.cti"],
 			data, mode=mode)[0]
 		newText = self.bufferText[oldTextLen:]
@@ -181,7 +183,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in cells])
 		oldText = self.bufferText
 		text = louis.backTranslate(
-			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
+			[os.path.join(brailleTables.TABLES_DIR, self.table.fileName),
 			"braille-patterns.cti"],
 			data, mode=louis.dotsIO | louis.noUndefinedDots | louis.partialTrans)[0]
 		self.bufferText = text
@@ -217,10 +219,10 @@ class BrailleInputHandler(AutoPropertyObject):
 		if speakTyped:
 			if protected:
 				speech.speakSpelling(speech.PROTECTED_CHAR)
-			elif not self._table.contracted or not self._reportContractedCell(pos):
+			elif not self.table.contracted or not self._reportContractedCell(pos):
 				dots = self.bufferBraille[pos]
 				speakDots(dots)
-		if self._table.contracted and (not speakTyped or protected):
+		if self.table.contracted and (not speakTyped or protected):
 			# Even if we're not speaking contracted cells, we might need to start doing so midword.
 			# For example, the user might have speak typed characters disabled, but enable it midword.
 			# Update state needed to report contracted cells.
@@ -344,7 +346,7 @@ class BrailleInputHandler(AutoPropertyObject):
 				self.updateDisplay()
 		else:
 			# This cell didn't produce text.
-			if self._table.contracted:
+			if self.table.contracted:
 				# Update state needed to report contracted cells.
 				self._translateForReportContractedCell(index)
 			speakDots(cell)

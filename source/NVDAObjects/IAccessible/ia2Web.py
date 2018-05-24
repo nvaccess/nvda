@@ -59,6 +59,9 @@ class Ia2Web(IAccessible):
 			return roleText
 		return super(Ia2Web,self).roleTextBraille
 
+	def _get_requiresUnicodeBrailleInput(self):
+		return bool(self.IA2Attributes.get('braille-input',False))
+
 class Document(Ia2Web):
 	value = None
 
