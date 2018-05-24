@@ -471,6 +471,9 @@ class EdgeNode(UIA):
 			return valueOfAriaCurrent
 		return None
 
+	def _get_requiresUnicodeBrailleInput(self):
+		return self.ariaProperties.get('braille-input')=="true"
+
 	def _get_placeholder(self):
 		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
 		return ariaPlaceholder

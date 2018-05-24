@@ -532,6 +532,9 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
+	def _get_requiresUnicodeBrailleInput(self):
+		return self.HTMLAttributes['aria-braille-input']=="true"
+
 	def _get_isCurrent(self):
 		isCurrent = self.HTMLAttributes["aria-current"]
 		if isCurrent == "false":
