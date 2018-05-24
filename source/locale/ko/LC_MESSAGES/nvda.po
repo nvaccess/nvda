@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-12 20:41-0700\n"
+"POT-Creation-Date: 2018-05-18 00:10+1000\n"
+"PO-Revision-Date: 2018-05-23 21:25+0900\n"
 "Last-Translator: Dong Hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -581,17 +581,17 @@ msgstr "자동 연결"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
-msgstr ""
+msgstr "지원되지 않는 입력"
 
 #. Translators: Reported when a braille input modifier is released.
 #, python-brace-format
 msgid "{modifier} released"
-msgstr ""
+msgstr "{modifier} 눌리지 않음"
 
 #. Translators: Reported when a braille input modifier is pressed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{modifier} pressed"
-msgstr "눌리지 않음"
+msgstr "{modifier} 눌림"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -1797,7 +1797,6 @@ msgid "yellow"
 msgstr "노랑"
 
 #. Translators: The color between  yellow and green (HSV hue 90 degrees)
-#, fuzzy
 msgctxt "color hue"
 msgid "yellow-green"
 msgstr "연두"
@@ -1853,10 +1852,10 @@ msgid "pink-red"
 msgstr "분홍"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
-msgstr "{color}"
+msgstr "bright {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
 #, python-brace-format
@@ -2424,7 +2423,7 @@ msgstr "파일 선택기"
 
 #. Translators: Identifies a panel control for grouping related options.
 msgid "panel"
-msgstr "페널"
+msgstr "패널"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 msgid "password edit"
@@ -3478,7 +3477,6 @@ msgid "%s copied to clipboard"
 msgstr "%s 클립보드에 복사됨"
 
 #. Translators: Input help mode message for report current navigator object command.
-#, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
 "information, and pressing three times Copies name and value of this object "
@@ -4199,30 +4197,40 @@ msgid ""
 "Virtually toggles the shift key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"점자 입력을 사용하여 키보드 단축키를 에뮬레이트하기 위해 Shift 키를 가상으로 "
+"토글합니다."
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the control key to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
+"점자 입력을 사용하여 키보드 단축키를 에뮬레이트하기 위해 control 키를 가상으"
+"로 토글합니다"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the alt key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"점자 입력을 사용하여 키보드 단축키를 에뮬레이트하기 위해 alt 키를 가상으로 토"
+"글합니다."
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the left windows key to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
+"점자 입력을 사용하여 키보드 단축키를 에뮬레이트하기 위해 왼쪽 windows 키를 가"
+"상으로 토글합니다"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"점자 입력으로 키보드 단축키를 에뮬레이트하기 위해 NVDA 키를 가상으로 토글합니"
+"다"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4309,7 +4317,7 @@ msgstr "Windows 10 OCR 기능을 사용하여 탐색 객체 컨텐츠를 인식�
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
-msgstr "키보드에서 시스템 키를 누른 것과 동일하게 작동합니다"
+msgstr "시스템 키 점자 입력"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
@@ -4832,24 +4840,21 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart Plus symbol"
-msgstr "선택된 기호 출력 변경"
+msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart Star Symbol"
-msgstr "차트 영역 "
+msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Chart X Symbol"
-msgstr "기호"
+msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5877,9 +5882,9 @@ msgstr "%s행"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, fuzzy, python-format
+#, python-format
 msgid "through %s"
-msgstr "취소선"
+msgstr "%s 까지"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -5888,9 +5893,9 @@ msgstr "%s열"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "{rowCount} 행, {columnCount} 열"
+msgstr "{row}행 {column}열 까지"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6996,9 +7001,8 @@ msgid "Slide {slideNumber}"
 msgstr "Slide {slideNumber}"
 
 #. Translators:   an unlabelled item in Powerpoint another shape is overlapping
-#, fuzzy
 msgid "other item"
-msgstr "header item"
+msgstr "나머지 도형"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
@@ -7192,21 +7196,20 @@ msgid "Bluetooth serial: {portName}"
 msgstr "블루투스 Serial: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
-#, fuzzy
 msgid "Setting HID keyboard simulation not supported"
-msgstr "수학 모드 지원 안 됨"
+msgstr "HID 키보드 시뮬레이션 설정 지원되지 않음"
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
-msgstr ""
+msgstr "HID 키보드 시뮬레이션 사용"
 
 #. Translators: Message when HID keyboard simulation is disabled.
 msgid "HID keyboard simulation disabled"
-msgstr ""
+msgstr "HID 키보드 시뮬레이션 사용 안 함"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggles HID keyboard simulation"
-msgstr ""
+msgstr "HID 키보드 시뮬레이션을 토글합니다"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7238,14 +7241,12 @@ msgid "Eurobraille Esys/Esytime/Iris displays"
 msgstr "Eurobraille Esys/Esytime/Iris"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
-#, fuzzy
 msgid "HID keyboard input simulation is unavailable."
-msgstr "NVDA {version} 버전이 준비되어 있습니다."
+msgstr "HID 키보드 입력 시뮬레이션 사용할 수 없음."
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
-#, fuzzy
 msgid "Toggle HID keyboard simulation"
-msgstr "수학 모드 지원 안 됨"
+msgstr "HID 키보드 시뮬레이션을 토글합니다"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7265,17 +7266,15 @@ msgstr "Handy Tech 점자 디스플레이"
 
 #. Translators: message when braille input is enabled
 msgid "Braille input enabled"
-msgstr ""
+msgstr "점자 입력 사용"
 
 #. Translators: message when braille input is disabled
-#, fuzzy
 msgid "Braille input disabled"
-msgstr "점자 디스플레이 (&D)"
+msgstr "점자 입력 사용 안 함"
 
 #. Translators: description of the script to toggle braille input
-#, fuzzy
 msgid "Toggle braille input"
-msgstr "입력된 점형을 텍스트로 변환합니다"
+msgstr "점자 입력을 토글합니다"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
@@ -7363,7 +7362,7 @@ msgstr ""
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
-msgstr "본 시스템은 이 설정 페널에 나열된 옵션을 지원하지 않습니다."
+msgstr "본 시스템은 이 설정 패널에 나열된 옵션을 지원하지 않습니다."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7420,7 +7419,7 @@ msgstr "NVDA 설정 (&S)..."
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
-msgstr "NVDA 설정없음"
+msgstr "NVDA 설정"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -8285,12 +8284,12 @@ msgstr "적용"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
-msgstr "설정 페널"
+msgstr "설정 패널"
 
 #. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
 #, python-format
 msgid "%s Settings Category"
-msgstr "%s 설정 페널"
+msgstr "%s 설정 패널"
 
 #. Translators: This is the label for the general settings panel.
 msgid "General"
@@ -8412,21 +8411,19 @@ msgid "Language Configuration Change"
 msgstr "언어 변경"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#, fuzzy
 msgid "&Synthesizer"
-msgstr "음성 엔진 (&S):"
+msgstr "음성 엔진 (&S)"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
 msgid "C&hange..."
-msgstr ""
+msgstr "변경 (&C)..."
 
 #. Translators: This is the label for the synthesizer selection dialog
-#, fuzzy
 msgid "Select Synthesizer"
-msgstr "음성 엔진"
+msgstr "음성 엔진 선택"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8455,7 +8452,6 @@ msgid "Synthesizer Error"
 msgstr "음성 엔진 오류"
 
 #. Translators: This is the label for the voice settings panel.
-#, fuzzy
 msgid "Voice"
 msgstr "보이스"
 
@@ -9065,7 +9061,7 @@ msgstr "점자 디스플레이"
 
 #. Translators: This is the label for the braille display selection dialog.
 msgid "Select Braille Display"
-msgstr ""
+msgstr "점자 디스플레이 선택"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9398,14 +9394,14 @@ msgid "&Errors"
 msgstr "오류 (&E)"
 
 #. Translators: The label shown for an insertion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "insertion: {text}"
-msgstr "철자: {text}"
+msgstr "삽입: {text}"
 
 #. Translators: The label shown for a deletion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "deletion: {text}"
-msgstr "철자: {text}"
+msgstr "삭제: {text}"
 
 #. Translators: The general label shown for track changes
 #, python-brace-format
@@ -9906,9 +9902,8 @@ msgid "No Series defined."
 msgstr "계열 정의되지 않음."
 
 #. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
-#, fuzzy
 msgid "Chart Elements"
-msgstr "요소"
+msgstr "차트 요소"
 
 #. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 #. Translators: Details about a series in a chart.
@@ -9918,9 +9913,9 @@ msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} 계열 {seriesIndex} 총 {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Slice color: {colorName} "
-msgstr "계열 색상: {colorName} "
+msgstr ""
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
@@ -9977,19 +9972,16 @@ msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} 총 {pointCount}"
 
 #. Translators: Indicates Primary Category Axis
-#, fuzzy
 msgid "Primary Category Axis"
-msgstr "Primary footer"
+msgstr ""
 
 #. Translators: Indicates Secondary Category Axis
-#, fuzzy
 msgid "Secondary Category Axis"
-msgstr "항목 {categoryAxisData}: "
+msgstr ""
 
 #. Translators: Indicates Primary Value Axis
-#, fuzzy
 msgid "Primary Value Axis"
-msgstr "Primary header"
+msgstr ""
 
 #. Translators: Indicates Secondary Value Axis
 #, fuzzy
@@ -9997,19 +9989,17 @@ msgid "Secondary Value Axis"
 msgstr "보조"
 
 #. Translators: Indicates Primary Series Axis
-#, fuzzy
 msgid "Primary Series Axis"
-msgstr "Primary footer"
+msgstr "기본 계열 축"
 
 #. Translators: Indicates Secondary Series Axis
-#, fuzzy
 msgid "Secondary Series Axis"
-msgstr "보조"
+msgstr "보조 계열 축"
 
 #. Translators: the title of a chart axis
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid " title: {axisTitle}"
-msgstr "차트 제목: {chartTitle}"
+msgstr " 제목: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
