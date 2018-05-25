@@ -669,7 +669,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getBrailleTextForProperties(**props)
-		content = field.get("content") if not useNameAsContent else brailleName
+		name = field.get("name")
+		log.debug(u"text is already: {} and brailleName is: {} and name is: {}".format(text, brailleName, name))
+		useName = brailleName if brailleName else name if name else None
+		content = field.get("content") if not (brailleName or (useNameAsContent and useName)) else useName
+		log.debug(u"content is: {}".format(content))
 		if content:
 			if text:
 				text += TEXT_SEPARATOR
@@ -791,9 +795,12 @@ class TextInfoRegion(Region):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
 		typeform = louis.plain_text
+		contentField = None
 		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
+				if contentField:
+					continue
 				self._isFormatFieldAtStart = False
 				if not command:
 					continue
@@ -825,6 +832,8 @@ class TextInfoRegion(Region):
 				cmd = command.command
 				field = command.field
 				if cmd == "formatChange":
+					if contentField:
+						continue
 					typeform = self._getTypeformFromFormatField(field)
 					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
 					if not text:
@@ -832,10 +841,14 @@ class TextInfoRegion(Region):
 					# Map this field text to the start of the field's content.
 					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlStart":
+					if contentField:
+						continue
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
 					else:
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
+						if field.get("brailleName"):
+							contentField = field
 					# Place this field on a stack so we can access it for controlEnd.
 					ctrlFields.append(field)
 					if not text:
@@ -856,6 +869,10 @@ class TextInfoRegion(Region):
 					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
+					if contentField is field:
+						contentField = None
+					if contentField:
+						continue
 					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue

@@ -868,15 +868,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 
 		if (!isEditable && (nameIsContent || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME) && !nodeHasUsefulContent(parentNode)) {
-		    auto brailleName = getBrailleNameAttribute(IA2AttribsMap);
-            parentNode->addAttribute(L"useNameAsContent", L"True");
+			auto brailleName = getBrailleNameAttribute(IA2AttribsMap);
+			parentNode->addAttribute(L"useNameAsContent", L"True");
 			// If there is no useful content and the name can be the content,
 			// render the name if there is one.
 			if(name) {
-		        parentNode->addAttribute(L"name", name);
-                tempNode = buffer->addTextFieldNode(parentNode, nullptr, L" ");
+				tempNode = buffer->addTextFieldNode(parentNode, nullptr, name);
 				if(tempNode && !locale.empty()) {
-                    tempNode->addAttribute(L"language", locale);
+					tempNode->addAttribute(L"language", locale);
 				}
 			} else if(role==ROLE_SYSTEM_LINK && value) {
 				// If a link has no name, derive it from the URL.

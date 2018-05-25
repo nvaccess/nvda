@@ -1111,7 +1111,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportName',False):
 		name=attrs.get('name', "")
-		log.debug("Getting actual name: {} \n\n from attrs: {}".format(name, attrs), stack_info=True)
 	else:
 		name=""
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
@@ -1201,16 +1200,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
 		out = []
-		log.debug("attrs: {}".format(attrs), stack_info=True)
-		gotName = attrs.get('name', "")
-		gotNameText=getSpeechTextForProperties(reason=reason,name=gotName)
-		useNameAsContent = bool(attrs.get("useNameAsContent", False))
 		content = attrs.get("content")
-		log.debug("useNameAsContent: {}, content: {}, nameText: {}".format(useNameAsContent, content, gotNameText))
-		if useNameAsContent and gotNameText:
-			content = gotNameText
-			gotNameText = None  # don't let this be used twice.
-
 		if content and speakContentFirst:
 			out.append(content)
 		if placeholderValue:
