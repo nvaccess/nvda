@@ -206,11 +206,20 @@ void VBufBackend_t::update() {
 		}
 		this->lock.acquire();
 		LOG_DEBUG(L"Replacing nodes with content of temp buffers");
+		list<pair<int,int>> changedList;
+		for(auto& i: replacementSubtreeMap) {
+			int docHandle=0; int ID=0;
+			auto node=(VBufStorage_controlFieldNode_t*)(i.first);
+			node->getIdentifier(&docHandle,&ID);
+			changedList.push_back({docHandle,ID});
+		}
 		if(!this->replaceSubtrees(replacementSubtreeMap)) {
 			LOG_DEBUGWARNING(L"Error replacing one or more subtrees");
 		}
 		this->lock.release();
-		nvdaControllerInternal_vbufChangeNotify(this->rootDocHandle,this->rootID);
+		for(auto i: changedList) {
+			nvdaControllerInternal_vbufChangeNotify(this->rootDocHandle,this->rootID,i.first,i.second);
+		}
 	} else {
 		LOG_DEBUG(L"Initial render");
 		this->lock.acquire();

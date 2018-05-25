@@ -45,7 +45,8 @@ interface NvdaControllerInternal {
  */
 	error_status_t __stdcall inputLangChangeNotify([in] const long threadID, [in] const unsigned long hkl, [in,string] const wchar_t* layoutString);
 
-/**
+/**changeNot
+
  * Notifies NVDA that a character has been typed in this thread.
  * @param threadID the thread the layout change occured in
  * @param ch the character typed.
@@ -79,7 +80,7 @@ interface NvdaControllerInternal {
 /**
  * Notifies NVDA that a virtual buffer has changed.
  */
-	error_status_t __stdcall vbufChangeNotify([in] const int rootDocHandle, [in] const int rootID);
+	error_status_t __stdcall vbufChangeNotify([in] const int rootDocHandle, [in] const int rootID, [in] const int docHandle, [in] const int ID);
 
 /**
 * Requests for installation of the add-on package from specified path.

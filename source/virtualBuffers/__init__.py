@@ -642,19 +642,23 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
 
 	@classmethod
-	def changeNotify(cls, rootDocHandle, rootID):
+	def changeNotify(cls, rootDocHandle, rootID,docHandle,ID):
 		try:
-			queueHandler.queueFunction(queueHandler.eventQueue, cls.rootIdentifiers[rootDocHandle, rootID]._handleUpdate)
+			queueHandler.queueFunction(queueHandler.eventQueue, cls.rootIdentifiers[rootDocHandle, rootID]._handleUpdate,docHandle,ID)
 		except KeyError:
 			pass
 
-	def _handleUpdate(self):
+	def _handleUpdate(self,docHandle,ID):
 		"""Handle an update to this buffer.
 		"""
 		if not self.VBufHandle:
 			# #4859: The buffer was unloaded after this method was queued.
 			return
 		braille.handler.handleUpdate(self)
+		obj=self.getNVDAObjectFromIdentifier(docHandle,ID)
+		if obj.IA2Attributes.get('live') in ("polite","assertive"):
+			info=self.makeTextInfo(obj)
+			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 
 	def getControlFieldForNVDAObject(self, obj):
 		docHandle, objId = self.getIdentifierFromNVDAObject(obj)
