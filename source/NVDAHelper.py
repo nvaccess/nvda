@@ -369,10 +369,10 @@ def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
 		eventHandler.queueEvent("typedCharacter",focus,ch=ch)
 	return 0
 
-@WINFUNCTYPE(c_long, c_int, c_int)
-def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
+@WINFUNCTYPE(c_long, c_int, c_int,c_int,c_int)
+def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID, docHandle,ID):
 	import virtualBuffers
-	virtualBuffers.VirtualBuffer.changeNotify(rootDocHandle, rootID)
+	virtualBuffers.VirtualBuffer.changeNotify(rootDocHandle, rootID,docHandle,ID)
 	return 0
 
 @WINFUNCTYPE(c_long, c_wchar_p)
