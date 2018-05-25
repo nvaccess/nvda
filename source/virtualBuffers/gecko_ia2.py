@@ -27,7 +27,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrVal=attrs.get(attr)
 			if attrVal is not None:
 				attrs[attr]=int(attrVal)
-
+		brailleName = attrs.get("IAccessible2::attribute_label-braille")
+		attrs["brailleName"] = brailleName
 		current = attrs.get("IAccessible2::attribute_current")
 		if current not in (None, 'false'):
 			attrs['current']= current

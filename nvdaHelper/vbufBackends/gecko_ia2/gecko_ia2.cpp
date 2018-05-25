@@ -320,6 +320,11 @@ bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
 }
 
+wstring getBrailleNameAttribute(const map<wstring,wstring>& IA2AttribsMap){
+	const auto IA2AttribsMapIt = IA2AttribsMap.find(L"label-braille");
+	return IA2AttribsMapIt != IA2AttribsMap.end() ? IA2AttribsMapIt->second : L"";
+}
+
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
 
@@ -477,9 +482,13 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if((states&STATE_SYSTEM_FOCUSABLE)&&parentNode->matchAttributes(ATTRLIST_ROLES, REGEX_PRESENTATION_ROLE)) {
 		parentNode->isHidden=true;
 	}
-	BSTR name=NULL;
+	BSTR name=nullptr;
 	if(pacc->get_accName(varChild,&name)!=S_OK)
-		name=NULL;
+		name=nullptr;
+
+    if(name){
+        LOG_INFO(L"name is: "<<name);
+    }
 
 	wstring description;
 	BSTR rawDesc=NULL;
@@ -859,12 +868,16 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 
 		if (!isEditable && (nameIsContent || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME) && !nodeHasUsefulContent(parentNode)) {
+			auto brailleName = getBrailleNameAttribute(IA2AttribsMap);
+			parentNode->addAttribute(L"useNameAsContent", L"True");
 			// If there is no useful content and the name can be the content,
 			// render the name if there is one.
 			if(name) {
-				tempNode = buffer->addTextFieldNode(parentNode, NULL, name);
-				if(tempNode && !locale.empty()) tempNode->addAttribute(L"language", locale);
-			} else if(role==ROLE_SYSTEM_LINK&&value) {
+				tempNode = buffer->addTextFieldNode(parentNode, nullptr, name);
+				if(tempNode && !locale.empty()) {
+					tempNode->addAttribute(L"language", locale);
+				}
+			} else if(role==ROLE_SYSTEM_LINK && value) {
 				// If a link has no name, derive it from the URL.
 				buffer->addTextFieldNode(parentNode, NULL, getNameForURL(value));
 			}

@@ -1110,7 +1110,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportName',False):
-		name=attrs.get('name',"")
+		name=attrs.get('name', "")
 	else:
 		name=""
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
