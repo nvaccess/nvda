@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 00:10+1000\n"
+"POT-Creation-Date: 2018-05-18 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
@@ -1623,14 +1623,14 @@ msgstr "aquest és el primer error"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr "Enlla&ços"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr "&Encapçalaments"
 
@@ -1647,7 +1647,7 @@ msgstr "&Botons"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "Reg&ions"
 
@@ -2905,10 +2905,12 @@ msgid "System caret"
 msgstr "Cursor del sistema"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "Ratolí"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "Veu"
 
@@ -2917,6 +2919,7 @@ msgid "Configuration"
 msgstr "Configuració"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Braille"
 
@@ -2984,7 +2987,8 @@ msgid "Sleep mode on"
 msgstr "Mode de suspensió activat"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
+#, fuzzy
+msgid "Toggles sleep mode on and off for the active application."
 msgstr "Activa i desactiva el mode en suspensió per a l'aplicació en ús."
 
 #. Translators: Input help mode message for report current line command.
@@ -3487,7 +3491,7 @@ msgstr ""
 "pantalla) i col·loca la posició de revisió en el punt de l'objecte de "
 "navegació"
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "Aquest és el primer mode de revisió"
 
@@ -3524,9 +3528,10 @@ msgid "%s copied to clipboard"
 msgstr "%s copiat al porta-retalls"
 
 #. Translators: Input help mode message for report current navigator object command.
+#, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
-"information, and pressing three times Copies name and value of this  object "
+"information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
 "Informa sobre quin és l'objecte de navegació actual. Si es prem dues vegades "
@@ -4029,49 +4034,55 @@ msgstr ""
 "Verbalitza el nom del fitxer de l'aplicació activa juntament amb el nom del "
 "mòdul d'aplicació carregat actualment"
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
+#. Translators: Input help mode message for go to general settings command.
+#, fuzzy
+msgid "Shows NVDA's general settings"
 msgstr "Mostra el diàleg de configuració general de NVDA"
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
-msgstr "Mostra el diàleg de sintetitzador de NVDA"
+#. Translators: Input help mode message for go to select synthesizer command.
+msgid "Shows the NVDA synthesizer selection dialog"
+msgstr "Mostra el diàleg de selecció del sintetitzador de NVDA"
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
+#. Translators: Input help mode message for go to speech settings command.
+msgid "Shows NVDA's speech settings"
 msgstr "Mostra el diàleg de configuració de la veu de NVDA"
 
-#. Translators: Input help mode message for go to braille settings dialog command.
-msgid "Shows the NVDA braille settings dialog"
+#. Translators: Input help mode message for go to select braille display command.
+#, fuzzy
+msgid "Shows the NVDA braille display selection dialog"
 msgstr "Mostra el diàleg de configuració del braille de NVDA"
 
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Mostra el diàleg de configuració de teclat de NVDA"
+#. Translators: Input help mode message for go to braille settings command.
+msgid "Shows NVDA's braille settings"
+msgstr "Mostra la configuració del braille de NVDA"
 
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
-msgstr "Mostra el diàleg de configuració del ratolí de NVDA"
+#. Translators: Input help mode message for go to keyboard settings command.
+msgid "Shows NVDA's keyboard settings"
+msgstr "Mostra la configuració de teclat de NVDA"
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
-msgid "Shows the NVDA review cursor settings dialog"
-msgstr "Mostra el diàleg de configuració del cursor de revisió de NVDA"
+#. Translators: Input help mode message for go to mouse settings command.
+msgid "Shows NVDA's mouse settings"
+msgstr "Mostra la configuració del ratolí de NVDA"
 
-#. Translators: Input help mode message for go to input composition dialog.
-msgid "Shows the NVDA input composition settings dialog"
-msgstr "Mostra el diàleg de configuració de la composició d'entrada de NVDA"
+#. Translators: Input help mode message for go to review cursor settings command.
+msgid "Shows NVDA's review cursor settings"
+msgstr "Mostra la configuració del cursor de revisió de NVDA"
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Mostra el diàleg de configuració de la presentació d'objectes de NVDA"
+#. Translators: Input help mode message for go to input composition settings command.
+msgid "Shows NVDA's input composition settings"
+msgstr "Mostra la configuració de la composició d'entrada de NVDA"
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Mostra el diàleg de configuració del mode de navegació de NVDA"
+#. Translators: Input help mode message for go to object presentation settings command.
+msgid "Shows NVDA's object presentation settings"
+msgstr "Mostra la configuració de la presentació d'objectes de NVDA"
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Mostra el diàleg de configuració de formatació de documents de NVDA"
+#. Translators: Input help mode message for go to browse mode settings command.
+msgid "Shows NVDA's browse mode settings"
+msgstr "Mostra la configuració del mode de navegació de NVDA"
+
+#. Translators: Input help mode message for go to document formatting settings command.
+msgid "Shows NVDA's document formatting settings"
+msgstr "Mostra la configuració de formatació de documents de NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
@@ -4257,10 +4268,9 @@ msgstr ""
 "Guia el cursor a la cel·la braille o activa l'objecte sota aquesta cel•la"
 
 #. Translators: Input help mode message for Braille report formatting command.
-#, fuzzy
 msgid "Reports formatting info for the text under this braille cell"
 msgstr ""
-"Guia el cursor a la cel·la braille o activa l'objecte sota aquesta cel•la"
+"Guia el cursor a la cel·la braille o activa l'objecte sota aquesta cel·la"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -4382,6 +4392,22 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Mostra el diàleg Perfils de configuració de NVDA"
+
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "S'han desactivat els activadors del perfil de configuració"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "S'han activat els activadors del perfil de configuració"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Activa la desactivació de tots els activadors del perfil de configuració. La "
+"desactivació continua fins que es reinicia el NVDA"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -6844,6 +6870,11 @@ msgstr "BCC:"
 msgid "unread"
 msgstr "per llegir"
 
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
+msgstr "S'està editant el perfil {profile}"
+
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "purple flag"
@@ -6904,6 +6935,11 @@ msgstr "enviat: %s"
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "S'està esperant a l'Outlook..."
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
+msgstr "{date} (all day)"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7435,9 +7471,17 @@ msgstr ""
 "No s'ha pogut desar la configuració - Probablement el suport és només de "
 "lectura"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr "Ja hi ha un diàleg de configuració de NVDA obert. Tanca’l primer."
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr ""
+"El panel de configuració seleccionat no es troba disponible en aquest "
+"sistema."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7456,99 +7500,47 @@ msgstr "Diccionari temporal"
 msgid "About NVDA"
 msgstr "Quant a NVDA"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "Paràmetres &generals..."
-
-msgid "General settings"
-msgstr "Paràmetres generals"
-
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&Sintetitzador..."
-
-msgid "Change the synthesizer to be used"
-msgstr "Canvia el sintetitzador"
-
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
-msgstr "Paràmetres de &veu"
-
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "Tria la veu, velocitat, to i volum"
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "Paràmetres del b&raille..."
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "Paràmetres del &teclat..."
-
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
 msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
 msgstr ""
-"Configura la disposició del teclat, la verbalització dels caràcters i "
-"paraules escrites o les tecles d'ordres"
+"Esteu a punt d'executar l'eina de resolució d'errors amb el registre de COM. "
+"Aquesta eina intentarà solucionar problemes habituals del sistema que "
+"impedeixen que NVDA pugui accedir al contingut de molts programes, inclosos "
+"el Firefox i l'Internet Explorer. Aquesta eina ha de fer canvis al registre "
+"del sistema i, per tant, requereix permisos d'administrador. Esteu segur que "
+"voleu continuar?"
 
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "Paràmetres del &ratolí..."
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Avís"
 
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr "Canvia l'infome de la forma del ratolí i de l'objecte sota el ratolí"
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "Eina de resolució d'errors amb el registre de COM"
 
-#. Translators: The label for the menu item to open Touch Interaction dialog.
-msgid "&Touch interaction..."
-msgstr "In&teracció tàctil..."
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "Espera mentre NVDA intenta solucionar els registres COM del sistema."
 
-#. Translators: tooltip for touch interaction settings item.
-msgid "Change how NVDA interacts with the touchscreen"
-msgstr "Canvia la manera amb què NVDA interactua amb la pantalla tàctil"
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Eina de resolució d'errors amb el registre de COM finalitzada"
 
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "Cursor de &revisió..."
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+msgid "&Settings..."
+msgstr "&Configuració..."
 
-msgid "Configure how and when the review cursor moves"
-msgstr "Configura com i quan es mou el cursor de revisió"
-
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "Paràmetres de la composició d'&entrada..."
-
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
-msgstr ""
-"Configura com NVDA informa de la composició d'entrada i de la selecció de "
-"candidats per a certs idiomes"
-
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "Presentació d'&objectes..."
-
-msgid "Change reporting of objects"
-msgstr "Canvia l'informe d'objectes"
-
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "&Mode de navegació..."
-
-msgid "Change virtual buffers specific settings"
-msgstr "Canvia la configuració específica de la memòria intermèdia virtual"
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "&Formatació de documents..."
-
-msgid "Change settings of document properties"
-msgstr "Canvia els paràmetres de les propietats del document"
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "&Windows 10 OCR..."
-msgstr "OCR del &Windows 10..."
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+msgid "NVDA settings"
+msgstr "Configuració del NVDA"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7622,6 +7614,10 @@ msgstr "Crea una versió portable..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Instal·la NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Executa l'eina de resolució d'errors amb el registre de COM..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7749,7 +7745,7 @@ msgstr "Opcions"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "&Disposició de teclat:"
 
@@ -8174,11 +8170,6 @@ msgstr ""
 "s'eliminarà la relació amb l'altre perfil i s'associarà amb aquest.\n"
 "Estàs segur que vols continuar?"
 
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Avís"
-
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
@@ -8414,9 +8405,30 @@ msgstr "Anomena i desa"
 msgid "Error saving log: %s"
 msgstr "S'ha produït un error en desar el registre: %s"
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
-msgstr "Configuració general"
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "D'acord"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Aplica"
+
+#. Translators: The label for the list of categories in a multi category settings dialog.
+msgid "&Categories:"
+msgstr "&Categories:"
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr "%s Settings Category"
+
+#. Translators: This is the label for the general settings panel.
+msgid "General"
+msgstr "General"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8537,9 +8549,20 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "Canvi de configuració de l'idioma"
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
-msgstr "Sintetitzador"
+#. Translators: A label for the synthesizer on the speech panel.
+msgid "&Synthesizer"
+msgstr "&Sintetitzador"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr "C&anvi..."
+
+#. Translators: This is the label for the synthesizer selection dialog
+msgid "Select Synthesizer"
+msgstr "Selecciona el sintetitzador"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8553,7 +8576,7 @@ msgstr "&Sintetitzador:"
 msgid "Output &device:"
 msgstr "Dispositiu de &sortida:"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr "Mode &d'atenuació de l'àudio:"
 
@@ -8567,27 +8590,28 @@ msgstr "No s'ha pogut carregar el sintetitzador %s ."
 msgid "Synthesizer Error"
 msgstr "Error de sintetitzador"
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "Configuració de veu"
+#. Translators: This is the label for the voice settings panel.
+#, fuzzy
+msgid "Voice"
+msgstr "Veu"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr "Canvi d’idioma automàtic (si el sintetitzador admet l'opció)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Canvi de dialecte automàtic (si el sintetitzador admet l'opció)"
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "&Nivell de puntuació i símbols:"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr ""
 "Llegeix amb la veu de l'idioma del text al processar caràcters i símbols"
@@ -8597,88 +8621,88 @@ msgid "Capital pitch change percentage"
 msgstr "Percentatge de canvi de to a les majúscules"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr "Digues &Maj abans de verbalitzar una lletra majúscula"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "&Emet un xiulet per les majúscules"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr ""
 "Utilitza la funcionalitat de &lletrejar si el sintetitzador admet l'opció"
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "Paràmetres de teclat"
+#. Translators: This is the label for the keyboard settings panel.
+msgid "Keyboard"
+msgstr "Teclat"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Utilitza Bloq Maj com a tecla modificadora de NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr ""
 "Utilitza la tecla d'inserció del teclat numèric com a tecla modificadora de "
 "NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr ""
 "Utilitza la tecla d'inserció del teclat expandit com a tecla modificadora de "
 "NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr "Verbalitza els &caràcters escrits"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr "Verbalitza les &paraules escrites"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr "Interrupció de la veu per als caràcters escrits"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr "Interrupció de la veu per a la tecla de Retorn"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr "Permet la lectura supe&rficial en el perfil Verbalitza-ho tot"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
 "Emet un xiulet en escriure lletres minúscules quan el Bloqueig de majúscules "
 "està activat"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr "Verbalitza les &tecles d'ordres"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr "R"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr "Gestiona les tecles d'altres &aplicacions"
 
@@ -8686,95 +8710,91 @@ msgstr "Gestiona les tecles d'altres &aplicacions"
 msgid "At least one key must be used as the NVDA key."
 msgstr "Almenys una de les tecles ha ser utilitzada com a tecla NVDA."
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "Paràmetres de ratolí"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr "Anuncia els canvis en la &forma del ratolí"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "Habilita el &seguiment del ratolí"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr "&Unitat de resolució de text:"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr "Anuncia el &rol quan el ratolí entri dins l'objecte"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr "&Emet les coordenades per àudio quan el ratolí es mogui"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "La &brillantor controla el volum de l'àudio"
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "Configuració del cursor de revisió"
+#. Translators: This is the label for the review cursor settings panel.
+msgid "Review Cursor"
+msgstr "Cursor de revisió..."
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "Segueix el &focus del sistema"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr "Segueix el &cursor del sistema"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "Segueix el cursor del &ratolí"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "Mode de revisió simple"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
-msgstr "Configuració de la composició d'entrada"
+#. Translators: This is the label for the Input Composition settings panel.
+msgid "Input Composition"
+msgstr "Composició d'entrada"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr "Informa automàticament de tots els &candidats disponibles"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr "Anuncia el candidat &seleccionat"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr ""
 "Inclou sempre la &descripció curta dels caràcters en anunciar els candidats"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr "Informa de canvis a la cadena de &lectura"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr "Informa de canvis a la cadena de &composició"
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Presentació d'objectes"
 
@@ -8797,113 +8817,113 @@ msgid "Speak and beep"
 msgstr "Verbalitza i emet un xiulet"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr "Informa dels &indicadors de funció"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &help balloons"
 msgstr "Informa dels &indicadors de funció d'ajuda"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr "Informa de les &tecles de drecera de l'objecte"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr "Informa de la &posició de l'objecte"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr ""
 "Endevina la informació de &posició de l'objecte quan no estigui "
 "disponibletigui disponible"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr "Informa de les &descripcions de l'objecte"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "Sortida de la barra de progrés:"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr "Informa de les barres de progrés en segon pla"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "Informa dels canvis dinàmics del &contingut"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "Reprodueix un so quan apareguin suggeriments &automàtics"
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
 msgstr "Mode de navegació"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr "Nombre &màxim de caràcters en una línia"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr "&Nombre de línies per pàgina"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr "Utilitza la disposició de &pantalla (si s'admet l'opció)"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr "&Verbalitza-ho tot automàticament quan es carrega una pàgina"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr "Inclou les taules de dispo&sició"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr "Mode de focus automàtic per als canvis de focus"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr "Mode de focus automàtic per al moviment del cursor del sistema"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "Indicació audible del mode de focus i de navegació"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr ""
 "Impedeix que tots els gestos que no corresponen a instruccions arribin al "
 "document"
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Formatació de Documents"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
@@ -8912,84 +8932,83 @@ msgstr ""
 "informa NVDA."
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr "Font"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Font name"
 msgstr "&Nom del tipus de lletra"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font &size"
 msgstr "&Cos de la lletra"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font attri&butes"
 msgstr "Atri&buts de la lletra"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "è&mfasi"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "Est&il"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr "&Colors"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Document information"
 msgstr "Informació del document"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Co&mments"
 msgstr "Co&mentaris"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "Revisions de l'&editor"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Spelling e&rrors"
 msgstr "error ortog&ràfic"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr "Pàgines i espaiat"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr "&Pàgines"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Line &numbers"
 msgstr "&Números de línia"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
-#, fuzzy
 msgid "Line &indentation reporting:"
-msgstr "Informa del &sagnat de la línia amb:"
+msgstr "Informa del &sagnat de la línia:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Off"
 msgstr "Desactivat"
 
@@ -9007,88 +9026,97 @@ msgstr "Tons"
 msgid "Both  Speech and Tones"
 msgstr "Tant Veu, com tons"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "Sagnat del &paràgraf"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "Espai entre &línies"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Alignment"
 msgstr "&Alineació"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Table information"
 msgstr "Informació de la taula"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Tables"
 msgstr "&Taules"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Row/column h&eaders"
 msgstr "capçalera de fila/columna"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "C&oordenades de la cel·la"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Styles"
 msgstr "Estils"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr "Tant els colors com els estils"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell borders:"
 msgstr "Vores de la cel·la:"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Elements"
 msgstr "Elements"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Llistes"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Block &quotes"
 msgstr "Cita en bloc"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "Ma&rcs"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Clickable"
 msgstr "Permet fer &clic"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr "Anuncia canvis de format després del cursor (pot provocar un retard)"
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+msgid "Touch Interaction"
+msgstr "Interacció tàctil"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr "Mode d'escriptura &tàctil"
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
 msgstr "OCR del Windows 10"
 
@@ -9180,9 +9208,13 @@ msgstr "&Edita"
 msgid "Add Dictionary Entry"
 msgstr "Afegeix una entrada al diccionari"
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr "Paràmetres de braille"
+#. Translators: A label for the braille display on the braille panel.
+msgid "Braille &display"
+msgstr "Línia &braille"
+
+#. Translators: This is the label for the braille display selection dialog.
+msgid "Select Braille Display"
+msgstr "Selecciona la línia Braille"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9191,6 +9223,13 @@ msgstr "Línia braille:"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "&Port:"
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr "No s'ha pogut carregar la línia %s"
+
+msgid "Braille Display Error"
+msgstr "Error del terminal braille"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9249,12 +9288,13 @@ msgstr "Evita la separació de &paraules si és possible"
 msgid "Focus context presentation:"
 msgstr "Presentació del context del focus:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "No s'ha pogut carregar la línia %s"
+#. Translators: This is the label for the NVDA settings dialog.
+msgid "NVDA"
+msgstr "NVDA"
 
-msgid "Braille Display Error"
-msgstr "Error del terminal braille"
+#. Translators: The profile name for normal configuration
+msgid "normal configuration"
+msgstr "configuració normal"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9333,15 +9373,6 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
 "S'ha produït un error en desar els gestos definits - probablement el suport "
 "és només de lectura."
-
-#. Translators: This is the label for the touch interaction settings dialog.
-msgid "Touch Interaction"
-msgstr "Interacció tàctil"
-
-#. Translators: This is the label for a checkbox in the
-#. touch interaction settings dialog.
-msgid "&Touch typing mode"
-msgstr "Mode d'escriptura &tàctil"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10891,6 +10922,99 @@ msgstr "Doble interlineat"
 msgid "1.5 line spacing"
 msgstr "interlineat de 1.5"
 
+#~ msgid "Shows the NVDA voice settings dialog"
+#~ msgstr "Mostra el diàleg de configuració de la veu de NVDA"
+
+#~ msgid "&General settings..."
+#~ msgstr "Paràmetres &generals..."
+
+#~ msgid "&Synthesizer..."
+#~ msgstr "&Sintetitzador..."
+
+#~ msgid "Change the synthesizer to be used"
+#~ msgstr "Canvia el sintetitzador"
+
+#~ msgid "Choose the voice, rate, pitch and volume to use"
+#~ msgstr "Tria la veu, velocitat, to i volum"
+
+#~ msgid "B&raille settings..."
+#~ msgstr "Paràmetres del b&raille..."
+
+#~ msgid "&Keyboard settings..."
+#~ msgstr "Paràmetres del &teclat..."
+
+#~ msgid ""
+#~ "Configure keyboard layout, speaking of typed characters, words or command "
+#~ "keys"
+#~ msgstr ""
+#~ "Configura la disposició del teclat, la verbalització dels caràcters i "
+#~ "paraules escrites o les tecles d'ordres"
+
+#~ msgid "&Mouse settings..."
+#~ msgstr "Paràmetres del &ratolí..."
+
+#~ msgid "Change reporting of mouse shape and object under mouse"
+#~ msgstr ""
+#~ "Canvia l'infome de la forma del ratolí i de l'objecte sota el ratolí"
+
+#~ msgid "&Touch interaction..."
+#~ msgstr "In&teracció tàctil..."
+
+#~ msgid "Change how NVDA interacts with the touchscreen"
+#~ msgstr "Canvia la manera amb què NVDA interactua amb la pantalla tàctil"
+
+#~ msgid "Configure how and when the review cursor moves"
+#~ msgstr "Configura com i quan es mou el cursor de revisió"
+
+#~ msgid "&Input composition settings..."
+#~ msgstr "Paràmetres de la composició d'&entrada..."
+
+#~ msgid ""
+#~ "Configure how NVDA reports input composition and candidate selection for "
+#~ "certain languages"
+#~ msgstr ""
+#~ "Configura com NVDA informa de la composició d'entrada i de la selecció de "
+#~ "candidats per a certs idiomes"
+
+#~ msgid "&Object presentation..."
+#~ msgstr "Presentació d'&objectes..."
+
+#~ msgid "Change reporting of objects"
+#~ msgstr "Canvia l'informe d'objectes"
+
+#~ msgid "&Browse mode..."
+#~ msgstr "&Mode de navegació..."
+
+#~ msgid "Change virtual buffers specific settings"
+#~ msgstr "Canvia la configuració específica de la memòria intermèdia virtual"
+
+#~ msgid "Document &formatting..."
+#~ msgstr "&Formatació de documents..."
+
+#~ msgid "Change settings of document properties"
+#~ msgstr "Canvia els paràmetres de les propietats del document"
+
+#~ msgid "&Windows 10 OCR..."
+#~ msgstr "OCR del &Windows 10..."
+
+#~ msgid "General Settings"
+#~ msgstr "Configuració general"
+
+#~ msgid "Voice Settings"
+#~ msgstr "Configuració de veu"
+
+#~ msgid "Keyboard Settings"
+#~ msgstr "Paràmetres de teclat"
+
+#~ msgid "Mouse Settings"
+#~ msgstr "Paràmetres de ratolí"
+
+#~ msgid "Review Cursor Settings"
+#~ msgstr "Configuració del cursor de revisió"
+
+#~ msgid "Braille Settings"
+#~ msgstr "Paràmetres de braille"
+
 #~ msgid "French (Canada) grade 1"
 #~ msgstr "Francès (Canadà) grau 1"
 
@@ -10935,9 +11059,6 @@ msgstr "interlineat de 1.5"
 
 #~ msgid "Not defined"
 #~ msgstr "Sense definir"
-
-#~ msgid "Category"
-#~ msgstr "Categoria"
 
 #~ msgid "Value"
 #~ msgstr "Valor"
