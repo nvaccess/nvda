@@ -436,7 +436,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item=self.menu_tools_toggleBrailleViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Braille viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
 		import brailleViewer
-		brailleViewer.brailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
+		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
 		frame.onBrailleViewerChangedState(created=brailleViewer.isBrailleDisplayCreated())
 
 		if not globalVars.appArgs.secure and not config.isAppX:

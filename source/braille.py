@@ -1529,7 +1529,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._tether = config.conf["braille"]["tetherTo"]
 		self._rawText=u""
 		import brailleViewer
-		brailleViewer.brailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
+		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1627,7 +1627,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				raise RuntimeError("BrailleViewer and physical display sizes must match")
 			self.displaySize = self.viewerTool.numCells
 			self.enabled = True
-		log.debug("reef braille enabled: {}".format(self.enabled))
+		log.debug("Braille Viewer enabled: {}".format(self.enabled))
 
 	def _updateDisplay(self):
 		if self._cursorBlinkTimer:

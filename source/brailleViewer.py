@@ -22,7 +22,7 @@ _display = None
 # is created or destroyed.
 # Args given to Notify:
 # created - A boolean argument is given, True for created, False for destructed.
-brailleViewerToolToggledAction = extensionPoints.Action()
+postBrailleViewerToolToggledAction = extensionPoints.Action()
 
 def isBrailleDisplayCreated():
 	return bool(_display)
@@ -40,12 +40,13 @@ def destroyBrailleViewerTool():
 	global _display
 	if not _display:
 		return
+	d = _display
+	_display = None
 	try:
-		_display.terminate()
+		d.terminate()
 	except:
 		log.error("Error terminating braille viewer tool", exc_info=True)
-	_display = None
-	brailleViewerToolToggledAction.Notify(created=False)
+	postBrailleViewerToolToggledAction.notify(created=False)
 
 DEFAULT_NUM_CELLS = 40
 def createBrailleViewerTool():
@@ -63,7 +64,7 @@ def createBrailleViewerTool():
 		_display.__init__(cells)
 	else:
 		_display = BrailleViewerDriver(cells)
-	brailleViewerToolToggledAction.notify(created=True)
+	postBrailleViewerToolToggledAction.notify(created=True)
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 SPACE_CHARACTER = u" "
@@ -73,11 +74,12 @@ class BrailleViewerFrame(wx.MiniFrame):
 	#Translators: The title of the NVDA Braille Viewer tool window.
 	title = _("NVDA Braille Viewer")
 
-	def __init__(self, numCells, onCloseFunc):
+	def __init__(self, numCells, onDestroyed):
 
 		super(BrailleViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, self.title, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
-		self._notifyOfClose = onCloseFunc
+		self._notifyOfDestroyed = onDestroyed
 		self.Bind(wx.EVT_CLOSE, self.onClose)
+		self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
 		self.lastBraille = SPACE_CHARACTER * numCells
 		self.lastText = SPACE_CHARACTER
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -116,22 +118,24 @@ class BrailleViewerFrame(wx.MiniFrame):
 		return font
 
 	def onClose(self, evt):
-		log.debug("reef onClose")
+		log.debug("braille viewer gui onClose")
 		if not evt.CanVeto():
-			self._notifyOfClose()
 			self.Destroy()
 			return
 		evt.Veto()
 
-	def close(self):
-		self.Destroy()
+	def onDestroy(self, evt):
+		log.debug("braille viewer gui destroyed")
+		self._notifyOfDestroyed()
+		evt.Skip()
+
 
 class BrailleViewerDriver(BrailleDisplayDriver):
 	name = "brailleViewer"
 	#Translators: Description of the braille viewer tool
 	description = _("Braille viewer")
-	numCells = DEFAULT_NUM_CELLS # Overriden to match an active braille display
-	_brailleGui = None # A BrailleViewer instance
+	numCells = DEFAULT_NUM_CELLS  # Overriden to match an active braille display
+	_brailleGui = None  # A BrailleViewer instance
 
 	@classmethod
 	def check(cls):
@@ -141,13 +145,19 @@ class BrailleViewerDriver(BrailleDisplayDriver):
 		super(BrailleViewerDriver, self).__init__()
 		self.numCells = numCells
 		self.rawText = u""
+		self._hasTerminated = False
 		self._setupBrailleGui()
 
 	def _setupBrailleGui(self):
 		# check we have not initialialised yet
 		if self._brailleGui:
 			return True
-		self._brailleGui = BrailleViewerFrame(self.numCells, destroyBrailleViewerTool)
+
+		if self._hasTerminated:
+			return False
+
+		self._brailleGui = BrailleViewerFrame(self.numCells, self.onBrailleGuiDestroyed)
+		return self._brailleGui
 
 	def display(self, cells):
 		if not self._setupBrailleGui():
@@ -160,12 +170,16 @@ class BrailleViewerDriver(BrailleDisplayDriver):
 		self._brailleGui.updateValues(u"".join(spaceReplaced), self.rawText)
 
 	def terminate(self):
-		log.debug("reef terminate")
 		super(BrailleViewerDriver, self).terminate()
-		try:
-			self._brailleGui.Destroy()
-			self._brailleGui = None
-		except wx.PyDeadObjectError:
-			# NVDA's GUI has already terminated.
-			pass
+		if self._brailleGui and not self._hasTerminated:
+			try:
+				self._brailleGui.Destroy()
+			except wx.PyDeadObjectError:
+				# NVDA's GUI has already terminated.
+				pass
+		self.onBrailleGuiDestroyed()
 
+	def onBrailleGuiDestroyed(self):
+		self._brailleGui = None
+		self._hasTerminated = True
+		destroyBrailleViewerTool()
