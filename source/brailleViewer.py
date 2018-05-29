@@ -8,7 +8,7 @@ import wx
 import gui
 import braille
 from braille import BrailleDisplayDriver
-import inputCore
+import config
 from logHandler import log
 import extensionPoints
 
@@ -75,8 +75,18 @@ class BrailleViewerFrame(wx.MiniFrame):
 	title = _("NVDA Braille Viewer")
 
 	def __init__(self, numCells, onDestroyed):
-
-		super(BrailleViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, self.title, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
+		dialogPos=None
+		if not config.conf["brailleViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
+			log.debug("Setting brailleViewer window position")
+			speechViewSection = config.conf["brailleViewer"]
+			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
+		super(BrailleViewerFrame, self).__init__(
+			parent=gui.mainFrame,
+			id=wx.ID_ANY,
+			title=self.title,
+			pos=dialogPos,
+			style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP
+		)
 		self._notifyOfDestroyed = onDestroyed
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
@@ -93,6 +103,12 @@ class BrailleViewerFrame(wx.MiniFrame):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.Show()
+
+
+	def doDisplaysMatchConfig(self):
+		configSizes = config.conf["brailleViewer"]["displays"]
+		attachedSizes = self.getAttachedDisplaySizesAsStringArray()
+		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in xrange(len(configSizes)))
 
 	def updateValues(self, braille, text):
 		brailleEqual = self.lastBraille == braille
@@ -117,6 +133,17 @@ class BrailleViewerFrame(wx.MiniFrame):
 		font.FaceName = "Courier New"
 		return font
 
+	def getAttachedDisplaySizesAsStringArray(self):
+		displays = ( wx.Display(i).GetGeometry().GetSize() for i in xrange(wx.Display.GetCount()) )
+		return [repr( (i.width, i.height) ) for i in displays]
+
+	def savePositionInformation(self):
+		position = self.GetPosition()
+		config.conf["brailleViewer"]["x"] = position.x
+		config.conf["brailleViewer"]["y"] = position.y
+		config.conf["brailleViewer"]["displays"] = self.getAttachedDisplaySizesAsStringArray()
+		config.conf["brailleViewer"]["autoPositionWindow"] = False
+
 	def onClose(self, evt):
 		log.debug("braille viewer gui onClose")
 		if not evt.CanVeto():
@@ -126,6 +153,7 @@ class BrailleViewerFrame(wx.MiniFrame):
 
 	def onDestroy(self, evt):
 		log.debug("braille viewer gui destroyed")
+		self.savePositionInformation()
 		self._notifyOfDestroyed()
 		evt.Skip()
 

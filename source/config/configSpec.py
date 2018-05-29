@@ -113,6 +113,14 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	height = integer()
 	displays = string_list()
 
+[brailleViewer]
+	showBrailleViewerAtStartup = boolean(default=false)
+	autoPositionWindow = boolean(default=True)
+	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
+	x = integer()
+	y = integer()
+	displays = string_list()
+
 #Keyboard settings
 [keyboard]
 	useCapsLockAsNVDAModifierKey = boolean(default=false)
