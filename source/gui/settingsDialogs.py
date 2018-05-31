@@ -106,6 +106,7 @@ class SettingsDialog(wx.Dialog):
 			startTime = time.time()
 		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
 		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
+		self.hasApply = hasApplyButton
 
 		# the wx.Window must be constructed before we can get the handle.
 		import windowUtils
@@ -117,24 +118,52 @@ class SettingsDialog(wx.Dialog):
 
 		self.mainSizer.Add(self.settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL | wx.EXPAND, proportion=1)
 		self.mainSizer.Add(wx.StaticLine(self), flag=wx.EXPAND)
-		buttonFlags = wx.OK|wx.CANCEL|(wx.APPLY if hasApplyButton else 0)|wx.HELP
+
+		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+		buttonSizer.addButton(self, label=_("OK"), id=wx.ID_OK)
+		# Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+		buttonSizer.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		# Translators: The help button on an NVDA dialog. This button will open the NVDA User Guide.
+		buttonSizer.addButton(self, label=_("Help"), id=wx.ID_HELP)
+		if hasApplyButton:
+			# Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+			buttonSizer.addButton(self, label=_("Apply"), id=wx.ID_APPLY)
+
 		self.mainSizer.Add(
-			self.CreateButtonSizer(flags=buttonFlags),
+			buttonSizer.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL|wx.ALIGN_RIGHT
+			flag=wx.ALL | wx.ALIGN_RIGHT
 		)
+
 		self.mainSizer.Fit(self)
 		self.SetSizer(self.mainSizer)
 
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_HELP)
 		self.Bind(wx.EVT_HELP, lambda evt: contextHelp.showHelp(self.helpIds, evt), id=wx.ID_ANY)
-		self.Bind(wx.EVT_BUTTON,self.onApply,id=wx.ID_APPLY)
+		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
+		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
+
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
+
+	def _enterActivatesOk_ctrlSActivatesApply(self, evt):
+		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
+		pressed. Cancel behavior is built into wx.
+		Pressing enter will also close the dialog when a list has focus
+		(e.g. the list of symbols in the symbol pronunciation dialog).
+		Without this custom handler, enter would propagate to the list control (wx ticket #3725).
+		"""
+		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
+		elif self.hasApply and evt.UnicodeKey == ord(u'S') and evt.controlDown:
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_APPLY))
+		else:
+			evt.Skip()
 
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
@@ -200,6 +229,7 @@ class SettingsPanel(wx.Panel):
 		* Optionally, extend L{onPanelActivated} to perform actions after the category has been selected in the list of categories, such as synthesizer or braille display list population.
 		* Optionally, extend L{onPanelDeactivated} to perform actions after the category has been deselected (i.e. another category is selected) in the list of categories.
 		* Optionally, extend one or both of L{onSave} or L{onDiscard} to perform actions in response to the parent dialog's OK or Cancel buttons, respectively.
+		* Optionally, extend one or both of L{isValid} or L{postSave} to perform validation before or steps after saving, respectively.
 
 	@ivar title: The title of the settings panel, also listed in the list of settings categories.
 	@type title: str
@@ -255,9 +285,24 @@ class SettingsPanel(wx.Panel):
 		"""
 		raise NotImplementedError
 
+	def isValid(self):
+		"""Evaluate whether the current circumstances of this panel are valid
+		and allow saving all the settings in a L{MultiCategorySettingsDialog}.
+		Sub-classes may extend this method.
+		@returns: C{True} if validation should continue,
+			C{False} otherwise.
+		@rtype: bool
+		"""
+		return True
+
+	def postSave(self):
+		"""Take action whenever saving settings for all panels in a L{MultiCategorySettingsDialog} succeeded.
+		Sub-classes may extend this method.
+		"""
+
 	def onDiscard(self):
 		"""Take action in response to the parent's dialog Cancel button being pressed.
-		Sub-classes should override this method.
+		Sub-classes may override this method.
 		MultiCategorySettingsDialog is responsible for cleaning up the panel when Cancel is pressed.
 		"""
 
@@ -486,9 +531,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			self.catListCtrl.Focus(newIndex)
 			if not listHadFocus and self.currentCategory:
 				self.currentCategory.SetFocus()
-		elif listHadFocus and key == wx.WXK_RETURN:
-			# The list control captures the return key, but we want it to save the settings.
-			self.onOk(evt)
 		else:
 			evt.Skip()
 
@@ -533,9 +575,22 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		else:
 			evt.Skip()
 
-	def onOk(self,evt):
+	def _doSave(self):
+		for panel in self.catIdToInstanceMap.itervalues():
+			if panel.isValid() is False:
+				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
 		for panel in self.catIdToInstanceMap.itervalues():
 			panel.onSave()
+		for panel in self.catIdToInstanceMap.itervalues():
+			panel.postSave()
+
+	def onOk(self,evt):
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("", exc_info=True)
+			return
+		for panel in self.catIdToInstanceMap.itervalues():
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
@@ -546,8 +601,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		for panel in self.catIdToInstanceMap.itervalues():
-			panel.onSave()
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("", exc_info=True)
+			return
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 class GeneralSettingsPanel(SettingsPanel):
@@ -720,7 +778,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
-		if self.oldLanguage!=newLanguage:
+
+	def postSave(self):
+		if self.oldLanguage!=config.conf["general"]["language"]:
 			if gui.messageBox(
 				# Translators: The message displayed after NVDA interface language has been changed.
 				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
@@ -738,7 +798,8 @@ class SpeechSettingsPanel(SettingsPanel):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the synthesizer on the speech panel.
 		synthLabel = _("&Synthesizer")
-		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=synthLabel), wx.HORIZONTAL))
+		synthBox = wx.StaticBox(self, label=synthLabel)
+		synthGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(synthBox, wx.HORIZONTAL))
 		settingsSizerHelper.addItem(synthGroup)
 
 		# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
@@ -748,6 +809,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		# display here.
 		synthDesc = getSynth().description
 		self.synthNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), value=synthDesc, style=wx.TE_READONLY)
+		self.synthNameCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeSynth)
 
 		# Translators: This is the label for the button used to change synthesizer,
 		# it appears in the context of a synthesizer group on the speech settings panel.
@@ -762,6 +824,12 @@ class SpeechSettingsPanel(SettingsPanel):
 
 		self.voicePanel = VoiceSettingsPanel(self)
 		settingsSizerHelper.addItem(self.voicePanel)
+
+	def _enterTriggersOnChangeSynth(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onChangeSynth(evt)
+		else:
+			evt.Skip()
 
 	def onChangeSynth(self, evt):
 		changeSynth = SynthesizerSelectionDialog(self, multiInstanceAllowed=True)
@@ -1246,7 +1314,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.helpIds[self.handleInjectedKeysCheckBox.GetId()] = "KeyboardSettingsHandleKeys"
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
-	def onSave(self):
+	def isValid(self):
 		# #2871: check wether at least one key is the nvda key.
 		if not self.capsAsNVDAModifierCheckBox.IsChecked() and not self.numpadInsertAsNVDAModifierCheckBox.IsChecked() and not self.extendedInsertAsNVDAModifierCheckBox.IsChecked():
 			log.debugWarning("No NVDA key set")
@@ -1255,7 +1323,10 @@ class KeyboardSettingsPanel(SettingsPanel):
 				_("At least one key must be used as the NVDA key."), 
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
-			return
+			return False
+		return super(KeyboardSettingsPanel, self).isValid()
+
+	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
@@ -2009,7 +2080,6 @@ class DictionaryDialog(SettingsDialog):
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
 		self.editingIndex=-1
-		self.dictList.Bind(wx.EVT_CHAR, self.onListChar)
 
 		bHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
 		addButtonID=wx.NewId()
@@ -2030,16 +2100,6 @@ class DictionaryDialog(SettingsDialog):
 
 	def postInit(self):
 		self.dictList.SetFocus()
-
-	def onListChar(self, evt):
-		if evt.KeyCode == wx.WXK_RETURN:
-			# The enter key should be propagated to the dialog and thus activate the default button,
-			# but this is broken (wx ticket #3725).
-			# Therefore, we must catch the enter key here.
-			# Activate the OK button.
-			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-		else:
-			evt.Skip()
 
 	def onCancel(self,evt):
 		globalVars.speechDictionaryProcessing=True
@@ -2107,7 +2167,9 @@ class BrailleSettingsPanel(SettingsPanel):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the braille display on the braille panel.
 		displayLabel = _("Braille &display")
-		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=displayLabel), wx.HORIZONTAL))
+
+		displayBox = wx.StaticBox(self, label=displayLabel)
+		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(displayBox, wx.HORIZONTAL))
 		settingsSizerHelper.addItem(displayGroup)
 		
 		displayDesc = braille.handler.display.description
@@ -2121,10 +2183,17 @@ class BrailleSettingsPanel(SettingsPanel):
 				changeDisplayBtn
 			)
 		)
+		self.displayNameCtrl.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeDisplay)
 		changeDisplayBtn.Bind(wx.EVT_BUTTON,self.onChangeDisplay)
 
 		self.brailleSubPanel = BrailleSettingsSubPanel(self)
 		settingsSizerHelper.addItem(self.brailleSubPanel)
+
+	def _enterTriggersOnChangeDisplay(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onChangeDisplay(evt)
+		else:
+			evt.Skip()
 
 	def onChangeDisplay(self, evt):
 		changeDisplay = BrailleDisplaySelectionDialog(self, multiInstanceAllowed=True)
@@ -2549,7 +2618,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
-		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
@@ -2637,16 +2705,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.levelList.Enable()
 		self.preserveList.Enable()
 		evt.Skip()
-
-	def onListChar(self, evt):
-		if evt.KeyCode == wx.WXK_RETURN:
-			# The enter key should be propagated to the dialog and thus activate the default button,
-			# but this is broken (wx ticket #3725).
-			# Therefore, we must catch the enter key here.
-			# Activate the OK button.
-			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-		else:
-			evt.Skip()
 
 	def OnAddClick(self, evt):
 		with AddSymbolDialog(self) as entryDialog:
