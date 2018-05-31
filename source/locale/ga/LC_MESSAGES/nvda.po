@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2017.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-15 20:02+0100\n"
+"POT-Creation-Date: 2018-05-25 00:10+1000\n"
+"PO-Revision-Date: 2018-05-26 18:10+0100\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -507,7 +507,7 @@ msgstr "líon an taispeántas Braille I gcónaí"
 #. always shows the object with focus at the very left of the braille display
 #. (i.e. you will have to scroll back for focus context information).
 msgid "Only when scrolling back"
-msgstr ""
+msgstr "Níl sé le fáil ach nuair atá tú ag scrollú ar ais"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -539,25 +539,25 @@ msgstr "lbh %s"
 #. Occurences of %s are replaced with the corresponding row numbers.
 #, python-brace-format
 msgid "r{rowNumber}-{rowSpan}"
-msgstr ""
+msgstr "r{rowNumber}-{rowSpan}"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
 #, python-brace-format
 msgid "r{rowNumber}"
-msgstr ""
+msgstr "r{rowNumber}"
 
 #. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
 #. Occurences of %s are replaced with the corresponding column numbers.
 #, python-brace-format
 msgid "c{columnNumber}-{columnSpan}"
-msgstr ""
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
 #, python-brace-format
 msgid "c{columnNumber}"
-msgstr ""
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -584,12 +584,12 @@ msgstr "Uathoibríoch"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
-msgstr ""
+msgstr "Níl tacaíocht ar fáil don ionchur seo."
 
 #. Translators: Reported when a braille input modifier is released.
 #, python-brace-format
 msgid "{modifier} released"
-msgstr ""
+msgstr "{modifier} scaoilte"
 
 #. Translators: Reported when a braille input modifier is pressed.
 #, python-brace-format
@@ -846,9 +846,8 @@ msgstr "Cróitis, ríomhbhraille 8-ponc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Croatian grade 1"
-msgstr "Laitvis, grád 1"
+msgstr "k Cróitis,  grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -907,15 +906,13 @@ msgstr "Caismírí, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Lithuanian 8 dot"
-msgstr "Liotuáinis "
+msgstr "Liotuáinis 8 bpointe "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Lithuanian 6 dot"
-msgstr "Liotuáinis "
+msgstr "Liotuáinis 6 phointe "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -934,9 +931,8 @@ msgstr "Manipuri,  grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Mongolian grade 1"
-msgstr "Ungáiris, grád 1"
+msgstr ", grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1027,7 +1023,7 @@ msgstr "Puinseáibis, grád 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Romanian"
-msgstr ""
+msgstr "Rómánais"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1089,7 +1085,7 @@ msgstr "Tuircis, grád 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Ukrainian"
-msgstr ""
+msgstr "Úcráinis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1664,7 +1660,7 @@ msgstr "Sainchomhartha: %s"
 #. Translators: This is brailled to indicate a landmark (example output: lmk main).
 #, python-format
 msgid "lmk %s"
-msgstr ""
+msgstr "lmk %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #. Translators: Announces selected text. %s is replaced with the text.
@@ -2515,13 +2511,13 @@ msgstr "féilire"
 
 #. Translators: Identifies a chart element.
 msgid "chart element"
-msgstr ""
+msgstr "Eilimint cairte"
 
 msgid "video"
-msgstr ""
+msgstr "físeán"
 
 msgid "audio"
-msgstr ""
+msgstr "fuaim"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2768,7 +2764,7 @@ msgstr "tírdhreach"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr ""
+msgstr "portráid"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
@@ -5954,9 +5950,9 @@ msgstr "ró %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, fuzzy, python-format
+#, python-format
 msgid "through %s"
-msgstr "líne tríd"
+msgstr "go dtí %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -5965,9 +5961,9 @@ msgstr "colún %s"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "le {rowCount} ró agus {columnCount} colún"
+msgstr "go dtí ró {row} colún {column} "
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6503,14 +6499,13 @@ msgstr "Níl aon nuashonrú ar fáil."
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "&Install NVDA {version}"
-msgstr "Suiteáil NVDA"
+msgstr "Suiteáil NVDA {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
-#, fuzzy
 msgid "Re-&download update"
-msgstr "Íosluchtaigh an &nuashonrú"
+msgstr "Íoslódáil an nuashonrú arís an &nuashonrú"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6527,24 +6522,21 @@ msgid "&Close"
 msgstr "&Dún"
 
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "Tá leagan {version} de NVDA ar fáil."
+msgstr "Tá leagan {version} de NVDA ar fáil le haghaidh suiteála.\n"
 
 #. Translators: The label of a button to install an NVDA update.
-#, fuzzy
 msgid "&Install update"
-msgstr "Suiteáil an Nuashonrú"
+msgstr "Suiteáil an nuashonrú"
 
 #. Translators: The label of a button to postpone an NVDA update.
-#, fuzzy
 msgid "&Postpone update"
-msgstr "Íosluchtaigh an &nuashonrú"
+msgstr "Cuir an nuashonrú ar athló"
 
 #. Translators: The message when a downloaded update file could not be preserved.
-#, fuzzy
 msgid "Unable to postpone update."
-msgstr "ní féidir cóipeáil"
+msgstr "ní féidir an nuashonrú a chur ar athló. "
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -7361,9 +7353,8 @@ msgid "Braille input enabled"
 msgstr "Tá ionchur Braille cumasaithe"
 
 #. Translators: message when braille input is disabled
-#, fuzzy
 msgid "Braille input disabled"
-msgstr "&Taispeántas Braille:"
+msgstr "Tá ionchur Braille díchumasaithe"
 
 #. Translators: description of the script to toggle braille input
 #, fuzzy
@@ -7508,14 +7499,12 @@ msgid "COM Registration Fixing tool complete"
 msgstr ""
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "&Settings..."
-msgstr "Socruithe an &ghutha..."
+msgstr "&Socruithe..."
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "NVDA settings"
-msgstr "Gan socruithe"
+msgstr "Socruithe NVDA"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7672,9 +7661,8 @@ msgid "Donate"
 msgstr "Bronn"
 
 #. Translators: The label for the menu item to run a pending update.
-#, fuzzy
 msgid "Install pending &update"
-msgstr "Suiteáil an Nuashonrú"
+msgstr "Suiteáil an Nuashonrú atá ag feitheamh"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
@@ -7787,9 +7775,8 @@ msgid "Restart with debug logging enabled"
 msgstr "Tosaigh arís agus logáil dífhabhtaithe ar siúl."
 
 #. Translators: An option in the combo box to choose exit action.
-#, fuzzy
 msgid "Install pending update"
-msgstr "Suiteáil an Nuashonrú"
+msgstr "Suiteáil an Nuashonrú atá ag feitheamh"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7890,13 +7877,13 @@ msgid "Add-on Installation"
 msgstr "Suiteáil Bhreiseáin"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
 msgstr ""
-"Tá leagan den bhreiseán seo suiteáilte cheana.  An bhfuil fonn ort é a "
-"nuashonrú?"
+"Tá tú ar tí  leagan {newVersion} de {summary} a shuiteáil, agus meastar go "
+"bhfuil sé suiteáilte cheana."
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 #, fuzzy, python-brace-format
@@ -7946,14 +7933,12 @@ msgid "Enabled after restart"
 msgstr "Cumasaoídh é tar éis an atosaithe."
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#, fuzzy
 msgid "disabled"
-msgstr "Díchumasaigh"
+msgstr "Díchumasaithe"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-#, fuzzy
 msgid "enabled"
-msgstr "Cumasaigh"
+msgstr "Cumasaithe"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -7995,7 +7980,7 @@ msgstr "Eolas faoin Bhreiseán"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
-msgstr ""
+msgstr "Ní féidir breiseáin a shuiteáil i leagan Windows Stor de NVDA"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8322,7 +8307,7 @@ msgstr "Cóipeáil an &chumraíocht úsáideora atá ann"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr ""
+msgstr "Tosaigh an chóip nua iniompartha tar éis di a bheith cruthaithe"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -8397,19 +8382,17 @@ msgid "Apply"
 msgstr ""
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
-#, fuzzy
 msgid "&Categories:"
-msgstr "catagóir"
+msgstr "&catagóirí"
 
 #. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
 #, python-format
 msgid "%s Settings Category"
-msgstr ""
+msgstr "Catagóir Socruithe %s"
 
 #. Translators: This is the label for the general settings panel.
-#, fuzzy
 msgid "General"
-msgstr "Socruithe ginearálta"
+msgstr "ginearálta"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8469,7 +8452,7 @@ msgstr "Lorg n&uashonruithe NVDA go huathoibríoch"
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
-msgstr ""
+msgstr "Cuir in iúl go bhfuil nuashonrú ag feitheamh agus NVDA ag tosú"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8531,9 +8514,8 @@ msgid "Language Configuration Change"
 msgstr "Cumraíocht Teanga Athraithe"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#, fuzzy
 msgid "&Synthesizer"
-msgstr "&Sintéiseoir:"
+msgstr "&Sintéiseoir"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
@@ -8543,9 +8525,8 @@ msgid "C&hange..."
 msgstr "at&hraigh"
 
 #. Translators: This is the label for the synthesizer selection dialog
-#, fuzzy
 msgid "Select Synthesizer"
-msgstr "Sintéiseoir"
+msgstr "Romhnaigh an Sintéiseoir"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8574,7 +8555,6 @@ msgid "Synthesizer Error"
 msgstr "Earráid sa Sintéiseoir"
 
 #. Translators: This is the label for the voice settings panel.
-#, fuzzy
 msgid "Voice"
 msgstr "Guth"
 
@@ -8620,9 +8600,8 @@ msgid "Use &spelling functionality if supported"
 msgstr "Bain úsáid asfeidhm an &litriúithe má tá sé tacaithe.H1."
 
 #. Translators: This is the label for the keyboard settings panel.
-#, fuzzy
 msgid "Keyboard"
-msgstr " méarchlár %s"
+msgstr "méarchlár"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8720,9 +8699,8 @@ msgid "&Brightness controls audio coordinates volume"
 msgstr "Rialann an ghile láine na comhordanáidí fhuaime"
 
 #. Translators: This is the label for the review cursor settings panel.
-#, fuzzy
 msgid "Review Cursor"
-msgstr "&Cursóir athbhreithnithe..."
+msgstr "Cúrsóir athbhreithnithe"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -8848,7 +8826,7 @@ msgstr "Tuairiscigh athraithe ar& inneachar diniciúil"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
-msgstr ""
+msgstr "Sein fuaim nuair a thagann uathmoltai aníos"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
@@ -9086,9 +9064,8 @@ msgstr ""
 "ann)"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#, fuzzy
 msgid "Touch Interaction"
-msgstr "scoir ó matamaitic"
+msgstr "Idirghníomhú tadhaill"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
@@ -9112,9 +9089,8 @@ msgid "Whole &word"
 msgstr "focal go léir"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "Slonn &rialta"
+msgstr "Slonn rialta"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -9189,14 +9165,12 @@ msgid "Add Dictionary Entry"
 msgstr "Cuir Iontráil Fhoclóra Leis"
 
 #. Translators: A label for the braille display on the braille panel.
-#, fuzzy
 msgid "Braille &display"
-msgstr "&Taispeántas Braille:"
+msgstr "Taispeántas Braille:"
 
 #. Translators: This is the label for the braille display selection dialog.
-#, fuzzy
 msgid "Select Braille Display"
-msgstr "Taispeántas Braille:"
+msgstr "Taispeántas Braille"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9267,19 +9241,16 @@ msgid "Avoid splitting &words when possible"
 msgstr "Ná scoilt &focail más féidir"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#, fuzzy
 msgid "Focus context presentation:"
-msgstr "níl anótáil eile ar fáil as seo."
+msgstr "comhthéacs an fhócais"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#, fuzzy
 msgid "NVDA"
-msgstr "Scoir ó NVDA"
+msgstr "NVDA"
 
 #. Translators: The profile name for normal configuration
-#, fuzzy
 msgid "normal configuration"
-msgstr "gnáthcumraíocht"
+msgstr "gnáthchumraíocht"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9546,9 +9517,9 @@ msgid "&Errors"
 msgstr "&earráidí "
 
 #. Translators: The label shown for an insertion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "insertion: {text}"
-msgstr "litriú {text}"
+msgstr "ionchur {text}"
 
 #. Translators: The label shown for a deletion change
 #, python-brace-format
@@ -10054,9 +10025,8 @@ msgid "No Series defined."
 msgstr "nil aon srath sainmhínithe ann"
 
 #. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
-#, fuzzy
 msgid "Chart Elements"
-msgstr "Eilimintí"
+msgstr "Eilimintí cairte"
 
 #. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 #. Translators: Details about a series in a chart.
@@ -10066,9 +10036,9 @@ msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr " Srath {seriesName}  {seriesIndex} as {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Slice color: {colorName} "
-msgstr "Dath an sratha:  {colorName}"
+msgstr "Dath an scealla {colorName}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
@@ -10125,34 +10095,28 @@ msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} de {pointCount}"
 
 #. Translators: Indicates Primary Category Axis
-#, fuzzy
 msgid "Primary Category Axis"
-msgstr "Príomh-bhuntásc"
+msgstr "Ais na príomhcatagóire"
 
 #. Translators: Indicates Secondary Category Axis
-#, fuzzy
 msgid "Secondary Category Axis"
-msgstr "catagóir {categoryAxisData}: "
+msgstr "ais na catagóire tánaistí"
 
 #. Translators: Indicates Primary Value Axis
-#, fuzzy
 msgid "Primary Value Axis"
-msgstr "Príomh-cheanntásc"
+msgstr "ais an phríomhluacha"
 
 #. Translators: Indicates Secondary Value Axis
-#, fuzzy
 msgid "Secondary Value Axis"
-msgstr "tánaisteach"
+msgstr "ais an luacha thánaistigh"
 
 #. Translators: Indicates Primary Series Axis
-#, fuzzy
 msgid "Primary Series Axis"
-msgstr "Príomh-bhuntásc"
+msgstr "ais na príomhsraithe"
 
 #. Translators: Indicates Secondary Series Axis
-#, fuzzy
 msgid "Secondary Series Axis"
-msgstr "tánaisteach"
+msgstr "ais na sraithe tánaistí"
 
 #. Translators: the title of a chart axis
 #, fuzzy, python-brace-format
@@ -10213,7 +10177,7 @@ msgstr "Teideal an chárta  {chartTitle}"
 
 #. Translators: Indicates an untitled chart in Microsoft Office.
 msgid "Untitled chart"
-msgstr "cárta gan teideal"
+msgstr "cairt a gan teideal"
 
 #. Translators: Details about the chart area in a Microsoft Office chart.
 #, python-brace-format
@@ -10226,7 +10190,7 @@ msgstr ""
 
 #. Translators: Indicates the chart area of a Microsoft Office chart.
 msgid "Chart area "
-msgstr "achar cairte"
+msgstr "achar na cairte"
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
 #, python-brace-format
@@ -10275,7 +10239,9 @@ msgstr "dath anaithnid"
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Excel controls the pattern.
 msgid "automatic"
-msgstr "Uathoibríoch"
+msgstr ""
+"Uathoibríoch\n"
+" "
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
@@ -10387,7 +10353,7 @@ msgstr "gradán dronuilleogach "
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
-msgstr "Tuairiscítear ar eilimintí sa scarbhileog seo "
+msgstr "Tuairiscítear ar eilimintí sa scarbhileog seo"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10402,7 +10368,7 @@ msgstr "Nótaí tráchta"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
-msgstr "foirmlí"
+msgstr "foi&rmlí"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
