@@ -223,7 +223,7 @@ class SettingsPanel(wx.Panel):
 		* Optionally, extend L{onPanelActivated} to perform actions after the category has been selected in the list of categories, such as synthesizer or braille display list population.
 		* Optionally, extend L{onPanelDeactivated} to perform actions after the category has been deselected (i.e. another category is selected) in the list of categories.
 		* Optionally, extend one or both of L{onSave} or L{onDiscard} to perform actions in response to the parent dialog's OK or Cancel buttons, respectively.
-		* Optionally, extend one or both of L{preSave} or L{postSave} to perform actions before or after saving, respectively.
+		* Optionally, extend one or both of L{isValid} or L{postSave} to perform validation before or steps after saving, respectively.
 
 	@ivar title: The title of the settings panel, also listed in the list of settings categories.
 	@type title: str
@@ -279,11 +279,11 @@ class SettingsPanel(wx.Panel):
 		"""
 		raise NotImplementedError
 
-	def preSave(self):
-		"""Evaluate whether the current circumstances of this panel
-		allow saving all the settings in a L{MultiCategorySettingsDialog}.
+	def isValid(self):
+		"""Evaluate whether the current circumstances of this panel are valid
+		and allow saving all the settings in a L{MultiCategorySettingsDialog}.
 		Sub-classes may extend this method.
-		@returns: C{True} if pre saving evaluation should continue,
+		@returns: C{True} if validation should continue,
 			C{False} otherwise.
 		@rtype: bool
 		"""
@@ -569,15 +569,22 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		else:
 			evt.Skip()
 
-	def onOk(self,evt):
+	def _doSave(self):
 		for panel in self.catIdToInstanceMap.itervalues():
-			if panel.preSave() is False:
-				log.warning("Pre save handler for %s blocked saving settings" % panel.__class__.__name__)
-				return
+			if panel.isValid() is False:
+				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
 		for panel in self.catIdToInstanceMap.itervalues():
 			panel.onSave()
 		for panel in self.catIdToInstanceMap.itervalues():
 			panel.postSave()
+
+	def onOk(self,evt):
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("", exc_info=True)
+			return
+		for panel in self.catIdToInstanceMap.itervalues():
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
@@ -588,14 +595,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		for panel in self.catIdToInstanceMap.itervalues():
-			if panel.preSave() is False:
-				log.warning("Pre save handler for %s blocked saving settings" % panel.__class__.__name__)
-				return
-		for panel in self.catIdToInstanceMap.itervalues():
-			panel.onSave()
-		for panel in self.catIdToInstanceMap.itervalues():
-			panel.postSave()
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("", exc_info=True)
+			return
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 class GeneralSettingsPanel(SettingsPanel):
@@ -1272,7 +1276,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.handleInjectedKeysCheckBox=sHelper.addItem(wx.CheckBox(self,label=handleInjectedKeysText))
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
-	def preSave(self):
+	def isValid(self):
 		# #2871: check wether at least one key is the nvda key.
 		if not self.capsAsNVDAModifierCheckBox.IsChecked() and not self.numpadInsertAsNVDAModifierCheckBox.IsChecked() and not self.extendedInsertAsNVDAModifierCheckBox.IsChecked():
 			log.debugWarning("No NVDA key set")
@@ -1282,7 +1286,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
 			return False
-		return super(KeyboardSettingsPanel, self).preSave()
+		return super(KeyboardSettingsPanel, self).isValid()
 
 	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
