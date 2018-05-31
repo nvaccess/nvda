@@ -25,7 +25,7 @@ Belangrijke functies zijn:
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
 - Kan via usb-stick (flash drive) of ander draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
-- In 52 talen beschikbaar
+- In 54 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
 - Werken met beveiligde omgeving van Windows (inloggen e.d.) is mogelijk
 - Besturingselementen en tekst worden gemeld bij gebruik van aanraakgebaren
@@ -35,7 +35,7 @@ Belangrijke functies zijn:
 
 ++ Internationalisering ++[Internationalization]
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
-Behalve de Engelse versie van NVDA is het programma beschikbaar in nog 52 andere talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Aragonees, Braziliaans Portugees, bulgaars, Birmees, Catalaans, Colombiaans Spaans, Croatisch, Deens, Duits, Fins, Frans, Galisisch, Georgisch, Grieks, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Kannada, Koreaans, Kyrgyzisch, Litouws, Macedonisch, Nederlands, Nepalees, Noors, Oekraïens, Pharsi, Pools, Portugees, Punjabi, Roemeens, Russisch, Servisch, Sloveens, Slowaaks, Spaans, Tamil, Thai, Tsjechisch, Turks, Vereenvoudigd en Traditioneel Chinees, Viëtnamees en Zweeds. 
+Behalve de Engelse versie van NVDA is het programma beschikbaar in nog 54 andere talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Aragonees, bulgaars, Birmees, Catalaans, Chinees (Vereenvoudigd en Traditioneel), Croatisch, Deens, Duits (Duitsland en Zwitserland), Fins, Frans, Galisisch, Georgisch, Grieks, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Kannada, Koreaans, Kyrgyzisch, Litouws, Macedonisch, Mongools, Nederlands, Nepalees, Noors, Oekraïens, Pharsi, Pools, Portugees (Brazilië en Portugal), Punjabi, Roemeens, Russisch, Servisch, Sloveens, Slowaaks, Spaans (Spanje en Columbië), Tamil, Thai, Tsjechisch, Turks, Viëtnamees en Zweeds. 
 
 ++ Ondersteuning voor spraaksynthese ++[SpeechSynthesizerSupport]
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
@@ -265,7 +265,7 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 ++ Systeeminformatie melden ++[ReportingSystemInformation]
 %kc:beginInclude
 || Naam | Ttoets | Omschrijving |
-| Datum/tijd melden | NVDA+f12 | NVDA+f1| Eenmaal indrukken laat huidige tijd horen, tweemaal snel indrukken meldt de datum |
+| Datum/tijd melden | NVDA+f12 | Eenmaal indrukken laat huidige tijd horen, tweemaal snel indrukken meldt de datum |
 | Batterijstatus melden | NVDA+shift+b | Meldt de batterijstatus, of de computer is aangesloten op netstroom en het batterijpercentage. |
 | Tekst op het klembord melden | NVDA+c | Meldt de tekst op het klembord als er tekst op het klembord staat. |
 %kc:endInclude
@@ -908,27 +908,30 @@ Wanneer u in de tabelweergave  van toegevoegde boeken bent:
 + NVDA configureren +[ConfiguringNVDA]
 
 De meeste instellingen van NVDA kunnen via dialoogvensters worden aangepast. Om dit te doen gaat u in het NVDA-menu naar  “Opties” en kiest u het gewenste sub-menu in het NVDA-menu.
+Veel van deze instellingen zijn  te vinden in het uit meerdere pagina's bestaande [dialoogvenster Instellingen van NVDA  #NVDASettings].
 In alle dialoogvensters geldt dat u met de OK-knop de aangebrachte wijzigingen accepteert.
 Door op de knop “Annuleren” of de Escape-toets te drukken worden wijzigingen niet doorgevoerd.
+Voor bepaalde dialoogvensters kunt u op de knop Toepassen drukken waarmee de instellingen onmiddellijk worden doorgevoerd zonder dat het dialoogvenster wordt gesloten.
 Sommige instellingen kunnen ook gewijzigd worden met sneltoetsen. Deze worden, voor zover van toepassing, hieronder vermeld.
 
-++ NVDA-instellingen ++[NVDASettings]
+++ Instellingen van NVDA ++[NVDASettings]
 %kc:settingsSection: || Naam | Desktoptoets  | Laptoptoets | Beschrijving |
 Het dialoogvenster Instellingen van NVDA kent veel configuratieparameters die aan te passen zijn.
 Dit dialoogvenster  bevat een lijst met verscheidene categorieën instellingen waaruit een keuze gemaakt kan worden.
-Wanneer  u een category,  (of onderdeel) selecteert, krijgt u verschillende aan deze categorie gerelateerde   instellingen te zien in dit dialoogvenster.
+Wanneer  u een categorie,  (of onderdeel) selecteert, krijgt u verschillende aan deze categorie gerelateerde   instellingen te zien in dit dialoogvenster.
 Door de knop 'Toepassen' te gebruiken worden de aangepaste instellingen doorgevoerd zonder dat het dialoogvenster gesloten wordt.
 Als u uw instellingen wilt opslaan en het dialoogvenster Instellingen van NVDA wilt sluiten gebruikt  u de knop 'OK'.
 
 Enkele categorieën instellingen hebben een geheel eigen sneltoets. 
-Als deze wordt ingedrukt, wordt het dialoogvenster Instellingen van NVDA rechtstreeks bij de specifieke categorie geopend.
+Als deze wordt ingedrukt, wordt het dialoogvenster Instellingen van NVDA rechtstreeks bij die specifieke categorie geopend.
 Niet alle categorieën  zijn toegankelijk door middel van toetsenbordcommando's.
 Als u toegang wilt krijgen tot categorieën die niet over een eigen sneltoets beschikken kunt u het dialoogvenster Invoerhandelingen #InputGestures] gebruiken om een eigen invoerhandeling, zoals een toetsenbordcommando of een aanraakge baar, toe te voegen voor die  category.
 
-De verschillende categorieën instellingen die te vinden zijn in het dialoogvenster Instellingen van NVDA worden hieronder weergegeven.
+De categorieën instellingen die te vinden zijn in het dialoogvenster Instellingen van NVDA worden hieronder weergegeven.
  
 +++ Algemeen (NVDA+control+g) +++[GeneralSettings]
-De categorie Algemeen in het dialoogvenster Instellingen van NVDA bevat de volgende onderdelen:
+Via de categorie Algemeen  van het dialoogvenster Instellingen van NVDA stelt u in hoe NVDA in z'n algemeenheid moet omgaan met zaken zoals de interface-taal en of er al dan niet op updates gecontroleerd moet worden.
+In deze  categorie zijn de vogende keuzemogelijkheden beschikbaar:
 
 ==== Taal ====[GeneralSettingsLanguage]
 Dit is een vervolgkeuzelijst waarmee u de taal van de gebruikersinterface en de meldingen van NVDA kunt kiezen. 
@@ -976,7 +979,7 @@ Als deze optie is ingeschakeld zal NVDA u laten weten wanneer er een update besc
 Een beschikbare update kan ook handmatig worden geïnstalleerd vanuit  het dialoogvenster 'NVDA Afsluiten'(mits deze optie ingeschakeld is) of vanuit  het NVDA-menu, door op updates te controleren via het Help-menu.
 
 +++ Spraak (NVDA+control+v) +++[SpeechSettings]
-In de categorie Spraak van het dialoogvenster Instellingen kunt u van spraaksynthesizer veranderen maar ook het geluid van de spraak aanpassen.
+In de categorie Spraak van het dialoogvenster Instellingen kunt u van spraaksynthesizer veranderen maar ook stemkarakteristieken van de gekozen synthesizer  aanpassen.
  
 Een snellere, alternatieve manier om steminstellingen te wijzigen vindt u onder [Synth Settings Ring #SynthSettingsRing].
 
@@ -1224,6 +1227,7 @@ Deze optie is niet beschikbaar als uw brailleleesregel  uitsluitend automatische
 U kunt  de documentatie voor uw brailleleesregel  raadplegen in de rubriek  [Ondersteunde  Brailleleesregels #SupportedBrailleDisplays] voor meer details over de ondersteunde types communicatie en beschikbare poorten.
 
 +++ Toetsenbord (NVDA+control+k) +++[KeyboardSettings]
+Via de categorie Toetsenbord in het dialoogvenster Instellingen van NVDA  kunt u instellen hoe NVDA moet reageren wanneer u met uw toetsenbord werkt.
 In deze categorie treft u de volgende keuzemogelijkheden aan:
 
 ==== Toetsenbordindeling ====[KeyboardSettingsLayout]
@@ -1287,6 +1291,7 @@ Met deze optie kan de gebruiker bepalen of invoer die afkomstig is van toepassin
 Deze optie is standaard ingeschakeld, maar sommige gebruikers,zoals mensen die werken met het Unikey typeprogramma voor Viëtnamees, zullen er wellicht de voorkeur aan geven deze optie uit te zetten omdat er anders invoerfouten ontstaan. 
 
 +++ Muis (NVDA+control+m) +++[MouseSettings]
+Via de categorie Muis in het dialoogvenster Instellingen van NVDA  kunt u de muis volgen, het afspelen van pieptonen voor muiscoórdinaten en andere opties voor het gebruik van een muis instellen.
 De categorie Muisinstellingen in het dialoogvenster  Instellingen NVDA   heeft  de volgende opties:
 
 ==== Veranderingen van muisaanwijzervorm melden ====[MouseSettingsShape]
@@ -1317,6 +1322,7 @@ Deze functies staan standaard uit.
 
 +++ Aanraakinteractie +++[TouchInteraction]
 Via deze categorie instellingen, die u alleen aantreft op computers die draaien onder  Windows 8 en later welke beschikken over mogelijkheden voor bediening d.m.v. aanraking, kunt u configureren hoe NVDA omgaat met aanraakschermen.
+In deze categorie zijn de volgende keuzemogelijkheden beschikbaar:
 
 ==== Direct typen met aanraken ====[TouchTypingMode]
 Het al dan niet aanvinken van dit selectievakje bepaalt hoe u tekst invoert als u typt met het schermtoetsenbord.
@@ -1324,6 +1330,7 @@ Als het selectievakje is aangevinkt dan wordt de door u gewenste letter ingevoer
 Als u geen vinkje zet, moet u dubbeltikken op de letter van uw keuze om deze in te voeren.
 
 +++ Leescursor (review cursor) +++[ReviewCursorSettings]
+Via de categorie Leescursor in het dialoogvenster Instellingen van NVDA  kunt u configureren  hoe de leescursor in NVDA reageert.
 In deze categorie  treft u de volgende keuzemogelijkheden aan:
 
 %kc:setting
@@ -1347,6 +1354,7 @@ Als dit selectievakje aangevinkt is, zorgt NVDA ervoor dat objecten die voor de 
 Om de eenvoudige leesoverzichtmodus vanaf een willekeurige plaats aan- of uit te zetten kunt u via het dialoogvenster [Invoerhandelingen #InputGestures] een aangepaste handeling hiervoor aanmaken.
 
 +++ Objectweergave (NVDA+control+o) +++[ObjectPresentationSettings]
+Via de categorie Objectweergave in het dialoogvenster Instellingen van NVDA  kunt u instellen hoeveel informatie NVDA weergeeft met betrekking tot besturingselementen zoals een beschrijving, positie-informatie etc.
 In deze categorie treft u de volgende keuzemogelijkheden aan:
 
 ==== Flitsberichten melden ====[ObjectPresentationReportToolTips]
@@ -1433,6 +1441,7 @@ Met deze optie kunt u bepalen of NVDA nieuwe symbolen die in de samenstellingsre
 Deze optie is standaard aangevinkt.
 
 +++ Bladermodus (NVDA+control+b) +++[BrowseModeSettings]
+Via de categorie Bladermodus in het dialoogvenster Instellingen van NVDA  kunt u instellen hoe NVDA moet reageren bij het lezen van en het navigeren in complexe documenten zoals webpagina's.
 In deze categorie zijn de volgende keuzemogelijkheden beschikbaar:
 
 ==== Maximale aantal karakters per regel====[BrowseModeSettingsMaxLength]
@@ -1540,9 +1549,10 @@ De toonhoogte stijgtvoor elke spatie, en voor een tab, gaat de toon evenveel omh
 
 +++ Windows 10 OCR +++[Win10OcrSettings]
 Aan de hand van  de instellingen  in deze categorie  kunt u[Windows 10 OCR #Win10Ocr] configureren.
+In deze categorie zijn de volgende keuzemogelijkheden beschikbaar:
 
 ==== Herkenningstaal ====[Win10OcrSettingsRecognitionLanguage]
-Via het vervolgkeuzemenu kunt u de taal kiezen die voor de tekstherkenning gebruikt moet worden.
+In het vervolgkeuzemenu kunt u de taal kiezen die voor de tekstherkenning gebruikt moet worden.
 
 ++ Diverse instellingen ++[MiscSettings]
 Naast het dialoogvenster  Instellingen van [NVDA #NVDASettings] kent het sub-menu Opties van het NVDA-menu nog verscheidene andere onderdelen die hierna worden voorgesteld.
@@ -1868,7 +1878,7 @@ Alle Focus en PAC Mate leesregels van [Freedom Scientific http://www.freedomscie
 De drivers voor de brailleleesregels van Freedom Scientific moeten op uw computer worden geïnstalleerd.
 Zonodig kunt u de drivers downloaden van http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Hoewel op deze pagina alleen de Focus 40 Blueleesregel  wordt genoemd, ondersteunen deze drivers alleFocus en Packmate  leesregels van Freedom Scientific.
-Wanneer u met een 64-bit versie van Windows werkt, en de drivers door een ander schermlesprogramma reeds geïnstalleerd werden, is het waarschijnlijk toch nodig de drivers van bovenstaande link te installeren omdat de bestanden die NVDA nodig heeft, zeer waarschijnlijk niet door de andere schermlezer zijn geïnstalleerd. 
+Wanneer u met een 64-bit versie van Windows werkt, en de drivers door een ander schermleesprogramma reeds geïnstalleerd werden, is het waarschijnlijk toch nodig de drivers van bovenstaande link te installeren omdat de bestanden die NVDA nodig heeft, zeer waarschijnlijk niet door de andere schermlezer zijn geïnstalleerd. 
 
 De standaardinstelling is dat NVDA automatisch deze leesregels detecteert en via USB of bluetooth een verbinding tot stand brengt.
 U kunt evenwel bij het configureren van de leesregel expliciet kiezen voor een "USB-" of "Bluetooth-poort"  waarmee het te gebruiken verbindingstype wordt beperkt.
