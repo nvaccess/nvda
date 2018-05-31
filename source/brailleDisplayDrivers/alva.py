@@ -5,7 +5,7 @@
 #Copyright (C) 2009-2018 NV Access Limited, Davy Kager, Leonard de Ruijter, Optelec B.V.
 
 import serial
-import hwPortUtils
+import bdDetect
 import braille
 from logHandler import log
 import inputCore
@@ -15,7 +15,6 @@ from collections import OrderedDict
 from globalCommands import SCRCAT_BRAILLE
 import ui
 from baseObject import ScriptableObject
-import wx
 import time
 import datetime
 
@@ -89,12 +88,6 @@ ALVA_KEYS = {
 		"control", "windows", "space", "alt", "enter"),
 }
 
-USB_IDS = {
-	"VID_0798&PID_0640", # BC640
-	"VID_0798&PID_0680", # BC680
-	"VID_0798&PID_0699", # USB protocol converter
-}
-
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	name = "alva"
 	# Translators: The name of a braille display.
@@ -103,34 +96,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	timeout = 0.2
 
 	@classmethod
-	def check(cls):
-		return True
-
-	@classmethod
-	def getPossiblePorts(cls):
-		ports = OrderedDict()
-		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
-		try:
-			next(cls._getAutoPorts(comPorts))
-			ports.update((cls.AUTOMATIC_PORT,))
-		except StopIteration:
-			pass
-		for portInfo in comPorts:
-			if not portInfo.get("bluetoothName","").startswith("ALVA "):
-				continue
-			# Translators: Name of a bluetooth serial communications port.
-			ports[portInfo["port"]] = _("Bluetooth serial: {portName}").format(portName=portInfo["friendlyName"])
-		return ports
-
-	@classmethod
-	def _getAutoPorts(cls, comPorts):
-		for portInfo in hwPortUtils.listHidDevices():
-			if portInfo.get("usbID","") in USB_IDS:
-				yield portInfo["devicePath"], "USB HID", portInfo["usbID"]
-		for portInfo in comPorts:
-			if not portInfo.get("bluetoothName","").startswith("ALVA "):
-				continue
-			yield portInfo["port"], "bluetooth", portInfo["bluetoothName"]
+	def getManualPorts(cls):
+		return braille.getSerialPorts(filterFunc=lambda info: info.get("bluetoothName","").startswith("ALVA "))
 
 	def _get_model(self):
 		if not self._deviceId:
@@ -172,17 +139,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self.numCells = 0
 		self._rawKeyboardInput = False
 		self._deviceId = None
-		if port == "auto":
-			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
-		else:
-			tryPorts = ((port, "bluetooth", "ALVA"),)
-		for port, portType, identifier in tryPorts:
-			self.isHid = portType == "USB HID"
+
+		for portType, portId, port, portInfo in self._getTryPorts(port):
+			self.isHid = portType == bdDetect.KEY_HID
 			# Try talking to the display.
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
-					self._deviceId = int(identifier[-2:],16)
+					self._deviceId = int(portId[-2:],16)
 				else:
 					self._dev = hwIo.Serial(port, timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._ser6OnReceive)
 					# Get the device ID
@@ -194,6 +158,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					else: # No response from display
 						continue
 			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
 				continue
 			self._updateSettings()
 			if self.numCells:
@@ -204,7 +169,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.close()
 
 		else:
-			raise RuntimeError("No display found")
+			raise RuntimeError("No ALVA display found")
 
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
@@ -255,9 +220,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Some internal settings have changed.
 				# For example, split point could have been set, in which case the number of cells changed.
 				# We must handle these properly.
-				# Call this on the main thread, to make sure that we can wait for reads when in non-HID mode.
-				# This can probably be changed when #1271 is implemented.
-				wx.CallAfter(self._updateSettings)
+				self._updateSettings()
 			return
 		isRelease = bool(group & ALVA_RELEASE_MASK)
 		group = group & ~ALVA_RELEASE_MASK
