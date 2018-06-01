@@ -66,7 +66,10 @@ def createBrailleViewerTool():
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 SPACE_CHARACTER = u" "
 
-class BrailleViewerFrame(wx.MiniFrame):
+# Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
+# wx.Dialog causes a crash on destruction when multiple were created at the same time (speechViewer
+# may start at the same time)
+class BrailleViewerFrame(wx.Frame):
 
 	#Translators: The title of the NVDA Braille Viewer tool window.
 	title = _("NVDA Braille Viewer")

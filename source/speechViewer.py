@@ -9,7 +9,10 @@ import gui
 import config
 from logHandler import log
 
-class SpeechViewerFrame(wx.MiniFrame):
+# Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
+# wx.Dialog causes a crash on destruction when multiple were created at the same time (brailleViewer
+# may start at the same time)
+class SpeechViewerFrame(wx.Frame):
 
 	def __init__(self, onDestroyCallBack):
 		dialogSize=wx.Size(w=500, h=500)
