@@ -236,6 +236,8 @@ class SettingsPanel(wx.Panel):
 	"""
 
 	title=""
+	helpIds = {}
+
 
 	def __init__(self, parent):
 		"""
@@ -494,6 +496,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					 "MultiCategorySettingsDialog.MIN_SIZE"
 					).format(cls, panel.Size[0])
 				)
+			self.helpIds = panel.helpIds
 		return panel
 
 	def postInit(self):
