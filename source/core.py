@@ -53,10 +53,10 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		gui.WelcomeDialog.run()
+	if config.conf["brailleViewer"]["showBrailleViewerAtStartup"]:
+		gui.mainFrame.onToggleBrailleViewerCommand(evt=None)
 	if config.conf["speechViewer"]["showSpeechViewerAtStartup"]:
 		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
-#	import braille
-#	braille.handler.showBrailleViewer(True)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx

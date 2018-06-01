@@ -12,13 +12,10 @@ import config
 from logHandler import log
 import extensionPoints
 
-# global callbacks for braille viewer creation and destruction.
-_callbacks = []
-
 # global braille viewer driver:
 _display = None
 
-# this extension points action is triggered everytime the the brailleDisplayTool
+# this extension points action is triggered every time the the brailleDisplayTool
 # is created or destroyed.
 # Args given to Notify:
 # created - A boolean argument is given, True for created, False for destructed.
@@ -78,14 +75,14 @@ class BrailleViewerFrame(wx.MiniFrame):
 		dialogPos=None
 		if not config.conf["brailleViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
 			log.debug("Setting brailleViewer window position")
-			speechViewSection = config.conf["brailleViewer"]
-			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
+			brailleViewSection = config.conf["brailleViewer"]
+			dialogPos = wx.Point(x=brailleViewSection["x"], y=brailleViewSection["y"])
 		super(BrailleViewerFrame, self).__init__(
 			parent=gui.mainFrame,
 			id=wx.ID_ANY,
 			title=self.title,
 			pos=dialogPos,
-			style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP
+			style=wx.CAPTION | wx.STAY_ON_TOP
 		)
 		self._notifyOfDestroyed = onDestroyed
 		self.Bind(wx.EVT_CLOSE, self.onClose)
@@ -100,10 +97,23 @@ class BrailleViewerFrame(wx.MiniFrame):
 		item = self.rawoutput = wx.StaticText(self, label=SPACE_CHARACTER)
 		item.Font = self.setFont(item.Font)
 		mainSizer.Add(item, flag=wx.EXPAND)
+
+		# Translators: The label for a setting in the braille viewer that controls whether the braille viewer is shown at
+		# startup or not.
+		showOnStartupCheckboxLabel = _("&Show Braille Viewer on Startup")
+		self.shouldShowOnStartupCheckBox = wx.CheckBox(
+			parent=self,
+			label=showOnStartupCheckboxLabel)
+		self.shouldShowOnStartupCheckBox.SetValue(config.conf["brailleViewer"]["showBrailleViewerAtStartup"])
+		self.shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self.onShouldShowOnStartupChanged)
+		mainSizer.Add(self.shouldShowOnStartupCheckBox, border=5, flag=wx.ALL)
+
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.Show()
 
+	def onShouldShowOnStartupChanged(self, evt):
+		config.conf["brailleViewer"]["showBrailleViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
 
 	def doDisplaysMatchConfig(self):
 		configSizes = config.conf["brailleViewer"]["displays"]

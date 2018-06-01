@@ -9,7 +9,7 @@ import gui
 import config
 from logHandler import log
 
-class SpeechViewerFrame(wx.Dialog):
+class SpeechViewerFrame(wx.MiniFrame):
 
 	def __init__(self, onDestroyCallBack):
 		dialogSize=wx.Size(w=500, h=500)
@@ -37,10 +37,8 @@ class SpeechViewerFrame(wx.Dialog):
 		self.Show(True)
 
 	def onClose(self, evt):
-		deactivate()
-		return
 		if not evt.CanVeto():
-			self.Destroy()
+			deactivate()
 			return
 		evt.Veto()
 
