@@ -14,6 +14,8 @@ import api
 import speech
 import braille
 import ui
+import config
+import winVersion
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -22,19 +24,18 @@ class AppModule(appModuleHandler.AppModule):
 		# Therefore, move the navigator object to that item if possible.
 		# However, in recent builds, name change event is also fired.
 		# For consistent experience, report the new category first by traversing through controls.
+		# #8189: do not announce candidates list itself (not items), as this is repeated each time candidate items are selected.
+		if obj.UIAElement.cachedAutomationID == "CandidateList": return
 		speech.cancelSpeech()
-		# And no, if running on build 17040 and if this is typing suggestion, do not announce candidate window changes, as it is duplicate announcement and is anoying.
-		if obj.UIAElement.cachedAutomationID == "IME_Candidate_Window":
-			return
 		candidate = obj
-		if obj.UIAElement.cachedClassName == "ListViewItem":
+		if obj.UIAElement.cachedClassName == "ListViewItem" and obj.parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
 			# The difference between emoji panel and suggestions list is absence of categories/emoji separation.
-			# If dealing with keyboard entry suggestions (build 17040 and later), return immediately.
+			# Turns out automation ID for the container is different, observed in build 17666 when opening clipboard copy history.
 			candidate = obj.parent.previous
-			if candidate is None:
-				return
-			ui.message(candidate.name)
-			obj = candidate.firstChild
+			if candidate is not None:
+				# Emoji categories list.
+				ui.message(candidate.name)
+				obj = candidate.firstChild
 		if obj is not None:
 			api.setNavigatorObject(obj)
 			obj.reportFocus()
@@ -47,6 +48,36 @@ class AppModule(appModuleHandler.AppModule):
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
 		# Make sure to announce most recently used emoji first in post-1709 builds.
 		# Fake the announcement by locating 'most recently used" category and calling selected event on this.
-		if obj.childCount == 3:
+		# However, in build 17666 and later, child count is the same for both emoji panel and hardware keyboard candidates list.
+		if winVersion.winVersion.build < 17666 and obj.childCount == 3:
 			self.event_UIA_elementSelected(obj.lastChild.firstChild, nextHandler)
+		# Handle hardware keyboard suggestions.
+		# Treat it the same as CJK composition list - don't announce this if candidate announcement setting is off.
+		# This is also the case for emoji panel in build 17666 and later.
+		elif obj.childCount == 1:
+			childAutomationID = obj.firstChild.UIAElement.cachedAutomationID
+			if childAutomationID == "CandidateWindowControl" and config.conf["inputComposition"]["autoReportAllCandidates"]:
+				try:
+					self.event_UIA_elementSelected(obj.firstChild.firstChild.firstChild, nextHandler)
+				except AttributeError:
+					# Because this is dictation window.
+					pass
+			# Emoji panel in build 17666 and later (unless this changes).
+			elif childAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
+				self._emojiPanelOpened = True
+				self.event_UIA_elementSelected(obj.firstChild.firstChild.next.next.firstChild.firstChild, nextHandler)
+		nextHandler()
+
+	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
+	_emojiPanelOpened = False
+
+	def event_nameChange(self, obj, nextHandler):
+		# The word "blank" is kept announced, so suppress this on build 17666 and later.
+		if winVersion.winVersion.build >= 17672:
+			# In build 17672 and later, return immediatley when element selected event on clipboard item was fired just prior to this.
+			if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex" or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList": return
+			if not self._emojiPanelOpened or obj.UIAElement.cachedAutomationID != "TEMPLATE_PART_ExpressionGroupedFullView": speech.cancelSpeech()
+			self._emojiPanelOpened = False
+		if obj.UIAElement.cachedAutomationID not in ("TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex"):
+			ui.message(obj.name)
 		nextHandler()
