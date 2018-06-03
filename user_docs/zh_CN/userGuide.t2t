@@ -571,6 +571,129 @@ NVDA 支持下列类型的数学内容：
 
 当您希望返回到文档时，简单的按下“esc”键即可。"
 
++ Braille +[Braille]
+If you own a braille display, NVDA can display information in braille.
+If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
+
+Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
+You can configure braille using the [Braille category #BrailleSettings] of the [NVDA Settings #NVDASettings] dialog.
+
+++ Control Type, State and Landmark abbreviations ++[BrailleAbbreviations]
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
+
+|| Abbreviation | Control type |
+| app | application |
+| bqt | block quote |
+| btn | button |
+| drbtn | drop down button |
+| spnbtn | spin button |
+| splbtn | split button |
+| tgbtn | toggle button |
+| cbo | combo box |
+| chk | checkbox |
+| dlg | dialog |
+| doc | document |
+| edt | editable text field |
+| pwdedt | password edit |
+| embedded | embedded object |
+| enote | end note |
+| fnote | foot note |
+| gra | graphic |
+| grp | grouping |
+| hN | heading at level n, e.g. h1, h2. |
+| hlp | help baloon |
+| lmk | landmark |
+| lnk | link |
+| vlnk | visited link |
+| lst | list |
+| mnu | menu |
+| mnubar | menu bar |
+| mnubtn | menu button |
+| mnuitem | menu item |
+| pnl | panel |
+| prgbar | progress bar |
+| rbtn | radio button |
+| scrlbar | scroll bar |
+| sect | section |
+| stbar | status bar |
+| tabctl | tab control |
+| tbl | table |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| term | terminal |
+| tlbar | tool bar |
+| tltip | tool tip |
+| tv | tree view |
+| tvbtn | tree view button |
+| tvitem | tree view item |
+| lv N | a tree view item has a hierarchical level N|
+| wnd | window |
+| ⠤⠤⠤⠤⠤ | separator |
+
+The following state indicators are also defined:
+|| Abbreviation | Control state |
+| ... | displayed when an object supports autocompletion |
+| ⢎⣿⡱ | displayed when an object (e.g. a toggle button) is pressed |
+| ⢎⣀⡱ | displayed when an object (e.g. a toggle button) is not pressed |
+| ⣏⣿⣹ | displayed when an object (e.g. a checkbox) is checked |
+| ⣏⣸⣹ | displayed when an object (e.g. a checkbox) is half checked |
+| ⣏⣀⣹ | displayed when an object (e.g. a checkbox) is not checked |
+| - | displayed when an object (e.g. a tree view item) is collapsible |
+| + | displayed when an object (e.g. a tree view item) is Expandable |
+| *** | displayed when a protected control or document is encountered |
+| clk | displayed when an object is clickable |
+| cmnt | displayed when there is a comment for a spreadsheet cell or piece of text in a document |
+| frml | displayed when there is a formula on a spreadsheet cell |
+| invalid | displayed when an invalid entry has been made |
+| ldesc | displayed when an object (usually a graphic) has a long description |
+| mln | displayed when an edit field allows typing multiple lines of text such as comment fields on websites |
+| req | displayed when a required form field is encountered |
+| ro | displayed when an object (e.g. an editable text field) is read-only |
+| sel | displayed when an object is selected |
+| nsel | displayed when an object is not selected |
+| sorted asc | displayed when an object is sorted ascending |
+| sorted desc | displayed when an object is sorted descending |
+| submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
+
+++ Braille Input ++[BrailleInput]
+NVDA supports entry of both uncontracted and contracted braille via a braille keyboard.
+You can select the translation table used to translate braille into text using the [Input table #BrailleSettingsInputTable] setting in the Braille category of the [NVDA Settings #NVDASettings] dialog.
+
+When uncontracted braille is being used, text is inserted as soon as it is entered.
+When using contracted braille, text is inserted when you press space or enter at the end of a word.
+Note that translation can only reflect the braille word you are typing and cannot consider existing text.
+For example, if you are using a braille code that begins numbers with a number sign and you press backspace to move to the end of a number, you will need to type the number sign again to enter additional numbers.
+
+%kc:beginInclude
+Pressing dot 7 erases the last entered braille cell or character.
+Dot 8 translates any braille input and presses the enter key.
+Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
+%kc:endInclude
+
++ 内容识别 +
+当开发者没有为屏幕阅读软件的用户提供足够信息来确认内容时，可以使用各种工具来尝试从图像中识别其内容。 NVDA 支持 Windows 10内置的光学字符识别（OCR）功能，以便将图像识别成为文本。 NVDA的插件也有提供额外的内容识别器。
+
+当您使用内容识别指令时，NVDA会从目前的导航对象识别内容。默认设置下，导航对象会跟随系统焦点或浏览模式光标，因此需要OCR时，通常您只需移动焦点或浏览模式光标即可。 例如，如果将浏览模式光标移动到图形上，在默认设置下，识别器会开始从图形中识别其内容。 然而，您可能希望直接使用对象导航。例如，识别整个应用程序窗口的内容。
+
+一旦识别完成，结果会显示在一个类似于浏览模式下的文档中，它允许使用光标键或其他键来阅读。 在光标上的文本按 enter 或空格键就可以选中对应文本（相当于单击）。 按 escape 键退出识别结果文档。
+++ Windows 10 OCR ++
+Windows 10包含许多语言的OCR。
+NVDA可以使用它来识别来自图像或无障碍支持差的应用程序的文本。
+
+您可以在[NVDA设置#NVDASettings]对话框的[Windows 10 OCR部分#Win10OcrSettings]中设置用于文本识别的语言。
+您可以打开开始菜单，选择设置，选择时间和语言 - >地区和语言，然后选择添加语言来安装其他语言。
+
 + 特定应用程序的 NVDA命令 +
 NVDA 为某些特定的程序提供了自家的额外特性，让某些任务变得更加容易，还令某些其他屏幕阅读器用户无法访问的功能可用。
 
@@ -588,12 +711,6 @@ NVDA 可在您使用 Microsoft Word 浏览表格时自动读出恰当的行列�
 %kc:endInclude
 此设置将会以书签的形式存储在文档，能与其他屏幕阅读器如JAWS兼容。
 这样意味着，屏幕阅读器用户在后期打开这个文档时，使用其他屏幕阅读器也同样拥有设置好的行列标题。
-++ Windows 10 OCR ++ [Win10Ocr]
-Windows 10包含许多语言的OCR。
-NVDA可以使用它来识别来自图像或无障碍支持差的应用程序的文本。
-
-您可以在[NVDA设置#NVDASettings]对话框的[Windows 10 OCR部分#Win10OcrSettings]中设置用于文本识别的语言。
-您可以打开开始菜单，选择设置，选择时间和语言 - >地区和语言，然后选择添加语言来安装其他语言。
 
 +++ Microsoft Word 的浏览模式 +++
 

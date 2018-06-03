@@ -138,20 +138,24 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
-		self.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnOk_ctrlSTriggersOnApply)
+		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
 
 		self.postInit()
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
-	def _enterTriggersOnOk_ctrlSTriggersOnApply(self, evt):
+	def _enterActivatesOk_ctrlSActivatesApply(self, evt):
 		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
-		pressed. Cancel behavior is built into wx"""
-		if evt.KeyCode == wx.WXK_RETURN:
-			self.onOk(evt)
+		pressed. Cancel behavior is built into wx.
+		Pressing enter will also close the dialog when a list has focus
+		(e.g. the list of symbols in the symbol pronunciation dialog).
+		Without this custom handler, enter would propagate to the list control (wx ticket #3725).
+		"""
+		if evt.KeyCode in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
 		elif self.hasApply and evt.UnicodeKey == ord(u'S') and evt.controlDown:
-			self.onApply(evt)
+			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_APPLY))
 		else:
 			evt.Skip()
 
@@ -219,6 +223,7 @@ class SettingsPanel(wx.Panel):
 		* Optionally, extend L{onPanelActivated} to perform actions after the category has been selected in the list of categories, such as synthesizer or braille display list population.
 		* Optionally, extend L{onPanelDeactivated} to perform actions after the category has been deselected (i.e. another category is selected) in the list of categories.
 		* Optionally, extend one or both of L{onSave} or L{onDiscard} to perform actions in response to the parent dialog's OK or Cancel buttons, respectively.
+		* Optionally, extend one or both of L{isValid} or L{postSave} to perform validation before or steps after saving, respectively.
 
 	@ivar title: The title of the settings panel, also listed in the list of settings categories.
 	@type title: str
@@ -274,9 +279,24 @@ class SettingsPanel(wx.Panel):
 		"""
 		raise NotImplementedError
 
+	def isValid(self):
+		"""Evaluate whether the current circumstances of this panel are valid
+		and allow saving all the settings in a L{MultiCategorySettingsDialog}.
+		Sub-classes may extend this method.
+		@returns: C{True} if validation should continue,
+			C{False} otherwise.
+		@rtype: bool
+		"""
+		return True
+
+	def postSave(self):
+		"""Take action whenever saving settings for all panels in a L{MultiCategorySettingsDialog} succeeded.
+		Sub-classes may extend this method.
+		"""
+
 	def onDiscard(self):
 		"""Take action in response to the parent's dialog Cancel button being pressed.
-		Sub-classes should override this method.
+		Sub-classes may override this method.
 		MultiCategorySettingsDialog is responsible for cleaning up the panel when Cancel is pressed.
 		"""
 
@@ -505,9 +525,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			self.catListCtrl.Focus(newIndex)
 			if not listHadFocus and self.currentCategory:
 				self.currentCategory.SetFocus()
-		elif listHadFocus and key == wx.WXK_RETURN:
-			# The list control captures the return key, but we want it to save the settings.
-			self.onOk(evt)
 		else:
 			evt.Skip()
 
@@ -552,9 +569,22 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		else:
 			evt.Skip()
 
-	def onOk(self,evt):
+	def _doSave(self):
+		for panel in self.catIdToInstanceMap.itervalues():
+			if panel.isValid() is False:
+				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
 		for panel in self.catIdToInstanceMap.itervalues():
 			panel.onSave()
+		for panel in self.catIdToInstanceMap.itervalues():
+			panel.postSave()
+
+	def onOk(self,evt):
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("", exc_info=True)
+			return
+		for panel in self.catIdToInstanceMap.itervalues():
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
@@ -565,8 +595,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		for panel in self.catIdToInstanceMap.itervalues():
-			panel.onSave()
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("", exc_info=True)
+			return
 		super(MultiCategorySettingsDialog,self).onApply(evt)
 
 class GeneralSettingsPanel(SettingsPanel):
@@ -729,7 +762,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
-		if self.oldLanguage!=newLanguage:
+
+	def postSave(self):
+		if self.oldLanguage!=config.conf["general"]["language"]:
 			if gui.messageBox(
 				# Translators: The message displayed after NVDA interface language has been changed.
 				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
@@ -1234,7 +1269,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.handleInjectedKeysCheckBox=sHelper.addItem(wx.CheckBox(self,label=handleInjectedKeysText))
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
-	def onSave(self):
+	def isValid(self):
 		# #2871: check wether at least one key is the nvda key.
 		if not self.capsAsNVDAModifierCheckBox.IsChecked() and not self.numpadInsertAsNVDAModifierCheckBox.IsChecked() and not self.extendedInsertAsNVDAModifierCheckBox.IsChecked():
 			log.debugWarning("No NVDA key set")
@@ -1243,7 +1278,10 @@ class KeyboardSettingsPanel(SettingsPanel):
 				_("At least one key must be used as the NVDA key."), 
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
-			return
+			return False
+		return super(KeyboardSettingsPanel, self).isValid()
+
+	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
@@ -1952,7 +1990,6 @@ class DictionaryDialog(SettingsDialog):
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
 		self.editingIndex=-1
-		self.dictList.Bind(wx.EVT_CHAR, self.onListChar)
 
 		bHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
 		addButtonID=wx.NewId()
@@ -1973,16 +2010,6 @@ class DictionaryDialog(SettingsDialog):
 
 	def postInit(self):
 		self.dictList.SetFocus()
-
-	def onListChar(self, evt):
-		if evt.KeyCode == wx.WXK_RETURN:
-			# The enter key should be propagated to the dialog and thus activate the default button,
-			# but this is broken (wx ticket #3725).
-			# Therefore, we must catch the enter key here.
-			# Activate the OK button.
-			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-		else:
-			evt.Skip()
 
 	def onCancel(self,evt):
 		globalVars.speechDictionaryProcessing=True
@@ -2480,7 +2507,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
-		self.symbolsList.Bind(wx.EVT_CHAR, self.onListChar)
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
@@ -2568,16 +2594,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.levelList.Enable()
 		self.preserveList.Enable()
 		evt.Skip()
-
-	def onListChar(self, evt):
-		if evt.KeyCode == wx.WXK_RETURN:
-			# The enter key should be propagated to the dialog and thus activate the default button,
-			# but this is broken (wx ticket #3725).
-			# Therefore, we must catch the enter key here.
-			# Activate the OK button.
-			self.ProcessEvent(wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK))
-		else:
-			evt.Skip()
 
 	def OnAddClick(self, evt):
 		with AddSymbolDialog(self) as entryDialog:
