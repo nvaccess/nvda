@@ -215,6 +215,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
+	# wxPython 4 no longer has both spellings, some add-ons may rely on `CENTER_ON_SCREEN` so we add it back into wx.
+	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN
 	log.info("Using wx version %s"%wx.version())
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
@@ -401,11 +403,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
-		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
-		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
 			silent=globalVars.appArgs.createPortableSilent,startAfterCreate=not globalVars.appArgs.createPortableSilent)

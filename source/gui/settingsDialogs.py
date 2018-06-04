@@ -141,7 +141,7 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnOk_ctrlSTriggersOnApply)
 
 		self.postInit()
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
@@ -349,7 +349,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.SetMinSize(self.scaleSize(self.MIN_SIZE))
 		self.SetSize(self.scaleSize(self.INITIAL_SIZE))
 		# the size has changed, so recenter on the screen
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	# Initial / min size for the dialog. This size was chosen as a medium fit, so the
 	# smaller settings panels are not surrounded by too much space but most of
@@ -2444,7 +2444,7 @@ class AddSymbolDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.identifierTextCtrl.SetFocus()
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 class SpeechSymbolsDialog(SettingsDialog):
 

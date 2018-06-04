@@ -664,7 +664,7 @@ class WelcomeDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.kbdList.SetFocus()
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		layout = self.kbdNames[self.kbdList.GetSelection()]
@@ -740,7 +740,7 @@ class LauncherDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def onLicenseAgree(self, evt):
 		for ctrl in self.actionButtons:
@@ -822,7 +822,7 @@ class ExitDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.actionsList.SetFocus()
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		action=self.actionsList.GetSelection()
@@ -878,7 +878,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
 		self.Raise()
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()

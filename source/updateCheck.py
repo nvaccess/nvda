@@ -302,7 +302,7 @@ class UpdateResultDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 		self.Show()
 
 	def onInstallButton(self, evt):
@@ -353,7 +353,7 @@ class UpdateAskInstallDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onInstallButton(self, evt):
 		executeUpdate(self.destPath)
@@ -551,7 +551,7 @@ class DonateRequestDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 		self.Show()
 
 	def onDonate(self, evt):

@@ -825,7 +825,7 @@ class ElementsListDialog(wx.Dialog):
 
 		self.tree.SetFocus()
 		self.initElementType(self.ELEMENT_TYPES[self.lastSelectedElementType][0])
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def onElementTypeChange(self, evt):
 		elementType=evt.GetInt()

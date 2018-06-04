@@ -111,7 +111,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: The title for the dialog shown while Microsoft Outlook initializes.
 		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
-		d.Center(wx.BOTH | wx.Center)
+		d.CentreOnScreen()
 		gui.mainFrame.prePopup()
 		d.Show()
 		self._hasTriedoutlookAppSwitch=True
