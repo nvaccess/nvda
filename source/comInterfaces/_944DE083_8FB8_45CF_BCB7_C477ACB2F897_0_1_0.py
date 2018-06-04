@@ -1,5 +1,5 @@
 # -*- coding: mbcs -*-
-typelib_path = 'UIAutomationCore.dll')))
+typelib_path = 'UIAutomationCore.dll'
 _lcid = 0 # change this if required
 from ctypes import *
 import comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0
