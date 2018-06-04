@@ -111,12 +111,14 @@ def pauseSpeech(switch):
 	isPaused=switch
 	beenCanceled=False
 
-def speakMessage(text):
+def speakMessage(text,priority=None):
 	"""Speaks a given message.
 @param text: the message to speak
 @type text: string
+@param priority: The speech priority.
+@type priority: One of the C{SPRI_*} constants.
 """
-	speakText(text,reason=controlTypes.REASON_MESSAGE)
+	speakText(text,reason=controlTypes.REASON_MESSAGE,priority=priority)
 
 def getCurrentLanguage():
 	synth=getSynth()
@@ -132,7 +134,7 @@ def getCurrentLanguage():
 		language=languageHandler.getLanguage()
 	return language
 
-def spellTextInfo(info,useCharacterDescriptions=False):
+def spellTextInfo(info,useCharacterDescriptions=False,priority=None):
 	"""Spells the text from the given TextInfo, honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled."""
 	if not config.conf['speech']['autoLanguageSwitching']:
 		speakSpelling(info.text,useCharacterDescriptions=useCharacterDescriptions)
@@ -140,7 +142,7 @@ def spellTextInfo(info,useCharacterDescriptions=False):
 	curLanguage=None
 	for field in info.getTextWithFields({}):
 		if isinstance(field,basestring):
-			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions)
+			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions,priority=priority)
 		elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 			curLanguage=field.field.get('language')
 
@@ -154,13 +156,13 @@ def shouldUseCompatCodeForIndexing():
 		% synth.name))
 	return True
 
-def speakSpelling(text, locale=None, useCharacterDescriptions=False):
+def speakSpelling(text, locale=None, useCharacterDescriptions=False,priority=None):
 	if shouldUseCompatCodeForIndexing():
 		# Import late to avoid circular import.
 		import speechCompat
 		return speechCompat.speakSpelling(text, locale=locale, useCharacterDescriptions=useCharacterDescriptions)
 	seq = list(getSpeechForSpelling(text, locale=locale, useCharacterDescriptions=useCharacterDescriptions))
-	speak(seq)
+	speak(seq,priority=priority)
 
 def getSpeechForSpelling(text, locale=None, useCharacterDescriptions=False):
 	defaultLanguage=getCurrentLanguage()
@@ -240,7 +242,7 @@ def getCharDescListFromText(text,locale):
 			i = i - 1
 	return charDescList
 
-def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, **allowedProperties):
+def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, priority=None, _prefixSpeechCommand=None, **allowedProperties):
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
@@ -301,20 +303,20 @@ def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCo
 		if _prefixSpeechCommand is not None:
 			speechSequence.append(_prefixSpeechCommand)
 		speechSequence.append(text)
-		speak(speechSequence)
+		speak(speechSequence,priority=priority)
 
-def _speakPlaceholderIfEmpty(info, obj, reason):
+def _speakPlaceholderIfEmpty(info, obj, reason,priority=None):
 	""" attempt to speak placeholder attribute if the textInfo 'info' is empty
 	@return: True if info was considered empty, and we attempted to speak the placeholder value.
 	False if info was not considered empty.
 	"""
 	textEmpty = obj._isTextEmpty
 	if textEmpty:
-		speakObjectProperties(obj,reason=reason,placeholder=True)
+		speakObjectProperties(obj,reason=reason,placeholder=True,priority=priority)
 		return True
 	return False
 
-def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None):
+def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None,priority=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
@@ -365,7 +367,7 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 	if shouldReportTextContent:
 		allowProperties['value']=False
 
-	speakObjectProperties(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, **allowProperties)
+	speakObjectProperties(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, priority=priority, **allowProperties)
 	if reason==controlTypes.REASON_ONLYCACHE:
 		return
 	if shouldReportTextContent:
@@ -377,34 +379,36 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				_speakPlaceholderIfEmpty(info, obj, reason)
-				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				_speakPlaceholderIfEmpty(info, obj, reason,priority=priority)
+				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,priority=priority)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			if not _speakPlaceholderIfEmpty(newInfo, obj, reason):
-				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
+			if not _speakPlaceholderIfEmpty(newInfo, obj, reason,priority=priority):
+				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET,priority=priority)
 	elif role==controlTypes.ROLE_MATH:
 		import mathPres
 		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
-				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl))
+				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl),priority=priority)
 			except (NotImplementedError, LookupError):
 				pass
 
-def speakText(text,reason=controlTypes.REASON_MESSAGE,symbolLevel=None):
+def speakText(text,reason=controlTypes.REASON_MESSAGE,symbolLevel=None,priority=None):
 	"""Speaks some text.
 	@param text: The text to speak.
 	@type text: str
 	@param reason: The reason for this speech; one of the controlTypes.REASON_* constants.
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	@param priority: The speech priority.
+	@type priority: One of the C{SPRI_*} constants.
 	"""
 	if text is None:
 		return
 	if isBlank(text):
 		# Translators: This is spoken when the line is considered blank.
 		text=_("blank")
-	speak([text],symbolLevel=symbolLevel)
+	speak([text],symbolLevel=symbolLevel,priority=priority)
 
 RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
 def splitTextIndentation(text):
@@ -479,13 +483,15 @@ SPRI_NOW = 2
 #: The speech priorities ordered from highest to lowest.
 SPEECH_PRIORITIES = (SPRI_NOW, SPRI_NEXT, SPRI_NORMAL)
 
-def speak(speechSequence, symbolLevel=None, priority=SPRI_NORMAL):
+def speak(speechSequence, symbolLevel=None, priority=None):
 	"""Speaks a sequence of text and speech commands
 	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	@param priority: The speech priority.
 	@type priority: One of the C{SPRI_*} constants.
 	"""
+	if priority is None:
+		priority=SPRI_NORMAL
 	if not speechSequence: #Pointless - nothing to speak 
 		return
 	import speechViewer
@@ -549,14 +555,14 @@ def speak(speechSequence, symbolLevel=None, priority=SPRI_NORMAL):
 		return getSynth().speak(speechSequence)
 	_manager.speak(speechSequence, priority)
 
-def speakSelectionMessage(message,text):
+def speakSelectionMessage(message,text,priority=None):
 	if len(text) < 512:
-		speakMessage(message % text)
+		speakMessage(message % text,priority=priority)
 	else:
 		# Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-		speakMessage(message % _("%d characters") % len(text))
+		speakMessage(message % _("%d characters") % len(text),priority=priority)
 
-def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):
+def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False,priority=None):
 	"""Speaks a change in selection, either selected or unselected text.
 	@param oldInfo: a TextInfo instance representing what the selection was before
 	@type oldInfo: L{textInfos.TextInfo}
@@ -564,6 +570,8 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 	@type newInfo: L{textInfos.TextInfo}
 	@param generalize: if True, then this function knows that the text may have changed between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken more generally, rather than speaking the specific text, as the bounds may be all wrong.
 	@type generalize: boolean
+	@param priority: The speech priority.
+	@type priority: One of the C{SPRI_*} constants.
 	"""
 	selectedTextList=[]
 	unselectedTextList=[]
@@ -607,30 +615,30 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-				speakSelectionMessage(_("%s selected"),text)
+				speakSelectionMessage(_("%s selected"),text,priority=priority)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
 				text=characterProcessing.processSpeechSymbol(locale,text)
 			# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-			speakSelectionMessage(_("selected %s"),text)
+			speakSelectionMessage(_("selected %s"),text,priority=priority)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-				speakSelectionMessage(_("%s unselected"),text)
+				speakSelectionMessage(_("%s unselected"),text,priority=priority)
 		elif len(unselectedTextList)>0:
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-				speakSelectionMessage(_("%s selected instead"),text)
+				speakSelectionMessage(_("%s selected instead"),text,priority=priority)
 			else:
 				# Translators: Reported when selection is removed.
-				speakMessage(_("selection removed"))
+				speakMessage(_("selection removed"),priority=priority)
 
 #: The number of typed characters for which to suppress speech.
 _suppressSpeakTypedCharactersNumber = 0
@@ -729,7 +737,7 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 	except (NotImplementedError, LookupError):
 		return
 
-def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, onlyInitialFields=False, suppressBlanks=False):
+def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, onlyInitialFields=False, suppressBlanks=False,priority=None):
 	onlyCache=reason==controlTypes.REASON_ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
@@ -859,9 +867,9 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
 		if not onlyCache:
 			if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
-				speak(speechSequence)
+				speak(speechSequence,priority=priority)
 			if not onlyInitialFields: 
-				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
+				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None,priority=priority)
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
@@ -974,7 +982,7 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 		if reason==controlTypes.REASON_SAYALL:
 			return speakWithoutPauses(speechSequence)
 		else:
-			speak(speechSequence)
+			speak(speechSequence,priority=priority)
 			return True
 
 def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues):
