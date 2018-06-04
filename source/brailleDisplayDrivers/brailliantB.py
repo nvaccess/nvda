@@ -7,6 +7,7 @@
 import os
 import _winreg
 import itertools
+import time
 import serial
 import hwPortUtils
 import braille
@@ -18,6 +19,9 @@ import hwIo
 TIMEOUT = 0.2
 BAUD_RATE = 115200
 PARITY = serial.PARITY_EVEN
+DELAY_AFTER_CONNECT = 1.0
+INIT_ATTEMPTS = 3
+INIT_RETRY_DELAY = 0.2
 
 # Serial
 HEADER = "\x1b"
@@ -34,7 +38,8 @@ HR_BRAILLE = "\x05"
 HR_POWEROFF = "\x07"
 
 KEY_NAMES = {
-	# Braille keyboard.
+	1: "power", # Brailliant BI 32, 40 and 80.
+	# Braille keyboard (all devices except Brailliant 80).
 	2: "dot1",
 	3: "dot2",
 	4: "dot3",
@@ -44,62 +49,88 @@ KEY_NAMES = {
 	8: "dot7",
 	9: "dot8",
 	10: "space",
-	# Command keys.
+	# Command keys (Brailliant BI 32, 40 and 80).
 	11: "c1",
 	12: "c2",
 	13: "c3",
 	14: "c4",
 	15: "c5",
 	16: "c6",
-	# Thumb keys.
+	# Thumb keys (all devices).
 	17: "up",
 	18: "left",
 	19: "right",
 	20: "down",
+	# Joystick (Brailliant BI 14).
+	21: "stickUp",
+	22: "stickDown",
+	23: "stickLeft",
+	24: "stickRight",
+	25: "stickAction",
+	# BrailleNote Touch calibration key events.
+	30: "calibrationOk",
+	31: "calibrationFail",
+	32: "calibrationEmpty",
+	34: "calibrationReset",
 }
 FIRST_ROUTING_KEY = 80
 DOT1_KEY = 2
 DOT8_KEY = 9
 SPACE_KEY = 10
 
+USB_IDS_HID = {
+	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
+	"VID_1C71&PID_C022", # Brailliant BI 14
+	"VID_1C71&PID_C00A", # BrailleNote Touch
+}
+USB_IDS_SER = (
+	"Vid_1c71&Pid_c005", # Brailliant BI 32, 40 and 80
+	"Vid_1c71&Pid_c021", # Brailliant BI 14
+)
+
 def _getPorts():
-	# USB HID.
+	# HID.
 	for portInfo in hwPortUtils.listHidDevices():
-		if portInfo.get("usbID") == "VID_1C71&PID_C006":
+		if portInfo.get("usbID") in USB_IDS_HID:
 			yield "USB HID", portInfo["devicePath"]
+		# In Windows 10, the Bluetooth vendor and product ids don't get recognised.
+		# Use strings instead.
+		elif portInfo.get("manufacturer") == "Humanware" and portInfo.get("product") == "Brailliant HID":
+			yield "Bluetooth HID", portInfo["devicePath"]
 
 	# USB serial.
-	try:
-		rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\Vid_1c71&Pid_c005")
-	except WindowsError:
-		# A display has never been connected via USB.
-		pass
-	else:
+	for usbId in USB_IDS_SER:
+		try:
+			rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
+				r"SYSTEM\CurrentControlSet\Enum\USB\%s" % usbId)
+		except WindowsError:
+			# A display with this id has never been connected via USB.
+			continue
 		with rootKey:
 			for index in itertools.count():
 				try:
 					keyName = _winreg.EnumKey(rootKey, index)
 				except WindowsError:
-					break
+					break # No more sub-keys.
 				try:
 					with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
 						yield "USB serial", _winreg.QueryValueEx(paramsKey, "PortName")[0]
 				except WindowsError:
 					continue
 
-	# Bluetooth.
+	# Bluetooth serial.
 	for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 		try:
 			btName = portInfo["bluetoothName"]
 		except KeyError:
 			continue
-		if btName.startswith("Brailliant B") or btName == "Brailliant 80":
-			yield "bluetooth", portInfo["port"]
+		if btName.startswith("Brailliant B") or btName == "Brailliant 80" or "BrailleNote Touch" in btName:
+			yield "Bluetooth serial", portInfo["port"]
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
-	description = _("HumanWare Brailliant BI/B series")
+	description = _("HumanWare Brailliant BI/B series / BrailleNote Touch")
 	isThreadSafe = True
 
 	@classmethod
@@ -116,7 +147,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 
 		for portType, port in _getPorts():
-			self.isHid = portType == "USB HID"
+			self.isHid = portType.endswith(" HID")
 			# Try talking to the display.
 			try:
 				if self.isHid:
@@ -124,26 +155,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._serOnReceive)
 			except EnvironmentError:
-				continue
-			if self.isHid:
-				data = self._dev.getFeature(HR_CAPS)
-				self.numCells = ord(data[24])
-			else:
-				# This will cause the number of cells to be returned.
-				self._serSendMessage(MSG_INIT)
-				# #5406: With the new USB driver, the first command is ignored after a reconnection.
-				# Send the init message again just in case.
-				self._serSendMessage(MSG_INIT)
-				self._dev.waitForRead(TIMEOUT)
-				if not self.numCells:
-					# HACK: When connected via bluetooth, the display sometimes reports communication not allowed on the first attempt.
-					self._serSendMessage(MSG_INIT)
-					self._dev.waitForRead(TIMEOUT)
+				continue # Couldn't connect.
+			# The Brailliant can fail to init if you try immediately after connecting.
+			time.sleep(DELAY_AFTER_CONNECT)
+			# Sometimes, a few attempts are needed to init successfully.
+			for attempt in xrange(INIT_ATTEMPTS):
+				if attempt > 0: # Not the first attempt
+					time.sleep(INIT_RETRY_DELAY) # Delay before next attempt.
+				self._initAttempt()
+				if self.numCells:
+					break # Success!
 			if self.numCells:
 				# A display responded.
 				log.info("Found display with {cells} cells connected via {type} ({port})".format(
 					cells=self.numCells, type=portType, port=port))
 				break
+			# This device can't be initialized. Move on to the next (if any).
 			self._dev.close()
 
 		else:
@@ -151,6 +178,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
+
+	def _initAttempt(self):
+		if self.isHid:
+			try:
+				data = self._dev.getFeature(HR_CAPS)
+			except WindowsError:
+				return # Fail!
+			self.numCells = ord(data[24])
+		else:
+			# This will cause the display to return the number of cells.
+			# The _serOnReceive callback will see this and set self.numCells.
+			self._serSendMessage(MSG_INIT)
+			self._dev.waitForRead(TIMEOUT)
 
 	def terminate(self):
 		try:
@@ -230,10 +270,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# cells will already be padded up to numCells.
 		cells = "".join(chr(cell) for cell in cells)
 		if self.isHid:
-			self._dev.write("{id}"
+			outputReport=("{id}"
 				"\x01\x00" # Module 1, offset 0
 				"{length}{cells}"
 			.format(id=HR_BRAILLE, length=chr(self.numCells), cells=cells))
+			#: Humanware HID devices require the use of HidD_SetOutputReport when sending data to the device via HID, as WriteFile seems to block forever or fail to reach the device at all.
+			self._dev.setOutputReport(outputReport)
 		else:
 			self._serSendMessage(MSG_DISPLAY, cells)
 
@@ -245,19 +287,29 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_nextLine": ("br(brailliantB):down",),
 			"braille_routeTo": ("br(brailliantB):routing",),
 			"braille_toggleTether": ("br(brailliantB):up+down",),
-			"kb:upArrow": ("br(brailliantB):space+dot1",),
-			"kb:downArrow": ("br(brailliantB):space+dot4",),
-			"kb:leftArrow": ("br(brailliantB):space+dot3",),
-			"kb:rightArrow": ("br(brailliantB):space+dot6",),
-			"showGui": ("br(brailliantB):c1+c3+c4+c5",),
+			"kb:upArrow": ("br(brailliantB):space+dot1", "br(brailliantB):stickUp"),
+			"kb:downArrow": ("br(brailliantB):space+dot4", "br(brailliantB):stickDown"),
+			"kb:leftArrow": ("br(brailliantB):space+dot3", "br(brailliantB):stickLeft"),
+			"kb:rightArrow": ("br(brailliantB):space+dot6", "br(brailliantB):stickRight"),
+			"showGui": (
+				"br(brailliantB):c1+c3+c4+c5",
+				"br(brailliantB):space+dot1+dot3+dot4+dot5",
+			),
 			"kb:shift+tab": ("br(brailliantB):space+dot1+dot3",),
 			"kb:tab": ("br(brailliantB):space+dot4+dot6",),
 			"kb:alt": ("br(brailliantB):space+dot1+dot3+dot4",),
 			"kb:escape": ("br(brailliantB):space+dot1+dot5",),
-			"kb:windows+d": ("br(brailliantB):c1+c4+c5",),
+			"kb:enter": ("br(brailliantB):stickAction"),
+			"kb:windows+d": (
+				"br(brailliantB):c1+c4+c5",
+				"br(brailliantB):Space+dot1+dot4+dot5",
+			),
 			"kb:windows": ("br(brailliantB):space+dot3+dot4",),
 			"kb:alt+tab": ("br(brailliantB):space+dot2+dot3+dot4+dot5",),
-			"sayAll": ("br(brailliantB):c1+c2+c3+c4+c5+c6",),
+			"sayAll": (
+				"br(brailliantB):c1+c2+c3+c4+c5+c6",
+				"br(brailliantB):Space+dot1+dot2+dot3+dot4+dot5+dot6",
+			),
 		},
 	})
 

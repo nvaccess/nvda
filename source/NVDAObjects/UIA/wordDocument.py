@@ -156,6 +156,9 @@ class WordDocumentTextInfo(UIATextInfo):
 
 	def getTextWithFields(self,formatConfig=None):
 		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
+		if len(fields)==0: 
+			# Nothing to do... was probably a collapsed range.
+			return fields
 		# Fill in page number attributes where NVDA expects
 		try:
 			page=fields[0].field['page-number']

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -250,6 +250,11 @@ def _setSystemConfig(fromPath):
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
+			# Do not copy executables to the system configuration, as this may cause security risks.
+			# This will also exclude pending updates.
+			if f.endswith(".exe"):
+				log.debug("Ignored file %s while copying current user configuration to system configuration"%f)
+				continue
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(curDestDir,f)
 			installer.tryCopyFile(sourceFilePath,destFilePath)
