@@ -29,14 +29,6 @@ from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 
-#: When in a list view, the message classes which should not be announced for an item.
-#: For these, it should be safe to assume that their names consist of only one word.
-silentMessageClasses = [
-	"IPM.Appointment",
-	"IPM.Contact",
-	"IPM.Note", # The class for a message
-]
-
 #: The number of seconds in a day, used to make all day appointments and selections less verbose.
 #: Type: float
 SECONDS_PER_DAY = 86400.0
@@ -445,10 +437,8 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				unread=selection.unread
 			except COMError:
 				unread=False
-			try:
-				messageClass=selection.messageClass
-			except COMError:
-				messageClass=None
+			# Translators: when an email is unread
+			if unread: textList.append(_("unread"))
 			try:
 				flagIcon=selection.flagIcon
 			except COMError:
@@ -467,28 +457,13 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				importance=1
 			importanceLabel=importanceLabels.get(importance)
 			if importanceLabel: textList.append(importanceLabel)
-			if self.appModule.outlookVersion<15:
-				# Translators: when an email is unread
-				if unread: textList.append(_("unread"))
-				if messageClass=="IPM.Schedule.Meeting.Request":
-					# Translators: the email is a meeting request
-					textList.append(_("meeting request"))
-			elif messageClass is not None:
-				# Replied or forwarded state for this message is available from the object's value.
-				# We must parse this value correctly, as it may contain redundant information, such as the message class and read value.
-				# We only expose the unread state, and message class for non-messages.
-				# The several states are localized and separated by a space.
-				# Example output: 'Meeting request Replied Read'
-				valueParts = self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId).split(" ")
-				valueCount = len(valueParts)
-				# The last valuePart indicates whether the message is read or unread.
-				# Do not expose the read state
-				lastPart = valueCount if unread else valueCount-1
-				# The first valuePart is the type of the selection, e.g. Message, Contact.
-				# We can safely assume that the classes in silentMessageClasses are one word.
-				# For messages other than regular mail messages (e.g. meeting request), the message class is relevant.
-				firstPart = max(1, valueCount-2) if messageClass in silentMessageClasses else 0
-				textList.extend(valueParts[firstPart:lastPart])
+			try:
+				messageClass=selection.messageClass
+			except COMError:
+				messageClass=None
+			if messageClass=="IPM.Schedule.Meeting.Request":
+				# Translators: the email is a meeting request
+				textList.append(_("meeting request"))
 		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
