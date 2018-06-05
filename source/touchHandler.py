@@ -9,11 +9,11 @@ Used to provide input gestures for touchscreens, touch modes and other support f
 In order to use touch features, NVDA must be installed on a touchscreen computer running Windows 8 and later.
 """
 
-import wx
 import threading
 from ctypes import *
 from ctypes.wintypes import *
 import re
+import gui
 import winVersion
 import globalPluginHandler
 import config
@@ -208,7 +208,7 @@ inputCore.registerGestureSource("ts", TouchInputGesture)
 class TouchHandler(threading.Thread):
 
 	def __init__(self):
-		self.pendingEmitsTimer=wx.PyTimer(core.requestPump)
+		self.pendingEmitsTimer=gui.NonReEntrantTimer(core.requestPump)
 		super(TouchHandler,self).__init__()
 		self._curTouchMode='object'
 		self.initializedEvent=threading.Event()

@@ -5,6 +5,7 @@
 
 import time
 import wx
+import gui
 import tones
 import ctypes
 import winUser
@@ -205,7 +206,7 @@ def initialize():
 	curMousePos=(x,y)
 	winInputHook.initialize()
 	winInputHook.setCallbacks(mouse=internal_mouseEvent)
-	_shapeTimer = wx.PyTimer(_reportShape)
+	_shapeTimer = gui.NonReEntrantTimer(_reportShape)
 
 def _reportShape():
 	# Translators: Reported when mouse cursor shape changes (example output: edit cursor).
