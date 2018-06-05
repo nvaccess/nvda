@@ -16,6 +16,7 @@ For drivers in add-ons, this must be done in a global plugin.
 import itertools
 from collections import namedtuple, defaultdict, OrderedDict
 import threading
+import thread
 import wx
 import hwPortUtils
 import braille
@@ -156,9 +157,9 @@ class Detector(object):
 	"""
 
 	def __init__(self):
-		self._BgScanApc = winKernel.PAPCFUNC(self._bgScan)
 		self._btDevsLock = threading.Lock()
 		self._btDevs = None
+		self._thread = None
 		core.post_windowMessageReceipt.register(self.handleWindowMessage)
 		appModuleHandler.post_appSwitch.register(self.pollBluetoothDevices)
 		self._stopEvent = threading.Event()
@@ -168,54 +169,65 @@ class Detector(object):
 		self._startBgScan(usb=True, bluetooth=True)
 
 	def _startBgScan(self, usb=False, bluetooth=False):
-		detectionParam = usb | bluetooth << 1
 		with self._queuedScanLock:
+			self._detectUsb = usb
+			self._detectBluetooth = bluetooth
 			if not self._scanQueued:
-				braille._BgThread.queueApc(self._BgScanApc, param=detectionParam)
 				self._scanQueued = True
+				if self._thread and self._thread.isAlive():
+					# There's currently a scan in progress.
+					# Since the scan is embeded in a loop, it will automatically do another scan,
+					# unless a display has been found.
+					return
+				self._thread = threading.Thread(target=self._bgScan)
+				self._thread.start()
 
 	def _stopBgScan(self):
+		if not self._thread or not self._thread.isAlive():
+			# No scan to stop
+			return
 		self._stopEvent.set()
 
-	def _bgScan(self, param):
-		# Clear the stop event before a scan is started.
-		# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
-		self._stopEvent.clear()
-		detectUsb = bool(param & DETECT_USB)
-		detectBluetooth = bool(param & DETECT_BLUETOOTH)
-		with self._queuedScanLock:
-			self._scanQueued = False
-		if detectUsb:
-			if self._stopEvent.isSet():
-				return
-			for driver, match in getDriversForConnectedUsbDevices():
+	def _bgScan(self):
+		while self._scanQueued:
+			# Clear the stop event before a scan is started.
+			# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
+			self._stopEvent.clear()
+			with self._queuedScanLock:
+				self._scanQueued = False
+				detectUsb = self._detectUsb
+				detectBluetooth = self._detectBluetooth
+			if detectUsb:
 				if self._stopEvent.isSet():
-					return
-				if braille.handler.setDisplayByName(driver, detected=match):
-					return
-		if detectBluetooth:
-			if self._stopEvent.isSet():
-				return
-			with self._btDevsLock:
-				if self._btDevs is None:
-					btDevs = list(getDriversForPossibleBluetoothDevices())
-					# Cache Bluetooth devices for next time.
-					btDevsCache = []
-				else:
-					btDevs = self._btDevs
-					btDevsCache = btDevs
-			for driver, match in btDevs:
+					continue
+				for driver, match in getDriversForConnectedUsbDevices():
+					if self._stopEvent.isSet():
+						continue
+					if braille.handler.setDisplayByName(driver, detected=match):
+						return
+			if detectBluetooth:
 				if self._stopEvent.isSet():
-					return
-				if btDevsCache is not btDevs:
-					btDevsCache.append((driver, match))
-				if braille.handler.setDisplayByName(driver, detected=match):
-					return
-			if self._stopEvent.isSet():
-				return
-			if btDevsCache is not btDevs:
+					continue
 				with self._btDevsLock:
-					self._btDevs = btDevsCache
+					if self._btDevs is None:
+						btDevs = list(getDriversForPossibleBluetoothDevices())
+						# Cache Bluetooth devices for next time.
+						btDevsCache = []
+					else:
+						btDevs = self._btDevs
+						btDevsCache = btDevs
+				for driver, match in btDevs:
+					if self._stopEvent.isSet():
+						continue
+					if btDevsCache is not btDevs:
+						btDevsCache.append((driver, match))
+					if braille.handler.setDisplayByName(driver, detected=match):
+						return
+				if self._stopEvent.isSet():
+					continue
+				if btDevsCache is not btDevs:
+					with self._btDevsLock:
+						self._btDevs = btDevsCache
 
 	def rescan(self):
 		"""Stop a current scan when in progress, and start scanning from scratch."""
@@ -231,7 +243,7 @@ class Detector(object):
 
 	def pollBluetoothDevices(self):
 		"""Poll bluetooth devices that might be in range.
-		This does not cancel the current scan and only queues a new scan when no scan is in progress."""
+		This does not cancel the current scan."""
 		with self._btDevsLock:
 			if not self._btDevs:
 				return
@@ -241,6 +253,9 @@ class Detector(object):
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
 		core.post_windowMessageReceipt.unregister(self.handleWindowMessage)
 		self._stopBgScan()
+		if self._thread and self._thread.ident != thread.get_ident():
+			self._thread.join(2.5)
+			self._thread = None
 
 def getConnectedUsbDevicesForDriver(driver):
 	"""Get any connected USB devices associated with a particular driver.

@@ -1554,7 +1554,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detector = None
 
 	def terminate(self):
-		bgThreadStopTimeout = 2.5 if self._detectionEnabled else None
 		self._disableDetection()
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
@@ -1566,7 +1565,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
-		_BgThread.stop(timeout=bgThreadStopTimeout)
+		_BgThread.stop()
 
 	def getTether(self):
 		return self._tether
@@ -1632,9 +1631,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					# Re-initialize with supported kwargs.
 					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
 			else:
-				if newDisplay.isThreadSafe and not detected:
+				if newDisplay.isThreadSafe:
 					# Start the thread if it wasn't already.
-					# Auto detection implies the thread is already started.
 					_BgThread.start()
 				try:
 					newDisplay = newDisplay(**kwargs)
@@ -1971,7 +1969,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._detectionEnabled and self._detector:
 			self._detector.rescan()
 			return
-		_BgThread.start()
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		self.setDisplayByName("noBraille", isFallback=True)
 		self._detector = bdDetect.Detector()
@@ -2018,7 +2015,7 @@ class _BgThread:
 		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, param)
 
 	@classmethod
-	def stop(cls, timeout=None):
+	def stop(cls):
 		if not cls.thread:
 			return
 		cls.exit = True
@@ -2028,7 +2025,7 @@ class _BgThread:
 		cls.ackTimerHandle = None
 		# Wake up the thread. It will exit when it sees exit is True.
 		cls.queueApc(cls.executor)
-		cls.thread.join(timeout)
+		cls.thread.join()
 		cls.exit = False
 		winKernel.closeHandle(cls.handle)
 		cls.handle = None
