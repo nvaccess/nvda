@@ -100,7 +100,7 @@ addTable("cy-cy-g1.utb", _("Welsh grade 1"))
 addTable("cy-cy-g2.ctb", _("Welsh grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("cz-cz-g1.utb", _("Czech grade 1"))
+addTable("cs-g1.ctb", _("Czech grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("da-dk-g08.ctb", _("Danish 8 dot computer braille"))
