@@ -180,6 +180,7 @@ class Detector(object):
 					# unless a display has been found.
 					return
 				self._thread = threading.Thread(target=self._bgScan)
+				self._thread.daemon = True
 				self._thread.start()
 
 	def _stopBgScan(self):
