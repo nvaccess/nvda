@@ -18,6 +18,7 @@ import api
 import config
 import review
 from logHandler import log
+from locationHelper import RectLTWH
 
 class CompoundTextInfo(textInfos.TextInfo):
 
@@ -399,6 +400,19 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		self._normalizeStartAndEnd()
 
 		return direction - remainingMovement
+
+	def _get_boundingRect(self):
+		rects = []
+		for ti in self._getTextInfos():
+			if ti.obj.hasIrrelevantLocation:
+				continue
+			try:
+				rects.append(ti.boundingRect)
+			except LookupError:
+				continue
+		if not rects:
+			raise LookupError
+		return RectLTWH.fromCollection(*rects)
 
 class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	TextInfo = TreeCompoundTextInfo

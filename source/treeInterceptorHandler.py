@@ -208,6 +208,9 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_text(self):
 		return self.innerTextInfo.text
 
+	def _get_boundingRect(self):
+		return self.innerTextInfo.boundingRect
+
 	def getTextWithFields(self,formatConfig=None):
 		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
 

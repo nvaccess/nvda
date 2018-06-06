@@ -19,7 +19,7 @@ from textInfos.offsets import OffsetsTextInfo
 import watchdog
 from logHandler import log
 import windowUtils
-from locationHelper import RectLTRB
+from locationHelper import RectLTRB, RectLTWH
 
 def wcharToInt(c):
 	i=ord(c)
@@ -399,15 +399,6 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		if bkColor is not None:
 			field['background-color']=colors.RGB.fromCOLORREF(int(bkColor))
 
-	def _getPointFromOffset(self, offset):
-		# Returns physical coordinates.
-		rects=self._storyFieldsAndRects[1]
-		if not rects or offset>=len(rects):
-			raise LookupError
-		x,y=rects[offset][:2]
-		x,y=windowUtils.logicalToPhysicalPoint(self.obj.windowHandle,x,y)
-		return textInfos.Point(x, y)
-
 	def _getOffsetFromPoint(self, x, y):
 		# Accepts physical coordinates.
 		x,y=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,x,y)
@@ -430,6 +421,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		d=sorted(c)
 		#Return the lowest offset with the shortest distance
 		return d[0][1] if len(d)>0 else 0
+
+	def _getBoundingRectFromOffset(self, offset):
+		# Returns physical coordinates.
+		rects=self._storyFieldsAndRects[1]
+		if not rects or offset>=len(rects):
+			raise LookupError
+		return rects[offset].toPhysical(self.obj.windowHandle).toLTWH()
 
 	def _getNVDAObjectFromOffset(self,offset):
 		try:
@@ -488,6 +486,20 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return
 		for chunk in super(DisplayModelTextInfo,self).getTextInChunks(unit):
 			yield chunk
+
+	def _get_boundingRect(self):
+		# The base implementation for OffsetsTextInfo is conservative,
+		# However here, since bounding rectangles are always known and on screen, we can use them all.
+		rects=self._storyFieldsAndRects[1][self._startOffset:self._endOffset]
+		if not rects:
+			raise LookupError
+		return RectLTWH.fromCollection(*rects).toPhysical(self.obj.windowHandle)
+
+	def _getFirstVisibleOffset(self):
+		return 0
+
+	def _getLastVisibleOffset(self):
+		return self._getStoryLength()
 
 class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 

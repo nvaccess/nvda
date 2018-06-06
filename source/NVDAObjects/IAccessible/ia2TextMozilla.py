@@ -18,6 +18,7 @@ import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
+from locationHelper import RectLTWH
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -644,3 +645,27 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		if embedded:
 			return embedded
 		return obj
+
+	def _get_boundingRect(self):
+		rects = []
+		obj = self._startObj
+		ti = self._start
+		while obj:
+			if not obj.hasIrrelevantLocation:
+				try:
+					rects.append(ti.boundingRect)
+				except (NotImplementedError, LookupError):
+					pass
+			if obj == self._endObj:
+				# We're ad the end of the range.
+				break
+			try:
+				ti, obj = self._findNextContent(ti)
+			except LookupError:
+				# Can't move forward any further.
+				break
+			if obj == self._endObj:
+				ti = self._end
+		if not rects:
+			raise LookupError
+		return RectLTWH.fromCollection(*rects)

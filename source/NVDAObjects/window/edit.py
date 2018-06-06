@@ -174,30 +174,31 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_POSFROMCHAR,offset,None)
 			point=textInfos.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
-		(left,top,width,height)=self.obj.location
-		point.x=point.x+left
-		point.y=point.y+top
+		if -1 in (point.x, point.y):
+			raise LookupError("Point with client coordinates x=%d, y=%d not within client area of object" %
+				(point.x, point.y))
+		point.x, point.y = winUser.ClientToScreen(self.obj.windowHandle, point.x, point.y)
 		return point
 
 
 	def _getOffsetFromPoint(self,x,y):
-		(left,top,width,height)=self.obj.location
+		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
 		if self.obj.editAPIVersion>=1:
 			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			try:
-				p=PointLStruct(x-left,y-top)
+				p=PointLStruct(x,y)
 				winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
 				offset=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,internalP)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 		else:
-			p=(x-left)+((y-top)<<16)
+			p=x+(y<<16)
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)
 			offset=winUser.LOWORD(res)
 			lineNum=winUser.HIWORD(res)
 			if offset==0xFFFF and lineNum==0xFFFF:
-				raise LookupError("Point outside client aria")
+				raise LookupError("Point outside client area")
 			if self._getStoryLength() > 0xFFFF:
 				# Returned offsets are 16 bits, therefore for large documents, we need to make sure that the correct offset is returned.
 				# We can calculate this by using the start offset of the line with the retrieved line number.

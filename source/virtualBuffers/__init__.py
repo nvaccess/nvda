@@ -167,10 +167,11 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
-	def _getPointFromOffset(self,offset):
+	def _getBoundingRectFromOffset(self,offset):
 		o = self._getNVDAObjectFromOffset(offset)
-		left, top, width, height = o.location
-		return textInfos.Point(left + width / 2, top + height / 2)
+		if o.hasIrrelevantLocation:
+			raise LookupError("Object is off screen, invisible or has no location")
+		return o.location
 
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
