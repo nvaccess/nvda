@@ -12,6 +12,8 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <memory>
+#include <functional>
 #include <boost/optional.hpp>
 #include <windows.h>
 #include <set>
@@ -27,6 +29,34 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "gecko_ia2.h"
 
 using namespace std;
+
+CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element) {
+	std::unique_ptr<IUnknown*,std::function<void(IUnknown**)>> labelElementArray;
+	{
+		IUnknown** ppUnk=nullptr;
+		long nTargets=0;
+		constexpr int numRelations=1;
+		HRESULT res=element->get_relationTargetsOfType(IA2_RELATION_LABELLED_BY,numRelations,&ppUnk,&nTargets);
+		labelElementArray = {ppUnk, [=](IUnknown** ppUnk){
+			if(ppUnk) {
+				for(auto i=0; i<nTargets;++i) {
+					if(ppUnk[i]) ppUnk[i]->Release();
+				}
+				CoTaskMemFree(ppUnk);
+			}
+		}};
+		if(res!=S_OK) {
+			LOG_DEBUGWARNING(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY failed with result "<<res);
+			return nullptr;
+		}
+		if(nTargets==0) {
+			LOG_DEBUG(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY found no targets");
+			return nullptr;
+		}
+	}
+	return CComQIPtr<IAccessible2>(labelElementArray.get()[0]);
+}
+
 
 #define NAVRELATION_LABELLED_BY 0x1003
 #define NAVRELATION_NODE_CHILD_OF 0x1005
@@ -285,24 +315,13 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 bool isLabelVisible(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if(!pacc2_2) return false;
-	IUnknown** ppUnk=nullptr;
-	long nTargets=0;
-	HRESULT res=pacc2_2->get_relationTargetsOfType(IA2_RELATION_LABELLED_BY,1,&ppUnk,&nTargets);
-	if(res!=S_OK) {
-		LOG_DEBUGWARNING(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY failed with result "<<res);
-		return false;
-	}
-	if(nTargets==0) {
-		LOG_DEBUG(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY found no targets");
-		return false;
-	}
-	CComQIPtr<IAccessible2> targetAcc=*ppUnk;
-	CoTaskMemFree(ppUnk);
+	auto targetAcc=getLabelElement(pacc2_2);
+	if(!targetAcc) return false;
 	CComVariant child;
 	child.vt = VT_I4;
 	child.lVal = 0;
 	CComVariant state;
-	res = targetAcc->get_accState(child, &state);
+	HRESULT res = targetAcc->get_accState(child, &state);
 	if (res != S_OK)
 		return false;
 	if (state.lVal & STATE_SYSTEM_INVISIBLE)
