@@ -1800,6 +1800,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.setTether(self.TETHER_FOCUS, auto=True)
 		if self._tether != self.TETHER_FOCUS:
 			return
+		if getattr(obj, "treeInterceptor", None) and not obj.treeInterceptor.passThrough:
+			obj = obj.treeInterceptor
 		self._doNewObject(itertools.chain(getFocusContextRegions(obj, oldFocusRegions=self.mainBuffer.regions), getFocusRegions(obj)))
 
 	def _doNewObject(self, regions):
