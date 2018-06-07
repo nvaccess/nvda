@@ -21,7 +21,6 @@ Les points forts de cette version incluent la prise en charge des tableaux dans 
  - Vous pouvez assigner ces nouveaux modificateurs en utilisant les commandes qui se trouvent dans Touches émulées du clavier du système dans le dialogue Gestes de commandes.
 - Retour du support des terminaux braille Handy Tech Braillino et Modular (ceux équipés de l'ancien micrologiciel). (#8016)
 - La date et l'heure pour les terminaux Handy Tech supportés (comme Active Braille et Active Star) seront automatiquement synchronisés par NVDA en cas de désynchronisation de plus de 5 secondes. (#8016)
-- Dans les listes de messages de Microsoft Outlook, NVDA signale désormais si un message a été répondu ou transféré. (#6911)
 - Un geste de commande peut être assigné pour désactiver temporairement tous les déclencheurs des profils de configuration. (#4935)
 
 
@@ -58,6 +57,7 @@ Les points forts de cette version incluent la prise en charge des tableaux dans 
 - NVDA ne signale plus (marques LTR et RTL) ni en Braille ni quand on se déplace vocalement par caractère, lors de l'accès à l'horloge dans les versions récentes de Windows. (#5729)
 - La détection des touches de défilement sur les afficheurs Hims Smart Beetle est à nouveau plus fiable. (#6086)
 - Dans certains contrôles de texte, surtout dans les applications Delphi, les informations fournies lors de l'édition et la navigation sont maintenant beaucoup plus fiables. (#636, #8102)
+- Sous Windows 10 RS5, NVDA n'annonce plus d'informations redondantes quand on change de tâche avec alt+tab. (#8258)
 
 
 == Changements pour les développeurs ==
