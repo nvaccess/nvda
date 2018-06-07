@@ -104,8 +104,7 @@ before_test:
  - mkdir testResults
 
 test_script:
- - ps: |
-     py -m robot -d testResults -x systemTests_xunit.xml tests/system/initial.robot
+ - py -m robot -d testResults -x systemTests_xunit.xml tests/system/initial.robot & echo done tests
  
 after_test:
  - ps: |
