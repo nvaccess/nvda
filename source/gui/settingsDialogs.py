@@ -181,9 +181,6 @@ class SettingsDialog(wx.Dialog):
 		self.DestroyChildren()
 		self.Destroy()
 		self.SetReturnCode(wx.ID_OK)
-		# #7077: clean instances set in order to avoid multi-instance error when opening a fresh Settings window.
-		if len(SettingsDialog._instances) == 1:
-			SettingsDialog._instances.clear()
 
 	def onCancel(self, evt):
 		"""Take action in response to the Cancel button being pressed.
@@ -193,9 +190,6 @@ class SettingsDialog(wx.Dialog):
 		self.DestroyChildren()
 		self.Destroy()
 		self.SetReturnCode(wx.ID_CANCEL)
-		# #7077: clean instances set in order to avoid multi-instance error when opening a fresh Settings window.
-		if len(SettingsDialog._instances) == 1:
-			SettingsDialog._instances.clear()
 
 	def onApply(self, evt):
 		"""Take action in response to the Apply button being pressed.
