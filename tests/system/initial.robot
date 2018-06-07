@@ -10,7 +10,6 @@ Library       nvdaRobotLib.py
 *** Test Cases ***
 
 Can Start and exit NVDA
-    ${nvdaProcessHandle} =  start NVDA
     ${nvdaResult} =  quit NVDA
     Should Be Equal  ${nvdaResult.stdout}  Hello, world!
 
