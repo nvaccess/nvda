@@ -4,6 +4,7 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.2 =
+
 Caracteristicile principale ale acestei versiuni includ suport pentru citirea și navigarea în tabelele din aplicația Kindle pentru PC, suport pentru afișajele braille de la HumanWare BrailleNote Touch și BI14, precum și rezolvările multor defecte la vocile Windows Onecore și Sapi5. În plus, s-au introdus câteva mici funcții noi în Microsoft Outlook etc.
 
 
@@ -21,7 +22,6 @@ Caracteristicile principale ale acestei versiuni includ suport pentru citirea ș
  - puteți să le atribuiți utilizând comenzile găsite sub tastele tastaturii simulate din dialogul gesturilor de intrare.
 - S-a restaurat suportul pentru afișajele braille Handy Tech Braillino și Modular (cu firmware vechi). (#8016)
 - Acum, data și ora pentru dispozitivele Handy Tech suportate (cum ar fi Active Braille și Active Star) vor fi sincronizate automat de NVDA atunci când nu se sincronizează mai mult de cinci secunde. (#8016)
-- În listele de mesaje din Microsoft Outlook, NVDA raportează acum dacă s-a răspuns la un mesaj sau dacă mesajul s-a trimis. (#6911)
 - Acum se poate crea un gest de intrare nou în dialogul "gesturi de intrare" pentru a putea dezactiva temporar toate declanșările profilurilor de configurare. (#4935)
 
 
@@ -58,6 +58,7 @@ Caracteristicile principale ale acestei versiuni includ suport pentru citirea ș
 - NVDA nu mai anunță marcările (RTL și LTR) în braille sau când se citește literă cu literă în ceasul din versiunile mai noi de Windows. (#5729)
 - Tastele de deplasare ale afișajelor Hims Smart Beetle sunt acum detectate din nou în mod corect. (#6086)
 - Privind controale text în anumite aplicații precum aplicațiile Delphi, informațiile despre editare și navigare sunt redate mult mai stabil de către NVDA. (#8102)
+- În Windows 10 RS5, NVDA nu mai raportează informații redundante suplimentare la comutarea între activități cu alt+tab. (#8258)
 
 
 == Modificări pentru Dezvoltatori ==

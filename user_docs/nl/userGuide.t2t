@@ -174,7 +174,7 @@ Om een toets die u als NVDA programmatoets hebt ingesteld zijn oorspronkelijke f
 
 +++ Toetsenbordindeling +++[KeyboardLayouts]
 Momenteel beschikt NVDA over twee profielen met toetscommando's die toetsenbordindelingen worden genoemd: de desktoptoetsenbordindeling en de laptoptoetsenbordindeling. 
-De standaardinstelling van NVDA is de Desktoptoetsenbordindeling, maar in het NVDA-menu onder Opties en vervolgens in het onderdeel Toetsenbord [NVDA Settings #NVDASettings]  kunt u dit wijzigen in Laptoptoetsenbordindeling.
+De standaardinstelling van NVDA is de Desktoptoetsenbordindeling, maar u kunt dit wijzigen in Laptoptoetsenbordindeling bij  de categorie Toetsenbord in het dialoogvenster [Instellingen van NVDA #NVDASettings] dat u vindt in het NVDA-menu onder Opties.
 
 Bij de Desktoptoetsenbordindeling wordt zeer veel gebruik gemaakt van het numerieke toetsenbord waarbij num lock uit moet staan.
 Hoewel de meeste laptops geen apart numeriek toetsenbord hebben, kan dit soms wel worden gesimuleerd door de FN-toets ingedrukt te houden en letters en cijfers in te toetsen op het rechterdeel van het toetsenbord (7, 8, 9, u, i, o, j, k, l, etc.).
@@ -231,7 +231,7 @@ Bij tablets zoals de Surface Pro van Microsoft , is het schermtoetsenbord altijd
 Om het schermtoetsenbord te laten verdwijnen dubbeltikt u op het schermtoetsenbordikoon of gaat u uit het tekstinvoerveld.
 
 De letters en tekens op het schermtoetsenbord vindt u door met een vinger naar het toetsenbord te gaan, gewoonlijk te vinden onderaan het scherm, waar u vervolgens met uw vinger de toets zoekt van uw keuze. Hiervoor moet het toetsenbord wel actief zijn.
-Zodra u de toets die u wilt gebruiken hebt gevonden, dubbeltikt u op de toets of u haalt uw vinger van de toets al naar gelang de gekozen opties in het onderdeel [Aanraakinteractie-instellingen #TouchInteraction] van de NVDA-instellingen.
+Zodra u de toets die u wilt gebruiken hebt gevonden, dubbeltikt u op de toets of u haalt uw vinger van de toets al naar gelang de gekozen opties in de categorie [Aanraakinteractie-instellingen #TouchInteraction] van de Instellingen van NVDA.
 
 ++ Invoerhulpmodus ++[InputHelpMode]
 Er worden veel NVDA-commando’s genoemd in deze handleiding, maar om op een gemakkelijke manier de verschillende commando’s te leren kennen kunt u het beste Invoerhulp inschakelen. 
@@ -452,8 +452,8 @@ Om een idee te krijgen waar de muis zich op het scherm bevindt kunnen pieptonen 
 Hoe verder de muis naar de bovenkant van het scherm wordt bewogen, hoe hoger de pieptoon wordt.
 Hoe verder de muis naar links wordt bewogen, hoe meer het geluid uit de linker luidspreker lijkt te komen, terwijl het geluid steeds meer van rechts komt als de muis naar rechts wordt bewogen. Hierbij wordt ervan uitgegaan dat de gebruiker over stereoluidsprekers of een stereohoofdtelefoon beschikt.
 
-Deze optie van de muis staat standaard   “uit”.
-Als u deze functionaliteit wilt gebruiken, kunt u deze inschakelen in het onderdeel [muisinstellingen venster #MouseSettings], bereikbaar vanuit het NVDA-instellingenmenu[NVDA Settings #NVDASettings]. 
+Deze extra muisopties staan standaard   “uit”.
+Als u deze functionaliteit wilt gebruiken, kunt u deze inschakelen in de categorie [muisinstellingen #MouseSettings] van het dialoogvenster [Instellingen van NVDA #NVDASettings], dat bereikbaar is via Opties in het NVDA-menu. 
 
 Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet gebruiken, zijn er een aantal toetscombinaties in NVDA waarmee muisbewegingen en muiskliks kunnen worden gesimuleerd:
 %kc:beginInclude
@@ -603,7 +603,7 @@ Als u over een brailleleesregel beschikt, kan NVDA informatie in braille weergev
 Als uw brailleleesregel een toetsenbord heeft van het type Perkins kunt u ook zowel verkort als onverkort braille invoeren.
 
 Raadpleegde paragraaf  [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor informatie over de ondersteunde brailleleesregels.
-U kunt braille configureren via het [onderdeel Brailleïnstellingen #BrailleSettings] onder [Instellingen in het NVDA-menu #NVDASettings].
+U kunt braille configureren via de [categorie Braille #BrailleSettings] in het dialoogvenster [Instellingen van NVDA #NVDASettings].
 
 ++ Braille-afkortingen voor besturingselementen, status-indicatoren en oriëntatiepunten ++[BrailleAbbreviations]
 Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type en de status van een besturingselement alsmede oriëntatiepunten.
@@ -695,7 +695,7 @@ Tot slot kunnen de volgende afkortingen gebruikt worden met betrekking tot orië
 
 ++ Brailleinvoer ++[BrailleInput]
 NVDA ondersteunt de invoer van zowel onverkort als verkort braille via een brailletoetsenbord.
-U kunt een omzettabel selecteren waarmee u braille in tekst kunt laten omzetten met behulp van de [Invoertabelopties#BrailleSettingsInputTable]  onder Braillebij de [NVDA-instellingen #NVDASettings].
+U kunt een omzettabel selecteren waarmee u braille in tekst kunt laten omzetten met behulp van de [Invoertabelopties#BrailleSettingsInputTable]  in de categorie  Braille van  het dialoogvenster  [Instellingen van NVDA #NVDASettings].
 
 Bij gebruik van onverkort braille wordt tekst ingevoegd zodra deze wordt ingevoerd.
 Bij gebruik van verkort braille wordt tekst ingevoegd wanneer u op de spatiebalk of de Enter-toets drukt aan het eind van een woord.
@@ -726,7 +726,7 @@ Door op Escape te drukken wordt het herkenningsresultaat geannuleerd.
 De OCR-functionaliteit van Windows 10 biedt ondersteuning voor veel talen.
 NVDA kan hiervan gebruik maken om tekst uit afbeeldingen en ontoegankelijke toepassingen te herkennen.
 
-U kunt de tekstherkenningstaal onder [Windows 10 OCR #Win10OcrSettings] bij [NVDA-instellingen #NVDASettings] opgeven.
+In de categorie [Windows 10 OCR #Win10OcrSettings] van het dialoogvenster  [Instellingen van NVDA #NVDASettings] kunt u de tekstherkenningstaal opgeven.
 U kunt extra talen toevoegen door in het menu Start, (of met linker Windows-toets +i) Instellingen te kiezen, Tijd en Taal -> Regio & Taal te selecteren   en dan  Een taal toevoegen te kiezen.
 
 %kc:beginInclude
@@ -740,7 +740,7 @@ NVDA beschikt over een aantal applicatie-specifieke kenmerken om het gebruik van
 
 +++ Automatisch Lezen van Kolom- en Rijkoppen +++[WordAutomaticColumnAndRowHeaderReading]
 Bij het navigeren in Microsoft Word-tabellen  kan NVDA de toepasselijke  kolom- en rijkoppen automatisch melden.
-Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in het dialoogvenster Documentopmaak,dat u vindt bij de [NVDA-instellingen #NVDASettings], ingeschakeld is. 
+Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in de categorie Documentopmaak,welke  u vindt in het dialoogvenster [Instellingen van NVDA #NVDASettings], ingeschakeld is. 
 Ten tweede moet NVDA voor elke tabel weten in welke kolom of rij de kolom-/rijkoppen staan.
 Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijkoppen zich bevinden, kunt u de volgende commando’s gebruiken:
 %kc:beginInclude
@@ -774,7 +774,7 @@ Om eventuele opmerkingen op de positie waar de cursor op dat moment staat te lat
 
 +++ Automatisch Lezen van Kolom- en Rijkoppen +++[ExcelAutomaticColumnAndRowHeaderReading]
 Bij het navigeren in Microsoft Excel-werkbladen  kan NVDA de toepasselijke  kolom- en rijkoppen automatisch melden.
-Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melde  in het dialoogvenster Documentopmaak, dat u vindt bij de [NVDA-instellingen #NVDASettings], ingeschakeld is. 
+Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in de categorie Documentopmaak,welke  u vindt in het dialoogvenster [Instellingen van NVDA #NVDASettings], ingeschakeld is. 
 Ten tweede moet NVDA voor elk werkblad weten in welke kolom of rij de kolom-/rijkoppen staan.
 Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijkoppen zich bevinden, kunt u een van de volgende commando’s gebruiken:
 %kc:beginInclude
@@ -918,7 +918,7 @@ Sommige instellingen kunnen ook gewijzigd worden met sneltoetsen. Deze worden, v
 %kc:settingsSection: || Naam | Desktoptoets  | Laptoptoets | Beschrijving |
 Het dialoogvenster Instellingen van NVDA kent veel configuratieparameters die aan te passen zijn.
 Dit dialoogvenster  bevat een lijst met verscheidene categorieën instellingen waaruit een keuze gemaakt kan worden.
-Wanneer  u een categorie,  (of onderdeel) selecteert, krijgt u verschillende aan deze categorie gerelateerde   instellingen te zien in dit dialoogvenster.
+Wanneer  u een categorie selecteert, krijgt u verschillende aan deze categorie gerelateerde   instellingen te zien in dit dialoogvenster.
 Door de knop 'Toepassen' te gebruiken worden de aangepaste instellingen doorgevoerd zonder dat het dialoogvenster gesloten wordt.
 Als u uw instellingen wilt opslaan en het dialoogvenster Instellingen van NVDA wilt sluiten gebruikt  u de knop 'OK'.
 
