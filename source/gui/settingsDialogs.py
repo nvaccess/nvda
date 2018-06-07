@@ -1990,15 +1990,15 @@ class DictionaryDialog(SettingsDialog):
 		self.editingIndex=-1
 
 		bHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
-		addButtonID=wx.ID_ANY
+		addButtonID=wx.NewId()
 		# Translators: The label for a button in speech dictionaries dialog to add new entries.
 		bHelper.addButton(self, addButtonID,_("&Add"),wx.DefaultPosition)
 
-		editButtonID=wx.ID_ANY
+		editButtonID=wx.NewId()
 		# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 		bHelper.addButton(self, editButtonID,_("&Edit"),wx.DefaultPosition)
 
-		removeButtonID=wx.ID_ANY
+		removeButtonID=wx.NewId()
 		bHelper.addButton(self, removeButtonID,_("&Remove"),wx.DefaultPosition)
 		sHelper.addItem(bHelper)
 
