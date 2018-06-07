@@ -17,12 +17,12 @@ import speech
 import api
 import eventHandler
 import winKernel
-import winUser
 from . import IAccessible, List
 from ..window import Window
 import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 import config
+from locationHelper import RectLTRB
 
 #Window messages
 LVM_FIRST=0x1000
@@ -306,9 +306,13 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.readProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
-		windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
-		windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
-		return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
+		# ##8268: this might be a malformed rectangle
+		# (i.e. with a left coordinate that is greather than the right coordinate).
+		left = min(localRect.left, localRect.right)
+		top = min(localRect.top, localRect.bottom)
+		right = max(localRect.left, localRect.right)
+		bottom = max(localRect.top, localRect.bottom)
+		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self,column):
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
