@@ -26,7 +26,7 @@ NVDA允许盲人和低视力人群访问 Windows 操作系统和与许多第三�
 - 已翻译为54种语言。
 - 支持现代的 Windows 操作系统，包括32位和64位和其他衍生版本。
 - 能够在 Windows 登录和其他安全界面运行
-- 支持常见的辅助功能接口，如微软 Active Accessibility、Java Access Bridge、IAccessible2和UI automation(UI automation 仅支持 Windows 7和更高版本的操作系统)
+- 支持常见的辅助功能接口，如Microsoft Active Accessibility(MSAA)、Java Access Bridge、IAccessible2和UI automation(UI automation 仅支持 Windows 7和更高版本的操作系统)
 - 支持 Windows 命令提示符和其他控制台程序。
 -
 
@@ -47,24 +47,24 @@ NVDA捆绑的[eSpeak NG https://github.com/espeak-ng/espeak-ng]是一个免费�
 
 NVDA 支持多种语言的简写或非简写点字和电脑点字。
 
-++ 许可证与著作权 ++
- NVDA版权归 NVDA_COPYRIGHT_YEARS  NVDA 贡献者。
+++ 许可证与著作权 ++[LicenseAndCopyright]
+ NVDA版权归 NVDA贡献者所有 @ NVDA_COPYRIGHT_YEARS 。
 
 NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。 
 只要将此公开许可协议随附于软件内，您可以自由地以任何形式分享或改变此软件，并将所有的源代码提供给需要的人
 此槼则适用于原始发布的软件或任何以此软件修改之后发布的作品，以及所有采用此软件内的程序码所生成的作品。 
-更详细的信息，请[查看完整授权， http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+更详细的信息，请查看[完整的授权协议 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + 系统需求 +[SystemRequirements]
 - 操作系统： 所有32位或者64位的Windows 7 Sp1、Windows 8 、Windows 8.1 、Windows 10(包括服务器系统)。
 - 对于 Windows 7 版本，NVDA 要求 SP1 以上。
-- 对于 Windows Server 2008 R2服务器版 操作系统 ， NVDA 要求 SP1 或者更高。
+- 对于 Windows Server 2008 R2 服务器操作系统 ， NVDA 要求 SP1 或者更高。
 - 内存：需要 256MB 或以上 
 - 处理器速率：1.0Ghz或以上 
 - 约需要90 MB 的磁盘空间。
 -
 
-+ 获取和设置 NVDA +
++ 获取和设置 NVDA +[GettingAndSettingUpNVDA]
 如果您还没有 NVDA 的副本， 请从[www.nvaccess.org NVDA_URL]下载它(译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 http://www.nvdacn.com/]获取)。
 
 转到下载区域，您将发现一个可下载最近版本 NVDA 的链接。
@@ -72,16 +72,16 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 运行您刚刚下载的文件，会打开一个临时的 NVDA 副本。
 您将被询问，是否要安装 NVDA、创建便携版本或者仅仅是运行临时的版本。
 
-如果您计划总是在此电脑上使用 NVDA，您将希望选择“安装NVDA”。
-在安装 NVDA 的时候，将允许您使用如“在 Windows 登陆窗口启用 NVDA”，此选项将允许 NVDA 读取 Windows 的登陆界面或者其他安全界面(此特性无法在便携版和临时的 NVDA 副本中启用)，，或在开始菜单和桌面创建快捷方式的功能。
+如果您只打算在这个电脑上使用 NVDA，您将希望选择“安装NVDA”。
+在安装 NVDA 的时候，将允许您使用如“在 Windows 登陆窗口启用 NVDA”，此选项将允许 NVDA 读取 Windows 的登陆界面或者其他安全界面(此功能无法在便携版和临时的 NVDA 副本中启用)，或在开始菜单和桌面创建快捷方式的功能。
 安装版本的 NVDA 允许您在任何时候创建便携版本。
 
-如果您希望让 NVDA 运行在 U盘或其他可写媒体，您应该选择“创建便携版本”。
+如果您希望让 NVDA 运行在U盘或其他可写存储设备上，您应该选择“创建便携版本”。
 便携版本同样允许您在随后把它安装到电脑上。
 或者，您如果只希望让 NVDA 运行在如 CD 等只读媒体，您只需要拷贝下载的文件即可。
 在只读媒体上直接运行便携版本的 NVDA 在目前是不受支持的。
 
-如只是希望试用，可选择使用临时的 nvda 副本，虽然每次以这种方式启动 NVDA 变得非常费时。
+如只是希望试用，可选择使用临时的 NVDA 副本，虽然每次以这种方式启动 NVDA 变得非常费时。
 
 ++ 便携副本和临时副本的限制 ++
 除了不能在登录期间和或其后自动启动，NVDA 的便携副本和临时副本还有以下限制：
@@ -89,7 +89,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 - 读取用户帐户控制(UAC)界面时，不能尝试启动具有管理权限的应用程序。
 - Windows 8： 无法使用触摸屏进行输入。
 - Windows 8：无法在 Windows 商店应用提供诸如浏览模式和朗读输入字符的特性。
-- windows8 或其后版本：无法提供音频闪避特性。
+- Windows8 或其后版本：无法提供音频闪避特性。
 -
 
 ++ 安装 NVDA ++
@@ -102,7 +102,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 一旦安装完成，将弹出消息提示您，安装已经成功。
 再此点击“确定”按钮，将启动更新版本的 NVDA。
 
-+++ 在 WINDOWS 启动时运行 +++
++++ 在 Windows 启动时运行 +++
 此选项将允许您选择是否在 Windows 欢迎屏幕(即在输入密码以前)启动 NVDA。
 此选项还可应用于 UAC 控制和其他安全界面。
 
@@ -1762,9 +1762,9 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | brailleSpaceBar+dot1+dot3+dot4 |
 | alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
 | escape key | brailleSpaceBar+dot1+dot5 |
-| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| Windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | space key | brailleSpaceBar |
-| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
 | Report Current Line | brailleSpaceBar+dot1+dot4 |
 | NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
 
@@ -1813,9 +1813,9 @@ Please see the display's documentation for descriptions of where these keys can 
 | enter key | spEnter |
 | Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
-| windows+d key (minimize all applications) | sp1+sp4 |
-| windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3 |
+| Windows+d key (minimize all applications) | sp1+sp4 |
+| Windows+b key (focus system tray) | sp3+sp4 |
+| Windows key | sp2+sp3 |
 | alt+tab key | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
@@ -1964,8 +1964,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | space+dot1+dot3+dot4 (space+m) |
 | escape key | space+dot1+dot5 (space+e) |
 | enter key | dot8 |
-| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
-| windows key | space+dot3+dot4 |
+| Windows+d key (minimize all applications) | c1+c4+c5 (command d) |
+| Windows key | space+dot3+dot4 |
 | alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
@@ -2028,8 +2028,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | f1 key | dot1+dot2+dot5+space |
 | f3 key | dot1+dot2+dot4+dot8 |
 | f4 key | dot7+advance3 |
-| windows+b key | dot1+dot2+advance1 |
-| windows+d key | dot1+dot4+dot5+advance1 |
+| Windows+b key | dot1+dot2+advance1 |
+| Windows+d key | dot1+dot4+dot5+advance1 |
 %kc:endInclude
 
 ++ HIMS SyncBraille ++
