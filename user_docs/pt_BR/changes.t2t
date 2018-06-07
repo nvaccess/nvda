@@ -1,12 +1,12 @@
 Novidades do NVDA
-Traduzido por Marlin Rodrigues da Silva, Cleverson Casarin Uliana e Tiago Melo Casal
+Traduzido por: Marlin Rodrigues da Silva, Cleverson Casarin Uliana, Tiago Melo Casal.
 
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
 = 2018.2 =
 
-Os destaques desta versão incluem Suporte para tabelas no Kindle para PC, suporte para linhas Braille Humanware BrailleNote Touch e BI14, Melhorias nos sintetizadores de fala Onecore e Sapi5, melhorias no Microsoft Outlook e muito mais.
+Os destaques desta versão incluem Suporte para tabelas no Kindle para PC, suporte para linhas Braille HumanWare BrailleNote Touch e BI14, Melhorias nos sintetizadores de fala Onecore e Sapi5, melhorias no Microsoft Outlook e muito mais.
 
 == Novas Características ==
 - O intervalo de linhas e colunas para células de tabelas agora é anunciado em fala e braille. (#2642)
@@ -22,14 +22,13 @@ Os destaques desta versão incluem Suporte para tabelas no Kindle para PC, supor
  - Você pode atribuir esses novos modificadores de alternância usando os comandos encontrados em Teclas emuladas do teclado de sistema na caixa de diálogo Gestos para entrada.
 - Suporte restaurado para linhas Handy Tech Braillino e Modular (com firmware antigo). (#8016)
 - Data e hora dos dispositivos Handy Tech suportados (como Active Braille e Active Star) serão automaticamente sincronizadas pelo NVDA quando estiverem fora de sincronia por mais de cinco segundos. (#8016)
-- Nas listas de mensagens do Microsoft Outlook, o NVDA agora informa se uma mensagem foi respondida ou encaminhada. (#6911)
-- Um gesto de entrada pode ser atribuído para desativar temporariamente todos os gatilhos de perfil de configuração. (#4935)
+- Um gesto de entrada pode ser atribuído para desativar temporariamente todos os disparadores de perfil de configuração. (#4935)
 
 
 == Alterações ==
 - A coluna de status no gerenciador de complementos foi alterada para indicar se o complemento está habilitado ou desativado em vez de executando ou suspenso. (#7929)
 - Transcritor braille liblouis atualizado para a versão 3.5.0. (#7839)
-- A tabela de braille Lituano foi renomeado para Lituano de 6 pontos para evitar confusão com a nova tabela de 8 pontos. (#7839)
+- A tabela de braille Lituano foi renomeada para Lituano de 6 pontos para evitar confusão com a nova tabela de 8 pontos. (#7839)
 - As tabelas em Francês (Canadá) grau 1 e 2 foram removidas. Em vez destas, serão usadas as tabelas braille em francês (unificado) de 6 pontos para computador e a Grau 2 respectivamente. (#7839)
 - Os botões secundários de rolagem nas linhas braille Alva BC6, EuroBraille e Papenmeier agora anunciam informações de formatação para o texto sob a célula braille desse botão. (#7106)
 - As tabelas de entrada braille abreviadas retornarão automaticamente ao modo não abreviado em casos não editáveis (isto é, em controles onde não há cursor ou no modo de navegação). (#7306)
@@ -55,10 +54,11 @@ Os destaques desta versão incluem Suporte para tabelas no Kindle para PC, supor
 - Modelos de gestos específicos para botões nas linhas Hims estão funcionando como publicado no guia do usuário. (#8096)
 - O NVDA tentará agora corrigir os problemas de registro do sistema COM que fazem com que programas como o Firefox e o Internet Explorer fiquem inacessíveis e comunique "Desconhecido" pelo NVDA. (#2807)
 - Contornado um bug ""[falha]"" no Gerenciador de Tarefas que fazia com que o NVDA não permitisse que os usuários acessassem o conteúdo de detalhes específicos sobre processos. (#8147)
-- As vozes Microsoft SAPI5 mais recentes não ficam mais atrasadas no final da fala, tornando muito mais eficiente navegar com essas vozes. (#8174)
+- As vozes Microsoft SAPI5 mais recentes já não ficam atrasadas no final da fala, tornando muito mais eficiente navegar com essas vozes. (#8174)
 - O NVDA não comunica mais (marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"") em Braille ou em fala por caractere ao acessar o relógio em versões recentes do Windows. (#5729)
 - A detecção de teclas de rolagem nas linhas Hims Smart Beetle mais uma vez não é mais desconfiável. (#6086)
 - Em alguns controles de texto, particularmente em aplicativos Delphi, as informações fornecidas sobre edição e navegação são agora muito mais confiáveis. (#636, #8102)
+- No Windows 10 RS5, o NVDA não anuncia mais informações redundantes adicionais ao alternar tarefas com alt+tab. (#8258)
 
 
 == Alterações Específicas para Desenvolvedores ==
@@ -2331,4 +2331,3 @@ O mais destacável desta versão inclui o suporte para versões de 64 bit do Win
 - O NVDA agora pergunta se deve salvar suas configurações e reiniciá-lo quando o usuário altera seu idioma através do Diálogo de Opções da Interface. Para que o novo idioma seja carregado, a configuração tem de ser salva e o NVDA reiniciado.
 - Quando um sintetizador não pode ser carregado ao ser escolhido a partir do Diálogo de Sintetizadores, uma caixa de diálogo agora avisa ao usuário desse fato.
 - Ao carregar um sintetizador pela primeira vez, o NVDA deixa que ele escolha os parâmetros mais adequados de voz, velocidade e tom, em lugar de forçá-lo a usar os padrões que este supõe estar adequados. Isso resolve um problema com os sintetizadores Eloquence e Viavoice sapi4 que iniciavam a falar de forma excessivamente rápida para uma primeira vez.
-
