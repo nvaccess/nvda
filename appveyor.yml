@@ -97,6 +97,20 @@ build_script:
  - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
  - cd ..
 
+before_test:
+ - py -m pip install robotframework
+ - py -m pip install robotremoteserver
+ - py -m pip install pyautogui
+ - mkdir testResults
+
+test_script:
+ - py -m robot -d testResults -x systemTests_xunit.xml tests/system/initial.robot
+ 
+after_test:
+ - ps: |
+     $wc = New-Object 'System.Net.WebClient'
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\systemTests_xunit.xml))
+ 
 artifacts:
  - path: output\*
  - path: output\*\*
