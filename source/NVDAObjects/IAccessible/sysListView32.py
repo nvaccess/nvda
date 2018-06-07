@@ -53,6 +53,15 @@ LVIF_INDENT=0x10
 LVIF_GROUPID=0x100
 LVIF_COLUMNS=0x200
 
+#GETSUBITEMRECT flags
+# Returns the bounding rectangle of the entire item, including the icon and label
+LVIR_BOUNDS = 0
+# Returns the bounding rectangle of the icon or small icon.
+LVIR_ICON = 1
+# Returns the bounding rectangle of the entire item, including the icon and label.
+# This is identical to LVIR_BOUNDS.
+LVIR_LABEL = 2
+
 #Item states
 LVIS_FOCUSED=0x01
 LVIS_SELECTED=0x02
@@ -298,7 +307,11 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnLocationRaw(self,index):
 		processHandle=self.processHandle
-		localRect=RECT(left=2,top=index)
+		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
+		localRect=RECT(
+			left=LVIR_LABEL, # Returns the bounding rectangle of the entire item, including the icon and label
+			top=index # The one-based index of the subitem
+		)
 		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			winKernel.writeProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
