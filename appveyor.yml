@@ -109,7 +109,7 @@ test_script:
 after_test:
  - ps: |
      $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\systemTests_xunit.xml))
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$env:APPVEYOR_JOB_ID", ".\testResults\systemTests_xunit.xml")
  
 artifacts:
  - path: output\*
