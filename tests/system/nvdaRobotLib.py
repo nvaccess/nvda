@@ -49,20 +49,13 @@ class nvdaRobotLib(object):
 
 
 	def start_NVDA(self):
-		print "*WARN* copy plugin"
 		self.copy_in_system_test_spy()
-		print "*WARN* start NVDA process"
 		nvdaProcessHandle = self._startNVDAProcess()
-		print "*WARN* check if running"
 		process.process_should_be_running(nvdaProcessHandle)
-		print "*WARN* connect to remote server"
 		builtIn.sleep(3.0)
 		self._connectToRemoteServer()
-		print "*WARN* wait for NVDA start-up to complete"
 		self.wait_for_NVDA_startup_to_complete()
-		print "*WARN* done"
 		return nvdaProcessHandle
-
 
 	def wait_for_NVDA_startup_to_complete(self):
 		while not self.nvdaSpy.run_keyword("is_NVDA_startup_complete", [], {}):
