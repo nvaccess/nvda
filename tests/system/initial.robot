@@ -11,6 +11,7 @@ Library       nvdaRobotLib.py
 
 Can Start and exit NVDA
     start nvda
+    log to console  About to run quit NVDA
     quit NVDA
 
 

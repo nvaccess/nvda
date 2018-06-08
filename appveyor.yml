@@ -112,7 +112,7 @@ test_script:
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\unitTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
-     py -m robot -d testResults -x systemTests.xml tests/system/initial.robot
+     py -m robot --loglevel DEBUG -d testResults -x systemTests.xml tests/system/initial.robot
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\systemTests.xml))
