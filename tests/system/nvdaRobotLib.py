@@ -73,8 +73,13 @@ class nvdaRobotLib(object):
 			nvdaSpy.Stop Remote Server
 			Wait For Process  nvdaAlias
 		"""
+		print "*WARN* send quit NVDA keys"
 		sendKey.send_quit_NVDA_keys()
+		print "*WARN* sleep"
 		builtIn.sleep(1.0)
+		print "*WARN* send enter key"
 		sendKey.send_enter_key()
+		print "*WARN* stop remote server"
 		self.nvdaSpy.run_keyword("stop_remote_server", [], {})
+		print "*WARN* wait for NVDA process"
 		return process.wait_for_process(self.nvdaHandle)
