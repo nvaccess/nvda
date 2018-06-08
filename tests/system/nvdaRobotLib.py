@@ -1,3 +1,4 @@
+import sys
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.OperatingSystem import OperatingSystem
 from robot.libraries.Process import Process
@@ -74,12 +75,21 @@ class nvdaRobotLib(object):
 			Wait For Process  nvdaAlias
 		"""
 		print "*WARN* send quit NVDA keys"
+		sys.stdout.flush()
 		sendKey.send_quit_NVDA_keys()
 		print "*WARN* sleep"
+		sys.stdout.flush()
 		builtIn.sleep(1.0)
 		print "*WARN* send enter key"
+		sys.stdout.flush()
 		sendKey.send_enter_key()
 		print "*WARN* stop remote server"
+		sys.stdout.flush()
 		self.nvdaSpy.run_keyword("stop_remote_server", [], {})
 		print "*WARN* wait for NVDA process"
-		return process.wait_for_process(self.nvdaHandle)
+		sys.stdout.flush()
+		res=process.wait_for_process(self.nvdaHandle)
+		print "*WARN* done"
+		sys.stdout.flush()
+		return res
+
