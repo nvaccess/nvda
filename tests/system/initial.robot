@@ -11,7 +11,7 @@ Library			 nvdaRobotLib.py
 
 Can Start and exit NVDA
 	log to console	start nvda
-	start process	pythonw nvda.pyw --debug-logging -r	 cwd=source	shell=true	alias=nvdaAlias
+	start process	py nvda.pyw --debug-logging -r	 cwd=source	shell=true	alias=nvdaAlias
 	sleep	4
 	log to console	connect to remote server
 	Import Library	Remote				 WITH NAME		nvdaSpy
