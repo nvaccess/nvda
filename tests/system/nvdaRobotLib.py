@@ -56,6 +56,7 @@ class nvdaRobotLib(object):
 		print "*WARN* check if running"
 		process.process_should_be_running(nvdaProcessHandle)
 		print "*WARN* connect to remote server"
+		builtIn.sleep(3.0)
 		self._connectToRemoteServer()
 		print "*WARN* wait for NVDA start-up to complete"
 		self.wait_for_NVDA_startup_to_complete()
