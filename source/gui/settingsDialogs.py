@@ -1990,21 +1990,25 @@ class DictionaryDialog(SettingsDialog):
 		self.editingIndex=-1
 
 		bHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
-		addButtonID=wx.NewId()
-		# Translators: The label for a button in speech dictionaries dialog to add new entries.
-		bHelper.addButton(self, addButtonID,_("&Add"),wx.DefaultPosition)
+		bHelper.addButton(
+			parent=self,
+			# Translators: The label for a button in speech dictionaries dialog to add new entries.
+			label=_("&Add")
+		).Bind(wx.EVT_BUTTON, self.OnAddClick)
 
-		editButtonID=wx.NewId()
-		# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-		bHelper.addButton(self, editButtonID,_("&Edit"),wx.DefaultPosition)
+		bHelper.addButton(
+			parent=self,
+			# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
+			label=_("&Edit")
+		).Bind(wx.EVT_BUTTON, self.OnEditClick)
 
-		removeButtonID=wx.NewId()
-		bHelper.addButton(self, removeButtonID,_("&Remove"),wx.DefaultPosition)
+		bHelper.addButton(
+			parent=self,
+			# Translators: The label for a button in speech dictionaries dialog to remove existing entries.
+			label=_("&Remove")
+		).Bind(wx.EVT_BUTTON, self.OnRemoveClick)
+
 		sHelper.addItem(bHelper)
-
-		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
-		self.Bind(wx.EVT_BUTTON,self.OnEditClick,id=editButtonID)
-		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
 
 	def postInit(self):
 		self.dictList.SetFocus()
