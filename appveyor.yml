@@ -104,13 +104,14 @@ before_test:
  - mkdir testResults
 
 test_script:
- - py -m robot --nostatusrc -d testResults -x systemTests_xunit.xml tests/system/initial.robot
- 
-after_test:
  - ps: |
+     $errorCode=0
+     py -m robot -d testResults -x systemTests_xunit.xml tests/system/initial.robot
+     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\systemTests_xunit.xml))
- 
+     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+
 artifacts:
  - path: output\*
  - path: output\*\*
