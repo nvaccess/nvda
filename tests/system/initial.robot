@@ -10,6 +10,8 @@ Library			 nvdaRobotLib.py
 *** Test Cases ***
 
 Can Start and exit NVDA
+	log to console	copy globalPlugin
+	Copy File	tests/system/systemTestSpy.py	source/globalPlugins/
 	log to console	start nvda
 	start process	py nvda.pyw --debug-logging -r	 cwd=source	shell=true	alias=nvdaAlias
 	sleep	4
