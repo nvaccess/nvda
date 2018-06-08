@@ -87,3 +87,5 @@ class nvdaRobotLib(object):
 		sys.stdout.flush()
 		return res
 
+	def wait_for_process_good(self,processObj):
+		processObj.wait()
