@@ -170,6 +170,18 @@ class Detector(object):
 		# Perform initial scan.
 		self._startBgScan(usb=True, bluetooth=True)
 
+	@property
+	def _scanQueuedSafe(self):
+		"""Returns L{_scanQueued} in a thread safe way by using L{_queuedScanLock}."""
+		with self._queuedScanLock:
+			return self._scanQueued
+
+	@_scanQueuedSafe.setter
+	def _scanQueuedSafe(self, state):
+		"""Sets L{_scanQueued} in a thread safe way by using L{_queuedScanLock}."""
+		with self._queuedScanLock:
+			self._scanQueued = state
+
 	def _startBgScan(self, usb=False, bluetooth=False):
 		with self._queuedScanLock:
 			self._detectUsb = usb
@@ -189,15 +201,14 @@ class Detector(object):
 			# No scan to stop
 			return
 		self._stopEvent.set()
-		with self._queuedScanLock:
-			self._scanQueued = False
+		self._scanQueuedSafe = False
 
 	def _bgScan(self, param):
 		if self._runningApcLock.locked():
 			log.debugWarning("Braille display detection background scan APC executed while one is already running")
 			return
 		with self._runningApcLock:
-			while self._scanQueued:
+			while self._scanQueuedSafe:
 				# Clear the stop event before a scan is started.
 				# Since a scan can take some time to complete, another thread can set the stop event to cancel it.
 				self._stopEvent.clear()
