@@ -50,7 +50,9 @@ class TCList(IAccessible):
 		if self.name:
 			currIndex = self.IAccessibleChildID
 			allIndex = self.parent.childCount
-			indexString = (" %s of %s" % (currIndex, allIndex))
+			if currIndex == 1: ui.message(_("Top"))
+			if allIndex == currIndex: ui.message(_("Bottom"))
+			indexString=_("{number} of {total}").format( number = currIndex, total = allIndex)
 			speakList=[]
 			if controlTypes.STATE_SELECTED in self.states:
 				speakList.append(controlTypes.stateLabels[controlTypes.STATE_SELECTED])
