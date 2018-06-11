@@ -801,12 +801,14 @@ class ExitDialog(wx.Dialog):
 			# Translators: An option in the combo box to choose exit action.
 			_("Exit"),
 			# Translators: An option in the combo box to choose exit action.
-			_("Restart"),
-			# Translators: An option in the combo box to choose exit action.
-			_("Restart with add-ons disabled"),
-			# Translators: An option in the combo box to choose exit action.
-			_("Restart with debug logging enabled")
+			_("Restart")
 		]
+		# Windows Store version of NVDA does not support add-ons yet.
+		if not config.isAppX:
+			# Translators: An option in the combo box to choose exit action.
+			self.actions.append(_("Restart with add-ons disabled"))
+		# Translators: An option in the combo box to choose exit action.
+		self.actions.append(_("Restart with debug logging enabled"))
 		if updateCheck and updateCheck.isPendingUpdate():
 			# Translators: An option in the combo box to choose exit action.
 			self.actions.append(_("Install pending update"))
@@ -826,6 +828,9 @@ class ExitDialog(wx.Dialog):
 
 	def onOk(self, evt):
 		action=self.actionsList.GetSelection()
+		# Because Windows Store version of NVDA does not support add-ons yet, add 1 if action is 2 or above if this is such a case.
+		if action >= 2 and config.isAppX:
+			action += 1
 		if action == 0:
 			wx.GetApp().ExitMainLoop()
 		elif action == 1:
