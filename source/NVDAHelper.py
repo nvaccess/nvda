@@ -1,3 +1,9 @@
+#NVDAHelper.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2017-2018 NV Access Limited, Peter Vagner, Davy Kager
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import os
 import sys
 import _winreg
@@ -30,8 +36,8 @@ _remoteLoader64=None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
-lastInputLanguageName=None
-lastInputMethodName=None
+lastLanguageID=None
+lastLayoutString=None
 
 #utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
 def _setDllFuncPointer(dll,name,cfunc):
@@ -304,7 +310,13 @@ def nvdaControllerInternal_IMEOpenStatusUpdate(opened):
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
-	global lastInputMethodName, lastInputLanguageName
+	global lastLanguageID, lastLayoutString
+	languageID=hkl&0xffff
+	#Simple case where there is no change
+	if languageID == lastLanguageID and layoutString == lastLayoutString:
+		return 0
+	lastLanguageID=languageID
+	lastLayoutString=layoutString
 	focus=api.getFocusObject()
 	#This callback can be called before NVDa is fully initialized
 	#So also handle focus object being None as well as checking for sleepMode
@@ -321,7 +333,6 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		return 0
 	import queueHandler
 	import ui
-	languageID=hkl&0xffff
 	buf=create_unicode_buffer(1024)
 	res=windll.kernel32.GetLocaleInfoW(languageID,2,buf,1024)
 	# Translators: the label for an unknown language when switching input methods.
@@ -329,8 +340,8 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	layoutStringCodes=[]
 	inputMethodName=None
 	#layoutString can either be a real input method name, a hex string for an input method name in the registry, or an empty string.
-	#If its a real input method name its used as is.
-	#If its a hex string or its empty, then the method name is looked up by trying:
+	#If it is a real input method name, then it is used as is.
+	#If it is a hex string or it is empty, then the method name is looked up by trying:
 	#The full hex string, the hkl as a hex string, the low word of the hex string or hkl, the high word of the hex string or hkl.
 	if layoutString:
 		try:
@@ -351,15 +362,15 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
 		# Translators: The label for an unknown input method when switching input methods. 
 		inputMethodName=_("unknown input method")
+	#Remove the language name if it is in the input method name.
 	if ' - ' in inputMethodName:
 		inputMethodName="".join(inputMethodName.split(' - ')[1:])
-	if inputLanguageName!=lastInputLanguageName:
-		lastInputLanguageName=inputLanguageName
-		# Translators: the message announcing the language and keyboard layout when it changes
-		inputMethodName=_("{language} - {layout}").format(language=inputLanguageName,layout=inputMethodName)
-	if inputMethodName!=lastInputMethodName:
-		lastInputMethodName=inputMethodName
-		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,inputMethodName)
+	#Include the language only if it changed.
+	if languageID!=lastLanguageID:
+		msg="{language} - {layout}".format(language=inputLanguageName,layout=inputMethodName)
+	else:
+		msg=inputMethodName
+	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,msg)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_wchar)
@@ -424,7 +435,14 @@ class RemoteLoader64(object):
 		winKernel.closeHandle(self._process)
 
 def initialize():
-	global _remoteLib, _remoteLoader64, localLib, generateBeep,VBuf_getTextInRange
+	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
+	hkl=c_ulong(windll.User32.GetKeyboardLayout(0)).value
+	lastLanguageID=hkl&0xffff
+	KL_NAMELENGTH=9
+	buf=create_unicode_buffer(KL_NAMELENGTH)
+	res=windll.User32.GetKeyboardLayoutNameW(buf)
+	if res:
+		lastLayoutString=buf.value
 	localLib=cdll.LoadLibrary(os.path.join(versionedLibPath,'nvdaHelperLocal.dll'))
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
@@ -452,13 +470,13 @@ def initialize():
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
 	generateBeep.restype=c_int
-	# The rest of this function (to do with injection only applies if NVDA is not running as a Windows store application)
+	# The rest of this function (to do with injection) only applies if NVDA is not running as a Windows store application
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
 	if config.isAppX:
-		log.info("Remote injection disabled due to running as a  Windows Store Application")
+		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,u"nvdaHelperRemote.dll")),0,0x8)

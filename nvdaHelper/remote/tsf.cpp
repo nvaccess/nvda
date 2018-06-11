@@ -174,7 +174,7 @@ bool TsfSink::Initialize() {
 				(ITfThreadMgrEventSink*)this, &mThreadMgrCookie);
 		}
 		if (hr == S_OK) {
-			///For profile activations use ITfInputProcessProfileActivationSink if its available, otherwise ITfActiveLanguageNotifySink (usually on XP).
+			//For profile activations use ITfInputProcessorProfileActivationSink if it is available, otherwise ITfActiveLanguageNotifySink (usually on XP).
 			hr = src->AdviseSink(IID_ITfInputProcessorProfileActivationSink,(ITfInputProcessorProfileActivationSink*)this, &mLangProfCookie);
 			if(hr!=S_OK||mLangProfCookie==TF_INVALID_COOKIE) {
 				LOG_DEBUGWARNING(L"Cannot register ITfInputProcessorProfileActivationSink, trying ITfActiveLanguageProfileNotifySink instead");
@@ -574,11 +574,11 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 STDMETHODIMP TsfSink::OnActivated(DWORD dwProfileType, LANGID langId, REFCLSID rclsid, REFGUID catId, REFGUID guidProfile, HKL hkl, DWORD dwFlags) {
 	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
 	if(dwProfileType==TF_PROFILETYPE_KEYBOARDLAYOUT) {
-		//This is a normal keyboard layout so forget any last active TSF profile
+		//This is a normal keyboard layout, so forget any last active TSF profile
 		hasActiveProfile=false;
 		curTSFClsID=null_clsid;
 		if(dwFlags&TF_IPSINK_FLAG_ACTIVE) {
-			//As its activating, report the layout change to NVDA
+			//As it is activating, report the layout change to NVDA
 			wchar_t buf[KL_NAMELENGTH];
 			GetKeyboardLayoutName(buf);
 			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),HandleToUlong(GetKeyboardLayout(0)), buf);
@@ -684,7 +684,7 @@ void TSF_thread_detached() {
 }
 
 bool isTSFThread(bool checkActiveProfile) {
-TsfSink* tsf=fetchCurrentTsfSink();
+	TsfSink* tsf=fetchCurrentTsfSink();
 	if(!tsf) return false; 
 	return checkActiveProfile?tsf->hasActiveProfile:true;
 }
