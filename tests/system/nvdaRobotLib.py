@@ -1,12 +1,10 @@
 import sys
 from robot.libraries.BuiltIn import BuiltIn
-from robot.libraries.OperatingSystem import OperatingSystem
-from robot.libraries.Process import Process
 import sendKey
 
 builtIn = BuiltIn()
-os = OperatingSystem()
-process = Process()
+os = builtIn.get_library_instance('OperatingSystem')
+process = builtIn.get_library_instance('Process')
 
 class nvdaRobotLib(object):
 
@@ -27,7 +25,7 @@ class nvdaRobotLib(object):
 		Start Process  pythonw nvda.pyw --debug-logging  cwd=source  shell=true  alias=nvdaAlias
 		"""
 		self.nvdaHandle = handle = process.start_process(
-			"pythonw nvda.pyw --debug-logging",
+			"pythonw nvda.pyw --debug-logging -r",
 			cwd='source',
 			shell=True,
 			alias='nvdaAlias'
@@ -52,7 +50,7 @@ class nvdaRobotLib(object):
 		self.copy_in_system_test_spy()
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
-		builtIn.sleep(3.0)
+		builtIn.sleep(4.0)
 		self._connectToRemoteServer()
 		self.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
@@ -62,30 +60,10 @@ class nvdaRobotLib(object):
 			builtIn.sleep(0.1)
 
 	def quit_NVDA(self):
-		"""send quit NVDA keys
-			sleep  1
-			send enter key
-			nvdaSpy.Stop Remote Server
-			Wait For Process  nvdaAlias
-		"""
-		print "*WARN* send quit NVDA keys"
-		sys.stdout.flush()
-		sendKey.send_quit_NVDA_keys()
-		print "*WARN* sleep"
-		sys.stdout.flush()
-		builtIn.sleep(1.0)
-		print "*WARN* send enter key"
-		sys.stdout.flush()
-		sendKey.send_enter_key()
-		print "*WARN* stop remote server"
-		sys.stdout.flush()
-		self.nvdaSpy.run_keyword("stop_remote_server", [], {})
-		print "*WARN* wait for NVDA process"
-		sys.stdout.flush()
-		res=process.wait_for_process(self.nvdaHandle)
-		print "*WARN* done"
-		sys.stdout.flush()
-		return res
-
-	def wait_for_process_good(self,processObj):
-		processObj.wait()
+		"""send quit NVDA keys"""
+		process.run_process(
+			"pythonw nvda.pyw -q",
+			cwd='source',
+			shell=True,
+		)
+		process.wait_for_process(self.nvdaHandle)
