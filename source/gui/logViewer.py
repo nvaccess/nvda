@@ -68,7 +68,7 @@ class LogViewer(wx.Frame):
 
 	def onSaveAsCommand(self, evt):
 		# Translators: Label of a menu item in NVDA Log Viewer.
-		filename = wx.FileSelector(_("Save As"), default_filename="nvda.log", flags=wx.SAVE | wx.OVERWRITE_PROMPT, parent=self)
+		filename = wx.FileSelector(_("Save As"), default_filename="nvda.log", flags=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, parent=self)
 		if not filename:
 			return
 		try:
