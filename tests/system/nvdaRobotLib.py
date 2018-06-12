@@ -1,10 +1,12 @@
 import sys
+import os
 from robot.libraries.BuiltIn import BuiltIn
 import sendKey
 
 builtIn = BuiltIn()
-os = builtIn.get_library_instance('OperatingSystem')
 process = builtIn.get_library_instance('Process')
+
+nvdaProfileDir=os.path.abspath("tests/system/nvdaProfile")
 
 class nvdaRobotLib(object):
 
@@ -13,19 +15,12 @@ class nvdaRobotLib(object):
 		self.nvdaHandle = None
 
 
-	def copy_in_system_test_spy(self):
-		"""Equiv robot text:
-		Copy File  tests/system/systemTestSpy.py  source/globalPlugins/
-		"""
-		os.copy_file("tests/system/systemTestSpy.py", "source/globalPlugins/")
-
-
 	def _startNVDAProcess(self):
 		"""Equiv robot text:
 		Start Process  pythonw nvda.pyw --debug-logging  cwd=source  shell=true  alias=nvdaAlias
 		"""
 		self.nvdaHandle = handle = process.start_process(
-			"pythonw nvda.pyw --debug-logging -r",
+			"pythonw nvda.pyw --debug-logging -r -c \"{nvdaProfileDir}\"".format(nvdaProfileDir=nvdaProfileDir),
 			cwd='source',
 			shell=True,
 			alias='nvdaAlias'
@@ -47,7 +42,6 @@ class nvdaRobotLib(object):
 
 
 	def start_NVDA(self):
-		self.copy_in_system_test_spy()
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
 		builtIn.sleep(4.0)
