@@ -49,7 +49,7 @@ static sinkMap_t gTsfSinks;
 static LockableObject gTsfSinksLock;
 static PVOID gLastCompStr = NULL;
 
-class TsfSink : public ITfThreadMgrEventSink, public ITfActiveLanguageProfileNotifySink, public ITfTextEditSink, public ITfUIElementSink, public ITfInputProcessorProfileActivationSink {
+class TsfSink : public ITfThreadMgrEventSink, public ITfTextEditSink, public ITfUIElementSink, public ITfInputProcessorProfileActivationSink {
 public:
 	TsfSink();
 	~TsfSink();
@@ -75,8 +75,8 @@ public:
 	// ITfTextEditSink methods
 	STDMETHODIMP OnEndEdit(ITfContext*, TfEditCookie, ITfEditRecord*);
 
-	STDMETHODIMP ITfActiveLanguageProfileNotifySink::OnActivated(REFCLSID, REFGUID, BOOL);
-	STDMETHODIMP ITfInputProcessorProfileActivationSink::OnActivated(DWORD dwProfileType, LANGID langId, REFCLSID rclsid, REFGUID catId, REFGUID guidProfile, HKL hkl, DWORD dwFlags);
+	// ITfInputProcessorProfileActivationSink methods
+	STDMETHODIMP OnActivated(DWORD dwProfileType, LANGID langId, REFCLSID rclsid, REFGUID catId, REFGUID guidProfile, HKL hkl, DWORD dwFlags);
 
 	// ITfUIElementSink methods
 	STDMETHODIMP BeginUIElement(DWORD, BOOL*);
@@ -174,12 +174,7 @@ bool TsfSink::Initialize() {
 				(ITfThreadMgrEventSink*)this, &mThreadMgrCookie);
 		}
 		if (hr == S_OK) {
-			//For profile activations use ITfInputProcessorProfileActivationSink if it is available, otherwise ITfActiveLanguageNotifySink (usually on XP).
 			hr = src->AdviseSink(IID_ITfInputProcessorProfileActivationSink,(ITfInputProcessorProfileActivationSink*)this, &mLangProfCookie);
-			if(hr!=S_OK||mLangProfCookie==TF_INVALID_COOKIE) {
-				LOG_DEBUGWARNING(L"Cannot register ITfInputProcessorProfileActivationSink, trying ITfActiveLanguageProfileNotifySink instead");
-				hr = src->AdviseSink(IID_ITfActiveLanguageProfileNotifySink,(ITfActiveLanguageProfileNotifySink*)this, &mLangProfCookie);
-			}
 		}
 		if (hr == S_OK) {
 			hr = mpThreadMgr->QueryInterface(IID_ITfUIElementMgr,(void**)&mpUIElementMgr);
@@ -287,8 +282,6 @@ STDMETHODIMP TsfSink::QueryInterface(REFIID riid, LPVOID* ppvObj) {
 	if (IsEqualIID(riid, IID_IUnknown) ||
 			IsEqualIID(riid, IID_ITfThreadMgrEventSink)) {
 		*ppvObj = (ITfThreadMgrEventSink*)this;
-	} else if (IsEqualIID(riid, IID_ITfActiveLanguageProfileNotifySink)) {
-		*ppvObj = (ITfActiveLanguageProfileNotifySink*)this;
 	} else if (IsEqualIID(riid, IID_ITfInputProcessorProfileActivationSink)) {
 		*ppvObj = (ITfInputProcessorProfileActivationSink*)this;
 	} else if (IsEqualIID(riid, IID_ITfTextEditSink)) {
@@ -528,49 +521,6 @@ STDMETHODIMP TsfSink::OnEndEdit(
 	return S_OK;
 }
 
-//ITfActiveLanguageProfileNotifySink::OnActivated
-//To notify NVDA (in XP) of a TSF profile change
-STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activated) {
-	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
-	if (!activated) {
-		curTSFClsID=null_clsid;
-		hasActiveProfile=false;
-		return S_OK;
-	}
-	//Re-enable IME conversion mode update reporting as input lang change window message disabled it while completing the switch
-	curTSFClsID=rClsID;
-	if (IsEqualCLSID(rClsID, null_clsid)) {
-		hasActiveProfile = false;
-		// When switching to non-TSF profile, resend last input language
-		wchar_t buf[KL_NAMELENGTH];
-		GetKeyboardLayoutName(buf);
-		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),
-				HandleToUlong(GetKeyboardLayout(0)), buf);
-		handleIMEConversionModeUpdate(GetFocus(),true);
-		return S_OK;
-	}
-	hasActiveProfile = true;
-	ITfInputProcessorProfiles* profiles = create_input_processor_profiles();
-	if (!profiles)  return S_OK;
-	HRESULT hr = S_OK;
-	LANGID  lang = 0;
-	if (hr == S_OK)
-		hr = profiles->GetCurrentLanguage(&lang);
-	if (hr == S_OK) {
-		BSTR desc = NULL;
-		profiles->GetLanguageProfileDescription(rClsID, lang, rProfGUID, &desc);
-		if (desc) {
-			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),HandleToUlong(GetKeyboardLayout(0)), desc);
-			SysFreeString(desc);
-		}
-	}
-	profiles->Release();
-	handleIMEConversionModeUpdate(GetFocus(),true);
-	return S_OK;
-}
-
-//ITfInputProcessorProfileActivationSink::OnActivated
-//To notify NVDA (Win7 and above) of a TSF profile change
 STDMETHODIMP TsfSink::OnActivated(DWORD dwProfileType, LANGID langId, REFCLSID rclsid, REFGUID catId, REFGUID guidProfile, HKL hkl, DWORD dwFlags) {
 	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
 	if(dwProfileType==TF_PROFILETYPE_KEYBOARDLAYOUT) {
