@@ -1,6 +1,15 @@
 os: Visual Studio 2017
 version: "{branch}-{build}"
 
+branches:
+ only:
+  - master
+  - next
+  - rc
+  - /try-.*/
+  # For tags, branch = tag if GitHub couldn't work out the base branch.
+  - /release-.*/
+  
 environment:
  PY_PYTHON: 2.7-32
  encFileKey:
