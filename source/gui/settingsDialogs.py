@@ -22,6 +22,7 @@ import languageHandler
 import speech
 import gui
 from gui import nvdaControls
+from gui import contextHelp
 import globalVars
 from logHandler import log
 import nvwave
@@ -42,7 +43,6 @@ except RuntimeError:
 	updateCheck = None
 import inputCore
 import nvdaControls
-import contextHelp
 import touchHandler
 import winVersion
 import weakref

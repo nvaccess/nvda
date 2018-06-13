@@ -8,53 +8,48 @@ import gui
 import ui
 import wx
 from logHandler import log
-from xml.etree import ElementTree
+import lxml.html as lh
+from lxml import etree
 
-class Help():
-
-	def __init__(self):
-		helpTree = ElementTree.parse(gui.getDocFilePath("userGuide.html"))
-		expression = "A[@name]"
-		root = helpTree.getroot()
+def generateHelp():
+	helpFile = gui.getDocFilePath("userGuide.html")
+	helpTree = lh.parse(helpFile)
+	helpInfo = {}
+	helpNames = helpTree.findall('.//a[@name]')
+	for name in helpNames:
+		helpInfo[name.attrib['name']] = ""
+		currentHeadingLevel = int(name.getnext().tag[-1])
+		for data in name.itersiblings():
+			try:
+				if not data.attrib.has_key('name'):
+					helpInfo[name.attrib['name']] += etree.tostring(data).replace("&#13;", "")
+				elif data.attrib['name'] == name.attrib['name']:
+					continue
+				elif int(data.getnext().tag[-1]) > currentHeadingLevel:
+					continue
+				else:
+					break
+			except(AttributeError): break
+	return helpInfo
 
 def showHelp(helpIds, evt):
 	"""Display the corresponding section of the user guide when either the Help
 	button in an NVDA dialog is pressed or the F1 key is pressed on a
 	recognized control.
 	"""
-	helpFile = gui.getDocFilePath("userGuide.html")
+	helpInfo = generateHelp()
 	# Translators: Message indicating no context sensitive help is available.
 	helpMessage = _("No context sensitive help is available here at this time.")
-	tag = None
-	lines = None
 	windowId = evt.GetId()
-	log.debug("helpIds = %s\nwindowId = %d"%(helpIds, windowId))
+	windowName = evt.GetEventObject().GetName()
+	log.debug("helpIds = %s\nwindowId = %d\nwindowName = %s"%(helpIds, windowId, windowName))
 	# if the Help button is pressed or we have no help for a particular control then get help for the entire dialog.
 	if windowId == wx.ID_HELP or not windowId in helpIds.keys():
 		windowId = evt.GetEventObject().GetTopLevelParent().GetId()
 		log.debug("WindowId changed to %d" % windowId)
 	if windowId in helpIds.keys():
-		try:
-			with open(helpFile) as help:
-				lines = help.readlines()
-		except:
-			lines = ""
-		iLines = iter(lines)
-		while iLines:
-			try:
-				line = next(iLines)
-				if ("id=\"%s\"" % (helpIds[windowId])) in line:
-					helpMessage = next(iLines)
-					tag = helpMessage[:4]
-					helpMessage += next(iLines)
-				elif tag != None and not line.startswith(tag):
-					helpMessage += line
-				elif tag != None and (line.startswith(tag) or line.startswith("<H4>")):
-					break
-			except(StopIteration):
-				break
 		helpTitle = _("NVDA Help")
-		ui.browseableMessage(helpMessage, helpTitle, True)
+		ui.browseableMessage(helpInfo[helpIds[windowId]], helpTitle, True)
 	else:
 		log.debug("Help for window id %d not found." % (windowId))
 		evt.Skip(True)
