@@ -242,7 +242,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			arg2 = _qtKeys.get(ord(key), key)
 		else:
 			arg2 = None
-		self._dispatch(command, ord(arg), ord(arg2) if arg2 is not None else None)
+		self._dispatch(command, ord(arg), arg2 if arg2 is not None else None)
 
 	def _dispatch(self, command, arg, arg2=None):
 		space = False
