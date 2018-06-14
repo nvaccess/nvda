@@ -200,12 +200,13 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				raise LookupError("Point outside client aria")
 			if self._getStoryLength() > 0xFFFF:
 				# Offsets are 16 bits, therefore for large documents, we need to make sure that the correct offset is returned.
-				# We can calculate this by using the line number.
+				# We can calculate this by using the start offset of the line with the retrieved line number.
 				lineStart=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
-				lineStartLW = winUser.LOWORD(lineStart)
-				if lineStartLW > offset:
-					offset+= 0x10000
-				offset = (offset - lineStartLW) + lineStart
+				# Get the last 16 bits of the line number
+				lineStart16=lineStart&0xFFFF
+				if lineStart16 > offset:
+					offset+=0x10000
+				offset = (offset - lineStart16) + lineStart
 		return offset
 
 	def _getCharFormat(self,offset):
