@@ -190,19 +190,14 @@ class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAut
 
 	initOverlayClass = editableText.EditableTextWithoutAutoSelectDetection.initClass
 
-class LiveText(NVDAObject):
-	"""An object for which new text should be reported automatically.
-	These objects present text as a single chunk
-	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
+class TextMonitor(NVDAObject):
+	"""A basic object class which facilitates monitoring of changes in text or text formatting.
+	These objects only fire an event indicating that some part of the text or text formatting has changed; i.e. they don't provide the new text.
 	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
 	The object should notify of text changes using the textChange event.
 	"""
 	#: The time to wait before fetching text after a change event.
 	STABILIZE_DELAY = 0
-	# If the text is live, this is definitely content.
-	presentationType = NVDAObject.presType_content
-
-	announceNewLineText=False
 
 	def initOverlayClass(self):
 		self._event = threading.Event()
@@ -210,8 +205,7 @@ class LiveText(NVDAObject):
 		self._keepMonitoring = False
 
 	def startMonitoring(self):
-		"""Start monitoring for new text.
-		New text will be reported when it is detected.
+		"""Start monitoring for changes in text.
 		@note: If monitoring has already been started, this will have no effect.
 		@see: L{stopMonitoring}
 		"""
@@ -239,6 +233,25 @@ class LiveText(NVDAObject):
 		@note: It is safe to call this directly from threads other than the main thread.
 		"""
 		self._event.set()
+
+	def _monitor(self):
+		"""The monitoring method.
+		This is run in a separate thread using the L{startMonitoring} method.
+		Subclasses should override this method.
+		"""
+		raise NotImplementedError()
+
+class LiveText(TextMonitor):
+	"""An object for which new text should be reported automatically.
+	These objects present text as a single chunk
+	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
+	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
+	The object should notify of text changes using the textChange event.
+	"""
+	# If the text is live, this is definitely content.
+	presentationType = NVDAObject.presType_content
+
+	announceNewLineText=False
 
 	def _getTextLines(self):
 		"""Retrieve the text of this object in lines.
@@ -671,3 +684,4 @@ class WebDialog(NVDAObject):
 		if self.parent.treeInterceptor:
 			return True
 		return False
+
