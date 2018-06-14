@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 00:10+1000\n"
-"PO-Revision-Date: 2018-05-04 13:42+0300\n"
+"POT-Creation-Date: 2018-05-14 08:42+1000\n"
+"PO-Revision-Date: 2018-05-11 14:45+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -4292,6 +4292,22 @@ msgstr "Parmağınızın konumu değiştiğinde yeni nesne ve içeriği seslendi
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "NVDA Konfigürasyon Profilleri iletişim kutusunu gösterir"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Konfigürasyon Profilleri tetikleyicisi devre dışı"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Konfigürasyon Profilleri tetikleyicisi etkin"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Konfigürasyon profili tetikleyicisini devre dışı bırakıp etkinleştirir. "
+"Devre dışı bırakılınca, bu NVDA yeniden başlatılıncaya kadar etkili olur."
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -8276,6 +8292,18 @@ msgstr "Farklı kaydet"
 #, python-format
 msgid "Error saving log: %s"
 msgstr "Kayıt hatası: %s"
+
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "Tamam"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "İptal"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Uygula"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"

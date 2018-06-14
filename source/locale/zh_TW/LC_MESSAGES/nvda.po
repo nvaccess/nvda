@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 00:10+1000\n"
-"PO-Revision-Date: 2018-05-09 09:08+0800\n"
+"POT-Creation-Date: 2018-05-14 08:42+1000\n"
+"PO-Revision-Date: 2018-05-16 10:20+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -4231,6 +4231,20 @@ msgstr "讀出手指新觸摸的物件或內容，若所觸摸的物件與前次
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "開啟NVDA組態設定對話框"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "組態設定檔觸發器停用"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "組態設定檔觸發器啟用"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr "切換停用所有組態設定檔觸發器，停用會持續到NVDA重新啟動為止"
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -8167,6 +8181,18 @@ msgstr "另存新檔"
 #, python-format
 msgid "Error saving log: %s"
 msgstr "儲存%s記錄檔時發生錯誤"
+
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "確認"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "取消"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "套用"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"

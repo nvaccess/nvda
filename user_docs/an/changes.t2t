@@ -3,6 +3,69 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.2 =
+
+Lo resinyable d'ista versión inclui lo suporte pa tablas en o Kindle pa PC, lo suporte pa pantallas Humanware BrailleNote Touch y BI14 Braille, milloras pa os sintetizadors de voz Onecore y Sapi5, milloras en o Microsoft Outlook y muito mas.
+
+== Nuevas Caracteristicas ==
+- Agora s'anuncia lo rango de ringleras y columnas pa celdas de tablas  en voz y braille. (#2642)
+- Agora se suporta las ordens de navegación de táblas d'o NVDA en o Google Docs (con o modo de braille enchegau). (#7946)
+- S'ha adhibiu a Capacidat pa leyer y navegar por tablas en o Kindle pa PC. (#7977)
+- Suporte pa las linias BrailleNote touch y Brailliant BI 14 a traviés tanto d'USB como de bluetooth. (#6524)
+- En l'actualización Fall Creators d'o Windows 10 y posteriors lo NVDA puet anunciar notificacions dende aplicacions tals como a calculadora y o Windows Store. (#8045)
+- Nuevas tablas de transcripcción braille: Lithuano 8 puntos, ucrainés, Mongol grau 2. (#7839)
+- S'ha adhibiu un programa pa anunciar información de formato pa lo texto baixo una celda braille especifica. (#7106)
+- En esviellar o NVDA, agora ye posible de posposar a instalación de l'actualización pa un momento posterior. (#4263) 
+- Nuevos idiomas: Mongol, Alemán de Suiza.
+- Agora puetz commutar control, shift, alt, windows y NVDA dende lo tuyo teclau braille y combinar ixos modificadors con a dentrada braille (eix.: pretar control+s). (#7306) 
+ - Puetz asignar ixas nuevas commutacions de modificadors fendo servir a orden que se troba en Teclas de sistema emuladas en o dialogo de cenyos de dentrada.
+- S'ha restaurau lo suporte pa las linias Handy Tech Braillino y Modular (con o  firmware antigo). (#8016)
+- Agora se sincronizará automaticament con o NVDA la calendata y la hora pa los dispositivos Handy Tech suportaus (tals como l'Active Braille y l'Active Star) quan sigan desincronizaus mas de cinco segundos. (#8016)
+- En as listas de mensaches d'o Microsoft Outlook o NVDA agora informa si bel mensache ha estau respondiu u reninviau. (#6911)
+- Se puet asignar un cenyo de dentrada pa desenchegar temporalment totz os disparadors d'un perfil de configuración. (#4935)
+
+
+== Cambios ==
+- S'ha cambiau la columna d'estau en l'alministrador de complementos pa indicar si lo complemento ye enchegau u desenchegau amás d'en execución u suspendiu. (#7929)
+- S'ha esviellau lo transcriptor braille liblouis ta 3.5.0. (#7839)
+- A tabla braille lituana s'ha renombrada ta lituano de 6 puntos pa privar confusions con a nueva tabla de 8 puntos. (#7839)
+- As tablas de francés (Canadá) grau 1 y grau 2 s'han eliminadas. En cuenta s'utilizará las tablas de francés (unificau) de 6 puntos y Grau 2 respectivament. (#7839)
+- Os sensors secundarios d'as linias braille Alva BC6, EuroBraille y Papenmeier agora anuncian información de formato pa lo texto baixo la celda braille d'ixe sensor. (#7106)
+- As tablas de dentrada de braille contraito tornarán automaticament t'o modo no contraito  en casos no editables (ye decir, controls an no bi haiga cursor u en modo de navegación). (#7306)
+- O NVDA agora charra menos en o calandario de l'Outlook quan una cita u una francha temporal cubre un día entero. (#7949)
+- Agora se puet trobar todas as preferencias d'o NVDA en un unico dialogo d'opcions en o menú NVDA -> Preferencias -> Opcions, en cuenta de deseparar-sen en muitos dialogos. (#7302)
+- O sintetizador de voz predeterminau en executar-se en o Windows 10 agora ye l'oneCore speech rather en cuenta de l'eSpeak. (#8176)
+
+
+== Corrección de fallos ==
+- O NVDA ya no falla en leyer controls enfocaus en a pantalla d'inicio de sesión d'a cuenta de Microsoft en Configuración dimpués de calar-bi una adreza de correu. (#7997)
+- O NVDA ya no falla en leyer a pachina quan se recula ta bella pachina anterior en o Microsoft Edge. (#7997)
+- O NVDA ya no anunciará incorrectament o caracter final d'un PIN d'inicio de sesión d'o windows 10 seguntes a maquina se desbloqueye. (#7908)
+- As etiquetas d'as caixetas de verificación y d'os botons d'opción en o Chrome y o Firefox ya no s'anuncian dos veces quan se tabule u s'faga servir a navegación rapeda en o modo de navegación. (#7960)
+- Se maneya aria-current con una valor de false como false en cuenta de true (#7892).
+- O controlador d'o sintetizador Windows Onecore Voices ya no falla en cargar si a voz configurada s'ha desinstalada. (#7999)
+- Cambiar as voces en o controlador d'o sintetizador Windows Onecore Voices agora ye muito mas rapedo. (#7999)
+- S'ha apanyau a malformación d'a salida braille pa quantas tablas braille, incluindo signos en mayusclas en o braille danés contraito de 8 puntos. (#7526, #7693)
+- O NVDA agora puet anunciar mas tipos de vinyetas en o Microsoft Word. (#6778)
+- En pretar lo programa d'anunciar a información ya no se mueve incorrectament a posición de revisión y por tanto en pretar-lo quantas veces ya no fa resultaus diferents. (#7869)
+- A dentrada braille ya no te permitirá d'utilizar braille contraito en casos que no i siga suportau (ye decir, ya no se ninviará parolas enteras t'o sistema difuera d'o conteniu de texto y en o modo de navegación). (#7306)
+- S'ha apanyau problemas d'estabilidat de connexión pa las linias braille Handy Tech Easy Braille y Braille Wave. (#8016)
+- En o Windows 8 y posterior, o NVDA ya no anunciará "desconoixiu" en ubrir o menú rapedo de vinclos (Windows+X) y en trigar elementos d'ixe menú. (#8137)
+- Os cenyos especificos d'o modelo pa botons en as pantallas Hims agora funcionan tal como s'anuncia en a Guida de l'Usuario. (#8096)
+- O NVDA mirará agora de correchir os problemas de rechistro COM d'o sistema que causan que programas como lo Firefox y l'Internet Explorer se tornen inaccesibles y anuncien "Desconoixiu" por o NVDA. (#2807).
+- S'ha treballau en a solución d'un fallo en l'alministrador de fayenas fendo que o NVDA no permita a os usuarios accedir t'os contenius de detalles especificos sobre os procesos. (#8147)
+- As voces mas nuevas d'o Microsoft SAPI5 ya no se retardan a la fin d'a verbalización, lo que fa que siga muito mas eficient navegar con istas voces. (#8174)
+- O NVDA ya no anuncia (marcas LTR y  RTL) en Braille u en a verbalización por caracters en accedir t'o reloch en as versions recients d'o Windows. (#5729)
+- A detección d'as teclas de desplazamiento en as linias Hims Smart Beetle ya no ye fulera. (#6086)
+- En qualques controls de texto, particularment en as aplicacions Delphi, a información furnida en a edición y en a navegación agora ye muito mas fiable. (#636, #8102)
+
+
+== Cambios pa os Desembolicadors ==
+- A información pa os desembolicadors pa os obchectos UIA agora contién una lista d'os patrons UIA disponibles. (#5712)
+- Os modulos d'aplicación agora pueden aforzar bellas finestras pa fer servir siempre UIA implementando lo metodo isGoodUIAWindow. (#7961)
+- A bandera booleana amagada "outputPass1Only" en a sección braille d'a configuración s'ha eliminada unatra vez. O Liblouis ya no suporta pasar 1 solo en a salida. (#7839)
+
+
 = 2018.1 =
 Lo resiñable d'ista versión inclui o suporte pa graficos en o Microsoft word y o PowerPoint, o suporte pa nuevas linias braille incluindo as Eurobraille y o conversor de protocolo d'Optelec, s'ha amillorau lo suporte pa las linias braille Hims y Optelec, milloras de rendimiento pa o Mozilla Firefox 58 y posteriors y muito mas.
 

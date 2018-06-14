@@ -25,7 +25,7 @@ Glavne značajke uključuju:
 - podršku za mnoge brajične retke, uključujući unos kompjutorske brajice za brajične retke koji posjeduju brajičnu tipkovnicu
 - mogućnost pokretanja sa USB memorijskih stickova u cjelosti ili drugih prijenosnih medija bez potrebe instalacije samog čitača zaslona
 - govorni instalacijski program koji je jednostavan za korištenje
-- preveden na 52 jezika
+- preveden na 54 jezika
 - podršku za moderne Windows operativne sustave u 32 i 64 bitnim inačicama
 - mogućnost pokretanja na Windows zaslonu za prijavu i ostalim sigurnosnim zaslonima
 - Izgovaranje kontrola i teksta, pri korištenju dodirnih gesti
@@ -35,7 +35,7 @@ Glavne značajke uključuju:
 
 ++ Internacionalizacija ++[Internationalization]
 Vrlo je važno da ljudi bilo gdje u svijetu, bez obzira na jezik kojim govore, imaju jednak pristup tehnologijama.
-Osim engleskog, NVDA je preveden na 52 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, kirgizki, korejski, litavski, Makedonski, burmanski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
+Osim engleskog, NVDA je preveden na 54 jezika, uključujući: afrikanerski, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, katalonski, kolumbijski španjolski, hrvatski, češki, danski, nizozemski, perzijski, finski, francuski, galicijski, grčki, gruzijski, njemački, švicarski njemački, hebrejski, hindi, mađarski, islandski, irski, talijanski, japanski, kirgizki, korejski, litavski, Makedonski, mongolski, burmanski, nepalski, norveški, poljski, portugalski, pendžabski, rumunjski, ruski, srpski, slovački, slovenski, španjolski, švedski, tamilski, tajski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
 
 ++ Podrška Za Sintetizatore Govora ++[SpeechSynthesizerSupport]
 Osim podrške za mnoge jezike, NVDA može omogućiti korisniku čitanje sadržaja na bilo kojem jeziku, sve dok korisnik ima sintetizator govora za taj određeni jezik.
@@ -905,27 +905,30 @@ Kada se nalazite u tabličnom pregledu dodanih knjiga:
 
 + Podešavanje NVDA +[ConfiguringNVDA]
 Većina konfiguracije može se obaviti koristeći dijaloške okvire kojima se može pristupiti putem podizbornika postavke, koji se nalazi u NVDA izborniku.
+Većina tih postavki mogu se pronaći u višestraničnom [dijaloškom okviru postavke #NVDASettings].
 Pritisnite gumb U redu, ako želite prihvatiti promjene koje ste napravili. To vrijedi za sve dijaloške okvire.
 Kako biste odustali od izmjena, pritisnite gumb odustani ili tipku escape.
+Za većinu postavki, možete pritisnuti gumb primijeni, kako bi postavke odmah stupile na snagu.
 Većina postavki se može promijeniti koristeći tipkovničke prećace, koji su popisani u poglavljima kako slijedi, gdje postoje.
 
 ++ NVDA postavke ++[NVDASettings]
 %kc:settingsSection: || Naziv | prečac za stolna računala | prečac za prijenosna računala | Opis |
-The NVDA Settings dialog contains many configuration parameters that can be changed.
+NVDA konfiguracijski dijalog sadrži puno postavki koje mogu biti promijenjene.
 Ovaj dijaloški okvir sadrži listu sa nekoliko kategorija koje možete odabrati za podešavanje.
-Kada odaberte kategoriju, nekoliko postavki koje su relevantne za tu kategoriju će se pokazati u tom dijaloškom okviru.
+Kada odaberete kategoriju, nekoliko postavki koje su relevantne za tu kategoriju će se pokazati u tom dijaloškom okviru.
 Ove će postavke biti primijenjene kada pritisnete gumb primijeni, poslije ćega će postavke i dalje biti otvorene.
 Ako želite pospremiti postavke i zatvoriti dijaloški okvir postavki, možete pritisnuti gumb U redu.
 
 Neke kategorije postavki imaju vlastiti tipkovnički prečac.
-Ako je isti pritisnut, dijaloki okvir postavki otvorit će se u toj određenoj kategoriji.
+Ako je isti pritisnut, dijaloški okvir postavki otvorit će se u toj određenoj kategoriji.
 Podrazumijevano, nemože se svim kategorijama pristupiti pomoću tipkovničkih prečaca.
 Ako želite pridijeliti prečac kategoriji koja ga nema, koristite [dijaloški okvir ulazne geste #InputGestures] kako biste dodali komandu kao što je tipkovnički prečac ili dodirna gesta.
 
-Nekoliko kategorija iz dijaloškog okvira postavke bit će opisane ispod.
+Kategorije iz dijaloškog okvira postavke bit će opisane ispod.
 
 +++ Općenito (NVDA+control+g) +++[GeneralSettings]
-Općenita kategorija U NVDA postavkama sadrži slijedeće opcije:
+Kategorija "općenito", NVDA dijaloškog okvira postavki postavlja općenite opcije poput jezika ili provjeravanja ažuriranja.
+Ova kategorija postavlja slijedeće opcije:
 
 ==== Jezik ====[GeneralSettingsLanguage]
 Ovo je odabirni okvir koji vam omogućuje odabir jezika na kojem će sve poruke NVDA i sučelje biti prikazani.
@@ -974,8 +977,7 @@ Ako je ova opcija omogućena, NVDA će vas informirati ako postoji nadogradnja n
 Također, Možete ručno instalirati ažuriranje na čekanju iz dijaloškog okvira izlaz (ako je to omogućeno),  Iz NVDA izbornika, ili ako ponovno provjeravate nadogradnju iz izbornika pomoć.
 
 +++ Postavke govora (NVDA+control+v) +++[SpeechSettings]
-Kategorija govor u dijaloškom okviru postavki sadrži postavke koje vam omogućuju promjenu govorne jedinice, kao i zvuk glasa.
-
+Kategorija govor u dijaloškom okviru postavke omogućava vam mijenjanje govorne jedinice, kao i karakteristike iste.
 Za brže mjenjanje glasovnih postavki s bilo kojeg mjesta pogledajte poglavlje  [postavke sintetizatora govora u obliku prstena #SynthSettingsRing].
 
 Kategorija govor sadrži slijedeće opcije:
@@ -1225,6 +1227,7 @@ Ova opcija neće biti dostupna ako vaš brajični redak koristi automatsko otkri
 Možete pročitati dokumentaciju za vaš brajični redak u poglavlju [podržani brajični retci #SupportedBrailleDisplays] za više informacija o podržanim načinima spajanja i dostupnim priključcima.
 
 +++ Tipkovnica (NVDA+control+k) +++[KeyboardSettings]
+Kategorija tipkovnica u NVDA dijaloškom okviru postavki sadrži opcije kojima se podešava ponašanje NVDA pri pisanju na tipkovnici.
 Ova kategorija postavki sadrži slijedeće opcije:
 
 ==== Izgled tipkovnice ====[KeyboardSettingsLayout]
@@ -1284,7 +1287,8 @@ Ova opcija omogućuje korisniku kontrolu nad tim hoće li ili neće NVDA dohvać
 Ova je opcija zadano uključena, ali neki korisnici bi to htjeli isključiti kao što su korisnici koji upisuju vijetnamski pomoću Unikey programa za pisanje jer će to prouzrokovati pogrešan unos znakova.
 
 +++ Miš (NVDA+control+m) +++[MouseSettings]
-Kategorija miš u NVDA postavkama, sadrži slijedeće opcije:
+Kategorija Miš u postavkama omogućava praćenje miša,, reproduciranje zvučnih koordinati, te postavljanje drugih opcija.
+Ova kategorija sadrži slijedeće opcije:
 
 ==== Izvijesti o promjenama oblika miša ====[MouseSettingsShape]
 To je potvrdni okvir koji, kad je odabran, uzrokuje da NVDA izgovara promjene izgleda pokazivaća miša.
@@ -1314,6 +1318,7 @@ Ovaj potvrdni okvir zadano nije odabran.
 
 +++ Interakcija sa zaslonima osjetljivim na dodir +++[TouchInteraction]
 Ova kategorija postavki, koja je dostupna samo na računalima s instaliranim windowsima 8 ili višom verzijom,, omogućava podešavanje ponašanja NVDA sa zaslonima osjetljivim na dodir.
+Ova kategorija sadrži slijedeće opcije:
 
 ==== Način upisa dodirom ====[TouchTypingMode]
 Ovaj odabirni okvir omogućuje odabir načina unosa kada se koristi dodirna tipkovnica.
@@ -1321,6 +1326,7 @@ Ako je ovaj potvrdni okvir odabran, kada nađete tipku na dodirnoj tipkovnici, m
 Ako nije odabran, morat ćete dva puta pritisnuti tipku, kako biste aktivirali istu.
 
 +++ Pregledni kursor +++[ReviewCursorSettings]
+Kategorija "pregledni kursor" u NVDA postavkama koristi se za podešavanje ponašanja NVDA preglednog kursora.
 Ova kategorija sadrži slijedeće opcije:
 
 %kc:setting
@@ -1344,6 +1350,7 @@ Kad je ova opcija uključena, NVDA će filtrirati hijerarhiju objekata po kojima
 Da biste uključili ili isključili način jednostavnog pregleda iz bilo kojeg prozora, molimo dodijelite prilagođeni prečac koristeći [dijaloški okvir ulazne geste #InputGestures].
 
 +++ Prezentacija objekta (NVDA+control+o) +++[ObjectPresentationSettings]
+Kategorija prezentacija objekta u NVDA dijaloškom okviru postavki koristi se za podešavanje toga, koliko će informacija NVDA prezentirati. Te su informacije na primjer opis,, Informacija o položaju i tako dalje.
 Ova kategorija sadrži slijedeće opcije:
 
 ==== Izvijesti o Alatnim Savjetnicima ====[ObjectPresentationReportToolTips]
@@ -1430,6 +1437,7 @@ Ova vam opcija omogućuje odabir između toga hoće li ili neće NVDA izgovarati
 Ova je opcija uključena zadanim postavkama.
 
 +++ Način pregleda (NVDA+control+b) +++[BrowseModeSettings]
+Kategorija način pregleda u NVDA postavkama  koristi se za podešavanje toga, kako će se NVDA ponašati pri čitanju kompleksnih dokumenata, kao što su na primjer web stranice.
 Ova kategorija sadrži slijedeće opcije:
 
 ==== Maksimalni broj znakova u jednom retku ====[BrowseModeSettingsMaxLength]
@@ -1537,6 +1545,7 @@ Zvuk se povećava u visini za svaki razmak, a za tabulator, povećavat će se ek
 
 +++ Windows 10 OCR postavke +++[Win10OcrSettings]
 Postavke u ovoj kategoriji vam omogućavaju podešavanje [Windows 10 OCR #Win10Ocr].
+Ova kategorija sadrži slijedeće opcije:
 
 ==== Jezik prepoznavanja ====[Win10OcrSettingsRecognitionLanguage]
 Ovaj odabirni okvir omogućava izbor jezika koji će se koristiti za prepoznavanje sadržaja.
@@ -1714,6 +1723,8 @@ Da biste uredili profil kojemu je pridružena komanda reci sve, morate [Ručno a
 Ponekad je korisno onemogučiti sve okidače.
 Na primjer, možda biste htjeli urediti ručno aktivirani profil ili urediti vašu uobičajenu konfiguraciju bez ometanja okinutog profila.
 Možete to učiniti tako da ćete odabrati potvrdni okvir onemogući okidače u dijaloškom okviru konfiguracijski profili.
+
+Kako biste mogli onemogućiti okidaće profila od bilo kuda,, molimo pidijeliti prilagođenu gestu koristeći [dijaloški okvir ulaznih gesti #InputGestures].
 
 ++ Lokacija konfiguracijskih datoteka ++[LocationOfConfigurationFiles]
 Prijenosne inačice NVDA spremaju sve postavke, prilagođene module za aplikacije i prilagođene upravljačke programe za govorne jedinice u mapu userConfig koja se nalazi u mapi gdje je smješten NVDA.

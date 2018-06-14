@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-04 00:10+1000\n"
-"PO-Revision-Date: 2018-05-07 15:08+0800\n"
+"POT-Creation-Date: 2018-06-01 17:13+1000\n"
+"PO-Revision-Date: 2018-06-02 09:31+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -4328,6 +4328,22 @@ msgstr ""
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Вызывает диалог профилей конфигурации"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Автопереключатели профилей отключены"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Автопереключатели профилей включены"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Отключает или включает все автопереключатели профилей конфигурации. "
+"Отключение сохраняется до перезапуска NVDA"
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -6483,7 +6499,7 @@ msgstr "&Повторно загрузить обновление"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
-msgstr "&Загрузить обновление"
+msgstr "За&грузить обновление"
 
 #. Translators: The label of a button to remind the user later about performing some action.
 msgid "Remind me &later"
@@ -8357,6 +8373,18 @@ msgstr "Сохранить как"
 #, python-format
 msgid "Error saving log: %s"
 msgstr "Ошибка сохранения журнала: %s"
+
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "OK"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Отмена"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Применить"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -10846,128 +10874,3 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "Вызывает диалог выбора используемого голоса NVDA"
-
-#~ msgid "&General settings..."
-#~ msgstr "&Общие настройки..."
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "&Синтезатор..."
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "Изменить используемый синтезатор"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr "Изменить голос, скорость, высоту и прочие параметры синтезатора"
-
-#~ msgid "B&raille settings..."
-#~ msgstr "&Брайль..."
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "&Клавиатура..."
-
-#~ msgid ""
-#~ "Configure keyboard layout, speaking of typed characters, words or command "
-#~ "keys"
-#~ msgstr ""
-#~ "Настройка раскладки клавиатуры, чтения вводимых символов, слов и "
-#~ "командных клавиш"
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "&Мышь..."
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr "Изменение чтения формы указателя мыши и объектов под мышью"
-
-#~ msgid "&Touch interaction..."
-#~ msgstr "С&енсорное взаимодействие"
-
-#~ msgid "Change how NVDA interacts with the touchscreen"
-#~ msgstr "Настройка взаимодействия NVDA с сенсорным экраном"
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr "Настроить как и в каких случаях перемещается просмотровый курсор"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "&Формирование ввода азиатских символов..."
-
-#~ msgid ""
-#~ "Configure how NVDA reports input composition and candidate selection for "
-#~ "certain languages"
-#~ msgstr ""
-#~ "Настроить как NVDA будет сообщать формирование ввода и выбор кандидата "
-#~ "для некоторых языков"
-
-#~ msgid "&Object presentation..."
-#~ msgstr "&Представление объекта..."
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "Изменение чтения объектов"
-
-#~ msgid "&Browse mode..."
-#~ msgstr "Режим об&зора..."
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "Изменение специальных настроек виртуальных буферов"
-
-#~ msgid "Document &formatting..."
-#~ msgstr "&Форматирование документа..."
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "Изменение чтения форматирования документов"
-
-#~ msgid "&Windows 10 OCR..."
-#~ msgstr "&Windows 10 OCR..."
-
-#~ msgid "General Settings"
-#~ msgstr "Общие настройки"
-
-#~ msgid "Voice Settings"
-#~ msgstr "Настройки голоса"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "Клавиатура"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "Мышь"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "Настройки просмотрового курсора"
-
-#~ msgid "Braille Settings"
-#~ msgstr "Настройки Брайля"
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "Французский (Канада) (первая ступень)"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "Французский (Канада) (вторая ступень)"
-
-#~ msgid "Mongolian"
-#~ msgstr "Монгольский"
-
-#~ msgid "Download and &install update"
-#~ msgstr "Загрузить и &установить обновление"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "Обновление загружено и сейчас будет установлено."
-
-#~ msgid "Route to and report formatting"
-#~ msgstr "Перемещается к указанному месту и объявляет форматирование"
-
-#~ msgid "r%s"
-#~ msgstr "стр%s"
-
-#~ msgid "c%s"
-#~ msgstr "стлб%s"
-
-#~ msgid "suspended"
-#~ msgstr "отключено"
-
-#~ msgid "running"
-#~ msgstr "включено"
-
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "ALVA BC640/680"
