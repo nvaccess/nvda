@@ -193,7 +193,19 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 		else:
 			p=(x-left)+((y-top)<<16)
-			offset=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)&0xffff
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)
+			offset=winUser.LOWORD(res)
+			lineNum=winUser.HIWORD(res)
+			if offset==0xFFFF and lineNum==0xFFFF:
+				raise LookupError("Point outside client aria")
+			if self._getStoryLength() > 0xFFFF:
+				# Offsets are 16 bits, therefore for large documents, we need to make sure that the correct offset is returned.
+				# We can calculate this by using the line number.
+				lineStart=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
+				lineStartLW = winUser.LOWORD(lineStart)
+				if lineStartLW > offset:
+					offset+= 0x10000
+				offset = (offset - lineStartLW) + lineStart
 		return offset
 
 	def _getCharFormat(self,offset):
