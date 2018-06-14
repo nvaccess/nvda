@@ -7,64 +7,64 @@ NVDA NVDA_VERSION 用户指南
 = 目录 =[toc]
 %%toc
 
-+ 前言 +
-无视觉桌面访问(NVDA)是一个免费且开放源码的微软 windows 操作系统的屏幕阅读器。
++ 前言 +[Introduction]
+无视觉桌面访问(NVDA)是一个免费且开放源码的微软 Windows 操作系统的屏幕阅读器。
 通过合成器语音或者盲文点字的反馈，盲人和低视力人群无需付出更多而能使用运行在 Windows 操作系统下运作的电脑。，
 NVDA 由 [NV Access http://www.nvaccess.org/]和其他贡献者共同开发(译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 http://www.nvdacn.com/]获取)。
 
-++ 主要特色 ++
+++ 主要特色 ++[GeneralFeatures]
 NVDA允许盲人和低视力人群访问 Windows 操作系统和与许多第三方程序进行交互。
 
 主要特色包括：
-- 支持包括 WEB 浏览器、电子邮件客户端、互联网聊天程序和 Office 套装在内的流行应用程序。
+- 支持包括网页浏览器、电子邮件客户端、互联网聊天程序和 Office 套装在内的流行应用程序。
 - 内建的语音合成器支持超过80种语言。
 - 支持文档格式的朗读，如字体名称或大小、样式和拼写错误。
 - 可自动朗读鼠标指向的文本，还包括用声音提示鼠标所在位置的选项。
 - 支持许多点字显示器的实时刷新，支持带点字键盘的点字显示器的电脑盲文输入。
-- 无需安装，可完全运行在U盘或者其他可携式媒体。
+- 无需安装，可完全运行在U盘或者其他可携式存储设备上。
 - 便于使用的语音安装程序。
 - 已翻译为54种语言。
 - 支持现代的 Windows 操作系统，包括32位和64位和其他衍生版本。
 - 能够在 Windows 登录和其他安全界面运行
-- 支持常见的辅助功能接口，如微软 Active Accessibility、Java Access Bridge、IAccessible2和UI automation(UI automation 仅支持 Windows 7和更高版本的操作系统)
-- 支持 Windows 命令提示符和控制台程序。
+- 支持常见的辅助功能接口，如Microsoft Active Accessibility(MSAA)、Java Access Bridge、IAccessible2和UI automation(UI automation 仅支持 Windows 7和更高版本的操作系统)
+- 支持 Windows 命令提示符和其他控制台程序。
 -
 
-++ 国际化 ++
+++ 国际化 ++[Internationalization]
 让世界上所有的人，不管使用何种语言，都可以无障碍的公平使用科技是非常重要的。
 除了英语之外，NVDA 还被翻译成54种语言，包括：南非荷兰语，阿尔巴尼亚语，阿姆哈拉语，阿拉伯语，阿拉贡语，保加利亚语，加泰罗尼亚语，中文（繁体和简体），克罗地亚语，捷克语，丹麦语，荷兰语，波斯语，芬兰语，法语，加利西亚语，希腊语，格鲁吉亚语，德语（德国和瑞典），希伯来语，印地语，匈牙利语，冰岛语，爱尔兰语，意大利语，日本语，韩语，尼泊尔语，挪威语，波兰语，蒙古语，葡萄牙语（巴西和葡萄牙），旁遮普语，罗马尼亚语，俄语，塞尔维亚语，斯洛伐克语，斯洛文尼亚语，西班牙语（哥伦比亚和西班牙），瑞典语，泰米尔语，泰语，土耳其语，乌克兰语和越南语。
 
-++ 支持的语音合成器 ++
+++ 支持的语音合成器 ++[SpeechSynthesizerSupport]
 除了提供相应语言的消息和界面之外，只要它们有一个能讲述那一种语言的语音合成器，NVDA也可让用户阅读任何语言的内容，
 
 NVDA捆绑的[eSpeak NG https://github.com/espeak-ng/espeak-ng]是一个免费且开放源码的多语种语音合成器。
 
 有关于 NVDA 所支持的语音合成器的信息，可参看[支持的语音合成器 #SupportedSpeechSynths]章节。
 
-++ 点显器支持 ++
+++ 点显器支持 ++[BrailleSupport]
 对于拥有可刷新点显器的用户，NVDA 可将信息以点字形式输出到点显器上。
 请参看[支持的点显器 #SupportedBrailleDisplays]章节，查看有关于点显器支持方面的信息。
 
 NVDA 支持多种语言的简写或非简写点字和电脑点字。
 
-++ 许可证与著作权 ++
- NVDA版权归 NVDA_COPYRIGHT_YEARS  NVDA 贡献者。
+++ 许可证与著作权 ++[LicenseAndCopyright]
+ NVDA版权归 NVDA贡献者所有 @ NVDA_COPYRIGHT_YEARS 。
 
 NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。 
 只要将此公开许可协议随附于软件内，您可以自由地以任何形式分享或改变此软件，并将所有的源代码提供给需要的人
 此槼则适用于原始发布的软件或任何以此软件修改之后发布的作品，以及所有采用此软件内的程序码所生成的作品。 
-更详细的信息，请[查看完整授权， http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+更详细的信息，请查看[完整的授权协议 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
-+ 系统需求 +
++ 系统需求 +[SystemRequirements]
 - 操作系统： 所有32位或者64位的Windows 7 Sp1、Windows 8 、Windows 8.1 、Windows 10(包括服务器系统)。
 - 对于 Windows 7 版本，NVDA 要求 SP1 以上。
-- 对于 Windows Server 2008 R2服务器版 操作系统 ， NVDA 要求 SP1 或者更高。
+- 对于 Windows Server 2008 R2 服务器操作系统 ， NVDA 要求 SP1 或者更高。
 - 内存：需要 256MB 或以上 
 - 处理器速率：1.0Ghz或以上 
 - 约需要90 MB 的磁盘空间。
 -
 
-+ 获取和设置 NVDA +
++ 获取和设置 NVDA +[GettingAndSettingUpNVDA]
 如果您还没有 NVDA 的副本， 请从[www.nvaccess.org NVDA_URL]下载它(译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 http://www.nvdacn.com/]获取)。
 
 转到下载区域，您将发现一个可下载最近版本 NVDA 的链接。
@@ -72,16 +72,16 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 运行您刚刚下载的文件，会打开一个临时的 NVDA 副本。
 您将被询问，是否要安装 NVDA、创建便携版本或者仅仅是运行临时的版本。
 
-如果您计划总是在此电脑上使用 NVDA，您将希望选择“安装NVDA”。
-在安装 NVDA 的时候，将允许您使用如“在 Windows 登陆窗口启用 NVDA”，此选项将允许 NVDA 读取 Windows 的登陆界面或者其他安全界面(此特性无法在便携版和临时的 NVDA 副本中启用)，，或在开始菜单和桌面创建快捷方式的功能。
+如果您只打算在这个电脑上使用 NVDA，您将希望选择“安装NVDA”。
+在安装 NVDA 的时候，将允许您使用如“在 Windows 登陆窗口启用 NVDA”，此选项将允许 NVDA 读取 Windows 的登陆界面或者其他安全界面(此功能无法在便携版和临时的 NVDA 副本中启用)，或在开始菜单和桌面创建快捷方式的功能。
 安装版本的 NVDA 允许您在任何时候创建便携版本。
 
-如果您希望让 NVDA 运行在 U盘或其他可写媒体，您应该选择“创建便携版本”。
+如果您希望让 NVDA 运行在U盘或其他可写存储设备上，您应该选择“创建便携版本”。
 便携版本同样允许您在随后把它安装到电脑上。
 或者，您如果只希望让 NVDA 运行在如 CD 等只读媒体，您只需要拷贝下载的文件即可。
 在只读媒体上直接运行便携版本的 NVDA 在目前是不受支持的。
 
-如只是希望试用，可选择使用临时的 nvda 副本，虽然每次以这种方式启动 NVDA 变得非常费时。
+如只是希望试用，可选择使用临时的 NVDA 副本，虽然每次以这种方式启动 NVDA 变得非常费时。
 
 ++ 便携副本和临时副本的限制 ++
 除了不能在登录期间和或其后自动启动，NVDA 的便携副本和临时副本还有以下限制：
@@ -89,7 +89,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 - 读取用户帐户控制(UAC)界面时，不能尝试启动具有管理权限的应用程序。
 - Windows 8： 无法使用触摸屏进行输入。
 - Windows 8：无法在 Windows 商店应用提供诸如浏览模式和朗读输入字符的特性。
-- windows8 或其后版本：无法提供音频闪避特性。
+- Windows8 或其后版本：无法提供音频闪避特性。
 -
 
 ++ 安装 NVDA ++
@@ -102,7 +102,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 一旦安装完成，将弹出消息提示您，安装已经成功。
 再此点击“确定”按钮，将启动更新版本的 NVDA。
 
-+++ 在 WINDOWS 启动时运行 +++
++++ 在 Windows 启动时运行 +++
 此选项将允许您选择是否在 Windows 欢迎屏幕(即在输入密码以前)启动 NVDA。
 此选项还可应用于 UAC 控制和其他安全界面。
 
@@ -142,11 +142,11 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 
 如果您没有听到以上语音提示，而听到的是窗口错误的回应声，或是一串下沉的声音，那就代表 NVDA 加载没有成功，您需要重新查看可能引发的原因或向 NVDA 开发者报告此状况。
 请打开 NVDA 网站获取与如何报告此问题相关的信息。
-
+++ 欢迎对话框 ++
 当您首次启动 NVDA 时会跳出一个“欢迎”对话框，其内包含了如何设置 NVDA 键及其菜单的基本信息。
 请参见以下章节以进一步了解此主题。
 此对话框包含三个复选框。
-第一个允许您选择是否使用(大小写锁定)作为 NVDA 键。
+第一个允许您选择是否使用(大小写锁定键)作为 NVDA 键。
 第二个选择是否允许在 Windows 启动时启动 NVDA。
 第三个允许您选择是否希望在每次启动 NVDA 时显示此对话框。
 
@@ -156,8 +156,8 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 大多数 NVDA 键盘命令都是由一个被称之为 NVDA 组合键的特殊按键和另外的一个或者多个其他的按键组成。
  需要注意的是， NVDA 的台式机键盘方案中，进行文本浏览仅需使用小键盘的数字按键，但也有一些例外。
 
- NVDA 可设置使用数字键盘插入见(numpad0)、主键盘上的插入见(Insert)和或大小写锁定键(CapsLock)作为 NVDA 组合键。 
-默认状态下，将主键盘上的插入见及数字键盘上的0设为 NVDA 组合键。
+ NVDA 可设置使用数字键盘插入键(numpad0)、主键盘上的插入键(Insert)和或大小写锁定键(CapsLock)作为 NVDA 组合键。 
+默认状态下，将主键盘上的插入键及数字键盘上的0设为 NVDA 组合键。
 
 假如你想在未运行 NVDA 时执行该按键的其中一个原有动作(举例来说，如果你已设置大小写锁定键作为 NVDA 键，但又要用它来转换大写锁定状态)，你可以快速连按此键两次。 
 
@@ -212,6 +212,23 @@ NVDA 目前共有两套被称为按键布局的键盘命令：一套台式机按
 %kc:beginInclude
 三个手指点击屏幕即可切换触摸模式。
 %kc:endInclude
++++ Touch keyboard +++[TouchKeyboard]
+The touch keyboard is used to enter text and commands from a touchscreen.
+When focused on an edit field, you can bring up the touch keyboard by double-tapping the touch keyboard icon on the bottom of the screen.
+For tablets such as Microsoft Surface Pro, the touch keyboard is always available when the keyboard is undocked.
+To dismiss the touch keyboard, double-tap the touch keyboard icon or move away from the edit field.
+
+While the touch keyboard is active, to locate keys on the touch keyboard, move your finger to where the touch keyboard is located (typically at the bottom of the screen), then move around the keyboard with one finger.
+When you find the key you wish to press, double-tap the key or lift your finger, depending on options chosen from [Touch Interaction Settings category #TouchInteraction] of the NVDA Settings.
+
++++触摸键盘+++ [TouchKeyboard]
+触摸键盘用于从触摸屏输入文本和命令。
+当关注编辑区域时，您可以通过双击屏幕底部的触摸键盘图标来调出触摸键盘。
+对于Microsoft Surface Pro等平板电脑，当键盘断开连接时，触摸键盘始终可用。
+要关闭触摸键盘，请双击触摸键盘图标或离开编辑区域。
+
+当触摸键盘处于活动状态时，要定位触摸键盘上的键，请将手指移动到触摸键盘所在的位置（通常位于屏幕底部），然后用一根手指在键盘上移动。
+当您找到想要按的按键时，根据NVDA设置的[触摸交互设置类别＃触摸互动]中选择的选项，双击该按键或抬起手指。
 
 ++ 输入帮助模式 ++
 许多 NVDA 命令将被在剩余的文档中陆续提及，但更方便的快速了解所有不同命令的方法，就是打开“输入帮助”模式。
@@ -571,6 +588,129 @@ NVDA 支持下列类型的数学内容：
 
 当您希望返回到文档时，简单的按下“esc”键即可。"
 
++ Braille +[Braille]
+If you own a braille display, NVDA can display information in braille.
+If your braille display has a Perkins-style keyboard, you can also enter contracted or uncontracted braille.
+
+Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
+You can configure braille using the [Braille category #BrailleSettings] of the [NVDA Settings #NVDASettings] dialog.
+
+++ Control Type, State and Landmark abbreviations ++[BrailleAbbreviations]
+In order to fit as much information as possible on a braille display, the following abbreviations have been defined to indicate control type and state as well as landmarks.
+
+|| Abbreviation | Control type |
+| app | application |
+| bqt | block quote |
+| btn | button |
+| drbtn | drop down button |
+| spnbtn | spin button |
+| splbtn | split button |
+| tgbtn | toggle button |
+| cbo | combo box |
+| chk | checkbox |
+| dlg | dialog |
+| doc | document |
+| edt | editable text field |
+| pwdedt | password edit |
+| embedded | embedded object |
+| enote | end note |
+| fnote | foot note |
+| gra | graphic |
+| grp | grouping |
+| hN | heading at level n, e.g. h1, h2. |
+| hlp | help baloon |
+| lmk | landmark |
+| lnk | link |
+| vlnk | visited link |
+| lst | list |
+| mnu | menu |
+| mnubar | menu bar |
+| mnubtn | menu button |
+| mnuitem | menu item |
+| pnl | panel |
+| prgbar | progress bar |
+| rbtn | radio button |
+| scrlbar | scroll bar |
+| sect | section |
+| stbar | status bar |
+| tabctl | tab control |
+| tbl | table |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| term | terminal |
+| tlbar | tool bar |
+| tltip | tool tip |
+| tv | tree view |
+| tvbtn | tree view button |
+| tvitem | tree view item |
+| lv N | a tree view item has a hierarchical level N|
+| wnd | window |
+| ⠤⠤⠤⠤⠤ | separator |
+
+The following state indicators are also defined:
+|| Abbreviation | Control state |
+| ... | displayed when an object supports autocompletion |
+| ⢎⣿⡱ | displayed when an object (e.g. a toggle button) is pressed |
+| ⢎⣀⡱ | displayed when an object (e.g. a toggle button) is not pressed |
+| ⣏⣿⣹ | displayed when an object (e.g. a checkbox) is checked |
+| ⣏⣸⣹ | displayed when an object (e.g. a checkbox) is half checked |
+| ⣏⣀⣹ | displayed when an object (e.g. a checkbox) is not checked |
+| - | displayed when an object (e.g. a tree view item) is collapsible |
+| + | displayed when an object (e.g. a tree view item) is Expandable |
+| *** | displayed when a protected control or document is encountered |
+| clk | displayed when an object is clickable |
+| cmnt | displayed when there is a comment for a spreadsheet cell or piece of text in a document |
+| frml | displayed when there is a formula on a spreadsheet cell |
+| invalid | displayed when an invalid entry has been made |
+| ldesc | displayed when an object (usually a graphic) has a long description |
+| mln | displayed when an edit field allows typing multiple lines of text such as comment fields on websites |
+| req | displayed when a required form field is encountered |
+| ro | displayed when an object (e.g. an editable text field) is read-only |
+| sel | displayed when an object is selected |
+| nsel | displayed when an object is not selected |
+| sorted asc | displayed when an object is sorted ascending |
+| sorted desc | displayed when an object is sorted descending |
+| submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Finally, the following abbreviations for landmarks are defined:
+|| Abbreviation | Landmark |
+| bnnr | banner |
+| cinf | content info |
+| cmpl | complementary |
+| form | form |
+| main | main |
+| navi | navigation |
+| srch | search |
+| rgn | region |
+
+++ Braille Input ++[BrailleInput]
+NVDA supports entry of both uncontracted and contracted braille via a braille keyboard.
+You can select the translation table used to translate braille into text using the [Input table #BrailleSettingsInputTable] setting in the Braille category of the [NVDA Settings #NVDASettings] dialog.
+
+When uncontracted braille is being used, text is inserted as soon as it is entered.
+When using contracted braille, text is inserted when you press space or enter at the end of a word.
+Note that translation can only reflect the braille word you are typing and cannot consider existing text.
+For example, if you are using a braille code that begins numbers with a number sign and you press backspace to move to the end of a number, you will need to type the number sign again to enter additional numbers.
+
+%kc:beginInclude
+Pressing dot 7 erases the last entered braille cell or character.
+Dot 8 translates any braille input and presses the enter key.
+Pressing dot 7 + dot 8 translates any braille input, but without adding a space or pressing enter.
+%kc:endInclude
+
++ 内容识别 +
+当开发者没有为屏幕阅读软件的用户提供足够信息来确认内容时，可以使用各种工具来尝试从图像中识别其内容。 NVDA 支持 Windows 10内置的光学字符识别（OCR）功能，以便将图像识别成为文本。 NVDA的插件也有提供额外的内容识别器。
+
+当您使用内容识别指令时，NVDA会从目前的导航对象识别内容。默认设置下，导航对象会跟随系统焦点或浏览模式光标，因此需要OCR时，通常您只需移动焦点或浏览模式光标即可。 例如，如果将浏览模式光标移动到图形上，在默认设置下，识别器会开始从图形中识别其内容。 然而，您可能希望直接使用对象导航。例如，识别整个应用程序窗口的内容。
+
+一旦识别完成，结果会显示在一个类似于浏览模式下的文档中，它允许使用光标键或其他键来阅读。 在光标上的文本按 enter 或空格键就可以选中对应文本（相当于单击）。 按 escape 键退出识别结果文档。
+++ Windows 10 OCR ++
+Windows 10包含许多语言的OCR。
+NVDA可以使用它来识别来自图像或无障碍支持差的应用程序的文本。
+
+您可以在[NVDA设置#NVDASettings]对话框的[Windows 10 OCR部分#Win10OcrSettings]中设置用于文本识别的语言。
+您可以打开开始菜单，选择设置，选择时间和语言 - >地区和语言，然后选择添加语言来安装其他语言。
+
 + 特定应用程序的 NVDA命令 +
 NVDA 为某些特定的程序提供了自家的额外特性，让某些任务变得更加容易，还令某些其他屏幕阅读器用户无法访问的功能可用。
 
@@ -588,12 +728,6 @@ NVDA 可在您使用 Microsoft Word 浏览表格时自动读出恰当的行列�
 %kc:endInclude
 此设置将会以书签的形式存储在文档，能与其他屏幕阅读器如JAWS兼容。
 这样意味着，屏幕阅读器用户在后期打开这个文档时，使用其他屏幕阅读器也同样拥有设置好的行列标题。
-++ Windows 10 OCR ++ [Win10Ocr]
-Windows 10包含许多语言的OCR。
-NVDA可以使用它来识别来自图像或无障碍支持差的应用程序的文本。
-
-您可以在[NVDA设置#NVDASettings]对话框的[Windows 10 OCR部分#Win10OcrSettings]中设置用于文本识别的语言。
-您可以打开开始菜单，选择设置，选择时间和语言 - >地区和语言，然后选择添加语言来安装其他语言。
 
 +++ Microsoft Word 的浏览模式 +++
 
@@ -974,10 +1108,10 @@ NVDA设置对话框中的“键盘设置”部分包含一些选项，用于设�
 如果此复选框被选中，大小写锁定建(capslock)将被用来作为 NVDA 键。
 
 ==== 使用主键盘的插入键(Insert)作为 NVDA 键 ====
-如果此复选框备选中，扩展的插入见(Insert)(通常在光标键的上面，与行首键(home)、行尾键(end)相邻)会作为 NVDA 键。
+如果此复选框备选中，扩展的插入键(Insert)(通常在光标键的上面，与行首键(home)、行尾键(end)相邻)会作为 NVDA 键。
 
 ==== 使用数字键盘插入键(Numpad0)作为 NVDA 键 ====
-如果此复选框被选中，数字键盘的插入见将被用来作为 NVDA 键。
+如果此复选框被选中，数字键盘的插入键将被用来作为 NVDA 键。
 
 如果没有选择任何按键作为 NVDA 键，某些 NVDA 命令就可能无法使用。
 因而，如果在没有选择任何按键之前点击“确认”按钮，“键盘设置”对话框将显示一个错误信息。
@@ -1628,9 +1762,9 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | brailleSpaceBar+dot1+dot3+dot4 |
 | alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
 | escape key | brailleSpaceBar+dot1+dot5 |
-| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| Windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | space key | brailleSpaceBar |
-| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
 | Report Current Line | brailleSpaceBar+dot1+dot4 |
 | NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
 
@@ -1679,9 +1813,9 @@ Please see the display's documentation for descriptions of where these keys can 
 | enter key | spEnter |
 | Report date/time | sp1+sp2 |
 | NVDA Menu | sp1+sp3 |
-| windows+d key (minimize all applications) | sp1+sp4 |
-| windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3 |
+| Windows+d key (minimize all applications) | sp1+sp4 |
+| Windows+b key (focus system tray) | sp3+sp4 |
+| Windows key | sp2+sp3 |
 | alt+tab key | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
@@ -1830,8 +1964,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt key | space+dot1+dot3+dot4 (space+m) |
 | escape key | space+dot1+dot5 (space+e) |
 | enter key | dot8 |
-| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
-| windows key | space+dot3+dot4 |
+| Windows+d key (minimize all applications) | c1+c4+c5 (command d) |
+| Windows key | space+dot3+dot4 |
 | alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
@@ -1894,8 +2028,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | f1 key | dot1+dot2+dot5+space |
 | f3 key | dot1+dot2+dot4+dot8 |
 | f4 key | dot7+advance3 |
-| windows+b key | dot1+dot2+advance1 |
-| windows+d key | dot1+dot4+dot5+advance1 |
+| Windows+b key | dot1+dot2+advance1 |
+| Windows+d key | dot1+dot4+dot5+advance1 |
 %kc:endInclude
 
 ++ HIMS SyncBraille ++

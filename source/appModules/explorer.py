@@ -174,6 +174,8 @@ class UIProperty(UIA):
 	
 	def _get_value(self):
 		value = super(UIProperty, self).value
+		if value is None:
+			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 
@@ -233,8 +235,13 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, SuggestionListItem)
 			elif uiaClassName == "MultitaskingViewFrame" and role == controlTypes.ROLE_WINDOW:
 				clsList.insert(0, MultitaskingViewFrameWindow)
-			elif windowClass == "MultitaskingViewFrame" and role == controlTypes.ROLE_LISTITEM:
-				# Use windowClass here as there is no uiaClassName for these list items.
+			# Windows 10 task switch list
+			elif role == controlTypes.ROLE_LISTITEM and (
+				# RS4 and below we can match on a window class
+				windowClass == "MultitaskingViewFrame" or
+				# RS5 and above we must look for a particular UIA automationID on the list
+				isinstance(obj.parent,UIA) and obj.parent.UIAElement.cachedAutomationID=="SwitchItemListControl"
+			):
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
 				clsList.insert(0, UIProperty)
