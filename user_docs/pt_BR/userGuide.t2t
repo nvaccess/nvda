@@ -1,5 +1,5 @@
 Guia do Usuário do NVDA NVDA_VERSION
-Traduzido por: Cleverson Casarin Uliana, Marlin Rodrigues da Silva, Tiago Melo Casal
+Traduzido por: Gustavo Tavares Dantas, Marlin Rodrigues da Silva, Cleverson Casarin Uliana, Tiago Melo Casal.
 
 %!includeconf: ../userGuide.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
@@ -36,7 +36,7 @@ Suas características mais notáveis incluem:
 
 ++ Internacionalização ++[Internationalization]
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 54 idiomas, estando inclusos: Africâner, Albanês, Alemão (Alemanha e Suíça), Amárico, Árabe, Aragonês, Birmanês, Búlgaro, Canará, Catalão, Chinês (simplificado e tradicional), Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol (Colômbia e Espanha), Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindi, Holandês, Húngaro, Irlandês, Islandês, Italiano, Japonês, Lituano, Macedônio, Mongol, Nepalês, Norueguês, Persa, Polonês, Português (Brasil e Portugal), Punjabi, Quirguiz, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita.
+Além do inglês, o NVDA está traduzido para 54 idiomas, estando inclusos: Africâner, Albanês, Alemão (Alemanha e Suíça), Amárico, Árabe, Aragonês, Birmanês, Búlgaro, Canará, Catalão, Chinês (simplificado e tradicional), Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol (Colômbia e Espanha), Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindi, Holandês, Húngaro, Irlandês, Islandês, Italiano, Japonês, Lituano, Macedônio, Mongol, Nepali, Norueguês, Persa, Polonês, Português (Brasil e Portugal), Punjabi, Quirguiz, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita.
 
 ++ Suporte de Sintetizador de Voz ++[SpeechSynthesizerSupport]
 Além de fornecer as mensagens da interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular.
@@ -1003,23 +1003,23 @@ Esta opção permite-lhe alterar a velocidade da voz.
 Contém uma barra deslisante que lhe possibilita andar de 0 a 100, (sendo 0 a velocidade mais lenta e 100 a mais rápida).
 
 ==== Tom ====[SpeechSettingsPitch]
-Esta opção permite-lhe alterar o tom da voz.
+Esta opção permite-lhe alterar o tom da voz atual.
 Contém uma barra deslisante que lhe possibilita andar de 0 a 100, (sendo 0 o tom mais grave e 100 o mais agudo).
 
 ==== Volume ====[SpeechSettingsVolume]
 Esta opção é uma barra deslisante que lhe permite andar de 0 a 100, (sendo 0 o volume mais baixo e 100 o mais alto).
 
 ==== Inflexão ====[SpeechSettingsInflection]
-Uma barra deslisante que lhe permite escolher a inflexão (mais alta ou mais baixa do tom) que o sintetizador utilizará para falar. (Até o momento somente o eSpeak NG oferece essa opção por padrão).
+Uma barra deslisante que lhe permite escolher quanto de inflexão (elevação e queda no tom) que o sintetizador utilizará para falar. (Até o momento somente o eSpeak NG oferece essa opção por padrão).
 
 ==== Alternância Automática de Idioma ====[SpeechSettingsLanguageSwitching]
-Essa caixa de seleção lhe permite escolher se o NVDA deve ou não alterar o idioma do sintetizador de voz, desde que o atributo do idioma esteja disponível no texto que está sendo lido.
+Essa caixa de seleção lhe permite escolher se o NVDA deve ou não alterar o idioma do sintetizador de voz, desde que o atributo do idioma esteja especificado no texto que está sendo lido.
 Por padrão, essa opção está ativada.
 Atualmente, apenas o eSpeak NG suporta alternância automática de idioma.
 
 ==== Alternância Automática de Dialeto ====[SpeechSettingsDialectSwitching]
-Se a alternância automática de Idioma estiver ativada, essa caixa de seleção lhe permite escolher se as alterações nos dialetos devem ser processadas em lugar de alterar apenas o idioma atual.
-Isto é, caso esteja lendo com um sintetizador de voz em Inglês Americano mas o texto aparece como Inglês britânico e estando este recurso ativado, o sintetizador alterará a pronúncia.
+Se a alternância automática de Idioma estiver ativada, essa caixa de seleção lhe permite escolher se as alterações nos dialetos devem ser processadas em lugar de alterar apenas o idioma vigente.
+Isto é, caso esteja lendo com um sintetizador de voz em Inglês Americano mas o texto aparece como Inglês britânico e estando este recurso ativado, o sintetizador alterará o sotaque.
 Por padrão, essa opção está desativada.
 
 %kc:setting
@@ -1039,13 +1039,13 @@ Este campo de edição permite que você digite o valor que o tom da voz irá al
 Esse valor é uma porcentagem, onde um número negativo diminui o tom e um número positivo o aumenta.
 Para não alterar o tom você deve usar em 0.
 
-==== Dizer "cap" Antes De Letras Maiúsculas ====[SpeechSettingsSayCapBefore]
-Esta é uma caixa de seleção que se marcada informa ao NVDA para anunciar a palavra "cap" antes de qualquer letra maiúscula, quando falada como caractere individual, se soletrada, por exemplo.
+==== Dizer "maiúscula" Antes De Letras Maiúsculas ====[SpeechSettingsSayCapBefore]
+Essa é uma caixa de seleção que se marcada informa ao NVDA para anunciar a palavra "maiúscula" antes de qualquer letra maiúscula, quando falada como caractere individual, se soletrada, por exemplo.
 Normalmente, o NVDA aumenta ligeiramente o tom para qualquer letra maiúscula, mas alguns sintetizadores não suportam corretamente esta configuração, assim, poderá ser usada esta opção.
 
 ==== Bipar em maiúsculas ====[SpeechSettingsBeepForCaps]
-Se esta caixa de seleção estiver marcada, o NVDA reproduzirá um pequeno bipe cada vez que falar um Caractere maiúsculo.
-Tal como a caixa de seleção "dizer cap antes de maiúsculas", esta é útil para sintetizadores que não possam alterar seu tom em letras maiúsculas.
+Se essa caixa de seleção estiver marcada, o NVDA reproduzirá um pequeno bipe cada vez que falar um Caractere maiúsculo.
+Tal como a caixa de seleção "dizer maiúscula antes de maiúsculas", esta é útil para sintetizadores que não possam alterar seu tom em letras maiúsculas.
 
 ==== Usar funcionalidade de Soletragem Quando Suportado ====[SpeechSettingsUseSpelling]
 Algumas palavras consistem de um único caractere, mas a pronúncia é diferente dependendo de se este está sendo falado como um caractere individual (tal como quando é soletrado) ou como palavra.
@@ -1054,7 +1054,7 @@ Essa opção permite ao sintetizador diferenciar entre esses dois casos se o mes
 Maior parte dos sintetizadores o suportam.
 
 geralmente recomenda-se que essa opção esteja habilitada.
-Todavia, alguns sintetizadores Microsoft Speech API não o implementam corretamente e comportam-se de forma estranha quando esta opção está habilitada.
+Todavia, alguns sintetizadores Microsoft Speech API não o implementam corretamente e comportam-se de forma estranha quando essa opção está habilitada.
 Caso esteja enfrentando problemas com a pronúncia de caracteres individuais, experimente desabilitá-la.
 
 +++ Selecionar Sintetizador (NVDA+control+s) +++[SelectSynthesizer]
