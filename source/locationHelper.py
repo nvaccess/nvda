@@ -359,7 +359,7 @@ def toRectLTRB(*params):
 			return RectLTRB(param.left,param.top,param.right,param.bottom)
 		if isinstance(param,POINT_CLASSES):
 			# Right and bottom edges of the resulting rectangle are considered exclusive
-			x,y=point.x,point.y
+			x,y=param.x,param.y
 			return RectLTRB(x,y,x+1,y+1)
 		if isinstance(param,(tuple,list)):
 			# One indexable in another indexable doesn't make sence, so treat the inner indexable as outer indexable
