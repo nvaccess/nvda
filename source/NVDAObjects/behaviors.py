@@ -241,6 +241,22 @@ class TextMonitor(NVDAObject):
 		"""
 		raise NotImplementedError()
 
+	def _waitForTextChange(self):
+		"""
+		Waits until a text change has been detected and a possible stabilize delay has elapsed.
+		This method blocks, and therefore should be called from a background thread.
+		"""
+		self._event.wait()
+		if not self._keepMonitoring:
+			return
+		if self.STABILIZE_DELAY > 0:
+			# wait for the text to stabilise.
+			time.sleep(self.STABILIZE_DELAY)
+			if not self._keepMonitoring:
+				# Monitoring was stopped while waiting for the text to stabilise.
+				return
+		self._event.clear()
+
 class LiveText(TextMonitor):
 	"""An object for which new text should be reported automatically.
 	These objects present text as a single chunk
@@ -276,16 +292,9 @@ class LiveText(TextMonitor):
 			oldLines = []
 
 		while self._keepMonitoring:
-			self._event.wait()
+			self._waitForTextChange()
 			if not self._keepMonitoring:
 				break
-			if self.STABILIZE_DELAY > 0:
-				# wait for the text to stabilise.
-				time.sleep(self.STABILIZE_DELAY)
-				if not self._keepMonitoring:
-					# Monitoring was stopped while waiting for the text to stabilise.
-					break
-			self._event.clear()
 
 			try:
 				newLines = self._getTextLines()
@@ -684,4 +693,24 @@ class WebDialog(NVDAObject):
 		if self.parent.treeInterceptor:
 			return True
 		return False
+
+class SelectionChangeMonitor(TextMonitor, SelectableTextContainerObject):
+	"""Reports selection changes based on text monitoring.
+	"""
+
+	def startMonitoring(self):
+		self.initAutoSelectDetection()
+		super(SelectionChangeMonitor, self).startMonitoring()
+
+	def event_gainFocus(self):
+		super(SelectionChangeMonitor, self).event_gainFocus()
+		self.startMonitoring()
+
+	def event_loseFocus(self):
+		self.stopMonitoring()
+
+	def _monitor(self):
+		while self._keepMonitoring:
+			self._waitForTextChange()
+			self.detectPossibleSelectionChange()
 

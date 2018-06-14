@@ -224,6 +224,7 @@ class SelectableTextContainerObject(TextContainerObject):
 	"""
 
 	#: Whether to speak the unselected content after new content has been selected.
+	#: If C{False}, the new selection is always spoken.
 	#: @type: bool
 	speakUnselected = False
 
@@ -255,7 +256,12 @@ class SelectableTextContainerObject(TextContainerObject):
 		self._updateSelectionAnchor(oldInfo,newInfo)
 		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
 		self.hasContentChangedSinceLastSelection=False
-		speech.speakSelectionChange(oldInfo,newInfo,speakUnselected=speakUnselected,generalize=hasContentChanged)
+		if not self.speakUnselected:
+			# As the unselected state is not relevant here and all spoken content is selected,
+			# use speech.speakTextInfo to make sure the new selection is spoken.
+			speech.speakTextInfo(newInfo,unit=textInfos.UNIT_LINE,reason=controlsTypes.REASON_CARET)
+		else:
+			speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
 
 	def _updateSelectionAnchor(self,oldInfo,newInfo):
 		# Only update the value if the selection changed.

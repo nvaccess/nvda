@@ -15,7 +15,7 @@ import api
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
-from NVDAObjects.behaviors import EditableText, TextMonitor, LiveText
+from NVDAObjects.behaviors import EditableText, TextMonitor, LiveText, SelectionChangeMonitor
 import watchdog
 from locationHelper import RectLTWH
 
@@ -407,6 +407,9 @@ class DisplayModelTextMonitor(TextMonitor, Window):
 
 class DisplayModelLiveText(LiveText, DisplayModelTextMonitor):
 	TextInfo = displayModel.EditableTextDisplayModelTextInfo
+
+class DisplayModelSelectionChangeMonitor(DisplayModelTextMonitor, SelectionChangeMonitor):
+	pass
 
 windowClassMap={
 	"EDIT":"Edit",

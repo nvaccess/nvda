@@ -154,7 +154,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 _getWindowTextInRect=None
 _requestTextChangeNotificationsForWindow=None
 #: Objects that have registered for text change notifications.
-_textChangeNotificationObjs=[]
+_textChangeNotificationObjs=set()
 
 def initialize():
 	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow, _getFocusRect
@@ -206,7 +206,7 @@ def requestTextChangeNotifications(obj, enable):
 		_textChangeNotificationObjs.remove(obj)
 	watchdog.cancellableExecute(_requestTextChangeNotificationsForWindow, obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
 	if enable:
-		_textChangeNotificationObjs.append(obj)
+		_textChangeNotificationObjs.add(obj)
 
 def textChangeNotify(windowHandle, left, top, right, bottom):
 	for obj in _textChangeNotificationObjs:
