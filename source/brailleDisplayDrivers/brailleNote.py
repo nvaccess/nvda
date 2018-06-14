@@ -2,11 +2,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-# Copyright (C) 2011-2017 Rui Batista, NV Access Limited
+# Copyright (C) 2011-2018 NV access Limited, Rui Batista, Joseph Lee
 
 """ Braille Display driver for the BrailleNote notetakers in terminal mode.
 USB, serial and bluetooth communications are supported.
-QWERTY keyboard input and scroll weels are not yet supported.
+QWERTY keyboard input using basic terminal mode (no PC keyboard emulation) and scroll wheel are supported.
+See Brailliant B module for BrailleNote Touch support routines.
 """
 from collections import OrderedDict
 import itertools
@@ -30,7 +31,7 @@ USB_IDS = frozenset((
 BAUD_RATE = 38400
 TIMEOUT = 0.1
 
-# Tags sent by the braillenote
+# Tags sent by the BrailleNote
 # Combinations of dots 1...6
 DOTS_TAG = 0x80
 # combinations of dots 1...6 plus the space bar
@@ -39,12 +40,22 @@ DOTS_SPACE_TAG = 0x81
 DOTS_BACKSPACE_TAG = 0x82
 # Combinations of dots 1..6 plus space bar and enter
 DOTS_ENTER_TAG = 0x83
-# Combinations of one or two Thunb keys
-THUNB_KEYS_TAG = 0x84
+# Combinations of one or two Thumb keys
+THUMB_KEYS_TAG = 0x84
 # Cursor Routing keys
 CURSOR_KEY_TAG = 0x85
-# Status 
+# Status
 STATUS_TAG = 0x86
+# Scroll Wheel (Apex BT)
+SCROLL_WHEEL_TAG = 0x8B
+# QWERTY keyboard
+QT_LETTER_TAG = 0x8C
+QT_MOD_TAG = 0x8D
+QT_LETTER = 0x0
+QT_FN = 0x1
+QT_SHIFT = 0x2
+QT_CTRL = 0x4
+QT_READ = 0x8 #Alt key
 
 DESCRIBE_TAG = "\x1B?"
 DISPLAY_TAG = "\x1bB"
@@ -60,7 +71,7 @@ DOT_6 = 0x20
 DOT_7 = 0x40
 DOT_8 = 0x80
 
-# Thumb keys
+# Thumb-keys
 THUMB_PREVIOUS = 0x01
 THUMB_BACK = 0x02
 THUMB_ADVANCE = 0x04
@@ -74,12 +85,47 @@ _keyNames = {
 	0 : "space"
 }
 
+# Scroll wheel components (Apex BT)
+_scrWheel = ("wCounterclockwise", "wClockwise", "wUp", "wDown", "wLeft", "wRight", "wCenter")
+
 # Dots:
 # Backspace is dot7 and enter dot8
 _dotNames = {}
 for i in xrange(1,9):
 	key = globals()["DOT_%d" % i]
 	_dotNames[key] = "d%d" % i
+
+# QT keys
+_qtKeyNames={
+	QT_FN : "function",
+	QT_SHIFT : "shift",
+	QT_CTRL : "ctrl",
+	QT_READ : "read"
+}
+
+# QT uses various ASCII characters for special keys, akin to scancodes.
+_qtKeys= {
+	8:"backspace",
+	9:"tab",
+	13:"enter",
+	32:"space",
+	37:"leftArrow",
+	38:"upArrow",
+	39:"rightArrow",
+	40:"downArrow",
+	46:"delete",
+	186:"semi",
+	187:"equals",
+	188:"comma",
+	189:"dash",
+	190:"dot",
+	191:"slash",
+	192:"grave",
+	219:"leftBracket",
+	220:"backslash",
+	221:"rightBracket",
+	222:"tick",
+}
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -190,22 +236,33 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if not arg:
 			log.debugWarning("Timeout reading argument for command 0x%X" % command)
 			return
-		self._dispatch(command, ord(arg))
+		# #5993: Read the buffer once more if a BrailleNote QT says it's got characters in its pipeline.
+		if command == QT_MOD_TAG:
+			key = self._serial.read(2)[-1]
+			arg2 = _qtKeys.get(ord(key), key)
+		else:
+			arg2 = None
+		self._dispatch(command, ord(arg), arg2 if arg2 is not None else None)
 
-	def _dispatch(self, command, arg):
+	def _dispatch(self, command, arg, arg2=None):
 		space = False
-		if command == THUNB_KEYS_TAG :
+		if command == THUMB_KEYS_TAG:
 			gesture = InputGesture(keys=arg)
+		elif command == SCROLL_WHEEL_TAG:
+			gesture = InputGesture(wheel=arg)
 		elif command == CURSOR_KEY_TAG:
 			gesture = InputGesture(routing=arg)
 		elif command in (DOTS_TAG, DOTS_SPACE_TAG, DOTS_ENTER_TAG, DOTS_BACKSPACE_TAG):
 			if command != DOTS_TAG:
 				space = True
 			if command == DOTS_ENTER_TAG:
-				# Stuppid bug in the implementation
+				# Stupid bug in the implementation
 				# Force dot8 here, although it should be already there
 				arg |= DOT_8
 			gesture = InputGesture(dots=arg, space=space)
+		elif command == QT_MOD_TAG:
+			# BrailleNote QT
+			gesture = InputGesture(qtMod=arg, qtData=arg2)
 		else:
 			log.debugWarning("Unknown command")
 			return
@@ -227,46 +284,51 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_nextLine": ("br(braillenote):tnext",),
 			"braille_routeTo": ("br(braillenote):routing",),
 			"braille_toggleTether": ("br(braillenote):tprevious+tnext",),
-			"kb:upArrow": ("br(braillenote):space+d1",),
-			"kb:downArrow": ("br(braillenote):space+d4",),
-			"kb:leftArrow": ("br(braillenote):space+d3",),
-			"kb:rightArrow": ("br(braillenote):space+d6",),
-			"kb:pageup": ("br(braillenote):space+d1+d3",),
-			"kb:pagedown": ("br(braillenote):space+d4+d6",),
-			"kb:home": ("br(braillenote):space+d1+d2",),
-			"kb:end": ("br(braillenote):space+d4+d5",),
-			"kb:control+home": ("br(braillenote):space+d1+d2+d3",),
-			"kb:control+end": ("br(braillenote):space+d4+d5+d6",),
-			"braille_enter": ("br(braillenote):space+d8",),
-			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6",),
-			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5",),
-			"braille_eraseLastCell": ("br(braillenote):space+d7",),
-			"showGui": ("br(braillenote):space+d1+d3+d4+d5",),
-			"kb:windows": ("br(braillenote):space+d2+d4+d5+d6",),
-			"kb:alt": ("br(braillenote):space+d1+d3+d4",),
-			"toggleInputHelp": ("br(braillenote):space+d2+d3+d6",),
+			"kb:upArrow": ("br(braillenote):space+d1", "br(braillenote):wUp", "br(braillenote):upArrow",),
+			"kb:downArrow": ("br(braillenote):space+d4", "br(braillenote):wDown","br(braillenote):downArrow",),
+			"kb:leftArrow": ("br(braillenote):space+d3","br(braillenote):wLeft","br(braillenote):leftArrow",),
+			"kb:rightArrow": ("br(braillenote):space+d6","br(braillenote):wRight","br(braillenote):rightArrow",),
+			"kb:pageup": ("br(braillenote):space+d1+d3","br(braillenote):function+upArrow",),
+			"kb:pagedown": ("br(braillenote):space+d4+d6","br(braillenote):function+downArrow",),
+			"kb:home": ("br(braillenote):space+d1+d2","br(braillenote):function+leftArrow",),
+			"kb:end": ("br(braillenote):space+d4+d5","br(braillenote):function+rightArrow",),
+			"kb:control+home": ("br(braillenote):space+d1+d2+d3","br(braillenote):read+T",),
+			"kb:control+end": ("br(braillenote):space+d4+d5+d6","br(braillenote):read+B",),
+			"braille_enter": ("br(braillenote):space+d8","br(braillenote):wCenter","br(braillenote):enter",),
+			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6","br(braillenote):wCounterclockwise","br(braillenote):shift+tab",),
+			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5","br(braillenote):wClockwise","br(braillenote):tab",),
+			"braille_eraseLastCell": ("br(braillenote):space+d7","br(braillenote):backspace",),
+			"showGui": ("br(braillenote):space+d1+d3+d4+d5","br(braillenote):read+N",),
+			"kb:windows": ("br(braillenote):space+d2+d4+d5+d6","br(braillenote):read+W",),
+			"kb:alt": ("br(braillenote):space+d1+d3+d4","br(braillenote):read+M",),
+			"toggleInputHelp": ("br(braillenote):space+d2+d3+d6","br(braillenote):read+1",),
 		},
 	})
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys=None, dots=None, space=False, routing=None):
+	def __init__(self, keys=None, dots=None, space=False, routing=None, wheel=None, qtMod=None, qtData=None):
 		super(braille.BrailleDisplayGesture, self).__init__()
-		# see what thumb keys are pressed:
+		# Denotes if we're dealing with a QT model.
+		self.qt = qtMod is not None
+		# Handle thumb-keys and scroll wheel (wheel is for Apex BT).
 		names = set()
 		if keys is not None:
-			names.update(_keyNames[1 << i] for i in xrange(4)
-					if (1 << i) & keys)
+			names.update(_keyNames[1 << i] for i in xrange(4) if (1 << i) & keys)
+		elif wheel is not None:
+			names.add(_scrWheel[wheel])
 		elif dots is not None:
-		# now the dots
 			self.dots = dots
 			if space:
 				self.space = space
 				names.add(_keyNames[0])
-			names.update(_dotNames[1 << i] for i in xrange(8)
-					if (1 << i) & dots)
+			names.update(_dotNames[1 << i] for i in xrange(8) if (1 << i) & dots)
 		elif routing is not None:
 			self.routingIndex = routing
 			names.add('routing')
+		elif qtMod is not None:
+			names.update(_qtKeyNames[1 << i] for i in xrange(4)
+				if (1 << i) & qtMod)
+			names.add(qtData)
 		self.id = "+".join(names)

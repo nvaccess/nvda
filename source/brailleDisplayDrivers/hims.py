@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2017 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
+#Copyright (C) 2010-2018 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
 
 import _winreg
 import serial
@@ -69,7 +69,9 @@ class Model(AutoPropertyObject):
 			0x02<<8: "f1",
 			0x04<<8: "f2",
 			0x08<<8: "f3",
-			0x10<<8: "f4"
+			0x10<<8: "f4",
+			0x20<<8: "leftSideScroll",
+			0x40<<8: "rightSideScroll",
 		})
 
 class BrailleSense(Model):
@@ -81,8 +83,6 @@ class BrailleSense(Model):
 	def _get_keys(self):
 		keys = super(BrailleSense, self)._get_keys()
 		keys.update({
-			0x20<<8: "leftSideScroll",
-			0x40<<8: "rightSideScroll",
 			0x01<<16: "leftSideScrollUp",
 			0x02<<16: "leftSideScrollDown",
 			0x04<<16: "rightSideScrollUp",
