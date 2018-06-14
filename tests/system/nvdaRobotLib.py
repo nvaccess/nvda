@@ -60,6 +60,7 @@ class nvdaRobotLib(object):
 		while not self.nvdaSpy.run_keyword("is_NVDA_startup_complete", [], {}):
 			builtIn.sleep(0.1)
 
+
 	def quit_NVDA(self):
 		"""send quit NVDA keys
 			sleep  1
@@ -72,3 +73,7 @@ class nvdaRobotLib(object):
 		sendKey.send_enter_key()
 		self.nvdaSpy.run_keyword("stop_remote_server", [], {})
 		return process.wait_for_process(self.nvdaHandle)
+
+	def assert_last_speech(self, expectedSpeech):
+		actualLastSpeech = self.nvdaSpy.run_keyword("get_last_speech", [], {})
+		builtIn.should_be_equal_as_strings(actualLastSpeech, expectedSpeech)

@@ -12,5 +12,5 @@ Library       nvdaRobotLib.py
 Can Start and exit NVDA
     ${nvdaProcessHandle} =  start NVDA
     ${nvdaResult} =  quit NVDA
-    Should Be Equal  ${nvdaResult.stdout}  Hello, world!
+    assert last speech  "Welcome to NVDA"
 
