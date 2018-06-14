@@ -400,6 +400,9 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 		"""
 		return None
 
+	#: Whether this control requires that braille input from a braille display should be sent directly to the control as unicode braille, rather than translated into standard text first.
+	requiresUnicodeBrailleInput=False
+
 	def _get_value(self):
 		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
 		@rtype: basestring

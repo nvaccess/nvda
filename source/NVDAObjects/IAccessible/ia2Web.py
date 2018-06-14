@@ -47,6 +47,9 @@ class Ia2Web(IAccessible):
 			return False
 		return super(Ia2Web,self).isPresentableFocusAncestor
 
+	def _get_requiresUnicodeBrailleInput(self):
+		return self.IA2Attributes.get('braille-input')=="true"
+
 class Document(Ia2Web):
 	value = None
 
