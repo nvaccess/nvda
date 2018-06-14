@@ -31,7 +31,7 @@ class TextContainerObject(AutoPropertyObject):
 
 class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	"""
-	A document that supports standard table navigiation comments (E.g. control+alt+arrows to move between table cells).
+	A document that supports standard table navigation commands (E.g. control+alt+arrows to move between table cells).
 	The document could be an NVDAObject, or a BrowseModeDocument treeIntercepter for example.
 	"""
 	#: The controlField attribute name that should be used as the row number when navigating in a table. By default this is the same as the presentational attribute name
@@ -210,4 +210,57 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		"kb:control+alt+leftArrow": "previousColumn",
 	}
 
+class SelectableTextContainerObject(TextContainerObject):
+	"""
+	An object that contains text in which the selection can be fetched and changed.
+	This doesn't necessarily mean that the text is editable.
+
+	If the object notifies of selection changes, the following should be done:
+		* When the object gains focus, L{initAutoSelectDetection} must be called.
+		* When the object notifies of a possible selection change, L{detectPossibleSelectionChange} must be called.
+		* Optionally, if the object notifies of changes to its content, L{hasContentChangedSinceLastSelection} should be set to C{True}.
+	@ivar hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
+	@type hasContentChangedSinceLastSelection: bool
+	"""
+
+	#: Whether to speak the unselected content after new content has been selected.
+	#: @type: bool
+	speakUnselected = False
+
+	def initAutoSelectDetection(self):
+		"""Initialise automatic detection of selection changes.
+		This should be called when the object gains focus.
+		"""
+		try:
+			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		except:
+			self._lastSelectionPos=None
+		self.isTextSelectionAnchoredAtStart=True
+		self.hasContentChangedSinceLastSelection=False
+
+	def detectPossibleSelectionChange(self):
+		"""Detects if the selection has been changed, and if so it speaks the change.
+		"""
+		try:
+			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		except:
+			# Just leave the old selection, which is usually better than nothing.
+			return
+		oldInfo=getattr(self,'_lastSelectionPos',None)
+		self._lastSelectionPos=newInfo.copy()
+		if not oldInfo:
+			# There's nothing we can do, but at least the last selection will be right next time.
+			self.isTextSelectionAnchoredAtStart=True
+			return
+		self._updateSelectionAnchor(oldInfo,newInfo)
+		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
+		self.hasContentChangedSinceLastSelection=False
+		speech.speakSelectionChange(oldInfo,newInfo,speakUnselected=speakUnselected,generalize=hasContentChanged)
+
+	def _updateSelectionAnchor(self,oldInfo,newInfo):
+		# Only update the value if the selection changed.
+		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
+			self.isTextSelectionAnchoredAtStart=False
+		elif newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
+			self.isTextSelectionAnchoredAtStart=True
 
