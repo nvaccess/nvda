@@ -1,4 +1,7 @@
+import time
 import pyautogui
+pyautogui.FAILSAFE=False
+import ctypes
 
 """
 ['\t', '\n', '\r', ' ', '!', '"', '#', '$', '%', '&', "'", '(',
@@ -25,14 +28,18 @@ import pyautogui
 'command', 'option', 'optionleft', 'optionright']
 """
 
-def send_quit_NVDA_keys():
-    """
-    Sends Caps+q
-    """
-    pyautogui.hotkey('capslock', 'q')
+def send_key(*keys):
+	pyautogui.hotkey(*keys)
 
-def send_enter_key():
-    """
-    Sends ENTER
-    """
-    pyautogui.hotkey('enter')
+def get_foreground_name():
+	hwnd=ctypes.windll.user32.GetForegroundWindow()
+	buf=ctypes.create_unicode_buffer(1024)
+	ctypes.windll.user32.InternalGetWindowText(hwnd,buf,1023)
+	return buf.value
+
+def wait_for_foreground(name,timeout=5):
+	endTime=time.time()+timeout
+	while get_foreground_name()!=name:
+		time.sleep(0.25)
+		if time.time()>endTime:
+			raise RuntimeError("Timeout")

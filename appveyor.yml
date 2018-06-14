@@ -20,6 +20,7 @@ environment:
 
 init:
  - ps: |
+     iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
      if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
       # Strip "release-" prefix.
       $version = $env:APPVEYOR_REPO_TAG_NAME.Substring(8)
@@ -75,8 +76,8 @@ build_script:
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
  - py scons.py source %sconsArgs%
- # We don't need launcher to run tests, so run the tests before launcher.
- - py scons.py tests %sconsArgs%
+ # We don't need launcher to run checkPot, so run the checkPot before launcher.
+ - py scons.py checkPot %sconsArgs%
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - del output\*.pot
  - 'echo scons output targets: %sconsOutTargets%'
@@ -96,6 +97,27 @@ build_script:
  - cd symbols
  - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
  - cd ..
+
+before_test:
+ - py -m pip install robotframework
+ - py -m pip install robotremoteserver
+ - py -m pip install pyautogui
+ - py -m pip install nose 
+ - mkdir testResults
+
+test_script:
+ - ps: |
+     $errorCode=0
+     py -m nose --with-xunit --xunit-file=testResults/unitTests.xml tests/unit
+     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     $wc = New-Object 'System.Net.WebClient'
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\unitTests.xml))
+     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+     py -m robot --loglevel DEBUG -d testResults -x systemTests.xml tests/system/initial.robot
+     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     $wc = New-Object 'System.Net.WebClient'
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\systemTests.xml))
+     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 artifacts:
  - path: output\*

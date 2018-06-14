@@ -1,11 +1,12 @@
+import sys
+import os
 from robot.libraries.BuiltIn import BuiltIn
-from robot.libraries.OperatingSystem import OperatingSystem
-from robot.libraries.Process import Process
 import sendKey
 
 builtIn = BuiltIn()
-os = OperatingSystem()
-process = Process()
+process = builtIn.get_library_instance('Process')
+
+nvdaProfileDir=os.path.abspath("tests/system/nvdaProfile")
 
 class nvdaRobotLib(object):
 
@@ -14,19 +15,12 @@ class nvdaRobotLib(object):
 		self.nvdaHandle = None
 
 
-	def copy_in_system_test_spy(self):
-		"""Equiv robot text:
-		Copy File  tests/system/systemTestSpy.py  source/globalPlugins/
-		"""
-		os.copy_file("tests/system/systemTestSpy.py", "source/globalPlugins/")
-
-
 	def _startNVDAProcess(self):
 		"""Equiv robot text:
 		Start Process  pythonw nvda.pyw --debug-logging  cwd=source  shell=true  alias=nvdaAlias
 		"""
 		self.nvdaHandle = handle = process.start_process(
-			"pythonw nvda.pyw --debug-logging",
+			"pythonw nvda.pyw --debug-logging -r -c \"{nvdaProfileDir}\"".format(nvdaProfileDir=nvdaProfileDir),
 			cwd='source',
 			shell=True,
 			alias='nvdaAlias'
@@ -48,13 +42,12 @@ class nvdaRobotLib(object):
 
 
 	def start_NVDA(self):
-		self.copy_in_system_test_spy()
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
+		builtIn.sleep(4.0)
 		self._connectToRemoteServer()
 		self.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
-
 
 	def wait_for_NVDA_startup_to_complete(self):
 		while not self.nvdaSpy.run_keyword("is_NVDA_startup_complete", [], {}):
@@ -62,17 +55,13 @@ class nvdaRobotLib(object):
 
 
 	def quit_NVDA(self):
-		"""send quit NVDA keys
-			sleep  1
-			send enter key
-			nvdaSpy.Stop Remote Server
-			Wait For Process  nvdaAlias
-		"""
-		sendKey.send_quit_NVDA_keys()
-		builtIn.sleep(1.0)
-		sendKey.send_enter_key()
-		self.nvdaSpy.run_keyword("stop_remote_server", [], {})
-		return process.wait_for_process(self.nvdaHandle)
+		"""send quit NVDA keys"""
+		process.run_process(
+			"pythonw nvda.pyw -q",
+			cwd='source',
+			shell=True,
+		)
+		process.wait_for_process(self.nvdaHandle)
 
 	def assert_last_speech(self, expectedSpeech):
 		actualLastSpeech = self.nvdaSpy.run_keyword("get_last_speech", [], {})

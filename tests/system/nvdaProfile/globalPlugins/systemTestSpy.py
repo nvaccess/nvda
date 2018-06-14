@@ -47,6 +47,7 @@ class SystemTestSpyServer(object):
 		log.debug("Server address: {}".format(server.server_address))
 		signal.signal(signal.SIGINT, lambda signum, frame: server.stop())
 		server_thread = threading.Thread(target=server.serve)
+		server_thread.setDaemon(True)
 		server_thread.start()
 
 	def stop(self):
