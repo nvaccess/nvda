@@ -9,7 +9,7 @@ branches:
   - /try-.*/
   # For tags, branch = tag if GitHub couldn't work out the base branch.
   - /release-.*/
-
+  
 environment:
  PY_PYTHON: 2.7-32
  encFileKey:
@@ -30,7 +30,11 @@ init:
        $versionType = "stable"
       }
      } else {
-      $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+      if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+       $version = "pr$env:APPVEYOR_PULL_REQUEST_NUMBER-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+      } else {
+       $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+      }
       # The version is unique even for rebuilds, so we can use it for the AppVeyor version.
       Update-AppveyorBuild -Version $version
       if (!$env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
@@ -47,17 +51,23 @@ clone_depth: 1
 install:
  - cd appveyor
  # Decrypt files.
- - openssl enc -aes-256-cbc -d -pass pass:%encFileKey% -in authenticode.pfx.enc -out authenticode.pfx
- - openssl enc -aes-256-cbc -d -pass pass:%encFileKey% -in ssh_id_rsa.enc -out ssh_id_rsa
- # Install ssh stuff.
- - copy ssh_id_rsa %userprofile%\.ssh\id_rsa
+ - ps: |
+    if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
+     openssl enc -aes-256-cbc -d -pass pass:$env:encFileKey -in authenticode.pfx.enc -out authenticode.pfx
+     openssl enc -aes-256-cbc -d -pass pass:$env:encFileKey -in ssh_id_rsa.enc -out ssh_id_rsa
+     # Install ssh stuff.
+     copy ssh_id_rsa $env:userprofile\.ssh\id_rsa
+    }
  - type ssh_known_hosts >> %userprofile%\.ssh\known_hosts
  - cd ..
  - git submodule update --init
 
 build_script:
  - ps: |
-     $sconsOutTargets = "launcher appx"
+     $sconsOutTargets = "launcher"
+     if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
+      $sconsOutTargets += " appx"
+     }
      $sconsArgs = "version=$env:version"
      if ($env:release) {
       $sconsOutTargets += " changes userGuide developerGuide client"
@@ -67,7 +77,9 @@ build_script:
       $sconsArgs += " updateVersionType=$env:versionType"
      }
      $sconsArgs += ' publisher="NV Access"'
-     $sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
+     if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
+      $sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
+     }
      $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
      # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
      # It's possible to work around this, but the workarounds have annoying side effects.
@@ -103,7 +115,7 @@ artifacts:
 
 deploy_script:
  - ps: |
-     if ($env:versionType) {
+     if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
       # Not a try build.
       # Notify our server.
       $exe = Get-ChildItem -Name output\*.exe
