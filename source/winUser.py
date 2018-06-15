@@ -330,7 +330,7 @@ def HIBYTE(word):
 	return word>>8
 
 def MAKEWORD(lo,hi):
-	return (hi<<8)+lo
+	return (hi<<16)+lo
 
 def LOWORD(long):
 	return long&0xFFFF
