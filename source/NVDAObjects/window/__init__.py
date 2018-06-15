@@ -411,6 +411,34 @@ class DisplayModelLiveText(LiveText, DisplayModelTextMonitor):
 class DisplayModelSelectionChangeMonitor(SelectionChangeMonitor, DisplayModelTextMonitor):
 	pass
 
+class DisplayModelDrawFocusRectProcessor(Window):
+	"""
+	This object facilitates focus reporting when a focus rectangle is drawn,
+	but the focused rectangle does not correspond with an unique object and therefore no focus change is reported by NVDA.
+	For example, this can be used as an overlay class for objects (such as grids)
+	which don't expose child objects but fire displayModel_drawFocusRectNotify events for cell selection instead.
+	It should only be used as overlay class on an object which content is otherwise inaccessible.
+
+	When a displayModel_drawFocusRectNotify event is received,
+	the content of the given rectangle is set as the value of the object,
+	and event_valueChange is fired.
+	"""
+
+	TextInfo = displayModel.DisplayModelTextInfo
+
+	def _get_value(self):
+		# The initial value when this object is created is based on the selection.
+		import textInfos
+		try:
+			return self.makeTextInfo(textInfos.POSITION_SELECTION).text
+		except LookupError:
+			return None
+
+	def event_displayModel_drawFocusRectNotify(self, rect):
+		from textInfos import Rect
+		self.value = self.makeTextInfo(Rect(*rect)).text
+		self.event_valueChange()
+
 windowClassMap={
 	"EDIT":"Edit",
 	"TTntEdit.UnicodeClass":"Edit",

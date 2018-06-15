@@ -13,7 +13,7 @@ import itertools
 from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
-import textInfos.offsets
+import textInfos
 import colors
 import time
 import displayModel
@@ -28,7 +28,7 @@ import braille
 import api
 import config
 import controlTypes
-from NVDAObjects.window import Window
+from NVDAObjects.window import Window, DisplayModelSelectionChangeMonitor
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
@@ -543,6 +543,14 @@ the NVDAObject for IAccessible
 			#Generic client IAccessibles with no children should be classed as content and should use displayModel 
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
+				# The text of this window might expose relevant selection changes.
+				try:
+					displayModel.DisplayModelTextInfo(self, textInfos.POSITION_SELECTION)
+				except LookupError:
+					pass
+				else:
+					# Monitor for selection changes on this object
+					clsList.insert(0, DisplayModelSelectionChangeMonitor)
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
@@ -1898,6 +1906,8 @@ _staticMap={
 	("TRichView",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRichView",
 	("TRichViewEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
 	("TTntDrawGrid.UnicodeClass",oleacc.ROLE_SYSTEM_CLIENT):"List",
+	("TGrid",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGrid",
+	("TDBGrid",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGrid",
 	("SysListView32",oleacc.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_GROUPING):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",

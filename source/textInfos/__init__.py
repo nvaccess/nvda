@@ -27,7 +27,7 @@ class Field(dict):
 		For example,  to create a condition that matches on a format field with a white or black foreground color, you would provide the following condition argument:
 		{'color': [colors.RGB(255, 255, 255), colors.RGB(0, 0, 0)]}
 		"""
-		if len(dicts) == 1:
+		if len(dicts) == 1 and isinstance(dicts[0], (list, set, tuple)):
 			dicts = dicts[0]
 		for dict in dicts:
 			# Dicts are joined with or, therefore return early if a dict matches.
@@ -35,7 +35,7 @@ class Field(dict):
 				if key not in self:
 					# Go to the next dict
 					break
-				if not isinstance(values,(list,set,tuple)):
+				if not isinstance(values, (list, set, tuple)):
 					values=[values]
 				if not self[key] in values:
 					# Key does not match.

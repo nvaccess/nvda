@@ -1,6 +1,7 @@
 from NVDAObjects import behaviors
 import controlTypes
 from . import IAccessible
+from NVDAObjects.window import DisplayModelDrawFocusRectProcessor
 
 class TRichView(IAccessible):
 
@@ -35,3 +36,6 @@ class TRxRichEdit(IAccessible):
 
 	def _get_name(self):
 		return None
+
+class TGrid(DisplayModelDrawFocusRectProcessor, IAccessible):
+	pass
