@@ -28,6 +28,7 @@ import api
 import ui
 import braille
 import nvwave
+from documentBase import SelectableTextContainerObject
 
 class ProgressBar(NVDAObject):
 

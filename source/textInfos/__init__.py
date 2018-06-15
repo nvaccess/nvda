@@ -19,6 +19,32 @@ import controlTypes
 class Field(dict):
 	"""Provides information about a piece of text."""
 
+	def evaluateCondition(self, *dicts):
+		"""
+		A function that evaluates whether the provided condition is met for this L{Field}.
+		The arguments to this function are dicts whose keys are field attributes, and whose values are a list of possible values for the attribute.
+		The dicts are joined with 'or', the keys in each dict are joined with 'and', and the values  for each key are joined with 'or'.
+		For example,  to create a condition that matches on a format field with a white or black foreground color, you would provide the following condition argument:
+		{'color': [colors.RGB(255, 255, 255), colors.RGB(0, 0, 0)]}
+		"""
+		if len(dicts) == 1:
+			dicts = dicts[0]
+		for dict in dicts:
+			# Dicts are joined with or, therefore return early if a dict matches.
+			for key,values in dict.iteritems():
+				if key not in self:
+					# Go to the next dict
+					break
+				if not isinstance(values,(list,set,tuple)):
+					values=[values]
+				if not self[key] in values:
+					# Key does not match.
+					break
+			else:
+				# This dict matches.
+				return True
+		return False
+
 class FormatField(Field):
 	"""Provides information about the formatting of text; e.g. font information and hyperlinks."""
 

@@ -408,7 +408,7 @@ class DisplayModelTextMonitor(TextMonitor, Window):
 class DisplayModelLiveText(LiveText, DisplayModelTextMonitor):
 	TextInfo = displayModel.EditableTextDisplayModelTextInfo
 
-class DisplayModelSelectionChangeMonitor(DisplayModelTextMonitor, SelectionChangeMonitor):
+class DisplayModelSelectionChangeMonitor(SelectionChangeMonitor, DisplayModelTextMonitor):
 	pass
 
 windowClassMap={

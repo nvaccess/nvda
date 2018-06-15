@@ -10,6 +10,7 @@ import textInfos
 import speech
 import ui
 import controlTypes
+import braille
 
 class TextContainerObject(AutoPropertyObject):
 	"""
@@ -259,9 +260,15 @@ class SelectableTextContainerObject(TextContainerObject):
 		if not self.speakUnselected:
 			# As the unselected state is not relevant here and all spoken content is selected,
 			# use speech.speakTextInfo to make sure the new selection is spoken.
-			speech.speakTextInfo(newInfo,unit=textInfos.UNIT_LINE,reason=controlsTypes.REASON_CARET)
+			speech.speakTextInfo(newInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
 			speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
+
+		# Import late to avoid circular import
+		from editableText import EditableText
+		if not isinstance(self, EditableText):
+			# This object has no caret, manually trigger a braille update.
+			braille.handler.handleUpdate(self)
 
 	def _updateSelectionAnchor(self,oldInfo,newInfo):
 		# Only update the value if the selection changed.

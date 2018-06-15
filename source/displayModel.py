@@ -21,6 +21,9 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB
 
+COLOR_HIGHLIGHT = 13
+COLOR_HIGHLIGHTTEXT = 14
+
 def wcharToInt(c):
 	i=ord(c)
 	return c_short(i).value
@@ -202,7 +205,7 @@ def requestTextChangeNotifications(obj, enable):
 	@param enable: C{True} to enable notifications, C{False} to disable them.
 	@type enable: bool
 	"""
-	if not enable:
+	if not enable and obj in _textChangeNotificationObjs:
 		_textChangeNotificationObjs.remove(obj)
 	watchdog.cancellableExecute(_requestTextChangeNotificationsForWindow, obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
 	if enable:
@@ -223,22 +226,43 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	includeDescendantWindows=True
 
 	def _get_backgroundSelectionColor(self):
-		self.backgroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
+		self.backgroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(COLOR_HIGHLIGHT))
 		return self.backgroundSelectionColor
 
 	def _get_foregroundSelectionColor(self):
-		self.foregroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		self.foregroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(COLOR_HIGHLIGHTTEXT))
 		return self.foregroundSelectionColor
 
-	def _getSelectionOffsets(self):
+	def _get_defaultSelectionCondition(self):
+		condition = dict()
 		if self.backgroundSelectionColor is not None and self.foregroundSelectionColor is not None:
+			condition['color'] = [self.foregroundSelectionColor]
+			condition['background-color'] = [self.backgroundSelectionColor]
+		self.defaultSelectionCondition = condition
+		return self.defaultSelectionCondition
+
+	def _get_selectionCondition(self):
+		"""The search condition to apply to a L{textInfos.FieldCommand} when searching for selected or highlighted text.
+		A condition is a list with dicts whose keys are control field attributes,
+		and whose values are a list of possible values for the property.
+		The dicts are joined with 'or', the keys in each dict are joined with 'and', and the values  for each key are joined with 'or'.
+		It is evaluated using L{textInfos.Field.evaluateCondition}.
+		"""
+		# Lazily fetch a copy of the default condition dict and copy it.
+		defaultSelectionCondition = self.defaultSelectionCondition.copy()
+		self.selectionCondition = [defaultSelectionCondition]
+		return self.selectionCondition
+
+	def _getSelectionOffsets(self):
+		condition = self.selectionCondition
+		if condition:
 			fields=self._storyFieldsAndRects[0]
 			startOffset=None
 			endOffset=None
 			curOffset=0
 			inHighlightChunk=False
 			for item in fields:
-				if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange" and item.field.get('color',None)==self.foregroundSelectionColor and item.field.get('background-color',None)==self.backgroundSelectionColor: 
+				if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange" and item.field.evaluateCondition(*self.selectionCondition):
 					inHighlightChunk=True
 					if startOffset is None:
 						startOffset=curOffset
