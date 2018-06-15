@@ -21,7 +21,6 @@ Le caratteristiche principali di questa versione comprendono il supporto per le 
  - Questi nuovi interruttori possono essere assegnati usando i comandi che si trovano nella sezione pressione tasti simulata nella finestra tasti e gesti di immissione.
 - Ripristinato il supporto ai Display Braille di Handy Tech Braillino e Modular (con firmware vecchio). (#8016)
 - NVDA si occuperà di sincronizzare automaticamente l'ora e la data per alcuni display braille Handytech (quali Active Braille e Active Star), nel caso in cui queste informazioni siano fuori sincro di almeno 5 secondi. (#6911)
-- Nell'elenco messaggi di Microsoft Outlook, NVDA annuncerà se il messaggio è stato inoltrato o se si è risposto ad esso.   (#6911)
 - è possibile assegnare un nuovo gesto/combinazione di tasti per disattivare tutti i profili di configurazione in base agli eventi. (#4935)
 
 
@@ -57,6 +56,7 @@ Le caratteristiche principali di questa versione comprendono il supporto per le 
 - NVDA non leggerà più (marcatore da sinistra a destra o da destra a sinistra) quando si accede all'orologio delle ultime versioni di Windows10, sia per quel che concerne sintesi vocale che braille. (#5729)
 - Sistemati i problemi nel rilevamento dei tasti di scorrimento per i display braille Smart Beetle di Hims. (#6086)
 - In alcuni controlli di testo, in particolare nelle applicazioni Delphi, le informazioni fornite durante la navigazione e la modifica del testo risultano molto più accurate. (#636, #8102)
+- In Windows 10 rs5, NVDA non annuncerà più informazioni ridondanti quando si passa da un programma all'altro (#8258)
 
 
 == Cambiamenti per sviluppatori (in inglese) ==
