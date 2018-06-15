@@ -262,8 +262,6 @@ class LiveText(TextMonitor):
 	"""An object for which new text should be reported automatically.
 	These objects present text as a single chunk
 	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
-	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
-	The object should notify of text changes using the textChange event.
 	"""
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
@@ -367,7 +365,7 @@ class LiveText(TextMonitor):
 class Terminal(LiveText, EditableText):
 	"""An object which both accepts text input and outputs text which should be reported automatically.
 	This is an L{EditableText} object,
-	as well as a L{liveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
+	as well as a L{LiveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
 	role = controlTypes.ROLE_TERMINAL
 
@@ -697,6 +695,8 @@ class WebDialog(NVDAObject):
 
 class SelectionChangeMonitor(TextMonitor, SelectableTextContainerObject):
 	"""Reports selection changes based on text monitoring.
+	This inherrits from L{documentBase.SelectableTextContainerObject} which facilitates the detection of selection changesusing the L{TextInfo}.
+	This is also a L{TextMonitor} object for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
 
 	def startMonitoring(self):

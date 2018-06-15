@@ -421,7 +421,7 @@ class DisplayModelDrawFocusRectProcessor(Window):
 
 	When a displayModel_drawFocusRectNotify event is received,
 	the content of the given rectangle is set as the value of the object,
-	and event_valueChange is fired.
+	and a valueChange event is fired.
 	"""
 
 	TextInfo = displayModel.DisplayModelTextInfo
@@ -437,7 +437,7 @@ class DisplayModelDrawFocusRectProcessor(Window):
 	def event_displayModel_drawFocusRectNotify(self, rect):
 		from textInfos import Rect
 		self.value = self.makeTextInfo(Rect(*rect)).text
-		self.event_valueChange()
+		eventHandler.queueEvent("valueChange", self)
 
 windowClassMap={
 	"EDIT":"Edit",
