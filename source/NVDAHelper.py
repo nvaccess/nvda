@@ -311,7 +311,7 @@ def nvdaControllerInternal_IMEOpenStatusUpdate(opened):
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	global lastLanguageID, lastLayoutString
-	languageID=hkl&0xffff
+	languageID=winUser.LOWORD(hkl)
 	#Simple case where there is no change
 	if languageID == lastLanguageID and layoutString == lastLayoutString:
 		return 0
@@ -437,7 +437,7 @@ class RemoteLoader64(object):
 def initialize():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
 	hkl=c_ulong(windll.User32.GetKeyboardLayout(0)).value
-	lastLanguageID=hkl&0xffff
+	lastLanguageID=winUser.LOWORD(hkl)
 	KL_NAMELENGTH=9
 	buf=create_unicode_buffer(KL_NAMELENGTH)
 	res=windll.User32.GetKeyboardLayoutNameW(buf)
