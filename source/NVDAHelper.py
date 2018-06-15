@@ -1,6 +1,6 @@
 #NVDAHelper.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017-2018 NV Access Limited, Peter Vagner, Davy Kager
+#Copyright (C) 2008-2018 NV Access Limited, Peter Vagner, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
