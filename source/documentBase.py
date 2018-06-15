@@ -20,7 +20,7 @@ class TextContainerObject(AutoPropertyObject):
 
 	def _get_TextInfo(self):
 		raise NotImplementedError
- 
+
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
@@ -225,9 +225,10 @@ class SelectableTextContainerObject(TextContainerObject):
 	"""
 
 	#: Whether to speak the unselected content after new content has been selected.
-	#: If C{False}, the new selection is always spoken.
+	#: If C{False}, the old selection is ignored,
+	#: and the new selection is reported without the redundant selected state.
 	#: @type: bool
-	speakUnselected = False
+	speakUnselected = True
 
 	def initAutoSelectDetection(self):
 		"""Initialise automatic detection of selection changes.

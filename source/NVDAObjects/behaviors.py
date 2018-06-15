@@ -699,6 +699,8 @@ class SelectionChangeMonitor(TextMonitor, SelectableTextContainerObject):
 	This is also a L{TextMonitor} object for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
 
+	speakUnselected = False
+
 	def startMonitoring(self):
 		self.initAutoSelectDetection()
 		super(SelectionChangeMonitor, self).startMonitoring()
