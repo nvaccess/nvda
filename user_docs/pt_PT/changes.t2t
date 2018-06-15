@@ -26,7 +26,6 @@ Os destaques desta versão são:
  - Pode associar estas funcionalidades a comandos através da opção Definir comandos, Simulação de teclas do sistema.
 - Reposto o suporte para as linhas Braille Braillino e Modular da HandyTech com firmware antigo. (#8016)
 - Nos dispositivos HandyTech suportados, como Active Braille e Active Star, a data e hora serão automaticamente sincronizadas pelo NVDA, sempre que a diferença for superior a cinco segundos. (#8016)
-- Na lista de mensagens do Microsoft Outlook o NVDA já anuncia se uma mensagem foi respondida ou reenviada. (#6911)
 - Pode ser definido um comando para desactivar temporariamente todos os accionadores de perfis. (#4935)
 
 
@@ -64,6 +63,7 @@ Os destaques desta versão são:
 - O NVDA já não anuncia marcas (LTR e RTL em Braille ou em voz por-caractere, ao acessar o relógio de versões recentes do Windows. (#5729)
 - A detecção das teclas de deslocação da linha Smart Beetle  da HIMS volta a ser confiável. (#6086)
 - Em alguns controlos de texto, especialmente em aplicações Delphi as informações sobre edição e navegação já é muito mais confiável. (#636, #8102)
+- Em Windows 10 RS5, o NVDA já não anuncia informação redundante ao mudar de janela com alt+tab. (#8258)
 
 
 == Alterações para Desenvolvedores ==

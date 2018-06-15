@@ -5,7 +5,7 @@ What's New in NVDA
 
 = 2018.2 =
 
-Highlights of this release include Support for tables in Kindle for PC, support for Humanwear BrailleNote Touch and BI14 Braille displays, Improvements to both Onecore and Sapi5 speech synthesizers, improvements in Microsoft Outlook and much more.
+Highlights of this release include Support for tables in Kindle for PC, support for HumanWare BrailleNote Touch and BI14 Braille displays, Improvements to both Onecore and Sapi5 speech synthesizers, improvements in Microsoft Outlook and much more.
 
 == New Features ==
 - row and column span for table cells is now reported in speech and braille. (#2642)
@@ -21,7 +21,6 @@ Highlights of this release include Support for tables in Kindle for PC, support 
  - You can assign these new modifier toggles using the commands found under Emulated system keyboard keys in the Input gestures dialog.
 - Restored support for Handy Tech Braillino and Modular (with old firmware) displays. (#8016)
 - Date and time for supported Handy Tech devices (such as Active Braille and Active Star) will now automatically be synchronized by NVDA when out of sync more than five seconds. (#8016)
-- In Microsoft Outlook message lists, NVDA now reports if a message has been replied to or forwarded. (#6911)
 - An input gesture can be assigned to temporarily disable all configuration profile triggers. (#4935)
 
 
@@ -58,6 +57,7 @@ Highlights of this release include Support for tables in Kindle for PC, support 
 - NVDA no longer reports (LTR and RTL marks) in Braille or per-character speech when accessing the clock in recent versions of Windows. (#5729)
 - Detection of scroll keys on Hims Smart Beetle displays is once more no longer unreliable. (#6086)
 - In some text controls, particularly in Delphi applications, the information provided about editing and navigating is now much more reliable. (#636, #8102)
+- In Windows 10 RS5, NVDA no longer reports extra redundant information when switching tasks with alt+tab. (#8258)
 
 
 == Changes for developers ==
