@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-09 14:17+1000\n"
-"PO-Revision-Date: 2018-02-10 00:15+0700\n"
+"POT-Creation-Date: 2018-05-18 00:10+1000\n"
+"PO-Revision-Date: 2018-05-20 23:30+0700\n"
 "Last-Translator: Dang Hoai Phuc <danghoaiphuc@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -531,17 +531,29 @@ msgstr "{number} of {total}"
 msgid "lv %s"
 msgstr "lv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "r{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "r{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -565,6 +577,20 @@ msgstr "đến con trỏ duyệt"
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Tự động"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Kiểu nhập không hỗ trợ"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "Phát hành {modifier}"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "đã kích {modifier}"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -776,18 +802,8 @@ msgstr "French (unified) chữ nổi máy tính 8 chấm"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
-msgstr "French (unified) cấp 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "French (Canada) cấp 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "French (Canada) cấp 2"
+msgid "French (unified) grade 2"
+msgstr "French (unified) grade 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -886,8 +902,13 @@ msgstr "Kashmiri grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "Lithuanian"
+msgid "Lithuanian 8 dot"
+msgstr "Lithuanian 8 dot"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "Lithuanian 6 dot"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -906,8 +927,13 @@ msgstr "Manipuri grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "Mongolian"
+msgid "Mongolian grade 1"
+msgstr "Mongolian grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "Mongolian grade 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -991,6 +1017,11 @@ msgstr "Punjabi grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "Romanian"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "Russian braille for computer code"
 
@@ -1043,6 +1074,11 @@ msgstr "Telugu grade 1"
 #. braille settings dialog.
 msgid "Turkish grade 1"
 msgstr "Thổ Nhĩ Kỳ cấp 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Ukrainian"
+msgstr "Ukrainian"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1560,14 +1596,14 @@ msgstr "Không có lỗi trước"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr "&Liên kết"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr "&Tiêu đề"
 
@@ -1584,7 +1620,7 @@ msgstr "&Nút"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "Cột &mốc"
 
@@ -2840,10 +2876,12 @@ msgid "System caret"
 msgstr "Dấu nháy hệ thống"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "Chuột"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "tiếng nói"
 
@@ -2852,6 +2890,7 @@ msgid "Configuration"
 msgstr "Cấu hình"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Chữ nổi"
 
@@ -2917,8 +2956,8 @@ msgid "Sleep mode on"
 msgstr "Bật chế độ ngủ"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "Bật tắt chế độ ngủ của NVDA cho ứng dụng hiện tại"
+msgid "Toggles sleep mode on and off for the active application."
+msgstr "Bật tắt chế độ ngủ của NVDA cho ứng dụng hiện tại."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3395,7 +3434,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr "Chuyển sang chế độ duyệt kế"
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "Đã hết chế độ duyệt"
 
@@ -3431,12 +3470,11 @@ msgstr "đã cóp pi %s vào bộ nhớ tạm"
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
-"information, and pressing three times Copies name and value of this  object "
+"information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
-"Thông báo đối tượng điều hướng hiện tại. Ấn nhanh 2 lần để đánh vần thông "
-"tin về đối tượng. Ấn nhanh 3 lần để sao chép tên và giá trị của đối tượng "
-"vào bộ nhớ tạm."
+"Thông báo đối tượng điều hướng hiện tại. Nhấn hai lần để đánh vần thông tin "
+"và ba lần để chép tên và giá trị của đối tượng lên bộ nhớ đệm."
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3915,49 +3953,53 @@ msgstr ""
 "Thông báo tên tập tin của ứng dụng hiện tại và Add on đã được khởi động cho "
 "nó"
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
-msgstr "Mở hộp thoại thiết lập chung của NVDA"
+#. Translators: Input help mode message for go to general settings command.
+msgid "Shows NVDA's general settings"
+msgstr "Hiển thị cấu hình chung NVDA"
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
-msgstr "Mở hộp thoại thiết lập bộ đọc của NVDA"
+#. Translators: Input help mode message for go to select synthesizer command.
+msgid "Shows the NVDA synthesizer selection dialog"
+msgstr "Hiển thị hộp thoại chọn bộ đọc NVDA"
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
-msgstr "Mở hộp thoại thiết lập giọng đọc của NVDA"
+#. Translators: Input help mode message for go to speech settings command.
+msgid "Shows NVDA's speech settings"
+msgstr "Hiển thị cấu hình giọng đọc NVDA"
 
-#. Translators: Input help mode message for go to braille settings dialog command.
-msgid "Shows the NVDA braille settings dialog"
-msgstr "Mở hộp thoại thiết lập màn hình nổi của NVDA"
+#. Translators: Input help mode message for go to select braille display command.
+msgid "Shows the NVDA braille display selection dialog"
+msgstr "Hiển thị hộp thoại chọn màn hình nổi NVDA"
 
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Mở hộp thoại thiết lập bàn phím của NVDA"
+#. Translators: Input help mode message for go to braille settings command.
+msgid "Shows NVDA's braille settings"
+msgstr "Hiển thị cấu hình màn hình nổi NVDA"
 
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
-msgstr "Mở hộp thoại thiết lập chuột của NVDA"
+#. Translators: Input help mode message for go to keyboard settings command.
+msgid "Shows NVDA's keyboard settings"
+msgstr "Hiển thị cấu hình bàn phím NVDA"
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
-msgid "Shows the NVDA review cursor settings dialog"
-msgstr "Mở hộp thoại thiết lập con trỏ duyệt của NVDA"
+#. Translators: Input help mode message for go to mouse settings command.
+msgid "Shows NVDA's mouse settings"
+msgstr "Hiển thị cấu hình chuột NVDA"
 
-#. Translators: Input help mode message for go to input composition dialog.
-msgid "Shows the NVDA input composition settings dialog"
-msgstr "Mở hộp thoại thiết lập phương thức nhập của NVDA"
+#. Translators: Input help mode message for go to review cursor settings command.
+msgid "Shows NVDA's review cursor settings"
+msgstr "Hiển thị cấu hình con trỏ duyệt NVDA"
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Mở hộp thoại thiết lập trình bày đối tượng của NVDA"
+#. Translators: Input help mode message for go to input composition settings command.
+msgid "Shows NVDA's input composition settings"
+msgstr "Hiển thị cấu hình phương thức nhập NVDA"
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Mở hộp thoại thiết lập chế độ duyệt của NVDA"
+#. Translators: Input help mode message for go to object presentation settings command.
+msgid "Shows NVDA's object presentation settings"
+msgstr "Hiển thị cấu hình trình bày đối tượng NVDA"
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Mở hộp thoại thiết lập định dạng tài liệu của NVDA"
+#. Translators: Input help mode message for go to browse mode settings command.
+msgid "Shows NVDA's browse mode settings"
+msgstr "Hiển thị cấu hình chế độ duyệt NVDA"
+
+#. Translators: Input help mode message for go to document formatting settings command.
+msgid "Shows NVDA's document formatting settings"
+msgstr "Hiển thị cấu hình định dạng tài liệu NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
@@ -4141,6 +4183,10 @@ msgstr "Cuộn màn hình nổi tới"
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Đưa con trỏ tới hoặc kích hoạt đối tượng dưới ô chữ nổi này"
 
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "Báo thông tin định dạng văn bản dưới ô nổi này"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "Chuyển màn hình chữ nổi tới dòng trước"
@@ -4168,6 +4214,36 @@ msgstr "Chuyển dịch chữ nổi đầu vào và nhấn Enter."
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Chuyển dịch chữ nổi đầu vào"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "Bật/tắt phím shift ảo mô phỏng phím tắt cho kiểu nhập chữ nổi"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr "Bật/tắt phím control ảo mô phỏng phím tắt cho kiểu nhập chữ nổi"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "Bật/tắt phím alt ảo mô phỏng phím tắt cho kiểu nhập chữ nổi"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr "Bật/tắt phím windows trái ảo mô phỏng phím tắt cho kiểu nhập chữ nổi"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr "Bật/tắt phím NVDA ảo mô phỏng phím tắt cho kiểu nhập chữ nổi"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4217,6 +4293,22 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Hiển thị hộp thoại cấu hình profile của nVDA"
+
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Đã tắt tác nhân hồ sơ cấu hình"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Đã bật tác nhân hồ sơ cấu hình"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Bật/tắt việc vô hiệu hóa tác nhân hồ sơ cấu hình. Việc vô hiệu hóa này sẽ có "
+"hiệu lực đến khi NVDA khởi động lại."
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -5789,10 +5881,22 @@ msgstr "Duyệt tài liệu"
 msgid "row %s"
 msgstr "dòng %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "đến %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "Cột %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "đến dòng {row} cột {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6299,14 +6403,22 @@ msgid "Error checking for update."
 msgstr "Lỗi khi kiểm tra phiên bản mới"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Lỗi"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "Cập nhật cho NVDA"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr "Bản NVDA {version} đã được tải và đang chờ cài đặt."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6318,9 +6430,15 @@ msgstr "Phiên bản NVDa {version} đã có"
 msgid "No update available."
 msgstr "không có phiên bản mới"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "tải xuống và cài đặt"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "Cài NVDA {version}"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "Tải lại bản cập nhật"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6335,6 +6453,23 @@ msgstr "Nhắc lại sau"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Đóng"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "Bản NVDA {version} đã sẵn sàng để cài đặt.\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "Cài bản cập nhật"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "Ngưng cập nhậte"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "Không thể ngưng cập nhật."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6351,15 +6486,6 @@ msgstr "đang tải xuống"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "Lỗi khi tải phiên bản mới"
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "Đã tải xong. Phiên bản mới sẽ được cài đặt"
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "Cài phiên bản mới"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6632,6 +6758,11 @@ msgstr "BCC:"
 msgid "unread"
 msgstr "Chưa đọc"
 
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
+msgstr "Đang sửa hồ sơ {profile}"
+
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "purple flag"
@@ -6692,6 +6823,11 @@ msgstr "Gửi đi vào: %s"
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "Xin vui lòng chờ OutLook..."
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
+msgstr "{date} (mọi ngày)"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7094,8 +7230,8 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B series"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "HumanWare Brailliant BI/B series / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7156,10 +7292,6 @@ msgstr "Không có Braille"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX mẫu mới"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "Rút về và thông báo định dạng"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7222,11 +7354,17 @@ msgstr "đã lưu cấu hình"
 msgid "Could not save configuration - probably read only file system"
 msgstr "Không thể lưu cấu hình - lỗi có thể do tập tin có thuộc tính chỉ đọc"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
 "Một cửa sổ của NVDA đang được mở. xin vui lòng đóng cửa sổ đó lại trước khi "
 "mở cửa sổ mới."
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr "Bảng cấu hình bạn muốn mở không có trong hệ thống."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7245,100 +7383,45 @@ msgstr "Từ Điển Tạm"
 msgid "About NVDA"
 msgstr "Giới thiệu về NVDA"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "Thiết lập ch&ung..."
-
-msgid "General settings"
-msgstr "Thiết lập chung"
-
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&Bộ đọc"
-
-msgid "Change the synthesizer to be used"
-msgstr "thay đổi bộ đọc"
-
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
-msgstr "Thiết lập &giọng đọc"
-
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "Chọn tên giọng đọc, tốc độ, độ cao và âm lượng cho giọng đọc"
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "Thiết lập màn hình &nổi..."
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "Thiết lập bàn &phím..."
-
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
 msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
 msgstr ""
-"chọn kiểu bàn phím, chọn chế độ đọc khi gõ như đọc từng ký tự, từng từ hay "
-"đọc các phím điều khiển"
+"Bạn đang muốn chạy công cụ sửa đăng ký COM. Công cụ này sẽ giúp sửa những "
+"vấn đề không cho phép NVDA truy xuất nội dung của các ứng dụng như Firefox, "
+"Internet Explorer. Do thao tác này sẽ thay đổi registry hệ thống nên bạn cần "
+"có quyền quản trị. Xác nhận bạn muốn chạy công cụ này?"
 
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "Thiết lập &chuột..."
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Cảnh báo"
 
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr ""
-"Thông báo khi chuột thay đổi hình dạng và thông báo đối tượng dưới con trỏ "
-"chuột"
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "Công Cụ Sửa Đăng Ký COM"
 
-#. Translators: The label for the menu item to open Touch Interaction dialog.
-msgid "&Touch interaction..."
-msgstr "Tương tác cảm ứng..."
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "Vui lòng chờ, NVDA đang sửa đăng ký COM của hệ thống."
 
-#. Translators: tooltip for touch interaction settings item.
-msgid "Change how NVDA interacts with the touchscreen"
-msgstr "Thay đổi cách NVDA tương tác với màn hình cảm ứng"
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "Hoàn tất sửa đăng ký COM"
 
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "Con trỏ &duyệt..."
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+msgid "&Settings..."
+msgstr "Cấu hình..."
 
-msgid "Configure how and when the review cursor moves"
-msgstr "Cấu hình cách di chuyển con trỏ duyệt"
-
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "Thiết lập &phương thức nhập..."
-
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
-msgstr "Cài đặt phương thức nhập cho các ngôn ngữ"
-
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "Trình bà&y đối tượng..."
-
-msgid "Change reporting of objects"
-msgstr "Thay đổi thông báo các đối tượng"
-
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "Chế độ &duyệt..."
-
-msgid "Change virtual buffers specific settings"
-msgstr ""
-"Change virtual buffers specific settingsThay đổi các thiết lập cho bộ đệm ảo"
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "Định dạng tài &liệu..."
-
-msgid "Change settings of document properties"
-msgstr "thay đổi thông tin cho tài liệu"
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "&Windows 10 OCR..."
-msgstr "&Windows 10 OCR..."
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+msgid "NVDA settings"
+msgstr "Cấu hình NVDA"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7408,6 +7491,10 @@ msgstr "Tạo bản chạy trực tiếp..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Cài đặt NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Chạy công cụ sửa đăng ký COM..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7486,6 +7573,14 @@ msgstr "Ghi cấu hình hiện tại vào tập tin NVDA.ini"
 msgid "Donate"
 msgstr "Tài trợ"
 
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "Cài bản cập nhật đang chờ"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Thực thi bản cập nhật NVDA tải trước đó"
+
 msgid "E&xit"
 msgstr "&thoát NVDA"
 
@@ -7525,7 +7620,7 @@ msgstr "Tùy chọn"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "Kiểu bàn &phím"
 
@@ -7589,6 +7684,10 @@ msgstr "Khởi động lại với các add-on được tắt"
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with debug logging enabled"
 msgstr "Khởi động lại với bản ghi dò lỗi được bật"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Cài bản cập nhật đang chờ"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7732,21 +7831,21 @@ msgstr "Đã cài đặt"
 msgid "remove"
 msgstr "đã gỡ bỏ"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "Đã tắt"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "Tắt sau khi khởi động lại"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "Đã bật"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Bật sau khi khởi động lại"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "Tạm treo"
+msgid "disabled"
+msgstr "đã tắt"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "Đang chạy"
+msgid "enabled"
+msgstr "đã bật"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -7940,11 +8039,6 @@ msgstr ""
 "Tác nhân kích hoạt này đã được gán cho một hồ sơ cấu hình khác. nếu bạn tiếp "
 "tục chọn thì nó sẽ được gán với hồ sơ cấu hình này.\n"
 "Bạn có muốn tiếp tục không?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Cảnh báo"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8176,9 +8270,30 @@ msgstr "Lưu với"
 msgid "Error saving log: %s"
 msgstr "Lỗi khi lưu log: %s"
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
-msgstr "Thiết Lập Chung"
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "Đồng ý"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Áp dụng"
+
+#. Translators: The label for the list of categories in a multi category settings dialog.
+msgid "&Categories:"
+msgstr "Phân loại:"
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr "Phân loại cấu hình %s"
+
+#. Translators: This is the label for the general settings panel.
+msgid "General"
+msgstr "Chung "
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8232,6 +8347,11 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "tự động kiểm tra khi có phiên bản NVDa mới"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "Báo bản cập nhật đang chờ khi khởi động"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8288,9 +8408,20 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "Thay đổi cấu hình ngôn ngữ"
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
+#. Translators: A label for the synthesizer on the speech panel.
+msgid "&Synthesizer"
 msgstr "Bộ đọc"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr "Thay đổi..."
+
+#. Translators: This is the label for the synthesizer selection dialog
+msgid "Select Synthesizer"
+msgstr "Chọn bộ đọc"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8304,7 +8435,7 @@ msgstr "&Bộ đọc"
 msgid "Output &device:"
 msgstr "thiết bị đầu ra"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr "Chế độ giảm âm lượng ứng dụng khác:"
 
@@ -8318,27 +8449,27 @@ msgstr "Không tìm thấy bộ đọc %s"
 msgid "Synthesizer Error"
 msgstr "lỗi bộ đọc"
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "Thiết Lập Giọng Đọc"
+#. Translators: This is the label for the voice settings panel.
+msgid "Voice"
+msgstr "Giọng"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr "Tự động chuyển ngôn ngữ (nếu có hỗ trợ)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Tự động chuyển giọng theo vùng miền (nếu có hỗ trợ)"
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "&Mức độ thông báo dấu câu và ký hiệu:"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Sử dụng giọng đọc của ngôn ngữ để xử lý ký hiệu và ký tự"
 
@@ -8347,81 +8478,81 @@ msgid "Capital pitch change percentage"
 msgstr "Phần trăm thay đổi độ cao khi đọc chữ hoa"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr "Thông báo chữ &hoa"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "&Bíp khi gặp ký tự hoa"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Sử dụng chức năng đánh &vần nếu hỗ trợ"
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "Thiết Lập Bàn Phím"
+#. Translators: This is the label for the keyboard settings panel.
+msgid "Keyboard"
+msgstr "Bàn phím"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Sử dụng phím Khóa Hoa làm phím bổ trợ NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Dùng Insert (bàn phím số) làm phím bổ trợ NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Dùng Insert mở rộng làm phím bổ trợ NVDA"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr "Đọc ký tự khi gõ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr "Đọc từ khi gõ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr "Ngừng đọc khi gõ ký tự"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr "Ngừng đọc khi nhấn phím Enter"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr "cho phép thay đổi vị trí đọc khi đọc tất cả"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "bíp nếu gõ ký tự thường khi phím khóa hoa đang bật"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr "Đọc phím lệnh"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr "Phát âm thanh báo lỗi chính tả khi nhập liệu"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr "Quản lý phím từ ứng dụng khác"
 
@@ -8429,94 +8560,90 @@ msgstr "Quản lý phím từ ứng dụng khác"
 msgid "At least one key must be used as the NVDA key."
 msgstr "cần sử dụng ít nhất 1 phím cho phím bổ trợ NVDA"
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "Thiết Lập Chuột"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr "thông báo khi chuột thay đổi hình dạng"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "Thông báo khi di chuyển chuột"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr "Đơn vị nội dung được đọc tại vị trí chuột"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr "Thông báo vai trò đối tượng tại vị trí chuột"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr "&Phát tọa độ âm thanh khi chuột di chuyển"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "Độ &sáng kiểm soát âm lượng của tọa độ âm thanh"
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "Thiết Lập Con Trỏ Duyệt"
+#. Translators: This is the label for the review cursor settings panel.
+msgid "Review Cursor"
+msgstr "Con trỏ duyệt"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "Theo focus hệ &thống"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr "theo dấu &nháy hệ thống"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "Theo con trỏ chuột"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "chế độ duyệt &đơn giản"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
-msgstr "Thiết Lập Phương Thức Nhập"
+#. Translators: This is the label for the Input Composition settings panel.
+msgid "Input Composition"
+msgstr "Phương thức nhập"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr "Tự động thông báo các lựa chọn hiện có"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr "Thông báo mục đã chọn"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr "Thông báo mô tả ngắn của ký tự khi đọc các mục"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr "Thông báo những thay đổi cho chuỗi dựng sẵn"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr "Thông báo thay đổi cho chuỗi tổ hợp"
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "Trình Bày Đối Tượng"
 
@@ -8539,109 +8666,109 @@ msgid "Speak and beep"
 msgstr "Đọc  và bíp"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr "Đọc các thông báo trên đối tượng"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &help balloons"
 msgstr "Đọc các thông báo trợ giúp"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr "Thông báo phím tắt của đối tượng"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr "Thông báo thông tin &vị trí đối tượng"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr "Thông báo thông tin vị trí các đối tượng ẩn"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr "Thông báo mô &tả của đối tượng"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "Cách thông báo thanh &tiến trình:"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr "Thông báo các thanh tiến trình ngầm"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "Thông báo thay đổi nội &dung động"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "phát âm thanh khi có gợi ý tự động"
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
 msgstr "chế độ duyệt tài liệu"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr "Số ký tự tối đa trên một dòng"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr "Số dòng trên một trang"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr "Sử dụng kiểu trình bày theo màn hình khi được hỗ trợ)"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr "Tự động đọc tất cả khi trang được mở"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr "Hỗ trợ thông báo cho các bảng có kiểu trình bày khác nhau"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr "Tự động chuyển sang chế độ focus khi focus thay đổi"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr "Tự động chuyển sang chế độ focus khi di chuyển con trỏ nháy"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "Phát âm thanh khi thay đổi giữa chế độ nhập và chế độ duyệt"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "Chặn các thao tác không thuộc lệnh truy cập tài liệu"
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Định Dạng Tài Liệu"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
@@ -8649,72 +8776,72 @@ msgstr ""
 "Các tùy chọn sau kiểm soát kiểu định dạng tài lieu được thông báo bởi NVDA."
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr "Phông"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Font name"
 msgstr "Tên &phông"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font &size"
 msgstr "Kích &cỡ phông"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font attri&butes"
 msgstr "Thuộc &tính phông"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "nhấn &mạnh"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "Kiểu dáng"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr "&Màu"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Document information"
 msgstr "Thông tin tài liệu"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Co&mments"
 msgstr "Chú thích"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "Các bản sửa biên tập"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Spelling e&rrors"
 msgstr "Lỗi chính tả"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr "Trang và phân cách"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr "&Trang"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Line &numbers"
 msgstr "Số dòng"
 
@@ -8725,7 +8852,7 @@ msgstr "Thông báo thụt lề dòng:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Off"
 msgstr "Tắt"
 
@@ -8742,87 +8869,96 @@ msgstr "Âm thanh"
 msgid "Both  Speech and Tones"
 msgstr "Cả âm thanh và đọc"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "Lề của đoạn"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "Phân cách dòng"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Alignment"
 msgstr "Canh &lề"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Table information"
 msgstr "Thông tin bảng"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Tables"
 msgstr "&Bảng"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Row/column h&eaders"
 msgstr "Tiêu đề cột/dòng"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "Vị trí ô"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Styles"
 msgstr "Kiểu dáng"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr "Cả Màu và Kiểu Dáng"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell borders:"
 msgstr "Đường viền ô:"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Elements"
 msgstr "Thành phần"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Danh sách"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Block &quotes"
 msgstr "Trích dẫn"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "&Khung"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Clickable"
 msgstr "Có thể kích"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr "Thông báo các thay đổi định dạng sau con trỏ (có thể gây ra độ trễ)"
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+msgid "Touch Interaction"
+msgstr "Tương Tác Cảm Ứng"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr "Chế độ gọ cảm ứng"
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
 msgstr "Windows 10 OCR"
 
@@ -8914,9 +9050,13 @@ msgstr "&Sửa"
 msgid "Add Dictionary Entry"
 msgstr "Bổ sung từ vào từ điển"
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr "Thiết Lập Màn Hình Nổi"
+#. Translators: A label for the braille display on the braille panel.
+msgid "Braille &display"
+msgstr "Màn hình nổi"
+
+#. Translators: This is the label for the braille display selection dialog.
+msgid "Select Braille Display"
+msgstr "Chọn màn hình nổi"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -8925,6 +9065,13 @@ msgstr "Màn hình nổi"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "&Cổng"
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr "Không thể tải màn hình %s lên."
+
+msgid "Braille Display Error"
+msgstr "Lỗi màn hình chữ nổi"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -8983,12 +9130,13 @@ msgstr "Tránh tách từ"
 msgid "Focus context presentation:"
 msgstr "Trình bày ngữ cảnh tại focus:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Không thể tải màn hình %s lên."
+#. Translators: This is the label for the NVDA settings dialog.
+msgid "NVDA"
+msgstr "NVDA"
 
-msgid "Braille Display Error"
-msgstr "Lỗi màn hình chữ nổi"
+#. Translators: The profile name for normal configuration
+msgid "normal configuration"
+msgstr "cấu hình bình thường"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9067,15 +9215,6 @@ msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
 "Lỗi khi lưu lại các phím tắt/thao tác, nguyên nhân có thể do hệ thống không "
 "có quyền ghi xuống tập tin."
-
-#. Translators: This is the label for the touch interaction settings dialog.
-msgid "Touch Interaction"
-msgstr "Tương Tác Cảm Ứng"
-
-#. Translators: This is the label for a checkbox in the
-#. touch interaction settings dialog.
-msgid "&Touch typing mode"
-msgstr "Chế độ gọ cảm ứng"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -10605,6 +10744,130 @@ msgstr "Phân cách dòng đôi"
 msgid "1.5 line spacing"
 msgstr "Phân cách dòng 1.5"
 
+#~ msgid "Shows the NVDA voice settings dialog"
+#~ msgstr "Mở hộp thoại thiết lập giọng đọc của NVDA"
+
+#~ msgid "&General settings..."
+#~ msgstr "Thiết lập ch&ung..."
+
+#~ msgid "&Synthesizer..."
+#~ msgstr "&Bộ đọc"
+
+#~ msgid "Change the synthesizer to be used"
+#~ msgstr "thay đổi bộ đọc"
+
+#~ msgid "Choose the voice, rate, pitch and volume to use"
+#~ msgstr "Chọn tên giọng đọc, tốc độ, độ cao và âm lượng cho giọng đọc"
+
+#~ msgid "B&raille settings..."
+#~ msgstr "Thiết lập màn hình &nổi..."
+
+#~ msgid "&Keyboard settings..."
+#~ msgstr "Thiết lập bàn &phím..."
+
+#~ msgid ""
+#~ "Configure keyboard layout, speaking of typed characters, words or command "
+#~ "keys"
+#~ msgstr ""
+#~ "chọn kiểu bàn phím, chọn chế độ đọc khi gõ như đọc từng ký tự, từng từ "
+#~ "hay đọc các phím điều khiển"
+
+#~ msgid "&Mouse settings..."
+#~ msgstr "Thiết lập &chuột..."
+
+#~ msgid "Change reporting of mouse shape and object under mouse"
+#~ msgstr ""
+#~ "Thông báo khi chuột thay đổi hình dạng và thông báo đối tượng dưới con "
+#~ "trỏ chuột"
+
+#~ msgid "&Touch interaction..."
+#~ msgstr "Tương tác cảm ứng..."
+
+#~ msgid "Change how NVDA interacts with the touchscreen"
+#~ msgstr "Thay đổi cách NVDA tương tác với màn hình cảm ứng"
+
+#~ msgid "Configure how and when the review cursor moves"
+#~ msgstr "Cấu hình cách di chuyển con trỏ duyệt"
+
+#~ msgid "&Input composition settings..."
+#~ msgstr "Thiết lập &phương thức nhập..."
+
+#~ msgid ""
+#~ "Configure how NVDA reports input composition and candidate selection for "
+#~ "certain languages"
+#~ msgstr "Cài đặt phương thức nhập cho các ngôn ngữ"
+
+#~ msgid "&Object presentation..."
+#~ msgstr "Trình bà&y đối tượng..."
+
+#~ msgid "Change reporting of objects"
+#~ msgstr "Thay đổi thông báo các đối tượng"
+
+#~ msgid "&Browse mode..."
+#~ msgstr "Chế độ &duyệt..."
+
+#~ msgid "Change virtual buffers specific settings"
+#~ msgstr ""
+#~ "Change virtual buffers specific settingsThay đổi các thiết lập cho bộ đệm "
+#~ "ảo"
+
+#~ msgid "Document &formatting..."
+#~ msgstr "Định dạng tài &liệu..."
+
+#~ msgid "Change settings of document properties"
+#~ msgstr "thay đổi thông tin cho tài liệu"
+
+#~ msgid "&Windows 10 OCR..."
+#~ msgstr "&Windows 10 OCR..."
+
+#~ msgid "General Settings"
+#~ msgstr "Thiết Lập Chung"
+
+#~ msgid "Voice Settings"
+#~ msgstr "Thiết Lập Giọng Đọc"
+
+#~ msgid "Keyboard Settings"
+#~ msgstr "Thiết Lập Bàn Phím"
+
+#~ msgid "Mouse Settings"
+#~ msgstr "Thiết Lập Chuột"
+
+#~ msgid "Review Cursor Settings"
+#~ msgstr "Thiết Lập Con Trỏ Duyệt"
+
+#~ msgid "Braille Settings"
+#~ msgstr "Thiết Lập Màn Hình Nổi"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "French (Canada) cấp 1"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "French (Canada) cấp 2"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongolian"
+
+#~ msgid "Download and &install update"
+#~ msgstr "tải xuống và cài đặt"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "Đã tải xong. Phiên bản mới sẽ được cài đặt"
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "Rút về và thông báo định dạng"
+
+#~ msgid "r%s"
+#~ msgstr "r%s"
+
+#~ msgid "c%s"
+#~ msgstr "c%s"
+
+#~ msgid "suspended"
+#~ msgstr "Tạm treo"
+
+#~ msgid "running"
+#~ msgstr "Đang chạy"
+
 #~ msgid "ALVA BC640/680 series"
 #~ msgstr "ALVA BC640/680 series"
 
@@ -10619,9 +10882,6 @@ msgstr "Phân cách dòng 1.5"
 
 #~ msgid "Not defined"
 #~ msgstr "Chưa định nghĩa"
-
-#~ msgid "Category"
-#~ msgstr "Loại"
 
 #~ msgid "Value"
 #~ msgstr "Giá trị"
