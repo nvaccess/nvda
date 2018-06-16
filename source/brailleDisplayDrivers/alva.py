@@ -37,11 +37,14 @@ ALVA_RTC_STR_LENGTH = 7
 ALVA_RTC_MAX_DRIFT = 5
 ALVA_RTC_MIN_YEAR = 1900
 ALVA_RTC_MAX_YEAR = 3000
+ALVA_MODEL_BC640 = 0x40
+ALVA_MODEL_BC680 = 0x80
+ALVA_MODEL_CONVERTER = 0x99
 
 ALVA_MODEL_IDS = {
-	0x40: "BC640",
-	0x80: "BC680",
-	0x99: "ProtocolConverter",
+	ALVA_MODEL_BC640: "BC640",
+	ALVA_MODEL_BC680: "BC680",
+	ALVA_MODEL_CONVERTER: "ProtocolConverter",
 }
 
 ALVA_SER_CMD_LENGTHS = {
@@ -451,7 +454,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, model, keys, brailleInput=False):
 		super(InputGesture, self).__init__()
-		isNoBC640 = model != ALVA_MODEL_IDS[0x40]
+		isNoBC640 = model != ALVA_MODEL_IDS[ALVA_MODEL_BC640]
 		# Model identifiers should not contain spaces.
 		self.model = model.replace(" ", "")
 		assert(self.model.isalnum())
@@ -482,7 +485,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				if isNoBC640:
 					doubledKeyCount = DOUBLED_KEY_COUNTS.get(group)
 					if doubledKeyCount:
-						keyName = ("r" if number>=doubledKeyCount else "l") + keyName
+						keyName = ("r" if number >= doubledKeyCount else "l") + keyName
 					secondaryNames.append(keyName)
 			# Braille input
 			if brailleInput:
