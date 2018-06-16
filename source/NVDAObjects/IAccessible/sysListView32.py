@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Robert Hänggi
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -22,6 +22,9 @@ from . import IAccessible, List
 from ..window import Window
 import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
+from logHandler import log
+from displayModel import DisplayModelTextInfo
+from textInfos import Rect
 import config
 
 #Window messages
@@ -152,6 +155,7 @@ class AutoFreeBSTR(BSTR):
 	_needsfree=True
 
 class List(List):
+	_shouldEnableColumnContentRaw = True
 
 	def getListGroupInfo(self,groupIndex):
 		header=AutoFreeBSTR()
@@ -327,6 +331,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 					winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
 					buffer=create_unicode_buffer(len)
 					winKernel.readProcessMemory(processHandle,item.pszText,buffer,sizeof(buffer),None)
+			except ArgumentError as e:
+				log.debugWarning("%r,\nCan't retrieve item text, switching to display text instead" % e)
+				self.parent._shouldEnableColumnContentRaw = False
+				buffer = None
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
 		finally:
@@ -334,7 +342,18 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return buffer.value if buffer else None
 
 	def _getColumnContent(self, column):
-		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+		res = None
+		# use getattr for the (unlikely) case that the parent isn't a syslistview32-type  list 
+		if getattr(self.parent, "_shouldEnableColumnContentRaw", True):
+			targetColumn = self.parent._columnOrderArray[column - 1]
+			res = self._getColumnContentRaw(targetColumn)
+		if res is None:
+			# #8175: 64-bit addresses can not be accessed directly,
+			# therefore, return the display text within the column rectangle for this item
+			left,top,width,height = self._getColumnLocation(column)
+			disp = DisplayModelTextInfo(self, Rect(left, top, left+width, top+height))
+			res = disp.text.strip()
+		return res
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
