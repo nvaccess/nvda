@@ -10,11 +10,11 @@ complexSymbols:
 ! sentence ending	 илеп белгиси (?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	суроо белгиси (?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
-; phrase ending	    үтүрлүү чекит (?<=[^\s;]);(?=\s|$)
-: phrase ending	     кош чекит    (?<=[^\s:]):(?=\s|$)
+#; phrase ending	    үтүрлүү чекит (?<=[^\s;]);(?=\s|$)
+#: phrase ending	     кош чекит    (?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
-in-word ' апостроф 	(?<=[^\W_])['’]
+in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
@@ -24,8 +24,8 @@ symbols:
 . sentence ending	 чекит dot	all	always
 ! sentence ending	илеп белгиси bang	all	always
 ? sentence ending	 суроо белгиси  question	all	always
-; phrase ending	semi	үтүрлүү чекит most	always
-: phrase ending	colon	кош чекит  most	always
+#; phrase ending	semi	үтүрлүү чекит most	always
+#: phrase ending	colon	кош чекит  most	always
 decimal point		none	always
 in-word '	апостроф 	all	norep
 negative number	терс белгиси	none	norep
@@ -155,7 +155,7 @@ _	ылдыйкы сызык	most
 ∪	камтылган	none
 ∫	интеграл	none
 ∴	ошондуктан	none
-∵	поскольку	 ( болгондуктан)	none
+#∵	поскольку	 ( болгондуктан)	none
 ∶	тиешелүү	none
 ∷	теңдеш	none
 ≤	 кичине же барабар	none

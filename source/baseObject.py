@@ -1,6 +1,6 @@
 #baseObject.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited
+#Copyright (C) 2007-2018 NV Access Limited, Christopher Toth, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -128,6 +128,23 @@ class AutoPropertyObject(object):
 		for instance in cls.__instances.keys():
 			instance.invalidateCache()
 
+class ScriptableType(AutoPropertyType):
+	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
+
+	def __new__(meta, name, bases, dict):
+		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
+		gestures = getattr(cls, "_%s__gestures" % cls.__name__, {})
+		# Python 3 incompatible.
+		for name, script in dict.iteritems():
+			if not name.startswith('script_'):
+				continue
+			scriptName = name[len("script_"):]
+			if hasattr(script, 'gestures'):
+				for gesture in script.gestures:
+					gestures[gesture] = scriptName
+		setattr(cls, "_%s__gestures" % cls.__name__, gestures)
+		return cls
+
 class ScriptableObject(AutoPropertyObject):
 	"""A class that implements NVDA's scripting interface.
 	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
@@ -143,14 +160,22 @@ class ScriptableObject(AutoPropertyObject):
 	@type scriptCategory: basestring
 	"""
 
+	__metaclass__ = ScriptableType
+
 	def __init__(self):
 		#: Maps input gestures to script functions.
 		#: @type: dict
 		self._gestureMap = {}
 		# Bind gestures specified on the class.
+		# This includes gestures specified on decorated scripts.
+		# This does not include the gestures that are added when creating a DynamicNVDAObjectType.
 		for cls in reversed(self.__class__.__mro__):
 			try:
 				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+			except AttributeError:
+				pass
+			try:
+				self.bindGestures(cls._scriptDecoratorGestures)
 			except AttributeError:
 				pass
 		super(ScriptableObject, self).__init__()
