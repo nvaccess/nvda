@@ -17,7 +17,7 @@ class myDialog(class wx.Dialog):
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 
-		sHelper = guiHelper.SizerHelper( wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper( wx.VERTICAL)
 
 		filterElement = guiHelper.LabeledControlHelper(dialog, "Filter:", wx.TextCtrl)
 		symbols = wx.ListCtrl()
@@ -102,17 +102,18 @@ def associateElements( firstElement, secondElement):
 	""" Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 		pairings used in the NVDA GUI.
 		Currently handles:
-			wx.StaticText and (wx.Choice or wx.TextCtrl) - Horizontal layout
+			wx.StaticText and (wx.Choice, wx.TextCtrl or wx.Button) - Horizontal layout
 			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
 			wx.Button and wx.CheckBox - Horizontal layout
+			wx.TextCtrl and wx.Button - Horizontal layout
 	"""
 	if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
 		raise NotImplementedError("AssociateElements has no implementation for ButtonHelper elements")
 	if isinstance(firstElement, LabeledControlHelper) or isinstance(secondElement, LabeledControlHelper):
 		raise NotImplementedError("AssociateElements as no implementation for LabeledControlHelper elements")
 
-	# staticText and (choice or textCtrl)
-	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl, wx.SpinCtrl)):
+	# staticText and (choice, textCtrl or button)
+	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl, wx.SpinCtrl, wx.Button)):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)

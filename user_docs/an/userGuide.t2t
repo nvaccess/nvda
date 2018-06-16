@@ -932,8 +932,8 @@ Preta l'Acceptar y o NVDA se reenchegará.
 Ista opción ye una caixeta de verificación que quan se marca diz a lo NVDA que alce automaticament l'actual configuración en que salgas d'o NVDA. 
 
 ==== Amostrar as opcions de salida en salir d'o NVDA ====[GeneralSettingsShowExitOptions]
-Ista opción ye una caixeta de verificación que te permite trigar si amaneix u si no pas un dialogo en que salgas d'o NVDA que te pregunte qué acción quiers fer.
-Quan siga marcada, un dialogo amaneixerá en que intentes salir d'o NVDA preguntando-te si quiers salir, reenchegar u reenchegar con os complementos desenchegaus.
+Ista opción ye una caixeta de verificación que te permite de trigar si amaneix u si no pas un dialogo en que salgas d'o NVDA que te pregunte qué acción quiers fer.
+Quan siga marcada, un dialogo amaneixerá en que intentes salir d'o NVDA preguntando-te si quiers salir, reenchegar, reenchegar con os complementos desenchegaus u instalar actualizacions pendients si bi'n ha.
 Quan no siga marcada, se saldrá d'o NVDA inmediatament.
 
 ==== Reproducir sons en enchegar u desenchegar o NVDA ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,11 @@ Ista opción solament ye disponible pa las copias instaladas d'o NVDA.
 ==== Mirar automaticament as actualizacions d'o NVDA  ====[GeneralSettingsCheckForUpdates]
 Si isto ye activau, o NVDA mirará automaticament versions esvielladas y t'informará quan una actualización siga disponible.
 Tamién puetz mirar as actualizacions manualment seleccionando Mirar as Actualizacions baixo lo menú Aduya en o menú NVDA.
+
+==== Notificar as actualizacions pendients en enchegar ====[GeneralSettingsNotifyPendingUpdates]
+Si isto ye enchegau o NVDA t'informará en que bi haiga una actualización pendient en echegar-se, ufrindo-te a posibilidat d'instalar-la.
+Tamién puetz instalar manualment l'actualización pendient dende lo dialogo de salir d'o NVDA (si ye enchegau), dende o menú NVDA, u en rializar una nueva busca dende o menú d'aduya.
+
 
 +++ Selección de sintetizador (NVDA+control+s) +++[SynthesizerSelection]
 O dialogo Sintetizadors, que se troba en "Sintetizadors..." en o menú Preferencias, te permite seleccionar qué sintetizador habría d'emplegar o NVDA ta charrar.
@@ -1753,12 +1758,13 @@ Malas que lo fagas, un estau d'"instalar" s'amostrará ta ixe complemento en a l
 Pa eliminar bell complemento, selecciona o complemento dende a lista y preta o botón d'eliminar.
 O NVDA te preguntará si realment deseyas fer ixo.
 Igual como con a instalación, o NVDA debe reenchegar-se ta que o complemento siga eliminau completament.
-Malas que lo fagas, un estau d'"eliminar" s'amostrará pa ixe complemento en a lista.
+Dica que lo fagas, un estau d'"eliminar" s'amostrará pa ixe complemento en a lista.
 
 Pa desenchegar bell complemento preta o botón de desenchegar.
 Pa enchegar bell complemento previament desenchegau preta o botón d'enchegar.
-Puetz desenchegar bell complemento si o estau d'o complemento indica que ye correndo u enchegau, u enchegar-lo si o complemento ye suspendiu u desenchegau.
+Puetz desenchegar bell complemento si o estau d'o complemento indica que ye enchegau, u enchegar-lo si o complemento ye desenchegau.
 Pa cada pretada d'o botón d'enchegar u desenchegar cambia o estau d'o complemento pa indicar qué pasará en que o NVDA se reenchegue.
+Si o complemento fue desenchegau anteriorment, s'amostrará un estau "enchegau dimpués de reenchegar". Si o complemento yera anteriorment "enchegau", s'amostrará un estau "desenchegau dimpués de reenchegar"
 Igual como quan instales u elimines complementos te caldrá reenchegar o NVDA pa que os cambeos fagan efecto.
 
 L'administrador tamién tien un botón de zarrar pa zarrar o dialogo.
@@ -1919,6 +1925,7 @@ Por favor mira-te a documentación d'a linia pa descripcions de dó pueden troba
 | Mover a linia braille t'a linia siguient | t4 |
 | Desplazar a linia braille enta debant | t5 u etouch3 |
 | Guidar t'a celda braille | sensor |
+| Anunciar o formato de texto baixo a celda braille | sensors secundarios |
 | Conmutar a simulación de teclau HID | t1+spEnter |
 | Mover-se-ne t'a linia d'alto en a revisión | t1+t2 |
 | Mover-se-ne t'a linia d'abaixo en a revisión | t4+t5 |
@@ -2072,12 +2079,14 @@ Por favor mira a documentación d'a linia ta descripcions de do pueden trobar-se
 | Leyer-lo tot | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant Series BI/B ++[HumanWareBrailliant]
-As linias braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluindo BI 32, BI 40 y B 80, son suportadas quan se connectan a traviés de l'USB u bluetooth.
-Si la connectas a traviés d'USB con o protocolo establiu a HumanWare en primeras has d'instalar os controladors USB proporcionaus por o fabricant.
+++ Series d'a HumanWare Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
+As linias braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluindo BI 14, BI 32, BI 40 y B 80, son suportadas quan se connectan a traviés de l'USB u bluetooth.
+Si la connectas a traviés d'USB con o protocolo establiu a HumanWare en primeras has d'instalar os controladors USB furnius por o fabricant.
 os controladors USB no se requieren si o protocolo ye establiu t'OpenBraille.
 
-Seguidament van as asignacions de teclas pa ista linia con o NVDA.
+Tamién se suporta la BrailleNote Touch, y no se requier garra controlador pa instalar-la.
+
+Seguidament van as asignacions de teclas pa las linias Brailliant BI/B y BrailleNote touch con o NVDA.
 Por favor mira-te a documentación d'a linia pa descripcions de do pueden trobar-sen istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
@@ -2091,16 +2100,34 @@ Por favor mira-te a documentación d'a linia pa descripcions de do pueden trobar
 | tecla flecha abaixo | espacio+punto4 |
 | tecla flecha cucha | espacio+punto3 |
 | tecla flecha dreita | espacio+punto6 |
-| Menú NVDA | c1+c3+c4+c5 (comando n) |
 | tecla mayus+tabulador | espacio+punto1+punto3 |
 | tecla tabulador | espacio+punto4+punto6 |
 | tecla alt | espacio+punto1+punto3+punto4 (espacio+m) |
 | tecla escape | espacio+punto1+punto5 (espacio+y) |
 | tecla intro | punto8 |
-| tecla windows+d (minimizar todas as aplicacions) | c1+c4+c5 (comando d) |
 | tecla windows | espacio+punto3+punto4 |
 | tecla alt+tabulador | espacio+punto2+punto3+punto4+punto5 (espacio+t) |
+| Menú NVDA | espacio+punto1+punto3+punto4+punto5 (espacio+n) |
+| tecla windows+d (minimizar todas as aplicacions) | espacio+punto1+punto4+punto5 (espacio+d) |
+| Leyer-lo tot | espacio+punto1+punto2+punto3+punto4+punto5+punto6 |
+%kc:endInclude
+
++++ Asignacions de teclas pa Brailliant BI 32, BI 40 y B 80 +++ 
+%kc:beginInclude
+|| Nombre | Tecla |
+| Menú NVDA | c1+c3+c4+c5 (comando n) |
+| tecla windows+d (minimizar todas as aplicacions) | c1+c4+c5 (comando d) |
 | Leyer-lo tot | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Asignacions de teclas pa Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Nombre | Tecla |
+| tecla flecha alto | joystick alto |
+| tecla flecha abaixo | joystick abaixo |
+| tecla flecha cucha | joystick cucha |
+| tecla flecha dreita | joystick dreita |
+| tecla intro | Pretar joystick |
 %kc:endInclude
 
 ++ Series d'a HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
@@ -2252,7 +2279,7 @@ Seguidament van as asignacions d'ordens d'a Papenmeier t'o NVDA:
 | Mover-se-ne t'o primer obchecto conteniu | dn2 |
 | Mover-se-ne ta l'obchecto anterior | cucha2 |
 | Mover-se-ne t'o siguient obchecto | dreita2 |
-| Anunciar o formato de texto | ringlera de sensors superior |
+| Anunciar o formato de texto baixo a celda braille| ringlera de sensors superior |
 %kc:endInclude
 
 O modelo Trio tien quatro teclas adicionals que se troban debant d'o teclau braille.
@@ -2326,7 +2353,7 @@ Dispositivos con EAB:
 | Mover-se-ne t'o primer obchecto conteniu | dn2 |
 | Mover-se-ne t'o siguient obchecto | left2 |
 | Mover-se-ne ta l'obchecto anterior | right2 |
-| Anunciar o formato de texto | Upper routing strip |
+| Anunciar o formato de texto baixo a celda braille | Upper routing strip |
 
 BRAILLEX Tiny:
 || Nombre | Tecla |
@@ -2341,7 +2368,7 @@ BRAILLEX Tiny:
 | Mover-se-ne t'o primer obchecto conteniu | r1+dn |
 | Mover-se-ne ta l'obchecto anterior | r1+left |
 | Mover-se-ne t'o siguient obchecto | r1+right |
-| Anunciar o formato de texto | reportf |
+| Anunciar o formato de texto baixo a celda braille | sensors superiors |
 | Anunciar o titol | l1+alto |
 | Anunciar a barra d'estau | l2+abaixo |
 
@@ -2350,7 +2377,7 @@ BRAILLEX 2D Screen:
 | Anunciar o caracter actual en revisión | l1 |
 | Activar o navegador d'obchectos actual | l2 |
 | Activar u desactivar o seguimiento de braille | r2 |
-| Anunciar o formato de texto | reportf |
+| Anunciar o formato de texto baixo a celda braille | sensors superiors |
 | Mover a linia braille t'a linia anterior| up |
 | Desplazar a linia braille enta dezaga | left |
 | Desplazar a linia braille enta abant | right |
@@ -2369,6 +2396,8 @@ Se suportan os siguients modelos:
 - BrailleNote MPower (Connexions serie y bluetooth)
 - BrailleNote Apex (Connexions USB y Bluetooth)
 -
+
+Pa lo BrailleNote Touch, por favor mira-te a sección [series d'as Brailliant BI / BrailleNote Touch HumanWareBrailliant].
 
 Si o tuyo dispositivo suporta mas d'una mena de connexión, en que connectes o tuyo BrailleNote a lo NVDA, has de configurar o puerto d'a terminal braille en as opcions de terminal braille.
 Por favor mira o manual d'o BrailleNote ta detalles.
@@ -2461,7 +2490,7 @@ Os dispositivos Esytime antigos nomás suportan l'USB.
 As linias Iris nomás se pueden connectar a traviés d'un puerto serie.
 Por tanto, pa ixas linias, habrías de seleccionar o puerto a lo que se connecta dimpués d'haber trigau iste controlador en o dialogo d'opcions de braille.
 
-As pantallas Iris y Esys tienen un teclau braille con 10 teclas.
+As linias Iris y Esys tienen un teclau braille con 10 teclas.
 D'as dos teclas colocadas como barra espaciadera, la tecla d'a zurda se corresponde con a tecla de recule y a tecla dreita con a barra espaciadera.
 
 Seguidament va las asignacions de teclas pa istas linias con o NVDA.
@@ -2471,7 +2500,7 @@ Por favor mira-te a documentación d'a pantalla pa descripcions d'án pueden tro
 | Desplazar a linia braille enta zaga | switch1-6Zurda, l1 |
 | Desplazar a linia braille entadebant | switch1-6Dreita, l8 |
 | Mover-se-ne t'o foco actual | switch1-6Zurda+switch1-6Dreita, l1+l8 |
-| Enrotar t'a celda braille | sensors, double sensor |
+| Enrotar t'a celda braille | sensors |
 | Mover-se-ne t'a linia anterior en revisión | ceprén1Alto |
 | Mover-se-ne t'a siguient linia en revisión | ceprén1Baixo |
 | Mover-se-ne t'o caracter anterior en revisión | ceprén1Cucha |
@@ -2529,8 +2558,11 @@ Por favor mira-te a documentación d'a pantalla pa descripcions d'án pueden tro
 | tecla bloqMayus | punto7+retroceso, punto8+recule |
 | tecla BloqNum | punto3+recule, punto6+recule |
 | tecla mayus | punto7+espacio, l4 |
-| tecla control | punto7+punto8+espacio, punto1+punto7+punto8+espacio, punto4+punto7+punto8+espacio, l5 |
-| tecla alt | punto8+espacio, punto1+punto8+espacio, punto4+punto8+espacio, l6 |
+| Conmutar a tecla mayus | punto1+punto7+espacio, punto4+punto7+espacio |
+| tecla control | punto7+punto8+espacio, l5 |
+| Conmutar a tecla control | punto1+punto7+punto8+espacio, punto4+punto7+punto8+espacio |
+| Tecla alt | punto8+espacio, l6 |
+| Conmutar a tecla alt | punto1+punto8+espacio, punto4+punto8+espacio |
 | Commutar a simulación de dentrada de teclau HID | esytime):l1+ceprén1Abaixo, esytime):l8+ceprén1Abaixo |
 %kc:endInclude
 

@@ -199,6 +199,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [debugLog]
 	hwIo = boolean(default=false)
 	audioDucking = boolean(default=false)
+	gui = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")

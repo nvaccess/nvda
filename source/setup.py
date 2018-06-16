@@ -19,6 +19,31 @@ import wx
 import imp
 
 MAIN_MANIFEST_EXTRA = r"""
+<file name="brailleDisplayDrivers\handyTech\HtBrailleDriverServer.dll">
+	<comClass
+		description="HtBrailleDriver Class"
+		clsid="{209445BA-92ED-4AB2-83EC-F24ACEE77EE0}"
+		threadingModel="Apartment"
+		progid="HtBrailleDriverServer.HtBrailleDriver"
+		tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
+</file>
+<file name="brailleDisplayDrivers\handyTech\HtBrailleDriverServer.tlb">
+	<typelib tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}"
+		version="1.0"
+		helpdir="" />
+</file>
+<comInterfaceExternalProxyStub
+	name="IHtBrailleDriverSink"
+	iid="{EF551F82-1C7E-421F-963D-D9D03548785A}"
+	proxyStubClsid32="{00020420-0000-0000-C000-000000000046}"
+	baseInterface="{00000000-0000-0000-C000-000000000046}"
+	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
+<comInterfaceExternalProxyStub
+	name="IHtBrailleDriver"
+	iid="{43A71F9B-58EE-42D4-B58E-0F9FBA28D995}"
+	proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+	baseInterface="{00000000-0000-0000-C000-000000000046}"
+	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
 <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
 	<application>
 		<!-- Windows Vista -->
