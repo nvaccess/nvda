@@ -5,6 +5,9 @@
 
 import time
 import wx
+import gui
+import tones
+import ctypes
 import winUser
 import queueHandler
 import api
