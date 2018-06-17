@@ -1047,7 +1047,7 @@ class VoiceSettingsPanel(SettingsPanel):
 			if gui._isDebug():
 				log.debug("refreshing voice panel")
 			self.sizerDict.clear()
-			self.settingsSizer.Clear(deleteWindows=True)
+			self.settingsSizer.Clear(delete_windows=True)
 			self.makeSettings(self.settingsSizer)
 		super(VoiceSettingsPanel,self).onPanelActivated()
 
