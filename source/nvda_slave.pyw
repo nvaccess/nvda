@@ -43,6 +43,9 @@ def main():
 		elif action=="unregisterInstall":
 			import installer
 			installer.unregisterInstallation()
+		elif action=="fixCOMRegistrations":
+			import COMRegistrationFixes
+			COMRegistrationFixes.fixCOMRegistrations()
 		elif action=="launchNVDA":
 			import subprocess
 			import shellapi
