@@ -355,6 +355,12 @@ class Terminal(LiveText, EditableText):
 	def event_loseFocus(self):
 		self.stopMonitoring()
 
+	def _get_helpText(self):
+		helpText = super(Terminal, self).helpText
+		# Translators: help text for terminal windows.
+		helpText.append(_("You can type text into this terminal window. To review text, use review cursor commands."))
+		return helpText
+
 class CandidateItem(NVDAObject):
 
 	def getFormattedCandidateName(self,number,candidate):
@@ -491,6 +497,12 @@ class RowWithFakeNavigation(NVDAObject):
 	script_moveToPreviousRow.canPropagate = True
 	# Translators: The description of an NVDA command.
 	script_moveToPreviousRow.__doc__ = _("Moves the navigator object and focus to the previous row")
+
+	def _get_helpText(self):
+		helpText = super(RowWithFakeNavigation, self).helpText
+		# Translators: help text for table column navigation.
+		helpText.append(_("Press Control+Alt+arrow keys to navigate around this table. Pressing left or right arrow keys will navigate between columns, and up and down arrow keys will navigate by row."))
+		return helpText
 
 	__gestures = {
 		"kb:control+alt+rightArrow": "moveToNextColumn",
@@ -660,6 +672,12 @@ class EditableTextWithSuggestions(NVDAObject):
 		"""
 		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
 			nvwave.playWaveFile(r"waves\suggestionsClosed.wav")
+
+	def _get_helpText(self):
+		helpText = super(EditableTextWithSuggestions, self).helpText
+		# Translators: help text for search field in Windows 10 and other places.
+		helpText.append(_("After typing search text, press up or down arrow keys to review list of suggestions."))
+		return helpText
 
 class WebDialog(NVDAObject):
 	"""
