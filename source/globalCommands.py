@@ -2173,6 +2173,19 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
+	def script_contextSensitiveHelp(self,gesture):
+		# #2699: for now, help will be given for focused object.
+		obj=api.getFocusObject()
+		helpText = obj.helpText
+		if len(helpText) == 1:
+			# Translators: message displayed when there is no help information for the control.
+			helpText.append(_("No help information is available."))
+		# Translators: The title of NvDA context-sensitive help message window.
+		ui.browseableMessage("\n".join(reversed(helpText)), title=_("NVDA Help"))
+	# Translators: Input help mode message for context-sensitive help command.
+	script_contextSensitiveHelp.__doc__ = _("Provides context-sensitive help for the focused control and application.")
+	script_contextSensitiveHelp.category=SCRCAT_TOOLS
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -2357,6 +2370,7 @@ class GlobalCommands(ScriptableObject):
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 		"kb:NVDA+alt+m": "interactWithMath",
 		"kb:NVDA+r": "recognizeWithUwpOcr",
+		"kb:NVDA+h": "contextSensitiveHelp",
 	}
 
 #: The single global commands instance.
