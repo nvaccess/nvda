@@ -313,10 +313,8 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	global lastLanguageID, lastLayoutString
 	languageID=winUser.LOWORD(hkl)
 	#Simple case where there is no change
-	if languageID == lastLanguageID and layoutString == lastLayoutString:
+	if languageID==lastLanguageID and layoutString==lastLayoutString:
 		return 0
-	lastLanguageID=languageID
-	lastLayoutString=layoutString
 	focus=api.getFocusObject()
 	#This callback can be called before NVDa is fully initialized
 	#So also handle focus object being None as well as checking for sleepMode
@@ -370,6 +368,8 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		msg="{language} - {layout}".format(language=inputLanguageName,layout=inputMethodName)
 	else:
 		msg=inputMethodName
+	lastLanguageID=languageID
+	lastLayoutString=layoutString
 	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,msg)
 	return 0
 
