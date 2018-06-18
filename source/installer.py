@@ -21,6 +21,7 @@ import versionInfo
 from logHandler import log
 import addonHandler
 import easeOfAccess
+import COMRegistrationFixes
 
 _wsh=None
 def _getWSH():
@@ -421,6 +422,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 		raise RuntimeError("No available executable to use as nvda.exe")
 	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
 	removeOldLibFiles(installDir,rebootOK=True)
+	COMRegistrationFixes.fixCOMRegistrations()
 
 def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")
