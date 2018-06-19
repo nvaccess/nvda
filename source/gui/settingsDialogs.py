@@ -2179,6 +2179,7 @@ class BrailleSettingsPanel(SettingsPanel):
 	title = _("Braille")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "BrailleSettings"
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the braille display on the braille panel.
 		displayLabel = _("Braille &display")

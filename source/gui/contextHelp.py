@@ -55,6 +55,7 @@ def showHelp(helpIds, evt):
 		# windowId = window.GetId()
 		# log.debug("WindowId changed to %d name = %s" % (window.GetId(), window.GetName()))
 	if windowId in helpIds.keys():
+		#Translators: The title for an NVDA help window.
 		helpTitle = _("NVDA Help")
 		try:
 			ui.browseableMessage(helpInfo[helpIds[windowId]], helpTitle, True)
