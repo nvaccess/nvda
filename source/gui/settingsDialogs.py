@@ -108,6 +108,7 @@ class SettingsDialog(wx.Dialog):
 		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
 		self.hasApply = hasApplyButton
 
+		self.helpIds[self.GetId()] = "NVDASettings"
 		# the wx.Window must be constructed before we can get the handle.
 		import windowUtils
 		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
@@ -414,6 +415,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			size=catListDim,
 			style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER
 		)
+		self.helpIds[self.catListCtrl.GetId()] = "NVDASettings"
 		# This list consists of only one column.
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
@@ -424,12 +426,14 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# exposed via the IAccessibleName property.
 		global NvdaSettingsCategoryPanelId
 		NvdaSettingsCategoryPanelId = wx.NewId()
+		self.helpIds[NvdaSettingsCategoryPanelId] = "NVDASettings"
 		self.container = scrolledpanel.ScrolledPanel(
 			parent = self,
 			id = NvdaSettingsCategoryPanelId,
 			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME,
 			size=containerDim
 		)
+		self.helpIds[self.container.GetId()] = "NVDASettings"
 
 		# Th min size is reset so that they can be reduced to below their "size" constraint.
 		self.container.SetMinSize((1,1))
@@ -496,7 +500,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					 "MultiCategorySettingsDialog.MIN_SIZE"
 					).format(cls, panel.Size[0])
 				)
-			self.helpIds = panel.helpIds
+			self.helpIds.update(panel.helpIds)
 		return panel
 
 	def postInit(self):
@@ -626,7 +630,7 @@ class GeneralSettingsPanel(SettingsPanel):
 	)
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "GeneralSettings"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "GeneralSettings"
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.languageNames = languageHandler.getAvailableLanguages()
 		languageChoices = [x[1] for x in self.languageNames]
@@ -798,6 +802,7 @@ class SpeechSettingsPanel(SettingsPanel):
 	title = _("Speech")
 
 	def makeSettings(self, settingsSizer):
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "SpeechSettings"
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the synthesizer on the speech panel.
 		synthLabel = _("&Synthesizer")
@@ -817,6 +822,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		# Translators: This is the label for the button used to change synthesizer,
 		# it appears in the context of a synthesizer group on the speech settings panel.
 		changeSynthBtn = wx.Button(self, label=_("C&hange..."))
+		self.helpIds[self.synthNameCtrl.GetId()] = self.helpIds[changeSynthBtn.GetId()] = "SpeechSettingsChange"
 		synthGroup.addItem(
 			guiHelper.associateElements(
 				self.synthNameCtrl,
@@ -869,13 +875,13 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	synthNames = []
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "SynthesizerSelection"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "SynthesizerSelection"
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is a label for the select
 		# synthesizer combobox in the synthesizer dialog.
 		synthListLabelText=_("&Synthesizer:")
 		self.synthList = settingsSizerHelper.addLabeledControl(synthListLabelText, wx.Choice, choices=[])
-		self.helpIds[self.synthList.GetId()] = "SynthesizerSelectionSynthesizer"
+		self.helpIds[self.synthList.GetId()] = "SelectSynthesizerSynthesizer"
 		self.updateSynthesizerList()
 
 		# Translators: This is the label for the select output
@@ -885,7 +891,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		deviceListLabelText = _("Output &device:")
 		deviceNames=nvwave.getOutputDeviceNames()
 		self.deviceList = settingsSizerHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
-		self.helpIds[self.deviceList.GetId()] = "SynthesizerSelectionOutputDevice"
+		self.helpIds[self.deviceList.GetId()] = "SelectSynthesizerOutputDevice"
 		try:
 			selection = deviceNames.index(config.conf["speech"]["outputDevice"])
 		except ValueError:
@@ -895,7 +901,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		# Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 		duckingListLabelText=_("Audio &ducking mode:")
 		self.duckingList=settingsSizerHelper.addLabeledControl(duckingListLabelText, wx.Choice, choices=audioDucking.audioDuckingModes)
-		self.helpIds[self.duckingList.GetId()] = "SynthesizerSelectionDuckingMode"
+		self.helpIds[self.duckingList.GetId()] = "SelectSynthesizerDuckingMode"
 		index=config.conf['audio']['audioDuckingMode']
 		self.duckingList.SetSelection(index)
 		if not audioDucking.isAudioDuckingSupported():
@@ -1022,7 +1028,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
 		slider=VoiceSettingsSlider(self,wx.ID_ANY,minValue=0,maxValue=100)
 		setattr(self,"%sSlider"%setting.name,slider)
-		self.helpIds[slider.GetId()] = "VoiceSettings%s" % (setting.name.capitalize())
+		self.helpIds[slider.GetId()] = "SpeechSettings%s" % (setting.name.capitalize())
 		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
 		self._setSliderStepSizes(slider,setting)
 		slider.SetValue(getattr(getSynth(),setting.name))
@@ -1043,7 +1049,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		labeledControl=guiHelper.LabeledControlHelper(self, labelText, wx.Choice, choices=[x.name for x in l])
 		lCombo = labeledControl.control
 		setattr(self,"%sList"%setting.name,lCombo)
-		self.helpIds[lCombo.GetId()] = "VoiceSettings%s" % (setting.name.capitalize())
+		self.helpIds[lCombo.GetId()] = "SpeechSettings%s" % (setting.name.capitalize())
 		try:
 			cur=getattr(synth,setting.name)
 			i=[x.ID for x in l].index(cur)
@@ -1060,7 +1066,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
 		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
 		setattr(self,"%sCheckbox"%setting.name,checkbox)
-		self.helpIds[checkbox.GetId()] = "VoiceSettings%s" % (setting.name.capitalize())
+		self.helpIds[checkbox.GetId()] = "SpeechSettings%s" % (setting.name.capitalize())
 		checkbox.Bind(wx.EVT_CHECKBOX,
 			lambda evt: setattr(getSynth(),setting.name,evt.IsChecked()))
 		checkbox.SetValue(getattr(getSynth(),setting.name))
@@ -1079,7 +1085,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		super(VoiceSettingsPanel,self).onPanelActivated()
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "VoiceSettings"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "SpeechSettings"
 		self.sizerDict={}
 		self.lastControl=None
 		#Create controls for Synth Settings
@@ -1090,14 +1096,14 @@ class VoiceSettingsPanel(SettingsPanel):
 		# voice settings panel (if checked, text will be read using the voice for the language of the text).
 		autoLanguageSwitchingText = _("Automatic language switching (when supported)")
 		self.autoLanguageSwitchingCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=autoLanguageSwitchingText))
-		self.helpIds[self.autoLanguageSwitchingCheckbox.GetId()] = "VoiceSettingsLanguageSwitching"
+		self.helpIds[self.autoLanguageSwitchingCheckbox.GetId()] = "SpeechSettingsLanguageSwitching"
 		self.autoLanguageSwitchingCheckbox.SetValue(config.conf["speech"]["autoLanguageSwitching"])
 		
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 		autoDialectSwitchingText =_("Automatic dialect switching (when supported)")
 		self.autoDialectSwitchingCheckbox=settingsSizerHelper.addItem(wx.CheckBox(self,label=autoDialectSwitchingText))
-		self.helpIds[self.autoDialectSwitchingCheckbox.GetId()] = "VoiceSettingsDialectSwitching"
+		self.helpIds[self.autoDialectSwitchingCheckbox.GetId()] = "SpeechSettingsDialectSwitching"
 		self.autoDialectSwitchingCheckbox.SetValue(config.conf["speech"]["autoDialectSwitching"])
 
 		# Translators: This is the label for a combobox in the
@@ -1106,7 +1112,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		symbolLevelChoices =[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS]
 		self.symbolLevelList = settingsSizerHelper.addLabeledControl(punctuationLabelText, wx.Choice, choices=symbolLevelChoices)
-		self.helpIds[self.symbolLevelList.GetId()] = "VoiceSettingsSymbolLevel"
+		self.helpIds[self.symbolLevelList.GetId()] = "SpeechSettingsSymbolLevel"
 		curLevel = config.conf["speech"]["symbolLevel"]
 		self.symbolLevelList.SetSelection(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel))
 
@@ -1114,7 +1120,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		# voice settings panel (if checked, text will be read using the voice for the language of the text).
 		trustVoiceLanguageText = _("Trust voice's language when processing characters and symbols")
 		self.trustVoiceLanguageCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=trustVoiceLanguageText))
-		self.helpIds[self.trustVoiceLanguageCheckbox.GetId()] = "VoiceSettingsTrust"
+		self.helpIds[self.trustVoiceLanguageCheckbox.GetId()] = "SpeechSettingsTrust"
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 		
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
@@ -1123,27 +1129,27 @@ class VoiceSettingsPanel(SettingsPanel):
 			min=int(config.conf.getConfigValidationParameter(["speech", getSynth().name, "capPitchChange"], "min")),
 			max=int(config.conf.getConfigValidationParameter(["speech", getSynth().name, "capPitchChange"], "max")),
 			initial=config.conf["speech"][getSynth().name]["capPitchChange"])
-		self.helpIds[self.capPitchChangeEdit.GetId()] = "VoiceSettingsCapPitchChange"
+		self.helpIds[self.capPitchChangeEdit.GetId()] = "SpeechSettingsCapPitchChange"
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		sayCapForCapsText = _("Say &cap before capitals")
 		self.sayCapForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self,label=sayCapForCapsText))
-		self.helpIds[self.sayCapForCapsCheckBox.GetId()] = "VoiceSettingsSayCapBefore"
+		self.helpIds[self.sayCapForCapsCheckBox.GetId()] = "SpeechSettingsSayCapBefore"
 		self.sayCapForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["sayCapForCapitals"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		beepForCapsText =_("&Beep for capitals")
 		self.beepForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = beepForCapsText))
-		self.helpIds[self.beepForCapsCheckBox.GetId()] = "VoiceSettingsBeepForCaps"
+		self.helpIds[self.beepForCapsCheckBox.GetId()] = "SpeechSettingsBeepForCaps"
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		useSpellingFunctionalityText = _("Use &spelling functionality if supported")
 		self.useSpellingFunctionalityCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = useSpellingFunctionalityText))
-		self.helpIds[self.useSpellingFunctionalityCheckBox.GetId()] = "VoiceSettingsUseSpelling"
+		self.helpIds[self.useSpellingFunctionalityCheckBox.GetId()] = "SpeechSettingsUseSpelling"
 		self.useSpellingFunctionalityCheckBox.SetValue(config.conf["speech"][getSynth().name]["useSpellingFunctionality"])
 
 	def updateVoiceSettings(self, changedSetting=None):
@@ -1215,7 +1221,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 	title = _("Keyboard")
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "KeyboardSettings"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "KeyboardSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a combobox in the
 		# keyboard settings panel.
@@ -1291,14 +1297,14 @@ class KeyboardSettingsPanel(SettingsPanel):
 		# keyboard settings panel.
 		beepForLowercaseWithCapsLockText = _("Beep if typing lowercase letters when caps lock is on")
 		self.beepLowercaseCheckBox=sHelper.addItem(wx.CheckBox(self,label=beepForLowercaseWithCapsLockText))
-		self.helpIds[self.beepLowercaseCheckBox.GetId()] = "VoiceSettingsBeepLowercase"
+		self.helpIds[self.beepLowercaseCheckBox.GetId()] = "SpeechSettingsBeepLowercase"
 		self.beepLowercaseCheckBox.SetValue(config.conf["keyboard"]["beepForLowercaseWithCapslock"])
 
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings panel.
 		commandKeysText = _("Speak command &keys")
 		self.commandKeysCheckBox=sHelper.addItem(wx.CheckBox(self,label=commandKeysText))
-		self.helpIds[self.commandKeysCheckBox.GetId()] = "VoiceSettingsSpeakCommandKeys"
+		self.helpIds[self.commandKeysCheckBox.GetId()] = "SpeechSettingsSpeakCommandKeys"
 		self.commandKeysCheckBox.SetValue(config.conf["keyboard"]["speakCommandKeys"])
 
 		# Translators: This is the label for a checkbox in the
@@ -1350,7 +1356,7 @@ class MouseSettingsPanel(SettingsPanel):
 	title = _("Mouse")
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "MouseSettings"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "MouseSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is the label for a checkbox in the
@@ -1419,7 +1425,7 @@ class ReviewCursorPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings panel.
 		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow system &focus"))
-		self.helpIds[self.followFocusCheckBox.getId()] = "ReviewCursorFollowFocus"
+		self.helpIds[self.followFocusCheckBox.GetId()] = "ReviewCursorFollowFocus"
 		self.followFocusCheckBox.SetValue(config.conf["reviewCursor"]["followFocus"])
 		settingsSizer.Add(self.followFocusCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1452,7 +1458,7 @@ class InputCompositionPanel(SettingsPanel):
 	title = _("Input Composition")
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "InputCompositionSettings"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "InputCompositionSettings"
 		# Translators: This is the label for a checkbox in the
 		# Input composition settings panel.
 		self.autoReportAllCandidatesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Automatically report all available &candidates"))
@@ -1609,7 +1615,7 @@ class BrowseModePanel(SettingsPanel):
 	title = _("Browse Mode")
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "BrowseModeSettings"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "BrowseModeSettings"
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
@@ -1687,7 +1693,7 @@ class DocumentFormattingPanel(SettingsPanel):
 	title = _("Document Formatting")
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "DocumentFormattingSettings"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "DocumentFormattingSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: This is a label appearing on the document formatting settings panel.
@@ -1959,7 +1965,7 @@ class UwpOcrPanel(SettingsPanel):
 	title = _("Windows 10 OCR")
 
 	def makeSettings(self, settingsSizer):
-		self.helpIds[self.GetId()] = "Win10OcrSettings"
+		self.helpIds[wx.ID_HELP] = self.helpIds[self.GetId()] = "Win10OcrSettings"
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Lazily import this.
 		from contentRecog import uwpOcr
@@ -2544,6 +2550,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
 		self.SetTitle(self._getDialogTitle())
+		self.helpIds[self.catListCtrl.GetId()] = self.helpIds[self.currentCategory.GetId()]
 
 	def _getDialogTitle(self):
 		return u"{dialogTitle}: {panelTitle} ({configProfile})".format(
@@ -2551,6 +2558,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			panelTitle=self.currentCategory.title,
 			configProfile=NvdaSettingsDialogActiveConfigProfile
 		)
+		
 
 	def onCategoryChange(self,evt):
 		super(NVDASettingsDialog,self).onCategoryChange(evt)
