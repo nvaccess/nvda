@@ -21,7 +21,6 @@ Novosti u ovoj inačici uključuju Podršku tablica u Kindle za osobna računala
  - Možete dodijeliti te modifikatore  koje možete pronaći u kategoriji emulirane tipke sustava u dijaloškom okviru ulazne geste.
 - Vraćena podrška za Handy Tech Braillino i Modular brajične retke (sa starim firmwareom). (#8016)
 - Datum i vrijeme za podržane Handy Techove uređaje (poput Active Braille i Active Star) će biti automatski sinkronizirano kada nije sinkronizirano više od 5 sekundi. (#8016)
-- NVDA sada izvještava o odgovorenosti ili proslijeđenosti poruke u Microsoft outlooku. (#6911)
 - Sada se može pridijeliti gesta, koja služi za privremeno omogućavanje svih konfiguracijskih profila. (#4935)
 
 
@@ -51,13 +50,14 @@ Novosti u ovoj inačici uključuju Podršku tablica u Kindle za osobna računala
 - Brajični ulaz više ne dozvoljava korištenje kratkopisa u slučajevima u kojima isti nije podržan (NPR. cijele riječi neće biti poslane u sustav izvan tekstualnog sadržaja te u načinu pregleda). (#7306)
 - Ispravljene nestabilnosti u povezivanju za Handy Tech Easy Braille i Braille Wave brajične retke. (#8016)
 - U Windowsima 8 i novijim, NVDA više neće izgovarati "nepoznato" prilikom otvaranja izbornika brzog povezivanja )Windows+X) i označavanju stavaka iz tog izbornika. (#8137)
-- Specifične geste za modele Na Himsovim retcima sada rade oako, kako su opisane u korisničkom priručniku. (#8096)
+- Specifične geste za modele Na Himsovim retcima sada rade onako, kako su opisane u korisničkom priručniku. (#8096)
 - NVDA će sada pokušati ispraviti greške povezane sa sistemskom COM registracijom koje su prouzrokovale da Internet explorer i firefox postanu nepristupačni, pri tom izgovarajući "nepoznato". (#2807)
 - Ispravljena greška u upravitelju zadataka, koja je onemogućavala prikaz detaljnog prikaza zadataka. (#8147)
 - Noviji Microsoft sapi5 glasovi više ne zaostaju na kraju izgovorene riječi, što ih čini brzim pri kretanju. (#8174)
 - NVDA više niti ne izgovara, niti ne prikazuje (LTR i RTL znakove) prilikom pristupanja satu u windowsima 10. (#5729)
 - Otkrivanje tipki za pomicanje na Hims Smart Beetle brajičnim retcima sada više nije nepouzdano. (#6086)
 - U nekim tekstnim kontrolama, pogotovo u delphi aplikacijama, informacije koje su dane prilikom uređivanja ili kretanja sada su pouzdanije. (#636, #8102)
+- U Windowsima 10 RS5, NVDA više ne izgovara suvišne informacije pri prebacivanju aplikacija uz pomoč alt+tab. (#8258)
 
 
 == Izmjene za razvojne programere ==
