@@ -1,10 +1,10 @@
 *** Settings ***
-Documentation		Basic *NVDA* and _RobotFramework_ tests
-...							Starts NVDA and exits.
-...							Run with python -m robot tests/system/initial.robot in CMD.
-Library			 OperatingSystem
-Library			 Process
-Library			 sendKey.py
+Documentation	Basic *NVDA* and _RobotFramework_ tests
+...	Starts NVDA and exits.
+...	Run with python -m robot tests/system/initial.robot in CMD.
+Library	OperatingSystem
+Library	Process
+Library	sendKey.py
 Library	nvdaRobotLib.py
 
 *** Settings ***
@@ -22,4 +22,4 @@ Ensure NVDA quits from keyboard
 	wait for process	nvdaAlias	timeout=5 sec
 
 Can Start and exit NVDA
-	assert last speech  "Welcome to NVDA"
+	assert last speech	"Welcome to NVDA"
