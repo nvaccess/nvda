@@ -11,7 +11,8 @@
 > **Please note:**
 > While we welcome images/screenshots to help explain a problem, be aware that many of the
 > developers of NVDA are blind and will greatly appreciate this image being described in text.
-> For example, to capture the output of the inspect.exe tool:
+> Rather than taking a screenshot showing the output of an accessibility tool, in many cases you
+> can directly copy the text. For instance when using the Inspect tool from the Windows SDK:
 > 1. In the tree-view focus the element which you are interested in.
 > 1. Press F6 to move focus to the properties pane on the right.
 > 1. Select all, then copy and paste this into the issue.
