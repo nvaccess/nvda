@@ -365,7 +365,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		inputMethodName="".join(inputMethodName.split(' - ')[1:])
 	#Include the language only if it changed.
 	if languageID!=lastLanguageID:
-		msg="{language} - {layout}".format(language=inputLanguageName,layout=inputMethodName)
+		msg=u"{language} - {layout}".format(language=inputLanguageName,layout=inputMethodName)
 	else:
 		msg=inputMethodName
 	lastLanguageID=languageID
