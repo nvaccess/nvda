@@ -23,6 +23,7 @@ import speech
 import gui
 from gui import nvdaControls
 import globalVars
+import addonHandler
 from logHandler import log
 import nvwave
 import audioDucking
@@ -703,16 +704,17 @@ class GeneralSettingsPanel(SettingsPanel):
 			settingsSizerHelper.addItem(item)
 
 	def onCopySettings(self,evt):
-		for packageType in ('addons','appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
-			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
-				if gui.messageBox(
-					# Translators: A message to warn the user when attempting to copy current settings to system settings.
-					_("Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
-					# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
-				)==wx.NO:
-					return
-				break
+		runningAddons = []
+		for addon in addonHandler.getRunningAddons():
+			runningAddons.append(addon.manifest['summary'])
+		if len(runningAddons)>0:
+			if gui.messageBox(
+				# Translators: A message to warn the user when attempting to copy current settings to system settings.
+				_("The following add-ons were detected in your user settings directory:\r\n%s.\r\nCopying these to the system profile could be a security risk. Do you still wish to copy your settings?" % ", ".join(runningAddons)),
+				# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+				_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
+			)==wx.NO:
+				return
 		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while settings are being copied 
 		_("Copying Settings"),
