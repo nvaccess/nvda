@@ -45,20 +45,43 @@ class nvdaRobotLib(object):
 		"""Equiv robot text:
 		Import Library  Remote         WITH NAME    nvdaSpy
 		"""
-		builtIn.import_library(
-				"Remote",
-				'http://127.0.0.1:8270',
-				"WITH NAME",
-				"nvdaSpy"
-			)
-		self.nvdaSpy = builtIn.get_library_instance("nvdaSpy")
+		port = 8270  # default:8270 is `registered by IANA` for remote server usage. Two ASCII values, RF.
+		uri = 'http://127.0.0.1:{}'.format(port)
+		spyAlias = "nvdaSpy"
 
+		startTime = timer()
+		giveUpAfter = 10  # seconds
+		intervalBetweenTries = 0.1  # seconds
+		lastRunTime = startTime - intervalBetweenTries+1  # ensure we start trying immediately
+		canConnect=False
+		from robotremoteserver import test_remote_server
+		while not canConnect and (timer() - startTime) < giveUpAfter:
+			if (timer() - lastRunTime) > intervalBetweenTries:
+				lastRunTime = timer()
+
+				# Importing the 'Remote' library always succeeds, even when a connection can not be made.
+				# If that happens, then some 'Remote' keyword will fail at some later point.
+				# therefore we use 'test_remote_server' to ensure that we can in fact connect before proceeding.
+				canConnect = test_remote_server(uri)
+
+		if not canConnect:
+			raise RuntimeError("Unable to connect to nvdaSpy")
+		else:
+			builtIn.import_library(
+				"Remote",  # name of library to import
+				# Arguments to construct the library instance:
+				"uri={}".format(uri),
+				"timeout=2",  # seconds
+				# Set an alias for the imported library instance
+				"WITH NAME",
+				"nvdaSpy",
+			)
+			self.nvdaSpy = builtIn.get_library_instance(spyAlias)
 
 	def start_NVDA(self):
 		self.copy_in_system_test_spy()
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
-		builtIn.sleep(4.0)
 		self._connectToRemoteServer()
 		self.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
