@@ -1,5 +1,4 @@
 import os
-import sys
 from timeit import default_timer as timer
 from robotremoteserver import test_remote_server, stop_remote_server
 from robot.libraries.BuiltIn import BuiltIn
@@ -27,17 +26,14 @@ class nvdaRobotLib(object):
 		self.nvdaHandle = None
 
 	def copy_in_system_test_spy(self):
-		"""Equiv robot text:
-		Copy File  tests/system/systemTestSpy.py  {nvdaProfile}/globalPlugins/
-		"""
 		opSys.copy_file(systemTestSpySource, systemTestSpyInstallDir)
 
 	def remove_system_test_spy(self):
 		opSys.remove_file(systemTestSpyInstalled)
 
 	def _startNVDAProcess(self):
-		"""Equiv robot text:
-		Start Process  pythonw nvda.pyw --debug-logging  cwd=source  shell=true  alias=nvdaAlias
+		"""Start NVDA.
+		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
 		self.nvdaHandle = handle = process.start_process(
 			"pythonw nvda.pyw --debug-logging -r -c \"{nvdaProfileDir}\"".format(nvdaProfileDir=nvdaProfileDir),
@@ -47,26 +43,36 @@ class nvdaRobotLib(object):
 		)
 		return handle
 
-	def _connectToRemoteServer(self):
-		"""Equiv robot text:
-		Import Library  Remote         WITH NAME    nvdaSpy
-		"""
+	def _blockUntilReturnsTrue(self, giveUpAfterSeconds, intervalBetweenSeconds, errorMessage, func):
 		startTime = timer()
-		giveUpAfter = 10  # seconds
-		intervalBetweenTries = 0.1  # seconds
-		lastRunTime = startTime - intervalBetweenTries+1  # ensure we start trying immediately
-
-		while (timer() - startTime) < giveUpAfter:
-			if (timer() - lastRunTime) > intervalBetweenTries:
+		lastRunTime = startTime - intervalBetweenSeconds+1  # ensure we start trying immediately
+		while (timer() - startTime) < giveUpAfterSeconds:
+			if (timer() - lastRunTime) > intervalBetweenSeconds:
 				lastRunTime = timer()
-
-				# Importing the 'Remote' library always succeeds, even when a connection can not be made.
-				# If that happens, then some 'Remote' keyword will fail at some later point.
-				# therefore we use 'test_remote_server' to ensure that we can in fact connect before proceeding.
-				if test_remote_server(spyServerURI, log=False):
+				if func():
 					break
 		else:
-			raise RuntimeError("Unable to connect to nvdaSpy")
+			raise RuntimeError(errorMessage)
+
+	def _connectToRemoteServer(self):
+		"""Connects to the nvdaSpyServer
+		Because we do not know how far through the startup NVDA is, we have to poll
+		to check that the server is available. Importing the library immediately seems
+		to succeed, but then calling a keyword later fails with RuntimeError:
+			"Connection to remote server broken: [Errno 10061]
+				No connection could be made because the target machine actively refused it"
+		Instead we wait until the remote server is available before importing the library and continuing.
+		"""
+
+		# Importing the 'Remote' library always succeeds, even when a connection can not be made.
+		# If that happens, then some 'Remote' keyword will fail at some later point.
+		# therefore we use 'test_remote_server' to ensure that we can in fact connect before proceeding.
+		self._blockUntilReturnsTrue(
+			giveUpAfterSeconds=10,
+			intervalBetweenSeconds=0.1,
+			errorMessage="Unable to connect to nvdaSpy",
+			func=lambda: test_remote_server(spyServerURI, log=False)
+		)
 
 		builtIn.import_library(
 			"Remote",  # name of library to import
@@ -88,11 +94,16 @@ class nvdaRobotLib(object):
 		return nvdaProcessHandle
 
 	def wait_for_NVDA_startup_to_complete(self):
-		while not self.nvdaSpy.run_keyword("is_NVDA_startup_complete", [], {}):
-			builtIn.sleep(0.1)
+		self._blockUntilReturnsTrue(
+			giveUpAfterSeconds=10,
+			intervalBetweenSeconds=0.1,
+			errorMessage="Unable to connect to nvdaSpy",
+			func=lambda: self.nvdaSpy.run_keyword("is_NVDA_startup_complete", [], {})
+		)
 
 	def quit_NVDA(self):
 		stop_remote_server(spyServerURI, log=False)
+		# remove the spy so that if nvda is run manually against this config it does not interfere.
 		self.remove_system_test_spy()
 		process.run_process(
 			"pythonw nvda.pyw -q --disable-addons",
