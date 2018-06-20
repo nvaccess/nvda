@@ -1,12 +1,18 @@
-import sys
 import os
-from robot.libraries.BuiltIn import BuiltIn
-import sendKey
+import sys
+from timeit import default_timer as timer
 
+from robot.libraries.BuiltIn import BuiltIn
 builtIn = BuiltIn()
 process = builtIn.get_library_instance('Process')
+opSys = builtIn.get_library_instance('OperatingSystem')
 
-nvdaProfileDir=os.path.abspath("tests/system/nvdaProfile")
+systemTestSpyFileName = "systemTestSpy.py"
+systemTestSourceDir = os.path.abspath("tests/system")
+nvdaProfileDir = os.path.join(systemTestSourceDir, "nvdaProfile")
+systemTestSpySource = os.path.join(systemTestSourceDir, systemTestSpyFileName)
+systemTestSpyInstallDir = os.path.join(nvdaProfileDir, "globalPlugins")
+systemTestSpyInstalled = os.path.join(systemTestSpyInstallDir, systemTestSpyFileName)
 
 class nvdaRobotLib(object):
 
@@ -14,6 +20,14 @@ class nvdaRobotLib(object):
 		self.nvdaSpy = None
 		self.nvdaHandle = None
 
+	def copy_in_system_test_spy(self):
+		"""Equiv robot text:
+		Copy File  tests/system/systemTestSpy.py  {nvdaProfile}/globalPlugins/
+		"""
+		opSys.copy_file(systemTestSpySource, systemTestSpyInstallDir)
+
+	def remove_system_test_spy(self):
+		opSys.remove_file(systemTestSpyInstalled)
 
 	def _startNVDAProcess(self):
 		"""Equiv robot text:
@@ -26,7 +40,6 @@ class nvdaRobotLib(object):
 			alias='nvdaAlias'
 		)
 		return handle
-
 
 	def _connectToRemoteServer(self):
 		"""Equiv robot text:
@@ -42,6 +55,7 @@ class nvdaRobotLib(object):
 
 
 	def start_NVDA(self):
+		self.copy_in_system_test_spy()
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
 		builtIn.sleep(4.0)
@@ -55,9 +69,13 @@ class nvdaRobotLib(object):
 
 
 	def quit_NVDA(self):
-		"""send quit NVDA keys"""
+		try:
+			self.nvdaSpy.run_keyword("stop_remote_server", [], {})
+		except RuntimeError:
+			pass  # if the test manually exits, then we are unable to run this keyword.
+		self.remove_system_test_spy()
 		process.run_process(
-			"pythonw nvda.pyw -q",
+			"pythonw nvda.pyw -q --disable-addons",
 			cwd='source',
 			shell=True,
 		)

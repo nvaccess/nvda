@@ -41,18 +41,15 @@ class SystemTestSpyServer(object):
 		log.debug("TestSpyPlugin started")
 		server = self._server = RobotRemoteServer(
 			SystemTestSpy(),  # provides actual spy behaviour
-			port=8270,  # Could use 0 for auto port selection, which can be written out to a file / command line
+			port=8270,  # default:8270 is `registered by IANA` for remote server usage. Two ASCII values, RF.
 			serve=False  # we want to start this serving on another thread so as not to block.
 		)
 		log.debug("Server address: {}".format(server.server_address))
-		signal.signal(signal.SIGINT, lambda signum, frame: server.stop())
 		server_thread = threading.Thread(target=server.serve)
-		server_thread.setDaemon(True)
 		server_thread.start()
 
 	def stop(self):
 		self._server.stop()
-
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
@@ -60,6 +57,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		super(GlobalPlugin, self).__init__()
 		self._testSpy = SystemTestSpyServer()
 		self._testSpy.start()
+
+	def terminate(self):
+		log.debug("Terminating the systemTestSpy")
+		self._testSpy.stop()
 
 	__gestures = {
 	}
