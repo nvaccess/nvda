@@ -1,4 +1,6 @@
 import os
+from os.path import join as pathJoin
+from os.path import abspath
 from timeit import default_timer as timer
 from robotremoteserver import test_remote_server, stop_remote_server
 from robot.libraries.BuiltIn import BuiltIn
@@ -12,13 +14,16 @@ spyServerPort = 8270  # is `registered by IANA` for remote server usage. Two ASC
 spyServerURI = 'http://127.0.0.1:{}'.format(spyServerPort)
 spyAlias = "nvdaSpy"
 
+nvdaLogFilePath = abspath("source/nvda.log")
+
+systemTestSourceDir = abspath("tests/system")
+nvdaProfileWorkingDir = pathJoin(systemTestSourceDir, "nvdaProfile")
+nvdaSettingsSourceDir = pathJoin(systemTestSourceDir, "nvdaSettingsFiles")
+
 systemTestSpyFileName = "systemTestSpy.py"
-systemTestSourceDir = os.path.abspath("tests/system")
-nvdaProfileWorkingDir = os.path.join(systemTestSourceDir, "nvdaProfile")
-nvdaSettingsSourceDir = os.path.join(systemTestSourceDir, "nvdaSettingsFiles")
-systemTestSpySource = os.path.join(systemTestSourceDir, "libraries", systemTestSpyFileName)
-systemTestSpyInstallDir = os.path.join(nvdaProfileWorkingDir, "globalPlugins")
-systemTestSpyInstalled = os.path.join(systemTestSpyInstallDir, systemTestSpyFileName)
+systemTestSpySource = pathJoin(systemTestSourceDir, "libraries", systemTestSpyFileName)
+systemTestSpyInstallDir = pathJoin(nvdaProfileWorkingDir, "globalPlugins")
+systemTestSpyInstalled = pathJoin(systemTestSpyInstallDir, systemTestSpyFileName)
 
 class nvdaRobotLib(object):
 
@@ -115,6 +120,21 @@ class nvdaRobotLib(object):
 			func=lambda: self._runNvdaSpyKeyword("is_NVDA_startup_complete")
 		)
 
+	def save_NVDA_log(self):
+		"""NVDA logs are saved to the ${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log"""
+		outDir = builtIn.get_variable_value("${OUTPUT DIR}", )
+		suiteName = builtIn.get_variable_value("${SUITE NAME}")
+		testName = builtIn.get_variable_value("${TEST NAME}")
+		outputFileName = "{suite}-{test}-nvda.log"\
+			.format(
+				suite=suiteName,
+				test=testName,
+			).replace(" ", "_")
+		opSys.copy_file(
+			nvdaLogFilePath,
+			pathJoin(outDir, "nvdaTestRunLogs", outputFileName)
+		)
+
 	def quit_NVDA(self):
 		stop_remote_server(spyServerURI, log=False)
 		# remove the spy so that if nvda is run manually against this config it does not interfere.
@@ -125,6 +145,7 @@ class nvdaRobotLib(object):
 			shell=True,
 		)
 		process.wait_for_process(self.nvdaHandle)
+		self.save_NVDA_log()
 
 	def assert_last_speech(self, expectedSpeech):
 		actualLastSpeech = self._runNvdaSpyKeyword("get_last_speech")
