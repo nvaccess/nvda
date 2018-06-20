@@ -11,26 +11,34 @@ class SystemTestSpy:
 		from speech import preSpeech
 		postNvdaStartup.register(self._onNvdaStartupComplete)
 		preSpeech.register(self._onNvdaSpeech)
-		self._nvdaSpeech = [
-			[""],  # initialise with an empty string, this allows for access via [-1]. This is equiv to no speech.
-		]
+		self.clear_speech_cache()  # set self._nvdaSpeech
 
 	def _onNvdaStartupComplete(self):
 		self._nvdaStartupComplete = True
+		self.clear_speech_cache()
 
 	def _onNvdaSpeech(self, speechSequence=None):
 		if not speechSequence: return
 		self._nvdaSpeech.append(speechSequence)
 
 	def is_NVDA_startup_complete(self):
-		log.debug("Got startup complete action")
 		return self._nvdaStartupComplete
 
+	def _getJoinedBaseStringsFromCommands(self, speechCommandArray):
+		baseStrings = [c.strip() for c in speechCommandArray if isinstance(c, basestring)]
+		return ' '.join(baseStrings).replace("  ", "\n").strip()
+
 	def get_last_speech(self):
-		baseStrings = [s.strip() for s in self._nvdaSpeech[-1] if isinstance(s, basestring)]
-		lastSpeech = ' '.join(baseStrings)
-		log.debug("last speech: {}".format(lastSpeech))
-		return lastSpeech
+		return self._getJoinedBaseStringsFromCommands(self._nvdaSpeech[-1])
+
+	def get_all_speech(self):
+		speechCommands = [c for commands in self._nvdaSpeech for c in commands]
+		return self._getJoinedBaseStringsFromCommands(speechCommands)
+
+	def clear_speech_cache(self):
+		self._nvdaSpeech = [
+			[""],  # initialise with an empty string, this allows for access via [-1]. This is equiv to no speech.
+		]
 
 
 class SystemTestSpyServer(object):

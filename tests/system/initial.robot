@@ -6,9 +6,10 @@ Library	Process
 Library	libraries/sendKey.py
 Library	libraries/nvdaRobotLib.py
 
-*** Settings ***
 Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
 Test Teardown	quit NVDA
+
+Variables	variables.py
 
 *** Test Cases ***
 Ensure NVDA runs at all
@@ -22,4 +23,4 @@ Ensure NVDA quits from keyboard
 
 Can read the welcome dialog
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
-	assert last speech	"Welcome to NVDA"
+	assert all speech	${WELCOME_DIALOG_TEXT}

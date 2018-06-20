@@ -94,6 +94,11 @@ class nvdaRobotLib(object):
 		)
 		self.nvdaSpy = builtIn.get_library_instance(spyAlias)
 
+	def _runNvdaSpyKeyword(self, keyword, *args, **kwargs):
+		if not args: args = []
+		if not kwargs: kwargs = {}
+		return self.nvdaSpy.run_keyword(keyword, args, kwargs)
+
 	def start_NVDA(self, settingsFileName):
 		self.setup_nvda_profile(settingsFileName)
 		nvdaProcessHandle = self._startNVDAProcess()
@@ -107,7 +112,7 @@ class nvdaRobotLib(object):
 			giveUpAfterSeconds=10,
 			intervalBetweenSeconds=0.1,
 			errorMessage="Unable to connect to nvdaSpy",
-			func=lambda: self.nvdaSpy.run_keyword("is_NVDA_startup_complete", [], {})
+			func=lambda: self._runNvdaSpyKeyword("is_NVDA_startup_complete")
 		)
 
 	def quit_NVDA(self):
@@ -122,5 +127,13 @@ class nvdaRobotLib(object):
 		process.wait_for_process(self.nvdaHandle)
 
 	def assert_last_speech(self, expectedSpeech):
-		actualLastSpeech = self.nvdaSpy.run_keyword("get_last_speech", [], {})
+		actualLastSpeech = self._runNvdaSpyKeyword("get_last_speech")
 		builtIn.should_be_equal_as_strings(actualLastSpeech, expectedSpeech)
+
+	def assert_all_speech(self, expectedSpeech):
+			actualSpeech = self._runNvdaSpyKeyword("get_all_speech")
+			builtIn.should_be_equal_as_strings(
+				actualSpeech,
+				expectedSpeech,
+				msg="Actual speech != to expected speech.",
+			)
