@@ -354,7 +354,7 @@ class AutoCompleteListItem(IAccessible):
 			address = self.name
 			if address:
 				speech.cancelSpeech()
-				ui.message(self.name)
+				ui.message(self.name).queue
 
 class CalendarView(IAccessible):
 	"""Support for announcing time slots and appointments in Outlook Calendar.
