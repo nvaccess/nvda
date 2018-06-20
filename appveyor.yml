@@ -103,25 +103,27 @@ before_test:
  - py -m pip install robotremoteserver
  - py -m pip install pyautogui
  - py -m pip install nose 
- - mkdir testResults
+ - mkdir output\testResults
 
 test_script:
  - ps: |
      $errorCode=0
-     py -m nose --with-xunit --xunit-file=testResults/unitTests.xml tests/unit
+     py -m nose --with-xunit --xunit-file=output/testResults/unitTests.xml tests/unit
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\unitTests.xml))
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\unitTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
-     py -m robot --loglevel DEBUG -d testResults -x systemTests.xml tests/system/initial.robot
+     py -m robot --loglevel DEBUG -d output/testResults -x systemTests.xml tests/system/
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testResults\systemTests.xml))
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\systemTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 artifacts:
  - path: output\*
  - path: output\*\*
+ - path: output\testResults\*
+ - path: output\testResults\*\*
 
 deploy_script:
  - ps: |
