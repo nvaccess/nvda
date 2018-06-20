@@ -181,7 +181,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	followMouse = boolean(default=False)
 
 [UIA]
-	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 
