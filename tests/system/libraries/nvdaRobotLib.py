@@ -14,9 +14,10 @@ spyAlias = "nvdaSpy"
 
 systemTestSpyFileName = "systemTestSpy.py"
 systemTestSourceDir = os.path.abspath("tests/system")
-nvdaProfileDir = os.path.join(systemTestSourceDir, "nvdaProfile")
-systemTestSpySource = os.path.join(systemTestSourceDir, systemTestSpyFileName)
-systemTestSpyInstallDir = os.path.join(nvdaProfileDir, "globalPlugins")
+nvdaProfileWorkingDir = os.path.join(systemTestSourceDir, "nvdaProfile")
+nvdaSettingsSourceDir = os.path.join(systemTestSourceDir, "nvdaSettingsFiles")
+systemTestSpySource = os.path.join(systemTestSourceDir, "libraries", systemTestSpyFileName)
+systemTestSpyInstallDir = os.path.join(nvdaProfileWorkingDir, "globalPlugins")
 systemTestSpyInstalled = os.path.join(systemTestSpyInstallDir, systemTestSpyFileName)
 
 class nvdaRobotLib(object):
@@ -25,18 +26,26 @@ class nvdaRobotLib(object):
 		self.nvdaSpy = None
 		self.nvdaHandle = None
 
-	def copy_in_system_test_spy(self):
+	def setup_nvda_profile(self, settingsFileName):
 		opSys.copy_file(systemTestSpySource, systemTestSpyInstallDir)
+		opSys.copy_file(
+			os.path.join(nvdaSettingsSourceDir, settingsFileName),
+			os.path.join(nvdaProfileWorkingDir, "nvda.ini")
+		)
 
-	def remove_system_test_spy(self):
+	def teardown_nvda_profile(self):
 		opSys.remove_file(systemTestSpyInstalled)
+		opSys.remove_file(systemTestSpyInstalled+"c")  # also remove the .pyc
+		opSys.remove_file(
+			os.path.join(nvdaProfileWorkingDir, "nvda.ini")
+		)
 
 	def _startNVDAProcess(self):
 		"""Start NVDA.
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
 		self.nvdaHandle = handle = process.start_process(
-			"pythonw nvda.pyw --debug-logging -r -c \"{nvdaProfileDir}\"".format(nvdaProfileDir=nvdaProfileDir),
+			"pythonw nvda.pyw --debug-logging -r -c \"{nvdaProfileDir}\"".format(nvdaProfileDir=nvdaProfileWorkingDir),
 			cwd='source',
 			shell=True,
 			alias='nvdaAlias'
@@ -85,8 +94,8 @@ class nvdaRobotLib(object):
 		)
 		self.nvdaSpy = builtIn.get_library_instance(spyAlias)
 
-	def start_NVDA(self):
-		self.copy_in_system_test_spy()
+	def start_NVDA(self, settingsFileName):
+		self.setup_nvda_profile(settingsFileName)
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()
@@ -104,7 +113,7 @@ class nvdaRobotLib(object):
 	def quit_NVDA(self):
 		stop_remote_server(spyServerURI, log=False)
 		# remove the spy so that if nvda is run manually against this config it does not interfere.
-		self.remove_system_test_spy()
+		self.teardown_nvda_profile()
 		process.run_process(
 			"pythonw nvda.pyw -q --disable-addons",
 			cwd='source',

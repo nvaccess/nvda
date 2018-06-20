@@ -1,14 +1,13 @@
 *** Settings ***
-Documentation	Basic *NVDA* and _RobotFramework_ tests
-...	Starts NVDA and exits.
-...	Run with python -m robot tests/system/initial.robot in CMD.
+Documentation	Basic start and exit tests
+
 Library	OperatingSystem
 Library	Process
-Library	sendKey.py
-Library	nvdaRobotLib.py
+Library	libraries/sendKey.py
+Library	libraries/nvdaRobotLib.py
 
 *** Settings ***
-Test Setup	start NVDA
+Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
 Test Teardown	quit NVDA
 
 *** Test Cases ***
@@ -21,5 +20,6 @@ Ensure NVDA quits from keyboard
 	send key	enter
 	wait for process	nvdaAlias	timeout=5 sec
 
-Can Start and exit NVDA
+Can read the welcome dialog
+	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	assert last speech	"Welcome to NVDA"
