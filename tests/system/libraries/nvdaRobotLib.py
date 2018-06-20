@@ -32,6 +32,7 @@ class nvdaRobotLib(object):
 		self.nvdaHandle = None
 
 	def setup_nvda_profile(self, settingsFileName):
+		opSys.create_directory(systemTestSpyInstallDir)
 		opSys.copy_file(systemTestSpySource, systemTestSpyInstallDir)
 		opSys.copy_file(
 			os.path.join(nvdaSettingsSourceDir, settingsFileName),
@@ -78,6 +79,7 @@ class nvdaRobotLib(object):
 		Instead we wait until the remote server is available before importing the library and continuing.
 		"""
 
+		process.process_should_be_running(self.nvdaHandle)
 		# Importing the 'Remote' library always succeeds, even when a connection can not be made.
 		# If that happens, then some 'Remote' keyword will fail at some later point.
 		# therefore we use 'test_remote_server' to ensure that we can in fact connect before proceeding.
