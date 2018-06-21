@@ -137,7 +137,7 @@ test_script:
           Push-AppveyorArtifact $installerLogFilePath
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  - ps: |
-     py -m robot --loglevel DEBUG -d output/testResults/system -x systemTests.xml -v whichNVDA:installed tests/system/
+     py -m robot --loglevel DEBUG -d output/testResults/system -x systemTests.xml -v whichNVDA:source tests/system/
      Get-ChildItem ".\output/testResults/system\" -Attributes !Directory -depth 2 |
       Foreach-Object {
           Push-AppveyorArtifact $_.FullName
