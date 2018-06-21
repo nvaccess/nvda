@@ -707,7 +707,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		if any(addonHandler.getRunningAddons()):
 			if gui.messageBox(
 				# Translators: A message to warn the user when attempting to copy current settings to system settings.
-				_("The following add-ons were detected in your user settings directory:\r\n%s.\r\nCopying these to the system profile could be a security risk. Do you still wish to copy your settings?" % ", ".join(runningAddons)),
+				_("The following add-ons were detected in your user settings directory:\r\n%s.\r\nCopying these to the system profile could be a security risk. Do you still wish to copy your settings?" % ", ".join([addon.manifest['summary'] for addon in addonHandler.getRunningAddons()])),
 				# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 				_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
 			)==wx.NO:
