@@ -13,11 +13,16 @@ opSys = builtIn.get_library_instance('OperatingSystem')
 spyServerPort = 8270  # is `registered by IANA` for remote server usage. Two ASCII values:'RF'
 spyServerURI = 'http://127.0.0.1:{}'.format(spyServerPort)
 spyAlias = "nvdaSpy"
-
-nvdaLogFilePath = abspath("source/nvda.log")
+whichNVDA=builtIn.get_variable_value("${whichNVDA}", "source")
+if whichNVDA=="source":
+	baseNVDACommandline="pythonw source/nvda.pyw"
+elif whichNVDA=="installed":
+	baseNVDACommandline='"%s"'%os.path.join(os.path.expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
+print baseNVDACommandline
 
 systemTestSourceDir = abspath("tests/system")
 nvdaProfileWorkingDir = pathJoin(systemTestSourceDir, "nvdaProfile")
+nvdaLogFilePath = pathJoin(nvdaProfileWorkingDir,'nvda.log')
 nvdaSettingsSourceDir = pathJoin(systemTestSourceDir, "nvdaSettingsFiles")
 
 systemTestSpyFileName = "systemTestSpy.py"
@@ -51,8 +56,7 @@ class nvdaRobotLib(object):
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
 		self.nvdaHandle = handle = process.start_process(
-			"pythonw nvda.pyw --debug-logging -r -c \"{nvdaProfileDir}\"".format(nvdaProfileDir=nvdaProfileWorkingDir),
-			cwd='source',
+			"{baseNVDACommandline} --debug-logging -r -c \"{nvdaProfileDir}\" --log-file \"{nvdaLogFilePath}\"".format(baseNVDACommandline=baseNVDACommandline,nvdaProfileDir=nvdaProfileWorkingDir,nvdaLogFilePath=nvdaLogFilePath),
 			shell=True,
 			alias='nvdaAlias'
 		)
@@ -142,8 +146,7 @@ class nvdaRobotLib(object):
 		# remove the spy so that if nvda is run manually against this config it does not interfere.
 		self.teardown_nvda_profile()
 		process.run_process(
-			"pythonw nvda.pyw -q --disable-addons",
-			cwd='source',
+			"{baseNVDACommandline} -q --disable-addons".format(baseNVDACommandline=baseNVDACommandline),
 			shell=True,
 		)
 		process.wait_for_process(self.nvdaHandle)

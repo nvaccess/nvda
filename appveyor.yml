@@ -115,7 +115,15 @@ test_script:
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\unitTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
-     py -m robot --loglevel DEBUG -d output/testResults/system -x systemTests.xml tests/system/
+     $nvdaLauncherFile="output\nvda_"
+     if(!$env:release) {
+      $nvdaLauncherFile+="_snapshot"
+     }
+     $nvdaLauncherFile+="$env_version.exe"
+     $nvdaLauncherfile --install-silent --debug-logging --log-file .\output\nvda_install.log 
+     Push-AppveyorArtifact .\output\nvda_install.log
+     if($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode) }
+     py -m robot --loglevel DEBUG -d output/testResults/system -x systemTests.xml -v whichNVDA:installed tests/system/
      Get-ChildItem ".\output/testResults/system\" -Attributes !Directory -depth 2 |
       Foreach-Object {
           Push-AppveyorArtifact $_.FullName
