@@ -3,62 +3,19 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2018.2 =
-
-Af væsentlige forbedringer i denne version kan nævnes understøttelse for tabeller i Kindle for PC, støtte for Humanwear BrailleNote Touch og BI14 punktdisplays, forbedringer til OneCore og SAPI5-talesynteser, forbedringer til Microsoft Outlook og meget mere.
+= 2018.3 =
 
 == Nye Funktioner ==
-- NVDA rapporterer nu hvor mange kolonner og rækker en tabel omfatter med tale og punkt. (#2642)
-- Kommandoer til tabelnavigation kan nu benyttes i Google Docs (med braille-tilstand slået til). (#7946)
-- Det er muligt at navigere rundt i tabeller i Kindle for PC. (#7977)
-- Understøtter BrailleNote touch og Brailliant BI 14 punktdisplays via både USB og bluetooth. (#6524)
-- NVDA kan nu annoncere notifikationer fra apps som Lommeregner og Windows Store. (#8045)
-- Nye punkttabeller: Litauisk ottepunkt, ukrainsk, mongolsk Niveau 2. (#7839)
-- Tilføjede et script, der kan rapportere tekstformatering under den aktuelle punktcelle. (#7106)
-- Det er nu muligt at udskyde installationen af NVDA til et mere bekvemt tidspunkt. (#4263)
-- Nye sprog: Mongolsk, schweizisk tysk.
-- Du kan nu benytte kommandotasterne CTRL, Skift, Alt, Windows og NVDA fra dit punkttastatur og kombinere disse kommandotaster med punktindtastning (f.eks. trykke CTRL+S.) (#7306) 
- - Du kan tildele disse kommandotaster ved brug af kommandoerne, der er at finde under emulerede tastaturtryk i dialogen for inputbevægelser.
-- Gendannede understøttelse for Handy Tech Braillino og Modular (med gammel firmware) displays. (#8016)
-(#8016)
-- Dato og tid for understøttede Handy Tech-enheder (herunder Active Braille og Active Star) vil nu blive automatisk synkroniseret ved hjælp af NVDA, hvis tiden er mere end 5 sekunder bagud. (#8016)
-- En inputbevægelse kan nu tildeles for at midlertidigt deaktivere alle udløsere for alle indstillingsprofiler. (#4935)
+- NVDA kan nu rapportere grammatikfejl på websider, når dette er passende angivet i Mozilla Firefox. (#8280)
+- Tilføjede understøttelse for BrailleNote QT og Apex BTs rullehjul, når BrailleNote benyttes som punktdisplay. (#6316)
 
 
 == Ændringer ==
-- Statuskolonnen i dialogen for styring af tilføjelsespakker vil nu indikere om pakken er aktiveret eller deaktiveret, hvor den før viste om pakken var i gang eller stoppet. (#7929)
-- Opdaterede liblouis Braille Translator til 3.5.0. (#7839)
-- Den litauiske punktoversættelsestabel er blevet omdøbt til litauisk sekspunkt for at undgå forvirring, da vi nu har en tabel til litauisk ottepunkt. (#7839)
-- Det fransk (Canada) niveau 1 og niveau 2 punkttabeller er blevet erstattet med Fransk (Unified) og Fransk (Niveau 2). (#7839)
-- De sekundære markørsammenføringsknapper på Alva BC6, EuroBraille og Papenmeier punktdisplays rapporterer nu tekstformateringen under den aktuelle punktcelle. (#7106)
-- Forkortede punkttabeller vil nu automatisk falde tilbage til uforkortet tilstand, hvis du befinder dig på et uredigerbart kontrolelement (f.eks. kontroller hvor der ikke befinder sig en markør eller i gennemsynstilstand). (#7306)
-- NVDA er nu mindre ordrig, når en aftale eller en tid i Outlook-kalenderen dækker hele dagen. (#7949)
-- Alle NVDAs indstillinger kan nu findes i en enkelt indstillingsdialog under NVDA>Præferencer>Indstillinger. (#7302)
-- Standardsyntesen for NVDA, når du kører Windows 10, vil nu være Windows OneCore i stedet for eSpeak. (#8176)
+- Listen over tilgængelige sprog i den generelle indstillingskategori sorteres nu efter navn på de pågældende sprog i stedet for ISO 639. (#7284)
+- Tilføjede standarddefineret inputbevægelse for ALT+Skift+Tab og Windows+Tab for alle Freedom Scientific punktdisplays. (#7387)
 
 
 == Fejlrettelser ==
-- NVDA har ikke længere problemer med at læse kontroller, når du befinder dig i indstillingerne du skal benytte for at logge ind på din Microsoft-konto, hvis du har indtastet en email-adresse. (#7997)
-- NVDA vil ikke længere fejle ved oplæsning af en side, når du bevæger dig til den forrige side i Microsoft Edge. (#7997)
-- NVDA vil ikke længere ukorrekt meddele det endelige tegn, når du logger på ved brug af en PIN-kode i Windows 10. (#7908)
-- Mærker på check boxe og radioknapper i Chrome og Firefox annonceres ikke længere to gange, når der bruges bogstavnavigation eller tab-tasten benyttes. (#7960)
-- Håndter aria-current med en værdi false som false i stedet for true (#7892).
-- Stemmerne tilhørende Windows OneCore vil ikke længere være ude af stand til at indlæse, hvis en konfigureret stemme tilhørende den pågældende talesyntese er blevet fjernet. (#7999)
-- Det er nu hurtigere at skifte imellem stemmer, når Windows OneCore benyttes. (#7999)
-- Rettede ukorrekt punktoutput for flere punkttabeller, herunder store bogstaver i ottepunkt forkortet dansk punkt. (#7526, #7693)
-- NVDA kan nu rapportere flere typer af punkter i Microsoft Word. (#6778)
-- Udførelse af scriptet til rapportering af tekstformatering vil ikke længere have uventede resultater og flytte læsepositionen. (#7869)
-- Punktindtastning vil ikke længere lade dig benytte forkortet punktskrift hvor det ikke er tilladt (f.eks. hele ord vil ikke længere blive sendt til systemet udenfor tekstindhold og i gennemsynstilstand). (#7306)
-- Rettede forbindelsesproblemer med Handy Tech Easy Braille og Braille Wave displays. (#8016)
-- I Windows 8 og nyere, vil NVDA ikke længere annoncere "Ukendt", når du åbner et menupunkt fra en hurtiglink-menu (Windows+X). (#8137)
-- Modelspecifikke kommandoer til knapper på Hims-punktdisplays virker nu som forventet ifølge brugervejledningen. (#8096)
-- NVDA vil nu forsøge at rette system COM registration-problemer, der kan gøre programmer som Firefox og Internet Explorer utilgængelige og rapportere "Ukendt". (#2807)
-- Løste en fejl i joblisten der gjorde, at man ikke kunne benytte NVDA til at få bestemte detaljer for en proces oplyst. (#8147)
-- Nyere Microsoft SAPI5-stemmer er ikke længere forsinkede når de er færdig med at tale. Dette gør disse stemmer mere effektive under navigering. (#8174)
-- NVDA rapporterer ikke længere (LTR og RTL-tegn) med punkt eller under oplæsning af enkle tegn, når du bruger uret i nyere versioner af Windows. (#5729)
-- Detektion af rulletaster på Hims Smart Beetle displays er nu igen pålidelig. (#6086)
-- I nogle tekstkontroller, især Delfi-applikationer, er informationer oplyst vedr. navigation og redigering blevet meget mere pålidelige. (#636, #8102)
-- NVDA vil ikke længere rapportere yderligt overflødige informationer, når der skiftes mellem job med ALT+Tab. (#8258)
 
 
 == Ændringer for udviklere ==
