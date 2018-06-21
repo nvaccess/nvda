@@ -248,12 +248,9 @@ def _setSystemConfig(fromPath):
 		else:
 			if os.path.relpath(curSourceDir,fromPath) == "addons":
 				import addonHandler
-				runningAddons = []
-				for addon in addonHandler.getRunningAddons():
-					runningAddons.append(addon.name)
-				for subDir in subDirs:
-					if subDir not in runningAddons:
-						subDirs.remove(subDir)
+				subDirs[:] = [addon.name for addon in addonHandler.getRunningAddons()]
+			else:
+				subDirs[:] = subDirs
 			curDestDir=os.path.join(toPath,os.path.relpath(curSourceDir,fromPath))
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
