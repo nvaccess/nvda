@@ -704,10 +704,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			settingsSizerHelper.addItem(item)
 
 	def onCopySettings(self,evt):
-		runningAddons = []
-		for addon in addonHandler.getRunningAddons():
-			runningAddons.append(addon.manifest['summary'])
-		if len(runningAddons)>0:
+		if any(addonHandler.getRunningAddons()):
 			if gui.messageBox(
 				# Translators: A message to warn the user when attempting to copy current settings to system settings.
 				_("The following add-ons were detected in your user settings directory:\r\n%s.\r\nCopying these to the system profile could be a security risk. Do you still wish to copy your settings?" % ", ".join(runningAddons)),
