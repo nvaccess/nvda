@@ -1911,6 +1911,8 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | tecla control+fin | barra espaciadora braille+punto4+punto5+punto6 |
 | tecla alt | barra espaciadora braille+punto1+punto3+punto4 |
 | tecla alt+tab | barra espaciadora braille+punto2+punto3+punto4+punto5 |
+| tecla alt+shift+tab | barra espaciadorabraille+punto1+punto2+punto5+punto6 |
+| tecla windows+tab | barra espaciadora braille+punto2+punto3+punto4 |
 | tecla escape | barra espaciadora braille+punto1+punto5 |
 | tecla windows | barra espaciadora braille+punto2+punto4+punto5+punto6 |
 | tecla espacio | barra espaciadora braille |
@@ -2427,6 +2429,11 @@ Se admiten los siguientes modelos:
 
 Para el BrailleNote Touch, por favor consulta la sección [series de las Brailliant BI / BrailleNote Touch HumanWareBrailliant].
 
+Excepto para el BrailleNote PK, se admiten ambos teclados braille (BT) y QWERTY (QT).
+Para el BrailleNote QT, no se admite la emulación del teclado de PC.
+También puedes introducir puntos braille utilizando el teclado QT.
+Por favor consulta la sección de terminal braille de la guía de manual del BrailleNote para detalles.
+
 Si tu dispositivo admite más de un tipo de conexión, cuando conectes tu BrailleNote a NVDA, debes configurar el puerto de la terminal braille en las opciones de terminal braille.
 Por favor consulta el manual del BrailleNote para detalles.
 En NVDA, también podrías necesitar configurar el puerto en el cuadro de diálogo [Seleccionar Pantalla Braille #SelectBrailleDisplay].
@@ -2434,6 +2441,9 @@ Si te estás conectando a través de USB o bluetooth, puedes configurar el puert
 Si te estás conectando utilizando un puerto serie (o un conversor de USB a serie) o si no aparece ninguna de las opciones anteriores, debes elegir explícitamente el puerto de comunicación a utilizarse desde la lista de puertos hardware.
 
 Antes de conectar tu BrailleNote Apex utilizando su cliente de interface USB, debes instalar los controladores proporcionados por HumanWare.
+
+En el BrailleNote Apex BT, puedes utilizar la rueda de desplazamiento ubicada entre los puntos 1 y 4 para varias órdenes de NVDA.
+La rueda consiste en  cuatro puntos direccionales, un clic en el botón central, y una rueda que gira en el sentido o contra el sentido de las agujas del reloj.
 
 Seguidamente van las asignaciones de órdenes del BrailleNote para NVDA.
 Por favor consulta la documentación del BrailleNote para encontrar dónde se localizan estas teclas.
@@ -2445,6 +2455,7 @@ Por favor consulta la documentación del BrailleNote para encontrar dónde se lo
 | Mover pantalla braille a la línea anterior | anterior |
 | Mover pantalla braille a la línea siguiente | siguiente |
 | Llevar a la celda braille | sensores |
+| menú NVDA | espacio+punto1+punto3+punto4+punto5 (espacio+n) |
 | Activar y desactivar seguimiento de braille | anterior+siguiente |
 | Tecla flecha arriba | espacio+punto1 |
 | Tecla flecha abajo | espacio+punto4 |
@@ -2464,6 +2475,39 @@ Por favor consulta la documentación del BrailleNote para encontrar dónde se lo
 | Tecla Windows | espacio+punto2+punto4+punto5+punto6 (espacio+w) |
 | Tecla Alt | espacio+punto1+punto3+punto4 (espacio+m) |
 | Activar y desactivar ayuda de entrada | espacio+punto2+punto3+punto6 (espacio+h abajo) |
+
+Seguidamente van las órdenes asignadas al BrailleNote QT cuando no está en modo de entrada braille.
+
+|| Nombre | Tecla |
+| Menú NVDA | leer+n |
+| Tecla flecha arriba | flecha arriba |
+| Tecla flecha abajo | flecha abajo |
+| Tecla flecha izquierda | flecha izquierda |
+| Tecla flecha derecha | flecha derecha |
+| Tecla retroceso de página | función+flecha arriba |
+| Tecla avance de página | función+flecha abajo |
+| Tecla inicio | función+flecha izquierda |
+| Tecla fin | función+flecha derecha |
+| Control+teclas inicio | leer+t |
+| Control+teclas fin | leer+b |
+| Tecla intro | intro |
+| Tecla retroceso | retroceso |
+| Tecla tab | tab |
+| Teclas Shift+tab | shift+tab |
+| Tecla Windows | leer+w |
+| Tecla Alt | leer+m |
+| Conmutar ayuda de entrada | leer+1 |
+
+Seguidamente van las órdenes asignadas a la rueda de desplazamiento:
+
+|| Nombre | Tecla |
+| Tecla flecha arriba | flecha arriba |
+| Tecla flecha abajo | flecha abajo |
+| Tecla flecha izquierda | flecha izquierda |
+| Tecla flecha derecha | flecha derecha |
+| Tecla intro | botón central |
+| Tecla Tab | desplazar la rueda en el sentido de las agujas del reloj |
+| tecla Shift+tab | desplazar la rueda en el sentido contrario a las agujas del reloj |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]

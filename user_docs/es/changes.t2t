@@ -3,6 +3,25 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+
+== Nuevas Características ==
+- NVDA anunciará errores de gramática cuando se expongan apropiadamente por las páginas web en Mozilla Firefox. (#8280)
+- Añadida la compatibilidad para las ruedas de desplazamiento de BrailleNote QT y Apex BT cuando se utilice BrailleNote como una pantalla braille con NVDA. (#6316)
+
+
+== Cambios ==
+- La lista de idiomas disponibles en el diálogo opciones Generales ahora se ordena basándose en los nombres de los idiomas en lugar de en los códigos ISO 639. (#7284)
+- Añadidos gestos predeterminados para alt shift tab y windows tab con todas las pantallas braille compatibles de Freedom Scientific. (#7387)
+
+
+== Corrección de Errores ==
+
+
+== Cambios para Desarrolladores ==
+- Añadido scriptHandler.script, el cual puede funcionar como un decorador para scripts en objetos escriptables. (#6266)
+
+
 = 2018.2 =
 Lo reseñable de esta versión incluye el soporte para tablas en Kindle para PC, el soporte para pantallas Humanware BrailleNote Touch y BI14 Braille, mejoras para sintetizadores de voz Onecore y Sapi5, mejoras en Microsoft Outlook y mucho más.
 
