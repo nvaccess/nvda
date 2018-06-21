@@ -2,6 +2,24 @@ Ce este nou în NVDA
 
 
 %!includeconf: ../changes.t2tconf
+= 2018.3 =
+
+== Noi funcționalități ==
+- NVDA va raporta greșeli gramaticale la expunerea lor apropiată de către paginile web din Mozilla Firefox. (#8280)
+- Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#6316)
+
+
+== Modificări ==
+- Acum, lista de limbi disponibile din dialogul setărilor generale este sortată pe baza numelor limbilor în loc să fie sortată pe baza codurilor ISO 639. (#7284)
+- Se adaugă gesturile implicite pentru alt shift tab și pentru windows tab cu toate afișajele braille suportate de la Freedom Scientific. (#7387)
+
+
+== Defecte rezolvate ==
+
+
+== Modificări pentru dezvoltatori ==
+- S-a adăugat scriptHandler.script, care poate fi folosit pe post de decorator pentru scripturile de pe obiectele scriptabile. (#6266)
+
 
 = 2018.2 =
 

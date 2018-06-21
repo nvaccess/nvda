@@ -3,6 +3,25 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+
+== Neue Funktionen ==
+- NVDA zeigt nun Gramatikfehler auf Webseiten in Firefox an. (#8280)
+- Bei BrailleNote Apex und BrailleNote QT wird nun das Scrollrad vom Braillenote-Treiber unterstützt. (#6316)
+
+
+== Änderungen ==
+- In den Allgemeinen Einstellungen wird die Liste verfügbarer Sprachen nicht mehr nach ISO-639-Codes, sondern nach Sprachennamen sortiert. (#7284)
+- Die Tastenkombinationen Alt+Umschalt+Tab und Windows+Tab können mit allen Freedom Scientific-Zeilen emuliert werden. (#7387)
+
+
+== Fehlerkorrekturen ==
+
+
+== Änderungen für Entwickler ==
+- scriptHandler.script hinzugefügt; kann als decorator für Scripts verwendet werden. (#6266)
+
+
 = 2018.2 =
 
 Zu den Highlights dieser Version gehören die Unterstützung von Tabellen in Kindle für PC, Unterstützung für BrailleNote Touch- und BI14 Braillezeilen von Humanware, Verbesserungen für Onecore- und Sapi5-Sprachausgaben, Verbesserungen in Microsoft Outlook und vieles mehr.
