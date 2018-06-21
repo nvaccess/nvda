@@ -55,6 +55,7 @@ install:
  - type ssh_known_hosts >> %userprofile%\.ssh\known_hosts
  - cd ..
  - git submodule update --init
+ - py -m pip install robotremoteserver
 
 build_script:
  - ps: |
