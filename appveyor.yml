@@ -115,12 +115,14 @@ test_script:
      $wc = New-Object 'System.Net.WebClient'
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\unitTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
-     $nvdaLauncherFile="output\nvda_"
+     $nvdaLauncherFile=".\output\nvda"
      if(!$env:release) {
       $nvdaLauncherFile+="_snapshot"
      }
-     $nvdaLauncherFile+="$env_version.exe"
-     $installerLogFilePath=$(resolve-path .\output\nvda_install.log)
+     $nvdaLauncherFile+="_${env:version}.exe"
+     echo NVDALauncherFile: $NVDALauncherFile
+     $outputDir=$(resolve-path .\output)
+          $installerLogFilePath="$outputDir\nvda_install.log"
      $installerProcess=start-process -FilePath "$nvdaLauncherFile" -ArgumentList "--install-silent --debug-logging --log-file $installerLogFilePath" -passthru
      try {
       $installerProcess | wait-process -Timeout 180
