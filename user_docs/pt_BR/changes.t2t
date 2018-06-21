@@ -1,8 +1,27 @@
 Novidades do NVDA
-Traduzido por: Marlin Rodrigues da Silva, Cleverson Casarin Uliana, Tiago Melo Casal.
+Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo Casal.
 
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
+
+= 2018.3 =
+
+== Novas Características ==
+- O NVDA anunciará erros gramaticais quando exposto de forma apropriada por páginas da Web no Mozilla Firefox. (#8280)
+- Adicionado suporte para BrailleNote QT e rodinha da Apex BT quando o BrailleNote é usado como uma linha braille com o NVDA. (#6316)
+
+
+== Alterações ==
+- A lista de idiomas disponíveis na caixa de diálogo Configurações Gerais agora é ordenada com base nos nomes de idiomas em vez dos códigos ISO 639. (#7284)
+- Adicionado gestos predefinidos para o alt shift tab e o windows tab a todas as linhas Braille da Freedom Scientific suportadas. (#7387)
+
+
+== Correção de Falhas ==
+
+
+== Alterações Específicas para Desenvolvedores ==
+- Adicionado scriptHandler.script, que pode funcionar como um decorador ""[decorator]"" para scripts em objetos scriptáveis ""[scriptable objects]"". (#6266)
+
 
 = 2018.2 =
 
