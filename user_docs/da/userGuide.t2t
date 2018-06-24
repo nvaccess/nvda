@@ -1911,6 +1911,8 @@ Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan
 | Ctrl+end tast | punktMellemrum+punkt4+punkt5+punkt6 |
 | alt tast | punktMellemrum+punkt1+punkt3+punkt4 |
 | alt+tab tast | punktMellemrum+punkt2+punkt3+punkt4+punkt5 |
+| alt+shift+tab taster | punktMellemrum+punkt1+punkt2+punkt5+punkt6 |
+| windows+tab taster | punktMellemrum+punkt2+punkt3+punkt4 |
 | escape tast | punktMellemrum+punkt1+punkt5 |
 | windows tast | punktMellemrum+punkt2+punkt4+punkt5+punkt6 |
 | mellemrum tast | punktMellemrum |
@@ -2427,6 +2429,11 @@ Følgende modeller er understøttede:
 
 For BrailleNote Touch, læs venligst afsnittet [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] for yderligere information.
 
+Udover BrailleNote PK, så er både tastaturer understøttet, herunder både punktindtastning (BT) og QWERTY (QT).
+For BrailleNote QT er tastaturemulation ikke understøttet.
+Du kan også indtaste punkt via QWERTY-tastaturet.
+Læs venligst afsnittet om Braille Terminal i BrailleNote-manualen for yderligere detaljer.
+
 Hvis din enhed understøtter mere end en forbindelsestype, skal du indstille porten til punktterminal under indstillinger for Punkt Terminal.
 Læs venligst Braillenote manualen for detaljer.
 Det kan også være nødvendigt at indstille porten i [dialogen Vælg punktdisplay #SelectBrailleDisplay].
@@ -2434,6 +2441,9 @@ hvis du kobler til via USB eller Bluetooth, kan du sætte indstillingen til "Aut
 Hvis du forbinder enheden gennem en ældre seriel port eller en USB til seriel adapter, eller hvis ingen af de forrige indstillinger er tilgængelige, skal du vælge hvilken port du ønsker at bruge fra listen.
 
 Før du forbinder din BrailleNote Apex ved brug af dens USB-client grænseflade, skal du installere de nødvendige drivere fra HumanWare.
+
+På BrailleNote Apex BT kan du benytte rullehjulet, der er at finde mellem punkt 1 og punkt 4, til at udføre diverse NVDA-kommandoer.
+Hjulet består af fire etningspunkter, en klikknap i midten, og et hjul der kan bevæge sig med og imod uret.
 
 Dette er tastekombinationerne til BrailleNote til brug med NVDA.
 Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan finde knapperne.
@@ -2445,6 +2455,7 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 | Flyt punktdisplay til forrige linje | previous |
 | Flyt punktdisplay til næste linje | next |
 | Flyt til punktcelle | markørsammenføringsknapper |
+| NvDA-menu | mellemrum+punkt1+punkt3+punkt4+punkt5 (mellemrum+n) |
 | Slå "Punkt følger" til/fra | previous+next |
 | Pil-op | mellemrum+punkt1 |
 | Pil-ned key | mellemrum+punkt4 |
@@ -2464,6 +2475,39 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 | Windows tast | mellemrum+punkt2+punkt4+punkt5+punkt6 (mellemrum+w) |
 | Alt tast | mellemrum+punkt1+punkt3+punkt4 (mellemrum+m) |
 | Tastaturhjælp til/fra | mellemrum+punkt2+punkt3+punkt6 (mellemrum+lavt+h) |
+
+Følgende er tastekombinationer tildelt BrailleNote BT, når punkttilstand ikke er slået til.
+
+|| Navn | Tast |
+| NvDA-menu | read+n |
+| Pil op | pilOp |
+| Pil ned | pilNed |
+| Venstre pil | venstrePil |
+| Højre pil | højrePil |
+| Side op | funktion+pilOp |
+| Side ned | funktion+pilNed |
+| Hjem | funktion+venstrePil |
+| End | funktion+højre pil |
+| Control+hjem taster | read+t |
+| Control+end taster | read+b |
+| Enter-tast | enter |
+| Backspace-tast | backspace |
+| Tab-tast | tab |
+| Skift+tab-taster | skift+tab |
+| Windows-tast | read+w |
+| Alt-tast | read+m |
+| Slå tastaturhjælp til og fra | read+1 |
+
+Følgende er kommandoer tildelt rullehjulet:
+
+|| Navn | Tast |
+| Pil op | pilOp |
+| Pil ned | pilNed |
+| Venstre pil | venstrePil |
+| Højre pil | højrePil |
+| Enter-tast | center-knap |
+| Tab-tast | rul hjul mod uret |
+| Skift+tab-taster | rul hjul imod uret |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
