@@ -142,7 +142,6 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		except IndexError:
 			return
-	# Translators: Input help mode message for a command in Skype Preview app.
 	script_readMessage.__doc__ = _("Reports and moves the review cursor to a recent message")
 
 	def script_moveToChatEditField(self, gesture):
