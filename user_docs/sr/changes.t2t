@@ -5,14 +5,23 @@
 
 = 2018.2 =
 
+Glavne karakteristike ove verzije uključuju podršku za tabele u programu Kindle za  PC, podrška za Humanware BrailleNote Touch i  BI14 brajeve redove, poboljšanja za Onecore i Sapi5 sintetizatore govora, poboljšanja u programu Microsoft Outlook i još puno toga.
+
 == Nove karakteristike ==
 - Redovi i kolone koje pokriva određena ćelija u tabeli se sada izgovaraju i ispisuju na brajevom redu. (#2642)
 - NVDA komande za navigaciju kroz tabele su  sada podržane u servisu  Google Docs (sa omogućenim brajevim režimom). (#7946)
-- Sposobnost čitanja i navigacije kroz tabele u programu Kindle za  PC. (#7977)
+- Dodata sposobnost čitanja i navigacije kroz tabele u programu Kindle za  PC. (#7977)
 - Podrška za  BrailleNote touch i  Brailliant BI 14 brajeve redove putem USB i  bluetooth veze. (#6524)
 - U Windows 10 jesenjem Creators ažuriranju i novijim, NVDA će  izgovarati obaveštenja u aplikacijama kao što su  kalkulator i  Windows prodavnica. (#8045)
 - Nove tabele za brajev prevod: Litvanski osmotačkasti, Ukrajinski, Mongolski. (#7839)
 - Kada ažurirate  NVDA, moguće je odložiti instalaciju ažuriranja za kasnije. (#4263) 
+- Novi jezici: Mongolski, Švajcarski.
+- Sada možete pritisnuti Kontrol, šift, alt, windows i  NVDA sa vaše brajeve tastature i kombinovati ih sa brajevim unosom (na primer kombinacijom Kontrol+s). (#7306) 
+ - Možete podesiti ove tastere korišćenjem kategorije emulirani sistemski tasteri u dijalogu ulazne komande.
+- Vraćena podrška za brajeve redove Handy Tech Braillino i  Modular (sa starijom verzijom softvera ). (#8016)
+- Vreme i datum za podržane Handy Tech uređaje (na primer Active Braille i  Active Star) će sada automatski biti sinhronizovano sa programom  NVDA kada se razlikuje više od 5 sekundi. (#8016)
+- U listi poruka programa  Microsoft Outlook, NVDA sada prijavljuje da li je na poruku odgovoreno ili je prosleđena. (#6911)
+- Ulazna komanda se može dodeliti za deaktiviranje svih aktivatora profila podešavanja. (#4935)
 
 
 == Promene ==
@@ -21,6 +30,10 @@
 - Litvanska brajeva tabela je preimenovana  u Litvanski šestotačkasti da bi se izbeglo mešanje sa novom osmotačkastom tabelom. (#7839)
 - Francuske  (Kanadske) brajeve tabele stepen 1 i stepen 2 su uklonjene. Umesto toga, Francuska (unificirana) šestotačkasta i tabela stepena 2 će se koristiti. (#7839)
 - Sekundarni tasteri za prebacivanje kursora na brajevim redovima  Alva BC6, EuroBraille i  Papenmeier  sada prijavljuju informacije o formatiranju teksta trenutne ćelije. (#7106)
+- Brajeve tabele  koje podržavaju skraćen unos brajevog pisma će se automatski vratiti na standardan unos u slučajevima kada uređivanje nije moguće (na primer kod kontrola koje nemaju kursor ili u režimu pretraživanja). (#7306)
+- NVDA sada izgovara manje suvišnih informacija kada napomena u kalendaru programa Outlook  važi za ceo dan. (#7949)
+- Sva podešavanja programa NVDA se sada mogu pronaći u jednom dijalogu za podešavanja kada se ode u  NVDA meni-> Opcije-> podešavanja, i više nisu u puno posebnih dijaloga. (#7302)
+- Podrazumevani sintetizator govora kada se NVDA pokrene na Windowsu 10 je sada oneCore i više to nije ESpeak. (#8176)
 
 
 == Ispravljene greške ==
@@ -28,13 +41,23 @@
 - NVDA sada ispravno čita Web stranicu nakon vraćanja nazad u programu Microsoft Edge. (#7997)
 - NVDA neće više neispravno izgovarati poslednji znak  windows 10 PIN koda za prijavu  dok se računar otključava. (#7908)
 - Oznake za radio dugmiće i izborna polja u programima Chrome i  Firefox se više ne prijavljuju dva puta kada se koristi taster tab ili brza navigacija u režimu pretraživanja. (#7960)
-- Računaj  aria-current koji ima vrednost false kao false umesto  true (#7892).
+-   aria-current koji ima vrednost false će se sada izgovarati kao false  umesto  true (#7892).
 - Windows Onecore drajver više nema greške kada  je podešen glas uklonjen. (#7999)
 - Menjanje glasova u Windows Onecore sintetizatoru je sada puno brže. (#7999)
 - Ispravljen pogrešan prikaz brajevog unosa za nekoliko brajevih tabela, uključujući velika slova u skraćenom unosu osmotačkaste Danske brajeve tabele. (#7526, #7693)
 - NVDA sada može  prijaviti više vrsta nabrajanja u programu  Microsoft Word. (#6778)
 - Dodata komanda za prijavljivanje formatiranja teksta ispod trenutne brajeve ćelije. (#7106)
 - Pritiskanje komande za prijavljivanje formatiranja više ne pomera poziciju pregleda, pa s time pritiskanje komande više puta ne daje različite rezultate. (#7869)
+- Brajev unos više ne dozvoljava unos skraćenog brajevog pisma u slučajevima u kojima to nije podržano (cele reči neće više biti poslane sistemu i neće raditi u režimu pretraživanja ). (#7306)
+- Ispravljeni problemi sa povezivanjem redova Handy Tech Easy Braille i  Braille Wave. (#8016)
+- Na  Windowsu 8 i novijim, NVDA više neće izgovarati "nepoznato" kada otvarate brzi meni (Windows+X) i kada  izaberete  neku od ponuđenih  opcija iz ovog menija. (#8137)
+- Komande koje su posebne za model brajevog reda Hims  sada rade kao što je to objašnjeno u korisničkom vodiču. (#8096)
+- NVDA će sada pokušati da popravi  sistemske greške u  COM registraciji koje često dovode do toga da programi kao što su Firefox i  Internet Explorer postanu nepristupačni i prijavljuju "nepoznato" od strane programa  NVDA. (#2807)
+- Ispravljena greška u menadžeru zadataka  koja dovodi do toga da NVDA ne dozvoljava korisnicima da prikažu više detalja o određenim procesima. (#8147)
+- Noviji Microsoft SAPI5 glasovi više ne usporavaju rad na kraju izgovora, što čini navigaciju dosta bržom sa ovim glasovima. (#8174)
+- NVDA više ne prijavljuje (Oznake s leva na desno i  oznake s desna na levo ) na brajevom redu ili kada se izgovara slovo po slovo sat u Windows traci obaveštenja u novijim verzijama Windowsa. (#5729)
+- Prepoznavanje tastera za pomeranje Hims Smart Beetle brajevih redova  ponovo radi ispravno. (#6086)
+- U određenim tekstualnim kontrolama, posebno u  Delphi aplikacijama, informacije koje se pružaju o navigaciji i uređivanju su sada dosta preciznije. (#636, #8102)
 
 
 == Promene za programere ==
