@@ -72,12 +72,16 @@ class AppModule(appModuleHandler.AppModule):
 	_emojiPanelOpened = False
 
 	def event_nameChange(self, obj, nextHandler):
+		# On some systems, touch keyboard keys keeps firing name change event.
+		if obj.UIAElement.cachedClassName == "CRootKey":
+			return
 		# The word "blank" is kept announced, so suppress this on build 17666 and later.
 		if winVersion.winVersion.build >= 17672:
 			# In build 17672 and later, return immediatley when element selected event on clipboard item was fired just prior to this.
 			if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex" or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList": return
 			if not self._emojiPanelOpened or obj.UIAElement.cachedAutomationID != "TEMPLATE_PART_ExpressionGroupedFullView": speech.cancelSpeech()
 			self._emojiPanelOpened = False
-		if obj.UIAElement.cachedAutomationID not in ("TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex"):
+		# Don't forget to add "Microsoft Candidate UI" as something that should be suppressed.
+		if obj.UIAElement.cachedAutomationID not in ("TEMPLATE_PART_ExpressionFullViewItemsGrid", "TEMPLATE_PART_ClipboardItemIndex", "CandidateWindowControl"):
 			ui.message(obj.name)
 		nextHandler()
