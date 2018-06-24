@@ -647,9 +647,6 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_TYPE,VT_I4,&shapeType)!=S_OK) {
 		return 0;
 	}
-	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_HASCHART,VT_BOOL,&shapeHasChart)!=S_OK) {
-		return 0;
-	}
 	wstring altTextStr=L"";
 	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_ALTERNATIVETEXT,VT_BSTR,&altText)==S_OK&&altText) {
 		for(int i=0;altText[i]!='\0';++i) {
@@ -665,20 +662,6 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 		SysFreeString(altText);
 	}
 	altText=NULL;
-	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_HASCHART,VT_BOOL,&shapeHasChart)==S_OK&&shapeHasChart) {
-		if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_CHART,VT_DISPATCH,&pDispatchChart)==S_OK&&pDispatchChart) {
-			if(_com_dispatch_raw_propget(pDispatchChart,wdDISPID_CHART_HASTITLE,VT_BOOL,&chartHasTitle)==S_OK&&chartHasTitle) {
-				if(_com_dispatch_raw_propget(pDispatchChart,wdDISPID_CHART_CHARTTITLE,VT_DISPATCH,&pDispatchChartTitle)==S_OK&&pDispatchChartTitle) {
-					if(_com_dispatch_raw_propget(pDispatchChartTitle,wdDISPID_CHARTTITLE_TEXT,VT_BSTR,&altText)==S_OK&&altText) {
-						for(int i=0;altText[i]!='\0';++i) {
-							appendCharToXML(altText[i],altTextStr,true);
-						}
-						SysFreeString(altText);
-					}
-				}
-			}
-		}
-	}
 	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":(shapeType==wdInlineShapeChart?L"chart":L"object"))<<L"\" value=\""<<altTextStr<<L"\"";
 	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
 		XMLStream<<L" shapeoffset=\""<<offset<<L"\"";

@@ -457,18 +457,19 @@ class EdgeNode(UIA):
 	# RegEx to get the value for the aria-current property. This will be looking for a the value of 'current'
 	# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
 	# character and before the ';' character.
-	# This could be one of: True, "page", "step", "location", "date", "time"
-	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(\w+);")
+	# This could be one of: "false", "true", "page", "step", "location", "date", "time"
+	# "false" is ignored by the regEx and will not produce a match
+	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
 
 	def _get_isCurrent(self):
 		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		match = self.RE_ARIA_CURRENT_PROP_VALUE.match(ariaProperties)
+		match = self.RE_ARIA_CURRENT_PROP_VALUE.search(ariaProperties)
 		log.debug("aria props = %s" % ariaProperties)
 		if match:
 			valueOfAriaCurrent = match.group(1)
 			log.debug("aria current value = %s" % valueOfAriaCurrent)
 			return valueOfAriaCurrent
-		return False
+		return None
 
 	def _get_placeholder(self):
 		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
@@ -570,6 +571,19 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDoc
 		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
 			return True
 		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
+
+	def makeTextInfo(self,position):
+		try:
+			return super(EdgeHTMLTreeInterceptor,self).makeTextInfo(position)
+		except RuntimeError as e:
+			# sometimes the stored TextRange we have for the caret/selection can die if the page mutates too much.
+			# Therefore, if we detect this, just give back the first position in the document, updating our stored version as we go.
+			if position in (textInfos.POSITION_SELECTION,textInfos.POSITION_CARET):
+				log.debugWarning("%s died. Using first position instead."%position)
+				info=self.makeTextInfo(textInfos.POSITION_FIRST)
+				self._selection=info
+				return info
+			raise e
 
 class EdgeHTMLRoot(EdgeNode):
 

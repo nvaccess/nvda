@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-02 00:10+1000\n"
+"POT-Creation-Date: 2018-02-23 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -98,9 +98,9 @@ msgstr "stavefeil"
 
 #. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "spelling: {text}"
-msgstr "stavefeil"
+msgstr "staver: {text}"
 
 #. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -361,7 +361,7 @@ msgstr "btknp"
 #. Translators: Displayed in braille for an object which is a
 #. split button.
 msgid "splbtn"
-msgstr ""
+msgstr "splkn"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu button.
@@ -483,12 +483,12 @@ msgstr "hoved"
 #. Translators: Displayed in braille for the navigation landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
 msgid "navi"
-msgstr ""
+msgstr "nav"
 
 #. Translators: Displayed in braille for the search landmark, normally found on web pages.
 msgctxt "braille landmark abbreviation"
 msgid "srch"
-msgstr ""
+msgstr "søk"
 
 #. Translators: Displayed in braille for the form landmark, normally found on web pages.
 #, fuzzy
@@ -1901,7 +1901,7 @@ msgstr "mørk lyse{color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
-msgstr ""
+msgstr "veldig mørk blek {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
 #, python-brace-format
@@ -4936,17 +4936,15 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Right Arrow"
-msgstr "pil høyre"
+msgstr "Bøyd pil høyre"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Curved Up Arrow"
-msgstr "pil opp"
+msgstr "Bøyd pil opp"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5336,10 +5334,9 @@ msgstr "pil venstre"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Lightning bolt"
-msgstr "høyre alt"
+msgstr "Lyn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5361,10 +5358,9 @@ msgstr ""
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
-#, fuzzy
 msgctxt "shape"
 msgid "Callout with horizontal line"
-msgstr "tynn vannrett stripe"
+msgstr "Callout med horisontal linje"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7164,7 +7160,7 @@ msgstr "av"
 
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
-msgstr ""
+msgstr "Optelec ALVA 6-serien/protokollkonverterer"
 
 #. Translators: Name of a bluetooth serial communications port.
 #, python-brace-format
@@ -7178,15 +7174,15 @@ msgstr "Matematikkinteraksjon støttes ikke"
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
-msgstr ""
+msgstr "Simulering av HID-tastatur slått på"
 
 #. Translators: Message when HID keyboard simulation is disabled.
 msgid "HID keyboard simulation disabled"
-msgstr ""
+msgstr "Simulering av HID-tastatur slått av"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggles HID keyboard simulation"
-msgstr ""
+msgstr "Bytter simulering av HID-tastatur på/av"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7214,6 +7210,20 @@ msgid "EcoBraille displays"
 msgstr "EcoBraille-leselister"
 
 #. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+#, fuzzy
+msgid "HID keyboard input simulation is unavailable."
+msgstr "NVDA versjon {version} er tilgjengelig."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+#, fuzzy
+msgid "Toggle HID keyboard simulation"
+msgstr "Matematikkinteraksjon støttes ikke"
+
+#. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Freedom Scientific Focus/PAC Mate serie"
 
@@ -7234,9 +7244,8 @@ msgid "Braille input enabled"
 msgstr ""
 
 #. Translators: message when braille input is disabled
-#, fuzzy
 msgid "Braille input disabled"
-msgstr "&Leselist:"
+msgstr "Punktskrift inndata slått av"
 
 #. Translators: description of the script to toggle braille input
 msgid "Toggle braille input"
@@ -7598,7 +7607,6 @@ msgstr "&Avslutt"
 msgid "Exit NVDA"
 msgstr "Avslutt NVDA"
 
-#, fuzzy
 msgid ""
 "Most commands for controlling NVDA require you to hold down the NVDA key "
 "while pressing other keys.\n"
@@ -7609,14 +7617,14 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions."
 msgstr ""
-"Velkommen til NVDA!\n"
-"De fleste kommandoene for å styre NVDA gis ved å benytte NVDA-tasten "
-"samtidig som andre taster.\n"
-"Som standard kan begge insert-knappene brukes som NVDA-tast.\n"
-"Du kan konfigurere NVDA til å bruke CapsLock som NVDA-tast.\n"
-"Trykk NVDA+n når som helst for å åpne NVDA-menyen.\n"
-"Fra denne menyen kan du konfigurere NVDA, få hjelp, samt finne andre NVDA-"
-"funksjoner.\n"
+"De fleste kommandoer for å kontrollere NVDA krever at du holder nede NVDA-"
+"tasten mens du trykker på andre taster.\n"
+"Som standard kan  både den ordinære Insert-tasten og Insert-tasten på "
+"talltastaturet brukes som NVDA-tast.\n"
+"Du kan også konfigurere NVDA til å bruke CapsLock som NVDA-tast.\n"
+"Trykk NVDA+n når som helst for å aktivere NVDA-menyen.\n"
+"Fra denne menyen kan du konfigurere NVDA, få hjelp og få tilgang til andre "
+"NVDA-funksjoner."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -9297,11 +9305,13 @@ msgstr ""
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
+"Fjernet rad {rowNumber}  kolonne {columnNumber} fra kolonneoverskrifter"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
+"Finner ikke rad {rowNumber} kolonne {columnNumber} i kolonneoverskrifter"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
@@ -9323,7 +9333,7 @@ msgstr ""
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
+msgstr "Fjernet rad {rowNumber} kolonne {columnNumber} fra kolonneoverskrifter"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
@@ -9567,7 +9577,7 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
-msgstr ""
+msgstr "3D-sylinderkolonne"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -9577,7 +9587,7 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
-msgstr ""
+msgstr "Smultringdiagram"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -9837,7 +9847,7 @@ msgstr "Vegger"
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Data Label"
-msgstr ""
+msgstr "Dataetikett"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #, fuzzy
@@ -9899,24 +9909,24 @@ msgstr "Dataseriefarge: {colorName} "
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr ""
+msgstr "ingen endring fra punkt {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "Økt med {incrementValue} fra punkt {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "Redusert med {decrementValue} fra punkt {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".

@@ -36,6 +36,7 @@ thousands separator	ponto	all	norep	# clássico separador de milhares
 # Standard punctuation/symbols
 !	exclamação
 "	aspas
+# pt_BR: "#" na tabela de caracteres Unicode (caractere U+0023) é nomeado oficialmente como "number sign" (sinal de número) - www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
 \#	número
 $	cifrão
 £	libra
@@ -79,8 +80,6 @@ _	sublinha
 •	bolinha
 …	reticências
 ...	ponto ponto ponto
-# pt_BR: deixado texto original do caractere ""(U+F0B7), diferenciando por não ser o mesmo que caractere "•" (U+2022)
-	bullet
 “	abre aspas
 ”	fecha aspas
 ‘	apóstrofo esquerdo
@@ -95,7 +94,12 @@ _	sublinha
 ▪	quadradinho negro
 ◾	quadradinho médio negro
 ◦	bolinha branca
-➔	seta apontando para direita
+⇒	seta dupla para a direita
+⇨	seta branca para a direita
+➢	Seta para a direita 3d superior-iluminada
+❖	diamante negro menos x branco
+♣	clube negro
+♦	diamante Negro
 §	parágrafo
 °	graus
 «	abre aspas angulares
@@ -115,7 +119,7 @@ _	sublinha
 →	seta para direita
 ↓	seta para baixo
 ✓	marca de seleção
-✔	marca de seleção em negrito
+✔	marca de seleção realçada
 
 #Mathematical Operators U+2200 to U+220F
 ∀	para todo

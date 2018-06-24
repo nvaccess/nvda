@@ -326,6 +326,21 @@ formatConfigFlagsMap={
 }
 formatConfigFlag_includeLayoutTables=0x20000
 
+# Map some characters from PUA to Unicode. Meant to be used with bullets only.
+# Doesn't care about the actual font, so can give incorrect Unicode in rare cases.
+mapPUAToUnicode = {
+	# from : to # fontname
+	u'\uF06E' : u'\u25A0', # Wingdings
+	u'\uF076' : u'\u2756', # Wingdings
+	u'\uF0A7' : u'\u2663', # Symbol
+	u'\uF0A8' : u'\u2666', # Symbol
+	u'\uF0B7' : u'\u2022', # Symbol
+	u'\uF0D8' : u'\u27A2', # Wingdings
+	u'\uF0E8' : u'\u21D2', # Wingdings
+	u'\uF0F0' : u'\u21E8', # Wingdings
+	u'\uF0FC' : u'\u2714', # Wingdings
+}
+
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(self,nodeType,document,textInfo,level):
@@ -831,6 +846,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			else:
 				v=self.obj.getLocalizedMeasurementTextForPointSize(v)
 			field[x]=v
+		bullet=field.get('line-prefix')
+		if bullet and len(bullet)==1:
+			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
 		return field
 
 	def expand(self,unit):

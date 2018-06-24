@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V., Zahari Yurukov
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -61,6 +61,8 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
+	if not globalVars.appArgs.secure and not config.isAppX and not config.conf['update']['askedAllowUsageStats']:
+		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None))
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
