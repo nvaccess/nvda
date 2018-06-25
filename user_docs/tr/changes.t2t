@@ -3,6 +3,25 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+
+== New Features ==
+- NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox. (#8280)
+- Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#6316)
+
+
+== Changes ==
+- the list of available languages in the General Settings dialog is now sorted based on language names instead of ISO 639 codes. (#7284)
+- Add default gestures for alt shift tab and windows tab with all supported Freedom Scientific braille displays. (#7387)
+
+
+== Bug Fixes ==
+
+
+== Changes for Developers ==
+- Added scriptHandler.script, which can function as a decorator for scripts on scriptable objects. (#6266)
+
+
 = 2018.2 =
 
 Highlights of this release include Support for tables in Kindle for PC, support for HumanWare BrailleNote Touch and BI14 Braille displays, Improvements to both Onecore and Sapi5 speech synthesizers, improvements in Microsoft Outlook and much more.

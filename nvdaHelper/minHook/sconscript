@@ -10,7 +10,7 @@ env=env.Clone(CPPPATH=minhookPath.Dir('include'))
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
 
-HDESourceFile='HDE/HDE64.c' if env['TARGET_ARCH']=='x86_64' else 'HDE/HDE32.c'
+HDESourceFile='hde/hde64.c' if env['TARGET_ARCH']=='x86_64' else 'hde/hde32.c'
 
 sourceFiles=[
 	HDESourceFile,
