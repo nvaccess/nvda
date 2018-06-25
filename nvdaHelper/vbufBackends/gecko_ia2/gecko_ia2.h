@@ -32,7 +32,6 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	bool shouldDisableTableHeaders;
 	bool hasEncodedAccDescription;
-	bool canDetectLabelVisibility;
 
 	protected:
 
