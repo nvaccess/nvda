@@ -306,6 +306,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
 
 	def _getColumnLocationRaw(self,index):
+		assert index>0, "INvalid index: %d" % index
 		processHandle=self.processHandle
 		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
 		localRect=RECT(
@@ -319,7 +320,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.readProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
-		# ##8268: this might be a malformed rectangle
+		# #8268: this might be a malformed rectangle
 		# (i.e. with a left coordinate that is greather than the right coordinate).
 		left = min(localRect.left, localRect.right)
 		top = min(localRect.top, localRect.bottom)
