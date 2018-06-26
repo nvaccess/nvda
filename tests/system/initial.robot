@@ -22,7 +22,7 @@ Ensure NVDA quits from keyboard
 	send key	insert	q
 	wait for foreground	Exit NVDA
 	send key	enter
-	wait for process	nvdaAlias	timeout=5 sec
+	wait for process	nvdaAlias	timeout=10 sec
 	process should be stopped	nvdaAlias
 
 Can read the welcome dialog
