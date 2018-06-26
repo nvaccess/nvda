@@ -1,5 +1,5 @@
 Guia do Usuário do NVDA NVDA_VERSION
-Traduzido por: Gustavo Tavares Dantas, Marlin Rodrigues da Silva, Cleverson Casarin Uliana, Tiago Melo Casal.
+Traduzido por: Gustavo Tavares Dantas; Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo Casal.
 
 %!includeconf: ../userGuide.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
@@ -1911,6 +1911,8 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Tecla control+end | brailleSpaceBar+ponto 4+ponto 5+ponto 6 |
 | Tecla alt | brailleSpaceBar+ponto 1+ponto 3+ponto 4 |
 | Tecla alt+tab | brailleSpaceBar+ponto 2+ponto 3+ponto 4+ponto 5 |
+| tecla alt+shift+tab | barraDeEspaçoBraille+ponto1+ponto2+ponto5+ponto6 |
+| tecla windows+tab | barraDeEspaçoBraille+ponto2+ponto3+ponto4 |
 | Tecla escape | brailleSpaceBar+ponto 1+ponto 5 |
 | Tecla windows | brailleSpaceBar+ponto 2+ponto 4+ponto 5+ponto 6 |
 | Tecla espaço | brailleSpaceBar |
@@ -2432,6 +2434,10 @@ Os seguintes modelos são suportados:
 
 Para o BrailleNote Touch, consulte a seção [Brailliant BI Série / BrailleNote Touch #HumanWareBrailliant].
 
+Com exceção do BrailleNote PK, os teclados braille (BT) e QWERTY (QT) são suportados.
+Para o BrailleNote QT, a emulação do teclado de PC não é suportada.
+Você também pode digitar pontos braille usando o teclado QT.
+
 Se seu dispositivo suporta mais de um tipo de conexão, ao conectar seu BrailleNote para usar com o NVDA, você precisa configurá-lo como porta de terminal braille nas opções de terminal braille.
 Por favor consulte o manual do BrailleNote para mais detalhes.
 No NVDA, poderá também ser necessário configurar a porta no diálogo [Selecionar Linha Braille #SelectBrailleDisplay].
@@ -2439,6 +2445,9 @@ Caso esteja conectando via USB ou bluetooth, você pode configurar a porta para 
 Caso conecte usando uma porta serial legada (ou um conversor de USB para serial) ou se nenhuma das opções anteriores aparece, você deve escolher explicitamente a porta de comunicação a ser usada na lista de portas de hardware.
 
 Antes de conectar seu BrailleNote Apex usando sua interface para cliente USB, você precisa instalar os drivers fornecidos pela HumanWare.
+
+No BrailleNote Apex BT, você pode usar a rodinha localizada entre os pontos 1 e 4 para vários comandos do NVDA.
+A rodinha consiste em quatro pontos direcionais, um botão de clique no centro, e uma roda que gira no sentido horário ou anti-horário.
 
 A seguir estão os comandos BrailleNote atribuídos para o NVDA.
 Por favor consulte a documentação de seu BrailleNote para informações sobre onde essas teclas se encontram.
@@ -2450,6 +2459,7 @@ Por favor consulte a documentação de seu BrailleNote para informações sobre 
 | Mover linha braille para a linha anterior | previous |
 | Mover linha braille para a linha seguinte | next |
 | Guiar para a cela braille | sensor |
+| Menu NVDA | espaço+ponto1+ponto3+ponto4+ponto5 (espaço+n) |
 | Alternar vínculo do braille | previous+next |
 | Tecla seta acima | espaço+ponto1 |
 | Tecla seta abaixo | espaço+ponto4 |
@@ -2469,6 +2479,39 @@ Por favor consulte a documentação de seu BrailleNote para informações sobre 
 | Tecla Windows | espaço+ponto2+ponto4+ponto5+ponto6 (espaço+w) |
 | Tecla alt | espaço+ponto1+ponto3+ponto4 (espaço+m) |
 | Alternar ajuda de entrada | espaço+ponto1+ponto2+ponto5 (espaço+h) |
+
+A seguir, os comandos atribuídos ao BrailleNote QT quando ele não está no modo de entrada ""[digitação]"" em braille.
+
+|| Nome | Tecla |
+| Menu NVDA | read+n |
+| Tecla seta para cima | setaParaCima |
+| Tecla seta para baixo | setaParaBaixo |
+| Tecla Seta para esquerda | setaParaEsquerda |
+| Tecla seta para direita | setaParaDireita |
+| Tecla page up | função+setaParaCima |
+| Tecla page down | função+setaParaBaixo |
+| Tecla home | função+setaParaEsquerda |
+| Tecla end | função+setaParaDireita |
+| Teclas control+home | read+t |
+| Teclas control+end | read+b |
+| Tecla enter | enter |
+| Tecla backspace | backspace |
+| Tecla tab | tab |
+| Teclas shift+tab | shift+tab |
+| Tecla windows | read+w |
+| Tecla alt | read+m |
+| Alternar ajuda de entrada | read+1 |
+
+A seguir, os comandos atribuídos à rodinha:
+
+|| Nome | Tecla |
+| Tecla seta para cima | setaParaCima |
+| Tecla seta para baixo | setaParaBaixo |
+| Tecla Seta para esquerda | setaParaEsquerda |
+| Tecla seta para direita | setaParaDireita |
+| Tecla enter | botão central |
+| Tecla tab | girar rodinha no sentido horário |
+| Teclas shift+tab | girar rodinha no sentido anti-horário |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]

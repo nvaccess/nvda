@@ -832,9 +832,11 @@ For further information about Browse mode and single letter navigation, see the 
 %kc:beginInclude
 || Name | Key | Description |
 | Report remaining time | control+shift+r | Reports the remaining time of the currently playing track, if any. |
+| Report elapsed time | control+shift+e | Reports the elapsed time of the currently playing track, if any. |
+| Report track length | control+shift+t | Reports the length of the currently playing track, if any. |
 %kc:endInclude
 
-Note: The report remaining time shortcut works only with the default formatting string for foobar's status line.
+Note: The above shortcuts work only with the default formatting string for foobar's status line.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -922,7 +924,7 @@ If you want to save your settings and close the NVDA Settings dialog, you can us
 Some settings categories have dedicated shortcut keys.
 If pressed, the shortcut key will open the NVDA Settings dialog in that particular category.
 By default, not all categories can be accessed with keyboard commands.
-If you wish to access categories which does not have dedicated shortcut keys, use the [Input Gestures dialog #InputGestures] to add a custom gesture such as a keyboard command or touch gesture for that category.
+If you wish to access categories which do not have dedicated shortcut keys, use the [Input Gestures dialog #InputGestures] to add a custom gesture such as a keyboard command or touch gesture for that category.
 
 The settings categories found in the NVDA Settings dialog will be outlined below.
 
@@ -971,6 +973,25 @@ This option is only available for installed copies of NVDA.
 ==== Automatically check for updates to NVDA ====[GeneralSettingsCheckForUpdates]
 If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
 You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
+When manually or automatically checking for updates, it is necessary for NVDA to send some information to the update server in order to receive the correct update for your system.
+The following information is always sent: 
+- Current NVDA version
+- Operating System version
+- Whether the Operating System is 64 or 32 bit
+
+
+==== Allow the NVDA project to gather NVDA usage statistics ====[GeneralSettingsGatherUsageStats]
+If this is enabled, NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system and country of origin.
+Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
+Apart from the mandatory information required to check for updates, the following extra information is also currently sent:
+- NVDA interface language
+- Whether this copy of NVDA is portable or installed
+- Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
+- Name of the current Braille display in use (including the name of the add-on the driver comes from)
+- The current output Braille table (if Braille is in use)
+
+
+This information greatly aides NV Access to prioritize future development of NVDA.
 
 ==== Notify for pending updates on startup ====[GeneralSettingsNotifyPendingUpdates]
 If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
@@ -1911,6 +1932,8 @@ Please see the display's documentation for descriptions of where these keys can 
 | control+end key | brailleSpaceBar+dot4+dot5+dot6 |
 | alt key | brailleSpaceBar+dot1+dot3+dot4 |
 | alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| alt+shift+tab key | brailleSpaceBar+dot1+dot2+dot5+dot6 |
+| windows+tab key | brailleSpaceBar+dot2+dot3+dot4 |
 | escape key | brailleSpaceBar+dot1+dot5 |
 | windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | space key | brailleSpaceBar |
@@ -2427,6 +2450,11 @@ The following models are supported:
 
 For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
 
+Except for BrailleNote PK, both braille (BT) and QWERTY (QT) keyboards are supported.
+For BrailleNote QT, PC keyboard emulation isn't supported.
+You can also enter braille dots using the QT keyboard.
+Please check the braille terminal section of the BrailleNote manual guide for details.
+
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.
 In NVDA, you may also need to set the port in the [Select Braille Display #SelectBrailleDisplay] dialog.
@@ -2434,6 +2462,9 @@ If you are connecting via USB or bluetooth, you can set the port to "Automatic",
 If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
 
 Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
+
+On the BrailleNote Apex BT, you can use the scroll wheel located between dots 1 and 4 for various NVDA commands.
+The wheel consists of four directional dots, a center click button, and a wheel that spins clockwise or counterclockwise.
 
 Following are the BrailleNote command assignments for NVDA.
 Please check your BrailleNote's documentation to find where these keys are located.
@@ -2445,6 +2476,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Move braille display to previous line | previous |
 | Move braille display to next line | next |
 | Route to braille cell | routing |
+| NvDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
 | Toggle braille tethered to | previous+next |
 | Up arrow key | space+dot1 |
 | Down arrow key | space+dot4 |
@@ -2464,6 +2496,39 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+
+Following are commands assigned to BrailleNote QT when it is not in braille input mode.
+
+|| Name | Key |
+| NvDA menu | read+n |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow|
+| Right arrow key | rightArrow |
+| Page up key | function+upArrow |
+| Page down key | function+downArrow |
+| Home key | function+leftArrow |
+| End key | function+rightArrow |
+| Control+home keys | read+t |
+| Control+end keys | read+b |
+| Enter key | enter |
+| Backspace key | backspace |
+| Tab key | tab |
+| Shift+tab keys | shift+tab |
+| Windows key | read+w |
+| Alt key | read+m |
+| Toggle input help | read+1 |
+
+Following are commands assigned to the scroll wheel:
+
+|| Name | Key |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow |
+| Right arrow key | rightArrow |
+| Enter key | center button |
+| Tab key | scroll wheel clockwise |
+| Shift+tab keys | scroll wheel counterclockwise |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
