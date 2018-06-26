@@ -117,26 +117,6 @@ test_script:
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\unitTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  - ps: |
-     $errorCode=0
-     $nvdaLauncherFile=".\output\nvda"
-     if(!$env:release) {
-      $nvdaLauncherFile+="_snapshot"
-     }
-     $nvdaLauncherFile+="_${env:version}.exe"
-     echo NVDALauncherFile: $NVDALauncherFile
-     $outputDir=$(resolve-path .\output)
-          $installerLogFilePath="$outputDir\nvda_install.log"
-     $installerProcess=start-process -FilePath "$nvdaLauncherFile" -ArgumentList "--install-silent --debug-logging --log-file $installerLogFilePath" -passthru
-     try {
-      $installerProcess | wait-process -Timeout 180
-      $errorCode=$installerProcess.ExitCode
-     } catch {
-      echo NVDA installer process timed out
-      $errorCode=1
-     }
-          Push-AppveyorArtifact $installerLogFilePath
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
- - ps: |
      py -m robot --loglevel DEBUG -d output/testResults/system -x systemTests.xml -v whichNVDA:source tests/system/
      Get-ChildItem ".\output/testResults/system\" -Attributes !Directory -depth 2 |
       Foreach-Object {
