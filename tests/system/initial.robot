@@ -16,6 +16,7 @@ Ensure NVDA runs at all
 	process should be running	nvdaAlias
 
 Ensure NVDA quits from keyboard
+	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	send key	insert	tab
 	send key	insert	q
 	sleep	1
