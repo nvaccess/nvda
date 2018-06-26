@@ -293,6 +293,6 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# This window or its root is a topmost window.
 		# This includes menus, combo box pop-ups and the task switching list.
 		return True
-	if eventName=="gainfocus::
+	if eventName=="gainfocus":
 		log.info("Filtered out focus event")
 	return False

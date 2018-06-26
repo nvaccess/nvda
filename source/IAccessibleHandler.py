@@ -137,7 +137,7 @@ liveNVDAObjectTable=weakref.WeakValueDictionary()
 
 # #3831: Stuff related to deferring of events for foreground changes.
 # See pumpAll for details.
-MAX_FOREGROUND_DEFERS=2
+MAX_FOREGROUND_DEFERS=10
 _deferUntilForegroundWindow = None
 _foregroundDefers = 0
 
