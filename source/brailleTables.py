@@ -74,6 +74,7 @@ RENAMED_TABLES = {
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
 	"no-no.ctb":"no-no-comp8.ctb",
+	"ru-compbrl.ctb":"ru.ctb",
 	"sk-sk-g1.utb":"sk-g1.ctb",
 	"UEBC-g1.ctb":"en-ueb-g1.ctb",
 	"UEBC-g2.ctb":"en-ueb-g2.ctb",
@@ -103,7 +104,7 @@ addTable("cy-cy-g1.utb", _("Welsh grade 1"))
 addTable("cy-cy-g2.ctb", _("Welsh grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("cs-comp8.utb", _("Czech 8-dots computer braille"))
+addTable("cs-comp8.utb", _("Czech 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("cs-g1.ctb", _("Czech grade 1"))
@@ -334,7 +335,7 @@ addTable("pu-in-g1.utb", _("Punjabi grade 1"))
 addTable("ro.ctb", _("Romanian"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ru.ctb", _("Russian computer braille"))
+addTable("ru-compbrl.ctb", _("Russian braille for computer code"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ru-ru-g1.utb", _("Russian grade 1"))
