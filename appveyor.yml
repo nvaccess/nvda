@@ -118,16 +118,6 @@ before_test:
  - py -m pip install nose 
  - mkdir output\testResults
  - mkdir output\testResults\system
-
-test_script:
- - ps: |
-     $errorCode=0
-     py -m nose --with-xunit --xunit-file=output/testResults/unitTests.xml tests/unit
-     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
-     Push-AppveyorArtifact .\output\testResults\unitTests.xml
-     $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\unitTests.xml))
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  - ps: |
      $errorCode=0
      $nvdaLauncherFile=".\output\nvda"
@@ -147,6 +137,16 @@ test_script:
       $errorCode=1
      }
           Push-AppveyorArtifact $installerLogFilePath
+     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+
+test_script:
+ - ps: |
+     $errorCode=0
+     py -m nose --with-xunit --xunit-file=output/testResults/unitTests.xml tests/unit
+     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     Push-AppveyorArtifact .\output\testResults\unitTests.xml
+     $wc = New-Object 'System.Net.WebClient'
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\unitTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  - ps: |
      py -m robot --loglevel DEBUG -d output/testResults/system -x systemTests.xml -v whichNVDA:installed tests/system/
