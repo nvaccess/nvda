@@ -17,15 +17,11 @@ Ensure NVDA runs at all
 
 Ensure NVDA quits from keyboard
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
-	send key	insert	tab
-	send key	insert	q
-	sleep	1
-	send key	insert	tab
-	wait for foreground	Exit NVDA
-	send key	insert	tab
+	wait for foreground	Welcome to NVDA
 	send key	enter
-	sleep	1
-	send key	insert	tab
+	send key	insert	q
+	wait for foreground	Exit NVDA
+	send key	enter
 	wait for process	nvdaAlias	timeout=5 sec
 	process should be stopped	nvdaAlias
 
