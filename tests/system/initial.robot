@@ -16,11 +16,15 @@ Ensure NVDA runs at all
 	process should be running	nvdaAlias
 
 Ensure NVDA quits from keyboard
-	send key	insert	n
-	send key	x
+	send key	insert	tab
+	send key	insert	q
 	sleep	1
-	send key	alt	shift	tab
+	send key	insert	tab
+	wait for foreground	Exit NVDA
+	send key	insert	tab
 	send key	enter
+	sleep	1
+	send key	insert	tab
 	wait for process	nvdaAlias	timeout=5 sec
 	process should be stopped	nvdaAlias
 

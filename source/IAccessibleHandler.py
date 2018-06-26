@@ -539,6 +539,10 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
+		if eventID==winUser.EVENT_OBJECT_FOCUS:
+			log.info("focus %s, %s"%(winUser.getClassName(window),winUser.getWindowText(window)))
+		if eventID==winUser.EVENT_SYSTEM_FOREGROUND:
+			log.info("foreground %s, %s"%(winUser.getClassName(window),winUser.getWindowText(window)))
 		#Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
 		if objectID<=winUser.OBJID_ALERT: 
 			return
