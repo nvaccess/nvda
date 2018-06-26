@@ -17,7 +17,7 @@ Ensure NVDA runs at all
 
 Ensure NVDA quits from keyboard
 	send key	insert	q
-	wait for foreground	Exit NVDA
+	sleep 1
 	send key	enter
 	wait for process	nvdaAlias	timeout=5 sec
 
