@@ -137,7 +137,7 @@ liveNVDAObjectTable=weakref.WeakValueDictionary()
 
 # #3831: Stuff related to deferring of events for foreground changes.
 # See pumpAll for details.
-MAX_FOREGROUND_DEFERS=10
+MAX_FOREGROUND_DEFERS=100
 _deferUntilForegroundWindow = None
 _foregroundDefers = 0
 
@@ -850,10 +850,12 @@ def pumpAll():
 		# but GetForegroundWindow() takes a short while to return this new foreground.
 		if _foregroundDefers<MAX_FOREGROUND_DEFERS and winUser.getForegroundWindow()!=_deferUntilForegroundWindow:
 			# Wait a core cycle before handling events to give the foreground window time to update.
+			log.info("Defer foreground")
 			core.requestPump()
 			_foregroundDefers+=1
 			return
 		else:
+			log.info("allowing foreground")
 			# Either the foreground window is now correct
 			# or we've already had the maximum number of defers.
 			# (Sometimes, foreground events are fired even when the foreground hasn't actually changed.)
