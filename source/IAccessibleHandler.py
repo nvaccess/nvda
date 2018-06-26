@@ -876,6 +876,8 @@ def pumpAll():
 			if not focus.shouldAcceptShowHideCaretEvent:
 				continue
 		elif not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
+			if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
+				log.info("Dropped focus winevent")
 			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
