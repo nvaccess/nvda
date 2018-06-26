@@ -17,10 +17,11 @@ Ensure NVDA runs at all
 
 Ensure NVDA quits from keyboard
 	send key	insert	q
-	sleep 1
 	send key	enter
-	wait for process	nvdaAlias	timeout=5 sec
+	${result} =	wait for process	nvdaAlias	timeout=5 sec
+	process should be stopped	nvdaAlias
 
 Can read the welcome dialog
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 	assert all speech	${WELCOME_DIALOG_TEXT}
+	send key	enter
