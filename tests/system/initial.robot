@@ -16,9 +16,11 @@ Ensure NVDA runs at all
 	process should be running	nvdaAlias
 
 Ensure NVDA quits from keyboard
-	send key	insert	q
+	send key	insert	n
+	send key	x
+	sleep	1
 	send key	enter
-	${result} =	wait for process	nvdaAlias	timeout=5 sec
+	wait for process	nvdaAlias	timeout=5 sec
 	process should be stopped	nvdaAlias
 
 Can read the welcome dialog
