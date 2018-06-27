@@ -52,6 +52,8 @@ def playObjectCoordinates(obj):
 	@param obj: the object for which the coordinates should be played
 	@type obj: NVDAObjects.NvDAObject
 	"""
+	if obj.location is None:
+		return
 	l,t,w,h=obj.location
 	x = l+(w/2)
 	y = t+(h/2)
