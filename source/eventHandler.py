@@ -273,8 +273,6 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			return True
 
 	fg = winUser.getForegroundWindow()
-	if eventName=="gainFocus":
-		log.info("Checking focus event for %s against foreground of %s, %s"%(wClass,fg,winUser.getClassName(fg)))
 	if wClass == "NetUIHWND" and winUser.getClassName(fg) == "Net UI Tool Window Layered":
 		# #5504: In Office >= 2013 with the ribbon showing only tabs,
 		# when a tab is expanded, the window we get from the focus object is incorrect.
@@ -293,6 +291,4 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# This window or its root is a topmost window.
 		# This includes menus, combo box pop-ups and the task switching list.
 		return True
-	if eventName=="gainfocus":
-		log.info("Filtered out focus event")
 	return False

@@ -539,10 +539,6 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 
 def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 	try:
-		if eventID==winUser.EVENT_OBJECT_FOCUS:
-			log.info("focus %s, %s"%(winUser.getClassName(window),winUser.getWindowText(window)))
-		if eventID==winUser.EVENT_SYSTEM_FOREGROUND:
-			log.info("foreground %s, %s"%(winUser.getClassName(window),winUser.getWindowText(window)))
 		#Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
 		if objectID<=winUser.OBJID_ALERT: 
 			return
@@ -681,14 +677,11 @@ def processFocusNVDAEvent(obj,force=False):
 	@return: C{True} if the focus event is valid and was queued, C{False} otherwise.
 	@rtype: boolean
 	"""
-	log.info("IAccessible NVDAObject focus:\n%s"%"\n".join(obj.devInfo))
 	if not force and isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 		focus=eventHandler.lastQueuedFocusObject
 		if isinstance(focus,NVDAObjects.IAccessible.IAccessible) and focus.isDuplicateIAccessibleEvent(obj):
-			log.info("duplicate focus event")
 			return True
 		if not obj.shouldAllowIAccessibleFocusEvent:
-			log.info("focus event not allowed")
 			return False
 	eventHandler.queueEvent('gainFocus',obj)
 	return True
@@ -850,12 +843,10 @@ def pumpAll():
 		# but GetForegroundWindow() takes a short while to return this new foreground.
 		if _foregroundDefers<MAX_FOREGROUND_DEFERS and winUser.getForegroundWindow()!=_deferUntilForegroundWindow:
 			# Wait a core cycle before handling events to give the foreground window time to update.
-			log.info("Defer foreground")
 			core.requestPump()
 			_foregroundDefers+=1
 			return
 		else:
-			log.info("allowing foreground")
 			# Either the foreground window is now correct
 			# or we've already had the maximum number of defers.
 			# (Sometimes, foreground events are fired even when the foreground hasn't actually changed.)
@@ -878,8 +869,6 @@ def pumpAll():
 			if not focus.shouldAcceptShowHideCaretEvent:
 				continue
 		elif not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
-			if winEvent[0]==winUser.EVENT_OBJECT_FOCUS:
-				log.info("Dropped focus winevent")
 			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
