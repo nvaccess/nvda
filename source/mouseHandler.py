@@ -20,6 +20,7 @@ import winInputHook
 import core
 import ui
 from math import floor
+from contextlib import contextmanager
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -31,6 +32,7 @@ WM_RBUTTONDBLCLK=0x0206
 
 curMousePos=(0,0)
 mouseMoved=False
+ignoreInjected=False
 curMouseShape=""
 _shapeTimer=None
 scrBmpObj=None
@@ -48,6 +50,14 @@ def updateMouseShape(name):
 		# Delay reporting to avoid unnecessary/excessive verbosity.
 		_shapeTimer.Stop()
 		_shapeTimer.Start(SHAPE_REPORT_DELAY, True)
+
+@contextmanager
+def ignoreInjection():
+	"""Context manager that allows ignoring injected mouse events temporarily by using a with statement."""
+	global ignoreInjected
+	ignoreInjected=True
+	yield
+	ignoreInjected=False
 
 def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBrightness=True,blurFactor=0):
 	""" play audio coordinates:
@@ -83,9 +93,11 @@ def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBr
 #Internal mouse event
 
 def internal_mouseEvent(msg,x,y,injected):
+	"""Event called by winInputHook when it receives a mouse event.
+	"""
 	global mouseMoved, curMousePos, lastMouseEventTime
 	lastMouseEventTime=time.time()
-	if injected:
+	if injected and (ignoreInjected or not config.conf['mouse']['handleInjectedMouseControl']):
 		return True
 	if not config.conf['mouse']['enableMouseTracking']:
 		return True

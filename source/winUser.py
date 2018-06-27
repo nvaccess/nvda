@@ -430,7 +430,11 @@ def keybd_event(*args):
 	return user32.keybd_event(*args)
 
 def mouse_event(*args):
-	return user32.mouse_event(*args)
+	# #8452: NVDA should ignore mouse events that are injected by itself.
+	# Import late to avoid circular import
+	import mouseHandler
+	with mouseHandler.ignoreInjection():
+		return user32.mouse_event(*args)
 
 def getAncestor(hwnd,flags):
 	return user32.GetAncestor(hwnd,flags)
