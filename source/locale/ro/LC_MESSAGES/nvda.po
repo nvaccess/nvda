@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-01 00:10+1000\n"
-"PO-Revision-Date: 2018-05-31 15:10+0300\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"PO-Revision-Date: 2018-06-26 13:45+0300\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -6715,9 +6715,21 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Nu este redată nicio melodie"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anunță timpul rămas din melodia redată acum, dacă există"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr ""
+"Anunță timpul rămas din melodia a cărei redare este în desfășurare, dacă "
+"există"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr ""
+"Anunță timpul rămas din melodia a cărei redare este în desfășurare, dacă "
+"există"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7776,6 +7788,44 @@ msgstr "Instalează Actualizarea în așteptare"
 msgid "Please wait"
 msgstr "Așteptați"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Colectarea datelor cu privire la utilizarea NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Pentru a îmbunătăți NVDA în viitor, NV Access dorește să colecteze date de "
+"utilizare de la copiile NVDA care rulează.\n"
+"\n"
+"Datele includ versiunea sistemului de operare, versiunea de NVDA, limba, "
+"țara de origine, plus anumite configurări NVDA, precum sintetizatorul "
+"curent, afișajul braille și tabelul braille. Conținutul nerostit sau afișat "
+"în braille, nu va fi trimis la NV Access. Vă rugăm să consultați Ghidul "
+"Utilizatorului pentru a vedea o listă curentă a tuturor datelor colectate.\n"
+"\n"
+"Doriți să permiteți ca NV Access să colecteze periodic aceste date în "
+"vederea îmbunătățirii NVDA?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Da"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Nu"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Administratorul de suplimente"
@@ -8453,6 +8503,11 @@ msgstr "&Verifică automat existența actualizărilor NVDA"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "Notific&ă actualizarea în așteptare la pornire"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
+"Permiteți proiectului NVDA să adune statistici cu privire la utilizarea NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -10778,7 +10833,7 @@ msgstr "Aliniat la stânga"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "centered"
-msgstr "ceentrat"
+msgstr "centrat"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Right aligned"
