@@ -831,10 +831,12 @@ For yderligere informationer om gennemsynstilstand samt bogstavnavigation, se [G
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Sig resterende tid | Ctrl+Shift+r | Annoncerer den resterende tid af det aktuelle spor, hvis der er nogen. |
+| Rapportér resterende tid | Ctrl+Skift+r | Rapporterer den resterende tid af det igangværende spor, hvis tilgængelig. |
+| Rapportér forløbne tid | Ctrl+skift+e | Rapporterer den forløbne tid for det igangværende spor, hvis tilgængelig. |
+| Rapportér længden af det aktuelle spor | Ctrl+skift+t | Rapporterer længden for det igangværende spor, hvis tilgængelig. |
 %kc:endInclude
 
-Bemærk: Genvejen til at oplyse den resterende tid virker kun, når statuslinjen er formateret som standard.
+Bemærk: Ovenstående genveje virker kun, når statuslinjen i Foobar er formateret som standard.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +973,25 @@ Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
 ==== Søg automatisk efter opdateringer af NVDA ====[GeneralSettingsCheckForUpdates]
 Hvis denne indstilling er aktiveret, vil NVDA automatisk søge efter opdateringer og informere dig, når en opdatering er tilgængelig.
 Du kan også manuelt søge efter opdateringer ved at vælge Søg efter opdateringer under Hjælp i NVDA-menuen.
+Når der manuelt eller automatisk søges efter opdateringer, vil det være nødvendigt at sende nogle informationer til opdateringsserveren for at sikre, at du modtager den rette opdatering til dit system.
+Følgende informationer bliver altid sendt:
+- Aktuelle version af NvDA
+- Version af dit operativsystem
+- Om dit system er 64- eller 32 bit.
+
+
+==== Tillad at NVDA-projektet indsamler brugsdata om NVDA ====[GeneralSettingsGatherUsageStats]
+Hvis dette er aktiveret, bruger NV Access oplysningerne indsendt under søgning af opdateringer til at spore antallet af NVDA-brugere, herunder bestemte demografiske forhold som operativsystem og oprindelsesland.
+Bemærk, at selvom din IP-adresse vil blive brugt til at beregne dit land under opdateringskontrollen, bliver IP-adressen aldrig gemt.
+Bortset fra de obligatoriske oplysninger, der kræves for at kontrollere efter opdateringer, er følgende yderligere oplysninger også sendt i øjeblikket:
+- NVDAs aktuelle sprog
+- Om denne kopi af NVDA er flytbar eller installeret
+- Navn på den aktuelle talesyntese i brug (herunder navnet på tilføjelsesprogrammet, som driveren kommer fra)
+- Navn på det aktuelle punktdisplay i brug (herunder navnet på tilføjelsen, som driveren kommer fra)
+- Den aktuelle oversættelsestabel (hvis punkt er i brug)
+
+
+Disse informationer hjælper i høj grad NV Access med at prioritere fremtidig udvikling af NVDA.
 
 ==== Meddel om ventende opdateringer, når NVDA startes ====[GeneralSettingsNotifyPendingUpdates]
 Hvis denne indstilling er slået til, vil NVDA lade dig installere ventende opdateringer, når NVDA starter, hvis en opdatering venter på installation.
