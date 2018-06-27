@@ -133,6 +133,8 @@ class EdgeTextInfo(UIATextInfo):
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
+		# ARIA roledescription
+		field['roleText']=obj.roleText
 		# report landmarks
 		field['landmark']=obj.landmark
 		# Combo boxes with a text pattern are editable
@@ -470,6 +472,9 @@ class EdgeNode(UIA):
 			log.debug("aria current value = %s" % valueOfAriaCurrent)
 			return valueOfAriaCurrent
 		return None
+
+	def _get_roleText(self):
+		return self.ariaProperties.get('roledescription', None)
 
 	def _get_placeholder(self):
 		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
