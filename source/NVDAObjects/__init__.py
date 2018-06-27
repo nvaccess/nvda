@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager, Joseph Lee
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -26,7 +26,6 @@ import appModuleHandler
 import treeInterceptorHandler
 import braille
 import globalPluginHandler
-import screenExplorer
 import brailleInput
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -980,8 +979,6 @@ This code is executed if a gain focus event is received by this object.
 		if braille.handler.shouldAutoTether and isFocus:
 			return
 		braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
-		if config.conf["presentation"]["playObjectCoordinates"]:
-			screenExplorer.playObjectCoordinates(self)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():

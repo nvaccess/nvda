@@ -1,11 +1,10 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2018 NV Access Limited
+#Copyright (C) 2016 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import time
 import wx
-import gui
 import tones
 import ctypes
 import winUser
@@ -13,13 +12,13 @@ import queueHandler
 import api
 import screenBitmap
 import speech
+import globalVars
 import eventHandler
 from logHandler import log
 import config
 import winInputHook
 import core
 import ui
-import screenExplorer
 from math import floor
 
 WM_MOUSEMOVE=0x0200
@@ -168,7 +167,9 @@ def executeMouseMoveEvent(x,y):
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
 
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
-		screenExplorer.playLocationCoordinates(x,y,screenWidth,screenHeight,minPos,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
+		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
+			config.conf['mouse']['audioCoordinates_detectBrightness'],
+			config.conf['mouse']['audioCoordinates_blurFactor'])
 
 	oldMouseObject=api.getMouseObject()
 	mouseObject=desktopObject.objectFromPoint(x, y)

@@ -1487,16 +1487,10 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
-		objCoordinatesText = _("&Play object coordinates")
-		self.playObjectCoordinatesCheckBox=sHelper.addItem(wx.CheckBox(self,label=objCoordinatesText))
-		self.playObjectCoordinatesCheckBox.SetValue(config.conf["presentation"]["playObjectCoordinates"])
-
-		# Translators: This is the label for a checkbox in the
-		# object presentation settings panel.
 		descriptionText = _("Report object &descriptions")
 		self.descriptionCheckBox=sHelper.addItem(wx.CheckBox(self,label=descriptionText))
 		self.descriptionCheckBox.SetValue(config.conf["presentation"]["reportObjectDescriptions"])
-
+		
 		# Translators: This is the label for a combobox in the
 		# object presentation settings panel.
 		progressLabelText = _("Progress &bar output:")
@@ -1508,13 +1502,13 @@ class ObjectPresentationPanel(SettingsPanel):
 				break
 		else:
 			log.debugWarning("Could not set progress list to current report progress bar updates setting")
-
+		
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
 		reportBackgroundProgressBarsText = _("Report background progress bars")
 		self.reportBackgroundProgressBarsCheckBox=sHelper.addItem(wx.CheckBox(self,label=reportBackgroundProgressBarsText))
 		self.reportBackgroundProgressBarsCheckBox.SetValue(config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"])
-
+		
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
 		dynamicContentText = _("Report dynamic &content changes")
@@ -1533,7 +1527,6 @@ class ObjectPresentationPanel(SettingsPanel):
 		config.conf["presentation"]["reportKeyboardShortcuts"]=self.shortcutCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]=self.guessPositionInfoCheckBox.IsChecked()
-		config.conf["presentation"]["playObjectCoordinates"]=self.playObjectCoordinatesCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
