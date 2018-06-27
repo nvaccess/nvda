@@ -58,16 +58,24 @@ class nvdaRobotLib(object):
 		)
 		return handle
 
-	def _blockUntilReturnsTrue(self, giveUpAfterSeconds, intervalBetweenSeconds, errorMessage, func):
+	def _blockUntilReturnsTrue(self, func, giveUpAfterSeconds, intervalBetweenSeconds=0.1, errorMessage=None):
+		"""Call 'func' every 'intervalBetweenSeconds' seconds until 'func' returns True until
+		'giveUpAfterSeconds' is reached.
+		If 'func' does not return true and 'errorMessage' is provided, a RuntimeError is raised
+		using the provided errorMessage.
+		@return True if 'func' returns True before 'giveUpAfterSeconds' is reached, else False
+		"""
 		startTime = timer()
 		lastRunTime = startTime - intervalBetweenSeconds+1  # ensure we start trying immediately
 		while (timer() - startTime) < giveUpAfterSeconds:
 			if (timer() - lastRunTime) > intervalBetweenSeconds:
 				lastRunTime = timer()
 				if func():
-					break
+					return True
 		else:
-			raise RuntimeError(errorMessage)
+			if errorMessage:
+				raise RuntimeError(errorMessage)
+			return False
 
 	def _connectToRemoteServer(self):
 		"""Connects to the nvdaSpyServer
@@ -78,16 +86,13 @@ class nvdaRobotLib(object):
 				No connection could be made because the target machine actively refused it"
 		Instead we wait until the remote server is available before importing the library and continuing.
 		"""
-
-		process.process_should_be_running(self.nvdaHandle)
 		# Importing the 'Remote' library always succeeds, even when a connection can not be made.
 		# If that happens, then some 'Remote' keyword will fail at some later point.
 		# therefore we use 'test_remote_server' to ensure that we can in fact connect before proceeding.
 		self._blockUntilReturnsTrue(
+			func=lambda: test_remote_server(spyServerURI, log=False),
 			giveUpAfterSeconds=10,
-			intervalBetweenSeconds=0.1,
 			errorMessage="Unable to connect to nvdaSpy",
-			func=lambda: test_remote_server(spyServerURI, log=False)
 		)
 
 		builtIn.import_library(
@@ -116,10 +121,9 @@ class nvdaRobotLib(object):
 
 	def wait_for_NVDA_startup_to_complete(self):
 		self._blockUntilReturnsTrue(
+			func=lambda: self._runNvdaSpyKeyword("is_NVDA_startup_complete"),
 			giveUpAfterSeconds=10,
-			intervalBetweenSeconds=0.1,
 			errorMessage="Unable to connect to nvdaSpy",
-			func=lambda: self._runNvdaSpyKeyword("is_NVDA_startup_complete")
 		)
 
 	def save_NVDA_log(self):
@@ -151,12 +155,74 @@ class nvdaRobotLib(object):
 
 	def assert_last_speech(self, expectedSpeech):
 		actualLastSpeech = self._runNvdaSpyKeyword("get_last_speech")
-		builtIn.should_be_equal_as_strings(actualLastSpeech, expectedSpeech)
+		builtIn.should_be_equal_as_strings(
+			actualLastSpeech,
+			expectedSpeech,
+			msg="Actual speech != Expected speech"
+		)
 
 	def assert_all_speech(self, expectedSpeech):
-			actualSpeech = self._runNvdaSpyKeyword("get_all_speech")
-			builtIn.should_be_equal_as_strings(
-				actualSpeech,
-				expectedSpeech,
-				msg="Actual speech != to expected speech.",
-			)
+		actualSpeech = self._runNvdaSpyKeyword("get_all_speech")
+		builtIn.should_be_equal_as_strings(
+			actualSpeech,
+			expectedSpeech,
+			msg="Actual speech != Expected speech",
+		)
+
+	def assert_speech_since_index(self, index, expectedSpeech):
+		actualSpeech = self._runNvdaSpyKeyword("get_speech_since_index", index)
+		builtIn.should_be_equal_as_strings(
+			actualSpeech,
+			expectedSpeech,
+			msg="Actual speech != Expected speech",
+		)
+
+	def wait_for_next_speech(self, maxWaitSeconds=5, raiseErrorOnTimeout=True):
+		return self._blockUntilReturnsTrue(
+			func=lambda: self._runNvdaSpyKeyword("has_speech_occurred_since_last_check"),
+			giveUpAfterSeconds=maxWaitSeconds,
+			errorMessage="Speech did not start before timeout" if raiseErrorOnTimeout else None
+		)
+
+	def has_speech_finished(self):
+		speechOccurred = self.wait_for_next_speech(maxWaitSeconds=2, raiseErrorOnTimeout=False)
+		return not speechOccurred
+
+	def wait_for_speech_to_finish(self, maxWaitSeconds=5):
+		self._blockUntilReturnsTrue(
+			func=self.has_speech_finished,
+			giveUpAfterSeconds=maxWaitSeconds,
+			errorMessage="Speech did not finish before timeout"
+		)
+
+	def wait_for_speech_to_start_and_finish(self):
+		self.wait_for_next_speech()
+		self.wait_for_speech_to_finish()
+
+	def reset_get_all_speech(self):
+		self._runNvdaSpyKeyword("reset_all_speech_index")
+
+	def wait_for_specific_speech(self, speech, sinceIndex=None, maxWaitSeconds=5):
+		sinceIndex = 0 if not sinceIndex else sinceIndex
+		def trueIfSpeechIndex():
+			index = self._runNvdaSpyKeyword("get_index_of_speech", speech, sinceIndex)
+			builtIn.log_to_console("value of index: ".format(index))
+			return index > 0
+
+		self._blockUntilReturnsTrue(
+			func=trueIfSpeechIndex,
+			giveUpAfterSeconds=maxWaitSeconds,
+			errorMessage="Specific speech did not occur before timeout: {}".format(speech)
+		)
+
+	def wait_for_specific_speech_after_action(self, speech, action, *args):
+		self.wait_for_speech_to_finish()
+		index = self._runNvdaSpyKeyword("get_speech_index")
+		builtIn.run_keyword(action, *args)
+		self.wait_for_specific_speech(speech, index)
+		return self._runNvdaSpyKeyword("get_index_of_speech", speech, index)
+
+	def wait_for_any_speech_after_action(self, action, *args):
+		self.wait_for_speech_to_finish()
+		builtIn.run_keyword(action, *args)
+		self.wait_for_next_speech()
