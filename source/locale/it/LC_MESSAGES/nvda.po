@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 00:10+1000\n"
-"PO-Revision-Date: 2018-05-29 14:24+0200\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"PO-Revision-Date: 2018-06-22 09:32+0200\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -6712,9 +6712,17 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Nessun brano in riproduzione"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Legge il tempo rimanente del brano in riproduzione"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Legge il tempo trascorso del brano in riproduzione, se presente"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Legge la lunghezza del brano in riproduzione, se presente"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7774,6 +7782,44 @@ msgstr "Installa aggiornamenti in sospeso"
 msgid "Please wait"
 msgstr "Attendere prego"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Raccolta dati di utilizzo di NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Al fine di migliorare NVDA per il futuro, Nv Access desidererebbe acquisire "
+"alcuni dati di utilizzo provenienti dalle copie in esecuzione di NVDA.\n"
+"I dati in questione riguardano la versione del sistema operativo, la "
+"versione di NVDA, la lingua, il paese d'origine, oltre ad alcune "
+"informazioni di configurazione quali il sintetizzatore in uso, il modello di "
+"barra braille e la tabella braille scelta dall'utente. Non verrà mai inviato "
+"a Nv Access il testo pronunciato dalla sintesi vocale o il contenuto del "
+"display braille. Si prega di fare riferimento al manuale utente per l'elenco "
+"completo dei dati che NV Access può ricevere.\n"
+"Desideri consentire a Nv Access di raccogliere sporadicamente questi dati "
+"per migliorare NVDA?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Sì"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&No"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Gestore componenti aggiuntivi"
@@ -8458,6 +8504,12 @@ msgstr "&Controlla automaticamente la presenza di aggiornamenti di NVDA"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "&Notifica aggiornamenti in sospeso all'avvio"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
+"Consenti al progetto NVDA di raccogliere statistiche sull'utilizzo dello "
+"screen reader"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
