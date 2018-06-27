@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 00:10+1000\n"
-"PO-Revision-Date: 2018-05-20 08:55+0100\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"PO-Revision-Date: 2018-06-21 17:13+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -6670,9 +6670,17 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Brak odtwarzanego utworu"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Odczytuje pozostały czas aktualnie odtwarzanego utworu"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Oczytuje czas do końca odtwarzanego pliku, jeżeli jakiś jest"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "odczytuje czas trwania odtwarzanego pliku, jeżeli jakiś jest"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7721,6 +7729,45 @@ msgstr "Zainstaluj oczekującą aktualizację"
 msgid "Please wait"
 msgstr "Czekaj"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Zbieranie danych o użytkowaniu NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"W celu ciągłego ulepszania NVDA, NV Access chce zbierać dane użytkowników z "
+"każdej uruchomionej kopii NVDA.\n"
+"\n"
+"Są to takie dane jak: wersja systemu operacyjnego, wersja NVDA, język, kraj "
+"pochodzenia, oraz pewne ustawienia, takie jak aktualnie używany syntezator "
+"mowy, monitor brajlowski lub tablica brajlowska. Ani treść wymówiona, ani "
+"treść wyświetlana na monitorze brajlowskim nigdy nie będzie wysyłana do NV "
+"Access.  Prosimy zajrzeć do podręcznika użytkownika, aby się zapoznać z "
+"aktualną listą zbieranych danych.\n"
+"\n"
+"Czy zgadzasz się, aby organizacja NV Access zbierała tę dane w celu "
+"ulepszania NVDA?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Tak"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Nie"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Menadżer wtyczek"
@@ -8394,6 +8441,10 @@ msgstr "Sprawdzaj automatycznie, czy jest nowa wersja"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "Powiadamiaj o &oczekującej aktualizacji przy starcie"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Zezwalaj projektowi NVDA na zbieranie statystyk użytkowania programu"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
