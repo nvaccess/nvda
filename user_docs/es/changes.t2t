@@ -8,11 +8,14 @@
 == Nuevas Características ==
 - NVDA anunciará errores de gramática cuando se expongan apropiadamente por las páginas web en Mozilla Firefox. (#8280)
 - Añadida la compatibilidad para las ruedas de desplazamiento de BrailleNote QT y Apex BT cuando se utilice BrailleNote como una pantalla braille con NVDA. (#6316)
+- Añadidos scripts para anunciar el tiempo transcurrido y el tiempo total de la pista actual en Foobar2000. (#6596)
 
 
 == Cambios ==
 - La lista de idiomas disponibles en el diálogo opciones Generales ahora se ordena basándose en los nombres de los idiomas en lugar de en los códigos ISO 639. (#7284)
 - Añadidos gestos predeterminados para alt shift tab y windows tab con todas las pantallas braille compatibles de Freedom Scientific. (#7387)
+- Ahora se le pregunta al usuario una vez en el arranque de NVDA si están de acuerdo enviando estadísticas de uso a NV Access cuando se busquen actualizaciones automáticamente. (#8217)
+- Al buscar actualizaciones, si el usuario está de acuerdo al permitir el envío de estadísticas de uso a NV Access, NVDA ahora enviará el nombre del controlador del sintetizador actual y de la pantalla braille en uso, para ayudar a establecer un mejor orden de prioridades para el trabajo futuro de estos controladores. (#8217)
 
 
 == Corrección de Errores ==
