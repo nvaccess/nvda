@@ -3,8 +3,9 @@ import signal
 import threading
 from robotremoteserver import RobotRemoteServer
 from logHandler import log
+whitespaceMinusSlashN = '\t\x0b\x0c\r '
 
-class SystemTestSpy:
+class SystemTestSpy(object):
 	def __init__(self):
 		self._nvdaStartupComplete = False
 		from core import postNvdaStartup
@@ -27,8 +28,9 @@ class SystemTestSpy:
 		self._nvdaSpeech.append(speechSequence)
 
 	def _getJoinedBaseStringsFromCommands(self, speechCommandArray):
-		baseStrings = [c.strip() for c in speechCommandArray if isinstance(c, basestring)]
-		return ' '.join(baseStrings).replace("  ", "\n").strip()
+		wsChars = whitespaceMinusSlashN
+		baseStrings = [c.strip(wsChars) for c in speechCommandArray if isinstance(c, basestring)]
+		return ''.join(baseStrings).strip()
 
 	# Start of Robot library API
 
@@ -46,12 +48,21 @@ class SystemTestSpy:
 	def get_all_speech(self):
 		return self.get_speech_since_index(self._allSpeechStartIndex)
 
+	def _flattenCommandsSeparatingWithNewline(self, commandArray):
+		f = [c for commands in commandArray for newlineJoined in [commands, [u"\n"]] for c in newlineJoined]
+		log.debug("f: {}".format(repr(f)))
+		return f
+
 	def get_speech_since_index(self, speechIndex):
-		speechCommands = [c for commands in self._nvdaSpeech[speechIndex:] for c in commands]
-		return self._getJoinedBaseStringsFromCommands(speechCommands)
+		speechCommands = self._flattenCommandsSeparatingWithNewline(
+			self._nvdaSpeech[speechIndex:]
+		)
+		joined = self._getJoinedBaseStringsFromCommands(speechCommands)
+		log.debug("joined: {}".format(joined))
+		return joined
 
 	def get_speech_index(self):
-		return len(self._nvdaSpeech) -1
+		return len(self._nvdaSpeech) - 1
 
 	def reset_all_speech_index(self):
 		self._allSpeechStartIndex = self.get_speech_index()
@@ -60,12 +71,12 @@ class SystemTestSpy:
 		log.debug("indexHint is: {}, speech is: {}".format(indexHint, speech))
 		for index, commands in enumerate(self._nvdaSpeech[indexHint:]):
 			index = index+indexHint
-			baseStrings = [c.strip().replace("  ", "\n") for c in commands if isinstance(c, basestring)]
+			baseStrings = [c.strip() for c in commands if isinstance(c, basestring)]
 			log.debug("baseStrings: \n{}".format(repr(baseStrings)))
 			if speech in baseStrings:
 				log.debug("at index: {}, Found: {}".format(index, speech))
 				return index
-		return 0
+		return -1
 
 
 

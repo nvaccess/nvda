@@ -25,6 +25,24 @@ systemTestSpySource = pathJoin(systemTestSourceDir, "libraries", systemTestSpyFi
 systemTestSpyInstallDir = pathJoin(nvdaProfileWorkingDir, "globalPlugins")
 systemTestSpyInstalled = pathJoin(systemTestSpyInstallDir, systemTestSpyFileName)
 
+def _should_be_equal_as_strings(actual, expected, ignore_case=False):
+	try:
+		builtIn.should_be_equal_as_strings(
+			actual,
+			expected,
+			msg="Actual speech != Expected speech",
+			ignore_case=ignore_case
+		)
+	except AssertionError:
+		builtIn.log(
+			"repr of actual vs expected (ignore_case={}):\n{}\nvs\n{}".format(
+				ignore_case,
+				repr(actual),
+				repr(expected)
+			)
+		)
+		raise
+
 class nvdaRobotLib(object):
 
 	def __init__(self):
@@ -76,6 +94,33 @@ class nvdaRobotLib(object):
 			if errorMessage:
 				raise RuntimeError(errorMessage)
 			return False
+
+
+	def _blockUntilConditionMet(
+			self,
+			getValue,
+			giveUpAfterSeconds,
+			shouldStopEvaluator=lambda value: bool(value),
+			intervalBetweenSeconds=0.1,
+			errorMessage=None):
+		"""Repeatedly tries to get a value up until a time limit expires. Tries are separated by
+		a time interval. The call will block until shouldStopEvaluator returns True when given the value,
+		the default evaluator just returns the value converted to a boolean.
+		@return A tuple, (True, value) if evaluator condition is met, otherwise (False, None)
+		@raises RuntimeError if the time limit expires and an errorMessage is given.
+		"""
+		startTime = timer()
+		lastRunTime = startTime - intervalBetweenSeconds+1  # ensure we start trying immediately
+		while (timer() - startTime) < giveUpAfterSeconds:
+			if (timer() - lastRunTime) > intervalBetweenSeconds:
+				lastRunTime = timer()
+				val = getValue()
+				if shouldStopEvaluator(val):
+					return True, val
+		else:
+			if errorMessage:
+				raise RuntimeError(errorMessage)
+			return False, None
 
 	def _connectToRemoteServer(self):
 		"""Connects to the nvdaSpyServer
@@ -155,29 +200,17 @@ class nvdaRobotLib(object):
 
 	def assert_last_speech(self, expectedSpeech):
 		actualLastSpeech = self._runNvdaSpyKeyword("get_last_speech")
-		builtIn.should_be_equal_as_strings(
-			actualLastSpeech,
-			expectedSpeech,
-			msg="Actual speech != Expected speech"
-		)
+		_should_be_equal_as_strings(actualLastSpeech, expectedSpeech)
 
 	def assert_all_speech(self, expectedSpeech):
 		actualSpeech = self._runNvdaSpyKeyword("get_all_speech")
-		builtIn.should_be_equal_as_strings(
-			actualSpeech,
-			expectedSpeech,
-			msg="Actual speech != Expected speech",
-		)
+		_should_be_equal_as_strings(actualSpeech, expectedSpeech)
 
 	def assert_speech_since_index(self, index, expectedSpeech):
 		actualSpeech = self._runNvdaSpyKeyword("get_speech_since_index", index)
-		builtIn.should_be_equal_as_strings(
-			actualSpeech,
-			expectedSpeech,
-			msg="Actual speech != Expected speech",
-		)
+		_should_be_equal_as_strings(actualSpeech, expectedSpeech)
 
-	def wait_for_next_speech(self, maxWaitSeconds=5, raiseErrorOnTimeout=True):
+	def wait_for_next_speech(self, maxWaitSeconds=5.0, raiseErrorOnTimeout=True):
 		return self._blockUntilReturnsTrue(
 			func=lambda: self._runNvdaSpyKeyword("has_speech_occurred_since_last_check"),
 			giveUpAfterSeconds=maxWaitSeconds,
@@ -185,10 +218,10 @@ class nvdaRobotLib(object):
 		)
 
 	def has_speech_finished(self):
-		speechOccurred = self.wait_for_next_speech(maxWaitSeconds=2, raiseErrorOnTimeout=False)
+		speechOccurred = self.wait_for_next_speech(maxWaitSeconds=0.5, raiseErrorOnTimeout=False)
 		return not speechOccurred
 
-	def wait_for_speech_to_finish(self, maxWaitSeconds=5):
+	def wait_for_speech_to_finish(self, maxWaitSeconds=5.0):
 		self._blockUntilReturnsTrue(
 			func=self.has_speech_finished,
 			giveUpAfterSeconds=maxWaitSeconds,
@@ -204,23 +237,23 @@ class nvdaRobotLib(object):
 
 	def wait_for_specific_speech(self, speech, sinceIndex=None, maxWaitSeconds=5):
 		sinceIndex = 0 if not sinceIndex else sinceIndex
-		def trueIfSpeechIndex():
-			index = self._runNvdaSpyKeyword("get_index_of_speech", speech, sinceIndex)
-			builtIn.log_to_console("value of index: ".format(index))
-			return index > 0
 
-		self._blockUntilReturnsTrue(
-			func=trueIfSpeechIndex,
+		success, speechIndex = self._blockUntilConditionMet(
+			getValue=lambda: self._runNvdaSpyKeyword("get_index_of_speech", speech, sinceIndex),
 			giveUpAfterSeconds=maxWaitSeconds,
+			shouldStopEvaluator=lambda speechIndex: speechIndex>=0,
+			intervalBetweenSeconds=0.5,
 			errorMessage="Specific speech did not occur before timeout: {}".format(speech)
 		)
+		return speechIndex
 
 	def wait_for_specific_speech_after_action(self, speech, action, *args):
 		self.wait_for_speech_to_finish()
 		index = self._runNvdaSpyKeyword("get_speech_index")
 		builtIn.run_keyword(action, *args)
-		self.wait_for_specific_speech(speech, index)
-		return self._runNvdaSpyKeyword("get_index_of_speech", speech, index)
+		index = self.wait_for_specific_speech(speech, index)
+		builtIn.log("got index: {}".format(index), level='INFO')
+		return index
 
 	def wait_for_any_speech_after_action(self, action, *args):
 		self.wait_for_speech_to_finish()
