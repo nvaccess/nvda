@@ -1487,7 +1487,7 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
-		objCoordinatesText = _("&Play object coordinates"))
+		objCoordinatesText = _("&Play object coordinates")
 		self.playObjectCoordinatesCheckBox=sHelper.addItem(wx.CheckBox(self,label=objCoordinatesText))
 		self.playObjectCoordinatesCheckBox.SetValue(config.conf["presentation"]["playObjectCoordinates"])
 

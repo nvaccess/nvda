@@ -58,11 +58,7 @@ def playObjectCoordinates(obj):
 	x = l+(w/2)
 	y = t+(h/2)
 	screenWidth, screenHeight = api.getDesktopObject().location[-2:]
-	try:
-		playLocationCoordinates(x, y, screenWidth, screenHeight, detectBrightness=False)
-	except AttributeError:
-		pass
-
+	playLocationCoordinates(x, y, screenWidth, screenHeight, detectBrightness=False)
 
 class ScreenExplorer(object):
 
