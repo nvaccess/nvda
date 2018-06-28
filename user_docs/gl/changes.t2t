@@ -3,6 +3,28 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+
+== Novas Características ==
+- NVDA anunciará erros de gramática cando se expoñan apropriadamente polas páxinas web en Mozilla Firefox. (#8280)
+- Engadida a compatibilidade para as rodas de desprazamento de BrailleNote QT e Apex BT cando se use BrailleNote coma unha pantalla braille co NVDA. (#6316)
+- Engadidos scripts para anunciar o tempo transcorrido e o tempo total da pista actual en Foobar2000. (#6596)
+
+
+== Cambios ==
+- A listaxe de linguas dispoñibles no diálogo opcións Xerais agora ordéase baseándose nos nomes das linguas en lugar de nos códigos ISO 639. (#7284)
+- Engadidos xestos predeterminados para alt shift tab e windows tab con todas as pantallas braille compatibles de Freedom Scientific. (#7387)
+- Agora pregúntaselle ao usuario unha vez no arranque do NVDA se está de acordo enviando estadísticas de uso a NV Access cando se procuren actualizacións automáticamente. (#8217)
+- Ao se procurar actualizacións, se o usuario está de acordo ao permitir o envío de estadísticas de uso a NV Access, o NVDA agora enviará o nome do controlador do sintetizador actual e da pantalla braille en uso, para axudar a establecer unha mellor orde de prioridades para o traballo futuro destes controladores. (#8217)
+
+
+== Arranxo de Erros ==
+
+
+== Cambios para Desenvolvedores ==
+- Engadido scriptHandler.script, o que pode funcionar coma un decorador para scripts en obxectos escriptables. (#6266)
+
+
 = 2018.2 =
 O subliñable desta versión inclúe o soporte para táboas en Kindle para PC, o soporte para pantallas Humanware BrailleNote Touch e BI14 Braille, melloras para sintetizadores de voz Onecore e Sapi5, melloras en Microsoft Outlook e moito máis.
 
@@ -20,7 +42,6 @@ O subliñable desta versión inclúe o soporte para táboas en Kindle para PC, o
  - Podes asignar estas novas conmutacións de modificadores usando a orde que se atopa en Teclas de sistema emuladas no diálogo Xestos de Entrada.
 - Restaurado o soporte para pantallas Handy Tech Braillino e Modular (co firmware vello). (#8016)
 - Agora sincronizaranse automáticamente co NVDA a data e a hora para os dispositivos Handy Tech soportados (como Active Braille e Active Star) cando estean desincronizados máis de cinco segundos. (#8016)
-- Nas listaxes de mensaxes do Microsoft Outlook, o NVDA agora informa de se unha mensaxe foi respostada ou reenviada. (#6911)
 - Pódese asignar un xesto de entrada para desactivar temporalmente todos os disparadores dun perfil de configuración. (#4935)
 
 
