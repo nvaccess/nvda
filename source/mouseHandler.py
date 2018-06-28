@@ -135,7 +135,6 @@ def executeMouseMoveEvent(x,y):
 	displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
 	x, y = getMouseRestrictedToScreens(x, y, displays)
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
-
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
 		screenExplorer.playLocationCoordinates(x,y,screenWidth,screenHeight,minPos,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
 
