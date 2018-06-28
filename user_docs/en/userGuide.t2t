@@ -1394,8 +1394,17 @@ If reporting of object position information is turned on, this option allows NVD
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
 ==== Play object coordinates ====[ObjectPresentationObjectCoordinates]
-Checking this box allows you to hear a beep indicating where the current object is located on screen as you move focus or perform object navigation commands.
-This is useful if you are using touch gestures to move to next and previous objects.
+This option controls object coordinate announcement with beeps, used to indicate where the current object is located on screen as you move focus or perform object navigation commands.
+This is useful if you are using touch gestures to move to next and previous objects, or wish to know where system focus is going as you move focus.
+
+It has the following options:
+- Off: Object coordinate beep will not be heard.
+- When using object navigation: Location beep will be heard as you use [object navigation #ObjectNavigation] commands.
+- Focus: Location beep will be heard when you move [system focus #SystemFocus].
+- Both: Location beep will be heard regardless of moving via object navigation or system focus.
+-
+
+To toggle this setting from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
 
 ==== Report Object descriptions ====[ObjectPresentationReportDescriptions]
 Uncheck this checkbox if you don't wish to have the description reported along with objects.
