@@ -57,8 +57,11 @@ def playObjectCoordinates(obj):
 	l,t,w,h=obj.location
 	x = l+(w/2)
 	y = t+(h/2)
-	screenWidth, screenHeight = api.getDesktopObject().location[-2:]
-	playLocationCoordinates(x, y, screenWidth, screenHeight, detectBrightness=False)
+	# The object might be located on another display.
+	displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
+	x, y = mouseHandler.getMouseRestrictedToScreens(x, y, displays)
+	screenWidth, screenHeight, minPos = mouseHandler.getTotalWidthAndHeightAndMinimumPosition(displays)
+	playLocationCoordinates(x, y, screenWidth, screenHeight, screenMinPos=minPos, detectBrightness=False)
 
 class ScreenExplorer(object):
 
