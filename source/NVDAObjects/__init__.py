@@ -976,7 +976,9 @@ This code is executed if a gain focus event is received by this object.
 		@type isFocus: bool
 		"""
 		# #2559: coordinate tone playback takes priority.
-		if config.conf["presentation"]["playObjectCoordinates"]:
+		playObjectCoordinates = config.conf["presentation"]["playObjectCoordinates"]
+		if ((not isFocus and playObjectCoordinates in ("objNav", "both"))
+		or (isFocus and playObjectCoordinates in ("focus", "both"))):
 			screenExplorer.playObjectCoordinates(self)
 		# When the navigator object follows the focus and braille is auto tethered to review,
 		# we should not update braille with the new review position as a tether to focus is due.
