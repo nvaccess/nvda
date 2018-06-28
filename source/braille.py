@@ -2142,21 +2142,30 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal):
 		"""Factory function for creating dot firmness setting."""
-		# Translators: Label for a setting in braille settings dialog.
-		return driverHandler.NumericDriverSetting("dotFirmness",_("Dot firm&ness"),defaultVal=defaultVal,minVal=minVal,maxVal=maxVal)
+		return driverHandler.NumericDriverSetting(
+			"dotFirmness",
+			# Translators: Label for a setting in braille settings dialog.
+			_("Dot firm&ness"),
+			defaultVal=defaultVal,
+			minVal=minVal,
+			maxVal=maxVal
+		)
 
 	@classmethod
 	def BrailleInputSetting(cls):
 		"""Factory function for creating braille input setting."""
-		# Translators: Label for a setting in braille settings dialog.
-		return driverHandler.BooleanDriverSetting("brailleInput",_("Braille inp&ut"))
+		return driverHandler.BooleanDriverSetting(
+			"brailleInput",
+			# Translators: Label for a setting in braille settings dialog.
+			_("Braille inp&ut")
+		)
 
 	@classmethod
 	def HIDInputSetting(cls):
 		"""Factory function for creating HID input setting."""
-		# Translators: Label for a setting in braille settings dialog.
 		return driverHandler.BooleanDriverSetting(
 			"hidKeyboardInput",
+			# Translators: Label for a setting in braille settings dialog.
 			_("&HID keyboard input simulation")
 		)
 
