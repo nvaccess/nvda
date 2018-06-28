@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 00:10+1000\n"
-"PO-Revision-Date: 2018-06-15 19:08+0530\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"PO-Revision-Date: 2018-06-23 21:34+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -6637,9 +6637,17 @@ msgstr "துவக்கு"
 msgid "No track playing"
 msgstr "எத்தடமும் ஓடவில்லை"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் நேரத்தில் மீதமிருந்தால், அதை அறிவிக்கும்"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் கடந்துள்ள நேரத்தை அறிவிக்கும்"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் நீளத்தை அறிவிக்கும்"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7368,7 +7376,7 @@ msgid ""
 "make changes to the System registry and therefore requires administrative "
 "access. Are you sure you wish to proceed?"
 msgstr ""
-"COM பதிவுப் பிழை நீக்கியை நிறுவ இருக்கிறீர்கள். ஃபயர்ஃபாக்ஸ், இண்டர்நெட் எக்ஸ்ப்ளோரர் போன்ற பல "
+"COM பதிவுப் பிழை நீக்கியை இயக்க இருக்கிறீர்கள். ஃபயர்ஃபாக்ஸ், இண்டர்நெட் எக்ஸ்ப்ளோரர் போன்ற பல "
 "பயன்பாடுகளின் உள்ளடக்கங்களை என்விடிஏ அணுகவியலாமல் தடுக்கும் கணினியின் பொதுப் "
 "பிரச்சினைகளை நிவர்த்திச் செய்ய இக்கருவி முயற்சிக்கும். கணினியின் பதிவேட்டில் இக்கருவி "
 "மாற்றங்களைச் செய்ய வேண்டியிருப்பதால், இதற்கு நிர்வாகியின் சிறப்புரிமைத் தேவைப்படும். தாங்கள் "
@@ -7474,7 +7482,7 @@ msgstr "என்விடிஏவை நிறுவுக... (&I)"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr "COM பதிவுப் பிழை நீக்கியை இயக்குக"
+msgstr "COM பதிவுப் பிழை நீக்கியை இயக்குக (&T)"
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7673,6 +7681,45 @@ msgstr "காத்திருப்பிலிருக்கும் இ�
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "கருணைக்கூர்ந்து காத்திருக்கவும்"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "என்விடிஏ பயன்பாட்டுத் தரவுத் திரட்டு"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"என்விடிஏவை மேம்படுத்த, ஓடிக்கொண்டிருக்கும் என்விடிஏவின் படிகளிலிருந்து பயன்பாட்டுத் "
+"தரவினைத் திரட்ட என்வி அக்ஸஸ் விரும்புகிறது.\n"
+"\n"
+"இயக்கமுறைமையின் பதிப்பு, என்விடிஏவின் பதிப்பு, மொழி, எந்த நாடு, போன்ற தரவுகள் இதில் "
+"உள்ளடங்கும். இது தவிர, நடப்பிலிருக்கும் ஒலிப்பான், பிரெயில் காட்சியமைவு, பிரெயில் "
+"அட்டவணை போன்ற சில குறிப்பிட்ட என்விடிஏவின் அமைவடிவத் தரவுகளும் உள்ளடங்கும். பேச்சின் "
+"உள்ளடக்கத்தையோ, பிரெயிலின் உள்ளடக்கத்தையோ ஒருபோதும் என்வி அக்ஸஸ் நிறுவனத்திற்கு அனுப்பி "
+"வைக்கப்பட மாட்டாது.  திரட்டப்படும் தரவுகளின் தற்போதைய பட்டியலையறிய, என்விடிஏவின் பயனர் "
+"வழிகாட்டியைக் காணவும்.\n"
+"\n"
+"என்விடிஏவை மேம்படுத்த, இத்தரவினை என்வி அக்ஸஸ் நிறுவனம் கால இடைவெளிகளில் திரட்ட "
+"அனுமதிக்க விரும்புகிறீர்களா?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "ஆம் (&Y)"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "இல்லை (‍&N)"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -8339,6 +8386,11 @@ msgstr "இற்றாக்கங்களுக்குத் தானா�
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "துவக்கப்படும்பொழுது காத்திருப்பிலிருக்கும் இற்றாக்கத்தைத் தெரியப்படுத்துக (&P)"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
+"என்விடிஏவின் பயன்பாட்டுப் புள்ளிவிவரங்களை சேகரிக்க என்விடிஏ திட்டப் பணியை அனுமதிக்கவும் "
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""

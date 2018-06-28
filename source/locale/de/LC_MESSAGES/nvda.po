@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-15 00:10+1000\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adriani Botez <adriani.botez@gmail.com>\n"
 "Language-Team: \n"
@@ -3437,7 +3437,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "Schaltet in den nächsten Darstellungsmodus um und setzt den NVDA-Cursor an "
-"die Position des aktuellen Navigatorobjekts."
+"die Position des aktuellen Navigator-Objekts."
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
@@ -3449,7 +3449,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "Schaltet in den vorherigen Darstellungsmodus um und setzt den NVDA-Cursor an "
-"das aktuelle Navigatorobjekt."
+"das aktuelle Navigator-Objekt."
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
@@ -3537,7 +3537,7 @@ msgstr "Kein übergeordnetes Objekt."
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
-msgstr "Zieht das Navigatorobjekt zum enthaltenden Objekt."
+msgstr "Zieht das Navigator-Objekt zum enthaltenden Objekt."
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #. Translators: a message when there is no next object when navigating
@@ -3546,7 +3546,7 @@ msgstr "Kein weiteres Objekt."
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr "Zieht das Navigatorobjekt zum nächsten Objekt."
+msgstr "Zieht das Navigator-Objekt zum nächsten Objekt."
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #. Translators: a message when there is no previous object when navigating
@@ -3555,7 +3555,7 @@ msgstr "Kein vorheriges Objekt."
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
-msgstr "Zieht das Navigatorobjekt zum vorherigen Objekt."
+msgstr "Zieht das Navigator-Objekt zum vorherigen Objekt."
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
@@ -3563,7 +3563,7 @@ msgstr "kein untergeordnetes Objekt"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "Zieht das Navigatorobjekt zum ersten untergeordneten Objekt."
+msgstr "Zieht das Navigator-Objekt zum ersten untergeordneten Objekt."
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 msgid "Activate"
@@ -3640,7 +3640,7 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"Liest das aktuelle Wort unter dem NVDA-Cursor im Navigatorobjekt vor. Bei "
+"Liest das aktuelle Wort unter dem NVDA-Cursor im Navigator-Objekt vor. Bei "
 "zweimaligem Drücken wird das Wort buchstabiert. Bei dreimaligem Drücken wird "
 "das Wort phonetisch buchstabiert."
 
@@ -3679,7 +3679,7 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"Liest das aktuelle Zeichen unter dem NVDA-Cursor im Navigatorobjekt vor. Bei "
+"Liest das aktuelle Zeichen unter dem NVDA-Cursor im Navigator-Objekt vor. Bei "
 "zweimaligem Drücken wird das zeichen phonetisch buchstabiert und ein "
 "Beispiel wird angesagt. Bei dreimaligem Drücken wird das Zeichen als "
 "Dezimal- und als Hexadezimalwert gesprochen."
@@ -4363,7 +4363,7 @@ msgstr "Die Windows 10-OCR ist nicht verfügbar"
 #. Translators: Describes a command.
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "Erkennt das aktuelle Navigatorobjekt mit Hilfe der Windows 10 OCR."
+msgstr "Erkennt das aktuelle Navigator-Objekt mit Hilfe der Windows 10 OCR."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6645,19 +6645,19 @@ msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
-msgstr "Zieht das Navigatorobjekt zur nächsten Spalte"
+msgstr "Zieht das Navigator-Objekt zur nächsten Spalte"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the previous column"
-msgstr "Zieht das Navigatorobjekt zur vorherigen Spalte"
+msgstr "Zieht das Navigator-Objekt zur vorherigen Spalte"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the next row"
-msgstr "Zieht das Navigatorobjekt und den Fokus zur nächsten Zeile"
+msgstr "Zieht das Navigator-Objekt und den Fokus zur nächsten Zeile"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "Zieht das Navigatorobjekt und den Fokus zur vorigen Zeile"
+msgstr "Zieht das Navigator-Objekt und den Fokus zur vorigen Zeile"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
@@ -6683,11 +6683,22 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Es wird gerade kein Titel wiedergegeben."
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, falls einer "
 "abgespielt wird."
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr ""
+"Zeigt die abgelaufene Zeit des aktuell wiedergegebenen Titels an, falls "
+"vorhanden."
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr ""
+"Zeigt die Länge des aktuell wiedergegebenen Titels an, falls vorhanden."
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7736,6 +7747,43 @@ msgstr "Ausstehende Aktualisierung installieren"
 msgid "Please wait"
 msgstr "Bitte warten"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA-Nutzungsdatenerfassung"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Um NVDA in Zukunft zu verbessern, möchte NV Access Nutzungsdaten von "
+"laufenden Kopien von NVDA sammeln.\n"
+"\n"
+"Zu den Daten gehören Betriebssystemversion, NVDA-Version, Sprache, "
+"Herkunftsland sowie bestimmte NVDA-Konfigurationen wie aktuelle "
+"Sprachausgabe, aktuelle Braillezeile und die verwendete Braille-Tabelle. Es "
+"wird weder gesprochene noch Braille-Inhalte jemals an NV Access gesendet.  "
+"Eine aktuelle Liste aller gesammelten Daten finden Sie im Benutzerhandbuch.\n"
+"Möchten Sie NV Access erlauben, diese Daten regelmäßig zu sammeln, um NVDA "
+"zu verbessern?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Ja"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Nein"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Erweiterungen verwalten"
@@ -8417,6 +8465,10 @@ msgstr "Automatisch nach &Aktualisierungen suchen"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "Beim Start von NVDA &ausstehende Aktualisierungen melden"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Erlauben Sie dem NVDA-Projekt, NVDA-Nutzungsstatistiken zu erstellen."
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""

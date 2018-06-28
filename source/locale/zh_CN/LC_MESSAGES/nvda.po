@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA Simplified Chinese Team\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-01 17:13+1000\n"
-"PO-Revision-Date: 2018-06-02 21:07+0800\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"PO-Revision-Date: 2018-06-24 21:05+0800\n"
 "Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -6563,9 +6563,17 @@ msgstr "开始"
 msgid "No track playing"
 msgstr "没有播放音乐"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "读出当前播放曲目的剩余时间"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "读出当前正在播放的曲目的已用时间"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "读出当前正在播放的曲目的长度"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7600,6 +7608,38 @@ msgstr "安装之前推迟的更新"
 msgid "Please wait"
 msgstr "请等待"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA使用数据收集"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"为了在未来改进NVDA，NV Access希望从正在运行的NVDA副本收集使用数据。数据包括操"
+"作系统版本，NVDA版本，语言，所在国家，以及某些NVDA配置，如语音合成器，盲文点"
+"显器和盲文表等等。NVDA不会将语音或盲文内容发送给NV Access。关于收集数据的完整"
+"列表，请参阅用户指南的数据收集部分。您是否希望允许NV Access定期收集这些数据以"
+"改进NVDA？"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "是(&Y)"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "否(&N)"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "插件管理器"
@@ -8243,6 +8283,10 @@ msgstr "自动检查更新(&U)"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "在启动NVDA时通知并等待更新"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "允许NVDA项目收集NVDA使用情况统计数据"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""

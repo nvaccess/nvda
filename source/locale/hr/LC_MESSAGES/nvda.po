@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-11 16:17+0100\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"PO-Revision-Date: 2018-06-27 13:49+0100\n"
 "Last-Translator: zvonimir Stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -6695,11 +6695,19 @@ msgstr "Početak"
 msgid "No track playing"
 msgstr "Nema trake koja se reproducira"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Izvještava o preostalom vremenu trake koja se trenutno reproducira, ukoliko "
 "postoji"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Izgovara preostalo vrijeme zvučne datoteke, ako postoji"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "izgovara dužinu datoteke koja se reproducira, ako postoji"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7755,6 +7763,45 @@ msgstr "Instaliraj ažuriranje na čekanju"
 msgid "Please wait"
 msgstr "Molimo pričekajte"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA prikupljanje podataka o korištenju"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Kako bi se NVDA mogao dalje u budućnosti razvijati, NV Access želi "
+"prikupljati podatke o korištenju iz pokrenutih kopija NVDA.\n"
+"\n"
+"Podatci uključuju: inačicu operacijskog sustava, inačicu NVDA, jezik, zemlju "
+"porijekla, te neke parametre konfiguracije NVDA, kao što su to trenutno "
+"korištena govorna jedinica, brajični redak i brajična tablica. Sadržaj koji "
+"se prikazuje na brajičnom retku ili se izgovara, neće biti poslan "
+"organizaciji NV Acces.  Kako biste saznači više o tome, koji se podatci "
+"sakupljaju, pogledajte vodič za korisnike.\n"
+"\n"
+"Želite li dozvoliti organizaciji NV Access da skuplja te podatke u cilju "
+"unapređivanja NVDA?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Da"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Ne"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Upravitelj dodacima"
@@ -8430,6 +8477,10 @@ msgstr "Automatski provjeri dostupnost &ažuriranja za NVDA"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "prilikom pokretanja, Obavijesti o ažuriranjima na &čekanju"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Dozvoli NVDA projektu prikupljanje statistike korištenja"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""

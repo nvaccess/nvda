@@ -831,10 +831,12 @@ Saat lisätietoja selaustilasta ja pikaselausnäppäimistä [Selaustila #BrowseM
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Lue jäljellä oleva aika | Ctrl+Vaihto+R | Lukee nykyisen kappaleen jäljellä olevan ajan. |
+| Ilmoita jäljellä oleva aika | Ctrl+Vaihto+R | Ilmoittaa toistettavan kappaleen jäljellä olevan ajan. |
+| Ilmoita kulunut aika | Ctrl+Vaihto+E | Ilmoittaa toistettavan kappaleen kuluneen ajan. |
+| Ilmoita kappaleen kesto | Ctrl+Vaihto+T | Ilmoittaa toistettavan kappaleen keston. |
 %kc:endInclude
 
-Huom: Lue jäljellä oleva aika -komento toimii vain foobar2000:n tilarivin muotoilun oletusmerkkijonolla.
+Huom: Yllä olevat näppäinkomennot toimivat vain foobar2000:n tilarivin muotoilun oletusmerkkijonolla.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +973,25 @@ Tämä painike on käytettävissä vain NVDA:n asennetuissa versioissa.
 ==== Tarkista päivitykset automaattisesti ====[GeneralSettingsCheckForUpdates]
 Jos tämä asetus on käytössä, NVDA etsii automaattisesti uusia versioita ja ilmoittaa, kun päivitys on saatavilla.
 Päivitysten manuaalinen tarkistaminen on myös mahdollista valitsemalla Tarkista päivitykset -vaihtoehto NVDA-valikosta Ohje-valikon alta.
+Kun päivitykset tarkistetaan manuaalisesti tai automaattisesti, NVDA:n on  lähetettävä joitakin tietoja päivityspalvelimelle asianmukaisen version vastaanottamiseksi.
+Seuraavat tiedot lähetetään aina:
+- Nykyinen NVDA:n versio
+- Käyttöjärjestelmän versio
+- Onko käyttöjärjestelmä 64- vai 32-bittinen
+
+
+==== Salli NVDA-projektin kerätä käyttötilastoja ====[GeneralSettingsGatherUsageStats]
+Jos tämä on käytössä, NV Access käyttää päivitystarkistusten tietoja NVDA-käyttäjien määrän seuraamiseen, mukaan lukien tietyt väestötilastolliset tiedot kuten käyttöjärjestelmä sekä alkuperämaa.
+Huom: IP-osoitettasi ei koskaan säilytetä, vaikka sitä käytetäänkin päivitystarkistuksen aikana maasi selvittämiseen.
+Päivitysten tarkistamiseen tarvittavien pakollisten tietojen lisäksi lähetetään tällä hetkellä myös seuraavat lisätiedot:
+- NVDA:n käyttöliittymän kieli
+- Onko NVDA asennettu vai käytetäänkö massamuistiversiota
+- Käytössä olevan puhesyntetisaattorin nimi (mukaan lukien lisäosan nimi, johon ajuri kuuluu)
+- Käytössä olevan pistenäytön nimi (mukaan lukien lisäosan nimi, johon ajuri kuuluu)
+- Nykyinen pistekirjoituksen tulostustaulukko (jos pistenäyttö on käytössä)
+
+
+Nämä tiedot auttavat huomattavasti NV Accessia priorisoimaan NVDA:n tulevaa kehitystä.
 
 ==== Ilmoita käynnistettäessä odottavasta päivityksestä ====[GeneralSettingsNotifyPendingUpdates]
 Jos tämä on valittuna, NVDA ilmoittaa käynnistyessään odottavasta päivityksestä ja tarjoaa mahdollisuutta sen asentamiseen.
