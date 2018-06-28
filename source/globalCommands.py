@@ -1463,6 +1463,29 @@ class GlobalCommands(ScriptableObject):
 	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
 	script_toggleProgressBarOutput.category=SCRCAT_SPEECH
 
+	def script_togglePlayObjectCoordinates(self,gesture):
+		playObjectCoordinates = config.conf["presentation"]["playObjectCoordinates"]
+		if playObjectCoordinates == "both":
+			playObjectCoordinates = "off"
+			# Translators: A mode where object location coordinates will not be announced.
+			ui.message(_("Do not play Object location tone"))
+		elif playObjectCoordinates == "off":
+			playObjectCoordinates = "objNav"
+			# Translators: A mode where object coordinate beep will be heard when using object navigation commands.
+			ui.message(_("Play object location tone when using object navigation"))
+		elif playObjectCoordinates == "objNav":
+			playObjectCoordinates = "focus"
+			# Translators: A mode where object coordinate beep will be heard when moving system focus.
+			ui.message(_("Play object location tone when focus moves"))
+		else:
+			playObjectCoordinates = "both"
+			# Translators: A mode where object location beep will be heard always when moving focus and doing object navigation commands.
+			ui.message(_("Always play object location tone"))
+		config.conf["presentation"]["playObjectCoordinates"] = playObjectCoordinates
+	# Translators: Input help mode message for toggle object coordinate announcement command.
+	script_togglePlayObjectCoordinates.__doc__ = _("Toggles when object coordinate tone will be heard between off, object navigation only, focus only, or always")
+	script_togglePlayObjectCoordinates.category = SCRCAT_OBJECTNAVIGATION
+
 	def script_toggleReportDynamicContentChanges(self,gesture):
 		if config.conf["presentation"]["reportDynamicContentChanges"]:
 			# Translators: presented when the present dynamic changes is toggled.
