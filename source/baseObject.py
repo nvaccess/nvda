@@ -133,7 +133,11 @@ class ScriptableType(AutoPropertyType):
 
 	def __new__(meta, name, bases, dict):
 		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
-		gestures = getattr(cls, "_%s__gestures" % cls.__name__, {})
+		# #8463: To avoid name mangling conflicts, create a copy of the __gestures dictionary.
+		try:
+			gestures = getattr(cls, "_%s__gestures" % cls.__name__).copy()
+		except AttributeError:
+			gestures = {}
 		# Python 3 incompatible.
 		for name, script in dict.iteritems():
 			if not name.startswith('script_'):
@@ -142,7 +146,8 @@ class ScriptableType(AutoPropertyType):
 			if hasattr(script, 'gestures'):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName
-		setattr(cls, "_%s__gestures" % cls.__name__, gestures)
+		if gestures:
+			setattr(cls, "_%s__gestures" % cls.__name__, gestures)
 		return cls
 
 class ScriptableObject(AutoPropertyObject):
@@ -192,7 +197,7 @@ class ScriptableObject(AutoPropertyObject):
 		# and instance methods are meant to be generated on retrieval anyway.
 		func = getattr(self.__class__, "script_%s" % scriptName, None)
 		if not func:
-			raise LookupError("No such script: %s" % func)
+			raise LookupError("No such script: %s" % scriptName)
 		# Import late to avoid circular import.
 		import inputCore
 		self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)] = func
