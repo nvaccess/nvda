@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2015-2018 NV Access Limited, Babbage B.V., Joseph Lee
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -421,6 +421,14 @@ class EdgeNode(UIA):
 			lastCharInfo.setEndPoint(charInfo,"startToEnd")
 			charInfo.collapse(True)
 		return range
+
+	def _get_name(self):
+		name=super(EdgeNode,self).name
+		# #8466: elements with aria-role=alert set fires live region changed event but does not expose the alert text as its name, wihch can be found in its children.
+		# Therefore, join names of its children, wihch then allows live region changed event to work.
+		if "role" in self.ariaProperties and self.ariaProperties["role"] == "alert":
+			name = " ".join([text.name for text in self.children])
+		return name
 
 	def _get_role(self):
 		role=super(EdgeNode,self).role
