@@ -1,10 +1,9 @@
 import os
 from os.path import join as pathJoin
 from os.path import abspath
-from timeit import default_timer as timer
 from robotremoteserver import test_remote_server, stop_remote_server
+from testutils import blockUntilConditionMet
 from robot.libraries.BuiltIn import BuiltIn
-
 
 builtIn = BuiltIn()
 process = builtIn.get_library_instance('Process')
@@ -20,28 +19,15 @@ systemTestSourceDir = abspath("tests/system")
 nvdaProfileWorkingDir = pathJoin(systemTestSourceDir, "nvdaProfile")
 nvdaSettingsSourceDir = pathJoin(systemTestSourceDir, "nvdaSettingsFiles")
 
+# TODO: find a better way to share this testutils code!!
+systemTestUtilsFileName = "testutils.py"
+systemTestUtilsSource = pathJoin(systemTestSourceDir, "libraries", systemTestUtilsFileName)
 systemTestSpyFileName = "systemTestSpy.py"
 systemTestSpySource = pathJoin(systemTestSourceDir, "libraries", systemTestSpyFileName)
 systemTestSpyInstallDir = pathJoin(nvdaProfileWorkingDir, "globalPlugins")
 systemTestSpyInstalled = pathJoin(systemTestSpyInstallDir, systemTestSpyFileName)
+systemTestUtilsInstalled = pathJoin(nvdaProfileWorkingDir, "systemTestLibs", systemTestUtilsFileName)
 
-def _should_be_equal_as_strings(actual, expected, ignore_case=False):
-	try:
-		builtIn.should_be_equal_as_strings(
-			actual,
-			expected,
-			msg="Actual speech != Expected speech",
-			ignore_case=ignore_case
-		)
-	except AssertionError:
-		builtIn.log(
-			"repr of actual vs expected (ignore_case={}):\n{}\nvs\n{}".format(
-				ignore_case,
-				repr(actual),
-				repr(expected)
-			)
-		)
-		raise
 
 class nvdaRobotLib(object):
 
@@ -50,6 +36,7 @@ class nvdaRobotLib(object):
 		self.nvdaHandle = None
 
 	def setup_nvda_profile(self, settingsFileName):
+		builtIn.log("Copying files into NVDA profile")
 		opSys.create_directory(systemTestSpyInstallDir)
 		opSys.copy_file(systemTestSpySource, systemTestSpyInstallDir)
 		opSys.copy_file(
@@ -58,6 +45,8 @@ class nvdaRobotLib(object):
 		)
 
 	def teardown_nvda_profile(self):
+		builtIn.log("Removing files from NVDA profile")
+		# TODO: probably dont need to remove the raw python file?
 		opSys.remove_file(systemTestSpyInstalled)
 		opSys.remove_file(systemTestSpyInstalled+"c")  # also remove the .pyc
 		opSys.remove_file(
@@ -76,51 +65,6 @@ class nvdaRobotLib(object):
 		)
 		return handle
 
-	def _blockUntilReturnsTrue(self, func, giveUpAfterSeconds, intervalBetweenSeconds=0.1, errorMessage=None):
-		"""Call 'func' every 'intervalBetweenSeconds' seconds until 'func' returns True until
-		'giveUpAfterSeconds' is reached.
-		If 'func' does not return true and 'errorMessage' is provided, a RuntimeError is raised
-		using the provided errorMessage.
-		@return True if 'func' returns True before 'giveUpAfterSeconds' is reached, else False
-		"""
-		startTime = timer()
-		lastRunTime = startTime - intervalBetweenSeconds+1  # ensure we start trying immediately
-		while (timer() - startTime) < giveUpAfterSeconds:
-			if (timer() - lastRunTime) > intervalBetweenSeconds:
-				lastRunTime = timer()
-				if func():
-					return True
-		else:
-			if errorMessage:
-				raise RuntimeError(errorMessage)
-			return False
-
-
-	def _blockUntilConditionMet(
-			self,
-			getValue,
-			giveUpAfterSeconds,
-			shouldStopEvaluator=lambda value: bool(value),
-			intervalBetweenSeconds=0.1,
-			errorMessage=None):
-		"""Repeatedly tries to get a value up until a time limit expires. Tries are separated by
-		a time interval. The call will block until shouldStopEvaluator returns True when given the value,
-		the default evaluator just returns the value converted to a boolean.
-		@return A tuple, (True, value) if evaluator condition is met, otherwise (False, None)
-		@raises RuntimeError if the time limit expires and an errorMessage is given.
-		"""
-		startTime = timer()
-		lastRunTime = startTime - intervalBetweenSeconds+1  # ensure we start trying immediately
-		while (timer() - startTime) < giveUpAfterSeconds:
-			if (timer() - lastRunTime) > intervalBetweenSeconds:
-				lastRunTime = timer()
-				val = getValue()
-				if shouldStopEvaluator(val):
-					return True, val
-		else:
-			if errorMessage:
-				raise RuntimeError(errorMessage)
-			return False, None
 
 	def _connectToRemoteServer(self):
 		"""Connects to the nvdaSpyServer
@@ -131,29 +75,35 @@ class nvdaRobotLib(object):
 				No connection could be made because the target machine actively refused it"
 		Instead we wait until the remote server is available before importing the library and continuing.
 		"""
+
+		builtIn.log("Waiting for nvdaSpy to be available at: {}".format(spyServerURI))
 		# Importing the 'Remote' library always succeeds, even when a connection can not be made.
 		# If that happens, then some 'Remote' keyword will fail at some later point.
 		# therefore we use 'test_remote_server' to ensure that we can in fact connect before proceeding.
-		self._blockUntilReturnsTrue(
-			func=lambda: test_remote_server(spyServerURI, log=False),
+		blockUntilConditionMet(
+			getValue=lambda: test_remote_server(spyServerURI, log=False),
 			giveUpAfterSeconds=10,
 			errorMessage="Unable to connect to nvdaSpy",
 		)
-
+		builtIn.log("Connecting to nvdaSpy")
+		maxRemoteKeywordDurationSeconds = 30  # If any remote call takes longer than this, the connection will be closed!
 		builtIn.import_library(
 			"Remote",  # name of library to import
 			# Arguments to construct the library instance:
 			"uri={}".format(spyServerURI),
-			"timeout=2",  # seconds
+			"timeout={}".format(maxRemoteKeywordDurationSeconds),
 			# Set an alias for the imported library instance
 			"WITH NAME",
 			"nvdaSpy",
 		)
+		builtIn.log("Getting nvdaSpy library instance")
 		self.nvdaSpy = builtIn.get_library_instance(spyAlias)
+		self._runNvdaSpyKeyword("set_max_keyword_duration", maxSeconds=maxRemoteKeywordDurationSeconds)
 
 	def _runNvdaSpyKeyword(self, keyword, *args, **kwargs):
 		if not args: args = []
 		if not kwargs: kwargs = {}
+		builtIn.log("nvdaSpy keyword: {} args: {}, kwargs: {}".format(keyword, args, kwargs))
 		return self.nvdaSpy.run_keyword(keyword, args, kwargs)
 
 	def start_NVDA(self, settingsFileName):
@@ -161,18 +111,12 @@ class nvdaRobotLib(object):
 		nvdaProcessHandle = self._startNVDAProcess()
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()
-		self.wait_for_NVDA_startup_to_complete()
+		self._runNvdaSpyKeyword("wait_for_NVDA_startup_to_complete")
 		return nvdaProcessHandle
-
-	def wait_for_NVDA_startup_to_complete(self):
-		self._blockUntilReturnsTrue(
-			func=lambda: self._runNvdaSpyKeyword("is_NVDA_startup_complete"),
-			giveUpAfterSeconds=10,
-			errorMessage="Unable to connect to nvdaSpy",
-		)
 
 	def save_NVDA_log(self):
 		"""NVDA logs are saved to the ${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log"""
+		builtIn.log("saving NVDA log")
 		outDir = builtIn.get_variable_value("${OUTPUT DIR}", )
 		suiteName = builtIn.get_variable_value("${SUITE NAME}")
 		testName = builtIn.get_variable_value("${TEST NAME}")
@@ -187,7 +131,7 @@ class nvdaRobotLib(object):
 		)
 
 	def quit_NVDA(self):
-		stop_remote_server(spyServerURI, log=False)
+		builtIn.log("Stopping nvdaSpy server: {}".format(spyServerURI))
 		# remove the spy so that if nvda is run manually against this config it does not interfere.
 		self.teardown_nvda_profile()
 		process.run_process(
@@ -198,64 +142,21 @@ class nvdaRobotLib(object):
 		process.wait_for_process(self.nvdaHandle)
 		self.save_NVDA_log()
 
-	def assert_last_speech(self, expectedSpeech):
-		actualLastSpeech = self._runNvdaSpyKeyword("get_last_speech")
-		_should_be_equal_as_strings(actualLastSpeech, expectedSpeech)
-
-	def assert_all_speech(self, expectedSpeech):
-		actualSpeech = self._runNvdaSpyKeyword("get_all_speech")
-		_should_be_equal_as_strings(actualSpeech, expectedSpeech)
-
-	def assert_speech_since_index(self, index, expectedSpeech):
-		actualSpeech = self._runNvdaSpyKeyword("get_speech_since_index", index)
-		_should_be_equal_as_strings(actualSpeech, expectedSpeech)
-
-	def wait_for_next_speech(self, maxWaitSeconds=5.0, raiseErrorOnTimeout=True):
-		return self._blockUntilReturnsTrue(
-			func=lambda: self._runNvdaSpyKeyword("has_speech_occurred_since_last_check"),
-			giveUpAfterSeconds=maxWaitSeconds,
-			errorMessage="Speech did not start before timeout" if raiseErrorOnTimeout else None
-		)
-
-	def has_speech_finished(self):
-		speechOccurred = self.wait_for_next_speech(maxWaitSeconds=0.5, raiseErrorOnTimeout=False)
-		return not speechOccurred
-
-	def wait_for_speech_to_finish(self, maxWaitSeconds=5.0):
-		self._blockUntilReturnsTrue(
-			func=self.has_speech_finished,
-			giveUpAfterSeconds=maxWaitSeconds,
-			errorMessage="Speech did not finish before timeout"
-		)
-
-	def wait_for_speech_to_start_and_finish(self):
-		self.wait_for_next_speech()
-		self.wait_for_speech_to_finish()
-
-	def reset_get_all_speech(self):
-		self._runNvdaSpyKeyword("reset_all_speech_index")
-
-	def wait_for_specific_speech(self, speech, sinceIndex=None, maxWaitSeconds=5):
-		sinceIndex = 0 if not sinceIndex else sinceIndex
-
-		success, speechIndex = self._blockUntilConditionMet(
-			getValue=lambda: self._runNvdaSpyKeyword("get_index_of_speech", speech, sinceIndex),
-			giveUpAfterSeconds=maxWaitSeconds,
-			shouldStopEvaluator=lambda speechIndex: speechIndex>=0,
-			intervalBetweenSeconds=0.5,
-			errorMessage="Specific speech did not occur before timeout: {}".format(speech)
-		)
-		return speechIndex
-
-	def wait_for_specific_speech_after_action(self, speech, action, *args):
-		self.wait_for_speech_to_finish()
-		index = self._runNvdaSpyKeyword("get_speech_index")
-		builtIn.run_keyword(action, *args)
-		index = self.wait_for_specific_speech(speech, index)
-		builtIn.log("got index: {}".format(index), level='INFO')
-		return index
-
-	def wait_for_any_speech_after_action(self, action, *args):
-		self.wait_for_speech_to_finish()
-		builtIn.run_keyword(action, *args)
-		self.wait_for_next_speech()
+# TODO: this shouldn't be a member function, but it is not available from robot if it is not??
+	def assert_strings_are_equal(self, actual, expected, ignore_case=False):
+		try:
+			builtIn.should_be_equal_as_strings(
+				actual,
+				expected,
+				msg="Actual speech != Expected speech",
+				ignore_case=ignore_case
+			)
+		except AssertionError:
+			builtIn.log(
+				"repr of actual vs expected (ignore_case={}):\n{}\nvs\n{}".format(
+					ignore_case,
+					repr(actual),
+					repr(expected)
+				)
+			)
+			raise
