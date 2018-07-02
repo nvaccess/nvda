@@ -461,6 +461,9 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 		macro_addHTMLAttributeToMap(L"colspan",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 		macro_addHTMLAttributeToMap(L"rowspan",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 		macro_addHTMLAttributeToMap(L"scope",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	} else if (nodeName.compare(L"OL") == 0) {
+		macro_addHTMLAttributeToMap(L"start", false, pHTMLAttributeCollection2, attribsMap, tempVar, tempAttribNode);
+		macro_addHTMLAttributeToMap(L"type", false, pHTMLAttributeCollection2, attribsMap, tempVar, tempAttribNode);
 	}
 	macro_addHTMLAttributeToMap(L"longdesc",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"alt",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -1007,6 +1010,13 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
 		//Ordered lists should number their list items
 		LIIndex=1;
+		// set the list index if list has start attribute
+		if ((tempIter = attribsMap.find(L"HTMLAttrib::start")) != attribsMap.end()) {
+			if (!tempIter->second.empty()) {
+				LIIndex = stoi(tempIter->second);
+			}
+		}
+
 		LIIndexPtr=&LIIndex;
 	} else if(nodeName.compare(L"DL")==0) {
 		//Unordered lists should not be numbered
