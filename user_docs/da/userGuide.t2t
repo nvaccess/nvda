@@ -91,7 +91,7 @@ Brug af den midlertidige kopi af NVDA er også en mulighed fx. hvis du har til h
 Udover den manglende evne til at starte på og efter logon-skærmen, har en flytbar eller midlertidig kopi af NVDA følgende begrænsninger:
 - manglende evne til at interagere med programmer der kører med administratorrettigheder, med mindre NVDA ligeledes kører med administratorrettigheder (anbefales ikke).
 - Manglende evne til at læse Kontrol af Brugerkonti (UAC) skærme når du forsøger at starte et program med administratorrettigheder.
-- Windows 8 og senere: Understøtter ikke input for touchskærme.
+- Windows 8 og senere: Understøtter ikke input for berøringsfølsomme skærme.
 - Windows 8: NVDA er ikke i stand til at benytte funktioner såsom gennemsynstilstand, samt evnen til at udtale indtastede tegn i Windows Store apps.
 - Windows 8 og senere: Lyddæmpning er ikke understøttet.
 -
@@ -179,7 +179,7 @@ Desktop-layout bruger i høj grad det numeriske tastatur (med Num Lock slået fr
 Selvom de fleste bærbare computere ikke har et fysisk numerisk tastatur, kan nogle bærbare computere efterligne et ved at holde Fn-tasten nede og trykke på bogstaver og tal på højre side af tastaturet (7 8 9 u i o j k l osv)..
 Hvis din bærbare computer ikke kan gøre brug af dette, eller ikke tillader dig at slå Num Lock fra, kan du skifte til det bærbare layout i stedet.
 
-++ NVDA Touch-bevægelser ++[NVDATouchGestures]
+++ NVDA Berøringsbevægelser ++[NVDATouchGestures]
 Hvis du kører NVDA på en enhed med touchskærm og Windows 8 eller nyere, kan du kontrollere NVDA direkte ved hjælp af den berøringsfølsomme skærm.
 Når NVDA er i gang, vil alle bevægelser registreret af skærmen blive indfanget af NVDA. 
 Dette betyder, at handlinger der kan udføres normalt uden NVDA ikke vil virke.
@@ -189,9 +189,9 @@ Den mest grundlæggende handling du kan udføre er at få annonceret et element 
 For at gøre dette, skal du placere en finger et sted på skærmen.
 Du kan også beholde din finger på skærmen, og derefter bevæge den rundt på skærmen for at få oplæst tekst og elementer, som du bevæger dig hen over.
 
-+++ Touch-bevægelser +++[TouchGestures]
++++ Berøringsbevægelser +++[TouchGestures]
 Når NVDA-kommandoer er beskrevet senere i denne brugermanual, kan de indeholde information om hvordan man benytter touchskærmen til at udføre den tilsvarende kommando.
-Følgende information beskriver hvordan du kan udføre diverse touch-bevægelser.
+Følgende information beskriver hvordan du kan udføre diverse berøringsbevægelser.
 
 ==== Tryk ====
 Tryk på skærmen hurtigt med en eller flere fingre.
@@ -212,15 +212,15 @@ Der er fire mulige svirpebevægelser du kan benytte, afhængige af retningen: Sv
 Ligesom tryk kan du benytte flere fingre for at udføre deforskellige bevægelser.
 Derfor er bevægelser som svirp op med to fingre og svirp til venstre med fire fingre mulige bevægelser.
 
-+++ Touch-tilstande +++[TouchModes]
++++ Berøringstilstande +++[TouchModes]
 Eftersom der er mange flere NVDA-kommandoer tilgængelige end der er mulige bevægelser, har NVDA implementeret forskellige tilstande der gør det muligt for dig, at benytte dig af forskellige undergrupper af kommandoer.
 De to tilstande er teksttilstand og objekttilstand 
-Visse NVDA kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter touch-bevægelsen.
+Visse NVDA kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter berøringsbevægelsen.
 For eksempel, svirp op (teksttilstand) betyder at kommandoen vil blive udført hvis du svirper op, men kun hvis teksttilstand er aktiv.
 Hvis kommandoen ikke har en tilstand knyttet til den, virker den uafhængigt af hvilken tilstand NVDA befinder sig i.
 
 %kc:beginInclude
-For at skifte touch-tilstand, udfør et tryk med tre fingre.
+For at skifte berøringstilstand, udfør et tryk med tre fingre.
 %kc:endInclude
 
 +++ Touch-tastatur +++[TouchKeyboard]
@@ -237,7 +237,7 @@ Mange vigtige kommandoer er nævnt i resten af denne brugervejledning, men en ne
 
 For At slå tastaturhjælp til, skal du trykke på NVDA+1.
 For at slå tastaturhjælp fra igen, tryk på NVDA+1.
-Når tastaturhjælp er slået til, vil enhver udført kommando, såsom et tastetryk eller en udført touch-bevægelse annoncere, hvilken handling den er knyttet til.
+Når tastaturhjælp er slået til, vil enhver udført kommando, såsom et tastetryk eller en udført berøringsbevægelse annoncere, hvilken handling den er knyttet til.
 Selve kommandoerne vil ikke blive udført, mens tastaturhjælp er slåët til.
 
 ++ NVDA-menuen ++[TheNVDAMenu]
@@ -1337,7 +1337,7 @@ Jo længere mod venstre eller højre musen befinder sig på skærmen, desto læn
 Hvis check boxen "Afspil lydkoordinater under flytning af mus" er slået til, bevirker markering af denne check box, at lydstyrken på biptonen ved lydkoordinaterne bestemmes af, hvor lyst skærmbilledet under musen er.
 Denne indstilling er slået fra som standard.
 
-+++ Touch-interaktion +++[TouchInteraction]
++++ Berøringsinteraktion +++[TouchInteraction]
 Denne indstillingskategori vil kun være tilgængelig på computere, der kører Windows 8 og nyere, samt har mulighed for touch-funktionalitet. Disse indstillinger lader dig konfigurere, hvordan NVDA håndtere berøring af touchskærme.
 Denne kategori indeholder følgende indstillinger:
 
