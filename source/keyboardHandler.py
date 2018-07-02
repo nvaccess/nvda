@@ -28,6 +28,7 @@ import inputCore
 import tones
 import core
 from contextlib import contextmanager
+import threading
 
 ignoreInjected=False
 
@@ -61,13 +62,15 @@ stickyNVDAModifier = None
 #: Whether the sticky NVDA modifier is locked.
 stickyNVDAModifierLocked = False
 
+_ignoreInjectionLock = threading.Lock()
 @contextmanager
 def ignoreInjection():
 	"""Context manager that allows ignoring injected keys temporarily by using a with statement."""
 	global ignoreInjected
-	ignoreInjected=True
-	yield
-	ignoreInjected=False
+	with _ignoreInjectionLock:
+		ignoreInjected=True
+		yield
+		ignoreInjected=False
 
 def passNextKeyThrough():
 	global passKeyThroughCount

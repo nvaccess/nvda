@@ -21,6 +21,7 @@ import core
 import ui
 from math import floor
 from contextlib import contextmanager
+import threading
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -51,13 +52,15 @@ def updateMouseShape(name):
 		_shapeTimer.Stop()
 		_shapeTimer.Start(SHAPE_REPORT_DELAY, True)
 
+_ignoreInjectionLock = threading.Lock()
 @contextmanager
 def ignoreInjection():
 	"""Context manager that allows ignoring injected mouse events temporarily by using a with statement."""
 	global ignoreInjected
-	ignoreInjected=True
-	yield
-	ignoreInjected=False
+	with _ignoreInjectionLock:
+		ignoreInjected=True
+		yield
+		ignoreInjected=False
 
 def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBrightness=True,blurFactor=0):
 	""" play audio coordinates:
