@@ -7,11 +7,11 @@
 most specifically related to the setup for, starting of, quiting of, and cleanup of, NVDA. This is in contrast with
 the systemTestSpy.py file, which provides library functions related to monitoring / asserting NVDA output.
 """
-
-from os.path import join as pathJoin
-from os.path import abspath
-from robotremoteserver import test_remote_server, stop_remote_server
-from testutils import blockUntilConditionMet
+# imported methods start with underscore (_) so they don't get imported into robot files as keywords
+from os.path import join as _pJoin
+from os.path import abspath as _abspath
+from robotremoteserver import test_remote_server as _testRemoteServer, stop_remote_server as _stopRemoteServer
+from testutils import _blockUntilConditionMet
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.OperatingSystem import OperatingSystem
 from robot.libraries.Process import Process
@@ -25,11 +25,11 @@ spyServerURI = 'http://127.0.0.1:{}'.format(spyServerPort)
 spyAlias = "nvdaSpy"
 
 # Paths
-nvdaLogFilePath = abspath("source/nvda.log")
-systemTestSourceDir = abspath("tests/system")
-nvdaProfileWorkingDir = pathJoin(systemTestSourceDir, "nvdaProfile")
-profileGlobalPluginsDir = pathJoin(nvdaProfileWorkingDir, "globalPlugins")
-profileSysTestSpyPackageDir = pathJoin(profileGlobalPluginsDir, "systemTestSpy")
+nvdaLogFilePath = _abspath("source/nvda.log")
+systemTestSourceDir = _abspath("tests/system")
+nvdaProfileWorkingDir = _pJoin(systemTestSourceDir, "nvdaProfile")
+profileGlobalPluginsDir = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
+profileSysTestSpyPackageDir = _pJoin(profileGlobalPluginsDir, "systemTestSpy")
 
 
 class nvdaRobotLib(object):
@@ -41,25 +41,25 @@ class nvdaRobotLib(object):
 	def setup_nvda_profile(self, settingsFileName):
 		builtIn.log("Copying files into NVDA profile")
 		opSys.copy_file(
-			pathJoin(systemTestSourceDir, "nvdaSettingsFiles", settingsFileName),
-			pathJoin(nvdaProfileWorkingDir, "nvda.ini")
+			_pJoin(systemTestSourceDir, "nvdaSettingsFiles", settingsFileName),
+			_pJoin(nvdaProfileWorkingDir, "nvda.ini")
 		)
 		# create a package to use as the globalPlugin
 		opSys.create_directory(profileSysTestSpyPackageDir)
 		opSys.copy_file(
-			pathJoin(systemTestSourceDir, "libraries", "systemTestSpy.py"),
-			pathJoin(profileSysTestSpyPackageDir, "__init__.py")
+			_pJoin(systemTestSourceDir, "libraries", "systemTestSpy.py"),
+			_pJoin(profileSysTestSpyPackageDir, "__init__.py")
 		)
 		testUtilsFileName = "testutils.py"
 		opSys.copy_file(
-			pathJoin(systemTestSourceDir, "libraries", testUtilsFileName),
-			pathJoin(profileSysTestSpyPackageDir, testUtilsFileName)
+			_pJoin(systemTestSourceDir, "libraries", testUtilsFileName),
+			_pJoin(profileSysTestSpyPackageDir, testUtilsFileName)
 		)
 
 	def teardown_nvda_profile(self):
 		builtIn.log("Removing files from NVDA profile")
 		opSys.remove_file(
-			pathJoin(nvdaProfileWorkingDir, "nvda.ini")
+			_pJoin(nvdaProfileWorkingDir, "nvda.ini")
 		)
 		opSys.remove_directory(
 			profileSysTestSpyPackageDir,
@@ -92,9 +92,9 @@ class nvdaRobotLib(object):
 		builtIn.log("Waiting for nvdaSpy to be available at: {}".format(spyServerURI))
 		# Importing the 'Remote' library always succeeds, even when a connection can not be made.
 		# If that happens, then some 'Remote' keyword will fail at some later point.
-		# therefore we use 'test_remote_server' to ensure that we can in fact connect before proceeding.
-		blockUntilConditionMet(
-			getValue=lambda: test_remote_server(spyServerURI, log=False),
+		# therefore we use '_testRemoteServer' to ensure that we can in fact connect before proceeding.
+		_blockUntilConditionMet(
+			getValue=lambda: _testRemoteServer(spyServerURI, log=False),
 			giveUpAfterSeconds=10,
 			errorMessage="Unable to connect to nvdaSpy",
 		)
@@ -140,11 +140,12 @@ class nvdaRobotLib(object):
 			).replace(" ", "_")
 		opSys.copy_file(
 			nvdaLogFilePath,
-			pathJoin(outDir, "nvdaTestRunLogs", outputFileName)
+			_pJoin(outDir, "nvdaTestRunLogs", outputFileName)
 		)
 
 	def quit_NVDA(self):
 		builtIn.log("Stopping nvdaSpy server: {}".format(spyServerURI))
+		_stopRemoteServer(spyServerURI, log=False)
 		# remove the spy so that if nvda is run manually against this config it does not interfere.
 		self.teardown_nvda_profile()
 		process.run_process(

@@ -10,10 +10,11 @@ package. This allows us to share utility methods between the global plugin and t
 
 import globalPluginHandler
 import threading
-from testutils import blockUntilConditionMet
+from testutils import _blockUntilConditionMet
 from robotremoteserver import RobotRemoteServer
 from logHandler import log
-from timeit import default_timer as timer
+from timeit import default_timer as _timer
+
 whitespaceMinusSlashN = '\t\x0b\x0c\r '
 
 
@@ -27,7 +28,7 @@ class SystemTestSpy(object):
 		self._allSpeechStartIndex = 0
 		self._speechOccurred = False
 		self.isNvdaStartupComplete = False
-		self.lastSpeechTime = timer()
+		self.lastSpeechTime = _timer()
 		self._registerWithExtensionPoints()
 
 	def _registerWithExtensionPoints(self):
@@ -44,7 +45,7 @@ class SystemTestSpy(object):
 		if not speechSequence: return
 		with threading.Lock():
 			self._speechOccurred = True
-			self.lastSpeechTime = timer()
+			self.lastSpeechTime = _timer()
 			self._nvdaSpeech.append(speechSequence)
 
 	# Private helper methods
@@ -94,7 +95,7 @@ class SystemTestSpy(object):
 			return -1
 
 	def hasSpeechFinished(self):
-		return self.SPEECH_HAS_FINISHED_SECONDS < timer() - self.lastSpeechTime
+		return self.SPEECH_HAS_FINISHED_SECONDS < _timer() - self.lastSpeechTime
 
 	def dumpSpeechToLog(self):
 		log.debug("All speech:\n{}".format(repr(self._nvdaSpeech)))
@@ -119,7 +120,7 @@ class NvdaSpyLib(object):
 		self._maxKeywordDuration = maxSeconds-1
 
 	def wait_for_NVDA_startup_to_complete(self):
-		blockUntilConditionMet(
+		_blockUntilConditionMet(
 			getValue=lambda: self._spy.isNvdaStartupComplete,
 			giveUpAfterSeconds=self._minTimeout(10),
 			errorMessage="Unable to connect to nvdaSpy",
@@ -146,7 +147,7 @@ class NvdaSpyLib(object):
 # TODO: does this need to return the index of this speech? What if the "next speech" has already past when this is called?
 	def wait_for_speech_to_start(self, maxWaitSeconds=5.0, raiseErrorOnTimeout=True):
 		useErrorMesg = "Speech did not start before timeout" if raiseErrorOnTimeout else None
-		success, value = blockUntilConditionMet(
+		success, value = _blockUntilConditionMet(
 			getValue=lambda: self._spy.checkIfSpeechOccurredAndReset(),
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			errorMessage=useErrorMesg
@@ -156,7 +157,7 @@ class NvdaSpyLib(object):
 	def wait_for_specific_speech(self, speech, sinceIndex=None, maxWaitSeconds=5):
 		sinceIndex = 0 if not sinceIndex else sinceIndex
 		try:
-			success, speechIndex = blockUntilConditionMet(
+			success, speechIndex = _blockUntilConditionMet(
 				getValue=lambda: self._spy.getIndexOfSpeech(speech, sinceIndex),
 				giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 				shouldStopEvaluator=lambda speechIndex: speechIndex >= 0,
@@ -169,7 +170,7 @@ class NvdaSpyLib(object):
 		return speechIndex
 
 	def wait_for_speech_to_finish(self, maxWaitSeconds=5.0):
-		blockUntilConditionMet(
+		_blockUntilConditionMet(
 			getValue=self._spy.hasSpeechFinished,
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			errorMessage="Speech did not finish before timeout"

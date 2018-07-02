@@ -8,10 +8,10 @@ It is copied into the (system test specific) NVDA profile directory as part of a
 package. This allows us to share utility methods between the global plugin and the nvdaRobotLib library.
 """
 
-from timeit import default_timer as timer
+from timeit import default_timer as _timer
 
 
-def blockUntilConditionMet(
+def _blockUntilConditionMet(
 		getValue,
 		giveUpAfterSeconds,
 		shouldStopEvaluator=lambda value: bool(value),
@@ -25,13 +25,13 @@ def blockUntilConditionMet(
 	"""
 	assert callable(getValue)
 	assert callable(shouldStopEvaluator)
-	startTime = timer()
+	startTime = _timer()
 	lastRunTime = startTime
 	firstRun = True  # ensure we start immediately
-	while (timer() - startTime) < giveUpAfterSeconds:
-		if firstRun or (timer() - lastRunTime) > intervalBetweenSeconds:
+	while (_timer() - startTime) < giveUpAfterSeconds:
+		if firstRun or (_timer() - lastRunTime) > intervalBetweenSeconds:
 			firstRun = False
-			lastRunTime = timer()
+			lastRunTime = _timer()
 			val = getValue()
 			if shouldStopEvaluator(val):
 				return True, val
