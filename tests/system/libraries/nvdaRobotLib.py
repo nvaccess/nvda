@@ -1,4 +1,13 @@
-import os
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2018 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+
+"""This file provides robot library functions for NVDA system tests. It contains helper methods for system tests,
+most specifically related to the setup for, starting of, quiting of, and cleanup of, NVDA. This is in contrast with
+the systemTestSpy.py file, which provides library functions related to monitoring / asserting NVDA output.
+"""
+
 from os.path import join as pathJoin
 from os.path import abspath
 from robotremoteserver import test_remote_server, stop_remote_server
