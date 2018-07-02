@@ -1391,8 +1391,8 @@ class GlobalCommands(ScriptableObject):
 				ui.message(_("unable to copy status bar content to clipboard"))
 			else:
 				if api.copyToClip(text):
-				# Translators: The message presented when the status bar is copied to the clipboard.
-				ui.message(_("%s copied to clipboard")%text)
+					# Translators: The message presented when the status bar is copied to the clipboard.
+					ui.message(_("%s copied to clipboard")%text)
 	# Translators: Input help mode message for report status line text command.
 	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard")
 	script_reportStatusLine.category=SCRCAT_FOCUS
