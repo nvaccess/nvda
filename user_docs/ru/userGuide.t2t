@@ -831,10 +831,12 @@ NVDA может автоматически сообщать соответств
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Название | Клавиша | Описание |
-| Читать оставшееся время | control+shift+r | Читает оставшееся время воспроизведения текущей дорожки, если она воспроизводится. |
+| Сообщить оставшееся время | control+shift+r | Сообщает оставшееся время воспроизводимого трека, если оно доступно. |
+| Сообщить прошедшее время | control+shift+e | Сообщает прошедшее время воспроизводимого трека, если оно доступно. |
+| Сообщить длительность трека | control+shift+t | Сообщает длительность воспроизводимого трека, если она доступна. |
 %kc:endInclude
 
-Примечание: Клавиатурная команда чтения оставшегося времени работает в строке состояния foobar только со строкой форматирования по умолчанию.
+Примечание: приведённые выше комбинации клавиш работают в строке состояния foobar только со строкой форматирования по умолчанию.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +973,25 @@ Kindle позволяет вам выполнять различные дейс�
 ==== Автоматически проверять наличие обновлений NVDA ====[GeneralSettingsCheckForUpdates]
 Если этот флажок установлен, то NVDA будет автоматически проверять наличие своей более новой версии и сообщать пользователю, когда она доступна.
 Вы можете также вручную проверить наличие обновлений, активировав главное меню NVDA/Справка/Проверить наличие обновлений...
+Чтобы получить правильное обновление для вашей системы при ручной или автоматической проверке обновлений, NVDA должна передать на сервер обновлений некоторую информацию.
+Всегда передаётся следующая информация:
+- Текущая версия NVDA
+- Версия операционной системы
+- Разрядность операционной системы (32 или 64 бит)
+
+
+==== Разрешить NV Access собирать статистику использования NVDA ====[GeneralSettingsGatherUsageStats]
+Если этот флажок установлен, то информация передаваемая при проверке обновлений, будет использоваться NV Access для отслеживания количества пользователей NVDA, включая информацию об их операционной системе и стране пребывания.
+Обратите внимание, что IP-адрес используемый при проверке обновлений для определения вашей страны, на сервере обновлений никогда не сохраняется.
+Помимо обязательной информации требуемой для проверки обновлений, в настоящее время будет передаваться следующая дополнительная информация:
+- Язык интерфейса NVDA
+- Является ли эта копия NVDA переносной или установленной
+- Название используемого синтезатора речи (включая имя дополнения предоставляющего его драйвер)
+- Название используемого брайлевского дисплея (включая имя дополнения предоставляющего его драйвер)
+- Используемая брайлевская таблица вывода (если используется брайль)
+
+
+Эта информация очень помогает NV Access определять приоритеты в дальнейшем развитии NVDA.
 
 ==== Сообщать об отложенных обновлениях при запуске NVDA ====[GeneralSettingsNotifyPendingUpdates]
 Если этот флажок установлен, то NVDA при своём запуске будет информировать вас о наличии отложенного обновления и предлогать его установку.
@@ -1911,6 +1932,8 @@ Windows 10 включает в себя новые голоса, известн�
 | control+end key | brailleSpaceBar+dot4+dot5+dot6 |
 | alt key | brailleSpaceBar+dot1+dot3+dot4 |
 | alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| alt+shift+tab key | brailleSpaceBar+dot1+dot2+dot5+dot6 |
+| windows+tab key | brailleSpaceBar+dot2+dot3+dot4 |
 | escape key | brailleSpaceBar+dot1+dot5 |
 | windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | space key | brailleSpaceBar |
@@ -2427,6 +2450,11 @@ The following models are supported:
 
 For BrailleNote Touch, please refer to the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
 
+Except for BrailleNote PK, both braille (BT) and QWERTY (QT) keyboards are supported.
+For BrailleNote QT, PC keyboard emulation isn't supported.
+You can also enter braille dots using the QT keyboard.
+Please check the braille terminal section of the BrailleNote manual guide for details.
+
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.
 In NVDA, you may also need to set the port in the [Select Braille Display #SelectBrailleDisplay] dialog.
@@ -2434,6 +2462,9 @@ If you are connecting via USB or bluetooth, you can set the port to "Automatic",
 If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
 
 Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
+
+On the BrailleNote Apex BT, you can use the scroll wheel located between dots 1 and 4 for various NVDA commands.
+The wheel consists of four directional dots, a center click button, and a wheel that spins clockwise or counterclockwise.
 
 Following are the BrailleNote command assignments for NVDA.
 Please check your BrailleNote's documentation to find where these keys are located.
@@ -2445,6 +2476,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Move braille display to previous line | previous |
 | Move braille display to next line | next |
 | Route to braille cell | routing |
+| NvDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
 | Toggle braille tethered to | previous+next |
 | Up arrow key | space+dot1 |
 | Down arrow key | space+dot4 |
@@ -2464,6 +2496,39 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+
+Following are commands assigned to BrailleNote QT when it is not in braille input mode.
+
+|| Name | Key |
+| NvDA menu | read+n |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow|
+| Right arrow key | rightArrow |
+| Page up key | function+upArrow |
+| Page down key | function+downArrow |
+| Home key | function+leftArrow |
+| End key | function+rightArrow |
+| Control+home keys | read+t |
+| Control+end keys | read+b |
+| Enter key | enter |
+| Backspace key | backspace |
+| Tab key | tab |
+| Shift+tab keys | shift+tab |
+| Windows key | read+w |
+| Alt key | read+m |
+| Toggle input help | read+1 |
+
+Following are commands assigned to the scroll wheel:
+
+|| Name | Key |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow |
+| Right arrow key | rightArrow |
+| Enter key | center button |
+| Tab key | scroll wheel clockwise |
+| Shift+tab keys | scroll wheel counterclockwise |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
