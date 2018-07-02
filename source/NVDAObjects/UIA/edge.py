@@ -425,7 +425,7 @@ class EdgeNode(UIA):
 	def _get_name(self):
 		name=super(EdgeNode,self).name
 		# #8466: elements with aria-role=alert set fires live region changed event but does not expose the alert text as its name, wihch can be found in its descendants.
-		if "role" in self.ariaProperties and self.ariaProperties["role"] == "alert":
+		if self.ariaProperties.get("role") == "alert" and self.treeInterceptor:
 			name = self.treeInterceptor.makeTextInfo(self).text
 		return name
 
