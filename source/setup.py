@@ -207,7 +207,7 @@ setup(
 		# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
 		# Also, the service executable used win32api, which some add-ons use for various purposes.
 		# Explicitly include them so we don't break some add-ons.
-		"includes": ["nvdaBuiltin", "bisect", "win32api"],
+		"includes": ["nvdaBuiltin", "bisect", "win32api","robotremoteserver"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),

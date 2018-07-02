@@ -21,6 +21,12 @@ Ensure NVDA runs at all
 	process should be running	nvdaAlias
 
 Ensure NVDA quits from keyboard
+	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
+	
+	${Welcome dialog title} =	catenate double space	Welcome to NVDA	dialog
+	wait for specific speech	${Welcome dialog title}
+	send key	enter
+	
 	${Exit NVDA dialog} =	catenate double space	Exit NVDA	dialog
 	send key	insert	q
 	${INDEX} =	wait for specific speech	${Exit NVDA dialog}
@@ -30,7 +36,8 @@ Ensure NVDA quits from keyboard
 	assert strings are equal	${actual speech}	${QUIT_DIALOG_TEXT}
 
 	send key	enter
-	wait for process	nvdaAlias	timeout=5 sec
+	wait for process	nvdaAlias	timeout=10 sec
+	process should be stopped	nvdaAlias
 
 Can read the welcome dialog
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
@@ -40,3 +47,4 @@ Can read the welcome dialog
 	wait for speech to finish
 	${actual speech} =	get speech from index until now	${INDEX}
 	assert strings are equal	${actual speech}	${WELCOME_DIALOG_TEXT}
+	send key	enter

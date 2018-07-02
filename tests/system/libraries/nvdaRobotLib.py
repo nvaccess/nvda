@@ -25,9 +25,15 @@ spyServerURI = 'http://127.0.0.1:{}'.format(spyServerPort)
 spyAlias = "nvdaSpy"
 
 # Paths
-nvdaLogFilePath = _abspath("source/nvda.log")
+whichNVDA=builtIn.get_variable_value("${whichNVDA}", "source")
+if whichNVDA=="source":
+	baseNVDACommandline="pythonw source/nvda.pyw"
+elif whichNVDA=="installed":
+	baseNVDACommandline='"%s"'%_pJoin(os.path.expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
+print baseNVDACommandline
 systemTestSourceDir = _abspath("tests/system")
 nvdaProfileWorkingDir = _pJoin(systemTestSourceDir, "nvdaProfile")
+nvdaLogFilePath = _pJoin(nvdaProfileWorkingDir,'nvda.log')
 profileGlobalPluginsDir = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
 profileSysTestSpyPackageDir = _pJoin(profileGlobalPluginsDir, "systemTestSpy")
 
@@ -71,8 +77,7 @@ class nvdaRobotLib(object):
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
 		self.nvdaHandle = handle = process.start_process(
-			"pythonw nvda.pyw --debug-logging -r -c \"{nvdaProfileDir}\"".format(nvdaProfileDir=nvdaProfileWorkingDir),
-			cwd='source',
+			"{baseNVDACommandline} --debug-logging -r -c \"{nvdaProfileDir}\" --log-file \"{nvdaLogFilePath}\"".format(baseNVDACommandline=baseNVDACommandline,nvdaProfileDir=nvdaProfileWorkingDir,nvdaLogFilePath=nvdaLogFilePath),
 			shell=True,
 			alias='nvdaAlias'
 		)
@@ -149,8 +154,7 @@ class nvdaRobotLib(object):
 		# remove the spy so that if nvda is run manually against this config it does not interfere.
 		self.teardown_nvda_profile()
 		process.run_process(
-			"pythonw nvda.pyw -q --disable-addons",
-			cwd='source',
+			"{baseNVDACommandline} -q --disable-addons".format(baseNVDACommandline=baseNVDACommandline),
 			shell=True,
 		)
 		process.wait_for_process(self.nvdaHandle)
