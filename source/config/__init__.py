@@ -6,7 +6,11 @@
 #See the file COPYING for more details.
 
 """Manages NVDA configuration.
+The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
+In addition, this module provides three actions: profile switch notifier, an action to be performed when NVDA saves settings, and action to be performed when NVDA is asked to reload configuration from disk or reset settings to factory defaults.
+For the latter two actions, one can perform actions prior to and/or after they take place.
 """ 
+
 import globalVars
 import _winreg
 import ctypes
@@ -35,14 +39,22 @@ from .configSpec import confspec
 isAppX=False
 
 #: The active configuration, C{None} if it has not yet been loaded.
-#: @type: ConfigObj
+#: @type: ConfigManager
 conf = None
 
 #: Notifies when the configuration profile is switched.
-#: This allows components to apply changes required by the new configuration.
+#: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
 #: Handlers are called with no arguments.
-configProfileSwitched = extensionPoints.Action()
+postConfigProfileSwitch = extensionPoints.Action()
+#: Notifies when NVDA is saving current configuration.
+#: Handlers can listen to "pre" or "post" action to perform tasks prior to or after NVDA's own configuration is saved.
+#: Handlers are called with no arguments.
+preConfigSave = extensionPoints.Action()
+postConfigSave = extensionPoints.Action()
+#: Notifies when configuration is reloaded from disk or factory defaults are applied.
+#: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
+postConfigReset = extensionPoints.Action()
 
 def initialize():
 	global conf
@@ -353,7 +365,7 @@ class ConfigManager(object):
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		configProfileSwitched.notify()
+		postConfigProfileSwitch.notify()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -490,6 +502,8 @@ class ConfigManager(object):
 	def save(self):
 		"""Save all modified profiles and the base configuration to disk.
 		"""
+		# #7598: give others a chance to either save settings early or terminate tasks.
+		preConfigSave.notify()
 		if not self._shouldWriteProfile:
 			log.info("Not writing profile, either --secure or --launcher args present")
 			return
@@ -504,6 +518,7 @@ class ConfigManager(object):
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
+		postConfigSave.notify()
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
@@ -515,6 +530,7 @@ class ConfigManager(object):
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
+		postConfigReset.notify(factoryDefaults=factoryDefaults)
 
 	def createProfile(self, name):
 		"""Create a profile.
