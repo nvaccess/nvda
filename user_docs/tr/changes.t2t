@@ -8,11 +8,14 @@ What's New in NVDA
 == New Features ==
 - NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox. (#8280)
 - Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#6316)
+- Added scripts for reporting elapsed and total time of current track in Foobar2000. (#6596)
 
 
 == Changes ==
 - the list of available languages in the General Settings dialog is now sorted based on language names instead of ISO 639 codes. (#7284)
 - Add default gestures for alt shift tab and windows tab with all supported Freedom Scientific braille displays. (#7387)
+- The user is now asked once on NVDA start-up if they are happy sending usage statistics to NV Access when automatically checking for updates. (#8217)
+- When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)
 
 
 == Bug Fixes ==

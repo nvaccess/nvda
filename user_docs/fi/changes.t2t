@@ -8,11 +8,14 @@
 == Uudet ominaisuudet =
 - NVDA ilmoittaa Mozilla Firefoxissa kielioppivirheistä, kun tieto niistä välitetään verkkosivuilla asianmukaisesti. (#8280)
 - Lisätty tuki BrailleNote QT:n ja Apex BT:n vieritysrullalle, kun BrailleNotea käytetään pistenäyttönä NVDA:n kanssa. (#6316)
+- Lisätty komennot nykyisen kappaleen kuluneen ajan ja kokonaiskeston ilmoittamiseen Foobar2000:ssa. (#6596)
 
 
 == Muutokset ==
 - Yleiset asetukset -valintaikkunan käytettävissä olevien kielten luettelo  lajitellaan nyt ISO 639 -koodien asemesta kielen nimen perusteella. (#7284)
 - Lisätty oletussyötekomentoja Alt+Vaihto+Sarkain- ja Windows+Sarkain-näppäinyhdistelmille kaikille tuetuille Freedom Scientificin pistenäytöille. (#7387)
+- Käyttäjältä kysytään nyt kerran NVDA:n käynnistyessä, haluaako hän sallia käyttötilastojen lähettämisen NV Accessille automaattisen päivitystarkistuksen yhteydessä. (#8217)
+- Jos käyttäjä on sallinut käyttötilastojen lähettämisen NV Accessille, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ajurien tulevaa kehitystä voidaan priorisoida paremmin. (#8217)
 
 
 == Korjatut ohjelmavirheet ==
