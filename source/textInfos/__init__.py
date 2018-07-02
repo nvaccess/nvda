@@ -93,6 +93,13 @@ class ControlField(Field):
 		):
 			return self.PRESCAT_CONTAINER
 
+		# If the author has provided specific role text, then this should be presented either as container or singleLine depending on whether the field is block or not. 
+		if self.get('roleText'):
+			if self.get('isBlock'):
+				return self.PRESCAT_CONTAINER
+			else:
+				return self.PRESCAT_SINGLELINE
+
 		return self.PRESCAT_LAYOUT
 
 class FieldCommand(object):

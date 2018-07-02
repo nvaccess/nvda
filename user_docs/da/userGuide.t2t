@@ -91,7 +91,7 @@ Brug af den midlertidige kopi af NVDA er også en mulighed fx. hvis du har til h
 Udover den manglende evne til at starte på og efter logon-skærmen, har en flytbar eller midlertidig kopi af NVDA følgende begrænsninger:
 - manglende evne til at interagere med programmer der kører med administratorrettigheder, med mindre NVDA ligeledes kører med administratorrettigheder (anbefales ikke).
 - Manglende evne til at læse Kontrol af Brugerkonti (UAC) skærme når du forsøger at starte et program med administratorrettigheder.
-- Windows 8 og senere: Understøtter ikke input for touchskærme.
+- Windows 8 og senere: Understøtter ikke input for berøringsfølsomme skærme.
 - Windows 8: NVDA er ikke i stand til at benytte funktioner såsom gennemsynstilstand, samt evnen til at udtale indtastede tegn i Windows Store apps.
 - Windows 8 og senere: Lyddæmpning er ikke understøttet.
 -
@@ -179,7 +179,7 @@ Desktop-layout bruger i høj grad det numeriske tastatur (med Num Lock slået fr
 Selvom de fleste bærbare computere ikke har et fysisk numerisk tastatur, kan nogle bærbare computere efterligne et ved at holde Fn-tasten nede og trykke på bogstaver og tal på højre side af tastaturet (7 8 9 u i o j k l osv)..
 Hvis din bærbare computer ikke kan gøre brug af dette, eller ikke tillader dig at slå Num Lock fra, kan du skifte til det bærbare layout i stedet.
 
-++ NVDA Touch-bevægelser ++[NVDATouchGestures]
+++ NVDA Berøringsbevægelser ++[NVDATouchGestures]
 Hvis du kører NVDA på en enhed med touchskærm og Windows 8 eller nyere, kan du kontrollere NVDA direkte ved hjælp af den berøringsfølsomme skærm.
 Når NVDA er i gang, vil alle bevægelser registreret af skærmen blive indfanget af NVDA. 
 Dette betyder, at handlinger der kan udføres normalt uden NVDA ikke vil virke.
@@ -189,9 +189,9 @@ Den mest grundlæggende handling du kan udføre er at få annonceret et element 
 For at gøre dette, skal du placere en finger et sted på skærmen.
 Du kan også beholde din finger på skærmen, og derefter bevæge den rundt på skærmen for at få oplæst tekst og elementer, som du bevæger dig hen over.
 
-+++ Touch-bevægelser +++[TouchGestures]
++++ Berøringsbevægelser +++[TouchGestures]
 Når NVDA-kommandoer er beskrevet senere i denne brugermanual, kan de indeholde information om hvordan man benytter touchskærmen til at udføre den tilsvarende kommando.
-Følgende information beskriver hvordan du kan udføre diverse touch-bevægelser.
+Følgende information beskriver hvordan du kan udføre diverse berøringsbevægelser.
 
 ==== Tryk ====
 Tryk på skærmen hurtigt med en eller flere fingre.
@@ -212,15 +212,15 @@ Der er fire mulige svirpebevægelser du kan benytte, afhængige af retningen: Sv
 Ligesom tryk kan du benytte flere fingre for at udføre deforskellige bevægelser.
 Derfor er bevægelser som svirp op med to fingre og svirp til venstre med fire fingre mulige bevægelser.
 
-+++ Touch-tilstande +++[TouchModes]
++++ Berøringstilstande +++[TouchModes]
 Eftersom der er mange flere NVDA-kommandoer tilgængelige end der er mulige bevægelser, har NVDA implementeret forskellige tilstande der gør det muligt for dig, at benytte dig af forskellige undergrupper af kommandoer.
 De to tilstande er teksttilstand og objekttilstand 
-Visse NVDA kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter touch-bevægelsen.
+Visse NVDA kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter berøringsbevægelsen.
 For eksempel, svirp op (teksttilstand) betyder at kommandoen vil blive udført hvis du svirper op, men kun hvis teksttilstand er aktiv.
 Hvis kommandoen ikke har en tilstand knyttet til den, virker den uafhængigt af hvilken tilstand NVDA befinder sig i.
 
 %kc:beginInclude
-For at skifte touch-tilstand, udfør et tryk med tre fingre.
+For at skifte berøringstilstand, udfør et tryk med tre fingre.
 %kc:endInclude
 
 +++ Touch-tastatur +++[TouchKeyboard]
@@ -237,7 +237,7 @@ Mange vigtige kommandoer er nævnt i resten af denne brugervejledning, men en ne
 
 For At slå tastaturhjælp til, skal du trykke på NVDA+1.
 For at slå tastaturhjælp fra igen, tryk på NVDA+1.
-Når tastaturhjælp er slået til, vil enhver udført kommando, såsom et tastetryk eller en udført touch-bevægelse annoncere, hvilken handling den er knyttet til.
+Når tastaturhjælp er slået til, vil enhver udført kommando, såsom et tastetryk eller en udført berøringsbevægelse annoncere, hvilken handling den er knyttet til.
 Selve kommandoerne vil ikke blive udført, mens tastaturhjælp er slåët til.
 
 ++ NVDA-menuen ++[TheNVDAMenu]
@@ -831,10 +831,12 @@ For yderligere informationer om gennemsynstilstand samt bogstavnavigation, se [G
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Sig resterende tid | Ctrl+Shift+r | Annoncerer den resterende tid af det aktuelle spor, hvis der er nogen. |
+| Rapportér resterende tid | Ctrl+Skift+r | Rapporterer den resterende tid af det igangværende spor, hvis tilgængelig. |
+| Rapportér forløbne tid | Ctrl+skift+e | Rapporterer den forløbne tid for det igangværende spor, hvis tilgængelig. |
+| Rapportér længden af det aktuelle spor | Ctrl+skift+t | Rapporterer længden for det igangværende spor, hvis tilgængelig. |
 %kc:endInclude
 
-Bemærk: Genvejen til at oplyse den resterende tid virker kun, når statuslinjen er formateret som standard.
+Bemærk: Ovenstående genveje virker kun, når statuslinjen i Foobar er formateret som standard.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +973,25 @@ Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
 ==== Søg automatisk efter opdateringer af NVDA ====[GeneralSettingsCheckForUpdates]
 Hvis denne indstilling er aktiveret, vil NVDA automatisk søge efter opdateringer og informere dig, når en opdatering er tilgængelig.
 Du kan også manuelt søge efter opdateringer ved at vælge Søg efter opdateringer under Hjælp i NVDA-menuen.
+Når der manuelt eller automatisk søges efter opdateringer, vil det være nødvendigt at sende nogle informationer til opdateringsserveren for at sikre, at du modtager den rette opdatering til dit system.
+Følgende informationer bliver altid sendt:
+- Aktuelle version af NvDA
+- Version af dit operativsystem
+- Om dit system er 64- eller 32 bit.
+
+
+==== Tillad at NVDA-projektet indsamler brugsdata om NVDA ====[GeneralSettingsGatherUsageStats]
+Hvis dette er aktiveret, bruger NV Access oplysningerne indsendt under søgning af opdateringer til at spore antallet af NVDA-brugere, herunder bestemte demografiske forhold som operativsystem og oprindelsesland.
+Bemærk, at selvom din IP-adresse vil blive brugt til at beregne dit land under opdateringskontrollen, bliver IP-adressen aldrig gemt.
+Bortset fra de obligatoriske oplysninger, der kræves for at kontrollere efter opdateringer, er følgende yderligere oplysninger også sendt i øjeblikket:
+- NVDAs aktuelle sprog
+- Om denne kopi af NVDA er flytbar eller installeret
+- Navn på den aktuelle talesyntese i brug (herunder navnet på tilføjelsesprogrammet, som driveren kommer fra)
+- Navn på det aktuelle punktdisplay i brug (herunder navnet på tilføjelsen, som driveren kommer fra)
+- Den aktuelle oversættelsestabel (hvis punkt er i brug)
+
+
+Disse informationer hjælper i høj grad NV Access med at prioritere fremtidig udvikling af NVDA.
 
 ==== Meddel om ventende opdateringer, når NVDA startes ====[GeneralSettingsNotifyPendingUpdates]
 Hvis denne indstilling er slået til, vil NVDA lade dig installere ventende opdateringer, når NVDA starter, hvis en opdatering venter på installation.
@@ -1316,7 +1337,7 @@ Jo længere mod venstre eller højre musen befinder sig på skærmen, desto læn
 Hvis check boxen "Afspil lydkoordinater under flytning af mus" er slået til, bevirker markering af denne check box, at lydstyrken på biptonen ved lydkoordinaterne bestemmes af, hvor lyst skærmbilledet under musen er.
 Denne indstilling er slået fra som standard.
 
-+++ Touch-interaktion +++[TouchInteraction]
++++ Berøringsinteraktion +++[TouchInteraction]
 Denne indstillingskategori vil kun være tilgængelig på computere, der kører Windows 8 og nyere, samt har mulighed for touch-funktionalitet. Disse indstillinger lader dig konfigurere, hvordan NVDA håndtere berøring af touchskærme.
 Denne kategori indeholder følgende indstillinger:
 
@@ -1911,6 +1932,8 @@ Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan
 | Ctrl+end tast | punktMellemrum+punkt4+punkt5+punkt6 |
 | alt tast | punktMellemrum+punkt1+punkt3+punkt4 |
 | alt+tab tast | punktMellemrum+punkt2+punkt3+punkt4+punkt5 |
+| alt+shift+tab taster | punktMellemrum+punkt1+punkt2+punkt5+punkt6 |
+| windows+tab taster | punktMellemrum+punkt2+punkt3+punkt4 |
 | escape tast | punktMellemrum+punkt1+punkt5 |
 | windows tast | punktMellemrum+punkt2+punkt4+punkt5+punkt6 |
 | mellemrum tast | punktMellemrum |
@@ -2427,6 +2450,11 @@ Følgende modeller er understøttede:
 
 For BrailleNote Touch, læs venligst afsnittet [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] for yderligere information.
 
+Udover BrailleNote PK, så er både tastaturer understøttet, herunder både punktindtastning (BT) og QWERTY (QT).
+For BrailleNote QT er tastaturemulation ikke understøttet.
+Du kan også indtaste punkt via QWERTY-tastaturet.
+Læs venligst afsnittet om Braille Terminal i BrailleNote-manualen for yderligere detaljer.
+
 Hvis din enhed understøtter mere end en forbindelsestype, skal du indstille porten til punktterminal under indstillinger for Punkt Terminal.
 Læs venligst Braillenote manualen for detaljer.
 Det kan også være nødvendigt at indstille porten i [dialogen Vælg punktdisplay #SelectBrailleDisplay].
@@ -2434,6 +2462,9 @@ hvis du kobler til via USB eller Bluetooth, kan du sætte indstillingen til "Aut
 Hvis du forbinder enheden gennem en ældre seriel port eller en USB til seriel adapter, eller hvis ingen af de forrige indstillinger er tilgængelige, skal du vælge hvilken port du ønsker at bruge fra listen.
 
 Før du forbinder din BrailleNote Apex ved brug af dens USB-client grænseflade, skal du installere de nødvendige drivere fra HumanWare.
+
+På BrailleNote Apex BT kan du benytte rullehjulet, der er at finde mellem punkt 1 og punkt 4, til at udføre diverse NVDA-kommandoer.
+Hjulet består af fire etningspunkter, en klikknap i midten, og et hjul der kan bevæge sig med og imod uret.
 
 Dette er tastekombinationerne til BrailleNote til brug med NVDA.
 Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan finde knapperne.
@@ -2445,6 +2476,7 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 | Flyt punktdisplay til forrige linje | previous |
 | Flyt punktdisplay til næste linje | next |
 | Flyt til punktcelle | markørsammenføringsknapper |
+| NvDA-menu | mellemrum+punkt1+punkt3+punkt4+punkt5 (mellemrum+n) |
 | Slå "Punkt følger" til/fra | previous+next |
 | Pil-op | mellemrum+punkt1 |
 | Pil-ned key | mellemrum+punkt4 |
@@ -2464,6 +2496,39 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 | Windows tast | mellemrum+punkt2+punkt4+punkt5+punkt6 (mellemrum+w) |
 | Alt tast | mellemrum+punkt1+punkt3+punkt4 (mellemrum+m) |
 | Tastaturhjælp til/fra | mellemrum+punkt2+punkt3+punkt6 (mellemrum+lavt+h) |
+
+Følgende er tastekombinationer tildelt BrailleNote BT, når punkttilstand ikke er slået til.
+
+|| Navn | Tast |
+| NvDA-menu | read+n |
+| Pil op | pilOp |
+| Pil ned | pilNed |
+| Venstre pil | venstrePil |
+| Højre pil | højrePil |
+| Side op | funktion+pilOp |
+| Side ned | funktion+pilNed |
+| Hjem | funktion+venstrePil |
+| End | funktion+højre pil |
+| Control+hjem taster | read+t |
+| Control+end taster | read+b |
+| Enter-tast | enter |
+| Backspace-tast | backspace |
+| Tab-tast | tab |
+| Skift+tab-taster | skift+tab |
+| Windows-tast | read+w |
+| Alt-tast | read+m |
+| Slå tastaturhjælp til og fra | read+1 |
+
+Følgende er kommandoer tildelt rullehjulet:
+
+|| Navn | Tast |
+| Pil op | pilOp |
+| Pil ned | pilNed |
+| Venstre pil | venstrePil |
+| Højre pil | højrePil |
+| Enter-tast | center-knap |
+| Tab-tast | rul hjul mod uret |
+| Skift+tab-taster | rul hjul imod uret |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
