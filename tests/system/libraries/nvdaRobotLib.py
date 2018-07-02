@@ -155,22 +155,3 @@ class nvdaRobotLib(object):
 		)
 		process.wait_for_process(self.nvdaHandle)
 		self.save_NVDA_log()
-
-# TODO: this shouldn't be a member function, but it is not available from robot if it is not??
-	def assert_strings_are_equal(self, actual, expected, ignore_case=False):
-		try:
-			builtIn.should_be_equal_as_strings(
-				actual,
-				expected,
-				msg="Actual speech != Expected speech",
-				ignore_case=ignore_case
-			)
-		except AssertionError:
-			builtIn.log(
-				"repr of actual vs expected (ignore_case={}):\n{}\nvs\n{}".format(
-					ignore_case,
-					repr(actual),
-					repr(expected)
-				)
-			)
-			raise
