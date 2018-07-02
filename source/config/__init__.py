@@ -48,12 +48,16 @@ conf = None
 #: Handlers are called with no arguments.
 postConfigProfileSwitch = extensionPoints.Action()
 #: Notifies when NVDA is saving current configuration.
-#: Handlers can listen to "pre" or "post" action to perform tasks prior to or after NVDA's own configuration is saved.
+#: Handlers can listen to "pre", "on", or "post" action to perform tasks prior to, during,  or after NVDA's own configuration is saved.
 #: Handlers are called with no arguments.
 preConfigSave = extensionPoints.Action()
+onConfigSave = extensionPoints.Action()
 postConfigSave = extensionPoints.Action()
 #: Notifies when configuration is reloaded from disk or factory defaults are applied.
+#: Handlers can listen to "pre", "on", or "post" action to perform tasks prior to, during,  or after NVDA's own configuration is reloaded.
 #: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
+preConfigReset = extensionPoints.Action()
+onConfigReset = extensionPoints.Action()
 postConfigReset = extensionPoints.Action()
 
 def initialize():
@@ -518,6 +522,7 @@ class ConfigManager(object):
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
+		onConfigSave.notify()
 		postConfigSave.notify()
 
 	def reset(self, factoryDefaults=False):
@@ -525,11 +530,13 @@ class ConfigManager(object):
 		@param factoryDefaults: C{True} to reset to factory defaults, C{False} to reset to saved configuration.
 		@type factoryDefaults: bool
 		"""
+		preConfigReset.notify(factoryDefaults=factoryDefaults)
 		self.profiles = []
 		self._profileCache.clear()
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
+		onConfigReset.notify(factoryDefaults=factoryDefaults)
 		postConfigReset.notify(factoryDefaults=factoryDefaults)
 
 	def createProfile(self, name):
