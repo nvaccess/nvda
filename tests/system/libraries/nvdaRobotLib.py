@@ -4,29 +4,23 @@ from os.path import abspath
 from robotremoteserver import test_remote_server, stop_remote_server
 from testutils import blockUntilConditionMet
 from robot.libraries.BuiltIn import BuiltIn
+from robot.libraries.OperatingSystem import OperatingSystem
+from robot.libraries.Process import Process
 
-builtIn = BuiltIn()
-process = builtIn.get_library_instance('Process')
-opSys = builtIn.get_library_instance('OperatingSystem')
+builtIn = BuiltIn()  # type: BuiltIn
+process = builtIn.get_library_instance('Process')  # type: Process
+opSys = builtIn.get_library_instance('OperatingSystem')  # type: OperatingSystem
 
 spyServerPort = 8270  # is `registered by IANA` for remote server usage. Two ASCII values:'RF'
 spyServerURI = 'http://127.0.0.1:{}'.format(spyServerPort)
 spyAlias = "nvdaSpy"
 
+# Paths
 nvdaLogFilePath = abspath("source/nvda.log")
-
 systemTestSourceDir = abspath("tests/system")
 nvdaProfileWorkingDir = pathJoin(systemTestSourceDir, "nvdaProfile")
-nvdaSettingsSourceDir = pathJoin(systemTestSourceDir, "nvdaSettingsFiles")
-
-# TODO: find a better way to share this testutils code!!
-systemTestUtilsFileName = "testutils.py"
-systemTestUtilsSource = pathJoin(systemTestSourceDir, "libraries", systemTestUtilsFileName)
-systemTestSpyFileName = "systemTestSpy.py"
-systemTestSpySource = pathJoin(systemTestSourceDir, "libraries", systemTestSpyFileName)
-systemTestSpyInstallDir = pathJoin(nvdaProfileWorkingDir, "globalPlugins")
-systemTestSpyInstalled = pathJoin(systemTestSpyInstallDir, systemTestSpyFileName)
-systemTestUtilsInstalled = pathJoin(nvdaProfileWorkingDir, "systemTestLibs", systemTestUtilsFileName)
+profileGlobalPluginsDir = pathJoin(nvdaProfileWorkingDir, "globalPlugins")
+profileSysTestSpyPackageDir = pathJoin(profileGlobalPluginsDir, "systemTestSpy")
 
 
 class nvdaRobotLib(object):
@@ -37,20 +31,30 @@ class nvdaRobotLib(object):
 
 	def setup_nvda_profile(self, settingsFileName):
 		builtIn.log("Copying files into NVDA profile")
-		opSys.create_directory(systemTestSpyInstallDir)
-		opSys.copy_file(systemTestSpySource, systemTestSpyInstallDir)
 		opSys.copy_file(
-			os.path.join(nvdaSettingsSourceDir, settingsFileName),
-			os.path.join(nvdaProfileWorkingDir, "nvda.ini")
+			pathJoin(systemTestSourceDir, "nvdaSettingsFiles", settingsFileName),
+			pathJoin(nvdaProfileWorkingDir, "nvda.ini")
+		)
+		# create a package to use as the globalPlugin
+		opSys.create_directory(profileSysTestSpyPackageDir)
+		opSys.copy_file(
+			pathJoin(systemTestSourceDir, "libraries", "systemTestSpy.py"),
+			pathJoin(profileSysTestSpyPackageDir, "__init__.py")
+		)
+		testUtilsFileName = "testutils.py"
+		opSys.copy_file(
+			pathJoin(systemTestSourceDir, "libraries", testUtilsFileName),
+			pathJoin(profileSysTestSpyPackageDir, testUtilsFileName)
 		)
 
 	def teardown_nvda_profile(self):
 		builtIn.log("Removing files from NVDA profile")
-		# TODO: probably dont need to remove the raw python file?
-		opSys.remove_file(systemTestSpyInstalled)
-		opSys.remove_file(systemTestSpyInstalled+"c")  # also remove the .pyc
 		opSys.remove_file(
-			os.path.join(nvdaProfileWorkingDir, "nvda.ini")
+			pathJoin(nvdaProfileWorkingDir, "nvda.ini")
+		)
+		opSys.remove_directory(
+			profileSysTestSpyPackageDir,
+			recursive=True
 		)
 
 	def _startNVDAProcess(self):

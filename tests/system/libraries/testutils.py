@@ -12,9 +12,11 @@ def blockUntilConditionMet(
 	@return A tuple, (True, value) if evaluator condition is met, otherwise (False, None)
 	@raises RuntimeError if the time limit expires and an errorMessage is given.
 	"""
+	assert callable(getValue)
+	assert callable(shouldStopEvaluator)
 	startTime = timer()
 	lastRunTime = startTime
-	firstRun=True  # ensure we start trying immediately
+	firstRun = True  # ensure we start immediately
 	while (timer() - startTime) < giveUpAfterSeconds:
 		if firstRun or (timer() - lastRunTime) > intervalBetweenSeconds:
 			firstRun = False
