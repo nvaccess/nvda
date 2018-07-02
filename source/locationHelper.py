@@ -345,7 +345,7 @@ def toRectLTRB(*params):
 	Converts the given input to L{RectLTRB}.
 	Input should be one of the following types:
 		* One of l{RECT_CLASSES}.
-		* One of L{POINT_CLASSES}: converted to L{Rect} square of one pixel.
+		* One of L{POINT_CLASSES}: converted to L{Rect} with a width and height of 0.
 		* List or tuple of integers: 4 treated as L{RectLTRB}, 2 treated as L{Point}.
 		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{RectLTRB} containing all input.
 	"""
@@ -358,9 +358,8 @@ def toRectLTRB(*params):
 		if isinstance(param,RECT_CLASSES):
 			return RectLTRB(param.left,param.top,param.right,param.bottom)
 		if isinstance(param,POINT_CLASSES):
-			# Right and bottom edges of the resulting rectangle are considered exclusive
 			x,y=param.x,param.y
-			return RectLTRB(x,y,x+1,y+1)
+			return RectLTRB(x,y,x,y)
 		if isinstance(param,(tuple,list)):
 			# One indexable in another indexable doesn't make sence, so treat the inner indexable as outer indexable
 			params=param
@@ -372,7 +371,7 @@ def toRectLTRB(*params):
 			return RectLTRB(*params)
 		elif len(params)==2:
 			x,y=params
-			return RectLTRB(x,y,x+1,y+1)
+			return RectLTRB(x,y,x,y)
 		elif len(params) in (1,3) or len(params)>4:
 			raise ValueError("When providing integers, this function requires either 2 or 4 arguments (%d given)"%len(params))
 	xs=[]
