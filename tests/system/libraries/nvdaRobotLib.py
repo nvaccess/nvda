@@ -11,10 +11,15 @@ the systemTestSpy.py file, which provides library functions related to monitorin
 from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
 import sys
 from robotremoteserver import test_remote_server as _testRemoteServer, stop_remote_server as _stopRemoteServer
-from systemTestUtils import _blockUntilConditionMet
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.OperatingSystem import OperatingSystem
 from robot.libraries.Process import Process
+import os
+sys.path.append(
+	os.path.abspath(
+		os.path.dirname(__file__))
+)
+from systemTestUtils import _blockUntilConditionMet
 
 builtIn = BuiltIn()  # type: BuiltIn
 process = builtIn.get_library_instance('Process')  # type: Process
