@@ -8,11 +8,14 @@ Quoi de Neuf dans NVDA
 == Nouvelles Fonctionnalités ==
 - NVDA Annoncera les erreurs grammaticales correctement exposées dans les pages web sous Mozilla Firefox. (#8280)
 - Ajout du support de la roue de défilement du BrailleNote QT et de l'Apex BT quand le  BrailleNote est utilisé comme afficheur braille parNVDA. (#6316)
+- Ajout de scripts pour annoncer le temps écoulé et le temps total de la piste en cours sous Foobar2000. (#6596)
 
 
 == Changements ==
 - La liste des langues disponibles dans le dialogue Paramètres/Général est maintenant triée dans l'ordre alphabétique des noms des langues au lieu du code ISO 639. (#7284)
 - Ajout d'un geste par défaut pour alt maj tab et windows tab pour les terminaux braille Freedom Scientific supportés. (#7387)
+- Au démarrage de NVDA, il est maintenant demandé une fois à l'utilisateur s'il souhaite envoyer des statistiques d'utilisation à NV Access lors de la vérification automatique de mises à jour. (#8217)
+- Lors de la vérification de mises à jour, si l'utilisateur a accepté d'envoyer des données statistiques à NV Access, NVDA enverra maintenant le nom du synthétiseur et le terminal braille en cours, pour permettre une meilleure prioritisation du travail futur sur ces pilotes. (#8217)
 
 
 == Corrections de Bogues ==
