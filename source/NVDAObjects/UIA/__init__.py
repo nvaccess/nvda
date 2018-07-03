@@ -790,14 +790,14 @@ class UIA(Window):
 			clsList.append(ListItem)
 		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
 		# #8405: there are more dialogs scattered throughout Windows 10 and various apps.
-		# Apart from "popup" dialog seen when uninstaling apps and such, they are window elements (popup dialog isn't).
+		# Apart from "popup" dialog seen when uninstalling apps and such, they are window elements (popup dialog isn't).
 		# Dialog detection is a bit easier on build 17682 and later thanks to IsDialog property.
 		try:
 			isDialog = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDialogPropertyId)
 		except COMError:
-			isDialog = False
-		if isDialog or (not isDialog and (self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
-		or (not self.UIAIsWindowElement and UIAClassName == "Popup")):
+			isDialog = ((self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
+			or (not self.UIAIsWindowElement and UIAClassName == "Popup"))
+		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
 		# In Windows 10, allow Start menu search box and Edge's address omnibar to participate in announcing appearance of auto-suggestions.
