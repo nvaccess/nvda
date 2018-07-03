@@ -14,11 +14,6 @@ from robotremoteserver import test_remote_server as _testRemoteServer, stop_remo
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.OperatingSystem import OperatingSystem
 from robot.libraries.Process import Process
-import os
-sys.path.append(
-	os.path.abspath(
-		os.path.dirname(__file__))
-)
 from systemTestUtils import _blockUntilConditionMet
 
 builtIn = BuiltIn()  # type: BuiltIn
