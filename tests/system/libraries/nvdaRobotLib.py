@@ -8,10 +8,10 @@ most specifically related to the setup for, starting of, quiting of, and cleanup
 the systemTestSpy.py file, which provides library functions related to monitoring / asserting NVDA output.
 """
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-from os.path import join as _pJoin
-from os.path import abspath as _abspath
+from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
+import sys
 from robotremoteserver import test_remote_server as _testRemoteServer, stop_remote_server as _stopRemoteServer
-from testutils import _blockUntilConditionMet
+from systemTestUtils import _blockUntilConditionMet
 from robot.libraries.BuiltIn import BuiltIn
 from robot.libraries.OperatingSystem import OperatingSystem
 from robot.libraries.Process import Process
@@ -24,18 +24,65 @@ spyServerPort = 8270  # is `registered by IANA` for remote server usage. Two ASC
 spyServerURI = 'http://127.0.0.1:{}'.format(spyServerPort)
 spyAlias = "nvdaSpy"
 
-# Paths
+
 whichNVDA=builtIn.get_variable_value("${whichNVDA}", "source")
 if whichNVDA=="source":
 	baseNVDACommandline="pythonw source/nvda.pyw"
 elif whichNVDA=="installed":
-	baseNVDACommandline='"%s"'%_pJoin(os.path.expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
+	baseNVDACommandline='"%s"'%_pJoin(_expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
 print baseNVDACommandline
+
+# Paths
 systemTestSourceDir = _abspath("tests/system")
 nvdaProfileWorkingDir = _pJoin(systemTestSourceDir, "nvdaProfile")
 nvdaLogFilePath = _pJoin(nvdaProfileWorkingDir,'nvda.log')
-profileGlobalPluginsDir = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
-profileSysTestSpyPackageDir = _pJoin(profileGlobalPluginsDir, "systemTestSpy")
+systemTestSpyAddonName = "systemTestSpy"
+testSpyPackageDest = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
+
+
+def _findDepPath(depFileName, searchPaths):
+	import os
+	print searchPaths
+	for path in searchPaths:
+		filePath = _pJoin(path, depFileName+".py")
+		print filePath
+		if os.path.isfile(filePath):
+			return filePath
+		elif os.path.isfile(_pJoin(path, depFileName, "__init__.py")):
+			return _pJoin(path, depFileName)
+	raise AssertionError("Unable to find required system test spy dependency: {}".format(depFileName))
+
+# relative to the python path
+requiredPythonImports = [
+	r"robotremoteserver",
+	r"SimpleXMLRPCServer",
+	r"xmlrpclib",
+]
+
+def _createNvdaSpyPackage():
+	import os
+	searchPaths = sys.path
+	profileSysTestSpyPackageStagingDir = _pJoin(systemTestSourceDir, systemTestSpyAddonName)
+	# copy in required dependencies, the addon will modify the python path
+	# to point to this sub dir
+	spyPackageLibsDir = _pJoin(profileSysTestSpyPackageStagingDir, "libs")
+	opSys.create_directory(spyPackageLibsDir)
+	for lib in requiredPythonImports:
+		libSource = _findDepPath(lib, searchPaths)
+		if os.path.isdir(libSource):
+			opSys.copy_directory(libSource, spyPackageLibsDir)
+		elif os.path.isfile(libSource):
+			opSys.copy_file(libSource, spyPackageLibsDir)
+
+	opSys.copy_file(
+		_pJoin(systemTestSourceDir, "libraries", systemTestSpyAddonName+".py"),
+		_pJoin(profileSysTestSpyPackageStagingDir, "__init__.py")
+	)
+	opSys.copy_file(
+		_pJoin(systemTestSourceDir, "libraries", "systemTestUtils.py"),
+		profileSysTestSpyPackageStagingDir
+	)
+	return profileSysTestSpyPackageStagingDir
 
 
 class nvdaRobotLib(object):
@@ -51,15 +98,9 @@ class nvdaRobotLib(object):
 			_pJoin(nvdaProfileWorkingDir, "nvda.ini")
 		)
 		# create a package to use as the globalPlugin
-		opSys.create_directory(profileSysTestSpyPackageDir)
-		opSys.copy_file(
-			_pJoin(systemTestSourceDir, "libraries", "systemTestSpy.py"),
-			_pJoin(profileSysTestSpyPackageDir, "__init__.py")
-		)
-		testUtilsFileName = "testutils.py"
-		opSys.copy_file(
-			_pJoin(systemTestSourceDir, "libraries", testUtilsFileName),
-			_pJoin(profileSysTestSpyPackageDir, testUtilsFileName)
+		opSys.copy_directory(
+			_createNvdaSpyPackage(),
+			_pJoin(testSpyPackageDest, systemTestSpyAddonName)
 		)
 
 	def teardown_nvda_profile(self):
@@ -68,7 +109,7 @@ class nvdaRobotLib(object):
 			_pJoin(nvdaProfileWorkingDir, "nvda.ini")
 		)
 		opSys.remove_directory(
-			profileSysTestSpyPackageDir,
+			testSpyPackageDest,
 			recursive=True
 		)
 
@@ -77,7 +118,11 @@ class nvdaRobotLib(object):
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
 		self.nvdaHandle = handle = process.start_process(
-			"{baseNVDACommandline} --debug-logging -r -c \"{nvdaProfileDir}\" --log-file \"{nvdaLogFilePath}\"".format(baseNVDACommandline=baseNVDACommandline,nvdaProfileDir=nvdaProfileWorkingDir,nvdaLogFilePath=nvdaLogFilePath),
+			"{baseNVDACommandline} --debug-logging -r -c \"{nvdaProfileDir}\" --log-file \"{nvdaLogFilePath}\"".format(
+				baseNVDACommandline=baseNVDACommandline,
+				nvdaProfileDir=nvdaProfileWorkingDir,
+				nvdaLogFilePath=nvdaLogFilePath
+			),
 			shell=True,
 			alias='nvdaAlias'
 		)

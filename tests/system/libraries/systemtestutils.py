@@ -8,7 +8,7 @@ It is copied into the (system test specific) NVDA profile directory as part of a
 package. This allows us to share utility methods between the global plugin and the nvdaRobotLib library.
 """
 
-from timeit import default_timer as _timer
+from time import clock as _timer
 
 
 def _blockUntilConditionMet(

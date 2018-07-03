@@ -7,13 +7,21 @@
 It is copied into the (system test specific) NVDA profile directory. It becomes the '__init__.py' file as part of a
 package. This allows us to share utility methods between the global plugin and the nvdaRobotLib library.
 """
-
 import globalPluginHandler
 import threading
-from testutils import _blockUntilConditionMet
-from robotremoteserver import RobotRemoteServer
+from systemTestUtils import _blockUntilConditionMet
 from logHandler import log
-from timeit import default_timer as _timer
+from time import clock as _timer
+
+import sys
+import os
+log.debug("before pathmod: {}".format(sys.path))
+# Get the path to the top of the package
+TOP_DIR = os.path.abspath(os.path.dirname(__file__))
+# imports that require libraries not distributed with an install of NVDA
+sys.path.append( os.path.join(TOP_DIR, "libs"))
+log.debug("after pathmod: {}".format(sys.path))
+from robotremoteserver import RobotRemoteServer
 
 whitespaceMinusSlashN = '\t\x0b\x0c\r '
 
