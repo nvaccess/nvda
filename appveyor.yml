@@ -116,7 +116,6 @@ before_test:
  - py -m pip install robotremoteserver
  - py -m pip install pyautogui
  - py -m pip install nose 
- - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
  - ps: |
@@ -150,7 +149,7 @@ test_script:
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testOutput\unit\unitTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  - ps: |
-     py -m robot --loglevel DEBUG -d testOutput/system -x systemTests.xml -v whichNVDA:installed tests/system/
+     py -m robot --loglevel DEBUG -d testOutput/system -x systemTests.xml -v whichNVDA:installed -P tests/system/libraries tests/system/
      Compress-Archive -Path ".\testOutput\system\*" -DestinationPath ".\testOutput\systemTestResult.zip"
      Push-AppveyorArtifact ".\testOutput\systemTestResult.zip"
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }

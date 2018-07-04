@@ -4,12 +4,13 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	Basic start and exit tests
+Default Tags	NVDA	smoke test
 
 Library	OperatingSystem
 Library	Process
-Library	../libraries/sendKey.py
-Library	../libraries/nvdaRobotLib.py
-Library	../libraries/helperLib.py
+Library	sendKey.py
+Library	nvdaRobotLib.py
+Library	helperLib.py
 
 Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
 Test Teardown	quit NVDA
