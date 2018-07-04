@@ -135,6 +135,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 	allowMoveToOffsetPastEnd=False #: no need for end insertion point as vbuf is not editable. 
 
 	UNIT_CONTROLFIELD = "controlField"
+	UNIT_TEXTFIELD = "textField"
 
 	def _getControlFieldAttribs(self,  docHandle, id):
 		start, end = self._getOffsetsFromFieldIdentifier(docHandle, id)
@@ -166,22 +167,6 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		end = ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
-
-	def _getControlFieldNodeFromOffset(self, offset):
-		startOffset = ctypes.c_int()
-		endOffset = ctypes.c_int()
-		docHandle = ctypes.c_int()
-		ID = ctypes.c_int()
-		node=VBufRemote_nodeHandle_t()
-		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID),ctypes.byref(node))
-		return node
-
-	def _getTextFieldNodeFromOffset(self, offset):
-		startOffset = ctypes.c_int()
-		endOffset = ctypes.c_int()
-		node=VBufRemote_nodeHandle_t()
-		NVDAHelper.localLib.VBuf_locateTextFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(node))
-		return node
 
 	def _getPointFromOffset(self,offset):
 		o = self._getNVDAObjectFromOffset(offset)
@@ -369,6 +354,12 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			ID=ctypes.c_int()
 			node=VBufRemote_nodeHandle_t()
 			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID),ctypes.byref(node))
+			return startOffset.value,endOffset.value
+		elif unit == self.UNIT_TEXTFIELD:
+			startOffset=ctypes.c_int()
+			endOffset=ctypes.c_int()
+			node=VBufRemote_nodeHandle_t()
+			NVDAHelper.localLib.VBuf_locateTextFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
