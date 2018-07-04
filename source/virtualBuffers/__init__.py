@@ -137,9 +137,9 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 	UNIT_CONTROLFIELD = "controlField"
 
 	def _getControlFieldAttribs(self,  docHandle, id):
-		info = self.copy()
-		info.expand(textInfos.UNIT_CHARACTER)
-		for field in reversed(info.getTextWithFields()):
+		start, end = self._getOffsetsFromFieldIdentifier(docHandle, id)
+		# The control starts at the first character.
+		for field in reversed(self._getFieldsInRange(start, start+1)):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
@@ -268,11 +268,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					return placeholder
 		return None
 
-	def getTextWithFields(self,formatConfig=None):
-		start=self._startOffset
-		end=self._endOffset
-		if start==end:
-			return ""
+	def _getFieldsInRange(self,start,end):
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
 			return ""
@@ -285,6 +281,13 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				elif isinstance(field,textInfos.FormatField):
 					commandList[index].field=self._normalizeFormatField(field)
 		return commandList
+
+	def getTextWithFields(self,formatConfig=None):
+		start=self._startOffset
+		end=self._endOffset
+		if start==end:
+			return ""
+		return self._getFieldsInRange(start,end)
 
 	def _getWordOffsets(self,offset):
 		#Use VBuf_getBufferLineOffsets with out screen layout to find out the range of the current field
