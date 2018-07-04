@@ -7,9 +7,9 @@ Documentation	Basic start and exit tests
 
 Library	OperatingSystem
 Library	Process
-Library	libraries/sendKey.py
-Library	libraries/nvdaRobotLib.py
-Library	libraries/helperLib.py
+Library	../libraries/sendKey.py
+Library	../libraries/nvdaRobotLib.py
+Library	../libraries/helperLib.py
 
 Test Setup	start NVDA	standard-dontShowWelcomeDialog.ini
 Test Teardown	quit NVDA
@@ -17,16 +17,18 @@ Test Teardown	quit NVDA
 Variables	variables.py
 
 *** Test Cases ***
-Ensure NVDA runs at all
+Starts
 	process should be running	nvdaAlias
 
-Ensure NVDA quits from keyboard
+Quits from keyboard
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
-	
+
 	${Welcome dialog title} =	catenate double space	Welcome to NVDA	dialog
 	wait for specific speech	${Welcome dialog title}
+	wait for speech to finish
+	sleep	1	# the dialog is not always receiving the enter keypress, wait a little longer for it
 	send key	enter
-	
+
 	${Exit NVDA dialog} =	catenate double space	Exit NVDA	dialog
 	send key	insert	q
 	${INDEX} =	wait for specific speech	${Exit NVDA dialog}
@@ -39,7 +41,7 @@ Ensure NVDA quits from keyboard
 	wait for process	nvdaAlias	timeout=10 sec
 	process should be stopped	nvdaAlias
 
-Can read the welcome dialog
+Read welcome dialog
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 
 	${Welcome dialog title} =	catenate double space	Welcome to NVDA	dialog
