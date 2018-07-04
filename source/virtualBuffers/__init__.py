@@ -167,6 +167,22 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
+	def _getControlFieldNodeFromOffset(self, offset):
+		startOffset = ctypes.c_int()
+		endOffset = ctypes.c_int()
+		docHandle = ctypes.c_int()
+		ID = ctypes.c_int()
+		node=VBufRemote_nodeHandle_t()
+		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID),ctypes.byref(node))
+		return node
+
+	def _getTextFieldNodeFromOffset(self, offset):
+		startOffset = ctypes.c_int()
+		endOffset = ctypes.c_int()
+		node=VBufRemote_nodeHandle_t()
+		NVDAHelper.localLib.VBuf_locateTextFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(node))
+		return node
+
 	def _getPointFromOffset(self,offset):
 		o = self._getNVDAObjectFromOffset(offset)
 		left, top, width, height = o.location
