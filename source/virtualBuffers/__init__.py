@@ -156,6 +156,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		ID = ctypes.c_int()
 		node=VBufRemote_nodeHandle_t()
 		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID),ctypes.byref(node))
+		if not any((docHandle.value, ID.value)):
+			raise LookupError("Neither docHandle nor ID found for offset %d" % offset)
 		return docHandle.value, ID.value
 
 	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
