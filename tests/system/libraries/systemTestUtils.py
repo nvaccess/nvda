@@ -8,6 +8,7 @@ It is copied into the (system test specific) NVDA profile directory as part of a
 package. This allows us to share utility methods between the global plugin and the nvdaRobotLib library.
 """
 
+from time import sleep as _sleep
 from time import clock as _timer
 
 
@@ -25,6 +26,8 @@ def _blockUntilConditionMet(
 	"""
 	assert callable(getValue)
 	assert callable(shouldStopEvaluator)
+	assert intervalBetweenSeconds > 0.001
+	SLEEP_TIME = intervalBetweenSeconds * 0.5
 	startTime = _timer()
 	lastRunTime = startTime
 	firstRun = True  # ensure we start immediately
@@ -35,6 +38,8 @@ def _blockUntilConditionMet(
 			val = getValue()
 			if shouldStopEvaluator(val):
 				return True, val
+			_sleep(SLEEP_TIME)
+
 	else:
 		if errorMessage:
 			raise AssertionError(errorMessage)

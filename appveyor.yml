@@ -142,19 +142,19 @@ before_test:
 test_script:
  - ps: |
      $errorCode=0
-     py -m nose --with-xunit --xunit-file=output/testResults/unitTests.xml tests/unit
+     py -m nose --with-xunit --xunit-file=testOutput/unit/unitTests.xml tests/unit
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
-     Push-AppveyorArtifact .\output\testResults\unitTests.xml
+     Push-AppveyorArtifact .\testOutput\unit\unitTests.xml
      $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\unitTests.xml))
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testOutput\unit\unitTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  - ps: |
-     py -m robot --loglevel DEBUG -d output/testResults/system -x systemTests.xml -v whichNVDA:installed tests/system/
-     Compress-Archive -Path ".\output\testResults\system\*" -DestinationPath ".\output\testResults\systemTestResult.zip"
-     Push-AppveyorArtifact ".\output\testResults\systemTestResult.zip"
+     py -m robot --loglevel DEBUG -d testOutput/system -x systemTests.xml -v whichNVDA:installed tests/system/
+     Compress-Archive -Path ".\testOutput\system\*" -DestinationPath ".\testOutput\systemTestResult.zip"
+     Push-AppveyorArtifact ".\testOutput\systemTestResult.zip"
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\output\testResults\system\systemTests.xml))
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\testOutput\system\systemTests.xml))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 artifacts:

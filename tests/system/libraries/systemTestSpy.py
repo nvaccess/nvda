@@ -90,16 +90,13 @@ class SystemTestSpy(object):
 		with threading.Lock():
 			return len(self._nvdaSpeech) - 1
 
-	def getIndexOfSpeech(self, speech, indexHint=0):
+	def getIndexOfSpeech(self, speech, startFromIndex=0):
 		with threading.Lock():
-			log.debug("from index:{}, looking for speech: {}".format(indexHint, speech))
-			for index, commands in enumerate(self._nvdaSpeech[indexHint:]):
-				index = index+indexHint
+			for index, commands in enumerate(self._nvdaSpeech[startFromIndex:]):
+				index = index + startFromIndex
 				baseStrings = [c.strip() for c in commands if isinstance(c, basestring)]
 				if any(speech in x for x in baseStrings):
-					log.debug("found it")
 					return index
-			log.debug("did not find it")
 			return -1
 
 	def hasSpeechFinished(self):
@@ -151,16 +148,6 @@ class NvdaSpyLib(object):
 
 	def get_last_speech_index(self):
 		return self._spy.getIndexOfLastSpeech()
-
-# TODO: does this need to return the index of this speech? What if the "next speech" has already past when this is called?
-	def wait_for_speech_to_start(self, maxWaitSeconds=5.0, raiseErrorOnTimeout=True):
-		useErrorMesg = "Speech did not start before timeout" if raiseErrorOnTimeout else None
-		success, value = _blockUntilConditionMet(
-			getValue=lambda: self._spy.checkIfSpeechOccurredAndReset(),
-			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
-			errorMessage=useErrorMesg
-		)
-		return success
 
 	def wait_for_specific_speech(self, speech, sinceIndex=None, maxWaitSeconds=5):
 		sinceIndex = 0 if not sinceIndex else sinceIndex

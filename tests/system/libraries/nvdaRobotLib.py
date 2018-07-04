@@ -30,12 +30,13 @@ if whichNVDA=="source":
 	baseNVDACommandline="pythonw source/nvda.pyw"
 elif whichNVDA=="installed":
 	baseNVDACommandline='"%s"'%_pJoin(_expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
-print baseNVDACommandline
+else:
+	raise AssertionError("robot should be given argument `-v whichNVDA [source|installed]")
 
 # Paths
 systemTestSourceDir = _abspath("tests/system")
-nvdaProfileWorkingDir = _pJoin(systemTestSourceDir, "nvdaProfile")
-nvdaLogFilePath = _pJoin(nvdaProfileWorkingDir,'nvda.log')
+nvdaProfileWorkingDir = _pJoin(_expandvars('%TEMP%'), "nvdaProfile")
+nvdaLogFilePath = _pJoin(nvdaProfileWorkingDir, 'nvda.log')
 systemTestSpyAddonName = "systemTestSpy"
 testSpyPackageDest = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
 
@@ -53,7 +54,7 @@ def _findDepPath(depFileName, searchPaths):
 	raise AssertionError("Unable to find required system test spy dependency: {}".format(depFileName))
 
 # relative to the python path
-requiredPythonImports = [
+requiredPythonImportsForSystemTestSpyPackage = [
 	r"robotremoteserver",
 	r"SimpleXMLRPCServer",
 	r"xmlrpclib",
@@ -62,12 +63,12 @@ requiredPythonImports = [
 def _createNvdaSpyPackage():
 	import os
 	searchPaths = sys.path
-	profileSysTestSpyPackageStagingDir = _pJoin(systemTestSourceDir, systemTestSpyAddonName)
+	profileSysTestSpyPackageStagingDir = _pJoin(_expandvars('%TEMP%'), systemTestSpyAddonName)
 	# copy in required dependencies, the addon will modify the python path
 	# to point to this sub dir
 	spyPackageLibsDir = _pJoin(profileSysTestSpyPackageStagingDir, "libs")
 	opSys.create_directory(spyPackageLibsDir)
-	for lib in requiredPythonImports:
+	for lib in requiredPythonImportsForSystemTestSpyPackage:
 		libSource = _findDepPath(lib, searchPaths)
 		if os.path.isdir(libSource):
 			opSys.copy_directory(libSource, spyPackageLibsDir)
@@ -196,11 +197,11 @@ class nvdaRobotLib(object):
 	def quit_NVDA(self):
 		builtIn.log("Stopping nvdaSpy server: {}".format(spyServerURI))
 		_stopRemoteServer(spyServerURI, log=False)
-		# remove the spy so that if nvda is run manually against this config it does not interfere.
-		self.teardown_nvda_profile()
 		process.run_process(
 			"{baseNVDACommandline} -q --disable-addons".format(baseNVDACommandline=baseNVDACommandline),
 			shell=True,
 		)
 		process.wait_for_process(self.nvdaHandle)
 		self.save_NVDA_log()
+		# remove the spy so that if nvda is run manually against this config it does not interfere.
+		self.teardown_nvda_profile()
