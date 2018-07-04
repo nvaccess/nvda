@@ -127,8 +127,8 @@ before_test:
      }
      $nvdaLauncherFile+="_${env:version}.exe"
      echo NVDALauncherFile: $NVDALauncherFile
-     $outputDir=$(resolve-path .\output)
-          $installerLogFilePath="$outputDir\nvda_install.log"
+     $outputDir=$(resolve-path .\testOutput)
+     $installerLogFilePath="$outputDir\nvda_install.log"
      $installerProcess=start-process -FilePath "$nvdaLauncherFile" -ArgumentList "--install-silent --debug-logging --log-file $installerLogFilePath" -passthru
      try {
       $installerProcess | wait-process -Timeout 180
@@ -137,7 +137,7 @@ before_test:
       echo NVDA installer process timed out
       $errorCode=1
      }
-          Push-AppveyorArtifact $installerLogFilePath
+     Push-AppveyorArtifact $installerLogFilePath
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 test_script:
