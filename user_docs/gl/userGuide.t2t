@@ -831,10 +831,12 @@ Para información adicional acerca do modo exploración e da navegación cunha s
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Nome | Tecla | Descripción |
-| Anunciar tempo restante | control+shift+r | Anuncia o tempo restante da pista actualmente en reproducción, se hai algunha. |
+| Anunciar o tempo restante | control+shift+r | Anuncia o tempo restante da pista actualmente en reproducción, se hai algunha. |
+| Anunciar o tempo transcorrido | control+shift+e | Anuncia o tempo transcorrido da pista actual en reprodución, se a hai. |
+| Anunciar a lonxitude da pista | control+shift+t | Anuncia a lonxitude da pista actual en reprodución, se a hai. |
 %kc:endInclude
 
-Nota: o atallo de teclado de anunciado do tempo restante só funciona coa cadea de formato predeterminada para a liña de estado de foobar.
+Nota: os atallos de teclado de arriba só funcionan coa cadea de formato predeterminada para a liña de estado de foobar.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +973,25 @@ Esta opción só está dispoñible para copias instaladas do NVDA.
 ==== Procurar actualizacións para NVDA automáticamente ====[GeneralSettingsCheckForUpdates]
 Se esto está activado, NVDA procurará automáticamente versións actualizadas e informarache cando unha actualización estea dispoñible.
 Tamén podes procurar actualizacións manualmente seleccionando Procurar Actualizacións baixo o menú Axuda no menú NVDA.
+Cando se procuren actualizacións manual ou automáticamente, é necesario para NVDA enviar algunha información ao servidor de actualizacións para recibir a actualización correcta para o teu sistema.
+Envíase sempre a seguinte información: 
+- Versión actual do NVDA
+- Versión do Sistema Operativo
+- Se o Sistema Operativo é de 64 ou de 32 bits
+
+
+==== Permitir que o Proxecto NVDA Recolla Estadísticas de Uso do NVDA ====[GeneralSettingsGatherUsageStats]
+Se esto está activado, NV Access usará a información das procuras de actualizacións para seguir o número de usuarios do NVDA incluíndo datos demográficos particulares coma o Sistema Operativo e o país de orixe.
+Ten en conta que aíndaque o teu enderezo IP usarase para calcular o teu país durante a procura de actualizacións, o enderezo IP nunca se conservará.
+Ademáis da información obrigatoria necesaria para procurar actualizacións, tamén se envía a seguinte información adicional actualmente:
+- Lingua da interfaz do NVDA
+- Se esta copia do NVDA é portable ou instalada
+- O nome do sintetizador de voz actual en uso (incluíndo o nome do complemento que ven co controlador)
+- O nome da pantalla Braille actual en uso (incluíndo o nome do complemento que ven co controlador)
+- A táboa de saída braille actual (se o Braille está en uso)
+
+
+Esta información axuda enormemente a NV Access a priorizar o desenvolvemento futuro do NVDA.
 
 ==== Notificar actualizacións pendentes ao comezar ====[GeneralSettingsNotifyPendingUpdates]
 Se esto está habilitado, o NVDA informarache cando hai unha actualización pendente ao comezar, ofrecéndoche a posibilidade de instalala.

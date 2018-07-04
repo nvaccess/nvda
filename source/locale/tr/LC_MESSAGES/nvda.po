@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-11 14:45+0300\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"PO-Revision-Date: 2018-06-22 09:35+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,967,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
@@ -6651,9 +6651,17 @@ msgstr "Başlat"
 msgid "No track playing"
 msgstr "Çalan parça yok"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Çalmakta olan parça için geri kalan kısmın süresini söyler"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Çalmakta olan parça için kalan süre bilgisini söyler"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Çalmakta olan parçanın toplam  süresini söyler"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7707,6 +7715,44 @@ msgstr "Bekleyen güncellemeyi kur"
 msgid "Please wait"
 msgstr "Lütfen bekleyin"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA Kullanım Verilerini Toplama"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"NVDA'nın iyileştirilmesi ve geliştirilmesi için NVAccess çalışan NVDA "
+"kopyalarından kullanım verilerini toplamak istiyor.\n"
+"\n"
+"Toplanacak veriler, İşletim Sistemi sürümü, NVDA versiyonu, dil, menşe ülke, "
+"artı mevcut synthesizer, braille ekran ve braille tablo gibi bazı NVDA "
+"konfigürasyon öğeleridir. Konuşmaya ya da kabartmaya çevrilen hiçbir içerik "
+"hiçbir suretle NVAccess'e gönderilmez. Toplanacak veri listesi  için "
+"kullanıcı rehberini inceleyebilirsiniz.\n"
+"\n"
+"NVAccess'in bu verileri NVDA'yı geliştirmek için kullanmak amacıyla peryodik "
+"olarak toplamasına izin veriyor musunuz?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Evet"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "Hayı&r"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Eklenti Yöneticisi"
@@ -7732,7 +7778,7 @@ msgstr "Durum"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
 msgid "Version"
-msgstr "Versiyon"
+msgstr "Sürüm"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's author (example: author is NV Access).
 msgid "Author"
@@ -8377,6 +8423,10 @@ msgstr "Otomatik g&üncelleme kontrolü"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "NVDA başladığında &bekleyen güncelleme varsa bildir"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "NVDA kullanım verilerini toplaması için NVDA projesine izin ver"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
