@@ -116,8 +116,9 @@ before_test:
  - py -m pip install robotremoteserver
  - py -m pip install pyautogui
  - py -m pip install nose 
- - mkdir output\testResults
- - mkdir output\testResults\system
+ - mkdir testOutput
+ - mkdir testOutput\unit
+ - mkdir testOutput\system
  - ps: |
      $errorCode=0
      $nvdaLauncherFile=".\output\nvda"
