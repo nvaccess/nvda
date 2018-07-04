@@ -27,13 +27,13 @@ the tests are run from an administrator command prompt.
 * "source"
 
 ```
-python -m robot --loglevel DEBUG -d testOutput -v whichNVDA:source tests/system/
+python -m robot --loglevel DEBUG -d testOutput/system -x systemTests.xml -v whichNVDA:source -P tests/system/libraries tests/system/
 ```
 
 To run a single test, use the `--test` argument. Refer to the robot framework documentation for further details.
 
 ```
-python -m robot --loglevel DEBUG -d testOutput -v whichNVDA:source --test "name of test here" tests/system/
+python -m robot --test "name of test here" ...
 ```
 
 ### Getting the results
