@@ -47,10 +47,8 @@ testSpyPackageDest = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
 
 def _findDepPath(depFileName, searchPaths):
 	import os
-	print searchPaths
 	for path in searchPaths:
 		filePath = _pJoin(path, depFileName+".py")
-		print filePath
 		if os.path.isfile(filePath):
 			return filePath
 		elif os.path.isfile(_pJoin(path, depFileName, "__init__.py")):

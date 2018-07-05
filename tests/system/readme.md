@@ -32,7 +32,8 @@ of NVDA (first ensure it is compatible with the tests). Note valid values are:
 the tests are run from an administrator command prompt.
 * "source"
 
-To run a single test, use the `--test` argument. Refer to the robot framework documentation for further details.
+To run a single test or filter tests, use the `--test` argument (wildcards accepted).
+Refer to the robot framework documentation for further details.
 
 ```
 python -m robot --test "name of test here" ...

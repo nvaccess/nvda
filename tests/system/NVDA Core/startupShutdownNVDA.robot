@@ -19,9 +19,11 @@ Variables	variables.py
 
 *** Test Cases ***
 Starts
+	[Documentation]	Ensure that NVDA can start
 	process should be running	nvdaAlias
 
 Quits from keyboard
+	[Documentation]	Starts NVDA and ensures that it can be quit using the keyboard
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 
 	${Welcome dialog title} =	catenate double space	Welcome to NVDA	dialog
@@ -43,6 +45,7 @@ Quits from keyboard
 	process should be stopped	nvdaAlias
 
 Read welcome dialog
+	[Documentation]	Ensure that the welcome dialog can be read in full
 	[Setup]	start NVDA	standard-doShowWelcomeDialog.ini
 
 	${Welcome dialog title} =	catenate double space	Welcome to NVDA	dialog
