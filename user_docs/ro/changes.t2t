@@ -8,6 +8,9 @@ Ce este nou în NVDA
 - NVDA raportează acum greșeli gramaticale la expunerea lor apropiată de către paginile web din Mozilla Firefox. (#8280)
 - Când Braillenote este folosit ca afișaj braille, NVDA este acum compatibil cu joysticurile de rulare ale tastaturilor BrailleNote QT și Apex BT. (#6316)
 - S-au creeat noi scripturi pentru raportarea timpului trecut și timpului total al titlului actual în Foobar2000. (#6596)
+- Acum, simbolul tastei de comandă Mac (⌘) este anunțat la citirea textului cu orice sintetizator. (#8366)
+- Prin atributul aria-roledescription, rolurilr personalizate sunt suportate acum în Firefox, Chrome și Internet Explorer.
+- Tabel braille nou: Suedeză, braille în 8 puncte pentru calculator. (#8227)
 
 
 == Modificări ==
@@ -15,9 +18,11 @@ Ce este nou în NVDA
 - S-au adăugat gesturile implicite pentru alt shift tab și pentru windows tab cu toate afișajele braille suportate de la Freedom Scientific. (#7387)
 - La prima pornire a acestei versiuni NVDA, utilizatorii vor fi întrebați dacă acceptă ca NVDA să trimită statistici despre modul de folosire către NV Access de fiecare dată când NVDA  caută automat actualizări. (#8217)
 - Dacă utilizatorul acceptă trimiterea statisticilor către NV Access în timpul verificării pentru actualizări noi, NVDA va trimite numele driverului pentru sintetizator și numele driverului pentru afișajul braille conectat. Aceste date vor ajuta la priorizarea lucrărilor din viitor cu referință la sintetizatoare și afișaje braille. (#8217)
+- S-a actualizat traducătorul braille liblouis la versiunea 3.6.0. (#8365)
 
 
 == Defecte rezolvate ==
+- Etichetele accesibile pentru comenzile din Google Chrome sunt acum raportate cu ușurință în modul de navigare atunci când eticheta nu apare ca și conținut în sine. (#4773)
 
 
 == Modificări pentru dezvoltatori ==
