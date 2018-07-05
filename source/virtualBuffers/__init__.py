@@ -172,6 +172,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 	def _getPointFromOffset(self,offset):
 		o = self._getNVDAObjectFromOffset(offset)
+		if not o.location:
+			raise LookupError
 		left, top, width, height = o.location
 		return textInfos.Point(left + width / 2, top + height / 2)
 
