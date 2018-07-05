@@ -116,6 +116,7 @@ before_test:
  - py -m pip install robotremoteserver
  - py -m pip install pyautogui
  - py -m pip install nose
+ - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
  - ps: |
@@ -144,7 +145,7 @@ test_script:
      $errorCode=0
      $unitTestsXml = (Resolve-Path .\testOutput\unit\unitTests.xml)
      cd tests
-     py -m nose --with-xunit --xunit-file=testOutput/unit/unitTests.xml ./unit
+     py -m nose --with-xunit --xunit-file=$unitTestsXml ./unit
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      Push-AppveyorArtifact $unitTestsXml
      $wc = New-Object 'System.Net.WebClient'
@@ -152,14 +153,14 @@ test_script:
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
-     $systemTestOutput = (Resolve-Path .\testOutput\system)
-     cd tests
-     py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P ./system/libraries ./system/
+     $systemTestOutput = (Resolve-Path "$testOutput\system")
+     $testSource = "./tests/system"
+     py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
      Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
      Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $systemTestOutput\systemTests.xml))
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 artifacts:

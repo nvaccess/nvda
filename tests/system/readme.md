@@ -18,17 +18,19 @@ pip install pyautogui
 
 ### Running the tests
 
-These tests should be run from the windows command prompt (cmd.exe) from the root directory of your NVDA repository.
+These tests should be run from the windows command prompt (cmd.exe) from the root directory
+ of your NVDA repository.
+
+
+```
+python -m robot --loglevel DEBUG -d testOutput/system -x systemTests.xml -v whichNVDA:source -P ./tests/system/libraries ./tests/system/
+```
 
 The `whichNVDA` argument allows the tests to be run against an installed copy
 of NVDA (first ensure it is compatible with the tests). Note valid values are:
 * "installed" - when running against the installed version of NVDA, you are likely to get errors in the log unless
 the tests are run from an administrator command prompt.
 * "source"
-
-```
-python -m robot --loglevel DEBUG -d testOutput/system -x systemTests.xml -v whichNVDA:source -P tests/system/libraries tests/system/
-```
 
 To run a single test, use the `--test` argument. Refer to the robot framework documentation for further details.
 

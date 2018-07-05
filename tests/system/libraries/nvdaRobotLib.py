@@ -24,17 +24,21 @@ spyServerPort = 8270  # is `registered by IANA` for remote server usage. Two ASC
 spyServerURI = 'http://127.0.0.1:{}'.format(spyServerPort)
 spyAlias = "nvdaSpy"
 
-
-whichNVDA=builtIn.get_variable_value("${whichNVDA}", "source")
-if whichNVDA=="source":
-	baseNVDACommandline="pythonw source/nvda.pyw"
-elif whichNVDA=="installed":
-	baseNVDACommandline='"%s"'%_pJoin(_expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
+# robot is expected to be run from the NVDA repo root directory. We want all repo specific
+# paths to be relative to this. This would allow us to change where it is run from if we decided to.
+repoRoot = _abspath("./")
+whichNVDA = builtIn.get_variable_value("${whichNVDA}", "source")
+if whichNVDA == "source":
+	NVDACommandPathToCheckExists = _pJoin(repoRoot, "source/nvda.pyw")
+	baseNVDACommandline = "pythonw "+NVDACommandPathToCheckExists
+elif whichNVDA == "installed":
+	NVDACommandPathToCheckExists = _pJoin(_expandvars('%PROGRAMFILES%'),'nvda','nvda.exe')
+	baseNVDACommandline='"%s"' % NVDACommandPathToCheckExists
 else:
 	raise AssertionError("robot should be given argument `-v whichNVDA [source|installed]")
 
 # Paths
-systemTestSourceDir = _abspath("tests/system")
+systemTestSourceDir = _pJoin(repoRoot, "tests", "system")
 nvdaProfileWorkingDir = _pJoin(_expandvars('%TEMP%'), "nvdaProfile")
 nvdaLogFilePath = _pJoin(nvdaProfileWorkingDir, 'nvda.log')
 systemTestSpyAddonName = "systemTestSpy"
@@ -99,7 +103,7 @@ class nvdaRobotLib(object):
 			_pJoin(nvdaProfileWorkingDir, "nvda.ini")
 		)
 		# create a package to use as the globalPlugin
-		opSys.copy_directory(
+		opSys.move_directory(
 			_createNvdaSpyPackage(),
 			_pJoin(testSpyPackageDest, systemTestSpyAddonName)
 		)
@@ -118,6 +122,7 @@ class nvdaRobotLib(object):
 		"""Start NVDA.
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
+		opSys.file_should_exist(NVDACommandPathToCheckExists, "Unable to start NVDA unless path exists.")
 		self.nvdaHandle = handle = process.start_process(
 			"{baseNVDACommandline} --debug-logging -r -c \"{nvdaProfileDir}\" --log-file \"{nvdaLogFilePath}\"".format(
 				baseNVDACommandline=baseNVDACommandline,
