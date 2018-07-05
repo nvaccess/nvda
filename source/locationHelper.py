@@ -183,6 +183,14 @@ class Point(namedtuple("Point",("x","y"))):
 class _RectMixin:
 	"""Mix-in class for properties shared between RectLTRB and RectLTWH classes"""
 
+	@classmethod
+	def fromNonInts(cls, *nonInts):
+		"""Creates an instance from parameters that aren't integers, such as floats.
+		The provided parameters will be converted to ints automatically.
+		@raise ValueError: If one of the input parameters can't be converted to int.
+		"""
+		return cls(*map(int, nonInts))
+
 	def toRECT(self):
 		"""Converts self to a L{ctypes.wintypes.RECT}"""
 		return RECT(self.left,self.top,self.right,self.bottom)
