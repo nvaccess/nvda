@@ -9,6 +9,9 @@
 - NVDA ilmoittaa Mozilla Firefoxissa kielioppivirheistä, kun tieto niistä välitetään verkkosivuilla asianmukaisesti. (#8280)
 - Lisätty tuki BrailleNote QT:n ja Apex BT:n vieritysrullalle, kun BrailleNotea käytetään pistenäyttönä NVDA:n kanssa. (#6316)
 - Lisätty komennot nykyisen kappaleen kuluneen ajan ja kokonaiskeston ilmoittamiseen Foobar2000:ssa. (#6596)
+- Mac-komentonäppäimen symboli (⌘) puhutaan nyt luettaessa tekstiä mitä tahansa syntetisaattoria käytettäessä. (#8366)
+- Mukautettuja rooleja tuetaan nyt aria-roledescription-attribuutin välityksellä Firefoxissa, Chromessa ja Internet Explorerissa.
+- Uusi pistetaulukko: ruotsalainen 8 pisteen tietokonemerkistö. (#8227)
 
 
 == Muutokset ==
@@ -16,9 +19,11 @@
 - Lisätty oletussyötekomentoja Alt+Vaihto+Sarkain- ja Windows+Sarkain-näppäinyhdistelmille kaikille tuetuille Freedom Scientificin pistenäytöille. (#7387)
 - Käyttäjältä kysytään nyt kerran NVDA:n käynnistyessä, haluaako hän sallia käyttötilastojen lähettämisen NV Accessille automaattisen päivitystarkistuksen yhteydessä. (#8217)
 - Jos käyttäjä on sallinut käyttötilastojen lähettämisen NV Accessille, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ajurien tulevaa kehitystä voidaan priorisoida paremmin. (#8217)
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.6.0. (#8365)
 
 
 == Korjatut ohjelmavirheet ==
+- Saavutettavat selitteet  ilmoitetaan nyt herkemmin Google Chromessa selaustilassa oltaessa kun selite ei näy sisällön osana. (#4773)
 
 
 == Muutokset kehittäjille ==

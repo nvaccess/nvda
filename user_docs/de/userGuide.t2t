@@ -243,7 +243,7 @@ Die Tasten(kombinationen) führen ihre Funktion nicht aus, so lange Sie die Eing
 ++ Das NVDA-Menü ++[TheNVDAMenu]
 In diesem Menü können Sie alle Einstellungen von NVDA ändern, die Einstellungen speichern oder zurücksetzen, die Hilfe aufrufen, die Wörterbücher für die Aussprache bearbeiten, zusätzliche Funktionen aufrufen und auch NVDA komplett beenden.
 
-Um von überall in das NVDA-Menü zu gelangen, drücken Sie die Tastenkombination NVDA+n oder tippen Sie zweimal mit zwei Fingern. Dies funktioniert allerdings auch nur, wenn NVDA läuft.
+Um von überall in das NVDA-Menü zu gelangen, drücken Sie die Tastenkombination NVDA+N oder tippen Sie zweimal mit zwei Fingern. Dies funktioniert allerdings auch nur, wenn NVDA läuft.
 Das Menü kann auch über einen Rechtsklick auf das NVDA-Symbol im Infobereich erreicht werden.
 Alternativ können Sie auch die Tastenkombination "Windows+b" drücken und mit den "Pfeiltasten zum NVDA-Symbol navigieren und das Menü mit der Anwendungstaste öffnen. Die Anwendungstaste befindet sich auf den meisten Tastaturen links neben der rechten Strg-Taste.
 In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste öffnen Sie die Menüpunkte.
@@ -319,7 +319,8 @@ Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügu
 
 ++ Objektnavigation ++[ObjectNavigation]
 Üblicherweise arbeiten Sie mit Programmen, indem Sie mittels Tastenkürzeln den [Fokus #SystemFocus] oder den [System-Cursor #SystemCaret] bewegen.
-Manchmal möchten Sie jedoch mit den Objekten einer Anwendung oder des Betriebssystems arbeiten, ohne den Fokus oder den System-Cursor zu bewegen oder Sie wollen mit [Objekten #Objects] umgehen, die nicht mit den Standard-Tastenkombinationen erreichbar sind (etwa, weil sie nicht in der Tab-Reihenfolge stehen).
+Manchmal möchten Sie jedoch mit den Objekten einer Anwendung oder des Betriebssystems arbeiten, ohne den Fokus oder den System-Cursor zu bewegen.
+Vielleicht wollen Sie mit [Objekten #Objects] umgehen, die nicht mit den Standard-Tastenkombinationen erreichbar sind (etwa, weil sie nicht in der Tab-Reihenfolge stehen).
 In solchen Fällen können Sie die objektorientierte Navigation verwenden. Dabei wird ein NVDA-Cursor die Objekte ansteuern.
 
 Die Objektnavigation erlaubt das Bewegen zwischen Objekten und das Abrufen von Informationen über ein einzelnes [Objekt #Objects].
@@ -726,7 +727,7 @@ Sie können die Erkennungssprache einstellen, indem Sie die Kategorie [Windows 1
 Zusätzliche Sprachen können Sie in den Einstellungen von Windows unter Zeit und Sprache -> Region und Sprache -> Sprache hinzufügen installieren.
 
 %kc:beginInclude
-Drücken Sie NVDA+r, um den Text im aktuellen NAvigator-Objekt mit Hilfe der Windows 10-Texterkennung zu erkennen.
+Drücken Sie NVDA+R, um den Text im aktuellen NAvigator-Objekt mit Hilfe der Windows 10-Texterkennung zu erkennen.
 %kc:endInclude
 
 + Anwendungsspezifische Funktionen +[ApplicationSpecificFeatures]
@@ -1043,7 +1044,7 @@ Diese Option ist standardmäßig deaktiviert.
 
 %kc:setting
 ==== Zeichen/Symbolebene ====[SpeechSettingsSymbolLevel]
-Tastenkombination: NVDA+p
+Tastenkombination: NVDA+P
 
 Hier kann eingestellt werden, ob und wie viele Satz- und Sonderzeichen NVDA als Wort aussprechen soll.
 Wenn hier "alle" ausgewählt ist, spricht NVDA alle Symbole, als wären diese ausgeschrieben.
@@ -1316,7 +1317,7 @@ In Windows ändert sich die Form des Mauszeigers, wenn sich dieser Beispielsweis
 
 %kc:setting
 ==== Mausverfolgung einschalten ====[MouseSettingsTracking]
-Tastenkombination: NVDA+m
+Tastenkombination: NVDA+M
 
 Dieses Kontrollfeld weist NVDA an, den Text unter dem Mauszeiger vorzulesen. Das erleichtert Ihnen das Auffinden von Informationen am Bildschirm, wenn Sie mittels der Maus den Mauszeiger über den Bildschirm bewegen.
 
@@ -1391,14 +1392,14 @@ Diese Option legt fest, ob Sie die Objektposition (z. B. 1 von 4) angesagt bekom
 ==== Informationen zur Objektposition bei Nichtverfügbarkeit ermitteln ====[ObjectPresentationGuessPositionInfo]
 Wenn die Ausgabe der Informationen zur Objektposition aktiviert ist, wird NVDA die Informationen zur Objektposition für bestimmte Steuerelemente ermitteln, falls diese nicht anderweitig verfügbar ist.
 
-Ist diese Option aktiviert, wird NVDA die Informationen zur Objektposition für mehr Steuerelemente ausgeben (so z. B. für Menüs oder Symbolleisten), auch wenn solche Positionsangaben oft ungenau sind.
+Wenn diese aktiviert ist, meldet NVDA Positionsinformationen für weitere Steuerelemente, wie Menüs und Symbolleisten, jedoch können diese Informationen etwas ungenau sein.
 
 ==== Objektbeschreibungen ansagen ====[ObjectPresentationReportDescriptions]
 Deaktivieren Sie einfach diese Option, wenn Sie die Ansage der Objektbeschreibungen nicht wünschen.
 
 %kc:setting
 ==== Ausgabe des Fortschrittsbalkens ====[ObjectPresentationProgressBarOutput]
-Tastenkombination: NVDA+u
+Tastenkombination: NVDA+U
 
 Diese Option kontrolliert, wie NVDA die Aktualisierungen der Fortschrittsbalken ansagen soll.
 
@@ -1468,7 +1469,7 @@ Wenn gleich der Lesemodus keine wirklichen Seiten hat, können Sie jedoch hier f
 
 %kc:setting
 ==== Bildschirmlayout verwenden ====[BrowseModeSettingsScreenLayout]
-Tastenkombination: NVDA+v
+Tastenkombination: NVDA+V
 
 Diese Option legt fest, wie der Inhalt einer Seite in den Lesemodus übernommen werden soll. Wenn die Option aktiviert ist, bekommen Sie die Ansicht exakt so, wie sie am Bildschirm erscheint. Wenn die Option deaktiviert ist, werden alle Elemente, wie beispielsweise Links im Textverlauf in einer neuen Zeile dargestellt.
 
