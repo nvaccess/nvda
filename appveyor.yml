@@ -143,9 +143,9 @@ before_test:
 test_script:
  - ps: |
      $errorCode=0
-     $unitTestsXml = (Resolve-Path .\testOutput\unit\unitTests.xml)
-     cd tests
-     py -m nose --with-xunit --xunit-file=$unitTestsXml ./unit
+     $outDir = (Resolve-Path .\testOutput\unit\)
+     $unitTestsXml = "$outDir\unitTests.xml"
+     py -m nose --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      Push-AppveyorArtifact $unitTestsXml
      $wc = New-Object 'System.Net.WebClient'
