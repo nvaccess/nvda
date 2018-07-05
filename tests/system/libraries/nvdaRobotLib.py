@@ -46,6 +46,8 @@ nvdaProfileWorkingDir = _pJoin(tempDir, "nvdaProfile")
 nvdaLogFilePath = _pJoin(nvdaProfileWorkingDir, 'nvda.log')
 systemTestSpyAddonName = "systemTestSpy"
 testSpyPackageDest = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
+outDir = builtIn.get_variable_value("${OUTPUT DIR}")
+testOutputNvdaLogsDir = _pJoin(outDir, "nvdaTestRunLogs")
 
 
 def _findDepPath(depFileName, searchPaths):
@@ -91,16 +93,14 @@ def _createNvdaSpyPackage():
 	return profileSysTestSpyPackageStagingDir
 
 def _createTestIdFileName(name):
-	outDir = builtIn.get_variable_value("${OUTPUT DIR}", )
 	suiteName = builtIn.get_variable_value("${SUITE NAME}")
 	testName = builtIn.get_variable_value("${TEST NAME}")
-	outputFileName = "{suite}-{test}-{name}" \
-		.format(
+	outputFileName = "{suite}-{test}-{name}".format(
 		suite=suiteName,
 		test=testName,
 		name=name,
 	).replace(" ", "_")
-	return _pJoin(outDir, "nvdaTestRunLogs", outputFileName)
+	return outputFileName
 
 class nvdaRobotLib(object):
 
@@ -134,6 +134,7 @@ class nvdaRobotLib(object):
 		"""Start NVDA.
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
+		opSys.create_directory(testOutputNvdaLogsDir)
 		opSys.file_should_exist(NVDACommandPathToCheckExists, "Unable to start NVDA unless path exists.")
 		self.nvdaHandle = handle = process.start_process(
 			"{baseNVDACommandline} --debug-logging -r -c \"{nvdaProfileDir}\" --log-file \"{nvdaLogFilePath}\"".format(
@@ -143,8 +144,8 @@ class nvdaRobotLib(object):
 			),
 			shell=True,
 			alias='nvdaAlias',
-			stdout=_createTestIdFileName("stdout.txt"),
-			stderr=_createTestIdFileName("stderr.txt"),
+			stdout=_pJoin(testOutputNvdaLogsDir, _createTestIdFileName("stdout.txt")),
+			stderr=_pJoin(testOutputNvdaLogsDir, _createTestIdFileName("stderr.txt")),
 		)
 		return handle
 
@@ -199,10 +200,10 @@ class nvdaRobotLib(object):
 	def save_NVDA_log(self):
 		"""NVDA logs are saved to the ${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log"""
 		builtIn.log("saving NVDA log")
-		outputFileName = _createTestIdFileName("nvda.log")
+		opSys.create_directory(testOutputNvdaLogsDir)
 		opSys.copy_file(
 			nvdaLogFilePath,
-			outputFileName
+			_pJoin(testOutputNvdaLogsDir, _createTestIdFileName("nvda.log"))
 		)
 
 	def quit_NVDA(self):
