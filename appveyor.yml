@@ -4,7 +4,7 @@ version: "{branch}-{build}"
 branches:
  only:
   - master
-  - next
+  - beta
   - rc
   - /try-.*/
   # For tags, branch = tag if GitHub couldn't work out the base branch.
@@ -24,7 +24,7 @@ init:
       # Strip "release-" prefix.
       $version = $env:APPVEYOR_REPO_TAG_NAME.Substring(8)
       Set-AppveyorBuildVariable "release" "1"
-      if ($env:APPVEYOR_REPO_TAG_NAME.Contains("rc")) {
+      if ($env:APPVEYOR_REPO_TAG_NAME.Contains("rc") -or $env:APPVEYOR_REPO_TAG_NAME.Contains("beta")) {
        $versionType = "beta"
       } else {
        $versionType = "stable"
@@ -32,12 +32,16 @@ init:
      } else {
       if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
        $version = "pr$env:APPVEYOR_PULL_REQUEST_NUMBER-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
+      } elseif($env:APPVEYOR_REPO_BRANCH -eq "master") {
+       $version = "alpha-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
       } else {
        $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
       }
       # The version is unique even for rebuilds, so we can use it for the AppVeyor version.
       Update-AppveyorBuild -Version $version
-      if (!$env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
+      if($env:APPVEYOR_REPO_BRANCH -eq "master") {
+       $versionType = "snapshot:alpha"
+      } elseif (!$env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
        $versionType = "snapshot:$env:APPVEYOR_REPO_BRANCH"
       }
      }
