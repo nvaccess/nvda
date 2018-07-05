@@ -6,15 +6,40 @@
 
 """Classes and helper functions for working with rectangles and coordinates."""
 
-from collections import namedtuple
+from collections import namedtuple, Sequence
 import windowUtils
 import winUser
-from ctypes.wintypes import RECT, SMALL_RECT, POINT
+from ctypes.wintypes import RECT, POINT, DWORD
 import textInfos
 import wx
 
 class Point(namedtuple("Point",("x","y"))):
 	"""Represents a point on the screen."""
+
+	@classmethod
+	def fromNonInts(cls, *nonInts):
+		"""Creates an instance from parameters that aren't integers, such as floats.
+		The provided parameters will be converted to ints automatically.
+		@raise ValueError: If one of the input parameters can't be converted to int.
+		"""
+		return cls(*map(int, nonInts))
+
+	@classmethod
+	def fromCompatibleType(cls, point):
+		"""Creates an instance from a compatible type.
+		Compatible types are defined in L{POINT_CLASSES}.
+		"""
+		if isinstance(point,POINT_CLASSES):
+			return cls(point.x, point.y)
+		raise TypeError("point should be one of %s" % ", ".join(cls.__module__+"."+cls.__name__ for cls in POINT_CLASSES))
+
+	@classmethod
+	def fromDWORD(cls, dwPoint):
+		if isinstance(dwPoint,DWORD):
+			dwPoint = dwPoint.value
+		if not isinstance(dwPoint,(int,long)):
+			raise TypeError("dwPoint should be one of int, long or ctypes.wintypes.DWORD (ctypes.ulong)")
+		return Point(winUser.GET_X_LPARAM(dwPoint),winUser.GET_Y_LPARAM(dwPoint))
 
 	def __add__(self,other):
 		"""Returns a new L{Point} with its coordinates representing the additions of the original x and y coordinates."""
@@ -47,10 +72,7 @@ class Point(namedtuple("Point",("x","y"))):
 		To compare in opposite order (i.e. compare x, then y), use L{xWiseLessThan}
 		"""
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return (self.y, self.x) < (other.y, other.x)
 
 	def xWiseLessThan(self,other):
@@ -60,10 +82,7 @@ class Point(namedtuple("Point",("x","y"))):
 		To compare in opposite order (i.e. compare y, then x), use L{yWiseLessThan}
 		"""
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return (self.x, self.y) < (other.x, other.y)
 
 	def yWiseLessOrEq(self,other):
@@ -73,10 +92,7 @@ class Point(namedtuple("Point",("x","y"))):
 		To compare in opposite order (i.e. compare x, then y), use L{xWiseLessOrEq}
 		"""
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return (self.y, self.x) <= (other.y, other.x)
 
 	def xWiseLessOrEq(self,other):
@@ -86,10 +102,7 @@ class Point(namedtuple("Point",("x","y"))):
 		To compare in opposite order (i.e. compare y, then x), use L{yWiseLessOrEq}
 		"""
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return (self.x, self.y) <= (other.x, other.y)
 
 	def yWiseGreaterThan(self,other):
@@ -99,10 +112,7 @@ class Point(namedtuple("Point",("x","y"))):
 		To compare in opposite order (i.e. compare x, then y), use L{xWiseGreaterThan}
 		"""
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return (self.y, self.x) > (other.y, other.x)
 
 	def xWiseGreaterThan(self,other):
@@ -112,10 +122,7 @@ class Point(namedtuple("Point",("x","y"))):
 		To compare in opposite order (i.e. compare y, then x), use L{yWiseGreaterThan}
 		"""
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return (self.x, self.y) > (other.x, other.y)
 
 	def yWiseGreaterOrEq(self,other):
@@ -125,10 +132,7 @@ class Point(namedtuple("Point",("x","y"))):
 		To compare in opposite order (i.e. compare x, then y), use L{xWiseGreaterOrEq}
 		"""
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return (self.y, self.x) >= (other.y, other.x)
 
 	def xWiseGreaterOrEq(self,other):
@@ -138,26 +142,17 @@ class Point(namedtuple("Point",("x","y"))):
 		To compare in opposite order (i.e. compare y, then x), use L{yWiseGreaterOrEq}
 		"""
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return (self.x, self.y) >= (other.x, other.y)
 
 	def __eq__(self,other):
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return self.x == other.x and self.y == other.y
 
 	def __ne__(self,other):
 		if not isinstance(other,POINT_CLASSES):
-			try:
-				other=toPoint(other)
-			except ValueError:
-				return True
+			return NotImplemented
 		return self.x != other.x or self.y != other.y
 
 	def toPOINT(self):
@@ -190,6 +185,57 @@ class _RectMixin:
 		@raise ValueError: If one of the input parameters can't be converted to int.
 		"""
 		return cls(*map(int, nonInts))
+
+	@classmethod
+	def fromCompatibleType(cls, rect):
+		"""Creates an instance from a compatible type.
+		Compatible types are defined in L{RECT_CLASSES}.
+		"""
+		if isinstance(rect,cls):
+			return rect
+		if isinstance(rect,RECT_CLASSES):
+			if cls is RectLTWH:
+				return cls(rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top)
+			return cls(rect.left, rect.top, rect.right, rect.bottom)
+		raise TypeError("rect should be one of %s" % ", ".join(cls.__module__+"."+cls.__name__ for cls in RECT_CLASSES))
+
+	@classmethod
+	def fromPoint(cls, point):
+		"""Creates an instance from a compatible point type with a width and height of 0."""
+		if isinstance(point,POINT_CLASSES):
+			if cls is RectLTWH:
+				return cls(point.x, point.y, 0, 0)
+			return cls(point.x, point.y, point.x, point.y)
+		raise TypeError("point should be one of %s" % ", ".join(cls.__module__+"."+cls.__name__ for cls in POINT_CLASSES))
+
+	@classmethod
+	def fromCollection(cls, *items):
+		"""Creates a bounding rectangle for the provided collection of items.
+		The highest coordinates found in the collection are considered exclusive.
+		For example, if you provide Point(x=1,y=1) and point(x=2,y=2),
+		The resulting rectangle coordinates are left=1,top=1,right=2,bottom=2.
+		Input could be of mixed types from either L{RECT_CLASSES} or L{POINT_CLASSES}.
+		"""
+		if len(items)==0:
+			raise TypeError("This function takes at least 1 argument (0 given)")
+		xs=set()
+		ys=set()
+		for item in items:
+			if isinstance(item,RECT_CLASSES):
+				xs.update((item.left,item.right))
+				ys.update((item.top,item.bottom))
+			elif isinstance(item,POINT_CLASSES):
+				xs.add(item.x)
+				ys.add(item.y)
+			else:
+				raise ValueError("Unexpected parameter %s"%str(item))
+		left=min(xs)
+		top=min(ys)
+		right=max(xs)
+		bottom=max(ys)
+		if cls is RectLTWH:
+			return cls(left, top, right-left, bottom-top)
+		return cls(left, top, right, bottom)
 
 	def toRECT(self):
 		"""Converts self to a L{ctypes.wintypes.RECT}"""
@@ -246,44 +292,29 @@ class _RectMixin:
 		if isinstance(other,POINT_CLASSES):
 			return self.left <= other.x < self.right and  self.top <= other.y < self.bottom
 		if not isinstance(other,RECT_CLASSES):
-			try:
-				other=toRectLTRB(other)
-			except:
-				return False
+			return NotImplemented
 		return self.isSuperset(other) and self!=other
 
 	def isSubset(self,other):
 		"""Returns whether this rectangle is a subset of other (i.e. whether all points in this rectangle are contained by other)."""
 		if not isinstance(other,RECT_CLASSES):
-			try:
-				other=toRectLTRB(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return other.left<=self.left<=self.right<=other.right and other.top<=self.top<=self.bottom<=other.bottom
 
 	def isSuperset(self,other):
 		"""Returns whether this rectangle is a superset of other (i.e. whether all points of other are contained by this rectangle)."""
 		if not isinstance(other,RECT_CLASSES):
-			try:
-				other=toRectLTRB(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return self.left<=other.left<=other.right<=self.right and self.top<=other.top<=other.bottom<=self.bottom
 
 	def __eq__(self,other):
 		if not isinstance(other,RECT_CLASSES):
-			try:
-				other=toRectLTRB(other)
-			except ValueError:
-				return False
+			return NotImplemented
 		return other.left == self.left and other.top == self.top and other.right == self.right and other.bottom == self.bottom
 
 	def __ne__(self,other):
 		if not isinstance(other,RECT_CLASSES):
-			try:
-				other=toRectLTRB(other)
-			except ValueError:
-				return True
+			return NotImplemented
 		return other.left != self.left or other.top != self.top or other.right != self.right or other.bottom != self.bottom
 
 	def intersection(self,other):
@@ -293,10 +324,7 @@ class _RectMixin:
 		No intersect results in a rectangle with zeroed coordinates.
 		"""
 		if not isinstance(other,RECT_CLASSES):
-			try:
-				other=toRectLTRB(other)
-			except ValueError:
-				return NotImplemented
+			return NotImplemented
 		left=max(self.left,other.left)
 		top=max(self.top,other.top)
 		right=min(self.right,other.right)
@@ -348,104 +376,9 @@ class RectLTRB(_RectMixin, namedtuple("RectLTRB",("left","top","right","bottom")
 	def toLTWH(self):
 		return RectLTWH(self.left,self.top,self.width,self.height)
 
-def toRectLTRB(*params):
-	"""
-	Converts the given input to L{RectLTRB}.
-	Input should be one of the following types:
-		* One of l{RECT_CLASSES}.
-		* One of L{POINT_CLASSES}: converted to L{Rect} with a width and height of 0.
-		* List or tuple of integers: 4 treated as L{RectLTRB}, 2 treated as L{Point}.
-		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{RectLTRB} containing all input.
-	"""
-	if len(params)==0:
-		raise TypeError("This function takes at least 1 argument (0 given)")
-	if len(params)==1:
-		param=params[0]
-		if isinstance(param,RectLTRB):
-			return param
-		if isinstance(param,RECT_CLASSES):
-			return RectLTRB(param.left,param.top,param.right,param.bottom)
-		if isinstance(param,POINT_CLASSES):
-			x,y=param.x,param.y
-			return RectLTRB(x,y,x,y)
-		if isinstance(param,(tuple,list)):
-			# One indexable in another indexable doesn't make sence, so treat the inner indexable as outer indexable
-			params=param
-	if all(isinstance(param,(int,long)) for param in params):
-		if len(params)==4:
-			# Assume that we are converting from a tuple rectangle (RectLTRB).
-			# To convert from a tuple location (RectLTWH), use L{toRectLTWH} instead.
-			# To convert from a tuple rectangle to L{RectLTWH}, use this function and execute L{toLTWH} on the resulting object.
-			return RectLTRB(*params)
-		elif len(params)==2:
-			x,y=params
-			return RectLTRB(x,y,x,y)
-		elif len(params) in (1,3) or len(params)>4:
-			raise ValueError("When providing integers, this function requires either 2 or 4 arguments (%d given)"%len(params))
-	xs=[]
-	ys=[]
-	for param in params:
-		if isinstance(param,RECT_CLASSES):
-			xs.extend((param.left,param.right))
-			ys.extend((param.top,param.bottom))
-		elif isinstance(param,POINT_CLASSES):
-			xs.append(param.x)
-			ys.append(param.y)
-		else:
-			raise ValueError("Unexpected parameter %s"%str(param))
-	left=min(xs)
-	top=min(ys)
-	right=max(xs)
-	bottom=max(ys)
-	return RectLTRB(left,top,right,bottom)
-
-def toRectLTWH(*params):
-	"""
-	Converts the given input to L{RectLTWH}.
-	Input should be one of the following types:
-		* One of l{RECT_CLASSES}.
-		* One of L{POINT_CLASSES}: converted to L{RectLTWH} square of one pixel.
-		* List or tuple of integers: 4 treated as L{RectLTWH}, 2 treated as L{Point}.
-		* List or tuple of mixed types from L{RECT_CLASSES} or L{POINT_CLASSES}: converted to L{RectLTWH} containing all input.
-	"""
-	if len(params)==0:
-		raise TypeError("This function takes at least 1 argument (0 given)")
-	if len(params)==1:
-		param=params[0]
-		if isinstance(param,RectLTWH):
-			return param
-		if not isinstance(param,RECT_CLASSES+POINT_CLASSES) and isinstance(param,(tuple,list)):
-			# One indexable in another indexable doesn't make sence, so treat the inner indexable as outer indexable
-			params=param
-	if len(params)==4 and all(isinstance(param,(int,long)) for param in params):
-		# Assume that we are converting from a tuple location (RectLTWH).
-		# To convert from a tuple rectangle (RectLTRB), use L{toRectLTRB} instead.
-		# To convert from a tuple location to L{RectLTRB}, use this function and execute L{toLTRB} on the resulting object.
-		return RectLTWH(*params)
-	return toRectLTRB(*params).toLTWH()
-
-def toPoint(*params):
-	"""
-	Converts the given input to L{Point}.
-	Input should either be one of L{POINT_CLASSES}, 2 integers or one double word.
-	"""
-	if not len(params) in (1,2):
-		raise TypeError("This function takes 1 or 2 arguments (%d given)"%len(params))
-	if len(params)==1:
-		param=params[0]
-		if isinstance(param,Point):
-			return param
-		if isinstance(param,POINT_CLASSES):
-			return Point(param.x,param.y)
-		if isinstance(param,(int,long)):
-			return Point(winUser.GET_X_LPARAM(param),winUser.GET_Y_LPARAM(param))
-	if all(isinstance(param,(int,long)) for param in params) and len(params)==2:
-		return Point(*params)
-	raise ValueError("Unexpected parameter(s) %s"%params)
-
 #: Classes which support conversion to locationHelper Points using their x and y properties.
 #: type: tuple
 POINT_CLASSES=(Point, POINT, textInfos.Point, wx.Point)
 #: Classes which support conversion to locationHelper RectLTRB/LTWH using their left, top, right and bottom properties.
 #: type: tuple
-RECT_CLASSES=(RectLTRB, RectLTWH, RECT, SMALL_RECT, textInfos.Rect)
+RECT_CLASSES=(RectLTRB, RectLTWH, RECT, textInfos.Rect)

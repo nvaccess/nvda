@@ -72,15 +72,13 @@ class TestRectUtilities(unittest.TestCase):
 		self.assertEqual(RectLTRB(left=10, top=10, right=21, bottom=21).center, Point(x=16, y=16))
 		self.assertEqual(RectLTRB(left=-21, top=-21, right=-10, bottom=-10).center, Point(x=-16, y=-16))
 
-class TestToRectLTRB(unittest.TestCase):
-
 	def test_collection(self):
 		"""Tests whether a collection of several rectangle and point types convert to the expected L{RectLTRB}."""
 		rect=RectLTRB(left=10, top=15, right=500, bottom=1000)
-		self.assertEqual(toRectLTRB(
-			rect.topLeft, 
-			rect.bottomRight, 
-			rect.center, 
+		self.assertEqual(RectLTRB.fromCollection(
+			rect.topLeft,
+			rect.bottomRight,
+			rect.center,
 			Point(15, 15),
 			Point(20, 20),
 			Point(50, 50),
@@ -93,21 +91,11 @@ class TestToRectLTRB(unittest.TestCase):
 			RECT(450, 450, 490, 990)
 		), rect)
 
-	def test_integers(self):
-		self.assertEqual(RectLTRB(left=10, top=10, right=20, bottom=20), toRectLTRB(10, 10, 20, 20))
-
-	def test_valueErrorForUnsuportedInput(self):
-		self.assertRaises(ValueError, RectLTRB, left=10, top=10, right=9, bottom=9)
-
-class TestToRectLTWH(unittest.TestCase):
-
-	def test_collection(self):
-		"""Tests whether a collection of several rectangle and point types convert to the expected L{RectLTWH}."""
 		location=RectLTWH(left=10, top=15, width=500, height=1000)
-		self.assertEqual(toRectLTWH(
-			location.topLeft, 
-			location.bottomRight, 
-			location.center, 
+		self.assertEqual(RectLTWH.fromCollection(
+			location.topLeft,
+			location.bottomRight,
+			location.center,
 			Point(15, 15),
 			Point(20, 20),
 			Point(50, 50),
@@ -120,8 +108,14 @@ class TestToRectLTWH(unittest.TestCase):
 			RECT(450, 450, 490, 990)
 		), location)
 
-	def test_integers(self):
-		self.assertEqual(RectLTWH(left=10, top=10, width=20, height=20),toRectLTWH(10, 10, 20, 20))
+	def test_fromNonInts(self):
+		self.assertEqual(RectLTRB(left=10, top=10, right=20, bottom=20), RectLTRB.fromNonInts(10.0, 10.0, 20.0, 20.0))
+		self.assertEqual(RectLTRB(left=10, top=10, right=20, bottom=20), RectLTRB.fromNonInts("10", "10", "20", "20"))
+		self.assertEqual(RectLTWH(left=10, top=10, width=20, height=20), RectLTWH.fromNonInts(10.0, 10.0, 20.0, 20.0))
+		self.assertEqual(RectLTWH(left=10, top=10, width=20, height=20), RectLTWH.fromNonInts("10", "10", "20", "20"))
+
+	def test_valueErrorForUnsuportedInput(self):
+		self.assertRaises(ValueError, RectLTRB, left=10, top=10, right=9, bottom=9)
 
 class TestPointOperators(unittest.TestCase):
 
