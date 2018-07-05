@@ -35,6 +35,9 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				obj = None
 			if not obj:
 				continue
+			if not obj.location:
+				# Older versions of Adobe Reader have per word objects, but they don't expose a location
+				break
 			left, top, width, height = obj.location
 			return textInfos.Point(left + width / 2, top + height / 2)
 		return super(AdobeAcrobat_TextInfo, self)._getPointFromOffset(offset)
